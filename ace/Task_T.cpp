@@ -102,4 +102,92 @@ ACE_Task<ACE_SYNCH_USE>::module (void) const
   return this->mod_;
 }
 
+// Initialize the <ACE_Message_Block_Buffer> to keep track of the
+// <high_water_mark> and the <timeout>, which are used to determine at
+// what point to flush the buffer.
+
+template <class PEER_STREAM, class SYNCH>
+ACE_Buffered_Task<PEER_STREAM, class SYNCH>::ACE_Buffered_Task (PEER_STREAM stream,
+                                                                size_t high_water_mark,
+                                                                ACE_Time_Value *timeout)
+  : current_size_ (0),
+    high_water_mark_ (high_water_mark),
+    timeout_ (timeout == 0 ? ACE_Time_Value::zero : *timeout),
+    timeoutp_ (timeout),
+    stream_ (stream)
+{
+}
+
+int 
+template <class PEER_STREAM, class SYNCH>
+ACE_Buffered_Task<PEER_STREAM, SYNCH>::put (ACE_Message_Block *mb,
+                                            ACE_Time_Value *tv)
+{
+#if 0
+  if (this->putq (mb) == -1)
+    return -1;
+  else 
+    {
+      this->current_size_ += mb->total_size ();
+
+      if (this->current_size_ >= this->high_water_mark_)
+        // @@ Need to add the "timed flush" feature...
+        return this->flush ();
+
+      return 0;
+    }
+#else
+  return 0;
+#endif
+}
+
+// Flush the buffer.
+
+int
+template <class PEER_STREAM, class SYNCH>
+ACE_Buffered_Task<PEER_STREAM, SYNCH>::flush (void)
+{
+#if 0
+  iovec iov[ACE_DEFAULT_WRITEV_MAX];
+  size_t i = 0;
+
+  ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> iterator (queue);
+
+  // Iterate over all the <ACE_Message_Block>s in the
+  // <ACE_Message_Queue>.
+  for (ACE_Message_Block *entry = 0;
+       iterator.next (entry) != 0;
+       iterator.advance ())
+    {
+      // Iterate over all the continuations (if any) in the
+      // <Message_Block>.
+      for (ACE_Message_Block *temp = entry;
+           entry != 0;
+           entry = entry->cont ())
+        {
+          iov[i].iov_len = entry->size ();
+          iov[i].iov_buf = entry->rd_ptr ();
+
+          i++;
+          if (i == ACE_DEFAULT_WRITEV_MAX)
+            {
+              // Send off the data.
+              if (this->stream_.sendv_n (iov,
+                                         i) == -1)
+                return -1;
+              i = 0;
+            }
+        }
+    }
+
+  if (i > 0)
+    return this->stream_.sendv_n (iov,
+                                  i);
+  else
+    return 0;
+#else
+  return 0;
+#endif
+}
+
 #endif /* ACE_TASK_T_C */

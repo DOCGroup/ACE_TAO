@@ -150,6 +150,52 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Task (const ACE_Task<ACE_SYNCH_USE> &))
 };
 
+template <class PEER_STREAM, class SYNCH>
+class ACE_Buffered_Task : public ACE_Task<SYNCH>
+{
+  // = TITLE
+  //     Defines a configurable and efficient buffering scheme for
+  //     <ACE_Message_Blocks>.
+  //
+  // = DESCRIPTION
+public:
+  ACE_Buffered_Task (PEER_STREAM stream,
+                     size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
+                     ACE_Time_Value *timeout = 0);
+  // Initialize the <ACE_Buffered_Task> to keep track of the
+  // <high_water_mark> and the <timeout>, which are used to determine
+  // at what point to flush the buffer.
+
+  virtual int put (ACE_Message_Block *message_block,
+                   ACE_Time_Value *unused = 0);
+  // Insert the <ACE_Message_Block> chain rooted at <message_block>
+  // into the buffer.  If this causes the number of bytes
+
+  virtual int flush (void);
+  // Flush the buffer, which writes all the queued
+  // <ACE_Message_Block>s.
+
+protected:
+  virtual int svc (void);
+  // Run the buffering flushing procedure in a separate thread!
+
+  size_t current_size_;
+  // Keep track of the current number of bytes in the buffer.
+
+  size_t high_water_mark_;
+  // Size of the high water mark, which is used to control when we
+  // flush the buffer.
+  
+  ACE_Time_Value timeout_;
+  // Timeout value.
+
+  ACE_Time_Value *timeoutp_;
+  // Timeout pointer.
+
+  PEER_STREAM stream_;
+  // Stream that we're sending over (should be a template parameter!).
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Task_T.i"
 #endif /* __ACE_INLINE__ */
