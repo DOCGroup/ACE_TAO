@@ -1,7 +1,9 @@
 //$Id$
+//#include "tao/RTScheduling/RTSchedulerC.h"
 #include "testC.h"
 #include "test.h"
 
+int
 main (int argc, char* argv [])
 {
   CORBA::ORB_var orb =

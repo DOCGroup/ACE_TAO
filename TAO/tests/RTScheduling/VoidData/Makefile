@@ -22,7 +22,14 @@ CLIENT_OBJS = test_client.o testC.o
 
 BUILD = $(BIN)
 VBIN = $(BIN:%=%$(VAR))
-TAO_IDLFLAGS += -Ge 1
+TAO_IDLFLAGS += -Ge 1 \
+                -I $(TAO_ROOT) \
+                -I $(TAO_ROOT)/tao/RTScheduling \
+                -I $(TAO_ROOT)/tao/RTCORBA \
+                -I $(TAO_ROOT)/tao/PortableServer \
+                -I $(TAO_ROOT)/tao/PortableInterceptor \
+
+CPPFLAGS += -I$(TAO_ROOT)/tao/RTScheduling
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
