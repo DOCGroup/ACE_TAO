@@ -240,6 +240,13 @@ to Graham for providing the OSE tools!<p>
 
       Static instances of built-in types, such as
       <strong><code>int</code></strong> or any pointer type, are fine.<p>
+
+      Construction of static instance of a user-defined type should
+      <em>never</em> spawn threads.  Because order of construction of
+      statics across files is not defined by the language, it is usually
+      assumed that only one thread exists during static construction.
+      This allows statics suchs as locks to be safely created.  We don't
+      want to violate this assumption.<p>
 </ul><p>
 
 
