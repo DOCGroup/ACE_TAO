@@ -1,3 +1,9 @@
+Thu Jul 26 09:44:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+
+          Hide more debugging messages behind: if( TAO_debug_level > 0) 
+
 Thu Jul 26 07:37:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/Server_Protocol/server.cpp:
