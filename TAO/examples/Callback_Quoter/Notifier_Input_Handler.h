@@ -25,7 +25,7 @@
 #include "orbsvcs/CosNamingS.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
-class Notifier_Input_Handler
+class Notifier_Input_Handler : public ACE_Event_Handler
 {
   // = TITLE
   //   The class defines the callback quoter Notifier initialization
@@ -46,6 +46,9 @@ public:
 
   int run (CORBA::Environment &env);
   // Run the ORB.
+
+   virtual int handle_input (ACE_HANDLE);
+  // Handle the user input.
 
 private:
   int parse_args (void);
