@@ -1,3 +1,13 @@
+Wed Jul  3 07:41:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Sequence_T.cpp: Fixed a compile error with SunCC 5.3. The
+	  method TAO_Valuetype_Manager::operator= passed erroneously the
+	  reference to tao_remove_ref ()and tao_add_ref (). The two
+	  methods actually expect a pointer.
+
+	* tao/Notify_Handler.h: Fixed a warming about an extra ; with the
+	  same compiler  
+
 Wed Jul  3 07:27:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ValueFactory_Map.cpp: Fixed a compile error with SunCC 5.3.

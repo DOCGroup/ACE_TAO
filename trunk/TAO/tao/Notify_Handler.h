@@ -66,7 +66,7 @@ protected:
 private:
 
   /// Preventing default ctor's.
-  ACE_UNIMPLEMENTED_FUNC (TAO_Notify_Handler (void));
+  ACE_UNIMPLEMENTED_FUNC (TAO_Notify_Handler (void))
 
 private:
   /// Our copy of the connection handler, reference count incremented
