@@ -324,6 +324,7 @@ public:
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor (void);
   virtual TAO_AV_Connector *make_connector (void);
+  int ref_count;
 };
 
 
