@@ -112,6 +112,7 @@ sub Build_Config
     my $Project_Name = "";
     my $Status = -1;
     my $Cntr = 0;
+    my $Command_Line = "";
 
     @Collection = split /:\s*/, $Collection;
     for ($Cntr = 0; $Cntr < scalar (@Collection); $Cntr++)
@@ -122,16 +123,17 @@ sub Build_Config
         $Bname =~ s/.*\/([^\/]*)/$1/;
         ($Project_File, $Project_Name) = split /,\s*/, $Bname;
         chdir ("$ENV{ACE_ROOT}/$Project_Dir");
+        $Command_Line =  "msdev.com $Project_File /MAKE \"$Project_Name - $Config\" /USEENV $Build_Cmd /Y3";
         if ( $Debug == 0 )
         {
             $Status =
-                system "msdev.com $Project_File /MAKE \"$Project_Name - $Config\" /USEENV /BUILD /Y3";
+                system "$Command_Line";
         }
         else
         {
             $Status = 0;
             print "chdir (\"$ENV{ACE_ROOT}/$Project_Dir\");\n";
-            print "$Status = msdev.com $Project_File /MAKE \"$Project_Name - $Config\"\n";
+            print "$Status = $Command_Line\n";
         }
 
         if ($Ignore_error == 0)
@@ -159,6 +161,7 @@ $Debug = 0;
 $Ignore_error = 0;              # By default, bail out if an error occurs.
 $Build_DLL = 1;
 $Build_LIB = 1;
+$Build_Cmd = "/BUILD";
 @Lists = @Win32_Lists;
 %DLL_Collections = %Win32_DLL_Collections;
 %Lib_Collections = %Win32_Lib_Collections;
@@ -194,9 +197,14 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
         print "Build LIB only" if ( $Verbose );
         $Build_DLL = 0;
     }
-    elsif ($ARGV[0] eq '-v' )   # Verbose mode
+    elsif ( $ARGV[0] eq '-v' )   # Verbose mode
     {
         $Verbose = 1;
+    }
+    elsif ( $ARGV[0] eq '-r' )  # Rebuild all
+    {
+        print "Rebuild all\n" if ( $Verbose );
+        $Build_Cmd = "/REBUILD";
     }
     else
     {
