@@ -281,7 +281,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       // For now, the original code is minimally changed.
 
       IIOP_Object *iiopobj =
-	ACE_dynamic_cast (IIOP_Object*, obj->_stubobj ());
+        ACE_dynamic_cast (IIOP_Object*, obj->_stubobj ());
 
       IIOP::Profile *profile = &iiopobj->profile;
 
@@ -444,14 +444,15 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
                           break;
 
                         case CORBA::tk_objref:
-			  {
-			    TAO_Object_Field* field = 
-			      ACE_static_cast(TAO_Object_Field*, data);
-			    CORBA_Object_ptr ptr = 
-			      field->_upcast ();
-			    retval = stream->encode (param, &ptr, 0, env);
-			  }
-			  break;
+                          {
+                            TAO_Object_Field* field =
+                              ACE_reinterpret_cast (TAO_Object_Field *,
+                                ACE_const_cast (void *, data));
+                            CORBA_Object_ptr ptr =
+                              field->_upcast ();
+                            retval = stream->encode (param, &ptr, 0, env);
+                          }
+                          break;
 
                         default:
                           break;
@@ -541,7 +542,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                           if (env.exception () == 0)
                             {
                               // do the matching
-			      CORBA::TypeCode_var type = member_label->type ();
+                              CORBA::TypeCode_var type = member_label->type ();
                               switch (type->kind (env))
                                 {
                                 case CORBA::tk_short:
@@ -715,13 +716,13 @@ TAO_Marshal_String::encode (CORBA::TypeCode_ptr tc,
     {
       CORBA::ULong length = ACE_OS::strlen (str);
       if (bounds == 0 || bounds >= length)
-	if (stream->write_string (length, str))
-	  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+        if (stream->write_string (length, str))
+          return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   else
     {
       if (stream->write_string (0, 0))
-	return CORBA::TypeCode::TRAVERSE_CONTINUE;
+        return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
@@ -832,21 +833,21 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                                 stream->write_octet_array
                                 ((CORBA::Octet*)value, bounds);
 #else
-			      {
-				TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-				  ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*,seq);
-				if (oseq->mb_ == 0)
-				  {
-				    continue_encoding = continue_encoding &&
-				      stream->write_octet_array
-				      ((CORBA::Octet*)value, bounds);
-				  }
-				else
-				  {
-				    continue_encoding = continue_encoding &&
-				      stream->write_octet_array_mb (oseq->mb ());
-				  }
-			      }
+                              {
+                                TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
+                                  ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*,seq);
+                                if (oseq->mb_ == 0)
+                                  {
+                                    continue_encoding = continue_encoding &&
+                                      stream->write_octet_array
+                                      ((CORBA::Octet*)value, bounds);
+                                  }
+                                else
+                                  {
+                                    continue_encoding = continue_encoding &&
+                                      stream->write_octet_array_mb (oseq->mb ());
+                                  }
+                              }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
                               if (continue_encoding == CORBA::B_TRUE)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -894,23 +895,23 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
-			      
+
                             case CORBA::tk_objref:
-			      {
-				size = sizeof (CORBA_Object_ptr);
-				while (bounds-- &&
-				       retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-				  {
-				    CORBA_Object_ptr ptr = 
-				      seq->_upcast (value);
-				    retval = stream->encode (tc2, &ptr, 0,  env);
-				    if (env.exception () != 0) break;
-				    value += size;
-				  }
-				if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-				  return retval;
-			      }
-			      break;
+                              {
+                                size = sizeof (CORBA_Object_ptr);
+                                while (bounds-- &&
+                                       retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                                  {
+                                    CORBA_Object_ptr ptr =
+                                      seq->_upcast (value);
+                                    retval = stream->encode (tc2, &ptr, 0,  env);
+                                    if (env.exception () != 0) break;
+                                    value += size;
+                                  }
+                                if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                                  return retval;
+                              }
+                              break;
 
                             default:
                               break;
@@ -1311,13 +1312,13 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
       // if it is an unbounded string or if the length is less than the
       // bounds for an unbounded string
       if (bounds == 0 || len <= bounds)
-	if (stream->write_wstring (len, str))
-	  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+        if (stream->write_wstring (len, str))
+          return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   else
     {
       if (stream->write_wstring (0, 0))
-	return CORBA::TypeCode::TRAVERSE_CONTINUE;
+        return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
