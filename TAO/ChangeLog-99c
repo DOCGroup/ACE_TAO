@@ -1,3 +1,20 @@
+Mon Nov 22 14:31:22 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+
+	  Added support for the following configure script options:
+
+                --enable-intf-repo      enable interface repository
+                --enable-messaging      enable CORBA messaging support
+                --enable-minimum-corba  enable minimum CORBA support
+                --enable-rt-corba       enable Real-Time CORBA support
+
+	* tao/Makefile.am:
+
+	  Added orb.idl and Policy.pidl to the of headers to be installed.
+	  Policy.pidl is included in orb.idl, which is why it must be
+	  installed too.
+
 Sun Nov 28 15:16:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/AMI/index.html:
