@@ -225,12 +225,13 @@ TAO_Naming_Client::get_context (void) const
 }
 
 int 
-TAO_Naming_Client::init (CORBA::ORB_ptr orb)
+TAO_Naming_Client::init (CORBA::ORB_ptr orb,
+                         ACE_Time_Value *timeout)
 {
   TAO_TRY
     {
       CORBA::Object_var naming_obj =
-	orb->resolve_initial_references ("NameService");
+	orb->resolve_initial_references ("NameService", timeout);
 
       if (CORBA::is_nil (naming_obj.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
