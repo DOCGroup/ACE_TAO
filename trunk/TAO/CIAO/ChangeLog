@@ -1,3 +1,8 @@
+Thu Sep 30 09:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/DnC_Dump_T.h:
+          Fixed fuzz error
+
 Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* performance-tests/Protocols:
@@ -8,60 +13,60 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  - run_test.pl was changed so that a simple version of the test
 	  can be executed.
 
-	* performance-tests/Protocols/Sender/Sender.mpc: 
-	* performance-tests/Protocols/Receiver/Receiver.mpc: 
+	* performance-tests/Protocols/Sender/Sender.mpc:
+	* performance-tests/Protocols/Receiver/Receiver.mpc:
 
 	  Removed "dummy" label so that it is included in nightly builds.
 
-	* performance-tests/Protocols/descriptors/CIAO_Installation_Data.ini: 
-	* performance-tests/Protocols/Sender/Sender.mpc: 
-	* performance-tests/Protocols/descriptors/Receiver.csd: 
-	* performance-tests/Protocols/descriptors/Receiver.ssd: 
-	* performance-tests/Protocols/descriptors/Sender.csd: 
-	* performance-tests/Protocols/descriptors/Sender.ssd: 
+	* performance-tests/Protocols/descriptors/CIAO_Installation_Data.ini:
+	* performance-tests/Protocols/Sender/Sender.mpc:
+	* performance-tests/Protocols/descriptors/Receiver.csd:
+	* performance-tests/Protocols/descriptors/Receiver.ssd:
+	* performance-tests/Protocols/descriptors/Sender.csd:
+	* performance-tests/Protocols/descriptors/Sender.ssd:
 
 	  Sender_* was changed to Protocols_Sender_* and Receiver_* was
 	  changed to Protocols_Receiver_*.
 
 	* performance-tests/Protocols/Sender/Sender_exec.cpp:
-	* performance-tests/Protocols/Sender/Sender.mpc: 
+	* performance-tests/Protocols/Sender/Sender.mpc:
 
 	  Custom_Network_Priority_Mapping.cpp was included directly.  If
 	  listed as a source file that is not in the current directory,
 	  mpc mucks the object file location.
 
-	* performance-tests/Protocols/descriptors/Receiver.csd: 
-	* performance-tests/Protocols/descriptors/Receiver.ssd: 
-	* performance-tests/Protocols/descriptors/Sender.csd: 
-	* performance-tests/Protocols/descriptors/Sender.ssd: 
+	* performance-tests/Protocols/descriptors/Receiver.csd:
+	* performance-tests/Protocols/descriptors/Receiver.ssd:
+	* performance-tests/Protocols/descriptors/Sender.csd:
+	* performance-tests/Protocols/descriptors/Sender.ssd:
 
 	  Hello was changed to Protocols.
 
-	* tests/RTCCM/DiffServ/descriptors/CIAO_Installation_Data.ini: 
-	* tests/RTCCM/DiffServ/Sender/Sender.mpc: 
-	* tests/RTCCM/DiffServ/descriptors/Receiver.csd: 
-	* tests/RTCCM/DiffServ/descriptors/Receiver.ssd: 
-	* tests/RTCCM/DiffServ/descriptors/Sender.csd: 
-	* tests/RTCCM/DiffServ/descriptors/Sender.ssd: 
+	* tests/RTCCM/DiffServ/descriptors/CIAO_Installation_Data.ini:
+	* tests/RTCCM/DiffServ/Sender/Sender.mpc:
+	* tests/RTCCM/DiffServ/descriptors/Receiver.csd:
+	* tests/RTCCM/DiffServ/descriptors/Receiver.ssd:
+	* tests/RTCCM/DiffServ/descriptors/Sender.csd:
+	* tests/RTCCM/DiffServ/descriptors/Sender.ssd:
 
 	  Sender_* was changed to DiffServ_Sender_* and Receiver_* was
 	  changed to DiffServ_Receiver_*.
 
 	* tests/RTCCM/DiffServ/Sender/Sender_exec.cpp:
-	* tests/RTCCM/DiffServ/Sender/Sender.mpc: 
+	* tests/RTCCM/DiffServ/Sender/Sender.mpc:
 
 	  Custom_Network_Priority_Mapping.cpp was included directly.  If
 	  listed as a source file that is not in the current directory,
 	  mpc mucks the object file location.
 
-	* tests/RTCCM/DiffServ/descriptors/Receiver.csd: 
-	* tests/RTCCM/DiffServ/descriptors/Receiver.ssd: 
-	* tests/RTCCM/DiffServ/descriptors/Sender.csd: 
-	* tests/RTCCM/DiffServ/descriptors/Sender.ssd: 
+	* tests/RTCCM/DiffServ/descriptors/Receiver.csd:
+	* tests/RTCCM/DiffServ/descriptors/Receiver.ssd:
+	* tests/RTCCM/DiffServ/descriptors/Sender.csd:
+	* tests/RTCCM/DiffServ/descriptors/Sender.ssd:
 
 	  Hello was changed to DiffServ.
 
-	* tests/RTCCM/DiffServ/Controller/Controller.mpc: 
+	* tests/RTCCM/DiffServ/Controller/Controller.mpc:
 
 	  "requires" directive was incorrect.  Correct directive is
 	  "after".
@@ -78,23 +83,23 @@ Wed Sep 29 14:39:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  The dump function was too complicated not compiling on many
 	  platforms cleanly. This effort is to simplify the dump functions
-	  so that we can compile on many platforms. 
-	
+	  so that we can compile on many platforms.
+
 	* DAnCE/Config_Handlers/DnC_Dump.cpp:
 	* DAnCE/Config_Handlers/DnC_Dump.h:
-	  
-	  Moved template functions out of the class. 
-	
+
+	  Moved template functions out of the class.
+
 	* DAnCE/Config_Handlers/DnC_Dump_T.cpp:
 	* DAnCE/Config_Handlers/DnC_Dump_T.h:
 
-	  New files for the template functions. 
-	
+	  New files for the template functions.
+
 	* DAnCE/Config_Handlers/Dump_Obj.cpp:
 	* DAnCE/Config_Handlers/Dump_Obj.h:
 
 	  Utility functions have been moved here.
-	
+
  	* DAnCE/Config_Handlers/Config_Handlers.mpc:
 	  New files added to the build.
 
