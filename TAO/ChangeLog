@@ -1,3 +1,15 @@
+Mon Aug 25 18:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/configurations.html:
+        * orbsvcs/orbsvcs/Makefile:
+          Changed TAO_ORBSVCS options. Removed Event, when specifying CosEvent
+          than also RTEvent would be build. CosEvent and RTEvent already
+          existed, so use them. Removed NativeCosEvent, is the same as
+          CosEvent, so use CosEvent instead. Changed EventLog to CosEventLog,
+          when EventLog was specified also the RTEventLog was build.
+          Thanks to Charlie Frasch <cfrasch@spawar.navy.mil> for reporting
+          this. This fixes bugzilla [1575].
+
 Mon Aug 25 11:18:39 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAOACE.mwc:
