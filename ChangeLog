@@ -6,36 +6,36 @@ Tue Mar 25 10:44:23 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 Mon Mar 24 22:05:56 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/Default_Constants.h: Added a const value for the connector's
-	  map size. 
+	  map size.
 	* ace/Connector.cpp: Used the constant value to configure the
 	  internal map. Too large a map doesnt help with run-time
-	  footprint. 
+	  footprint.
 
 Mon Mar 24 18:06:49 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.pl: Modified the script to do the following
 
-	  - Added an option to run only TAO tests in $TAO_ROOT/tests. 
+	  - Added an option to run only TAO tests in $TAO_ROOT/tests.
 	  - Instead of reading just one file for all the tests and
 	    examples in our daily builds, we will now use 3 files. One of
 	    the files is for ACE tests, one for tests in TAO and the last
-	    one is for all the other tests and examples in TAO. 
+	    one is for all the other tests and examples in TAO.
 
 	  This provides various flexibilities for a poor developer like
 	  yours truly, to just build and run all the tests in TAO/tests
 	  after making changes to the ORB Core. It helps automating some
 	  development work. We could also take this to our daily
-	  builds. We will see more of this over a period of time. 
+	  builds. We will see more of this over a period of time.
 
 	  The changes should be backward compatible and shouldnt break any
-	  of the existing builds. 
-	  
+	  of the existing builds.
+
 	* bin/ace_tests.lst:
 	* bin/tao_orb_tests.lst:
 	* bin/tao_other_tests.lst: New configuration files for ACE+TAO
 	  tests. We will use only this to add new tests to ACE+TAO.
 
-	* bin/auto_run_tests.lst: Removed this file from the repo. 
+	* bin/auto_run_tests.lst: Removed this file from the repo.
 
 Mon Mar 24 10:23:08 2003  Ossama Othman  <ossama@uci.edu>
 
