@@ -3,7 +3,7 @@ Mon Apr 12 13:55:46 2004  Chad Elliott  <elliott_c@ociweb.com>
         * apps/JAWS/clients/Caching/caching.mpc:
         * apps/JAWS/server/server.mpc:
 
-          Made these project require ace_filecache.
+          Made these projects require ace_filecache.
 
         * bin/MakeProjectCreator/config/ftclientorb.mpb:
 
