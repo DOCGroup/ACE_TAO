@@ -22,6 +22,12 @@ Type "make" to make the application. The server executable is called
 You should have the TAO IDL compiler and the TAO library installed
 before using this application.
 
+The -GA options has been added the IDL compiler command line for this
+test. This option moves the generation of implementations for type
+codes and Any insertion/extraction operators to a separate file with
+the extension *A.cpp. Adding this option tests that it is handled
+correctly for all the various IDL types used in this test.
+
 To run the server, type
 
    server [arguments to ORB_init] [-d] [-o <ior_output_file>]

@@ -18,6 +18,12 @@ anything useful, i.e. chances are that this test will always pass.
 - External users are often asked to send us a 'simple test' for their
   use case, we can now point them to this test to explain what do we
   mean by "simple".
+- The -GA option has been added to the IDL compiler command line.
+  This option generates type code and Any insertion/extraction
+  operator implementations in a separate file with the extension *A.cpp.
+  This file is not included in the compilation however, to make sure
+  there is no dependency on it if the client and server do not use
+  type codes or Anys.
 
 	Please refrain from "improving", extending or expanding this
 test, if you need to change 
