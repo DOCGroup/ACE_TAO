@@ -150,6 +150,9 @@
 
 /* end threading defines */
 
+#define ACE_HAS_PRIOCNTL
+#define ACE_NEEDS_LWP_PRIO_SET
+
 // Platform supports TLI timod STREAMS module.
 #define ACE_HAS_TIMOD_H
 

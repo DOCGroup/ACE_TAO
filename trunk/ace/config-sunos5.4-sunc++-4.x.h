@@ -19,10 +19,10 @@
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 
-#define ACE_HAS_XPG4_MULTIBYTE_CHAR 
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Sun has the wrong prototype for sendmsg.
 #define ACE_HAS_BROKEN_SENDMSG
@@ -61,7 +61,7 @@
 #define ACE_HAS_IP_MULTICAST
 
 // Compiler/platform supports alloca()
-#define ACE_HAS_ALLOCA 
+#define ACE_HAS_ALLOCA
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
@@ -131,7 +131,7 @@
 /* Turn off the following defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
 
 // Platform supports Solaris threads.
@@ -147,6 +147,9 @@
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
 /* end threading defines */
+
+#define ACE_HAS_PRIOCNTL
+#define ACE_NEEDS_LWP_PRIO_SET
 
 // Reactor detects deadlock
 // #define ACE_REACTOR_HAS_DEADLOCK_DETECTION
