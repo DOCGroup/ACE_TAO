@@ -163,7 +163,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
                                    int protocol_family,
                                    int protocol)
 {
-  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe");
+  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe");
 
 #if defined (ACE_WIN32)
   // Windows NT's winsock has trouble with multicast subscribes in the presence
