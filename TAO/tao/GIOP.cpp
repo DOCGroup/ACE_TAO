@@ -1022,16 +1022,14 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         // value; if that exception is not allowed by this operation,
         // fail (next).
 
-        u_int i;
-        CORBA::TypeCode_ptr *tcp;
-
-        for (i = 0, tcp = xlist->buffer;
-             i < xlist->length;
-             i++, tcp++)
+        for (CORBA::ULong i = 0;
+             i < xlist->length ();
+             i++)
           {
-            const char *xid;
+	    CORBA::TypeCode_ptr tcp = (*xlist) [i];
+	    
+            const char *xid = tcp->id (env);
 
-            xid = (*tcp)->id (env);
             if (env.exception () != 0)
               {
                 dexc (env, "invoke (), get exception ID");
@@ -1044,7 +1042,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                 size_t size;
                 CORBA::Exception *exception;
 
-                size = (*tcp)->size (env);
+                size = tcp->size (env);
                 if (env.exception () != 0)
                   {
                     dexc (env, "invoke (), get exception size");
@@ -1057,9 +1055,9 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                 // to clean them all up together, in case of errors
                 // unmarshaling.
 
-                exception = new (new char [size]) CORBA::Exception (*tcp);
+                exception = new (new char [size]) CORBA::Exception (tcp);
 
-                if (this->inp_stream_.decode (*tcp, exception, 0, env)
+                if (this->inp_stream_.decode (tcp, exception, 0, env)
                     != CORBA::TypeCode::TRAVERSE_CONTINUE)
                   {
                     delete exception;
@@ -1244,11 +1242,11 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>;
 template class TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>;
-template class CORBA_SEQUENCE<CORBA::Octet>;
-template class CORBA_SEQUENCE<CORBA::TypeCode*>;
+template class TAO_Unbounded_Sequence<CORBA::Octet>;
+template class TAO_Unbounded_Object_Sequence<CORBA::TypeCode>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
 #pragma instantiate TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>
-#pragma instantiate CORBA_SEQUENCE<CORBA::Octet>
-#pragma instantiate CORBA_SEQUENCE<CORBA::TypeCode*>
+#pragma instantiate TAO_Unbounded_Sequence<CORBA::Octet>
+#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::TypeCode>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -207,33 +207,8 @@ TAO_Marshal_Principal::deep_copy (CORBA::TypeCode_ptr  tc,
       if (dst)
         {
           // Principals are just opaque IDs ... copy them
-          assert (src->id.length <= UINT_MAX);
-          dst->id.length = dst->id.maximum = src->id.length;
-
-          if (dst->id.length > 0)
-            {
-              ACE_NEW_RETURN (dst->id.buffer,
-                              CORBA::Octet [(u_int) dst->id.length],
-                              CORBA::TypeCode::TRAVERSE_STOP);
-              if (dst->id.buffer)
-                {
-                  ACE_OS::memcpy (dst->id.buffer,
-				  src->id.buffer,
-				  (size_t) dst->id.length);
-                  return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                }
-              else
-                {
-                  env.exception (new CORBA::NO_MEMORY  (CORBA::COMPLETED_MAYBE) );
-                  dmsg ("TAO_Marshal_Principal::deep_copy detected error");
-                  return CORBA::TypeCode::TRAVERSE_STOP;
-                }
-            }
-          else
-            {
-              dst->id.buffer = 0;
-              return CORBA::TypeCode::TRAVERSE_CONTINUE;
-            }
+          assert (src->id.length () <= UINT_MAX);
+	  dst->id = src->id;
         }
       else
         {
@@ -584,8 +559,8 @@ TAO_Marshal_Sequence::deep_copy (CORBA::TypeCode_ptr  tc,
   CORBA::ULong bounds;
   char *value1;
   char *value2;
-  CORBA::OctetSeq *src;
-  CORBA::OctetSeq *dst;
+  TAO_Base_Sequence *src;
+  TAO_Base_Sequence *dst;
 
   // Rely on binary format of sequences -- all are the same except for
   // the type pointed to by "buffer."
@@ -595,8 +570,7 @@ TAO_Marshal_Sequence::deep_copy (CORBA::TypeCode_ptr  tc,
       src = (CORBA::OctetSeq *) source;
       dst = (CORBA::OctetSeq *) dest;
 
-      assert (src->length <= UINT_MAX);
-      dst->length = dst->maximum = src->length;
+      assert (src->length_ <= UINT_MAX);
 
       // Get element typecode.
       tc2 = tc->content_type (env);
@@ -607,14 +581,15 @@ TAO_Marshal_Sequence::deep_copy (CORBA::TypeCode_ptr  tc,
           if (env.exception () == 0)
             {
               // Compute the length of the sequence.
-              bounds = src->length;
+              bounds = src->length_;
 
               // Allocate a buffer to hold the sequence.
-              dst->buffer = new CORBA::Octet [size *(size_t) src->maximum];
-              if (dst->buffer)
+	      dst->_allocate_buffer (bounds);
+
+              if (dst->buffer_)
                 {
-                  value1 = (char *) src->buffer;
-                  value2 = (char *) dst->buffer;
+                  value1 = (char *) src->buffer_;
+                  value2 = (char *) dst->buffer_;
 
                   switch (tc2->kind_)
                     {

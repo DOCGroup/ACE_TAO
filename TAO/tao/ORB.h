@@ -177,41 +177,7 @@ typedef u_int CORBA_Flags;
 
 // forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
-
-template <class T>
-class CORBA_SEQUENCE
-{
-  // = TITLE
-  //    Utility template class.
-public:
-  // @@ Is there any reason we don't use CORBA::Long here?
-#if ACE_SIZEOF_LONG == 4
-  u_long maximum;
-  u_long length;
-#else
-  // = Just assume "int" is four bytes long ...
-  u_int maximum;
-  u_int length;
-#endif /* ACE_SIZEOF_LONG */
-  T *buffer;
-  CORBA_Boolean release;
-  // Only here to make it compliant with IDL-generated layout.
-
-  CORBA_SEQUENCE (void)
-    : maximum (0),
-      length (0),
-      buffer (0),
-      release (0)
-  {
-  }
-  // Constructor.
-
-  ~CORBA_SEQUENCE (void)
-  {
-    // @@ destructor should free buffer, elements!!
-  }
-  // Destructor.
-};
+template <class T> class TAO_Unbounded_Object_Sequence;
 
 class TAO_Export CORBA
 {
@@ -346,7 +312,7 @@ public:
   typedef Char &Char_out;
   // Out type for char.
 
-  typedef CORBA_SEQUENCE<Octet> OctetSeq;
+  typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
 
   typedef Char *String;
 
@@ -522,7 +488,7 @@ public:
 
   typedef CORBA_UserException  UserException;
 
-  typedef CORBA_SEQUENCE<TypeCode_ptr> ExceptionList;
+  typedef TAO_Unbounded_Object_Sequence<TypeCode> ExceptionList;
   typedef ExceptionList *ExceptionList_ptr;
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
