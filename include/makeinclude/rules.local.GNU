@@ -150,11 +150,60 @@ show_uninit:
 #       Installation targets
 #----------------------------------------------------------------------------
 
+# Set the cleanup targets
+ifeq ($(CLEAN_BIN),)
+  ifneq ($(BIN),)
+    CLEAN_BIN = $(BIN)
+  else
+    ifneq ($(BIN2),)
+      CLEAN_BIN = $(BIN2)
+    else
+      CLEAN_BIN = $(BIN_UNCHECKED)
+    endif
+  endif
+endif
+
+ifeq ($(CLEAN_LIB),)
+  ifneq ($(LIB),)
+    CLEAN_LIB = $(LIB)
+  else
+    ifneq ($(LIB2),)
+      CLEAN_LIB = $(LIB2)
+    else
+      CLEAN_LIB = $(LIB_UNCHECKED)
+    endif
+  endif
+endif
+
+ifeq ($(CLEAN_SHLIB),)
+  ifneq ($(SHLIB),)
+    CLEAN_SHLIB = $(SHLIB)
+  else
+    ifneq ($(SHLIB2),)
+      CLEAN_SHLIB = $(SHLIB2)
+    else
+      CLEAN_SHLIB = $(SHLIB_UNCHECKED)
+    endif
+  endif
+endif
+
+ifeq ($(CLEAN_SHLIBA),)
+  ifneq ($(SHLIBA),)
+    CLEAN_SHLIBA = $(SHLIBA)
+  else
+    ifneq ($(SHLIBA2),)
+      CLEAN_SHLIBA = $(SHLIBA2)
+    else
+      CLEAN_SHLIBA = $(SHLIBA2)
+    endif
+  endif
+endif
+
 install.local: $(INSTALL)
 
 deinstall.local:
-	$(RM) $(INSTALL) $(LIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT)) \
-$(SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
+	$(RM) $(INSTALL) $(CLEAN_LIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT)) \
+$(CLEAN_SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
 
 
 #### To disable installs, just add "INSTALL=" to your "make" invocation.
@@ -227,55 +276,6 @@ ifneq ($(IDL_FILES),)
 	-$(RM) $(addsuffix $(IDL_CLIENT_HDR_EXT), $(IDL_FILES)) $(addsuffix $(IDL_CLIENT_INL_EXT), $(IDL_FILES)) $(addsuffix $(IDL_CLIENT_SRC_EXT),$(IDL_FILES))
 	-$(RM) $(addsuffix $(IDL_SERVER_HDR_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_INL_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_SRC_EXT),$(IDL_FILES))
 	-$(RM) $(addsuffix $(IDL_SERVER_THDR_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_TINL_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_TSRC_EXT),$(IDL_FILES))
-endif
-
-# Set the cleanup targets
-ifeq ($(CLEAN_BIN),)
-  ifneq ($(BIN),)
-    CLEAN_BIN = $(BIN)
-  else
-    ifneq ($(BIN2),)
-      CLEAN_BIN = $(BIN2)
-    else
-      CLEAN_BIN = $(BIN_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEAN_LIB),)
-  ifneq ($(LIB),)
-    CLEAN_LIB = $(LIB)
-  else
-    ifneq ($(LIB2),)
-      CLEAN_LIB = $(LIB2)
-    else
-      CLEAN_LIB = $(LIB_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEAN_SHLIB),)
-  ifneq ($(SHLIB),)
-    CLEAN_SHLIB = $(SHLIB)
-  else
-    ifneq ($(SHLIB2),)
-      CLEAN_SHLIB = $(SHLIB2)
-    else
-      CLEAN_SHLIB = $(SHLIB_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEAN_SHLIBA),)
-  ifneq ($(SHLIBA),)
-    CLEAN_SHLIBA = $(SHLIBA)
-  else
-    ifneq ($(SHLIBA2),)
-      CLEAN_SHLIBA = $(SHLIBA2)
-    else
-      CLEAN_SHLIBA = $(SHLIBA2)
-    endif
-  endif
 endif
 
 realclean.local: clean.local deinstall.local clean_idl_stubs.local
