@@ -408,14 +408,21 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
   }
   // Release the guard.
 
+#else
+  int instance_count = --instance_count_;
+#endif /* ACE_MT_SAFE */
+
   // If this is the last instance then cleanup.  Only the last
   // thread to destroy its ACE_Log_Msg instance should execute
   // this block.
   if (instance_count == 0)
     {
-#     if defined (ACE_HAS_TSS_EMULATION)
-        ACE_Log_Msg_Manager::close ();
-#     endif /* ACE_HAS_TSS_EMULATION */
+#     if defined (ACE_HAS_TSS_EMULATION) || !defined (ACE_MT_SAFE) || ACE_MT_SAFE == 0
+        // Destroy the static message queue instance.
+        ACE_Log_Msg_message_queue->close ();
+        delete ACE_Log_Msg_message_queue;
+        ACE_Log_Msg_message_queue = 0;
+#     endif /* ACE_HAS_TSS_EMULATION || ! ACE_MT_SAFE */
 
       if (ACE_Log_Msg::program_name_)
         {
@@ -429,7 +436,6 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
           ACE_Log_Msg::local_host_ = 0;
         }
     }
-#endif /* ACE_MT_SAFE */
 }
 
 // Open the sender-side of the Message ACE_Queue.
