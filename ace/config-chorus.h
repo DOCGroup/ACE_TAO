@@ -26,8 +26,6 @@
 #elif defined (ghs)
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
-# define ACE_HAS_WCHAR_TYPEDEFS_CHAR
-# define ACE_LACKS_UNISTD_H
 #else  /* ! __GNUG__ && ! ghs */
 # error unsupported compiler on VxWorks
 #endif /* ! __GNUG__ && ! ghs */
