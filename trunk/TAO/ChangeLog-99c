@@ -7,7 +7,7 @@ Mon Nov  8 23:21:35 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu
 	* orbsvcs/orbsvcs/Log/BasicLog_i:
 	* orbsvcs/orbsvcs/Log/Iterator_i.h: Added a
 	  #pragma warning(disable:4250) so that MSVC++ won't complain
- 	  about "dominance violations".  Thanks to Dominish, Derek
+ 	  about "dominance violations".  Thanks to Derek Dominish
 	  <Derek.Dominish@Australia.Boeing.com> for reporting this and
 	  providing the solution.
 
