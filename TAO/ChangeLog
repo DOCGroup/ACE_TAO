@@ -1,3 +1,19 @@
+Thu Mar 13 10:45:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+
+          Removed 'greater than' comparisons between a native policy value
+          and RTCORBA::maxPriority. Since these quantities are both typed
+          as CORBA::Short and RTCORBA::maxPriority is given the value
+          32767 in RTCORBA.pidl, the comparison will always be false. This
+          error started appearing because code generation was changed to
+          assign constant values in the stub header file instead of in
+          the stub source file as formerly, so now the compiler knows the
+          value of the constant from just an include of the header file.
+
 Thu Mar 13 10:14:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAO.dsp:
