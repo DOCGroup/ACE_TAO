@@ -58,7 +58,8 @@ ange */
 
 // this is a hack, but since this only occured in FreeBSD 2.1.x,
 // I guess it is ok.
-#define   timespec   timeval
+#define ACE_HAS_BROKEN_TIMESPEC_MEMBERS
+
 #endif /* defined FreeBSD_2_1 */
 
 // Platform supports POSIX timers via timestruct_t.
