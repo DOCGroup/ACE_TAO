@@ -41,7 +41,7 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
      char_translator_ (0),
      wchar_translator_ (0),
      wchar_allowed_(1)
-  
+
 {
   ACE_CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
@@ -175,7 +175,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
       return (this->good_bit_ = 0);
     }
   if (this->wchar_translator_ != 0)
-    return (this->good_bit_ = this->wchar_translator_->write_wchar (*this, x));    
+    return (this->good_bit_ = this->wchar_translator_->write_wchar (*this, x));
   if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
           && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
     {
@@ -193,7 +193,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
   if (sizeof (ACE_CDR::WChar) == 2)
     return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort *, &x));
   else
-    return this->write_4 (ACE_reinterpret_cast (const ACE_CDR::ULong *, &x)); 
+    return this->write_4 (ACE_reinterpret_cast (const ACE_CDR::ULong *, &x));
 }
 
 ACE_CDR::Boolean
@@ -648,10 +648,6 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     wchar_translator_ (rhs.wchar_translator_),
     wchar_allowed_ (rhs.wchar_allowed_)
 {
-  if (this->char_translator_)
-    this->char_translator_->add_ref();
-  if (this->wchar_translator_)
-    this->wchar_translator_->add_ref();
   // Align the base pointer assuming that the incoming stream is also
   // aligned the way we are aligned
   char *incoming_start = ACE_ptr_align_binary (rhs.start_.base (),
@@ -682,10 +678,6 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     wchar_translator_ (rhs.wchar_translator_),
     wchar_allowed_ (rhs.wchar_allowed_)
 {
-  if (this->char_translator_)
-    this->char_translator_->add_ref();
-  if (this->wchar_translator_)
-    this->wchar_translator_->add_ref();
   // Align the base pointer assuming that the incoming stream is also
   // aligned the way we are aligned
   char *incoming_start = ACE_ptr_align_binary (rhs.start_.base (),
@@ -721,10 +713,6 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
     wchar_translator_ (rhs.wchar_translator_),
     wchar_allowed_ (rhs.wchar_allowed_)
 {
-  if (this->char_translator_)
-    this->char_translator_->add_ref();
-  if (this->wchar_translator_)
-    this->wchar_translator_->add_ref();
   char *buf = ACE_ptr_align_binary (rhs.start_.base (),
                                     ACE_CDR::MAX_ALIGNMENT);
 
@@ -744,10 +732,6 @@ ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
     wchar_translator_ (x.rhs_.wchar_translator_),
     wchar_allowed_ (x.rhs_.wchar_allowed_)
 {
-  if (this->char_translator_)
-    this->char_translator_->add_ref();
-  if (this->wchar_translator_)
-    this->wchar_translator_->add_ref();
 
   this->start_.rd_ptr (x.rhs_.start_.rd_ptr ());
   this->start_.wr_ptr (x.rhs_.start_.wr_ptr ());
@@ -767,11 +751,6 @@ ACE_InputCDR::operator= (const ACE_InputCDR& rhs)
       this->do_byte_swap_ = rhs.do_byte_swap_;
       this->good_bit_ = 1;
       this->char_translator_ = rhs.char_translator_;
-      if (this->char_translator_)
-        this->char_translator_->add_ref();
-      this->wchar_translator_ = rhs.wchar_translator_;
-      if (this->wchar_translator_)
-        this->wchar_translator_->add_ref();
       this->wchar_allowed_ = rhs.wchar_allowed_;
       this->major_version_ = rhs.major_version_;
       this->minor_version_ = rhs.minor_version_;
@@ -802,11 +781,6 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
     wchar_translator_ (rhs.wchar_translator_),
     wchar_allowed_ (rhs.wchar_allowed_)
 {
-  if (this->char_translator_)
-    this->char_translator_->add_ref();
-  if (this->wchar_translator_)
-    this->wchar_translator_->add_ref();
-  
   ACE_CDR::mb_align (&this->start_);
   for (const ACE_Message_Block *i = rhs.begin ();
        i != rhs.end ();
