@@ -1,3 +1,10 @@
+Thu Oct  5 09:31:06 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+
+          Added the CORBANAME_Parser.* files.
+
 Thu Oct  5 10:17:40 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_interface.cpp:
