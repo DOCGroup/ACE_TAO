@@ -1,3 +1,34 @@
+Sat Jan  3 13:11:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	Added needed includes to compile the APG examples using the Borland
+	compiler.
+
+	* examples/APG/Config/ARGV_Example.cpp:
+	* examples/APG/Config/Get_Opt.cpp:
+	* examples/APG/Config/Get_Opt_Long.cpp:
+	  Added #include "ace/OS_NS_string.h" to get ACE_OS::strcmp and
+	  ACE_OS::strncmp.
+
+	* examples/APG/Naming/Naming_Context.h:
+	* examples/APG/Processes/Spawn.cpp:
+	* examples/APG/Shared_Memory/Malloc.cpp
+	  Added #include "ace/OS_NS_stdio.h" to get ACE_OS::sprintf.
+
+	* examples/APG/Signals/SigAction.cpp:
+	* examples/APG/Signals/SigGuard.cpp:
+	* examples/APG/Signals/SigHandler.cpp:
+	* examples/APG/Signals/SigHandlers.cpp:
+	* examples/APG/ThreadManagement/Coop_Cancel.cpp:
+	* examples/APG/ThreadManagement/Signals.cpp:
+	* examples/APG/ThreadManagement/Signals2.cpp:
+	* examples/APG/Threads/Activate.cpp:
+	  Added #include "ace/OS_NS_unistd.h" to get ACE_OS::sleep and
+	  ACE_OS::getpid.
+
+	* examples/APG/Sockets/Basic_Robust.cpp:
+	* examples/APG/Sockets/Server.cpp:
+	  Added #include "ace/OS_NS_errno.h" to get ACE_OS::lasterrror.
+
 Fri Jan  2 18:07:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Active_Objects/AO.cpp:
