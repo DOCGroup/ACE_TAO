@@ -17,6 +17,21 @@ TAO_Wait_Strategy::~TAO_Wait_Strategy (void)
 {
 }
 
+int
+TAO_Wait_Strategy::send_request (TAO_ORB_Core *orb_core,
+                                 TAO_OutputCDR &stream,
+                                 int /* two_way */)
+{
+  int success = success = (int) TAO_GIOP::send_request (this->transport_,
+                                                        stream,
+                                                        this->transport_->orb_core ());
+  
+  if (!success)
+    return -1;
+  else
+    return 0;  
+}
+
 // *********************************************************************
 
 // Constructor.
@@ -36,11 +51,16 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 int
 TAO_Wait_On_Reactor::wait (void)
 {
-  // @@ Alex: I assume the reactor was not changing inside of the
-  //    loop, so I took it out, the code is more readable that way
-  //    too.
+  // Reactor does not change inside the loop.
   ACE_Reactor* reactor =
     this->transport_->orb_core ()->reactor ();
+
+  // @@ Carlos: Can we rely on <reply_received> flag in the AMI case?
+  //    It depends on whether we are expecting replies or not, right? 
+  //    So, I think we can simply return from this loop, when some
+  //    event occurs, and the invocation guy can call us again, if it
+  //    wants to. (AMI will call, if it is expecting replies, SMI will
+  //    call if the reply is not arrived) (Alex).
 
   // Do the event loop, till there are no events and no errors.
 
@@ -103,26 +123,67 @@ TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
   this->cond_response_available_ = 0;
 }
 
+
+// @@ Why do we need <orb_core> and the <two_way> flag? <orb_core> is 
+//    with the <Transport> object and <two_way> flag wont make sense
+//    at this level since this is common for AMI also. (Alex).
+int
+TAO_Wait_On_Leader_Follower::send_request (TAO_ORB_Core *orb_core,
+                                           TAO_OutputCDR &stream,
+                                           int two_way)
+{
+  if (!two_way)
+    {
+      return TAO_Wait_Strategy::send_request (orb_core,
+                                              stream,
+                                              two_way);
+    }
+  else
+    {
+      // = Two way call.
+      
+      // @@ Should we do here that checking for the difference in the
+      //    Reactor used??? (Alex).
+
+      // Register the handler.
+      this->transport_->register_handler ();
+      // @@ Carlos: We do this only if the reactor is different right?
+      //    (Alex) 
+      
+      // Obtain the lock.
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                        orb_core->leader_follower_lock (), -1);
+      
+      // Set the state so that we know we're looking for a response.
+      this->expecting_response_ = 1;
+      
+      // remember in which thread the client connection handler was running
+      this->calling_thread_ = ACE_Thread::self ();
+      
+      // Send the request
+      return TAO_Wait_Strategy::send_request (orb_core,
+                                              stream,
+                                              two_way);
+    }
+}
+
 int
 TAO_Wait_On_Leader_Follower::wait (void)
 {
-  // @@ Do we need this code? (Alex).
+  // @@ Do we need this code (checking for the difference in the
+  //    Reactor)? (Alex). 
   // @@ Alex: yes, the same connection may be used in multiple
   //    threads, each with its own reactor.
+  // @@ Carlos: But, where is that code now? I  cant see it here now?
+  //    (Alex). 
 
   // Cache the ORB core, it won't change and is used multiple times
   // below:
-
   TAO_ORB_Core* orb_core = 
     this->transport_->orb_core ();
-
-  this->transport_->register_handler ();
-
-  // Obtain the lock.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    orb_core->leader_follower_lock (), -1);
-
+  
   // Set the state so that we know we're looking for a response.
+
   // @@ Alex: maybe this should be managed by the Demux strategy?
   // @@ Alex: this should be set *before* we enter this function,
   //    actually before we *send* the request, otherwise we can run
@@ -133,10 +194,15 @@ TAO_Wait_On_Leader_Follower::wait (void)
   // IMHO the send_request method in the transport should invoke a
   // method in the Wait_Strategy so we can set the flag on time (and
   // while holding the L-F lock).
-  this->expecting_response_ = 1;
 
-  // Remember in which thread the client connection handler was running
-  this->calling_thread_ = ACE_Thread::self ();
+  // @@ Carlos: I have done this: There is a <send_request> method for
+  //    this class now. (Alex).
+  
+  // Obtain the lock.
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                    orb_core->leader_follower_lock (), -1);
+  
+  // = Follower code.
 
   // Check if there is a leader, but the leader is not us
   if (orb_core->leader_available () && !orb_core->I_am_the_leader_thread ())
@@ -181,6 +247,8 @@ TAO_Wait_On_Leader_Follower::wait (void)
           return 0;
         }
     }
+
+  // = Leader Code.
 
   // The only way to reach this point is if we must become the leader,
   // because there is no leader or we have to update to a leader or we
@@ -231,7 +299,6 @@ TAO_Wait_On_Leader_Follower::wait (void)
   this->calling_thread_ = ACE_OS::NULL_thread;
 
   return 0;
-
 }
 
 // Handle the input.
@@ -297,86 +364,6 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   return 0;
 }
-
-// ****************************************************************
-// remove this code ASAP, but not before that ;-)
-#if 0
-{
-  /// Release the lock.
-  if (orb_core->leader_follower_lock ().release () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::wait: "
-                       "Failed to release the lock.\n"),
-                      -1);
-  
-  // The following variables are safe, because we are not
-  // registered with the reactor any more.
-  
-  // Ready to receive the input message.
-  // @@ Is it ok to read it blockingly. (Alex).
-  int result = this->transport_->handle_client_input (1);
-        
-  // Resume the handler.
-  if (this->transport_->resume_handler () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::wait: "
-                       "<resume_handler> failed.\n"),
-                      -1);
-  
-  // We should have read the whole message.
-  if (result != 1)
-    ACE_ERROR_RETURN ((LM_WARNING,
-                       "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
-                       "Input message was not read fully.\n"),
-                      -1);
-  return 0;
-}
-#endif
-#if 0
-// Grab leader follower lock.
-ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                          ace_mon,
-                          this->transport_->orb_core ()->leader_follower_lock (),
-                          -1));
-
-// Bind the reply handler.
-
-TAO_Leader_Follower_Reply_Handler rh (..);
-
-rrs->bind (this->request_id, &rh);
-
-// Check if we need to become the leader.
-if (!this->transport_->orb_core ()->leader_available ())
-{
-  // This might increase the refcount of the leader.
-  this->transport_->orb_core ()->set_leader_thread ();
-  
-  // Do the reactor event loop.
-  this->transport_->orb_core ()->reactor ()->owner (ACE_Thread::self ());
-      
-  result = 0;
-  
-  while (result != -1)
-    result = this->transport_->orb_core ()->reactor ()->handle_events ();
-  
-  if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):TAO_Wait_On_Leader_Follower::wait: "
-                       "Reactor::handle_events failed.\n"),
-                      -1);
-}
-else
-{
-  // Block on condition variable.
-  ACE_SYNCH_CONDITION* cond =
-    this->cond_response_available ();
-  if (this->transport_->orb_core ()->add_follower (cond) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%N:%l:(%P|%t) TAO_Wait_On_Leader_Follower::wait: "
-                "Failed to add a follower thread\n"));
-  cond->wait ();
-}
-#endif /* 0 */
 
 // ****************************************************************
 
