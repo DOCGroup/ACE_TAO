@@ -36,29 +36,27 @@ Sat Apr 27 11:16:03 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  without deactivating the queue.  Also refactored the close()
  	  method to use flush_i().
 
-Sat Apr 27 09:26:43 2002  Edan Ayal  <edanayal@yahoo.com>
-
-	Added support (currently under win32 only) for asynchronous
-        scattered read and asynchronous gathered write with socket streams
-        and with files. 
+Sat Apr 27 09:26:43 2002  Edan Ayal <edanayal@yahoo.com> 
+  
+        Added support (currently under win32 only) for asynchronous
+	scattered read and asynchronous gathered write with socket streams
+	and with files.
 
 	* ace/Asynch_IO.{h cpp}: Added methods 'readv' to
 	  ACE_Asynch_Read_Stream/File, and 'writev' to
-	  ACE_Asynch_Write_Stream/File, for win32 only. The methods just
-	  delegate to the implementation. 
+ 	  ACE_Asynch_Write_Stream/File, for win32 only. The methods just
+ 	  delegate to the implementation.
 
-	* ace/Asynch_IO_Impl.h: Added pure virtual methods 'readv' to
-	  ACE_Asynch_Read_Stream/File_Impl, and 'writev' to
-	  ACE_Asynch_Write_Stream/File_Impl, for 'readv' to
-	  ACE_Asynch_Read_Stream/File_Impl, and 'writev' to
-	  ACE_Asynch_Write_Stream/File_Impl, for win32 only. 
+	* ace/Asynch_IO_Impl.h: Added pure virtual methods
+	  'readv' to ACE_Asynch_Read_Stream/File_Impl, and 'writev' to
+ 	  ACE_Asynch_Write_Stream/File_Impl, for win32 only.
 
-	* ace/WIN32_Asynch_IO.{h cpp}: Implemented the 'readv' for
-	  ACE_WIN32_Asynch_Read_Stream/File and 'writev' for
-	  ACE_WIN32_Asynch_Write_Stream/File. Modified the 'complete'
-	  method and the ctor of ACE_WIN32_Asynch_Read_Stream/File_Result 
-	  and ACE_WIN32_Asynch_Write_Stream/File_Result.
-	
+	* ace/WIN32_Asynch_IO.{h cpp}: Implemented the 'readv'
+	  for ACE_WIN32_Asynch_Read_Stream/File and 'writev' for
+ 	  ACE_WIN32_Asynch_Write_Stream/File. Modified the 'complete'
+ 	  method and the ctor of ACE_WIN32_Asynch_Read_Stream/File_Result
+ 	  and ACE_WIN32_Asynch_Write_Stream/File_Result.
+
 Sat Apr 27 16:07:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Proactor/test_udp_proactor.cpp:
