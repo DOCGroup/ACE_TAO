@@ -98,7 +98,7 @@ Driver::init (int argc, char **argv)
                        "ORB::string_to_object() returned null object for IOR <%s>\n",
                        opt->param_test_ior ()),
                       -1);
-  
+
   this->objref_ = Param_Test::_narrow (temp.in(), env);
   if (env.exception () != 0)
     {
@@ -224,6 +224,19 @@ Driver::run (void)
         delete client;
       }
       break;
+    case Options::TEST_ANY:
+      {
+        Param_Test_Client<Test_Any> *client = new
+          Param_Test_Client<Test_Any> (this->orb_ptr_,
+                                       this->objref_.in(),
+                                       new Test_ObjRef);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
     default:
       break;
     }
@@ -240,6 +253,7 @@ template class Param_Test_Client<Test_Var_Struct>;
 template class Param_Test_Client<Test_Nested_Struct>;
 template class Param_Test_Client<Test_Struct_Sequence>;
 template class Param_Test_Client<Test_ObjRef>;
+template class Param_Test_Client<Test_Any>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
@@ -250,4 +264,5 @@ template class Param_Test_Client<Test_ObjRef>;
 #pragma instantiate Param_Test_Client<Test_Nested_Struct>
 #pragma instantiate Param_Test_Client<Test_Struct_Sequence>
 #pragma instantiate Param_Test_Client<Test_ObjRef>
+#pragma instantiate Param_Test_Client<Test_Any>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

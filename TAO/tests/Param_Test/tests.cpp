@@ -1167,11 +1167,11 @@ Test_Struct_Sequence::compare (const Param_Test::StructSeq &s1,
       const Param_Test::Fixed_Struct& vs2 = s2[i];
 
       if (vs1.l != vs2.l
-	  || vs1.c != vs2.c 
-	  || vs1.s != vs2.s 
-	  || vs1.o != vs2.o 
-	  || vs1.f != vs2.f 
-	  || vs1.b != vs2.b 
+	  || vs1.c != vs2.c
+	  || vs1.s != vs2.s
+	  || vs1.o != vs2.o
+	  || vs1.f != vs2.f
+	  || vs1.b != vs2.b
 	  || vs1.d != vs2.d )
 	return 0;
     }
@@ -1448,4 +1448,74 @@ Test_ObjRef::print_values (void)
               inout,
               out,
               ret));
+}
+
+// ************************************************************************
+//               Test_Any
+// ************************************************************************
+
+Test_Any::Test_Any (void)
+  : opname_ (CORBA::string_dup ("test_any"))
+{
+}
+
+Test_Any::~Test_Any (void)
+{
+  CORBA::string_free (this->opname_);
+  this->opname_ = 0;
+}
+
+const char *
+Test_Any::opname (void) const
+{
+  return this->opname_;
+}
+
+int
+Test_Any::init_parameters (Param_Test_ptr objref,
+                           CORBA::Environment &env)
+{
+  return 0;
+}
+
+int
+Test_Any::reset_parameters (void)
+{
+  return 0;
+}
+
+int
+Test_Any::run_sii_test (Param_Test_ptr objref,
+                          CORBA::Environment &env)
+{
+  this->ret_ = objref->test_Any (this->in_.in (),
+                                 this->inout_.inout (),
+                                 out,
+                                 env);
+  return (env.exception () ? -1:0);
+}
+
+int
+Test_Any::add_args (CORBA::NVList_ptr &param_list,
+                      CORBA::NVList_ptr &retval,
+                      CORBA::Environment &env)
+{
+  return 0;
+}
+
+CORBA::Boolean
+Test_Any::check_validity (void)
+{
+  return 0;
+}
+
+CORBA::Boolean
+Test_Any::check_validity (CORBA::Request_ptr req)
+{
+  return this->check_validity ();
+}
+
+void
+Test_Any::print_values (void)
+{
 }

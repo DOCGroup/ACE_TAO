@@ -249,13 +249,13 @@ TAO_IIOP_Interpreter::skip_long (TAO_InputCDR *stream)
 
 size_t
 TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
-				       TAO_InputCDR* stream,	
+				       TAO_InputCDR* stream,
 				       CORBA::TCKind kind,
 				       size_t &alignment,
 				       CORBA::Environment &env)
 {
   CORBA::ULong temp;
-  // Just a temporary to retrieve CORBA::TCKind variables as ULong's 
+  // Just a temporary to retrieve CORBA::TCKind variables as ULong's
 
   // Check for illegal TCKind enum values ... out of range, or which
   // represent data values that can't be nested.  (Some can't even
@@ -320,6 +320,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
       // where parameters and the size allocated to them don't jive.
 
       stream->skip_bytes (temp);
+
       if (stream->rd_ptr () != nested.rd_ptr ())
         {
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -431,7 +432,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
-  
+
   // Notice how we change the sign of the offset to estimate the
   // maximum size.
   TAO_InputCDR indirected_stream (*stream, -offset, offset);
