@@ -291,8 +291,6 @@ be_union::gen_client_stubs (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
-  be_type *bt;       // type node
-  be_state *s;       // code generation state
 
   if (!this->cli_stub_gen_)
     {
