@@ -138,9 +138,6 @@ public:
   CORBA_UserException &operator= (const CORBA_UserException &src);
   // Assignment operator.
 
-  virtual void _raise (void);
-  // To throw an exception of this type.
-
   static CORBA_UserException *_narrow (CORBA_Exception *exception);
   // The narrow operation.
 

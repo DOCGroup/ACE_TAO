@@ -126,7 +126,7 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
   else
     {
       *os << ","
-          << node->name () << ")" << be_nl;
+          << node->name () << "&)" << be_nl;
     }
 
   *os  << "{" << be_idt_nl;
