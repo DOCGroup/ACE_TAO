@@ -1,3 +1,24 @@
+Thu Sep 23 13:24:54 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/tests/tests.mpc:
+        * examples/DLL/DLL.mpc:
+        * examples/Export/Export.mpc:
+        * examples/NT_Service/NT_Service.mpc:
+        * examples/Reactor/Ntalker/Reactor_Ntalker.mpc:
+        * examples/Web_Crawler/Web_Crawler.mpc:
+        * performance-tests/Misc/Misc.mpc:
+        * performance-tests/Server_Concurrency/Leader_Follower/Svr_Conc_Leader_Follower.mpc:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/Svr_Conc_Queue_Based_Workers.mpc:
+        * performance-tests/Synch-Benchmarks/Synch_Benchmarks.mpc:
+        * performance-tests/TCP/TCP.mpc:
+        * performance-tests/UDP/UDP.mpc:
+
+          Added an 'exename' setting for the projects in these mpc files.
+          The cpp files contain some form of ACE_MAIN which used to be
+          recognized by MPC as an entry point.  It is now necessary to set
+          exename since MPC will no longer recognize ACE_MAIN as a "main"
+          function.
+
 Thu Sep 23 15:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Config.h:
@@ -5,10 +26,10 @@ Thu Sep 23 15:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep 23 07:42:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ACE.cpp:
+        * ace/ACE.cpp:
 
-	  Changed buffer and iovec versions of ACE:crc32() to hoist
-	  computing the end position out of the loop.
+          Changed buffer and iovec versions of ACE:crc32() to hoist
+          computing the end position out of the loop.
 
 Thu Sep 23 14:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -26,29 +47,29 @@ Thu Sep 23 14:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Sep 22 14:40:15 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ACE.cpp:
+        * ace/ACE.cpp:
 
-	  Changed ACE::crc32() family of functions to NOT fold in the
-	  length of the string/buffer/iovec into the CRC.
+          Changed ACE::crc32() family of functions to NOT fold in the
+          length of the string/buffer/iovec into the CRC.
 
-	* ace/ACE.cpp:
-	* ace/ACE.h:
+        * ace/ACE.cpp:
+        * ace/ACE.h:
 
-	  Changed return type of ACE::crc32() family of functions from
-	  u_long to ACE_UINT32.
+          Changed return type of ACE::crc32() family of functions from
+          u_long to ACE_UINT32.
 
 Wed Sep 22 13:46:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/msvc_cidlc.pl:
+        * bin/msvc_cidlc.pl:
 
-	  CIDLC cannot be compiled in release mode. Enable only debug
-	  mode.
+          CIDLC cannot be compiled in release mode. Enable only debug
+          mode.
 
 Wed Sep 22 10:35:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ACE.cpp:
+        * ace/ACE.cpp:
 
-	  Added const qualifier to ACE_OS::crc_table_.
+          Added const qualifier to ACE_OS::crc_table_.
 
 Wed Sep 22 17:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
