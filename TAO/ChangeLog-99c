@@ -1,3 +1,10 @@
+Sun Oct 10 02:25:36 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/Makefile:
+          Removed Logging Service and test from Minimum CORBA, 
+          since it depends on the Trading Service.
+
 Sun Oct 10 09:17:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.cpp (~TAO_ORB_Core): don't delete poa_current_
