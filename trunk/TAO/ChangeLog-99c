@@ -1,3 +1,8 @@
+Wed Jun 30 19:29:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/IORManipulation/IORTest.cpp:
+	  Fixed debug message.
+
 Wed Jun 30 18:17:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynEnum_i.cpp:
