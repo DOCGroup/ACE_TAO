@@ -1,3 +1,8 @@
+Wed Aug 12 16:16:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MsgQueue_Notifications_Test.cpp: Since this test doesn't
+	  use threads at all, I removed the #if ACE_HAS_THREADS macro.
+
 Wed Aug 12 14:57:51 1998  Jonathan Biggar  <jon@floorboard.com>
 
         * ace/config-sunos5.5.h: wrapped thread-related defines with
