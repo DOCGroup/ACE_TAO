@@ -423,10 +423,10 @@ public:
   // to be kept. Default  is current directory from which the
   // <tao_idl> is called. 
 
-  virtual void perfect_hasher (const char* s);
+  virtual void gperf_path (const char* s);
   // Set the path for the perfect hashing program (GPERF).
 
-  virtual const char* perfect_hasher (void) const;
+  virtual const char* gperf_path (void) const;
   // Get the path for the perfect hashing program (GPERF). 
 
   virtual void any_support (idl_bool);
@@ -537,7 +537,7 @@ private:
 
   // Path for the perfect hash generator(gperf) program. Default
   // is $ACE_ROOT/bin/gperf.
-  char* perfect_hasher_;
+  char* gperf_path_;
   
   // Directory where all the IDL-Compiler-Generated files are to be
   // kept. Default value is 0 for this string which means the current
