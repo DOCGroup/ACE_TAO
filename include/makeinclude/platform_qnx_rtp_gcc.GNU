@@ -18,10 +18,13 @@ endif # ! exceptions
 
 CC      = gcc
 CXX     = g++
+
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 DCFLAGS += -gstabs
 
 CFLAGS  += -pipe -W -Wall -Wpointer-arith
-CCFLAGS += $(CFLAGS) -fno-implicit-templates
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 
 DLD     = $(CXX)
 LD      = $(CXX)

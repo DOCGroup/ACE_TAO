@@ -17,8 +17,11 @@ endif # ! repo
 
 CC      = i386-nto-gcc
 CXX     = i386-nto-g++
+
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 CFLAGS  += -pipe -W -Wall -Wpointer-arith
-CCFLAGS += $(CFLAGS) -fno-implicit-templates
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
