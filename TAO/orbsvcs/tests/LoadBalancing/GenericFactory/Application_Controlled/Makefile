@@ -46,13 +46,6 @@ TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (CosLoadBalancing,$(findstring CosLoadBalancing,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # CosLoadBalancing
-ifeq ($(ami),0)
-BIN      =
-endif  # !ami
-
-ifeq ($(interceptors),0)
-BIN      =
-endif  # !interceptors
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
