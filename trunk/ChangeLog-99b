@@ -1,9 +1,5 @@
 Mon Jun  7 00:11:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Naming_Context.h (ACE_Name_Options): Changed the parameters
- 	  from "char *argv[]" to "const char *argv[]" since this is
- 	  cleaner.
-
 	* tests/Hash_Map_Manager_Test.cpp: Changed the use of ASYS_TCHAR *
  	  to LPCTSTR to ensure const-correctness.
 

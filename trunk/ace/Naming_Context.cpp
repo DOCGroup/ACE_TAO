@@ -564,7 +564,7 @@ ACE_Name_Options::verbose (void)
 }
 
 void
-ACE_Name_Options::parse_args (int argc, const char *argv[])
+ACE_Name_Options::parse_args (int argc, char *argv[])
 {
   ACE_TRACE ("ACE_Name_Options::parse_args");
   ACE_LOG_MSG->open (argv[0]);

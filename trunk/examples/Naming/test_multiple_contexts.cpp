@@ -56,7 +56,7 @@ int main (int, char *[])
     sizeof (n_argv) / sizeof (char *) -1;
 
   name_options->parse_args (m_argc,
-                            m_argv);
+                            (char **) m_argv);
   i = ns_ptr->open (ACE_Naming_Context::NODE_LOCAL);
 
   ACE_DEBUG ((LM_DEBUG,
