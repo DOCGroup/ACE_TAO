@@ -114,6 +114,7 @@ NAMES = \
    Svc_Handler_Test \
    TP_Reactor_Test \
    TSS_Test \
+   TSS_Static_Test \
    Task_Test \
    Task_Ex_Test \
    Thread_Manager_Test \
