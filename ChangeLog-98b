@@ -1,7 +1,13 @@
+Fri Aug 21 18:47:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.cpp (wait): Need to check if status is non-null
+	  before accessing the exit status on NT.   Thanks to Carlos for
+	  pointing this out.
+
 Fri Aug 21 16:40:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-sgic++.h: 
-	* ace/OS.i: 
+	* ace/config-irix6.x-sgic++.h:
+	* ace/OS.i:
 	  Some platforms (notable IRIX 6.x) do not update the timer in
 	  pthread_cond_timedwait(), this made the Semaphore test fail for
 	  those platforms.
