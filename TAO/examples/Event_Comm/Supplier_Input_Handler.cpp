@@ -30,19 +30,6 @@ Supplier_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
   ACE_OS::fclose (this->fp_);
 
-  TAO_TRY
-    {
-      // Disconnect all the consumers gracefully.
-      notifier->disconnect ("quit",
-			    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Error:Supplier_Input_Handler::handle_close\n");
-    }
-  TAO_ENDTRY;
-
   if (ACE_Reactor::instance ()->remove_handler
       (this,
        // Don't execute a callback here otherwise we'll recurse
@@ -69,14 +56,16 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier,
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                 "%p\n",
-                "register_handler"), -1);
+                "register_handler"),
+                      -1);
 
   this->fp_ = ACE_OS::fdopen (handle, "r");
 
   if (this->fp_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
-		       "fdopen"), -1);
+		       "fdopen"),
+                      -1);
   return 0;
 }
 

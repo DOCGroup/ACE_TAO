@@ -10,7 +10,8 @@
 //    Notifier_Handler.h
 //
 // = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
+//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and
+//    Pradeep Gore (pradeep@cs.wustl.edu)
 //
 // ============================================================================
 
