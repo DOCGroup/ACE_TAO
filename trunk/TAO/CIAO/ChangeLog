@@ -1,3 +1,12 @@
+Mon May  3 23:17:31 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Deployment.idl:
+
+          Changed the datatype from ULongSeq to StringSeq
+          in the following structures:
+
+          SharedResource, Node, Interconnect and Bridge.
+
 Mon May  3 22:44:09 2004  George Edwards  <g.edwards@vanderbilt.edu>
 
         * DnC/Deployment.idl:
