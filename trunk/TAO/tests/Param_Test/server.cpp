@@ -98,7 +98,7 @@ main (int argc, char *argv[])
       // We use a different POA, otherwise the user would have to
       // change the object key each time it invokes the server.
       PortableServer::POA_var good_poa =
-        oa_ptr->create_POA ("RootPOA_is_BAD",
+        oa_ptr->create_POA ("child_poa",
                             poa_manager.in (),
                             policies,
                             TAO_TRY_ENV);
