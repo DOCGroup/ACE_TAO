@@ -1,18 +1,23 @@
+Tue Nov 11 19:52:38 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* server/Pipeline.{h,cpp}: The beginning of a new Pipeline
+	  framework has been added.
+
 Sun Oct 12 16:21:32 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* clients/Caching/Makefile: 
-	* stress_testing/Makefile: 
+	* clients/Caching/Makefile:
+	* stress_testing/Makefile:
 	  There is no need to set LDLIBS to add local object files
 	  anymore, using FILES is enough.
 
 Fri Oct 10 18:41:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* clients/Blobby/Makefile: 
+	* clients/Blobby/Makefile:
 	  Fixed problem that made compilation fail.
 
 Thu Sep 11 10:40:38 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
 
-	* server/HTTP_Request.cpp: 
+	* server/HTTP_Request.cpp:
 	  I checked the use of MAXNAMELEN vs. MAXPATHLEN; all buffers
 	  intended to keep full filenames should have at least
 	  MAXPATHLEN+1 chars.
@@ -53,7 +58,7 @@ Sun Aug 10 13:44:14 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Wed Aug  6 16:45:48 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* server/main.cpp: Added another signal handler so I can kill JAWS
-	  when purifying. 
+	  when purifying.
 
 Mon Aug  4 00:07:24 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
@@ -85,7 +90,7 @@ Fri Jul 25 02:05:20 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 	  flags to be specified from the command line.  Removed some code
 	  that was used to track down memory leaks.
 
-	* server/HTTP_Helpers.{h,cpp}: Added another method 
+	* server/HTTP_Helpers.{h,cpp}: Added another method
 	  HTTP_date (char *), so that a buffer to which the date will be
 	  written to can be passed into the HTTP_date routine.
 
@@ -168,7 +173,7 @@ Mon Jul  7 23:40:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	* clients/WebSTONE/src/webmaster.c: Added prototype for
 	  HostEntCpy() and a null statement to avoid warning from MSVC.
 
-	* clients/WebSTONE/src/gendata/genrand.mak: 
+	* clients/WebSTONE/src/gendata/genrand.mak:
 	* clients/WebSTONE/src/master/webmaster.mak:
 	* clients/WebSTONE/src/client/webclient.mak: Updated file paths
 	  and dependencies.
@@ -318,7 +323,7 @@ Wed Jun  4 22:30:41 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* IO.cpp (transmit_file): The third argument passed
 	  ACE_Asynch_Transmit_File::Header_And_Trailer() should be an
-	  address (&).  
+	  address (&).
 
 Mon Jun  2 16:35:18 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
@@ -465,7 +470,7 @@ Tue May 20 22:49:24 1997  James C Hu  <jxh@polka.cs.wustl.edu>
  	  counts are maintained now, which was missing in VFS.  Also,
  	  there is no longer a dependency on the JXH_List template now,
  	  which is a plus.
-  	
+
 	* IO.cpp: Changes to adapt to the new virtual filesystem.  The
 	  changes all involved simplifications to the programming
 	  interface.
