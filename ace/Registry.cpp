@@ -294,10 +294,13 @@ ACE_Registry::Naming_Context::resolve (const Istring &name,
 				   &type,
 				   (BYTE *)data,
 				   &size);      
-  // Reset object state
-  // No need to set object.data()
-  object.type (type);
-  object.size (size);
+  if (result == ERROR_SUCCESS)
+    {
+      // Reset object state
+      // No need to set object.data()
+      object.type (type);
+      object.size (size);
+    }
 
   ACE_REGISTRY_CALL_RETURN (result);
 }
