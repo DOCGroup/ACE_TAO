@@ -1,10 +1,20 @@
 // This may look like C, but it's really -*- C++ -*-
+
+// ============================================================================
 //
-// @(#) $Id$
-// Copyright 1995 by Sun Microsystems, Inc.
-// All Rights Reserved
+// = LIBRARY
+//    TAO
+// 
+// = FILENAME
+//    corbacom.h
 //
-// CORBA C/C++/COM mapping for Win32
+// = DESCRIPTION
+//    CORBA C/C++/COM mapping for Win32
+//
+// = AUTHOR
+//     Copyright 1994-1995 by Sun Microsystems Inc.
+// 
+// ============================================================================
 
 #if !defined (TAO_CORBACOM_H)
 #define TAO_CORBACOM_H
@@ -21,15 +31,14 @@ typedef int			CORBA_Boolean;
 enum { CORBA_B_FALSE = 0, CORBA_B_TRUE = 1 };
 #endif /* "bool" not builtin */
 
-typedef u_char		CORBA_Octet;
+typedef u_char CORBA_Octet;
 
-typedef short			CORBA_Short;
-typedef u_short		CORBA_UShort;
+typedef short CORBA_Short;
+typedef u_short CORBA_UShort;
 
-//
-// CORBA "Long" (and its unsigned cousin) are 32 bits, just like
-// on almost all C/C++ compilers.
-//
+// CORBA "Long" (and its unsigned cousin) are 32 bits, just like on
+// almost all C/C++ compilers.
+
 #if	SIZEOF_LONG == 4
 typedef long CORBA_Long;
 typedef u_long CORBA_ULong;
@@ -39,8 +48,8 @@ typedef int CORBA_Long;
 typedef u_int CORBA_ULong;
 #endif	/* SIZEOF_LONG != 4 */
 
-// 94-9-32 Appendix A, also the OMG C++ mapping, stipulate that
-// 64 bit integers are "LongLong".
+// 94-9-32 Appendix A, also the OMG C++ mapping, stipulate that 64 bit
+// integers are "LongLong".
 //
 // NOTE:  those are IDL extensions, not yet standard.
 
