@@ -1,0 +1,13 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  ../ace
+  ../apps/gperf/src
+  ../ACEXML/common
+  ../ACEXML/parser/parser
+  ../ACEXML/apps/svcconf
+  tao
+  TAO_IDL
+  performance-tests/Latency
+}

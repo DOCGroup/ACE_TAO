@@ -530,8 +530,10 @@ public:
    *
    */
   virtual int handle_input (TAO_Resume_Handle &rh,
-                            ACE_Time_Value *max_wait_time = 0,
-                            int block = 0);
+                              ACE_Time_Value *max_wait_time = 0,
+                              int block = 0);
+  void try_to_complete (ACE_Time_Value *max_wait_time);
+
 
   enum
     {
@@ -611,59 +613,10 @@ public:
 
 protected:
 
-  /// Called by the handle_input_i(). This method is used to parse
-  /// message read by the handle_input_i() call. It also decides
-  /// whether the message  needs consolidation before processing.
-  int parse_consolidate_messages (ACE_Message_Block &bl,
-                                  TAO_Resume_Handle &rh,
-                                  ACE_Time_Value *time = 0);
-
-
-  /// Method does parsing of the message if we have a fresh message in
-  /// the @a message_block or just returns if we have read part of the
-  /// previously stored message.
-  int parse_incoming_messages (ACE_Message_Block &message_block);
-
-  /// Return if we have any missing data in the queue of messages
-  /// or determine if we have more information left out in the
-  /// presently read message to make it complete.
-  size_t missing_data (ACE_Message_Block &message_block);
-
-  /// Consolidate the currently read message or consolidate the last
-  /// message in the queue. The consolidation of the last message in
-  /// the queue is done by calling consolidate_message_queue ().
-  virtual int consolidate_message (ACE_Message_Block &incoming,
-                                   ssize_t missing_data,
-                                   TAO_Resume_Handle &rh,
-                                   ACE_Time_Value *max_wait_time);
-
-  /// @@Bala: Docu???
-  int consolidate_fragments (TAO_Queued_Data *qd,
-                             TAO_Resume_Handle &rh);
-
-  /// First consolidate the message queue.  If the message is still not
-  /// complete, try to read from the handle again to make it
-  /// complete. If these dont help put the message back in the queue
-  /// and try to check the queue if we have message to process. (the
-  /// thread  needs to do some work anyway :-))
-  int consolidate_message_queue (ACE_Message_Block &incoming,
-                                 ssize_t missing_data,
-                                 TAO_Resume_Handle &rh,
-                                 ACE_Time_Value *max_wait_time);
-
-  /// Called by parse_consolidate_message () if we have more messages
-  /// in one read. Queue up the messages and try to process one of
-  /// them, atleast at the head of them.
-  int consolidate_extra_messages (ACE_Message_Block &incoming,
-                                  TAO_Resume_Handle &rh);
-
   /// Process the message by sending it to the higher layers of the
   /// ORB.
   int process_parsed_messages (TAO_Queued_Data *qd,
                                TAO_Resume_Handle &rh);
-
-  /// Make a queued data from the @a incoming message block
-  TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
 
   /// Implement send_message_shared() assuming the handler_lock_ is
   /// held.
@@ -722,6 +675,34 @@ public:
 
   /// Accessor to sent_byte_count_
   size_t sent_byte_count (void);
+
+
+  /*!
+    \name Incoming Queue Methods
+  */
+  //@{
+  /*!
+    \brief Queue up \a queueable_message as a completely-received incoming message.
+
+    This method queues up a completely-received queueable GIOP message
+    (i.e., it must be dynamically-allocated).  It does not assemble a
+    complete GIOP message; that should be done prior to calling this
+    message, and is currently done in handle_input_i.
+
+    This does, however, assure that a completely-received GIOP
+    FRAGMENT gets associated with any previously-received related
+    fragments.  It does this through collaboration with the messaging
+    object (since fragment reassembly is protocol specific).
+
+    \param queueable_message instance as returned by one of the TAO_Queued_Data::make_*_message that's been completely received
+
+    \return 0 successfully enqueued \a queueable_message
+
+    \return -1 failed to enqueue \a queueable_message
+    \todo How do we indicate \em what may have failed?
+   */
+  int enqueue_incoming_message (TAO_Queued_Data *queueable_message);
+  //@}
 
   /// CodeSet Negotiation - Get the char codeset translator factory
   TAO_Codeset_Translator_Factory *char_translator (void) const;
@@ -907,8 +888,11 @@ protected:
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
 
-  /// Queue of the incoming messages..
+  /// Queue of the completely-received incoming messages..
   TAO_Incoming_Message_Queue incoming_message_queue_;
+
+  /// Place to hold a partially-received (waiting-to-be-completed) message
+  TAO_Queued_Data * uncompleted_message_;
 
   /// The queue will start draining no later than <queing_deadline_>
   /// *if* the deadline is
@@ -999,6 +983,13 @@ public:
 private:
   TAO_Transport *tr_;
 };
+
+// Always inline this method
+inline size_t
+TAO_Transport::id (void) const
+{
+  return this->id_;
+}
 
 #if defined (__ACE_INLINE__)
 # include "Transport.inl"

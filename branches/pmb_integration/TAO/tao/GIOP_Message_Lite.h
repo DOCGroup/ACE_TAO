@@ -89,44 +89,31 @@ public:
   /// the message.
   virtual int format_message (TAO_OutputCDR &cdr);
 
-  /// Parse the incoming messages..
-  virtual int parse_incoming_messages (ACE_Message_Block &message_block);
-
-  /// Get the message type. The return value would be one of the
-  /// following:
-  /// TAO_PLUGGABLE_MESSAGE_REQUEST,
-  /// TAO_PLUGGABLE_MESSAGE_REPLY,
-  /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
-  /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
-  TAO_Pluggable_Message_Type message_type (void);
-
-
-  /// Calculate the amount of data that is missing in the <incoming>
-  /// message block.
-  virtual ssize_t missing_data (ACE_Message_Block &message_block);
-
-  /* Extract the details of the next message from the @a incoming
-   * through @a qd. Returns 1 if there are more messages and returns a
-   * 0 if there are no more messages in @a incoming.
-   */
-  virtual int extract_next_message (ACE_Message_Block &incoming,
-                                    TAO_Queued_Data *&qd);
-
-  /// Check whether the node @a qd needs consolidation from @a incoming
-  virtual int consolidate_node (TAO_Queued_Data *qd,
-                                ACE_Message_Block &incoming);
-
-  /// Get the details of the message parsed through the <qd>.
-  virtual void get_message_data (TAO_Queued_Data *qd);
-
-  /// @@Bala: Docu???
-  virtual int consolidate_fragments (TAO_Queued_Data *dqd,
-                                     const TAO_Queued_Data *sqd);
-
   /// Process the request message that we have received on the
   /// connection
   virtual int process_request_message (TAO_Transport *transport,
                                        TAO_Queued_Data *qd);
+
+
+  /*!
+    \brief Inspects the bytes in \param mb to see if they "look like" the beginning of a message.
+
+    Inspects the bytes in \param mb, beginning at \code mb.rd_ptr, to
+    see if they look like the beginning of a message.  Does
+   */
+  virtual int check_for_valid_header (const ACE_Message_Block &mb) const;
+
+  /*!
+    \brief Set fields in \param qd based on values derived from \param mb.
+
+    This function sets fields in \param qd based on values derived
+    from \param mb.  It assumes that if the length of \param mb is
+    enough to hold a header, then the data in there can be trusted to
+    make sense.
+   */
+  virtual void set_queued_data_from_message_header (
+    TAO_Queued_Data *,
+    const ACE_Message_Block &mb) const;
 
   /// Parse the reply message that we received and return the reply
   /// information through @a reply_info
