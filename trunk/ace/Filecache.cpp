@@ -1,5 +1,7 @@
 // $Id$
 
+#define ACE_BUILD_DLL
+
 #include "ace/Filecache.h"
 
 static const int R_MASK = S_IRUSR|S_IRGRP|S_IROTH;
