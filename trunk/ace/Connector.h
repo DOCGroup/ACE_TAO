@@ -238,11 +238,6 @@ protected:
   // unconnected ACE_Svc_Handler's and removing them from the
   // ACE_Reactor.
 
-  virtual ACE_HANDLE get_handle (void) const;
-  // Return the underlying handle that's associated with the
-  // SVC_HANDLER we're currently trying to connect (or
-  // ACE_INVALID_HANDLER if there isn't one).
-
   virtual int handle_timeout (const ACE_Time_Value &tv, 
 			      const void *arg);
   // This method is called if a connection times out before
