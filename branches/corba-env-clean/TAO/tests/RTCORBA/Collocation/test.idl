@@ -1,0 +1,8 @@
+// $Id$
+
+interface test
+{
+  void start ();
+
+  void method ();
+};
