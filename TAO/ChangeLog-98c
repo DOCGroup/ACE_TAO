@@ -1,3 +1,14 @@
+Thu Dec  3 10:31:12 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp
+	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+
+	  We make sure that the upcast and downcast methods are now
+	  generated only for CORBA::Object sequences and not for sequences
+	  of CORBA::TypeCodes. In the latter case, the upcast and downcast
+	  methods are not needed and furthermore, casting them to
+	  CORBA::Object_ptr is totally incorrect.
+	
 Thu Dec  3 07:09:07 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/README.tests: Added
