@@ -1748,7 +1748,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  if (obj->_is_local ())
+  if (!CORBA::is_nil (obj) && obj->_is_local ())
     // @@ The CCM spec says one minor code, and the CORBA spec says
     //    another.  Which is the correct one?
     ACE_THROW_RETURN (CORBA::MARSHAL (TAO_OMG_VMCID | 4,
@@ -1829,12 +1829,16 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
     }
   else
     {
-      if (obj->_stubobj () == 0)
+      // It is perfectly valid to marshal a nil object reference.
+      // However, it is not possible to convert a nil object reference
+      // to a URL IOR, so throw an exception.
+      if (CORBA::is_nil (obj) || obj->_stubobj () == 0)
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO_Stub pointer in CORBA::ORB::object_to_string() ")
-                        ACE_TEXT ("is zero.\n")));
+                        ACE_TEXT ("Nil object reference or TAO_Stub ")
+                        ACE_TEXT ("pointer is zero when converting\n")
+                        ACE_TEXT ("object reference to URL IOR.\n")));
 
           ACE_THROW_RETURN (CORBA::MARSHAL (
                               CORBA_SystemException::_tao_minor_code (
