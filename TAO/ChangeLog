@@ -1,3 +1,13 @@
+Fri Feb 21 06:22:36 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitializer_Registry.cpp:
+
+	  Changed ACE_Array_Base explicit template instantiation argument
+	  from PortableInterceptor::ORBInitializer_ptr to
+	  PortableInterceptor::ORBInitializer_var.  Fixes unresolved
+	  symbol link-time errors in explicit template instantiation
+	  builds.
+
 Fri Feb 21 13:32:43 2003  Edward Scott  <eas@prismtechnologies.com>
 
         * docs/bugzilla-build-setup.html
