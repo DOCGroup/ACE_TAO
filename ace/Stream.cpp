@@ -233,7 +233,7 @@ ACE_Stream<ACE_SYNCH_2>::push_module (ACE_Module<ACE_SYNCH_2> *new_top,
 }
 
 #if 0
-int
+template <ACE_SYNCH_1> int
 ACE_Stream<ACE_SYNCH_2>::open (void *a, 
 			       ACE_Multiplexor &muxer, 
 			       ACE_Module<ACE_SYNCH_2> *head)

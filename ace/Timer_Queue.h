@@ -102,17 +102,9 @@ class ACE_Export ACE_Timer_Queue
   //      Provides an interface to timers.
   //
   // = DESCRIPTION
-  //      This implementation uses a linked list of absolute times.
-  //      Therefore, in the average case, scheduling and canceling
-  //      <ACE_Event_Handler> timers is O(N) (where N is the total
-  //      number of timers) and expiring timers is O(K) (where K is
-  //      the total number of timers that are < the current time of
-  //      day).
-  //
-  //      More clever implementations could use a delta-list, a heap,
-  //      or timing wheels, etc.  For instance, <ACE_Timer_Heap>
-  //      is a subclass of <ACE_Timer_Queue> that implements a
-  //      heap-based callout queue.
+  //      This is an abstract base class that provides hook for
+  //      implementing specialized policies such as <ACE_Timer_List>
+  //      and <ACE_Timer_Heap>.
 {
 public: 
   // = Initialization and termination methods.
@@ -145,7 +137,7 @@ public:
   // timers.  As long as timers don't stay around longer than this
   // there should be no problems with accidentally deleting the wrong
   // timer.  Returns -1 on failure (which is guaranteed never to be a
-  // valid <timer_id>.
+  // valid <timer_id>).
 
   virtual int cancel (ACE_Event_Handler *event_handler) = 0;
   // Cancel all <event_handlers> that match the address of
