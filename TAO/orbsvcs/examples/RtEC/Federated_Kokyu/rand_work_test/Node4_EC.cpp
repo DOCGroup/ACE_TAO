@@ -229,7 +229,8 @@ main (int argc, char* argv[])
       Node4_EC supplier_ec;
       if (supplier_ec.init(time_master,sched_type.c_str(), poa.in(),orb->orb_core()->reactor()) == -1)
         {
-          ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Kokyu_EC"), 1);
+          ACE_OS::fprintf(stderr, "Unable to initialize Kokyu_EC");
+          return -1;
         }
 
       RtEventChannelAdmin::RtSchedEventChannel_var supplier_ec_ior =
@@ -285,7 +286,8 @@ main (int argc, char* argv[])
       long timer_id = rt.reactor()->schedule_timer(ginit,0,gateway_delay);
       if (timer_id < 0)
         {
-          ACE_ERROR_RETURN((LM_ERROR,"Node4_EC (%t) could not schedule Gateway_Initializer timer\n"),-1);
+          ACE_OS::fprintf(stderr,"Node4_EC (%t) could not schedule Gateway_Initializer timer\n");
+          return -1;
         }
 
 #ifdef ACE_HAS_DSUI
@@ -344,9 +346,10 @@ int parse_args (int argc, char *argv[])
         ior_output_file = ACE_OS::fopen (ior_output_filename.c_str(), "w");
         if (ior_output_file == 0)
           {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to open %s for writing: %p\n",
-                               ior_output_filename.c_str()), -1);
+            ACE_OS::fprintf(stderr,
+                            "Unable to open %s for writing: %p\n",
+                            ior_output_filename.c_str());
+            return -1;
           }
         break;
       case 'i':
@@ -366,16 +369,16 @@ int parse_args (int argc, char *argv[])
 
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s -s <rms|muf|edf>"
-                           " [-o iorfile]"
-                           " [-i consumer_ec_ior]"
-                           " [-m]"
-                           "\n"
-                           "For multiple consumers, specify -i multiple times\n"
-                           "If '-m' is present, this node will tell the others when to start\n",
-                           argv [0]),
-                          -1);
+        ACE_OS::fprintf(stderr,
+                        "Usage:  %s -s <rms|muf|edf>"
+                        " [-o iorfile]"
+                        " [-i consumer_ec_ior]"
+                        " [-m]"
+                        "\n"
+                        "For multiple consumers, specify -i multiple times\n"
+                        "If '-m' is present, this node will tell the others when to start\n",
+                        argv [0]);
+        return -1;
       }
   if (ior_output_file == 0)
     {
