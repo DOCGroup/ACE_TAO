@@ -1,3 +1,9 @@
+Tue Oct  2 19:52:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Makefile: Removed some of the files that no longer exist in the
+	  repository. The inclusion of these files in the Makefile added
+	  noise during the beta cutting process.
+
 Tue Oct 02 15:34:49 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* etc/tao_cosevent.doxygen:
