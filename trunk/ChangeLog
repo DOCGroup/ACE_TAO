@@ -1,3 +1,13 @@
+Fri May 09 11:04:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.h:
+	* ace/Thread_Manager.cpp: Applied a patch that expose the
+	  Thread_Manager internal freelists, and the thread startup sync
+	  mutex in Thread_Descriptor.  These changes allow users to derive
+	  their own Thread_Manager and spawn threads using a third party
+	  library, such as that of Sybase's Open Server.   Thanks to Caleb
+	  Epstein <cae@bklyn.org> for submitting the patch.
+
 Fri May  9 08:45:12 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:

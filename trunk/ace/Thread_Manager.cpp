@@ -276,6 +276,31 @@ ACE_Thread_Descriptor::acquire_release (void)
     }
 }
 
+void
+ACE_Thread_Descriptor::acquire (void)
+{
+  // Just try to acquire the lock then release it.
+#if defined (ACE_THREAD_MANAGER_USES_SAFE_SPAWN)
+  if (ACE_BIT_DISABLED (this->thr_state_, ACE_Thread_Manager::ACE_THR_SPAWNED))
+#endif /* ACE_THREAD_MANAGER_USES_SAFE_SPAWN */
+    {
+      this->sync_->acquire ();
+    }
+}
+
+void
+ACE_Thread_Descriptor::release (void)
+{
+  // Just try to acquire the lock then release it.
+#if defined (ACE_THREAD_MANAGER_USES_SAFE_SPAWN)
+  if (ACE_BIT_DISABLED (this->thr_state_, ACE_Thread_Manager::ACE_THR_SPAWNED))
+#endif /* ACE_THREAD_MANAGER_USES_SAFE_SPAWN */
+    {
+      this->sync_->release ();
+      // Release the lock before putting it back to freelist.
+    }
+}
+
 // The following macro simplifies subsequence code.
 #define ACE_FIND(OP,INDEX) \
   ACE_Thread_Descriptor *INDEX = OP; \
