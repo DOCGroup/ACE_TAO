@@ -42,7 +42,7 @@ public:
   int init (int argc, char *argv[]);
   // Initialize the Naming Service with the arguments.
 
-  int run (CORBA_Environment& env);
+  int run (CORBA_Environment& ACE_TRY_ENV);
   // Run the TAO_Naming_Service.
 
   ~TAO_Naming_Service (void);
@@ -69,6 +69,10 @@ private:
   // Service context (if one is created).  Note: all the contexts
   // created under the given context will use the same size for their
   // initial hash table allocations.
+
+  LPCTSTR persistence_file_name_;
+  // Path to the file to be used to store/read in Naming Service
+  // persistent state.
 
   size_t time_;
   // After how long the server should stop listening to requests (in

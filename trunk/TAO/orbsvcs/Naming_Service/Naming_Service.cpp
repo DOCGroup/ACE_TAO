@@ -11,6 +11,7 @@ TAO_Naming_Service::TAO_Naming_Service (void)
   : ior_output_file_ (0),
     pid_file_name_ (0),
     context_size_ (ACE_DEFAULT_MAP_SIZE),
+    persistence_file_name_ (0),
     time_ (0)
 {
 }
@@ -22,6 +23,7 @@ TAO_Naming_Service::TAO_Naming_Service (int argc,
   : ior_output_file_ (0),
     pid_file_name_ (0),
     context_size_ (ACE_DEFAULT_MAP_SIZE),
+    persistence_file_name_ (0),
     time_ (0)
 {
   this->init (argc, argv);
@@ -31,7 +33,7 @@ int
 TAO_Naming_Service::parse_args (int argc,
                                 char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:p:s:t:");
+  ACE_Get_Opt get_opts (argc, argv, "do:p:s:t:f:");
   int c;
   int size, time;
 
@@ -53,6 +55,9 @@ TAO_Naming_Service::parse_args (int argc,
       case 'p':
         this->pid_file_name_ = get_opts.optarg;
         break;
+      case 'f':
+        this->persistence_file_name_ = get_opts.optarg;
+        break;
       case 's':
         size = ACE_OS::atoi (get_opts.optarg);
         if (size >= 0)
@@ -70,6 +75,7 @@ TAO_Naming_Service::parse_args (int argc,
                            "-NScontextname <contextname> "
                            "-o <ior_output_file> "
                            "-p <pid_file_name> "
+                           "-f <persistence_file_name> "
                            "\n",
                            argv [0]),
                           -1);
@@ -86,13 +92,14 @@ TAO_Naming_Service::init (int argc,
   CORBA::ORB_var orb;
   PortableServer::POA_var child_poa;
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       this->orb_manager_.init_child_poa (argc,
                                          argv,
                                          "child_poa",
-                                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       orb = this->orb_manager_.orb ();
       child_poa = this->orb_manager_.child_poa ();
@@ -107,19 +114,20 @@ TAO_Naming_Service::init (int argc,
 
       result = this->my_naming_server_.init (orb.in (),
                                              child_poa.in (),
+                                             persistence_file_name_,
                                              context_size_,
                                              0,
                                              0);
-      TAO_CHECK_ENV;
       if (result == -1)
         return result;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("TAO_Naming_Service::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Service::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   if (this->ior_output_file_ != 0)
     {
@@ -148,14 +156,14 @@ TAO_Naming_Service::init (int argc,
 // Run the ORB event loop.
 
 int
-TAO_Naming_Service::run (CORBA_Environment& env)
+TAO_Naming_Service::run (CORBA_Environment& ACE_TRY_ENV)
 {
   if (time_ == 0)
-      return this->orb_manager_.run (env);
+      return this->orb_manager_.run (ACE_TRY_ENV);
   else
     {
       ACE_Time_Value *t = new ACE_Time_Value (time_);
-      return this->orb_manager_.run (env, t);
+      return this->orb_manager_.run (ACE_TRY_ENV, t);
     }
 }
 
@@ -175,16 +183,19 @@ main (int argc, char *argv[])
   if (init_result == -1)
     return -1;
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      naming_service.run (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      naming_service.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("NamingService");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NamingService");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (1);
+
   return 0;
 }
