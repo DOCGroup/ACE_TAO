@@ -71,19 +71,12 @@ CORBA_String_var::CORBA_String_var(char* p)
 }
 
 CORBA_String_var::CORBA_String_var(const char* p)
-    : ptr_((char *)p)
+    : ptr_(CORBA_string_dup((char *)p))
 {
-  if (this->ptr_ != 0){
-    CORBA_string_free(this->ptr_);
-  }
-  this->ptr_ = CORBA_string_dup(p);
 }
 
 CORBA_String_var::CORBA_String_var(const CORBA_String_var& r)
 {
-  if (this->ptr_ != 0){
-    CORBA_string_free(this->ptr_);
-  }
   this->ptr_ = CORBA_string_dup(r.ptr_);
 }
 

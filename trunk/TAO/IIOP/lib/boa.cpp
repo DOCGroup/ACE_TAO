@@ -147,7 +147,7 @@ void CORBA_BOA::dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
   skeleton skel;  // pointer to function pointer for the operation
   CORBA_Object_ptr obj;  // object that will be looked up based on the key
   CORBA_OctetSeq		*obj_key;
-  CORBA_String_var  opname;
+  CORBA_String  opname;
 
 #if 0
   // this whole thing doesn't seem to be right since the context will be the
