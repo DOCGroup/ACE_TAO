@@ -58,7 +58,7 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   TAO_IIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
-  
+
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_IIOP_Connect_Creation_Strategy (
                                              this->orb_core_->thr_mgr (),
@@ -72,7 +72,7 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connector_lock,
                   TAO_Cached_Connector_Lock (this->orb_core_),
                   -1);
-  
+
   auto_ptr<TAO_Cached_Connector_Lock> new_connector_lock (connector_lock);
 
   ACE_NEW_RETURN (this->cached_connect_strategy_,
@@ -162,7 +162,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
       //    connector?  We (Fred and Carlos) thought about just
       //    setting the hint to 0, but that would not be thread-safe
       //    (other threads may be touching the same profile).
-      //    At this point (the day before 1.0) i'm reluctant to change 
+      //    At this point (the day before 1.0) i'm reluctant to change
       //    ACE, and this fix passes all the TAO tests (including the
       //    new ping/pong test in the tests/Faults directory).
       iiop_profile->reset_hint ();
@@ -257,13 +257,13 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
                       ACE_INET_Addr[num_connections],
                       -1);
 
-      auto_ptr<ACE_INET_Addr> safe_remote_addrs (remote_addrs);
+      ACE_Auto_Array_Ptr<ACE_INET_Addr> safe_remote_addrs (remote_addrs);
 
       ACE_NEW_RETURN (handlers,
                       TAO_IIOP_Client_Connection_Handler *[num_connections],
                       -1);
 
-      auto_ptr<TAO_IIOP_Client_Connection_Handler *>
+      ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Client_Connection_Handler*>
         safe_handlers (handlers);
 
       ACE_NEW_RETURN (failures,
