@@ -57,9 +57,39 @@ ACE_SSL_Context::ssl_library_init (void)
 
   if (ACE_SSL_Context::library_init_count_ == 0)
     {
+      // Initialize the locking callbacks before initializing anything
+      // else.
+#ifdef ACE_HAS_THREADS
+      int num_locks = ::CRYPTO_num_locks ();
+
+      ACE_NEW (ACE_SSL_Context::lock_,
+               ACE_mutex_t[num_locks]);
+
+      for (int i = 0; i < num_locks; ++i)
+        {
+          // rwlock_init(&(ACE_SSL_Context::lock_[i]), USYNC_THREAD,
+          // 0);
+          if (ACE_OS::mutex_init (&(ACE_SSL_Context::lock_[i]),
+                                  USYNC_THREAD) != 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) ACE_SSL_Context::ssl_library_init ")
+                        ACE_TEXT ("- %p\n"),
+                        ACE_TEXT ("mutex_init")));
+        }
+
+# if !defined (WIN32)
+      // This call isn't necessary on some platforms.  See the CRYPTO
+      // library's threads(3) man page for details.
+      ::CRYPTO_set_id_callback (ACE_SSL_thread_id);
+# endif  /* WIN32 */
+      ::CRYPTO_set_locking_callback (ACE_SSL_locking_callback);
+#endif  /* ACE_HAS_THREADS */
+
+
       ::SSL_library_init ();
       ::SSL_load_error_strings ();
       ::SSLeay_add_ssl_algorithms ();
+
 
       // Seed the random number generator.  Note that the random
       // number generator can be seeded more than once to "stir" its
@@ -86,35 +116,11 @@ ACE_SSL_Context::ssl_library_init (void)
       if (rand_file != 0)
         (void) this->seed_file (rand_file);
 
-      // Initialize the mutexes that will be used by the crypto
-      // library.
+      // Initialize the mutexes that will be used by the SSL and
+      // crypto library.
 
-#ifdef ACE_HAS_THREADS
-      int num_locks = ::CRYPTO_num_locks ();
-
-      ACE_NEW (ACE_SSL_Context::lock_,
-               ACE_mutex_t[num_locks]);
-
-      for (int i = 0; i < num_locks; ++i)
-        {
-          // rwlock_init(&(ACE_SSL_Context::lock_[i]), USYNC_THREAD,
-          // 0);
-          if (ACE_OS::mutex_init (&(ACE_SSL_Context::lock_[i]),
-                                  USYNC_THREAD) != 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ACE_SSL_Context::ssl_library_init ")
-                        ACE_TEXT ("- %p\n"),
-                        ACE_TEXT ("mutex_init")));
-        }
-
-# if !defined (WIN32)
-      // This call isn't necessary on some platforms.  See the CRYPTO
-      // library's threads(3) man page for details.
-      ::CRYPTO_set_id_callback (ACE_SSL_thread_id);
-# endif  /* WIN32 */
-      ::CRYPTO_set_locking_callback (ACE_SSL_locking_callback);
-#endif  /* ACE_HAS_THREADS */
     }
+
   ACE_SSL_Context::library_init_count_++;
 }
 
@@ -128,6 +134,11 @@ ACE_SSL_Context::ssl_library_fini (void)
   ACE_SSL_Context::library_init_count_--;
   if (ACE_SSL_Context::library_init_count_ == 0)
     {
+      ::ERR_free_strings ();
+      ::EVP_cleanup ();
+
+      // Clean up the locking callbacks after everything else has been
+      // cleaned up.
 #ifdef ACE_HAS_THREADS
       int num_locks = ::CRYPTO_num_locks ();
 
@@ -137,9 +148,6 @@ ACE_SSL_Context::ssl_library_fini (void)
 
       delete [] ACE_SSL_Context::lock_;
 #endif  /* ACE_HAS_THREADS */
-
-      ::ERR_free_strings ();
-      ::EVP_cleanup ();
     }
 }
 
@@ -219,7 +227,8 @@ ACE_SSL_Context::set_mode (int mode)
                                        cert_file,
                                        cert_dir) <= 0)
     {
-      ACE_SSL_Context::report_error ();
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
 
       return -1;
     }
