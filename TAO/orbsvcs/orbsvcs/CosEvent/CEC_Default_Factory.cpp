@@ -12,9 +12,12 @@
 #include "CEC_EventChannel.h"
 #include "CEC_Reactive_ConsumerControl.h"
 #include "CEC_Reactive_SupplierControl.h"
-#include "orbsvcs/Event/EC_Proxy_Collection.h"
-#include "orbsvcs/Event/EC_Command.h" // Work around bug in GHS compiler
-#include "orbsvcs/Event/EC_Concrete_Proxy_Set.h"
+#include "orbsvcs/ESF/ESF_Immediate_Changes.h"
+#include "orbsvcs/ESF/ESF_Delayed_Changes.h"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
+#include "orbsvcs/ESF/ESF_Copy_On_Read.h"
+#include "orbsvcs/ESF/ESF_Proxy_List.h"
+#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
 
@@ -446,119 +449,111 @@ TAO_CEC_Default_Factory::destroy_proxy_pull_consumer (TAO_CEC_ProxyPullConsumer 
 
 // These typedefs workaround a SunCC 4.2 bug
 typedef
-    TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>::Iterator
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>::Iterator
     TAO_CEC_PushConsumer_List_Iterator;
 typedef
-    TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>::Iterator
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>::Iterator
     TAO_CEC_PushConsumer_RB_Tree_Iterator;
 typedef
-    TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>::Iterator
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>::Iterator
     TAO_CEC_PullConsumer_List_Iterator;
 typedef
-    TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>::Iterator
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>::Iterator
     TAO_CEC_PullConsumer_RB_Tree_Iterator;
 typedef
-    TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>::Iterator
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>::Iterator
     TAO_CEC_PushSupplier_List_Iterator;
 typedef
-    TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>::Iterator
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>::Iterator
     TAO_CEC_PushSupplier_RB_Tree_Iterator;
 typedef
-    TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>::Iterator
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>::Iterator
     TAO_CEC_PullSupplier_List_Iterator;
 typedef
-    TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>::Iterator
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>::Iterator
     TAO_CEC_PullSupplier_RB_Tree_Iterator;
 
 TAO_CEC_ProxyPushConsumer_Collection*
 TAO_CEC_Default_Factory::create_proxy_push_consumer_collection (TAO_CEC_EventChannel *)
 {
   if (this->consumer_collection_ == 0x000)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH_MUTEX> ();
   else if (this->consumer_collection_ == 0x001)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH_MUTEX> ();
-  /*
   else if (this->consumer_collection_ == 0x002)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
-      ACE_SYNCH_MUTEX> ();
-  */
+      ACE_SYNCH> ();
   else if (this->consumer_collection_ == 0x003)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH> ();
   else if (this->consumer_collection_ == 0x010)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX> ();
   else if (this->consumer_collection_ == 0x011)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX> ();
-  /*
   else if (this->consumer_collection_ == 0x012)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX> ();
-  */
+      ACE_SYNCH> ();
   else if (this->consumer_collection_ == 0x013)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH> ();
   else if (this->consumer_collection_ == 0x100)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_Null_Mutex> ();
   else if (this->consumer_collection_ == 0x101)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_Null_Mutex> ();
-  /*
   else if (this->consumer_collection_ == 0x102)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
-      ACE_Null_Mutex> ();
-  */
+      ACE_NULL_SYNCH> ();
   else if (this->consumer_collection_ == 0x103)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_NULL_SYNCH> ();
   else if (this->consumer_collection_ == 0x110)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
   else if (this->consumer_collection_ == 0x111)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
-  /*
   else if (this->consumer_collection_ == 0x112)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
-  */
+      ACE_NULL_SYNCH> ();
   else if (this->consumer_collection_ == 0x113)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
@@ -575,91 +570,83 @@ TAO_CEC_ProxyPullConsumer_Collection*
 TAO_CEC_Default_Factory::create_proxy_pull_consumer_collection (TAO_CEC_EventChannel *)
 {
   if (this->consumer_collection_ == 0x000)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH_MUTEX> ();
   else if (this->consumer_collection_ == 0x001)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH_MUTEX> ();
-  /*
   else if (this->consumer_collection_ == 0x002)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
-      ACE_SYNCH_MUTEX> ();
-  */
+      ACE_SYNCH> ();
   else if (this->consumer_collection_ == 0x003)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH> ();
   else if (this->consumer_collection_ == 0x010)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX> ();
   else if (this->consumer_collection_ == 0x011)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX> ();
-  /*
   else if (this->consumer_collection_ == 0x012)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX> ();
-  */
+      ACE_SYNCH> ();
   else if (this->consumer_collection_ == 0x013)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH> ();
   else if (this->consumer_collection_ == 0x100)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_Null_Mutex> ();
   else if (this->consumer_collection_ == 0x101)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_Null_Mutex> ();
-  /*
   else if (this->consumer_collection_ == 0x102)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
-      ACE_Null_Mutex> ();
-  */
+      ACE_NULL_SYNCH> ();
   else if (this->consumer_collection_ == 0x103)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_NULL_SYNCH> ();
   else if (this->consumer_collection_ == 0x110)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
   else if (this->consumer_collection_ == 0x111)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
-  /*
   else if (this->consumer_collection_ == 0x112)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
-  */
+      ACE_NULL_SYNCH> ();
   else if (this->consumer_collection_ == 0x113)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
@@ -676,91 +663,83 @@ TAO_CEC_ProxyPushSupplier_Collection*
 TAO_CEC_Default_Factory::create_proxy_push_supplier_collection (TAO_CEC_EventChannel *)
 {
   if (this->supplier_collection_ == 0x000)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH_MUTEX> ();
   else if (this->supplier_collection_ == 0x001)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH_MUTEX> ();
-  /*
   else if (this->supplier_collection_ == 0x002)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
-      ACE_SYNCH_MUTEX> ();
-  */
+      ACE_SYNCH> ();
   else if (this->supplier_collection_ == 0x003)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH> ();
   else if (this->supplier_collection_ == 0x010)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX> ();
   else if (this->supplier_collection_ == 0x011)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX> ();
-  /*
   else if (this->supplier_collection_ == 0x012)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX> ();
-  */
+      ACE_SYNCH> ();
   else if (this->supplier_collection_ == 0x013)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH> ();
   else if (this->supplier_collection_ == 0x100)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_Null_Mutex> ();
   else if (this->supplier_collection_ == 0x101)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_Null_Mutex> ();
-  /*
   else if (this->supplier_collection_ == 0x102)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
-      ACE_Null_Mutex> ();
-  */
+      ACE_NULL_SYNCH> ();
   else if (this->supplier_collection_ == 0x103)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_NULL_SYNCH> ();
   else if (this->supplier_collection_ == 0x110)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
   else if (this->supplier_collection_ == 0x111)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
-  /*
   else if (this->supplier_collection_ == 0x112)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
-  */
+      ACE_NULL_SYNCH> ();
   else if (this->supplier_collection_ == 0x113)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
@@ -777,91 +756,83 @@ TAO_CEC_ProxyPullSupplier_Collection*
 TAO_CEC_Default_Factory::create_proxy_pull_supplier_collection (TAO_CEC_EventChannel *)
 {
   if (this->supplier_collection_ == 0x000)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH_MUTEX> ();
   else if (this->supplier_collection_ == 0x001)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH_MUTEX> ();
-  /*
   else if (this->supplier_collection_ == 0x002)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
-      ACE_SYNCH_MUTEX> ();
-  */
+      ACE_SYNCH> ();
   else if (this->supplier_collection_ == 0x003)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH> ();
   else if (this->supplier_collection_ == 0x010)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX> ();
   else if (this->supplier_collection_ == 0x011)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX> ();
-  /*
   else if (this->supplier_collection_ == 0x012)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX> ();
-  */
+      ACE_SYNCH> ();
   else if (this->supplier_collection_ == 0x013)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH> ();
   else if (this->supplier_collection_ == 0x100)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_Null_Mutex> ();
   else if (this->supplier_collection_ == 0x101)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_Null_Mutex> ();
-  /*
   else if (this->supplier_collection_ == 0x102)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
-      ACE_Null_Mutex> ();
-  */
+      ACE_NULL_SYNCH> ();
   else if (this->supplier_collection_ == 0x103)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_NULL_SYNCH> ();
   else if (this->supplier_collection_ == 0x110)
-    return new TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
   else if (this->supplier_collection_ == 0x111)
-    return new TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
-  /*
   else if (this->supplier_collection_ == 0x112)
-    return new TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
-  */
+      ACE_NULL_SYNCH> ();
   else if (this->supplier_collection_ == 0x113)
-    return new TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
@@ -978,9 +949,16 @@ template class ACE_Unbounded_Queue<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>;
 #endif /* ! TAO_ORBSVCS_HAS_Event2 */
 
-template class TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushConsumer>;
-template class TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>;
-template class TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>;
+template class TAO_ESF_Copy_On_Write_Collection<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+    TAO_CEC_PushConsumer_List_Iterator >;
+template class TAO_ESF_Copy_On_Write_Collection<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+    TAO_CEC_PushConsumer_RB_Tree_Iterator >;
+
+template class TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushConsumer>;
+template class TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>;
+template class TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>;
 template class ACE_Unbounded_Set<TAO_CEC_ProxyPushConsumer *>;
 template class ACE_Node<TAO_CEC_ProxyPushConsumer *>;
 template class ACE_Unbounded_Set_Iterator<TAO_CEC_ProxyPushConsumer *>;
@@ -990,11 +968,18 @@ template class ACE_RB_Tree_Reverse_Iterator<TAO_CEC_ProxyPushConsumer *, int, AC
 template class ACE_RB_Tree_Iterator_Base<TAO_CEC_ProxyPushConsumer *, int, ACE_Less_Than<TAO_CEC_ProxyPushConsumer *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<TAO_CEC_ProxyPushConsumer *, int>;
 template class ACE_Less_Than<TAO_CEC_ProxyPushConsumer *>;
-template class TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<TAO_CEC_ProxyPushConsumer>;
+template class TAO_ESF_Proxy_RB_Tree_Iterator<TAO_CEC_ProxyPushConsumer>;
 
-template class TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushSupplier>;
-template class TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>;
-template class TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>;
+template class TAO_ESF_Copy_On_Write_Collection<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+    TAO_CEC_PushSupplier_List_Iterator >;
+template class TAO_ESF_Copy_On_Write_Collection<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+    TAO_CEC_PushSupplier_RB_Tree_Iterator >;
+
+template class TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushSupplier>;
+template class TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>;
+template class TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>;
 template class ACE_Unbounded_Set<TAO_CEC_ProxyPushSupplier *>;
 template class ACE_Node<TAO_CEC_ProxyPushSupplier *>;
 template class ACE_Unbounded_Set_Iterator<TAO_CEC_ProxyPushSupplier *>;
@@ -1004,11 +989,18 @@ template class ACE_RB_Tree_Iterator_Base<TAO_CEC_ProxyPushSupplier *, int, ACE_L
 template class ACE_RB_Tree_Reverse_Iterator<TAO_CEC_ProxyPushSupplier *, int, ACE_Less_Than<TAO_CEC_ProxyPushSupplier *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<TAO_CEC_ProxyPushSupplier *, int>;
 template class ACE_Less_Than<TAO_CEC_ProxyPushSupplier *>;
-template class TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<TAO_CEC_ProxyPushSupplier>;
+template class TAO_ESF_Proxy_RB_Tree_Iterator<TAO_CEC_ProxyPushSupplier>;
 
-template class TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullConsumer>;
-template class TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>;
-template class TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>;
+template class TAO_ESF_Copy_On_Write_Collection<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+    TAO_CEC_PullConsumer_List_Iterator >;
+template class TAO_ESF_Copy_On_Write_Collection<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+    TAO_CEC_PullConsumer_RB_Tree_Iterator >;
+
+template class TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullConsumer>;
+template class TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>;
+template class TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>;
 template class ACE_Unbounded_Set<TAO_CEC_ProxyPullConsumer *>;
 template class ACE_Node<TAO_CEC_ProxyPullConsumer *>;
 template class ACE_Unbounded_Set_Iterator<TAO_CEC_ProxyPullConsumer *>;
@@ -1018,11 +1010,18 @@ template class ACE_RB_Tree_Reverse_Iterator<TAO_CEC_ProxyPullConsumer *, int, AC
 template class ACE_RB_Tree_Iterator_Base<TAO_CEC_ProxyPullConsumer *, int, ACE_Less_Than<TAO_CEC_ProxyPullConsumer *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<TAO_CEC_ProxyPullConsumer *, int>;
 template class ACE_Less_Than<TAO_CEC_ProxyPullConsumer *>;
-template class TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<TAO_CEC_ProxyPullConsumer>;
+template class TAO_ESF_Proxy_RB_Tree_Iterator<TAO_CEC_ProxyPullConsumer>;
 
-template class TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullSupplier>;
-template class TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>;
-template class TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>;
+template class TAO_ESF_Copy_On_Write_Collection<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+    TAO_CEC_PullSupplier_List_Iterator >;
+template class TAO_ESF_Copy_On_Write_Collection<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+    TAO_CEC_PullSupplier_RB_Tree_Iterator >;
+
+template class TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullSupplier>;
+template class TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>;
+template class TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>;
 template class ACE_Unbounded_Set<TAO_CEC_ProxyPullSupplier *>;
 template class ACE_Node<TAO_CEC_ProxyPullSupplier *>;
 template class ACE_Unbounded_Set_Iterator<TAO_CEC_ProxyPullSupplier *>;
@@ -1032,7 +1031,7 @@ template class ACE_RB_Tree_Iterator_Base<TAO_CEC_ProxyPullSupplier *, int, ACE_L
 template class ACE_RB_Tree_Reverse_Iterator<TAO_CEC_ProxyPullSupplier *, int, ACE_Less_Than<TAO_CEC_ProxyPullSupplier *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<TAO_CEC_ProxyPullSupplier *, int>;
 template class ACE_Less_Than<TAO_CEC_ProxyPullSupplier *>;
-template class TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<TAO_CEC_ProxyPullSupplier>;
+template class TAO_ESF_Proxy_RB_Tree_Iterator<TAO_CEC_ProxyPullSupplier>;
 
 #if defined (ACE_HAS_THREADS)
 //
@@ -1042,392 +1041,443 @@ template class TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<TAO_CEC_ProxyPullSupplier
 // We *cannot* use explicit ACE_Synch classes because that will not
 // compile in platforms without threads.
 //
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH_MUTEX>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
      TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH_MUTEX>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_List_Iterator,
-      ACE_SYNCH_MUTEX>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+      TAO_CEC_PushConsumer_List_Iterator,
+      ACE_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_SYNCH> >;
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+      TAO_CEC_PushConsumer_RB_Tree_Iterator,
+      ACE_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_SYNCH> >;
 
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH_MUTEX>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH_MUTEX>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_List_Iterator,
-      ACE_SYNCH_MUTEX>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+      TAO_CEC_PushSupplier_List_Iterator,
+      ACE_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_SYNCH> >;
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+      TAO_CEC_PushSupplier_RB_Tree_Iterator,
+      ACE_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_SYNCH> >;
+
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+    TAO_CEC_PushConsumer_List_Iterator,
+        ACE_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+    TAO_CEC_PushSupplier_List_Iterator,
+        ACE_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+    TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        ACE_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+    TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        ACE_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+    TAO_CEC_PushConsumer_List_Iterator,
+        ACE_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+    TAO_CEC_PushSupplier_List_Iterator,
+        ACE_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+    TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        ACE_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+    TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        ACE_SYNCH>;
+
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+    TAO_CEC_PullConsumer_List_Iterator,
+        ACE_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+    TAO_CEC_PullSupplier_List_Iterator,
+        ACE_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+    TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        ACE_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+    TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        ACE_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+    TAO_CEC_PullConsumer_List_Iterator,
+        ACE_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+    TAO_CEC_PullSupplier_List_Iterator,
+        ACE_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+    TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        ACE_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+    TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        ACE_SYNCH>;
+
 #endif /* ACE_HAS_THREADS */
 
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_Null_Mutex>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_Null_Mutex>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_List_Iterator,
-      ACE_Null_Mutex>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_NULL_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+      TAO_CEC_PushConsumer_List_Iterator,
+      ACE_NULL_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_NULL_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_NULL_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_List_Iterator,
       ACE_NULL_SYNCH> >;
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_Null_Mutex>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_Null_Mutex>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      ACE_Null_Mutex>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+      TAO_CEC_PushConsumer_RB_Tree_Iterator,
+      ACE_NULL_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushConsumer >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> >;
 
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_Null_Mutex>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_Null_Mutex>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_List_Iterator,
-      ACE_Null_Mutex>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_NULL_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+      TAO_CEC_PushSupplier_List_Iterator,
+      ACE_NULL_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_NULL_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_NULL_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_List_Iterator,
       ACE_NULL_SYNCH> >;
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_Null_Mutex>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_Null_Mutex>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      ACE_Null_Mutex>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+      TAO_CEC_PushSupplier_RB_Tree_Iterator,
+      ACE_NULL_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPushSupplier >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPushSupplier>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> >;
 
@@ -1439,394 +1489,445 @@ template class TAO_EC_Shutdown_Command<
 // We *cannot* use explicit ACE_Synch classes because that will not
 // compile in platforms without threads.
 //
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH_MUTEX>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
      TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH_MUTEX>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_List_Iterator,
-      ACE_SYNCH_MUTEX>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+      TAO_CEC_PullConsumer_List_Iterator,
+      ACE_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_SYNCH> >;
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+      TAO_CEC_PullConsumer_RB_Tree_Iterator,
+      ACE_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_SYNCH> >;
 
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH_MUTEX>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH_MUTEX>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_List_Iterator,
-      ACE_SYNCH_MUTEX>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+      TAO_CEC_PullSupplier_List_Iterator,
+      ACE_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_SYNCH> >;
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH_MUTEX>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+      TAO_CEC_PullSupplier_RB_Tree_Iterator,
+      ACE_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_SYNCH> >;
+
 #endif /* ACE_HAS_THREADS */
 
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_Null_Mutex>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_Null_Mutex>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_List_Iterator,
-      ACE_Null_Mutex>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_NULL_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+      TAO_CEC_PullConsumer_List_Iterator,
+      ACE_NULL_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_NULL_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_NULL_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_List_Iterator,
       ACE_NULL_SYNCH> >;
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_Null_Mutex>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_Null_Mutex>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      ACE_Null_Mutex>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+      TAO_CEC_PullConsumer_RB_Tree_Iterator,
+      ACE_NULL_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullConsumer >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullConsumer>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> >;
 
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_Null_Mutex>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_Null_Mutex>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_List_Iterator,
-      ACE_Null_Mutex>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_NULL_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+      TAO_CEC_PullSupplier_List_Iterator,
+      ACE_NULL_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_NULL_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_NULL_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_List_Iterator,
       ACE_NULL_SYNCH> >;
-template class TAO_EC_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_Null_Mutex>;
-template class TAO_EC_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_Null_Mutex>;
-  /*
-template class TAO_EC_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      ACE_Null_Mutex>;
-  */
-template class TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH>;
-template class TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+      TAO_CEC_PullSupplier_RB_Tree_Iterator,
+      ACE_NULL_SYNCH>;
+template class TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> >;
-template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class ACE_Guard< TAO_ESF_Busy_Lock_Adapter<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> > >;
-template class TAO_EC_Connected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Connected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Reconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Reconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Disconnected_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Disconnected_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH>,TAO_CEC_ProxyPullSupplier >;
-template class TAO_EC_Shutdown_Command<
-  TAO_EC_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_CEC_ProxyPullSupplier>,
+template class TAO_ESF_Shutdown_Command<
+  TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> >;
+
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+    TAO_CEC_PushConsumer_List_Iterator,
+        ACE_Null_Mutex>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+    TAO_CEC_PushSupplier_List_Iterator,
+        ACE_Null_Mutex>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+    TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        ACE_Null_Mutex>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+    TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        ACE_Null_Mutex>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+    TAO_CEC_PushConsumer_List_Iterator,
+        ACE_NULL_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+    TAO_CEC_PushSupplier_List_Iterator,
+        ACE_NULL_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+    TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        ACE_NULL_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+    TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        ACE_NULL_SYNCH>;
+
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+    TAO_CEC_PullConsumer_List_Iterator,
+        ACE_Null_Mutex>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+    TAO_CEC_PullSupplier_List_Iterator,
+        ACE_Null_Mutex>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+    TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        ACE_Null_Mutex>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+    TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        ACE_Null_Mutex>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+    TAO_CEC_PullConsumer_List_Iterator,
+        ACE_NULL_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+    TAO_CEC_PullSupplier_List_Iterator,
+        ACE_NULL_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+    TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        ACE_NULL_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Write_Guard<
+    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+    TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        ACE_NULL_SYNCH>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 

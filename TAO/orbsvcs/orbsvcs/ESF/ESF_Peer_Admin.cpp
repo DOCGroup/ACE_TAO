@@ -13,6 +13,11 @@
 
 ACE_RCSID(ESF, ESF_Peer_Admin, "$Id$")
 
+template<class EC, class P, class PEER>
+TAO_ESF_Peer_Admin<EC,P,PEER>::~TAO_ESF_Peer_Admin (void)
+{
+}
+
 template<class EC, class P, class PEER> void
 TAO_ESF_Peer_Admin<EC,P,PEER>::peer_connected (PEER *peer,
                                                CORBA::Environment &ACE_TRY_ENV)

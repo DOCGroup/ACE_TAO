@@ -26,21 +26,21 @@
 #define TAO_EC_SUPPLIERADMIN_H
 #include "ace/pre.h"
 
-#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "EC_ProxyConsumer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_Proxy_Collection.h"
-#include "EC_Worker.h"
+#include "orbsvcs/ESF/ESF_Peer_Admin.h"
 #include "event_export.h"
 
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
-class TAO_EC_ProxyPushConsumer;
 
-class TAO_RTEvent_Export TAO_EC_SupplierAdmin : public POA_RtecEventChannelAdmin::SupplierAdmin
+class TAO_RTEvent_Export TAO_EC_SupplierAdmin
+  : public POA_RtecEventChannelAdmin::SupplierAdmin
+  , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
 {
   // = TITLE
   //   ProxyPushSupplier
@@ -60,32 +60,6 @@ public:
   virtual ~TAO_EC_SupplierAdmin (void);
   // destructor...
 
-  void for_each (TAO_EC_Worker<TAO_EC_ProxyPushConsumer> *worker,
-                 CORBA::Environment &ACE_TRY_ENV);
-  // For each elements call <worker->work()>.
-
-  virtual void connected (TAO_EC_ProxyPushConsumer*,
-                          CORBA::Environment&);
-  virtual void reconnected (TAO_EC_ProxyPushConsumer*,
-                            CORBA::Environment&);
-  virtual void disconnected (TAO_EC_ProxyPushConsumer*,
-                             CORBA::Environment&);
-  // Used to inform the EC that a Consumer has connected or
-  // disconnected from it.
-
-  virtual void connected (TAO_EC_ProxyPushSupplier*,
-                          CORBA::Environment&);
-  virtual void reconnected (TAO_EC_ProxyPushSupplier*,
-                            CORBA::Environment&);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier*,
-                             CORBA::Environment&);
-  // Used to inform the EC that a Supplier has connected or
-  // disconnected from it.
-
-  virtual void shutdown (CORBA::Environment&);
-  // The event channel is shutting down, inform all the consumers of
-  // this
-
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
       obtain_push_consumer (CORBA::Environment &)
@@ -95,93 +69,8 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
 
 private:
-  TAO_EC_Event_Channel *event_channel_;
-  // The Event Channel we belong to
-
-  typedef TAO_EC_Proxy_Collection<TAO_EC_ProxyPushConsumer> Collection;
-
-  Collection *collection_;
-  // The consumer container
-
   PortableServer::POA_var default_POA_;
   // Store the default POA.
-};
-
-// ****************************************************************
-
-class TAO_EC_Connect_Supplier : public TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
-{
-  // = TITLE
-  //   TAO_EC_Connect_Supplier
-  //
-  // = DESCRIPTION
-  //   Worker class to connect the ProxyPushConsumer objects with all
-  //   the ProxyPushConsumer objects in the collection.
-  //
-public:
-  TAO_EC_Connect_Supplier (TAO_EC_ProxyPushSupplier *supplier);
-  // Constructor
-
-  void work (TAO_EC_ProxyPushConsumer *consumer,
-             CORBA::Environment &ACE_TRY_ENV);
-
-private:
-  TAO_EC_ProxyPushSupplier *supplier_;
-};
-
-// ****************************************************************
-
-class TAO_EC_Reconnect_Supplier : public TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
-{
-  // = TITLE
-  //   TAO_EC_Reconnect_Supplier
-  //
-  // = DESCRIPTION
-  //   Worker class to reconnect the ProxyPushConsumer objects with all
-  //   the ProxyPushConsumer objects in the collection.
-  //
-public:
-  TAO_EC_Reconnect_Supplier (TAO_EC_ProxyPushSupplier *supplier);
-  // Constructor
-
-  void work (TAO_EC_ProxyPushConsumer *consumer,
-             CORBA::Environment &ACE_TRY_ENV);
-
-private:
-  TAO_EC_ProxyPushSupplier *supplier_;
-};
-
-// ****************************************************************
-
-class TAO_EC_Disconnect_Supplier : public TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
-{
-  // = TITLE
-  //   TAO_EC_Disconnect_Supplier
-  //
-  // = DESCRIPTION
-  //   Worker class to disconnect the ProxyPushConsumer objects with all
-  //   the ProxyPushConsumer objects in the collection.
-  //
-public:
-  TAO_EC_Disconnect_Supplier (TAO_EC_ProxyPushSupplier *supplier);
-  // Constructor
-
-  void work (TAO_EC_ProxyPushConsumer *consumer,
-             CORBA::Environment &ACE_TRY_ENV);
-
-private:
-  TAO_EC_ProxyPushSupplier *supplier_;
-};
-
-// ****************************************************************
-
-class TAO_EC_Shutdown_Consumer : public TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
-{
-public:
-  TAO_EC_Shutdown_Consumer (void);
-
-  void work (TAO_EC_ProxyPushConsumer *consumer,
-             CORBA::Environment &ACE_TRY_ENV);
 };
 
 #if defined (__ACE_INLINE__)

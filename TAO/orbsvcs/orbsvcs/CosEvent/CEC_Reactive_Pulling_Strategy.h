@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 #include "tao/corba.h"
 
 class TAO_CEC_ProxyPullConsumer;
@@ -109,7 +109,7 @@ private:
 
 // ****************************************************************
 
-class TAO_CEC_Pull_Event : public TAO_EC_Worker<TAO_CEC_ProxyPullConsumer>
+class TAO_CEC_Pull_Event : public TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer>
 {
 public:
   TAO_CEC_Pull_Event (TAO_CEC_ConsumerAdmin *consumer_admin,

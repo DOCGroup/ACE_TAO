@@ -31,6 +31,49 @@ TAO_CEC_ProxyPullConsumer::~TAO_CEC_ProxyPullConsumer (void)
   this->event_channel_->destroy_consumer_lock (this->lock_);
 }
 
+CosEventChannelAdmin::ProxyPullConsumer_ptr
+TAO_CEC_ProxyPullConsumer::activate (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC (())
+{
+  CosEventChannelAdmin::ProxyPullConsumer_var result;
+  ACE_TRY
+    {
+      result = this->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      return CosEventChannelAdmin::ProxyPullConsumer::_nil ();
+    }
+  ACE_ENDTRY;
+  return result._retn ();
+}
+
+void
+TAO_CEC_ProxyPullConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC (())
+{
+  ACE_TRY
+    {
+      PortableServer::POA_var poa =
+        this->_default_POA (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (this, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Exceptions here should not be propagated.  They usually
+      // indicate that an object is beign disconnected twice, or some
+      // race condition, but not a fault that the user needs to know
+      // about.
+    }
+  ACE_ENDTRY;
+}
+
 // NOTE: There is some amount of duplicated code here, but it is
 // intentional. Mainly we want to avoid locking overhead when
 // possible, thus the code flow is optimized for that case more than
@@ -197,26 +240,6 @@ TAO_CEC_ProxyPullConsumer::cleanup_i (void)
     CosEventComm::PullSupplier::_nil ();
 }
 
-void
-TAO_CEC_ProxyPullConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      PortableServer::POA_var poa =
-        this->_default_POA (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      PortableServer::ObjectId_var id =
-        poa->servant_to_id (this, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      poa->deactivate_object (id.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-}
-
 CORBA::ULong
 TAO_CEC_ProxyPullConsumer::_incr_refcnt (void)
 {
@@ -235,7 +258,7 @@ TAO_CEC_ProxyPullConsumer::_decr_refcnt (void)
   }
 
   // Notify the event channel
-  this->event_channel_->destroy_proxy_pull_consumer (this);
+  this->event_channel_->destroy_proxy (this);
   return 0;
 }
 

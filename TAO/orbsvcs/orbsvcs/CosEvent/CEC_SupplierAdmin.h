@@ -32,13 +32,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_Proxy_Collection.h"
-#include "orbsvcs/Event/EC_Worker.h"
+#include "orbsvcs/ESF/ESF_Proxy_Admin.h"
+#include "CEC_ProxyPushConsumer.h"
+#include "CEC_ProxyPullConsumer.h"
 #include "event_export.h"
 
 class TAO_CEC_EventChannel;
-class TAO_CEC_ProxyPushConsumer;
-class TAO_CEC_ProxyPullConsumer;
 
 class TAO_Event_Export TAO_CEC_SupplierAdmin : public POA_CosEventChannelAdmin::SupplierAdmin
 {
@@ -67,11 +66,11 @@ public:
   virtual ~TAO_CEC_SupplierAdmin (void);
   // destructor...
 
-  void for_each (TAO_EC_Worker<TAO_CEC_ProxyPushConsumer> *worker,
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer> *worker,
                  CORBA::Environment &ACE_TRY_ENV);
   // For each elements call <worker->work()>.
 
-  void for_each (TAO_EC_Worker<TAO_CEC_ProxyPullConsumer> *worker,
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer> *worker,
                  CORBA::Environment &ACE_TRY_ENV);
   // For each elements call <worker->work()>.
 
@@ -108,40 +107,12 @@ private:
   TAO_CEC_EventChannel *event_channel_;
   // The Event Channel we belong to
 
-  typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushConsumer> PushCollection;
-
-  PushCollection *push_collection_;
-  // The consumer container
-
-  typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullConsumer> PullCollection;
-
-  PullCollection *pull_collection_;
-  // The consumer container
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer> push_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer> pull_admin_;
+  // The push and pull aspects are implemented using these classes
 
   PortableServer::POA_var default_POA_;
   // Store the default POA.
-};
-
-// ****************************************************************
-
-class TAO_CEC_Shutdown_Push_Consumer : public TAO_EC_Worker<TAO_CEC_ProxyPushConsumer>
-{
-public:
-  TAO_CEC_Shutdown_Push_Consumer (void);
-
-  void work (TAO_CEC_ProxyPushConsumer *consumer,
-             CORBA::Environment &ACE_TRY_ENV);
-};
-
-// ****************************************************************
-
-class TAO_CEC_Shutdown_Pull_Consumer : public TAO_EC_Worker<TAO_CEC_ProxyPullConsumer>
-{
-public:
-  TAO_CEC_Shutdown_Pull_Consumer (void);
-
-  void work (TAO_CEC_ProxyPullConsumer *consumer,
-             CORBA::Environment &ACE_TRY_ENV);
 };
 
 #if defined (__ACE_INLINE__)

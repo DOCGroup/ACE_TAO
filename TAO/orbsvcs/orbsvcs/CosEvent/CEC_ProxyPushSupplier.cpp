@@ -29,6 +29,49 @@ TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier (void)
   this->event_channel_->destroy_supplier_lock (this->lock_);
 }
 
+CosEventChannelAdmin::ProxyPushSupplier_ptr
+TAO_CEC_ProxyPushSupplier::activate (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC (())
+{
+  CosEventChannelAdmin::ProxyPushSupplier_var result;
+  ACE_TRY
+    {
+      result = this->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      return CosEventChannelAdmin::ProxyPushSupplier::_nil ();
+    }
+  ACE_ENDTRY;
+  return result._retn ();
+}
+
+void
+TAO_CEC_ProxyPushSupplier::deactivate (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC (())
+{
+  ACE_TRY
+    {
+      PortableServer::POA_var poa =
+        this->_default_POA (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (this, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Exceptions here should not be propagated.  They usually
+      // indicate that an object is beign disconnected twice, or some
+      // race condition, but not a fault that the user needs to know
+      // about.
+    }
+  ACE_ENDTRY;
+}
+
 void
 TAO_CEC_ProxyPushSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -98,26 +141,6 @@ TAO_CEC_ProxyPushSupplier::cleanup_i (void)
     CosEventComm::PushConsumer::_nil ();
 }
 
-void
-TAO_CEC_ProxyPushSupplier::deactivate (CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      PortableServer::POA_var poa =
-        this->_default_POA (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      PortableServer::ObjectId_var id =
-        poa->servant_to_id (this, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      poa->deactivate_object (id.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-}
-
 CORBA::ULong
 TAO_CEC_ProxyPushSupplier::_incr_refcnt (void)
 {
@@ -136,7 +159,7 @@ TAO_CEC_ProxyPushSupplier::_decr_refcnt (void)
   }
 
   // Notify the event channel
-  this->event_channel_->destroy_proxy_push_supplier (this);
+  this->event_channel_->destroy_proxy (this);
   return 0;
 }
 
@@ -256,7 +279,7 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event,
     if (this->refcount_ == 0)
       {
         ace_mon.release ();
-        this->event_channel_->destroy_proxy_push_supplier (this);
+        this->event_channel_->destroy_proxy (this);
         return;
       }
 

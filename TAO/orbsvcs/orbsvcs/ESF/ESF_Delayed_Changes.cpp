@@ -13,7 +13,7 @@
 #include "ESF_Worker.h"
 #include "ESF_Delayed_Command.h"
 
-ACE_RCSID(ESF, ESF_Immediate_Changes, "$Id$")
+ACE_RCSID(ESF, ESF_Delayed_Changes, "$Id$")
 
 // ****************************************************************
 

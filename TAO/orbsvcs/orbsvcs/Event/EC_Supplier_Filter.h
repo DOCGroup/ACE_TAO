@@ -31,7 +31,7 @@
 #include "ace/pre.h"
 
 #include "orbsvcs/RtecEventCommC.h"
-#include "EC_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 #include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -124,7 +124,7 @@ public:
 
 // ****************************************************************
 
-class TAO_EC_Filter_Worker : public TAO_EC_Worker<TAO_EC_ProxyPushSupplier>
+class TAO_EC_Filter_Worker : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
   TAO_EC_Filter_Worker (RtecEventComm::EventSet &event,

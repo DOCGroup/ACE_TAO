@@ -69,52 +69,52 @@ TAO_EC_Event_Channel::supplier_control (void) const
   return this->supplier_control_;
 }
 
-ACE_INLINE TAO_EC_ProxyPushSupplier*
-TAO_EC_Event_Channel::create_proxy_push_supplier (void)
+ACE_INLINE void
+TAO_EC_Event_Channel::create_proxy (TAO_EC_ProxyPushSupplier*& x)
 {
-  return this->factory_->create_proxy_push_supplier (this);
+  x = this->factory_->create_proxy_push_supplier (this);
 }
 
 ACE_INLINE void
-TAO_EC_Event_Channel::destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier* supplier)
+TAO_EC_Event_Channel::destroy_proxy (TAO_EC_ProxyPushSupplier* supplier)
 {
   this->factory_->destroy_proxy_push_supplier (supplier);
 }
 
-ACE_INLINE TAO_EC_ProxyPushConsumer*
-TAO_EC_Event_Channel::create_proxy_push_consumer (void)
+ACE_INLINE void
+TAO_EC_Event_Channel::create_proxy (TAO_EC_ProxyPushConsumer*& x)
 {
-  return this->factory_->create_proxy_push_consumer (this);
-}
-
-ACE_INLINE TAO_EC_ProxyPushConsumer_Collection*
-TAO_EC_Event_Channel::create_proxy_push_consumer_collection (void)
-{
-  return this->factory_->create_proxy_push_consumer_collection (this);
+  x = this->factory_->create_proxy_push_consumer (this);
 }
 
 ACE_INLINE void
-TAO_EC_Event_Channel::destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection* x)
+TAO_EC_Event_Channel::destroy_proxy (TAO_EC_ProxyPushConsumer* consumer)
+{
+  this->factory_->destroy_proxy_push_consumer (consumer);
+}
+
+ACE_INLINE void
+TAO_EC_Event_Channel::create_proxy_collection (TAO_EC_ProxyPushConsumer_Collection*& x)
+{
+  x = this->factory_->create_proxy_push_consumer_collection (this);
+}
+
+ACE_INLINE void
+TAO_EC_Event_Channel::destroy_proxy_collection (TAO_EC_ProxyPushConsumer_Collection* x)
 {
   this->factory_->destroy_proxy_push_consumer_collection (x);
 }
 
-ACE_INLINE TAO_EC_ProxyPushSupplier_Collection*
-TAO_EC_Event_Channel::create_proxy_push_supplier_collection (void)
+ACE_INLINE void
+TAO_EC_Event_Channel::create_proxy_collection (TAO_EC_ProxyPushSupplier_Collection*& x)
 {
-  return this->factory_->create_proxy_push_supplier_collection (this);
+  x = this->factory_->create_proxy_push_supplier_collection (this);
 }
 
 ACE_INLINE void
-TAO_EC_Event_Channel::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection* x)
+TAO_EC_Event_Channel::destroy_proxy_collection (TAO_EC_ProxyPushSupplier_Collection* x)
 {
   this->factory_->destroy_proxy_push_supplier_collection (x);
-}
-
-ACE_INLINE void
-TAO_EC_Event_Channel::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer* consumer)
-{
-  this->factory_->destroy_proxy_push_consumer (consumer);
 }
 
 ACE_INLINE PortableServer::POA_ptr
