@@ -240,7 +240,7 @@ ACE_Proactor::instance (size_t threads)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-				*ACE_Static_Object_Lock::get_lock (), 0));
+				*ACE_Static_Object_Lock::instance (), 0));
 
       if (ACE_Proactor::proactor_ == 0)
 	{
@@ -257,7 +257,7 @@ ACE_Proactor::instance (ACE_Proactor *r)
   ACE_TRACE ("ACE_Proactor::instance");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-			    *ACE_Static_Object_Lock::get_lock ()_, 0));
+			    *ACE_Static_Object_Lock::instance (), 0));
 
   ACE_Proactor *t = ACE_Proactor::proactor_;
   // We can't safely delete it since we don't know who created it!
@@ -273,7 +273,7 @@ ACE_Proactor::close_singleton (void)
   ACE_TRACE ("ACE_Proactor::close_singleton");
 
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
-		     *ACE_Static_Object_Lock::get_lock ()_));
+		     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Proactor::delete_proactor_)
     {
