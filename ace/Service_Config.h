@@ -312,8 +312,10 @@ protected:
   // Process service configuration requests as indicated in the
   // <service_config_file>.  Returns -1 if errors occur, else 0.
 
-  static void parse_args (int, char *[]);
-  // Handle the command-line options intended for the <ACE_Service_Config>.
+  static void parse_args (int, char *argv[]);
+  // Handle the command-line options intended for the
+  // <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the
+  // program name.
 
   static int start_daemon (void);
   // Become a daemon. 
