@@ -1,3 +1,15 @@
+Fri Apr 26 13:32:04 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientRequestInfo_i.cpp (TAO_ClientRequestInfo_i):
+	* tao/PICurrent.cpp (TAO_PICurrent_Guard):
+
+	  Do not make invocations on the TAO_PICurrent object if the
+	  cached pointer to that object in the ORB Core is zero.  It can
+	  be zero if the ORB Core hasn't been initialized or if it has
+	  been shutdown.  Fixes a memory access violation that occurred
+	  when attempting to perform a remote invocation through an ORB
+	  that has been shutdown.
+
 Fri Apr 26 12:04:08 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/IFR_Service/AbstractInterfaceDef_i.cpp:
