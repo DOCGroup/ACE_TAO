@@ -8,6 +8,7 @@
 
 ACE_RCSID(tao, Synch_Reply_Dispatcher, "$Id$")
 
+
 // Constructor.
 TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
     TAO_ORB_Core *orb_core,
@@ -61,20 +62,11 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   // dispatcher is used because the request must be re-sent.
   //this->message_state_.reset (0);
 
-  // Steal the buffer so that no copying is done.
-  this->reply_cdr_.exchange_data_blocks (params.input_cdr_);
+  // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
+  ACE_Data_Block *db =
+    this->reply_cdr_.clone_from (params.input_cdr_);
 
-  /*if (&this->message_state_ != message_state)
-    {
-      // The Transport Mux Strategy did not use our Message_State to
-      // receive the event, possibly because it is muxing multiple
-      // requests over the same connection.
-
-       // Steal the buffer so that no copying is done.
-      this->message_state_.cdr.steal_from (message_state->cdr);
-
-      // There is no need to copy the other fields!
-      }*/
+  ACE_UNUSED_ARG (db);
 
   if (this->wait_strategy_ != 0)
     {
@@ -90,12 +82,6 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
 
   return 1;
 }
-
-/*TAO_GIOP_Message_State *
-TAO_Synch_Reply_Dispatcher::message_state (void)
-{
-  return &this->message_state_;
-}*/
 
 void
 TAO_Synch_Reply_Dispatcher::dispatcher_bound (TAO_Transport *transport)

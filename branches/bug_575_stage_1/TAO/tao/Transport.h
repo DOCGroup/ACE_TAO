@@ -19,15 +19,18 @@
 #include "ace/pre.h"
 
 #include "corbafwd.h"
+
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Exception.h"
 #include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "ace/Strategies.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "Incoming_Message_Queue.h"
 
 class TAO_ORB_Core;
 class TAO_Target_Specification;
@@ -72,7 +75,7 @@ protected:
  *
  * <H3>The outgoing data path:</H3>
  *
- * One of the responsabilities of the TAO_Transport class is to send
+ * One of the responsibilities of the TAO_Transport class is to send
  * out GIOP messages as efficiently as possible.  In most cases
  * messages are put out in FIFO order, the transport object will put
  * out the message using a single system call and return control to
@@ -136,7 +139,19 @@ protected:
  *
  * <H3>The incoming data path:</H3>
  *
- * @todo Document the incoming data path design forces.
+ * One of the main responsibilities of the transport is to read and
+ * process the incoming GIOP message as quickly and efficiently as
+ * possible. There are other forces that needs to be given due
+ * consideration. They are
+ *  - Multiple threads should read from the same handle
+ *  - Reads on the handle could give one or more messages.
+ *  - Minimise locking and copying overhead when trying to attack the
+ *    above.
+ * <H3> Parsing messages (GIOP) & processing the message:</H3>
+ *
+ * The messages should be checked for validity and the right
+ * information should be sent to the higher layer for processing.
+ *
  *
  *
  * <B>See Also:</B>
@@ -451,6 +466,33 @@ public:
                                        TAO_Target_Specification &spec,
                                        TAO_OutputCDR &msg);
 
+  /// Callback to read incoming data
+  /// @@ Bala: Change documentation here.... They dont make sense
+  /// anymore
+  /**
+   * The ACE_Event_Handler adapter invokes this method as part of its
+   * handle_input() operation.
+   *
+   * @todo: the method name is confusing! Calling it handle_input()
+   * would probably make things easier to understand and follow!
+   *
+   * Once a complete message is read the Transport class delegates on
+   * the Messaging layer to invoke the right upcall (on the server) or
+   * the TAO_Reply_Dispatcher (on the client side).
+   *
+   * @param max_wait_time In some cases the I/O is synchronous, e.g. a
+   * thread-per-connection server or when Wait_On_Read is enabled.  In
+   * those cases a maximum read time can be specified.
+   *
+   * @param block Is deprecated and ignored.
+   *
+   */
+  // @@ lockme
+  virtual int handle_input_i (ACE_HANDLE h = ACE_INVALID_HANDLE,
+                              ACE_Time_Value *max_wait_time = 0,
+                              int block = 0);
+
+
   /// Prepare the waiting and demuxing strategy to receive a reply for
   /// a new request.
   /**
@@ -501,29 +543,6 @@ public:
                             int is_synchronous = 1,
                             ACE_Time_Value *max_time_wait = 0) = 0;
 
-  /// Callback to read incoming data
-  /**
-   * The ACE_Event_Handler adapter invokes this method as part of its
-   * handle_input() operation.
-   *
-   * @todo: the method name is confusing! Calling it handle_input()
-   * would probably make things easier to understand and follow!
-   *
-   * Once a complete message is read the Transport class delegates on
-   * the Messaging layer to invoke the right upcall (on the server) or
-   * the TAO_Reply_Dispatcher (on the client side).
-   *
-   * @param max_wait_time In some cases the I/O is synchronous, e.g. a
-   * thread-per-connection server or when Wait_On_Read is enabled.  In
-   * those cases a maximum read time can be specified.
-   *
-   * @param block Is deprecated and ignored.
-   *
-   */
-  // @@ lockme
-  virtual int read_process_message (ACE_Time_Value *max_wait_time = 0,
-                                    int block = 0) = 0;
-
 protected:
   /// Register the handler with the reactor.
   /**
@@ -547,6 +566,28 @@ protected:
    * resources associated with the handler association.
    */
   virtual void transition_handler_state_i (void) = 0;
+
+  /// @@ Bala: Documentation
+  int parse_incoming_messages (ACE_Message_Block &message_block);
+
+  size_t missing_data (ACE_Message_Block &message_block);
+
+  int check_message_integrity (ACE_Message_Block &message_block);
+
+  int consolidate_message (ACE_Message_Block &incoming,
+                           size_t missing_data,
+                           ACE_HANDLE h,
+                           ACE_Time_Value *max_wait_time);
+
+  int consolidate_message_queue (ACE_Message_Block &incoming,
+                                 size_t missing_data,
+                                 ACE_HANDLE h,
+                                 ACE_Time_Value *max_wait_time);
+
+  /// @@ Bala: Documentation
+  virtual int process_parsed_messages (ACE_Message_Block &message_block,
+                                       CORBA::Octet byte_order,
+                                       ACE_HANDLE h = ACE_INVALID_HANDLE);
 
 public:
   /// Method for the connection handler to signify that it
@@ -621,6 +662,9 @@ public:
    */
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void* act);
+
+  // @@ Bala : Add documentation
+  //  int process_message (ACE_Message_Block &message_block) = 0;
 
 private:
   /// Send some of the data in the queue.
@@ -746,6 +790,9 @@ protected:
   /// Implement the outgoing data queue
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
+
+  /// @@Bala: Docu??
+  TAO_Incoming_Message_Queue incoming_message_queue_;
 
   /// The queue will start draining no later than <queing_deadline_>
   /// *if* the deadline is

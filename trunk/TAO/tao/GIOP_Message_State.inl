@@ -2,12 +2,25 @@
 
 //$Id$
 
-// ****************************************************************
-// @@ Bala: we use the stars to separate classes in ACE+TAO
+ACE_INLINE CORBA::ULong
+TAO_GIOP_Message_State::message_size (void) const
+{
+  return this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
+}
 
-//
-// Inlined methods for TAO_GIOP_Message_State
-//
+ACE_INLINE CORBA::ULong
+TAO_GIOP_Message_State::payload_size (void) const
+{
+  return this->message_size_;
+}
+
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_State::byte_order (void) const
+{
+  return this->byte_order_;
+}
+
+#if 0
 ACE_INLINE int
 TAO_GIOP_Message_State::message_fragmented (void)
 {
@@ -29,3 +42,5 @@ TAO_GIOP_Message_State::header_received (void) const
 {
   return this->message_size != 0;
 }
+
+#endif
