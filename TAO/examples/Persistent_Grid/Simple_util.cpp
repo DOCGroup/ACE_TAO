@@ -125,19 +125,21 @@ Server<Servant>::init (const char *servant_name,
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("\tException in activation of POA");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "\tException in activation of POA");
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 template <class Servant>int
-Server<Servant>::run (CORBA::Environment &env)
+Server<Servant>::run (CORBA::Environment &ACE_TRY_ENV)
 {
     // Run the main event loop for the ORB.
-  if (this->orb_manager_.run (env) == -1)
+  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),
                       -1);
@@ -278,7 +280,7 @@ Client<InterfaceObj, Var>::init (const char *name,
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Client_i::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_i::init");
       return -1;
     }
   ACE_ENDTRY;
@@ -289,7 +291,7 @@ Client<InterfaceObj, Var>::init (const char *name,
 
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::shutdown (void )
+Client<InterfaceObj, Var>::shutdown (void)
 {
   // Returns the shutdwon flag
   return shutdown_;
