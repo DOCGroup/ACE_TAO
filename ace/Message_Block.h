@@ -337,6 +337,9 @@ public:
   ACE_Lock *locking_strategy (ACE_Lock *);
   // Set a new locking strategy and return the hold one.
 
+  int reference_count (void) const;
+  // Get the current reference count.
+
   void dump (void) const;
   // Dump the state of an object.
 
