@@ -2,7 +2,7 @@
 #include "ace/Get_Opt.h"
 #include "FooC.h"
 
-char *ior = 0;
+static char *ior = 0;
 
 static int
 parse_args (int argc, char **argv)
@@ -39,7 +39,7 @@ main (int argc, char **argv)
 {
   CORBA::Environment env;
 
-  CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, 0, env);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
   if (env.exception () != 0)
     {
       env.print_exception ("CORBA::ORB_init");
@@ -58,7 +58,7 @@ main (int argc, char **argv)
   Foo_var foo = Foo::_narrow (object.in (), env);
   if (env.exception () != 0)
     {
-      env.print_exception ("Foo::_bind");
+      env.print_exception ("Foo::_narrow");
       return -1;
     }
 
@@ -70,8 +70,6 @@ main (int argc, char **argv)
     }
   
   cout << result << endl;
-
-  CORBA::release (orb);
 
   return 0;
 }
