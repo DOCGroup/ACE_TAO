@@ -147,9 +147,12 @@ main (int argc, char **argv)
         = PortableServer::POA::_narrow (obj.in ());
 
       Server server (orb.in (), poa.in ());
+      
+      int result 
+        = server.init (argc, argv, ACE_TRY_ENV);
 
-      if (server.init (argc, argv, ACE_TRY_ENV) == -1)
-        return 1;
+      if (result == -1)
+        return -1;
 
       server.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;

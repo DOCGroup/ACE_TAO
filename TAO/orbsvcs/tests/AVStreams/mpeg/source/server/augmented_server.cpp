@@ -586,8 +586,10 @@ AV_Server::init (int argc,
   // service type.
 
 
-
-  if (this->resolve_trader (ACE_TRY_ENV) != -1)
+  result 
+    = this->resolve_trader (ACE_TRY_ENV);
+  
+  if (result != -1)
     {
       // Invoke this for each offer.
       this->export_properties (ACE_TRY_ENV);
@@ -612,6 +614,7 @@ AV_Server::run (CORBA::Environment& ACE_TRY_ENV){
   int result;
   // Run the ORB event loop
   this->orb_manager_.run (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) AV_Server::run () "

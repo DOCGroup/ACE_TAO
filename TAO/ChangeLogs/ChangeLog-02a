@@ -1,3 +1,16 @@
+2001-04-01  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp: 
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+       	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+
+	  Fixed more Fuzz errors.	
+	
 Sun Apr  1 21:50:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory/Makefile:

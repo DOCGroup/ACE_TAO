@@ -2843,6 +2843,7 @@ TAO_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl,
 {
   ACE_UNUSED_ARG (media_ctrl);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
   return 1;
 }
 
