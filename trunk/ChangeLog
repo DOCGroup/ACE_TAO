@@ -1,3 +1,15 @@
+Fri Oct  4 18:39:19 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Recursive_Condition_Test.cpp: Added a deactivate/wait
+          on the timer queue to make sure the queue shuts down. This
+          reveals a bug in the recursive condition... it's stuck.
+          Also added a much simpler wait/signal test that shows the issue
+          without the additional stuff to trudge through while looking for
+          the problem.  Thanks to Philippe Haussy <p.haussy@xpedite.com>
+          for reporting this and sending a nice, concise test case.
+
+        * THANKS: Added Philippe Haussy to the Hall of Fame.
+
 Thu Oct  3 17:29:36 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS_Dirent.cpp (readdir_emulation): Don't do a FindNextFile()
