@@ -7,21 +7,21 @@
 CFG=RTEvent - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "RTEvent.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "RTEvent.mak" CFG="RTEvent - Win32 MFC Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "RTEvent - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RTEvent - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RTEvent - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RTEvent - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -72,7 +72,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RTEvent_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR- /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_RTEVENT_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_RTEVENT_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -143,7 +143,7 @@ LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_Svc_Utils.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_RTEvent.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # ADD LINK32 acemfc.lib TAOmfc.lib TAO_Svc_Utilsmfc.lib TAO_PortableServermfc.lib TAO_Messagingmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_RTEventmfc.dll" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -176,6 +176,10 @@ SOURCE=.\Event\EC_Busy_Lock.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Channel_Destroyer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Conjunction_Filter.cpp
 # End Source File
 # Begin Source File
@@ -192,15 +196,19 @@ SOURCE=.\Event\EC_Default_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Default_ProxyConsumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxySupplier.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Disjunction_Filter.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Dispatching.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Reactive_Dispatching.cpp
 # End Source File
 # Begin Source File
 
@@ -232,15 +240,11 @@ SOURCE=.\Event\EC_Gateway.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Gateway_UDP.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_UDP_Out_Endpoint.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_Group_Scheduling.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Lifetime_Utils.cpp
 # End Source File
 # Begin Source File
 
@@ -276,6 +280,10 @@ SOURCE=.\Event\EC_Prefix_Filter_Builder.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Proxy_Disconnector.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_ProxyConsumer.cpp
 # End Source File
 # Begin Source File
@@ -284,19 +292,15 @@ SOURCE=.\Event\EC_ProxySupplier.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Default_ProxyConsumer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Default_ProxySupplier.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_QOS_Info.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Reactive_ConsumerControl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Reactive_Dispatching.cpp
 # End Source File
 # Begin Source File
 
@@ -348,7 +352,51 @@ SOURCE=.\Event\EC_UDP_Admin.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\ECG_Adapters.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Address_Server_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_CDR_Message_Receiver.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_CDR_Message_Sender.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Complex_Address_Server.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\ECG_Mcast_EH.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Mcast_Gateway.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Simple_Address_Server.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Simple_Mcast_EH.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_EH.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Out_Endpoint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Receiver.cpp
 # End Source File
 # Begin Source File
 
@@ -437,6 +485,14 @@ SOURCE=.\Event\EC_Default_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Default_ProxyConsumer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxySupplier.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Defaults.h
 # End Source File
 # Begin Source File
@@ -446,10 +502,6 @@ SOURCE=.\Event\EC_Disjunction_Filter.h
 # Begin Source File
 
 SOURCE=.\Event\EC_Dispatching.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Reactive_Dispatching.h
 # End Source File
 # Begin Source File
 
@@ -478,10 +530,6 @@ SOURCE=.\Event\EC_Filter_Builder.h
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_UDP_Out_Endpoint.h
 # End Source File
 # Begin Source File
 
@@ -537,19 +585,15 @@ SOURCE=.\Event\EC_ProxySupplier.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Default_ProxyConsumer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Default_ProxySupplier.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_QOS_Info.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Reactive_ConsumerControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Reactive_Dispatching.h
 # End Source File
 # Begin Source File
 
@@ -601,11 +645,59 @@ SOURCE=.\Event\EC_UDP_Admin.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\ECG_Adapters.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Address_Server_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_CDR_Message_Receiver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_CDR_Message_Sender.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Complex_Address_Server.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Defaults.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\ECG_Mcast_EH.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\ECG_Mcast_Gateway.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Simple_Address_Server.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Simple_Mcast_EH.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_EH.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Out_Endpoint.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\ECG_UDP_Protocol.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Receiver.h
 # End Source File
 # Begin Source File
 
@@ -686,7 +778,7 @@ SOURCE=.\RtecDefaultEventData.idl
 !IF  "$(CFG)" == "RTEvent - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECD="..\..\..\bin\Release\tao_idl.exe"
+USERDEP__RTECD="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecDefaultEventData.idl
 InputName=RtecDefaultEventData
@@ -725,7 +817,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECD="..\..\..\bin\tao_idl.exe"
+USERDEP__RTECD="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecDefaultEventData.idl
 InputName=RtecDefaultEventData
@@ -839,7 +931,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -849,7 +941,7 @@ SOURCE=.\RtecEventChannelAdmin.idl
 !IF  "$(CFG)" == "RTEvent - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECE="..\..\..\bin\Release\tao_idl.exe"
+USERDEP__RTECE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -888,7 +980,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECE="..\..\..\bin\tao_idl.exe"
+USERDEP__RTECE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -1002,7 +1094,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -1012,7 +1104,7 @@ SOURCE=.\RtecEventComm.idl
 !IF  "$(CFG)" == "RTEvent - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEV="..\..\..\bin\Release\tao_idl.exe"
+USERDEP__RTECEV="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -1051,7 +1143,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEV="..\..\..\bin\tao_idl.exe"
+USERDEP__RTECEV="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -1165,7 +1257,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -1175,7 +1267,7 @@ SOURCE=.\RtecUDPAdmin.idl
 !IF  "$(CFG)" == "RTEvent - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\Release\tao_idl.exe"
+USERDEP__RTECU="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
@@ -1214,7 +1306,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\tao_idl.exe"
+USERDEP__RTECU="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
@@ -1328,7 +1420,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
@@ -1373,15 +1465,19 @@ SOURCE=.\Event\EC_Default_Factory.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Default_ProxyConsumer.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxySupplier.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Disjunction_Filter.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Dispatching.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Reactive_Dispatching.i
 # End Source File
 # Begin Source File
 
@@ -1410,10 +1506,6 @@ SOURCE=.\Event\EC_Filter_Builder.i
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway_UDP.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_UDP_Out_Endpoint.i
 # End Source File
 # Begin Source File
 
@@ -1457,19 +1549,15 @@ SOURCE=.\Event\EC_ProxySupplier.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Default_ProxyConsumer.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Default_ProxySupplier.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_QOS_Info.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Reactive_ConsumerControl.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Reactive_Dispatching.i
 # End Source File
 # Begin Source File
 
@@ -1517,7 +1605,47 @@ SOURCE=.\Event\EC_Type_Filter.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\ECG_Address_Server_Base.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_CDR_Message_Receiver.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_CDR_Message_Sender.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Complex_Address_Server.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\ECG_Mcast_EH.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Mcast_Gateway.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Simple_Address_Server.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Simple_Mcast_EH.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_EH.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Out_Endpoint.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Receiver.i
 # End Source File
 # Begin Source File
 
@@ -1597,7 +1725,7 @@ SOURCE=.\RtecDefaultEventDataS_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -1622,7 +1750,7 @@ SOURCE=.\RtecEventChannelAdminS_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -1647,7 +1775,7 @@ SOURCE=.\RtecEventCommS_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -1672,7 +1800,7 @@ SOURCE=.\RtecUDPAdminS_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
