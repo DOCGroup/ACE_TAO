@@ -277,7 +277,7 @@ Sat Sep 18 16:25:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  Fixed all mismatches where the return value of a call to
 	  CORBA::ORB::object_to_string (a CORBA::String) was assigned to
 	  an ACE_CString.  The correct thing to do is to assign the
-	  CORBA::String return value to a CORBA::String_var.  This fixes a 
+	  CORBA::String return value to a CORBA::String_var.  This fixes
 	  several memory leaks.
 
 	  Changed the last of the "_ptr" variables to "_var" variables.
