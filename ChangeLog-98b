@@ -1,3 +1,36 @@
+Tue May 12 00:42:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+	
+	* tests/WinCE/*: New project files.  Updated the workspace.
+	  Please see CE-status for the current progress.
+	
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/Enum_Interfaces_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/Reactors_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+        * tests/Thread_Mutex_Test.cpp: Made CE friendly.
+	
+        * tests/test_config.h: Moved some common definitions shared among
+	  CE and other platforms out.
+	
+        * ace/Acceptor.cpp:
+        * ace/Acceptor.h:
+        * ace/Connector.cpp:
+        * ace/Connector.h:
+        * ace/Stream.cpp:
+        * ace/Svc_Handler.cpp:
+        * ace/Svc_Handler.h:
+        * ace/Synch.h:
+        * ace/Synch.i: CE stuff.
+	
+        * ace/config-WinCE.h: Defined ACE_DEFAULT_SERVER_HOST in UNICODE
+	  here to overwrite the default setting.
+	
+	* ace/Synch.i (ACE_Lock): CE needs a default ctor here.
+
 Mon May 11 15:43:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/WinCE/ce_tests.dsw:
