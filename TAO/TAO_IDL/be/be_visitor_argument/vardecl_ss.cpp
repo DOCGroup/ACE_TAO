@@ -358,7 +358,18 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
         case AST_Argument::dir_OUT:
           os->indent ();
 
-          *os << bt->name () << " " << arg->local_name () << ";\n";
+          *os << bt->name () << " " << arg->local_name ();
+
+          // @@@ (JP) This is a hack for VC7, which gets an internal
+          // compiler error if a boolean OUT is not initialized.
+          // (02-08-13)
+          if (this->direction () == AST_Argument::dir_OUT
+              && pt == AST_PredefinedType::PT_boolean)
+            {
+              *os << " = 0";
+            }
+
+          *os << ";\n";
 
           break;
         }
