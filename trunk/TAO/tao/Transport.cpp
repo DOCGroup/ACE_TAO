@@ -697,20 +697,28 @@ TAO_Transport::close_connection_shared (int disable_purge,
       return;
     }
 
+  int retval = 0;
+
   // We first try to remove the handler from the reactor. After that
   // we destroy the handler using handle_close (). The remove handler
   // is necessary because if the handle_closed is called directly, the
   // reactor would be left with a dangling pointer.
   if (this->ws_->is_registered ())
     {
-      this->orb_core_->reactor ()->remove_handler (
-          eh,
-          ACE_Event_Handler::ALL_EVENTS_MASK |
-          ACE_Event_Handler::DONT_CALL);
+      retval = this->orb_core_->reactor ()->remove_handler (
+                 eh,
+                 ACE_Event_Handler::ALL_EVENTS_MASK |
+                 ACE_Event_Handler::DONT_CALL);
     }
 
-  (void) eh->handle_close (ACE_INVALID_HANDLE,
-                           ACE_Event_Handler::ALL_EVENTS_MASK);
+  // Yet another protocol using the Reactor. If a thread is not able
+  // to remove the handler from the Reactor, then he has no business
+  // to close down the handler.
+  if (retval == 0)
+    {
+      (void) eh->handle_close (ACE_INVALID_HANDLE,
+                               ACE_Event_Handler::ALL_EVENTS_MASK);
+    }
 
   this->send_connection_closed_notifications ();
 }
