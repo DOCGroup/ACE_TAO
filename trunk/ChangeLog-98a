@@ -13,6 +13,20 @@ Tue Dec 30 22:07:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Map_Manager.cpp (operator*): fixed typo in "ACE_Map_Entry".
 
+        * ace/OS.h: added ACE_NSIG.  In addition, I removed this:
+
+            // Why is this defined?  It must be a std C library symbol.
+            #if !defined (NSIG)
+            #define NSIG 0
+            #endif /* NSIG */
+
+          We #define NSIG elsewhere on platforms (VxWorks, MVS) that need
+          it.  #defining it to be 0 isn't good; better to catch the lack
+          of NSIG at compile time than at run time.
+
+        * ace/{Log_Msg.cpp,OS.i,Select_Reactor.cpp,Signal.*,WFMO_Reactor.i},
+          tests/Sigset_Ops_Test.cpp: replace NSIG with ACE_NSIG.
+
 Tue Dec 30 20:32:03 1997  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Map_Manager.{h,cpp}: Added STL-styled iterator function.
