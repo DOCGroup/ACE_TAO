@@ -1,3 +1,22 @@
+Sun Oct 03 09:38:03 2004  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* DAnCE/Config_Handlers/XSCRT/Elements.hpp:
+	* DAnCE/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.hpp:
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.hpp:
+	* DAnCE/Config_Handlers/pcd.hpp:
+	* DAnCE/Config_Handlers/iad.hpp:
+	* DAnCE/Config_Handlers/cpd.hpp:
+	* DAnCE/Config_Handlers/cid.hpp:
+	* DAnCE/Config_Handlers/cdp.hpp:
+	* DAnCE/Config_Handlers/cdd.hpp:
+	* DAnCE/Config_Handlers/Deployment.hpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/ccd.hpp:
+	* DAnCE/Config_Handlers/toplevel.hpp: Change to include XSCRT
+	  headers as "user libraries" instead of <system libraries>.
+
 Sun Oct 03 09:18:05 2004  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* DAnCE/tests/Config_Handlers/handler_test.mpb: Changed to use the

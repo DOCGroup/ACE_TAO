@@ -247,7 +247,7 @@ namespace XSCRT
       XMLCh const* xns = e.dom_element ()->lookupNamespaceURI (p);
       std::basic_string<C> ns (
         xns ? transcode<C> (xns, 0) : std::basic_string<C> ());
-      
+
       delete[] p;
       return ns;
 
@@ -315,7 +315,7 @@ namespace XSCRT
   };
 }
 
-#include <XSCRT/Parser.ipp>
-#include <XSCRT/Parser.tpp>
+#include "XSCRT/Parser.ipp"
+#include "XSCRT/Parser.tpp"
 
 #endif  // XSCRT_PARSER_HPP
