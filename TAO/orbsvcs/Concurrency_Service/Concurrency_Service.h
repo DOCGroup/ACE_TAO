@@ -29,7 +29,7 @@
 #include "ace/Log_Msg.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/Concurrency/Concurrency_Utils.h"
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 
 class Concurrency_Service : public TAO_ORB_Manager
 {
@@ -37,7 +37,7 @@ class Concurrency_Service : public TAO_ORB_Manager
   //   Defines a class that encapsulates the implementation of the
   //   concurrency service.
   // = DESCRIPTION
-  //   This class uses the TAO_ORB_Manager, the TAO_Naming_Server, and
+  //   This class uses the TAO_ORB_Manager, the TAO_Naming_Client, and
   //   the TAO_Concurrency_Server classes to implement a server for
   //   the concurrency service.
 public:
@@ -83,8 +83,8 @@ private:
   TAO_ORB_Manager orb_manager_;
   // The ORB manager
 
-  TAO_Naming_Server my_name_server_;
-  // An instance of the name server used for registering the factory
+  TAO_Naming_Client naming_client_;
+  // An instance of the name client used for registering the factory
   // objects.
 
   TAO_Concurrency_Server my_concurrency_server_;

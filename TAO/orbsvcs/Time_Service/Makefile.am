@@ -8,13 +8,9 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
-bin_PROGRAMS =
-
 ## Makefile.Time_Service_Clerk.am
 
-if BUILD_CORBA_MESSAGING
-
-bin_PROGRAMS += Time_Service_Clerk
+bin_PROGRAMS = Time_Service_Clerk
 
 Time_Service_Clerk_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -31,23 +27,13 @@ Time_Service_Clerk_SOURCES = \
 
 Time_Service_Clerk_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTime.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_CORBA_MESSAGING
-
 ## Makefile.Time_Service_Server.am
-
-if BUILD_CORBA_MESSAGING
 
 bin_PROGRAMS += Time_Service_Server
 
@@ -66,19 +52,11 @@ Time_Service_Server_SOURCES = \
 
 Time_Service_Server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTime.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

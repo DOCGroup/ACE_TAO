@@ -8,13 +8,9 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
-bin_PROGRAMS =
-
 ## Makefile.Concurrency_Service.am
 
-if BUILD_CORBA_MESSAGING
-
-bin_PROGRAMS += Concurrency_Service
+bin_PROGRAMS = Concurrency_Service
 
 Concurrency_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -30,19 +26,11 @@ Concurrency_Service_SOURCES = \
 
 Concurrency_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosConcurrency.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

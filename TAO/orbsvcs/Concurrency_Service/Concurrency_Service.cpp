@@ -162,10 +162,9 @@ Concurrency_Service::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
   PortableServer::POA_var child_poa;
 
   orb = this->orb_manager_.orb ();
-  child_poa = this->orb_manager_.child_poa ();
 
-  int result = this->my_name_server_.init (orb.in (),
-                                           child_poa.in ());
+  int result = this->naming_client_.init (orb.in ());
+
   if (result == -1)
     return result;
   lockset_factory_ =
@@ -177,7 +176,7 @@ Concurrency_Service::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
   concurrency_context_name[0].id = CORBA::string_dup ("CosConcurrency");
 
   this->concurrency_context_ =
-    this->my_name_server_->bind_new_context (concurrency_context_name
+    this->naming_client_->bind_new_context (concurrency_context_name
                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 

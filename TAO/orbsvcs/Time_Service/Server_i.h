@@ -21,7 +21,7 @@
 #include "ace/Log_Msg.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/Time/TAO_Time_Service_Server.h"
 
 class Server_i
@@ -48,10 +48,8 @@ public:
   int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the orb.
 
-  int init_naming_service (int argc,
-                           char* argv[]
-                           ACE_ENV_ARG_DECL);
-  // Initialises the name server.
+  int init_naming_service ();
+  // Initialises the name client.
 
   int create_server (void);
   // Create the time server object.
@@ -62,10 +60,6 @@ public:
   int parse_args (int argc,
                   ACE_TCHAR* argv[]);
   // Parse the commandline arguments.
-
-  int if_first_server (CosNaming::Name &server_context_name);
-  // Check if this is the first server binding to the Naming
-  // Service.
 
 private:
 
@@ -78,7 +72,7 @@ private:
   FILE *ior_output_file_;
   // File where the IOR of the Clerk object is stored.
 
-  TAO_Naming_Server my_name_server_;
+  TAO_Naming_Client naming_client_;
   // An instance of the name server used for registering the
   // <TimeService Server> object.
 

@@ -194,8 +194,8 @@ Clerk_i::get_first_IOR (void)
 
       // Resolve name.
       CORBA::Object_var temp_object =
-        this->my_name_server_->resolve (server_context_name
-                                        ACE_ENV_ARG_PARAMETER);
+        this->naming_client_->resolve (server_context_name
+                                       ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -316,41 +316,10 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
 // Initialise the Naming Service.
 
 int
-Clerk_i::init_naming_service (int argc,
-                              char* argv[])
+Clerk_i::init_naming_service ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
-    {
-      // Initialize the POA.
-      this->orb_manager_.init_child_poa (argc,
-                                         argv,
-                                         "my_child_poa"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      PortableServer::POA_ptr child_poa
-        = this->orb_manager_.child_poa ();
-
-      // Initialize the Naming Server. Note the Naming Server cannot
-      // be initialized with the Root POA because it has to be a
-      // persistent object reference.  Hence the need for child
-      // POA. The servants need not be registered in the same POA. We
-      // use the Root POA for the servants.
-
-      if (this->my_name_server_.init (this->orb_.in (),
-                                      child_poa) == -1)
-        return -1;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_LIB_TEXT("Exception"));
-      return -1;
-    }
-  ACE_ENDTRY;
-
-  return 0;
+  // Initialize the Naming Client.
+  return (this->naming_client_.init (this->orb_.in ()));
 }
 
 // Create an instance of the clerk with appropriate parameters.
@@ -407,28 +376,6 @@ Clerk_i::create_clerk (void)
   return 0;
 }
 
-// Check if this is the first Clerk to bind to the Naming
-// Service. If yes, then 1 is returned else 0 is returned.
-
-int
-Clerk_i::if_first_clerk (CosNaming::Name clerk_context_name)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      this->my_name_server_->resolve
-        (clerk_context_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::UserException, userex)
-    {
-      ACE_UNUSED_ARG (userex);
-      return 1;
-    }
-  ACE_ENDTRY;
-  return 0;
-}
-
 // Binds the clerk in the context ClerkContext with the name
 // Clerk:<hostname>.
 
@@ -444,24 +391,22 @@ Clerk_i::register_clerk (void)
       clerk_context_name.length (1);
       clerk_context_name[0].id = CORBA::string_dup ("ClerkContext");
 
-      CosNaming::NamingContext_var clerk_context;
-
-      if (if_first_clerk (clerk_context_name))
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
         {
-          clerk_context = this->my_name_server_->new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          this->my_name_server_->rebind_context (clerk_context_name,
-                                                 clerk_context.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          CosNaming::NamingContext_var clerk_context =
+	    this->naming_client_->bind_new_context(clerk_context_name);
+	  ACE_TRY_CHECK;
+	}
+      ACE_CATCH(CosNaming::NamingContext::AlreadyBound, ex)
+        {
+	  // OK, naming context already exists.
         }
+      ACE_ENDTRY;
 
       char host_name[MAXHOSTNAMELEN];
       char clerk_mc_name[MAXHOSTNAMELEN];
-
-      ACE_OS::hostname (host_name,
-                        MAXHOSTNAMELEN);
+      ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
 
       //CosNaming::Name clerk_name (clerk_context_name);
       CosNaming::Name clerk_name;
@@ -473,7 +418,7 @@ Clerk_i::register_clerk (void)
       clerk_name[0].id = CORBA::string_dup ("ClerkContext");
       clerk_name[1].id = CORBA::string_dup (clerk_mc_name);
 
-      this->my_name_server_->rebind (clerk_name,
+      this->naming_client_->rebind (clerk_name,
                                      this->time_service_clerk_.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -541,8 +486,7 @@ Clerk_i::init (int argc,
                       ACE_LIB_TEXT("IOR file not specified. Using the Naming Service instead\n")));
 
           // Initialize the Naming Service.
-          if (this->init_naming_service (command.get_argc(),
-                                         command.get_ASCII_argv()) !=0 )
+          if (this->init_naming_service () !=0 )
             return -1;
 
           // Get a reference to the Server Naming context and the
