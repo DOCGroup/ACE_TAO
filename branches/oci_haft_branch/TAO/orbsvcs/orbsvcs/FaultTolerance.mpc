@@ -1,4 +1,4 @@
-project(FaultTolerance) : orbsvcslib, core, notification, ftorb {
+project(FaultTolerance) : orbsvcslib, core, notification, ftorb, portablegroup {
   sharedname   = TAO_FaultTolerance
   idlflags    += -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags = TAO_FT_BUILD_DLL
@@ -8,7 +8,7 @@ project(FaultTolerance) : orbsvcslib, core, notification, ftorb {
     FT_CORBA.idl
     FT_Replica.idl
     FT_Notifier.idl
-    FT_Detector.idl
+    FT_FaultDetectorFactory.idl
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
@@ -19,8 +19,8 @@ project(FaultTolerance) : orbsvcslib, core, notification, ftorb {
       FT_ReplicaS.cpp
       FT_NotifierC.cpp
       FT_NotifierS.cpp
-      FT_DetectorC.cpp
-      FT_DetectorS.cpp
+      FT_FaultDetectorFactoryC.cpp
+      FT_FaultDetectorFactoryS.cpp
     }
   }
 }

@@ -1,12 +1,12 @@
-// $Id$
+/* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    Detector_i.h
+ *  @file    Fault_Detector_i.h
  *
  *  $Id$
  *
  *  This file is part of Fault Tolerant CORBA.
- *  This file declares the Detector_i class.
+ *  This file declares the Fault_Detector_i class.
  *  The class implements the FaultDetectors as defined
  *  in the specification.
  *  A FaultDetector monitors the health of replicas.
@@ -18,8 +18,8 @@
 //=============================================================================
 
 
-#ifndef FT_DETECTOR_I_H_
-#define FT_DETECTOR_I_H_
+#ifndef FAULT_DETECTOR_I_H_
+#define FAULT_DETECTOR_I_H_
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -36,22 +36,22 @@ class FT_FaultDetectorFactory_i;
 //////////////////////
 // Class declarations
 
-class Detector_i
+class Fault_Detector_i
 {
   ///////////////////
   // Public interface
 public:
-  Detector_i (
+  Fault_Detector_i (
     FT_FaultDetectorFactory_i & factory,
     CORBA::ULong id,
     FT::FaultNotifier_var & notifier,
     FT::PullMonitorable_var & monitorable,
     FT::FTDomainId domain_id,
-    FT::ObjectGroupId group_id,
+    FT::Location object_location,
     FT::TypeId object_type,
-    FT::Location object_location
+    FT::ObjectGroupId group_id
     );
-  ~Detector_i ();
+  ~Fault_Detector_i ();
 
   void start(ACE_Thread_Manager & threadManager);
 
@@ -74,9 +74,9 @@ private:
   ////////////////////
   // Forbidden methods
 private:
-  Detector_i ();
-  Detector_i (Detector_i & rhs);
-  Detector_i & operator = (const Detector_i & rhs);
+  Fault_Detector_i ();
+  Fault_Detector_i (Fault_Detector_i & rhs);
+  Fault_Detector_i & operator = (const Fault_Detector_i & rhs);
 
   ///////////////
   // Static data
@@ -104,4 +104,4 @@ private:
   int quitRequested_;
 };
 
-#endif // FT_DETECTOR_I_H_
+#endif // FAULT_DETECTOR_I_H_

@@ -1,7 +1,7 @@
-// $Id$
+/* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    DetectorFactory_i.h
+ *  @file    FT_FaultDetectorFactory_i.h
  *
  *  $Id$
  *
@@ -14,8 +14,8 @@
  */
 //=============================================================================
 
-#ifndef FT_DETECTORFACTORY_I_H_
-#define FT_DETECTORFACTORY_I_H_
+#ifndef FT_FAULTDETECTORFACTORY_I_H_
+#define FT_FAULTDETECTORFACTORY_I_H_
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -28,26 +28,26 @@ class  FT_FaultDetectorFactory_i;
 
 /////////////////////////////////
 // Includes needed by this header
-#include "orbsvcs/FT_DetectorFactoryS.h"
-#include <ace/Thread_Manager.h>
+#include "orbsvcs/FT_FaultDetectorFactoryS.h"
+#include "ace/Thread_Manager.h"
 
 /////////////////////
 // Forward references
 class TAO_ORB_Manager;
-class Detector_i;
+class Fault_Detector_i;
 
 /**
  * Implement the FaultDetectorFactory interface.
- * 
+ *
  * Because each FaultDetector runs in a separate thread, care
  * must be taken to insure that the thread comes to an end, and
- * that the detector_i object is deleted at the right time.  Hence,
- * the FaultDetector life cycle:
+ * that the Fault_Detector_i object is deleted at the right time.
+ * Hence, the FaultDetector life cycle:
  *  Creation:
- *  A dector_i object to implement a fault detector is created 
+ *  A Fault_Detector_i object to implement a fault detector is created
  *  in response to the create_object call on the factory.
- *  A pointer to the detector_i is stored in the detectors_ table.
- *  The start method of the detector_i is called to create a thread
+ *  A pointer to the Fault_Detector_i is stored in the detectors_ table.
+ *  The start method of the Fault_Detector_i is called to create a thread
  *  that will monotor the object-to-be-monitored.  An ACE_Thread_Manager
  *  supplied by the factory is used to track the thread.
  *
@@ -55,13 +55,13 @@ class Detector_i;
  *  If the factory wants the detector to go away, it calls the
  *  quitRequested method of the detector which sets a flag that must
  *  be checked regularly by the detector.
- *  If the object being monitored faults, the detector sends the 
+ *  If the object being monitored faults, the detector sends the
  *  notification message then sets its own quit requested flag.
  *  When a detector discovers the quit requested flag has been set
  *  it calls the removeDetector method of the factory, then ends
  *  the thread.
  *  The removeDetector method of the factory removes the detector from
- *  the detectors_ collection, then deletes the detector_i object.
+ *  the detectors_ collection, then deletes the Fault_Detector_i object.
  *  The factory closes the ACE_Thread_Manager to ensure that all
  *  detector threads have departed before the factory itself is
  *  deleted.
@@ -69,22 +69,45 @@ class Detector_i;
  */
 class  FT_FaultDetectorFactory_i : public virtual POA_FT::FaultDetectorFactory
 {
-  typedef ACE_Vector<Detector_i *> DetectorVec;
+  typedef ACE_Vector<Fault_Detector_i *> DetectorVec;
 
   //////////////////////
   // non-CORBA interface
 public:
+  /**
+   * Default constructor.
+   */
   FT_FaultDetectorFactory_i ();
 
+  /**
+   * Virtual destructor.
+   */
   virtual ~FT_FaultDetectorFactory_i ();
 
+  /**
+   * Parse command line arguments.
+   */
   int parse_args (int argc, char * argv[]);
+
+  /**
+   * Publish this objects IOR.
+   */
   int self_register (TAO_ORB_Manager & orbManager);
+
+  /**
+   * Return a string to identify this object for logging/console message purposes.
+   */
   const char * identity () const;
 
-  void removeDetector(CORBA::ULong id, Detector_i * detector);
+  /**
+   * Remove pointer to individual detector; delete Fault_Detector_i.
+   */
+  void removeDetector (CORBA::ULong id, Fault_Detector_i * detector);
 
-  void shutdown_i();
+  /**
+   * Clean house for process shut down.
+   */
+  void shutdown_i ();
 
   //////////////////
   // CORBA interface
@@ -121,6 +144,12 @@ public:
     CORBA::SystemException
     , FT::ObjectNotFound
   ));
+
+  ////////////////////////////////
+  // CORBA interface PullMonitorable
+
+  virtual CORBA::Boolean is_alive ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /////////////////
   // Implementation
@@ -159,11 +188,19 @@ private:
    */
   const char * nsName_;
 
+  /**
+   * Quit on idle flag.
+   */
+  int quitOnIdle_;
+
   ACE_CString identity_;
 
+  /**
+   * A human-readable string to distinguish this from other Notifiers.
+   */
   ACE_Thread_Manager threadManager_;
 
   DetectorVec detectors_;
 };
 
-#endif /* FT_DETECTORFACTORY_I_H_  */
+#endif /* FT_FAULTDETECTORFACTORY_I_H_  */

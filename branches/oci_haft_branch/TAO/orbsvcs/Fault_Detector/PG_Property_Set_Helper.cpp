@@ -1,11 +1,11 @@
-// $Id$
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    Detector.h
  *
  *  $Id$
  *
- *  This file implements classes to help manage the Property_Sets 
+ *  This file implements classes to help manage the Property_Sets
  *  defined in the Portable Object Group.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
@@ -55,14 +55,14 @@ void Portable_Group::Property_Set::Encoder::add (
 }
 
 void Portable_Group::Property_Set::Encoder::encode (
-  FT::Properties_var & property_set) const
+  PortableGroup::Properties_var & property_set) const
 {
   size_t count = values_.size();
   property_set->length(count);
   for( size_t nItem = 0; nItem < count; ++nItem )
   {
     const NamedValue & nv = values_[nItem];
-    FT::Property & property = property_set[nItem];
+    PortableGroup::Property & property = property_set[nItem];
     CosNaming::Name & nsName = property.nam;
     CORBA::Any & anyValue = property.val;
     // assign the value
@@ -82,12 +82,12 @@ void Portable_Group::Property_Set::Encoder::encode (
 
 //////////
 // Decoder
-Portable_Group::Property_Set::Decoder::Decoder (const FT::Properties & property_set)
+Portable_Group::Property_Set::Decoder::Decoder (const PortableGroup::Properties & property_set)
 {
   size_t count = property_set.length();
   for (size_t nItem = 0; nItem < count; ++nItem)
   {
-    const FT::Property & property = property_set[nItem];
+    const PortableGroup::Property & property = property_set[nItem];
     const CosNaming::Name & nsName = property.nam;
     // note assumption one level name with no kind
     // TODO: fix this
@@ -96,7 +96,7 @@ Portable_Group::Property_Set::Decoder::Decoder (const FT::Properties & property_
     if (0 != values_.bind(name, property.val))
     {
       ACE_ERROR ((LM_ERROR,
-        "%T %n: Property_set: bind failed.\n"
+        "%n\n%T: Property_set: bind failed.\n"
         ));
     }
   }
@@ -130,7 +130,7 @@ int Portable_Group::Property_Set::test_encode_decode ()
   static const double testDouble = 3.1415;
   static const char * testDoubleKey = "pi";
 
-  FT::Properties_var property_set = new FT::Properties;
+  PortableGroup::Properties_var property_set = new PortableGroup::Properties;
   //scope encoder to be sure its gone before decoding
   {
     Portable_Group::Property_Set::Encoder encoder;
@@ -155,7 +155,7 @@ int Portable_Group::Property_Set::test_encode_decode ()
     if (longResult != testLong)
     {
       ACE_ERROR ((LM_ERROR,
-        "%T %n: %s = %d expecting %d\n",
+        "%n\n%T: %s = %d expecting %d\n",
           testLongKey,
           (int)longResult,
           (int)testLong
@@ -166,7 +166,7 @@ int Portable_Group::Property_Set::test_encode_decode ()
   else
   {
     ACE_ERROR ((LM_ERROR,
-      "%T %n: Can't find value for %s\n", testLongKey
+      "%n\n%T: Can't find value for %s\n", testLongKey
       ));
     result = 0;
   }
@@ -177,7 +177,7 @@ int Portable_Group::Property_Set::test_encode_decode ()
     if(0 != ACE_OS::strcmp(testString, stringResult))
     {
       ACE_ERROR ((LM_ERROR,
-        "%T %n: %s = \"%s\" expecting \"%s\"\n",
+        "%n\n%T: %s = \"%s\" expecting \"%s\"\n",
           testStringKey,
           (int)stringResult,
           (int)testString
@@ -188,7 +188,7 @@ int Portable_Group::Property_Set::test_encode_decode ()
   else
   {
     ACE_ERROR ((LM_ERROR,
-      "%T %n: Can't find value for %s\n", testStringKey
+      "%n\n%T: Can't find value for %s\n", testStringKey
       ));
     result = 0;
   }
@@ -199,16 +199,11 @@ int Portable_Group::Property_Set::test_encode_decode ()
   {
     if(doubleResult != testDouble)
     {
-      // ACE_ERROR doesn't format doubles, so...
-      char buffer[200];
-      ACE_OS::snprintf(buffer, sizeof(buffer),
-              "%s = \"%f\" expecting \"%f\"\n",
+      ACE_ERROR ((LM_ERROR,
+        "%n\n%T: %s = \"%f\" expecting \"%f\"\n",
           testDoubleKey,
           doubleResult,
           testDouble
-        );
-      ACE_ERROR ((LM_ERROR, 
-        "%T %n: %s", buffer
         ));
       result = 0;
     }
@@ -216,10 +211,20 @@ int Portable_Group::Property_Set::test_encode_decode ()
   else
   {
     ACE_ERROR ((LM_ERROR,
-      "%T %n: Can't find value for %s\n", testDoubleKey
+      "%n\n%T: Can't find value for %s\n", testDoubleKey
       ));
     result = 0;
   }
 
   return result;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template ACE_Pair< ACE_CString, CORBA::Any>;
+  template ACE_Vector< NamedValue, 10 >;
+  template ACE_Hash_Map_Manager<ACE_CString, CORBA::Any, ACE_SYNCH_NULL_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate ACE_Pair< ACE_CString, CORBA::Any>
+# pragma instantiate ACE_Vector< NamedValue, 10 >
+# pragma instantiate ACE_Hash_Map_Manager<ACE_CString, CORBA::Any, ACE_SYNCH_NULL_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

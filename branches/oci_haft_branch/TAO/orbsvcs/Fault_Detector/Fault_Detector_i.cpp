@@ -1,48 +1,48 @@
-// $Id$
+/* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    Detector_i.cpp
+ *  @file    Fault_Detector_i.cpp
  *
  *  $Id$
  *
  *  This file is part of Fault Tolerant CORBA.
- *  This file implements the Detector_i class as declared in Detector_i.h.
+ *  This file implements the Fault_Detector_i class as declared in Fault_Detector_i.h.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
 #include "ace/pre.h"
-#include "Detector_i.h"
-#include "FT_DetectorFactory_i.h"
+#include "Fault_Detector_i.h"
+#include "FT_FaultDetectorFactory_i.h"
 
-Detector_i::Detector_i (
+Fault_Detector_i::Fault_Detector_i (
       FT_FaultDetectorFactory_i & factory,
       CORBA::ULong id,
       FT::FaultNotifier_var & notifier,
       FT::PullMonitorable_var & monitorable,
       FT::FTDomainId domain_id,
-      FT::ObjectGroupId group_id,
+      FT::Location object_location,
       FT::TypeId object_type,
-      FT::Location object_location
+      FT::ObjectGroupId group_id
       )
   : factory_(factory)
   , id_(id)
   , notifier_(notifier)
   , monitorable_(monitorable)
   , domain_id_(domain_id)
-  , group_id_(group_id)
   , object_location_(object_location)
   , object_type_(object_type)
+  , group_id_(group_id)
   , sleep_(0)           // initially not signaled
   , quitRequested_(0)
 {
 }
 
-Detector_i::~Detector_i ()
+Fault_Detector_i::~Fault_Detector_i ()
 {
 }
 
-void Detector_i::run()
+void Fault_Detector_i::run()
 {
   while ( ! quitRequested_ )
   {
@@ -77,7 +77,7 @@ void Detector_i::run()
 }
 
 
-void Detector_i::notify()
+void Fault_Detector_i::notify()
 {
   CosNotification::StructuredEvent *  pEvent;
   ACE_NEW_NORETURN(pEvent, CosNotification::StructuredEvent );
@@ -113,7 +113,7 @@ void Detector_i::notify()
     }
     ACE_TRY_NEW_ENV
     {
-      notifier_->push_structured_fault(vEvent.in() 
+      notifier_->push_structured_fault(vEvent.in()
         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -128,33 +128,31 @@ void Detector_i::notify()
   }
 }
 
-void Detector_i::requestQuit()
+void Fault_Detector_i::requestQuit()
 {
   quitRequested_ = 1;
   // wake up the thread
   sleep_.signal ();
 }
 
-void Detector_i::start(ACE_Thread_Manager & threadManager)
+void Fault_Detector_i::start(ACE_Thread_Manager & threadManager)
 {
   threadManager.spawn(thr_func, this);
 }
 
 //static
-ACE_THR_FUNC_RETURN Detector_i::thr_func (void * arg)
+ACE_THR_FUNC_RETURN Fault_Detector_i::thr_func (void * arg)
 {
-  Detector_i * detector = static_cast<Detector_i *>(arg);
+  Fault_Detector_i * detector = static_cast<Fault_Detector_i *>(arg);
   detector->run();
   return 0;
 }
 
 //static
-ACE_Time_Value Detector_i::sleepTime_(1,0);
+ACE_Time_Value Fault_Detector_i::sleepTime_(1,0);
 
 //static
-void Detector_i::setTimeValue(ACE_Time_Value value)
+void Fault_Detector_i::setTimeValue(ACE_Time_Value value)
 {
 }
-
-
 

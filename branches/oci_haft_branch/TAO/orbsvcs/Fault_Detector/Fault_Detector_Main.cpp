@@ -1,4 +1,4 @@
-// $Id$
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    FaultDetectorMain.cpp
@@ -15,7 +15,7 @@
 //=============================================================================
 
 #include "ace/pre.h"
-#include "FT_DetectorFactory_i.h"
+#include "FT_FaultDetectorFactory_i.h"
 
 #include "tao/PortableServer/ORB_Manager.h"
 
@@ -46,7 +46,7 @@ int main (int argc, ACE_TCHAR * argv[] )
         if ( Portable_Group::Property_Set::test_encode_decode () )
         {
           ACE_ERROR ((LM_ERROR,
-            "%T %n: Passed property set self-test.\n "
+            "%n\n%T: Passed property set self-test.\n "
             ));
         }
 
@@ -54,7 +54,7 @@ int main (int argc, ACE_TCHAR * argv[] )
         if (result == 0)
         {
           ACE_ERROR ((LM_ERROR,
-            "%T %n: Ready %s\n", factory.identity() 
+            "%n\n%T: Ready %s\n", factory.identity()
             ));
 
           // Run the main event loop for the ORB.
@@ -62,26 +62,26 @@ int main (int argc, ACE_TCHAR * argv[] )
           if (result == -1)
           {
             ACE_ERROR_RETURN (
-              (LM_ERROR, "%T %n: FT_Replica_i::run error"),
+              (LM_ERROR, "%n\n%T: FT_Replica_i::run error"),
               -1);
           }
           ACE_TRY_CHECK;
           ACE_ERROR ((LM_ERROR,
-            "%T %n: Terminated normally. %s\n", factory.identity()
+            "%n\n%T: Terminated normally. %s\n", factory.identity()
             ));
         }
         else
         {
-          ACE_ERROR ((LM_ERROR, 
-            "%T %n: Write IOR failed: %p\n"
+          ACE_ERROR ((LM_ERROR,
+            "%n\n%T: Write IOR failed: %p\n"
             ));
           result = -1;
         }
       }
       else
       {
-        ACE_ERROR ((LM_ERROR, 
-          "%T %n: orb manager init failed\n"
+        ACE_ERROR ((LM_ERROR,
+          "%n\n%T: orb manager init failed\n"
         ));
         result = -1;
       }
@@ -96,3 +96,5 @@ int main (int argc, ACE_TCHAR * argv[] )
   }
   return result;
 }
+
+

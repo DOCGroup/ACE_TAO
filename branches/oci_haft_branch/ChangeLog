@@ -1,3 +1,41 @@
+Mon Jul 28 16:20:29 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+
+        * TAO/orbsvcs/Fault_Detector/Detector_i.h:
+        * TAO/orbsvcs/Fault_Detector/Detector_i.cpp:
+        * TAO/orbsvcs/Fault_Detector/FT_DetectorFactory_i.h:
+        * TAO/orbsvcs/Fault_Detector/FT_DetectorFactory_i.cpp:
+          Renamed these files to...
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+        * TAO/orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * TAO/orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+          ...respectively
+
+        * TAO/orbsvcs/orbsvcs/FT_CORBA.idl:
+        * TAO/orbsvcs/orbsvcs/FT_Notifier.idl:
+        * TAO/orbsvcs/orbsvcs/FT_Replica.idl:
+          Modified IDL to use PortableGroup definitions in FT.
+
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * TAO/orbsvcs/Fault_Detector/PG_Property_Set_Helper.h:
+        * TAO/orbsvcs/Fault_Detector/PG_Property_Set_Helper.cpp:
+          Use PortableGroup definitions.
+
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * TAO/orbsvcs/orbsvcs/FaultTolerance.mpc:
+          Build renamed files.
+
+        * TAO/tests/FT_App/FT_App.mpc:
+        * TAO/tests/FT_App/FT_Client.cpp:
+        * TAO/tests/FT_App/FT_Replica.cpp:
+        * TAO/tests/FT_App/FT_TestReplica.idl:
+        * TAO/tests/FT_App/FT_TestReplica_i.h:
+        * TAO/tests/FT_App/FT_TestReplica_i.cpp:
+          Continue work on unit test for FaultDetector.
+
+        These changes were made in the oci_haft branch.
+
 Wed Jul 23 17:23:33 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * TAO/orbsvcs/Fault_Detector/Detector_i.h:

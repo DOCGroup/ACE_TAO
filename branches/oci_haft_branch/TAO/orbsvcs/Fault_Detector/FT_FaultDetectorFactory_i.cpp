@@ -1,26 +1,41 @@
-// $Id$
+/* -*- C++ -*- */
+//=============================================================================
+/**
+ *  @file    FT_FaultDetectorFactory_i.cpp
+ *
+ *  $Id$
+ *
+ *  This file is part of Fault Tolerant CORBA.
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
 #include "ace/pre.h"
-#include "FT_DetectorFactory_i.h"
-#include "Detector_i.h"
+#include "FT_FaultDetectorFactory_i.h"
+#include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/PortableServer/ORB_Manager.h"
 #include "PG_Property_Set_Helper.h"
 
-FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i (void)
+FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   : ior_output_file_(0)
   , nsName_(0)
+  , quitOnIdle_(0)
 {
 }
 
 
-FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i (void)
+FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
 {
-  InternalGuard guard (internals_);
+  //scope the guard
+  {
+    InternalGuard guard (internals_);
 
-  // be sure all detectors are gone
-  // before this object disappears
-  shutdown_i ();
+    // be sure all detectors are gone
+    // before this object disappears
+    shutdown_i ();
+  }
   threadManager_.close ();
 }
 
@@ -29,7 +44,7 @@ void FT_FaultDetectorFactory_i::shutdown_i()
   // assume mutex is locked
   for (size_t nDetector = 0; nDetector < detectors_.size(); ++nDetector)
   {
-    Detector_i * detector = detectors_[nDetector];
+    Fault_Detector_i * detector = detectors_[nDetector];
     if (detector != 0)
     {
       detector->requestQuit();
@@ -39,25 +54,35 @@ void FT_FaultDetectorFactory_i::shutdown_i()
 
 int FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:q");
   int c;
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
-      {
+    {
       case 'o':
         ior_output_file_ = get_opts.opt_arg ();
         break;
+      case 'q':
+      {
+        quitOnIdle_ = 1;
+        break;
+      }
 
       case '?':
+        // fall thru
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
+                           "usage:  %s"
+                           " -o <iorfile>"
+                           " -q{uit on idle}"
                            "\n",
                            argv [0]),
                           -1);
-      }
+      break;
+    }
+  }
   // Indicates sucessful parsing of the command line
   return 0;
 }
@@ -134,7 +159,9 @@ void FT_FaultDetectorFactory_i::change_properties (
   static const long timeT_per_uSec = 10L;
   static const long uSec_per_sec = 1000000L;
 
-  Portable_Group::Property_Set::Decoder decoder(property_set);
+
+  const PortableGroup::Properties * PGp = reinterpret_cast<const PortableGroup::Properties *>(&property_set);
+  Portable_Group::Property_Set::Decoder decoder(*PGp);
 
   TimeBase::TimeT value = 0;
   if( Portable_Group::Property_Set::find (decoder, FT::FT_FAULT_MONITORING_INTERVAL, value) )
@@ -144,7 +171,7 @@ void FT_FaultDetectorFactory_i::change_properties (
     long uSec = static_cast<long>((value / timeT_per_uSec) % uSec_per_sec);
     long sec = static_cast<long>((value / timeT_per_uSec) / uSec_per_sec);
     ACE_Time_Value atv(sec, uSec);
-    Detector_i::setTimeValue(atv);
+    Fault_Detector_i::setTimeValue(atv);
   }
   else
   {
@@ -176,11 +203,13 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
 {
   InternalGuard guard (internals_);
 
-  ::Portable_Group::Property_Set::Decoder decoder (the_criteria);
+  const PortableGroup::Properties * pgc
+    = reinterpret_cast<const PortableGroup::Properties *> (&the_criteria);
+  ::Portable_Group::Property_Set::Decoder decoder (*pgc);//the_criteria);
 
   // boolean, becomes true if a required parameter is missing
   int missingParameter = 0;
-   
+
 
   CORBA::ULong detectorId = detectors_.size();
 
@@ -211,11 +240,11 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
     missingParameter = 1;
   }
 
-  FT::ObjectGroupId group_id = 0;
+  FT::Location_var object_location;
   if (! ::Portable_Group::Property_Set::find (
     decoder,
-    ::FT::FT_GROUP_ID,
-    group_id) )
+    ::FT::FT_LOCATION,
+    object_location) )
   {
     missingParameter = 1;
   }
@@ -226,16 +255,16 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
     ::FT::FT_TYPE_ID,
     object_type) )
   {
-    missingParameter = 1;
+    // Not required: missingParameter = 1;
   }
 
-  FT::Location_var object_location;
+  FT::ObjectGroupId group_id = 0;
   if (! ::Portable_Group::Property_Set::find (
     decoder,
-    ::FT::FT_LOCATION,
-    object_location) )
+    ::FT::FT_GROUP_ID,
+    group_id) )
   {
-    missingParameter = 1;
+    // Not required: missingParameter = 1;
   }
 
   if (missingParameter)
@@ -243,16 +272,16 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
     ACE_THROW ( FT::InvalidCriteria() );
   }
 
-  Detector_i * detector;
-  ACE_NEW_NORETURN(detector, Detector_i(
+  Fault_Detector_i * detector;
+  ACE_NEW_NORETURN(detector, Fault_Detector_i(
     *this,
     detectorId,
     notifier,
     monitorable,
     domain_id,
-    group_id,
+    object_location,
     object_type,
-    object_location));
+    group_id));
   if (detector == 0)
   {
     ACE_THROW ( FT::ObjectNotCreated() );
@@ -261,8 +290,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
   detectors_.push_back(detector);
 
   (*factory_creation_id) <<= detectorId;
-  
- 
+
   // since FaultDetector is not a CORBA object (it does not implement
   // an interface.) we always return NIL;
   return CORBA::Object::_nil();
@@ -307,11 +335,17 @@ int FT_FaultDetectorFactory_i::write_IOR()
     ACE_OS::fclose (out);
     result = 0;
   }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+      "Open failed for %s\n", nsName_
+    ));
+  }
   return result;
 }
 
 
-void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Detector_i * detector)
+void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i * detector)
 {
   InternalGuard guard (internals_);
   if (id < detectors_.size())
@@ -323,5 +357,17 @@ void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Detector_i * det
     }
   }
 }
+
+CORBA::Boolean FT_FaultDetectorFactory_i::is_alive ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return 1;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template ACE_Vector<Fault_Detector_i *>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate ACE_Vector<Fault_Detector_i *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 

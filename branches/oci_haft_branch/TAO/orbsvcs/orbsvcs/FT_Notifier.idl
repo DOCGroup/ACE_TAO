@@ -1,16 +1,26 @@
-//$Id$
-// FT.idl
+/* -*- IDL -*- */
+//=============================================================================
+/**
+ *  @file    FT_Notifier.idl
+ *
+ *  $Id$
+ *
+ *  This file is part of Fault Tolerant CORBA.
+ *  This was original part of the OMG FT.idl file
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
+
 #ifndef _FT_NOTIFIER_IDL_
 #define _FT_NOTIFIER_IDL_
 
-// The OMG FT file has been split into 
-//      FT_CORBA_ORB.idl -- Interface(s) to be implemented in the orb
-//      FT_CORBA.idl  -- Interface(s) to be implemented by the Replication manager
-//      FT_Notifier.idl -- Interface(s) to be implemented by FaultNotifier
-//      FT_Servant.idl -- Interface(s) to be implemented by the servant
-
-// The next include is TAO specific.
+///////////////////////////////
+// TAO specific includes
 #include "orbsvcs/FT_CORBA_ORB.idl"
+#include "orbsvcs/FT_Replica.idl"
+// end of TAO specific includes
+///////////////////////////////
 
 #include "orbsvcs/CosNaming.idl" // 98-10-19.idl
 #include "orbsvcs/CosNotification.idl" // from telecom/98-11-03.idl
@@ -24,7 +34,9 @@ module FT
 {
   // Specifications for Fault Management
   // Specification of FaultNotifier Interface
-  interface FaultNotifier {
+  // TAO SPECIFIC:  added inheritence from PullMonitorable
+  interface FaultNotifier  : ::FT::PullMonitorable
+  {
     typedef unsigned long long ConsumerId;
     void push_structured_fault( in CosNotification::StructuredEvent
                                 event);
@@ -42,7 +54,7 @@ module FT
                                                filter);
 
     void disconnect_consumer( in ConsumerId connection)
-    raises(CosEventComm::Disconnected); 
+    raises(CosEventComm::Disconnected);
   };
 };
 
