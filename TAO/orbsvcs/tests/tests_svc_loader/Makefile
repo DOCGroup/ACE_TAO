@@ -13,22 +13,12 @@ ifndef TAO_ROOT
 endif
 
 LDLIBS  = -lTAO
-ACE_SHLIBS = -lTAO -lACE
 
 PROG_SRCS = tests_svc_loader.cpp
        
 SRC = $(PROG_SRCS)
 
-SIMPLE_CLI_OBJS = tests_svc_loader.o
-       
-BIN2 = tests_svc_loader
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifneq (minimum_corba,1)
-  BIN = $(BIN2)
-endif # minimum_corba
+BIN_UNCHECKED = tests_svc_loader
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -38,9 +28,14 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifneq ($(minimum_corba),1)
+  BIN = $(BIN_UNCHECKED)
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
@@ -50,13 +45,6 @@ include $(TAO_ROOT)/taoconfig.mk
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
-
-.PRECIOUS: $(foreach ext, $(IDL_EXT), Time_Date$(ext))
-
-tests_svc_loader: $(addprefix $(VDIR),$(SIMPLE_CLI_OBJS)) $(SHLIB)
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-$(BIN):
 
 #----------------------------------------------------------------------------
 #       Dependencies
