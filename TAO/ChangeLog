@@ -1,3 +1,23 @@
+Tue Nov 26 15:01:40 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AbstractBase.cpp:
+        * tao/AbstractBase.h:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/ValueBase.cpp:
+        * tao/ValueBase.h:
+        * tao/ValueFactory.cpp:
+        * tao/ValueFactory.h:
+        * tao/ValueFactory_Map.cpp:
+        * tao/ValueFactory_Map.h:
+        * tao/corbafwd.h:
+        * tao/orbconf.h:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynCommon.h:
+
+          Removed TAO_HAS_VALUETYPE flag. None of the tests or examples that 
+          use valuetypes have ever used this flag.
+          
 Tue Nov 26 14:21:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
         * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h:

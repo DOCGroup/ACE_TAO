@@ -25,8 +25,6 @@
 #include "tao/ValueBase.h"
 #include "tao/ValueFactory.h"
 
-#if (TAO_HAS_VALUETYPE == 1)
-
 /**
  * @class CORBA_AbstractBase
  *
@@ -173,8 +171,6 @@ operator>> (TAO_InputCDR &, CORBA_AbstractBase_ptr &);
 #if defined (__ACE_INLINE__)
 # include "tao/AbstractBase.inl"
 #endif /* __ACE_INLINE__) */
-
-#endif /* TAO_HAS_VALUETYPE == 1 */
 
 #include "ace/post.h"
 

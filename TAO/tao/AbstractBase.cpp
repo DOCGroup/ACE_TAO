@@ -20,8 +20,6 @@
 #include "tao/ValueFactory.h"
 #include "tao/debug.h"
 
-#if (TAO_HAS_VALUETYPE == 1)
-
 #if !defined (__ACE_INLINE__)
 # include "tao/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -347,4 +345,3 @@ CORBA_AbstractBase::_tao_to_value (void)
   return 0;
 }
 
-#endif /* TAO_HAS_VALUETYPE == 1 */
