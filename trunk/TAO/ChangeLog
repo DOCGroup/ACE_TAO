@@ -1,3 +1,10 @@
+Sun Dec  7 10:03:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp:
+          Changed the names of enum declarations "NONE" in this
+          file. This was causing a clash with VxWORKS systems
+          headers.
+
 Sun Dec  7 09:49:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Asynch_Reply_Dispatcher_Base.h:
