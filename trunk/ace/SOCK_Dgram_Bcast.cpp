@@ -160,27 +160,16 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 #endif /* ! _UNICOS */
     }
 
-/* November 2004 already passed ? If so, then please remove this
-   commented code
+
+#if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
-#if !defined(CHORUS_4) && !defined(AIX)
        n--, ifr++)
 #else
-       n--,
-           ((ifr->ifr_addr.sa_len <= sizeof (struct sockaddr)) ?
-             ifr++ :
-             ifr = (struct ifreq *)
-             (ifr->ifr_addr.sa_len + (caddr_t) &ifr->ifr_addr)))
-#endif
-*/
-
   /*
      There are addresses longer than sizeof (struct sockaddr) eg. IPv6
      or QNX::links. In this case address does not fit into struct ifreq.
-     Fortunatelly, one can determine the length from sa_len field. The
-     problem with adresses was probably recognized under AIX and CHORUS,
-     what led to a partial bugfix related with enumeration of interfaces
-     (see the commented out code above).
+     The code below could be applied everywhere, but now every system
+	 provides sockaddr.sa_len field.
    */
   for (int nbytes = ifc.ifc_len; nbytes >= (int) sizeof (struct ifreq) &&
         ((ifr->ifr_addr.sa_len > sizeof (struct sockaddr)) ?
@@ -190,6 +179,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
           (nbytes -= sizeof (struct ifreq), ifr++)))
+#endif
     {
 #if defined (__QNX__)
       // Silently skip link interfaces
