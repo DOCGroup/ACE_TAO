@@ -1,3 +1,13 @@
+Fri Jun 18 18:36:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* docs/index.html: Changed title of the ACE-tutorial.pdf/ps link to
+	  say it's a tutorial, not the ACE programmer's guide, so as not to
+	  confuse this with "The ACE Programmer's Guide" (APG). Thanks to
+	  Johnny Willemsen for pointing out this confusion.
+
+	* docs/ACE-tutorials.html: Removed. All of the pertinent information
+	  is on the index.html page.
+
 Fri Jun 18 12:42:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/OS_NS_time.cpp:
@@ -59,7 +69,7 @@ Fri Jun 18 10:12:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/msvc_notes.txt:
 
-	  Updated this file about th elocation of libraries.
+	  Updated this file about the location of libraries.
 
 	* include/makeinclude/wrapper_macros.GNU:
 
