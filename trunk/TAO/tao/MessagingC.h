@@ -1772,8 +1772,11 @@ TAO_NAMESPACE  Messaging
       void operator= (const _tao_seq_Octet_var &);
     };
 
-
 #endif /* end #if !defined */
+
+#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef _tao_seq_Octet _marshaled_exception_seq;
+#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
 
     virtual void marshaled_exception (const _tao_seq_Octet &) = 0;    // set
     virtual const _tao_seq_Octet &marshaled_exception (void) const = 0;     // get method (read only)
