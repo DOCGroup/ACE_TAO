@@ -1,5 +1,0 @@
-project : naming, notification, portablegroup, messaging {
-  after   += FaultTolerance
-  libs    += TAO_FaultTolerance
-  tagchecks   += FaultTolerance
-}
