@@ -824,7 +824,7 @@ main (int argc, char *argv [])
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -863,7 +863,7 @@ main (int argc, char *argv [])
       // the cost of doing it later.
       ACE_TIMEPROBE_RESET;
 
-#if 0
+#if 1
       CosNaming::Name channel_name (1);
       channel_name.length (1);
       channel_name[0].id = CORBA::string_dup ("EventService");

@@ -1,4 +1,4 @@
-Microsoft Developer Studio Workspace File, Format Version 6.00
+nMicrosoft Developer Studio Workspace File, Format Version 6.00
 # WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
 
 ###############################################################################
@@ -128,6 +128,39 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Disconnect"=.\Basic\Disconnect.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "MT_Disconnect"=.\Basic\MT_Disconnect.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
 }}}
 
 ###############################################################################

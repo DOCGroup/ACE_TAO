@@ -21,6 +21,8 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/orbsvcs_export.h"
 
+typedef void (*TAO_EC_Event_Initializer) (RtecEventComm::Event&);
+
 class TAO_ORBSVCS_Export ACE_ConsumerQOS_Factory
 {
   // = TITLE
@@ -113,7 +115,7 @@ class TAO_ORBSVCS_Export ACE_ConsumerQOS_Factory
   //      G+H occur, they are queued until IntervalTimeout occurs.  If
   //      IntervalTimeout occurs, it is queued until G+H occur.
 public:
-  ACE_ConsumerQOS_Factory (void);
+  ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer = 0);
   // Default construction.
 
   ~ACE_ConsumerQOS_Factory (void);
@@ -186,6 +188,12 @@ private:
   int designator_set_;
   // Whether a start_XX_group has been called yet.  This is to make
   // sure that a designator is placed in the subscription list first.
+
+  TAO_EC_Event_Initializer event_initializer_;
+  // If not zero this is a user-provided function used to initialize
+  // the events.  When the event contains unions this is required to
+  // avoid marshaling and demarshaling of default initialized unions
+  // that (AFAIK) is not CORBA compliant.
 };
 
 // ************************************************************
@@ -193,7 +201,7 @@ private:
 class TAO_ORBSVCS_Export ACE_SupplierQOS_Factory
 {
 public:
-  ACE_SupplierQOS_Factory (void);
+  ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = 0);
   // Default construction.
 
   int insert (RtecEventComm::EventSourceID sid,
@@ -216,6 +224,12 @@ public:
 private:
   RtecEventChannelAdmin::SupplierQOS qos_;
   // Representation needed by channel.
+
+  TAO_EC_Event_Initializer event_initializer_;
+  // If not zero this is a user-provided function used to initialize
+  // the events.  When the event contains unions this is required to
+  // avoid marshaling and demarshaling of default initialized unions
+  // that (AFAIK) is not CORBA compliant.
 };
 
 

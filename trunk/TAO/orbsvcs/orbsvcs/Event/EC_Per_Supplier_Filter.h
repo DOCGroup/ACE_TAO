@@ -25,7 +25,7 @@
 #ifndef TAO_EC_PER_SUPPLIER_FILTER_H
 #define TAO_EC_PER_SUPPLIER_FILTER_H
 
-#include "EC_SupplierFiltering.h"
+#include "EC_Supplier_Filter.h"
 #include "EC_Supplier_Filter_Builder.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,7 +34,7 @@
 
 class TAO_EC_ProxyPushSupplier_Set;
 
-class TAO_ORBSVCS_Export TAO_EC_Per_Supplier_Filter : public TAO_EC_SupplierFiltering
+class TAO_ORBSVCS_Export TAO_EC_Per_Supplier_Filter : public TAO_EC_Supplier_Filter
 {
   // = TITLE
   //   Filter the events on each supplier.
@@ -54,7 +54,7 @@ public:
   virtual ~TAO_EC_Per_Supplier_Filter (void);
   // Destructor
 
-  // = The TAO_EC_SupplierFiltering methods.
+  // = The TAO_EC_Supplier_Filter methods.
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void unbind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
@@ -80,6 +80,9 @@ private:
 
   CORBA::ULong refcnt_;
   // Reference counting
+
+  ACE_SYNCH_MUTEX lock_;
+  // Locking
 };
 
 // ****************************************************************
@@ -96,10 +99,10 @@ public:
   // constructor....
 
   // = The TAO_EC_Supplier_Filter_Builder methods...
-  virtual TAO_EC_SupplierFiltering*
+  virtual TAO_EC_Supplier_Filter*
       create (RtecEventChannelAdmin::SupplierQOS& qos);
   virtual void
-      destroy (TAO_EC_SupplierFiltering *filter);
+      destroy (TAO_EC_Supplier_Filter *filter);
 
 private:
   TAO_EC_Event_Channel* event_channel_;

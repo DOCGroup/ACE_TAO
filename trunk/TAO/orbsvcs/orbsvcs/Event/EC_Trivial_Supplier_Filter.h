@@ -25,7 +25,7 @@
 #ifndef TAO_EC_TRIVIAL_SUPPLIER_FILTER_H
 #define TAO_EC_TRIVIAL_SUPPLIER_FILTER_H
 
-#include "EC_SupplierFiltering.h"
+#include "EC_Supplier_Filter.h"
 #include "EC_Supplier_Filter_Builder.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,7 +36,7 @@ class TAO_EC_ProxyPushSupplier_Set;
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Trivial_Supplier_Filter : public TAO_EC_SupplierFiltering
+class TAO_ORBSVCS_Export TAO_EC_Trivial_Supplier_Filter : public TAO_EC_Supplier_Filter
 {
   // = TITLE
   //   A null filtering strategy.
@@ -51,7 +51,7 @@ public:
   TAO_EC_Trivial_Supplier_Filter (TAO_EC_Event_Channel* ec);
   // Constructor
 
-  // = The TAO_EC_SupplierFiltering methods.
+  // = The TAO_EC_Supplier_Filter methods.
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void unbind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
@@ -87,10 +87,10 @@ public:
   // constructor....
 
   // = The TAO_EC_Supplier_Filter_Builder methods...
-  virtual TAO_EC_SupplierFiltering*
+  virtual TAO_EC_Supplier_Filter*
       create (RtecEventChannelAdmin::SupplierQOS& qos);
   virtual void
-      destroy (TAO_EC_SupplierFiltering *filter);
+      destroy (TAO_EC_Supplier_Filter *filter);
 
 private:
   TAO_EC_Trivial_Supplier_Filter filter_;

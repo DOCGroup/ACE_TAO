@@ -126,7 +126,9 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECSupplierFiltering") == 0)
+      else if (ACE_OS::strcasecmp (arg, "-ECSupplierFilter") == 0
+               // @@ TODO remove, only for backwards compatibility
+               || ACE_OS::strcasecmp (arg, "-ECSupplierFiltering") == 0)
         {
           arg_shifter.consume_arg ();
 
