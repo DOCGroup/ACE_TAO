@@ -15,15 +15,15 @@ Sun Mar  4 19:31:16 2001  Darrell Brunsch <brunsch@uci.edu>
 
           Turned on autoflush for all scripts.
 
-        * M docs/run_test.txt:
+        * docs/run_test.txt:
 
           Updated run_test.pl instructions to fit all the changes I
           just made.
         
-        * M examples/Export/run_test.pl:
-        * M performance-tests/RPC/run_test.pl:
-        * M performance-tests/TCP/run_test.pl:
-        * M performance-tests/UDP/run_test.pl:
+        * examples/Export/run_test.pl:
+        * performance-tests/RPC/run_test.pl:
+        * performance-tests/TCP/run_test.pl:
+        * performance-tests/UDP/run_test.pl:
 
           Updated to use PerlACE::Run_Test;
 
