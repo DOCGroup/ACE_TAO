@@ -1,3 +1,15 @@
+Mon Jul  9 15:28:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/Dirent_Selector.cpp:
+        * ace/Dirent_Selector.h:
+
+          Added ACE_INLINE guards around inclusion of Dirent_Selector.inl.
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+
+          Added Dirent_Selector.{h,i,cpp} to these projects.
+
 Mon Jul  9 06:52:09 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Makefile.bor (OBJFILES): Added the Dirent_Selector.obj file.
