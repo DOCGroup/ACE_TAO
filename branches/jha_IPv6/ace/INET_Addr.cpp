@@ -206,9 +206,21 @@ ACE_INET_Addr::set (u_short port_number,
   ACE_UNUSED_ARG (ip_addr);
   ACE_UNUSED_ARG (encode);
 
-  // XXXXX
-  printf("Error: set not defined for 32 bit addresses with IPv6 defined\n");
-  return -1;
+  if(ip_addr == INADDR_ANY)
+    return this->set(port_number,ACE_INADDR_ANY);
+
+  struct sockaddr_in ipv4addr;
+  if(encode)
+    ip_addr = htonl(ip_addr);
+  ipv4addr.sin_addr.s_addr = ip_addr;
+
+  char addr[INET_ADDRSTRLEN];
+  if(0 == ACE_OS::inet_ntop (AF_INET, (const void*)&ip_addr, addr, INET_ADDRSTRLEN)) {
+    errno = EINVAL;
+    return -1;
+  }
+
+  return this->set(port_number,addr);
 }
 #endif
 
@@ -222,9 +234,12 @@ ACE_INET_Addr::set (u_short port_number,
 {
 #if defined (ACE_HAS_IPV6)
   unsigned char &family = this->inet_addr_.sin6_family;
+#if defined (ACE_HAS_SIN_LEN)
   unsigned char &len = this->inet_addr_.sin6_len;
+#endif
   unsigned short &port = this->inet_addr_.sin6_port;
   void *addrptr = (void*)&this->inet_addr_.sin6_addr;
+  int addrsize = sizeof(this->inet_addr_.sin6_addr);
 #else
   unsigned short &family = this->inet_addr_.sin_family;
 #if defined (ACE_HAS_SIN_LEN)
@@ -232,6 +247,7 @@ ACE_INET_Addr::set (u_short port_number,
 #endif
   unsigned short &port = this->inet_addr_.sin_port;
   void *addrptr = (void*)&this->inet_addr_.sin_addr;
+  int addrsize = sizeof(this->inet_addr_.sin_addr);
 #endif
 
   ACE_TRACE ("ACE_INET_Addr::set");
@@ -254,14 +270,13 @@ ACE_INET_Addr::set (u_short port_number,
     port = port_number;
 
 #if defined (ACE_HAS_IPV6)
-// XXX load a size variable up above
   (void) ACE_OS::memcpy ((void *) addrptr,
                          (void *) &inet_address,
-                         sizeof this->inet_addr_.sin6_addr);
+                         addrsize);
 #else
   (void) ACE_OS::memcpy ((void *) addrptr,
                          (void *) &inet_address,
-                         sizeof this->inet_addr_.sin_addr);
+                         addrsize);
 #endif
   return 0;
 }
@@ -449,9 +464,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 int
 ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 {
-  /* XXX not supported yet */
-  printf("Error: set (const sockaddr_in *addr, int len) not implemented for IPv6\n");
-  return -1;
+  return this->set(addr->sin_port,addr->sin_addr.s_addr);
 }
 #endif
 
@@ -558,16 +571,12 @@ ACE_INET_Addr::get_host_name (char hostname[],
                               size_t len) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
+
 #if defined (ACE_HAS_IPV6)
-  ACE_UNUSED_ARG( hostname );
-  ACE_UNUSED_ARG( len );
-
-  // XXXXXXXXXXX
-  ACE_ERROR ((LM_ERROR,"ACE_INET_Addr::get_host_name needs to be written for IPv6\n"));
-  return -1;
+  if (IN6_IS_ADDR_UNSPECIFIED(&this->inet_addr_.sin6_addr))
 #else
-
   if (this->inet_addr_.sin_addr.s_addr == INADDR_ANY)
+#endif
     {
       if (ACE_OS::hostname (hostname, len) == -1)
         return -1;
@@ -590,7 +599,11 @@ ACE_INET_Addr::get_host_name (char hostname[],
         }
 #else
 #  if !defined(_UNICOS)
+#    if defined (ACE_HAS_IPV6)
+      int a_len = sizeof this->inet_addr_.sin6_addr;
+#    else
       int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
+#    endif /* ACE_HAS_IPV6 */
 #  else /* _UNICOS */
       int a_len = sizeof this->inet_addr_.sin_addr;
 #  endif /* ! _UNICOS */
@@ -607,7 +620,12 @@ ACE_INET_Addr::get_host_name (char hostname[],
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       hostent *hp =
-        ACE_OS::gethostbyaddr_r ((char *)&this->inet_addr_.sin_addr,
+        ACE_OS::gethostbyaddr_r (
+#if defined (ACE_HAS_IPV6)
+                                 (char *)&this->inet_addr_.sin6_addr,
+#else
+                                 (char *)&this->inet_addr_.sin_addr,
+#endif
                                  a_len,
                                  this->addr_type_,
                                  &hentry,
@@ -634,7 +652,6 @@ ACE_INET_Addr::get_host_name (char hostname[],
       return 0;
 #endif /* VXWORKS */
     }
-#endif /* ACE_HAS_IPV6 */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -710,5 +727,28 @@ ACE_INET_Addr::get_host_addr (void) const
   return this->get_host_addr(buf,INET6_ADDRSTRLEN);
 #else
   return ACE_OS::inet_ntoa (this->inet_addr_.sin_addr);
+#endif
+}
+
+// Return the 4-byte IP address, converting it into host byte order.
+
+ACE_UINT32
+ACE_INET_Addr::get_ip_address (void) const
+{
+  ACE_TRACE ("ACE_INET_Addr::get_ip_address");
+#if defined (ACE_HAS_IPV6)
+  if(IN6_IS_ADDR_V4MAPPED(&this->inet_addr_.sin6_addr)) {
+    char addr[INET6_ADDRSTRLEN];
+    ACE_OS::inet_ntop (AF_INET, (const void*)&this->inet_addr_.sin6_addr, addr, INET_ADDRSTRLEN);
+    ACE_UINT32 dst;
+    ACE_OS::inet_pton(AF_INET,addr,(void*)&dst);
+    return dst;
+  } else {
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("ACE_INET_Addr::get_ip_address: address is a IPv6 address not IPv4\n")));
+    return 0;
+  }
+#else
+  return ntohl (ACE_UINT32 (this->inet_addr_.sin_addr.s_addr));
 #endif
 }
