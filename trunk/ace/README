@@ -223,6 +223,7 @@ ACE_LACKS_SIGACTION			Platform lacks struct sigaction (e.g., Win32 and Chorus)
 ACE_LACKS_SIGNED_CHAR			Platform lacks "signed char" type (broken!)
 ACE_LACKS_SIGSET			Platform lacks signal sets (e.g., Chorus and Win32)
 ACE_LACKS_STREAM_MODULES		Compiler can't grok inclusion of ACE_Stream_Modules (i.e., HP/UX 10.x with aCC).
+ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER		STL doesn't have default parameters  (e.g., MSVC 4.2)
 ACE_LACKS_SYS_NERR			Platforms/compiler lacks the sys_nerr variable (e.g., VxWorks and MVS).
 ACE_LACKS_SYSV_MSG_H			Platform lacks sys/msg.h (e.g., Chorus and VxWorks)
 ACE_LACKS_KEYDELETE			Platform lacks TSS keydelete (e.g., HP/UX)
