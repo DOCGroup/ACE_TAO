@@ -104,10 +104,19 @@ TEMPINCDIR := $(TEMPINCDIR)/<%project_name%>
 all: $(TEMPINCDIR)
 
 endif
+
 <%if(exename)%>
-OUTPUT_DIRECTORY = <%if(install)%><%install%><%else%>.<%endif%>
+INSBIN ?= <%if(install)%><%install%><%else%>.<%endif%>
+OUTPUT_DIRECTORY = $(INSBIN)
 <%else%>
-OUTPUT_DIRECTORY = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+ifeq ($(INSLIB),.)
+  ifeq ($(PWD),)
+    PWD=$(shell pwd)
+  endif
+  INSLIB = $(PWD)
+endif
+OUTPUT_DIRECTORY = $(INSLIB)
 <%endif%>
 all: $(OUTPUT_DIRECTORY)
 
@@ -119,14 +128,16 @@ $(OUTPUT_DIRECTORY):
 # turn off libcheck if doing a dry run
 ifeq ($(findstring n, $(MAKEFLAGS)),n)
   LIBCHECK = 1
-endif
-# turn off libcheck if keep going was passed too
-ifeq ($(findstring k, $(MAKEFLAGS)),k)
-  LIBCHECK = 1
-endif
-LIBCHECK ?= $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach libpath,<%libpaths%>,$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
-ifeq ($(LIBCHECK),)
-  LIBCHECK = 1
+else
+  # turn off libcheck if keep going was passed too
+  ifeq ($(findstring k, $(MAKEFLAGS)),k)
+    LIBCHECK = 1
+  else
+    LIBCHECK ?= $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach libpath,<%libpaths%> $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
+    ifeq ($(LIBCHECK),)
+      LIBCHECK = 1
+    endif
+  endif
 endif
 <%else%>
 LIBCHECK = 1
@@ -276,33 +287,12 @@ LSRC   = $(addsuffix .cpp, $(FILES))
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-<%if(install)%>
+<%if(install && exename)%>
 
-INSTALL_CHECK = <%install%>
-ifeq ($(INSTALL_CHECK),)
-  INSTALL = $(INSTALL_CHECK)
-else
-ifneq ($(INSTALL_CHECK),.)
-<%if(exename)%>
-  INSBIN  = $(INSTALL_CHECK)
+ifneq ($(OUTPUT_DIRECTORY),.)
   INSTALL = $(VBIN:%=$(INSBIN)/%$(EXEEXT))
   CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(EXEEXT))
-<%endif%>
 endif
-endif
-<%else%>
-<%if(!exename)%>
-
-INSTALL_CHECK = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
-ifeq ($(INSTALL_CHECK),.)
-  ifeq ($(PWD),)
-    PWD=$(shell pwd)
-  endif
-  INSLIB = $(PWD)
-else
-  INSLIB  = $(INSTALL_CHECK)
-endif
-<%endif%>
 
 <%endif%>
 <%if(sharedname || staticname)%>
@@ -399,7 +389,7 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
     ## If all of the generated files are there, then we need to check
     ## and make sure that the generated files are up-to-date.  If they are not
     ## then we need the special rule.
-    ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->input_file%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> &&<%endfor%> echo 0),)
+    ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->input_file%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
       .NOTPARALLEL:
 <%if(custom_type->dependent)%>
     else
@@ -407,7 +397,7 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->command%>$(EXEEXT) -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> &&<%endfor%> echo 0),)
+      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->command%>$(EXEEXT) -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
         .NOTPARALLEL:
       endif
 <%endif%>
@@ -422,6 +412,11 @@ endif
 <%endfor%>
 <%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->dependent)%> <%custom_type->command%>$(EXEEXT)<%endif%>
 	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+<%if(custom_type->postcommand)%>
+<%foreach(custom_type->input_file->output_files)%>
+	<%custom_type->postcommand()%>
+<%endfor%>
+<%endif%>
 <%if(pch_header)%>
 <%if(custom_type->pch_postrule)%>
 <%foreach(custom_type->input_file->source_output_files)%>
