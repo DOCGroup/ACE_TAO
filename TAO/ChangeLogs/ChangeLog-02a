@@ -1,3 +1,20 @@
+Tue Jan  2 12:06:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+
+          Modified default constructor for bounded sequences to call
+          the TAO_Bounded_Base_Sequence constructor that takes only
+          a maximum and a void* buffer argument. This constructor
+          automatically sets the length to 0 and assumes ownership
+          of the buffer (which is created by a call to the derived
+          sequence's allocate_buffer() method). Formerly, we were
+          calling the base class constructor where length and release
+          arguments are also supplied, and the release argument was
+          set to 0, setting the stage for a possible memory leak.
+          For the special cases of object sequences and string
+          sequences, the above change was already made. Thanks to
+          Bogdan Jeram <bjeram@eso.org> for reporting this bug.
+                                                      
 Sun Dec 31 13:59:35 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/ForwardRequest/server.cpp (main):
