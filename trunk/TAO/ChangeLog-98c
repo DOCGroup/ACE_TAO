@@ -1,3 +1,41 @@
+Fri Sep 25 22:00:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA: Changed the POA so that the IOR it generates when the
+ 	  SYSTEM_ID policy is used can be used to actively find the
+ 	  servant.  This new IOR contains an extra byte to indicate
+ 	  whether the IOR is from a POA with SYSTEM_ID or USER_ID policy.
+  	  When the SYSTEM_ID is used, the IOR contains two pieces of
+ 	  information. (a) The index of the slot where the servant is
+ 	  registered. (b) The generation count of that slot.  The
+ 	  generation count is used to identify old IORs and allows the
+ 	  recycling of the slots in the Active Object Map.
+
+	  Another advantage of the SYSTEM_ID policy is that the Object Id
+ 	  is of fixed size.  This makes the parsing of the incoming IOR
+ 	  quicker.
+
+	  Obviously, the changes in the IOR required changes to the
+	  parsing routines and the IOR generation routines.
+
+	  Also, fixed a bug in TAO_POA::destroy.  We must destroy self
+ 	  only after releasing the lock.  This is the same bug I found in
+ 	  Marina's code ;-)
+
+	* tao/IIOP_Object.cpp (operator!=): Added operator!= for
+ 	  TAO_opaque.  Also, fixed IIOP::Profile::set() so that it does
+ 	  not try to do get_host_name() if use_dotted_decimal_addresses ()
+ 	  is set.
+
+	* tao/Object_Table: New file (Object_Table.i) which contains the
+ 	  smaller functions from Object_Table.cpp.  The new Object_Table
+ 	  files contain an almost complete rewrite of TAO_Linear_ObjTable
+ 	  and specially of TAO_Active_Demux_ObjTable.  Also, moved the
+ 	  responsibility of object id creation from the POA to the Object
+ 	  Table.
+
+	* tao/Server_Strategy_Factory.cpp (object_table_size): Added
+ 	  method to access user specified object table size.
+
 Fri Sep 25 22:07:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Mcast/README: 
@@ -22,8 +60,8 @@ Fri Sep 25 22:07:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Fri Sep 25 19:02:03 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/try_macros.h: Fixed the TAO_THROW_ENV_RETURN macro for
-	  native exceptions.  It was not taking in the RETURN value
-	  argument
+ 	  native exceptions.  It was not taking in the RETURN value
+ 	  argument
 
 Fri Sep 25 15:31:17 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
