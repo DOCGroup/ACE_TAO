@@ -1,3 +1,8 @@
+Wed Jul 21 06:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added libs that must be build first in the msvc static builds
+
 Mon Jul 19 21:11:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Dev_Poll_Reactor_Test.cpp:
