@@ -1,3 +1,14 @@
+Thu Feb 12 23:39:44 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SECIOP.idl:
+
+	  Removed this unused file to avoid potential confusion.  It is a
+	  vestige of early TAO CORBA security service CVS commits.  The
+	  plan was to implement SECIOP very soon after the introduction of
+	  this file.  Due to time and resource constraints, and lack of
+	  funding, the SECIOP protocol was never implemented.  Thanks to
+	  Brian R. Mendel for pointing out this problem.
+
 Thu Feb 12 15:41:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence.cpp:
