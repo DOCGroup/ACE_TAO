@@ -24,15 +24,7 @@ LSRC= \
 LIFECYCLE_SERVICE_OBJS = LifeCycle_Service.o LifeCycle_Service_i.o \
         Factory_Trader.o Criteria_Evaluator.o
 
-LDLIBS = -lTAO_CosLifeCycle -lTAO_CosTrading -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_PortableServer -lTAO
-#
-# NOTE
-#
-# The following macro expands to a series of libraries
-# on QNX RTP. It has been introduced to solve a problem
-# with the current QNX RTP linker.
-#
-LDLIBS+=$(TAO_COS_NAMING_LIBS)
+LDLIBS = -lTAO_CosLifeCycle -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_PortableServer -lTAO
 
 BIN2 = LifeCycle_Service
 

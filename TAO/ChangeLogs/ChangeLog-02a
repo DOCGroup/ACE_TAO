@@ -1,27 +1,60 @@
+Sun Mar 04 21:43:51 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/Dump_Schedule/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/LifeCycle_Service/Makefile:
+        * orbsvcs/Logging_Service/Makefile:
+        * orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/tests/AVStreams/benchmark/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+        * orbsvcs/tests/EC_Basic/Makefile:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event_Latency/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+        * orbsvcs/tests/Sched/Makefile:
+        * orbsvcs/tests/Trading/Makefile:
+        * orbsvcs/tests/ior_corbaname/Makefile:
+          The libraries added to support QNX were not in the right order,
+          it should be fixed now.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+          Several minor cosmetic fixes.
+
 Sun Mar 04 20:15:33 2001  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/SMI_Iterator/client.cpp (retrieve_data):
-	* examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp
-	  (initialize_content_iterator):
-	* examples/Content_Server/AMI_Observer/Callback_i.cpp
-	  (Callback_i):
+        * examples/Content_Server/SMI_Iterator/client.cpp (retrieve_data):
+        * examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp
+          (initialize_content_iterator):
+        * examples/Content_Server/AMI_Observer/Callback_i.cpp
+          (Callback_i):
 
-	  Windows doesn't like the POSIX.1 mode constants I was using in
-	  these files.  Use the ACE_DEFAULT_FILE_PERMS macro instead to
-	  work-around Windows-specific stuff like this.
+          Windows doesn't like the POSIX.1 mode constants I was using in
+          these files.  Use the ACE_DEFAULT_FILE_PERMS macro instead to
+          work-around Windows-specific stuff like this.
 
-	  Fixed error messages so that they properly display filename with
-	  which the error was associated.
+          Fixed error messages so that they properly display filename with
+          which the error was associated.
 
 Sun Mar  4 21:39:03 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	  Commented in TAO_TAG_UDP_PROFILE now that DIOP is being
-	  built regularly.
+        * tao/corbafwd.h:
+          Commented in TAO_TAG_UDP_PROFILE now that DIOP is being
+          built regularly.
 
-	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
-	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
-	  Fixed compile warnings under Linux.
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+          Fixed compile warnings under Linux.
 
 Sun Mar  4 19:12:59 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -189,37 +222,37 @@ Sun Mar  4 19:12:59 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Sun Mar 04 16:01:50 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/RT_Current.h:
-	* tao/RT_Mutex.h:
-	* tao/RT_ORB.h:
-	* tao/RT_Policy_i.h:
+        * tao/RT_Current.h:
+        * tao/RT_Mutex.h:
+        * tao/RT_ORB.h:
+        * tao/RT_Policy_i.h:
 
-	  Removed inclusion of `tao/RTCORBAS.h'.  The RTCORBA module only
-	  defines local interfaces, so there is no need to include this
-	  header.  Included `tao/RTCORBAC.h' instead.  This reduces header
-	  dependencies.
+          Removed inclusion of `tao/RTCORBAS.h'.  The RTCORBA module only
+          defines local interfaces, so there is no need to include this
+          header.  Included `tao/RTCORBAC.h' instead.  This reduces header
+          dependencies.
 
-	* tao/RTCORBAC.cpp:
-	* tao/TAOC.cpp:
-	* tao/TimeBaseC.cpp:
+        * tao/RTCORBAC.cpp:
+        * tao/TAOC.cpp:
+        * tao/TimeBaseC.cpp:
 
-	  We should never include a skeleton header for the same IDL in
-	  the corresponding stub sources.  Removed those includes
-	  (e.g. removed '#include "tao/TAOS.h"' from TAOC.cpp).
+          We should never include a skeleton header for the same IDL in
+          the corresponding stub sources.  Removed those includes
+          (e.g. removed '#include "tao/TAOS.h"' from TAOC.cpp).
 
-	* tao/Makefile:
-	* tao/Makefile.bor:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
 
-	  Do not compile the following empty skeleton files:
+          Do not compile the following empty skeleton files:
 
-	    CONV_FRAMES
-	    GIOPS
-	    IOPS
-	    PollableS
-	    RTCORBAS
-	    TAOS
+            CONV_FRAMES
+            GIOPS
+            IOPS
+            PollableS
+            RTCORBAS
+            TAOS
 
 Sun Mar 04 13:55:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 

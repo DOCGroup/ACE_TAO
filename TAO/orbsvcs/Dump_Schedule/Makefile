@@ -10,15 +10,7 @@ SRC = $(DUMP_SRCS)
 SCHEDULE_OBJS = $(SCHEDULE_SRCS:.cpp=.o)
 DUMP_OBJS = $(DUMP_SRCS:.cpp=.o)
 
-LDLIBS = -lTAO_RTSched -lTAO_Svc_Utils -lTAO_PortableServer -lTAO -lACE
-#
-# NOTE
-#
-# The following macro expands to a series of libraries
-# on QNX RTP. It has been introduced to solve a problem
-# with the current QNX RTP linker.
-#
-LDLIBS+=$(TAO_COS_NAMING_LIBS)
+LDLIBS = -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 BIN2 = Dump_Schedule
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
