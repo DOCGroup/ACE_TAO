@@ -328,7 +328,7 @@ int StubFaultNotifier::write_ior_file()
   FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
   if (out)
   {
-    ACE_OS::fprintf (out, "%s", ACE_static_cast(const char *, this->ior_));
+    ACE_OS::fprintf (out, "%s", this->ior_.in ());
     ACE_OS::fclose (out);
     result = 0;
   }

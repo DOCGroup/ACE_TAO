@@ -452,7 +452,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       this->identity_ += this->ior_output_file_;
       // note: don't set identified--ns identity overrides file identitiy
     }
-    result = write_ior (this->ior_output_file_, this->ior_);
+    result = write_ior (this->ior_output_file_, this->ior_. in ());
   }
   else
   {
@@ -508,7 +508,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     ACE_CHECK_RETURN (-1);
     ::CORBA::String_var replicaIOR = this->orb_->object_to_string(replica_obj.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
-    write_ior (this->test_output_file_, replicaIOR);
+    write_ior (this->test_output_file_, replicaIOR.in ());
   }
 
   return result;

@@ -36,7 +36,7 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedEve
       ACE_DEBUG ((LM_DEBUG, "***** Initializing the DSI for the new TypedProxyPushConsumer *****\n"));
     }
 
-  this->dsi_impl_ = new 
+  this->dsi_impl_ = new
     TAO_CEC_DynamicImplementationServer (this->default_POA_.in(),
                                          this,
                                          this->typed_event_channel_);
@@ -53,12 +53,13 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedEve
   }
   ACE_ENDTRY;
 }
-  
+
 // Implementation skeleton destructor
 TAO_CEC_TypedProxyPushConsumer::~TAO_CEC_TypedProxyPushConsumer (void)
 {
   ACE_TRY_NEW_ENV {
-    this->default_POA_->deactivate_object (this->oid_ ACE_ENV_ARG_PARAMETER);
+    this->default_POA_->deactivate_object (this->oid_.in ()
+                                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
   ACE_CATCHALL {

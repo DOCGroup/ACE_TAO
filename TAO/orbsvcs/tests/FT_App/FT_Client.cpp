@@ -358,13 +358,14 @@ int FTClientMain::pass (
         }
         case 'S':
         {
-          if (state.in() != 0)
+          if (state.in () != 0)
           {
             if (this->verbose_ >= LOUD)
             {
               cout << "FT Client: ->set_state(saved_state);" << endl;
             }
-            this->replica_->set_state(state ACE_ENV_ARG_PARAMETER);
+            this->replica_->set_state (state.in ()
+                                       ACE_ENV_ARG_PARAMETER);
             ACE_CHECK_RETURN (-1);
             counter = stateValue;
           }
@@ -387,13 +388,13 @@ int FTClientMain::pass (
         }
         case 'U':
         {
-          if (update.in() != 0)
+          if (update.in () != 0)
           {
             if (this->verbose_ >= LOUD)
             {
               cout << "FT Client: ->set_update(saved_update);" << endl;
             }
-            this->replica_->set_update(update ACE_ENV_ARG_PARAMETER);
+            this->replica_->set_update(update.in () ACE_ENV_ARG_PARAMETER);
             ACE_CHECK_RETURN (-1);
             counter = updateValue;
           }

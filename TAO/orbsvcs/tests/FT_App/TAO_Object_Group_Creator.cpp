@@ -271,12 +271,12 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::ULong count = infos->length ();
-  ACE_ERROR ( (LM_INFO,
-    ACE_TEXT("%T %n (%P|%t): Object_Group_Creator: found %u factories for %s : %s\n"),
-    ACE_static_cast (unsigned, count),
-    role,
-    ACE_static_cast (const char *, type_id)
-    ));
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("%T %n (%P|%t): Object_Group_Creator: ")
+              ACE_TEXT ("found %u factories for %s : %s\n"),
+              static_cast<unsigned> (count),
+              role,
+              type_id.in ()));
 
   if (count > 0)
   {

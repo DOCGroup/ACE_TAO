@@ -342,10 +342,10 @@ ReplicaController::send_reply (
     {
       ACE_DEBUG ((LM_DEBUG, "Slot update is void\n"));
 
-      PortableServer::POA_var poa = resolve_poa (an);
+      PortableServer::POA_var poa = resolve_poa (an.in ());
 
       PortableServer::ServantBase_var servant =
-        poa->id_to_servant (oid);
+        poa->id_to_servant (oid.in ());
 
       Checkpointable* target =
         dynamic_cast<Checkpointable*> (servant.in ());
@@ -360,8 +360,8 @@ ReplicaController::send_reply (
 
     TAO_OutputCDR cdr;
 
-    cdr << oid;
-    cdr << an;
+    cdr << oid.in ();
+    cdr << an.in ();
     cdr << ftr->client_id.in ();
     cdr << ftr->retention_id;
     cdr << reply.in ();

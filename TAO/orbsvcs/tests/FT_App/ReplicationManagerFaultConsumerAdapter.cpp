@@ -296,11 +296,11 @@ int ReplicationManagerFaultConsumerAdapter::init (
 
         PortableGroup::TypeId_var object_type = CORBA::string_dup (
           "IDL:org.omg/CosNaming/NamingContextExt:1.0");
-        value <<= object_type;
+        value <<= object_type.in ();
         encoder.add(::FT::FT_TYPE_ID, value);
 
         PortableGroup::ObjectGroupId group_id =
-          ACE_static_cast (PortableGroup::ObjectGroupId, 6191982);
+          static_cast<PortableGroup::ObjectGroupId> (6191982);
         value <<= group_id;
         encoder.add(::FT::FT_GROUP_ID, value);
 
@@ -381,4 +381,3 @@ int ReplicationManagerFaultConsumerAdapter::idle(int & result
 # pragma instantiate ACE_Vector < const char * >
 # pragma instantiate ACE_Vector < FT::PullMonitorable_var >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
