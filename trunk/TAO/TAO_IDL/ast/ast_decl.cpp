@@ -936,6 +936,21 @@ AST_Decl::version (char *value)
     {
       delete [] this->version_;
       this->version_ = value;
+      
+      // Repo id is now computed eagerly, so a version set must update
+      // is as well.
+      if (this->repoID_ != 0)
+        {
+          ACE_CString tmp (this->repoID_);
+          int pos = tmp.rfind (':');
+          
+          if (pos != ACE_CString::npos)
+            {
+              tmp = tmp.substr (0, pos + 1) + value;
+              delete [] this->repoID_;
+              this->repoID_ = ACE::strnew (tmp.fast_rep ());
+            }
+        }
     }
   else
     {
