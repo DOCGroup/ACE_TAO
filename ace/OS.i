@@ -1184,11 +1184,7 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
 ACE_INLINE int
 ACE_OS::atexit (ACE_EXIT_HOOK func)
 {
-#if defined (ACE_LACKS_ATEXIT)
   return ACE_OS_Object_Manager::instance ()->at_exit (func);
-#else
-  return ::atexit (func);
-#endif /* ACE_LACKS_ATEXIT */
 }
 
 // Doesn't need a macro since it *never* returns!
