@@ -1,6 +1,9 @@
 //$Id$
 
 #include "Scheduler.h"
+#include "ace/Atomic_Op.h"
+
+ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
 
 CORBA::PolicyList* 
 TAO_Scheduler::scheduling_policies (ACE_ENV_SINGLE_ARG_DECL)
@@ -109,14 +112,37 @@ TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr
 
 void 
 TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr,
-				const RTScheduling::Current::IdType &,
-				const char *,
-				CORBA::Policy_ptr,
-				CORBA::Policy_ptr
+				RTScheduling::Current::IdType_out guid,
+				CORBA::String_out name,
+				CORBA::Policy_out sched_param,
+				CORBA::Policy_out implicit_sched_param
 				ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
+  //***************************************
+  
+		
+  // Generate GUID.
+  guid->length (sizeof(long));
+  
+  long temp = ++server_guid_counter;
+  ACE_OS::memcpy (guid->get_buffer (),
+		  &temp,
+		  sizeof(long));
+      
+  int id;
+  ACE_OS::memcpy (&id,
+		  guid->get_buffer (),
+		  guid.length ());
+  
+  ACE_DEBUG ((LM_DEBUG,
+	      "The Guid is %d %d\n",
+	      id,
+	      server_guid_counter.value_i ()));
+  //***************************************
+  
+  
 }
 
 void 
