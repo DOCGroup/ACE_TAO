@@ -1,3 +1,9 @@
+Mon Nov  6 09:50:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp (stubless_relative_roundtrip_timeout): 
+	  Put a TAO_HAS_CORBA_MESSAGING guard around the implementation of
+	  this function to satisfy the ssl=1 case.
+
 Mon Nov  6 10:06:09 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Callback/Makefile:
@@ -26,14 +32,29 @@ Sat Nov  4 18:34:10 2000  Darrell Brunsch <brunsch@uci.edu>
           Fixed tao_idl dependency.
 
 Sat Nov  4 18:59:00 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+<<<<<<< ChangeLog
+=======
 
         * orbsvcs/tests/AVStreams/mpeg/source/server/Makefile:
         * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ui.cpp:
         * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.cpp:
+>>>>>>> 1.1828
 
+<<<<<<< ChangeLog
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ui.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.cpp: 
+=======
           Fixed compile and link errors.
+>>>>>>> 1.1828
 
+<<<<<<< ChangeLog
+	  Fixed compile and link errors.
+	
 
+=======
+
+>>>>>>> 1.1828
 Sat Nov  4 18:04:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_typedef.cpp:
