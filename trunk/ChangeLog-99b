@@ -1,3 +1,8 @@
+Sat May 22 14:53:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Filecache.cpp: snagged another "template <>".
+          Thanks to Bala for reporting it.
+
 Sat May 22 07:30:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-chorus.h,ace/config-lynxos.h: added
