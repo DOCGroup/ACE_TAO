@@ -1,0 +1,8 @@
+$Id$
+
+interface Simple_Server
+{
+  long test_method (in long x);
+
+  void shutdown ();
+};
