@@ -23,6 +23,8 @@
 #include "orbsvcs/CosPropertyServiceS.h"
 #include "orbsvcs/AVStreamsS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
+#include "ace/Process.h"
+#include "orbsvcs/CosNamingC.h"
 
 class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl 
   : public virtual POA_AVStreams::Basic_StreamCtrl
@@ -38,7 +40,6 @@ class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
                      CORBA::Environment &env);
   // Stop the transfer of data of the stream
   // Empty the_spec means apply operation to all flows
-
 
   virtual void start (const AVStreams::flowSpec &the_spec,  
                       CORBA::Environment &env);
@@ -398,6 +399,68 @@ class TAO_ORBSVCS_Export TAO_VDev
   // My peer
  private:
   CORBA::ORB_ptr orb_;
+};
+
+class TAO_ORBSVCS_Export TAO_Endpoint_Strategy
+// = DESCRIPTION
+//    Base class to define various strategies
+//    used by the MMDevice to create the Endpoint and Vdev
+{
+public:
+  TAO_Endpoint_Strategy (void);
+  
+  virtual int create_B (AVStreams::StreamEndPoint_B_ptr stream_endpoint,
+                        AVStreams::VDev_ptr vdev,
+                        CORBA::Environment &env);
+
+  virtual int activate (void) = 0;
+  
+ protected:
+  //  TAO_Endpoint_Factory *endpoint_factory_;
+  AVStreams::StreamEndPoint_B_ptr stream_endpoint_b_;
+  AVStreams::VDev_ptr vdev_;
+};
+
+class TAO_ORBSVCS_Export TAO_Endpoint_Process_Strategy
+  : public virtual TAO_Endpoint_Strategy
+// = DESCRIPTION
+//    Process-based strategy
+{
+ public:
+  TAO_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
+
+  virtual int activate (void);
+  
+ private:
+  int get_object_references (void);
+  ACE_Process_Options *process_options_;
+
+};  
+
+template <class T_StreamEndpoint_B, class T_Vdev , class T_MediaCtrl>
+class TAO_ORBSVCS_Export TAO_Child_Process
+// = DESCRIPTION
+//    Helper class for the child process created in TAO_Endpoint_Process_Strategy
+{
+public:
+  TAO_Child_Process ();
+  int init (int argc, char **argv);
+  int run (ACE_Time_Value &tv = 0);
+
+ private:
+
+  int activate_objects (int argc, 
+                        char **argv,
+                        CORBA::Environment &env);
+
+  int register_with_naming_service (CORBA::Environment &env);
+  int run (ACE_Time_Value &tv);
+  int release_semaphore ();
+
+  TAO_ORB_Manager orb_manager_;
+  T_StreamEndpoint stream_endpoint_b_;
+  T_Vdev vdev_;
+  T_MediaCtrl media_control_;
 };
 
 class TAO_ORBSVCS_Export TAO_MMDevice 
