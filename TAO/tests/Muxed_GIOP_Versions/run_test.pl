@@ -20,7 +20,7 @@ unlink $logfile;
 
 # Testing Options:
 # most effective is $serveriterations=1000 (with or without clients)
-$verbose = 0;
+$verbose = 1;
 $serverthreads = '10';
 $clientthreads = '5';
 $serveriterations = 1000;
@@ -33,11 +33,11 @@ $corbaloc_str = "corbaloc:iiop:1.0\@$TARGETHOSTNAME:$orb_port/SomeObjectNameThat
 
 # ORBDebugLevel 10 seems to encourage the problem
 # -ORBCollocation no  is required for server to produce the problem
-$serverargs = "-ORBCollocation no -ORBdebuglevel 10 -ORBLogFile $logfile -ORBDebugLevel 0 -ORBEndpoint iiop://$TARGETHOSTNAME:$orb_port -o $iorfile -i $serveriterations -n $serverthreads -l $corbaloc_str" 
-$clientargs = "-ORBCollocation no -ORBdebuglevel 10 -ORBLogFile $logfile -l $corbaloc_str -k file://$iorfile -n $clientthreads -i $clientiterations";
-
+$serverargs = "-ORBCollocation no -ORBdebuglevel 10 -ORBLogFile $logfile -ORBEndpoint iiop://$TARGETHOSTNAME:$orb_port -o $iorfile -i $serveriterations -n $serverthreads -l $corbaloc_str";
 
 $SV = new PerlACE::Process ("server", $serverargs);
+
+$clientargs = "-ORBCollocation no -ORBdebuglevel 10 -ORBLogFile $logfile -l $corbaloc_str -k file://$iorfile -n $clientthreads -i $clientiterations";
 
 $CL1 = new PerlACE::Process ("client", $clientargs);
 $CL2 = new PerlACE::Process ("client", $clientargs);
