@@ -1,3 +1,11 @@
+Thu Jan  8 20:09:16 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+	  Made these files compiling with BCB, thanks to Bala for helping with
+	  this. Let us just see what other compilers find of the solution.
+
 Thu Jan  8 19:06:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/FT_ReplicationManager/FT_ReplicationManagerLib_export.h:
