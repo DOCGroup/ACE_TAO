@@ -1,7 +1,9 @@
 // $Id$
 
-#include "tao/Resource_Factory.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
+
+#include "tao/Resource_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 
@@ -140,6 +142,9 @@ template class ACE_Node<TAO_Protocol_Item*>;
 template class ACE_Unbounded_Set<TAO_Protocol_Item*>;
 template class ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>;
 
+template class auto_ptr<TAO_Cached_Connector_Lock>;
+template class ACE_Auto_Basic_Ptr<TAO_Cached_Connector_Lock>;
+
 template class ACE_Guard<TAO_Cached_Connector_Lock>;
 template class ACE_Reverse_Lock<TAO_Cached_Connector_Lock>;
 template class ACE_Guard<ACE_Reverse_Lock<TAO_Cached_Connector_Lock> >;
@@ -150,6 +155,9 @@ template class ACE_Guard<ACE_Reverse_Lock<TAO_Cached_Connector_Lock> >;
 #pragma instantiate ACE_Node<TAO_Protocol_Item*>
 #pragma instantiate ACE_Unbounded_Set<TAO_Protocol_Item*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
+
+#pragma instantiate auto_ptr<TAO_Cached_Connector_Lock>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Cached_Connector_Lock>
 
 #pragma instantiate ACE_Guard<TAO_Cached_Connector_Lock>
 #pragma instantiate ACE_Reverse_Lock<TAO_Cached_Connector_Lock>

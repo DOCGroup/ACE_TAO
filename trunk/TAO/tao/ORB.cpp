@@ -1659,16 +1659,17 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj,
   if (sobj == 0)
     return TAO_SERVANT_NOT_FOUND;
 
-  // @@ What about forwarding.  Which this approach we are never forwarded
+  // @@ What about forwarding.  Whith this approach we are never forwarded
   //    when we use collocation!
-  const TAO_MProfile &mprofile = sobj->get_base_profiles ();
+  const TAO_MProfile &mprofile = sobj->base_profiles ();
 
   {
     // @@ Ossama: maybe we need another lock for the table, to
     //    reduce contention on the Static_Object_Lock below, if so
     //    then we need to use that lock in the ORB_init() function.
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                              *ACE_Static_Object_Lock::instance (), TAO_SERVANT_NOT_FOUND));
+                              *ACE_Static_Object_Lock::instance (),
+                              TAO_SERVANT_NOT_FOUND));
 
     TAO_ORB_Table *table = TAO_ORB_Table::instance ();
     TAO_ORB_Table::Iterator end = table->end ();
