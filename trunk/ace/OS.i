@@ -3543,6 +3543,8 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
   return prio == THREAD_PRIORITY_ERROR_RETURN ? -1 : 0;
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPriorityGet (thr_id, &prio), ace_result_), int, -1);
+#else
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);

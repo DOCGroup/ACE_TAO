@@ -1,3 +1,10 @@
+Thu Mar 13 16:31:54 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.i (thr_getprio): Added missing ACE_NOTSUP_RETURN
+	  for the case of pthreads && !defined (ACE_LACKS_SETSCHED).
+	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for
+	  reporting this.
+
 Thu Mar 13 00:12:15 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Local_Name_Space_T.cpp (dump): Added ACE_UNUSED_ARG around
