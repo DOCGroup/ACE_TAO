@@ -38,6 +38,7 @@ static const char rcsid[] =
 */
 
 #include "media-timer.h"
+// FUZZ: disable check_for_math_include
 #include <math.h>
 
 

@@ -1740,4 +1740,5 @@ public:
 
 #endif /*TAO_HAS_FT_CORBA == 1 */
 
+#include "ace/post.h"
 #endif /*TAO_FT_CORBA_SERVICES_H */

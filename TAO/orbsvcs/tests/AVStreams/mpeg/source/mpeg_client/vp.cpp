@@ -46,6 +46,8 @@
  *         email: scen@cse.ogi.edu
  */
 
+// FUZZ: disable check_for_math_include
+
 #include "ace/OS.h"
 #include <stdio.h>
 #include <errno.h>

@@ -18,6 +18,7 @@
 //
 // ============================================================================
 
+// FUZZ: disable check_for_math_include
 
 #include "ace/Get_Opt.h"
 #include "demux_testC.h"
