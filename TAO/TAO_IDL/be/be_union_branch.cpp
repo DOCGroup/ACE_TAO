@@ -194,7 +194,8 @@ be_union_branch::tc_encap_len (void)
           ACE_ERROR ((LM_ERROR, "be_union_branch: bad field type\n"));
           return -1;
         }
-      this->encap_len_ += bt->tc_encap_len ();
+      this->encap_len_ += bt->tc_size (); // note that we add the typecode size
+                                          // of the type
     }
   return this->encap_len_;
 }

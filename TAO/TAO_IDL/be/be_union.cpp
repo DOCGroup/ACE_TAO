@@ -203,14 +203,20 @@ be_union::gen_client_header (void)
       ch->decr_indent ();
       *ch << "private:\n";
       ch->incr_indent ();
-      *ch << bt->name () << " disc_;\n\n";
+      *ch << bt->name () << " disc_;" << nl;
 
+      // the members are inside of a union
+      *ch << "union" << nl;
+      *ch << "{\n";
+      ch->incr_indent (0);
       if (be_scope::gen_client_header () == -1)
         {
           ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n"));
           ACE_ERROR ((LM_ERROR, "data member generation failure\n"));
           return -1;
         }
+      ch->decr_indent ();
+      *ch << "}; // end of union\n\n";
 
       ch->decr_indent ();
       *ch << "};\n\n";
@@ -459,7 +465,7 @@ be_union::gen_typecode (void)
   cs->indent (); // start from whatever indentation level we were at
 
   *cs << "CORBA::tk_union, // typecode kind" << nl;
-  *cs << this->tc_size () << ", // encapsulation length\n";
+  *cs << this->tc_encap_len () << ", // encapsulation length\n";
   // now emit the encapsulation
   return this->gen_encapsulation ();
 }
@@ -512,6 +518,7 @@ be_union::gen_encapsulation (void)
     }
 
   // generate the default used flag
+  cs->indent ();
   *cs << this->default_index () << ", // default used index" << nl;
   // generate the member count
   *cs << this->member_count () << ", // member count\n";
