@@ -1,3 +1,11 @@
+Mon Mar 22 01:04:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (free_all_keys_left): Changed to remove left-over
+	  keys using TlsFree on Win32.  We can't use ACE_OS::thr_keyfree
+	  here because it tries to update the TSS in_use_ information
+	  which has already been deleted at this point.
+	  (cleanup_tss): Uncommented free_all_keys_left.
+
 Sun Mar 21 21:26:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: fixed error status when building ACE+TAO.
