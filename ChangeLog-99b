@@ -1,5 +1,17 @@
 Tue Oct 12 15:05:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/run_tests.lst: Reenabed Dave Madden's new
+	  Process_Manager_Test so that we can see if it works on various
+ 	  platforms.
+
+	* tests/Process_Manager_Test.cpp (main): Added a new one-button
+	  test for the ACE_Process_Manager.  Thanks to Dave Madden
+ 	  <dhm@mersenne.com> for contributing this test.
+
+	* ace/Process_Manager.cpp (wait): Fixed a bug triggered by
+	  a process-specific wait.  Thanks to Dave Madden
+ 	  <dhm@mersenne.com> for contributing this fix.
+
 	* ace/ACE.cpp (format_hexdump): Replaced
   
           textver[i] = (c < 0x20 || c > 0x7e) ? '.' : c;
