@@ -551,18 +551,20 @@ DEP_CPP_ACE_C=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -607,6 +609,8 @@ DEP_CPP_ACE_C=\
 	".\Message_Block_T.h"\
 	".\Message_Block_T.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -661,6 +665,9 @@ DEP_CPP_ACE_C=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\Version.h"\
 	
 
@@ -1907,14 +1914,24 @@ DEP_CPP_ACTIV=\
 	".\ace_wchar.inl"\
 	".\Activation_Queue.h"\
 	".\Activation_Queue.i"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -1985,6 +2002,8 @@ DEP_CPP_ACTIV=\
 	".\Message_Queue_T.i"\
 	".\Method_Request.h"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -2069,6 +2088,12 @@ DEP_CPP_ACTIV=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
@@ -3660,18 +3685,20 @@ DEP_CPP_ACTIVE=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -3714,6 +3741,8 @@ DEP_CPP_ACTIVE=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -3782,6 +3811,12 @@ DEP_CPP_ACTIVE=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -5018,8 +5053,15 @@ DEP_CPP_ADDR_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -5691,33 +5733,27 @@ DEP_CPP_ARGV_=\
 	".\ace_wchar.inl"\
 	".\ARGV.h"\
 	".\ARGV.i"\
-	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
-	".\Event_Handler.h"\
-	".\Event_Handler.i"\
-	".\File_Lock.h"\
-	".\File_Lock.inl"\
 	".\Flag_Manip.h"\
 	".\Flag_Manip.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
 	".\Handle_Ops.h"\
 	".\Handle_Ops.i"\
 	".\Init_ACE.h"\
@@ -5730,22 +5766,13 @@ DEP_CPP_ARGV_=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -5765,32 +5792,10 @@ DEP_CPP_ARGV_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\Process_Mutex.h"\
-	".\Process_Mutex.inl"\
-	".\Process_Semaphore.h"\
-	".\Process_Semaphore.inl"\
-	".\RW_Process_Mutex.h"\
-	".\RW_Process_Mutex.inl"\
-	".\Signal.h"\
-	".\Signal.i"\
 	".\Sock_Connect.h"\
 	".\Sock_Connect.i"\
 	".\streams.h"\
-	".\SV_Semaphore_Complex.h"\
-	".\SV_Semaphore_Complex.i"\
-	".\SV_Semaphore_Simple.h"\
-	".\SV_Semaphore_Simple.i"\
 	".\svc_export.h"\
-	".\Synch.h"\
-	".\Synch.i"\
-	".\Synch_T.cpp"\
-	".\Synch_T.h"\
-	".\Synch_T.i"\
-	".\Test_and_Set.cpp"\
-	".\Test_and_Set.h"\
-	".\Test_and_Set.i"\
-	".\Thread.h"\
-	".\Thread.i"\
 	".\Thread_Adapter.h"\
 	".\Thread_Adapter.inl"\
 	".\Thread_Control.h"\
@@ -5798,6 +5803,9 @@ DEP_CPP_ARGV_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -6929,6 +6937,9 @@ DEP_CPP_ASYNC=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Asynch_IO.h"\
 	".\Asynch_IO_Impl.h"\
 	".\Asynch_IO_Impl.i"\
@@ -6938,8 +6949,15 @@ DEP_CPP_ASYNC=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -6996,6 +7014,8 @@ DEP_CPP_ASYNC=\
 	".\Message_Block_T.h"\
 	".\Message_Block_T.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -7067,6 +7087,12 @@ DEP_CPP_ASYNC=\
 	".\Timer_Wheel_T.cpp"\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -8443,18 +8469,20 @@ DEP_CPP_BASED=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -8497,6 +8525,8 @@ DEP_CPP_BASED=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -8568,6 +8598,12 @@ DEP_CPP_BASED=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -9796,8 +9832,15 @@ DEP_CPP_BASIC=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -10457,7 +10500,6 @@ DEP_CPP_BASIC_=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -10481,7 +10523,6 @@ DEP_CPP_BASIC_=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -10589,6 +10630,10 @@ DEP_CPP_BASIC_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
+NODEP_CPP_BASIC_=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -10600,6 +10645,9 @@ DEP_CPP_BASIC_=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -10609,8 +10657,15 @@ DEP_CPP_BASIC_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -10704,10 +10759,16 @@ DEP_CPP_BASIC_=\
 	".\Name_Request_Reply.h"\
 	".\Name_Space.h"\
 	".\Naming_Context.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
+	".\Obstack_T.cpp"\
+	".\Obstack_T.h"\
+	".\Obstack_T.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -10731,7 +10792,6 @@ DEP_CPP_BASIC_=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -10836,6 +10896,12 @@ DEP_CPP_BASIC_=\
 	".\Token_Request_Reply.h"\
 	".\Token_Request_Reply.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
@@ -10957,7 +11023,6 @@ DEP_CPP_BASIC_=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -10981,7 +11046,6 @@ DEP_CPP_BASIC_=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -11088,6 +11152,10 @@ DEP_CPP_BASIC_=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_BASIC_=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -11207,7 +11275,6 @@ DEP_CPP_BASIC_=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -11231,7 +11298,6 @@ DEP_CPP_BASIC_=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -11338,6 +11404,10 @@ DEP_CPP_BASIC_=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_BASIC_=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -11457,7 +11527,6 @@ DEP_CPP_BASIC_=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -11481,7 +11550,6 @@ DEP_CPP_BASIC_=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -11588,6 +11656,10 @@ DEP_CPP_BASIC_=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_BASIC_=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -11712,7 +11784,6 @@ DEP_CPP_BASIC_=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -11736,7 +11807,6 @@ DEP_CPP_BASIC_=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -11843,6 +11913,10 @@ DEP_CPP_BASIC_=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_BASIC_=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -11967,7 +12041,6 @@ DEP_CPP_BASIC_=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -11991,7 +12064,6 @@ DEP_CPP_BASIC_=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -12098,6 +12170,10 @@ DEP_CPP_BASIC_=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_BASIC_=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -12217,7 +12293,6 @@ DEP_CPP_BASIC_=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -12241,7 +12316,6 @@ DEP_CPP_BASIC_=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -12348,6 +12422,10 @@ DEP_CPP_BASIC_=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_BASIC_=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -12467,7 +12545,6 @@ DEP_CPP_BASIC_=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -12491,7 +12568,6 @@ DEP_CPP_BASIC_=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -12598,6 +12674,10 @@ DEP_CPP_BASIC_=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_BASIC_=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -12717,7 +12797,6 @@ DEP_CPP_BASIC_=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -12741,7 +12820,6 @@ DEP_CPP_BASIC_=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -12848,6 +12926,10 @@ DEP_CPP_BASIC_=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_BASIC_=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -12982,14 +13064,23 @@ DEP_CPP_CONTA=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
-	".\Atomic_Op.i"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -13000,15 +13091,8 @@ DEP_CPP_CONTA=\
 	".\Containers_T.cpp"\
 	".\Containers_T.h"\
 	".\Containers_T.i"\
-	".\Event_Handler.h"\
-	".\Event_Handler.i"\
-	".\File_Lock.h"\
-	".\File_Lock.inl"\
 	".\Flag_Manip.h"\
 	".\Flag_Manip.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
 	".\Handle_Ops.h"\
 	".\Handle_Ops.i"\
 	".\Init_ACE.h"\
@@ -13021,22 +13105,13 @@ DEP_CPP_CONTA=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -13056,32 +13131,10 @@ DEP_CPP_CONTA=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\Process_Mutex.h"\
-	".\Process_Mutex.inl"\
-	".\Process_Semaphore.h"\
-	".\Process_Semaphore.inl"\
-	".\RW_Process_Mutex.h"\
-	".\RW_Process_Mutex.inl"\
-	".\Signal.h"\
-	".\Signal.i"\
 	".\Sock_Connect.h"\
 	".\Sock_Connect.i"\
 	".\streams.h"\
-	".\SV_Semaphore_Complex.h"\
-	".\SV_Semaphore_Complex.i"\
-	".\SV_Semaphore_Simple.h"\
-	".\SV_Semaphore_Simple.i"\
 	".\svc_export.h"\
-	".\Synch.h"\
-	".\Synch.i"\
-	".\Synch_T.cpp"\
-	".\Synch_T.h"\
-	".\Synch_T.i"\
-	".\Test_and_Set.cpp"\
-	".\Test_and_Set.h"\
-	".\Test_and_Set.i"\
-	".\Thread.h"\
-	".\Thread.i"\
 	".\Thread_Adapter.h"\
 	".\Thread_Adapter.inl"\
 	".\Thread_Control.h"\
@@ -13089,6 +13142,12 @@ DEP_CPP_CONTA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -14128,8 +14187,15 @@ DEP_CPP_DLL_C=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -14883,8 +14949,15 @@ DEP_CPP_DUMP_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -15882,8 +15955,15 @@ DEP_CPP_DYNAM=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -16929,14 +17009,24 @@ DEP_CPP_EVENT=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -16991,6 +17081,8 @@ DEP_CPP_EVENT=\
 	".\Message_Block_T.h"\
 	".\Message_Block_T.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -17055,6 +17147,12 @@ DEP_CPP_EVENT=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -18233,8 +18331,15 @@ DEP_CPP_FLAG_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -18867,8 +18972,15 @@ DEP_CPP_FUNCT=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -19631,8 +19743,15 @@ DEP_CPP_GET_O=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -20368,8 +20487,15 @@ DEP_CPP_HANDL=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -21159,27 +21285,26 @@ DEP_CPP_HIGH_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
 	".\File_Lock.inl"\
 	".\Flag_Manip.h"\
 	".\Flag_Manip.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
 	".\Handle_Ops.h"\
 	".\Handle_Ops.i"\
 	".\High_Res_Timer.h"\
@@ -21194,22 +21319,13 @@ DEP_CPP_HIGH_=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -21235,8 +21351,6 @@ DEP_CPP_HIGH_=\
 	".\Process_Semaphore.inl"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
-	".\Signal.h"\
-	".\Signal.i"\
 	".\Sock_Connect.h"\
 	".\Sock_Connect.i"\
 	".\Stats.h"\
@@ -21264,6 +21378,9 @@ DEP_CPP_HIGH_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -22356,8 +22473,15 @@ DEP_CPP_INET_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -23095,8 +23219,15 @@ DEP_CPP_INIT_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -23741,8 +23872,15 @@ DEP_CPP_IO_SA=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -24378,8 +24516,15 @@ DEP_CPP_IPC_S=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -25013,8 +25158,15 @@ DEP_CPP_LIB_F=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -25653,7 +25805,6 @@ DEP_CPP_LOG_M=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\Signal.h"\
@@ -25708,6 +25859,9 @@ DEP_CPP_LOG_M=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_LOG_M=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -25719,14 +25873,24 @@ DEP_CPP_LOG_M=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -25761,25 +25925,18 @@ DEP_CPP_LOG_M=\
 	".\Log_Msg_Backend.h"\
 	".\Log_Msg_Callback.h"\
 	".\Log_Msg_IPC.h"\
+	".\Log_Msg_NT_Event_Log.h"\
+	".\Log_Msg_UNIX_Syslog.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -25803,11 +25960,8 @@ DEP_CPP_LOG_M=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
-	".\Signal.h"\
-	".\Signal.i"\
 	".\Singleton.cpp"\
 	".\Singleton.h"\
 	".\Singleton.i"\
@@ -25857,6 +26011,12 @@ DEP_CPP_LOG_M=\
 	".\Thread_Manager.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -25953,7 +26113,6 @@ DEP_CPP_LOG_M=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\Signal.h"\
@@ -26007,6 +26166,9 @@ DEP_CPP_LOG_M=\
 	".\Thread_Manager.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -26103,7 +26265,6 @@ DEP_CPP_LOG_M=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\Signal.h"\
@@ -26157,6 +26318,9 @@ DEP_CPP_LOG_M=\
 	".\Thread_Manager.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -26253,7 +26417,6 @@ DEP_CPP_LOG_M=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\Signal.h"\
@@ -26307,6 +26470,9 @@ DEP_CPP_LOG_M=\
 	".\Thread_Manager.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -26409,7 +26575,6 @@ DEP_CPP_LOG_M=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\Signal.h"\
@@ -26463,6 +26628,9 @@ DEP_CPP_LOG_M=\
 	".\Thread_Manager.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -26565,7 +26733,6 @@ DEP_CPP_LOG_M=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\Signal.h"\
@@ -26619,6 +26786,9 @@ DEP_CPP_LOG_M=\
 	".\Thread_Manager.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -26715,7 +26885,6 @@ DEP_CPP_LOG_M=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\Signal.h"\
@@ -26769,6 +26938,9 @@ DEP_CPP_LOG_M=\
 	".\Thread_Manager.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -26865,7 +27037,6 @@ DEP_CPP_LOG_M=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\Signal.h"\
@@ -26919,6 +27090,9 @@ DEP_CPP_LOG_M=\
 	".\Thread_Manager.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -27015,7 +27189,6 @@ DEP_CPP_LOG_M=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\Signal.h"\
@@ -27070,6 +27243,9 @@ DEP_CPP_LOG_M=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_LOG_M=\
+	".\QoS_Session.h"\
+	
 
 !ENDIF 
 
@@ -27108,8 +27284,15 @@ DEP_CPP_LOG_MS=\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -27355,8 +27538,15 @@ DEP_CPP_LOG_MSG=\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -27638,7 +27828,6 @@ DEP_CPP_LOG_MSG_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -27670,6 +27859,9 @@ DEP_CPP_LOG_MSG_=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_LOG_MSG_=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -27686,8 +27878,15 @@ DEP_CPP_LOG_MSG_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -27737,7 +27936,6 @@ DEP_CPP_LOG_MSG_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -27836,7 +28034,6 @@ DEP_CPP_LOG_MSG_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -27867,6 +28064,9 @@ DEP_CPP_LOG_MSG_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_MSG_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -27935,7 +28135,6 @@ DEP_CPP_LOG_MSG_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -27966,6 +28165,9 @@ DEP_CPP_LOG_MSG_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_MSG_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -28034,7 +28236,6 @@ DEP_CPP_LOG_MSG_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -28065,6 +28266,9 @@ DEP_CPP_LOG_MSG_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_MSG_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -28138,7 +28342,6 @@ DEP_CPP_LOG_MSG_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -28169,6 +28372,9 @@ DEP_CPP_LOG_MSG_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_MSG_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -28242,7 +28448,6 @@ DEP_CPP_LOG_MSG_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -28273,6 +28478,9 @@ DEP_CPP_LOG_MSG_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_MSG_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -28341,7 +28549,6 @@ DEP_CPP_LOG_MSG_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -28372,6 +28579,9 @@ DEP_CPP_LOG_MSG_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_MSG_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -28440,7 +28650,6 @@ DEP_CPP_LOG_MSG_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -28471,6 +28680,9 @@ DEP_CPP_LOG_MSG_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_MSG_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -28539,7 +28751,6 @@ DEP_CPP_LOG_MSG_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -28570,6 +28781,9 @@ DEP_CPP_LOG_MSG_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_LOG_MSG_=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -28662,8 +28876,15 @@ DEP_CPP_LOG_R=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -29427,18 +29648,20 @@ DEP_CPP_MALLO=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -29476,6 +29699,8 @@ DEP_CPP_MALLO=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -29528,6 +29753,9 @@ DEP_CPP_MALLO=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -30595,8 +30823,15 @@ DEP_CPP_MALLOC=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -31565,8 +31800,15 @@ DEP_CPP_MEM_M=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -31586,6 +31828,7 @@ DEP_CPP_MEM_M=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
+	".\Malloc_Base.h"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
@@ -31613,6 +31856,8 @@ DEP_CPP_MEM_M=\
 	".\pre.h"\
 	".\Sock_Connect.h"\
 	".\Sock_Connect.i"\
+	".\SString.h"\
+	".\SString.i"\
 	".\streams.h"\
 	".\svc_export.h"\
 	".\Thread_Adapter.h"\
@@ -32365,27 +32610,26 @@ DEP_CPP_MEMOR=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
 	".\File_Lock.inl"\
 	".\Flag_Manip.h"\
 	".\Flag_Manip.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
 	".\Handle_Ops.h"\
 	".\Handle_Ops.i"\
 	".\Init_ACE.h"\
@@ -32398,14 +32642,7 @@ DEP_CPP_MEMOR=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
@@ -32414,6 +32651,8 @@ DEP_CPP_MEMOR=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -32469,6 +32708,9 @@ DEP_CPP_MEMOR=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -33649,18 +33891,20 @@ DEP_CPP_MESSA=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -33705,6 +33949,8 @@ DEP_CPP_MESSA=\
 	".\Message_Block_T.h"\
 	".\Message_Block_T.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -33764,6 +34010,9 @@ DEP_CPP_MESSA=\
 	".\Timeprobe_T.cpp"\
 	".\Timeprobe_T.h"\
 	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -35012,14 +35261,24 @@ DEP_CPP_MESSAG=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -35089,6 +35348,8 @@ DEP_CPP_MESSAG=\
 	".\Message_Queue_T.h"\
 	".\Message_Queue_T.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -35173,6 +35434,12 @@ DEP_CPP_MESSAG=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
@@ -36648,8 +36915,15 @@ DEP_CPP_METHO=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -37176,6 +37450,1273 @@ DEP_CPP_METHO=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Obchunk.cpp
+
+!IF  "$(CFG)" == "ace - Win32 (WCE MIPS) Release"
+
+DEP_CPP_OBCHU=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Atomic_Op.i"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_OBCHU=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Atomic_Op.i"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
+
+DEP_CPP_OBCHU=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Atomic_Op.i"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
+
+DEP_CPP_OBCHU=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Atomic_Op.i"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
+
+DEP_CPP_OBCHU=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Atomic_Op.i"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
+
+DEP_CPP_OBCHU=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Atomic_Op.i"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
+
+DEP_CPP_OBCHU=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Atomic_Op.i"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
+
+DEP_CPP_OBCHU=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Atomic_Op.i"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
+
+DEP_CPP_OBCHU=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Atomic_Op.i"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
+
+DEP_CPP_OBCHU=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Atomic_Op.i"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ENDIF 
@@ -37294,7 +38835,6 @@ DEP_CPP_OBJEC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -37372,6 +38912,9 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	
+NODEP_CPP_OBJEC=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -37383,6 +38926,9 @@ DEP_CPP_OBJEC=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Asynch_IO.h"\
 	".\Asynch_IO_Impl.h"\
 	".\Asynch_IO_Impl.i"\
@@ -37392,8 +38938,15 @@ DEP_CPP_OBJEC=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -37458,6 +39011,8 @@ DEP_CPP_OBJEC=\
 	".\Name_Request_Reply.h"\
 	".\Name_Space.h"\
 	".\Naming_Context.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -37482,7 +39037,6 @@ DEP_CPP_OBJEC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -37559,6 +39113,12 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -37670,7 +39230,6 @@ DEP_CPP_OBJEC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -37747,6 +39306,9 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -37858,7 +39420,6 @@ DEP_CPP_OBJEC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -37935,6 +39496,9 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -38046,7 +39610,6 @@ DEP_CPP_OBJEC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -38123,6 +39686,9 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -38239,7 +39805,6 @@ DEP_CPP_OBJEC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -38316,6 +39881,9 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -38432,7 +40000,6 @@ DEP_CPP_OBJEC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -38509,6 +40076,9 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -38620,7 +40190,6 @@ DEP_CPP_OBJEC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -38697,6 +40266,9 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -38808,7 +40380,6 @@ DEP_CPP_OBJEC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -38885,6 +40456,9 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -38996,7 +40570,6 @@ DEP_CPP_OBJEC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -39073,6 +40646,9 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -39148,7 +40724,6 @@ DEP_CPP_OBSTA=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -39200,6 +40775,9 @@ DEP_CPP_OBSTA=\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_OBSTA=\
+	".\Obstack.i"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -39215,18 +40793,20 @@ DEP_CPP_OBSTA=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -39264,10 +40844,16 @@ DEP_CPP_OBSTA=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
+	".\Obstack_T.cpp"\
+	".\Obstack_T.h"\
+	".\Obstack_T.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -39318,6 +40904,9 @@ DEP_CPP_OBSTA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -39386,7 +40975,6 @@ DEP_CPP_OBSTA=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -39437,6 +41025,9 @@ DEP_CPP_OBSTA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -39505,7 +41096,6 @@ DEP_CPP_OBSTA=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -39556,6 +41146,9 @@ DEP_CPP_OBSTA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -39624,7 +41217,6 @@ DEP_CPP_OBSTA=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -39675,6 +41267,9 @@ DEP_CPP_OBSTA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -39748,7 +41343,6 @@ DEP_CPP_OBSTA=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -39799,6 +41393,9 @@ DEP_CPP_OBSTA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -39872,7 +41469,6 @@ DEP_CPP_OBSTA=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -39923,6 +41519,9 @@ DEP_CPP_OBSTA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -39991,7 +41590,6 @@ DEP_CPP_OBSTA=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -40042,6 +41640,9 @@ DEP_CPP_OBSTA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -40110,7 +41711,6 @@ DEP_CPP_OBSTA=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -40161,6 +41761,9 @@ DEP_CPP_OBSTA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -40229,7 +41832,6 @@ DEP_CPP_OBSTA=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -40280,6 +41882,9 @@ DEP_CPP_OBSTA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\Obstack.i"\
 	
 
 !ENDIF 
@@ -40482,14 +42087,24 @@ DEP_CPP_PARSE=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -40500,6 +42115,7 @@ DEP_CPP_PARSE=\
 	".\Containers_T.cpp"\
 	".\Containers_T.h"\
 	".\Containers_T.i"\
+	".\DLL.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -40562,6 +42178,8 @@ DEP_CPP_PARSE=\
 	".\Module.cpp"\
 	".\Module.h"\
 	".\Module.i"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -40655,6 +42273,12 @@ DEP_CPP_PARSE=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
@@ -42221,7 +43845,6 @@ DEP_CPP_PIPE_=\
 	".\Pipe.i"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_Acceptor.h"\
@@ -42245,6 +43868,9 @@ DEP_CPP_PIPE_=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_PIPE_=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -42261,8 +43887,15 @@ DEP_CPP_PIPE_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -42311,7 +43944,6 @@ DEP_CPP_PIPE_=\
 	".\Pipe.i"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_Acceptor.h"\
@@ -42401,7 +44033,6 @@ DEP_CPP_PIPE_=\
 	".\Pipe.i"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_Acceptor.h"\
@@ -42424,6 +44055,9 @@ DEP_CPP_PIPE_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -42491,7 +44125,6 @@ DEP_CPP_PIPE_=\
 	".\Pipe.i"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_Acceptor.h"\
@@ -42514,6 +44147,9 @@ DEP_CPP_PIPE_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -42581,7 +44217,6 @@ DEP_CPP_PIPE_=\
 	".\Pipe.i"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_Acceptor.h"\
@@ -42604,6 +44239,9 @@ DEP_CPP_PIPE_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -42676,7 +44314,6 @@ DEP_CPP_PIPE_=\
 	".\Pipe.i"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_Acceptor.h"\
@@ -42699,6 +44336,9 @@ DEP_CPP_PIPE_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -42771,7 +44411,6 @@ DEP_CPP_PIPE_=\
 	".\Pipe.i"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_Acceptor.h"\
@@ -42794,6 +44433,9 @@ DEP_CPP_PIPE_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -42861,7 +44503,6 @@ DEP_CPP_PIPE_=\
 	".\Pipe.i"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_Acceptor.h"\
@@ -42884,6 +44525,9 @@ DEP_CPP_PIPE_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -42951,7 +44595,6 @@ DEP_CPP_PIPE_=\
 	".\Pipe.i"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_Acceptor.h"\
@@ -42974,6 +44617,9 @@ DEP_CPP_PIPE_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -43041,7 +44687,6 @@ DEP_CPP_PIPE_=\
 	".\Pipe.i"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_Acceptor.h"\
@@ -43064,6 +44709,9 @@ DEP_CPP_PIPE_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -43212,27 +44860,26 @@ DEP_CPP_PROCE=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
 	".\File_Lock.inl"\
 	".\Flag_Manip.h"\
 	".\Flag_Manip.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
 	".\Handle_Ops.h"\
 	".\Handle_Ops.i"\
 	".\Init_ACE.h"\
@@ -43245,22 +44892,13 @@ DEP_CPP_PROCE=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -43317,6 +44955,9 @@ DEP_CPP_PROCE=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -44466,18 +46107,20 @@ DEP_CPP_PROCES=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -44501,21 +46144,10 @@ DEP_CPP_PROCES=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
@@ -45766,8 +47398,15 @@ DEP_CPP_PROCESS=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -46712,8 +48351,15 @@ DEP_CPP_PROFI=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -47594,14 +49240,24 @@ DEP_CPP_REACT=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -47678,6 +49334,8 @@ DEP_CPP_REACT=\
 	".\Min_Max.h"\
 	".\Msg_WFMO_Reactor.h"\
 	".\Msg_WFMO_Reactor.i"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -47777,6 +49435,12 @@ DEP_CPP_REACT=\
 	".\TP_Reactor.h"\
 	".\TP_Reactor.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
@@ -49429,8 +51093,15 @@ DEP_CPP_SCHED=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -50138,14 +51809,24 @@ DEP_CPP_SELEC=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -50200,6 +51881,8 @@ DEP_CPP_SELEC=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -50283,6 +51966,12 @@ DEP_CPP_SELEC=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -51638,7 +53327,6 @@ DEP_CPP_SELECT=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -51694,6 +53382,9 @@ DEP_CPP_SELECT=\
 	".\Token.i"\
 	".\Trace.h"\
 	
+NODEP_CPP_SELECT=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -51711,18 +53402,20 @@ DEP_CPP_SELECT=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -51750,22 +53443,13 @@ DEP_CPP_SELECT=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -51791,7 +53475,6 @@ DEP_CPP_SELECT=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -51846,6 +53529,12 @@ DEP_CPP_SELECT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -51944,7 +53633,6 @@ DEP_CPP_SELECT=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -51999,6 +53687,9 @@ DEP_CPP_SELECT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SELECT=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -52097,7 +53788,6 @@ DEP_CPP_SELECT=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -52152,6 +53842,9 @@ DEP_CPP_SELECT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SELECT=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -52250,7 +53943,6 @@ DEP_CPP_SELECT=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -52305,6 +53997,9 @@ DEP_CPP_SELECT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SELECT=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -52408,7 +54103,6 @@ DEP_CPP_SELECT=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -52463,6 +54157,9 @@ DEP_CPP_SELECT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SELECT=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -52566,7 +54263,6 @@ DEP_CPP_SELECT=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -52621,6 +54317,9 @@ DEP_CPP_SELECT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SELECT=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -52719,7 +54418,6 @@ DEP_CPP_SELECT=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -52774,6 +54472,9 @@ DEP_CPP_SELECT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SELECT=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -52872,7 +54573,6 @@ DEP_CPP_SELECT=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -52927,6 +54627,9 @@ DEP_CPP_SELECT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SELECT=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -53025,7 +54728,6 @@ DEP_CPP_SELECT=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -53080,6 +54782,9 @@ DEP_CPP_SELECT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SELECT=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -53170,7 +54875,6 @@ DEP_CPP_SERVI=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -53194,7 +54898,6 @@ DEP_CPP_SERVI=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -53262,6 +54965,10 @@ DEP_CPP_SERVI=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	
+NODEP_CPP_SERVI=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -53275,6 +54982,9 @@ DEP_CPP_SERVI=\
 	".\Addr.i"\
 	".\ARGV.h"\
 	".\ARGV.i"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -53284,8 +54994,15 @@ DEP_CPP_SERVI=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -53296,6 +55013,7 @@ DEP_CPP_SERVI=\
 	".\Containers_T.cpp"\
 	".\Containers_T.h"\
 	".\Containers_T.i"\
+	".\DLL.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -53341,10 +55059,16 @@ DEP_CPP_SERVI=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
+	".\Obstack_T.cpp"\
+	".\Obstack_T.h"\
+	".\Obstack_T.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -53368,7 +55092,6 @@ DEP_CPP_SERVI=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -53435,6 +55158,12 @@ DEP_CPP_SERVI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -53518,7 +55247,6 @@ DEP_CPP_SERVI=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -53542,7 +55270,6 @@ DEP_CPP_SERVI=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -53609,6 +55336,10 @@ DEP_CPP_SERVI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SERVI=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -53692,7 +55423,6 @@ DEP_CPP_SERVI=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -53716,7 +55446,6 @@ DEP_CPP_SERVI=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -53783,6 +55512,10 @@ DEP_CPP_SERVI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SERVI=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -53866,7 +55599,6 @@ DEP_CPP_SERVI=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -53890,7 +55622,6 @@ DEP_CPP_SERVI=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -53957,6 +55688,10 @@ DEP_CPP_SERVI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SERVI=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -54045,7 +55780,6 @@ DEP_CPP_SERVI=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -54069,7 +55803,6 @@ DEP_CPP_SERVI=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -54136,6 +55869,10 @@ DEP_CPP_SERVI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SERVI=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -54224,7 +55961,6 @@ DEP_CPP_SERVI=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -54248,7 +55984,6 @@ DEP_CPP_SERVI=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -54315,6 +56050,10 @@ DEP_CPP_SERVI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SERVI=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -54398,7 +56137,6 @@ DEP_CPP_SERVI=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -54422,7 +56160,6 @@ DEP_CPP_SERVI=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -54489,6 +56226,10 @@ DEP_CPP_SERVI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SERVI=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -54572,7 +56313,6 @@ DEP_CPP_SERVI=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -54596,7 +56336,6 @@ DEP_CPP_SERVI=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -54663,6 +56402,10 @@ DEP_CPP_SERVI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SERVI=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -54746,7 +56489,6 @@ DEP_CPP_SERVI=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -54770,7 +56512,6 @@ DEP_CPP_SERVI=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -54837,6 +56578,10 @@ DEP_CPP_SERVI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SERVI=\
+	".\Obstack.i"\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -54962,7 +56707,6 @@ DEP_CPP_SERVIC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -55038,6 +56782,9 @@ DEP_CPP_SERVIC=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
+NODEP_CPP_SERVIC=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -55049,14 +56796,24 @@ DEP_CPP_SERVIC=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -55132,6 +56889,8 @@ DEP_CPP_SERVIC=\
 	".\Message_Queue_T.h"\
 	".\Message_Queue_T.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -55155,7 +56914,6 @@ DEP_CPP_SERVIC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -55228,6 +56986,12 @@ DEP_CPP_SERVIC=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
@@ -55348,7 +57112,6 @@ DEP_CPP_SERVIC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -55423,6 +57186,9 @@ DEP_CPP_SERVIC=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SERVIC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -55541,7 +57307,6 @@ DEP_CPP_SERVIC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -55616,6 +57381,9 @@ DEP_CPP_SERVIC=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SERVIC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -55734,7 +57502,6 @@ DEP_CPP_SERVIC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -55809,6 +57576,9 @@ DEP_CPP_SERVIC=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SERVIC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -55932,7 +57702,6 @@ DEP_CPP_SERVIC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -56007,6 +57776,9 @@ DEP_CPP_SERVIC=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SERVIC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -56130,7 +57902,6 @@ DEP_CPP_SERVIC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -56205,6 +57976,9 @@ DEP_CPP_SERVIC=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SERVIC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -56323,7 +58097,6 @@ DEP_CPP_SERVIC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -56398,6 +58171,9 @@ DEP_CPP_SERVIC=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SERVIC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -56516,7 +58292,6 @@ DEP_CPP_SERVIC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -56591,6 +58366,9 @@ DEP_CPP_SERVIC=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SERVIC=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -56709,7 +58487,6 @@ DEP_CPP_SERVIC=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\Reactor.h"\
 	".\Reactor.i"\
 	".\Reactor_Impl.h"\
@@ -56784,6 +58561,9 @@ DEP_CPP_SERVIC=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SERVIC=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -56908,8 +58688,15 @@ DEP_CPP_SERVICE=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -57937,8 +59724,15 @@ DEP_CPP_SERVICE_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -59062,14 +60856,24 @@ DEP_CPP_SERVICE_T=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -59142,6 +60946,8 @@ DEP_CPP_SERVICE_T=\
 	".\Module.cpp"\
 	".\Module.h"\
 	".\Module.i"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -59237,6 +61043,12 @@ DEP_CPP_SERVICE_T=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
@@ -60839,8 +62651,15 @@ DEP_CPP_SHARE=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -61616,14 +63435,24 @@ DEP_CPP_SIGNA=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -61640,9 +63469,6 @@ DEP_CPP_SIGNA=\
 	".\File_Lock.inl"\
 	".\Flag_Manip.h"\
 	".\Flag_Manip.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
 	".\Handle_Ops.h"\
 	".\Handle_Ops.i"\
 	".\Init_ACE.h"\
@@ -61655,22 +63481,13 @@ DEP_CPP_SIGNA=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -61723,6 +63540,12 @@ DEP_CPP_SIGNA=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -62741,7 +64564,6 @@ DEP_CPP_SOCK_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -62755,6 +64577,9 @@ DEP_CPP_SOCK_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
@@ -62772,8 +64597,15 @@ DEP_CPP_SOCK_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -62783,8 +64615,6 @@ DEP_CPP_SOCK_=\
 	".\Flag_Manip.i"\
 	".\Handle_Ops.h"\
 	".\Handle_Ops.i"\
-	".\INET_Addr.h"\
-	".\INET_Addr.i"\
 	".\Init_ACE.h"\
 	".\Init_ACE.i"\
 	".\iosfwd.h"\
@@ -62820,7 +64650,6 @@ DEP_CPP_SOCK_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -62899,7 +64728,6 @@ DEP_CPP_SOCK_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -62913,6 +64741,9 @@ DEP_CPP_SOCK_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -62978,7 +64809,6 @@ DEP_CPP_SOCK_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -62992,6 +64822,9 @@ DEP_CPP_SOCK_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -63057,7 +64890,6 @@ DEP_CPP_SOCK_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -63071,6 +64903,9 @@ DEP_CPP_SOCK_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -63141,7 +64976,6 @@ DEP_CPP_SOCK_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -63155,6 +64989,9 @@ DEP_CPP_SOCK_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -63225,7 +65062,6 @@ DEP_CPP_SOCK_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -63239,6 +65075,9 @@ DEP_CPP_SOCK_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -63304,7 +65143,6 @@ DEP_CPP_SOCK_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -63318,6 +65156,9 @@ DEP_CPP_SOCK_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -63383,7 +65224,6 @@ DEP_CPP_SOCK_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -63397,6 +65237,9 @@ DEP_CPP_SOCK_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -63462,7 +65305,6 @@ DEP_CPP_SOCK_=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -63476,6 +65318,9 @@ DEP_CPP_SOCK_=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -63557,7 +65402,6 @@ DEP_CPP_SOCK_A=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -63595,6 +65439,9 @@ DEP_CPP_SOCK_A=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_SOCK_A=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -63612,8 +65459,15 @@ DEP_CPP_SOCK_A=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -63668,7 +65522,6 @@ DEP_CPP_SOCK_A=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -63779,7 +65632,6 @@ DEP_CPP_SOCK_A=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -63816,6 +65668,9 @@ DEP_CPP_SOCK_A=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -63890,7 +65745,6 @@ DEP_CPP_SOCK_A=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -63927,6 +65781,9 @@ DEP_CPP_SOCK_A=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -64001,7 +65858,6 @@ DEP_CPP_SOCK_A=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -64038,6 +65894,9 @@ DEP_CPP_SOCK_A=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -64117,7 +65976,6 @@ DEP_CPP_SOCK_A=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -64154,6 +66012,9 @@ DEP_CPP_SOCK_A=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -64233,7 +66094,6 @@ DEP_CPP_SOCK_A=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -64270,6 +66130,9 @@ DEP_CPP_SOCK_A=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -64344,7 +66207,6 @@ DEP_CPP_SOCK_A=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -64381,6 +66243,9 @@ DEP_CPP_SOCK_A=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -64455,7 +66320,6 @@ DEP_CPP_SOCK_A=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -64492,6 +66356,9 @@ DEP_CPP_SOCK_A=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -64566,7 +66433,6 @@ DEP_CPP_SOCK_A=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -64603,6 +66469,9 @@ DEP_CPP_SOCK_A=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -64675,7 +66544,6 @@ DEP_CPP_SOCK_C=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_CODgram.h"\
@@ -64694,6 +66562,9 @@ DEP_CPP_SOCK_C=\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_SOCK_C=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -64710,8 +66581,15 @@ DEP_CPP_SOCK_C=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -64721,8 +66599,6 @@ DEP_CPP_SOCK_C=\
 	".\Flag_Manip.i"\
 	".\Handle_Ops.h"\
 	".\Handle_Ops.i"\
-	".\INET_Addr.h"\
-	".\INET_Addr.i"\
 	".\Init_ACE.h"\
 	".\Init_ACE.i"\
 	".\iosfwd.h"\
@@ -64758,7 +66634,6 @@ DEP_CPP_SOCK_C=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_CODgram.h"\
@@ -64841,7 +66716,6 @@ DEP_CPP_SOCK_C=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_CODgram.h"\
@@ -64859,6 +66733,9 @@ DEP_CPP_SOCK_C=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -64924,7 +66801,6 @@ DEP_CPP_SOCK_C=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_CODgram.h"\
@@ -64942,6 +66818,9 @@ DEP_CPP_SOCK_C=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -65007,7 +66886,6 @@ DEP_CPP_SOCK_C=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_CODgram.h"\
@@ -65025,6 +66903,9 @@ DEP_CPP_SOCK_C=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -65095,7 +66976,6 @@ DEP_CPP_SOCK_C=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_CODgram.h"\
@@ -65113,6 +66993,9 @@ DEP_CPP_SOCK_C=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -65183,7 +67066,6 @@ DEP_CPP_SOCK_C=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_CODgram.h"\
@@ -65201,6 +67083,9 @@ DEP_CPP_SOCK_C=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -65266,7 +67151,6 @@ DEP_CPP_SOCK_C=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_CODgram.h"\
@@ -65284,6 +67168,9 @@ DEP_CPP_SOCK_C=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -65349,7 +67236,6 @@ DEP_CPP_SOCK_C=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_CODgram.h"\
@@ -65367,6 +67253,9 @@ DEP_CPP_SOCK_C=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -65432,7 +67321,6 @@ DEP_CPP_SOCK_C=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\SOCK_CODgram.h"\
@@ -65450,6 +67338,9 @@ DEP_CPP_SOCK_C=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -65559,8 +67450,15 @@ DEP_CPP_SOCK_CO=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -66359,7 +68257,6 @@ DEP_CPP_SOCK_CON=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -66381,6 +68278,9 @@ DEP_CPP_SOCK_CON=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_SOCK_CON=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -66397,8 +68297,15 @@ DEP_CPP_SOCK_CON=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -66445,7 +68352,6 @@ DEP_CPP_SOCK_CON=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -66531,7 +68437,6 @@ DEP_CPP_SOCK_CON=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -66552,6 +68457,9 @@ DEP_CPP_SOCK_CON=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_CON=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -66617,7 +68525,6 @@ DEP_CPP_SOCK_CON=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -66638,6 +68545,9 @@ DEP_CPP_SOCK_CON=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_CON=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -66703,7 +68613,6 @@ DEP_CPP_SOCK_CON=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -66724,6 +68633,9 @@ DEP_CPP_SOCK_CON=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_CON=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -66794,7 +68706,6 @@ DEP_CPP_SOCK_CON=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -66815,6 +68726,9 @@ DEP_CPP_SOCK_CON=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_CON=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -66885,7 +68799,6 @@ DEP_CPP_SOCK_CON=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -66906,6 +68819,9 @@ DEP_CPP_SOCK_CON=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_CON=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -66971,7 +68887,6 @@ DEP_CPP_SOCK_CON=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -66992,6 +68907,9 @@ DEP_CPP_SOCK_CON=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_CON=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -67057,7 +68975,6 @@ DEP_CPP_SOCK_CON=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -67078,6 +68995,9 @@ DEP_CPP_SOCK_CON=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_CON=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -67143,7 +69063,6 @@ DEP_CPP_SOCK_CON=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -67164,6 +69083,9 @@ DEP_CPP_SOCK_CON=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_CON=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -67247,7 +69169,6 @@ DEP_CPP_SOCK_D=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -67280,6 +69201,9 @@ DEP_CPP_SOCK_D=\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_SOCK_D=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -67297,8 +69221,15 @@ DEP_CPP_SOCK_D=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -67314,8 +69245,6 @@ DEP_CPP_SOCK_D=\
 	".\Handle_Ops.i"\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
-	".\INET_Addr.h"\
-	".\INET_Addr.i"\
 	".\Init_ACE.h"\
 	".\Init_ACE.i"\
 	".\iosfwd.h"\
@@ -67355,7 +69284,6 @@ DEP_CPP_SOCK_D=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -67463,7 +69391,6 @@ DEP_CPP_SOCK_D=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -67495,6 +69422,9 @@ DEP_CPP_SOCK_D=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -67571,7 +69501,6 @@ DEP_CPP_SOCK_D=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -67603,6 +69532,9 @@ DEP_CPP_SOCK_D=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -67679,7 +69611,6 @@ DEP_CPP_SOCK_D=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -67711,6 +69642,9 @@ DEP_CPP_SOCK_D=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -67792,7 +69726,6 @@ DEP_CPP_SOCK_D=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -67824,6 +69757,9 @@ DEP_CPP_SOCK_D=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -67905,7 +69841,6 @@ DEP_CPP_SOCK_D=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -67937,6 +69872,9 @@ DEP_CPP_SOCK_D=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -68013,7 +69951,6 @@ DEP_CPP_SOCK_D=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -68045,6 +69982,9 @@ DEP_CPP_SOCK_D=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -68121,7 +70061,6 @@ DEP_CPP_SOCK_D=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -68153,6 +70092,9 @@ DEP_CPP_SOCK_D=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -68229,7 +70171,6 @@ DEP_CPP_SOCK_D=\
 	".\Process_Mutex.inl"\
 	".\Process_Semaphore.h"\
 	".\Process_Semaphore.inl"\
-	".\QoS_Session.h"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
 	".\SOCK.h"\
@@ -68261,6 +70202,9 @@ DEP_CPP_SOCK_D=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -68333,7 +70277,6 @@ DEP_CPP_SOCK_DG=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -68352,6 +70295,9 @@ DEP_CPP_SOCK_DG=\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_SOCK_DG=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -68368,8 +70314,15 @@ DEP_CPP_SOCK_DG=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -68416,7 +70369,6 @@ DEP_CPP_SOCK_DG=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -68499,7 +70451,6 @@ DEP_CPP_SOCK_DG=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -68517,6 +70468,9 @@ DEP_CPP_SOCK_DG=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -68582,7 +70536,6 @@ DEP_CPP_SOCK_DG=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -68600,6 +70553,9 @@ DEP_CPP_SOCK_DG=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -68665,7 +70621,6 @@ DEP_CPP_SOCK_DG=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -68683,6 +70638,9 @@ DEP_CPP_SOCK_DG=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -68753,7 +70711,6 @@ DEP_CPP_SOCK_DG=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -68771,6 +70728,9 @@ DEP_CPP_SOCK_DG=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -68841,7 +70801,6 @@ DEP_CPP_SOCK_DG=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -68859,6 +70818,9 @@ DEP_CPP_SOCK_DG=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -68924,7 +70886,6 @@ DEP_CPP_SOCK_DG=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -68942,6 +70903,9 @@ DEP_CPP_SOCK_DG=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -69007,7 +70971,6 @@ DEP_CPP_SOCK_DG=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69025,6 +70988,9 @@ DEP_CPP_SOCK_DG=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -69090,7 +71056,6 @@ DEP_CPP_SOCK_DG=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69108,6 +71073,9 @@ DEP_CPP_SOCK_DG=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -69180,7 +71148,6 @@ DEP_CPP_SOCK_DGR=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69199,6 +71166,9 @@ DEP_CPP_SOCK_DGR=\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_SOCK_DGR=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -69215,8 +71185,15 @@ DEP_CPP_SOCK_DGR=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -69263,7 +71240,6 @@ DEP_CPP_SOCK_DGR=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69346,7 +71322,6 @@ DEP_CPP_SOCK_DGR=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69364,6 +71339,9 @@ DEP_CPP_SOCK_DGR=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -69429,7 +71407,6 @@ DEP_CPP_SOCK_DGR=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69447,6 +71424,9 @@ DEP_CPP_SOCK_DGR=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -69512,7 +71492,6 @@ DEP_CPP_SOCK_DGR=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69530,6 +71509,9 @@ DEP_CPP_SOCK_DGR=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -69600,7 +71582,6 @@ DEP_CPP_SOCK_DGR=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69618,6 +71599,9 @@ DEP_CPP_SOCK_DGR=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -69688,7 +71672,6 @@ DEP_CPP_SOCK_DGR=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69706,6 +71689,9 @@ DEP_CPP_SOCK_DGR=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -69771,7 +71757,6 @@ DEP_CPP_SOCK_DGR=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69789,6 +71774,9 @@ DEP_CPP_SOCK_DGR=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -69854,7 +71842,6 @@ DEP_CPP_SOCK_DGR=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69872,6 +71859,9 @@ DEP_CPP_SOCK_DGR=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -69937,7 +71927,6 @@ DEP_CPP_SOCK_DGR=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -69955,6 +71944,9 @@ DEP_CPP_SOCK_DGR=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -70029,7 +72021,6 @@ DEP_CPP_SOCK_I=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70045,6 +72036,9 @@ DEP_CPP_SOCK_I=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
@@ -70062,8 +72056,15 @@ DEP_CPP_SOCK_I=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -70075,8 +72076,6 @@ DEP_CPP_SOCK_I=\
 	".\Handle_Ops.i"\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
-	".\INET_Addr.h"\
-	".\INET_Addr.i"\
 	".\Init_ACE.h"\
 	".\Init_ACE.i"\
 	".\iosfwd.h"\
@@ -70112,7 +72111,6 @@ DEP_CPP_SOCK_I=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70195,7 +72193,6 @@ DEP_CPP_SOCK_I=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70211,6 +72208,9 @@ DEP_CPP_SOCK_I=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -70278,7 +72278,6 @@ DEP_CPP_SOCK_I=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70294,6 +72293,9 @@ DEP_CPP_SOCK_I=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -70361,7 +72363,6 @@ DEP_CPP_SOCK_I=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70377,6 +72378,9 @@ DEP_CPP_SOCK_I=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -70449,7 +72453,6 @@ DEP_CPP_SOCK_I=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70465,6 +72468,9 @@ DEP_CPP_SOCK_I=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -70537,7 +72543,6 @@ DEP_CPP_SOCK_I=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70553,6 +72558,9 @@ DEP_CPP_SOCK_I=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -70620,7 +72628,6 @@ DEP_CPP_SOCK_I=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70636,6 +72643,9 @@ DEP_CPP_SOCK_I=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -70703,7 +72713,6 @@ DEP_CPP_SOCK_I=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70719,6 +72728,9 @@ DEP_CPP_SOCK_I=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -70786,7 +72798,6 @@ DEP_CPP_SOCK_I=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70802,6 +72813,9 @@ DEP_CPP_SOCK_I=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -70874,7 +72888,6 @@ DEP_CPP_SOCK_S=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -70893,6 +72906,9 @@ DEP_CPP_SOCK_S=\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
 	
+NODEP_CPP_SOCK_S=\
+	".\QoS_Session.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -70909,8 +72925,15 @@ DEP_CPP_SOCK_S=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -70957,7 +72980,6 @@ DEP_CPP_SOCK_S=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -71040,7 +73062,6 @@ DEP_CPP_SOCK_S=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -71058,6 +73079,9 @@ DEP_CPP_SOCK_S=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -71123,7 +73147,6 @@ DEP_CPP_SOCK_S=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -71141,6 +73164,9 @@ DEP_CPP_SOCK_S=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
@@ -71206,7 +73232,6 @@ DEP_CPP_SOCK_S=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -71224,6 +73249,9 @@ DEP_CPP_SOCK_S=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -71294,7 +73322,6 @@ DEP_CPP_SOCK_S=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -71312,6 +73339,9 @@ DEP_CPP_SOCK_S=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -71382,7 +73412,6 @@ DEP_CPP_SOCK_S=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -71400,6 +73429,9 @@ DEP_CPP_SOCK_S=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -71465,7 +73497,6 @@ DEP_CPP_SOCK_S=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -71483,6 +73514,9 @@ DEP_CPP_SOCK_S=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -71548,7 +73582,6 @@ DEP_CPP_SOCK_S=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -71566,6 +73599,9 @@ DEP_CPP_SOCK_S=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\QoS_Session.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
@@ -71631,7 +73667,6 @@ DEP_CPP_SOCK_S=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\QoS_Session.h"\
 	".\SOCK.h"\
 	".\SOCK.i"\
 	".\Sock_Connect.h"\
@@ -71649,6 +73684,9 @@ DEP_CPP_SOCK_S=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\QoS_Session.h"\
 	
 
 !ENDIF 
@@ -71813,18 +73851,20 @@ DEP_CPP_SSTRI=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -71864,6 +73904,8 @@ DEP_CPP_SSTRI=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -71932,6 +73974,12 @@ DEP_CPP_SSTRI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -73184,7 +75232,6 @@ DEP_CPP_STATS=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
-	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Stats.h"\
@@ -73192,29 +75239,26 @@ DEP_CPP_STATS=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
-	".\Event_Handler.h"\
-	".\Event_Handler.i"\
-	".\File_Lock.h"\
-	".\File_Lock.inl"\
 	".\Flag_Manip.h"\
 	".\Flag_Manip.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
 	".\Handle_Ops.h"\
 	".\Handle_Ops.i"\
+	".\High_Res_Timer.h"\
+	".\High_Res_Timer.i"\
 	".\Init_ACE.h"\
 	".\Init_ACE.i"\
 	".\iosfwd.h"\
@@ -73225,22 +75269,13 @@ DEP_CPP_STATS=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -73260,34 +75295,12 @@ DEP_CPP_STATS=\
 	".\OS_TLI.inl"\
 	".\post.h"\
 	".\pre.h"\
-	".\Process_Mutex.h"\
-	".\Process_Mutex.inl"\
-	".\Process_Semaphore.h"\
-	".\Process_Semaphore.inl"\
-	".\RW_Process_Mutex.h"\
-	".\RW_Process_Mutex.inl"\
-	".\Signal.h"\
-	".\Signal.i"\
 	".\Sock_Connect.h"\
 	".\Sock_Connect.i"\
 	".\Stats.h"\
 	".\Stats.i"\
 	".\streams.h"\
-	".\SV_Semaphore_Complex.h"\
-	".\SV_Semaphore_Complex.i"\
-	".\SV_Semaphore_Simple.h"\
-	".\SV_Semaphore_Simple.i"\
 	".\svc_export.h"\
-	".\Synch.h"\
-	".\Synch.i"\
-	".\Synch_T.cpp"\
-	".\Synch_T.h"\
-	".\Synch_T.i"\
-	".\Test_and_Set.cpp"\
-	".\Test_and_Set.h"\
-	".\Test_and_Set.i"\
-	".\Thread.h"\
-	".\Thread.i"\
 	".\Thread_Adapter.h"\
 	".\Thread_Adapter.inl"\
 	".\Thread_Control.h"\
@@ -73295,6 +75308,9 @@ DEP_CPP_STATS=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -74463,14 +76479,24 @@ DEP_CPP_STRAT=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -74540,6 +76566,8 @@ DEP_CPP_STRAT=\
 	".\Message_Queue_T.h"\
 	".\Message_Queue_T.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -74624,6 +76652,12 @@ DEP_CPP_STRAT=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
@@ -76097,7 +78131,6 @@ DEP_CPP_SVC_C=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -76170,6 +78203,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	
+NODEP_CPP_SVC_C=\
+	".\Obstack.i"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -76185,18 +78221,21 @@ DEP_CPP_SVC_C=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
+	".\DLL.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -76236,10 +78275,16 @@ DEP_CPP_SVC_C=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
+	".\Obstack_T.cpp"\
+	".\Obstack_T.h"\
+	".\Obstack_T.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -76311,6 +78356,12 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -76381,7 +78432,6 @@ DEP_CPP_SVC_C=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -76453,6 +78503,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -76523,7 +78576,6 @@ DEP_CPP_SVC_C=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -76596,6 +78648,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	
+NODEP_CPP_SVC_C=\
+	".\Obstack.i"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
 
@@ -76665,7 +78720,6 @@ DEP_CPP_SVC_C=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -76737,6 +78791,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -76812,7 +78869,6 @@ DEP_CPP_SVC_C=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -76884,6 +78940,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -76959,7 +79018,6 @@ DEP_CPP_SVC_C=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -77031,6 +79089,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -77101,7 +79162,6 @@ DEP_CPP_SVC_C=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -77173,6 +79233,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -77243,7 +79306,6 @@ DEP_CPP_SVC_C=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -77316,6 +79378,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	
+NODEP_CPP_SVC_C=\
+	".\Obstack.i"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
 
@@ -77385,7 +79450,6 @@ DEP_CPP_SVC_C=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -77457,6 +79521,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\Obstack.i"\
 	
 
 !ENDIF 
@@ -77559,7 +79626,6 @@ DEP_CPP_SVC_CO=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -77659,6 +79725,9 @@ DEP_CPP_SVC_CO=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
+NODEP_CPP_SVC_CO=\
+	".\Obstack.i"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
 
@@ -77670,14 +79739,24 @@ DEP_CPP_SVC_CO=\
 	".\ace_wchar.inl"\
 	".\ARGV.h"\
 	".\ARGV.i"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -77688,6 +79767,7 @@ DEP_CPP_SVC_CO=\
 	".\Containers_T.cpp"\
 	".\Containers_T.h"\
 	".\Containers_T.i"\
+	".\DLL.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -77750,10 +79830,16 @@ DEP_CPP_SVC_CO=\
 	".\Module.cpp"\
 	".\Module.h"\
 	".\Module.i"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Obchunk.h"\
+	".\Obchunk.i"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
+	".\Obstack_T.cpp"\
+	".\Obstack_T.h"\
+	".\Obstack_T.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -77850,6 +79936,12 @@ DEP_CPP_SVC_CO=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
@@ -77947,7 +80039,6 @@ DEP_CPP_SVC_CO=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -78046,6 +80137,9 @@ DEP_CPP_SVC_CO=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SVC_CO=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
@@ -78141,7 +80235,6 @@ DEP_CPP_SVC_CO=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -78241,6 +80334,9 @@ DEP_CPP_SVC_CO=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
+NODEP_CPP_SVC_CO=\
+	".\Obstack.i"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
 
@@ -78335,7 +80431,6 @@ DEP_CPP_SVC_CO=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -78434,6 +80529,9 @@ DEP_CPP_SVC_CO=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SVC_CO=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
@@ -78534,7 +80632,6 @@ DEP_CPP_SVC_CO=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -78633,6 +80730,9 @@ DEP_CPP_SVC_CO=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SVC_CO=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
@@ -78733,7 +80833,6 @@ DEP_CPP_SVC_CO=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -78832,6 +80931,9 @@ DEP_CPP_SVC_CO=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SVC_CO=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
@@ -78927,7 +81029,6 @@ DEP_CPP_SVC_CO=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -79026,6 +81127,9 @@ DEP_CPP_SVC_CO=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SVC_CO=\
+	".\Obstack.i"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
@@ -79121,7 +81225,6 @@ DEP_CPP_SVC_CO=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -79221,6 +81324,9 @@ DEP_CPP_SVC_CO=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
+NODEP_CPP_SVC_CO=\
+	".\Obstack.i"\
+	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
 
@@ -79315,7 +81421,6 @@ DEP_CPP_SVC_CO=\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
-	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
 	".\OS_Dirent.h"\
@@ -79414,6 +81519,9 @@ DEP_CPP_SVC_CO=\
 	".\Trace.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+NODEP_CPP_SVC_CO=\
+	".\Obstack.i"\
 	
 
 !ENDIF 
@@ -79532,8 +81640,15 @@ DEP_CPP_SYNCH=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -80475,8 +82590,15 @@ DEP_CPP_SYNCH_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -81259,18 +83381,20 @@ DEP_CPP_SYSTE=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
-	".\Containers.h"\
-	".\Containers.i"\
-	".\Containers_T.cpp"\
-	".\Containers_T.h"\
-	".\Containers_T.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\File_Lock.h"\
@@ -81308,6 +83432,8 @@ DEP_CPP_SYSTE=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -81361,6 +83487,9 @@ DEP_CPP_SYSTE=\
 	".\Thread_Exit.h"\
 	".\Thread_Hook.h"\
 	".\Trace.h"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -82515,14 +84644,24 @@ DEP_CPP_TASK_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -82595,6 +84734,8 @@ DEP_CPP_TASK_=\
 	".\Module.cpp"\
 	".\Module.h"\
 	".\Module.i"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -82686,6 +84827,12 @@ DEP_CPP_TASK_=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	
@@ -84256,8 +86403,15 @@ DEP_CPP_THREA=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -85038,14 +87192,24 @@ DEP_CPP_THREAD=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -85077,22 +87241,13 @@ DEP_CPP_THREAD=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -85118,8 +87273,6 @@ DEP_CPP_THREAD=\
 	".\Process_Semaphore.inl"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
-	".\Signal.h"\
-	".\Signal.i"\
 	".\Singleton.cpp"\
 	".\Singleton.h"\
 	".\Singleton.i"\
@@ -85150,6 +87303,12 @@ DEP_CPP_THREAD=\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -86275,14 +88434,24 @@ DEP_CPP_THREAD_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -86314,22 +88483,13 @@ DEP_CPP_THREAD_=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -86355,8 +88515,6 @@ DEP_CPP_THREAD_=\
 	".\Process_Semaphore.inl"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
-	".\Signal.h"\
-	".\Signal.i"\
 	".\Singleton.cpp"\
 	".\Singleton.h"\
 	".\Singleton.i"\
@@ -86387,6 +88545,12 @@ DEP_CPP_THREAD_=\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -87491,8 +89655,15 @@ DEP_CPP_THREAD_E=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -88484,6 +90655,9 @@ DEP_CPP_THREAD_M=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -88493,8 +90667,15 @@ DEP_CPP_THREAD_M=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -88528,22 +90709,13 @@ DEP_CPP_THREAD_M=\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_Allocator.h"\
-	".\Malloc_Allocator.i"\
 	".\Malloc_Base.h"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -88569,8 +90741,6 @@ DEP_CPP_THREAD_M=\
 	".\Process_Semaphore.inl"\
 	".\RW_Process_Mutex.h"\
 	".\RW_Process_Mutex.inl"\
-	".\Signal.h"\
-	".\Signal.i"\
 	".\Singleton.cpp"\
 	".\Singleton.h"\
 	".\Singleton.i"\
@@ -88601,6 +90771,12 @@ DEP_CPP_THREAD_M=\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -89747,8 +91923,15 @@ DEP_CPP_TOKEN=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -90788,14 +92971,24 @@ DEP_CPP_TP_RE=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -90850,6 +93043,8 @@ DEP_CPP_TP_RE=\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -90935,6 +93130,12 @@ DEP_CPP_TP_RE=\
 	".\TP_Reactor.h"\
 	".\TP_Reactor.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
@@ -92279,8 +94480,15 @@ DEP_CPP_TRACE=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -92994,6 +95202,9 @@ DEP_CPP_WFMO_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Array_Base.cpp"\
+	".\Array_Base.h"\
+	".\Array_Base.inl"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -93003,8 +95214,15 @@ DEP_CPP_WFMO_=\
 	".\Basic_Types.h"\
 	".\Basic_Types.i"\
 	".\config-all.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
 	".\config-win32-borland.h"\
 	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
 	".\config-win32-msvc.h"\
 	".\config-win32-visualage.h"\
 	".\config-win32.h"\
@@ -93074,6 +95292,8 @@ DEP_CPP_WFMO_=\
 	".\Message_Queue_T.h"\
 	".\Message_Queue_T.i"\
 	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -93161,6 +95381,12 @@ DEP_CPP_WFMO_=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	

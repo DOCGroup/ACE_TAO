@@ -1,3 +1,10 @@
+Mon Jul 23 10:39:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/OS.h: Added /**/ between #include and <sys/times.h> to
+          avoid warning from CE compiler.
+
+        * ace/ace_dll.vcp: Added Obchunk.cpp to the project.
+
 Sun Jul 22 08:19:43 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/config-cygwin32.h: ADded a #define for_CLOCKID_T.  Thanks to
@@ -19,16 +26,16 @@ Fri Jul 20 10:16:46 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  sh->get_handle () with a cached value of handle.  This fixes a
  	  bug with gcc 2.96 on Tornado 2.1/VxWorks for SuperH.  Thanks to
  	  Frank Wolf <fwolf@gum.de> for reporting this.
-	
+
 	* examples/Connection/non_blocking/CPP-acceptor.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp: 
+	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
 	* examples/Connection/non_blocking/CPP-connector.cpp:  Changed the
 	  SH macro to SVH to avoid clashes with a macro in VxWorks.
   	  Thanks to Frank Wolf <fwolf@gum.de> for reporting this.
 
 Thu Jul 19 06:55:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-g++-common.h: Version 2.96 of g++ on VxWorks 
+	* ace/config-g++-common.h: Version 2.96 of g++ on VxWorks
 	  is missing auto_ptr, so let's add the ACE_LACK_AUTO_PTR flag
  	  there.  Thanks to Frank Wolf for suggesting this.
 
