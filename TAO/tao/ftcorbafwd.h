@@ -125,8 +125,8 @@ class FT_FactoryInfos_var;
 class FT_FactoryInfos_out;
 
 struct FT_FaultMonitoringIntervalAndTimeoutValue;
-class FT_FaultMonitoringIntervalAndTimeoutValue_var;
-class FT_FaultMonitoringIntervalAndTimeoutValue_out;
+class  FT_FaultMonitoringIntervalAndTimeoutValue_var;
+struct FT_FaultMonitoringIntervalAndTimeoutValue_out;
 
 class FT_InterfaceNotFound;
 class FT_MemberNotFound;
