@@ -1,4 +1,4 @@
-project : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable, portableserver {
+project : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable {
   exename  = ImplRepo_Service
   Source_Files {
     Adapter_Activator.cpp
@@ -9,7 +9,7 @@ project : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable, portable
 }
 
 
-project(ImR_Activator) : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable, portableserver {
+project(ImR_Activator) : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable, strategies {
   exename  = ImR_Activator
   Source_Files {
     ImR_Activator.cpp
@@ -26,7 +26,7 @@ project(ImR_Activator) : orbsvcsexe, core, acexml, minimum_corba, svc_utils, ior
 }
 
 
-project(tao_imr) : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable, portableserver {
+project(tao_imr) : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable {
   exename  = tao_imr
   Source_Files {
     tao_imr.cpp

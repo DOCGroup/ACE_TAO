@@ -78,64 +78,67 @@ my(@build_re)     = ();
 
 print "Creating or updating builds in $starting_dir\n";
 
-sub is_changed {
-  my($real, $fake) = @_;
-  unless (-e $real) {
+#### If the $linked file is newer than the real file then
+#### backup the real file, and replace it with the linked
+#### version. 
+
+sub backup_and_copy_changed {
+  my($real, $linked) = @_;
+  my($status_real) = stat($real);
+  if (! $status_real) {
     die "ERROR: is_changed() real $real not exist.\n";
   }
-  my($status1) = stat($real);
-  my($status2) = stat($fake);
-  my($tm1) = $status1->mtime;
+  my($status_linked) = stat($linked);
 
-  if ($status1->mtime != $status2->mtime) {
+  if ($status_linked->mtime > $status_real->mtime) {
+    rename($real, $real . '.bak');
+    rename($linked, $real);
     return 1;
   }
-  if ($status1->size != $status2->size) {
+
+  if ($status_real->mtime != $status_linked->mtime) {
+    unlink($linked);
+    return 1;
+  }
+  if ($status_real->size != $status_linked->size) {
+    unlink($linked);
     return 1;
   }
   return 0;
 }
   
 sub cab_link {
-  my($real,$fake,$build_regex) = @_;
-  my($uif)  = ($^O eq 'MSWin32' ? 'link' : 'symlink');
+  my($real,$linked,$build_regex) = @_;
 
   my($status) = 0;
   if ($^O eq 'MSWin32') {
-    my($fixed) = $fake;
+    my($fixed) = $linked;
     $fixed =~ s/$build_regex//;
     push(@nlinks, $fixed);
 
-    if (-d "$starting_dir/$fake") {
-       die "ERROR: cab_link() $fake is a directory.\n";
-    }
-
-    #### chdir does NOT work with relative path names. (ActivePerl 5.6 WinXP)
-    my($curdir) = "$starting_dir/" . dirname($fake);
+    my($curdir) = "$starting_dir/" . dirname($linked);
     $status = chdir($curdir);
     if (! $status) {
        die "ERROR: cab_link() chdir " . $curdir . " failed.\n";
     }
     
-    my($base_fake) = basename($fake);
+    my($base_linked) = basename($linked);
 
-    if (-e $base_fake) {
-      if (is_changed($real, $base_fake)) {
-        unlink($base_fake);
-      } else {
+    if (-e $base_linked) {
+      if (! backup_and_copy_changed($real, $base_linked)) {
         return;
       }
     }
 
-    print "$uif $real $fake\n" if $verbose;
-    $status = link ($real, $base_fake);
+    print "link $real $linked\n" if $verbose;
+    $status = link ($real, $base_linked);
     chdir($starting_dir);
   } else {
-    print "$uif $real $fake\n" if $verbose;
-    $status = symlink ($real, $fake);
+    print "$symlink $real $linked\n" if $verbose;
+    $status = symlink ($real, $linked);
   }
   if (!$status) {
-    die "$0: $real -> $fake failed\n";
+    die "$0: $real -> $linked failed\n";
   }
 }
 
@@ -272,6 +275,7 @@ sub wanted {
         ! /^.*\.icp\z/s && 
         ! /^.*\.ncb\z/s &&
         ! /^.*\.opt\z/s &&
+        ! /^.*\.bak\z/s &&
         ! /^\.cvsignore\z/s &&
         ! /^Makefile.*\z/s
       );
@@ -291,7 +295,6 @@ print "Found $#files files and directories.\n";
 ####
 foreach $file (@files) {
   $file =~ s%^./%%g;  #### excise leading ./ directory component
-  #### -d does NOT work with relative path names. (ActivePerl 5.6 WinXP)
   my($fullname) = "$starting_dir/$file";
   for ($idx = 0; $idx <= $#builds; $idx++) {
     my($build) = $builds[$idx];
@@ -301,7 +304,7 @@ foreach $file (@files) {
         mkdir ("$starting_dir/$build/$file", $directory_mode);
       }
     } else {
-      unless ((-e "$build/$file") && ($^O ne 'MSWin32')) {
+      unless (($^O ne 'MSWin32') && (-e "$build/$file")) {
         $up = '../..';
         while ($file =~ m%/%g) {
           $up .= '/..';
@@ -311,6 +314,8 @@ foreach $file (@files) {
     }
   }
 }
+
+print "Finished creating and updating links.\n";
 
 foreach $build (@builds) {
   ####
@@ -378,15 +383,24 @@ foreach $build (@builds) {
   ####
   print "\nCompleted creation of $build/.\n";
 
-  if (! -e "$build/ace/config.h") {
+foreach $build (@builds) {
+  unless (-d "$starting_dir/$build") {
+    print "Creating $starting_dir/$build\n";
+    mkdir ("$starting_dir/$build", $directory_mode);
+  }
+
+
+  if (! -e "$starting_dir/$build/ace/config.h") {
     print "Be sure to setup $build/ace/config.h";
   }
 
   if ($^O ne 'MSWin32' &&
-      ! -e "$build/include/makeinclude/platform_macros.GNU") {
+      ! -e "$starting_dir/$build/include/makeinclude/platform_macros.GNU") {
     print " and\n$build/include/makeinclude/platform_macros.GNU";
   }
   print ".\n";
+}
+
 }
 
 #### EOF

@@ -9,16 +9,16 @@ project(*supplier): messaging, rteventexe, naming {
   }
 }
 
-project(*consumer): messaging, rteventexe, naming {
-  after  += ECMcastTests_Lib
-  libs     += ECMcastTests
-  includes += ../Common
-  exename   = consumer
-
-  Source_Files {
-    consumer.cpp
-  }
-}
+//project(*consumer): messaging, rteventexe, naming {
+//  after  += ECMcastTests_Lib
+//  libs     += ECMcastTests
+//  includes += ../Common
+//  exename   = consumer
+//
+//  Source_Files {
+//    consumer.cpp
+//  }
+//}
 
 project(*gateway-ec): messaging, rteventexe, naming {
   after  += ECMcastTests_Lib

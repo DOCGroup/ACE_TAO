@@ -1,15 +1,11 @@
-project(*Server): taoserver {
-  idlflags += -Gv
-
+project(*Server): taoserver, valuetype {
   Source_Files {
     AnyS_impl.cpp
     server.cpp
   }
 }
 
-project(*Client): taoclient {
-  idlflags += -Gv
-
+project(*Client): taoclient, valuetype {
   Source_Files {
     AnyC.cpp
     client.cpp

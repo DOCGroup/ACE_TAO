@@ -1,6 +1,7 @@
 // $Id$
 
 // Test program for different methods of copying files.
+#if !defined(_WIN32) 
 
 #include "ace/OS.h"
 #include "ace/ACE.h"
@@ -124,7 +125,8 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 
   for (i = 0; test_vector[i] != 0; i++)
     {
-      if (ACE_OS::ftruncate (fileno (output_fp), 0) == -1)
+      ACE_HANDLE hfile = fileno (output_fp);
+      if (ACE_OS::ftruncate (hfile, 0) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
                            "%s\n",
                            "ftruncate"),
@@ -203,3 +205,9 @@ main (int argc, char *argv[])
   cleanup ();
   return 0;
 }
+#else 
+int main(int ac, char* av[]) {
+  // not supported on win32
+  return 0;
+}
+#endif

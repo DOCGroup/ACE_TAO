@@ -1,3 +1,17 @@
+project(Test_Output) : acelib {
+  sharedname = Test_Output
+  dynamicflags = TEST_OUTPUT_BUILD_DLL
+  Source_Files {
+    Test_Output.cpp
+  }
+  Header_Files {
+    Test_Output_Export.h
+    test_config.h
+  }
+  Resource_Files {
+  }
+}
+
 project(Framework Component DLL) : acelib {
   sharedname   = Framework_Component_DLL
   dynamicflags = FRAMEWORK_COMPONENT_DLL_BUILD_DLL
@@ -45,6 +59,12 @@ project(Service Config DLL) : acelib {
 project(ACE INIT Test) : acetest {
   Source_Files {
     ACE_Init_Test.cpp
+  }
+}
+
+project(ACE Test) : acetest {
+  Source_Files {
+    ACE_Test.cpp
   }
 }
 
@@ -903,7 +923,7 @@ project(Framework Component Test) : acetest {
   }
 }
 
-project(FIFO Test) : aceexe {
+project(FIFO Test) : acetest {
   Source_Files {
     FIFO_Test.cpp
   }

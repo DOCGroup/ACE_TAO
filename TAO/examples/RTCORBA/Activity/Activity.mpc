@@ -1,8 +1,25 @@
-project: namingexe, rt_server {
-  exename      = activity
-  // todo : This doesn't make any sense for an EXE. What is the
-  // code really supposed to look like? MPC will not let you add 
-  // dynamicflags to an exe project anyway, so the following is ignored.
+project(*Lib) : orbsvcslib, naming, rtportableserver {
+  sharedname = activity
   dynamicflags = ACTIVITY_BUILD_DLL
+  libout = .
+  Source_Files {
+    Activity.cpp
+    Builder.cpp
+    Job_i.cpp
+    Periodic_Task.cpp
+    POA_Holder.cpp
+    Task_Stats.cpp
+    Thread_Task.cpp
+  }
+}
+project: namingexe, rt_server {
+  exename = test
+  after  += Activity_Lib
+  libs   += activity
+  Source_Files {
+    main.cpp
+  }  
+  IDL_Files {
+  }
 }
 

@@ -1,2 +1,30 @@
 project : aceexe {
+  exename = malloc
+  Source_Files {
+    Malloc.cpp
+    Options.cpp
+    test_malloc.cpp
+  }
+}
+project(*multiple) : aceexe {
+  exename = multiple
+  Source_Files {
+    Malloc.cpp
+    Options.cpp
+    test_multiple_mallocs.cpp
+  }
+}
+project(*persistence) : aceexe {
+  exename = persistence
+  Source_Files {
+    test_persistence.cpp
+  }
+}
+project(*posind) : aceexe {
+  exename = posind
+  Source_Files {
+    Malloc.cpp
+    Options.cpp
+    test_position_independent_malloc.cpp
+  }
 }

@@ -1,3 +1,34 @@
+Wed Jul 02 14:57:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * examples/AMH/Sink_Server/Sink_Server.mpc
+        * examples/RTCORBA/Activity/Activity.cpp
+        * examples/RTCORBA/Activity/Activity.mpc
+        * examples/RTCORBA/Activity/main.cpp
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc
+        * orbsvcs/examples/Notify/Lanes/Lanes.mpc
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.cpp
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.h
+        * orbsvcs/tests/Event/Mcast/Simple/Simple.mpc
+        * orbsvcs/tests/Security/MT_IIOP_SSL/MT_SSLIOP.mpc
+        * performance-tests/Latency/AMH/Single_Threaded/Single_Threaded.mpc
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/Single_Threaded.mpc
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc
+        * performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc
+        * tests/IDL_Test/IDL_Test.mpc
+        * tests/OBV/Any/OBV_Any.mpc
+        * tests/OBV/Factory/OBV_Factory.mpc
+        * tests/OBV/Forward/OBV_Forward.mpc
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc
+        * tests/Param_Test/Param_Test.mpc
+
+          Fixed broken mpc files.
+          Updated Activity example by splitting it into a separate library. The
+        example was exporting symbols from an exe. There may be another way
+        to solve this, but I had to guess at what was originally intended.
+          Removed extra MT_IIOP_SSL mpc file.
+          Updated Pluggable_Flow_Protocol test to not use covariant return, since
+        this isn't supported on VC6, and wasn't necessary in this case.
+
 Wed Jul 2 15:37:36 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/TAO_RTScheduler.dsp:	
@@ -5,6 +36,7 @@ Wed Jul 2 15:37:36 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  Added the /GR option to TAO_RTScheduler.dsp to fix warnings due
 	  to run time type identifcation problem.
 		
+
 Wed Jul 2 00:23:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/Distributable_Thread.cpp:

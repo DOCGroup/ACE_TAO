@@ -1,6 +1,4 @@
-project(*Server): taoserver {
-  idlflags += -Gv
-
+project(*Server): taoserver, valuetype {
   Source_Files {
     FactoryC_impl.cpp
     FactoryS_impl.cpp
@@ -8,9 +6,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoclient {
-  idlflags += -Gv
-
+project(*Client): taoclient, valuetype {
   Source_Files {
     FactoryC.cpp
     FactoryC_impl.cpp

@@ -1,7 +1,6 @@
 project(*Server): messaging, taoserver, minimum_corba {
   Source_Files {
     param_test_i.cpp
-    tmplinst.cpp
     server.cpp
   }
 }
@@ -10,49 +9,48 @@ project(*Client): messaging, taoserver, minimum_corba, dynamicinterface {
   exename  = client
 
   Source_Files {
-    param_testC.cpp
-    driver.cpp
-    options.cpp
-    results.cpp
-    helper.cpp
-    tmplinst.cpp
     any.cpp
+    bd_array_seq.cpp
     bd_long_seq.cpp
     bd_short_seq.cpp
-    bd_str_seq.cpp
-    bd_wstr_seq.cpp
     bd_string.cpp
-    bd_wstring.cpp
     bd_struct_seq.cpp
-    bd_array_seq.cpp
+    bd_str_seq.cpp
+    bd_wstring.cpp
+    bd_wstr_seq.cpp
+    big_union.cpp
+    client.cpp
+    complex_any.cpp
+    driver.cpp
+    except.cpp
     fixed_array.cpp
     fixed_struct.cpp
+    helper.cpp
+    multdim_array.cpp
     nested_struct.cpp
-    objref_struct.cpp
     objref.cpp
+    objref_struct.cpp
+    options.cpp
+    param_test_i.cpp
+    recursive_struct.cpp
+    recursive_union.cpp
+    results.cpp
     short.cpp
-    ulonglong.cpp
+    small_union.cpp
     typecode.cpp
     ub_any_seq.cpp
+    ub_array_seq.cpp
     ub_long_seq.cpp
     ub_objref_seq.cpp
     ub_short_seq.cpp
-    ub_str_seq.cpp
-    ub_wstr_seq.cpp
     ub_string.cpp
-    ub_wstring.cpp
     ub_struct_seq.cpp
-    ub_array_seq.cpp
+    ub_str_seq.cpp
+    ub_wstring.cpp
+    ub_wstr_seq.cpp
+    ulonglong.cpp
     var_array.cpp
     var_struct.cpp
-    recursive_struct.cpp
-    except.cpp
-    big_union.cpp
-    small_union.cpp
-    recursive_union.cpp
-    multdim_array.cpp
-    complex_any.cpp
-    client.cpp
   }
 }
 
