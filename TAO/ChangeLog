@@ -3597,10 +3597,11 @@ Fri Jul 26 11:22:55 2002  Charles Frasch <cfrasch@spawar.navy.mil>
 	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h
 	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp
 
-	  Corectly cancel timers in the shutdown methods. The timers
+	  Correctly cancel timers in the shutdown methods. The timers
 	  are scheduled in the activate methods but an
 	  ACE_Reactor::remove_handler() call was being made rather
-	  than the correct ACE_Reactor::cancel_timer().
+	  than the correct ACE_Reactor::cancel_timer(). Fixes 
+          BUGID 1246.
 
 Fri Jul 26 09:26:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
