@@ -4,6 +4,10 @@ Fri Aug 28 13:45:28 1998  David L. Levine  <levine@cs.wustl.edu>
           support for PowerPC target.  It has a slightly different
           name (sunos-xcoff-ppc) than for x86 target (sunos-coff-x86).
 
+        * ace/config-lynxos.h: there doesn't seem to be an
+          alloca () for PowerPC target.  So, only enable
+          ACE_HAS_ALLOCA and ACE_HAS_ALLOCA_H ifdef __x86__.
+
 Fri Aug 28 12:30:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * bin/create_ace_build:
