@@ -13,6 +13,9 @@ Tue Sep 11 01:22:40 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/SString.cpp: Changed ACE_CString to be a typedef of
 	  ACE_String_Base<char>.
 
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added String_Base.* to appropriate folders.
+
 Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager_T.i:
