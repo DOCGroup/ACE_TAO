@@ -1,3 +1,8 @@
+Tue Jun 15 08:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Log_Msg/Log_Msg_MFC/MFC_Log.cpp:
+          Added missing include
+
 Mon Jun 14 16:46:35 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* include/makeinclude/rules.local.GNU:
