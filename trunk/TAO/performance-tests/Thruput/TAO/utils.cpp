@@ -360,10 +360,9 @@ read_timer (CORBA::Char *str, CORBA::Long len)
 void
 prusage (char *outp)
 {
-  register time_t t;
+  register ACE_timer_t t, ms;
   register char *cp;
   register int i;
-  int ms;
   struct rusage *r1, *r0;
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;
@@ -475,19 +474,19 @@ prusage (char *outp)
             break;
 
           case 'X':
-	    ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (rusage.ru_ixrss) / t);
+	    ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (int) ((rusage.ru_ixrss) / t));
             END (outp);
             break;
 
           case 'D':
             ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
-                     (rusage.ru_idrss + rusage.ru_isrss) / t);
+                     (int) ((rusage.ru_idrss + rusage.ru_isrss) / t));
             END (outp);
             break;
 
           case 'K':
             ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
-	            (rusage.ru_ixrss + rusage.ru_isrss + rusage.ru_idrss) / t);
+	            (int) ((rusage.ru_ixrss + rusage.ru_isrss + rusage.ru_idrss) / t));
             END (outp);
             break;
 
