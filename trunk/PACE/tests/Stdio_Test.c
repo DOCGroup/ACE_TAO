@@ -27,7 +27,7 @@ const char * success = "SUCCEEDED";
 const char * failure = "***FAILED***";
 
 int
-main (int argc, char **argv)
+main (int, char **)
 {
   /* Test creating/opening a file. */
   FILE *file;
