@@ -1,0 +1,45 @@
+# Makefile for building the Thread_Cancel exe with Borland C++ Builder
+
+NAME = Thread_Cancel
+
+
+OBJFILES = \
+	$(OBJDIR)\Scheduler.obj \
+	$(OBJDIR)\Thread_Task.obj \
+	$(OBJDIR)\test.obj
+
+LFLAGS = \
+	-j..\..\..\..\lib\$(CONFIG_SUBDIR) -j..\..\..\..\lib \
+	-L..\..\..\..\lib\$(CONFIG_SUBDIR) -L..\..\..\..\lib \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	TAO_RTScheduler$(LIB_DECORATOR).lib \
+	TAO_RTCORBA$(LIB_DECORATOR).lib \
+	TAO$(LIB_DECORATOR).lib \
+	ACE$(LIB_DECORATOR).lib \
+
+
+!ifdef STATIC
+LIB_FLAGS = -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS =
+!endif
+
+CFLAGS = \
+	-I..\..\.. \
+	-I..\..\..\tao \
+	-I..\..\..\.. \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = .
+
+INCLUDES = \
+	..\Scheduler.h \
+	Thread_Task.h
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
