@@ -61,18 +61,9 @@ public:
         virtual int open(void * _void_data)
                 { return inherited::open(_void_data); }
 
-        /*
-           When you're done wit the thread pool, you have to have some way to shut it down.
-           This is what close() is for.
-         */
-    int close( void );
-
     /*
-      Just like open() we have to provide a bogus method that will
-      invoke the baseclass close() to keep some compilers quiet.
     */
-    virtual int close( u_long flags )
-        { return inherited::close(flags); }
+    int close( u_long flags = 0 );
 
         /*
            To use the thread pool, you have to put some unit of work into it.  Since we're

@@ -31,8 +31,10 @@ int Thread_Pool::open( int _pool_size )
    Closing the thread pool can be a tricky exercise.  I've decided to take an easy approach
    and simply enqueue a secret message for each thread we have active.
  */
-int Thread_Pool::close( void )
+int Thread_Pool::close( u_long flags )
 {
+	ACE_UNUSED_ARG(flags);
+
 	/*
 	   Find out how many threads are currently active
 	 */

@@ -134,7 +134,7 @@ int Client_Handler::handle_input (ACE_HANDLE _handle)
    */
   if( concurrency() == Client_Acceptor::thread_pool_ )
   {
-	if( ACE_Thread::self() == creator_ )
+	if( ACE_OS::thr_equal(ACE_Thread::self(),creator_) )
 	{
 		/*
 		   Remove ourselves from the reactor and ask to be put into the thread pool's
