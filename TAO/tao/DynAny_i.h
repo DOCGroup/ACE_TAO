@@ -28,6 +28,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/POA_CORBA.h"
+#include "tao/Typecode.h"
 
 class TAO_Export TAO_DynAny_i : public POA_CORBA::DynAny
 {
