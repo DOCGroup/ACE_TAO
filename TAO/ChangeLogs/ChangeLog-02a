@@ -1,3 +1,14 @@
+Mon Feb 26 19:05:57 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+	* orbsvcs/orbsvcs/Trader/Trader_Constraint_Visitors.h:
+	  Added some TAO_Trading_Export macros to export some classes from
+ 	  the Trading Service library.  Thanks to Lothar Werzinger
+ 	  <werzinger.lothar@krones.de> for reporting this and submitting
+ 	  the patches.
+
 Mon Feb 26 16:34:55 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * orbsvcs/IFR_Service/IFR_Service.bor:

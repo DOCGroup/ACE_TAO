@@ -28,7 +28,7 @@
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
 
-class TAO_Constraint_Interpreter : public TAO_Interpreter
+class TAO_Trading_Export TAO_Constraint_Interpreter : public TAO_Interpreter
 {
   //
   // = TITLE
@@ -74,7 +74,7 @@ public:
   // tree was constructed. This method is thread safe (hopefully).
 };
 
-class TAO_Preference_Interpreter : public TAO_Interpreter
+class TAO_Trading_Export TAO_Preference_Interpreter : public TAO_Interpreter
 {
   // = TITLE
   //   The TAO_Preference_Interpreter will, given a valid preference

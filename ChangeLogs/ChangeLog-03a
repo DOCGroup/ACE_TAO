@@ -1,3 +1,9 @@
+Mon Feb 26 19:01:16 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Logging_Strategy.{h,cpp}: Added a new -k option to 
+	  set the logging key via the ACE_Logging_Strategy.  Thanks to
+ 	  Chris Kohlhoff <chris@kohlhoff.com> for contributing this.
+	
 Mon Feb 26 18:18:38 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SString.i
