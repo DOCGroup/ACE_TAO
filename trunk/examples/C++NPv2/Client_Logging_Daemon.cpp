@@ -48,13 +48,13 @@ public:
 
 protected:
   // Forward log records to the server logging daemon.
-  virtual void *forward ();
+  virtual ACE_THR_FUNC_RETURN forward ();
 
   // Send the buffered log records using a gather-write operation.
   virtual int send (ACE_Message_Block *chunk[], size_t &count);
 
   // Entry point into forwarder thread of control.
-  static void *run_svc (void *arg);
+  static ACE_THR_FUNC_RETURN run_svc (void *arg);
 
   // A synchronized <ACE_Message_Queue> that queues messages.
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue_;
@@ -142,13 +142,13 @@ int CLD_Handler::open (CLD_Connector *connector) {
 }
 
 
-void *CLD_Handler::run_svc (void *arg) {
+ACE_THR_FUNC_RETURN CLD_Handler::run_svc (void *arg) {
   CLD_Handler *handler = ACE_static_cast (CLD_Handler *, arg);
   return handler->forward ();
 }
 
 
-void *CLD_Handler::forward () {
+ACE_THR_FUNC_RETURN CLD_Handler::forward () {
   ACE_Message_Block *chunk[ACE_IOV_MAX];
   size_t message_index = 0;
   ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());

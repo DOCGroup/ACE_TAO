@@ -1363,7 +1363,7 @@ ACE_Thread_Manager::cancel_all (int async_cancel)
 }
 
 int
-ACE_Thread_Manager::join (ACE_thread_t tid, void **status)
+ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
 {
   ACE_TRACE ("ACE_Thread_Manager::join");
 
@@ -1527,8 +1527,8 @@ ACE_Thread_Manager::wait_grp (int grp_id)
 // Must be called when thread goes out of scope to clean up its table
 // slot.
 
-void *
-ACE_Thread_Manager::exit (void *status, int do_thr_exit)
+ACE_THR_FUNC_RETURN
+ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
 {
   ACE_TRACE ("ACE_Thread_Manager::exit");
 #if defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)

@@ -183,7 +183,7 @@ reactor_event_hook (ACE_Reactor *)
   return 0;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 svr_worker (void *)
 {
   // Server thread function.
@@ -202,7 +202,7 @@ svr_worker (void *)
   return 0;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 cli_worker (void *arg)
 {
   // Client thread function.
@@ -245,7 +245,7 @@ cli_worker (void *arg)
   return 0;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *)
 {
   ACE_OS::sleep (3);

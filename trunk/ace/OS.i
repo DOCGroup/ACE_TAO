@@ -6874,7 +6874,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 
 ACE_INLINE int
 ACE_OS::thr_join (ACE_hthread_t thr_handle,
-                  void **status)
+                  ACE_THR_FUNC_RETURN *status)
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
@@ -6918,14 +6918,14 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
                      int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
 # elif defined (ACE_HAS_WTHREADS)
-  void *local_status = 0;
+  ACE_THR_FUNC_RETURN local_status = 0;
 
   // Make sure that status is non-NULL.
   if (status == 0)
     status = &local_status;
 
   if (::WaitForSingleObject (thr_handle, INFINITE) == WAIT_OBJECT_0
-      && ::GetExitCodeThread (thr_handle, (LPDWORD) status) != FALSE)
+      && ::GetExitCodeThread (thr_handle, status) != FALSE)
     {
       ::CloseHandle (thr_handle);
       return 0;
@@ -6951,7 +6951,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 ACE_INLINE int
 ACE_OS::thr_join (ACE_thread_t waiter_id,
                   ACE_thread_t *thr_id,
-                  void **status)
+                  ACE_THR_FUNC_RETURN *status)
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
@@ -10806,7 +10806,7 @@ ACE_OS::thr_getprio (const ACE_Thread_ID &thr_id, int &prio)
 }
 
 ACE_INLINE int
-ACE_OS::thr_join (const ACE_Thread_ID &thr_id, void **status)
+ACE_OS::thr_join (const ACE_Thread_ID &thr_id, ACE_THR_FUNC_RETURN *status)
 {
 # if defined (ACE_WIN32)
   return ACE_OS::thr_join (thr_id.handle (), status);

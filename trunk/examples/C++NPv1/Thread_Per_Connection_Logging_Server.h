@@ -21,7 +21,7 @@ private:
   };
 
   // Passed as a parameter to <ACE_Thread_Manager::spawn>.
-  static void *run_svc (void *arg);
+  static ACE_THR_FUNC_RETURN run_svc (void *arg);
 
 protected:
   virtual int handle_connections ();

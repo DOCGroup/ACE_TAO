@@ -168,7 +168,7 @@ public:
    * this event handler returns <ACE_INVALID_HANDLE> we default to
    * reading from ACE_STDIN.
    */
-  static void *read_adapter (void *event_handler);
+  static ACE_THR_FUNC_RETURN read_adapter (void *event_handler);
 
   /**
    * Abstracts away from the differences between Win32 and ACE with

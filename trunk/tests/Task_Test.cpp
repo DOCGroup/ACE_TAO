@@ -31,8 +31,8 @@ ACE_RCSID(tests, Task_Test, "$Id$")
 class My_Thread_Hook : public ACE_Thread_Hook
 {
 public:
-  virtual void *start (ACE_THR_FUNC func,
-                       void *arg);
+  virtual ACE_THR_FUNC_RETURN start (ACE_THR_FUNC func,
+                                     void *arg);
 };
 
 class Barrier_Task : public ACE_Task<ACE_MT_SYNCH>
@@ -67,7 +67,7 @@ Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")));
 }
 
-void *
+ACE_THR_FUNC_RETURN
 My_Thread_Hook::start (ACE_THR_FUNC func,
                        void *arg)
 {

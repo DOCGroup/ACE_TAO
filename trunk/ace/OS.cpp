@@ -3586,7 +3586,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 }
 
 void
-ACE_OS::thr_exit (void *status)
+ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 {
   ACE_OS_TRACE ("ACE_OS::thr_exit");
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
@@ -3622,7 +3622,7 @@ ACE_OS::thr_exit (void *status)
     if (using_afx != -1)
       {
         if (using_afx)
-          ::AfxEndThread ((DWORD)status);
+          ::AfxEndThread (status);
         else
           ACE_ENDTHREADEX (status);
       }
@@ -3636,7 +3636,7 @@ ACE_OS::thr_exit (void *status)
         if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
           ACE_ENDTHREADEX (status);
         else
-          ::AfxEndThread ((DWORD)status);
+          ::AfxEndThread (status);
       }
 #     else
     ACE_ENDTHREADEX (status);

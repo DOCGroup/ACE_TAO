@@ -577,13 +577,16 @@ public:
                ACE_Task_Base *task = 0);
 
   /**
-   * Called to clean up when a thread exits.  If <do_thread_exit> is
-   * non-0 then <ACE_Thread::exit> is called to exit the thread, in
-   * which case <status> is passed as the exit value of the thread.
+   * Called to clean up when a thread exits.
+   *
+   * @arg do_thread_exit   If non-0 then ACE_Thread::exit is called to
+   *                       exit the thread
+   * @arg status           If ACE_Thread_Exit is called, this is passed as
+   *                       the exit value of the thread.
    * Should _not_ be called by main thread.
    */
-  void *exit (void *status = 0,
-              int do_thread_exit = 1);
+  ACE_THR_FUNC_RETURN exit (ACE_THR_FUNC_RETURN status = 0,
+                            int do_thread_exit = 1);
 
   /**
    * Block until there are no more threads running in the
@@ -607,7 +610,7 @@ public:
             int abandon_detached_threads = 0);
 
   /// Join a thread specified by <tid>.  Do not wait on a detached thread.
-  int join (ACE_thread_t tid, void **status = 0);
+  int join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status = 0);
 
   /**
    * Block until there are no more threads running in a group.

@@ -212,7 +212,7 @@ run_client (u_short port,
   return status;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 connect_client (void *arg)
 {
   u_short *sport =  ACE_reinterpret_cast (u_short *, arg);
