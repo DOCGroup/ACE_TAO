@@ -4,14 +4,14 @@
 
 // TAO Load Balancer test client
 
-#include "Hash_ReplicaC.h"
+#include "HasherC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 
 static void run_test (int iterations,
                       int timeout,
-                      Hash_Replica_ptr hasher,
+                      Hasher_ptr hasher,
                       CORBA::Environment &ACE_TRY_ENV);
 
 int
@@ -64,9 +64,9 @@ main (int argc, char *argv[])
         orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Hash_Replica_var hasher =
-        Hash_Replica::_unchecked_narrow (obj.in (),
-                                         ACE_TRY_ENV);
+      Hasher_var hasher =
+        Hasher::_unchecked_narrow (obj.in (),
+                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (hasher.in ()))
@@ -92,7 +92,7 @@ main (int argc, char *argv[])
 void
 run_test (int iterations,
           int timeout,
-          Hash_Replica_ptr hasher,
+          Hasher_ptr hasher,
           CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_Time_Value tv (0, timeout * 1000);
