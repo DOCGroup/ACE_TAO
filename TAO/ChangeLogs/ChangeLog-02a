@@ -1,3 +1,36 @@
+Tue Oct  3 19:20:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_interface_fwd.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/ast/ast_native.cpp:
+	* TAO_IDL/ast/ast_recursive.cpp:
+	* TAO_IDL/ast/ast_root.cpp:
+	* TAO_IDL/ast/ast_string.cpp:
+	* TAO_IDL/ast/ast_typedef.cpp:
+	* TAO_IDL/ast/ast_union_branch.cpp:
+	* TAO_IDL/ast/ast_union_label.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	* TAO_IDL/be/be_visitor_enum/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/include/ast_interface_fwd.h:
+	* TAO_IDL/include/ast_module.h:
+	* TAO_IDL//ast_native.h:
+	* TAO_IDL/include/ast_root.h:
+	* TAO_IDL/include/ast_string.h:
+	* TAO_IDL/include/ast_typedef.h:
+	* TAO_IDL/include/ast_union_branch.h:
+	* TAO_IDL/include/ast_union_label.h:
+
+	  More cosmetizing and ACE-ifying of IDL compiler
+	  files, and a fix to a problem with IDL files containing
+	  unions that was inadvertently introduced by previous
+	  cosmetizing.
+
 Tue Oct  3 13:42:47 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Portable_Interceptors/Dynamic/run_test.pl:
