@@ -136,12 +136,14 @@ CXX             = dplus -tPPC860ES:psos
 #    -Xno-implicit-templates produces smaller code, but requires explicit
 #                            template instantiation (see pp 91 of D-C++ user guide)
 # -Xcomdat (per Jim Terman) is the "preferred" way of instantiating templates as of 4.1a (but, there are problems there with Synch_T.cpp and Synch_T.h)
+# -ei1676 turns off the gazillion messages about not overriding pure virtual
+#         functions in derived classes.
 
 #CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS) -Xno-implicit-templates
 #CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS) -Xno-implicit-templates=3
 #CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS) -Xno-implicit-templates=2
 #CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS) -Xcomdat
-CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS)
+CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS) -ei1676
 
 # C++ Compiler Debug Flags  (passed iff debug == 1)
 DCCFLAGS         +=  $(DCFLAGS)
