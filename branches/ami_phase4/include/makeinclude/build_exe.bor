@@ -1,0 +1,43 @@
+# 
+# Rules for building an executable
+#
+# Inputs:
+# ~~~~~~~ 
+# NAME - undecorated name of target
+# CFLAGS - extra compiler flags for building target
+# CPPDIR - list of directories containing source files
+# OBJFILES - list of (non-system) object files
+# LIBFILES - list of (non-system) libraries
+# STATIC - if defined means link exe with static libraries
+# PASCAL - if defined means link dll against pascal run-time library
+# DEBUG - if defined means building with debug information
+#
+
+!include <$(ACE_ROOT)\include\makeinclude\decorator.bor>
+!include <$(ACE_ROOT)\include\makeinclude\outputdir.bor>
+!include <$(ACE_ROOT)\include\makeinclude\compiler.bor>
+
+TARGET = $(BINDIR)\$(NAME).exe
+
+$(TARGET): $(OBJFILES)
+	@$(MAKE_BINDIR)
+	$(LD) @&&!
+	$(COMMON_LFLAGS) $(EXE_LFLAGS) $(LFLAGS) +
+	$(EXE_STARTUP_OBJ) $(OBJFILES), +
+	$(TARGET),, +
+	$(COMMON_LIBS) $(LIBFILES)
+!
+
+!ifdef CPPDIR
+.path.cpp = $(CPPDIR)
+!endif
+
+.path.obj = $(OBJDIR)
+
+.cpp.obj:
+	@$(MAKE_OBJDIR)
+	$(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.autodepend
+
+
