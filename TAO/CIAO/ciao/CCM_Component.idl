@@ -19,6 +19,8 @@
 
 module Components
 {
+  typeprefix Components "omg.org";
+
   abstract valuetype PrimaryKeyBase {};
 
   interface CCMObject; //forward reference
