@@ -1,3 +1,14 @@
+Thu Mar  4 17:24:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any_Impl.cpp (_remove_ref ()):
+
+	  Scope the lock before calling delete. 
+	
+	* tao/Any_Unknown_IDL_Type.cpp:
+
+	  Use delete to remove the message block. We used new to create
+	  it. 
+
 Thu Mar  4 16:48:20 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl: 
@@ -386,7 +397,7 @@ Thu Feb 26 02:48:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
 
-          When marshaling an interface member, changed geneation to
+          When marshaling an interface member, changed generation to
           use CORBA::Object::marshal(), which checks for a nil
           object reference, instead of calling the virtual marshal()
           method directly. This fix is similar to what is already
@@ -395,7 +406,7 @@ Thu Feb 26 02:48:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Feb 26 01:59:57 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * TAO_}IDL/fe/idl.yy:
+        * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
 
           Set the return token value to 0 if, when parsing a union
