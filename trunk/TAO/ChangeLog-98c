@@ -1,3 +1,11 @@
+Thu Apr 16 19:22:10 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	  The ACE_NESTED_CLASS macro in the base/member initialization
+	  section of a collocated class was using the wrong scope to
+	  initialize inherited collocated classes. Prefixed a "POA_" to
+	  the scope.
+
 Thu Apr 16 16:00:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/decode.cpp: In TypeCode::decode, for the case of bounded
