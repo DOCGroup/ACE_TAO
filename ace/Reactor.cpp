@@ -151,12 +151,13 @@ ACE_Reactor_Handler_Repository::find (ACE_HANDLE handle,
   ACE_TRACE ("ACE_Reactor_Handler_Repository::find");
 
   ACE_Event_Handler *eh = 0;
+  ssize_t i;
 
   // Only bother to search for the <handle> if it's in range.
   if (this->handle_in_range (handle))
     {
 #if defined (ACE_WIN32)
-      ssize_t i = 0;
+      i = 0;
 
       for (; i < this->max_handlep1_; i++)
 	if (ACE_REACTOR_HANDLE (i) == handle)
@@ -165,7 +166,7 @@ ACE_Reactor_Handler_Repository::find (ACE_HANDLE handle,
 	    break;
 	  }
 #else
-      ssize_t i = handle;
+      i = handle;
 
       eh = ACE_REACTOR_EVENT_HANDLER (this, handle);
 #endif /* ACE_WIN32 */

@@ -42,6 +42,9 @@ ACE_Test_and_Set<LOCK, TYPE>::set (TYPE status)
 template <class LOCK, class TYPE> int 
 ACE_Test_and_Set<LOCK, TYPE>::handle_signal (int, siginfo_t *, ucontext_t *)
 {
+  // By setting this to 1, we are "signaling" to anyone calling
+  // <is_set> or or <set> that the "test and set" object is in the
+  // "signaled" state, i.e., it's "available" to be set back to 0.
   this->set (1);
   return 0;
 }
@@ -193,6 +196,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_TSS)
 template <class TYPE>
 ACE_TSS<TYPE>::~ACE_TSS (void)
 {
+  // We can't call <ACE_OS::thr_keyfree> until *all* of the threads
+  // that are using that key have done an <ACE_OS::thr_key_detach>.
+  // Otherwise, we'll end up with "dangling TSS pointers."
   ACE_OS::thr_key_detach (this);
 }
 
@@ -531,7 +537,7 @@ ACE_TSS_Guard<LOCK>::~ACE_TSS_Guard (void)
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
   ACE_Thread::getspecific (this->key_, (void **) &tss_adapter);
-  guard = (ACE_Guard<LOCK> *)tss_adapter->ts_obj_;
+  guard = (ACE_Guard<LOCK> *) tss_adapter->ts_obj_;
 #else
   ACE_Thread::getspecific (this->key_, (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */

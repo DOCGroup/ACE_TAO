@@ -29,22 +29,22 @@ ACE_ReactorEx::handle_events (ACE_Time_Value &how_long,
 }
 
 ACE_INLINE ACE_HANDLE *
-ACE_ReactorEx::handles (void) const
+ACE_ReactorEx_Handler_Repository::handles (void) const
 {
   return this->handles_;
 }
 
 ACE_INLINE size_t
-ACE_ReactorEx_Handler_Repository::max_handlep1 (void)
+ACE_ReactorEx_Handler_Repository::max_handlep1 (void) const
 {
   return this->max_handlep1_;
 }
 
 ACE_INLINE ACE_Event_Handler *
-ACE_ReactorEx_Handler_Repository::find (size_t index)
+ACE_ReactorEx_Handler_Repository::find (size_t index) const
 {
   if (this->handle_in_range (index))
-    return this->event_handlers_[i];
+    return this->event_handlers_[index];
   else
     {
       errno = ENOENT;

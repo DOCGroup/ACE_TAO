@@ -63,7 +63,12 @@ public:
 
   virtual int close (u_long flags = 0);
   // Hook called from ACE_Task_Exit when during thread exit and from
-  // the default implemenation of module_closed().
+  // the default implemenation of <module_closed>.  In general, this
+  // method shouldn't be called directly by an application,
+  // particularly if the <Task> is running as an Active Object.
+  // Instead, a special message should be passed into the <Task> via
+  // the <put> method defined below, and the <svc> method should
+  // interpret this as a flag to shut down the <Task>.
 
   virtual int module_closed (void);
   // Hook called during ACE_Module::close().  The default

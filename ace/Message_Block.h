@@ -94,6 +94,9 @@ public:
   ACE_Message_Block (void);
   // Create an empty message.
 
+  ACE_Message_Block (ACE_Data_Block *);
+  // Create an <ACE_Message_Block> that owns the <ACE_Data_Block> *.
+
   ACE_Message_Block (const char *data,
 		     size_t size = 0);
   // Create a Message Block that assumes ownership of <data> without
@@ -306,7 +309,8 @@ private:
 	      ACE_Allocator *allocator,
 	      ACE_Lock *locking_strategy,
 	      Message_Flags flags,
-	      u_long priority);
+	      u_long priority, 
+	      ACE_Data_Block *db = 0);
   // Perform the actual initialization.
 
   char *rd_ptr_;	
@@ -351,6 +355,9 @@ class ACE_Export ACE_Data_Block
 {
 public:
   // = Initialization and termination methods.
+  ACE_Data_Block (void);
+  // Default "do-nothing" constructor.
+  
   ACE_Data_Block (size_t size,
 		  ACE_Message_Block::ACE_Message_Type msg_type,
 		  const char *msg_data, 

@@ -1,5 +1,33 @@
 Tue Jan  7 13:03:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Message_Block: Added a new constructor to ACE_Message_Block
+ 	  that takes an ACE_Data_Block * and "owns" it.  Thanks to Tim for
+ 	  this idea.
+
+	* ace/Log_Msg.cpp: Now that we've prevented signal handlers from
+ 	  occurring within critical sections of ACE_Log_Msg::log() we
+ 	  don't need to use the ACE_Recursive_Thread_Mutex anymore.
+  	  Instead, we just need ACE_Thread_Mutex.
+
+	* ace/Log_Msg.cpp (log): Added an ACE_Sig_Guard to the block in
+ 	  ACE_Log_Msg::log() that acquires the mutex that serializes
+ 	  output.  This prevents nasty problems with recursive to
+ 	  ACE_Log_Msg::log() from within signal handlers.
+
+	* ace/Service_Config.cpp (end_reactor_event_loop): Added a timeout
+ 	  of ACE_Time_Value::zero to the ACE_Reactor::notify() method when
+ 	  called in the ACE_Service_Config::end_reactor_event_loop().
+  	  This prevents the Reactor from blocking indefinitely if there's
+ 	  no longer a thread to receive from the notification pipe.
+  
+	* netsvcs/clients/Naming/Dump_Restore: Removed the vestigal
+ 	  nametest.cpp and nametest.h files.  I'm not sure why they were
+ 	  still there, but they shouldn't have been!
+
+	* ace/Synch.i (remove): this->owner_ should be set to -1 before
+ 	  calling this->release().  Thanks to Per Andersson
+ 	  <Per.Andersson@hfera.ericsson.se> for suggesting this.
+
 	* ace/Thread_Manager.cpp (exit): Added a flag called "do_thr_exit"
  	  to the ACE_Thread_Control::exit() method.  This controls whether
  	  we call ACE_OS::thr_exit() after removing the thread from the
