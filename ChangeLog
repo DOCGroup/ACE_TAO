@@ -1,3 +1,12 @@
+Thu Jan 22 18:11:00 2004  Gary Maxey <gary.maxey@hp.com>
+
+	* ace/os_include/os_pthread.h
+
+	  Fix for BUGID 1707
+
+	  Added #ifdef so correct pthreads include file is used when
+	  compiling for Tandem NSK platform.
+
 ChangeLogTag: Thu Jan 22 17:48:56 2004  Gary Maxey <gary.maxey@hp.com>
 
 	* ace/config-tandem-nsk-mips-v2.h
