@@ -1,3 +1,9 @@
+Thu Sep 21 18:04:53 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/IPC_SAP/SSL_SAP/Makefile (LDLIBS):
+
+	  `-lssl -lcrypto' is needed for static builds.
+
 Thu Sep 21 16:54:19 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp: Fixed a typo in <day_of_week_name>.  Thanks to Craig
