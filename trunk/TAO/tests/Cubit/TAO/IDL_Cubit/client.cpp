@@ -14,7 +14,11 @@ main (int argc, char **argv)
 
   if (cubit_client.init (argc, argv) == -1)
     return 1;
-  else
-    return cubit_client.run ();
+
+  int retval = cubit_client.run ();
+
+  ACE_TIMEPROBE_PRINT;
+
+  return retval;
 }
 
