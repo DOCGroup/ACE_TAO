@@ -1,8 +1,38 @@
+Sun Jun 27 17:45:54 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/config-g++-common.h: Define ACE_HAS_STANDARD_CPP_LIBRARY
+	  so that #include <exception> will work properly.  However, this
+ 	  required that we also set ACE_USES_OLD_IOSTREAMS, as well.
+  	  Thanks to Carlos for help with this.
+
+	* ace/config-g++-common.h: The EGCS 1.1.1 compiler supports
+	  the template<> syntax.  If this breaks older EGCS or GCC
+ 	  compilers we'll have to handle each of those cases.
+
+	* ace/config-win32-borland.h:
+	  Added ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION.
+
+	* ace/OS.h: Replaced the const's for ACE_DEFAULT_SHLIB_MODE and
+	  ACE_SHLIB_INVALID_HANDLE with #defines since it's more portable.
+
+	* ace/OS.i: All the strcasecmp() and strncasecmp() methods were
+	  broken.  Thanks to David Levine for reporting this.
+
+	* ace/WFMO_Reactor.cpp: Updated the programming style a bit to
+	  conform to the ACE guidelines.
+
 Sun Jun 27 14:56:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/run_tests.bat: Added the patch for running tests compiled
 	  with Borland C++.  Thanks to Jody Haggins <jody@atdesk.com> for
 	  the patch.
+
+	* tests/Cache_Map_Manager_Test.dsp: The project file was
+	  mis-configured.
+
+	* tests/version_tests/version_tests.dsw:
+	* tests/version_tests/Cache_Map_Manager_Test.dsp: Added this new
+	  project file.
 
 Sun Jun 27 12:36:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -14,15 +44,6 @@ Sun Jun 27 12:36:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           moved out of the derived classes and into the base class.
           Thanks to Matt Braun and Carlos O'Ryan for pointing out
           this problem.
-
-Sun Jun 27 12:14:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* tests/Cache_Map_Manager_Test.dsp: The project file was
-	  mis-configured.
-
-	* tests/version_tests/version_tests.dsw:
-	* tests/version_tests/Cache_Map_Manager_Test.dsp: Added this new
-	  project file.
 
 Sat Jun 26 16:22:07 1999  Marina Spivak  <marina@cs.wustl.edu>
 
@@ -128,9 +149,9 @@ Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>
 	  BCB4 has a bug in the RTL that resets the GetLastError() value
  	  to zero when errno is accessed.  Thus, setting errno to
  	  ::GetLastError requires a copy.  To keep from having the code
- 	  everywhere, I added ACE_set_errno_to_last_error () and
- 	  ACE_set_errno_to_wsa_last_error (), and used it everywhere errno
- 	  was being set to GetLastError() or WSAGetLastError().
+ 	  everywhere, I added ACE_OS::set_errno_to_last_error () and
+ 	  ACE_OS::set_errno_to_wsa_last_error (), and used it everywhere
+ 	  errno was being set to GetLastError() or WSAGetLastError().
 
 	  BCB4 has a bug in the optimizer that screws up the return from
  	  certain expressions when a variable is set on both sides of an
@@ -139,13 +160,14 @@ Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>
 
 	* ace/OS.i: Use ACE_set_errno_to_last_error where appropriate.
 	  BCB4 bug requires splitting FILETIME dummy_1, dummy_2; into
-	  separate declarations.
+ 	  separate declarations.
 
 	* ace/Select_Reactor.h: Need ACE_TEMPLATE_SPECIALIZE on
 	  specializations.
 
-	* ace/WFMO_Reactor.cpp: Use ACE_set_errno_to_last_error where appropriate.
-	  auto_ptr copy ctor can not take a const ref.
+	* ace/WFMO_Reactor.cpp: Use ACE_set_errno_to_last_error where
+	  appropriate.  Likewise, fix the use of auto_ptr copy ctor, which
+ 	  can not take a const ref.
 
 	* ace/WIN32_Asynch_IO.cpp: Use ACE_set_errno_to_last_error
 	  where appropriate.  Need CancelIo for BCB as well.
@@ -164,7 +186,7 @@ Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>
 	  BCB4 bug prevents using typedef inside class for explicit
  	  dextructor.
 
-	* apps/JAWS/PROTOTYPE/JAWS/Cache_Manager_T.cpp: BCB4 bug prevents
+	* apps/JAWS/PROTOTYPE/JAWS/Cache_Manager_T.cpp: BCB4 bug prevents 
  	  using typedef inside class for explicit dextructor.
 
 	* apps/JAWS/PROTOTYPE/JAWS/IO.cpp: Get rid of const warning
@@ -176,17 +198,18 @@ Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>
  	  add some decoration to find the function.  Also, added prefix to
  	  find the executable.
 
-	* tests/Message_Queue_Test.cpp: BCB4 defines a "messages" and by default
-	  sucks that namespace into the global namespace, so a new
+	* tests/Message_Queue_Test.cpp: BCB4 defines a "messages" and by
+	  default sucks that namespace into the global namespace, so a new
  	  variable name was needed.
 
-	* tests/Reactor_Exceptions_Test.cpp: The test throws a structured exception.
-	  The ISO does not require non C++ exceptions to be caught by
- 	  catch (...).  MSVC catches it but BCB4 does not.  So, the code
- 	  needed to be changed to catch a structured exception as well.
+	* tests/Reactor_Exceptions_Test.cpp: The test throws a structured
+	  exception.  The ISO does not require non C++ exceptions to be
+ 	  caught by catch (...).  MSVC catches it but BCB4 does not.  So,
+ 	  the code needed to be changed to catch a structured exception as
+ 	  well.
 
-	* tests/run_tests.bat: Changed to allow running the BCB tests, when in another
- 	  directory.
+	* tests/run_tests.bat: Changed to allow running the BCB tests,
+	  when in another directory.
 
 Sat Jun 26 08:40:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
