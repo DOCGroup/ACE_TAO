@@ -1,3 +1,8 @@
+Tue Apr 15 17:09:33 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* examples/Logger: Added MSVC++ makefile to Acceptor-server
+	  and client.
+
 Tue Apr 15 21:51:45 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
         * apps/JAWS/server/IO.cpp: Added a template instance for
