@@ -25,10 +25,15 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/types.h"
+#include "ace/os_include/limits.h"
 
 #if !defined (ACE_LACKS_DIRENT_H)
 # include /**/ <dirent.h>
 #endif /* !ACE_LACKS_DIRENT_H */
+
+#if !defined (MAXNAMLEN)
+#  define MAXNAMLEN NAME_MAX
+#endif /* !MAXNAMLEN */
 
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_DIRENT_H */
