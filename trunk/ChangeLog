@@ -1,4 +1,10 @@
-Fri Aug 22 09:53:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+Sun Aug 22 11:11:00 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/amh.mpb:
+          When using amh, you must have valuetype support, so add valuetype
+          as base project of amh
+
+Sun Aug 22 09:53:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * tests/MEM_Stream_Test.cpp:
 
