@@ -192,6 +192,9 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::expire (const ACE_Time_Value &cur_time)
   // Keep looping while there are timers remaining and the earliest
   // timer is <= the <cur_time> passed in to the method.
 
+  if (this->is_empty ())
+    return 0;
+
   while (this->earliest_time () <= cur_time)
     {
       expired = this->remove_first ();
@@ -232,8 +235,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::expire (const ACE_Time_Value &cur_time)
 
 template <class LOCK> int
 ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *, 
-							ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
-							LOCK> &timer_queue,
+                                                                          ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
+                                                                          LOCK> &timer_queue,
                                                         ACE_Event_Handler *handler,
                                                         const void *act,
                                                         const ACE_Time_Value &cur_time)
@@ -247,8 +250,8 @@ ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::timeout (ACE_Timer_Queue_T<ACE_Ev
 
 template <class LOCK> int
 ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::cancellation (ACE_Timer_Queue_T<ACE_Event_Handler *, 
-							     ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
-							     LOCK> &timer_queue,
+                                                                               ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
+                                                                               LOCK> &timer_queue,
                                                              ACE_Event_Handler *handler)
 {
   ACE_UNUSED_ARG (timer_queue);
@@ -261,8 +264,8 @@ ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::cancellation (ACE_Timer_Queue_T<A
 
 template <class LOCK> int
 ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::deletion (ACE_Timer_Queue_T<ACE_Event_Handler *, 
-							 ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
-							 LOCK> &timer_queue,
+                                                                           ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
+                                                                           LOCK> &timer_queue,
                                                          ACE_Event_Handler *handler,
                                                          const void *arg)
 {
