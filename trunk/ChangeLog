@@ -84,6 +84,17 @@ Sat Apr 10 23:39:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Removed.
 
+Fri Apr  9 16:07:33 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Select_Reactor_T.cpp (check_handles): The previous method of
+	  locating handles to check -- iterating the handler repository for
+	  ACE_Event_Handler pointers and calling get_handle() -- didn't work
+	  if the handler didn't do get_handle() as we expected. Changed this
+	  to build a union of the read/write/exception wait_set masks and
+	  iterate through that. If a bad handle is found, call
+	  remove_handler_i() based on the handle, not the event handler
+	  pointer.
+
 Thu Apr  8 20:12:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * */*.bor:
