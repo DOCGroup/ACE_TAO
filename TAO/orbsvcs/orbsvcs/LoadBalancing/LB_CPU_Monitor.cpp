@@ -67,10 +67,35 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Float load = 0;
 
-#ifdef WINDOWS
-  load = ::GetLoadAvg ();
+  // Obtain the number of processors each time a load is computed.
+  // The idea is to take into account the processor failures that can
+  // on platforms that continue running with the remaining processors.
+  //
+  // @@ Is this a realistic scenario?  Perhaps we should just cache
+  //    the number of processors and assume that any processor failure
+  //    is a catastrophic one.
+
+#if defined (WINDOWS)
+
+  SYSTEM_INFO sys_info;
+  ::GetSystemInfo (&sys_info);
+
+  load = ::GetLoadAvg () / sys_info.dwNumberOfProcessors;
+
+#elif defined (linux)
+
+  // Only bother getting the load average over the last minute.
+  //
+  // @todo Make this configurable so that the load average over the
+  //       last 5 and 15 minutes can be used instead.
+  double loadavg[1];
+  if (::getloadavg (loadavg, 1) == 1)
+    load = loadavg[0] / ::sysconf (_SC_NPROCESSORS_ONLN);
+
 #else
+
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+
 #endif
 
   CosLoadBalancing::LoadList * tmp;
