@@ -2,12 +2,11 @@
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
-
+#include "ace/ACE.h"
 
 ACE_RCSID (ace,
            OS_NS_string,
            "$Id$")
-
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_string.inl"
@@ -152,6 +151,24 @@ ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
   return dscan;
 }
 #endif /* ACE_HAS_WCHAR */
+
+char *
+ACE_OS::strerror (int errnum)
+{
+#if defined (WIN32)
+  if (errnum >= WSAEINTR && errnum <= WSASYSCALLFAILURE) 
+    {
+      const char *errortext = ACE::sock_error (errnum);
+      if (ACE_OS::strstr (errortext, "unknown") != errortext)
+        return const_cast<char *> (errortext);
+    }
+#endif /* WIN32 */
+#if defined (ACE_LACKS_STRERROR)
+  return ACE_OS::strerror_emulation (errnum);
+#else /* ACE_LACKS_STRERROR */
+  return ::strerror (errnum);
+#endif /* ACE_LACKS_STRERROR */
+}
 
 #if defined (ACE_LACKS_STRERROR)
 /**
