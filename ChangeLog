@@ -1,3 +1,11 @@
+Tue Nov 23 20:26:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_Thread.inl:
+
+	  The previous checkin used ::GetCurrentProcess () to access the
+	  policy which is not right, but the "id" passed in should be
+	  used to maintain the semantics of thr_getprio ().
+
 Tue Nov 23 14:06:41 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/OS_NS_Thread.inl:
