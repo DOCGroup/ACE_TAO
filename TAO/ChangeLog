@@ -1,3 +1,71 @@
+Sat Oct 11 23:47:39 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
+
+	  Reverted portion of change described in ChangeLog entry "Tue Apr
+	  22 13:51:45  2003  Chad Elliott  <elliott_c@ociweb.com>".  It
+	  prevented the getloadavg() call from being called on platforms
+	  that don't define ACE_HAS_SYS_LOADAVG_H, thus rendering the CPU
+	  load monitor useless.
+
+	  (TAO_LB_CPU_Monitor):
+
+	  Do not assign a default value to the "kind" field of the
+	  CosLoadBalancing::Location member of the TAO_LB_CPU_Monitor if a
+	  location ID is supplied by the user but a location "kind" is
+	  not.  Fixes a problem where it wasn't possible to retrieve a
+	  load monitor from the LoadManager.
+
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
+
+	  For the sake of consistency, make default push monitoring
+	  interval the same as the pull monitoring interval.
+
+	  Removed "-o" command line option description from the "usage"
+	  message.  The LoadMonitor binary does not accept such a command
+	  line option.
+
+	* orbsvcs/tests/LoadBalancing/Makefile:
+	* orbsvcs/tests/LoadBalancing/Makefile.bor:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/Makefile:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/Makefile.bor:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile.bor:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/README:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/client.cpp:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/run_test.pl:
+
+	  New regression test that verifies Cygnus' CPU load monitor is
+	  functioning properly.
+
+	* orbsvcs/performance-tests/LoadBalancing/client.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/default.conf:
+	* orbsvcs/performance-tests/LoadBalancing/default_configuration.pl:
+	* orbsvcs/performance-tests/LoadBalancing/default.conf.xml:
+	* orbsvcs/performance-tests/LoadBalancing/Makefile:
+	* orbsvcs/performance-tests/LoadBalancing/ORBInitializer.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/ORBInitializer.h:
+	* orbsvcs/performance-tests/LoadBalancing/Roundtrip.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/Roundtrip.h:
+	* orbsvcs/performance-tests/LoadBalancing/RPS_Monitor.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/RPS_Monitor.h:
+	* orbsvcs/performance-tests/LoadBalancing/run_test.pl:
+	* orbsvcs/performance-tests/LoadBalancing/server.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/ServerRequestInterceptor.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/ServerRequestInterceptor.h:
+	* orbsvcs/performance-tests/LoadBalancing/svc.conf:
+	* orbsvcs/performance-tests/LoadBalancing/svc.conf.xml:
+
+	  Load balancer performance test based on Single Threaded Latency
+	  test.  Neglected to provide a ChangeLog entry when this test was
+	  written a few months ago.
+
+	* tests/RTScheduling/Current/Thread_Task.cpp (svc):
+
+	  Use the ".in()" accessor to gain access to the string held in a
+	  string sequence instead of CORBA::string_dup().  The latter was
+	  unnecessary in this case and only introduced memory leaks.
+
 Sat Oct 11 21:42:36 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.{h,cpp}: 
