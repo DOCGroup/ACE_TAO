@@ -1,3 +1,9 @@
+Mon Feb  5 09:12:00 2001  Ossama Othman  <ossama@uci.edu>
+
+	* docs/Options.html:
+
+	  Added missing "-ORBReactorType" argument descriptions.
+
 Sun Feb  4 15:30:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
         * tests/AMI_Timeouts/client.cpp:
