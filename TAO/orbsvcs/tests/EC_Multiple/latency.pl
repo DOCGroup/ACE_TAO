@@ -55,14 +55,16 @@ while (<>) {
 }
 
 print "Latency results for $opt_k:\n";
+$s2 = $sum2 - ($sum * $sum) / $n;
+$sigma = int(sqrt ( $s2 / ($n - 1) ));
 print "Minimum: $min,",
     " Maximum: $max,",
     " Average: ", int($sum / $n),
-    " Deviation: ",
-    int(sqrt (($sum2/$n - ($sum/$n)*($sum/$n)))), "\n";
+    " Deviation: ", $sigma,
+    "\n";
 
 while ( ($key,$value) = each %histo ) {
     $t = ($key / $opt_r);
-    print $t, " ", $value / $n, "\n";
+    print $t, " ", 100 * $value / $n, "\n";
 }
 

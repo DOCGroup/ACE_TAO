@@ -173,19 +173,18 @@ private:
   // different, etc.)
 
   ACE_hrtime_t lcl_time_[Test_ECG::MAX_EVENTS];
-  int lcl_cnt_;
+  int lcl_count_;
   ACE_hrtime_t rmt_time_[Test_ECG::MAX_EVENTS];
-  int rmt_cnt_;
+  int rmt_count_;
   // Store the measurements for local and remote events..
 
-  ACE_hrtime_t scavenger_start_;
-  ACE_hrtime_t scavenger_end_;
+  ACE_High_Res_Timer scavenger_timer_;
   // Measure the time it takes to run the scavenger thread.
 
   ACE_Barrier scavenger_barrier_;
   // The scavenger thread should not start until the EC is running.
 
-  int scavenger_cnt_;
+  int scavenger_count_;
   // The number of iterations to run in the scavenger thread, if 0
   // then there utilization thread is not started (this is good to
   // measure just latency).
@@ -197,7 +196,15 @@ private:
   ACE_High_Res_Timer push_timer_;
   // Measure the time spent in pushes...
 
-  int scheduling_class_;
+  int push_count_;
+  // Number of iterations of ACE::is_prime() in the push() method.
+
+  const char* schedule_file_;
+  // Ask the schedule to compute and dump its schedule after the test
+  // execution.
+
+  const char* pid_file_name_;
+  // The name of a file where the process stores its pid
 };
 
 #endif /* EC_MULTIPLE_H */

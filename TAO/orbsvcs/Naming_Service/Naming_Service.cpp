@@ -21,24 +21,26 @@
 // Default Constructor.
 
 Naming_Service::Naming_Service (void)
-  :ior_output_file_ (0)
+  : ior_output_file_ (0),
+    pid_file_name_ (0)
 {
 }
 
 // Constructor taking command-line arguments
 
 Naming_Service::Naming_Service (int argc,
-                                char** argv)
-  :ior_output_file_ (0)
+                                char* argv[])
+  : ior_output_file_ (0),
+    pid_file_name_ (0)
 {
-   this->init (argc,argv);
+   this->init (argc, argv);
 }
 
 int
 Naming_Service::parse_args (int argc,
-                            char **argv)
+                            char *argv[])
 {
-  ACE_Get_Opt get_opts (argc,argv,"o:");
+  ACE_Get_Opt get_opts (argc,argv,"o:p:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -51,11 +53,15 @@ Naming_Service::parse_args (int argc,
                              "Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
+      case 'p':
+	this->pid_file_name_ = get_opts.optarg;
+	break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-o] <ior_output_file>"
+                           "usage:  %s "
+                           "-o <ior_output_file> "
+			   "-p <pid_file_name> "
                            "\n",
                            argv [0]),
                           -1);
@@ -66,7 +72,7 @@ Naming_Service::parse_args (int argc,
 // Initialize the state of the Naming_Service object
 int
 Naming_Service::init (int argc,
-                      char** argv)
+                      char* argv[])
 {
   int result;
 
@@ -110,6 +116,16 @@ Naming_Service::init (int argc,
                        str.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
+
+  if (this->pid_file_name_ != 0)
+    {
+      FILE* pidf = fopen (this->pid_file_name_, "w");
+      if (pidf != 0)
+	{
+	  ACE_OS::fprintf (pidf, "%d\n", ACE_OS::getpid ());
+	  ACE_OS::fclose (pidf);
+	}
+    }
   return 0;
 }
 
@@ -127,9 +143,8 @@ Naming_Service::~Naming_Service (void)
 {
 }
 
-
 int
-main (int argc, char ** argv)
+main (int argc, char* argv[])
 {
   int init_result;
 

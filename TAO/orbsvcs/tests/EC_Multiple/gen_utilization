@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+TESTS_SOURCES="X LCL"
+TESTS="$TESTS_SOURCES"
+
+for i in $TESTS_SOURCES; do
+  grep "Scavenger time" UTL.${i}.*.log |
+    sed -e "s/^UTL\.${i}\.//" -e 's/\.log:Scavenger time://' |
+    sort -n | awk '{printf ("%d %.3f\n", $1, $2/$1);}'> UTL.${i}.scav.data
+  grep "Push time" UTL.${i}.*.log |
+    sed -e "s/^UTL\.${i}\.//" -e 's/\.log:Push time://' |
+    sort -n | awk '{printf ("%d %.3f\n", $1, $2/$1);}'> UTL.${i}.push.data
+done
+
+paste scav.RMT1.data scav.RMT2.data |
+  awk '{printf("%d %.3f\n", $1, ($2 + $4)/2);}' > UTL.RMT.scav.data
+paste push.RMT1.data push.RMT2.data |
+  awk '{printf("%d %.3f\n", $1, ($2 + $4)/2);}' > UTL.RMT.push.data
+
+for i in $TESTS; do
+  case $i in
+    X) LABEL="Number of Messages [short circuit test]"
+       ;;
+    LCL) LABEL="Number of Messages [local EC test]"
+       ;;
+    RMT) LABEL="Number of Messages [remote EC test]"
+       ;;
+    RMT1) LABEL="Number of Messages [remote EC test 1]"
+       ;;
+    RMT2) LABEL="Number of Messages [remote EC test 2]"
+       ;;
+
+    *) LABEL="Number of Messages [unknown test]"
+       ;;
+  esac
+  
+  gnuplot <<_EOF_
+set grid xtics ytics
+set xlabel "$LABEL"
+
+set terminal postscript eps color
+set ylabel "Time in scavenger (usecs)"
+set output "UTL.${i}.scav.eps"
+plot 'UTL.${i}.scav.data' w l
+set terminal x11
+plot 'UTL.${i}.scav.data' w l
+pause 2
+
+set terminal postscript eps
+set ylabel "Time in push (usecs)"
+set output "UTL.${i}.push.eps"
+plot 'UTL.${i}.push.data' w l
+set terminal x11
+plot 'UTL.${i}.push.data' w l
+pause 2
+
+_EOF_
+done
+
+for i in push scav; do
+  for j in $TESTS; do
+    gs -sDEVICE=jpeg -g640x480 -r110x110 -sNOPAUSE \
+       -sOutputFile="UTL.${j}.${i}.jpg" UTL.${j}.${i}.eps quit.ps
+  done
+done
+
+exit 0
+
