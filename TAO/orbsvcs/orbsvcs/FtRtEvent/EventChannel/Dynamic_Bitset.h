@@ -29,7 +29,7 @@ class Dynamic_Bitset
 public:
   class reference {
   public:
-    typedef Dynamic_Bitset::size_type size_type;
+    typedef unsigned size_type;
     reference(Dynamic_Bitset* bitset, size_type bit);
     reference operator = (bool val);
     operator bool () const;
@@ -70,7 +70,7 @@ inline Dynamic_Bitset operator & (const Dynamic_Bitset& lhs, const Dynamic_Bitse
 
 
 
-inline Dynamic_Bitset::reference::reference(Dynamic_Bitset* bitset, size_type bit)
+inline Dynamic_Bitset::reference::reference(Dynamic_Bitset* bitset, Dynamic_Bitset::reference::size_type bit)
 : bitset_(bitset), bit_(bit)
 {
 }
@@ -109,7 +109,7 @@ inline Dynamic_Bitset::size_type Dynamic_Bitset::size() const
   return bit_size_;
 }
 
-inline Dynamic_Bitset::reference Dynamic_Bitset::operator[](size_type bit)
+inline Dynamic_Bitset::reference Dynamic_Bitset::operator[](Dynamic_Bitset::size_type bit)
 {
   return Dynamic_Bitset::reference(this, bit);
 }
