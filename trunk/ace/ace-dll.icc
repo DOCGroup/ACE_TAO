@@ -85,6 +85,7 @@ option
                                               'CDR_Stream.h',
                                               'Cleanup_Strategies_T.h',
                                               'Codeset_IBM1047.h',
+                                              'Codeset_Registry.h',
                                               'config.h',
                                               'Connector.h',
                                               'Containers.h',
@@ -328,6 +329,8 @@ option
                  source type(cpp) "Capabilities.cpp"
                  source type(cpp) "CDR_Base.cpp"
                  source type(cpp) "CDR_Stream.cpp"
+                 source type(cpp) "Codeset_Registry.cpp"
+                 source type(cpp) "Codeset_Registry_db.cpp"
                  source type(cpp) "Configuration.cpp"
                  source type(cpp) "Containers.cpp"
                  source type(cpp) "Date_Time.cpp"

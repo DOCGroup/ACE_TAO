@@ -64,6 +64,8 @@ CLEAN :
 	-@erase "$(INTDIR)\CDR_Base.obj"
 	-@erase "$(INTDIR)\CDR_Stream.obj"
 	-@erase "$(INTDIR)\Codecs.obj"
+	-@erase "$(INTDIR)\Codeset_Registry.obj"
+	-@erase "$(INTDIR)\Codeset_Registry_db.obj"
 	-@erase "$(INTDIR)\Configuration.obj"
 	-@erase "$(INTDIR)\Configuration_Import_Export.obj"
 	-@erase "$(INTDIR)\Connection_Recycling_Strategy.obj"
@@ -347,6 +349,8 @@ LIB32_OBJS= \
 	"$(INTDIR)\CDR_Base.obj" \
 	"$(INTDIR)\CDR_Stream.obj" \
 	"$(INTDIR)\Codecs.obj" \
+	"$(INTDIR)\Codeset_Registry.obj"
+	"$(INTDIR)\Codeset_Registry_db.obj"
 	"$(INTDIR)\Configuration.obj" \
 	"$(INTDIR)\Configuration_Import_Export.obj" \
 	"$(INTDIR)\Connection_Recycling_Strategy.obj" \
@@ -600,6 +604,8 @@ CLEAN :
 	-@erase "$(INTDIR)\CDR_Base.obj"
 	-@erase "$(INTDIR)\CDR_Stream.obj"
 	-@erase "$(INTDIR)\Codecs.obj"
+	-@erase "$(INTDIR)\Codeset_Registry.obj"
+	-@erase "$(INTDIR)\Codeset_Registry_db.obj"
 	-@erase "$(INTDIR)\Configuration.obj"
 	-@erase "$(INTDIR)\Configuration_Import_Export.obj"
 	-@erase "$(INTDIR)\Connection_Recycling_Strategy.obj"
@@ -882,6 +888,8 @@ LIB32_OBJS= \
 	"$(INTDIR)\CDR_Base.obj" \
 	"$(INTDIR)\CDR_Stream.obj" \
 	"$(INTDIR)\Codecs.obj" \
+        "$(INTDIR)\Codeset_Registry.obj"
+	"$(INTDIR)\Codeset_Registry_db.obj"
 	"$(INTDIR)\Configuration.obj" \
 	"$(INTDIR)\Configuration_Import_Export.obj" \
 	"$(INTDIR)\Connection_Recycling_Strategy.obj" \
@@ -1231,6 +1239,16 @@ SOURCE=.\CDR_Stream.cpp
 SOURCE=.\Codecs.cpp
 
 "$(INTDIR)\Codecs.obj" : $(SOURCE) "$(INTDIR)"
+
+
+SOURCE=.\Codeset_Registry.cpp
+
+"$(INTDIR)\Codeset_Registry.obj" : $(SOURCE) "$(INTDIR)"
+
+
+SOURCE=.\Codeset_Registry_db.cpp
+
+"$(INTDIR)\Codeset_Registry_db.obj" : $(SOURCE) "$(INTDIR)"
 
 
 SOURCE=.\Configuration.cpp
