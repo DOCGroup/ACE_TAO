@@ -111,6 +111,9 @@ protected:
   // Tells  whether this property is allowed in this property set or
   // no.
 
+  void operator= (const TAO_PropertySet<IF> &);
+  // hack to avoid strange undefined symbol errors for operator= for PropertyTypes.
+
   // XXX:This public: is a hack to keep the compiler complain about access violation.
 public:
   CosProperty_Hash_Map hash_table_;
