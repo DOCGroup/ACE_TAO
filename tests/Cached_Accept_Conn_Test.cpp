@@ -6,22 +6,24 @@
 //    tests
 //
 // = FILENAME
-//    Cached_Conn_Test.cpp
+//    Cached_Accept_Conn_Test.cpp
 //
 // = DESCRIPTION
 //    The test illustrates how the <ACE_Strategy_Connector> works by
 //    showing how you can cache connections on the client using
 //    different caching strategies. Also how connections can be purged
 //    explicitly and implicitly if needed from the connection cache
-//    maintained by the connector.
+//    maintained by the connector. The <ACE_Strategy_Acceptor> can also
+//    explicitly purge connections from the process CONNECTION CACHE on
+//    demand.
 //
 // = AUTHOR
 //    Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
 // ============================================================================
 
-#ifndef CACHED_CONNECT_TEST
-#define CACHED_CONNECT_TEST
+#ifndef CACHED_ACCEPT_CONNECTION_TEST
+#define CACHED_ACCEPT_CONNECTION_TEST
 
 #include "test_config.h"
 
@@ -45,7 +47,7 @@
 #pragma warning(disable:4503)
 #endif /* _MSC_VER */
 
-ACE_RCSID(tests, Cached_Conn_Test, "$Id$")
+ACE_RCSID(tests, Cached_Accept_Conn_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
@@ -54,43 +56,72 @@ USELIB("..\ace\aced.lib");
 
 static int debug = 0;
 
-class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+class Client_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
 
-  Svc_Handler (ACE_Thread_Manager *t = 0);
+  Client_Svc_Handler (ACE_Thread_Manager *t = 0);
   int open (void *v = 0);
   int close (u_long flags = 0);
 };
 
-Svc_Handler::Svc_Handler (ACE_Thread_Manager *t)
+Client_Svc_Handler::Client_Svc_Handler (ACE_Thread_Manager *t)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
 {
 }
 
 int
-Svc_Handler::open (void *)
+Client_Svc_Handler::open (void *)
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("opening Svc_Handler %d with handle %d\n"),
+                ASYS_TEXT ("opening Client_Svc_Handler %d with handle %d\n"),
                 this,
                 this->peer ().get_handle ()));
   return 0;
 }
 
 int
-Svc_Handler::close (u_long flags)
+Client_Svc_Handler::close (u_long flags)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Closing Svc_Handler %d with handle %d\n"),
+              ASYS_TEXT ("Closing Client_Svc_Handler %d with handle %d\n"),
               this,
               this->peer ().get_handle ()));
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::close (flags);
 }
 
+class Server_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
+public:
+
+  Server_Svc_Handler (ACE_Thread_Manager *t = 0);
+  int open (void *v = 0);
+};
+
+Server_Svc_Handler::Server_Svc_Handler (ACE_Thread_Manager *t)
+  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
+{
+}
+
+int
+Server_Svc_Handler::open (void *)
+{
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("opening Server_Svc_Handler %d with handle %d\n"),
+                this,
+                this->peer ().get_handle ()));
+
+  int result = ACE_Reactor::instance ()->end_event_loop ();
+  ACE_ASSERT (result != 1);
+  ACE_UNUSED_ARG (result);
+
+  return this->close ();
+}
+
 typedef size_t ATTRIBUTES;
-typedef ACE_Pair<Svc_Handler *, ATTRIBUTES>
+typedef ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>
         CACHED_HANDLER;
 typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
         ADDR;
@@ -138,19 +169,19 @@ typedef ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
-typedef ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>
+typedef ACE_Strategy_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
         ACCEPTOR;
 
-typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
+typedef ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
         STRATEGY_CONNECTOR;
 
-typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
+typedef ACE_NOOP_Creation_Strategy<Client_Svc_Handler>
         NULL_CREATION_STRATEGY;
 
-typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
+typedef ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>
         NULL_ACTIVATION_STRATEGY;
 
-typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
+typedef ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
         CACHED_CONNECT_STRATEGY;
 
 enum Caching_Strategy_Type
@@ -167,33 +198,127 @@ static int default_iterations = 3000;
 static int iterations = default_iterations;
 static double purge_percentage = 20;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
-static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
 
 //====================================================================
 
-static void
-out_of_sockets_handler (void)
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
+class ACE_Cached_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
-  // ENOBUFS had to be checked on NT while ENOENT check had to be added for
-  // Solaris + Linux.
+public:
+
+  ACE_Cached_Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy);
+  // Constructor.
+
+  int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+            int restart = 0);
+  // Initialize the <peer_acceptor_> with <local_addr>.  If the
+  // process runs out of descriptors, the unsed svc_handlers from the
+  // CONNECTION CACHE are removed.
+
+  int accept_svc_handler (SVC_HANDLER *svc_handler);
+  // The default behavior delegates to the <accept> method of the
+  // PEER_ACCEPTOR. A check is made here for the process running out
+  // of file descriptors. If so, the CONNECTION CACHE is purged of
+  // some idle svc_handlers.
+
+protected:
+
+  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
+
+  int out_of_sockets_handler (void);
+  // Handler for removing cached connections.
+
+  CACHED_CONNECT_STRATEGY &caching_connect_strategy_;
+};
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
+ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Cached_Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy)
+  : caching_connect_strategy_ (caching_connect_strategy)
+{
+}
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+                                                                    int restart)
+{
+  int result = ACCEPT_STRATEGY_BASE::open (local_addr,
+                                           restart);
+
+  if (result == 0)
+    return result;
+
+  // If the error occured due to the fact that the file descriptor
+  // limit was exhausted, then purge the connection cache of some
+  // entries.
+  result = this->out_of_sockets_handler ();
+  if (result == -1)
+    return -1;
+
+  // If we are able to purge, try again.
+  return ACCEPT_STRATEGY_BASE::open (local_addr, restart);
+}
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDLER *svc_handler)
+{
+  // Note: The base class method isnt called since it closes the
+  // svc_handler on error which we want to avoid as we are trying to
+  // accept after purging.
+
+  // Try to find out if the implementation of the reactor that we are
+  // using requires us to reset the event association for the newly
+  // created handle. This is because the newly created handle will
+  // inherit the properties of the listen handle, including its event
+  // associations.
+  int reset_new_handle = this->reactor_->uses_event_associations ();
+
+  int result = this->acceptor_.accept (svc_handler->peer (), // stream
+                                       0, // remote address
+                                       0, // timeout
+                                       1, // restart
+                                       reset_new_handle  // reset new handler
+                                       );
+  if (result == 0)
+    return result;
+
+  // If the error occured due to teh fact that the file descriptor
+  // limit was exhausted, then purge the connection cache of some
+  // entries.
+  result = this->out_of_sockets_handler ();
+  if (result == 0)
+    {
+      return this->acceptor_.accept (svc_handler->peer (), // stream
+                                     0, // remote address
+                                     0, // timeout
+                                     1, // restart
+                                     reset_new_handle  // reset new handler
+                                     );
+    }
+
+  // Close down handler to avoid memory leaks.
+  svc_handler->close (0);
+  return result;
+}
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (void)
+{
+  // ENOBUFS had to be checked on NT while ENOENT check had to be
+  // added for Solaris + Linux.
   if (errno == EMFILE || errno == ENOBUFS || errno == ENOENT)
     {
       // Close connections which are cached by explicitly purging the
       // connection cache maintained by the connector.
       ACE_DEBUG ((LM_DEBUG, "Purging connections from Connection Cache...\n"));
 
-      int retval = connect_strategy->purge_connections (purge_percentage);
-      ACE_ASSERT (retval != -1);
+      return this->caching_connect_strategy_.purge_connections (purge_percentage);
     }
-  else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p\n"),
-                  ASYS_TEXT ("out_of_sockets_handler  failed!")));
-      // This shouldn't happen!
-      ACE_ASSERT (0);
-    }
+
+  return -1;
 }
+
+typedef ACE_Cached_Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
+        CACHED_ACCEPT_STRATEGY;
 
 static int
 cached_connect (STRATEGY_CONNECTOR &con,
@@ -205,7 +330,7 @@ cached_connect (STRATEGY_CONNECTOR &con,
 
   // Perform a blocking connect to the server using the Strategy
   // Connector with a connection caching strategy.
-  Svc_Handler *svc_handler = 0;
+  Client_Svc_Handler *svc_handler = 0;
   int result = con.connect (svc_handler,
                             remote_addr);
   if (result == -1)
@@ -221,29 +346,14 @@ cached_connect (STRATEGY_CONNECTOR &con,
   return 0;
 }
 
-static int
-server (ACCEPTOR *acceptor)
+static void
+server (void)
 {
-  ACE_INET_Addr cli_addr;
+  ACE_Reactor::instance ()->reset_event_loop ();
 
-  // Create a new <Svc_Handler> to consume the data.
-  Svc_Handler svc_handler;
-
-  int result = acceptor->accept (&svc_handler,
-                                 &cli_addr);
-  if (result == -1)
-    return -1;
-
-  if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("client %s connected from %d\n"),
-                cli_addr.get_host_name (),
-                cli_addr.get_port_number ()));
-
-  //
-  // Svc_Handler dies here, closing the server side socket.
-  //
-  return 0;
+  int result = ACE_Reactor::instance ()->run_event_loop ();
+  ACE_ASSERT (result != 1);
+  ACE_UNUSED_ARG (result);
 }
 
 static void
@@ -252,9 +362,6 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   // Configure the Strategy Connector with a strategy that caches
   // connection.
   CACHED_CONNECT_STRATEGY caching_connect_strategy (caching_strategy);
-
-  // This is required by the <out_of_sockets_handler>.
-  connect_strategy = &caching_connect_strategy;
 
   NULL_CREATION_STRATEGY creation_strategy;
   NULL_ACTIVATION_STRATEGY activation_strategy;
@@ -270,17 +377,24 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
                   ASYS_TEXT ("iteration %d\n"),
                   i));
 
+      // Connect strategy is required by the <out_of_sockets_handler>.
+      CACHED_ACCEPT_STRATEGY cached_accept_strategy (caching_connect_strategy);
+
       // Acceptor
       ACCEPTOR acceptor;
       ACE_INET_Addr server_addr;
 
       // Bind acceptor to any port and then find out what the port
       // was.
-
-      if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1)
+      if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
+                         ACE_Reactor::instance (),
+                         0,
+                         &cached_accept_strategy) == -1)
         {
-          out_of_sockets_handler ();
-          continue;
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("%p\n"),
+                      ASYS_TEXT ("open")));
+          ACE_ASSERT (0);
         }
 
       if (acceptor.acceptor ().get_local_addr (server_addr) == -1)
@@ -301,9 +415,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
                                    server_addr);
       ACE_ASSERT (result != -1);
 
-      result = server (&acceptor);
-      if (result == -1)
-        out_of_sockets_handler ();
+      server ();
     }
 }
 
@@ -399,6 +511,7 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("usage: %s ")
+                    ASYS_TEXT ("[-t (timeout)] ")
                     ASYS_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
                     ASYS_TEXT ("[-i (iterations)] ")
                     ASYS_TEXT ("[-d (addition debugging output)] ")
@@ -420,7 +533,7 @@ main (int argc,
     return result;
 
   // Start the test only if options are valid.
-  ACE_START_TEST (ASYS_TEXT ("Cached_Conn_Test"));
+  ACE_START_TEST (ASYS_TEXT ("Cached_Accept_Conn_Test"));
 
   // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
@@ -453,48 +566,49 @@ main (int argc,
   return 0;
 }
 
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
-template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
-template class ACE_Concurrency_Strategy<Svc_Handler>;
-template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Creation_Strategy<Svc_Handler>;
-template class ACE_Hash_Map_Entry<ADDR, Svc_Handler *>;
+template class ACE_NOOP_Creation_Strategy<Client_Svc_Handler>;
+template class ACE_Concurrency_Strategy<Client_Svc_Handler>;
+template class ACE_Connect_Strategy<Client_Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Creation_Strategy<Client_Svc_Handler>;
+template class ACE_Hash_Map_Entry<ADDR, Client_Svc_Handler *>;
 template class ACE_Hash<ADDR>;
 template class ACE_Equal_To<ADDR>;
-template class ACE_Hash_Map_Manager<ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator<ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
-template class ACE_Recycling_Strategy<Svc_Handler>;
-template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<Svc_Handler>;
-template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Hash_Map_Manager<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>;
+template class ACE_Recycling_Strategy<Client_Svc_Handler>;
+template class ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Svc_Tuple<Client_Svc_Handler>;
 
-template class ACE_Pair<Svc_Handler *, ATTRIBUTES>;
-template class ACE_Reference_Pair<ADDR, Svc_Handler *>;
+template class ACE_Strategy_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>;
+
+template class ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>;
+template class ACE_Reference_Pair<ADDR, Client_Svc_Handler *>;
 template class ACE_Hash_Map_Entry<ADDR, CACHED_HANDLER>;
 
-template class ACE_Hash_Map_Manager<ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ADDR, Svc_Handler *, H_KEY,  C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ADDR, Client_Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ADDR, Client_Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ADDR, Client_Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ADDR, Client_Svc_Handler *, H_KEY,  C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
 
 template class ACE_Hash_Map_Manager<ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
@@ -505,7 +619,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_K
 template class ACE_Hash_Map_Iterator_Base_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
 
 // = Caching_Strategy
-template class ACE_Hash_Cache_Map_Manager<ADDR, Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>;
+template class ACE_Hash_Cache_Map_Manager<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>;
 
 template class ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
 
@@ -521,64 +635,65 @@ template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LFU_CAC
 template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>;
 template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>;
 
-template class ACE_Cache_Map_Manager<ADDR, Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
-template class ACE_Cache_Map_Iterator<ADDR, Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
-template class ACE_Cache_Map_Reverse_Iterator<ADDR, Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
+template class ACE_Cache_Map_Manager<ADDR, Client_Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
+template class ACE_Cache_Map_Iterator<ADDR, Client_Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
+template class ACE_Cache_Map_Reverse_Iterator<ADDR, Client_Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
 
 #else
 
-template class ACE_Cache_Map_Manager<ADDR, Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>;
+template class ACE_Cache_Map_Manager<ADDR, Client_Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>;
 
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
-template class ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Cached_Connect_Strategy<Client_Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>;
 
 template class ACE_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>;
 template class ACE_Recyclable_Handler_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>;
 template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
-#pragma instantiate ACE_NOOP_Creation_Strategy<Svc_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
-#pragma instantiate ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Creation_Strategy<Svc_Handler>
-#pragma instantiate ACE_Hash_Map_Entry<ADDR, Svc_Handler *>
+#pragma instantiate ACE_NOOP_Creation_Strategy<Client_Svc_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<Client_Svc_Handler>
+#pragma instantiate ACE_Connect_Strategy<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Creation_Strategy<Client_Svc_Handler>
+#pragma instantiate ACE_Hash_Map_Entry<ADDR, Client_Svc_Handler *>
 #pragma instantiate ACE_Hash<ADDR>
 #pragma instantiate ACE_Equal_To<ADDR>
-#pragma instantiate ACE_Hash_Map_Manager<ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-#pragma instantiate ACE_Recycling_Strategy<Svc_Handler>
-#pragma instantiate ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<Svc_Handler>
-#pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Hash_Map_Manager<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>
+#pragma instantiate ACE_Recycling_Strategy<Client_Svc_Handler>
+#pragma instantiate ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Svc_Tuple<Client_Svc_Handler>
 
-#pragma instantiate ACE_Pair<Svc_Handler *, ATTRIBUTES>
-#pragma instantiate ACE_Reference_Pair<ADDR, Svc_Handler *>
+#pragma instantiate ACE_Strategy_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
+
+#pragma instantiate ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>
+#pragma instantiate ACE_Reference_Pair<ADDR, Client_Svc_Handler *>
 #pragma instantiate ACE_Hash_Map_Entry<ADDR, CACHED_HANDLER>
 
-#pragma instantiate ACE_Hash_Map_Manager<ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ADDR, Svc_Handler *, H_KEY,  C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ADDR, Client_Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ADDR, Client_Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ADDR, Client_Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ADDR, Client_Svc_Handler *, H_KEY,  C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Manager<ADDR, CACHED_HANDLER, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<ADDR, CACHED_HANDLER, ACE_Null_Mutex>
@@ -589,7 +704,7 @@ template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
 
 // = Caching_Strategy
-#pragma instantiate ACE_Hash_Cache_Map_Manager<ADDR, Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>
+#pragma instantiate ACE_Hash_Cache_Map_Manager<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>
 
 #pragma instantiate ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 
@@ -605,18 +720,18 @@ template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH
 #pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>
 #pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>
 
-#pragma instantiate ACE_Cache_Map_Manager<ADDR, Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
-#pragma instantiate ACE_Cache_Map_Iterator<ADDR, Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
-#pragma instantiate ACE_Cache_Map_Reverse_Iterator<ADDR, Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
+#pragma instantiate ACE_Cache_Map_Manager<ADDR, Client_Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
+#pragma instantiate ACE_Cache_Map_Iterator<ADDR, Client_Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
+#pragma instantiate ACE_Cache_Map_Reverse_Iterator<ADDR, Client_Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
 
 #else
 
-#pragma instantiate ACE_Cache_Map_Manager<ADDR, Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>
+#pragma instantiate ACE_Cache_Map_Manager<ADDR, Client_Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>
 
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
-#pragma instantiate ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Cached_Connect_Strategy<Client_Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>
 
 #pragma instantiate ACE_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>
 #pragma instantiate ACE_Recyclable_Handler_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>
