@@ -647,6 +647,7 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
 
   // Initialize the creation strategy.
 
+  // First we decide if we need to clean up.
   if (this->creation_strategy_ != 0 &&
       this->delete_creation_strategy_ != 0 &&
       cre_s != 0)
@@ -656,15 +657,15 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
       this->delete_creation_strategy_ = 0;
     }
 
-  if (this->creation_strategy_ == 0)
-    if (cre_s == 0)
-      {
-        ACE_NEW_RETURN (this->creation_strategy_,
-                        CREATION_STRATEGY, -1);
-        this->delete_creation_strategy_ = 1;
-      }
-    else
-      this->creation_strategy_ = cre_s;
+  if (cre_s != 0)
+    this->creation_strategy_ = cre_s;
+  else if (this->creation_strategy_ == 0)
+    {
+      ACE_NEW_RETURN (this->creation_strategy_,
+                      CREATION_STRATEGY, -1);
+      this->delete_creation_strategy_ = 1;
+    }
+
 
   // Initialize the accept strategy.
 
@@ -677,15 +678,15 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
       this->delete_connect_strategy_ = 0;
     }
 
-  if (this->connect_strategy_ == 0)
-    if (conn_s == 0)
+    if (conn_s != 0)
+      this->connect_strategy_ = conn_s;
+    else if (this->connect_strategy_ == 0)
       {
         ACE_NEW_RETURN (this->connect_strategy_,
                         CONNECT_STRATEGY, -1);
         this->delete_connect_strategy_ = 1;
       }
-    else
-      this->connect_strategy_ = conn_s;
+
 
   // Initialize the concurrency strategy.
 
@@ -698,15 +699,14 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
       this->delete_concurrency_strategy_ = 0;
     }
 
-  if (this->concurrency_strategy_ == 0)
-    if (con_s == 0)
-      {
-        ACE_NEW_RETURN (this->concurrency_strategy_,
-                        CONCURRENCY_STRATEGY, -1);
-        this->delete_concurrency_strategy_ = 1;
-      }
-    else
-      this->concurrency_strategy_ = con_s;
+  if (con_s != 0)
+    this->concurrency_strategy_ = con_s;
+  else if (this->concurrency_strategy_ == 0)
+    {
+      ACE_NEW_RETURN (this->concurrency_strategy_,
+                      CONCURRENCY_STRATEGY, -1);
+      this->delete_concurrency_strategy_ = 1;
+    }
 
   return 0;
 }
