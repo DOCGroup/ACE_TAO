@@ -54,9 +54,15 @@ public:
 };
 
 typedef Server_T <1> Server_1;
-typedef Server_T <2> Server_2;
+FRAMEWORK_COMPONENT_DLL_SINGLETON_DECLARATION(Server_T<1>);
 
+typedef Server_T <2> Server_2;
+FRAMEWORK_COMPONENT_DLL_SINGLETON_DECLARATION(Server_T<2>);
+
+ACE_FACTORY_DECLARE (Framework_Component_DLL, Server_1)
 ACE_FACTORY_DEFINE (Framework_Component_DLL, Server_1)
+
+ACE_FACTORY_DECLARE (Framework_Component_DLL, Server_2)
 ACE_FACTORY_DEFINE (Framework_Component_DLL, Server_2)
 
 

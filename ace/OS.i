@@ -215,13 +215,19 @@ ACE_OS::mktemp (ACE_TCHAR *s)
 }
 #endif /* !ACE_LACKS_MKTEMP */
 
-#if !defined (ACE_LACKS_MKSTEMP)
 ACE_INLINE ACE_HANDLE
 ACE_OS::mkstemp (ACE_TCHAR *s)
 {
+#if !defined (ACE_LACKS_MKSTEMP)
   return ::mkstemp (s);
-}
+#else /* !ACE_LACKS_MKSTEMP */
+  ACE_TCHAR *filename = ACE_OS::mktemp (s);
+  ACE_HANDLE handle = ACE_INVALID_HANDLE;
+  if (filename)
+    handle = ACE_OS::open (filename, _O_CREAT | _O_TEMPORARY);
+  return handle;
 #endif /* !ACE_LACKS_MKSTEMP */
+}
 
 ACE_INLINE int
 ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
