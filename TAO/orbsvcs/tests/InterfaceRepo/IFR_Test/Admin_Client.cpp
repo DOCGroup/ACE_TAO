@@ -1421,7 +1421,11 @@ Admin_Client::union_test (CORBA::Environment &ACE_TRY_ENV)
       // Multiple labels for first member shifts index by 1.
       ACE_ASSERT (!ACE_OS::strcmp (str.in (), u_members[i + 1].name));
 
-      TAO_InputCDR cdr (tc->member_label (i)->_tao_get_cdr ());
+      CORBA::Any_var label = tc->member_label (i,
+                                               ACE_TRY_ENV);
+      ACE_CHECK;
+
+      TAO_InputCDR cdr (label->_tao_get_cdr ());
       CORBA::ULong val;
 
       // If we're at the default index, it's in the label as octet 0,
