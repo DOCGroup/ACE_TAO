@@ -1,3 +1,10 @@
+Mon Dec  4 18:11:01 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/IIOP_Acceptor.cpp
+	* tao/Strategies/UIOP_Acceptor.cpp:
+
+	  Fixed comments.
+
 Mon Dec  4 17:36:22 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h
