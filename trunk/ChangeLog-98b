@@ -1,112 +1,118 @@
+Sun May 17 21:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Misc/childbirth_time.cpp: changed type of
+          MULTIPLY_FACTOR from int to size_t to avoid signed/unsigned
+          comparison.
+
 Sat May 16 15:10:46 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Service_Config.h (ACE_Service_Config): Moved the
- 	  process_directive() into the public part of the class so this
- 	  can be called by applications one the Service Configurator is
- 	  open.  Thanks to Tom Arbuckle
- 	  <arbuckle@uran.informatik.uni-bonn.de> for suggesting this.
+        * ace/Service_Config.h (ACE_Service_Config): Moved the
+          process_directive() into the public part of the class so this
+          can be called by applications one the Service Configurator is
+          open.  Thanks to Tom Arbuckle
+          <arbuckle@uran.informatik.uni-bonn.de> for suggesting this.
 
 Sat May 16 14:12:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.{h,i,cpp} (class ACE_Thread_Descriptor_Base):
-	  Extract thread handle and thread creation flags out from
-	  Thread_Descriptor into this new class.  This is necessary
-	  because after my last round of changes to improve
-	  ACE_Thread_Manager, I changed the <terminated_queue_> from
-	  holding Thread_Descriptor's to holding pointers to descriptor.
-	  This was a bad move because the address of these pointers had
-	  already been "freed."  The <terminated_queue_> now holds
-	  ACE_Thread_Descriptor_Base which contains only the information
-	  needed for manipulating <terminated_queue_>.  Thanks to Arturo
-	  for noticing this.
+        * ace/Thread_Manager.{h,i,cpp} (class ACE_Thread_Descriptor_Base):
+          Extract thread handle and thread creation flags out from
+          Thread_Descriptor into this new class.  This is necessary
+          because after my last round of changes to improve
+          ACE_Thread_Manager, I changed the <terminated_queue_> from
+          holding Thread_Descriptor's to holding pointers to descriptor.
+          This was a bad move because the address of these pointers had
+          already been "freed."  The <terminated_queue_> now holds
+          ACE_Thread_Descriptor_Base which contains only the information
+          needed for manipulating <terminated_queue_>.  Thanks to Arturo
+          for noticing this.
 
 Sat May 16 03:23:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Misc/childbirth_time.cpp (main): Added a new
-	  function to test the performance of ACE_Thread_Mutex in single
-	  thread _without_ any contention.
+        * performance-tests/Misc/childbirth_time.cpp (main): Added a new
+          function to test the performance of ACE_Thread_Mutex in single
+          thread _without_ any contention.
 
 Fri May 15 22:55:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Recursive_Mutex_Test.cpp: Only iterate the test 50 times
-	  on CE as on Chorus.  Otherwise, as I'm using a CEdit to hold the
-	  test output, CEdit would overflow.
+        * tests/Recursive_Mutex_Test.cpp: Only iterate the test 50 times
+          on CE as on Chorus.  Otherwise, as I'm using a CEdit to hold the
+          test output, CEdit would overflow.
 
-	* ace/OS.i (thr_getspecific): Don't check for return value of
-	  TlsGetValue on CE because CE doesn't seem to set the LastError
-	  correspondingly.
-	  (strchr): Added implementation on CE.
+        * ace/OS.i (thr_getspecific): Don't check for return value of
+          TlsGetValue on CE because CE doesn't seem to set the LastError
+          correspondingly.
+          (strchr): Added implementation on CE.
 
-	* Added Activation_Queue.i and Strategies.i.
+        * Added Activation_Queue.i and Strategies.i.
 
-	* Combed thru all these files and added difinitions for ctor/dtor
-	  for a bunch of classes explicitly.  CE needs them.
+        * Combed thru all these files and added difinitions for ctor/dtor
+          for a bunch of classes explicitly.  CE needs them.
 
-	  Activation_Queue.cpp Activation_Queue.h Dynamic.h Dynamic.i
-	  Event_Handler.h Event_Handler.i Get_Opt.h Get_Opt.i Handle_Set.h
-	  Handle_Set.i High_Res_Timer.h High_Res_Timer.i INET_Addr.h
-	  INET_Addr.i IO_SAP.h IO_SAP.i IPC_SAP.h IPC_SAP.i Local_Tokens.h
-	  Local_Tokens.i Log_Record.h Log_Record.i Malloc.h Malloc.i OS.h
-	  OS.i Obstack.cpp Obstack.h Obstack.i Parse_Node.h Parse_Node.i
-	  Pipe.h Pipe.i Process_Manager.h Process_Manager.i SOCK.h SOCK.i
-	  SOCK_Acceptor.cpp SOCK_Acceptor.h SOCK_Acceptor.i SOCK_CODgram.h
-	  SOCK_CODgram.i SOCK_Connector.h SOCK_Connector.i SOCK_Dgram.h
-	  SOCK_Dgram.i SOCK_Dgram_Bcast.h SOCK_Dgram_Bcast.i
-	  SOCK_Dgram_Mcast.h SOCK_Dgram_Mcast.i SOCK_IO.h SOCK_IO.i
-	  SOCK_Stream.h SOCK_Stream.i SString.h SString.i Sched_Params.h
-	  Sched_Params.i Select_Reactor.h Select_Reactor.i
-	  Service_Manager.h Service_Manager.i Service_Repository.h
-	  Service_Repository.i Service_Types.h Service_Types.i
-	  Shared_Object.h Shared_Object.i Signal.h Signal.i Strategies.cpp
-	  Strategies.h Strategies.i Strategies_T.cpp Strategies_T.h
-	  Synch.cpp Synch.h Synch.i Synch_Options.cpp Synch_Options.h
-	  Synch_Options.i Timer_Heap_T.cpp Timer_Heap_T.h Timer_List_T.cpp
-	  Timer_List_T.h Timer_Queue_T.cpp Timer_Queue_T.h
-	  Timer_Wheel_T.cpp Timer_Wheel_T.h.
+          Activation_Queue.cpp Activation_Queue.h Dynamic.h Dynamic.i
+          Event_Handler.h Event_Handler.i Get_Opt.h Get_Opt.i Handle_Set.h
+          Handle_Set.i High_Res_Timer.h High_Res_Timer.i INET_Addr.h
+          INET_Addr.i IO_SAP.h IO_SAP.i IPC_SAP.h IPC_SAP.i Local_Tokens.h
+          Local_Tokens.i Log_Record.h Log_Record.i Malloc.h Malloc.i OS.h
+          OS.i Obstack.cpp Obstack.h Obstack.i Parse_Node.h Parse_Node.i
+          Pipe.h Pipe.i Process_Manager.h Process_Manager.i SOCK.h SOCK.i
+          SOCK_Acceptor.cpp SOCK_Acceptor.h SOCK_Acceptor.i SOCK_CODgram.h
+          SOCK_CODgram.i SOCK_Connector.h SOCK_Connector.i SOCK_Dgram.h
+          SOCK_Dgram.i SOCK_Dgram_Bcast.h SOCK_Dgram_Bcast.i
+          SOCK_Dgram_Mcast.h SOCK_Dgram_Mcast.i SOCK_IO.h SOCK_IO.i
+          SOCK_Stream.h SOCK_Stream.i SString.h SString.i Sched_Params.h
+          Sched_Params.i Select_Reactor.h Select_Reactor.i
+          Service_Manager.h Service_Manager.i Service_Repository.h
+          Service_Repository.i Service_Types.h Service_Types.i
+          Shared_Object.h Shared_Object.i Signal.h Signal.i Strategies.cpp
+          Strategies.h Strategies.i Strategies_T.cpp Strategies_T.h
+          Synch.cpp Synch.h Synch.i Synch_Options.cpp Synch_Options.h
+          Synch_Options.i Timer_Heap_T.cpp Timer_Heap_T.h Timer_List_T.cpp
+          Timer_List_T.h Timer_Queue_T.cpp Timer_Queue_T.h
+          Timer_Wheel_T.cpp Timer_Wheel_T.h.
 
 Fri May 15 16:55:34 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/config-sunos5*.h: Automatically enable ACE_LACKS_RWLOCK_T if
- 	  we're NOT using Solaris threads (since pthreads doesn't support
- 	  readers/writer locks).
+        * ace/config-sunos5*.h: Automatically enable ACE_LACKS_RWLOCK_T if
+          we're NOT using Solaris threads (since pthreads doesn't support
+          readers/writer locks).
 
-	* ace/Service_Config.cpp: Removed a duplicate template
- 	  instantiation of template class
- 	  ACE_Unbounded_Queue_Iterator<ACE_CString>.  Thanks to Ben Eng
- 	  <ben@jetpen.com> for reporting this.
+        * ace/Service_Config.cpp: Removed a duplicate template
+          instantiation of template class
+          ACE_Unbounded_Queue_Iterator<ACE_CString>.  Thanks to Ben Eng
+          <ben@jetpen.com> for reporting this.
 
         * ace/OS: Fixed a number of problems that occurred when trying to
- 	  use the PTHREAD implementation on Solaris without using
- 	  ACE_HAS_STHREADS.  The problems related primarily to the
- 	  ACE_OS::rw*() functions.  To fix the problems, the following
-	  changes were made.
+          use the PTHREAD implementation on Solaris without using
+          ACE_HAS_STHREADS.  The problems related primarily to the
+          ACE_OS::rw*() functions.  To fix the problems, the following
+          changes were made.
 
-	  Remove the #if defined (ACE_HAS_STHREADS) from the case where we
- 	  have the native rw*() functions.  We just use the
- 	  ACE_LACKS_RWLOCK_T compile flag to determine whether we have the
- 	  native functions.
+          Remove the #if defined (ACE_HAS_STHREADS) from the case where we
+          have the native rw*() functions.  We just use the
+          ACE_LACKS_RWLOCK_T compile flag to determine whether we have the
+          native functions.
 
-	  Without the ACE_HAS_STHREAD flag, ACE_rwlock_t comes up
-	  undefined.  To fix this, moved the definition at approx. line
-	  1868 above the #else at approx. line 1865 as the following:
+          Without the ACE_HAS_STHREAD flag, ACE_rwlock_t comes up
+          undefined.  To fix this, moved the definition at approx. line
+          1868 above the #else at approx. line 1865 as the following:
 
-	  #if ! defined (ACE_LACKS_RWLOCK_T)
-	  #include <synch.h>
-	  typedef rwlock_t ACE_rwlock_t;
-	  #endif  // ! ACE_LACKS_RWLOCK_T
+          #if ! defined (ACE_LACKS_RWLOCK_T)
+          #include <synch.h>
+          typedef rwlock_t ACE_rwlock_t;
+          #endif  // ! ACE_LACKS_RWLOCK_T
 
-	  Finally, the ACE_idtype_t type was also undefined.  To fix this,
-	  moved the typedef from within the #if defined (ACE_HAS_STHREADS) ||
-	  defined (DIGITAL_UNIX) block and create a new ifdef block:
+          Finally, the ACE_idtype_t type was also undefined.  To fix this,
+          moved the typedef from within the #if defined (ACE_HAS_STHREADS) ||
+          defined (DIGITAL_UNIX) block and create a new ifdef block:
 
-	  #if defined (ACE_HAS_IDTYPE_T)
-	  typedef idtype_t ACE_idtype_t;
-	  #else
-	  typedef int ACE_idtype_t;
-	  #endif
+          #if defined (ACE_HAS_IDTYPE_T)
+          typedef idtype_t ACE_idtype_t;
+          #else
+          typedef int ACE_idtype_t;
+          #endif
 
-	  Thanks to Chris Lahey <CLahey@cccis.com> for his through help at
-	  recognizing and fixing these problems.
+          Thanks to Chris Lahey <CLahey@cccis.com> for his through help at
+          recognizing and fixing these problems.
 
 Fri May 15 09:38:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
