@@ -42,6 +42,7 @@ namespace CCF
           ENUM        ("enum"       ),
           EXCEPTION   ("exception"  ),
           FACTORY     ("factory"    ),
+          GETRAISES   ("getraises"  ),
           IN          ("in"         ),
           INOUT       ("inout"      ),
           INTERFACE   ("interface"  ),
@@ -56,6 +57,7 @@ namespace CCF
           RAISES      ("raises"     ),
           READONLY    ("readonly"   ),
           SEQUENCE    ("sequence"   ),
+          SETRAISES   ("setraises"  ),
           STRING      ("string"     ),
           STRUCT      ("struct"     ),
           SUPPORTS    ("supports"   ),
@@ -107,6 +109,12 @@ namespace CCF
 
           act_attribute_name (
             f.attribute (), &SemanticAction::Attribute::name),
+
+          act_attribute_get_raises (
+            f.attribute (), &SemanticAction::Attribute::get_raises),
+
+          act_attribute_set_raises (
+            f.attribute (), &SemanticAction::Attribute::set_raises),
 
           act_attribute_end (
             f.attribute (), &SemanticAction::Attribute::end),
@@ -834,14 +842,58 @@ namespace CCF
       //
       //
       attribute_decl =
-        (
-            (READONLY >> ATTRIBUTE)[act_attribute_begin_ro]
-          |
-            ATTRIBUTE[act_attribute_begin_rw]
-        )
-        >> identifier[act_attribute_type]
+          (
+               (READONLY >> ATTRIBUTE)[act_attribute_begin_ro]
+            >> attribute_ro_decl_trailer
+          )
+        |
+          (
+               ATTRIBUTE[act_attribute_begin_rw]
+            >> attribute_rw_decl_trailer
+          )
+        ;
+
+
+      attribute_ro_decl_trailer =
+           identifier[act_attribute_type]
         >> simple_identifier[act_attribute_name]
+        >> !(
+                (RAISES >> LPAREN >> attribute_get_raises_list >> RPAREN)
+              |
+                +(COMMA >> simple_identifier[act_attribute_name])
+           )
         >> SEMI[act_attribute_end]
+        ;
+
+      attribute_rw_decl_trailer =
+           identifier[act_attribute_type]
+        >> simple_identifier[act_attribute_name]
+        >> !(
+                attribute_rw_raises_spec
+              |
+                +(COMMA >> simple_identifier[act_attribute_name])
+           )
+        >> SEMI[act_attribute_end]
+        ;
+
+      attribute_rw_raises_spec =
+          (
+               (GETRAISES >> LPAREN >> attribute_get_raises_list >> RPAREN)
+            >> !(SETRAISES >> LPAREN >> attribute_set_raises_list >> RPAREN)
+          )
+        |
+          (SETRAISES >> LPAREN >> attribute_set_raises_list >> RPAREN)
+        ;
+
+      attribute_get_raises_list =
+           identifier[act_attribute_get_raises]
+        >> *(COMMA >> identifier[act_attribute_get_raises])
+        ;
+
+
+      attribute_set_raises_list =
+           identifier[act_attribute_set_raises]
+        >> *(COMMA >> identifier[act_attribute_set_raises])
         ;
 
 

@@ -17,6 +17,32 @@ namespace CCF
       //
       //
       //
+      struct GetRaises : Edge<SemanticGraph::GetRaises>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.exception ());
+        }
+      };
+
+
+      //
+      //
+      //
+      struct SetRaises : Edge<SemanticGraph::SetRaises>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.exception ());
+        }
+      };
+
+
+      //
+      //
+      //
       struct Attribute : Node<SemanticGraph::Attribute>
       {
         virtual void
@@ -58,7 +84,6 @@ namespace CCF
         virtual void
         name (Type&);
 
-        /*
         virtual void
         get_raises (Type&, EdgeDispatcherBase&);
 
@@ -70,10 +95,15 @@ namespace CCF
 
         virtual void
         get_raises_post (Type&);
-        */
+
+        virtual void
+        get_raises_none (Type&);
 
         virtual void
         post (Type&);
+
+        virtual void
+        comma (Type&);
       };
 
 
@@ -97,7 +127,6 @@ namespace CCF
         virtual void
         name (Type&);
 
-        /*
         virtual void
         get_raises (Type&, EdgeDispatcherBase&);
 
@@ -111,6 +140,9 @@ namespace CCF
         get_raises_post (Type&);
 
         virtual void
+        get_raises_none (Type&);
+
+        virtual void
         set_raises (Type&, EdgeDispatcherBase&);
 
         virtual void
@@ -121,10 +153,15 @@ namespace CCF
 
         virtual void
         set_raises_post (Type&);
-        */
+
+        virtual void
+        set_raises_none (Type&);
 
         virtual void
         post (Type&);
+
+        virtual void
+        comma (Type&);
       };
     }
   }

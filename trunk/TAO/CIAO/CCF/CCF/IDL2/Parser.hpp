@@ -324,6 +324,7 @@ namespace CCF
       KeywordParser ENUM;
       KeywordParser EXCEPTION;
       KeywordParser FACTORY;
+      KeywordParser GETRAISES;
       KeywordParser IN;
       KeywordParser INOUT;
       KeywordParser INTERFACE;
@@ -338,6 +339,7 @@ namespace CCF
       KeywordParser RAISES;
       KeywordParser READONLY;
       KeywordParser SEQUENCE;
+      KeywordParser SETRAISES;
       KeywordParser STRING;
       KeywordParser STRUCT;
       KeywordParser SUPPORTS;
@@ -434,6 +436,11 @@ namespace CCF
       Rule interface_body;
 
       Rule attribute_decl;
+      Rule attribute_ro_decl_trailer;
+      Rule attribute_rw_decl_trailer;
+      Rule attribute_rw_raises_spec;
+      Rule attribute_get_raises_list;
+      Rule attribute_set_raises_list;
 
       Rule exception_decl;
       Rule exception_body;
@@ -511,6 +518,12 @@ namespace CCF
 
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Attribute>
       act_attribute_name;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Attribute>
+      act_attribute_get_raises;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Attribute>
+      act_attribute_set_raises;
 
       NoArgAction<SemanticAction::Attribute>
       act_attribute_end;
