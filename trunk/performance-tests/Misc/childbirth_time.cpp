@@ -77,7 +77,7 @@
 #define SUBPROGRAM "date"
 #endif
 
-int MULTIPLY_FACTOR = 10;
+size_t MULTIPLY_FACTOR = 10;
 typedef double (*Profiler)(size_t);
 static int do_exec_after_fork = 0;
 
@@ -186,7 +186,7 @@ prof_native_thread (size_t iteration)
         {
           ACE_STOP_SIGN;
           ptimer.start ();
-          for (int j = 0; j < MULTIPLY_FACTOR; j++)
+          for (size_t j = 0; j < MULTIPLY_FACTOR; j++)
             {
 #if defined (ACE_HAS_WTHREADS)
               if (::CreateThread (NULL,
@@ -235,7 +235,7 @@ prof_ace_os_thread (size_t iteration)
           ACE_STOP_SIGN;
           ptimer.start ();
 
-          for (int j = 0; j < MULTIPLY_FACTOR; j++)
+          for (size_t j = 0; j < MULTIPLY_FACTOR; j++)
             if (ACE_OS::thr_create ((ACE_THR_FUNC) empty,
                                     0,
                                     THR_SUSPENDED,
@@ -347,7 +347,8 @@ main (int argc, char* argv[])
           iteration = ACE_OS::atoi (get_opt.optarg);
           break;
         case 'l':
-          MULTIPLY_FACTOR = ACE_OS::atoi (get_opt.optarg);
+          MULTIPLY_FACTOR = ACE_static_cast (size_t,
+                                             ACE_OS::atoi (get_opt.optarg));
           break;
         case 'p':                       // test ACE_Process.spawn ()
           profiler = prof_ace_process;
