@@ -199,9 +199,14 @@
 #endif /* ACE_LACKS_FIFO */
 #endif /* ACE_DEFAULT_RENDEZVOUS */
 
+// The default multicast port number for TAO Naming Service.
+#if !defined (TAO_DEFAULT_NAME_SERVER_PORT)
+#define TAO_DEFAULT_NAME_SERVER_PORT 10013
+#endif /* TAO_DEFAULT_SERVER_PORT */
+
 // The default starting port number for TAO servers.
 #if !defined (TAO_DEFAULT_SERVER_PORT)
-#define TAO_DEFAULT_SERVER_PORT 10013
+#define TAO_DEFAULT_SERVER_PORT 10014
 #endif /* TAO_DEFAULT_SERVER_PORT */
 
 #if !defined (ACE_DEFAULT_SERVER_HOST)
