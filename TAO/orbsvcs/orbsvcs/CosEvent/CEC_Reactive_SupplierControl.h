@@ -1,11 +1,15 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   CEC_Reactive_SupplierControl
+ *  @file   CEC_Reactive_SupplierControl.h
  *
  *  $Id$
  *
- *  @author Carlos O'Ryan (coryan@cs.wustl.edu)More details can be found in:http://www.cs.wustl.edu/~coryan/EC/index.html
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/
  */
 //=============================================================================
 
