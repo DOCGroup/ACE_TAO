@@ -1,3 +1,16 @@
+Wed Nov 26 17:26:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/AMI/ami_test.idl:
+        * tests/AMI/ami_test_i.cpp:
+        * tests/AMI/ami_test_i.h:
+        
+          Added an operation to the IDL file, and to the implementation
+          class, that contains an INOUT parameter. No call is made to
+          this operation by the client, it is there to catch a 
+          possible recurrence of a bug recently fixed, in which 
+          incorrect code was generated for INOUT args in sendc-*
+          operations.
+
 Wed Nov 26 16:29:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:

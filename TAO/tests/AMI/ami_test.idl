@@ -35,6 +35,8 @@ module A
         attribute long yadda;
         
         oneway void shutdown ();
+        
+        void inout_arg_test (inout string str);
       };
 
   };
