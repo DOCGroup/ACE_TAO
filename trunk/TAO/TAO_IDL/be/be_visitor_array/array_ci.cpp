@@ -568,9 +568,6 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
 int
 be_visitor_array_ci::gen_forany_impl (be_array *node)
 {
-  if (node->is_local ())
-    return 0;
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   char nodename [NAMEBUFSIZE]; // node name
@@ -637,10 +634,6 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
         }
     }
 
-  // generate the var implementation in the inline file
-
-  os->indent (); // start with whatever was our current indent level
-
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -668,21 +661,15 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "    nocopy_ (nocopy)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
-  // copy constructor (deep copy)
+  // copy constructor
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << be_idt << be_idt_nl
       << "const " << fname << " &p" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << "this->ptr_ =" << be_idt_nl 
-      << nodename << "_dup (" << be_idt << be_idt_nl
-      << "ACE_const_cast (" << be_idt << be_idt_nl
-      << "const " << nodename << "_slice *," << be_nl
-      << "p.ptr_" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl;
-  *os << "this->nocopy_ = p.nocopy_;" << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "this->ptr_ = p.ptr_;" << be_nl 
+      << "this->nocopy_ = p.nocopy_;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // destructor
   *os << "ACE_INLINE" << be_nl;
@@ -697,14 +684,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
       << nodename << "_slice *p" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << "// Is what we own the same that is being assigned to us?"
-      << be_nl;
-  *os << "if (this->ptr_ != p)" << be_idt_nl;
-  *os << "{" << be_idt_nl;
-  *os << "// Delete our stuff and assume ownership of p." << be_nl;
-  *os << nodename << "_free (this->ptr_);" << be_nl;
-  *os << "this->ptr_ = p;" << be_uidt_nl;
-  *os << "}" << be_uidt_nl << be_nl;
+  *os << "this->ptr_ = p;" << be_nl;
   *os << "return *this;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
@@ -715,20 +695,9 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
       << "const " << fname << " &p" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << "if (this != &p)" << be_idt_nl;
-  *os << "{" << be_idt_nl;
-  *os << nodename << "_free (this->ptr_);" << be_nl << be_nl;
-  *os << "// Deep copy." << be_nl;
-  *os << "this->ptr_ =" << be_idt_nl
-      << nodename << "_dup (" << be_idt << be_idt_nl
-      << "ACE_const_cast (" << be_idt << be_idt_nl
-      << "const " << nodename << "_slice *," << be_nl
-      << "p.ptr_" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl;
-  *os << "this->nocopy_ = p.nocopy_;" << be_uidt_nl;
-  *os << "}" << be_uidt_nl << be_nl;
-  *os << "return *this;" << be_uidt_nl;
+  *os << "this->ptr_ = p.ptr_;" << be_nl
+      << "this->nocopy_ = p.nocopy_;" << be_nl
+      << "return *this;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
   // other extra methods - cast operators ()
