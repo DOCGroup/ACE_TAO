@@ -2619,7 +2619,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
                        ASYS_TEXT ("ioctl - SIOCGIFNUM failed")),
                       -1);
    return 0;
-#elif defined (__unix) || defined (__Lynx__)
+#elif defined (__unix) || defined (__Lynx__) || defined (_AIX)
    // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
    // AIX, SunOS 4.x perform some ioctls to retrieve ifconf list of
    // ifreq structs no SIOCGIFNUM on SunOS 4.x, so use guess and scan
@@ -2693,7 +2693,7 @@ ACE::get_handle (void)
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined (sparc)
   handle = ACE_OS::open ("/dev/udp", O_RDONLY);
-#elif defined (__unix) || defined (__Lynx__)
+#elif defined (__unix) || defined (__Lynx__) || defined (_AIX)
   // Note: DEC CXX doesn't define "unix" BSD compatible OS: HP UX,
   // AIX, SunOS 4.x
 
@@ -2900,7 +2900,7 @@ ACE::get_ip_interfaces (size_t &count,
   return 0;
 # endif /* Winsock 2 && MSVC 5 or later */
 
-#elif defined (__unix) || defined (__Lynx__)
+#elif defined (__unix) || defined (__Lynx__) || defined (_AIX)
   // COMMON (SVR4 and BSD) UNIX CODE
 
   size_t num_ifs;
