@@ -101,15 +101,18 @@ private:
   TAO_POA *poa_impl_;
   // The POA implementation invoking an upcall
   
-  PortableServer::ObjId *object_id_;
+  const PortableServer::ObjId *object_id_;
   // The object ID of the current context.
   
   int in_upcall_;
   // Flag which indicates whether we're in an upcall.
   
-  TAO::ObjectKey *object_key_;
+  const TAO::ObjectKey *object_key_;
   // The object key of the current context.
-};
 
+  // = Hidden because we don't allow these
+  TAO_POA_Current_Impl (const TAO_POA_Current_Impl &);
+  operator = (const TAO_POA_Current_Impl &);
+};
 
 #endif /* TAO_POA_CURRENT_H */
