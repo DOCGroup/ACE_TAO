@@ -1,3 +1,9 @@
+Thu Jul  1 16:59:03 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_deployment_stub:
+
+          Updated to include files from the DAnCE directory.
+
 Thu Jul  1 16:24:47 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
