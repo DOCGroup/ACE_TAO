@@ -2602,7 +2602,7 @@ static void timer_speed()
 static void wait_display(void)
 {
   if (!usr1_flag) {
-    if (shared->cmd == CmdINIT) usleep(5000000);
+    if (shared->cmd == CmdINIT) usleep(5000000);// XXX hack to make the client wait until the server gets a chance.
     else usleep(800000);
   }
   if (!usr1_flag)
@@ -2927,6 +2927,8 @@ int CTRmain(void)
 
   command_handler->init ();
   // initialize the command handler , ORB
+  command_handler->resolve_server_reference ();
+  // Resolve the video control object reference.
 
   // .. and register it with the reactor.
   if (ACE_Reactor::instance ()->register_handler (command_handler,

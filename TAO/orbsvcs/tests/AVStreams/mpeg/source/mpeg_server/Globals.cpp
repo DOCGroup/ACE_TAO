@@ -1589,26 +1589,31 @@ Video_Global::stat_sent (void)
 }
 
 int
-Video_Global::init_play (void)
+Video_Global::init_play (Video_Control::PLAYpara para)
 {
+  // ~~ why do we need the play_para in Video_Global , why can't just use
+  // the para that's passed.
   int result;
 
   ACE_DEBUG ((LM_DEBUG,
-              " (%P|%t) this->play ()"));
+              " (%P|%t) Video_Global::init_play ()"));
 
   // this gets the parameters for the play command
-  result = this->CmdRead ((char *)&this->play_para, sizeof (this->play_para));
-  if (result != 0)
-    return result;
+  //  result = this->CmdRead ((char *)&this->play_para, sizeof (this->play_para));
+  //  if (result != 0)
+  //    return result;
+
+  // Assign the passed play 
+  this->play_para = para ;
 #ifdef NeedByteOrderConversion
   this->play_para.sn = ntohl (this->play_para.sn);
-  this->play_para.this->nextFrame = ntohl (this->play_para.this->nextFrame);
+  this->play_para.nextFrame = ntohl (this->play_para.nextFrame);
   this->play_para.usecPerFrame = ntohl (this->play_para.usecPerFrame);
   this->play_para.framesPerSecond = ntohl (this->play_para.framesPerSecond);
-  this->play_para.this->frameRateLimit1000 = ntohl (this->play_para.this->frameRateLimit1000);
+  this->play_para.frameRateLimit1000 = ntohl (this->play_para.frameRateLimit1000);
   this->play_para.collectStat = ntohl (this->play_para.collectStat);
-  this->play_para.this->sendPatternGops = ntohl (this->play_para.this->sendPatternGops);
-  this->play_para.this->VStimeAdvance = ntohl (this->play_para.this->VStimeAdvance);
+  this->play_para.sendPatternGops = ntohl (this->play_para.sendPatternGops);
+  this->play_para.VStimeAdvance = ntohl (this->play_para.VStimeAdvance);
 #endif
 
   this->frameRateLimit = this->play_para.frameRateLimit1000 / 1000.0;
@@ -1622,8 +1627,9 @@ Video_Global::init_play (void)
   }
  
   if (this->live_source || this->video_format != VIDEO_MPEG1) {
+    PLAYpara live_play_para; // xxx hack to compile the code
     if (this->live_source) 
-      this->PLAYliveVideo (&this->play_para);
+      this->PLAYliveVideo (&live_play_para);
     return 0;
   }
  
@@ -1639,7 +1645,11 @@ Video_Global::init_play (void)
   Video_Timer_Global::timerFrame = this->play_para.nextFrame;
   Video_Timer_Global::timerGroup = FrameToGroup (&Video_Timer_Global::timerFrame);
   Video_Timer_Global::timerHeader = this->gopTable[Video_Timer_Global::timerGroup].systemHeader;
-  memcpy (this->sendPattern, this->play_para.sendPattern, PATTERN_SIZE);
+  //  memcpy (this->sendPattern, this->play_para.sendPattern, PATTERN_SIZE);
+  // Do a sequence copy..
+
+  for (int i=0; i<PATTERN_SIZE ; i++)
+    this->sendPattern[i] = this->play_para.sendPattern[i];
   result = SendReferences (Video_Timer_Global::timerGroup, Video_Timer_Global::timerFrame);
   if (result < 0)
     return result;
@@ -1660,10 +1670,10 @@ Video_Global::init_fast_play (void)
     return result;
 #ifdef NeedByteOrderConversion
   this->fast_para.sn = ntohl (this->fast_para.sn);
-  this->fast_para.this->nextGroup = ntohl (this->fast_para.this->nextGroup);
+  this->fast_para.nextGroup = ntohl (this->fast_para.nextGroup);
   this->fast_para.usecPerFrame = ntohl (this->fast_para.usecPerFrame);
   this->fast_para.framesPerSecond = ntohl (this->fast_para.framesPerSecond);
-  this->fast_para.this->VStimeAdvance = ntohl (this->fast_para.this->VStimeAdvance);
+  this->fast_para.VStimeAdvance = ntohl (this->fast_para.VStimeAdvance);
 #endif
 
   if (this->live_source) return 0;
@@ -1880,8 +1890,8 @@ Video_Timer_Global::StopTimer (void)
   setitimer (ITIMER_REAL, &val, NULL);
   timerOn = 0;
   /*
-    fprintf (stderr, "VS: timer stopped.\n");
-    */
+  fprintf (stderr, "VS: timer stopped.\n");
+  */
 }
 
 void
