@@ -1,3 +1,10 @@
+Mon Mar 14 13:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
+          Fixed compile errors introduced by this change
+
+          Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
 Mon Mar 14 10:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
