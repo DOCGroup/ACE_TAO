@@ -1,3 +1,22 @@
+Tue Dec  4 10:25:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Added missing commas between strings supplied to an 
+          ACE_ERROR message. Thanks to Chris Kohlhoff 
+          <kohlhoff@pop.ihug.com.au>n for pointing this out.
+
+        * TAO_IDL/tao_idl.cpp:
+        * orbsvcs/IFR_Service/tao_ifr.cpp:
+
+          Removed the ACE_TEXT wrapper from strings applied to
+          an ACE_DEBUG or ACE_ERROR messsage when the string is
+          the result of a method call or is a supplied argument.
+          In these cases, with Unicode builds, an 'L' is prepended
+          to the string and becomes part of it. Thanks to Johnny
+          Willemsen <johnny_willemsen@planet.nl> for pointing this
+          out.
+
 Tue Dec  4 08:54:15 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/EC_Federated_Scalability/Servant_var.inl:
