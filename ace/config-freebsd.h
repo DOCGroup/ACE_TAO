@@ -6,27 +6,18 @@
 // The following configuration file is designed to work for FreeBSD
 // platforms using GNU C++ but without the POSIX (pthread) threads package
 
-#ifndef ACE_CONFIG_FREEBSD_H
-#define ACE_CONFIG_FREEBSD_H
-
-#include <osreldate.h>
-// Make sure we source in the OS version.
+#ifndef ACE_CONFIG_H
+#define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
-
-#if (__FreeBSD_version < 220000) && defined (_THREAD_SAFE)
-#error Threads are not supported.
-#endif /* __FreeBSD_version < 220000 */
 
 #define ACE_SIZEOF_LONG_DOUBLE 12
 
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
-
-#define ACE_HAS_GPERF
 
 // Platform specific directives
 #define ACE_LACKS_GETPGID
@@ -181,12 +172,5 @@ ange */
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
-#define ACE_HAS_TERM_IOCTLS
-#define ACE_USES_OLD_TERMIOS_STRUCT
-#define ACE_USES_HIGH_BAUD_RATES
-#define TCGETS TIOCGETA
-#define TCSETS TIOCSETA
-
-#endif /* ACE_CONFIG_FREEBSD_H */
+#endif /* ACE_CONFIG_H */

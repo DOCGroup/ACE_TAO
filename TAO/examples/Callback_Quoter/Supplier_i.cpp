@@ -38,7 +38,7 @@ Supplier::~Supplier (void)
 {
   // Release the memory allocated for ior_.
   ACE_OS::free (this->ior_);
-
+  
   // Close the stream.
   ACE_OS::fclose (f_ptr_);
 
@@ -152,9 +152,7 @@ int
 Supplier::send_market_status (const char *stock_name,
                               long value)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       // Make the RMI.
       this->notifier_->market_status (stock_name,
@@ -177,9 +175,9 @@ Supplier::send_market_status (const char *stock_name,
 int
 Supplier::run (void)
 {
-
+  
   long timer_id = 0;
-
+ 
   ACE_DEBUG ((LM_DEBUG,
               "Market Status Supplier Daemon is running...\n "));
 
@@ -187,16 +185,16 @@ Supplier::run (void)
   ACE_Time_Value period (period_value_);
 
   // "Your time starts now!" ;) the timer is scheduled to begin work.
-  timer_id = reactor_used ()->schedule_timer (supplier_timer_handler_,
+  timer_id = reactor_used ()->schedule_timer (supplier_timer_handler_, 
                                               "Periodic stockfeed",
                                               period,
                                               period);
   if ( timer_id== -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "%p\n", 
                            "schedule_timer"),
                           -1);
-
+                                            
    // ACE_DEBUG ((LM_DEBUG,
    //               "cancelling timer\n"));
    //  this->reactor_used ()->cancel_timer (timer_id);
@@ -204,7 +202,7 @@ Supplier::run (void)
 
   // The reactor starts executing in a loop.
    this->reactor_used ()->run_event_loop ();
-
+  
    return 0;
 }
 
@@ -212,9 +210,7 @@ Supplier::run (void)
 int
 Supplier::via_naming_service (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
@@ -244,8 +240,7 @@ Supplier::via_naming_service (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-  
+
   return 0;
 }
 
@@ -257,9 +252,7 @@ Supplier::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
@@ -308,7 +301,7 @@ Supplier::init (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 

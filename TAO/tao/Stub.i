@@ -1,11 +1,11 @@
-// -*- C++ -*-
 // $Id$
 
 // @@ Get rid of profile specific stuff, it is now in it's own class and
 // file. fredk
 #include <tao/debug.h>
 
-ACE_INLINE TAO_Profile *
+ACE_INLINE
+TAO_Profile *
 TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 {
   TAO_Profile *old = this->profile_in_use_;
@@ -27,13 +27,15 @@ TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
   return this->profile_in_use_;
 }
 
-ACE_INLINE void
+ACE_INLINE
+void
 TAO_Stub::reset_first_locate_request (void)
 {
   first_locate_request_ = 1;
 }
 
-ACE_INLINE void
+ACE_INLINE
+void
 TAO_Stub::reset_base (void)
 {
   this->base_profiles_.rewind ();
@@ -43,7 +45,8 @@ TAO_Stub::reset_base (void)
   set_profile_in_use_i (base_profiles_.get_next ());
 }
 
-ACE_INLINE void
+ACE_INLINE
+void
 TAO_Stub::forward_back_one (void)
 {
   TAO_MProfile *from = forward_profiles_->forward_from ();
@@ -65,21 +68,26 @@ TAO_Stub::forward_back_one (void)
 
 }
 
-ACE_INLINE void
+ACE_INLINE
+void
 TAO_Stub::reset_forward (void)
 {
-  while (this->forward_profiles_ != 0)
+  while (forward_profiles_)
     forward_back_one ();
+
+  forward_profiles_ = 0;
 }
 
-ACE_INLINE void
+ACE_INLINE
+void
 TAO_Stub::reset_profiles_i (void)
 {
   reset_forward ();
   reset_base ();
 }
 
-ACE_INLINE void
+ACE_INLINE
+void
 TAO_Stub::reset_profiles (void)
 {
   ACE_MT (ACE_GUARD (ACE_Lock,
@@ -109,13 +117,15 @@ TAO_Stub::~TAO_Stub (void)
 
 }
 
-ACE_INLINE TAO_Profile *
+ACE_INLINE
+TAO_Profile *
 TAO_Stub::profile_in_use (void)
 {
   return this->profile_in_use_;
 }
 
-ACE_INLINE void
+ACE_INLINE
+void
 TAO_Stub::use_locate_requests (CORBA::Boolean use_it)
 {
   if (use_it)
@@ -131,19 +141,20 @@ TAO_Stub::use_locate_requests (CORBA::Boolean use_it)
     }
 }
 
-ACE_INLINE TAO_MProfile *
+ACE_INLINE
+TAO_MProfile *
 TAO_Stub::get_profiles (void)
 {
-  return new TAO_MProfile (base_profiles_);
+  return new TAO_MProfile (&base_profiles_);
 }
 
-ACE_INLINE TAO_Profile *
+ACE_INLINE
+TAO_Profile *
 TAO_Stub::next_forward_profile (void)
 {
   TAO_Profile *pfile_next = 0;
 
-  while (this->forward_profiles_
-         && (pfile_next = forward_profiles_->get_next ()) == 0)
+  while (forward_profiles_ && (pfile_next = forward_profiles_->get_next ()) == 0)
     // that was the last profile.  Now we clean up our forward profiles.
     // since we own the forward MProfiles, we must delete them when done.
     forward_back_one ();
@@ -151,7 +162,8 @@ TAO_Stub::next_forward_profile (void)
   return pfile_next;
 }
 
-ACE_INLINE TAO_Profile *
+ACE_INLINE
+TAO_Profile *
 TAO_Stub::next_profile_i (void)
 {
 
@@ -173,7 +185,8 @@ TAO_Stub::next_profile_i (void)
   return pfile_next;
 }
 
-ACE_INLINE TAO_Profile *
+ACE_INLINE
+TAO_Profile *
 TAO_Stub::next_profile (void)
 {
 
@@ -184,26 +197,30 @@ TAO_Stub::next_profile (void)
   return next_profile_i ();
 }
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE
+CORBA::Boolean
 TAO_Stub::valid_forward_profile (void)
 {
   return (profile_success_ && forward_profiles_);
 }
 
-ACE_INLINE void
+ACE_INLINE
+void
 TAO_Stub::set_valid_profile (void)
 {
   profile_success_ = 1;
 }
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE
+CORBA::Boolean
 TAO_Stub::valid_profile (void)
 {
   return profile_success_;
 }
 
-ACE_INLINE TAO_Profile *
-TAO_Stub::set_base_profiles (const TAO_MProfile &mprofiles)
+ACE_INLINE
+TAO_Profile *
+TAO_Stub::set_base_profiles (TAO_MProfile *mprofiles)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
@@ -218,7 +235,33 @@ TAO_Stub::set_base_profiles (const TAO_MProfile &mprofiles)
 
 }
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE
+void
+TAO_Stub::add_forward_profiles (TAO_MProfile *mprofiles)
+{
+  // we assume that the profile_in_use_ is being
+  // forwarded!  Grab the lock so things don't change.
+  ACE_MT (ACE_GUARD (ACE_Lock,
+                     guard,
+                     *this->profile_lock_ptr_));
+
+  // forwarded profile points to the new IOR (profiles)
+  profile_in_use_->forward_to (mprofiles);
+
+  TAO_MProfile *now_pfiles = forward_profiles_ ? forward_profiles_ : &base_profiles_;
+
+  // new profile list points back to the list which was forwarded.
+  mprofiles->forward_from (now_pfiles);
+
+  forward_profiles_ = mprofiles;
+
+  // make sure we start at the beginning of mprofiles
+  forward_profiles_->rewind ();
+
+}
+
+ACE_INLINE
+CORBA::Boolean
 TAO_Stub::next_profile_retry (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
@@ -252,78 +295,4 @@ ACE_INLINE TAO_ORB_Core*
 TAO_Stub::orb_core (void) const
 {
   return this->orb_core_;
-}
-
-// Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)
-ACE_INLINE
-TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr (TAO_Stub *p)
-  : p_ (p)
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr");
-}
-
-ACE_INLINE TAO_Stub *
-TAO_Stub_Auto_Ptr::get (void) const
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::get");
-  return this->p_;
-}
-
-ACE_INLINE TAO_Stub *
-TAO_Stub_Auto_Ptr::release (void)
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::release");
-  TAO_Stub *old = this->p_;
-  this->p_ = 0;
-  return old;
-}
-
-ACE_INLINE void
-TAO_Stub_Auto_Ptr::reset (TAO_Stub *p)
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::reset");
-  if (this->get () != p)
-    this->get ()->_decr_refcnt ();
-  this->p_ = p;
-}
-
-ACE_INLINE TAO_Stub *
-TAO_Stub_Auto_Ptr::operator-> () const
-{
-  ACE_TRACE ("auto_ptr::operator->");
-  return this->get ();
-}
-
-ACE_INLINE
-TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &rhs)
-  : p_ (rhs.release ())
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr");
-}
-
-ACE_INLINE TAO_Stub_Auto_Ptr &
-TAO_Stub_Auto_Ptr::operator= (TAO_Stub_Auto_Ptr &rhs)
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::operator=");
-  if (this != &rhs)
-    {
-      this->reset (rhs.release ());
-    }
-  return *this;
-}
-
-ACE_INLINE
-TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr (void)
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr");
-  this->get ()->_decr_refcnt ();
-}
-
-// Accessor methods to the underlying Stub Object
-
-ACE_INLINE TAO_Stub &
-TAO_Stub_Auto_Ptr::operator *() const
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::operator *()");
-  return *this->get ();
 }

@@ -25,18 +25,15 @@
 #ifndef TAO_EC_PRIORITY_DISPATCHING_H
 #define TAO_EC_PRIORITY_DISPATCHING_H
 
-#include "orbsvcs/RtecSchedulerC.h"
+#include "EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_Dispatching.h"
-
 class TAO_EC_Dispatching_Task;
-class TAO_EC_Event_Channel;
 
-class TAO_ORBSVCS_Export TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
+class TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
 {
   // = TITLE
   //   Dispatching strategy that minimizes priority inversion.
@@ -54,8 +51,8 @@ class TAO_ORBSVCS_Export TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
   //   analyze and schedule.
   //
 public:
-  TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel* ec);
-  // The scheduler is used to find the range of priorities and similar
+  TAO_EC_Priority_Dispatching (void);
+  // The scheduler is used to find the range of priorities and similar 
   // info.
 
   // = The EC_Dispatching methods.
@@ -79,9 +76,6 @@ private:
 
   TAO_EC_Dispatching_Task** tasks_;
   // The tasks..
-
-  RtecScheduler::Scheduler_var scheduler_;
-  // The scheduler
 };
 
 #if defined (__ACE_INLINE__)

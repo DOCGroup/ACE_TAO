@@ -13,8 +13,7 @@
 //    This class implements the Time_Date IDL interface.
 //
 // = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and Michael Kircher.
-//
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 // ============================================================================
 
 #ifndef TIME_DATE_I_H
@@ -38,20 +37,11 @@ public:
   ~Time_Date_i (void);
   // Destructor
 
-  virtual void bin_date (CORBA::Long_out time_date,
-                         CORBA::Environment &);
+  virtual void bin_date (CORBA::Long_out time_date);
   // Obtain the time and date in binary format.
 
-  virtual void str_date (CORBA::String_out time_date,
-                         CORBA::Environment &);
+  virtual void str_date (CORBA::String_out time_date);
   // Obtain the time and date in string format.
-
-  void orb (CORBA::ORB_ptr orb_ptr);
-  // ORB pointer.
-
-private:
-  CORBA::ORB_var orb_var_;
-  // ORB pointer.
 };
 
 #endif /* TIME_DATE_I_H */

@@ -486,10 +486,10 @@ server (void *arg)
 
 #if !defined (ACE_LACKS_FORK)
 static void
-handler (int /* signum */)
+handler (int signum)
 {
-  // No printout here, to be safe.  Signal handlers must not acquire
-  // locks, etc.  It's not even safe to call ACE_OS::exit ()!
+  // Print the signal number and exit.
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) %S\n"), signum));
   ACE_OS::exit (0);
 }
 
@@ -563,34 +563,36 @@ spawn_processes (ACCEPTOR *acceptor,
 #if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
 // Spawn threads and run the client and server.
 
-static
-int
+static void
 spawn_threads (ACCEPTOR *acceptor,
                ACE_INET_Addr *server_addr)
 {
-  int status = 0;
-
 #if defined (VXWORKS)
   // Assign thread (VxWorks task) names to test that feature.
   ACE_thread_t *server_name;
-  ACE_NEW_RETURN (server_name, ACE_thread_t[n_servers], -1);
+  ACE_NEW (server_name,
+           ACE_thread_t[n_servers]);
 
   // And test ability to provide stacks.
   size_t *stack_size;
-  ACE_NEW_RETURN (stack_size, size_t[n_servers], -1);
+  ACE_NEW (stack_size,
+           size_t[n_servers]);
   char **stack;
-  ACE_NEW_RETURN (stack, char *[n_servers], -1);
+  ACE_NEW (stack,
+           char *[n_servers]);
 
   int i;
 
   for (i = 0; i < n_servers; ++i)
     {
-      ACE_NEW_RETURN (server_name[i], ASYS_TCHAR[32], -1);
+      ACE_NEW (server_name[i],
+               ASYS_TCHAR[32]);
       ACE_OS::sprintf (server_name[i],
                        ASYS_TEXT ("server%u"),
                        i);
       stack_size[i] = 40000;
-      ACE_NEW_RETURN (stack[i], char[stack_size[i]], -1);
+      ACE_NEW (stack[i],
+               char[stack_size[i]]);
 
       // Initialize the stack for checkStack.
       ACE_OS::memset (stack[i], 0xEE, stack_size[i]);
@@ -636,20 +638,7 @@ spawn_threads (ACCEPTOR *acceptor,
                 ASYS_TEXT ("client thread create failed")));
 
   // Wait for the threads to exit.
-  // But, wait for a limited time because sometimes the test hangs on Irix.
-  const ACE_Time_Value max_wait (200 /* seconds */);
-  const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
-  if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
-    {
-      if (errno == ETIME)
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("maximum wait time of %d msec exceeded\n"),
-                               max_wait.msec ()));
-      else
-        ACE_OS::perror ("wait");
-
-      status = -1;
-    }
+  ACE_Thread_Manager::instance ()->wait ();
 
 #if defined (VXWORKS)
   for (i = 0; i < n_servers; ++i)
@@ -661,8 +650,6 @@ spawn_threads (ACCEPTOR *acceptor,
   delete [] stack;
   delete [] stack_size;
 #endif /* VXWORKS */
-
-  return status;
 }
 #endif /* ! ACE_LACKS_FORK && ACE_HAS_THREADS */
 
@@ -670,7 +657,6 @@ int
 main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Conn_Test"));
-  int status = 0;
 
   ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("c:i:s:"));
   for (int c; (c = getopt ()) != -1; )
@@ -710,7 +696,7 @@ main (int argc, ASYS_TCHAR *argv[])
                            ASYS_TEXT ("spawn_processes")),
                           1);
 #elif defined (ACE_HAS_THREADS)
-      status = spawn_threads (&acceptor, &server_addr);
+      spawn_threads (&acceptor, &server_addr);
 #else  /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
       ACE_ERROR ((LM_ERROR,
                   ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 1));
@@ -718,7 +704,7 @@ main (int argc, ASYS_TCHAR *argv[])
     }
 
   ACE_END_TEST;
-  return status;
+  return 0;
 }
 
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>

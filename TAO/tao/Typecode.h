@@ -67,7 +67,7 @@ public:
     Bounds (void);
 
     virtual void _raise (void);
-    static Bounds* _narrow (CORBA_Exception *ex);
+    Bounds* _narrow (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };
 
@@ -77,7 +77,7 @@ public:
     BadKind (void);
 
     virtual void _raise (void);
-    static BadKind* _narrow (CORBA_Exception *ex);
+    BadKind* _narrow (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };
 
@@ -251,16 +251,6 @@ public:
   // Indirected typecodes share "buffer" with a parent, and hold a
   // reference to that parent to ensure its memory is not freed
   // inappropriately.
-
-  const char *tc_base_;
-  // my typecode base. Notice that the buffer_ member points to my
-  // encapsulation. However, for indirected typecodes, the offsets will point
-  // to my tk_kind field which should be pointed to be tc_base_
-
-  const char *root_tc_base_;
-  // base of the topmost level typecode. Applicable only if I have any parents,
-  // else it is the same as tc_base. This helps in case we have indirections
-  // and we need to traverse beyond encapsulation boundaries
 
   static CORBA::Boolean skip_typecode (TAO_InputCDR &stream);
   // skip a typecode encoding in a given CDR stream.  This is just a

@@ -49,7 +49,6 @@
 #define ACE_CDR_H
 
 #include "ace/Message_Block.h"
-#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -117,8 +116,6 @@ public:
   // the IDL basic type sizes.
 
   static void mb_align (ACE_Message_Block *mb);
-  // Align the message block to ACE_CDR::MAX_ALIGNMENT,
-  // set by the CORBA spec at 8 bytes.
 
   static int grow (ACE_Message_Block *mb, size_t minsize);
   // Increase the capacity of mb to contain at least <minsize> bytes.
@@ -132,13 +129,13 @@ public:
   // Definitions of the IDL basic types, for use in the CDR
   // classes. The cleanest way to avoid complaints from all compilers
   // is to define them all.
-  #if defined (CHORUS) && defined (ghs) && !defined (__STANDARD_CXX)
+  #if defined (ghs) && defined (CHORUS)
     // This is non-compliant, but a nasty bout with
     // Green Hills C++68000 1.8.8 forces us into it.
     typedef unsigned long Boolean;
-  #else  /* ! (CHORUS && ghs 1.8.8) */
+  #else  /* ! (ghs && CHORUS) */
     typedef u_char Boolean;
-  #endif /* ! (CHORUS && ghs 1.8.8) */
+  #endif /* ! (ghs && CHORUS) */
 
   typedef u_char Octet;
   typedef char Char;
@@ -412,11 +409,7 @@ public:
   const ACE_Message_Block *end (void) const;
   // Return the last message in the chain that is is use.
 
-  const ACE_Message_Block *current (void) const;
-  // Return the <current_> message block in chain.
-
   const char *buffer (void) const;
-  // Access the underlying buffer (read only).
 
   size_t length (void) const;
   // Return the start and size of the internal buffer.  NOTE: This
@@ -547,9 +540,9 @@ public:
 
   ACE_InputCDR (const ACE_InputCDR& rhs);
   ACE_InputCDR& operator= (const ACE_InputCDR& rhs);
-  // These make a copy of the current stream state, but do not copy
-  // the internal buffer, so the same stream can be read multiple
-  // times efficiently.
+  // Make a copy of the current stream state, but does not copy the
+  // internal buffer; so the same stream can be read multiple times
+  // efficiently.
 
   ACE_InputCDR (const ACE_InputCDR& rhs,
                 size_t size,
@@ -747,10 +740,8 @@ private:
   // for that case, but that would be too platform dependent.
 
   void rd_ptr (size_t offset);
-  // Move the rd_ptr ahead by <offset> bytes.
-
   char* end (void);
-  // Points to the continuation field of the current message block.
+  // Short cuts for the underlying message block.
 
   int adjust (size_t size,
               char *&buf);

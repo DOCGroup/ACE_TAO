@@ -77,6 +77,12 @@ public:
   typedef TAO_EC_ProxyPushSupplier_Set::Busy_Lock Busy_Lock;
   Busy_Lock& busy_lock (void);
 
+  void busy_hwm (CORBA::ULong hwm);
+  CORBA::ULong busy_hwm (void) const;
+  void max_write_delay (CORBA::ULong hwm);
+  CORBA::ULong max_write_delay (void) const;
+  // Delegate on the EC_ProxyPushSupplier....
+
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*,
@@ -90,10 +96,6 @@ public:
                              CORBA::Environment&);
   // Used to inform the EC that a Supplier has connected or
   // disconnected from it.
-
-  virtual void shutdown (CORBA::Environment&);
-  // The event channel is shutting down, inform all the consumers of
-  // this
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr

@@ -1,9 +1,8 @@
+# $Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
-
-# $Id$
-# -*- perl -*-
 
 # This is a Perl script that runs the client and all the other servers that
 # are needed
@@ -41,10 +40,10 @@ sub client
 @opts = ("-s", "-t", "-i", "-e", "-y");
 
 @comments = ("Simple Test: \n",
-             "Tree Test: \n",
-             "Iterator Test: \n",
-             "Exceptions Test: \n",
-             "Destroy Test: \n");
+	     "Tree Test: \n",
+	     "Iterator Test: \n",
+	     "Exceptions Test: \n",
+	     "Destroy Test: \n");
 
 $test_number = 0;
 

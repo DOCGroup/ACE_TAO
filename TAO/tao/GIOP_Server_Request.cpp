@@ -117,7 +117,7 @@ GIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
 
   if (hdr_status)
     {
-      input >> this->requesting_principal_.out ();
+      input >> this->requesting_principal_;
       hdr_status = input.good_bit ();
     }
 
@@ -301,6 +301,7 @@ GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       // Stick it into the Any. It gets duplicated there.
       any->_tao_replace (tc.in (),
                          cdr,
+                         0,
                          env);
 
       // Now we can release the original.
@@ -350,9 +351,6 @@ GIOP_ServerRequest::set_exception (const CORBA::Any &value,
     env.exception (new CORBA::BAD_INV_ORDER ());
   else
   {
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
     // Try to narrow to ForwardRequest
     PortableServer::ForwardRequest_ptr forward_request =
         PortableServer::ForwardRequest::_narrow ((CORBA::Exception *) value.value ());
@@ -365,9 +363,6 @@ GIOP_ServerRequest::set_exception (const CORBA::Any &value,
       }
     // Normal exception
     else
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
       {
         this->exception_ = new CORBA::Any (value);
 
@@ -407,7 +402,7 @@ GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
       if (this->retval_)
         {
           CORBA::TypeCode_var tc = this->retval_->type ();
-                if (this->retval_->any_owns_data ())
+	        if (this->retval_->any_owns_data ())
             {
               (void) this->outgoing_->encode (tc.in (), retval_->value (), 0, env);
             }
@@ -572,8 +567,8 @@ GIOP_ServerRequest::init_reply (CORBA::Environment &env)
 {
   // Construct a REPLY header.
   TAO_GIOP::start_message (TAO_GIOP::Reply,
-                                             *this->outgoing_,
-                                             this->orb_core_);
+                           *this->outgoing_,
+                           this->orb_core_);
 
   TAO_GIOP_ServiceContextList resp_ctx;
   resp_ctx.length (0);

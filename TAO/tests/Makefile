@@ -11,14 +11,11 @@
 #----------------------------------------------------------------------------
 
 DIRS  = CDR \
-        DynAny_Test \
         OctetSeq \
         Param_Test \
-        InterOp-Naming \
         NestedUpcall \
         Multiple_Inheritance \
-	MT_Client \
-	FL_Cube
+	MT_Client
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

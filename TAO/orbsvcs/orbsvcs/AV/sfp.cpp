@@ -3,23 +3,6 @@
 
 // $Id$
 
-// default arguments to pass to use for the ORB
-const char *TAO_SFP::TAO_SFP_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
-
-// SFP magic numbers
-const char *TAO_SFP::TAO_SFP_MAGIC_NUMBER = "=SFP";
-const char *TAO_SFP::TAO_SFP_FRAGMENT_MAGIC_NUMBER = "FRAG";
-const char *TAO_SFP::TAO_SFP_START_MAGIC_NUMBER = "=STA";
-const char *TAO_SFP::TAO_SFP_CREDIT_MAGIC_NUMBER = "=CRE";
-const char *TAO_SFP::TAO_SFP_STARTREPLY_MAGIC_NUMBER = "=STR";
-
-// SFP version 1.0
-const unsigned char TAO_SFP::TAO_SFP_MAJOR_VERSION = 1;
-const unsigned char TAO_SFP::TAO_SFP_MINOR_VERSION = 0;
-
-// lengths of various SFP headers
-const unsigned char TAO_SFP::TAO_SFP_FRAME_HEADER_LEN = 12;
-
 int 
 operator< (const TAO_SFP_Fragment_Node& left,
            const TAO_SFP_Fragment_Node& right)
@@ -35,10 +18,10 @@ TAO_SFP::TAO_SFP (CORBA::ORB_ptr orb,
                   SFP_Callback *callback)
   :orb_ (orb),
    reactor_ (reactor),
-   start_tries_ (10),
-   startReply_tries_ (10),
    timeout1_ (timeout1),
    timeout2_ (timeout2),
+   start_tries_ (10),
+   startReply_tries_ (10),
    callback_ (callback),
    sequence_num_ (0),
    credit_num_ (10),
@@ -229,6 +212,7 @@ TAO_SFP::start_stream (const char *local_addr,int Credit)
     }
   else
       ACE_ERROR_RETURN ((LM_ERROR,"Invalid messaged received while Start expected\n"),-1);
+  return 0;
 }
 
 // Sends the ACE_Message_Block data as a frame, fragmenting if necessary.
@@ -250,7 +234,7 @@ TAO_SFP::send_frame (ACE_Message_Block *frame)
               this->output_cdr_.reset ();
               // CDR encode the frame header.
               //(<<= isAvailable only in compiled marshalling!)
-              this->frame_header_.message_type = flowProtocol::SimpleFrame_Msg;
+              this->frame_header_.message_type = flowProtocol::SimpleFrame;
               this->frame_header_.message_size = frame->length ()+this->frame_header_len_;
               this->output_cdr_.encode (flowProtocol::_tc_frameHeader,
                                         &this->frame_header_,
@@ -329,7 +313,7 @@ TAO_SFP::send_frame (ACE_Message_Block *frame)
                     }
                 }
               //  This can be either a simpleframe or a sequenced frame,other types of frames.
-              this->frame_header_.message_type = flowProtocol::Frame_Msg;
+              this->frame_header_.message_type = flowProtocol::Frame;
               this->frame_header_.message_size = message_len;
               ACE_DEBUG ((LM_DEBUG,"first fragment of size:%d\n",message_len- this->frame_header_len_));
               this->output_cdr_.reset ();
@@ -490,8 +474,7 @@ TAO_SFP::send_cdr_buffer (TAO_OutputCDR &cdr,ACE_Message_Block *mb)
   // from the heap.
   iovec iov[TAO_WRITEV_MAX];
   int iovcnt = 0;
-  const ACE_Message_Block* b = 0;
-  for (b = cdr.begin ();
+  for (const ACE_Message_Block* b = cdr.begin ();
        b != cdr.end () && iovcnt < TAO_WRITEV_MAX;
        b = b->cont ())
     {
@@ -587,9 +570,6 @@ TAO_SFP::handle_timeout (const ACE_Time_Value &tv,
         {
           this->end_stream ();
         }
-      break;
-    default:
-      ACE_DEBUG ((LM_DEBUG,"Handle_timeout: No Action in this state %d",this->state_));
     }
   return 0;
 }
@@ -601,7 +581,7 @@ int
 TAO_SFP::handle_input (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP::handle_input\n"));
-  flowProtocol::MsgType msg_type = flowProtocol::Start_Msg;
+  flowProtocol::MsgType msg_type;
   ACE_INET_Addr sender;
   char peek_buffer [MAGIC_NUMBER_LEN+2];// 2 is for flags + message_type.
   int peek_len = MAGIC_NUMBER_LEN +2;
@@ -621,12 +601,12 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
   if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_START_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)Start message received\n"));
-      msg_type = flowProtocol::Start_Msg;
+      msg_type = flowProtocol::start;
     }
   else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_STARTREPLY_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)StartReply message received\n"));
-      msg_type = flowProtocol::StartReply_Msg;
+      msg_type = flowProtocol::startReply;
     }
   else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_MAGIC_NUMBER) == 0)
     {
@@ -638,15 +618,13 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
   else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_FRAGMENT_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) fragment Header received\n"));
-      msg_type = flowProtocol::Fragment_Msg;
+      msg_type = flowProtocol::Fragment;
     }
   else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_CREDIT_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) credit message received\n"));
-      msg_type = flowProtocol::Credit_Msg;
+      msg_type = flowProtocol::Credit;
     }
-  else
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_SFP:Invalid magic number\n"),0);
   switch (this->state_)
     {
     case ACTIVE_START:
@@ -661,7 +639,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
       // In this state we check for credit frames.
       switch (msg_type)
         {
-        case flowProtocol::Credit_Msg:
+        case flowProtocol::Credit:
           {
             flowProtocol::credit credit;
             n = this->dgram_.recv ((char *)&credit,
@@ -671,7 +649,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
               ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input - Credit\n"),0);
             break;
           }
-        case flowProtocol::Start_Msg:
+        case flowProtocol::start:
           // consume the retransmitted start message.
           {
             flowProtocol::Start start;
@@ -685,8 +663,8 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
             break;
           }
 
-        case flowProtocol::Frame_Msg:
-        case flowProtocol::SimpleFrame_Msg:
+        case flowProtocol::Frame:
+        case flowProtocol::SimpleFrame:
           {
             ACE_Message_Block * mb =this->read_simple_frame ();
             if (mb != 0)
@@ -704,7 +682,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
               }
             break;
           }
-        case flowProtocol::Fragment_Msg:
+        case flowProtocol::Fragment:
           {
             ACE_DEBUG ((LM_DEBUG,"Fragment received\n"));
             ACE_Message_Block *result = this->read_fragment ();
@@ -713,7 +691,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
               this->callback_->receive_frame (result);
             break;
           }
-        case flowProtocol::EndofStream_Msg:
+        case flowProtocol::EndofStream:
           {
             char *buf;
             ACE_NEW_RETURN (buf,
@@ -727,15 +705,13 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
             this->callback_->end_stream ();
             return -1;
           }
-        default:
-          break;
         }
       break;
     case REPLY_RECEIVED:
       // In this state we check for Data frames.
       switch (msg_type)
         {
-        case flowProtocol::StartReply_Msg:
+        case flowProtocol::startReply:
           {
             flowProtocol::StartReply start_reply;
             n = this->dgram_.recv ((char *)&start_reply,
@@ -746,14 +722,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
             else
               ACE_DEBUG ((LM_DEBUG,"start reply consumed\n"));
           }
-          break;
-        default:
-          ACE_DEBUG ((LM_DEBUG,"Invalid message in state REPLY_RECEIVED\n"));
-          break;
         }
-      break;
-    default:
-      break;
     }
   return 0;
 }
@@ -761,14 +730,12 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
 int
 TAO_SFP::end_stream (void)
 {
-  int result = -1;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG,"SFP - ending the stream\n"));
       // send the EndofStream message.
       this->frame_header_.flags = TAO_ENCAP_BYTE_ORDER;
-      this->frame_header_.message_type = flowProtocol::EndofStream_Msg;
+      this->frame_header_.message_type = flowProtocol::EndofStream;
       this->output_cdr_.reset ();
       this->output_cdr_.encode (flowProtocol::_tc_frameHeader,
                                 &this->frame_header_,
@@ -780,25 +747,24 @@ TAO_SFP::end_stream (void)
                                      this->receiver_inet_addr_);
       if ((n==-1) || (n==0))
         ACE_ERROR_RETURN ((LM_ERROR,"Error sending endofstream message:%p",""),-1);
-      result = this->reactor_->remove_handler (this,
-                                               ACE_Event_Handler::READ_MASK);
-
+      int result = this->reactor_->remove_handler (this,
+                                                   ACE_Event_Handler::READ_MASK);
+      return result;
     }
   ACE_CATCHANY
     {
       ACE_TRY_ENV.print_exception ("TAO_SFP::end_stream ()\n");
-      return result;
+      return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-  return result;
 }
                                   
 int
 TAO_SFP::register_dgram_handler (void)
 {
-  int result = this->reactor_->register_handler (this,
-                                                 ACE_Event_Handler::READ_MASK);
+  int result;
+  result = this->reactor_->register_handler (this,
+                                             ACE_Event_Handler::READ_MASK);
   return result;
 }
 
@@ -811,7 +777,6 @@ TAO_SFP::get_handle (void) const
 ACE_Message_Block *
 TAO_SFP::read_simple_frame (void)
 {
-  ACE_Message_Block *message_block = 0;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -827,7 +792,9 @@ TAO_SFP::read_simple_frame (void)
         return 0;
       int byte_order = frame_header.flags & 0x1;
       int message_len = frame_header.message_size;
-
+      if (frame_header.message_size < 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"Negative message size\n"),0);
+      ACE_Message_Block *message_block;
       ACE_NEW_RETURN (message_block,
                       ACE_Message_Block (message_len),
                       0);
@@ -906,6 +873,8 @@ TAO_SFP::read_simple_frame (void)
 	      return 0;
             }
         }
+      else
+          return message_block;
     }
   ACE_CATCHANY
     {
@@ -914,7 +883,6 @@ TAO_SFP::read_simple_frame (void)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-  return message_block;
 }
 
 int
@@ -974,9 +942,7 @@ TAO_SFP::read_frame_header (flowProtocol::frameHeader &frame_header)
 ACE_Message_Block *
 TAO_SFP::read_fragment (void)
 {
-  TAO_SFP_Fragment_Table_Entry *fragment_entry = 0;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       flowProtocol::fragment fragment;
       ACE_INET_Addr sender;
@@ -1016,6 +982,8 @@ TAO_SFP::read_fragment (void)
       ACE_DEBUG ((LM_DEBUG,"frag number = %d, frag size = %d,source id  = %d\n",
                   fragment.frag_number,fragment.frag_sz,fragment.source_id));
 
+      if (fragment.frag_sz < 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"negative fragment size:\n"),0);
       ACE_Message_Block *data;
       ACE_NEW_RETURN (data,
                       ACE_Message_Block(fragment.frag_sz),
@@ -1031,7 +999,7 @@ TAO_SFP::read_fragment (void)
       ACE_DEBUG ((LM_DEBUG,"length of %dth fragment is: %d\n",
                   fragment.frag_number,
                   data->length ()));
-
+      TAO_SFP_Fragment_Table_Entry *fragment_entry;
       TAO_SFP_Fragment_Node *new_node;
       ACE_NEW_RETURN (new_node,
                       TAO_SFP_Fragment_Node,
@@ -1067,7 +1035,7 @@ TAO_SFP::read_fragment (void)
           // since fragment number starts from 0 to n-1 we add 1.
           fragment_entry->num_fragments_ = fragment.frag_number + 1;
         }
-
+      return check_all_fragments (fragment_entry);
     }
   ACE_CATCHANY
     {
@@ -1075,8 +1043,6 @@ TAO_SFP::read_fragment (void)
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
-  return check_all_fragments (fragment_entry);
 }
 
 ACE_Message_Block*
@@ -1127,21 +1093,3 @@ TAO_SFP::dump_buf(char *buffer,int size)
     ACE_DEBUG ((LM_DEBUG,"%d ",buf[i]));
   ACE_DEBUG ((LM_DEBUG,"n========================================n"));
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_DNode<TAO_SFP_Fragment_Node>;
-template class ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node>;
-template class ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node>;
-template class ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<unsigned int, TAO_SFP_Fragment_Table_Entry *>;
-template class ACE_Hash_Map_Iterator_Base_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_DNode<TAO_SFP_Fragment_Node>
-#pragma instantiate ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node>
-#pragma instantiate ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node>
-#pragma instantiate ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<unsigned int, TAO_SFP_Fragment_Table_Entry *>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -28,28 +28,19 @@ TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
 {
 }
 
+// Initialize the ORB, using the supplied command line arguments.  the
+// poa_name is a user-supplied string that is used to name the POA
+// created.
 int
-TAO_ORB_Manager::init (int &argc,
+TAO_ORB_Manager::init (int& argc,
                        char **argv,
-                       CORBA::Environment &env)
-{
-  return this->init (argc,
-                     argv,
-                     0,
-                     env);
-}
-
-int
-TAO_ORB_Manager::init (int &argc,
-                       char **argv,
-                       const char *orb_name,
                        CORBA::Environment &env)
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    orb_name,
+                                    0,
                                     env);
       TAO_CHECK_ENV_RETURN (env, -1);
     }
@@ -85,33 +76,18 @@ TAO_ORB_Manager::init (int &argc,
   return 0;
 }
 
-int
-TAO_ORB_Manager::init_child_poa (int& argc,
-				 char **argv,
-				 const char *poa_name,
-				 CORBA_Environment &env)
-{
-  return this->init_child_poa (argc,
-                               argv,
-                               poa_name,
-                               0,
-                               env);
-}
+// Initialize the child poa.
 
 int
 TAO_ORB_Manager::init_child_poa (int& argc,
 				 char **argv,
-				 const char *poa_name,
-                                 const char *orb_name,
+				 char *poa_name,
 				 CORBA_Environment &env)
 {
   int init_result;
 
   // check to see if root poa has to be created.
-  init_result = this->init (argc,
-                            argv,
-                            orb_name,
-                            env);
+  init_result = this->init (argc, argv, env);
 
   if (init_result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -157,16 +133,6 @@ TAO_ORB_Manager::init_child_poa (int& argc,
     }
   TAO_CHECK_ENV_RETURN (env, -1);
 
-  return 0;
-}
-
-// Activate POA manager.
-
-int
-TAO_ORB_Manager::activate_poa_manager (CORBA_Environment &env)
-{
-  this->poa_manager_->activate (env);
-  TAO_CHECK_ENV_RETURN (env, -1);
   return 0;
 }
 

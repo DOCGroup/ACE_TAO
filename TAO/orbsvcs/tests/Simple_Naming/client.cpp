@@ -27,7 +27,7 @@ ACE_RCSID(Simple_Naming, client, "$Id$")
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-class My_Test_Object :
+class My_Test_Object : 
   public virtual PortableServer::RefCountServantBase,
   public virtual POA_Test_Object
 {
@@ -192,9 +192,6 @@ CosNaming_Client::init (int argc, char **argv)
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->orbmgr_.activate_poa_manager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
@@ -204,7 +201,7 @@ CosNaming_Client::init (int argc, char **argv)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "init");
-      // and return -1 below . . .
+      return -1;
     }
   ACE_ENDTRY;
 
@@ -403,7 +400,7 @@ int
 Loop_Test::execute (TAO_Naming_Client &root_context)
 {
   // Create a dummy object.
-  My_Test_Object * test_obj_impl =
+  My_Test_Object * test_obj_impl = 
     new My_Test_Object (CosNaming_Client::OBJ1_ID);
   Test_Object_var test_ref;
 
@@ -415,7 +412,7 @@ Loop_Test::execute (TAO_Naming_Client &root_context)
       ACE_TRY_CHECK_EX (SETUP);
 
       test_obj_impl->_remove_ref (ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (SETUP);
+      ACE_TRY_CHECK_EX (SETUP);      
     }
   ACE_CATCHANY
     {
@@ -616,7 +613,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       ACE_TRY_CHECK;
 
       // Instantiate a dummy object and bind it under the new context.
-      My_Test_Object *impl1 =
+      My_Test_Object *impl1 = 
         new My_Test_Object (CosNaming_Client::OBJ1_ID);
       Test_Object_var obj1 = impl1->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -857,7 +854,7 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
       ACE_TRY_CHECK;
       impl->_remove_ref (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       root_context->bind (test_name,
                           obj.in (),
                           ACE_TRY_ENV);
@@ -1014,7 +1011,7 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context,
 
       root_context->unbind (test_name, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "Not found (case 3) test failed - no exception was thrown\n"));
+      ACE_DEBUG ((LM_DEBUG, "Not found (case 3) test failed\n"));
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
     {

@@ -63,10 +63,6 @@ public:
       create_filter_builder (TAO_EC_Event_Channel*);
   virtual void
       destroy_filter_builder (TAO_EC_Filter_Builder*);
-  virtual TAO_EC_Supplier_Filter_Builder*
-      create_supplier_filter_builder (TAO_EC_Event_Channel*);
-  virtual void
-      destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder*);
   virtual TAO_EC_ConsumerAdmin*
       create_consumer_admin (TAO_EC_Event_Channel*);
   virtual void
@@ -91,10 +87,6 @@ public:
       create_observer_strategy (TAO_EC_Event_Channel*);
   virtual void
       destroy_observer_strategy (TAO_EC_ObserverStrategy*);
-  virtual TAO_EC_Scheduling_Strategy*
-      create_scheduling_strategy (TAO_EC_Event_Channel*);
-  virtual void
-      destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*);
   virtual TAO_EC_ProxyPushSupplier_Set*
       create_proxy_push_supplier_set (TAO_EC_Event_Channel*);
   virtual void

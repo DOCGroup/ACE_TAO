@@ -50,14 +50,23 @@ public:
   virtual int gen_out_impl (void);
   // generate the _out implementation
 
+  virtual int gen_typecode (void);
+  // generate the typecode
+
+  virtual int gen_encapsulation (void);
+  // encapsulation for parameters
+
+  virtual long tc_size (void);
+  // return typecode size
+
+  virtual long tc_encap_len (void);
+  // return length of encapsulation
+
   virtual int member_count (void);
   // return the count of members
 
   virtual int default_index (void);
   // return the default index used
-
-  virtual idl_bool in_recursion (be_type *node = 0);
-  // ar we or the parameter node involved in some kind of recursion 
 
   // Visiting
   virtual int accept (be_visitor *visitor);
@@ -66,29 +75,6 @@ public:
   DEF_NARROW_METHODS3 (be_union, AST_Union, be_scope, be_type);
   DEF_NARROW_FROM_DECL(be_union);
   DEF_NARROW_FROM_SCOPE(be_union);
-
-  struct DefaultValue
-  {
-    union PermittedTypes
-    {
-      char char_val;
-      idl_bool bool_val;
-      ACE_INT16 short_val;
-      ACE_UINT16 ushort_val;
-      ACE_INT32 long_val;
-      ACE_UINT32 ulong_val;
-      ACE_UINT32 enum_val;
-      // TO-DO - handle (u)longlong types
-    } u;
-    long computed_;
-    // computed == -1 => error condition
-    //          == 0 => does not exist because all cases have been covered
-    //          == 1 => already computed
-    //          == -2 => initial value
-  };
-
-  int default_value (DefaultValue &);
-  // get the default value
 
 protected:
   virtual int compute_size_type (void);
@@ -103,17 +89,11 @@ private:
   int compute_default_index (void);
   // count the default index
 
-  virtual int compute_default_value (void);
-  // compute the implicit default value (if any)
-
   int member_count_;
   // number of members
 
   int default_index_;
   // default label index (zero based indexing)
-
-  DefaultValue default_value_;
-  // implicit default value (if any)
 };
 
 #endif

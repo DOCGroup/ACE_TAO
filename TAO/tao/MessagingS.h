@@ -50,6 +50,55 @@ TAO_NAMESPACE  POA_Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_rebind_mode_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -171,6 +220,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_synchronization_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -292,6 +390,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_priority_range_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -413,6 +560,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_priority_range_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -534,6 +730,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_start_time_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -655,6 +900,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_end_time_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -776,6 +1070,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_start_time_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -897,6 +1240,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_end_time_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -1018,6 +1410,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_relative_expiry_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -1139,6 +1580,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_relative_expiry_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -1260,6 +1750,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_routing_range_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -1381,6 +1920,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_max_hops_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -1502,6 +2090,55 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
+    static void _get_allowed_orders_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void _get_policy_type_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void copy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void destroy_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,

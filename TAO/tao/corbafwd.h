@@ -61,6 +61,8 @@
 # endif
 #endif /* _MSC_VER */
 
+#define TAO_DEFAULT_MINOR_CODE 0xffff0000L
+
 // Forward declarations of some data types are needed.
 
 class CORBA_Any;
@@ -134,10 +136,7 @@ typedef class CORBA_Exception *CORBA_Exception_ptr;
   TAO_SYSTEM_EXCEPTION(REBIND); \
   TAO_SYSTEM_EXCEPTION(TIMEOUT); \
   TAO_SYSTEM_EXCEPTION(TRANSACTION_UNAVAILABLE); \
-  TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE); \
-  TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED); \
-  TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK); \
-  TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);
+  TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE);
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   class CORBA_ ## name
@@ -145,14 +144,6 @@ TAO_SYSTEM_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-
-class CORBA_WrongTransaction;
-typedef CORBA_WrongTransaction *CORBA_WrongTransaction_ptr;
-
-struct CORBA_NameValuePair;
-class CORBA_NameValuePair_var;
-class CORBA_NameValuePair_out;
-typedef CORBA_NameValuePair *CORBA_NameValuePair_ptr;
 
 class CORBA_Request;
 class CORBA_Request_var;
@@ -169,37 +160,10 @@ class CORBA_NamedValue_var;
 class CORBA_NamedValue_out;
 typedef class CORBA_NamedValue *CORBA_NamedValue_ptr;
 
-
 class CORBA_NVList;
 class CORBA_NVList_var;
 class CORBA_NVList_out;
 typedef class CORBA_NVList *CORBA_NVList_ptr;
-
-class CORBA_Context;
-class CORBA_Context_var;
-class CORBA_Context_out;
-typedef class CORBA_Context *CORBA_Context_ptr;
-
-class CORBA_ContextList;
-class CORBA_ContextList_var;
-class CORBA_ContextList_out;
-typedef class CORBA_ContextList *CORBA_ContextList_ptr;
-
-class CORBA_ConstructionPolicy;
-class CORBA_ConstructionPolicy_var;
-class CORBA_ConstructionPolicy_out;
-typedef class CORBA_ConstructionPolicy *CORBA_ConstructionPolicy_ptr;
-
-class CORBA_AnySeq;
-class CORBA_AnySeq_var;
-class CORBA_AnySeq_out;
-typedef class CORBA_AnySeq *CORBA_AnySeq_ptr;
-
-// Forward declarations.
-class CORBA_NameValuePairSeq;
-class CORBA_NameValuePairSeq_var;
-class CORBA_NameValuePairSeq_out;
-typedef CORBA_NameValuePairSeq *CORBA_NameValuePairSeq_ptr;
 
 #endif /* ! TAO_HAS_MINIMUM_CORBA */
 
@@ -212,6 +176,16 @@ class CORBA_Object;
 class CORBA_Object_var;
 class CORBA_Object_out;
 typedef class CORBA_Object *CORBA_Object_ptr;
+
+class CORBA_Context;
+class CORBA_Context_var;
+class CORBA_Context_out;
+typedef class CORBA_Context *CORBA_Context_ptr;
+
+class CORBA_ContextList;
+class CORBA_ContextList_var;
+class CORBA_ContextList_out;
+typedef class CORBA_ContextList *CORBA_ContextList_ptr;
 
 class CORBA_Current;
 class CORBA_Current_var;
@@ -226,27 +200,11 @@ class CORBA_Environment_var;
 class CORBA_Environment_out;
 typedef class CORBA_Environment *CORBA_Environment_ptr;
 
-// = Service Forward declaration
-struct CORBA_ServiceDetail;
-class CORBA_ServiceDetail_var;
-class CORBA_ServiceDetail_out;
-typedef CORBA_ServiceDetail * CORBA_ServiceDetail_ptr;
-
-struct CORBA_ServiceInformation;
-class CORBA_ServiceInformation_var;
-class CORBA_ServiceInformation_out;
-typedef CORBA_ServiceInformation * CORBA_ServiceInformation_ptr;
-
 class CORBA_Principal;
-class CORBA_Principal_var;
-class CORBA_Principal_out;
 typedef class CORBA_Principal *CORBA_Principal_ptr;
 
 typedef class CORBA_ImplementationDef *CORBA_ImplementationDef_ptr;
 
-class CORBA_InterfaceDef;
-class CORBA_InterfaceDef_var;
-class CORBA_InterfaceDef_out;
 typedef class CORBA_InterfaceDef *CORBA_InterfaceDef_ptr;
 
 #ifdef TAO_HAS_VALUETYPE
@@ -258,8 +216,6 @@ class CORBA_DefaultValueRefCountBase;
 
 class CORBA_String_var;
 class CORBA_String_out;
-class CORBA_WString_var;
-class CORBA_WString_out;
 
 class CORBA_ExceptionList;
 
@@ -274,13 +230,9 @@ class CORBA_PolicyTypeSeq_var;
 class CORBA_PolicyTypeSeq_out;
 
 class CORBA_PolicyManager;
-class CORBA_PolicyManager_var;
-class CORBA_PolicyManager_out;
 typedef CORBA_PolicyManager *CORBA_PolicyManager_ptr;
 
 class CORBA_PolicyCurrent;
-class CORBA_PolicyCurrent_var;
-class CORBA_PolicyCurrent_out;
 typedef CORBA_PolicyCurrent *CORBA_PolicyCurrent_ptr;
 
 class CORBA_Policy;
@@ -292,16 +244,6 @@ class CORBA_PolicyList;
 class CORBA_PolicyList_var;
 class CORBA_PolicyList_out;
 typedef CORBA_PolicyList *CORBA_PolicyList_ptr;
-
-class CORBA_DomainManager;
-class CORBA_DomainManager_var;
-class CORBA_DomainManager_out;
-typedef CORBA_DomainManager *CORBA_DomainManager_ptr;
-
-class CORBA_DomainManagerList;
-class CORBA_DomainManagerList_var;
-class CORBA_DomainManagerList_out;
-typedef CORBA_DomainManagerList *CORBA_DomainManagerList_ptr;
 
 class CORBA_PollableSet;
 class CORBA_PollableSet_var;
@@ -323,11 +265,6 @@ class TAO_OutputCDR;
 // @@ TODO This should be TAO_TAO_Stub
 class TAO_Stub;
 
-class CORBA_ORB_ObjectIdList;
-class CORBA_ORB_ObjectIdList_var;
-class CORBA_ORB_ObjectIdList_out;
-typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
-
 // enum values defined in tao/NVList.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
@@ -341,6 +278,9 @@ typedef void (*TAO_Skeleton)(
 // forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
 template <class T> class TAO_Unbounded_Object_Sequence;
+
+class CORBA_String_var;
+class CORBA_String_out;
 
 class TAO_Export CORBA
 {
@@ -393,30 +333,30 @@ public:
   typedef Char *String;
 
   // = String memory management.
-  static Char* string_alloc (ULong len);
-  static Char* string_dup (const Char *);
+  static String string_alloc (ULong len);
+  static String string_copy (const Char *);
+  static String string_dup (const Char *);
   static void string_free (Char *);
-  // This is a TAO extension and must go away....
-  static Char* string_copy (const Char *);
+
+  typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
 
   typedef CORBA_String_var String_var;
   typedef CORBA_String_out String_out;
 
-  // WChar was standarized in CORBA 2.2, but is still a bit unstable.
+  // WChar is an IDL extension, not yet standard.  We use 32 bits
+  // because that's what many platforms use for their native wchar_t.
 
   typedef ACE_CDR::WChar WChar;
+  typedef WChar *WString;
+
   typedef WChar &WChar_out;
   // Out type for WChar.
 
   // = String memory management routines.
-  static WChar* wstring_alloc (ULong len);
-  static WChar* wstring_dup (const WChar *const);
+  static WString wstring_alloc (ULong len);
+  static WString wstring_copy (const WChar *const);
+  static WString wstring_dup (const WChar *const);
   static void wstring_free (WChar *const);
-
-  typedef CORBA_WString_var WString_var;
-  typedef CORBA_WString_out WString_out;
-
-  typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
 
   // = various CORBA defined classes.
   typedef CORBA_Any Any;
@@ -451,6 +391,13 @@ public:
   typedef CORBA_NVList_var NVList_var;
   typedef CORBA_NVList_out NVList_out;
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  typedef CORBA_Object Object;
+  typedef CORBA_Object *Object_ptr;
+  typedef CORBA_Object_var Object_var;
+  typedef CORBA_Object_out Object_out;
+
   typedef CORBA_Context Context;
   typedef CORBA_Context *Context_ptr;
   typedef CORBA_Context_var Context_var;
@@ -461,21 +408,8 @@ public:
   typedef CORBA_ContextList_var ContextList_var;
   typedef CORBA_ContextList_out ContextList_out;
 
-  typedef char *CORBA_FieldName;
-  typedef CORBA_String_var CORBA_FieldName_var;
-  typedef CORBA_String_out CORBA_FieldName_out;
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-  typedef CORBA_Object Object;
-  typedef CORBA_Object *Object_ptr;
-  typedef CORBA_Object_var Object_var;
-  typedef CORBA_Object_out Object_out;
-
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
-  typedef CORBA_Principal_var Principal_var;
-  typedef CORBA_Principal_out Principal_out;
 
   typedef CORBA_ORB ORB;
   typedef CORBA_ORB *ORB_ptr;
@@ -487,7 +421,7 @@ public:
 
 
   typedef CORBA_TypeCode TypeCode;
-  typedef CORBA_TypeCode *TypeCode_ptr;
+  typedef TypeCode *TypeCode_ptr;
   typedef CORBA_TypeCode_var TypeCode_var;
   typedef CORBA_TypeCode_out TypeCode_out;
 
@@ -497,10 +431,7 @@ public:
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
 
-  typedef CORBA_InterfaceDef InterfaceDef;
-  typedef CORBA_InterfaceDef *InterfaceDef_ptr;
-  typedef CORBA_InterfaceDef_var InterfaceDef_var;
-  typedef CORBA_InterfaceDef_out InterfaceDef_out;
+  typedef class CORBA_InterfaceDef *InterfaceDef_ptr;
 
   typedef CORBA_Current Current;
   typedef CORBA_Current *Current_ptr;
@@ -531,7 +462,7 @@ public:
     COMPLETED_MAYBE    // can't say what happened; retry unsafe
   };
 
-  enum exception_type
+  enum ExceptionType
   {
     // = Exception type.
 
@@ -539,8 +470,6 @@ public:
     USER_EXCEPTION,
     SYSTEM_EXCEPTION
   };
-
-  CORBA::TypeCode_ptr _tc_exception_type;
 
   // all the system exception classes
 #define TAO_SYSTEM_EXCEPTION(name) \
@@ -553,6 +482,7 @@ TAO_SYSTEM_EXCEPTION_LIST
   // = all the CORBA::is_nil methods.
   static Boolean is_nil (Object_ptr);
   static Boolean is_nil (Environment_ptr);
+  //  static Boolean is_nil (Context_ptr);
   static Boolean is_nil (TypeCode_ptr);
   static Boolean is_nil (ORB_ptr);
   static Boolean is_nil (Principal_ptr);
@@ -563,7 +493,6 @@ TAO_SYSTEM_EXCEPTION_LIST
   static Boolean is_nil (Request_ptr);
   static Boolean is_nil (NamedValue_ptr);
   static Boolean is_nil (NVList_ptr);
-  static Boolean is_nil (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -571,6 +500,7 @@ TAO_SYSTEM_EXCEPTION_LIST
   static void release (Object_ptr);
   static void release (Environment_ptr);
   static void release (Principal_ptr);
+  static void release (Context_ptr);
   static void release (TypeCode_ptr);
   static void release (ORB_ptr);
   static void release (ServerRequest_ptr req);
@@ -580,7 +510,6 @@ TAO_SYSTEM_EXCEPTION_LIST
   static void release (Request_ptr);
   static void release (NamedValue_ptr);
   static void release (NVList_ptr);
-  static void release (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -665,27 +594,15 @@ TAO_SYSTEM_EXCEPTION_LIST
 
   static CORBA::TypeCode_ptr _tc_Current;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-  static CORBA::TypeCode_ptr _tc_NamedValue;
-#endif /* End of Minimum CORBA */
   enum
   {
-    // = Flags for NVList add methods
-    ARG_IN                  = 0x01,
-    ARG_OUT                 = 0x02,
-    ARG_INOUT               = 0x04,
-    IN_COPY_VALUE           = 0x08,
-    OUT_LIST_MEMORY         = 0x10,
-    DEPENDENT_LIST          = 0x20,
+    // = Define flags for NVList add methods
 
-    // = Flags for Context methods
-    CTX_RESTRICT_SCOPE      = 0x40,
-    CTX_DELETE_DESCENDENTS  = 0x80,
-
-    // = Flags for deferred synchronous methods
-    INV_NO_RESPONSE         = 0x100,
-    INV_TERM_ON_ERR         = 0x200,
-    RESP_NO_WAIT            = 0x400
+    ARG_IN = 0x01,
+    ARG_OUT = 0x02,
+    ARG_INOUT = 0x04,
+    IN_COPY_VALUE = 0x08,
+    OUT_LIST_MEMORY = 0x10
   };
 
   typedef char *ORBid;
@@ -736,38 +653,6 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA_PolicyList_out PolicyList_out;
   static CORBA::TypeCode_ptr _tc_PolicyList;
 
-  // = Service definitions
-  typedef CORBA::UShort ServiceType;
-  typedef ServiceType CORBA_ServiceType;
-  typedef CORBA::UShort_out ServiceType_out;
-  typedef ServiceType_out CORBA_ServiceType_out;
-  static CORBA::TypeCode_ptr _tc_ServiceType;
-  static const ServiceType Security;
-
-  typedef CORBA::ULong ServiceOption;
-  typedef ServiceOption CORBA_ServiceOption;
-  typedef CORBA::ULong_out ServiceOption_out;
-  typedef ServiceOption_out CORBA_ServiceOption_out;
-  static  CORBA::TypeCode_ptr _tc_ServiceOption;
-
-  typedef CORBA::ULong ServiceDetailType;
-  typedef ServiceDetailType CORBA_ServiceDetailType;
-  typedef CORBA::ULong_out ServiceDetailType_out;
-  typedef ServiceDetailType_out CORBA_ServiceDetailType_out;
-  static  CORBA::TypeCode_ptr _tc_ServiceDetailType;
-
-  typedef CORBA_ServiceDetail ServiceDetail;
-  typedef CORBA_ServiceDetail_var ServiceDetail_var;
-  typedef CORBA_ServiceDetail_out ServiceDetail_out;
-  typedef CORBA_ServiceDetail *ServiceDetail_ptr;
-  static CORBA::TypeCode_ptr _tc_ServiceDetail;
-
-  typedef CORBA_ServiceInformation ServiceInformation;
-  typedef CORBA_ServiceInformation_var ServiceInformation_var;
-  typedef CORBA_ServiceInformation_out ServiceInformation_out;
-  typedef CORBA_ServiceInformation *ServiceInformation_ptr;
-  static CORBA::TypeCode_ptr _tc_ServiceInformation;
-
   typedef CORBA_PolicyTypeSeq PolicyTypeSeq;
   typedef CORBA_PolicyTypeSeq_var PolicyTypeSeq_var;
   typedef CORBA_PolicyTypeSeq_out PolicyTypeSeq_out;
@@ -782,66 +667,12 @@ TAO_SYSTEM_EXCEPTION_LIST
   static CORBA::TypeCode_ptr _tc_SetOverrideType;
 
   typedef CORBA_PolicyManager PolicyManager;
-  typedef CORBA_PolicyManager_var PolicyManager_var;
-  typedef CORBA_PolicyManager_out PolicyManager_out;
   typedef CORBA_PolicyManager *PolicyManager_ptr;
   static CORBA::TypeCode_ptr _tc_PolicyManager;
 
   typedef CORBA_PolicyCurrent PolicyCurrent;
-  typedef CORBA_PolicyCurrent_var PolicyCurrent_var;
-  typedef CORBA_PolicyCurrent_out PolicyCurrent_out;
   typedef CORBA_PolicyCurrent *PolicyCurrent_ptr;
   static CORBA::TypeCode_ptr _tc_PolicyCurrent;
-
-  typedef CORBA_DomainManager DomainManager;
-  typedef CORBA_DomainManager *DomainManager_ptr;
-  typedef CORBA_DomainManager_var DomainManager_var;
-  typedef CORBA_DomainManager_out DomainManager_out;
-  static CORBA::TypeCode_ptr _tc_DomainManager;
-
-  typedef CORBA_DomainManagerList DomainManagerList;
-  typedef CORBA_DomainManagerList *DomainManagerList_ptr;
-  typedef CORBA_DomainManagerList_var DomainManagerList_var;
-  typedef CORBA_DomainManagerList_out DomainManagerList_out;
-  static CORBA::TypeCode_ptr _tc_DomainManagerList;
-
-  static const PolicyType SecConstruction;
-
-#if ! defined (TAO_HAS_MINIMUM_CORBA)
-  typedef CORBA_ConstructionPolicy ConstructionPolicy;
-  typedef CORBA_ConstructionPolicy *ConstructionPolicy_ptr;
-  typedef CORBA_ConstructionPolicy_var ConstructionPolicy_var;
-  typedef CORBA_ConstructionPolicy_out ConstructionPolicy_out;
-  static CORBA::TypeCode_ptr _tc_ConstructionPolicy;
-
-  typedef CORBA_WrongTransaction WrongTransaction;
-  typedef WrongTransaction *WrongTransaction_ptr;
-  static CORBA::TypeCode_ptr _tc_WrongTransaction;
-
-  typedef CORBA_AnySeq AnySeq;
-  typedef CORBA_AnySeq *AnySeq_ptr;
-  typedef CORBA_AnySeq_var AnySeq_var;
-  typedef CORBA_AnySeq_out AnySeq_out;
-  static CORBA::TypeCode_ptr _tc_AnySeq;
-
-  typedef CORBA_FieldName FieldName;
-  typedef CORBA_FieldName_var FieldName_var;
-  typedef CORBA_FieldName_out FieldName_out;
-  static CORBA::TypeCode_ptr _tc_FieldName;
-
-  typedef CORBA_NameValuePair NameValuePair;
-  typedef CORBA_NameValuePair *NameValuePair_ptr;
-  typedef CORBA_NameValuePair_var NameValuePair_var;
-  typedef CORBA_NameValuePair_out NameValuePair_out;
-  static CORBA::TypeCode_ptr _tc_NameValuePair;
-
-  typedef CORBA_NameValuePairSeq NameValuePairSeq;
-  typedef CORBA_NameValuePairSeq *NameValuePairSeq_ptr;
-  typedef CORBA_NameValuePairSeq_var NameValuePairSeq_var;
-  typedef CORBA_NameValuePairSeq_out NameValuePairSeq_out;
-  static CORBA::TypeCode_ptr _tc_NameValuePairSeq;
-
-#endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
 
   // ****************************************************************
 
@@ -869,10 +700,10 @@ TAO_SYSTEM_EXCEPTION_LIST
   // gets horribly confused if we used CORBA::default_environment() at
   // this point.
   static ORB_ptr ORB_init (int &argc,
-                           char *argv[],
+                           char *const *argv,
                            const char *orb_name = 0);
   static ORB_ptr ORB_init (int &argc,
-                           char *argv[],
+                           char *const *argv,
                            const char *orb_name,
                            CORBA_Environment &TAO_IN_ENV);
   // ORB initialisation
@@ -897,32 +728,6 @@ private:
 
 // ****************************************************************
 
-// This number was assigned by the OMG.  Do *NOT* change at random.
-// The ASCII represetantion is TA0xxxx, close enough since they only
-// take 20 bits, the first 16 are TA, the next 4 are 0000.  Remember
-// that we can only play with the last 12 bits, TAO_MAX_MINOR_CODE is
-// there to remind us of that.
-#define TAO_DEFAULT_MINOR_CODE 0x54410000
-#define TAO_MAX_MINOR_CODE 0x54410FFF
-
-// Minor code encoding.  Skip 4 bits, currently unused.  Then, encode
-// the location in 4 bits, and the errno in 4 bits:
-// 0x   0101 0100   0100 0001   0000   ____  ____     ____
-//          T           A        0      location      errno
-
-// Location encoding:  next-to-last 8 bits.
-#define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01u << 4)
-#define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02u << 4)
-#define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03u << 4)
-
-// errno encoding:  bottom 4 bits.
-#define TAO_UNKNOWN_MINOR_CODE   0x00u
-#define TAO_ETIMEDOUT_MINOR_CODE 0x01u
-#define TAO_ENFILE_MINOR_CODE    0x02u
-#define TAO_EMFILE_MINOR_CODE    0x03u
-
-// ****************************************************************
-
 // A helper clas to handle the various kinds of octet sequences used
 // inside the ORB.
 
@@ -939,9 +744,5 @@ class TAO_ObjectKey;
 class TAO_ObjectKey_var;
 class TAO_ObjectKey_out;
 typedef TAO_ObjectKey *TAO_ObjectKey_ptr;
-
-#if defined (__ACE_INLINE__)
-# include "tao/corbafwd.i"
-#endif /* ! __ACE_INLINE__ */
 
 #endif /* TAO_CORBAFWD_H */

@@ -56,7 +56,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_array (be_array *node)
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_slice *_tao_retval = 0;\n\n";
+  *os << bt->name () << "_slice *_tao_retval = 0;\n";
   return 0;
 }
 

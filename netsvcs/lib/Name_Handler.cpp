@@ -5,7 +5,6 @@
 #include "ace/Containers.h"
 #include "ace/Get_Opt.h"
 #include "ace/Singleton.h"
-#include "ace/Auto_Ptr.h"
 #include "Name_Handler.h"
 
 ACE_RCSID(lib, Name_Handler, "$Id$")
@@ -401,10 +400,9 @@ ACE_Name_Handler::resolve (void)
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
                             0,
                             0,
-                            avalue.fast_rep (),
+                            avalue.rep (),
                             avalue.length () * sizeof (ACE_USHORT16),
                             atype, ACE_OS::strlen (atype));
-      delete[] atype;
       return this->send_request (nrq);
     }
 
@@ -432,7 +430,7 @@ ACE_Name_Handler::name_request (ACE_WString *one_name)
 {
   ACE_TRACE ("ACE_Name_Handler::name_request");
   return ACE_Name_Request (ACE_Name_Request::LIST_NAMES,
-                           one_name->fast_rep (),
+                           one_name->rep (),
                            one_name->length () * sizeof (ACE_USHORT16),
                            0, 0,
                            0, 0);
@@ -444,7 +442,7 @@ ACE_Name_Handler::value_request (ACE_WString *one_value)
   ACE_TRACE ("ACE_Name_Handler::value_request");
   return ACE_Name_Request (ACE_Name_Request::LIST_VALUES,
                            0, 0,
-                           one_value->fast_rep (),
+                           one_value->rep (),
                            one_value->length () * sizeof (ACE_USHORT16),
                            0, 0);
 }
@@ -456,7 +454,7 @@ ACE_Name_Handler::type_request (ACE_WString *one_type)
   return ACE_Name_Request (ACE_Name_Request::LIST_TYPES,
                            0, 0,
                            0, 0,
-                           ACE_Auto_Basic_Array_Ptr<char> (one_type->char_rep ()).get (),
+                           one_type->char_rep (),
                            one_type->length ());
 }
 
@@ -562,9 +560,9 @@ ACE_Name_Handler::lists_entries (void)
            set_iterator.advance())
         {
           ACE_Name_Request mynrq (this->name_request_.msg_type (),
-                                  one_entry->name_.fast_rep (),
+                                  one_entry->name_.rep (),
                                   one_entry->name_.length () * sizeof (ACE_USHORT16),
-                                  one_entry->value_.fast_rep (),
+                                  one_entry->value_.rep (),
                                   one_entry->value_.length () * sizeof (ACE_USHORT16),
                                   one_entry->type_,
                                   ACE_OS::strlen (one_entry->type_));

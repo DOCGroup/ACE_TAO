@@ -17,12 +17,13 @@ CFG=POA DSI Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "POA DSI Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "POA DSI Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "POA DSI Client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "POA DSI Client - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -128,12 +129,12 @@ SOURCE=.\Database.idl
 !IF  "$(CFG)" == "POA DSI Client - Win32 Release"
 
 USERDEP__DATAB="..\..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Database.idl
 InputName=Database
 
 BuildCmds= \
-	..\..\..\..\bin\release\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -166,12 +167,12 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "POA DSI Client - Win32 Debug"
 
 USERDEP__DATAB="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Database.idl
 InputName=Database
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -174,16 +174,6 @@ public:
 
   virtual void _raise (void);
 
-  void print_exception_tao_ (FILE *f = stdout) const;
-  // Print the system exception <ex> to output determined by f.
-  // This function is not CORBA compliant.
-
-  static CORBA::ULong minor_code_tao_ (u_int location, int errno_value);
-  // Helper to create a minor status value.
-
-  static CORBA::ULong errno_tao_ (int errno_value);
-  // Helper to translate a platform-specific errno to a TAO errno value.
-
 private:
 
   CORBA::ULong minor_;
@@ -243,9 +233,6 @@ TAO_SYSTEM_EXCEPTION(REBIND);
 TAO_SYSTEM_EXCEPTION(TIMEOUT);
 TAO_SYSTEM_EXCEPTION(TRANSACTION_UNAVAILABLE);
 TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE);
-TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED);
-TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK);
-TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);
 
 #undef TAO_SYSTEM_EXCEPTION
 
@@ -318,12 +305,6 @@ public:
 
   static CORBA::ExceptionList *system_exceptions;
   // list of system exceptions
-
-private:
-  static ACE_Allocator *global_allocator_;
-  // This global allocator is used to initialize system exception typecodes.  Since at
-  // the time, the ORB is mostly still not available.  Using a separate allocator prevent
-  // CDR routine from accessing the optimized allocators from the ORB.
 };
 
 

@@ -1,16 +1,16 @@
+# $Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
-
-# $Id$
-# -*- perl -*-
 
 $usage = "run_tests.pl [-l suppress -ORBgioplite] [-n iterations] [-r, for thread-per-rate] [-t low priority threads]\n";
 
 unshift @INC, '../../../../../bin';
 require Process;
 
-$iorfile = "mtcubit.ior";
+$server_port = 0;
+$iorfile = "theior";
 $sleeptime = 3;
 $gioplite = '-ORBgioplite';
 $iterations = 1000;
@@ -52,6 +52,7 @@ while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
 $threads = $low_priority_threads + 1;
 
 $SV = Process::Create ('.' . $DIR_SEPARATOR . "server" . $Process::EXE_EXT,
+                       " -ORBport " . $server_port .
                        " $gioplite $thread_per_rate -f $iorfile -t $threads");
 
 sleep $sleeptime;

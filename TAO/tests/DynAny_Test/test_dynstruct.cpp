@@ -134,7 +134,7 @@ Test_DynStruct::run_test (void)
       ftc1->seek (2,
                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::FieldName fn = ftc1->current_member_name (ACE_TRY_ENV);
+      FieldName fn = ftc1->current_member_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (ACE_OS::strcmp (fn, "es"))
         ++this->error_count_;
@@ -149,7 +149,7 @@ Test_DynStruct::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: get_members/set_members\n"));
 
-      CORBA::NameValuePairSeq* nvps = fa1->get_members (ACE_TRY_ENV);
+      NameValuePairSeq* nvps = fa1->get_members (ACE_TRY_ENV);
       CORBA_DynStruct_ptr sm =
         this->orb_->create_dyn_struct (DynAnyTests::_tc_test_struct,
                                        ACE_TRY_ENV);
@@ -157,7 +157,7 @@ Test_DynStruct::run_test (void)
       sm->set_members (*nvps,
                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::NameValuePairSeq* gm = sm->get_members (ACE_TRY_ENV);
+      NameValuePairSeq* gm = sm->get_members (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (ACE_OS::strcmp ((*gm)[2].id, "es"))
         ++this->error_count_;

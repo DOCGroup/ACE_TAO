@@ -52,8 +52,7 @@ public:
 
   virtual TAO_EC_Filter*
       build (TAO_EC_ProxyPushSupplier *supplier,
-             RtecEventChannelAdmin::ConsumerQOS& qos,
-             CORBA::Environment &ACE_TRY_ENV) const = 0;
+             RtecEventChannelAdmin::ConsumerQOS& qos) const = 0;
   // Create the filter, the caller must assume ownership of the filter
   // returned.
 
@@ -78,8 +77,7 @@ public:
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos,
-                        CORBA::Environment &ACE_TRY_ENV) const;
+                        RtecEventChannelAdmin::ConsumerQOS& qos) const;
 };
 
 // ****************************************************************

@@ -25,12 +25,6 @@ CORBA_Context::_nil (void)
   return (CORBA::Context*)0;
 }
 
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Context_ptr ctx)
-{
-  return ctx == 0;
-}
-
 // *************************************************************
 // Inline operations for class CORBA_Context_var
 // *************************************************************

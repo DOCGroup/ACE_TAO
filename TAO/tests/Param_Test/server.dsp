@@ -129,7 +129,11 @@ SOURCE=.\Param_TestSer.h
 # PROP Default_Filter ".i"
 # Begin Source File
 
-SOURCE=.\param_testSer.i
+SOURCE=.\Param_TestC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Param_TestS.i
 # End Source File
 # End Group
 # Begin Group "IDL Files"

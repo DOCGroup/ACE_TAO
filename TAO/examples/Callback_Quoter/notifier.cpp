@@ -13,9 +13,7 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\tNotifier\n\n"));
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       if (notifier.init (argc, argv, ACE_TRY_ENV) == -1)
         return 1;

@@ -18,14 +18,17 @@ CFG=Simple Time Server - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Time Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Server - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE "Simple Time Server - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "Simple Time Server - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Server - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Server - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Console Application")
+!MESSAGE "Simple Time Server - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -336,6 +339,8 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\Exception.i"\
 	"..\..\..\tao\GIOP.h"\
 	"..\..\..\tao\GIOP.i"\
+	"..\..\..\tao\IIOP_ORB.h"\
+	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Invocation.h"\
 	"..\..\..\tao\Invocation.i"\
 	"..\..\..\tao\Marshal.h"\
@@ -397,8 +402,6 @@ NODEP_CPP_SERVE=\
 	"..\..\..\tao\IIOP_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
-	"..\..\..\tao\IIOP_ORB.h"\
-	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
 	".\Server_impl.h"\
 	".\Time_impl.h"\
@@ -615,6 +618,8 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\Exception.i"\
 	"..\..\..\tao\GIOP.h"\
 	"..\..\..\tao\GIOP.i"\
+	"..\..\..\tao\IIOP_ORB.h"\
+	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Invocation.h"\
 	"..\..\..\tao\Invocation.i"\
 	"..\..\..\tao\Marshal.h"\
@@ -675,8 +680,6 @@ NODEP_CPP_TIMEC=\
 	"..\..\..\tao\IIOP_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
-	"..\..\..\tao\IIOP_ORB.h"\
-	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
 	".\TimeC.h"\
 	".\TimeC.i"\
@@ -876,6 +879,8 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\Exception.i"\
 	"..\..\..\tao\GIOP.h"\
 	"..\..\..\tao\GIOP.i"\
+	"..\..\..\tao\IIOP_ORB.h"\
+	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Invocation.h"\
 	"..\..\..\tao\Invocation.i"\
 	"..\..\..\tao\Marshal.h"\
@@ -936,8 +941,6 @@ NODEP_CPP_TIMES=\
 	"..\..\..\tao\IIOP_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
-	"..\..\..\tao\IIOP_ORB.h"\
-	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
 	".\TimeC.h"\
 	".\TimeC.i"\
@@ -972,38 +975,38 @@ SOURCE=.\Time.idl
 !IF  "$(CFG)" == "Simple Time Server - Win32 Release"
 
 USERDEP__TIME_="..\..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Time.idl
 InputName=Time
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
@@ -1011,38 +1014,38 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__TIME_="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Time.idl
 InputName=Time
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 

@@ -44,14 +44,15 @@ be_decl::be_decl (void)
     flatname_ (0),
     repoID_ (0),
     prefix_ (0),
-    size_type_ (be_decl::SIZE_UNKNOWN)
+    size_type_ (be_decl::SIZE_UNKNOWN),
+    encap_len_ (-1)
 {
 }
 
 // Constructor
 be_decl::be_decl (AST_Decl::NodeType type,
-                  UTL_ScopedName *n,
-                  UTL_StrList *pragmas)
+		  UTL_ScopedName *n,
+		  UTL_StrList *pragmas)
   : AST_Decl (type, n, pragmas),
     cli_hdr_gen_ (I_FALSE),
     cli_stub_gen_ (I_FALSE),
@@ -69,13 +70,27 @@ be_decl::be_decl (AST_Decl::NodeType type,
     flatname_ (0),
     repoID_ (0),
     prefix_ (0),
-    size_type_ (be_decl::SIZE_UNKNOWN)
+    size_type_ (be_decl::SIZE_UNKNOWN),
+    encap_len_ (-1)
 {
 }
 
 //destructor
 be_decl::~be_decl (void)
 {
+}
+
+int
+be_decl::gen_encapsulation (void)
+{
+  // do nothing
+  return 0;
+}
+
+long
+be_decl::tc_encap_len (void)
+{
+  return -1;
 }
 
 // return our size type
@@ -194,7 +209,7 @@ be_decl::compute_flatname (void)
       // in the first loop compute the total length
       namelen = 0;
       i = new UTL_IdListActiveIterator (this->name ());
-
+      
       while (!(i->is_done ()))
         {
           if (!first)
@@ -347,16 +362,16 @@ be_decl::compute_prefix ()
   if (this->pragmas () != 0)
     {
       for (UTL_StrlistActiveIterator i (this->pragmas ());
-           !i.is_done ();
-           i.next ())
-        {
-          const char* s = i.item ()->get_string ();
+	   !i.is_done ();
+	   i.next ())
+	{
+	  const char* s = i.item ()->get_string ();
 
-          if (ACE_OS::strncmp (s, "#pragma prefix", 14) == 0)
-            {
-              pragma = s;
-            }
-        }
+	  if (ACE_OS::strncmp (s, "#pragma prefix", 14) == 0)
+	    {
+	      pragma = s;
+	    }
+	}
     }
 
   if (pragma != 0)
@@ -366,12 +381,12 @@ be_decl::compute_prefix ()
       const char* end = ACE_OS::strchr (tmp, '"');
 
       if (end == 0)
-        {
-          idl_global->err ()->syntax_error
-            (IDL_GlobalData::PS_PragmaPrefixSyntax);
-          this->prefix_ = ACE::strnew ("");
-          return;
-        }
+	{
+	  idl_global->err ()->syntax_error
+	    (IDL_GlobalData::PS_PragmaPrefixSyntax);
+	  this->prefix_ = ACE::strnew ("");
+	  return;
+	}
       int l = end - tmp;
       this->prefix_ = new char[l+1];
       ACE_OS::strncpy (this->prefix_, tmp, end - tmp);
@@ -385,12 +400,12 @@ be_decl::compute_prefix ()
     this->prefix_ = ACE::strnew ("");
   else
     {
-      be_scope* scope =
-        be_scope::narrow_from_scope (this->defined_in ());
+      be_scope* scope = 
+	be_scope::narrow_from_scope (this->defined_in ());
       if (scope == 0)
-        this->prefix_ = ACE::strnew ("");
+	this->prefix_ = ACE::strnew ("");
       else
-        this->prefix_ = ACE::strnew (scope->decl()->prefix ());
+	this->prefix_ = ACE::strnew (scope->decl()->prefix ());
     }
 }
 
@@ -400,6 +415,29 @@ be_decl::prefix (void)
   if (!this->prefix_)
     compute_prefix ();
   return this->prefix_;
+}
+
+// converts a string name into an array of 4 byte longs
+int
+be_decl::tc_name2long (const char *name, ACE_UINT32 *&larr, long &arrlen)
+{
+  const int bytes_per_word = sizeof(ACE_UINT32);
+  static ACE_UINT32 buf [NAMEBUFSIZE];
+  long slen;
+  long i;
+
+  slen = ACE_OS::strlen (name) + 1; // 1 for NULL terminating
+
+  // compute the number of bytes necessary to hold the name rounded to
+  // the next multiple of 4 (i.e., size of long)
+  arrlen = slen / bytes_per_word + (slen % bytes_per_word ? 1:0);
+
+  ACE_OS::memset (buf, 0, sizeof(buf));
+  larr = buf;
+  ACE_OS::memcpy (buf, name, slen);
+  for (i = 0; i < arrlen; i++)
+    larr [i] = ACE_HTONL (larr [i]);
+  return 0;
 }
 
 idl_bool
@@ -414,6 +452,35 @@ be_decl::is_nested (void)
     return I_TRUE;
 
   return I_FALSE;
+}
+
+// return the length in bytes to hold the repoID inside a typecode. This
+// comprises 4 bytes indicating the length of the string followed by the actual
+// string represented as longs.
+long
+be_decl::repoID_encap_len (void)
+{
+  long slen;
+
+  slen = ACE_OS::strlen (this->repoID ()) + 1; // + 1 for NULL terminating char
+  // the number of bytes to hold the string must be a multiple of 4 since this
+  // will be represented as an array of longs
+  return 4 + 4 * (slen/4 + (slen%4 ? 1:0));
+}
+
+// return the length in bytes to hold the name inside a typecode. This
+// comprises 4 bytes indicating the length of the string followed by the actual
+// string represented as longs.
+long
+be_decl::name_encap_len (void)
+{
+  long slen;
+
+  slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1;
+
+  // the number of bytes to hold the string must be a multiple of 4 since this
+  // will be represented as an array of longs
+  return 4 + 4 * (slen/4 + (slen%4 ? 1:0));
 }
 
 // compute the size type of the node in question

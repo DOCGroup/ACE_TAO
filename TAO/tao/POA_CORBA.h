@@ -10,7 +10,7 @@
 //   POA_CORBA.h
 //
 //   This file is created by merging the CurrentS.h, PolicyS.h,
-//   PollableS.h, DomainC.h and DynAnyS.h files which have been removed.
+//   PollableS.h and DynAnyS.h files which have been removed.
 //
 // = AUTHOR
 //
@@ -32,7 +32,6 @@
 #include "tao/CurrentC.h"
 #include "tao/PolicyC.h"
 #include "tao/DynAnyC.h"
-#include "tao/DomainC.h"
 #include "tao/Servant_Base.h"
 #if defined(TAO_POLLER)
 #include "tao/PollableC.h"
@@ -339,92 +338,6 @@ public:
 
   // ****************************************************************
 
-  class DomainManager;
-  typedef DomainManager *DomainManager_ptr;
-  class  DomainManager :  public virtual PortableServer::ServantBase
-  {
-  protected:
-    DomainManager (void);
-
-  public:
-    DomainManager (const DomainManager& rhs);
-    virtual ~DomainManager (void);
-
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-
-        static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-
-    CORBA::DomainManager *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-    virtual CORBA::Policy_ptr get_domain_policy (
-      CORBA::PolicyType policy_type,
-      CORBA::Environment &ACE_TRY_ENV = 
-        CORBA::default_environment ()
-    ) = 0;
-    static void get_domain_policy_skel (
-      CORBA::ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &_tao_env = 
-        CORBA::default_environment ()
-    );
-
-  };
-
-  class  _tao_collocated_DomainManager : public virtual CORBA::DomainManager
-  {
-  public:
-    _tao_collocated_DomainManager (
-        DomainManager_ptr  servant,
-        TAO_Stub *stub
-      );
-    DomainManager_ptr _get_servant (void) const;
-        virtual CORBA::Policy_ptr get_domain_policy (
-        CORBA::PolicyType policy_type,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-  
-  private:
-    DomainManager_ptr servant_;
-  };
-
-  // ****************************************************************
-
 #if defined (TAO_POLLER)
   class Pollable;
   typedef Pollable *Pollable_ptr;
@@ -723,7 +636,7 @@ public:
     virtual const char* _interface_repository_id (void) const;
   };
 
-  class TAO_Export _tao_collocated_PollableSet : public virtual CORBA::PollableSet
+  class TAO_Export _tao_collocated_PollableSet     : public virtual CORBA::PollableSet
   {
   public:
     _tao_collocated_PollableSet (
@@ -1035,13 +948,17 @@ public:
 
 };
 
+
+#if !defined (_CORBA_DYNANY___COLLOCATED_SH_)
+#define _CORBA_DYNANY___COLLOCATED_SH_
+
 class  _tao_collocated_DynAny : public virtual CORBA_DynAny
 {
 public:
   _tao_collocated_DynAny (
       DynAny_ptr  servant,
       TAO_Stub *stub
-     );
+    );
   DynAny_ptr _get_servant (void) const;
   virtual CORBA::Boolean _is_a (
       const char *logical_type_id,
@@ -1051,7 +968,7 @@ public:
   virtual CORBA::TypeCode_ptr type (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
-    );
+     );
   virtual void assign (
       CORBA_DynAny_ptr CORBA_Dyn_any,
       CORBA::Environment &TAO_IN_ENV =
@@ -1240,6 +1157,11 @@ private:
   DynAny_ptr servant_;
 };
 
+
+#endif /* end #if !defined */
+
+
+
 class DynEnum;
 typedef DynEnum *DynEnum_ptr;
 class TAO_Export DynEnum : public virtual DynAny
@@ -1299,6 +1221,10 @@ public:
 
 };
 
+
+#if !defined (_CORBA_DYNENUM___COLLOCATED_SH_)
+#define _CORBA_DYNENUM___COLLOCATED_SH_
+
 class  _tao_collocated_DynEnum : public virtual CORBA_DynEnum,
     public virtual _tao_collocated_DynAny
 {
@@ -1336,6 +1262,10 @@ private:
   DynEnum_ptr servant_;
 };
 
+
+#endif /* end #if !defined */
+
+
 class DynStruct;
 typedef DynStruct *DynStruct_ptr;
 class TAO_Export DynStruct : public virtual DynAny
@@ -1363,13 +1293,13 @@ public:
         CORBA::Environment::default_environment ()
      ) = 0;
 
-  virtual CORBA::NameValuePairSeq * get_members (
+  virtual NameValuePairSeq * get_members (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
 
   virtual void set_members (
-      const CORBA::NameValuePairSeq & value,
+      const NameValuePairSeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
@@ -1394,6 +1324,10 @@ public:
 
 };
 
+
+#if !defined (_CORBA_DYNSTRUCT___COLLOCATED_SH_)
+#define _CORBA_DYNSTRUCT___COLLOCATED_SH_
+
 class  _tao_collocated_DynStruct : public virtual CORBA_DynStruct,
     public virtual _tao_collocated_DynAny
 {
@@ -1416,12 +1350,12 @@ public:
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
-  virtual CORBA::NameValuePairSeq * get_members (
+  virtual NameValuePairSeq * get_members (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
   virtual void set_members (
-      const CORBA::NameValuePairSeq & value,
+      const NameValuePairSeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
@@ -1429,6 +1363,10 @@ public:
 private:
   DynStruct_ptr servant_;
 };
+
+
+#endif /* end #if !defined */
+
 
 class DynUnion;
 typedef DynUnion *DynUnion_ptr;
@@ -1509,6 +1447,10 @@ public:
 
 };
 
+
+#if !defined (_CORBA_DYNUNION___COLLOCATED_SH_)
+#define _CORBA_DYNUNION___COLLOCATED_SH_
+
 class  _tao_collocated_DynUnion : public virtual CORBA_DynUnion,
     public virtual _tao_collocated_DynAny
 {
@@ -1562,6 +1504,10 @@ private:
   DynUnion_ptr servant_;
 };
 
+
+#endif /* end #if !defined */
+
+
 class DynSequence;
 typedef DynSequence *DynSequence_ptr;
 class TAO_Export DynSequence : public virtual DynAny
@@ -1590,13 +1536,13 @@ public:
         CORBA::Environment::default_environment ()
      ) = 0;
 
-  virtual CORBA_AnySeq * get_elements (
+  virtual AnySeq * get_elements (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
 
   virtual void set_elements (
-      const CORBA_AnySeq & value,
+      const AnySeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
@@ -1629,6 +1575,10 @@ public:
 
 };
 
+
+#if !defined (_CORBA_DYNSEQUENCE___COLLOCATED_SH_)
+#define _CORBA_DYNSEQUENCE___COLLOCATED_SH_
+
 class  _tao_collocated_DynSequence : public virtual CORBA_DynSequence,
     public virtual _tao_collocated_DynAny
 {
@@ -1652,12 +1602,12 @@ public:
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
-  virtual CORBA_AnySeq * get_elements (
+  virtual AnySeq * get_elements (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
   virtual void set_elements (
-      const CORBA_AnySeq & value,
+      const AnySeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
@@ -1665,6 +1615,10 @@ public:
 private:
   DynSequence_ptr servant_;
 };
+
+
+#endif /* end #if !defined */
+
 
 class DynArray;
 typedef DynArray *DynArray_ptr;
@@ -1683,13 +1637,13 @@ public:
   virtual void* _downcast (
       const char* logical_type_id
     );
-  virtual CORBA_AnySeq * get_elements (
+  virtual AnySeq * get_elements (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
 
   virtual void set_elements (
-      const CORBA_AnySeq & value,
+      const AnySeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      ) = 0;
@@ -1714,6 +1668,10 @@ public:
 
 };
 
+
+#if !defined (_CORBA_DYNARRAY___COLLOCATED_SH_)
+#define _CORBA_DYNARRAY___COLLOCATED_SH_
+
 class  _tao_collocated_DynArray : public virtual CORBA_DynArray,
     public virtual _tao_collocated_DynAny
 {
@@ -1728,12 +1686,12 @@ public:
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
-  virtual CORBA_AnySeq * get_elements (
+  virtual AnySeq * get_elements (
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
   virtual void set_elements (
-      const CORBA_AnySeq & value,
+      const AnySeq & value,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );
@@ -1742,99 +1700,10 @@ private:
   DynArray_ptr servant_;
 };
 
-  class ConstructionPolicy;
-  typedef ConstructionPolicy *ConstructionPolicy_ptr;
-  class  ConstructionPolicy : public virtual Policy
-  {
-  protected:
-    ConstructionPolicy (void);
 
-  public:
-    ConstructionPolicy (const ConstructionPolicy& rhs);
-    virtual ~ConstructionPolicy (void);
+#endif /* end #if !defined */
 
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-
-        static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-
-    CORBA::ConstructionPolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-    virtual void make_domain_manager (
-      CORBA::InterfaceDef_ptr object_type,
-      CORBA::Boolean constr_policy,
-      CORBA::Environment &ACE_TRY_ENV = 
-        CORBA::default_environment ()
-    ) = 0;
-  static void make_domain_manager_skel (
-      CORBA::ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &_tao_env = 
-        CORBA::default_environment ()
-    );
-
-  };
-
-  class  _tao_collocated_ConstructionPolicy : public virtual CORBA::ConstructionPolicy,
-      public virtual _tao_collocated_Policy
-  {
-  public:
-    _tao_collocated_ConstructionPolicy (
-        ConstructionPolicy_ptr  servant,
-        TAO_Stub *stub
-      );
-    ConstructionPolicy_ptr _get_servant (void) const;
-        virtual void make_domain_manager (
-        CORBA::InterfaceDef_ptr object_type,
-        CORBA::Boolean constr_policy,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
-      );
-    virtual CORBA::Boolean _is_a (
-        const char *logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-  
-  private:
-    ConstructionPolicy_ptr servant_;
-  };
-
-#endif /* ! defined TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if defined(_MSC_VER)
 #pragma warning(default:4250)

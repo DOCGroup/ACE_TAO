@@ -43,16 +43,19 @@ TAO_EC_Trivial_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier*,
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::shutdown (CORBA::Environment &)
-{
-}
-
-void
 TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_EC_ConsumerAdmin* consumer_admin =
     this->event_channel_->consumer_admin ();
+
+  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
+      ace_mon, consumer_admin->busy_lock (),
+      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
+  TAO_EC_ConsumerAdmin::SupplierSetIterator end =
+    consumer_admin->end ();
 
   for (CORBA::ULong j = 0; j < event.length (); ++j)
     {
@@ -60,15 +63,6 @@ TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
       RtecEventComm::Event* buffer =
         ACE_const_cast(RtecEventComm::Event*, &e);
       RtecEventComm::EventSet single_event (1, 1, buffer, 0);
-
-      ACE_GUARD_THROW_EX (
-          TAO_EC_ConsumerAdmin::Busy_Lock,
-          ace_mon, consumer_admin->busy_lock (),
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-      ACE_CHECK;
-
-      TAO_EC_ConsumerAdmin::SupplierSetIterator end =
-        consumer_admin->end ();
 
       for (TAO_EC_ConsumerAdmin::SupplierSetIterator i =
              consumer_admin->begin ();
@@ -81,18 +75,6 @@ TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
           ACE_CHECK;
         }
     }
-}
-
-CORBA::ULong
-TAO_EC_Trivial_Supplier_Filter::_incr_refcnt (void)
-{
-  return 1;
-}
-
-CORBA::ULong
-TAO_EC_Trivial_Supplier_Filter::_decr_refcnt (void)
-{
-  return 1;
 }
 
 // ****************************************************************
@@ -115,3 +97,4 @@ TAO_EC_Trivial_Supplier_Filter_Builder::destroy (
     TAO_EC_SupplierFiltering*)
 {
 }
+

@@ -91,7 +91,8 @@ public:
   int signal_number (void) const;
   // POSIX4 real-time signal number to be used for the
   // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
-  // default, SIGRTMIN is used to issue <aio_> calls.
+  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+  // on non-POSIX4 systems and returns 0.
   
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor.
@@ -156,7 +157,8 @@ public:
   // Proactor class.
 
   int cancel (void);
-  // Check the documentation for <ACE_Asynch_Operation::cancel>.
+  //
+  // @@ Not implemented. Returns 0.
 
   // = Access methods.
 
@@ -205,7 +207,7 @@ protected:
   // This call is for the POSIX implementation. This method is used by
   // <ACE_Asynch_Operation> to store some information with the
   // Proactor after an <aio_> call is issued, so that the Proactor can
-  // retreve this information to do <aio_return> and <aio_error>.
+  // retrive this information to do <aio_return> and <aio_error>.
   // Passing a '0' ptr returns the status, indicating whether there
   // are slots available or no. Passing a valid ptr stores the ptr
   // with the Proactor.

@@ -37,9 +37,6 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#interfrepo">Interface Repository</a></li>
 
 <li>
-<a href="OBV.html">Object-by-Value</a></li>
-
-<li>
 <a href="#nservices">CORBA Naming Service </a>and <a href="../INS.html">Interoperable Naming Service</a></li>
 
 <li>
@@ -97,16 +94,11 @@ A complete list of all modifications to TAO is available in the <a href="http://
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:gokhale@research.bell-labs.com">Aniruddha
 Gokhale</a>
-<p>Current status: (As of May 15, 1999.)
+<p>Current status: (As of Jan 22, 1999.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
 C++ mapping for CORBA 2.3 (Document ptc/98-09-03).</li>
-
-<li>
-We are now able to handle recursive types. We are also able to
-generate optimized typecodes.
-</li>
 
 <li>
 Struct members of type strings and arrays of strings now use the managed
@@ -367,10 +359,10 @@ object. Each profile for an object may encode information pertaining to
 QoS, network and transport protocols, addresses or routes.<p>
 
 <li>
-<b>Example Transport protocols</b>- The first example, aside from IIOP, that
-has been implemented uses UNIX domain sockets. Other interesting transport
-protocols would be for ATM, Buses (VME or PCI), shared memory, TP4, GSMP, and
-UDP/IP.</li> <p>
+<b>Example Transport protocols</b>- The first planned example aside from
+IIOP will use UNIX domain sockets. Other interesting transport protocols
+would be for ATM, Buses (VME or PCI), shared memory, TP4, GSMP, and
+    UDP/IP.</li> <p>
 
 <li>
 <b>Pluggable ORB protocols</b> - This step will add support for ORB protocols
@@ -382,136 +374,19 @@ Current Status:
 <li>
 
 The initial prototype of the basic framework to support pluggable transport
-protocols has been compiled, linked and, tested against a recent version
+protocols has been compiled, linked and, tested against an older version
 of TAO. The standard TAO regression tests
 <tt>MT_Cubit</tt>, <tt>Multiple_Inheritance</tt>,
 <tt>CDR</tt>
 and <tt>EC_Throughput</tt> were run successfully.</li><P>
 
 <li>
-            Multiple endpoint support in the ORB has been added.  A
-            list of TAO_Acceptors is kept in the Acceptor
-            Registry. When the ORB needs to create an IOR it iterates
-            over all the acceptors to do so. Using either multiple
-            <code>-ORBendpoint</code> options or several endpoints
-            separated by semi-colons ';', the user can specify what
-            addresses the ORB should use.  Each endpoint is specified
-            in URL format (ex: <code>iiop://foo.bar.com:0</code>),
-            this format can be extended to support different
-            protocols.
-</li><P>
-
-<li>
-            If the user does not specify a list of endpoints then the
-            ORB creates a default endpoint for each protocol
-            configured.
-</li><P>
-
-<li>
-            Added support for multiple Connectors in the ORB, the ORB
-            finds the correct connector based on the tag for the
-            profile.
-</li><P>
-
-<li>
-	    Added support for multiple profiles in the IORs, when the
-            ORB demarshals an IOR it queries the Connector Registry to
-            create the right kind of profile for the known protocols.
-            If one of the protocols is unknown we create a special
-            profile class that can only be used for marshaling and
-            demarshaling, not communication.
-</li><P>
-
-<li>
-	    Enabled the UIOP protocol, this protocol uses local IPC
-            (aka UNIX domain) sockets as the transport mechanism.  The
-            protocol is loaded by default but no endpoints are created
-            unless an explicit <code>-ORBendpoint</code> option is
-            used (ex: <code>-ORBendpoint
-            uiop:///tmp/my_rendezvous</code>).
-
-</li><P>
-
-<li>
-	    Protocols can be dynamically loaded into the ORB: The
-            default resource factory reads the protocol "names" from
-            its list of arguments.  These protocol names are used to
-            load an abstract factory via the service configurator.
-            This factory can create acceptors or connectors on demand.
-            By default only IIOP and UIOP are loaded.
-</li><P>
-
-<li>
-	    The <code>-ORBhost</code> and <code>-ORBport</code>
-            options are deprecated. The new <code>-ORBendpoint</code>
-            option supercedes them. If the deprecated options are
-            used, the ORB issues a warning.
-</li><P>
-
-<li>
-            The <code>-ORBpreconnect</code> option supports multiple
-            protocols using the same URL formats that
-            <code>-ORBendpoint</code> does. Note that the old
-            <em><code>host:port</code></em> format is supported for
-            backwards compatibility.
-</li><P>
-
-<li>
-            The URL style object reference format has been updated to
-            conform with the format that <code>iioploc</code>
-            uses. The BNF specification for <code>iioploc</code> is:
-
-<blockquote><code>
-&lt;iioploc&gt; = "iioploc://"[&lt;addr_list&gt;]["/"&lt;key_string&gt;]<br>
-&lt;addr_list&gt;= [&lt;address&gt; ","]* &lt;address&gt;<br>
-&lt;address&gt; = [&lt;version&gt; &lt;host&gt; [":" &lt;port&gt;]]<br>
-&lt;host&gt; = DNS-style Host Name | ip_address<br>
-&lt;version&gt; = &lt;major&gt; "." &lt;minor&gt; "@" | empty_string<br>
-&lt;port&gt; = number<br>
-&lt;major&gt; = number<br>
-&lt;minor&gt; = number<br>
-&lt;key_string&gt; = &lt;string&gt; | empty_string<br>
-</code></blockquote>
-
-            <code>iiop</code> URL style object references are
-            equivalent to <code>iioploc</code> URL style object
-            references.  <code>uiop</code> URL style object references
-            have a similar syntax:
-
-<blockquote><code>
-&lt;uiop&gt; = "uiop://"[&lt;addr_list&gt;]["|"&lt;key_string&gt;]<br>
-&lt;addr_list&gt;= [&lt;address&gt; ","]* &lt;address&gt;<br>
-&lt;address&gt; = [&lt;version&gt; &lt;rendezvous point&gt;]<br>
-&lt;rendezvous point&gt; = &lt;string&gt;<br>
-&lt;version&gt; = &lt;major&gt; "." &lt;minor&gt; "@" |
-                empty_string<br>
-&lt;major&gt; = number<br>
-&lt;minor&gt; = number<br>
-&lt;key_string&gt; = &lt;string&gt; | empty_string<br>
-</code></blockquote>
-
-            Note that the key string delimiter for <b><code>uiop</code></b>
-            is a vertical bar `<b><code>|</code></b>' (the command line
-            "pipe" symbol) not a forward slash
-            `<code>/</code>'.  A delimiter other than a
-            forward slash is needed to prevent ambiguities of
-            where the rendezvous point ends and where the key
-            string begins since both may contain forward
-            slashes in them. 
-
-            The <i>rendezvous point</i> for <code>uiop</code> is
-            any valid path and filename that the ORB has permission to
-            read and write to.<P>
-
-            The <code>-ORBendpoint</code> option uses a syntax similar 
-            to that of the URL style object reference shown above.
-            The only difference is that the object key delimiter and
-            the object key string are not specified.
-</li><P>
+The basic framework does not include support for multiple profiles and
+the Acceptor registry. What it does do is separate the transport specific
+processing from the rest of the ORB.</li>
 
 <p>
 </ul>
-
 Known Issues:
 
 <ul>
@@ -523,21 +398,23 @@ Critical Work:
 
 <ul>
 <li>
-Complete support for multiple profiles.</li><p>
+Adding support for multiple profiles.</li><p>
 
 <p>
 </ul>
 Future Work:
 <ul>
 <li>
-Verify all of TAO's regression tests still work. This will be followed 
+Immediate plans are to bring my workspace up to date with the repository
+and verify all of TAO's regression tests still work. This will be followed
 by performing a suite of tests to compare performance of with the unmodified
-TAO distribution. Also, we'll extensively retest TAO using Purify and
-Quantify.
-</li><p> 
+TAO distribution. Also, we'll extensively retest TAO using purify and quantify.</li><p>
 
 <li>
-In parallel, we will add support for multiple profiles.</li><p>
+In parallel, we will add support for multiple profiles and an acceptor
+registry class. The acceptor registry will both keep track of all acceptors
+and be responsible for creating a list of profiles for new object references
+(essentially the IOR).</li><p>
 
 <li>
 Long term work will include adding support for pluggable ORB protocols,
@@ -561,8 +438,20 @@ requests to servants. <P>
 TAO supports the POA spec. This section will carry updates as available.</li>
 </ul>
 Known issues:
-
 <ul>
+
+<li>The synchronization in the POA is not optimal. For example, the
+locks are held across the invocation on the servant. The locks are
+also held across the invocation on the AdapterActivator. This forces
+the use of recursive locks inside the POA. However, the problem with
+recursive locks is that multiple threads cannot dispatch requests on
+the same POA simultaneous.</li><P>
+
+<li>We need to add the new RefCountServantBase class to TAO. This
+reference counted base class was added to the CORBA specification to
+avoid race conditions for servant deletion in threaded servers. <a
+href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
+contains the relevant text.</li><P>
 
 </UL>
 
@@ -582,40 +471,8 @@ Recently completed work:<P>
 
 <ul>
 
-<li> ORB::shutdown now properly deactives all the POA
-Managers. </li><P>
-
-<li>
-
-POA Managers in TAO were previously ignored in the request processing
-path on the server. This is now fixed such that their state is checked
-before dispatching the client request to the servant. Only if the
-state is <CODE>ACTIVE</CODE>, is the request dispatched to the
-servant.  Otherwise, the request is rejected. Since POA Managers start
-off in <CODE>HOLDING</CODE> state, make sure to
-<CODE>activate()</CODE> them before falling into the event loop.
-
-</li><P>
-
-<li> TAO's POA now properly supports both the threading policies:
-SINGLE_THREAD_MODEL and ORB_CTRL_MODEL. </li><P>
-
-<li>The synchronization in the POA is now very optimal. For example,
-the locks are not held across the invocation on the servant. The locks
-are also not held across the invocation on the AdapterActivator and
-ServantManagers. This allows us to use regular locks instead of
-recursive locks inside the POA. This also allows multiple threads to
-dispatch requests on the same POA simultaneous.</li><P>
-
-<li>TAO now supports reference counting between POA and servants,
-including the new RefCountServantBase and ServantBase_var
-classes. RefCountServantBase is a reference counted base class that
-was added to the CORBA specification to avoid race conditions for
-servant deletion in threaded servers. <a
-href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
-contains the relevant text. Check <a
-href="../poa_migration.html#Reference counting Servants">here</a> on
-some hints to avoid trouble.</li><P>
+<li> Support for collocation should be much better now because the POA
+can tell if we created the object reference.</li><P>
 
 <li> The POA now supports active demultiplexing of servants in the
 SYSTEM_ID and the USER_ID policy. This should make the POA faster and
@@ -687,9 +544,6 @@ removed. </li> <P>
 <li> New examples have been added to show how servants can be
 dynamically loaded from DLLs on demand. </li> <P>
 
-<li> Support for collocation should be much better now because the POA
-can tell if we created the object reference.</li><P>
-
 </UL>
 <hr>
 <h3>
@@ -707,12 +561,7 @@ object and make invocations on it using the DII.
 <p>Recent Work: TDB
 <p>Future Work: TDB
 <p>
-
 <hr>
-
-<br><!--#include virtual="OBV.html" -->
-<hr>
-
 <h3>
 <a NAME="nservices"></a>CORBA Naming Service and Interoperable Naming Service</h3>
 Points of contact: <a href="mailto:marina@cs.wustl.edu">Marina

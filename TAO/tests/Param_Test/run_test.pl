@@ -1,14 +1,14 @@
+# $Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
-
-# $Id$
-# -*- perl -*-
 
 use lib "../../../bin";
 require ACEutils;
 require Process;
 
+$port = 0;
 $iorfile = "server.ior";
 $invocation = "sii";
 $num = 5;
@@ -21,8 +21,9 @@ sub run_test
   my $type = shift(@_);
 
   $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
-                         "$debug -o $iorfile");
-
+                         "$debug -ORBport $port -o ".
+                         $iorfile);
+  
   ACE::waitforfile ($iorfile);
 
   system ($EXEPREFIX."client $debug -f $iorfile  -i $invocation -t ".
@@ -95,14 +96,14 @@ for ($i = 0; $i <= $#ARGV; $i++)
 
 @types = ("short", "ulonglong", "ubstring", "bdstring", "fixed_struct",
           "ub_strseq", "bd_strseq",
-          "var_struct", "nested_struct", "recursive_struct",
+          "var_struct", "nested_struct",
           "ub_struct_seq", "bd_struct_seq",
           "any", "objref", "objref_sequence", "objref_struct",
           "any_sequence",
           "ub_short_sequence", "ub_long_sequence",
           "bd_short_sequence", "bd_long_sequence",
           "fixed_array", "var_array", "typecode", "exception",
-	  "big_union", "complex_any");
+	  "big_union");
 
 if ($type ne "")
 {

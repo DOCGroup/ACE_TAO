@@ -42,7 +42,7 @@ RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /FD /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
@@ -86,10 +86,6 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\Acceptor_Registry.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Active_Object_Map.cpp
 # End Source File
 # Begin Source File
@@ -115,18 +111,6 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Connect.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Connector_Registry.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Context.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\corbafwd.cpp
 # End Source File
 # Begin Source File
 
@@ -159,14 +143,6 @@ SOURCE=.\default_resource.cpp
 # Begin Source File
 
 SOURCE=.\default_server.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainS.cpp
 # End Source File
 # Begin Source File
 
@@ -234,10 +210,6 @@ SOURCE=.\IIOP_Connector.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Factory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Profile.cpp
 # End Source File
 # Begin Source File
@@ -254,23 +226,11 @@ SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOR_LookupTable.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Key_Adapters.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Managed_Types.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Messaging_Policy_i.cpp
 # End Source File
 # Begin Source File
 
@@ -291,10 +251,6 @@ SOURCE=.\NVList.cpp
 # Begin Source File
 
 SOURCE=.\Object.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Object_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -354,10 +310,6 @@ SOURCE=.\Principal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Protocol_Factory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Request.cpp
 # End Source File
 # Begin Source File
@@ -379,10 +331,6 @@ SOURCE=.\Server_Request.cpp
 # Begin Source File
 
 SOURCE=.\Server_Strategy_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Services.cpp
 # End Source File
 # Begin Source File
 
@@ -432,18 +380,10 @@ SOURCE=.\ValueFactory.cpp
 
 SOURCE=.\ValueFactory_Map.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\WrongTransactionC.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
-# Begin Source File
-
-SOURCE=.\Acceptor_Registry.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.h
@@ -478,10 +418,6 @@ SOURCE=.\connect.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connector_Registry.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\corba.h
 # End Source File
 # Begin Source File
@@ -503,10 +439,6 @@ SOURCE=.\default_resource.h
 # Begin Source File
 
 SOURCE=.\default_server.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainC.h
 # End Source File
 # Begin Source File
 
@@ -566,10 +498,6 @@ SOURCE=.\IIOP_Connector.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Factory.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Profile.h
 # End Source File
 # Begin Source File
@@ -594,10 +522,6 @@ SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Messaging_Policy_i.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\MessagingC.h
 # End Source File
 # Begin Source File
@@ -615,10 +539,6 @@ SOURCE=.\nvlist.h
 # Begin Source File
 
 SOURCE=.\object.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Object_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -690,11 +610,11 @@ SOURCE=.\PolicyC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Principal.h
+SOURCE=.\PolicyS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Protocol_Factory.h
+SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
 
@@ -723,10 +643,6 @@ SOURCE=.\Server_Request.h
 # Begin Source File
 
 SOURCE=.\Server_Strategy_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Services.h
 # End Source File
 # Begin Source File
 
@@ -768,18 +684,10 @@ SOURCE=.\ValueFactory_Map.h
 
 SOURCE=.\varout.h
 # End Source File
-# Begin Source File
-
-SOURCE=.\WrongTransactionC.h
-# End Source File
 # End Group
 # Begin Group "Inline Files"
 
 # PROP Default_Filter "*.i"
-# Begin Source File
-
-SOURCE=.\Acceptor_Registry.i
-# End Source File
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.i
@@ -798,10 +706,6 @@ SOURCE=.\connect.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\corbafwd.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\CurrentC.i
 # End Source File
 # Begin Source File
@@ -815,14 +719,6 @@ SOURCE=.\default_resource.i
 # Begin Source File
 
 SOURCE=.\default_server.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainS_T.i
 # End Source File
 # Begin Source File
 
@@ -859,10 +755,6 @@ SOURCE=.\Managed_Types.i
 # Begin Source File
 
 SOURCE=.\marshal.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Messaging_Policy_i.i
 # End Source File
 # Begin Source File
 
@@ -951,10 +843,6 @@ SOURCE=.\Servant_Base.i
 # Begin Source File
 
 SOURCE=.\Server_Request.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Services.i
 # End Source File
 # Begin Source File
 

@@ -42,7 +42,6 @@ be_union::be_union (AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
     member_count_ (-1),
     default_index_ (-2)
 {
-  this->default_value_.computed_ = -2;
 }
 
 // compute total number of members
@@ -78,9 +77,8 @@ be_union::compute_default_index (void)
   be_union_branch *bub; // union branch node
   int i = 0; // counter
 
-  // if default case does not exist, it will have a value of -1 according to
-  // the spec
-  this->default_index_ = -1;
+  this->default_index_ = -1;  // if not used at all, this is the value it will
+                              // take
 
   // if there are elements in this scope
   if (this->nmembers () > 0)
@@ -95,16 +93,9 @@ be_union::compute_default_index (void)
           if (!d->imported ())
             {
               bub = be_union_branch::narrow_from_decl (d);
-              for (unsigned long j = 0;
-                   j < bub->label_list_length ();
-                   ++j)
-                {
-                  // check if we are printing the default case
-                  if (bub->label (j)->label_kind () 
-                      == AST_UnionLabel::UL_default)
-                    this->default_index_ = i; // zero based indexing
-                  i++;
-                }
+              if (bub->label ()->label_kind () == AST_UnionLabel::UL_default)
+                this->default_index_ = i; // zero based indexing
+              i++;
             }
           si->next ();
         } // end of while
@@ -132,6 +123,10 @@ be_union::default_index (void)
 
   return this->default_index_;
 }
+
+// generate typecode.
+// Typecode for union comprises the enumerated value followed by the
+// encapsulation of the parameters
 
 // generate the _var definition for ourself
 int
@@ -623,6 +618,123 @@ be_union::gen_out_impl (void)
   return 0;
 }
 
+int
+be_union::gen_typecode (void)
+{
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "CORBA::tk_union, // typecode kind" << nl;
+  *cs << this->tc_encap_len () << ", // encapsulation length\n";
+  // now emit the encapsulation
+  return this->gen_encapsulation ();
+}
+
+// generate encapsulation.
+// An encapsulation for ourselves will be necessary when we are part of some
+// other IDL type and a typecode for that other type is being generated. This
+// will comprise our typecode kind. IDL types with parameters will additionally
+// have the encapsulation length and the entire typecode description
+
+int
+be_union::gen_encapsulation (void)
+{
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  long i, arrlen;
+  ACE_UINT32 *arr;
+  be_type *discrim;
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
+  // generate repoID
+  *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
+  (void)this->tc_name2long (this->repoID (), arr, arrlen);
+  for (i=0; i < arrlen; i++)
+    {
+      cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
+    }
+  *cs << " // repository ID = " << this->repoID () << nl;
+  // generate name
+  *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
+  (void)this->tc_name2long(this->local_name ()->get_string (), arr, arrlen);
+  for (i=0; i < arrlen; i++)
+    {
+      cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
+    }
+  *cs << " // name = " << this->local_name () << ",\n";
+
+  // generate typecode for discriminant
+  discrim = be_type::narrow_from_decl (this->disc_type ());
+  if (discrim->gen_typecode () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_union: cannot generate typecode for discriminant\n"));
+      return -1;
+    }
+
+  // generate the default used flag
+  cs->indent ();
+  *cs << this->default_index () << ", // default used index" << nl;
+  // generate the member count
+  *cs << this->member_count () << ", // member count\n";
+  cs->incr_indent (0);
+  // hand over to the scope to generate the typecode for elements
+  if (be_scope::gen_encapsulation () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_union: cannot generate code for members\n"));
+      return -1;
+    }
+  cs->decr_indent (0);
+  return 0;
+}
+
+// compute typecode size
+long
+be_union::tc_size (void)
+{
+  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
+  // actual encapsulation length
+  return 4 + 4 + this->tc_encap_len ();
+}
+
+long
+be_union::tc_encap_len (void)
+{
+  if (this->encap_len_ == -1) // not computed yet
+    {
+      long slen;
+      be_type *discrim;
+
+      // Macro to avoid "warning: unused parameter" type warning.
+      ACE_UNUSED_ARG (slen);
+
+      this->encap_len_ = 4;  // holds the byte order flag
+
+      this->encap_len_ += this->repoID_encap_len (); // for repoID
+
+      // do the same thing for the local name
+      this->encap_len_ += this->name_encap_len (); // for name
+
+      // add encapsulation size of discriminant typecode
+      discrim = be_type::narrow_from_decl (this->disc_type ());
+      this->encap_len_ += discrim->tc_size ();
+
+      this->encap_len_ += 4; // to hold the "default used" flag
+      this->encap_len_ += 4; // to hold the member count
+
+      // compute encap length for members
+      this->encap_len_ += be_scope::tc_encap_len ();
+    }
+  return this->encap_len_;
+}
+
 // compute the size type of the node in question
 int
 be_union::compute_size_type (void)
@@ -663,375 +775,6 @@ be_union::compute_size_type (void)
     }
   return 0;
 }
-
-// Are we or the parameter node involved in any recursion
-idl_bool
-be_union::in_recursion (be_type *node)
-{
-  if (!node)
-    {
-      // we are determining the recursive status for ourselves
-      node = this;
-    }
-
-  // proceed if the number of members in our scope is greater than 0
-  if (this->nmembers () > 0)
-    {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
-      // continue until each element is visited
-      while (!si->is_done ())
-        {
-          be_union_branch *field = be_union_branch::narrow_from_decl (si->item ());
-          if (!field)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N:%l) be_union::")
-                                 ASYS_TEXT ("in_recursion - ")
-                                 ASYS_TEXT ("bad field node\n")),
-                                0);
-            }
-          be_type *type = be_type::narrow_from_decl (field->field_type ());
-          if (!type)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N:%l) be_union::")
-                                 ASYS_TEXT ("in_recursion - ")
-                                 ASYS_TEXT ("bad field type\n")),
-                                0);
-            }
-          if (type->in_recursion (node))
-            {
-              delete si;
-              return 1;
-            }
-          si->next ();
-        } // end of while loop
-      delete si;
-    } // end of if
-
-  // not in recursion
-  return 0;
-}
-
-// return the default value
-int
-be_union::default_value (be_union::DefaultValue &dv)
-{
-  if (this->default_value_.computed_ == -2)
-    {
-      // we need to compute it
-      if (this->compute_default_value () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) be_union::")
-                             ASYS_TEXT ("default_value - ")
-                             ASYS_TEXT ("Error computing ")
-                             ASYS_TEXT ("default value\n")),
-                            -1);
-        }
-    }
-  dv = this->default_value_;
-  return 0;
-}
-
-// determine the implicit default value (if any)
-int
-be_union::compute_default_value (void)
-{
-  // check if we really need a default value. This will be true if there is an
-  // explicit default case OR if an implicit default exists because not all
-  // values of the discriminant type are covered by the cases.
-
-  // compute the total true "case" labels i.e., exclude the "default" case
-  int total_case_members = 0;
-
-  // instantiate a scope iterator.
-  UTL_ScopeActiveIterator *si
-    = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
-  while (!(si->is_done ()))
-    {
-      // get the next AST decl node
-      be_union_branch *ub = be_union_branch::narrow_from_decl (si->item ());
-      if (ub)
-        {
-          // if the label is a case label, increment by 1
-          for (unsigned long i = 0;
-               i < ub->label_list_length ();
-               ++i)
-            {
-              if (ub->label (i)->label_kind () ==
-                  AST_UnionLabel::UL_label)
-                total_case_members++;
-            }
-        }
-      si->next ();
-    }
-  delete si;
-
-  // Check if the total_case_members cover the entire
-  // range of values that are permitted by the discriminant type. If they do,
-  // then a default value is not necessary. However, if such an explicit
-  // default case is provided, it must be flagged off as an error. Our
-  // front-end is not able to handle such a case since it is a semantic error
-  // and not a syntax error. Such an error is caught here.
-  
-  switch (this->udisc_type ())
-    {
-    case AST_Expression::EV_short:
-    case AST_Expression::EV_ushort:
-      if (total_case_members == ACE_UINT16_MAX+1)
-        this->default_value_.computed_ = 0;
-      break;
-    case AST_Expression::EV_long:
-    case AST_Expression::EV_ulong:
-      if ((unsigned int) total_case_members > ACE_UINT32_MAX)
-        this->default_value_.computed_ = 0;
-      break;
-    case AST_Expression::EV_longlong:
-    case AST_Expression::EV_ulonglong:
-      // error for now
-      this->default_value_.computed_ = -1;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_union::compute_default_value ")
-                         ASYS_TEXT ("- unimplemented discriminant type ")
-                         ASYS_TEXT ("(longlong or ulonglong)\n")),
-                        -1);
-      ACE_NOTREACHED (break;)
-    case AST_Expression::EV_char:
-      if (total_case_members == ACE_OCTET_MAX+1)
-        this->default_value_.computed_ = 0;
-      break;
-    case AST_Expression::EV_bool:
-      if (total_case_members == 2)
-        this->default_value_.computed_ = 0;
-      break;
-    case AST_Expression::EV_any:
-      // has to be enum
-      {
-        be_decl *d = be_decl::narrow_from_decl (this->disc_type ());
-        if (d->node_type () == AST_Decl::NT_typedef)
-          {
-            be_typedef *bt = be_typedef::narrow_from_decl (d);
-            d = bt->primitive_base_type ();
-          }
-        be_enum *en = be_enum::narrow_from_decl (d);
-        if (en)
-          {
-            if (total_case_members == en->member_count ())
-              this->default_value_.computed_ = 0;
-          }
-        else
-          {
-            // error
-            this->default_value_.computed_ = -1;
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("(%N:%l) be_union::")
-                               ASYS_TEXT ("compute_default_value ")
-                               ASYS_TEXT ("- disc type not an ENUM\n")),
-                              -1);
-          }
-      }
-      break;
-    default:
-      // error
-      this->default_value_.computed_ = -1;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_union::compute_default_value ")
-                         ASYS_TEXT ("- Bad discriminant type\n")),
-                        -1);
-      ACE_NOTREACHED (break;)
-    } // end of switch
-  
-  // if we have determined that we don't need a default case and even then a
-  // default case was provided, flag this off as error
-  if ((this->default_value_.computed_ == 0) &&
-      (this->default_index () != -1))
-    {
-      // error
-      this->default_value_.computed_ = -1;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_union::compute_default_value ")
-                         ASYS_TEXT ("- default clause is invalid here\n")),
-                        -1);
-    }
-  
-  // proceed only if necessary
-  switch (this->default_value_.computed_)
-    {
-    case -1:
-      // error. We should never be here because errors have already been caught
-      // above 
-      return -1;
-    case 0:
-      // nothing more to do
-      return 0;
-    default:
-      // proceed further down
-      break;
-    }
-
-  // initialization of the default value data member
-  switch (this->udisc_type ())
-    {
-    case AST_Expression::EV_short:
-      this->default_value_.u.short_val = ACE_INT16_MIN;
-      break;
-    case AST_Expression::EV_ushort:
-      this->default_value_.u.ushort_val = 0;
-      break;
-    case AST_Expression::EV_long:
-      this->default_value_.u.long_val = ACE_INT32_MIN;
-      break;
-    case AST_Expression::EV_ulong:
-      this->default_value_.u.ulong_val = 0;
-      break;
-    case AST_Expression::EV_char:
-      this->default_value_.u.char_val = 0;
-      break;
-    case AST_Expression::EV_bool:
-      this->default_value_.u.bool_val = 0;
-      break;
-    case AST_Expression::EV_any:
-      this->default_value_.u.enum_val = 0;
-      break;
-    case AST_Expression::EV_longlong:
-    case AST_Expression::EV_ulonglong:
-      // unimplemented
-    default:
-      // error caught earlier.
-      break;
-    } // end of switch
-
-  // proceed until we have found the appropriate default value
-  while (this->default_value_.computed_ == -2)
-    {
-      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
-      // instantiate a scope iterator.
-      
-      int break_loop = 0;
-      
-      while (!(si->is_done ()) && !break_loop)
-        {
-          // get the next AST decl node
-          be_union_branch *ub = be_union_branch::narrow_from_decl (si->item ());
-          if (ub)
-            {
-              for (unsigned long i = 0;
-                   i < ub->label_list_length () && !break_loop;
-                   ++i)
-                {
-                  if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
-                    {
-                      // not a default
-                      AST_Expression *expr = ub->label (i)->label_val ();
-                      if (!expr)
-                        {
-                          // error
-                          this->default_value_.computed_ = -1;
-                          ACE_ERROR_RETURN 
-                            ((LM_ERROR,
-                              ASYS_TEXT ("(%N:%l) be_union::")
-                              ASYS_TEXT ("compute_default_value - ")
-                              ASYS_TEXT ("Bad case label value\n")),
-                             -1);
-                        }
-                      
-                      switch (expr->ev ()->et)
-                        {
-                          // check if they match in which case this
-                          // cannot be the implicit default value. So
-                          // start with a new value and try the whole loop
-                          // again because our case labels may not be sorted
-                        case AST_Expression::EV_short:
-                          if (this->default_value_.u.short_val 
-                              == expr->ev ()->u.sval)
-                            {
-                              this->default_value_.u.short_val++;
-                              break_loop = 1;
-                            }
-                          break;
-                        case AST_Expression::EV_ushort:
-                          if (this->default_value_.u.ushort_val 
-                              == expr->ev ()->u.usval)
-                            {
-                              this->default_value_.u.ushort_val++;
-                              break_loop = 1;
-                            }
-                          break;
-                        case AST_Expression::EV_long:
-                          if (this->default_value_.u.long_val 
-                              == expr->ev ()->u.lval)
-                            {
-                              this->default_value_.u.long_val++;
-                              break_loop = 1;
-                            }
-                          break;
-                        case AST_Expression::EV_ulong:
-                          if (this->default_value_.u.ulong_val 
-                              == expr->ev ()->u.ulval)
-                            {
-                              this->default_value_.u.ulong_val++;
-                              break_loop = 1;
-                            }
-                          break;
-                        case AST_Expression::EV_char:
-                          if (this->default_value_.u.char_val 
-                              == expr->ev ()->u.cval)
-                            {
-                              this->default_value_.u.char_val++;
-                              break_loop = 1;
-                            }
-                          break;
-                        case AST_Expression::EV_bool:
-                          if (this->default_value_.u.bool_val 
-                              == (long) expr->ev ()->u.bval)
-                            {
-                              this->default_value_.u.bool_val++;
-                              break_loop = 1;
-                            }
-                          break;
-                        case AST_Expression::EV_any:
-                          // this is the case of enums. We maintain
-                          // evaluated values which always start with 0
-                          if (this->default_value_.u.enum_val 
-                              == expr->ev ()->u.eval)
-                            {
-                              this->default_value_.u.enum_val++;
-                              break_loop = 1;
-                            }
-                          break;
-                        case AST_Expression::EV_longlong:
-                        case AST_Expression::EV_ulonglong:
-                          // unimplemented. right now flag as error.
-                        default:
-                          // error
-                          break;
-                        } // end of switch
-                    } // if label_Kind == label
-                } // end of for loop going thru all labels
-            } // if valid union branch
-          si->next ();
-        } // end of while scope iterator loop
-      delete si; // free the iterator object
-      
-      // we have not aborted the inner loops which means we have found the
-      // default value
-      if (!break_loop)
-        this->default_value_.computed_ = 1;
-      
-    } // end of outer while
-  
-  return 0;
-}
-
-// visitor method
 
 int
 be_union::accept (be_visitor *visitor)

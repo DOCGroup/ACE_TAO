@@ -139,25 +139,17 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             CosNaming::NamingContext::_narrow (obj.in (),
                                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
-          // To make NS locatable through iioploc.  Right now not
-          // checking the return value.
-          orb->_tao_add_to_IOR_table ("NameService",
-                                      obj.in ());
         }
       else
         {
           TAO_Naming_Context *c = 0;
           TAO_Hash_Naming_Context *c_impl = 0;
 
-          // To keep compilers warnings away.
-          ACE_UNUSED_ARG (c_impl);
-
           ACE_NEW_RETURN (c,
                           TAO_Naming_Context,
                           -1);
 
-          // Put <c> into the auto pointer temporarily, in case
+          // Put c_impl into the auto pointer temporarily, in case
           // next allocation fails.
           ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp (c);
 
@@ -179,11 +171,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           this->naming_context_ =
             c->_this (ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
-          // To make NS locatable through iioploc.  Right now not
-          // checking the return value.
-          orb->_tao_add_to_IOR_table ("NameService",
-                                      this->naming_context_.in ());
 
           // Stringify the objref we'll be implementing, and print it
           // to stdout.  Someone will take that string and give it to

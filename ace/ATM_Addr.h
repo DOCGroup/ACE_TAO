@@ -38,24 +38,21 @@ public:
   static const long LINE_RATE;
   static const int OPT_FLAGS_CPID;
   static const int OPT_FLAGS_PMP;
-  static const int DEFAULT_SELECTOR;
+  static const int SELECTOR;
 
   // = Initialization methods.
-  ACE_ATM_Addr (unsigned char selector = DEFAULT_SELECTOR);
+  ACE_ATM_Addr (void);
   // Default constructor.
 
-  ACE_ATM_Addr (const ACE_ATM_Addr &,
-                unsigned char selector = DEFAULT_SELECTOR);
+  ACE_ATM_Addr (const ACE_ATM_Addr &);
   // Copy constructor.
 
-  ACE_ATM_Addr (const ATMSAPAddress *,
-                unsigned char selector = DEFAULT_SELECTOR);
+  ACE_ATM_Addr (const ATMSAPAddress *);
   // Creates an <ACE_ATM_Addr> from an ATMSAPAddress structure. This
   // is vendor specific (FORE systems). May need to change when other
   // vendors are supported.
 
-  ACE_ATM_Addr (const ASYS_TCHAR sap[],
-                unsigned char selector = DEFAULT_SELECTOR);
+  ACE_ATM_Addr (const ASYS_TCHAR sap[]);
   // Initializes an <ACE_ATM_Addr> from the <sap> which can be
   // "atm-address" (e.g.,
   // "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
@@ -65,22 +62,19 @@ public:
   // Default dtor.
 
   // = Initialization methods (useful after object construction).
-  void init (unsigned char selector = DEFAULT_SELECTOR);
+  void init (void);
   // Default initialization for non-address values (e.g.,
   // t_atm_sap_addr.SVE_tag_addr, t_atm_sap_addr.SVE_tag_selector)
 
-  int set (const ACE_ATM_Addr &,
-           unsigned char selector = DEFAULT_SELECTOR);
+  int set (const ACE_ATM_Addr &);
   // Initializes from another <ACE_ATM_Addr>.
 
-  int set (const ATMSAPAddress *,
-           unsigned char selector = DEFAULT_SELECTOR);
+  int set (const ATMSAPAddress *);
   // Initializes an <ACE_ATM_Addr> from an ATMSAPAddress
   // structure. This is vendor specific (FORE systems). May need to
   // change when other vendors are supported.
 
-  int set (const ASYS_TCHAR sap[],
-           unsigned char selector = DEFAULT_SELECTOR);
+  int set (const ASYS_TCHAR sap[]);
   // Initializes an <ACE_ATM_Addr> from the <sap> which can be
   // "atm-address" (e.g.,
   // "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
@@ -112,12 +106,6 @@ public:
 
   virtual void set_addr (void *, int);
   // Set a pointer to the address.
-
-  unsigned char get_selector (void) const;
-  // Return the selector for network address.
-
-  void set_selector (unsigned char);
-  // Set the selector for the network address.
 
   int operator == (const ACE_ATM_Addr &SAP) const;
   // Compare two addresses for equality.  The addresses are considered

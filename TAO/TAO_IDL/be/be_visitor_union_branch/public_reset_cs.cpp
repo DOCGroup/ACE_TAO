@@ -67,25 +67,10 @@ visit_union_branch (be_union_branch *node)
 
   this->ctx_->node (node); // save the node
 
-  for (unsigned long i = 0;
-       i < node->label_list_length ();
-       ++i)
-    {
-      // check if we are printing the default case
-      if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
-        *os << "default:";
-      else
-        {
-          *os << "case ";
-          node->gen_label_value (os, i);
-          *os << ":";
-        }
-      if (i == (node->label_list_length () - 1))
-        *os << be_idt_nl;
-      else
-        *os << be_nl;
-    }
-  
+  *os << "case ";
+  node->gen_label_value (os);
+  *os << ":" << be_idt_nl;
+
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

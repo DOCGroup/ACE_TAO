@@ -153,6 +153,7 @@ CORBA_NVList::add_value (const char *name,
             {
               nv->any_._tao_replace (value.type_,
                                      value.cdr_,
+                                     0,
                                      env);
             }
         }

@@ -35,11 +35,6 @@
 #include "tao/MProfile.h"
 #include "tao/ORB.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
-#include "tao/MessagingS.h"
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
-
 class TAO_GIOP_Invocation;
 class TAO_ORB_Core;
 class TAO_Policy_Manager_Impl;
@@ -48,10 +43,6 @@ class TAO_Policy_Manager_Impl;
 
 enum TAO_Param_Type
 {
-  // @@ Is there any use for this enum? I would assume that the
-  //    similar ones on corbfwd.h are enough!
-  // @@ Jeff: can you check into that?
-
   // = TITLE
   //   TAO_Param_Type
   // =DESCRIPTION
@@ -272,10 +263,6 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         CORBA::default_environment ()
     );
-
-  POA_Messaging::RelativeRoundtripTimeoutPolicy*
-     relative_roundtrip_timeout (void);
-
   CORBA::Policy_ptr get_client_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV =
@@ -318,7 +305,13 @@ public:
   // Our Constructors ...
 
   TAO_Stub (char *repository_id,
-            const TAO_MProfile &profiles,
+            TAO_MProfile *profiles,
+            TAO_ORB_Core *orb_core);
+  // Construct from a repository ID and a pointer to list of
+  // profiles. Assumes ownership of the profiles.
+
+  TAO_Stub (char *repository_id,
+            TAO_MProfile &profiles,
             TAO_ORB_Core *orb_core);
   // Construct from a repository ID and a list of profiles.
 
@@ -375,11 +368,11 @@ public:
    // returns TRUE if a connection was successful with at least
    // one profile.
 
-   TAO_Profile *set_base_profiles (const TAO_MProfile& mprofiles);
+   TAO_Profile *set_base_profiles (TAO_MProfile *mprofiles);
    // Initialize the base_profiles_ and set profile_in_use_ to
    // reference the first profile.
 
-  void add_forward_profiles (const TAO_MProfile &mprofiles);
+  void add_forward_profiles (TAO_MProfile *mprofiles);
   // THREAD SAFE.
   // set the forward_profiles.  This object will assume ownership of
   // this TAO_MProfile object!!
@@ -439,12 +432,13 @@ private:
   // NON-THREAD-SAFE.  utility method for next_profile.
 
 private:
+    // @@ For now, we keep track of transport specific profiles here,
+  //    but in the next iteration this will go away ... only transport
+  //    neutral info is kept here => TAO_Stub should also go away!
+  //    fredk
   TAO_MProfile     base_profiles_;
   // ordered list of profiles for this object.
-
   TAO_MProfile     *forward_profiles_;
-  // The list of forwarding profiles.  This is actually iimplemented as a
-  // linked list of TAO_MProfile objects.
 
   TAO_Profile *profile_in_use_;
   // this is the profile that we are currently sending/receiving with
@@ -485,30 +479,6 @@ private:
   // This de-warns.
   friend class everyone_needs_a_friend;
 #endif /* __GNUG__ */
-};
-
-// Define a TAO_Stub auto_ptr class
-class TAO_Stub_Auto_Ptr
-{
-  // = TITLE
-  //     Implements the draft C++ standard auto_ptr abstraction.
-  //     This class allows one to work Stub Objects *Only*!
-public:
-  // = Initialization and termination methods
-  /* explicit */ TAO_Stub_Auto_Ptr (TAO_Stub *p = 0);
-  TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
-  TAO_Stub_Auto_Ptr &operator= (TAO_Stub_Auto_Ptr &rhs);
-  ~TAO_Stub_Auto_Ptr (void);
-
-  // = Accessor methods.
-  TAO_Stub &operator *() const;
-  TAO_Stub *get (void) const;
-  TAO_Stub *release (void);
-  void reset (TAO_Stub *p = 0);
-  TAO_Stub *operator-> () const;
-
-protected:
-  TAO_Stub *p_;
 };
 
 #if defined (__ACE_INLINE__)

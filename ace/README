@@ -314,8 +314,6 @@ ACE_HAS_THR_MINSTACK                    Platform calls thr_minstack()
                                         (e.g., Tandem).
 ACE_HAS_LIMITED_RUSAGE_T                The rusage_t structure has
                                         only two fields.
-ACE_HAS_LIMITED_SELECT                  The select is unable to deal with
-                                        large file descriptors.
 ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as
                                         a long constant.
 ACE_HAS_MALLOC_STATS                    Enabled malloc statistics
@@ -407,6 +405,8 @@ ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP    Platform has
 ACE_HAS_PTHREAD_PROCESS_ENUM            pthread.h declares an enum with
                                         PTHREAD_PROCESS_PRIVATE and
                                         PTHREAD_PROCESS_SHARED values.
+ACE_HAS_PTHREAD_SIGMASK                 Platform has pthread_sigmask()
+                                        defined.
 ACE_HAS_PURIFY                          Purify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_QUANTIFY                        Quantify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    Platform will recurse
@@ -839,16 +839,8 @@ ACE_LACKS_U_LONGLONG_T                  Platform does not have
 ACE_LACKS_UALARM_PROTOTYPE              Platform/compiler lacks the
                                         ualarm() prototype (e.g.,
                                         Solaris)
-ACE_LACKS_CHAR_RIGHT_SHIFTS             Compiler does not have any istream
-                                        operator>> for chars, u_chars, or
-                                        signed chars.
-ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS        Compiler does not have
-                                        operator>> (istream &, u_char *) or
-                                        operator>> (istream &, signed char *)
 ACE_LACKS_UCONTEXT_H                    Platform lacks the ucontext.h
                                         file
-ACE_LACKS_UNBUFFERED_STREAMBUF          Platform lacks streambuf
-                                        "unbuffered ()".
 ACE_LACKS_UNISTD_H                      Platform lacks the unistd.h
                                         file (e.g., VxWorks and Win32)
 ACE_LACKS_UNIX_DOMAIN_SOCKETS           ACE platform has no UNIX

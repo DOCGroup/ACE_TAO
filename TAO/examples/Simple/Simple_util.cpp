@@ -1,5 +1,4 @@
 //$Id$
-
 #ifndef SIMPLE_UTIL_C
 #define SIMPLE_UTIL_C
 # include "Simple_util.h"
@@ -8,9 +7,9 @@
 
 template <class Servant>
 Server<Servant>::Server (void)
-  : ior_output_file_ (0),
-    naming_ (0),
-    ins_ (0)
+    : ior_output_file_ (0),
+      naming_ (0),
+      ins_ (0)
 {
   // no-op.
 }
@@ -74,20 +73,20 @@ template <class Servant> int
 Server<Servant>::test_for_ins (CORBA::String_var ior)
 {
 
-  CORBA::Object_ptr object =
-    this->orb_manager_.orb ()->string_to_object (ior.in ());
+  CORBA::Object_ptr bank_servant =
+    this->orb_manager_.orb ()->string_to_object (ior.in());
 
   // Add a KEY:IOR mapping to the ORB table.
-  ACE_CString ins (this->ins_);
+  ACE_CString object_id (this->ins_);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"Adding (KEY:IOR) %s:%s\n",
-		ins.c_str (),
+		object_id.c_str (),
 		ior.in ()));
 
-  if (this->orb_manager_.orb ()->_tao_add_to_IOR_table (ins,
-							object) != 0)
+  if (this->orb_manager_.orb ()->_tao_add_to_IOR_table (object_id,
+							bank_servant) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Simple_Util : Unable to add IOR to table\n"),
 		      -1);
@@ -198,8 +197,8 @@ Server<Servant>::run (CORBA::Environment &env)
 template <class Servant> int
 Server<Servant>::register_name (void)
 {
-  this->naming_server_.init (this->orb_manager_.orb(),
-                             this->orb_manager_.child_poa ());
+  this->namingServer.init (this->orb_manager_.orb(),
+                           this->orb_manager_.child_poa ());
   // create the name for the naming service
 
   CosNaming::Name bindName;
@@ -214,9 +213,9 @@ Server<Servant>::register_name (void)
       CORBA::Object_var object = servant_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      naming_server_->rebind (bindName,
-                              object.in(),
-                              ACE_TRY_ENV);
+      namingServer->rebind (bindName,
+                            object.in(),
+                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Test for INS.
@@ -230,7 +229,7 @@ Server<Servant>::register_name (void)
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
       ACE_TRY_ENV.clear ();
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "Unable to bind %s \n",
                          name),
                         -1);
@@ -242,8 +241,8 @@ Server<Servant>::register_name (void)
 
 // Constructor.
 
-template <class INTERFACE_OBJECT, class Var>
-Client<INTERFACE_OBJECT, Var>::Client (void)
+template <class InterfaceObj, class Var>
+Client<InterfaceObj, Var>::Client (void)
   : ior_ (0)
 {
   //no-op
@@ -251,8 +250,8 @@ Client<INTERFACE_OBJECT, Var>::Client (void)
 
 // Reads the Server ior from a file
 
-template <class INTERFACE_OBJECT, class Var> int
-Client<INTERFACE_OBJECT, Var>::read_ior (char *filename)
+template <class InterfaceObj, class Var> int
+Client<InterfaceObj, Var>::read_ior (char *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -281,8 +280,8 @@ Client<INTERFACE_OBJECT, Var>::read_ior (char *filename)
 
 // Parses the command line arguments and returns an error status.
 
-template <class INTERFACE_OBJECT, class Var> int
-Client<INTERFACE_OBJECT, Var>::parse_args (void)
+template <class InterfaceObj, class Var> int
+Client<InterfaceObj, Var>::parse_args (void)
 {
   ACE_Get_Opt get_opts (argc_, argv_, "df:nk:x");
   int c = 0;
@@ -317,14 +316,14 @@ Client<INTERFACE_OBJECT, Var>::parse_args (void)
   return 0;
 }
 
-template <class INTERFACE_OBJECT, class Var>
-Client<INTERFACE_OBJECT, Var>::~Client (void)
+template <class InterfaceObj, class Var>
+Client<InterfaceObj, Var>::~Client (void)
 {
   ACE_OS::free (this->ior_);
 }
 
-template <class INTERFACE_OBJECT, class Var> int
-Client<INTERFACE_OBJECT, Var>::init (const char *name,
+template <class InterfaceObj, class Var> int
+Client<InterfaceObj, Var>::init (const char *name,
                                  int argc,
                                  char **argv)
 {
@@ -333,7 +332,7 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
 
 
   ACE_DECLARE_NEW_CORBA_ENV;
-
+ 
   ACE_TRY
     {
       // Retrieve the ORB.
@@ -347,6 +346,8 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
       if (this->parse_args () == -1)
         return -1;
 
+
+
       if(this->ior_ != 0)
         {
           CORBA::Object_var server_object =
@@ -359,7 +360,7 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
                                "invalid ior <%s>\n",
                                this->ior_),
                               -1);
-          this->server_ = INTERFACE_OBJECT::_narrow (server_object.in (),
+          this->server_ = InterfaceObj::_narrow (server_object.in (),
                                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
@@ -393,14 +394,14 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
 }
 
 
-template <class INTERFACE_OBJECT, class Var> int
-Client<INTERFACE_OBJECT, Var>::obtain_initial_references (CORBA::Environment &ACE_TRY_ENV)
+template <class InterfaceObj, class Var> int
+Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &ACE_TRY_ENV)
 {
 
   ACE_TRY
     {
       // Initialize the naming services.
-      if (naming_client_.init (orb_.in ()) != 0)
+      if (namingClient.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
@@ -412,17 +413,17 @@ Client<INTERFACE_OBJECT, Var>::obtain_initial_references (CORBA::Environment &AC
       CORBA::string_dup (this->name_);
 
       CORBA::Object_var obj =
-        naming_client_->resolve (server_name,
-                                ACE_TRY_ENV);
+        namingClient->resolve (server_name,
+                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->server_ = INTERFACE_OBJECT::_narrow (obj.in (),
+      this->server_ = InterfaceObj::_narrow (obj.in (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Client::obtain_initial_references");
+      ACE_TRY_ENV.print_exception ("Bank::obtain_initial_references");
       return -1;
     }
   ACE_ENDTRY;
@@ -430,18 +431,18 @@ Client<INTERFACE_OBJECT, Var>::obtain_initial_references (CORBA::Environment &AC
   return 0;
 }
 
-template <class INTERFACE_OBJECT, class Var> int
-Client<INTERFACE_OBJECT, Var>::shutdown (void)
+template <class InterfaceObj, class Var> int
+Client<InterfaceObj, Var>::shutdown (void )
 {
   // Returns the shutdwon flag
   return shutdown_;
 }
 
-template <class INTERFACE_OBJECT, class Var> void
-Client<INTERFACE_OBJECT, Var>::shutdown (int flag)
+template <class InterfaceObj, class Var> void
+Client<InterfaceObj, Var>::shutdown (int flag)
 {
   // Fills the flag
   shutdown_ = flag;
 }
 
-#endif /* SIMPLE_UTIL_C */
+#endif

@@ -21,8 +21,6 @@ TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel *ec,
     {
       this->supplier_set_ =
         this->event_channel_->create_proxy_push_supplier_set ();
-      this->supplier_set_->busy_hwm (this->event_channel_->busy_hwm ());
-      this->supplier_set_->max_write_delay (this->event_channel_->max_write_delay ());
     }
   this->default_POA_ =
     this->event_channel_->consumer_poa ();
@@ -36,7 +34,7 @@ TAO_EC_ConsumerAdmin::~TAO_EC_ConsumerAdmin (void)
 
 void
 TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
-                                 CORBA::Environment &ACE_TRY_ENV)
+				 CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
       ace_mon, this->busy_lock (),
@@ -57,7 +55,7 @@ TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
 
 void
 TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
-                                    CORBA::Environment &ACE_TRY_ENV)
+				    CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
       ace_mon, this->busy_lock (),
@@ -78,45 +76,16 @@ TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
 
 void
 TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
-                                 CORBA::Environment &ACE_TRY_ENV)
+				 CORBA::Environment &ACE_TRY_ENV)
 {
   this->supplier_set_->connected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
-                                    CORBA::Environment &ACE_TRY_ENV)
+				    CORBA::Environment &ACE_TRY_ENV)
 {
   this->supplier_set_->disconnected (supplier, ACE_TRY_ENV);
-}
-
-void
-TAO_EC_ConsumerAdmin::shutdown (CORBA::Environment &ACE_TRY_ENV)
-{
-  {
-    ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
-      ace_mon, this->busy_lock (),
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-
-    SupplierSetIterator end = this->end ();
-    for (SupplierSetIterator i = this->begin ();
-         i != end;
-         ++i)
-      {
-        ACE_TRY
-          {
-            (*i)->shutdown (ACE_TRY_ENV);
-            ACE_TRY_CHECK;
-          }
-        ACE_CATCHANY
-          {
-            /* ignore all exceptions */
-          }
-        ACE_ENDTRY;
-      }
-  }
-  this->supplier_set_->shutdown (ACE_TRY_ENV);
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr

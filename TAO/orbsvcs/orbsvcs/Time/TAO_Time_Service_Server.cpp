@@ -26,16 +26,11 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
 
   // Return the local time of the system as a UTO.
   ACE_NEW_THROW_EX (uto,
-                    TAO_UTO (ACE_static_cast(CORBA::ULongLong,
-                                             ACE_OS::gettimeofday ().sec ()) * 
-                             ACE_static_cast(ACE_UINT32,
-                                             10000000) +
-                             ACE_static_cast(CORBA::ULongLong,
-                                             ACE_OS::gettimeofday ().usec () * 10),
+                    TAO_UTO (CORBA::ULongLong (ACE_OS::gettimeofday ().sec () * 10000000
+                                               + ACE_OS::gettimeofday ().usec () * 10),
                              0,
                              0),
                     CORBA::NO_MEMORY ());
-
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
   ACE_DEBUG ((LM_DEBUG,

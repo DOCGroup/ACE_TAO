@@ -127,14 +127,9 @@ TAO_Time_Service_Clerk::get_time (void)
   // elapsed since last updation was done.
   CORBA::ULongLong time;
 
-  time = (CORBA::ULongLong) (ACE_static_cast (CORBA::ULongLong,
-                                              ACE_OS::gettimeofday ().sec ()) * 
-                             ACE_static_cast (ACE_UINT32,
-                                              10000000) +
-                             ACE_static_cast (CORBA::ULongLong, 
-                                              ACE_OS::gettimeofday ().usec () * 10))
-    - this->update_timestamp_ 
-    + this->time_;
+  time = (CORBA::ULongLong) (ACE_OS::gettimeofday ().sec () * 10000000
+                             + ACE_OS::gettimeofday ().usec () * 10)
+    - this->update_timestamp_ + this->time_;
 
   return time;
 }

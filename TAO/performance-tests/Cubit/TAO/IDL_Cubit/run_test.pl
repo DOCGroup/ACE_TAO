@@ -3,7 +3,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     if 0;
 
 # $Id$
-# -*- perl -*-
 
 # The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
@@ -15,12 +14,13 @@ use lib "../../../../../bin";
 require ACEutils;
 
 $nsport = 20000 + ACE::uniqueid ();
+$server_port = 0;
 $iorfile = "cubit.ior";
 $exepref = '.' . $DIR_SEPARATOR;
 $svnsflags = " -o $iorfile";
 $clnsflags = " -f $iorfile";
-$clflags = "";
-$svflags = "";
+$clflags = " -ORBobjrefstyle url";
+$svflags = " -ORBobjrefstyle url";
 $mcast = 0;
 
 #make sure the file is gone, so we can wait on it.
@@ -78,16 +78,15 @@ for ($i = 0; $i <= $#ARGV; $i++)
     }
     if ($ARGV[$i] eq "-orblite")
     {
-      $clflags .= " -ORBgioplite";
-      $svflags .= " -ORBgioplite";
+      $clargs .= " -ORBgioplite";
+      $svargs .= " -ORBgioplite";
       last SWITCH;
     }
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
   }
 }
 
-(-f $exepref."server".$Process::EXE_EXT  &&
- -f $exepref."client".$Process::EXE_EXT)  ||
+(-f 'server'  &&  -f 'client')  ||
   die "$0: server and/or client need to be built!\n";
 
 $SV = Process::Create ($exepref."server".$Process::EXE_EXT,

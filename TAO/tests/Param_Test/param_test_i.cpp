@@ -492,27 +492,6 @@ Param_Test_i::test_nested_struct (const Param_Test::Nested_Struct &s1,
   return ret;
 }
 
-// test for recursive structs
-Param_Test::Recursive_Struct *
-Param_Test_i::test_recursive_struct (const Param_Test::Recursive_Struct &s1,
-                                     Param_Test::Recursive_Struct &s2,
-                                     Param_Test::Recursive_Struct_out s3,
-                                     CORBA::Environment &)
-{
-  // we copy the "in" structs into all the inout, out and return sequences.
-
-  Param_Test::Recursive_Struct
-    *ret = new Param_Test::Recursive_Struct,
-    *out = new Param_Test::Recursive_Struct;
-
-  // now copy all elements of s1 into the others
-  s2 = s1;
-  *out = s1;
-  *ret = s1;
-  s3 = out;
-  return ret;
-}
-
 Param_Test::Objref_Struct *
 Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
                                   Param_Test::Objref_Struct &s2,
@@ -795,18 +774,6 @@ Param_Test_i::test_big_union (const Param_Test::Big_Union& u1,
   Param_Test::Big_Union_var ret (new Param_Test::Big_Union (u1));
   u2 = u1;
   u3 = new Param_Test::Big_Union (u1);
-  return ret._retn ();
-}
-
-CORBA::Any*
-Param_Test_i::test_complex_any (const CORBA::Any &a1,
-                                CORBA::Any &a2,
-                                CORBA::Any_out a3,
-                                CORBA::Environment &ACE_TRY_ENV)
-{
-  CORBA::Any_var ret (new CORBA::Any (a1));
-  a2 = a1;
-  a3 = new CORBA::Any (a1);
   return ret._retn ();
 }
 

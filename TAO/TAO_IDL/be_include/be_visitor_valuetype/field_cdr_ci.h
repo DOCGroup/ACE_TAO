@@ -1,7 +1,7 @@
-/* -*- c++ -*- */
 //
 // $Id$
 //
+/* -*- c++ -*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -15,7 +15,7 @@
 //
 // = AUTHOR
 //    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    derived from be_visitor_field/cdr_op_ci.h
+//    derived from be_visitor_field/cdr_op_cs.h
 //
 // ============================================================================
 
@@ -88,7 +88,7 @@ class be_visitor_valuetype_field_cdr_decl : public be_visitor_scope
 {
   //
   // = TITLE
-  //   be_visitor_cdr_valuetype_field_cdr_decl
+  //   be_visitor_cdr_op_cs_field_decl
   //
   // = DESCRIPTION
   //   When generating CDR operators for fields of structures and/or

@@ -31,7 +31,7 @@ Time_Date_Client_i::run (char *name,
                          char *argv[])
 {
   // Initialize the client.
-  if (client_.init (name, argc, argv) == -1)
+  if (client.init (name, argc, argv) == -1)
     return -1;
 
   if (this->parse_args (argc, argv) == -1)
@@ -41,28 +41,25 @@ Time_Date_Client_i::run (char *name,
 
   ACE_TRY
     {
+      Time_Date_ptr time_date;
+
       CORBA::Long l;
 
-      // Get the time & date in binary format.
-      client_->bin_date (l,
-                         ACE_TRY_ENV);
+      // Get the time_date.
+      time_date->bin_date (l,
+                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Binary time_date = %d\n",
                   l));
 
-      // Get the time & date in string format.
-      CORBA::String_var str_var;
-      client_->str_date (str_var.out(),
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) String time_date = %s\n",
-                  str_var.in()));
-  
-      client_.shutdown ();
+                  "(%P|%t) Setting a value for the time_date\n"));
+
+      if (client.shutdown () == 1)
+        client->shutdown (ACE_TRY_ENV);
+      ACE_UNUSED_ARG (ret_val);
     }
   ACE_CATCH (CORBA::UserException, range_ex)
     {
@@ -73,7 +70,7 @@ Time_Date_Client_i::run (char *name,
   ACE_CATCH (CORBA::SystemException, memex)
     {
       ACE_PRINT_EXCEPTION (memex,
-                           "Cannot make time_date");
+                           "Cannot make time_date as Memory exhausted");
       return -1;
     }
   ACE_ENDTRY;
@@ -83,7 +80,7 @@ Time_Date_Client_i::run (char *name,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Client<Time_Date,Time_Date_var>;
+template class Client<Time_Date_Factory,Time_Date_Factory_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Client<Time_Date,Time_Date_var>
+#pragma instantiate Client<Time_Date_Factory,Time_Date_Factory_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

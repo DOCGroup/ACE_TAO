@@ -23,10 +23,6 @@
 #include "tao/corbafwd.h"
 #include "tao/Exception.h"
 #include "tao/IOR_LookupTable.h"
-#include "tao/Services.h"
-
-// IRIX needs this for the throw specs
-#include "tao/PolicyC.h"
 
 typedef enum
 {
@@ -73,13 +69,6 @@ class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
 class TAO_InputCDR;
 class TAO_OutputCDR;
-
-// Forward declaration and typedefs for the exception thrown by
-// the ORB Dynamic Any factory functions.
-class CORBA_ORB_InconsistentTypeCode;
-typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
-typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
-
 #ifdef TAO_HAS_VALUETYPE
 class TAO_ValueFactory_Map;
 #endif /* TAO_HAS_VALUETYPE */
@@ -209,115 +198,6 @@ private:
   void operator= (const CORBA_String_var &);
 };
 
-// ****************************************************************
-
-class TAO_Export CORBA_WString_var
-{
-  // = TITLE
-  //   CORBA_WString var class. Provides automatic deallocation of
-  //   storage for wide strings
-  //
-public:
-  CORBA_WString_var (void);
-  // default constructor.
-
-  CORBA_WString_var (CORBA::WChar *p);
-  // constructor, owns p.
-
-  CORBA_WString_var (const CORBA::WChar *p);
-  // constructor. Makes a copy of p.
-
-  CORBA_WString_var (const CORBA_WString_var &s);
-  // copy constructor.
-
-  ~CORBA_WString_var (void);
-  // destructor.
-
-  CORBA_WString_var &operator= (CORBA::WChar *p);
-  // assignment operator.
-
-  CORBA_WString_var &operator= (const CORBA::WChar *p);
-  // assignment to a const char*.  Makes a copy.
-
-  CORBA_WString_var &operator= (const CORBA_WString_var &s);
-  // assignment operator.
-
-  operator CORBA::WChar *();
-  // access and modify.
-
-  operator const CORBA::WChar *() const;
-  // only read privileges.
-
-  CORBA::WChar &operator[] (CORBA::ULong index);
-  // allows access and modification using an index.
-
-  CORBA::WChar operator[] (CORBA::ULong index) const;
-  // allows only accessing thru an index.
-
-    // = in, out, out, and _retn operations.
-    // ORBOS/97-05-15, Appendix C.2
-
-  const CORBA::WChar *in (void) const;
-  // for in parameter.
-
-  CORBA::WChar *&inout (void);
-  // for inout parameter.
-
-  CORBA::WChar *&out (void);
-  // for out parameter.
-
-  CORBA::WChar *_retn (void);
-  // for string of return type.
-
-private:
-  CORBA::WChar *ptr_;
-  // instance.
-};
-
-class TAO_Export CORBA_WString_out
-{
-  // = TITLE
-  //   CORBA_WString_out
-  //
-  // = DESCRIPTION
-  //   To support the memory management for "out" parameter passing
-  //   mode.  ORBOS/97-05-15, Appendix C.2 defines a CORBA_WString_out
-  //   class
-  //
-public:
-  // = operations.
-
-  CORBA_WString_out (CORBA::WChar *&p);
-  // Construction from a reference to a string.
-
-  CORBA_WString_out (CORBA_WString_var &p);
-  // Construction from a var.
-
-  CORBA_WString_out (const CORBA_WString_out &s);
-  // Copy constructor.
-
-  CORBA_WString_out &operator= (const CORBA_WString_out &s);
-  // Assignment from a string_out.
-
-  CORBA_WString_out &operator= (CORBA::WChar *p);
-  // Assignment from a string.
-
-  operator CORBA::WChar *&();
-  // Cast.
-
-  CORBA::WChar *&ptr (void);
-  // Return underlying instance.
-
-private:
-  CORBA::WChar *&ptr_;
-  // Instance.
-
-  // assignment from _var disallowed
-  void operator= (const CORBA_WString_var &);
-};
-
-// ****************************************************************
-
 class TAO_Export CORBA_ORB
 {
   // = TITLE
@@ -336,7 +216,7 @@ public:
 
   // ORB_Core has special privileges
   friend class TAO_ORB_Core;
-  friend TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
+  friend TAO_Export TAO_ORB_Core* TAO_ORB_Core_instance (void);
 
   class TAO_Export InvalidName : public CORBA_UserException
   {
@@ -348,16 +228,18 @@ public:
     virtual int _is_a (const char* interface_id) const;
   };
 
+  // Typedefs for CORBA_ORB_RequestSeq,
+  // which is an argument of send_multiple_requests_*().
+  // See Request.{h,i,cpp} for definitions.
+  typedef CORBA_ORB_RequestSeq RequestSeq;
+  typedef CORBA_ORB_RequestSeq_ptr RequestSeq_ptr;
+  typedef CORBA_ORB_RequestSeq_var RequestSeq_var;
+  typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
+
   typedef char *ObjectId;
   typedef CORBA::String_var ObjectId_var;
   typedef CORBA::String_out ObjectId_out;
   static CORBA::TypeCode_ptr _tc_ObjectId;
-
-  typedef CORBA_ORB_ObjectIdList ObjectIdList;
-  typedef CORBA_ORB_ObjectIdList_var ObjectIdList_var;
-  typedef CORBA_ORB_ObjectIdList_out ObjectIdList_out;
-  typedef CORBA_ORB_ObjectIdList *ObjectIdList_ptr;
-  static CORBA::TypeCode_ptr _tc_ObjectIdList;
 
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   // Return a duplicate of <{orb}>.  When work with this duplicate is
@@ -368,95 +250,81 @@ public:
   // can be used for initialization or in comparisons.
 
   virtual CORBA::Object_ptr string_to_object (
-                                              const char *str,
-                                              CORBA_Environment &ACE_TRY_ENV =
-                                              CORBA::default_environment ());
+         const char *str,
+         CORBA_Environment &ACE_TRY_ENV =
+               CORBA::default_environment ());
   // Turn a string-ified object reference back into an object pointer.
   // Typically these strings are created using <object_to_string()>,
   // but not necessarily locally.
 
   virtual CORBA::String object_to_string (
-                                          CORBA::Object_ptr obj,
-                                          CORBA_Environment &ACE_TRY_ENV =
-                                          CORBA::default_environment ());
+              CORBA::Object_ptr obj,
+              CORBA_Environment &ACE_TRY_ENV =
+                CORBA::default_environment ());
   // Turn an object reference into a string.  Each type of ORB,
   // e.g. an IIOP ORB, must implement this.  This can be used by
   // servers to publish their whereabouts to clients.  The output of
   // this is typically eventually given to <string_to_object()> as an
   // argument.
 
-
 #ifdef TAO_HAS_VALUETYPE
   // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
   CORBA::ValueFactory_ptr register_value_factory (
-                                                  const char *repository_id,
-                                                  CORBA::ValueFactory_ptr factory,
-                                                  CORBA_Environment &ACE_TRY_ENV =
-                                                  CORBA::default_environment () );
+                            const char *repository_id,
+                            CORBA::ValueFactory_ptr factory,
+                            CORBA_Environment &ACE_TRY_ENV =
+                                CORBA::default_environment () );
   void unregister_value_factory (const char * repository_id,
                                  CORBA_Environment &ACE_TRY_ENV =
-                                 CORBA::default_environment () );
+                                     CORBA::default_environment () );
   CORBA::ValueFactory_ptr lookup_value_factory (const char *repository_id,
-                                                CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment () );
+           CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment () );
 #endif /* TAO_HAS_VALUETYPE */
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  // Typedefs for CORBA_ORB_RequestSeq,
-  // which is an argument of send_multiple_requests_*().
-  // See Request.{h,i,cpp} for definitions.
-  typedef CORBA_ORB_RequestSeq RequestSeq;
-  typedef CORBA_ORB_RequestSeq_ptr RequestSeq_ptr;
-  typedef CORBA_ORB_RequestSeq_var RequestSeq_var;
-  typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
-
   void create_list (CORBA::Long count,
                     CORBA::NVList_ptr &new_list,
                     CORBA_Environment &ACE_TRY_ENV =
-                    CORBA::default_environment ());
+                      CORBA::default_environment ());
 
   // The following are not implemented and just throw
   // CORBA::NO_IMPLEMENT.
 
   void create_named_value (CORBA::NamedValue_ptr &nmval,
                            CORBA_Environment &ACE_TRY_ENV =
-                           CORBA::default_environment ());
+                             CORBA::default_environment ());
 
   void create_exception_list (CORBA::ExceptionList_ptr &exclist,
                               CORBA_Environment &ACE_TRY_ENV =
-                              CORBA::default_environment ());
+                                CORBA::default_environment ());
 
   void create_context_list (CORBA::ContextList_ptr &ctxtlist,
                             CORBA_Environment &ACE_TRY_ENV =
-                            CORBA::default_environment ());
+                              CORBA::default_environment ());
 
   void get_default_context (CORBA::Context_ptr &ctx,
                             CORBA_Environment &ACE_TRY_ENV =
-                            CORBA::default_environment ());
+                              CORBA::default_environment ());
 
   void create_environment (CORBA::Environment_ptr &new_env,
                            CORBA_Environment &ACE_TRY_ENV =
-                           CORBA::default_environment ());
-
-  CORBA::Boolean get_service_information (CORBA::ServiceType service_type,
-                                          CORBA::ServiceInformation_out service_information,
-                                          CORBA::Environment &ACE_TRY_ENV =
-                                          CORBA::default_environment ());
+                             CORBA::default_environment ());
 
   void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq req,
                                       CORBA_Environment &ACE_TRY_ENV =
-                                      CORBA::default_environment ());
+                                        CORBA::default_environment ());
 
   void send_multiple_requests_deferred (const CORBA_ORB_RequestSeq req,
                                         CORBA_Environment &ACE_TRY_ENV =
-                                        CORBA::default_environment ());
+                                          CORBA::default_environment ());
 
   void get_next_response (CORBA_Request_ptr &req,
                           CORBA_Environment &ACE_TRY_ENV =
-                          CORBA::default_environment ());
+                            CORBA::default_environment ());
 
   CORBA::Boolean poll_next_response (CORBA_Environment &ACE_TRY_ENV =
-                                     CORBA::default_environment ());
+                                       CORBA::default_environment ());
 
   // = New Things from the POA Specification
   //
@@ -465,14 +333,23 @@ public:
   // than is currently available.
 
   CORBA::Boolean work_pending (void);
-  // Returns an indication of whether the ORB needs to perform some
-  // work.
+  // Returns an indication of whether the ORB needs the <{main thread}> to
+  // perform some work.
 
   int perform_work (const ACE_Time_Value & = ACE_Time_Value::zero);
-  // This operation performs an implementation-defined unit of
-  // work. Note that the default behavior is not to block; this
-  // behavior can be modified by passing an appropriate
-  // <ACE_Time_Value>.
+  // If called by the <{main thread}>, this operation performs an
+  // implementation-defined unit of work. Otherwise, it does nothing.
+  // Note that the default behavior is not to block; this behavior can
+  // be modified by passing an appropriate <ACE_Time_Value>.
+  //
+  // It is platform-specific how the application and ORB arrange to
+  // use compatible threading primitives.
+
+  // Forward declaration and typedefs for the exception thrown by
+  // the ORB Dynamic Any factory functions.
+  class CORBA_ORB_InconsistentTypeCode;
+  typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
+  typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
 
   // Typecode for the above exception.
   static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
@@ -514,8 +391,7 @@ public:
   // we've returned since we've been asked to shut down the value of 1
   // is returned.
 
-  void shutdown (CORBA::Boolean wait_for_completion = 0,
-                 CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  void shutdown (CORBA::Boolean wait_for_completion = 0);
   // This operation instructs the ORB to shut down. Shutting down the
   // ORB causes all Object Adapters to be shut down. If
   // <wait_for_completion> parameter is TRUE, this operation blocks
@@ -526,14 +402,12 @@ public:
 
   // @@EXC@@ Add the ACE_THROW_SPEC for these two functions
 
-  CORBA_Object_ptr resolve_initial_references (const char *name,
-                                               CORBA_Environment &TAO_IN_ENV =
-                                               CORBA::default_environment ());
+  CORBA_Object_ptr resolve_initial_references (CORBA::String name,
+                                               CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  CORBA_Object_ptr resolve_initial_references (const char *name,
+  CORBA_Object_ptr resolve_initial_references (CORBA::String name,
                                                ACE_Time_Value *timeout,
-                                               CORBA_Environment &TAO_IN_ENV =
-                                               CORBA::default_environment ());
+                                               CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // This method acts as a mini-bootstrapping Naming Service, which is
   // provided by the ORB for certain well-known object references.
   // TAO supports the "NameService", "TradingService", "RootPOA", and
@@ -547,21 +421,7 @@ public:
   // will remains compliant with the CORBA
   // <resolve_initial_references> specification.
 
-  // Unimplemented function - throws CORBA::NO_IMPLEMENT.
-  CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &TAO_IN_ENV =
-                                                    CORBA::default_environment ());
-
-#if defined(TAO_HAS_CORBA_MESSAGING)
-  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any& val,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                       CORBA::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException, CORBA::PolicyError));
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
-  // ----------------------------------------------------------------
   // = TAO-specific extensions to the CORBA specification.
-  // ----------------------------------------------------------------
 
   virtual TAO_ServantBase *_get_collocated_servant (TAO_Stub *p);
   // Return the object pointer of an collocated object it there is
@@ -569,11 +429,11 @@ public:
   // must implement this and determine what is a collocated object
   // based on information provided in the TAO_Stub.
 
-  virtual int _tao_add_to_IOR_table (const ACE_CString &object_id,
+  virtual int _tao_add_to_IOR_table (ACE_CString &object_id,
                                      CORBA::Object_ptr obj);
   // Add a mapping ObjectID->IOR to the table.
 
-  virtual int _tao_find_in_IOR_table (const ACE_CString &object_id,
+  virtual int _tao_find_in_IOR_table (ACE_CString &object_id,
                                       CORBA::Object_ptr &obj);
   // Find the given ObjectID in the table.
 
@@ -643,11 +503,8 @@ public:
 
   void _optimize_collocation_objects (CORBA::Boolean opt);
   // Set collocation optimization status.
-  CORBA::Boolean _optimize_collocation_objects (void) const;
+  CORBA::Boolean _optimize_collocation_objects (void);
   // Get collocation optimization status.
-
-  TAO_ORB_Core *orb_core (void) const;
-  // Get the ORB core.
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_ORB_ptr _ptr_type;
@@ -657,7 +514,7 @@ public:
 
 protected:
   // We must be created via the <ORB_init> call.
-  CORBA_ORB (TAO_ORB_Core *orb_core);
+  CORBA_ORB (TAO_ORB_Core* orb_core);
   virtual ~CORBA_ORB (void);
 
   CORBA_Object_ptr resolve_poa_current (CORBA_Environment &TAO_IN_ENV);
@@ -674,7 +531,7 @@ protected:
 
 private:
 
-  CORBA_Object_ptr resolve_service (const char* service_name,
+  CORBA_Object_ptr resolve_service (CORBA::String service_name,
                                     ACE_Time_Value *timeout,
                                     CORBA::Environment& ACE_TRY_ENV);
   // Resolve the service name.
@@ -702,8 +559,18 @@ private:
   // Read an IOR from a file and then parse it, returning the object
   // reference.
 
+  CORBA::Object_ptr iiop_string_to_object (const char* url,
+                                           CORBA::Environment& env);
+  // Read an IOR from a file and then parse it, returning the object
+  // reference.
+
   CORBA::Object_ptr ior_string_to_object (const char* ior,
                                           CORBA::Environment& env);
+  // Read an IOR from a file and then parse it, returning the object
+  // reference.
+
+  CORBA::Object_ptr iioploc_string_to_object (const char* string,
+                                              CORBA::Environment& env);
   // Read an IOR from a file and then parse it, returning the object
   // reference.
 
@@ -754,7 +621,7 @@ private:
   TAO_Leader_Follower_Info  leader_follower_info_;
   // Information about the leader follower model
 
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core* orb_core_;
   // The ORB_Core that created us....
 
 #ifdef TAO_HAS_VALUETYPE
@@ -766,6 +633,9 @@ private:
   // Table of ObjectID->IOR mappings.
 
   CORBA::Boolean use_omg_ior_format_;
+  // Decides whether to use the URL notation or to use IOR notation.
+
+  CORBA::Boolean optimize_collocation_objects_;
   // Decides whether to use the URL notation or to use IOR notation.
 
   // = NON-PROVIDED METHODS

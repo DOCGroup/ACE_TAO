@@ -16,7 +16,6 @@
 #ifndef TAO_TRADING_DYNAMIC_IDL
 #define TAO_TRADING_DYNAMIC_IDL
 
-#include <orb.idl>
 #include "CosTrading.idl"
 
 #pragma prefix "omg.org"
@@ -28,21 +27,21 @@ module CosTradingDynamic
   
   exception DPEvalFailure {
     CosTrading::PropertyName name;
-    CORBA::TypeCode returned_type;
+    TypeCode returned_type;
     any extra_info;
   };
   
   interface DynamicPropEval
     {      
       any evalDP (in CosTrading::PropertyName name,
-                  in CORBA::TypeCode returned_type,
+                  in TypeCode returned_type,
                   in any extra_info)
         raises (DPEvalFailure);
     };
 
     struct DynamicProp {
       DynamicPropEval eval_if;
-      CORBA::TypeCode returned_type;
+      TypeCode returned_type;
       any extra_info;
     };
 }; /* end module CosTradingDynamic */

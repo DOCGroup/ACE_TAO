@@ -119,10 +119,6 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\complex_any.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\driver.cpp
 # End Source File
 # Begin Source File
@@ -164,10 +160,6 @@ SOURCE=.\param_testCli.cpp
 # Begin Source File
 
 SOURCE=.\param_testSer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\recursive_struct.cpp
 # End Source File
 # Begin Source File
 
@@ -263,10 +255,6 @@ SOURCE=.\client.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\complex_any.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\driver.h
 # End Source File
 # Begin Source File
@@ -312,10 +300,6 @@ SOURCE=.\Param_TestCli.h
 # Begin Source File
 
 SOURCE=.\Param_TestSer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\recursive_struct.h
 # End Source File
 # Begin Source File
 
@@ -375,7 +359,11 @@ SOURCE=.\var_struct.h
 # PROP Default_Filter ".i"
 # Begin Source File
 
-SOURCE=.\param_testCli.i
+SOURCE=.\Param_TestC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Param_TestS.i
 # End Source File
 # End Group
 # Begin Group "IDL Files"

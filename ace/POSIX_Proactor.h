@@ -71,17 +71,18 @@ public:
   // user once this method is called.
 
   int wake_up_dispatch_threads (void);
-  // @@ This is a no-op on POSIX platforms. Returns 0.  
+  // Add wakeup dispatch threads (reinit).
 
   int close_dispatch_threads (int wait);
-  // @@ This is a no-op on POSIX platforms. Returns 0.  
+  // Close all dispatch threads.
 
   size_t number_of_threads (void) const;
   void number_of_threads (size_t threads);
-  // @@ This is a no-op on POSIX platforms. Returns 0.  
+  // Number of thread used as a parameter to CreatIoCompletionPort.
 
   virtual ACE_HANDLE get_handle (void) const;
-  // This is a no-op in POSIX. Returns ACE_INVALID_HANDLE.
+  // Get the event handle. This is a no-op in POSIX. Returns
+  // ACE_INVALID_HANDLE. 
 
   // Methods used to create Asynch_IO_Result objects. We create the right
   // objects here in these methods.
@@ -169,20 +170,7 @@ protected:
 				  const void *completion_key,
 				  u_long error);
   // Protect against structured exceptions caused by user code when
-  // dispatching handles. The <completion_key> is not very useful
-  // compared to <AST> that can be associated each asynchronous
-  // operation. <completion_key> is implemented right now for the
-  // POSIX Proators.
-
-  virtual int post_wakeup_completions (int how_many);
-  // Post <how_many> completions to the completion port so that all
-  // threads can wake up. This is used in conjunction with the
-  // <run_event_loop>. 
-
-protected:
-  ACE_Handler wakeup_handler_;
-  // Handler to handle the wakeups. This works in conjunction with the
-  // <ACE_Proactor::run_event_loop>. 
+  // dispatching handles.
 };
 
 // Forward declarations.
@@ -234,7 +222,7 @@ public:
   // Post a result to the completion port of the Proactor.
 
   // = Methods used to create Asynch_IO objects. We create the right
-  //   objects here in these methods.
+  // objects here in these methods.
 
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
 
@@ -270,17 +258,12 @@ protected:
   ACE_AIOCB_Notify_Pipe_Manager* aiocb_notify_pipe_manager_;
   // This class takes care of doing <accept> when we use
   // AIO_CONTROL_BLOCKS strategy.
-  
+
   aiocb *aiocb_list_ [ACE_RTSIG_MAX];
   // Use an array to keep track of all the aio's issued
   // currently. We'll limit the array size to Maximum RT signals that
   // can be queued in a process.  This is the upper limit how many aio
   // operations can be pending at a time.
-
-  ACE_POSIX_Asynch_Result *result_list_ [ACE_RTSIG_MAX];
-  // @@ Keeping an extra copy of the <aiocb_list> here so that we can 
-  //    avoid dynamic cast when we use the result object calling back
-  //    the hook methods.
 
   size_t aiocb_list_max_size_;
   // To maintain the maximum size of the array (list).

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 // $Id$
-
 #include "Time_Date_i.h"
 #include "tao/corba.h"
 
@@ -21,25 +20,14 @@ Time_Date_i::~Time_Date_i (void)
 // Obtain the time and date in binary format.
 
 void
-Time_Date_i::bin_date (CORBA::Long_out time_date,
-                       CORBA::Environment &ACE_TRY_ENV)
+Time_Date::bin_date (CORBA::Long_out time_date)
 {
-  time_date = ACE_OS::time (0);
 }
 
 // Obtain the time and date in string format.
 
 void 
-Time_Date_i::str_date (CORBA::String_out time_date,
-                       CORBA::Environment &ACE_TRY_ENV)
+Time_Date::str_date (CORBA::String_out time_date)
 {
-  const time_t time = ACE_OS::time (0);
 
-  time_date = CORBA::string_dup (ACE_OS::ctime (&time));
-}
-
-void 
-Time_Date_i::orb (CORBA::ORB_ptr orb_ptr)
-{
-   orb_var_ = CORBA::ORB::_duplicate (orb_ptr);
 }

@@ -77,25 +77,21 @@ public:
   // The QoS (subscription) used to connect to the EC.
 
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
-                          CORBA::Environment &env);
+			  CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
-                             CORBA::Environment &env);
+			     CORBA::Environment &env);
   // Concrete implementations can use this methods to keep track of
   // the consumers interested in this events.
 
   virtual void connected (TAO_EC_ProxyPushConsumer* consumer,
-                          CORBA::Environment &env);
+			  CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer,
-                             CORBA::Environment &env);
+			     CORBA::Environment &env);
   // Usually implemented as no-ops, but some configurations may
   // require this methods.
 
-  virtual void shutdown (CORBA::Environment&);
-  // The event channel is shutting down
-
-  const RtecEventChannelAdmin::SupplierQOS& publications_i (void) const;
-  // The QoS (subscription) used to connect to the EC, assumes the
-  // locks are held, use with care!
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
+  // Override the ServantBase method.
 
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -103,15 +99,14 @@ public:
 
   // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
-                RtecEventComm::PushSupplier_ptr push_supplier,
+		RtecEventComm::PushSupplier_ptr push_supplier,
                 const RtecEventChannelAdmin::SupplierQOS& qos,
                 CORBA::Environment &);
   virtual void push (const RtecEventComm::EventSet& event,
                      CORBA::Environment &);
   virtual void disconnect_push_consumer (CORBA::Environment &);
 
-  // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
+  // = Servant reference counting methods.
   virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV =
                              CORBA::default_environment ());
   virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV =
@@ -120,12 +115,6 @@ public:
 private:
   CORBA::Boolean is_connected_i (void) const;
   // The private version (without locking) of is_connected().
-
-  void cleanup_i (void);
-  // Release the filter and the supplier
-
-  void deactivate (CORBA::Environment &ACE_TRY_ENV);
-  // Deactivate from the POA
 
 private:
   TAO_EC_Event_Channel* event_channel_;

@@ -35,40 +35,36 @@ class TAO_Export TAO_IIOP_Connector : public TAO_Connector
   //
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
-  //
 public:
   // = Initialization and termination methods.
   TAO_IIOP_Connector (void);
   // Constructor.
+  // @@ Do we want to pass in the tag here or should it be statically
+  // defined?
 
-  // = The TAO_Connector methods, please check the documentation on
-  // Pluggable.h
-  int open (TAO_ORB_Core *orb_core);
+  int open (TAO_Resource_Factory *trf, ACE_Reactor *reactor);
+  //  Initialize object and register with reactor.
+
   int close (void);
-  int connect (TAO_Profile *profile, TAO_Transport *&transport);
-  int preconnect (const char *preconnections);
-  TAO_Profile *create_profile (TAO_InputCDR& cdr);
+  // Shutdown Connector bridge and concreate Connector.
 
-  typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
-        TAO_NULL_ACTIVATION_STRATEGY;
+  int preconnect (char *preconnections);
+  // Initial set of connections to be established.
 
-  typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
-        TAO_NULL_CREATION_STRATEGY;
+  CORBA::ULong tag (void);
+  // The tag identifying the specific ORB transport layer protocol.
+  // For example TAO_IOP_TAG_INTERNET_IOP = 0.  The tag is used in the
+  // IOR to identify the type of profile included. IOR -> {{tag0,
+  // profile0} {tag1, profole1} ...}  GIOP.h defines typedef
+  // CORBA::ULong TAO_IOP_Profile_ID;
 
-protected:
-  // = More TAO_Connector methods, please check the documentation on
-  // Pluggable.h
-  virtual int make_profile (const char *endpoint,
-                            TAO_Profile *&,
-                            CORBA::Environment &ACE_TRY_ENV);
-
-  virtual int check_prefix (const char *endpoint);
-
-  virtual char object_key_delimiter (void) const;
+  int connect (TAO_Profile *profile,
+               TAO_Transport *&transport);
+  // Connect will be called from TAO_GIOP_Invocation::start
 
 private:
-  TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
-  TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
+  CORBA::ULong tag_;
+  // IIOP tag.
 
   TAO_IIOP_BASE_CONNECTOR  base_connector_;
   // The connector initiating connection requests for IIOP.

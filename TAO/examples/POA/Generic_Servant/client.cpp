@@ -14,6 +14,7 @@
 //
 // ================================================================
 
+#include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
 #include "tao/Timeprobe.h"

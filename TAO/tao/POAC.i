@@ -3103,7 +3103,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Thread
     return 0;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
@@ -3152,7 +3151,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-#endif /* end #if !defined */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::LifespanPolicyValue &_tao_enumval)
 {
@@ -3369,8 +3367,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Implic
     return 0;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
@@ -3419,8 +3415,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-#endif /* !defined (TAO_HAS_MINIMUM_CORBA) */
-
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ServantRetentionPolicyValue &_tao_enumval)
 {
@@ -3438,8 +3432,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Servan
   else
     return 0;
 }
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -3490,8 +3482,6 @@ operator>> (
   return 0;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::RequestProcessingPolicyValue &_tao_enumval)
 {
   return strm.write_ulong ((CORBA::ULong) _tao_enumval);
@@ -3508,8 +3498,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Reques
   else
     return 0;
 }
-
-#if !defined(TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -3559,7 +3547,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::AdapterAlreadyExists &_tao_aggregate)
@@ -3584,8 +3571,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::A
     return 0;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::AdapterInactive &_tao_aggregate)
 {
   // first marshal the repository ID
@@ -3607,7 +3592,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::A
   else
     return 0;
 }
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::AdapterNonExistent &_tao_aggregate)
 {
@@ -3667,8 +3651,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::I
     return 0;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::NoServant &_tao_aggregate)
 {
   // first marshal the repository ID
@@ -3690,7 +3672,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::N
   else
     return 0;
 }
-#endif /* !defined (TAO_HAS_MINIMUM_CORBA) */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::ObjectAlreadyActive &_tao_aggregate)
 {

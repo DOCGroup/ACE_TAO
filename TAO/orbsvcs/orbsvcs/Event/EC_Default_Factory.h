@@ -31,8 +31,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_Defaults.h"
-
 class TAO_EC_SupplierFiltering;
 
 class TAO_ORBSVCS_Export TAO_EC_Default_Factory : public TAO_EC_Factory
@@ -101,10 +99,6 @@ public:
       create_observer_strategy (TAO_EC_Event_Channel*);
   virtual void
       destroy_observer_strategy (TAO_EC_ObserverStrategy*);
-  virtual TAO_EC_Scheduling_Strategy*
-      create_scheduling_strategy (TAO_EC_Event_Channel*);
-  virtual void
-      destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*);
   virtual TAO_EC_ProxyPushSupplier_Set*
       create_proxy_push_supplier_set (TAO_EC_Event_Channel*);
   virtual void
@@ -126,7 +120,6 @@ private:
   int supplier_filtering_;
   int timeout_;
   int observer_;
-  int scheduling_;
   int supplier_set_;
   int consumer_lock_;
   int supplier_lock_;

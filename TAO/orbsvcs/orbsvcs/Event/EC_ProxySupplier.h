@@ -83,21 +83,21 @@ public:
   // The QoS (subscription) used to connect to the EC.
 
   virtual void connected (TAO_EC_ProxyPushConsumer* consumer,
-                          CORBA::Environment &env);
+			  CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer,
-                             CORBA::Environment &env);
+			     CORBA::Environment &env);
   // Concrete implementations can use this methods to keep track of
   // the suppliers that publish its events.
 
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
-                          CORBA::Environment &env);
+			  CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
-                             CORBA::Environment &env);
+			     CORBA::Environment &env);
   // Usually implemented as no-ops, but some configurations may
   // require this methods.
 
-  virtual void shutdown (CORBA::Environment &env);
-  // The event channel is shutting down
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
+  // Override the ServantBase method.
 
   void push_to_consumer (const RtecEventComm::EventSet &event,
                          CORBA::Environment &env);
@@ -114,7 +114,7 @@ public:
 
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
-                RtecEventComm::PushConsumer_ptr push_consumer,
+		RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS& qos,
                 CORBA::Environment &);
   virtual void disconnect_push_supplier (CORBA::Environment &);
@@ -141,12 +141,8 @@ public:
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader &header) const;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info,
-                                CORBA::Environment &ACE_TRY_ENV);
 
-  // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
+  // = Servant reference counting methods.
   virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV =
                              CORBA::default_environment ());
   virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV =
@@ -155,12 +151,6 @@ public:
 private:
   CORBA::Boolean is_connected_i (void) const;
   // The private version (without locking) of is_connected().
-
-  void cleanup_i (void);
-  // Release the child and the consumer
-
-  void deactivate (CORBA::Environment &ACE_TRY_ENV);
-  // Deactivate from the POA
 
 private:
   TAO_EC_Event_Channel* event_channel_;
@@ -177,6 +167,9 @@ private:
 
   CORBA::Boolean suspended_;
   // Is this consumer suspended?
+
+  int state_;
+  // The state, see the enum above for a description.
 
   RtecEventChannelAdmin::ConsumerQOS qos_;
   // The subscription and QoS information...

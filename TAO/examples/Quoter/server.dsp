@@ -139,12 +139,12 @@ SOURCE=.\Quoter.idl
 !IF  "$(CFG)" == "Quoter Server - Win32 Release"
 
 USERDEP__QUOTE="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Quoter.idl
 InputName=Quoter
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
+	tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -177,12 +177,12 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Quoter Server - Win32 Debug"
 
 USERDEP__QUOTE="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Quoter.idl
 InputName=Quoter
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
+	tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

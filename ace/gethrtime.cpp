@@ -29,11 +29,10 @@ ACE_gethrtime (void)
   // "now".  The A constraint signifies a 64-bit int.
 #if defined (__GNUG__)
   asm volatile ("rdtsc" : "=A" (now) : : "memory");
-// #elif defined (ghs)
-// The following doesn't work.  For now, this file must be compile with g++.
-//  asm ("rdtsc");
-//  asm ("movl %edx,-16(%ebp)");
-//  asm ("movl %eax,-12(%ebp)");
+#elif defined (ghs)
+  asm ("rdtsc");
+  asm ("movl -16(%ebp),%edx");
+  asm ("movl -12(%ebp),%eax");
 #else
 # error unsupported compiler
 #endif

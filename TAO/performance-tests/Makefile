@@ -11,8 +11,6 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Cubit \
-	POA \
-	Pluggable \
 	Thruput
 
 # The following tests have not been updated yet

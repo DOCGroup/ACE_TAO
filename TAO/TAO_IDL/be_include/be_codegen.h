@@ -35,11 +35,10 @@ class TAO_CodeGen
   //
 public:
 
-  // define all the code generation states.
-  // The first letter C/S of the suffix stands for client/server-side
-  // The second letter H/I/S stands for header/inline/impl file.
-  // These are used to denote the state or the context of code
-  // generation we are in and serves to produce the right kind of
+  // define all the code generation states. The first letter C/S of the suffix stands
+  // for client/server-side and the second letter H/I/S stands for
+  // header/inline/impl file. These are used to denote the state or the context
+  // of code generation we are in and serves to produce the right kind of
   // visitor for us
 
   enum CG_STATE
@@ -94,7 +93,6 @@ public:
     TAO_ARRAY_ANY_OP_CH,
     TAO_ARRAY_ANY_OP_CS,
     TAO_ARRAY_CDR_OP_CH,
-    TAO_ARRAY_CDR_OP_CI,
     TAO_ARRAY_CDR_OP_CS,
 
     // emitting code for the constants
@@ -108,7 +106,6 @@ public:
     TAO_ENUM_ANY_OP_CH,
     TAO_ENUM_ANY_OP_CS,
     TAO_ENUM_CDR_OP_CH,
-    TAO_ENUM_CDR_OP_CI,
     TAO_ENUM_CDR_OP_CS,
 
     // emitting code for exceptions
@@ -121,7 +118,6 @@ public:
     TAO_EXCEPTION_ANY_OP_CH,
     TAO_EXCEPTION_ANY_OP_CS,
     TAO_EXCEPTION_CDR_OP_CH,
-    TAO_EXCEPTION_CDR_OP_CI,
     TAO_EXCEPTION_CDR_OP_CS,
 
     // emitting fields i.e., struct members
@@ -129,7 +125,6 @@ public:
     TAO_FIELD_CI,
     TAO_FIELD_CS,
     TAO_FIELD_CDR_OP_CH,
-    TAO_FIELD_CDR_OP_CI,
     TAO_FIELD_CDR_OP_CS,
     TAO_FIELD_OBV_CH,
 
@@ -147,7 +142,6 @@ public:
     TAO_INTERFACE_ANY_OP_CH,
     TAO_INTERFACE_ANY_OP_CS,
     TAO_INTERFACE_CDR_OP_CH,
-    TAO_INTERFACE_CDR_OP_CI,
     TAO_INTERFACE_CDR_OP_CS,
     TAO_INTERFACE_TIE_SH,
     TAO_INTERFACE_TIE_SI,
@@ -155,10 +149,7 @@ public:
     // emitting code for the interface forward declaration
     TAO_INTERFACE_FWD_CH,
     TAO_INTERFACE_FWD_CI,
-    TAO_INTERFACE_FWD_CS,
-    TAO_INTERFACE_FWD_CDR_OP_CH,
     TAO_INTERFACE_FWD_CDR_OP_CI,
-    TAO_INTERFACE_FWD_CDR_OP_CS,
 
     // emitting code for the valuetype
     TAO_VALUETYPE_CH,
@@ -179,7 +170,6 @@ public:
     TAO_VALUETYPE_MARSHAL_CH,          // the actual generation of CDR in header
     TAO_VALUETYPE_MARSHAL_CS,          // and the implementation, activated from:
     TAO_VALUETYPE_CDR_OP_CH,
-    TAO_VALUETYPE_CDR_OP_CI,
     TAO_VALUETYPE_CDR_OP_CS,
     //TAO_VALUETYPE_TIE_SH,
     //TAO_VALUETYPE_TIE_SI,
@@ -187,10 +177,7 @@ public:
     // emitting code for the valuetype forward declaration
     TAO_VALUETYPE_FWD_CH,
     TAO_VALUETYPE_FWD_CI,
-    TAO_VALUETYPE_FWD_CS,
-    TAO_VALUETYPE_FWD_CDR_OP_CH,
     TAO_VALUETYPE_FWD_CDR_OP_CI,
-    TAO_VALUETYPE_FWD_CDR_OP_CS,
 
     // emitting code for the module
     TAO_MODULE_CH,
@@ -204,7 +191,6 @@ public:
     TAO_MODULE_ANY_OP_CH,
     TAO_MODULE_ANY_OP_CS,
     TAO_MODULE_CDR_OP_CH,
-    TAO_MODULE_CDR_OP_CI,
     TAO_MODULE_CDR_OP_CS,
     TAO_MODULE_OBV_CH,                  // for OBV_ (cmp. POA_ namespace)
     TAO_MODULE_OBV_CI,
@@ -294,7 +280,6 @@ public:
     TAO_SEQUENCE_ANY_OP_CH,
     TAO_SEQUENCE_ANY_OP_CS,
     TAO_SEQUENCE_CDR_OP_CH,
-    TAO_SEQUENCE_CDR_OP_CI,
     TAO_SEQUENCE_CDR_OP_CS,
 
     // emitting code for sequence base type
@@ -319,7 +304,6 @@ public:
     TAO_STRUCT_ANY_OP_CH,
     TAO_STRUCT_ANY_OP_CS,
     TAO_STRUCT_CDR_OP_CH,
-    TAO_STRUCT_CDR_OP_CI,
     TAO_STRUCT_CDR_OP_CS,
 
     // emitting code for typedefs
@@ -329,7 +313,6 @@ public:
     TAO_TYPEDEF_ANY_OP_CH,
     TAO_TYPEDEF_ANY_OP_CS,
     TAO_TYPEDEF_CDR_OP_CH,
-    TAO_TYPEDEF_CDR_OP_CI,
     TAO_TYPEDEF_CDR_OP_CS,
 
     // emitting code for unions
@@ -339,7 +322,6 @@ public:
     TAO_UNION_ANY_OP_CH,
     TAO_UNION_ANY_OP_CS,
     TAO_UNION_CDR_OP_CH,
-    TAO_UNION_CDR_OP_CI,
     TAO_UNION_CDR_OP_CS,
 
     // emitting code for the discriminant
@@ -360,7 +342,6 @@ public:
 
     // emitting code for CDR operators for types defined inside unions
     TAO_UNION_BRANCH_CDR_OP_CH,
-    TAO_UNION_BRANCH_CDR_OP_CI,
     TAO_UNION_BRANCH_CDR_OP_CS,
 
     // emitting code for typecodes
@@ -385,22 +366,10 @@ public:
   enum CG_SUB_STATE
   {
     // sub states
-
-    // these are for the CDR operators
     TAO_CDR_INPUT,
     TAO_CDR_OUTPUT,
     TAO_CDR_SCOPE,
 
-    // these are for typecode generation
-    TAO_TC_DEFN_TYPECODE, // top level typecode
-    TAO_TC_DEFN_TYPECODE_NESTED, // nested tc
-    TAO_TC_DEFN_ENCAPSULATION, // encapsulation
-    TAO_TC_DEFN_SCOPE, // scope
-    TAO_TC_DEFN_TC_SIZE, // tc size computation
-    TAO_TC_DEFN_ENCAP_LEN, // encap size computation
-    TAO_TC_DEFN_SCOPE_LEN, // scope size computation
-
-    // used to denote either error or don't care
     TAO_SUB_STATE_UNKNOWN
   };
 

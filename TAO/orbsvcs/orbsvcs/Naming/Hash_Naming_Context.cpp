@@ -446,10 +446,6 @@ TAO_Hash_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   TAO_Hash_Naming_Context *c_impl = 0;
-
-  // To keep compilers warnings away.
-  ACE_UNUSED_ARG (c_impl);
-
   TAO_Naming_Context *c = 0;
   CosNaming::NamingContext_var result;
   char poa_id[BUFSIZ];
@@ -463,7 +459,7 @@ TAO_Hash_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (result._retn ());
 
-  // Put <c> into the auto pointer temporarily, in case next
+  // Put c_impl into the auto pointer temporarily, in case next
   // allocation fails.
   ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp (c);
 

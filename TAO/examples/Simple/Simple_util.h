@@ -77,7 +77,7 @@ protected:
   // The ORB manager - a helper class for accessing the POA and
   // registering objects.
 
-  TAO_Naming_Server naming_server_;
+  TAO_Naming_Server namingServer;
   // helper class for getting access to Naming Service.
 
   FILE *ior_output_file_;
@@ -86,7 +86,7 @@ protected:
   int naming_;
   // Flag to indicate whether naming service could be used
        
-  char *ins_;
+  char * ins_;
   // Used test the INS.
 
   int argc_;
@@ -96,7 +96,7 @@ protected:
   // The command line arguments.
 };
 
-template <class INTERFACE_OBJECT, class Var>
+template <class InterfaceObj, class Var>
 class Client
 {
   // = TITLE
@@ -118,7 +118,7 @@ public:
   int init (const char *name,int argc, char *argv[]);
   // Initialize the client communication endpoint with server.
 
-  INTERFACE_OBJECT *operator-> () { return server_.in ();};
+  InterfaceObj *operator-> () { return server_.in ();};
   // Return the interface object pointer.
 
   int shutdown (void );
@@ -137,7 +137,7 @@ protected:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  TAO_Naming_Client naming_client_;
+  TAO_Naming_Client namingClient;
   // helper class for getting access to Naming Service.
   
   int argc_;

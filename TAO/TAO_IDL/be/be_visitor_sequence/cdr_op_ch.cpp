@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -52,17 +52,14 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
   // generate the CDR << and >> operator declarations
   os->indent ();
   *os << "CORBA::Boolean " << idl_global->export_macro ()
-      << " operator<< (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &," << be_nl
-      << "const " << node->name () << " &" << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << " operator<< (TAO_OutputCDR &, const " << node->name ()
+      << " &); // " << be_nl;
   *os << "CORBA::Boolean " << idl_global->export_macro ()
-      << " operator>> (" << be_idt << be_idt_nl
-      << "TAO_InputCDR &," << be_nl
-      << node->name () << " &" << be_uidt_nl
-      << ");" << be_uidt << "\n\n";
+      << " operator>> (TAO_InputCDR &, "
+      << node->name () << " &);\n";
 
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;
 }
+

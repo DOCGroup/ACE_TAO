@@ -68,6 +68,11 @@ Specifies which IOR the Trading Service is listening on.
 <TD>
 Specifies which port the Trading Service is listening on.
 </TD></TR>
+<TR>
+<TD><CODE>TAO_ORB_DEBUG</CODE> <EM>which</EM></TD>
+<TD>
+Enables TAO debugging mode.
+</TD></TR>
 </TABLE>
 </P>
 </BLOCKQUOTE>
@@ -121,73 +126,31 @@ componentry.</TD></TR>
 more output (try 10).
 </TD></TR>
 <TR>
-
-<TD><CODE>-ORBendpoint</CODE> <EM>endpoint</EM></TD> <TD><a
-name="-ORBendpoint"></a>Tells the ORB to listen for requests on the
-interface specified by <I><EM>endpoint</EM></I>.  Endpoints are
-specified using a URL style format.  An endpoint has the form:
-<blockquote><CODE>
-protocol://V.v@addr1,...,W.w@addrN
-</CODE></blockquote>
-where <CODE>V.v</CODE> and <CODE>W.w</CODE> are optional protcol versions for
-each address.  An example of an IIOP endpoint is:
-<blockquote><CODE>
-iiop://<I><EM>hostname</EM></I>:<I><EM>port</EM></I>
-</CODE></blockquote>
-Sets of endpoints may be specified using multiple <CODE>-ORBendpoint</CODE>
-options or by delimiting endpoints with a semi-colon (;).  For example,
-<blockquote><CODE>
--ORBendpoint iiop://localhost:9999 -ORBendpoint uiop:///tmp/mylocalsock
-</CODE></blockquote>
-is equivalent to:
-<blockquote><CODE>
--ORBendpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock'
-</CODE></blockquote>
-Notice the single quotes (') in the latter option specification.  Single
-quotes are needed to prevent the shell from interpreting text after the
-semi-colon as another command to run.<P>
-If an endpoint is specified without an <CODE>addr</CODE> such as the following:
-<blockquote><CODE>
--ORBendpoint uiop://
-</CODE></blockquote>
-then a default endpoint will be created for the specified protocol.
-</TD></TR>
-
+<TD><CODE>-ORBhost</CODE> <EM>hostname</EM></TD>
+<TD><a name="-ORBhost"></a>Tells the Object Adapter to listen for requests on the interface associated
+with the host named <I><EM>hostname</EM></I>.</TD></TR>
 <TR>
-
-<TD><CODE>-ORBhost</CODE> <EM>hostname</EM></TD> <TD><a
-name="-ORBhost"></a>Tells the ORB to listen for requests on the
-interface associated with the host named
-<I><EM>hostname</EM></I>.  This option is valid only for IIOP endpoints.<BR>  
-<STRONG>NOTE:</STRONG> This option has been superceded by the
-<CODE>-ORBendpoint</CODE> option. It will not be supported in the
-future.</TD></TR>
-
-<TR>
-
-<TD><CODE>-ORBport</CODE> <EM>portspec</EM></TD> <TD>Tells the ORB to
-listen for requests on the port specified by
-<I><EM>portspec</EM></I>. If not specified, the OS gets to choose a
-random empty port.  This option is valid only for IIOP endpoints.<BR>  
-<STRONG>NOTE:</STRONG> This option has been superceded by the
-<CODE>-ORBendpoint</CODE> option. It will not be supported in the
-future.</TD>
-
-</TR>
-
+<TD><CODE>-ORBport</CODE> <EM>portspec</EM></TD>
+<TD>Tells the Object Adapter to listen for requests on the port specified by
+<I><EM>portspec</EM></I>, which can be a name as found in <TT>/etc/services</TT>
+or a number. The default is <TT>10013</TT>.</TD></TR>
 <TR>
 <TD><CODE>-ORBobjrefstyle</CODE> <EM>which</EM></TD>
 <TD>Specifies the user-visible style of object references. The range of values
 is <CODE>IOR</CODE>, which is the traditional nonsensical object reference,
 or <CODE>URL</CODE>, which looks more like a URL.</TD></TR>
 <TR>
+<TD><CODE>-ORBtablesize</CODE> <EM>object table size</EM></TD>
+<TD>Specifies the size of the object table as a positive, non-zero integer.
+If not specified, the default is <TT>64</TT>.</TD></TR>
+<TR>
 <TD><CODE>-ORBrcvsock</CODE> <EM>receive buffer size</EM></TD>
 <TD><A NAME="-ORBrcvsock"></a>Specify the size of the socket receive buffer as a positive, non-zero integer.
-If not specified, the ACE_DEFAULT_MAX_SOCKET_BUFSIZ default is used.</TD></TR>
+If not specified, the system-dependent default is used.</TD></TR>
 <TR>
 <TD><CODE>-ORBsndsock</CODE> <EM>send buffer size</EM></TD>
 <TD><A NAME="-ORBsndsock"></a>Specify the size of the socket send buffer as a positive, non-zero integer.
-If not specified, the ACE_DEFAULT_MAX_SOCKET_BUFSIZ default is used.</TD></TR>
+If not specified, the system-dependent default is used.</TD></TR>
 <TR>
 <TD><CODE>-ORBnameserviceport</CODE> <EM>portspec</EM></TD>
 <TD>Specifies which port the Naming Service is listening on.</TD></TR>
@@ -205,18 +168,12 @@ If not specified, the ACE_DEFAULT_MAX_SOCKET_BUFSIZ default is used.</TD></TR>
 <TD><CODE>-ORBcollocation</CODE> <EM>yes/no</EM></TD>
 <TD>Specifies the use of collocation object optimization.  Default is yes.</TD></TR>
 <TR>
-<TD><CODE>-ORBpreconnect</CODE> <EM>endpoint</EM></TD>
-<TD><A name="-ORBpreconnect"></a>Pre-establishes a blocking connection to
-each listed <EM>endpoint</EM>. If a connection cannot be established the
-failed preconnection will be ignored and the next preconnection in the list
-will be processed.  Successful and unsuccessful preconnections will be
-displayed if a debugging level greater than or equal to one is specified by
-using the <CODE>-ORBdebuglevel</CODE> option.  Listing the same combination
-multiple times will properly establish multiple connections to that endpoint.
-The <CODE>-ORBpreconnect</CODE> option uses the same endpoint format as the
-<CODE>-ORBendpoint</CODE> option.  Specifying IIOP endpoints using a comma
-delimited list of <EM>host<STRONG>:</STRONG>port</EM> pairs is deprecated
-and will not be supported in the future.</TD></TR>
+<TD><CODE>-ORBpreconnect</CODE> <EM>host</EM><STRONG>:</STRONG><EM>port</em>[<STRONG>,</STRONG><EM>host</EM><STRONG>:</STRONG><EM>port</em>...]</TD>
+<TD><A name="-ORBpreconnect"></a>Pre-establishes a blocking connection to each listed
+<em>host</em>:<em>port</em> combination.  If a connection cannot
+be established, a warning is announced and it continues with the
+next listed.  Listing the same combination multiple times will
+properly establish multiple connections to that endpoint.</TD></TR>
 <TR>
 <TD><CODE>-ORBcdrtradeoff</CODE> <EM>maxsize</EM></TD>
 <TD><A name="-ORBCDRtradeoff"></a>Control the strategy to tradeoff
@@ -224,11 +181,6 @@ between copy vs no copy marshalling of octet sequences.
 If an octet sequence is smaller than <EM>maxsize</EM> and the current
 message block contains enough space for it the octet sequence is
 copied instead of appended to the CDR stream.</TD></TR>
-<TR>
-<TD><CODE>-ORBSkipServiceConfigOpen</CODE></TD>
-<TD><A name="-ORBSkipServiceConfigOpen"></a>Do not call the <code>ACE_Service_Config::open</code>
-method, which is necessary if the ORB is being linked dynamically via the ACE Service Configurator
-which is not reentrant.</TD></TR>
 <TR>
 <TD><CODE>-ORBgioplite</CODE></TD>
 <TD><A name="-ORBgioplite"></a>Enable a lightweight version of the
@@ -265,44 +217,9 @@ which is not reentrant.</TD></TR>
 (<em>which</em> = <code>tss</code>) instance for the resources it returns.</TD></TR>
 <TR>
 <TD><CODE>-ORBreactorlock</CODE> <EM>which</EM></TD>
-<TD><a name="-ORBreactorlock"></a>Specify whether the ORB reactor is
-	      thread-safe
+<TD><a name="-ORBcoltable"></a>Specify whether the ORB reactor is thread-safe
 (<em>which</em> = <code>token</code>) or not
-(<em>which</em> = <code>null</code>).  Default is <code>token</code>.
-	      <P>This option has been superseeded by
-		<CODE>-ORBreactortype</CODE>
-	      </P>
-</TD></TR>
-<TR>
-<TD><CODE>-ORBreactortype</CODE> <EM>which</EM></TD>
-<TD><a name="-ORBcoltable"></a>Specify what kind of reactor does the
-	      ORB use, the options are:
-  <TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
-  <TR><TH><em>which</em></TH><TH>Reactor</TH></TR>
-  <TR><TD><CODE>select_mt<CODE></TD><TD>Use the
-		    <CODE>ACE_Select_Reactor</CODE> with the usual
-		    locking mechanism for this platform</TD></TR>
-  <TR><TD><CODE>select_st<CODE></TD><TD>Use the
-		    <CODE>ACE_Select_Reactor</CODE> with null locks
-		  </TD></TR>
-  <TR><TD><CODE>fl_reactor<CODE></TD><TD>Use the
-		    <CODE>ACE_FlReactor</CODE> only available if ACE
-		    was compiled with support for the FL toolkit
-		  </TD></TR>
-  <TR><TD><CODE>xt_reactor<CODE></TD><TD>Use the
-		    <CODE>ACE_FlReactor</CODE> only available if ACE
-		    was compiled with support for the XWindows Toolkit
-		  </TD></TR>
-  <TR><TD><CODE>WFMO<CODE></TD><TD>Use the
-		    <CODE>ACE_WFMO_Reactor</CODE> only available on
-		    Win32 platforms.
-		  </TD></TR>
-  <TR><TD><CODE>MsgWFMO<CODE></TD><TD>Use the
-		    <CODE>ACE_Msg_WFMO_Reactor</CODE> only available on
-		    Win32 platforms.
-		  </TD></TR>
-  </TABLE>
-  The default is <code>select_mt</code></TD></TR>
+(<em>which</em> = <code>null</code>).  Default is <code>token</code></TD></TR>
 <TR>
 <TD><CODE>-ORBcoltable</CODE> <EM>which</EM></TD>
 <TD><a name="-ORBcoltable"></a>Specify whether each ORB uses a global

@@ -34,13 +34,11 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
   handle_set.reset ();
   handle_set.set_bit (this->get_handle ());
 
-  io_vec->iov_base = 0;
-
   // Check the status of the current socket.
   switch (ACE_OS::select (int (this->get_handle ()) + 1,
-                          handle_set,
-                          0, 0,
-                          timeout))
+                         handle_set,
+                         0, 0,
+                         timeout))
     {
     case -1:
       return -1;
@@ -56,17 +54,13 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
 
   u_long inlen;
 
-  if (ACE_OS::ioctl (this->get_handle (),
-                     FIONREAD,
+  if (ACE_OS::ioctl (this->get_handle (), FIONREAD,
                      (u_long *) &inlen) == -1)
     return -1;
   else if (inlen > 0)
     {
-      ACE_NEW_RETURN (io_vec->iov_base,
-                      char[inlen],
-                      -1);
-      io_vec->iov_len = this->recv (io_vec->iov_base,
-                                    inlen);
+      ACE_NEW_RETURN (io_vec->iov_base, char[inlen], -1);
+      io_vec->iov_len = this->recv (io_vec->iov_base, inlen);
       return io_vec->iov_len;
     }
   else
@@ -105,9 +99,7 @@ ACE_SOCK_IO::send (size_t n, ...) const
       iovp[i].iov_len = va_arg (argp, ssize_t);
     }
 
-  ssize_t result = ACE_OS::sendv (this->get_handle (),
-                                  iovp,
-                                  total_tuples);
+  ssize_t result = ACE_OS::sendv (this->get_handle (), iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -143,9 +135,7 @@ ACE_SOCK_IO::recv (size_t n, ...) const
       iovp[i].iov_len = va_arg (argp, ssize_t);
     }
 
-  ssize_t result = ACE_OS::recvv (this->get_handle (), 
-                                  iovp, 
-                                  total_tuples);
+  ssize_t result = ACE_OS::recvv (this->get_handle (), iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */

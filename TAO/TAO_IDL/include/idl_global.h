@@ -549,13 +549,6 @@ public:
   virtual idl_bool opt_tc (void);
   // check if TypeCodes need be optimized
 
-  virtual void case_diff_error (idl_bool);
-  // report an error (1) for indentifiers in the same scope
-  // that differ only by case, or report a warning (0).
-
-  virtual idl_bool case_diff_error (void);
-  // are we strict about case-only differences or not?
-
 private:
   // Data
   UTL_ScopeStack                *pd_scopes;             // Store scopes stack
@@ -692,10 +685,6 @@ private:
 
   idl_bool opt_tc_;
   // do we generate optimized typecodes?
-
-  idl_bool case_diff_error_;
-  // do we report an error for indentifiers in the same scope that differ
-  // only by case? or just a warning?
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

@@ -16,7 +16,6 @@
 #ifndef TAO_TRADING_REPOS_IDL
 #define TAO_TRADING_REPOS_IDL
 
-#include <orb.idl>
 #include "CosTrading.idl"
 
 #pragma prefix "omg.org"
@@ -36,7 +35,7 @@ module CosTradingRepos
       struct PropStruct
       {
         CosTrading::PropertyName name;
-        CORBA::TypeCode value_type;
+        TypeCode value_type;
         PropertyMode mode;
       };
       typedef sequence<PropStruct> PropStructSeq;

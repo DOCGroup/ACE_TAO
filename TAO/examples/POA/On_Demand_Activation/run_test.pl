@@ -1,9 +1,8 @@
+#$Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
-
-# $Id$
-# -*- perl -*-
 
 unshift @INC, '../../../../bin';
 require ACEutils;
@@ -67,7 +66,5 @@ $status  = system ("../Generic_Servant/client$Process::EXE_EXT $extra_args $onew
 
 unlink $iorfile_1;
 unlink $iorfile_2;
-
-$SV->Wait ();
 
 exit $status;

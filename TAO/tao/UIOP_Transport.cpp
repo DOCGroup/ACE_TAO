@@ -5,7 +5,7 @@
 
 #include "tao/UIOP_Transport.h"
 #include "tao/GIOP.h"
-#include "tao/UIOP_Connect.h"
+#include "tao/Connect.h"
 #include "tao/Timeprobe.h"
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -43,8 +43,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
 
 
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Handler_Base* handler)
-  : TAO_Transport (TAO_IOP_TAG_UNIX_IOP),
-    handler_ (handler)
+  : handler_(handler),
+    tag_(TAO_IOP_TAG_INTERNET_IOP)
 {
 }
 
@@ -52,15 +52,15 @@ TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
 }
 
-TAO_UIOP_Server_Transport::TAO_UIOP_Server_Transport (TAO_UIOP_Server_Connection_Handler *handler)
-  : TAO_UIOP_Transport (handler),
+TAO_UIOP_Server_Transport::TAO_UIOP_Server_Transport (TAO_Server_Connection_Handler *handler)
+  : TAO_UIOP_Transport(handler),
     server_handler_ (0)
 {
   server_handler_ = handler;
 }
 
-TAO_UIOP_Client_Transport::TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler)
-  :  TAO_UIOP_Transport (handler),
+TAO_UIOP_Client_Transport::TAO_UIOP_Client_Transport (TAO_Client_Connection_Handler *handler)
+  :  TAO_UIOP_Transport(handler),
      client_handler_ (0)
 {
   client_handler_ = handler;
@@ -74,13 +74,19 @@ TAO_UIOP_Client_Transport::~TAO_UIOP_Client_Transport (void)
 {
 }
 
-TAO_UIOP_Client_Connection_Handler *
+CORBA::ULong
+TAO_UIOP_Transport::tag (void)
+{
+  return this->tag_;
+}
+
+TAO_Client_Connection_Handler *
 TAO_UIOP_Client_Transport::client_handler (void)
 {
   return this->client_handler_;
 }
 
-TAO_UIOP_Server_Connection_Handler *
+TAO_Server_Connection_Handler *
 TAO_UIOP_Server_Transport::server_handler (void)
 {
   return this->server_handler_;
@@ -133,7 +139,7 @@ TAO_UIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                          TAO_OutputCDR &stream,
                                          int twoway)
 {
-  // ACE_FUNCTION_TIMEPROBE (TAO_UIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
+  ACE_FUNCTION_TIMEPROBE (TAO_UIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
 
   return this->client_handler_->send_request (orb_core, stream, twoway);
 }
@@ -146,15 +152,19 @@ TAO_UIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 // }
 
 ssize_t
-TAO_UIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
+TAO_UIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
 {
-  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
+  ACE_UNUSED_ARG (s);
 
   // For the most part this was copied from GIOP::send_request and
   // friends.
 
-  iovec iov[IOV_MAX];
+  // @@ Fred, this should NOT be a local constant...  It should use a
+  // macro defined in OS.h...
+  const int TAO_WRITEV_MAX = 16;
+  iovec iov[TAO_WRITEV_MAX];
   int iovcnt = 0;
   ssize_t n = 0;
   ssize_t nbytes = 0;
@@ -175,8 +185,8 @@ TAO_UIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
           // platforms do not implement writev() there we should copy
           // the data into a buffer and call send_n(). In other cases
           // there may be some limits on the size of the iovec, there
-          // we should set IOV_MAX to that limit.
-          if (iovcnt == IOV_MAX)
+          // we should set TAO_WRITEV_MAX to that limit.
+          if (iovcnt == TAO_WRITEV_MAX)
             {
               n = this->handler_->peer ().sendv_n ((const iovec *) iov,
                                                    iovcnt);
@@ -206,20 +216,22 @@ TAO_UIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
 ssize_t
 TAO_UIOP_Transport::send (const u_char *buf,
                           size_t len,
-                          ACE_Time_Value *)
+                          ACE_Time_Value *s)
 {
-  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
+  ACE_UNUSED_ARG (s);
   return this->handler_->peer ().send_n (buf, len);
 }
 
 ssize_t
 TAO_UIOP_Transport::send (const iovec *iov,
                           int iovcnt,
-                          ACE_Time_Value *)
+                          ACE_Time_Value *s)
 {
-  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
+  ACE_UNUSED_ARG (s);
   return this->handler_->peer ().sendv_n ((const iovec *) iov,
                                           iovcnt);
 }
@@ -227,10 +239,11 @@ TAO_UIOP_Transport::send (const iovec *iov,
 ssize_t
 TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
-                          ACE_Time_Value *)
+                          ACE_Time_Value *s)
 {
-  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
 
+  ACE_UNUSED_ARG (s);
   return this->handler_->peer ().recv_n (buf, len);
 }
 
@@ -238,10 +251,11 @@ ssize_t
 TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
                           int flags,
-                          ACE_Time_Value *)
+                          ACE_Time_Value *s)
 {
-  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
 
+  ACE_UNUSED_ARG (s);
   return this->handler_->peer ().recv_n (buf,
                                          len,
                                          flags);
@@ -250,10 +264,11 @@ TAO_UIOP_Transport::recv (char *buf,
 ssize_t
 TAO_UIOP_Transport::recv (iovec *iov,
                           int iovcnt,
-                          ACE_Time_Value *)
+                          ACE_Time_Value *s)
 {
-  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
 
+  ACE_UNUSED_ARG (s);
   return handler_->peer ().recvv_n (iov, iovcnt);
 }
 

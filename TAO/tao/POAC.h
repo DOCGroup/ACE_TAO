@@ -192,7 +192,6 @@ TAO_NAMESPACE PortableServer{
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectId;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #if !defined (_PORTABLESERVER_FORWARDREQUEST___PTR_CH_)
 #define _PORTABLESERVER_FORWARDREQUEST___PTR_CH_
@@ -237,8 +236,6 @@ TAO_NAMESPACE PortableServer{
 
 
 #endif /* end #if !defined */
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong THREAD_POLICY_ID;
 
@@ -2284,20 +2281,13 @@ TAO_NAMESPACE PortableServer{
 #if defined (__ACE_INLINE__)
 #include "POAC.i"
 #else
-
 // POA's policies.
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicyValue &); //
 CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::ThreadPolicyValue &);
 CORBA::Boolean TAO_Export
 operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicy_ptr );
 CORBA::Boolean TAO_Export
 operator>> (TAO_InputCDR &, PortableServer::ThreadPolicy_ptr &);
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::LifespanPolicyValue &); //
 CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::LifespanPolicyValue &);
 CORBA::Boolean TAO_Export
@@ -2316,9 +2306,6 @@ CORBA::Boolean TAO_Export
 operator<< (TAO_OutputCDR &, const PortableServer::IdAssignmentPolicy_ptr );
 CORBA::Boolean TAO_Export
 operator>> (TAO_InputCDR &, PortableServer::IdAssignmentPolicy_ptr &);
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::ImplicitActivationPolicyValue &); //
 CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::ImplicitActivationPolicyValue &);
 CORBA::Boolean TAO_Export
@@ -2338,36 +2325,22 @@ operator<< (TAO_OutputCDR &, const PortableServer::RequestProcessingPolicy_ptr )
 CORBA::Boolean TAO_Export
 operator>> (TAO_InputCDR &, PortableServer::RequestProcessingPolicy_ptr &);
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 // POA's exceptions.
 void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::AdapterAlreadyExists &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::AdapterAlreadyExists*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::AdapterAlreadyExists *&);
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::AdapterInactive &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::AdapterInactive*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::AdapterInactive *&);
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::AdapterNonExistent &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::AdapterNonExistent*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::AdapterNonExistent *&);
 void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::InvalidPolicy &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::InvalidPolicy*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::InvalidPolicy *&);
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::NoServant &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::NoServant*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::NoServant *&);
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::ObjectAlreadyActive &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::ObjectAlreadyActive*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::ObjectAlreadyActive *&);

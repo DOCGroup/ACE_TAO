@@ -1678,20 +1678,24 @@ case_branch :
 	  AST_UnionBranch	*b = NULL;
 	  AST_Field		*f = $3;
 
-          ACE_UNUSED_ARG (l);
-          ACE_UNUSED_ARG (d);
-
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemCompleted);
 	  /*
 	   * Create several nodes representing branches of a union.
 	   * Add them to the enclosing scope (the union scope)
 	   */
 	  if (s != NULL && $1 != NULL && $3 != NULL) {
-	      b = idl_global->gen()->create_union_branch($1,
+	    l = new UTL_LabellistActiveIterator($1);
+	    for (;!(l->is_done()); l->next()) {
+	      d = l->item();
+	      if (d == NULL)
+		continue;
+	      b = idl_global->gen()->create_union_branch(d,
 						      f->field_type(),
 						      f->name(),
 						      f->pragmas());
 	      (void) s->fe_add_union_branch(b);
+	    }
+	    delete l;
 	  }
 	}
 	| error

@@ -1,9 +1,8 @@
+# $Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
-
-# $Id$
-# -*- perl -*-
 
 # This is a Perl script that runs the client and all the other servers that
 # are needed.
@@ -22,11 +21,22 @@ $num_threads = 4;
 
 $sleeptime = 2;
 
+# variables for parameters
+
+#$nsport = 20000 + uniqueid ();
+$nsport = 0;
+$clport = 0;
+$lcport = 0;
+$svport = 0;
+$ffport = 0;
+$gfport = 0;
+
 # other variables
 
 $n = 1;
 $leave = 1;
 $ior = 0;
+$done = "";
 $debug = "";
 $cm = "";
 $sm = "";
@@ -45,7 +55,7 @@ sub read_nsior
 
 sub name_server
 {
-  my $args = "$other -o $nsiorfile";
+  my $args = "$other -ORBport $nsport -ORBobjrefstyle url -o $nsiorfile";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
              "Naming_Service$DIR_SEPARATOR".
              "Naming_Service$Process::EXE_EXT";
@@ -55,18 +65,18 @@ sub name_server
 
 sub lifecycle_server
 {
-  my $args = "$other -ORBnameserviceior ".
+  my $args = "$other -ORBport $lcport -ORBobjrefstyle url -ORBnameserviceior ".
              "$ior -ORBsvcconf svc.conf";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
              "LifeCycle_Service$DIR_SEPARATOR".
              "LifeCycle_Service$Process::EXE_EXT";
-
+  
   $LC = Process::Create ($prog, $args);
 }
 
 sub server
 {
-  my $args = "$other $debug $sm ".
+  my $args = "$other $debug $sm -ORBport $svport -ORBobjrefstyle url ".
              "-ORBnameserviceior $ior -ORBsvcconf $s_conf";
 
   $SV = Process::Create ("server$Process::EXE_EXT", $args);
@@ -74,7 +84,7 @@ sub server
 
 sub factory_finder
 {
-  my $args = "$other -ORBnameserviceior ".
+  my $args = "$other -ORBport $ffport -ORBobjrefstyle url -ORBnameserviceior ".
              "$ior -ORBsvcconf svc.conf";
 
   $FF = Process::Create ("Factory_Finder".$Process::EXE_EXT, $args);
@@ -82,7 +92,7 @@ sub factory_finder
 
 sub generic_factory
 {
-  my $args = "$other -l -ORBnameserviceior ".
+  my $args = "$other -l -ORBport $gfport -ORBobjrefstyle url -ORBnameserviceior ".
              "$ior -ORBsvcconf svc.conf";
 
   $GF = Process::Create ("Generic_Factory".$Process::EXE_EXT, $args);
@@ -90,8 +100,8 @@ sub generic_factory
 
 sub client
 {
-  my $exe = "client$Process::EXE_EXT $other -l $debug $cm ".
-            "-ORBnameserviceior $ior -ORBsvcconf $c_conf";
+  my $exe = "client$Process::EXE_EXT $other -l $debug $cm -ORBobjrefstyle url ".
+            "-ORBport $clport -ORBnameserviceior $ior -ORBsvcconf $c_conf";
 
   for ($j = 0; $j < $n; $j++)
   {

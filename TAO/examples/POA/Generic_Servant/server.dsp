@@ -17,12 +17,13 @@ CFG=POA Generic Servant DLL - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "POA Generic Servant DLL - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "POA Generic Servant DLL - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "POA Generic Servant DLL - Win32 Release" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "POA Generic Servant DLL - Win32 Debug" (based on\
+ "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -137,12 +138,13 @@ SOURCE=.\Foo.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__FOO_I="..\..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(InputName).idl
+	tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
+          -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -167,12 +169,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__FOO_I="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(InputName).idl
+	tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
+          -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

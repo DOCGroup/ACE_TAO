@@ -44,6 +44,9 @@ public:
 
   virtual int visit_exception (be_exception *node);
   // visit exception
+
+  virtual int post_process (be_decl *);
+  // any post processing that needs to be done after a scope element is handled
 };
 
 #endif /* _BE_VISITOR_EXCEPTION_CDR_OP_CS_H_ */

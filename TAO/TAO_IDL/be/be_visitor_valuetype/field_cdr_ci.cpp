@@ -15,7 +15,7 @@
 //
 // = AUTHOR
 //    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    derived from be_visitor_field/cdr_op_ci.cpp
+//    derived from be_visitor_field/cdr_op_cs.cpp
 //
 // ============================================================================
 
@@ -25,7 +25,7 @@
 
 #include "be_visitor_field.h"
 
-ACE_RCSID(be_visitor_valuetype, field_cdr_op_ci, "$Id$")
+ACE_RCSID(be_visitor_valuetype, field_cdr_op_cs, "$Id$")
 
 
 // **********************************************
@@ -160,7 +160,7 @@ be_visitor_valuetype_field_cdr_ci::visit_array (be_array *node)
                        // is still the same
 
       // first generate the  declaration
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CI);
+      ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {
@@ -234,7 +234,7 @@ be_visitor_valuetype_field_cdr_ci::visit_enum (be_enum *node)
                        // is still the same
 
       // generate the typcode for enums
-      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
+      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {
@@ -557,7 +557,7 @@ be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
       // The scope is still the same
 
       // generate the inline code for structs
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI);
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {
@@ -674,7 +674,7 @@ be_visitor_valuetype_field_cdr_ci::visit_structure (be_structure *node)
       // still the same
 
       // generate the inline code for structs
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {
@@ -770,7 +770,7 @@ be_visitor_valuetype_field_cdr_ci::visit_union (be_union *node)
       // still the same
 
       // generate the inline code for union
-      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
+      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {

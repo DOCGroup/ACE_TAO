@@ -32,8 +32,6 @@
 #define _THREAD_SAFE
 #endif /* _THREAD_SAFE */
 
-#define ACE_HAS_GPERF
-
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
@@ -41,7 +39,6 @@
 #define ACE_HAS_SIG_MACROS
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_CHARPTR_DL
 //#define ACE_USES_ASM_SYMBOL_IN_DLSYM
 #define ACE_LACKS_SIGSET
@@ -173,11 +170,5 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_DIRENT
 
 #define ACE_HAS_SIGWAIT
-
-#define ACE_HAS_TERM_IOCTLS
-#define ACE_USES_OLD_TERMIOS_STRUCT
-#define ACE_USES_HIGH_BAUD_RATES
-#define TCGETS TIOCGETA
-#define TCSETS TIOCSETA
 
 #endif /* ACE_CONFIG_H */

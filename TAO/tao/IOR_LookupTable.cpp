@@ -7,6 +7,8 @@ ACE_RCSID(tao, IOR_TableLookup, "$Id$")
 
   // = Initialization and termination methods.
 TAO_IOR_LookupTable::TAO_IOR_LookupTable (void)
+  : object_name_ (),
+    ior_ ()
 {
 }
 
@@ -24,8 +26,8 @@ return 0;
 }
 
 int
-TAO_IOR_LookupTable::add_ior (const ACE_CString &object_name,
-                              const ACE_CString &ior)
+TAO_IOR_LookupTable::add_ior (ACE_CString &object_name,
+                              ACE_CString &ior)
 {
   // Make an entry in the table.
   switch (this->hash_map_.bind (object_name, ior))
@@ -52,7 +54,7 @@ TAO_IOR_LookupTable::add_ior (const ACE_CString &object_name,
 }
 
 int
-TAO_IOR_LookupTable::find_ior (const ACE_CString &object_name,
+TAO_IOR_LookupTable::find_ior (ACE_CString &object_name,
                                ACE_CString &ior)
 {
   // Find the IOR corresponding to the object name.

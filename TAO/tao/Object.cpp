@@ -10,10 +10,10 @@
 #include "tao/Servant_Base.h"
 #include "tao/Request.h"
 #include "tao/varout.h"
+#include "tao/IIOP_Profile.h"
 #include "tao/GIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
-#include "tao/debug.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
@@ -146,59 +146,6 @@ CORBA_Object::_is_collocated (void) const
   return this->is_collocated_;
 }
 
-// Quickly hash an object reference's representation data.  Used to
-// create hash tables.
-
-CORBA::ULong
-CORBA_Object::_hash (CORBA::ULong maximum,
-                     CORBA::Environment &env)
-{
-  return this->_stubobj ()->hash (maximum, env);
-}
-
-// Compare two object references to see if they point to the same
-// object.  Used in linear searches, as in hash buckets.
-//
-// XXX would be useful to also have a trivalued comparison predicate,
-// such as strcmp(), to allow more comparison algorithms.
-
-CORBA::Boolean
-CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
-                              CORBA::Environment &env)
-{
-  if (other_obj == this)
-    {
-      env.clear ();
-      return 1;
-    }
-
-  return this->_stubobj ()->is_equivalent (other_obj, env);
-}
-
-// TAO's extensions
-
-TAO_ObjectKey *
-CORBA::Object::_key (CORBA::Environment &env)
-{
-  if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
-    return this->_stubobj ()->profile_in_use ()->_key (env);
-
-  ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
-}
-
-
-// @@ This doesn't seemed to be used anyplace! It should go away!! FRED
-void
-CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
-{
-  if ( this->_stubobj () )
-    this->_stubobj ()->use_locate_requests (use_it);
-
-  return;
-}
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 // NON_EXISTENT ... send a simple call to the object, which will
 // either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
 // the latter case, return FALSE.
@@ -255,36 +202,64 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
   return _tao_retval;
 }
 
-void
-CORBA_Object::_create_request (CORBA::Context_ptr ctx,
-                               const CORBA::Char *operation,
-                               CORBA::NVList_ptr arg_list,
-                               CORBA::NamedValue_ptr result,
-                               CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags,
-                               CORBA::Environment &TAO_IN_ENV)
+// Quickly hash an object reference's representation data.  Used to
+// create hash tables.
+
+CORBA::ULong
+CORBA_Object::_hash (CORBA::ULong maximum,
+                     CORBA::Environment &env)
 {
-  // Since we don't really support Context, anything but a null pointer
-  // is a no-no.
-  if (ctx)
-    {
-      TAO_THROW (CORBA::NO_IMPLEMENT ());
-    }
-  request = new CORBA::Request (this,
-                                operation,
-                                arg_list,
-                                result,
-                                req_flags,
-                                TAO_IN_ENV);
+  return this->_stubobj ()->hash (maximum, env);
 }
+
+// Compare two object references to see if they point to the same
+// object.  Used in linear searches, as in hash buckets.
+//
+// XXX would be useful to also have a trivalued comparison predicate,
+// such as strcmp(), to allow more comparison algorithms.
+
+CORBA::Boolean
+CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
+                              CORBA::Environment &env)
+{
+  if (other_obj == this)
+    {
+      env.clear ();
+      return 1;
+    }
+
+  return this->_stubobj ()->is_equivalent (other_obj, env);
+}
+
+// TAO's extensions
+
+TAO_ObjectKey *
+CORBA::Object::_key (CORBA::Environment &env)
+{
+  if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
+    return this->_stubobj ()->profile_in_use ()->_key (env);
+
+  ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
+}
+
+
+// @@ This doesn't seemed to be used anyplace! It should go away!! FRED
+void
+CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
+{
+  if ( this->_stubobj () )
+    this->_stubobj ()->use_locate_requests (use_it);
+
+  return;
+}
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 void
 CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                const CORBA::Char *operation,
                                CORBA::NVList_ptr arg_list,
                                CORBA::NamedValue_ptr result,
-                               CORBA::ExceptionList_ptr,
-                               CORBA::ContextList_ptr,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags,
                                CORBA::Environment &TAO_IN_ENV)
@@ -293,12 +268,12 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
   // is a no-no.
   if (ctx)
     {
-      TAO_THROW (CORBA::NO_IMPLEMENT ());
+      TAO_THROW(CORBA::NO_IMPLEMENT ());
     }
-  request = new CORBA::Request (this,
-                                operation,
-                                arg_list,
-                                result,
+  request = new CORBA::Request (this, 
+                                operation, 
+                                arg_list, 
+                                result, 
                                 req_flags,
                                 TAO_IN_ENV);
 }
@@ -308,7 +283,7 @@ CORBA_Object::_request (const CORBA::Char *operation,
                         CORBA::Environment &TAO_IN_ENV)
 {
   TAO_IN_ENV.clear ();
-  return new CORBA::Request (this,
+  return new CORBA::Request (this, 
                              operation,
                              TAO_IN_ENV);
 }
@@ -493,35 +468,103 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
     }
 
   // get a profile container to store all profiles in the IOR.
-  TAO_MProfile mp (profile_count);
+  auto_ptr<TAO_MProfile> mp (new TAO_MProfile (profile_count));
 
-  TAO_ORB_Core *orb_core = cdr.orb_core ();
-  if (orb_core == 0)
+  while (profile_count-- != 0 && cdr.good_bit ())
     {
-      orb_core = TAO_ORB_Core_instance ();
-      if (TAO_debug_level > 0)
+      CORBA::ULong tag;
+
+      // If there is an error we abort
+      if ((cdr >> tag) == 0)
+        continue;
+
+      // @@ For now we just take IIOP_Profiles,  FRED
+      // @@ fred: this is something that we *must* handle correctly,
+      //    the TAO_Profile class must be concrete (or we must have a
+      //    TAO_Generic_Profile class), any profile we don't anything
+      //    about should be converted in one of those
+      //    TAO_Generic_Profiles.
+      //    Also: the right component to decide if we can handle a
+      //    profile or not is the connector registry.
+      //                   Carlos.
+      //
+      if (tag != TAO_IOP_TAG_INTERNET_IOP)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "WARNING: extracting object from default ORB_Core\n"));
+                      "unknown profile tag %d skipping\n", tag));
+          cdr.skip_string ();
+          continue;
         }
-    }
 
-  TAO_Connector_Registry *connector_registry =
-    orb_core->connector_registry ();
-  for (CORBA::ULong i = 0; i != profile_count && cdr.good_bit (); ++i)
-    {
-      TAO_Profile *pfile =
-        connector_registry->create_profile (cdr);
-      if (pfile != 0)
-        mp.give_profile (pfile);
-    }
+      // OK, we've got an IIOP profile.  It's going to be
+      // encapsulated ProfileData.  Create a new decoding stream and
+      // context for it, and tell the "parent" stream that this data
+      // isn't part of it any more.
+
+      // ProfileData is encoded as a sequence of octet. So first get
+      // the length of the sequence.
+      CORBA::ULong encap_len;
+      if ((cdr >> encap_len) == 0)
+        continue;
+
+      // Create the decoding stream from the encapsulation in the
+      // buffer, and skip the encapsulation.
+      TAO_InputCDR str (cdr, encap_len);
+
+      if (str.good_bit () == 0
+          || cdr.skip_bytes (encap_len) == 0)
+        continue;
+
+      // get the default IIOP Profile and fill in the blanks
+      // with str.
+      // @@ use an auto_ptr<> here!
+      TAO_IIOP_Profile *pfile;
+      ACE_NEW_RETURN (pfile, TAO_IIOP_Profile, 0);
+
+      int r = 0;
+      ACE_TRY_NEW_ENV
+        {
+          CORBA::Boolean continue_decoding;
+          r = pfile->parse (str, continue_decoding, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "IIOP_Profile::parse raised exception!"
+                      " Shouldn't happen\n"));
+          ACE_TRY_ENV.print_exception ("IIOP_Profile::parse");
+          pfile->_decr_refcnt ();
+          return 0;
+        }
+      ACE_ENDTRY;
+
+      switch (r)
+        {
+          case -1:
+            pfile->_decr_refcnt ();
+            return 0;
+          case 0:
+            pfile->_decr_refcnt ();
+            break;
+          case 1:
+          default:
+            mp->give_profile (pfile);
+            // all other return values indicate success
+            // we do not decrement reference count on profile since we
+            // are giving it to the MProfile!
+            break;
+        } // switch
+
+    } // while loop
 
   // make sure we got some profiles!
-  if (mp.profile_count () != profile_count)
+  if (mp->profile_count () == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) could not create all "
-                  "the profiles\n"));
+                  "no IIOP v%d.%d (or earlier) profile in IOR!\n",
+                  TAO_IIOP_Profile::DEF_IIOP_MAJOR,
+                  TAO_IIOP_Profile::DEF_IIOP_MINOR));
       return 0;
     }
 
@@ -529,7 +572,7 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   // TAO_Stub will make a copy of mp!
   TAO_Stub *objdata;
   ACE_NEW_RETURN (objdata, TAO_Stub (type_hint._retn (),
-                                     mp,
+                                     mp.get (),
                                      cdr.orb_core ()), 0);
 
   if (objdata == 0)
