@@ -188,6 +188,9 @@ public:
 
   virtual int get_parser_names (char **&names,
                                 int &number_of_names);
+
+  virtual ACE_Lock *create_cached_connection_lock (void);
+  // Creates the lock for the lock needed in the Cache Map
 };
 
 #include "ace/post.h"

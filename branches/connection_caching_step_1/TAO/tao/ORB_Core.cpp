@@ -1178,6 +1178,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
             this,
             this->orb_params ()->preconnects ());
 
+  // Open the Connection Cache
+  // @@ This seems to be a nice place to configure the connection
+  // cache for the number of allowed entries
+  this->connection_cache_.open (this);
+
   // As a last step perform initializations of the service callbacks
   this->services_callbacks_init ();
 

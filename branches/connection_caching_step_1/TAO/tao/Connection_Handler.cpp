@@ -116,15 +116,3 @@ TAO_Connection_Handler::svc_i (void)
 
   return result;
 }
-
-ACE_Time_Value *
-TAO_Connection_Handler::handle_timeout_i (const ACE_Time_Value &,
-                                          const void *)
-{
-  //
-  // This method is called when buffering timer expires.
-  //
-
-
-  return 0;
-}

@@ -46,7 +46,8 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     reactor_mask_signals_ (1),
     sched_policy_ (ACE_SCHED_OTHER),
     priority_mapping_type_ (TAO_PRIORITY_MAPPING_DIRECT),
-    dynamically_allocated_reactor_ (0)
+    dynamically_allocated_reactor_ (0),
+    cached_connection_lock_type_ (TAO_THREAD_LOCK)
 {
 }
 
@@ -368,6 +369,22 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
         if (curarg < argc)
           {
             this->add_to_ior_parser_names (argv[curarg]);
+          }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBConnectionLock") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    "thread") == 0)
+              this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name,
+                                         "null") == 0)
+              this->cached_connection_lock_type_ = TAO_NULL_LOCK;
           }
       }
 
@@ -1003,6 +1020,23 @@ double
 TAO_Default_Resource_Factory::purge_percentage (void) const
 {
   return this->purge_percentage_;
+}
+
+ACE_Lock *
+TAO_Default_Resource_Factory::create_cached_connection_lock (void)
+{
+  ACE_Lock *the_lock = 0;
+
+  if (this->cached_connection_lock_type_ == TAO_NULL_LOCK)
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
+                    0);
+  else
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX>,
+                    0);
+
+  return the_lock;
 }
 
 TAO_Priority_Mapping *

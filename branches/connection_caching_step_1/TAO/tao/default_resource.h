@@ -112,6 +112,7 @@ public:
   virtual TAO_Resource_Factory::Caching_Strategy connection_caching_strategy_type (void) const;
   virtual double purge_percentage (void) const;
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
+  virtual ACE_Lock *create_cached_connection_lock (void);
 
 protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
@@ -177,6 +178,16 @@ protected:
   // situation can occur when a resource factory derived from the
   // default one overrides the get_reactor() method but does not
   // override the reclaim_reactor() method.
+
+private:
+  enum Lock_Type
+  {
+    TAO_NULL_LOCK,
+    TAO_THREAD_LOCK
+  };
+
+  Lock_Type cached_connection_lock_type_;
+  // Type of lock used by the cached connector.
 };
 
 #if defined (__ACE_INLINE__)

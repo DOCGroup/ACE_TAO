@@ -27,6 +27,18 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
   this->set (addr.get_remote_addr (), use_dotted_decimal_addresses);
 }
 
+TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_INET_Addr &addr,
+                                          int use_dotted_decimal_addresses)
+  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE),
+    host_ (),
+    port_ (0),
+    object_addr_ (addr),
+    hint_ (0),
+    next_ (0)
+{
+  this->set (addr, use_dotted_decimal_addresses);
+}
+
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
                                           CORBA::UShort port,
                                           const ACE_INET_Addr &addr)

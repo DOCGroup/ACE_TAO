@@ -99,7 +99,6 @@ public:
   virtual TAO_UIOP_SVC_HANDLER *service_handler (void) = 0;
   // Acces the underlying connection handler
 
-protected:
 };
 
 class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport

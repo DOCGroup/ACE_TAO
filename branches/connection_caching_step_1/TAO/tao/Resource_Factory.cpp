@@ -13,7 +13,7 @@ ACE_RCSID(tao, Resource_Factory, "$Id$")
 
 TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (TAO_ORB_Core *orb_core)
 {
-  this->lock_ = orb_core->client_factory ()->create_cached_connector_lock ();
+  //this->lock_ = orb_core->client_factory ()->create_cached_connector_lock ();
 }
 
 TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
@@ -165,6 +165,12 @@ TAO_Resource_Factory::get_priority_mapping (void)
 int
 TAO_Resource_Factory::get_parser_names (char **&,
                                         int &)
+{
+  return 0;
+}
+
+ACE_Lock *
+TAO_Resource_Factory::create_cached_connection_lock (void)
 {
   return 0;
 }
