@@ -1,10 +1,16 @@
+Mon Mar 12 12:14:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO-INSTALL.html: Mentioned Windows 2000 explicitly in the
+	  document.  Thanks to Rahul Shukla <rshukla@ggn.aithent.com> for
+	  raising the question.
+
 Mon Mar 12 11:08:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
     * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
 
       Removed code that was registering the connection handler with
       the connection caching mechanism. We need to shortcut it, as we
-      use our own concept. The code was actually causing problems for 
+      use our own concept. The code was actually causing problems for
       Craig Rodrigues <rodrigc@mediaone.net>, thanks for reporting.
 
 Mon Mar 12 01:01:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
@@ -15,7 +21,7 @@ Mon Mar 12 01:01:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams: Added the following files to enable
 	  builds on Win32:
-	  
+
 	  - AVStreams.dsw
   	  - Full_Profile/Full_Profile.dsw
 	  - Full_Profile/ftp.dsp
@@ -38,7 +44,7 @@ Mon Mar 12 01:01:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 Mon Mar 12 10:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/Wait_On_Leader_Follower.cpp:
-	  
+
 	  When timeouts were specified and the connection was closed
 	  before the timer expired or the reply arrived we returned no
 	  error, thereby letting the client believe that the request was
@@ -51,7 +57,7 @@ Sun Mar 11 16:33:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/UDP_i.cpp: Changed Thread_Mutex in
 	  template instantiations to Null_Mutex. The declaration was
-	  Null_Mutex.  
+	  Null_Mutex.
 
 Sun Mar 11 11:29:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
