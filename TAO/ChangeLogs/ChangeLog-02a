@@ -1,3 +1,9 @@
+Fri Jun 1 20:39:23 2001  Ossama Othman  <ossama@uci.edu>
+
+	* docs/interceptors.html:
+
+	  Updated the Portable Interceptor release notes.
+
 Fri Jun  1 17:00:53 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/Object_Adapter.h (Servant_Upcall):
