@@ -1,3 +1,9 @@
+Thu Aug 28 22:24:51 UTC 2003  Scott Harris <harris_s@ociweb.com>
+
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp
+
+	  Fixed include error. "ace/Streams.h" -> "ace/Stream.h"
+
 Thu Aug 28 08:43:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/NVList.h:
