@@ -84,7 +84,7 @@ private:
 
   /// The number of threads currently running, when this reaches 0 the
   /// session destroys itself.
-  int active_thread_count_;
+  CORBA::ULong active_thread_count_;
 
   /// Number of messages expected
   CORBA::ULong expected_messages_;

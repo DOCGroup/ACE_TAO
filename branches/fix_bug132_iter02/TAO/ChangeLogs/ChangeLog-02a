@@ -1,3 +1,15 @@
+Sat Mar 17 15:34:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+          Fixed signed/unsigned warnings
+
+        * tests/Big_Oneways/Coordinator.cpp:
+          Print error messages in all exception cases
+
+        * tests/Big_Oneways/run_test.pl:
+          Run 3 peers to cause failures.
+
 Fri Mar 16 15:49:26 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/IIOP_Transport.cpp:

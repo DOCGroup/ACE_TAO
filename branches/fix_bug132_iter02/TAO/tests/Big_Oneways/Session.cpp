@@ -2,6 +2,7 @@
 // $Id$
 //
 #include "Session.h"
+#include "tao/debug.h"
 
 ACE_RCSID(Big_Oneways, Session, "$Id$")
 
@@ -131,7 +132,12 @@ Session::start (const Test::Session_List &other_sessions,
                 this->active_thread_count_++;
               }
           }
-        ACE_CATCHANY {} ACE_ENDTRY;
+        ACE_CATCHANY
+          {
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                 "Session::start, ignored");
+          }
+        ACE_ENDTRY;
       }
 
     if (this->active_thread_count_ != this->thread_count_)
@@ -228,6 +234,11 @@ Session::terminate (CORBA::Boolean success,
                                         ACE_TRY_ENV);
       ACE_TRY_CHECK_EX(GLOBAL);
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Session::terminate, ignored");
+    }
+  ACE_ENDTRY;
 
 }
