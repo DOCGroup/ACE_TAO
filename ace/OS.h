@@ -2150,10 +2150,7 @@ typedef u_long ACE_hthread_t;
 
 #if defined (ACE_PSOS_HAS_COND_T)
 typedef u_long ACE_cond_t;
-struct ACE_Export ACE_condattr_t
-{
-  int type;
-};
+typedef u_long ACE_condattr_t;
 struct ACE_Export ACE_mutexattr_t
 {
   int type;
