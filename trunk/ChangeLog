@@ -1,3 +1,11 @@
+Sat Mar 24 07:02:35 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * ace/INET_Addr.i (get_host_addr): Added a const_cast to the
+ 	VxWorks-only arm that casts away const on the this ptr so that
+ 	inet_ntoa_b can access and fill in the buffer data member that's
+ 	used to hold the result from inet_ntoa_b.  Thanks to Erik Johannes
+ 	<ejohannes@oresis.com> for point this out.
+
 Fri Mar 23 18:01:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Some of the tests cannot be run in
