@@ -1,3 +1,10 @@
+Fri Oct 31 01:03:05 1997    <irfan@TWOSTEP>
+
+	* TAO/TAO_IDL/TAO_IDL.{mak,mdp}: Added VC++4.2 make files.
+
+	* TAO_IDL/ast/ast_expression.cpp (dump): Streaming the enum was
+ 	  ambiguous.  Therefore the enum was cast to an int.
+
 Thu Oct 30 22:50:44 1997    <coryan@MILONGA>
 
 	* tao/corba.h: 

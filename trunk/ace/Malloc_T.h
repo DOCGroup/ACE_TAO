@@ -17,11 +17,6 @@
 #if !defined (ACE_MALLOC_T_H)
 #define ACE_MALLOC_T_H
 
-#include "ace/ACE.h"
-#include "ace/Synch.h"
-#include "ace/Malloc.h"
-#include "ace/Free_List.h"
-
 // Some useful abstration for expressions involving
 // ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
 // with ACE_ALLOCATOR* is that they call constructors also.
@@ -79,6 +74,11 @@ template <class T> inline void ACE_Destructor_Template_For_HPUX_aCC_Only (T *obj
         DEALLOCATOR (POINTER); \
       } while (0)
 #endif /* ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR */
+
+#include "ace/ACE.h"
+#include "ace/Synch.h"
+#include "ace/Malloc.h"
+#include "ace/Free_List.h"
 
 template <class T>
 class ACE_Cached_Mem_Pool_Node

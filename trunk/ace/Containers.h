@@ -181,14 +181,19 @@ class ACE_Node
   friend class ACE_Unbounded_Set_Iterator<T>;
   friend class ACE_Unbounded_Stack<T>;
   friend class ACE_Unbounded_Stack_Iterator<T>;
+
+public:
+  // This should really be private, but has to be publicly accessible
+  // for the ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR fix.
+
+  ~ACE_Node (void);
+  // This isn't necessary, but it keeps the compiler happy.
+
 private:
   // = Initialization methods
   ACE_Node (const T &i, ACE_Node<T> *n);
   ACE_Node (ACE_Node<T> *n = 0, int MS_SUCKS = 0);
   ACE_Node (const ACE_Node<T> &n);
-
-  ~ACE_Node (void);
-  // This isn't necessary, but it keeps the compiler happy.
 
   ACE_Node<T> *next_;
   // Pointer to next element in the list of <ACE_Node>s.

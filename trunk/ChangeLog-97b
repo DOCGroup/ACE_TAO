@@ -1,3 +1,38 @@
+Fri Oct 31 00:53:52 1997    <irfan@TWOSTEP>
+
+	* The following five changes were suggested by Stephen Coy
+ 	  <stevec@wsa.com.au>. Thanks Stephen.
+
+	* ace/OS.h (ACE_CLASS_IS_NAMESPACE): Changed friend
+ 	  ace_dewarn_gplusplus to friend class ace_dewarn_gplusplus.
+
+	* ace/Malloc_T.h: Move the #include files to just after the
+ 	  declaration of the macros, otherwise Containers.cpp will be
+ 	  #included before the definition of the various allocator macros
+ 	  (such as ACE_ALLOCATOR_RETURN) have been seen (when
+ 	  ACE_TEMPLATES_REQUIRE_SOURCE is defined).
+
+	* ace/Hash_Map_Manager.cpp (close_i): Changed &table[i] to
+ 	  &table_[i].
+
+	* ace/Containers.h: The ACE_Node destructor needs to be publicly
+ 	  accessible in order to support the
+ 	  ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR fix.  Unfortunately,
+ 	  making the template function
+ 	  ACE_Destructor_Template_For_HPUX_aCC_Only a friend does not seem
+ 	  to work (although it should).
+
+	* ace/ACE.cpp (ldfind): Changed path_entry from char* to
+ 	  const char*.
+
+	* tests/Priority_Reactor_Test.cpp (main): Fixed auto_ptr usage.
+  	  Thanks to Jack Erickson (jack@pinion.com) for pointing this out.
+
+	* ace/OS.h (ACE_CLASS_IS_NAMESPACE): Changed the macro to not
+ 	  include the destructor.  This causes undefined destructor
+ 	  problems on Win32.  Also added ACE_UNIMPLEMENTED_FUNC macros
+ 	  around the remain functions.
+
 Thu Oct 30 21:22:47 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: added auto Svc_Conf_[ly].cpp patches.
