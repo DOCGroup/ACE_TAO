@@ -1,3 +1,11 @@
+Wed May 30 11:13:16 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Singleton.cpp (instance):
+
+	  Integrated David's suggested changes that deal with potential
+	  problems related to registering Singletons in the presence of
+	  multiple ACE_Object_Manager instances.
+
 Wed May 30 00:37:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Singleton.cpp (instance):
