@@ -10234,3 +10234,81 @@ ACE_Cleanup::~ACE_Cleanup (void)
 {
 }
 
+ACE_INLINE DIR *
+ACE_OS::opendir (const char *filename)
+{
+#if defined (ACE_HAS_DIRENT)
+  return opendir (dirname);
+#else
+  ACE_UNUSED_ARG (filename);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_DIRENT */
+}
+
+ACE_INLINE void 
+ACE_OS::closedir (DIR *d)
+{
+#if defined (ACE_HAS_DIRENT)
+  closedir (d);
+#else
+  ACE_UNUSED_ARG (d);
+#endif /* ACE_HAS_DIRENT */
+}
+
+ACE_INLINE struct dirent *
+ACE_OS::readdir (DIR *d)
+{
+#if defined (ACE_HAS_DIRENT)
+  return readdir (d);
+#else
+  ACE_UNUSED_ARG (d);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_DIRENT */
+}
+
+ACE_INLINE int *
+ACE_OS::readdir_r (DIR *dirp,
+                   struct dirent *entry,
+                   struct dirent **result);
+{
+#if defined (ACE_HAS_DIRENT)
+  return readdir_r (dirp, entry, result);
+#else
+  ACE_UNUSED_ARG (dirp);
+  ACE_UNUSED_ARG (entry);
+  ACE_UNUSED_ARG (result);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_DIRENT */
+}
+
+ACE_INLINE long 
+ACE_OS::telldir (DIR *d)
+{
+#if defined (ACE_HAS_DIRENT)
+  return telldir (d);
+#else
+  ACE_UNUSED_ARG (d);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_DIRENT */
+}
+
+ACE_INLINE void 
+ACE_OS::seekdir (DIR *d, long loc)
+{
+#if defined (ACE_HAS_DIRENT)
+  seekdir (d, loc);
+#else
+  ACE_UNUSED_ARG (d);
+  ACE_UNUSED_ARG (loc);
+#endif /* ACE_HAS_DIRENT */
+}
+
+ACE_INLINE void
+ACE_OS::rewinddir (DIR *d)
+{
+#if defined (ACE_HAS_DIRENT)
+  rewinddir (d);
+#else
+  ACE_UNUSED_ARG (d);
+#endif /* ACE_HAS_DIRENT */
+}

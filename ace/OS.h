@@ -4334,6 +4334,18 @@ public:
   static void *dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbol);
 # endif /* ! ACE_HAS_WINCE */
 
+  // = A set of wrappers for the directory iterator.
+  static DIR *opendir (const char *filename);
+  static void closedir (DIR *);
+  static struct dirent *readdir (DIR *);
+  static int *readdir_r (DIR *dirp,
+                         struct dirent *entry,
+                         struct dirent **entry);
+  static long telldir (DIR *);
+  static void seekdir (DIR *,
+                       long loc);
+  static void rewinddir (DIR *);
+
   // = A set of wrappers for stdio file operations.
   static int last_error (void);
   static void last_error (int);

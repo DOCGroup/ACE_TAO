@@ -187,5 +187,6 @@
 #define ACE_HAS_IDTYPE_T
 
 #define ACE_HAS_GPERF
+#define ACE_HAS_DIRENT
 
 #endif /* ACE_CONFIG_H */
