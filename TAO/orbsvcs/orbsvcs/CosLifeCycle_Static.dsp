@@ -346,6 +346,7 @@ SOURCE=.\LifeCycleServiceS_T.h
 # Begin Source File
 
 SOURCE=.\CosLifeCycleC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -354,6 +355,7 @@ SOURCE=.\CosLifeCycleS.cpp
 # Begin Source File
 
 SOURCE=.\LifeCycleServiceC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

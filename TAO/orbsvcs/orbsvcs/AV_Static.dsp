@@ -503,7 +503,7 @@ SOURCE=.\AV\md5.h
 # End Source File
 # Begin Source File
 
-SOURCE=".\AV\media-timer.h"
+SOURCE=.\AV\media_timer.h
 # End Source File
 # Begin Source File
 
@@ -584,6 +584,7 @@ SOURCE=.\AV\AVStreams_i.cpp
 # Begin Source File
 
 SOURCE=.\AVStreamsC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -615,7 +616,7 @@ SOURCE=.\AV\md5c.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\AV\media-timer.cpp"
+SOURCE=.\AV\media_timer.cpp
 # End Source File
 # Begin Source File
 
@@ -624,6 +625,7 @@ SOURCE=.\AV\Nil.cpp
 # Begin Source File
 
 SOURCE=.\Null_MediaCtrlC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -664,6 +666,7 @@ SOURCE=.\AV\sfp.cpp
 # Begin Source File
 
 SOURCE=.\sfpC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

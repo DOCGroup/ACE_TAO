@@ -558,10 +558,12 @@ SOURCE=.\Trader\Constraint_y.cpp
 # Begin Source File
 
 SOURCE=.\CosTradingC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosTradingDynamicC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -570,6 +572,7 @@ SOURCE=.\CosTradingDynamicS.cpp
 # Begin Source File
 
 SOURCE=.\CosTradingReposC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

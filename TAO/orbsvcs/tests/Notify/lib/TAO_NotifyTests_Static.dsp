@@ -6,21 +6,20 @@
 
 CFG=TAO_NotifyTests LIB - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE run the tool that generated this project file and specify the
-!MESSAGE nmake output type.  You can then use the following command:
-!MESSAGE
+!MESSAGE use the Export Makefile command and run
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO_NotifyTests_Static.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO_NotifyTests_Static.mak" CFG="TAO_NotifyTests LIB - Win32 Static Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "TAO_NotifyTests LIB - Win32 Static Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "TAO_NotifyTests LIB - Win32 Static Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -37,9 +36,10 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Static_Release"
 # PROP Target_Dir ""
 LINK32=link.exe -lib
-# ADD CPP /nologo /G5 /W3 /GX /O2 /MD /Zi /GR /I "..\..\..\..\orbsvcs" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D NDEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D TAO_AS_STATIC_LIBS=1 /D ACE_AS_STATIC_LIBS=1 /FD /c
+# ADD CPP /nologo /G5 /MD /W3 /GR /GX /Zi /O2 /I "..\..\..\..\orbsvcs" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D NDEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D TAO_AS_STATIC_LIBS=1 /D ACE_AS_STATIC_LIBS=1 /FD /c
 # SUBTRACT CPP /YX
-# ADD RSC /l 0x409 /d NDEBUG=1 /i "..\..\..\..\orbsvcs" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.."
+# ADD BASE RSC /l 0x809
+# ADD RSC /l 0x409 /i "..\..\..\..\orbsvcs" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.." /d NDEBUG=1
 BSC32=bscmake.exe
 # ADD BSC32 /nologo /o".\TAO_NotifyTests.bsc"
 LIB32=link.exe -lib
@@ -53,15 +53,16 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Static_Debug"
 # PROP Target_Dir ""
 LINK32=link.exe -lib
-# ADD CPP /nologo /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd /I "..\..\..\..\orbsvcs" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D _DEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D TAO_AS_STATIC_LIBS=1 /D ACE_AS_STATIC_LIBS=1 /FD /c
+# ADD CPP /nologo /G5 /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "..\..\..\..\orbsvcs" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D _DEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D TAO_AS_STATIC_LIBS=1 /D ACE_AS_STATIC_LIBS=1 /FD /c
 # SUBTRACT CPP /Fr /YX
-# ADD RSC /l 0x409 /d _DEBUG=1 /i "..\..\..\..\orbsvcs" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.."
+# ADD BASE RSC /l 0x809
+# ADD RSC /l 0x409 /i "..\..\..\..\orbsvcs" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.." /d _DEBUG=1
 BSC32=bscmake.exe
 # ADD BSC32 /nologo /o".\TAO_NotifyTests.bsc"
 LIB32=link.exe -lib
 # ADD LIB32 /nologo /out:".\TAO_NotifyTestssd.lib"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -367,13 +368,12 @@ SOURCE=.\Activation_Manager.idl
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+OutDir=.\Static_Release
 InputPath=.\Activation_Manager.idl
 InputName=Activation_Manager
-InputDir=.
-OutDir=.
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -o $(OutDir) -I..\..\..\.. -I$(TAO_ROOT)\orbsvcs -Ge 1 -Sc $(InputPath)
+	..\..\..\..\..\bin\Release\tao_idl_static -o $(OutDir) -I..\..\..\.. -I$(TAO_ROOT)\orbsvcs -Ge 1 -Sc $(InputPath)
 
 "$(OutDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -392,20 +392,18 @@ BuildCmds= \
 
 "$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
-
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "TAO_NotifyTests LIB - Win32 Static Debug"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+OutDir=.\Static_Debug
 InputPath=.\Activation_Manager.idl
 InputName=Activation_Manager
-InputDir=.
-OutDir=.
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -o $(OutDir) -I..\..\..\.. -I$(TAO_ROOT)\orbsvcs -Ge 1 -Sc $(InputPath)
+	..\..\..\..\..\bin\tao_idl_static -o $(OutDir) -I..\..\..\.. -I$(TAO_ROOT)\orbsvcs -Ge 1 -Sc $(InputPath)
 
 "$(OutDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -424,10 +422,9 @@ BuildCmds= \
 
 "$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
-
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group

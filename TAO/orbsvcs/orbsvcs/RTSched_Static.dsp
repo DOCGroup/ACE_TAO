@@ -299,6 +299,7 @@ SOURCE=.\Sched\Reconfig_Scheduler.cpp
 # Begin Source File
 
 SOURCE=.\RtecSchedulerC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -237,6 +237,7 @@ SOURCE=.\Property\CosPropertyService_i.cpp
 # Begin Source File
 
 SOURCE=.\CosPropertyServiceC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

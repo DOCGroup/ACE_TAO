@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\RTEvent"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "_LIB" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\RTEvent"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_LIB" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -860,6 +860,7 @@ SOURCE=.\Event_Utilities.cpp
 # Begin Source File
 
 SOURCE=.\RtecDefaultEventDataC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -868,6 +869,7 @@ SOURCE=.\RtecDefaultEventDataS.cpp
 # Begin Source File
 
 SOURCE=.\RtecEventChannelAdminC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -876,6 +878,7 @@ SOURCE=.\RtecEventChannelAdminS.cpp
 # Begin Source File
 
 SOURCE=.\RtecEventCommC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -884,6 +887,7 @@ SOURCE=.\RtecEventCommS.cpp
 # Begin Source File
 
 SOURCE=.\RtecUDPAdminC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
