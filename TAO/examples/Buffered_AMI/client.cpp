@@ -13,9 +13,10 @@
 //
 // ================================================================
 
+#include "testS.h"
+#include "tao/Messaging.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "testS.h"
 
 ACE_RCSID(Buffered_AMI, client, "$Id$")
 
