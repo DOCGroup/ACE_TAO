@@ -1,3 +1,21 @@
+//=============================================================================
+/**
+ *  @file    Dev_Poll_Reactor_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test verifies that the Dev_Poll_Reactor is functioning
+ *  properly, and demonstrates how "speculative reads" can be
+ *  performed.  "Speculative reads" are necessary when using event
+ *  demultiplexing mechanisms that use a "state change" interface.  An
+ *  example of demuxing mechanism with such an interface is Linux's
+ *  `/dev/epoll' character device.  Mechansims with state change
+ *  interfaces are also said to be "edge triggered," versus "level
+ *  triggered" mechanisms such as select().
+ *
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
 
 
 #include "test_config.h"
