@@ -18,7 +18,7 @@ BIN2 =  Notify_Consumer \
 	Notify_Supplier
 
 PSRC=$(addsuffix .cpp,$(BIN2))
-LDLIBS = -lTAO_DsNotifyLogAdmin -lTAO_DsEventLogAdmin -lTAO_DsLogAdmin -lTAO_CosNotification -lTAO_CosNaming -lTAO_PortableServer -lTAO -lACE
+LDLIBS = -lTAO_DsNotifyLogAdmin -lTAO_DsEventLogAdmin -lTAO_DsLogAdmin -lTAO_CosNotification -lTAO_CosNaming $(TAO_SRVR_LIBS)
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 

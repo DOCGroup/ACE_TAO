@@ -11,7 +11,7 @@ SERVER_OBJS = server.o
 
 CPPFLAGS += -I$(TAO_ROOT) -I../Generic_Servant
 
-LDLIBS  =  -lGeneric_Servant -lTAO_PortableServer -lTAO
+LDLIBS  =  -lGeneric_Servant $(TAO_SRVR_LIBS)
 LDFLAGS += -L$(TAO_ROOT)/tao -L../Generic_Servant
 
 #### For make depend

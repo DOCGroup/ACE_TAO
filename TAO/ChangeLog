@@ -1,3 +1,19 @@
+Tue May 13 07:44:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/IFR_Service/Makefile.IFR_Service:
+	* orbsvcs/examples/Log/Event/Makefile:
+	* orbsvcs/examples/Log/Notify/Makefile:
+	* orbsvcs/examples/Log/RTEvent/Makefile:
+	* orbsvcs/examples/Notify/Filter/Makefile:
+	* orbsvcs/examples/Notify/Subscribe/Makefile:
+	* orbsvcs/examples/ORT/Makefile:
+	* orbsvcs/examples/RtEC/MCast/Makefile:
+	* orbsvcs/examples/RtEC/Schedule/Makefile:
+	* orbsvcs/examples/RtEC/Simple/Makefile:
+	* examples/Callback_Quoter/Makefile: 
+	* examples/POA/Reference_Counted_Servant/Makefile: Fixes to get
+	  the above compiling in static builds.
+
 Tue May 13 07:35:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs//examples/CosEC/Factory/Makefile:
