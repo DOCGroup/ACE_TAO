@@ -240,6 +240,7 @@ ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
                   0);
   return sp;
 }
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 
 ACE_Service_Type_Impl *
 ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
@@ -281,7 +282,7 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
   return stp;
 
 }
-#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
+
 // Initialize and activate a statically linked service.
 
 int
@@ -568,11 +569,11 @@ ACE_Service_Config::process_directive (const ACE_Static_Svc_Descriptor &ssd,
   void *sym = (ssd.alloc_)(&gobbler);
 
   ACE_Service_Type_Impl *stp =
-    ace_create_service_type (ssd.name_,
-                             ssd.type_,
-                             sym,
-                             ssd.flags_,
-                             gobbler);
+    ACE_Service_Config::create_service_type_impl (ssd.name_,
+                                                  ssd.type_,
+                                                  sym,
+                                                  ssd.flags_,
+                                                  gobbler);
   if (stp == 0)
     return 0;
 
