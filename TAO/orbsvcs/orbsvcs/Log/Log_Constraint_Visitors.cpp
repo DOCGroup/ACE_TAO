@@ -434,7 +434,7 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
     {
       CORBA::Any *any_ptr = 0;
       ACE_NEW_RETURN (any_ptr,
-                      CORBA::Any (*any),
+                      CORBA::Any (any.in ()),
                       -1);
       this->current_member_ = any_ptr;
       return comp->accept (this);
