@@ -9,7 +9,7 @@
 //    Encodable.h
 //
 // = DESCRIPTION
-//     Defines the interface for classes that wish to be 
+//     Defines the interface for classes that wish to be
 //     encodable/decodable into/from a CDR representation.
 //
 // = AUTHOR
@@ -23,23 +23,6 @@
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
 
-// @@ Angelo, I fixed several typos in class and file descriptions.
-// Make sure to review what you write!!! 
-// @@ Marina DONE
-
-// @@ Angelo, when you type, many of the adjacent words have more than
-// 1 space between them.  Please make sure to use just one space! DONE
-
-// @@ Marina I like justified paragraph, that's why sometimes
-// there is more than one space in my comments, I don't think
-// this is a problem. It is hardly visible.
-
-// @@ Angelo, do we need to include orbconf.h ?  If not, make sure to
-// delete it.  We need to avoid creating unnecessary dependencies,
-// since they increase compilation times. 
-
-// @@ Marina No we don't, I took it off.
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif // ACE_LACKS_PRAGMA_ONCE
@@ -50,9 +33,9 @@ class TAO_Export TAO_Encodable
 //    TAO_Encodable Interface
 //
 // = DESCRIPTION
-//    This interface should be inherited by classes that whish to be 
-//    encoded/decoded into/from  a CDR stream. Implementation of the 
-//    streaming  methods is deferred to the subclasses.
+//    This interface should be inherited by classes that wish to be
+//    encoded/decoded into/from a CDR stream. Implementation of the
+//    streaming methods is deferred to the subclasses.
 //
 public:
 
@@ -70,14 +53,3 @@ public:
 #include "ace/post.h"
 
 #endif /* TAO_ENCODABLE_H_ */
-
-// @@ Angelo, please use #endif // TAO_ENCODABLE_H_
-// In other words, don't include 'defined' and parens in the comment
-// for endif. 
-// @@ Marina DONE
-
-
-
-
-
-

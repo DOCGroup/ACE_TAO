@@ -1,3 +1,15 @@
+Sun Jun 18 00:01:28 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Encodable.h
+	* tao/Policy_Factory.h
+	* tao/Profile.cpp
+	* tao/RT_Policy_i.cpp
+	* tao/RT_Policy_i.h
+	* tao/Stub.cpp
+	* tao/Stub.h:
+
+	  Code review.  Left a bunch of @@ comments for Angelo.
+
 Sat Jun 17 23:02:34 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/Exposed_Policies/Counter.idl
@@ -6,6 +18,7 @@ Sat Jun 17 23:02:34 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tests/Exposed_Policies/README
 	* tests/Exposed_Policies/client.cpp
 	* tests/Exposed_Policies/server.cpp:
+
 	  Code review.  Left a bunch of @@ comments for Angelo.
 
 Sat Jun 17 20:57:52 2000  Marina Spivak  <marina@cs.wustl.edu>

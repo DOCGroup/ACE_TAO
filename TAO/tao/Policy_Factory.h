@@ -25,24 +25,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-// @@ Angelo, all TAO implementation classes should start with TAO_.
-// Please change.
-// @@ Marina DONE.
-
 class TAO_Export TAO_Policy_Factory
 {
   // = TITLE
   //   TAO_Policy_Factory
   //
   // = DESCRIPTION
-  //   This class allows the creation of Policies based on the
-  //   type of the policy.
+  //   This class creates a Policy  based on the
+  //   type of the type provided.
+  // @@ Angelo, you could also mention why this class is needed, e.g.,
+  // why can't we just use ORB::create_policy for this purpose or why
+  // can't we creatte whatever policy we need directly...
 
-  // @@ Angelo, does this class creates only RT policies as the
-  // comment above indicates?
-
-  // @@ Marina not anymore...
 public:
 
   static CORBA::Policy * create_policy (CORBA::PolicyType ptype);
@@ -51,12 +45,6 @@ public:
 
 protected:
   TAO_Policy_Factory (void);
-  // @@ Angelo, The only method in this class is a static.  Do we
-  // need the constructor?
-  
-  // @@ Marina if u look at the .cpp file this is not implemented, 
-  // and it is declared because there is no point in creating
-  // an instance for this class.
 };
 
 
@@ -67,3 +55,6 @@ protected:
 #include "ace/post.h"
 
 #endif // defined (RTPOLICY_FACTORY_H_)
+
+// @@ Angelo, I already left you a similar comment last time in another file,
+// to use /* RTPOLICY_FACTORY_H_ */ instead of what you have above
