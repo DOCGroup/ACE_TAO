@@ -1655,6 +1655,7 @@ switch_type_spec :
 	{
           // octets are not allowed
           idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
+	  $$ = idl_global->scopes()->bottom()->lookup_primitive_type($1);
 	}
 	| boolean_type
 	{
