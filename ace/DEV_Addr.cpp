@@ -52,6 +52,7 @@ ACE_DEV_Addr::set (const ACE_DEV_Addr &sa)
 // Copy constructor. 
 
 ACE_DEV_Addr::ACE_DEV_Addr (const ACE_DEV_Addr &sa)
+  : ACE_Addr (AF_DEV, sizeof this->devname_)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
 
@@ -59,6 +60,7 @@ ACE_DEV_Addr::ACE_DEV_Addr (const ACE_DEV_Addr &sa)
 }
 
 ACE_DEV_Addr::ACE_DEV_Addr (LPCTSTR devname)
+  : ACE_Addr (AF_DEV, sizeof this->devname_)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
 
