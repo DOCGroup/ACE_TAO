@@ -1,3 +1,113 @@
+Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Abstract_Servant_Base.h:
+	* tao/Abstract_Servant_Base.cpp:
+
+	  This abstract class is now the class from which the
+	  TAO_ServantBase inherits. This class has been introduced
+	  to make it possible to keep the reference to the servant
+	  in the CORBA::Object and still keeping the TAO library
+	  independent from the PortableServer library.
+	 
+	
+	* tao/Object.h:
+	* tao/Object.cpp:
+	* tao/Object.i
+
+	  Modified constructor to initialize the servant pointer, and
+	  to set the proxy broker to remote proxy broker.
+
+	  Moved servant pointer from TAO_Collocated_Object back to
+	  CORBA::Object. 
+	  
+	  Added member variable keep a reference to the Proxy Broker.
+	  
+	  Added methods to get/set the proxy broker.
+	
+	* tao/PortableServer/Servant_Base.h
+
+	  Now the TAO_ServantBase inherits from the TAO_Abstract_ServantBase.
+
+	
+	* tao/Object_Proxy_Broker.h:
+	* tao/Object_Proxy_Broker.cpp:
+	 
+	  Proxy Broker superclass. This class define the interface
+	  used by CORBA::Object and its subclasses to get the right
+	  proxy needed to perform a given call. In the new collocation
+	  scheme, the proxy used could change on a call by call basis.
+
+	* tao/Remote_Object_Proxy_Broker.h:
+	* tao/Remote_Object_Proxy_Broker.cpp:
+
+	* tao/PortableServer/Strategized_Object_Proxy_Broker.h:
+	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+	
+	  Concrete Proxy Brokers implementations.
+
+	
+	* tao/Object_Proxy_Impl.h
+	* tao/Object_Proxy_Impl.cpp
+
+	  Abstract base class for the Object Proxies, each concrete
+	  proxy implements a strategy to perform a call.
+	
+	* tao/Remote_Object_Proxy_Impl.h:
+	* tao/Remote_Object_Proxy_Impl.cpp:
+	  
+	  Implementation of the Proxy for non "collocated calls".
+
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
+	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
+		  
+	  Implementation of the Proxy for "collocated calls".
+
+
+	* tao/PortableServer/Collocated_Object.h:
+	* tao/PortableServer/Collocated_Object.cpp:
+	* tao/PortableServer/Collocated_Object.i:
+
+	  Removed class TAO_Collocated_Object.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	  
+	  Added method <collocation_strategy> to resolve dinamically
+	  the collocation strategy to be used on a call by call
+	  basis. Right now this method implement the old logic,
+	  and will be updated as soon as other part of the RT-CORBA
+	  implementation are in place.
+
+	  Changend implementation of the method <create_object> to create
+	  
+
+	* tao/PortableServer/ObjectAdapter.cpp:
+
+	  Modified the implementation of the method <create_collocated_object>
+	  not to create a TAO_Collocated_Object, but to set the
+	  right type of proxy broker. 
+
+	* tao/tao.dsp:
+	  
+	  Added new files to the TAO's VC++ workspace.
+	  Added <Bind_Dispatcher_Guard.*> to the VC++ workspace.
+
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	  
+	  Added new files to the TAO_Portable 's VC++ workspace.
+
+	* tao/Makefile
+	  
+	  Updated Makefile to compile the new files.
+
+	* tao/PortableServer/Makefile
+	  
+	  Updated Makefile to compile the new files.
+	
+
+
 Tue Sep 19 13:32:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
