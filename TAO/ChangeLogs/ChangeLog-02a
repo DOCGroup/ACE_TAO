@@ -1,3 +1,10 @@
+Sun Jan  6 09:45:24 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Advanced/ch_8_and_10/client.cpp (main): 
+	  Added some casts to make certain C++ compilers happy.
+	  Thanks to Roy Sharon <roysharon@hotmail.com> for
+	  reporting this.
+
 Sat Jan  5 21:31:43 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h: 
