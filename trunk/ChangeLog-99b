@@ -1,3 +1,12 @@
+Wed Jul 28 10:32:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:  on
+          WIN32 host, assume that $(CC) is on the user's path
+          (or is a full pathname).  That way, we don't need to
+          determine ACE_CC dynamically, which causes trouble with
+          the WIN32 shell.  Thanks to Erik Johannes <ejohannes@oresis.com>
+          for reporting this.
+
 Wed Jul 28 09:48:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added guideline about testing
