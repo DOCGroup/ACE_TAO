@@ -1,3 +1,13 @@
+Fri Aug 20 09:27:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * tests/ORT/ORT.mpc:
+        * tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
+        * tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
+
+          Removed outdated -Gv IDL option according to [Bug 1908].
+
+
 Thu Aug 19 23:28:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Acceptor_Impl.cpp:
