@@ -1,3 +1,11 @@
+Sun Jan  2 10:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_client.mpb:
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+          Added ciaoversion as base project so that the version number
+          assigned to SOVERSION in the GNU makefiles is set to the CIAO
+          version and not to the TAO version
+
 Sun Jan  2 10:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CDR_Array_Test.cpp:
