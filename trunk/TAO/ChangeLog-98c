@@ -1,3 +1,9 @@
+Mon Feb 23 17:33:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/Makefile: 
+	  We don't generate the compiler as a single executable, without
+	  multiple shared libraries.
+
 Mon Feb 23 16:55:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event_Service_Constants.h: changed types of
