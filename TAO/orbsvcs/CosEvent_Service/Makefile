@@ -2,26 +2,30 @@
 # $Id$
 #
 
-BIN = CosEvent_Service
-
-
-LSRC = 	\
-	CosEvent_Service.cpp \
+LSRC = CosEvent_Service.cpp \
 
 ES_OBJS=$(LSRC:.cpp=.o)
 
 LDLIBS = -lorbsvcs -lTAO
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-#include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
+  BIN = CosEvent_Service
+endif # CosEvent
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+#include        $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
@@ -34,7 +38,7 @@ CosEvent_Service: $(addprefix $(VDIR),$(ES_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
