@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -153,9 +154,9 @@ public:
 // above could have some padding on machines with absurd padding
 // requirements (like 8 byte boundaries); hence the size of it may not
 // match the size of the header on the wire.
-//#define	TAO_GIOP_HEADER_LEN sizeof (TAO_GIOP_MessageHeader)
+//#define       TAO_GIOP_HEADER_LEN sizeof (TAO_GIOP_MessageHeader)
 // @@ - I made this explicitly 12 (ASG)
-#define	TAO_GIOP_HEADER_LEN 12
+#define TAO_GIOP_HEADER_LEN 12
 
 // Support for Implicit ORB Service Context.
 typedef CORBA::ULong TAO_GIOP_ServiceID;
@@ -417,5 +418,9 @@ public:
   static const char *message_name (TAO_GIOP::Message_Type which);
   // Returns the stringified <MsgType>.
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/GIOP.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_GIOP_H */
