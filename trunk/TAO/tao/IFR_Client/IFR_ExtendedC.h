@@ -208,19 +208,43 @@ private:
 
   typedef CORBA::Short ValueModifier;
   typedef CORBA::Short_out ValueModifier_out;
-    TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_NONE;
+    TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_NONE
+#if !defined (ACE_HAS_USING_KEYWORD)
+     = 0
+#endif
+;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_CUSTOM;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_CUSTOM
+#if !defined (ACE_HAS_USING_KEYWORD)
+     = 1
+#endif
+;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_ABSTRACT;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_ABSTRACT
+#if !defined (ACE_HAS_USING_KEYWORD)
+     = 2
+#endif
+;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_TRUNCATABLE;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_TRUNCATABLE
+#if !defined (ACE_HAS_USING_KEYWORD)
+     = 3
+#endif
+;
 
   typedef CORBA::Short Visibility;
   typedef CORBA::Short_out Visibility_out;
-    TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short PRIVATE_MEMBER;
+    TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short PRIVATE_MEMBER
+#if !defined (ACE_HAS_USING_KEYWORD)
+     = 0
+#endif
+;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short PUBLIC_MEMBER;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short PUBLIC_MEMBER
+#if !defined (ACE_HAS_USING_KEYWORD)
+     = 1
+#endif
+;
 
 
 #if !defined (_CORBA_FIXEDDEF___VAR_CH_)

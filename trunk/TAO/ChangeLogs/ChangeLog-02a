@@ -1,3 +1,10 @@
+Mon Apr  2 15:09:23 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/IFR_Client/IFR_ExtendedC.h:
+
+          Fix a compilation error for compilers that do not support
+          namespaces.
+
 Mon Apr  2 14:39:03 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* Logging_Service/Logging_Service.cpp:
