@@ -1,3 +1,18 @@
+Tue Nov  7 15:19:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_exception.cpp:
+	* TAO_IDL/ast/ast_structure.cpp:
+
+	  Added base class constructor calls, not needed when
+	  traversing the be_<node> classes, which inherit from
+	  these and add to the hierarchy of constructor calls.
+
+	* TAO_IDL/ast/ast_generator.cpp:
+
+	  Added code from be_generator::create_module to
+	  AST_Generator::create_module, so AST visitors will
+	  get reopened modules handled correctly.
+
 Tue Nov  7 12:27:34 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
