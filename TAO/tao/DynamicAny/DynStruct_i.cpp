@@ -124,9 +124,10 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
       ACE_CHECK;
 
       CORBA::Any field_any;
+      TAO_InputCDR unk_in (in);
       ACE_NEW (unk,
                TAO::Unknown_IDL_Type (field_tc.in (),
-                                      TAO_InputCDR (in)));
+                                      unk_in));
       field_any.replace (unk);
 
       // This recursive step will call the correct constructor
@@ -581,10 +582,11 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
           ACE_CHECK;
 
           CORBA::Any field_any;
+          TAO_InputCDR unk_in (in);
           TAO::Unknown_IDL_Type *unk = 0;
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (field_tc.in (),
-                                          TAO_InputCDR (in)));
+                                          unk_in));
           field_any.replace (unk);
 
           this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);

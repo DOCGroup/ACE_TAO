@@ -4,7 +4,7 @@
 #define TAO_ANY_ARRAY_IMPL_T_C
 
 #include "tao/Any_Array_Impl_T.h"
-#include "tao/Any.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/Marshal.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"

@@ -87,10 +87,11 @@ TAO_DynSequence_i::init (const CORBA::Any& any
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       CORBA::Any field_any;
+      TAO_InputCDR unk_in (cdr);
       TAO::Unknown_IDL_Type *field_unk = 0;
       ACE_NEW (field_unk,
                TAO::Unknown_IDL_Type (field_tc.in (),
-                                      TAO_InputCDR (cdr)));
+                                      unk_in));
       field_any.replace (field_unk);
 
       // This recursive step will call the correct constructor
@@ -599,10 +600,11 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
       for (CORBA::ULong i = 0; i < arg_length; ++i)
         {
           CORBA::Any field_any;
+          TAO_InputCDR unk_in (cdr);
           TAO::Unknown_IDL_Type *field_unk = 0;
           ACE_NEW (field_unk,
                    TAO::Unknown_IDL_Type (field_tc.in (),
-                                          TAO_InputCDR (cdr)));
+                                          unk_in));
           field_any.replace (field_unk);
 
           if (i < this->component_count_)
