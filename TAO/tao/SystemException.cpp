@@ -4,9 +4,9 @@
 #include "Environment.h"
 #include "Any_SystemException.h"
 #include "Any_Dual_Impl_T.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 #include "ORB_Constants.h"
-#include "TC_Constants_Forward.h"
+#include "TypeCode_Constants.h"
 #include "CORBA_String.h"
 #include "CDR.h"
 #include "debug.h"
@@ -1145,10 +1145,9 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA::name ::_tao_any_destructor (void *x) \
+CORBA::name ::_tao_any_destructor (void * x) \
 { \
-  CORBA::name *tmp = static_cast<CORBA::name *> (x); \
-  delete tmp; \
+  delete static_cast<CORBA::name *> (x); \
 }
 
 STANDARD_EXCEPTION_LIST
@@ -1158,7 +1157,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::Exception * \
 CORBA::name ::_tao_duplicate (void) const \
 { \
-  CORBA::Exception *result; \
+  CORBA::Exception * result; \
   ACE_NEW_RETURN (result, CORBA::name (*this), 0); \
   return result; \
 }

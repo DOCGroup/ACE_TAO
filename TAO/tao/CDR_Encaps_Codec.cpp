@@ -8,7 +8,7 @@
 #include "OctetSeqC.h"
 #include "Any.h"
 #include "Any_Impl.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 #include "Marshal.h"
 #include "Any_Unknown_IDL_Type.h"
 #include "SystemException.h"

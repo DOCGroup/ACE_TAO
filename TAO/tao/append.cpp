@@ -23,7 +23,7 @@
 #include "tao/debug.h"
 #include "tao/Valuetype_Adapter.h"
 #include "tao/ORB_Core.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/Marshal.h"
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"

@@ -22,7 +22,7 @@
 // ============================================================================
 
 #include "tao/Marshal.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Marshal.i"

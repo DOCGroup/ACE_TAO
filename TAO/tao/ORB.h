@@ -8,8 +8,9 @@
  *
  *  Header file for CORBA's ORB type.
  *
- *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
- *  @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu.edu>
+ *  @author DOC Center - Washington University at St. Louis
+ *  @author DOC Group - Vanderbilt University
+ *  @author DOC Laboratory - University of California at Irvine
  */
 //=============================================================================
 
@@ -154,22 +155,22 @@ namespace CORBA
       virtual void _raise (void) const;
 
       virtual void _tao_encode (TAO_OutputCDR &
-                                ACE_ENV_ARG_DECL_NOT_USED) const;
+                                ACE_ENV_ARG_DECL) const;
 
       virtual void _tao_decode (TAO_InputCDR &
-                                ACE_ENV_ARG_DECL_NOT_USED);
+                                ACE_ENV_ARG_DECL);
     };
 
     typedef char *ObjectId;
     typedef CORBA::String_var ObjectId_var;
     typedef CORBA::String_out ObjectId_out;
-    static CORBA::TypeCode_ptr _tc_ObjectId;
+    static CORBA::TypeCode_ptr const _tc_ObjectId;
 
     typedef CORBA::ORB_ObjectIdList ObjectIdList;
     typedef CORBA::ORB_ObjectIdList_var ObjectIdList_var;
     typedef CORBA::ORB_ObjectIdList_out ObjectIdList_out;
     typedef CORBA::ORB_ObjectIdList *ObjectIdList_ptr;
-    static CORBA::TypeCode_ptr _tc_ObjectIdList;
+    static CORBA::TypeCode_ptr const _tc_ObjectIdList;
 
     /// Return a duplicate of @c orb.
     /**
@@ -377,7 +378,7 @@ namespace CORBA
 
     CORBA::TypeCode_ptr create_local_interface_tc (
         const char *id,
-        const char *ame
+        const char *name
         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_component_tc (
@@ -581,7 +582,8 @@ namespace CORBA
     ACE_Time_Value *get_timeout (void);
 
   protected:
-    // We must be created via the @c ORB_init() call.
+
+    // We must be created via the @c CORBA::ORB_init() function.
     ORB (TAO_ORB_Core *orb_core);
 
     /// Destructor
@@ -596,12 +598,12 @@ namespace CORBA
 
     /// Resolve the Policy Manager for this ORB.
     CORBA::Object_ptr resolve_policy_manager (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+        ACE_ENV_SINGLE_ARG_DECL
       );
 
     /// Resolve the Policy Current for this thread.
     CORBA::Object_ptr resolve_policy_current (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+        ACE_ENV_SINGLE_ARG_DECL
       );
 
   private:
@@ -623,7 +625,7 @@ namespace CORBA
     void check_shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
     /// Set the timeout value
-    void set_timeout (ACE_Time_Value *timeout);
+    void set_timeout (ACE_Time_Value * timeout);
 
   private:
 
@@ -645,7 +647,7 @@ namespace CORBA
     ORB &operator= (const ORB &);
 
     /// Timeout value
-    ACE_Time_Value *timeout_;
+    ACE_Time_Value * timeout_;
 
   };
 }  // End namespace CORBA
