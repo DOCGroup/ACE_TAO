@@ -123,10 +123,8 @@ Fri Apr 30 18:46:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Fri Apr 30 17:41:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/Typecode.{h,cpp}:
-          Added a no-op parameter() function. This function has been
-          deprecated since CORBA 1.2 and is completely gone from 2.3a,
-          but the branding tests have it so... It just throws
-          CORBA::NO_IMPLEMENT.
+          Added a parameter() function. Although this function is gone
+          from CORBA2.3a, it is still in 2.2 (though deprecated).
 
           Also found twp methods, ulong_param and typecode_param, that
           were internal hacks to use until other member functions had
