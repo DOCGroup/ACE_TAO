@@ -198,8 +198,8 @@ public:
   void version_reset_error (void);
 
   // Report an attempt to change the id once set.
-  void id_reset_error (char *o,
-                       char *n);
+  void id_reset_error (const char *o,
+                       const char *n);
 
   // Report an attempt to use a forward declared interface which
   // hasn't been defined yet in an inheritance spec

@@ -44,6 +44,9 @@ public:
 
   virtual int visit_structure (be_structure *node);
   // visit structure
+
+  virtual int post_process (be_decl *);
+  // any post processing that needs to be done after a scope element is handled
 };
 
 #endif /* _BE_VISITOR_STRUCTURE_CDR_OP_CS_H_ */

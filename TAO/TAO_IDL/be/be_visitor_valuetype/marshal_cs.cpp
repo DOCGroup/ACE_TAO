@@ -213,7 +213,7 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
             }
 
           ++n_processed;
-          be_visitor_valuetype_field_cdr_ci visitor (&ctx);
+          be_visitor_valuetype_field_cdr_cs visitor (&ctx);
           visitor.pre_ = node->field_pd_prefix ();
           visitor.post_ = node->field_pd_postfix ();
 

@@ -804,8 +804,8 @@ UTL_Error::version_reset_error (void)
 
 // Report a reset of the id a second time to a different string.
 void
-UTL_Error::id_reset_error (char *o,
-                           char *n)
+UTL_Error::id_reset_error (const char *o,
+                           const char *n)
 {
   idl_error_header (EIDL_ID_RESET,
                     idl_global->lineno (),

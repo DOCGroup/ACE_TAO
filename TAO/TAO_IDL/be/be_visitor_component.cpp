@@ -52,7 +52,6 @@
 #include "be_visitor_component/any_op_ch.cpp"
 #include "be_visitor_component/any_op_cs.cpp"
 #include "be_visitor_component/cdr_op_ch.cpp"
-#include "be_visitor_component/cdr_op_ci.cpp"
 #include "be_visitor_component/cdr_op_cs.cpp"
 
 ACE_RCSID (be, 

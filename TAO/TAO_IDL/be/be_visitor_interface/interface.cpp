@@ -272,9 +272,9 @@ be_visitor_interface::visit_enum (be_enum *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
-        be_visitor_enum_cdr_op_ci visitor (&ctx);
+        be_visitor_enum_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -339,12 +339,6 @@ be_visitor_interface::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       {
         be_visitor_exception_cdr_op_ch visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
-      {
-        be_visitor_exception_cdr_op_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -484,7 +478,6 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SI:
@@ -623,12 +616,6 @@ be_visitor_interface::visit_structure (be_structure *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
-      {
-        be_visitor_structure_cdr_op_ci visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
         be_visitor_structure_cdr_op_cs visitor (&ctx);
@@ -731,12 +718,6 @@ be_visitor_interface::visit_union (be_union *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
-      {
-        be_visitor_union_cdr_op_ci visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
         be_visitor_union_cdr_op_cs visitor (&ctx);
@@ -836,12 +817,6 @@ be_visitor_interface::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       {
         be_visitor_typedef_cdr_op_ch visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
-      {
-        be_visitor_typedef_cdr_op_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
