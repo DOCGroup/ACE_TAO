@@ -17,7 +17,7 @@ MYFILES  	= \
 	HTTP_Config \
 	HTTP_Handler \
 	HTTP_Helpers \
-	Pipeline \
+	JAWS_Pipeline \
 	HTTP_Request \
 	HTTP_Response \
 	Parse_Headers \
