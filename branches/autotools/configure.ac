@@ -110,7 +110,7 @@ dnl Set the test language as C++
 AC_LANG([C++])
 
 dnl If we are cross compiling disable certain things in the Makefiles.
-AM_CONDITIONAL(ACE_CROSS_COMPILED, test X$cross_compiling = Xyes)dnl
+AM_CONDITIONAL([ACE_CROSS_COMPILED], [test X$cross_compiling = Xyes])
 
 
 dnl This checks for a binary called gm4, gnum4 or m4, and assigns
@@ -258,6 +258,8 @@ dnl Additional X library checks
 dnl We only check for these libraries if the user has
 dnl enabled XtReactor support.
 
+xt_reactor_go=no
+
 if test "$ace_user_enable_xt_reactor" = yes; then
 XTREACTOR_TEST_XLIBS=""
 dnl Check for Motif if we have X
@@ -269,7 +271,6 @@ dnl so we define another library variable that contains additional
 dnl libraries for the XtReactor test since it needs either Motif or the
 dnl Athena widget set.
 
-  xt_reactor_go=no
   AC_CHECK_LIB([Xm],[XmCreateRowColumn],
     [
      AC_DEFINE([ACE_HAS_XT])
@@ -293,12 +294,12 @@ dnl Athena widget set.
 
   AC_SUBST([XTREACTOR_TEST_XLIBS])
 
-dnl  AM_CONDITIONAL([COMPILE_XTREACTOR_TEST],[test X$xt_reactor_go = Xyes])
-
 dnl Restore pre-test linker flags
   LDFLAGS="$T_LDFLAGS"
 
 fi dnl test "$ace_user_enable_xt_reactor"= yes
+
+  AM_CONDITIONAL([COMPILE_XTREACTOR_TEST],[test X$xt_reactor_go = Xyes])
 
 dnl End additional X library checks
 
@@ -6339,7 +6340,7 @@ dnl since gethrtime.cpp uses assembler code specific to that compiler.
   [
    AC_DEFINE([ACE_HAS_PENTIUM])
   ],)
-AM_CONDITIONAL(ACE_ON_PENTIUM, test X$ace_cv_feature_pentium = Xyes)
+AM_CONDITIONAL([ACE_ON_PENTIUM], [test X$ace_cv_feature_pentium = Xyes])
 
 
 dnl
@@ -6645,9 +6646,9 @@ main ()
           ])
       ], , [AC_DEFINE([ACE_LACKS_NULL_PTHREAD_STATUS])])
 
-    dnl Check if OS supports timed mutex acquisitions
+    dnl Check if OS supports mutex timeouts
     dnl (e.g. pthread_mutex_timedlock()).
-    ACE_CACHE_CHECK([for timed mutex acquisitions],
+    ACE_CACHE_CHECK([for mutex timeouts],
       [ace_cv_have_mutex_timeouts],[
          AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifndef _REENTRANT
@@ -7302,6 +7303,7 @@ AC_CONFIG_FILES([
   apps/Makefile
   apps/gperf/Makefile
   apps/gperf/src/Makefile
+  tests/Makefile
 ])
 
 AC_CONFIG_COMMANDS([default],[

@@ -18,8 +18,8 @@ man_MANS = ace-config.1
 ## The docs directory is currently handled by the "dist-hook" makefile target.
 SUBDIRS = \
   ace \
-  apps
-##  tests \
+  apps \
+  tests
 ##  netsvcs \
 ##  man
 

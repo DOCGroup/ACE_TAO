@@ -1,3 +1,19 @@
+Mon Feb 10 14:42:59 2003  Ossama Othman  <ossama@uci.edu>
+
+	* configure.ac:
+
+	  Generate tests/Makefile.
+
+	  Updated and re-enabled XtReactor support.
+
+	* Makefile.am:
+
+	  Added ACE one-button test directory to the sub-directory list.
+
+	* tests/Makefile.am:
+
+	  Updated one-button test list.  It was missing some new tests.
+
 Wed Feb  5 13:50:09 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac:
