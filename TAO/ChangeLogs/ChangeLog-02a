@@ -1,8 +1,12 @@
+Fri Apr 28 13:16:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/InterceptorC.h: Doh! I forgot to check in this file.
+
 Fri Apr 28 11:17:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterceptorC.cpp:
-	  Moved the line '#if (TAO_HAS_INTERCEPTORS == 1)' line to come 
-	  after the line '#include tao/InterceptorC.h' to avoid link 
+	  Moved the line '#if (TAO_HAS_INTERCEPTORS == 1)' line to come
+	  after the line '#include tao/InterceptorC.h' to avoid link
 	  errors on NT.
 
 Fri Apr 28 08:29:09 2000  Carlos O'Ryan  <coryan@uci.edu>
