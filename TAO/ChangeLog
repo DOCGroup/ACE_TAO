@@ -1,3 +1,10 @@
+Thu Feb  3 19:27:58 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp (reply_timed_out): 
+
+	  A slightly modified fix for [BUGID2038]. Once Torsten confirms
+	  this works, I will close the bugzilla entry.
+
 Thu Feb  3 19:14:17 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
