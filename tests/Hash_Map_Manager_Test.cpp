@@ -190,8 +190,8 @@ static const int MAX_HASH = 6;
 // out how to simplify this.
 static const POOL_SIZE = sizeof (HASH_STRING_ENTRY) * STRING_TABLE_SIZE
                          + sizeof (HASH_STRING_ENTRY) * MAX_HASH; 
-
-static ACE_Static_Allocator<POOL_SIZE> allocator;
+static char String_Table_pool[POOL_SIZE];
+static ACE_Static_Allocator_Base allocator (String_Table_pool, POOL_SIZE);
 
 static int
 run_test (void)
