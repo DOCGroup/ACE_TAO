@@ -1,3 +1,10 @@
+Fri May 23 15:18:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Added code to
+	  initialize the proxy_broker pointers in the constructors.
+
 Fri May 23 15:08:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
@@ -16,7 +23,7 @@ Fri May 23 13:21:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  instantiations. 
 
 	* tao/Valuetype/AbstractBase.cpp: 
-	* tao/Valuetype/Seq_Tmplinst.cpp: Templat einstantiations for the
+	* tao/Valuetype/Seq_Tmplinst.cpp: Template instantiations for the
 	  ValueType library.
 
 Fri May 23 11:16:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
