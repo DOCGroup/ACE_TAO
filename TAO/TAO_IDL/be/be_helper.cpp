@@ -23,8 +23,8 @@
 #include "be_codegen.h"
 #include "idl_defines.h"
 
-ACE_RCSID (be, 
-           be_helper, 
+ACE_RCSID (be,
+           be_helper,
            "$Id$")
 
 static const char copyright[] =
@@ -297,16 +297,15 @@ TAO_OutStream::gen_endif (void)
 int
 TAO_OutStream::gen_ifdef_AHETI (void)
 {
-  *this << "\n\n#if !defined (TAO_USE_SEQUENCE_TEMPLATES)";
+  *this << "\n\n#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)";
 
   return 0;
 }
 
 int
-TAO_OutStream::gen_else_AHETI (void)
+TAO_OutStream::gen_elif_AHETI (void)
 {
-  *this << "\n#else /* TAO_USE_SEQUENCE_TEMPLATES */"
-        << be_nl;
+  *this << "\n\n#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)";
 
   return 0;
 }
@@ -314,7 +313,7 @@ TAO_OutStream::gen_else_AHETI (void)
 int
 TAO_OutStream::gen_endif_AHETI (void)
 {
-  *this << "\n\n#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ ";
+  *this << "\n\n#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ ";
 
   return 0;
 }

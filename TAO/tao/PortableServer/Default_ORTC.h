@@ -26,13 +26,11 @@
 #define _TAO_IDL_ORIG_DEFAULT_ORTC_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "tao/ObjectReferenceTemplateC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/ObjectReferenceTemplateC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -64,83 +62,21 @@ TAO_NAMESPACE  TAO_Default_ORT
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:307
   
   class ObjectReferenceTemplate;
-
-#if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___PTR_CH_)
-#define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___PTR_CH_
+  struct tao_ObjectReferenceTemplate_life;
+  typedef TAO_Value_Var_T<ObjectReferenceTemplate, tao_ObjectReferenceTemplate_life> ObjectReferenceTemplate_var;
+  typedef TAO_Value_Out_T<ObjectReferenceTemplate, tao_ObjectReferenceTemplate_life> ObjectReferenceTemplate_out;
   
-  typedef ObjectReferenceTemplate *ObjectReferenceTemplate_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___VAR_CH_)
-#define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:181
-  
-  class  ObjectReferenceTemplate_var
+  struct tao_ObjectReferenceTemplate_life
   {
-  public:
-    ObjectReferenceTemplate_var (void);
-    ObjectReferenceTemplate_var (ObjectReferenceTemplate*);
-    ObjectReferenceTemplate_var (const ObjectReferenceTemplate*); // (TAO extension)
-    ObjectReferenceTemplate_var (const ObjectReferenceTemplate_var &);
-    ~ObjectReferenceTemplate_var (void);
-    
-    ObjectReferenceTemplate_var &operator= (ObjectReferenceTemplate*);
-    ObjectReferenceTemplate_var &operator= (const ObjectReferenceTemplate_var &);
-    ObjectReferenceTemplate* operator-> (void) const;
-    
-    operator const ObjectReferenceTemplate* () const;
-    operator ObjectReferenceTemplate*& ();
-    // in, inout, out, _retn 
-    ObjectReferenceTemplate* in (void) const;
-    ObjectReferenceTemplate*& inout (void);
-    ObjectReferenceTemplate*& out (void);
-    ObjectReferenceTemplate* _retn (void);
-    ObjectReferenceTemplate* ptr (void) const;
-    
-    // Hooks used by template sequence and valuetype manager classes
-    // for non-defined forward declared valuetypes.
     static void tao_add_ref (ObjectReferenceTemplate *);
     static void tao_remove_ref (ObjectReferenceTemplate *);
-  
-  private:
-    ObjectReferenceTemplate* ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OUT_CH_)
-#define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:490
-  
-  class  ObjectReferenceTemplate_out
-  {
-  public:
-    ObjectReferenceTemplate_out (ObjectReferenceTemplate* &);
-    ObjectReferenceTemplate_out (ObjectReferenceTemplate_var &);
-    ObjectReferenceTemplate_out (const ObjectReferenceTemplate_out &);
-    ObjectReferenceTemplate_out &operator= (const ObjectReferenceTemplate_out &);
-    ObjectReferenceTemplate_out &operator= (const ObjectReferenceTemplate_var &);
-    ObjectReferenceTemplate_out &operator= (ObjectReferenceTemplate*);
-    operator ObjectReferenceTemplate*& ();
-    ObjectReferenceTemplate*& ptr (void);
-    ObjectReferenceTemplate* operator-> (void);
-    
-  private:
-    ObjectReferenceTemplate* &ptr_;
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:96
-
-#endif /* end #if !defined */
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:56
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE_CH_
@@ -164,7 +100,7 @@ TAO_NAMESPACE  TAO_Default_ORT
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:315
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:272
   
   protected:
     ObjectReferenceTemplate (void);
@@ -247,7 +183,7 @@ TAO_NAMESPACE  OBV_TAO_Default_ORT
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:682
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:212
 
 TAO_NAMESPACE CORBA
 {
@@ -268,7 +204,7 @@ TAO_NAMESPACE_CLOSE
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "Default_ORTC.i"
@@ -284,5 +220,4 @@ TAO_NAMESPACE_CLOSE
 
 #include "ace/post.h"
 #endif /* ifndef */
-
 

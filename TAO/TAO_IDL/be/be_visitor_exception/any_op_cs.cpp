@@ -1,7 +1,3 @@
-//
-// $Id$
-//
-
 // ============================================================================
 //
 // = LIBRARY
@@ -18,8 +14,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_exception, 
-           any_op_cs, 
+ACE_RCSID (be_visitor_exception,
+           any_op_cs,
            "$Id$")
 
 // ***************************************************************************
@@ -49,7 +45,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -77,7 +73,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << node->name () << " *_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert (" 
+      << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert ("
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
@@ -120,10 +116,11 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
       << be_idt_nl
       << "  defined (ACE_HAS_GNU_REPO)" << be_nl
-      << "template class TAO::Any_Dual_Impl_T<" << node->name () << ">;" 
+      << "template class TAO::Any_Dual_Impl_T<" << node->name () << ">;"
       << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "# pragma instantiate TAO::Any_Dual_Impl_T<" << node->name () 
+      << "# pragma instantiate TAO::Any_Dual_Impl_T<"
+      << node->name () << " \\"
       << ">" << be_nl
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 
@@ -132,7 +129,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception::visit_exception - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -151,7 +148,7 @@ be_visitor_exception_any_op_cs::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_any_op_cs::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -160,7 +157,7 @@ be_visitor_exception_any_op_cs::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_any_op_cs::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -183,7 +180,7 @@ be_visitor_exception_any_op_cs::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_any_op_cs::"
                          "visit_enum - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -206,7 +203,7 @@ be_visitor_exception_any_op_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_any_op_cs::"
                          "visit_structure - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -229,10 +226,9 @@ be_visitor_exception_any_op_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_any_op_cs::"
                          "visit_union - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
   return 0;
 }
-

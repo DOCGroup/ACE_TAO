@@ -420,6 +420,12 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
   if (!this->ctx_->alias ()
       && node->is_child (this->ctx_->scope ()))
     {
+      // Put the field node into the (anonymous) sequence node, to be
+      // used later for unique name generation.
+      be_field *member_node = 
+        be_field::narrow_from_decl (this->ctx_->node ());
+      node->field_node (member_node);
+
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
 

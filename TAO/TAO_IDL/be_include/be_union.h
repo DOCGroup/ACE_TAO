@@ -43,19 +43,8 @@ public:
             idl_bool abstract);
   // Constructor.
 
-  virtual int gen_var_defn (char *local_name = 0);
-  // Generate the _var class definition.
-
-  virtual int gen_var_impl (char *local_name = 0,
-                            char *full_name = 0);
-  // Generate the implementation for the _var class.
-
-  virtual int gen_out_defn (char *local_name = 0);
-  // Generate the _out class definition.
-
-  virtual int gen_out_impl (char *local_name = 0,
-                            char *full_name = 0);
-  // Generate the _out implementation.
+  virtual void redefine (AST_Structure *from);
+  // Catch BE-specific member values before delegating to the base class.
 
   virtual idl_bool has_duplicate_case_labels (void);
   // Do we have at least one member with multiple case labels?

@@ -224,3 +224,16 @@ CORBA::Environment_var::operator= (const CORBA::Environment_var &r)
   tmp.ptr_ = tmp_ptr;
   return *this;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class TAO_Pseudo_Var_T<CORBA::Environment>;
+  template class TAO_Pseudo_Out_T<CORBA::Environment, CORBA::Environment_var>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate TAO_Pseudo_Var_T<CORBA::Environment>
+# pragma instantiate TAO_Pseudo_Out_T<CORBA::Environment, CORBA::Environment_var>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

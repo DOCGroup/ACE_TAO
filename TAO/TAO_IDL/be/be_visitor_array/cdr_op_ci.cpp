@@ -717,7 +717,17 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
             }
           else
             {
-              *os << "tao_" << bt->flat_name () << "_marshal (_tao_array";
+              
+              AST_Decl *parent = 
+                ScopeAsDecl (bt->defined_in ());
+
+              if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+                {
+                  *os << parent->name () << "::";
+                }
+
+              *os << "tao_" << bt->local_name () << "_life::"
+                  << "tao_marshal (_tao_array";
               
               for (i = 0; i < ndims; ++i)
                 {

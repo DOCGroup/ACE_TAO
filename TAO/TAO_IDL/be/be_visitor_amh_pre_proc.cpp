@@ -169,6 +169,7 @@ be_visitor_amh_pre_proc::create_response_handler (
   response_handler->set_imported (node->imported ());
   response_handler->set_line (node->line ());
   response_handler->set_file_name (node->file_name ());
+  response_handler->gen_fwd_helper_name ();
 
   this->add_rh_node_members (node, response_handler, exception_holder);
 
@@ -638,6 +639,8 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                   0);
 
   excep_holder->set_name (excep_holder_name);
+  excep_holder->set_defined_in (node->defined_in ());
+  excep_holder->gen_fwd_helper_name ();
 
   // Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.

@@ -20,7 +20,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
@@ -31,7 +31,7 @@ ACE_INLINE
 TAO_Default_ORT::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
 {}
 
-ACE_INLINE const char* 
+ACE_INLINE const char*
 TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
 {
   return "IDL:TAO_Default_ORT/ObjectReferenceTemplate:1.0";
@@ -50,7 +50,7 @@ TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>::to_value (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:712
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:242
 
 #if defined (__ACE_INLINE__)
 
@@ -68,4 +68,3 @@ TAO_NAMESPACE_CLOSE
 
  CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceTemplate *);
  CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
-

@@ -23,7 +23,10 @@
 //
 // ================================================================
 #pragma prefix "omg.org"
+
 #include "IOP.pidl"
+#include "OctetSeq.pidl"
+
 module GIOP
 {
   typedef short AddressingDisposition;
@@ -44,7 +47,7 @@ module GIOP
 
   union TargetAddress switch (AddressingDisposition)
   {
-    case KeyAddr: sequence <octet> object_key;
+    case KeyAddr: CORBA::OctetSeq object_key;
     case ProfileAddr: IOP::TaggedProfile profile;
     case ReferenceAddr: IORAddressingInfo ior;
   };

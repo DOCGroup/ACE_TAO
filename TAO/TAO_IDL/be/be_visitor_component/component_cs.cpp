@@ -1,7 +1,3 @@
-//
-// $Id$
-//
-
 // ============================================================================
 //
 // = LIBRARY
@@ -64,11 +60,19 @@ be_visitor_component_cs::visit_component (be_component *node)
   *os << "int " << node->full_name () << "::_tao_class_id = 0;"
       << be_nl << be_nl;
 
-  // Global functions to allow non-defined forward declared interfaces
-  // access to some methods in the full definition.
-  *os << node->full_name () << "_ptr" << be_nl
-      << "tao_" << node->flat_name ()
-      << "_duplicate (" << be_idt << be_idt_nl
+  AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+  // Helper functions generated in case this interface was
+  // forward declared in some other IDL file and not defined there.
+  *os << node->full_name () << "_ptr" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_life::"
+      << "tao_duplicate (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -76,18 +80,30 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "::_duplicate (p);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "void" << be_nl
-      << "tao_" << node->flat_name ()
-      << "_release (" << be_idt << be_idt_nl
+  *os << "void" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_life::"
+      << "tao_release (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "CORBA::release (p);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << node->full_name () <<  "_ptr" << be_nl
-      << "tao_" << node->flat_name ()
-      << "_nil (" << be_idt << be_idt_nl
+  *os << node->full_name () <<  "_ptr" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_life::"
+      << "tao_nil (" << be_idt << be_idt_nl
       << "void" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -95,9 +111,31 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "::_nil ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << node->full_name () << "_ptr" << be_nl
-      << "tao_" << node->flat_name ()
-      << "_narrow (" << be_idt << be_idt_nl
+  *os << "CORBA::Boolean" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_life::"
+      << "tao_marshal (" << be_idt << be_idt_nl
+      << node->name () << "_ptr p," << be_nl
+      << "TAO_OutputCDR &cdr" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return p->marshal (cdr);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << node->full_name () << "_ptr" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_cast::"
+      << "tao_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr p" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -107,9 +145,15 @@ be_visitor_component_cs::visit_component (be_component *node)
       << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "CORBA::Object_ptr " << be_nl
-      << "tao_" << node->flat_name ()
-      << "_upcast (" << be_idt << be_idt_nl
+  *os << "CORBA::Object_ptr" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_cast::"
+      << "tao_upcast (" << be_idt << be_idt_nl
       << "void *src" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -128,25 +172,6 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "return p->marshal (strm);" << be_uidt_nl
       << "}";
 
-  // Generate the _var class.
-  if (node->gen_var_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_component_cs::"
-                         "visit_component - "
-                         "codegen for _var failed\n"),
-                        -1);
-    }
-
-  // Generate the _out class.
-  if (node->gen_out_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_component_cs::"
-                         "visit_component - "
-                         "codegen for _out failed\n"),
-                        -1);
-    }
 
   be_visitor_context ctx (*this->ctx_);
 

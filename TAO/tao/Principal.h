@@ -29,6 +29,10 @@
 
 namespace CORBA
 {
+  class Principal;
+  typedef TAO_Pseudo_Var_T<Principal> Principal_var;
+  typedef TAO_Pseudo_Out_T<Principal, Principal_var> Principal_out;
+
   /**
    * @class Principal
    *
@@ -52,8 +56,8 @@ namespace CORBA
     // @@ add "==", "<", ">" operators
 
     // The pseudo object operations.
-    static Principal* _duplicate (Principal*);
-    static Principal* _nil (void);
+    static Principal * _duplicate (Principal *);
+    static Principal * _nil (void);
 
     // = Stuff required for memory management.
     CORBA::ULong _incr_refcnt (void);
@@ -61,11 +65,9 @@ namespace CORBA
 
     Principal (void);
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    // Useful for template programming.
     typedef Principal_ptr _ptr_type;
     typedef Principal_var _var_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
 
   protected:
 
@@ -89,73 +91,14 @@ namespace CORBA
     /// Protect the reference count, this is OK because we do no
     /// duplicates or releases on the critical path.
     TAO_SYNCH_MUTEX refcount_mutex_;
-
-  };
-
-  /**
-   * @class Principal_var
-   *
-   * @brief The T_var class for CORBA::Principal
-   *
-   * As any other pseudo object Principal must have a T_var class,
-   * the interface an semantics are specified in the CORBA spec.
-   */
-  class TAO_Export Principal_var
-  {
-  public:
-    Principal_var (void);
-    Principal_var (Principal_ptr);
-    Principal_var (const Principal_var &);
-    ~Principal_var (void);
-
-    Principal_var &operator= (Principal_ptr);
-    Principal_var &operator= (const Principal_var &);
-    Principal_ptr operator-> (void) const;
-
-    /// in, inout, out, _retn
-    operator const Principal_ptr &() const;
-    operator Principal_ptr &();
-    Principal_ptr in (void) const;
-    Principal_ptr &inout (void);
-    Principal_ptr &out (void);
-    Principal_ptr _retn (void);
-    Principal_ptr ptr (void) const;
-
-  private:
-    Principal_ptr ptr_;
-  };
-
-  /**
-   * @class Principal_out
-   *
-   * @brief The T_out class for CORBA::Principal
-   *
-   * As any other pseudo object Principal must have a T_out class,
-   * the interface an semantics are specified in the CORBA spec.
-   */
-  class TAO_Export Principal_out
-  {
-  public:
-    Principal_out (Principal_ptr &);
-    Principal_out (Principal_var &);
-    Principal_out (Principal_out &);
-    Principal_out &operator= (Principal_out &);
-    Principal_out &operator= (const Principal_var &);
-    Principal_out &operator= (Principal_ptr);
-    operator Principal_ptr &();
-    Principal_ptr &ptr (void);
-    Principal_ptr operator-> (void);
-
-  private:
-    Principal_ptr &ptr_;
   };
 }  // End CORBA namespace
 
 TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR&, CORBA::Principal*);
+operator<< (TAO_OutputCDR &, CORBA::Principal *);
 
 TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR&, CORBA::Principal*&);
+operator>> (TAO_InputCDR &, CORBA::Principal *&);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Principal.i"

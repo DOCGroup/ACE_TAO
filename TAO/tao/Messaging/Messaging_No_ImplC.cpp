@@ -24,17 +24,6 @@
 
 
 #include "Messaging_No_ImplC.h"
-#include "tao/Stub.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -51,18 +40,18 @@ static const CORBA::Long _oc_Messaging_Priority[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5072), 
-  ACE_NTOHL (0x696f7269), 
-  ACE_NTOHL (0x74793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5072),
+  ACE_NTOHL (0x696f7269),
+  ACE_NTOHL (0x74793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Priority:1.0
     9,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
   ACE_NTOHL (0x0),  // name = Priority
     CORBA::tk_short,
 
@@ -92,19 +81,19 @@ static const CORBA::Long _oc_Messaging_RebindMode[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x62696e64), 
-  ACE_NTOHL (0x4d6f6465), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x62696e64),
+  ACE_NTOHL (0x4d6f6465),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Messaging/RebindMode:1.0
     11,
-  ACE_NTOHL (0x52656269), 
-  ACE_NTOHL (0x6e644d6f), 
+  ACE_NTOHL (0x52656269),
+  ACE_NTOHL (0x6e644d6f),
   ACE_NTOHL (0x64650000),  // name = RebindMode
     CORBA::tk_short,
 
@@ -134,19 +123,19 @@ static const CORBA::Long _oc_Messaging_RoutingType[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f526f), 
-  ACE_NTOHL (0x7574696e), 
-  ACE_NTOHL (0x67547970), 
-  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f526f),
+  ACE_NTOHL (0x7574696e),
+  ACE_NTOHL (0x67547970),
+  ACE_NTOHL (0x653a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/RoutingType:1.0
     12,
-  ACE_NTOHL (0x526f7574), 
-  ACE_NTOHL (0x696e6754), 
+  ACE_NTOHL (0x526f7574),
+  ACE_NTOHL (0x696e6754),
   ACE_NTOHL (0x79706500),  // name = RoutingType
     CORBA::tk_short,
 
@@ -176,18 +165,18 @@ static const CORBA::Long _oc_Messaging_Ordering[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f4f72), 
-  ACE_NTOHL (0x64657269), 
-  ACE_NTOHL (0x6e673a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f4f72),
+  ACE_NTOHL (0x64657269),
+  ACE_NTOHL (0x6e673a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Ordering:1.0
     9,
-  ACE_NTOHL (0x4f726465), 
-  ACE_NTOHL (0x72696e67), 
+  ACE_NTOHL (0x4f726465),
+  ACE_NTOHL (0x72696e67),
   ACE_NTOHL (0x0),  // name = Ordering
     CORBA::tk_ushort,
 
@@ -216,7 +205,7 @@ TAO_NAMESPACE_END
 int Messaging::RebindPolicy::_tao_class_id = 0;
 
 Messaging::RebindPolicy_ptr
-tao_Messaging_RebindPolicy_duplicate (
+Messaging::tao_RebindPolicy_life::tao_duplicate (
     Messaging::RebindPolicy_ptr p
   )
 {
@@ -224,7 +213,7 @@ tao_Messaging_RebindPolicy_duplicate (
 }
 
 void
-tao_Messaging_RebindPolicy_release (
+Messaging::tao_RebindPolicy_life::tao_release (
     Messaging::RebindPolicy_ptr p
   )
 {
@@ -232,15 +221,24 @@ tao_Messaging_RebindPolicy_release (
 }
 
 Messaging::RebindPolicy_ptr
-tao_Messaging_RebindPolicy_nil (
+Messaging::tao_RebindPolicy_life::tao_nil (
     void
   )
 {
   return Messaging::RebindPolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_RebindPolicy_life::tao_marshal (
+    Messaging::RebindPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::RebindPolicy_ptr
-tao_Messaging_RebindPolicy_narrow (
+Messaging::tao_RebindPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -249,7 +247,7 @@ tao_Messaging_RebindPolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_RebindPolicy_upcast (
+Messaging::tao_RebindPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -258,205 +256,32 @@ tao_Messaging_RebindPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_RebindPolicy_marshal (
-    Messaging::RebindPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::RebindPolicy,
+        Messaging::tao_RebindPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::RebindPolicy,
+        Messaging::tao_RebindPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::RebindPolicy, \
+        Messaging::tao_RebindPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::RebindPolicy, \
+        Messaging::tao_RebindPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::RebindPolicy_var
-// *************************************************************
-
-Messaging::RebindPolicy_var::RebindPolicy_var (void)
-  : ptr_ (RebindPolicy::_nil ())
-{}
-
-::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::RebindPolicy_var::RebindPolicy_var (const ::Messaging::RebindPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (RebindPolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::RebindPolicy_var::~RebindPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::RebindPolicy_var &
-Messaging::RebindPolicy_var::operator= (RebindPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RebindPolicy_var &
-Messaging::RebindPolicy_var::operator= (const ::Messaging::RebindPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RebindPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::RebindPolicy_var::operator const ::Messaging::RebindPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::RebindPolicy_var::operator ::Messaging::RebindPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RebindPolicy_ptr &
-Messaging::RebindPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RebindPolicy_ptr &
-Messaging::RebindPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RebindPolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RebindPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RebindPolicy::_nil ();
-  return val;
-}
-
-::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::tao_duplicate (RebindPolicy_ptr p)
-{
-  return ::Messaging::RebindPolicy::_duplicate (p);
-}
-
-void
-Messaging::RebindPolicy_var::tao_release (RebindPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::tao_nil (void)
-{
-  return ::Messaging::RebindPolicy::_nil ();
-}
-
-::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::RebindPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::RebindPolicy_var::tao_upcast (void *src)
-{
-  RebindPolicy **tmp =
-    ACE_static_cast (RebindPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::RebindPolicy_out
-// *************************************************************
-
-Messaging::RebindPolicy_out::RebindPolicy_out (RebindPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RebindPolicy::_nil ();
-}
-
-Messaging::RebindPolicy_out::RebindPolicy_out (RebindPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RebindPolicy::_nil ();
-}
-
-Messaging::RebindPolicy_out::RebindPolicy_out (const ::Messaging::RebindPolicy_out &p)
-  : ptr_ (ACE_const_cast (RebindPolicy_out &, p).ptr_)
-{}
-
-::Messaging::RebindPolicy_out &
-Messaging::RebindPolicy_out::operator= (const ::Messaging::RebindPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RebindPolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::RebindPolicy_out &
-Messaging::RebindPolicy_out::operator= (const ::Messaging::RebindPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RebindPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::RebindPolicy_out &
-Messaging::RebindPolicy_out::operator= (RebindPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RebindPolicy_out::operator ::Messaging::RebindPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::RebindPolicy_ptr &
-Messaging::RebindPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::RebindPolicy::RebindPolicy (void)
 {}
@@ -464,7 +289,7 @@ Messaging::RebindPolicy::RebindPolicy (void)
 Messaging::RebindPolicy::~RebindPolicy (void)
 {}
 
-void 
+void
 Messaging::RebindPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RebindPolicy *tmp = ACE_static_cast (RebindPolicy *, _tao_void_pointer);
@@ -480,7 +305,7 @@ Messaging::RebindPolicy::_narrow (
   return RebindPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::RebindPolicy_ptr 
+Messaging::RebindPolicy_ptr
 Messaging::RebindPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -490,7 +315,7 @@ Messaging::RebindPolicy::_unchecked_narrow (
     {
       return RebindPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           RebindPolicy_ptr,
@@ -510,14 +335,14 @@ Messaging::RebindPolicy::_duplicate (RebindPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::RebindPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, RebindPolicy)::_tao_class_id)
@@ -550,18 +375,24 @@ void *Messaging::RebindPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::RebindPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/RebindPolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::RebindPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -571,20 +402,20 @@ static const CORBA::Long _oc_Messaging_RebindPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x62696e64), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x62696e64),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/RebindPolicy:1.0
     13,
-  ACE_NTOHL (0x52656269), 
-  ACE_NTOHL (0x6e64506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x52656269),
+  ACE_NTOHL (0x6e64506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = RebindPolicy
   };
 
@@ -612,20 +443,20 @@ static const CORBA::Long _oc_Messaging_PriorityRange[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5072), 
-  ACE_NTOHL (0x696f7269), 
-  ACE_NTOHL (0x74795261), 
-  ACE_NTOHL (0x6e67653a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5072),
+  ACE_NTOHL (0x696f7269),
+  ACE_NTOHL (0x74795261),
+  ACE_NTOHL (0x6e67653a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Messaging/PriorityRange:1.0
     14,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x52616e67), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x52616e67),
   ACE_NTOHL (0x65000000),  // name = PriorityRange
   2, // member count
     4,
@@ -634,18 +465,18 @@ static const CORBA::Long _oc_Messaging_PriorityRange[] =
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x4d657373), 
-    ACE_NTOHL (0x6167696e), 
-    ACE_NTOHL (0x672f5072), 
-    ACE_NTOHL (0x696f7269), 
-    ACE_NTOHL (0x74793a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x4d657373),
+    ACE_NTOHL (0x6167696e),
+    ACE_NTOHL (0x672f5072),
+    ACE_NTOHL (0x696f7269),
+    ACE_NTOHL (0x74793a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Priority:1.0
         9,
-    ACE_NTOHL (0x5072696f), 
-    ACE_NTOHL (0x72697479), 
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
     ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
@@ -673,8 +504,8 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
 void Messaging::PriorityRange::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -683,12 +514,31 @@ void Messaging::PriorityRange::_tao_any_destructor (void *_tao_void_pointer)
 }
 
 // TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_Fixed_Var_T<
+      PriorityRange
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_Fixed_Var_T< \
+      PriorityRange \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int Messaging::RequestPriorityPolicy::_tao_class_id = 0;
 
 Messaging::RequestPriorityPolicy_ptr
-tao_Messaging_RequestPriorityPolicy_duplicate (
+Messaging::tao_RequestPriorityPolicy_life::tao_duplicate (
     Messaging::RequestPriorityPolicy_ptr p
   )
 {
@@ -696,7 +546,7 @@ tao_Messaging_RequestPriorityPolicy_duplicate (
 }
 
 void
-tao_Messaging_RequestPriorityPolicy_release (
+Messaging::tao_RequestPriorityPolicy_life::tao_release (
     Messaging::RequestPriorityPolicy_ptr p
   )
 {
@@ -704,15 +554,24 @@ tao_Messaging_RequestPriorityPolicy_release (
 }
 
 Messaging::RequestPriorityPolicy_ptr
-tao_Messaging_RequestPriorityPolicy_nil (
+Messaging::tao_RequestPriorityPolicy_life::tao_nil (
     void
   )
 {
   return Messaging::RequestPriorityPolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_RequestPriorityPolicy_life::tao_marshal (
+    Messaging::RequestPriorityPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::RequestPriorityPolicy_ptr
-tao_Messaging_RequestPriorityPolicy_narrow (
+Messaging::tao_RequestPriorityPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -721,7 +580,7 @@ tao_Messaging_RequestPriorityPolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_RequestPriorityPolicy_upcast (
+Messaging::tao_RequestPriorityPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -730,205 +589,32 @@ tao_Messaging_RequestPriorityPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_RequestPriorityPolicy_marshal (
-    Messaging::RequestPriorityPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::RequestPriorityPolicy,
+        Messaging::tao_RequestPriorityPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::RequestPriorityPolicy,
+        Messaging::tao_RequestPriorityPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::RequestPriorityPolicy, \
+        Messaging::tao_RequestPriorityPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::RequestPriorityPolicy, \
+        Messaging::tao_RequestPriorityPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::RequestPriorityPolicy_var
-// *************************************************************
-
-Messaging::RequestPriorityPolicy_var::RequestPriorityPolicy_var (void)
-  : ptr_ (RequestPriorityPolicy::_nil ())
-{}
-
-::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::RequestPriorityPolicy_var::RequestPriorityPolicy_var (const ::Messaging::RequestPriorityPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (RequestPriorityPolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::RequestPriorityPolicy_var::~RequestPriorityPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::RequestPriorityPolicy_var &
-Messaging::RequestPriorityPolicy_var::operator= (RequestPriorityPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RequestPriorityPolicy_var &
-Messaging::RequestPriorityPolicy_var::operator= (const ::Messaging::RequestPriorityPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RequestPriorityPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::RequestPriorityPolicy_var::operator const ::Messaging::RequestPriorityPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::RequestPriorityPolicy_var::operator ::Messaging::RequestPriorityPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestPriorityPolicy_ptr &
-Messaging::RequestPriorityPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestPriorityPolicy_ptr &
-Messaging::RequestPriorityPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestPriorityPolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RequestPriorityPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RequestPriorityPolicy::_nil ();
-  return val;
-}
-
-::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::tao_duplicate (RequestPriorityPolicy_ptr p)
-{
-  return ::Messaging::RequestPriorityPolicy::_duplicate (p);
-}
-
-void
-Messaging::RequestPriorityPolicy_var::tao_release (RequestPriorityPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::tao_nil (void)
-{
-  return ::Messaging::RequestPriorityPolicy::_nil ();
-}
-
-::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::RequestPriorityPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::RequestPriorityPolicy_var::tao_upcast (void *src)
-{
-  RequestPriorityPolicy **tmp =
-    ACE_static_cast (RequestPriorityPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::RequestPriorityPolicy_out
-// *************************************************************
-
-Messaging::RequestPriorityPolicy_out::RequestPriorityPolicy_out (RequestPriorityPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RequestPriorityPolicy::_nil ();
-}
-
-Messaging::RequestPriorityPolicy_out::RequestPriorityPolicy_out (RequestPriorityPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestPriorityPolicy::_nil ();
-}
-
-Messaging::RequestPriorityPolicy_out::RequestPriorityPolicy_out (const ::Messaging::RequestPriorityPolicy_out &p)
-  : ptr_ (ACE_const_cast (RequestPriorityPolicy_out &, p).ptr_)
-{}
-
-::Messaging::RequestPriorityPolicy_out &
-Messaging::RequestPriorityPolicy_out::operator= (const ::Messaging::RequestPriorityPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RequestPriorityPolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::RequestPriorityPolicy_out &
-Messaging::RequestPriorityPolicy_out::operator= (const ::Messaging::RequestPriorityPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RequestPriorityPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::RequestPriorityPolicy_out &
-Messaging::RequestPriorityPolicy_out::operator= (RequestPriorityPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RequestPriorityPolicy_out::operator ::Messaging::RequestPriorityPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestPriorityPolicy_ptr &
-Messaging::RequestPriorityPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::RequestPriorityPolicy::RequestPriorityPolicy (void)
 {}
@@ -936,7 +622,7 @@ Messaging::RequestPriorityPolicy::RequestPriorityPolicy (void)
 Messaging::RequestPriorityPolicy::~RequestPriorityPolicy (void)
 {}
 
-void 
+void
 Messaging::RequestPriorityPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RequestPriorityPolicy *tmp = ACE_static_cast (RequestPriorityPolicy *, _tao_void_pointer);
@@ -952,7 +638,7 @@ Messaging::RequestPriorityPolicy::_narrow (
   return RequestPriorityPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::RequestPriorityPolicy_ptr 
+Messaging::RequestPriorityPolicy_ptr
 Messaging::RequestPriorityPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -962,7 +648,7 @@ Messaging::RequestPriorityPolicy::_unchecked_narrow (
     {
       return RequestPriorityPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           RequestPriorityPolicy_ptr,
@@ -982,14 +668,14 @@ Messaging::RequestPriorityPolicy::_duplicate (RequestPriorityPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::RequestPriorityPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, RequestPriorityPolicy)::_tao_class_id)
@@ -1022,18 +708,24 @@ void *Messaging::RequestPriorityPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::RequestPriorityPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/RequestPriorityPolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::RequestPriorityPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -1043,24 +735,24 @@ static const CORBA::Long _oc_Messaging_RequestPriorityPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x71756573), 
-  ACE_NTOHL (0x74507269), 
-  ACE_NTOHL (0x6f726974), 
-  ACE_NTOHL (0x79506f6c), 
-  ACE_NTOHL (0x6963793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74507269),
+  ACE_NTOHL (0x6f726974),
+  ACE_NTOHL (0x79506f6c),
+  ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Messaging/RequestPriorityPolicy:1.0
     22,
-  ACE_NTOHL (0x52657175), 
-  ACE_NTOHL (0x65737450), 
-  ACE_NTOHL (0x72696f72), 
-  ACE_NTOHL (0x69747950), 
-  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737450),
+  ACE_NTOHL (0x72696f72),
+  ACE_NTOHL (0x69747950),
+  ACE_NTOHL (0x6f6c6963),
   ACE_NTOHL (0x79000000),  // name = RequestPriorityPolicy
   };
 
@@ -1087,7 +779,7 @@ TAO_NAMESPACE_END
 int Messaging::ReplyPriorityPolicy::_tao_class_id = 0;
 
 Messaging::ReplyPriorityPolicy_ptr
-tao_Messaging_ReplyPriorityPolicy_duplicate (
+Messaging::tao_ReplyPriorityPolicy_life::tao_duplicate (
     Messaging::ReplyPriorityPolicy_ptr p
   )
 {
@@ -1095,7 +787,7 @@ tao_Messaging_ReplyPriorityPolicy_duplicate (
 }
 
 void
-tao_Messaging_ReplyPriorityPolicy_release (
+Messaging::tao_ReplyPriorityPolicy_life::tao_release (
     Messaging::ReplyPriorityPolicy_ptr p
   )
 {
@@ -1103,15 +795,24 @@ tao_Messaging_ReplyPriorityPolicy_release (
 }
 
 Messaging::ReplyPriorityPolicy_ptr
-tao_Messaging_ReplyPriorityPolicy_nil (
+Messaging::tao_ReplyPriorityPolicy_life::tao_nil (
     void
   )
 {
   return Messaging::ReplyPriorityPolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_ReplyPriorityPolicy_life::tao_marshal (
+    Messaging::ReplyPriorityPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::ReplyPriorityPolicy_ptr
-tao_Messaging_ReplyPriorityPolicy_narrow (
+Messaging::tao_ReplyPriorityPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -1120,7 +821,7 @@ tao_Messaging_ReplyPriorityPolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_ReplyPriorityPolicy_upcast (
+Messaging::tao_ReplyPriorityPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -1129,205 +830,32 @@ tao_Messaging_ReplyPriorityPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_ReplyPriorityPolicy_marshal (
-    Messaging::ReplyPriorityPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::ReplyPriorityPolicy,
+        Messaging::tao_ReplyPriorityPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::ReplyPriorityPolicy,
+        Messaging::tao_ReplyPriorityPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::ReplyPriorityPolicy, \
+        Messaging::tao_ReplyPriorityPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::ReplyPriorityPolicy, \
+        Messaging::tao_ReplyPriorityPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::ReplyPriorityPolicy_var
-// *************************************************************
-
-Messaging::ReplyPriorityPolicy_var::ReplyPriorityPolicy_var (void)
-  : ptr_ (ReplyPriorityPolicy::_nil ())
-{}
-
-::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::ReplyPriorityPolicy_var::ReplyPriorityPolicy_var (const ::Messaging::ReplyPriorityPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (ReplyPriorityPolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::ReplyPriorityPolicy_var::~ReplyPriorityPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::ReplyPriorityPolicy_var &
-Messaging::ReplyPriorityPolicy_var::operator= (ReplyPriorityPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::ReplyPriorityPolicy_var &
-Messaging::ReplyPriorityPolicy_var::operator= (const ::Messaging::ReplyPriorityPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::ReplyPriorityPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::ReplyPriorityPolicy_var::operator const ::Messaging::ReplyPriorityPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::ReplyPriorityPolicy_var::operator ::Messaging::ReplyPriorityPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyPriorityPolicy_ptr &
-Messaging::ReplyPriorityPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyPriorityPolicy_ptr &
-Messaging::ReplyPriorityPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyPriorityPolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::ReplyPriorityPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::ReplyPriorityPolicy::_nil ();
-  return val;
-}
-
-::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::tao_duplicate (ReplyPriorityPolicy_ptr p)
-{
-  return ::Messaging::ReplyPriorityPolicy::_duplicate (p);
-}
-
-void
-Messaging::ReplyPriorityPolicy_var::tao_release (ReplyPriorityPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::tao_nil (void)
-{
-  return ::Messaging::ReplyPriorityPolicy::_nil ();
-}
-
-::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::ReplyPriorityPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::ReplyPriorityPolicy_var::tao_upcast (void *src)
-{
-  ReplyPriorityPolicy **tmp =
-    ACE_static_cast (ReplyPriorityPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::ReplyPriorityPolicy_out
-// *************************************************************
-
-Messaging::ReplyPriorityPolicy_out::ReplyPriorityPolicy_out (ReplyPriorityPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::ReplyPriorityPolicy::_nil ();
-}
-
-Messaging::ReplyPriorityPolicy_out::ReplyPriorityPolicy_out (ReplyPriorityPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyPriorityPolicy::_nil ();
-}
-
-Messaging::ReplyPriorityPolicy_out::ReplyPriorityPolicy_out (const ::Messaging::ReplyPriorityPolicy_out &p)
-  : ptr_ (ACE_const_cast (ReplyPriorityPolicy_out &, p).ptr_)
-{}
-
-::Messaging::ReplyPriorityPolicy_out &
-Messaging::ReplyPriorityPolicy_out::operator= (const ::Messaging::ReplyPriorityPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (ReplyPriorityPolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::ReplyPriorityPolicy_out &
-Messaging::ReplyPriorityPolicy_out::operator= (const ::Messaging::ReplyPriorityPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::ReplyPriorityPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::ReplyPriorityPolicy_out &
-Messaging::ReplyPriorityPolicy_out::operator= (ReplyPriorityPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::ReplyPriorityPolicy_out::operator ::Messaging::ReplyPriorityPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyPriorityPolicy_ptr &
-Messaging::ReplyPriorityPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::ReplyPriorityPolicy::ReplyPriorityPolicy (void)
 {}
@@ -1335,7 +863,7 @@ Messaging::ReplyPriorityPolicy::ReplyPriorityPolicy (void)
 Messaging::ReplyPriorityPolicy::~ReplyPriorityPolicy (void)
 {}
 
-void 
+void
 Messaging::ReplyPriorityPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyPriorityPolicy *tmp = ACE_static_cast (ReplyPriorityPolicy *, _tao_void_pointer);
@@ -1351,7 +879,7 @@ Messaging::ReplyPriorityPolicy::_narrow (
   return ReplyPriorityPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::ReplyPriorityPolicy_ptr 
+Messaging::ReplyPriorityPolicy_ptr
 Messaging::ReplyPriorityPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -1361,7 +889,7 @@ Messaging::ReplyPriorityPolicy::_unchecked_narrow (
     {
       return ReplyPriorityPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           ReplyPriorityPolicy_ptr,
@@ -1381,14 +909,14 @@ Messaging::ReplyPriorityPolicy::_duplicate (ReplyPriorityPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::ReplyPriorityPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, ReplyPriorityPolicy)::_tao_class_id)
@@ -1421,18 +949,24 @@ void *Messaging::ReplyPriorityPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::ReplyPriorityPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/ReplyPriorityPolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::ReplyPriorityPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -1442,23 +976,23 @@ static const CORBA::Long _oc_Messaging_ReplyPriorityPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   46,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x706c7950), 
-  ACE_NTOHL (0x72696f72), 
-  ACE_NTOHL (0x69747950), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x793a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x706c7950),
+  ACE_NTOHL (0x72696f72),
+  ACE_NTOHL (0x69747950),
+  ACE_NTOHL (0x6f6c6963),
+  ACE_NTOHL (0x793a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/ReplyPriorityPolicy:1.0
     20,
-  ACE_NTOHL (0x5265706c), 
-  ACE_NTOHL (0x79507269), 
-  ACE_NTOHL (0x6f726974), 
-  ACE_NTOHL (0x79506f6c), 
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x79507269),
+  ACE_NTOHL (0x6f726974),
+  ACE_NTOHL (0x79506f6c),
   ACE_NTOHL (0x69637900),  // name = ReplyPriorityPolicy
   };
 
@@ -1485,7 +1019,7 @@ TAO_NAMESPACE_END
 int Messaging::RequestStartTimePolicy::_tao_class_id = 0;
 
 Messaging::RequestStartTimePolicy_ptr
-tao_Messaging_RequestStartTimePolicy_duplicate (
+Messaging::tao_RequestStartTimePolicy_life::tao_duplicate (
     Messaging::RequestStartTimePolicy_ptr p
   )
 {
@@ -1493,7 +1027,7 @@ tao_Messaging_RequestStartTimePolicy_duplicate (
 }
 
 void
-tao_Messaging_RequestStartTimePolicy_release (
+Messaging::tao_RequestStartTimePolicy_life::tao_release (
     Messaging::RequestStartTimePolicy_ptr p
   )
 {
@@ -1501,15 +1035,24 @@ tao_Messaging_RequestStartTimePolicy_release (
 }
 
 Messaging::RequestStartTimePolicy_ptr
-tao_Messaging_RequestStartTimePolicy_nil (
+Messaging::tao_RequestStartTimePolicy_life::tao_nil (
     void
   )
 {
   return Messaging::RequestStartTimePolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_RequestStartTimePolicy_life::tao_marshal (
+    Messaging::RequestStartTimePolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::RequestStartTimePolicy_ptr
-tao_Messaging_RequestStartTimePolicy_narrow (
+Messaging::tao_RequestStartTimePolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -1518,7 +1061,7 @@ tao_Messaging_RequestStartTimePolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_RequestStartTimePolicy_upcast (
+Messaging::tao_RequestStartTimePolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -1527,205 +1070,32 @@ tao_Messaging_RequestStartTimePolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_RequestStartTimePolicy_marshal (
-    Messaging::RequestStartTimePolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::RequestStartTimePolicy,
+        Messaging::tao_RequestStartTimePolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::RequestStartTimePolicy,
+        Messaging::tao_RequestStartTimePolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::RequestStartTimePolicy, \
+        Messaging::tao_RequestStartTimePolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::RequestStartTimePolicy, \
+        Messaging::tao_RequestStartTimePolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::RequestStartTimePolicy_var
-// *************************************************************
-
-Messaging::RequestStartTimePolicy_var::RequestStartTimePolicy_var (void)
-  : ptr_ (RequestStartTimePolicy::_nil ())
-{}
-
-::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::RequestStartTimePolicy_var::RequestStartTimePolicy_var (const ::Messaging::RequestStartTimePolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (RequestStartTimePolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::RequestStartTimePolicy_var::~RequestStartTimePolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::RequestStartTimePolicy_var &
-Messaging::RequestStartTimePolicy_var::operator= (RequestStartTimePolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RequestStartTimePolicy_var &
-Messaging::RequestStartTimePolicy_var::operator= (const ::Messaging::RequestStartTimePolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RequestStartTimePolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::RequestStartTimePolicy_var::operator const ::Messaging::RequestStartTimePolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::RequestStartTimePolicy_var::operator ::Messaging::RequestStartTimePolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestStartTimePolicy_ptr &
-Messaging::RequestStartTimePolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestStartTimePolicy_ptr &
-Messaging::RequestStartTimePolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestStartTimePolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RequestStartTimePolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RequestStartTimePolicy::_nil ();
-  return val;
-}
-
-::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::tao_duplicate (RequestStartTimePolicy_ptr p)
-{
-  return ::Messaging::RequestStartTimePolicy::_duplicate (p);
-}
-
-void
-Messaging::RequestStartTimePolicy_var::tao_release (RequestStartTimePolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::tao_nil (void)
-{
-  return ::Messaging::RequestStartTimePolicy::_nil ();
-}
-
-::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::RequestStartTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::RequestStartTimePolicy_var::tao_upcast (void *src)
-{
-  RequestStartTimePolicy **tmp =
-    ACE_static_cast (RequestStartTimePolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::RequestStartTimePolicy_out
-// *************************************************************
-
-Messaging::RequestStartTimePolicy_out::RequestStartTimePolicy_out (RequestStartTimePolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RequestStartTimePolicy::_nil ();
-}
-
-Messaging::RequestStartTimePolicy_out::RequestStartTimePolicy_out (RequestStartTimePolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestStartTimePolicy::_nil ();
-}
-
-Messaging::RequestStartTimePolicy_out::RequestStartTimePolicy_out (const ::Messaging::RequestStartTimePolicy_out &p)
-  : ptr_ (ACE_const_cast (RequestStartTimePolicy_out &, p).ptr_)
-{}
-
-::Messaging::RequestStartTimePolicy_out &
-Messaging::RequestStartTimePolicy_out::operator= (const ::Messaging::RequestStartTimePolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RequestStartTimePolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::RequestStartTimePolicy_out &
-Messaging::RequestStartTimePolicy_out::operator= (const ::Messaging::RequestStartTimePolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RequestStartTimePolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::RequestStartTimePolicy_out &
-Messaging::RequestStartTimePolicy_out::operator= (RequestStartTimePolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RequestStartTimePolicy_out::operator ::Messaging::RequestStartTimePolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestStartTimePolicy_ptr &
-Messaging::RequestStartTimePolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::RequestStartTimePolicy::RequestStartTimePolicy (void)
 {}
@@ -1733,7 +1103,7 @@ Messaging::RequestStartTimePolicy::RequestStartTimePolicy (void)
 Messaging::RequestStartTimePolicy::~RequestStartTimePolicy (void)
 {}
 
-void 
+void
 Messaging::RequestStartTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RequestStartTimePolicy *tmp = ACE_static_cast (RequestStartTimePolicy *, _tao_void_pointer);
@@ -1749,7 +1119,7 @@ Messaging::RequestStartTimePolicy::_narrow (
   return RequestStartTimePolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::RequestStartTimePolicy_ptr 
+Messaging::RequestStartTimePolicy_ptr
 Messaging::RequestStartTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -1759,7 +1129,7 @@ Messaging::RequestStartTimePolicy::_unchecked_narrow (
     {
       return RequestStartTimePolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           RequestStartTimePolicy_ptr,
@@ -1779,14 +1149,14 @@ Messaging::RequestStartTimePolicy::_duplicate (RequestStartTimePolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::RequestStartTimePolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, RequestStartTimePolicy)::_tao_class_id)
@@ -1819,18 +1189,24 @@ void *Messaging::RequestStartTimePolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::RequestStartTimePolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/RequestStartTimePolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::RequestStartTimePolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -1840,25 +1216,25 @@ static const CORBA::Long _oc_Messaging_RequestStartTimePolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   49,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x71756573), 
-  ACE_NTOHL (0x74537461), 
-  ACE_NTOHL (0x72745469), 
-  ACE_NTOHL (0x6d65506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74537461),
+  ACE_NTOHL (0x72745469),
+  ACE_NTOHL (0x6d65506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Messaging/RequestStartTimePolicy:1.0
     23,
-  ACE_NTOHL (0x52657175), 
-  ACE_NTOHL (0x65737453), 
-  ACE_NTOHL (0x74617274), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737453),
+  ACE_NTOHL (0x74617274),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x506f6c69),
   ACE_NTOHL (0x63790000),  // name = RequestStartTimePolicy
   };
 
@@ -1885,7 +1261,7 @@ TAO_NAMESPACE_END
 int Messaging::RequestEndTimePolicy::_tao_class_id = 0;
 
 Messaging::RequestEndTimePolicy_ptr
-tao_Messaging_RequestEndTimePolicy_duplicate (
+Messaging::tao_RequestEndTimePolicy_life::tao_duplicate (
     Messaging::RequestEndTimePolicy_ptr p
   )
 {
@@ -1893,7 +1269,7 @@ tao_Messaging_RequestEndTimePolicy_duplicate (
 }
 
 void
-tao_Messaging_RequestEndTimePolicy_release (
+Messaging::tao_RequestEndTimePolicy_life::tao_release (
     Messaging::RequestEndTimePolicy_ptr p
   )
 {
@@ -1901,15 +1277,24 @@ tao_Messaging_RequestEndTimePolicy_release (
 }
 
 Messaging::RequestEndTimePolicy_ptr
-tao_Messaging_RequestEndTimePolicy_nil (
+Messaging::tao_RequestEndTimePolicy_life::tao_nil (
     void
   )
 {
   return Messaging::RequestEndTimePolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_RequestEndTimePolicy_life::tao_marshal (
+    Messaging::RequestEndTimePolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::RequestEndTimePolicy_ptr
-tao_Messaging_RequestEndTimePolicy_narrow (
+Messaging::tao_RequestEndTimePolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -1918,7 +1303,7 @@ tao_Messaging_RequestEndTimePolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_RequestEndTimePolicy_upcast (
+Messaging::tao_RequestEndTimePolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -1927,205 +1312,32 @@ tao_Messaging_RequestEndTimePolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_RequestEndTimePolicy_marshal (
-    Messaging::RequestEndTimePolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::RequestEndTimePolicy,
+        Messaging::tao_RequestEndTimePolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::RequestEndTimePolicy,
+        Messaging::tao_RequestEndTimePolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::RequestEndTimePolicy, \
+        Messaging::tao_RequestEndTimePolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::RequestEndTimePolicy, \
+        Messaging::tao_RequestEndTimePolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::RequestEndTimePolicy_var
-// *************************************************************
-
-Messaging::RequestEndTimePolicy_var::RequestEndTimePolicy_var (void)
-  : ptr_ (RequestEndTimePolicy::_nil ())
-{}
-
-::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::RequestEndTimePolicy_var::RequestEndTimePolicy_var (const ::Messaging::RequestEndTimePolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (RequestEndTimePolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::RequestEndTimePolicy_var::~RequestEndTimePolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::RequestEndTimePolicy_var &
-Messaging::RequestEndTimePolicy_var::operator= (RequestEndTimePolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RequestEndTimePolicy_var &
-Messaging::RequestEndTimePolicy_var::operator= (const ::Messaging::RequestEndTimePolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RequestEndTimePolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::RequestEndTimePolicy_var::operator const ::Messaging::RequestEndTimePolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::RequestEndTimePolicy_var::operator ::Messaging::RequestEndTimePolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestEndTimePolicy_ptr &
-Messaging::RequestEndTimePolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestEndTimePolicy_ptr &
-Messaging::RequestEndTimePolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestEndTimePolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RequestEndTimePolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RequestEndTimePolicy::_nil ();
-  return val;
-}
-
-::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::tao_duplicate (RequestEndTimePolicy_ptr p)
-{
-  return ::Messaging::RequestEndTimePolicy::_duplicate (p);
-}
-
-void
-Messaging::RequestEndTimePolicy_var::tao_release (RequestEndTimePolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::tao_nil (void)
-{
-  return ::Messaging::RequestEndTimePolicy::_nil ();
-}
-
-::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::RequestEndTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::RequestEndTimePolicy_var::tao_upcast (void *src)
-{
-  RequestEndTimePolicy **tmp =
-    ACE_static_cast (RequestEndTimePolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::RequestEndTimePolicy_out
-// *************************************************************
-
-Messaging::RequestEndTimePolicy_out::RequestEndTimePolicy_out (RequestEndTimePolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RequestEndTimePolicy::_nil ();
-}
-
-Messaging::RequestEndTimePolicy_out::RequestEndTimePolicy_out (RequestEndTimePolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RequestEndTimePolicy::_nil ();
-}
-
-Messaging::RequestEndTimePolicy_out::RequestEndTimePolicy_out (const ::Messaging::RequestEndTimePolicy_out &p)
-  : ptr_ (ACE_const_cast (RequestEndTimePolicy_out &, p).ptr_)
-{}
-
-::Messaging::RequestEndTimePolicy_out &
-Messaging::RequestEndTimePolicy_out::operator= (const ::Messaging::RequestEndTimePolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RequestEndTimePolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::RequestEndTimePolicy_out &
-Messaging::RequestEndTimePolicy_out::operator= (const ::Messaging::RequestEndTimePolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RequestEndTimePolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::RequestEndTimePolicy_out &
-Messaging::RequestEndTimePolicy_out::operator= (RequestEndTimePolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RequestEndTimePolicy_out::operator ::Messaging::RequestEndTimePolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestEndTimePolicy_ptr &
-Messaging::RequestEndTimePolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::RequestEndTimePolicy::RequestEndTimePolicy (void)
 {}
@@ -2133,7 +1345,7 @@ Messaging::RequestEndTimePolicy::RequestEndTimePolicy (void)
 Messaging::RequestEndTimePolicy::~RequestEndTimePolicy (void)
 {}
 
-void 
+void
 Messaging::RequestEndTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RequestEndTimePolicy *tmp = ACE_static_cast (RequestEndTimePolicy *, _tao_void_pointer);
@@ -2149,7 +1361,7 @@ Messaging::RequestEndTimePolicy::_narrow (
   return RequestEndTimePolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::RequestEndTimePolicy_ptr 
+Messaging::RequestEndTimePolicy_ptr
 Messaging::RequestEndTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -2159,7 +1371,7 @@ Messaging::RequestEndTimePolicy::_unchecked_narrow (
     {
       return RequestEndTimePolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           RequestEndTimePolicy_ptr,
@@ -2179,14 +1391,14 @@ Messaging::RequestEndTimePolicy::_duplicate (RequestEndTimePolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::RequestEndTimePolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, RequestEndTimePolicy)::_tao_class_id)
@@ -2219,18 +1431,24 @@ void *Messaging::RequestEndTimePolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::RequestEndTimePolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/RequestEndTimePolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::RequestEndTimePolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -2240,24 +1458,24 @@ static const CORBA::Long _oc_Messaging_RequestEndTimePolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   47,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x71756573), 
-  ACE_NTOHL (0x74456e64), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74456e64),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/RequestEndTimePolicy:1.0
     21,
-  ACE_NTOHL (0x52657175), 
-  ACE_NTOHL (0x65737445), 
-  ACE_NTOHL (0x6e645469), 
-  ACE_NTOHL (0x6d65506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737445),
+  ACE_NTOHL (0x6e645469),
+  ACE_NTOHL (0x6d65506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = RequestEndTimePolicy
   };
 
@@ -2284,7 +1502,7 @@ TAO_NAMESPACE_END
 int Messaging::ReplyStartTimePolicy::_tao_class_id = 0;
 
 Messaging::ReplyStartTimePolicy_ptr
-tao_Messaging_ReplyStartTimePolicy_duplicate (
+Messaging::tao_ReplyStartTimePolicy_life::tao_duplicate (
     Messaging::ReplyStartTimePolicy_ptr p
   )
 {
@@ -2292,7 +1510,7 @@ tao_Messaging_ReplyStartTimePolicy_duplicate (
 }
 
 void
-tao_Messaging_ReplyStartTimePolicy_release (
+Messaging::tao_ReplyStartTimePolicy_life::tao_release (
     Messaging::ReplyStartTimePolicy_ptr p
   )
 {
@@ -2300,15 +1518,24 @@ tao_Messaging_ReplyStartTimePolicy_release (
 }
 
 Messaging::ReplyStartTimePolicy_ptr
-tao_Messaging_ReplyStartTimePolicy_nil (
+Messaging::tao_ReplyStartTimePolicy_life::tao_nil (
     void
   )
 {
   return Messaging::ReplyStartTimePolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_ReplyStartTimePolicy_life::tao_marshal (
+    Messaging::ReplyStartTimePolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::ReplyStartTimePolicy_ptr
-tao_Messaging_ReplyStartTimePolicy_narrow (
+Messaging::tao_ReplyStartTimePolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -2317,7 +1544,7 @@ tao_Messaging_ReplyStartTimePolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_ReplyStartTimePolicy_upcast (
+Messaging::tao_ReplyStartTimePolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -2326,205 +1553,32 @@ tao_Messaging_ReplyStartTimePolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_ReplyStartTimePolicy_marshal (
-    Messaging::ReplyStartTimePolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::ReplyStartTimePolicy,
+        Messaging::tao_ReplyStartTimePolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::ReplyStartTimePolicy,
+        Messaging::tao_ReplyStartTimePolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::ReplyStartTimePolicy, \
+        Messaging::tao_ReplyStartTimePolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::ReplyStartTimePolicy, \
+        Messaging::tao_ReplyStartTimePolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::ReplyStartTimePolicy_var
-// *************************************************************
-
-Messaging::ReplyStartTimePolicy_var::ReplyStartTimePolicy_var (void)
-  : ptr_ (ReplyStartTimePolicy::_nil ())
-{}
-
-::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::ReplyStartTimePolicy_var::ReplyStartTimePolicy_var (const ::Messaging::ReplyStartTimePolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (ReplyStartTimePolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::ReplyStartTimePolicy_var::~ReplyStartTimePolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::ReplyStartTimePolicy_var &
-Messaging::ReplyStartTimePolicy_var::operator= (ReplyStartTimePolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::ReplyStartTimePolicy_var &
-Messaging::ReplyStartTimePolicy_var::operator= (const ::Messaging::ReplyStartTimePolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::ReplyStartTimePolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::ReplyStartTimePolicy_var::operator const ::Messaging::ReplyStartTimePolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::ReplyStartTimePolicy_var::operator ::Messaging::ReplyStartTimePolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyStartTimePolicy_ptr &
-Messaging::ReplyStartTimePolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyStartTimePolicy_ptr &
-Messaging::ReplyStartTimePolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyStartTimePolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::ReplyStartTimePolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::ReplyStartTimePolicy::_nil ();
-  return val;
-}
-
-::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::tao_duplicate (ReplyStartTimePolicy_ptr p)
-{
-  return ::Messaging::ReplyStartTimePolicy::_duplicate (p);
-}
-
-void
-Messaging::ReplyStartTimePolicy_var::tao_release (ReplyStartTimePolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::tao_nil (void)
-{
-  return ::Messaging::ReplyStartTimePolicy::_nil ();
-}
-
-::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::ReplyStartTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::ReplyStartTimePolicy_var::tao_upcast (void *src)
-{
-  ReplyStartTimePolicy **tmp =
-    ACE_static_cast (ReplyStartTimePolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::ReplyStartTimePolicy_out
-// *************************************************************
-
-Messaging::ReplyStartTimePolicy_out::ReplyStartTimePolicy_out (ReplyStartTimePolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::ReplyStartTimePolicy::_nil ();
-}
-
-Messaging::ReplyStartTimePolicy_out::ReplyStartTimePolicy_out (ReplyStartTimePolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyStartTimePolicy::_nil ();
-}
-
-Messaging::ReplyStartTimePolicy_out::ReplyStartTimePolicy_out (const ::Messaging::ReplyStartTimePolicy_out &p)
-  : ptr_ (ACE_const_cast (ReplyStartTimePolicy_out &, p).ptr_)
-{}
-
-::Messaging::ReplyStartTimePolicy_out &
-Messaging::ReplyStartTimePolicy_out::operator= (const ::Messaging::ReplyStartTimePolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (ReplyStartTimePolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::ReplyStartTimePolicy_out &
-Messaging::ReplyStartTimePolicy_out::operator= (const ::Messaging::ReplyStartTimePolicy_var &p)
-{
-  this->ptr_ = ::Messaging::ReplyStartTimePolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::ReplyStartTimePolicy_out &
-Messaging::ReplyStartTimePolicy_out::operator= (ReplyStartTimePolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::ReplyStartTimePolicy_out::operator ::Messaging::ReplyStartTimePolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyStartTimePolicy_ptr &
-Messaging::ReplyStartTimePolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::ReplyStartTimePolicy::ReplyStartTimePolicy (void)
 {}
@@ -2532,7 +1586,7 @@ Messaging::ReplyStartTimePolicy::ReplyStartTimePolicy (void)
 Messaging::ReplyStartTimePolicy::~ReplyStartTimePolicy (void)
 {}
 
-void 
+void
 Messaging::ReplyStartTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyStartTimePolicy *tmp = ACE_static_cast (ReplyStartTimePolicy *, _tao_void_pointer);
@@ -2548,7 +1602,7 @@ Messaging::ReplyStartTimePolicy::_narrow (
   return ReplyStartTimePolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::ReplyStartTimePolicy_ptr 
+Messaging::ReplyStartTimePolicy_ptr
 Messaging::ReplyStartTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -2558,7 +1612,7 @@ Messaging::ReplyStartTimePolicy::_unchecked_narrow (
     {
       return ReplyStartTimePolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           ReplyStartTimePolicy_ptr,
@@ -2578,14 +1632,14 @@ Messaging::ReplyStartTimePolicy::_duplicate (ReplyStartTimePolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::ReplyStartTimePolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, ReplyStartTimePolicy)::_tao_class_id)
@@ -2618,18 +1672,24 @@ void *Messaging::ReplyStartTimePolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::ReplyStartTimePolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/ReplyStartTimePolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::ReplyStartTimePolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -2639,24 +1699,24 @@ static const CORBA::Long _oc_Messaging_ReplyStartTimePolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   47,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x706c7953), 
-  ACE_NTOHL (0x74617274), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x706c7953),
+  ACE_NTOHL (0x74617274),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/ReplyStartTimePolicy:1.0
     21,
-  ACE_NTOHL (0x5265706c), 
-  ACE_NTOHL (0x79537461), 
-  ACE_NTOHL (0x72745469), 
-  ACE_NTOHL (0x6d65506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x79537461),
+  ACE_NTOHL (0x72745469),
+  ACE_NTOHL (0x6d65506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = ReplyStartTimePolicy
   };
 
@@ -2683,7 +1743,7 @@ TAO_NAMESPACE_END
 int Messaging::ReplyEndTimePolicy::_tao_class_id = 0;
 
 Messaging::ReplyEndTimePolicy_ptr
-tao_Messaging_ReplyEndTimePolicy_duplicate (
+Messaging::tao_ReplyEndTimePolicy_life::tao_duplicate (
     Messaging::ReplyEndTimePolicy_ptr p
   )
 {
@@ -2691,7 +1751,7 @@ tao_Messaging_ReplyEndTimePolicy_duplicate (
 }
 
 void
-tao_Messaging_ReplyEndTimePolicy_release (
+Messaging::tao_ReplyEndTimePolicy_life::tao_release (
     Messaging::ReplyEndTimePolicy_ptr p
   )
 {
@@ -2699,15 +1759,24 @@ tao_Messaging_ReplyEndTimePolicy_release (
 }
 
 Messaging::ReplyEndTimePolicy_ptr
-tao_Messaging_ReplyEndTimePolicy_nil (
+Messaging::tao_ReplyEndTimePolicy_life::tao_nil (
     void
   )
 {
   return Messaging::ReplyEndTimePolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_ReplyEndTimePolicy_life::tao_marshal (
+    Messaging::ReplyEndTimePolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::ReplyEndTimePolicy_ptr
-tao_Messaging_ReplyEndTimePolicy_narrow (
+Messaging::tao_ReplyEndTimePolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -2716,7 +1785,7 @@ tao_Messaging_ReplyEndTimePolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_ReplyEndTimePolicy_upcast (
+Messaging::tao_ReplyEndTimePolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -2725,205 +1794,32 @@ tao_Messaging_ReplyEndTimePolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_ReplyEndTimePolicy_marshal (
-    Messaging::ReplyEndTimePolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::ReplyEndTimePolicy,
+        Messaging::tao_ReplyEndTimePolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::ReplyEndTimePolicy,
+        Messaging::tao_ReplyEndTimePolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::ReplyEndTimePolicy, \
+        Messaging::tao_ReplyEndTimePolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::ReplyEndTimePolicy, \
+        Messaging::tao_ReplyEndTimePolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::ReplyEndTimePolicy_var
-// *************************************************************
-
-Messaging::ReplyEndTimePolicy_var::ReplyEndTimePolicy_var (void)
-  : ptr_ (ReplyEndTimePolicy::_nil ())
-{}
-
-::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::ReplyEndTimePolicy_var::ReplyEndTimePolicy_var (const ::Messaging::ReplyEndTimePolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (ReplyEndTimePolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::ReplyEndTimePolicy_var::~ReplyEndTimePolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::ReplyEndTimePolicy_var &
-Messaging::ReplyEndTimePolicy_var::operator= (ReplyEndTimePolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::ReplyEndTimePolicy_var &
-Messaging::ReplyEndTimePolicy_var::operator= (const ::Messaging::ReplyEndTimePolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::ReplyEndTimePolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::ReplyEndTimePolicy_var::operator const ::Messaging::ReplyEndTimePolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::ReplyEndTimePolicy_var::operator ::Messaging::ReplyEndTimePolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyEndTimePolicy_ptr &
-Messaging::ReplyEndTimePolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyEndTimePolicy_ptr &
-Messaging::ReplyEndTimePolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyEndTimePolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::ReplyEndTimePolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::ReplyEndTimePolicy::_nil ();
-  return val;
-}
-
-::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::tao_duplicate (ReplyEndTimePolicy_ptr p)
-{
-  return ::Messaging::ReplyEndTimePolicy::_duplicate (p);
-}
-
-void
-Messaging::ReplyEndTimePolicy_var::tao_release (ReplyEndTimePolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::tao_nil (void)
-{
-  return ::Messaging::ReplyEndTimePolicy::_nil ();
-}
-
-::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::ReplyEndTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::ReplyEndTimePolicy_var::tao_upcast (void *src)
-{
-  ReplyEndTimePolicy **tmp =
-    ACE_static_cast (ReplyEndTimePolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::ReplyEndTimePolicy_out
-// *************************************************************
-
-Messaging::ReplyEndTimePolicy_out::ReplyEndTimePolicy_out (ReplyEndTimePolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::ReplyEndTimePolicy::_nil ();
-}
-
-Messaging::ReplyEndTimePolicy_out::ReplyEndTimePolicy_out (ReplyEndTimePolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::ReplyEndTimePolicy::_nil ();
-}
-
-Messaging::ReplyEndTimePolicy_out::ReplyEndTimePolicy_out (const ::Messaging::ReplyEndTimePolicy_out &p)
-  : ptr_ (ACE_const_cast (ReplyEndTimePolicy_out &, p).ptr_)
-{}
-
-::Messaging::ReplyEndTimePolicy_out &
-Messaging::ReplyEndTimePolicy_out::operator= (const ::Messaging::ReplyEndTimePolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (ReplyEndTimePolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::ReplyEndTimePolicy_out &
-Messaging::ReplyEndTimePolicy_out::operator= (const ::Messaging::ReplyEndTimePolicy_var &p)
-{
-  this->ptr_ = ::Messaging::ReplyEndTimePolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::ReplyEndTimePolicy_out &
-Messaging::ReplyEndTimePolicy_out::operator= (ReplyEndTimePolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::ReplyEndTimePolicy_out::operator ::Messaging::ReplyEndTimePolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyEndTimePolicy_ptr &
-Messaging::ReplyEndTimePolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (void)
 {}
@@ -2931,7 +1827,7 @@ Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (void)
 Messaging::ReplyEndTimePolicy::~ReplyEndTimePolicy (void)
 {}
 
-void 
+void
 Messaging::ReplyEndTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyEndTimePolicy *tmp = ACE_static_cast (ReplyEndTimePolicy *, _tao_void_pointer);
@@ -2947,7 +1843,7 @@ Messaging::ReplyEndTimePolicy::_narrow (
   return ReplyEndTimePolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::ReplyEndTimePolicy_ptr 
+Messaging::ReplyEndTimePolicy_ptr
 Messaging::ReplyEndTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -2957,7 +1853,7 @@ Messaging::ReplyEndTimePolicy::_unchecked_narrow (
     {
       return ReplyEndTimePolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           ReplyEndTimePolicy_ptr,
@@ -2977,14 +1873,14 @@ Messaging::ReplyEndTimePolicy::_duplicate (ReplyEndTimePolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::ReplyEndTimePolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, ReplyEndTimePolicy)::_tao_class_id)
@@ -3017,18 +1913,24 @@ void *Messaging::ReplyEndTimePolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::ReplyEndTimePolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/ReplyEndTimePolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::ReplyEndTimePolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -3038,23 +1940,23 @@ static const CORBA::Long _oc_Messaging_ReplyEndTimePolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x706c7945), 
-  ACE_NTOHL (0x6e645469), 
-  ACE_NTOHL (0x6d65506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x706c7945),
+  ACE_NTOHL (0x6e645469),
+  ACE_NTOHL (0x6d65506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Messaging/ReplyEndTimePolicy:1.0
     19,
-  ACE_NTOHL (0x5265706c), 
-  ACE_NTOHL (0x79456e64), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x79456e64),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x506f6c69),
   ACE_NTOHL (0x63790000),  // name = ReplyEndTimePolicy
   };
 
@@ -3081,7 +1983,7 @@ TAO_NAMESPACE_END
 int Messaging::RelativeRequestTimeoutPolicy::_tao_class_id = 0;
 
 Messaging::RelativeRequestTimeoutPolicy_ptr
-tao_Messaging_RelativeRequestTimeoutPolicy_duplicate (
+Messaging::tao_RelativeRequestTimeoutPolicy_life::tao_duplicate (
     Messaging::RelativeRequestTimeoutPolicy_ptr p
   )
 {
@@ -3089,7 +1991,7 @@ tao_Messaging_RelativeRequestTimeoutPolicy_duplicate (
 }
 
 void
-tao_Messaging_RelativeRequestTimeoutPolicy_release (
+Messaging::tao_RelativeRequestTimeoutPolicy_life::tao_release (
     Messaging::RelativeRequestTimeoutPolicy_ptr p
   )
 {
@@ -3097,15 +1999,24 @@ tao_Messaging_RelativeRequestTimeoutPolicy_release (
 }
 
 Messaging::RelativeRequestTimeoutPolicy_ptr
-tao_Messaging_RelativeRequestTimeoutPolicy_nil (
+Messaging::tao_RelativeRequestTimeoutPolicy_life::tao_nil (
     void
   )
 {
   return Messaging::RelativeRequestTimeoutPolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_RelativeRequestTimeoutPolicy_life::tao_marshal (
+    Messaging::RelativeRequestTimeoutPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::RelativeRequestTimeoutPolicy_ptr
-tao_Messaging_RelativeRequestTimeoutPolicy_narrow (
+Messaging::tao_RelativeRequestTimeoutPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -3114,7 +2025,7 @@ tao_Messaging_RelativeRequestTimeoutPolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_RelativeRequestTimeoutPolicy_upcast (
+Messaging::tao_RelativeRequestTimeoutPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -3123,205 +2034,32 @@ tao_Messaging_RelativeRequestTimeoutPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_RelativeRequestTimeoutPolicy_marshal (
-    Messaging::RelativeRequestTimeoutPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::RelativeRequestTimeoutPolicy,
+        Messaging::tao_RelativeRequestTimeoutPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::RelativeRequestTimeoutPolicy,
+        Messaging::tao_RelativeRequestTimeoutPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::RelativeRequestTimeoutPolicy, \
+        Messaging::tao_RelativeRequestTimeoutPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::RelativeRequestTimeoutPolicy, \
+        Messaging::tao_RelativeRequestTimeoutPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::RelativeRequestTimeoutPolicy_var
-// *************************************************************
-
-Messaging::RelativeRequestTimeoutPolicy_var::RelativeRequestTimeoutPolicy_var (void)
-  : ptr_ (RelativeRequestTimeoutPolicy::_nil ())
-{}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::RelativeRequestTimeoutPolicy_var::RelativeRequestTimeoutPolicy_var (const ::Messaging::RelativeRequestTimeoutPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (RelativeRequestTimeoutPolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::RelativeRequestTimeoutPolicy_var::~RelativeRequestTimeoutPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::RelativeRequestTimeoutPolicy_var &
-Messaging::RelativeRequestTimeoutPolicy_var::operator= (RelativeRequestTimeoutPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RelativeRequestTimeoutPolicy_var &
-Messaging::RelativeRequestTimeoutPolicy_var::operator= (const ::Messaging::RelativeRequestTimeoutPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::RelativeRequestTimeoutPolicy_var::operator const ::Messaging::RelativeRequestTimeoutPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::RelativeRequestTimeoutPolicy_var::operator ::Messaging::RelativeRequestTimeoutPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr &
-Messaging::RelativeRequestTimeoutPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr &
-Messaging::RelativeRequestTimeoutPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RelativeRequestTimeoutPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_nil ();
-  return val;
-}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::tao_duplicate (RelativeRequestTimeoutPolicy_ptr p)
-{
-  return ::Messaging::RelativeRequestTimeoutPolicy::_duplicate (p);
-}
-
-void
-Messaging::RelativeRequestTimeoutPolicy_var::tao_release (RelativeRequestTimeoutPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::tao_nil (void)
-{
-  return ::Messaging::RelativeRequestTimeoutPolicy::_nil ();
-}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::RelativeRequestTimeoutPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::RelativeRequestTimeoutPolicy_var::tao_upcast (void *src)
-{
-  RelativeRequestTimeoutPolicy **tmp =
-    ACE_static_cast (RelativeRequestTimeoutPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::RelativeRequestTimeoutPolicy_out
-// *************************************************************
-
-Messaging::RelativeRequestTimeoutPolicy_out::RelativeRequestTimeoutPolicy_out (RelativeRequestTimeoutPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_nil ();
-}
-
-Messaging::RelativeRequestTimeoutPolicy_out::RelativeRequestTimeoutPolicy_out (RelativeRequestTimeoutPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_nil ();
-}
-
-Messaging::RelativeRequestTimeoutPolicy_out::RelativeRequestTimeoutPolicy_out (const ::Messaging::RelativeRequestTimeoutPolicy_out &p)
-  : ptr_ (ACE_const_cast (RelativeRequestTimeoutPolicy_out &, p).ptr_)
-{}
-
-::Messaging::RelativeRequestTimeoutPolicy_out &
-Messaging::RelativeRequestTimeoutPolicy_out::operator= (const ::Messaging::RelativeRequestTimeoutPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RelativeRequestTimeoutPolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::RelativeRequestTimeoutPolicy_out &
-Messaging::RelativeRequestTimeoutPolicy_out::operator= (const ::Messaging::RelativeRequestTimeoutPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RelativeRequestTimeoutPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::RelativeRequestTimeoutPolicy_out &
-Messaging::RelativeRequestTimeoutPolicy_out::operator= (RelativeRequestTimeoutPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RelativeRequestTimeoutPolicy_out::operator ::Messaging::RelativeRequestTimeoutPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr &
-Messaging::RelativeRequestTimeoutPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::RelativeRequestTimeoutPolicy::RelativeRequestTimeoutPolicy (void)
 {}
@@ -3329,7 +2067,7 @@ Messaging::RelativeRequestTimeoutPolicy::RelativeRequestTimeoutPolicy (void)
 Messaging::RelativeRequestTimeoutPolicy::~RelativeRequestTimeoutPolicy (void)
 {}
 
-void 
+void
 Messaging::RelativeRequestTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RelativeRequestTimeoutPolicy *tmp = ACE_static_cast (RelativeRequestTimeoutPolicy *, _tao_void_pointer);
@@ -3345,7 +2083,7 @@ Messaging::RelativeRequestTimeoutPolicy::_narrow (
   return RelativeRequestTimeoutPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::RelativeRequestTimeoutPolicy_ptr 
+Messaging::RelativeRequestTimeoutPolicy_ptr
 Messaging::RelativeRequestTimeoutPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -3355,7 +2093,7 @@ Messaging::RelativeRequestTimeoutPolicy::_unchecked_narrow (
     {
       return RelativeRequestTimeoutPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           RelativeRequestTimeoutPolicy_ptr,
@@ -3375,14 +2113,14 @@ Messaging::RelativeRequestTimeoutPolicy::_duplicate (RelativeRequestTimeoutPolic
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::RelativeRequestTimeoutPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, RelativeRequestTimeoutPolicy)::_tao_class_id)
@@ -3415,18 +2153,24 @@ void *Messaging::RelativeRequestTimeoutPolicy::_tao_QueryInterface (ptr_arith_t 
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::RelativeRequestTimeoutPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/RelativeRequestTimeoutPolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::RelativeRequestTimeoutPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -3436,28 +2180,28 @@ static const CORBA::Long _oc_Messaging_RelativeRequestTimeoutPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   55,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x6c617469), 
-  ACE_NTOHL (0x76655265), 
-  ACE_NTOHL (0x71756573), 
-  ACE_NTOHL (0x7454696d), 
-  ACE_NTOHL (0x656f7574), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x6c617469),
+  ACE_NTOHL (0x76655265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x7454696d),
+  ACE_NTOHL (0x656f7574),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/RelativeRequestTimeoutPolicy:1.0
     29,
-  ACE_NTOHL (0x52656c61), 
-  ACE_NTOHL (0x74697665), 
-  ACE_NTOHL (0x52657175), 
-  ACE_NTOHL (0x65737454), 
-  ACE_NTOHL (0x696d656f), 
-  ACE_NTOHL (0x7574506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x52656c61),
+  ACE_NTOHL (0x74697665),
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737454),
+  ACE_NTOHL (0x696d656f),
+  ACE_NTOHL (0x7574506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = RelativeRequestTimeoutPolicy
   };
 
@@ -3485,22 +2229,22 @@ static const CORBA::Long _oc_Messaging_RoutingTypeRange[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   43,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f526f), 
-  ACE_NTOHL (0x7574696e), 
-  ACE_NTOHL (0x67547970), 
-  ACE_NTOHL (0x6552616e), 
-  ACE_NTOHL (0x67653a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f526f),
+  ACE_NTOHL (0x7574696e),
+  ACE_NTOHL (0x67547970),
+  ACE_NTOHL (0x6552616e),
+  ACE_NTOHL (0x67653a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/RoutingTypeRange:1.0
     17,
-  ACE_NTOHL (0x526f7574), 
-  ACE_NTOHL (0x696e6754), 
-  ACE_NTOHL (0x79706552), 
-  ACE_NTOHL (0x616e6765), 
+  ACE_NTOHL (0x526f7574),
+  ACE_NTOHL (0x696e6754),
+  ACE_NTOHL (0x79706552),
+  ACE_NTOHL (0x616e6765),
   ACE_NTOHL (0x0),  // name = RoutingTypeRange
   2, // member count
     4,
@@ -3509,19 +2253,19 @@ static const CORBA::Long _oc_Messaging_RoutingTypeRange[] =
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     38,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x4d657373), 
-    ACE_NTOHL (0x6167696e), 
-    ACE_NTOHL (0x672f526f), 
-    ACE_NTOHL (0x7574696e), 
-    ACE_NTOHL (0x67547970), 
-    ACE_NTOHL (0x653a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x4d657373),
+    ACE_NTOHL (0x6167696e),
+    ACE_NTOHL (0x672f526f),
+    ACE_NTOHL (0x7574696e),
+    ACE_NTOHL (0x67547970),
+    ACE_NTOHL (0x653a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/RoutingType:1.0
         12,
-    ACE_NTOHL (0x526f7574), 
-    ACE_NTOHL (0x696e6754), 
+    ACE_NTOHL (0x526f7574),
+    ACE_NTOHL (0x696e6754),
     ACE_NTOHL (0x79706500),  // name = RoutingType
         CORBA::tk_short,
 
@@ -3549,8 +2293,8 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
 void Messaging::RoutingTypeRange::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -3559,12 +2303,31 @@ void Messaging::RoutingTypeRange::_tao_any_destructor (void *_tao_void_pointer)
 }
 
 // TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_Fixed_Var_T<
+      RoutingTypeRange
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_Fixed_Var_T< \
+      RoutingTypeRange \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int Messaging::RoutingPolicy::_tao_class_id = 0;
 
 Messaging::RoutingPolicy_ptr
-tao_Messaging_RoutingPolicy_duplicate (
+Messaging::tao_RoutingPolicy_life::tao_duplicate (
     Messaging::RoutingPolicy_ptr p
   )
 {
@@ -3572,7 +2335,7 @@ tao_Messaging_RoutingPolicy_duplicate (
 }
 
 void
-tao_Messaging_RoutingPolicy_release (
+Messaging::tao_RoutingPolicy_life::tao_release (
     Messaging::RoutingPolicy_ptr p
   )
 {
@@ -3580,15 +2343,24 @@ tao_Messaging_RoutingPolicy_release (
 }
 
 Messaging::RoutingPolicy_ptr
-tao_Messaging_RoutingPolicy_nil (
+Messaging::tao_RoutingPolicy_life::tao_nil (
     void
   )
 {
   return Messaging::RoutingPolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_RoutingPolicy_life::tao_marshal (
+    Messaging::RoutingPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::RoutingPolicy_ptr
-tao_Messaging_RoutingPolicy_narrow (
+Messaging::tao_RoutingPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -3597,7 +2369,7 @@ tao_Messaging_RoutingPolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_RoutingPolicy_upcast (
+Messaging::tao_RoutingPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -3606,205 +2378,32 @@ tao_Messaging_RoutingPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_RoutingPolicy_marshal (
-    Messaging::RoutingPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::RoutingPolicy,
+        Messaging::tao_RoutingPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::RoutingPolicy,
+        Messaging::tao_RoutingPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::RoutingPolicy, \
+        Messaging::tao_RoutingPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::RoutingPolicy, \
+        Messaging::tao_RoutingPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::RoutingPolicy_var
-// *************************************************************
-
-Messaging::RoutingPolicy_var::RoutingPolicy_var (void)
-  : ptr_ (RoutingPolicy::_nil ())
-{}
-
-::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::RoutingPolicy_var::RoutingPolicy_var (const ::Messaging::RoutingPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (RoutingPolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::RoutingPolicy_var::~RoutingPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::RoutingPolicy_var &
-Messaging::RoutingPolicy_var::operator= (RoutingPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RoutingPolicy_var &
-Messaging::RoutingPolicy_var::operator= (const ::Messaging::RoutingPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::RoutingPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::RoutingPolicy_var::operator const ::Messaging::RoutingPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::RoutingPolicy_var::operator ::Messaging::RoutingPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::RoutingPolicy_ptr &
-Messaging::RoutingPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RoutingPolicy_ptr &
-Messaging::RoutingPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RoutingPolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::RoutingPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::RoutingPolicy::_nil ();
-  return val;
-}
-
-::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::tao_duplicate (RoutingPolicy_ptr p)
-{
-  return ::Messaging::RoutingPolicy::_duplicate (p);
-}
-
-void
-Messaging::RoutingPolicy_var::tao_release (RoutingPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::tao_nil (void)
-{
-  return ::Messaging::RoutingPolicy::_nil ();
-}
-
-::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::RoutingPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::RoutingPolicy_var::tao_upcast (void *src)
-{
-  RoutingPolicy **tmp =
-    ACE_static_cast (RoutingPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::RoutingPolicy_out
-// *************************************************************
-
-Messaging::RoutingPolicy_out::RoutingPolicy_out (RoutingPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::RoutingPolicy::_nil ();
-}
-
-Messaging::RoutingPolicy_out::RoutingPolicy_out (RoutingPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::RoutingPolicy::_nil ();
-}
-
-Messaging::RoutingPolicy_out::RoutingPolicy_out (const ::Messaging::RoutingPolicy_out &p)
-  : ptr_ (ACE_const_cast (RoutingPolicy_out &, p).ptr_)
-{}
-
-::Messaging::RoutingPolicy_out &
-Messaging::RoutingPolicy_out::operator= (const ::Messaging::RoutingPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (RoutingPolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::RoutingPolicy_out &
-Messaging::RoutingPolicy_out::operator= (const ::Messaging::RoutingPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::RoutingPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::RoutingPolicy_out &
-Messaging::RoutingPolicy_out::operator= (RoutingPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::RoutingPolicy_out::operator ::Messaging::RoutingPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::RoutingPolicy_ptr &
-Messaging::RoutingPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::RoutingPolicy::RoutingPolicy (void)
 {}
@@ -3812,7 +2411,7 @@ Messaging::RoutingPolicy::RoutingPolicy (void)
 Messaging::RoutingPolicy::~RoutingPolicy (void)
 {}
 
-void 
+void
 Messaging::RoutingPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RoutingPolicy *tmp = ACE_static_cast (RoutingPolicy *, _tao_void_pointer);
@@ -3828,7 +2427,7 @@ Messaging::RoutingPolicy::_narrow (
   return RoutingPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::RoutingPolicy_ptr 
+Messaging::RoutingPolicy_ptr
 Messaging::RoutingPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -3838,7 +2437,7 @@ Messaging::RoutingPolicy::_unchecked_narrow (
     {
       return RoutingPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           RoutingPolicy_ptr,
@@ -3858,14 +2457,14 @@ Messaging::RoutingPolicy::_duplicate (RoutingPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::RoutingPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, RoutingPolicy)::_tao_class_id)
@@ -3898,18 +2497,24 @@ void *Messaging::RoutingPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::RoutingPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/RoutingPolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::RoutingPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -3919,20 +2524,20 @@ static const CORBA::Long _oc_Messaging_RoutingPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f526f), 
-  ACE_NTOHL (0x7574696e), 
-  ACE_NTOHL (0x67506f6c), 
-  ACE_NTOHL (0x6963793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f526f),
+  ACE_NTOHL (0x7574696e),
+  ACE_NTOHL (0x67506f6c),
+  ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Messaging/RoutingPolicy:1.0
     14,
-  ACE_NTOHL (0x526f7574), 
-  ACE_NTOHL (0x696e6750), 
-  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x526f7574),
+  ACE_NTOHL (0x696e6750),
+  ACE_NTOHL (0x6f6c6963),
   ACE_NTOHL (0x79000000),  // name = RoutingPolicy
   };
 
@@ -3959,7 +2564,7 @@ TAO_NAMESPACE_END
 int Messaging::MaxHopsPolicy::_tao_class_id = 0;
 
 Messaging::MaxHopsPolicy_ptr
-tao_Messaging_MaxHopsPolicy_duplicate (
+Messaging::tao_MaxHopsPolicy_life::tao_duplicate (
     Messaging::MaxHopsPolicy_ptr p
   )
 {
@@ -3967,7 +2572,7 @@ tao_Messaging_MaxHopsPolicy_duplicate (
 }
 
 void
-tao_Messaging_MaxHopsPolicy_release (
+Messaging::tao_MaxHopsPolicy_life::tao_release (
     Messaging::MaxHopsPolicy_ptr p
   )
 {
@@ -3975,15 +2580,24 @@ tao_Messaging_MaxHopsPolicy_release (
 }
 
 Messaging::MaxHopsPolicy_ptr
-tao_Messaging_MaxHopsPolicy_nil (
+Messaging::tao_MaxHopsPolicy_life::tao_nil (
     void
   )
 {
   return Messaging::MaxHopsPolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_MaxHopsPolicy_life::tao_marshal (
+    Messaging::MaxHopsPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::MaxHopsPolicy_ptr
-tao_Messaging_MaxHopsPolicy_narrow (
+Messaging::tao_MaxHopsPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -3992,7 +2606,7 @@ tao_Messaging_MaxHopsPolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_MaxHopsPolicy_upcast (
+Messaging::tao_MaxHopsPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -4001,205 +2615,32 @@ tao_Messaging_MaxHopsPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_MaxHopsPolicy_marshal (
-    Messaging::MaxHopsPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::MaxHopsPolicy,
+        Messaging::tao_MaxHopsPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::MaxHopsPolicy,
+        Messaging::tao_MaxHopsPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::MaxHopsPolicy, \
+        Messaging::tao_MaxHopsPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::MaxHopsPolicy, \
+        Messaging::tao_MaxHopsPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::MaxHopsPolicy_var
-// *************************************************************
-
-Messaging::MaxHopsPolicy_var::MaxHopsPolicy_var (void)
-  : ptr_ (MaxHopsPolicy::_nil ())
-{}
-
-::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::MaxHopsPolicy_var::MaxHopsPolicy_var (const ::Messaging::MaxHopsPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (MaxHopsPolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::MaxHopsPolicy_var::~MaxHopsPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::MaxHopsPolicy_var &
-Messaging::MaxHopsPolicy_var::operator= (MaxHopsPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::MaxHopsPolicy_var &
-Messaging::MaxHopsPolicy_var::operator= (const ::Messaging::MaxHopsPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::MaxHopsPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::MaxHopsPolicy_var::operator const ::Messaging::MaxHopsPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::MaxHopsPolicy_var::operator ::Messaging::MaxHopsPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::MaxHopsPolicy_ptr &
-Messaging::MaxHopsPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::MaxHopsPolicy_ptr &
-Messaging::MaxHopsPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::MaxHopsPolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::MaxHopsPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::MaxHopsPolicy::_nil ();
-  return val;
-}
-
-::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::tao_duplicate (MaxHopsPolicy_ptr p)
-{
-  return ::Messaging::MaxHopsPolicy::_duplicate (p);
-}
-
-void
-Messaging::MaxHopsPolicy_var::tao_release (MaxHopsPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::tao_nil (void)
-{
-  return ::Messaging::MaxHopsPolicy::_nil ();
-}
-
-::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::MaxHopsPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::MaxHopsPolicy_var::tao_upcast (void *src)
-{
-  MaxHopsPolicy **tmp =
-    ACE_static_cast (MaxHopsPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::MaxHopsPolicy_out
-// *************************************************************
-
-Messaging::MaxHopsPolicy_out::MaxHopsPolicy_out (MaxHopsPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::MaxHopsPolicy::_nil ();
-}
-
-Messaging::MaxHopsPolicy_out::MaxHopsPolicy_out (MaxHopsPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::MaxHopsPolicy::_nil ();
-}
-
-Messaging::MaxHopsPolicy_out::MaxHopsPolicy_out (const ::Messaging::MaxHopsPolicy_out &p)
-  : ptr_ (ACE_const_cast (MaxHopsPolicy_out &, p).ptr_)
-{}
-
-::Messaging::MaxHopsPolicy_out &
-Messaging::MaxHopsPolicy_out::operator= (const ::Messaging::MaxHopsPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (MaxHopsPolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::MaxHopsPolicy_out &
-Messaging::MaxHopsPolicy_out::operator= (const ::Messaging::MaxHopsPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::MaxHopsPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::MaxHopsPolicy_out &
-Messaging::MaxHopsPolicy_out::operator= (MaxHopsPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::MaxHopsPolicy_out::operator ::Messaging::MaxHopsPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::MaxHopsPolicy_ptr &
-Messaging::MaxHopsPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::MaxHopsPolicy::MaxHopsPolicy (void)
 {}
@@ -4207,7 +2648,7 @@ Messaging::MaxHopsPolicy::MaxHopsPolicy (void)
 Messaging::MaxHopsPolicy::~MaxHopsPolicy (void)
 {}
 
-void 
+void
 Messaging::MaxHopsPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   MaxHopsPolicy *tmp = ACE_static_cast (MaxHopsPolicy *, _tao_void_pointer);
@@ -4223,7 +2664,7 @@ Messaging::MaxHopsPolicy::_narrow (
   return MaxHopsPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::MaxHopsPolicy_ptr 
+Messaging::MaxHopsPolicy_ptr
 Messaging::MaxHopsPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -4233,7 +2674,7 @@ Messaging::MaxHopsPolicy::_unchecked_narrow (
     {
       return MaxHopsPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           MaxHopsPolicy_ptr,
@@ -4253,14 +2694,14 @@ Messaging::MaxHopsPolicy::_duplicate (MaxHopsPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::MaxHopsPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, MaxHopsPolicy)::_tao_class_id)
@@ -4293,18 +2734,24 @@ void *Messaging::MaxHopsPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::MaxHopsPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/MaxHopsPolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::MaxHopsPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -4314,20 +2761,20 @@ static const CORBA::Long _oc_Messaging_MaxHopsPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f4d61), 
-  ACE_NTOHL (0x78486f70), 
-  ACE_NTOHL (0x73506f6c), 
-  ACE_NTOHL (0x6963793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f4d61),
+  ACE_NTOHL (0x78486f70),
+  ACE_NTOHL (0x73506f6c),
+  ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Messaging/MaxHopsPolicy:1.0
     14,
-  ACE_NTOHL (0x4d617848), 
-  ACE_NTOHL (0x6f707350), 
-  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x4d617848),
+  ACE_NTOHL (0x6f707350),
+  ACE_NTOHL (0x6f6c6963),
   ACE_NTOHL (0x79000000),  // name = MaxHopsPolicy
   };
 
@@ -4354,7 +2801,7 @@ TAO_NAMESPACE_END
 int Messaging::QueueOrderPolicy::_tao_class_id = 0;
 
 Messaging::QueueOrderPolicy_ptr
-tao_Messaging_QueueOrderPolicy_duplicate (
+Messaging::tao_QueueOrderPolicy_life::tao_duplicate (
     Messaging::QueueOrderPolicy_ptr p
   )
 {
@@ -4362,7 +2809,7 @@ tao_Messaging_QueueOrderPolicy_duplicate (
 }
 
 void
-tao_Messaging_QueueOrderPolicy_release (
+Messaging::tao_QueueOrderPolicy_life::tao_release (
     Messaging::QueueOrderPolicy_ptr p
   )
 {
@@ -4370,15 +2817,24 @@ tao_Messaging_QueueOrderPolicy_release (
 }
 
 Messaging::QueueOrderPolicy_ptr
-tao_Messaging_QueueOrderPolicy_nil (
+Messaging::tao_QueueOrderPolicy_life::tao_nil (
     void
   )
 {
   return Messaging::QueueOrderPolicy::_nil ();
 }
 
+CORBA::Boolean
+Messaging::tao_QueueOrderPolicy_life::tao_marshal (
+    Messaging::QueueOrderPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 Messaging::QueueOrderPolicy_ptr
-tao_Messaging_QueueOrderPolicy_narrow (
+Messaging::tao_QueueOrderPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -4387,7 +2843,7 @@ tao_Messaging_QueueOrderPolicy_narrow (
 }
 
 CORBA::Object *
-tao_Messaging_QueueOrderPolicy_upcast (
+Messaging::tao_QueueOrderPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -4396,205 +2852,32 @@ tao_Messaging_QueueOrderPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_Messaging_QueueOrderPolicy_marshal (
-    Messaging::QueueOrderPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        Messaging::QueueOrderPolicy,
+        Messaging::tao_QueueOrderPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        Messaging::QueueOrderPolicy,
+        Messaging::tao_QueueOrderPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        Messaging::QueueOrderPolicy, \
+        Messaging::tao_QueueOrderPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        Messaging::QueueOrderPolicy, \
+        Messaging::tao_QueueOrderPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// Messaging::QueueOrderPolicy_var
-// *************************************************************
-
-Messaging::QueueOrderPolicy_var::QueueOrderPolicy_var (void)
-  : ptr_ (QueueOrderPolicy::_nil ())
-{}
-
-::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-Messaging::QueueOrderPolicy_var::QueueOrderPolicy_var (const ::Messaging::QueueOrderPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (QueueOrderPolicy::_duplicate (p.ptr ()))
-{}
-
-Messaging::QueueOrderPolicy_var::~QueueOrderPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-Messaging::QueueOrderPolicy_var &
-Messaging::QueueOrderPolicy_var::operator= (QueueOrderPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::QueueOrderPolicy_var &
-Messaging::QueueOrderPolicy_var::operator= (const ::Messaging::QueueOrderPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::Messaging::QueueOrderPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-Messaging::QueueOrderPolicy_var::operator const ::Messaging::QueueOrderPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::QueueOrderPolicy_var::operator ::Messaging::QueueOrderPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::Messaging::QueueOrderPolicy_ptr &
-Messaging::QueueOrderPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::QueueOrderPolicy_ptr &
-Messaging::QueueOrderPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::QueueOrderPolicy::_nil ();
-  return this->ptr_;
-}
-
-::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::Messaging::QueueOrderPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::Messaging::QueueOrderPolicy::_nil ();
-  return val;
-}
-
-::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::tao_duplicate (QueueOrderPolicy_ptr p)
-{
-  return ::Messaging::QueueOrderPolicy::_duplicate (p);
-}
-
-void
-Messaging::QueueOrderPolicy_var::tao_release (QueueOrderPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::tao_nil (void)
-{
-  return ::Messaging::QueueOrderPolicy::_nil ();
-}
-
-::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::Messaging::QueueOrderPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::QueueOrderPolicy_var::tao_upcast (void *src)
-{
-  QueueOrderPolicy **tmp =
-    ACE_static_cast (QueueOrderPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// Messaging::QueueOrderPolicy_out
-// *************************************************************
-
-Messaging::QueueOrderPolicy_out::QueueOrderPolicy_out (QueueOrderPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::Messaging::QueueOrderPolicy::_nil ();
-}
-
-Messaging::QueueOrderPolicy_out::QueueOrderPolicy_out (QueueOrderPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::Messaging::QueueOrderPolicy::_nil ();
-}
-
-Messaging::QueueOrderPolicy_out::QueueOrderPolicy_out (const ::Messaging::QueueOrderPolicy_out &p)
-  : ptr_ (ACE_const_cast (QueueOrderPolicy_out &, p).ptr_)
-{}
-
-::Messaging::QueueOrderPolicy_out &
-Messaging::QueueOrderPolicy_out::operator= (const ::Messaging::QueueOrderPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (QueueOrderPolicy_out&, p).ptr_;
-  return *this;
-}
-
-Messaging::QueueOrderPolicy_out &
-Messaging::QueueOrderPolicy_out::operator= (const ::Messaging::QueueOrderPolicy_var &p)
-{
-  this->ptr_ = ::Messaging::QueueOrderPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-Messaging::QueueOrderPolicy_out &
-Messaging::QueueOrderPolicy_out::operator= (QueueOrderPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-Messaging::QueueOrderPolicy_out::operator ::Messaging::QueueOrderPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::Messaging::QueueOrderPolicy_ptr &
-Messaging::QueueOrderPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 Messaging::QueueOrderPolicy::QueueOrderPolicy (void)
 {}
@@ -4602,7 +2885,7 @@ Messaging::QueueOrderPolicy::QueueOrderPolicy (void)
 Messaging::QueueOrderPolicy::~QueueOrderPolicy (void)
 {}
 
-void 
+void
 Messaging::QueueOrderPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   QueueOrderPolicy *tmp = ACE_static_cast (QueueOrderPolicy *, _tao_void_pointer);
@@ -4618,7 +2901,7 @@ Messaging::QueueOrderPolicy::_narrow (
   return QueueOrderPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-Messaging::QueueOrderPolicy_ptr 
+Messaging::QueueOrderPolicy_ptr
 Messaging::QueueOrderPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -4628,7 +2911,7 @@ Messaging::QueueOrderPolicy::_unchecked_narrow (
     {
       return QueueOrderPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           QueueOrderPolicy_ptr,
@@ -4648,14 +2931,14 @@ Messaging::QueueOrderPolicy::_duplicate (QueueOrderPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *Messaging::QueueOrderPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::Messaging, QueueOrderPolicy)::_tao_class_id)
@@ -4688,18 +2971,24 @@ void *Messaging::QueueOrderPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* Messaging::QueueOrderPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/Messaging/QueueOrderPolicy:1.0";
+}
+
+CORBA::Boolean
+Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -4709,22 +2998,22 @@ static const CORBA::Long _oc_Messaging_QueueOrderPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   43,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5175), 
-  ACE_NTOHL (0x6575654f), 
-  ACE_NTOHL (0x72646572), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5175),
+  ACE_NTOHL (0x6575654f),
+  ACE_NTOHL (0x72646572),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/QueueOrderPolicy:1.0
     17,
-  ACE_NTOHL (0x51756575), 
-  ACE_NTOHL (0x654f7264), 
-  ACE_NTOHL (0x6572506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x51756575),
+  ACE_NTOHL (0x654f7264),
+  ACE_NTOHL (0x6572506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = QueueOrderPolicy
   };
 
@@ -4799,7 +3088,7 @@ operator>>= (
 # pragma instantiate TAO::Any_Impl_T<Messaging::RebindPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -5242,7 +3531,7 @@ operator>>= (
 # pragma instantiate TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -5468,4 +3757,3 @@ operator>>= (
 # pragma instantiate TAO_Object_Manager<Messaging::QueueOrderPolicy, Messaging::QueueOrderPolicy_var>
 # pragma instantiate TAO::Any_Impl_T<Messaging::QueueOrderPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

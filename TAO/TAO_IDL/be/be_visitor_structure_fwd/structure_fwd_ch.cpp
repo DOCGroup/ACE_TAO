@@ -44,17 +44,11 @@ be_visitor_structure_fwd_ch::visit_structure_fwd (be_structure_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->cli_hdr_gen () || node->imported ())
-    {
-      return 0;
-    }
+  be_structure *fd = 
+    be_structure::narrow_from_decl (node->full_definition ());
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  // Generate a forward declaration of the class.
-  *os << be_nl << be_nl
-      << "struct " << node->local_name () << ";";
+  // This will be a no-op if it has already been done for this node.
+  fd->gen_common_varout (os);
 
   node->cli_hdr_gen (I_TRUE);
   return 0;

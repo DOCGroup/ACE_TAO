@@ -762,7 +762,7 @@ TAO_DynCommon::insert_dyn_any (DynamicAny::DynAny_ptr value
 }
 
 void
-TAO_DynCommon::insert_val (CORBA::ValueBase_ptr
+TAO_DynCommon::insert_val (CORBA::ValueBase *
                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -1459,7 +1459,7 @@ TAO_DynCommon::get_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
                                           ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::ValueBase_ptr
+CORBA::ValueBase *
 TAO_DynCommon::get_val (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,

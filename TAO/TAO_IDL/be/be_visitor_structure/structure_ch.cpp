@@ -45,12 +45,14 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  // Generate the _var and _out typedefs.
+  node->gen_common_varout (os);
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
-
-  *os << "struct " << be_global->stub_export_macro () << " "
+  *os << be_nl << be_nl
+      << "struct " << be_global->stub_export_macro () << " "
       << node->local_name () << be_nl
       << "{" << be_idt_nl;
 
@@ -75,38 +77,6 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
 
   *os << be_uidt_nl;
   *os << "};";
-
-  // Generate var definition.
-  if (node->gen_var_defn () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_structure_ch::"
-                         "visit_structure - "
-                         "codegen for _var failed\n"),
-                        -1);
-    }
-
-  // A class is generated for an out defn only for a variable
-  // length struct.
-  if (node->size_type () == AST_Type::VARIABLE)
-    {
-      if (node->gen_out_defn () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_structure_ch::"
-                             "visit_structure - "
-                             "codegen for _out failed\n"),
-                            -1);
-        }
-    }
-  else
-    {
-      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-      *os << "typedef " << node->local_name () << " &"
-          << node->local_name () << "_out;";
-    }
 
   if (be_global->tc_support ())
     {

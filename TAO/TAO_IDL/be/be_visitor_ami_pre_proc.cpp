@@ -501,6 +501,8 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                   0);
 
   reply_handler->set_name (reply_handler_name);
+  reply_handler->set_defined_in (node->defined_in ());
+  reply_handler->gen_fwd_helper_name ();
 
   // Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.
