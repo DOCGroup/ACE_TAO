@@ -86,7 +86,7 @@ protected:
   // Added sections below here to make compatible with the VMETRO
   // board test.
 
-  ACE_Timeprobe (const ACE_Timeprobe &);
+  ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &);
   // Not implemented.
 
   const char *find_description_i (u_long i);
