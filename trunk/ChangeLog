@@ -1,3 +1,10 @@
+Thu Oct 21 12:32:52 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/common/AttributesImpl.h:
+
+          Fixed doxygen errors dealing with the use of @var in a single line
+          comment.
+
 Thu Oct 21 09:12:32 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_other_tests.lst:
