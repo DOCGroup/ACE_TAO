@@ -4,6 +4,12 @@
 #include "common/Transcode.h"
 #include "common/AttributesImpl.h"
 
+static const ACEXML_Char default_attribute_type[] = {'C', 'D', 'A', 'T', 'A', 0};
+static const ACEXML_Char empty_string[] = { 0 };
+
+const ACEXML_Char
+ACEXML_Parser::simple_parsing_name_[] = { 'S', 'i', 'm', 'p', 'l', 'e', 0 };
+
 #if !defined (__ACEXML_INLINE__)
 # include "parser/parser/Parser.i"
 #endif /* __ACEXML_INLINE__ */
@@ -22,12 +28,6 @@ and when to invoke start/endPrefixMapping?
 Make sure we are freezing the obstack in all cases.
 
 ***/
-
-static const ACEXML_Char default_attribute_type[] = {'C', 'D', 'A', 'T', 'A', 0};
-static const ACEXML_Char empty_string[] = { 0 };
-
-const ACEXML_Char
-ACEXML_Parser::simple_parsing_name_[] = { 'S', 'i', 'm', 'p', 'l', 'e', 0 };
 
 ACEXML_Parser::ACEXML_Parser (void)
   :   dtd_handler_ (0),

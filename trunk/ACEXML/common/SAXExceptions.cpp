@@ -4,15 +4,38 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
-#if !defined (__ACEXML_INLINE__)
-# include "common/SAXExceptions.i"
-#endif /* __ACEXML_INLINE__ */
-
 static const ACEXML_Char ACEXML_SAXException_name[] = {
   'A', 'C', 'E', 'X', 'M', 'L',
   'S', 'A', 'X',
   '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
 const ACEXML_Char *ACEXML_SAXException::exception_name_ = ACEXML_SAXException_name;
+
+static const ACEXML_Char ACEXML_SAXNotSupportedException_name[] = {
+  'A', 'C', 'E', 'X', 'M', 'L',
+  'S', 'A', 'X',
+  'N', 'o', 't',
+  'S', 'u', 'p', 'p', 'o', 'r', 't', 'e', 'd',
+  '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+const ACEXML_Char *ACEXML_SAXNotSupportedException::exception_name_ = ACEXML_SAXNotSupportedException_name;
+
+static const ACEXML_Char ACEXML_SAXNotRecognizedException_name[] = {
+  'A', 'C', 'E', 'X', 'M', 'L',
+  'S', 'A', 'X',
+  'N', 'o', 't',
+  'R', 'e', 'c', 'o', 'g', 'n', 'i', 'z', 'e', 'd',
+  '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+const ACEXML_Char *ACEXML_SAXNotRecognizedException::exception_name_ = ACEXML_SAXNotRecognizedException_name;
+
+static const ACEXML_Char ACEXML_SAXParseException_name[] = {
+  'A', 'C', 'E', 'X', 'M', 'L',
+  'S', 'A', 'X',
+  'P', 'a', 'r', 's', 'e',
+  '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+const ACEXML_Char *ACEXML_SAXParseException::exception_name_ = ACEXML_SAXParseException_name;
+
+#if !defined (__ACEXML_INLINE__)
+# include "common/SAXExceptions.i"
+#endif /* __ACEXML_INLINE__ */
 
 ACEXML_SAXException::ACEXML_SAXException (void)
   : message_ (0)
@@ -77,14 +100,6 @@ ACEXML_SAXException::print (void)
               this->message_));
 }
 
-static const ACEXML_Char ACEXML_SAXNotSupportedException_name[] = {
-  'A', 'C', 'E', 'X', 'M', 'L',
-  'S', 'A', 'X',
-  'N', 'o', 't',
-  'S', 'u', 'p', 'p', 'o', 'r', 't', 'e', 'd',
-  '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
-const ACEXML_Char *ACEXML_SAXNotSupportedException::exception_name_ = ACEXML_SAXNotSupportedException_name;
-
 ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (void)
 {
 }
@@ -137,14 +152,6 @@ ACEXML_SAXNotSupportedException::print (void)
               "Exception: ACEXML_SAXNotSupportedException -- %s\n",
               this->message_));
 }
-
-static const ACEXML_Char ACEXML_SAXNotRecognizedException_name[] = {
-  'A', 'C', 'E', 'X', 'M', 'L',
-  'S', 'A', 'X',
-  'N', 'o', 't',
-  'R', 'e', 'c', 'o', 'g', 'n', 'i', 'z', 'e', 'd',
-  '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
-const ACEXML_Char *ACEXML_SAXNotRecognizedException::exception_name_ = ACEXML_SAXNotRecognizedException_name;
 
 ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (void)
 {
@@ -203,13 +210,6 @@ ACEXML_SAXNotRecognizedException::print (void)
               "Exception: ACEXML_SAXNotRecognizedException -- %s\n",
               this->message_));
 }
-
-static const ACEXML_Char ACEXML_SAXParseException_name[] = {
-  'A', 'C', 'E', 'X', 'M', 'L',
-  'S', 'A', 'X',
-  'P', 'a', 'r', 's', 'e',
-  '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
-const ACEXML_Char *ACEXML_SAXParseException::exception_name_ = ACEXML_SAXParseException_name;
 
 ACEXML_SAXParseException::ACEXML_SAXParseException (void)
 {

@@ -1,3 +1,13 @@
+Fri Jan 25 14:40:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* XML/common/Exception.cpp:
+	* XML/common/NamespaceSupport.cpp:
+	* XML/common/SAXExceptions.cpp:
+	* XML/parser/parser/Parser.cpp: Moved the initialization of static
+	  members before the inclusion of inline files to avoid
+	  compilation erros on Borland compiler.  Thanks to Johnny
+	  Willemsen <jwillemsen@remedy.nl> for figuring this out.
+
 Fri Jan 25 14:31:06 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/common/NamespaceSupport.cpp:
