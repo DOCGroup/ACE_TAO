@@ -26,7 +26,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
 
-
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "cubitC.h"
@@ -50,16 +49,6 @@
 #define sqrt(X) (1)
 #endif /* ACE_LACKS_FLOATING_POINT */
 
-#if !defined (ACE_HAS_THREADS)
-class NOOP_ACE_Barrier
-{
-public:
-  NOOP_ACE_Barrier (int) {}
-  void wait (void) {}
-};
-#define ACE_Barrier NOOP_ACE_Barrier
-#endif /* ACE_HAS_THREADS */
-
 #if defined (NO_ACE_QUANTIFY)
 #define START_QUANTIFY \
 quantify_start_recording_data ();
@@ -73,8 +62,12 @@ quantify_clear_data ();
 #define CLEAR_QUANTIFY
 #endif /* !NO_ACE_QUANTIFY */
 
+// @@ Naga, I think this function should be moved into a class as a
+// static member function, rather than having it at "file scope."
+
 // Arbitrary generator used by the client to create the numbers to be
 // cubed.
+
 static inline int
 func (u_int i)
 {
@@ -172,8 +165,8 @@ public:
   // Flag that indicates if we are going to use oneway calls instead
   // of two-way.
 
-char *one_ior_;
-
+  char *one_ior_;
+  // @@ Naga, can you please add a comment here?
 
   u_int use_name_service_;
   // Flag that say if we are using the or not the name service.
@@ -258,7 +251,9 @@ class Client : public ACE_Task<ACE_SYNCH>
   //     This class implements the Cubit Client, which is an active object.
   //     `n' threads execute svc, and make 2way CORBA calls on the server
 public:
-  Client (ACE_Thread_Manager *, Task_State *ts, u_int id);
+  Client (ACE_Thread_Manager *,
+          Task_State *ts,
+          u_int id);
   // Constructor, with a pointer to the common task state.
 
   virtual int svc (void);
@@ -278,7 +273,7 @@ private:
                  u_int,
                  Cubit_Datatypes,
                  ACE_timer_t frequency);
-  // run the various tests.
+  // Run the various tests.
 
   int make_calls (void);
   // make calls depending on the datatype.
@@ -329,7 +324,7 @@ private:
   // Object reference to the cubit context "MT_Cubit".
 
   TAO_Naming_Client my_name_client_;
-  // Naming Client intermediary to naming service stuff
+  // Naming Client intermediary to naming service stuff.
 };
 
 #endif /* !defined (TASK_CLIENT_H) */

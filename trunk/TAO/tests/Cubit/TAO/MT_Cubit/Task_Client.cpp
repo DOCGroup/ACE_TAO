@@ -129,6 +129,8 @@ Task_State::parse_args (int argc,char **argv)
     }
 
   if (thread_per_rate_ == 1)
+    // @@ Naga, can you please use the same symbolic constant that is
+    // used on the server side in place of this magic number?
     thread_count_ = 4;
 
   if (use_utilization_test_ == 1)
@@ -137,16 +139,13 @@ Task_State::parse_args (int argc,char **argv)
       shutdown_ = 1;
     }
 
-  // allocate the array of character pointers.
+  // Allocate the array of character pointers.
   ACE_NEW_RETURN (iors_,
                   char *[thread_count_],
                   -1);
 
   if (ior_file_ != 0)
     {
-      char buf[BUFSIZ];
-      u_int i = 0;
-      int j = 0;
       FILE *ior_file = ACE_OS::fopen (ior_file_, "r");
 
       if (ior_file == 0)
@@ -155,16 +154,23 @@ Task_State::parse_args (int argc,char **argv)
                            "unable to open IOR file \"%s\"\n",
                            ior_file_),
                           -1);
+      char buf[BUFSIZ];
+      u_int i;
 
-      while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 && i < thread_count_)
+      for (i = 0;
+           ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 
+             && i < thread_count_;
+           i++)
         {
           ACE_DEBUG ((LM_DEBUG,
                       buf));
-          j = ACE_OS::strlen (buf);
-          buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
+          int j = ACE_OS::strlen (buf);
+
+          // This overwrites the '\n' that was read from the file.
+          buf[j - 1] = 0;  
           iors_[i] = ACE_OS::strdup (buf);
-          i++;
         }
+
       this->iors_count_ = i;
       ACE_OS::fclose (ior_file);
     }
@@ -191,7 +197,6 @@ Task_State::parse_args (int argc,char **argv)
     ACE_NEW_RETURN (barrier_,
                     ACE_Barrier (thread_count_),
                     -1);
-
   ACE_NEW_RETURN (semaphore_,
                   ACE_Thread_Semaphore (0),
                   -1);
@@ -218,7 +223,7 @@ Task_State::~Task_State (void)
   for (i = 0; i < this->iors_count_; i++)
     ACE_OS::free (this->iors_ [i]);
 
-  // Delete the barrier
+  // Delete the barrier.
 
   delete this->barrier_;
   delete this->semaphore_;
@@ -268,16 +273,21 @@ Client::get_low_priority_latency (void)
 
   ACE_timer_t l = 0;
 
-  for (u_int i = 1; i < this->ts_->thread_count_; i++)
+  for (u_int i = 1;
+       i < this->ts_->thread_count_;
+       i++)
     l += (ACE_timer_t) this->ts_->latency_[i];
 
+  // @@ Naga, can you please add a comment that explains what this
+  // computation is doing?
   return l / (ACE_timer_t) (this->ts_->thread_count_ - 1);
 }
 
 ACE_timer_t
 Client::get_latency (u_int thread_id)
 {
-  return ACE_static_cast (ACE_timer_t, this->ts_->latency_ [thread_id]);
+  return ACE_static_cast (ACE_timer_t,
+                          this->ts_->latency_ [thread_id]);
 }
 
 ACE_timer_t
@@ -285,20 +295,24 @@ Client::get_high_priority_jitter (void)
 {
   ACE_timer_t jitter = 0.0;
   ACE_timer_t average = get_high_priority_latency ();
-  ACE_timer_t number_of_samples = this->ts_->high_priority_loop_count_ / this->ts_->granularity_;
+  ACE_timer_t number_of_samples =
+    this->ts_->high_priority_loop_count_ / this->ts_->granularity_;
 
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
 
   ACE_Stats stats;
 
-  // We first compute the sum of the squares of the differences
-  // each latency has from the average
+  // We first compute the sum of the squares of the differences each
+  // latency has from the average.
+
   for (u_int i = 0; i < number_of_samples; i ++)
     {
       ACE_timer_t difference =
         this->ts_->global_jitter_array_ [0][i] - average;
+
       jitter += difference * difference;
+
       stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [0][i] * 1000 + 0.5));
     }
 
@@ -307,6 +321,7 @@ Client::get_high_priority_jitter (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "high priority jitter:\n"));
+
   stats.print_summary (3, 1000, stderr);
 
   return sqrt (jitter / (number_of_samples - 1));
@@ -321,7 +336,6 @@ Client::get_low_priority_jitter (void)
   ACE_timer_t jitter = 0.0;
   ACE_timer_t average = get_low_priority_latency ();
   ACE_timer_t number_of_samples = 0;
-  //(this->ts_->thread_count_ - 1) * (this->ts_->loop_count_ / this->ts_->granularity_);
 
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
@@ -330,14 +344,21 @@ Client::get_low_priority_jitter (void)
 
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
-  for (u_int j = 1; j < this->ts_->thread_count_; j ++)
+  for (u_int j = 1;
+       j < this->ts_->thread_count_;
+       j++)
     {
       number_of_samples += this->ts_->count_[j];
-      for (u_int i = 0; i < this->ts_->count_[j] / this->ts_->granularity_; i ++)
+
+      for (u_int i = 0;
+           i < this->ts_->count_[j] / this->ts_->granularity_;
+           i ++)
         {
           ACE_timer_t difference =
             this->ts_->global_jitter_array_[j][i] - average;
+
           jitter += difference * difference;
+
           stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [j][i] * 1000 + 0.5));
         }
     }
@@ -366,11 +387,16 @@ Client::get_jitter (u_int id)
 
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
-  for (u_int i = 0; i < this->ts_->count_[id] / this->ts_->granularity_; i ++)
+
+  for (u_int i = 0;
+       i < this->ts_->count_[id] / this->ts_->granularity_;
+       i ++)
     {
       ACE_timer_t difference =
         this->ts_->global_jitter_array_[id][i] - average;
+
       jitter += difference * difference;
+
       stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [id][i] * 1000 + 0.5));
     }
 
@@ -394,10 +420,11 @@ Client::svc (void)
 
   ACE_timer_t frequency = 0.0;
 
-  ACE_DEBUG ((LM_DEBUG, "I'm thread %t\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "I'm thread %t\n"));
 
-  /// Add "-ORBobjrefstyle url" argument to the argv vector for the
-  //orb to / use a URL style to represent the ior.
+  // Add "-ORBobjrefstyle url" argument to the argv vector for the orb
+  // to / use a URL style to represent the ior.
 
   // Convert the argv vector into a string.
   ACE_ARGV tmp_args (this->ts_->argv_);
@@ -405,19 +432,18 @@ Client::svc (void)
 
   ACE_OS::strcpy (tmp_buf,
                   tmp_args.buf ());
-
   // Add the argument.
   ACE_OS::strcat (tmp_buf,
                   " -ORBobjrefstyle url "
                   " -ORBrcvsock 32768 "
                   " -ORBsndsock 32768 ");
 
-  ACE_DEBUG ((LM_DEBUG, tmp_buf));
+  ACE_DEBUG ((LM_DEBUG,
+              tmp_buf));
 
   // Convert back to argv vector style.
   ACE_ARGV tmp_args2 (tmp_buf);
   int argc = tmp_args2.argc ();
-
   char **argv = tmp_args2.argv ();
 
   u_int naming_success = 0;
@@ -426,8 +452,6 @@ Client::svc (void)
                          argv,
                          "internet",
                          env);
-
-  
   if (env.exception () != 0)
     {
       env.print_exception ("ORB_init()\n");
@@ -441,7 +465,6 @@ Client::svc (void)
 
       int result = this->ts_->parse_args (argc,
 					  argv);
-
       if (result < 0)
         return -1;
 
@@ -459,7 +482,7 @@ Client::svc (void)
 
   if (this->ts_->use_name_service_ != 0)
     {
-      // Initialize the naming services
+      // Initialize the naming services.
       if (my_name_client_.init (orb.in (), argc, argv) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
@@ -467,10 +490,7 @@ Client::svc (void)
                           -1);
     }
   {
-    //    ACE_DEBUG ((LM_DEBUG,"(%t) Not using Naming service\n"));
-
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->ts_->lock_, -1));
-
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) Out of ACE_MT\n"));
 
@@ -581,8 +601,9 @@ Client::svc (void)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             " (%t) resolve() returned nil\n"));
-                TAO_TRY_ENV.print_exception ("Attempt to resolve() a cubit object"
-                                             "using the name service Failed!\n");
+                TAO_TRY_ENV.print_exception 
+                  ("Attempt to resolve() a cubit object"
+                   "using the name service Failed!\n");
               }
             else
               {
@@ -602,7 +623,8 @@ Client::svc (void)
 
             // If we are running the "1 to n" test make sure all low
             // priority clients use only 1 low priority servant.
-            if (this->id_ > 0 && this->ts_->one_to_n_test_ == 1)
+            if (this->id_ > 0 
+                && this->ts_->one_to_n_test_ == 1)
               my_ior = this->ts_->iors_[1];
 
             if (my_ior == 0)
@@ -610,14 +632,14 @@ Client::svc (void)
                                  "Must specify valid factory ior key with -k option,"
                                  " naming service, or ior filename\n"),
                                 -1);
-
             ACE_DEBUG ((LM_DEBUG,
 			"(%P|%t) The ior I'm using is: \"%s\"\n",
 			my_ior));
 
-            // if we are running the "1 to n" test make sure all low
+            // If we are running the "1 to n" test make sure all low
             // priority clients use only 1 low priority servant.
-            if (this->id_ > 0 && this->ts_->one_to_n_test_ == 1)
+            if (this->id_ > 0 
+                && this->ts_->one_to_n_test_ == 1)
               my_ior = this->ts_->iors_[1];
 
             if (my_ior == 0)
@@ -625,7 +647,6 @@ Client::svc (void)
                                  "Must specify valid factory ior key with -k option,"
                                  " naming service, or ior filename\n"),
                                 -1);
-
             objref = orb->string_to_object (my_ior,
                                             TAO_TRY_ENV);
             ACE_DEBUG ((LM_DEBUG,
@@ -641,7 +662,7 @@ Client::svc (void)
         // Narrow the CORBA::Object reference to the stub object,
         // checking the type along the way using _is_a.
         this->cubit_ = Cubit::_narrow (objref.in (),
-                             TAO_TRY_ENV);
+                                       TAO_TRY_ENV);
         TAO_CHECK_ENV;
 
         ACE_DEBUG ((LM_DEBUG,
@@ -706,6 +727,7 @@ Client::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) CALLING SHUTDOWN() ON THE SERVANT\n"));
       this->cubit_->shutdown (env);
+
       if (env.exception () != 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -732,20 +754,23 @@ Client::cube_octet (void)
       START_QUANTIFY;
 
       if (this->ts_->remote_invocations_ == 1)
-        ret_octet = this->cubit_->cube_octet (arg_octet, TAO_TRY_ENV);
+        ret_octet = this->cubit_->cube_octet (arg_octet,
+                                              TAO_TRY_ENV);
       else
-        ret_octet = this->cubit_impl_->cube_octet (arg_octet, TAO_TRY_ENV);
+        ret_octet = this->cubit_impl_->cube_octet (arg_octet,
+                                                   TAO_TRY_ENV);
 
       STOP_QUANTIFY;
       TAO_CHECK_ENV;
 
+      // Perform the cube operation.
       arg_octet = arg_octet * arg_octet * arg_octet;
 
       if (arg_octet != ret_octet)
         {
           this->error_count_++;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "** cube_octet(%d)  (--> %d)\n",
+                             "** cube_octet (%d) (--> %d)\n",
                              arg_octet,
                              ret_octet),
                             -1);
@@ -756,7 +781,7 @@ Client::cube_octet (void)
     {
       TAO_TRY_ENV.print_exception ("call to cube_octet()\n");
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%s:Call failed\n",
+                         "%s: Call failed\n",
                          TAO_TRY_ENV.exception ()),
                         -1);
     }
@@ -775,9 +800,8 @@ Client::cube_short (void)
       CORBA::Short ret_short;
 
       START_QUANTIFY;
-
-      ret_short = this->cubit_->cube_short (arg_short, TAO_TRY_ENV);
-
+      ret_short = this->cubit_->cube_short (arg_short,
+                                            TAO_TRY_ENV);
       STOP_QUANTIFY;
       TAO_CHECK_ENV;
       arg_short = arg_short * arg_short * arg_short;
@@ -786,7 +810,7 @@ Client::cube_short (void)
         {
           this->error_count_++;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "** cube_short(%d)  (--> %d)\n",
+                             "** cube_short (%d) (--> %d)\n",
                              arg_short ,
                              ret_short),
                             -1);
@@ -796,7 +820,7 @@ Client::cube_short (void)
     {
       TAO_TRY_ENV.print_exception ("call to cube_short\n");
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%s:Call failed\n",
+                         "%s: Call failed\n",
                          TAO_TRY_ENV.exception ()),
                         -1);
     }
@@ -815,18 +839,18 @@ Client::cube_long (void)
       CORBA::Long ret_long;
 
       START_QUANTIFY;
-
-      ret_long = this->cubit_->cube_long (arg_long, TAO_TRY_ENV);
-
+      ret_long = this->cubit_->cube_long (arg_long,
+                                          TAO_TRY_ENV);
       STOP_QUANTIFY;
       TAO_CHECK_ENV;
+
       arg_long = arg_long * arg_long * arg_long;
 
       if (arg_long != ret_long)
         {
           this->error_count_++;
           ACE_ERROR ((LM_ERROR,
-                      "** cube_long(%d)  (--> %d)\n",
+                      "** cube_long (%d) (--> %d)\n",
                       arg_long,
                       ret_long));
         }
@@ -835,7 +859,7 @@ Client::cube_long (void)
     {
       TAO_TRY_ENV.print_exception ("call to cube_long()\n");
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%s:Call failed\n",
+                         "%s: Call failed\n",
                          TAO_TRY_ENV.exception ()),
                         -1);
     }
@@ -858,11 +882,11 @@ Client::cube_struct (void)
       arg_struct.o = func (this->num_);
 
       START_QUANTIFY;
-
-      ret_struct = this->cubit_->cube_struct (arg_struct, TAO_TRY_ENV);
-
+      ret_struct = this->cubit_->cube_struct (arg_struct,
+                                              TAO_TRY_ENV);
       STOP_QUANTIFY;
       TAO_CHECK_ENV;
+
       arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
       arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
       arg_struct.o = arg_struct.o  * arg_struct.o  * arg_struct.o ;
@@ -872,13 +896,17 @@ Client::cube_struct (void)
           || arg_struct.o  != ret_struct.o )
         {
           this->error_count_++;
-          ACE_ERROR ((LM_ERROR, "**cube_struct error!\n"));
+          ACE_ERROR ((LM_ERROR,
+                      "**cube_struct error!\n"));
         }
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("call to cube_struct()\n");
-      ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", TAO_TRY_ENV.exception ()), -1);
+      TAO_TRY_ENV.print_exception 
+        ("call to cube_struct()\n");
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s: Call failed\n", TAO_TRY_ENV.exception ()),
+                        -1);
     }
   TAO_ENDTRY;
   return 0;
@@ -935,7 +963,6 @@ Client::make_calls (void)
         }
       TAO_ENDTRY;
     }
-
   // return success.
   return 0;
 }
@@ -947,6 +974,8 @@ Client::run_tests (Cubit_ptr cb,
                    Cubit_Datatypes datatype,
                    ACE_timer_t frequency)
 {
+  // @@ Naga, can you please try to factor out code to reduce the size
+  // of this method?!
   int result;
   CORBA::Environment env;
   u_int i = 0;
@@ -955,8 +984,9 @@ Client::run_tests (Cubit_ptr cb,
 
   this->cubit_ = cb;
 
-  if (id_ == 0 && this->ts_->thread_count_ > 1)
-    // @@ Naga, can you please generalize this magic number?
+  if (id_ == 0 
+      && this->ts_->thread_count_ > 1)
+    // @@ Naga, can you please generalize these magic numbers?
     ACE_NEW_RETURN (my_jitter_array,
                     ACE_timer_t [(loop_count/this->ts_->granularity_) * 30],
                     -1);
@@ -964,9 +994,9 @@ Client::run_tests (Cubit_ptr cb,
     ACE_NEW_RETURN (my_jitter_array,
                     ACE_timer_t [loop_count/this->ts_->granularity_ * 15],
                     -1);
-
   ACE_timer_t latency = 0;
-  ACE_timer_t sleep_time = (1 / frequency) * ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_; // usec
+  ACE_timer_t sleep_time = // usec
+    (1 / frequency) * ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_; 
   ACE_timer_t delta = 0;
 
   // Time to wait for utilization tests to know when to stop.
@@ -985,16 +1015,17 @@ Client::run_tests (Cubit_ptr cb,
 
   for (i = 0;
        // keep running for loop count, OR
-       i < loop_count ||
-         // keep running if we are the highest priority thread and at
-         // least another lower client thread is running, OR
-         (id_ == 0 && this->ts_->thread_count_ > 1) ||
-         // keep running if test is thread_per_rate and we're not the
-         // lowest frequency thread.
-         (this->ts_->thread_per_rate_ == 1 && id_ < (this->ts_->thread_count_ - 1));
+       i < loop_count 
+       // keep running if we are the highest priority thread and at
+       // least another lower client thread is running, OR
+       || (id_ == 0 && this->ts_->thread_count_ > 1) 
+       // keep running if test is thread_per_rate and we're not the
+       // lowest frequency thread.
+       || (this->ts_->thread_per_rate_ == 1 
+           && id_ < (this->ts_->thread_count_ - 1));
        i++)
     {
-      // start timing a call
+      // Start timing a call.
       if ((i % this->ts_->granularity_) == 0 &&
            this->ts_->use_utilization_test_ == 0)
         {
@@ -1015,20 +1046,27 @@ Client::run_tests (Cubit_ptr cb,
         return 2;
 
       // Stop the timer.
-      if ( (i % this->ts_->granularity_) == this->ts_->granularity_ - 1 &&
-           this->ts_->use_utilization_test_ == 0)
+      if ((i % this->ts_->granularity_) == this->ts_->granularity_ - 1 
+          && this->ts_->use_utilization_test_ == 0)
         {
           timer.stop ();
+
           // Calculate time elapsed.
           ACE_timer_t real_time;
           real_time = timer.get_elapsed ();
-          delta = (ACE_timer_t) 40 *fabs (TIME_IN_MICROSEC(real_time))
-            / (ACE_timer_t) 100 + (ACE_timer_t) 60 *delta/ 100;
+
+          // @@ Naga, can you please explain this computation?!
+          delta = 
+            (ACE_timer_t) 40 * fabs (TIME_IN_MICROSEC (real_time))
+            / (ACE_timer_t) 100 + (ACE_timer_t) 60 * delta/ 100;
+
           latency += real_time * this->ts_->granularity_;
+
           my_jitter_array [i/this->ts_->granularity_] =
             TIME_IN_MICROSEC (real_time);
         } 
-      if ( this->ts_->thread_per_rate_ == 1 && id_ < (this->ts_->thread_count_ - 1) )
+      if (this->ts_->thread_per_rate_ == 1 
+          && id_ < (this->ts_->thread_count_ - 1))
         {
           if (this->ts_->semaphore_->tryacquire () != -1)
             break;
@@ -1037,12 +1075,13 @@ Client::run_tests (Cubit_ptr cb,
         // if We are the high priority client.
         // if tryacquire() succeeded then a client must have done a
         // release () on it, thus we decrement the client counter.
-        if (id_ == 0 && this->ts_->thread_count_ > 1)
+        if (id_ == 0 
+            && this->ts_->thread_count_ > 1)
           {
             if (this->ts_->semaphore_->tryacquire () != -1)
               {
                 low_priority_client_count --;
-                // if all clients are done then break out of loop.
+                // If all clients are done then break out of loop.
                 if (low_priority_client_count <= 0)
                   break;
               }
@@ -1051,24 +1090,28 @@ Client::run_tests (Cubit_ptr cb,
     } /* end of for () */
 
   if (id_ == 0)
-    this->ts_->high_priority_loop_count_ = this->call_count_;
+    this->ts_->high_priority_loop_count_ =
+      this->call_count_;
 
   if (this->ts_->use_utilization_test_ == 1)
     {
       timer.stop ();
-      ACE_timer_t util_time= timer.get_elapsed ();
+      ACE_timer_t util_time = timer.get_elapsed ();
       this->ts_->util_test_time_ = util_time;
     }
 
   // Perform latency stats only if we are not running the utilization
   // tests.
-  if (this->call_count_ > 0 &&
-      this->ts_->use_utilization_test_ == 0)
+  if (this->call_count_ > 0 
+      && this->ts_->use_utilization_test_ == 0)
     {
       if (this->error_count_ == 0)
         {
-          ACE_timer_t calls_per_second = (TIME_IN_MICROSEC (this->call_count_)) / latency;
-          latency = latency/this->call_count_;//calc average latency
+          ACE_timer_t calls_per_second =
+            TIME_IN_MICROSEC (this->call_count_) / latency;
+
+          // Calculate average latency.
+          latency = latency/this->call_count_;
 
           if (latency > 0)
             {
@@ -1077,7 +1120,6 @@ Client::run_tests (Cubit_ptr cb,
                           "%A calls/second\n",
                           latency,
                           calls_per_second));
-
               this->put_latency (my_jitter_array,
                                  TIME_IN_MICROSEC (latency),
                                  thread_id,
@@ -1085,7 +1127,8 @@ Client::run_tests (Cubit_ptr cb,
             }
           else
             {
-              // still we have to call this function to store a valid array pointer.
+              // Still we have to call this function to store a valid
+              // array pointer.
               this->put_latency (my_jitter_array,
                                  0,
                                  thread_id,
@@ -1104,6 +1147,7 @@ Client::run_tests (Cubit_ptr cb,
 
   // Delete the dynamically allocated memory
   delete [] my_jitter_array;
+
   return 0;
 }
 

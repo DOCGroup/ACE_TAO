@@ -1,7 +1,5 @@
+/* -*- C++ -*- */
 /* $Id$ */
-
-/* _*_C++_*_ */
-
 
 #if !defined (_MT_CUBIT_TIMER_H)
 #define _MT_CUBIT_TIMER_H
@@ -15,9 +13,12 @@ class MT_Cubit_Timer
   //     ACE Timer for other platforms.
 public:
   MT_Cubit_Timer (u_int granularity);
+
   void start (void);
   void stop (void);
+
   ACE_timer_t get_elapsed (void);
+
 private:
   ACE_High_Res_Timer timer_;
   // timer.
@@ -26,15 +27,15 @@ private:
   // Elapsed time in microseconds.
   
   u_int granularity_;
-  // this is the granularity of the timing of the CORBA requests. A
+  // This is the granularity of the timing of the CORBA requests. A
   // value of 5 represents that we will take time every 5 requests,
   // instead of the default of every request (1).
 
 #if defined (CHORUS)
+  // Variables for the pccTimer.
   int pstartTime_;
   int pstopTime_;
-  // variables for the pccTimer.
-#endif
+#endif /* CHORUS */
 };
 
-#endif
+#endif /* _MT_CUBIT_TIMER_H */
