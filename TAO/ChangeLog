@@ -1,3 +1,12 @@
+Wed May  7 08:08:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/OBV/Typed_Events/client.bor:
+        * examples/OBV/Typed_Events/server.bor:
+          Fixed these BCB makefiles
+
+        * examples/OBV/Typed_Events/Typed_Events.mpc:
+          Removed obsolote TAO_IDL cflag -Gv
+
 Wed May  7 07:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
