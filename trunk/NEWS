@@ -6,7 +6,7 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.3
 
 - (Boris) Addition of XSC
 
-- (Steve, Ossama) Autoconfigure using all MPC-generated files.
+- (Steve, J.T., Ossama) Autoconfigure using all MPC-generated files.
 
 - (Steve) Wide-char functionality on POSIX (Linux, etc.)
 

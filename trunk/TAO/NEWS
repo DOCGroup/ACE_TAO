@@ -6,11 +6,17 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (Johnny/Ossama) Location Forwarding fixes
 
-- (Ossama) Typecode refactoring fixes
+- (Ossama) Typecode overhaul
+
+  . ONGOING - ETA 8/31
 
 - (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
 
+  . ONGOING - ETA 9/26
+
 - (Ossama/Jeff) Skeleton refactoring
+
+  . TO BE STARTED - 9/1
 
 - (Johnny/Ossama) POA refactoring/modularization
 
@@ -39,16 +45,16 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
   Dale Wilson will do this week of 8/30.
 
 
-USER VISIBLE CHANGES THAT WILL BE VISIBLE BETWEEN TAO-1.4.2 and TAO-1.4.3
+USER VISIBLE CHANGES BETWEEN TAO-1.4.2 and TAO-1.4.3
 ====================================================
 
 . ORB
   - Bug 1476-SyncScope::NONE blocks during connects
 
 . POA
-  - The PortableServer library isn't depended anymore on the ObjRefTemplate
-    and IORInterceptor libraries. ObjRefTemplate and IORInterceptor are loaded
-    on demand and are dependend on PortableServer.
+  - The PortableServer library isn't depended anymore on the
+    ObjRefTemplate and IORInterceptor libraries.  ObjRefTemplate and
+    IORInterceptor are loaded on demand and depend on PortableServer.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.1 and TAO-1.4.2
 ====================================================
