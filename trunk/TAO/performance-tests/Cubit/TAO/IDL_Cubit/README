@@ -5,12 +5,6 @@ skeletons.  You can either run the server in the background in the
 same window as the client or open a separate window for the client and
 server.
 
-By default, the client and server use the Naming Service.  The cubit
-server has its own NamingServer implementation.  Therefore, you don't
-have to start the NamingService before starting the client and server.
-Likewise, you can use the -s flags on both the server and client if
-you don't want to use the naming service.
-
 The collocation_test demonstrates how the performance improves when
 objects are collocated.  The test runs both server and client in
 different threads.  To run it, simply run collocation_test.  It
@@ -19,6 +13,12 @@ not way to specify command line arguments for the server side at this
 moment.  This may be changed in the future.  At this moment, the
 collocation_test must use Naming_Service to resolve object
 references.  This may be changed later, also.
+
+NOTES: The IDL_Cubit server used to run a Naming Service so the client
+        could easily locate it.  This proved too problematic, the test
+        required a complete compilation of the orbsvcs library and was
+        not reliable. The preferred method is to use a file to pass
+        the factory IOR between the server and the client.
 
 server:
 -------
@@ -106,7 +106,7 @@ Sample Run-Using files to communicate IOR:
 
 1. Start the server.
 
-% server -s -ORBport 20000 -ORBobjrefstyle url -o theior
+% server -ORBport 20000 -ORBobjrefstyle url -o theior
 
         IDL_Cubit:SERVER
 
@@ -114,7 +114,7 @@ The IOR is: <iiop:1.0//tango:20000/Persistent/887665222/647179/RootPOA/RootPOA_i
 
 2. Start the client.
 
-%client -s -ORBport 19998 -f theior
+%client -ORBport 19998 -f theior
 
          IDL_Cubit: client
 
