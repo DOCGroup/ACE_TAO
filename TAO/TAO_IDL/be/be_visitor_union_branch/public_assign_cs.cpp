@@ -360,7 +360,8 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (be_predefined_t
         }
       else
         {
-          *os << bt->name () << "::_duplicate (u.u_."
+          *os << "this->u_." << ub->local_name () << "_ = "
+              << bt->name () << "::_duplicate (u.u_."
               << ub->local_name () << "_);" << be_uidt_nl;
         }
       break;
