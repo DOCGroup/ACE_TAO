@@ -91,11 +91,13 @@ ACE_Allocator::instance (void)
           static void *allocator_instance = 0;
 
           // Check this critical assumption.
-	  // We put it in a variable first to avoid stupid compiler
-	  // warnings that the condition may always be true/false.
+          // We put it in a variable first to avoid stupid compiler
+          // warnings that the condition may always be true/false.
+#         if !defined (ACE_NDEBUG)
           int assertion = (sizeof allocator_instance ==
-			   sizeof (ACE_New_Allocator));
+                           sizeof (ACE_New_Allocator));
           ACE_ASSERT (assertion);
+#         endif /* !ACE_NDEBUG */
 
           // Initialize the allocator_instance by using a placement
           // new.  The ACE_NEW_RETURN below doesn't actually allocate
