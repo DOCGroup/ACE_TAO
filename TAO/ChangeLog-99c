@@ -1,3 +1,8 @@
+Thu Aug  5 17:19:43 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Xt_Stopwatch/README: Updated the file to add some info
+	  about the svc.conf file and the resources that needs to be set.
+
 Thu Aug  5 16:36:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Benchmark/benchmark/Makefile:
