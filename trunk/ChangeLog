@@ -1,3 +1,15 @@
+Fri Aug 22 15:28:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ACE.mwc:
+          Added CVS keyword $Id$.
+
+        * apps/JAWS/server/server.mpc:
+        * netsvcs/clients/Naming/Client/Client.mpc:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.mpc:
+        * netsvcs/servers/servers.mpc:
+          Modified project names to keep MSVC happy--it can't deal with
+          duplicate names.
+
 Wed Aug 20 06:59:52 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/VC6WorkspaceCreator.pm:

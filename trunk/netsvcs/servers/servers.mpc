@@ -1,4 +1,4 @@
-project(main) : aceexe {
+project(Netsvcs_server) : aceexe {
   exename = main
   libs    += netsvcs
   after   += netsvcs
