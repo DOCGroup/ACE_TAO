@@ -1,3 +1,14 @@
+Fri Jul  2 12:06:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	* tao/Typecode_Constants.cpp:
+	* tests/InterOp-Naming/INS_test_client.cpp:
+	* tests/InterOp-Naming/run_test.pl:
+	  The CORBA::ORB::InvalidName exception was broken and crashed the 
+	  application if raised. Thanks to Eugene Surovegin
+	  <ebs@glasnet.ru> for pointing out this problem.
+
 Fri Jul  2 11:13:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IORC.i:
