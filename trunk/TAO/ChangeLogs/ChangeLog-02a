@@ -1,3 +1,14 @@
+Mon Feb 14 18:13:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/ast_module.h:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/util/utl_scope.cpp:
+	  Extension of fix below that doesn't depend on order
+	  of events inside AST_Module constructor body. Also
+	  removes static variable declared inside AST_Module
+	  constructor body.
+
 Mon Feb 14 13:01:53 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:
