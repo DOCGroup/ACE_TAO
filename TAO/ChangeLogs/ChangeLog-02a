@@ -1,3 +1,24 @@
+Sat Sep 29 18:07:55 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Endpoint.i (object_addr):
+
+	  Use the double-checked locking optimization to remove a lock
+	  from the critical path.  The lock will only be acquired/released
+	  once instead per initialization of the IIOP_Endpoint instead of
+	  once per invocation of this method.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (object_addr):
+
+	  Removed erroneous comment about deadlocking due to acquiring a
+	  lock in this method.  The underlying IIOP_Endpoint and the
+	  SSLIOP_Endpoint each have their own lock instance.  No deadlock
+	  will occur.
+
+	  Acquire a lock before setting the port number in the
+	  SSLIOP_Endpoint.  Double checked locking is used to prevent the
+	  lock from being acquired during each invocation.  Fixes a race
+	  condition.  [Bug 943]
+
 Sat Sep 29 14:06:30 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/MT_SSLIOP/MT_SSLIOP.dsw:
