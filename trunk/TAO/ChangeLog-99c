@@ -1,3 +1,11 @@
+Tue Jun 29 21:59:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO/orbsvcs/Time_Service/Clerk_i.cpp:
+	* TAO/orbsvcs/Time_Service/Server_i.cpp:
+	* TAO/orbsvcs/Time_Service/Time_Service_Clerk.cpp:
+	* TAO/orbsvcs/Time_Service/Time_Service_Server.cpp:
+	  Fixed more exception handling problems.
+
 Tue Jun 29 21:26:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* performance-tests/Pluggable/PP_Test_Server.cpp (run): Removed
