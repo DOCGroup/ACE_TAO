@@ -111,7 +111,7 @@ public:
   // Barrier for the multiple clients to synchronize after binding to
   // the servants.
 
-  CORBA::String key_;
+  const char *key_;
   // All cubit objects will have this as prefix to its key.
 
   u_int loop_count_;
