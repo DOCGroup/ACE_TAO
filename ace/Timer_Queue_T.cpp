@@ -32,13 +32,13 @@ ACE_Timer_Node_T<TYPE>::ACE_Timer_Node_T (void)
   ACE_TRACE ("ACE_Timer_Node_T::ACE_Timer_Node_T");
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> 
-ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Queue_Iterator_T (void)
+template <class TYPE, class FUNCTOR, class ACE_LOCK> 
+ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_Iterator_T (void)
 {
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> 
-ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_Queue_Iterator_T (void)
+template <class TYPE, class FUNCTOR, class ACE_LOCK> 
+ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Queue_Iterator_T (void)
 {
 }
 
@@ -50,11 +50,11 @@ ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_Queue_Iterator_T (vo
 // Time_Value type stored in the Timer_Queue type itself.  If some
 // external lock isn't held we'll have reentrancy problems!
 
-template <class TYPE, class FUNCTOR, class LOCK> ACE_Time_Value *
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_wait_time)
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Time_Value *
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::calculate_timeout");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, max_wait_time));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, max_wait_time));
   
   if (this->is_empty ())
     // Nothing on the Timer_Queue, so use whatever the caller gave us.
@@ -87,8 +87,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_w
     }
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> ACE_Time_Value *
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_wait_time,
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Time_Value *
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *max_wait_time,
 							   ACE_Time_Value *the_timeout)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::calculate_timeout");
@@ -130,8 +130,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_w
   return the_timeout;
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> void
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::dump (void) const
+template <class TYPE, class FUNCTOR, class ACE_LOCK> void
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 {
   ACE_TRACE ("ACE_Timer_Queue_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -140,8 +140,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> 
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Queue_T (FUNCTOR *upcall_functor, 
+template <class TYPE, class FUNCTOR, class ACE_LOCK> 
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_T (FUNCTOR *upcall_functor, 
                                                            ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : free_list_ (freelist == 0 ? new ACE_Locked_Free_List<ACE_Timer_Node_T <TYPE>, ACE_Null_Mutex> : freelist),
     gettimeofday_ (ACE_OS::gettimeofday),
@@ -153,8 +153,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Queue_T (FUNCTOR *upcall_funct
   ACE_TRACE ("ACE_Timer_Queue_T::ACE_Timer_Queue_T");
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> 
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_Queue_T (void)
+template <class TYPE, class FUNCTOR, class ACE_LOCK> 
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Queue_T (void)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::~ACE_Timer_Queue_T");
 
@@ -166,14 +166,14 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_Queue_T (void)
     delete this->free_list_;
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::alloc_node (void)
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Timer_Node_T<TYPE> *
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::alloc_node (void)
 {
   return this->free_list_->remove ();
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> void 
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::free_node (ACE_Timer_Node_T<TYPE> *node)
+template <class TYPE, class FUNCTOR, class ACE_LOCK> void 
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::free_node (ACE_Timer_Node_T<TYPE> *node)
 {
   this->free_list_->add (node);
 }
@@ -181,11 +181,11 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::free_node (ACE_Timer_Node_T<TYPE> *node)
 // Run the <handle_timeout> method for all Timers whose values are <=
 // <cur_time>.
 
-template <class TYPE, class FUNCTOR, class LOCK> int
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::expire (const ACE_Time_Value &cur_time)
+template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_time)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::expire");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   int number_of_timers_expired = 0;
 
@@ -235,10 +235,10 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::expire (const ACE_Time_Value &cur_time)
   return number_of_timers_expired;
 }
 
-template <class LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *, 
-                                                                          ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
-                                                                          LOCK> &timer_queue,
+template <class ACE_LOCK> int
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *, 
+                                                                          ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>, 
+                                                                          ACE_LOCK> &timer_queue,
                                                         ACE_Event_Handler *handler,
                                                         const void *act,
                                                         const ACE_Time_Value &cur_time)
@@ -250,10 +250,10 @@ ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::timeout (ACE_Timer_Queue_T<ACE_Ev
   return 0;
 }
 
-template <class LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::cancellation (ACE_Timer_Queue_T<ACE_Event_Handler *, 
-                                                                               ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
-                                                                               LOCK> &timer_queue,
+template <class ACE_LOCK> int
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::cancellation (ACE_Timer_Queue_T<ACE_Event_Handler *, 
+                                                                               ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>, 
+                                                                               ACE_LOCK> &timer_queue,
                                                              ACE_Event_Handler *handler)
 {
   ACE_UNUSED_ARG (timer_queue);
@@ -264,10 +264,10 @@ ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::cancellation (ACE_Timer_Queue_T<A
   return 0;
 }
 
-template <class LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::deletion (ACE_Timer_Queue_T<ACE_Event_Handler *, 
-                                                                           ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
-                                                                           LOCK> &timer_queue,
+template <class ACE_LOCK> int
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::deletion (ACE_Timer_Queue_T<ACE_Event_Handler *, 
+                                                                           ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>, 
+                                                                           ACE_LOCK> &timer_queue,
                                                          ACE_Event_Handler *handler,
                                                          const void *arg)
 {
