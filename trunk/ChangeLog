@@ -1,3 +1,10 @@
+Sat Apr 22 22:01:15 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Naming_Context.cpp:
+          
+          Fixed some wchar related changes.
+
 Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
           This is my first checkin of my Unicode changes.  They should be
