@@ -1,3 +1,8 @@
+Wed Jul  2 14:59:29 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* HTTP_Helpers.cpp (HTTP_decode_string): Added cast from strtol to
+ 	  char explicitly to prevent NT from complaining.
+
 Wed Jul  2 14:33:27 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* JAWS_File.{h.cpp}: Modifications to support RW_MUTEX for both
