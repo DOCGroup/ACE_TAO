@@ -48,6 +48,7 @@ fi
 IFS="|"
 tmp=/tmp
 compilation_log="log/compilations.log"
+shlib_suffix=".so"
 LD_LIBRARY_PATH=$ACE_ROOT/ace:${LD_LIBRARY_PATH:-/usr/lib}
 export LD_LIBRARY_PATH
 
@@ -58,6 +59,7 @@ sysname=`uname -s 2>&1`
 if [ $sysname = 'HP-UX' ]; then
   SHLIB_PATH=$ACE_ROOT/ace:${SHLIB_PATH:-/usr/lib}
   export SHLIB_PATH
+  shlib_suffix=".sl"
 fi
 
 if [ $sysname = 'AIX' ]; then
@@ -155,7 +157,7 @@ OTHER=`echo $ACE_BUILD_COMPONENTS | egrep ' Other '`
 TOKEN=`echo $ACE_BUILD_COMPONENTS | egrep ' Token '`
 
 libDLL_Test=
-if [ -f libDLL_Test.so ]; then
+if [ -f libDLL_Test$shlib_suffix ]; then
   libDLL_Test=1
 fi
 
