@@ -179,6 +179,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -371,6 +372,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -459,8 +461,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
@@ -507,6 +511,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -662,8 +667,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
@@ -709,6 +716,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -891,6 +899,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1045,6 +1054,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1159,7 +1169,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i testC.h \
+ $(TAO_ROOT)/tao/LocalObject.i testS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1188,7 +1203,24 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i testC.i
+ $(TAO_ROOT)/tao/ObjectIDList.i testC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ testS_T.h testS_T.i testS_T.cpp testS.i
 
 .obj/FOO_IORInterceptor_ORBInitializer.o .obj/FOO_IORInterceptor_ORBInitializer.so .shobj/FOO_IORInterceptor_ORBInitializer.o .shobj/FOO_IORInterceptor_ORBInitializer.so: \
  FOO_IORInterceptor_ORBInitializer.cpp \
@@ -1229,6 +1261,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1381,6 +1414,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1676,6 +1710,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1831,8 +1866,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \

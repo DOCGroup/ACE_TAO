@@ -41,11 +41,14 @@
  * side to ensure that IOR interceptor support is functioning
  * properly.
  */
-class FOO_IORInterceptor :
-  public virtual PortableInterceptor::IORInterceptor,
-  public virtual TAO_Local_RefCounted_Object
+class FOO_IORInterceptor
+  : public virtual PortableInterceptor::IORInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
 public:
+
+  /// Constructor
+  FOO_IORInterceptor (IOP::Codec_ptr codec);
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -91,6 +94,13 @@ public:
     ));
 
   //@}
+
+private:
+
+  /// The CDR encapsulation coder/decoder used to encapsulate data
+  /// into a CDR encapsulation.
+  IOP::Codec_var codec_;
+
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -1,3 +1,45 @@
+Sun Sep 15 11:56:58 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Codec/client.cpp (main):
+
+	  Verify that extraction of data from the Any succeeded.
+
+	  Cleaned up debugging output.
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.h:
+
+	  Added new IOP::Codec member that will be used when decoding data
+	  from the object reference's TaggedComponent.
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.cpp (send_request):
+
+	  Use a CDR encapsulation Codec to better demonstrate the
+	  standard/portable way to retrieve data from a TaggedComponent.
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
+
+	  Added new IOP::Codec member that will be used when encoding data
+	  into the object reference's TaggedComponent.
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp (establish_components):
+
+	  Use a CDR encapsulation Codec to better demonstrate the
+	  standard/portable way to embed data into a TaggedComponent.  The
+	  previous code used memcpy() on a string.
+
+	  Verify that IORInfo::add_ior_component_to_profile() also works.
+	  Previously, only add_ior_component() was tested.
+
+	  Verify that IORInfo::get_effective_policy() works.  This check
+	  was missing.  Thanks to Christoph Liebig <xfrog2000@yahoo.com>
+	  providing the code.
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_Client_ORBInitializer.cpp (post_init):
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor_ORBInitializer.cpp (post_init):
+
+	  Create a GIOP 1.2 CDR encapsulation Codec to be used by the
+	  interceptors created by each of these ORBInitializers.
+
 Sun Sep 15 09:38:42 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor:
@@ -515,13 +557,13 @@ Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  another to do the reverse conversion.
 
 	We have a new class Repository_Configuration which acts like a
- 	wrap around over 	
+ 	wrap around over
 
-	  
+
 	* orbsvcs/ImplRepo_Service/README:
 	  Updated to describe the new ImR, future work and also a section
 	  on how to transit from the old IMR to the present one.
-		  
+
 	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
 	* orbsvcs/ImplRepo_Service/tao_imr_i.h:
 	  Since now the ImplementationRepository::Administration's work is
@@ -538,10 +580,10 @@ Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  cosmetic changes.
 
 
-	* orbsvcs/tests/ImplRepo/locked/run_test.pl: 
-	* orbsvcs/tests/ImplRepo/run_test.pl: 
+	* orbsvcs/tests/ImplRepo/locked/run_test.pl:
+	* orbsvcs/tests/ImplRepo/run_test.pl:
 	  Updated to get the tests running with the new ImR.
-	
+
 Wed Sep  4 10:44:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/ObjectReferenceTemplate.h (poa):
@@ -579,12 +621,12 @@ Wed Sep  4 10:44:39 2002  Ossama Othman  <ossama@uci.edu>
 Wed Sep 04 09:43:45 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao/PortableInterceptorC.cpp (_create_policy): Fixed unused arg
-	  warning.	
+	  warning.
 
 Tue Sep 03 18:34:51 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tao/Messaging/TAO_Messaging_Static.dsp: Added the new files in
-	  to the workspace. 
+	  to the workspace.
 
 Tue Sep 03 19:26:44 2002  Irfan Pyarali  <irfan@oomworks.com>
 
@@ -621,7 +663,7 @@ Tue Sep 03 19:26:44 2002  Irfan Pyarali  <irfan@oomworks.com>
 Tue Sep  3 18:18:16 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tao/Messaging/Messaging_No_ImplC.h: Undefined TRANSPARENT, since
-	  some platforms (one of them being Win32) uses it for ioctl (). 
+	  some platforms (one of them being Win32) uses it for ioctl ().
 
 	* tao/Messaging/diffs/Messaging_No_Impl.diff: Updated the patch
 	  file to include the above change.
@@ -634,18 +676,18 @@ Tue Sep  3 23:00:35 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 Tue Sep 03 17:59:45 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tao/Messaging/TAO_Messaging.dsp: Added the new files in to the
-	  workspace. 
+	  workspace.
 
 Tue Sep  3 17:54:41 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tests/RTCORBA/Policies/Policies.cpp: Fixed a compile error in
-	  builds where native exceptions are disabled. 
+	  builds where native exceptions are disabled.
 
 Tue Sep  3 17:08:32 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	This check-in is aimed to help with the following 
+	This check-in is aimed to help with the following
 
-	- Reduce the TAO_HAS_SOME_POLICY madness 
+	- Reduce the TAO_HAS_SOME_POLICY madness
 	- Make the compiler do the work of linking in the pieces that it
 	  requires instead of putting the burden on the developers by
 	  these #define madness
@@ -653,31 +695,31 @@ Tue Sep  3 17:08:32 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	All the policies that are implemented in TAO are placed in
         seperate pidl files. The linker should link in only pieces that
         are required. More work is required to achieve that. This is just
-	a temporary check-in to facilitate stuff. 
+	a temporary check-in to facilitate stuff.
 
-	* tao/Messaging/Messaging_RT_Policy.pidl: 
+	* tao/Messaging/Messaging_RT_Policy.pidl:
 	* tao/Messaging/Messaging_SyncScope_Policy.pidl: These two files
-	  just house the RoundTrip and the SyncScope policies. 
-	
-	* tao/Messaging/Messaging_No_Impl.pidl: This file contains stuff
-	  that has not been implemented in TAO. 
-	
-	* tao/Messaging/Messaging.pidl: Broken up the contents of this
-	  file into multiple files described above. 
+	  just house the RoundTrip and the SyncScope policies.
 
-	* tao/Messaging/Messaging{C,S, S_T}.{h,cpp,i}: 
+	* tao/Messaging/Messaging_No_Impl.pidl: This file contains stuff
+	  that has not been implemented in TAO.
+
+	* tao/Messaging/Messaging.pidl: Broken up the contents of this
+	  file into multiple files described above.
+
+	* tao/Messaging/Messaging{C,S, S_T}.{h,cpp,i}:
 	* tao/Messaging/Messaging_RT_PolicyC.{h,cpp,i}:
 	* tao/Messaging/Messaging_SyncScope_PolicyC.{h,cpp,i}:
 	* tao/Messaging/Messaging_No_ImplC.{h,cpp,i}: The new generated
-	  code. 
+	  code.
 
 	* tao/Messaging/diffs/Messaging.diff:
 	* tao/Messaging/diff/Messaging_RT_Policy.diff:
 	* tao/Messaging/diff/Messaging_SyncScope_Policy.diff:
 	* tao/Messaging/diff/Messaging_No_Impl.diff: The diff files for
-	  the generated code. 
+	  the generated code.
 
-	* tao/Messaging/Makefile.bor: 
+	* tao/Messaging/Makefile.bor:
 	* tao/Messaging/Makefile: Added the new files.
 
 Tue Sep  3 14:48:55 2002  Ossama Othman  <ossama@uci.edu>
@@ -744,7 +786,7 @@ Mon Sep  2 16:20:08 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Mon Sep  2 09:09:30 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp (universal_time): 
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp (universal_time):
 	  Only call ACE_OS::gettimeofday() once, not twice, to avoid a
  	  skew.  Thanks to Jon Biggar <jon@floorboard.com> for reporting
  	  this.
@@ -769,22 +811,22 @@ Sat Aug 31 23:16:35 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  the recursive make on Makefile.tao fails.
 
 Sat Aug 31 16:06:42 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
-  
+
 	* tao/Messaging/Makefile: Reverted the change "Sat Aug 31 14:54:01
 	  2002  Balachandran Natarajan " since there is better way to do
 	  this.
 
 	* tao/Makefile.dirs: Make the Messaging directory to be
-	  conditionally compiled. 
-	
+	  conditionally compiled.
+
 Sat Aug 31 14:54:01 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tao/Adapter.cpp: #included debug.h
-	* tao/Messaging/Makefile: Do not compile if corba_messaging=0. 
-	 
+	* tao/Messaging/Makefile: Do not compile if corba_messaging=0.
+
 	  Thanks to Cemal Yilmaz <cyilmaz@cs.umd.edu> and the 'skoll'
 	  experiment for finding and reporting it. Apparently the error in
-	  tao/Adapter.cpp is being signalled by our scoreboard too. 
+	  tao/Adapter.cpp is being signalled by our scoreboard too.
 
 Sat Aug 31 15:59:07 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -797,17 +839,17 @@ Sat Aug 31 01:29:05 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/Makefile.dirs: (Added) Specifies the DIRS= list of directories
 	  to invoke recursive makes on.
-  
-	* tao/Makefile.tao: (Added) Build the libTAO library like the old 
+
+	* tao/Makefile.tao: (Added) Build the libTAO library like the old
 	  Makefile did.
-  
+
 	* tao/Makefile: Invoke Makefile.tao first, and then Makefile.dirs.
 	  It was necessary to split apart the DIRS= rule from the part of the
           Makefile which builds libACE in order to have parallel makes (-j 2)
           work on recursive makes, using the new rules.nested.GNU, see ACE
 	  ChangeLog entry:
-	  Sat Aug 31 01:20:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>	
-  
+	  Sat Aug 31 01:20:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
 Fri Aug 30 17:24:15 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
@@ -836,7 +878,7 @@ Fri Aug 30 13:36:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
         * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
 
-          Correction to 
+          Correction to
 
           Wed Aug 28 14:55:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -845,8 +887,8 @@ Fri Aug 30 13:36:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Aug 30 13:08:59 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCORBA/Policies/Makefile: 
-	* tests/POA/Policies/Makefile: 
+	* tests/RTCORBA/Policies/Makefile:
+	* tests/POA/Policies/Makefile:
 
 	  Minor change and updated dependencies.
 
@@ -854,7 +896,7 @@ Fri Aug 30 13:08:59 2002  Irfan Pyarali  <irfan@oomworks.com>
 	  Changed TAO_ORB_VMCID to CORBA::OMGVMCID.
 
 	* tao/RTCORBA/RT_Policy_i.cpp: Fixed minor warnings.
-	
+
 Thu Aug 29 21:08:59 2002  Irfan Pyarali  <irfan@oomworks.com>
 
         Thanks to Paul Calabrese <calabrese_p@ociweb.com> for reporting
@@ -1001,7 +1043,7 @@ Thu Aug 29 14:48:51 2002  Ossama Othman  <ossama@uci.edu>
 	  Fixed broken emulated exception macros yet again.  RTM people!
 
 	  (update_client_protocol_properties):
-	  (update_server_protocol_properties): 
+	  (update_server_protocol_properties):
 
 	  Use the proper IOP::TAG_INTERNET_IOP ProfileId instead of the
 	  redundant and now non-existent TAO_TAG_IIOP_PROFILE macro.
@@ -3675,7 +3717,7 @@ Fri Jul 26 11:22:55 2002  Charles Frasch <cfrasch@spawar.navy.mil>
 	  Correctly cancel timers in the shutdown methods. The timers
 	  are scheduled in the activate methods but an
 	  ACE_Reactor::remove_handler() call was being made rather
-	  than the correct ACE_Reactor::cancel_timer(). Fixes 
+	  than the correct ACE_Reactor::cancel_timer(). Fixes
           BUGID 1246.
 
 Fri Jul 26 09:26:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
