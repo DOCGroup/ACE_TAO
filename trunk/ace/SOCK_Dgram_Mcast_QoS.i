@@ -45,3 +45,8 @@ ACE_SOCK_Dgram_Mcast_QoS::send (const void *buf,
                                func);
 }
 
+ASYS_INLINE ACE_QoS_Manager
+ACE_SOCK_Dgram_Mcast_QoS::qos_manager (void)
+{
+  return this->qos_manager_;
+}

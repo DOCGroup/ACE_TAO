@@ -56,7 +56,7 @@ ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &mcast_addr,
                           flags,
                           reuse_addr) == -1)
         return -1;
-
+      
       int one = 1;
       if (reuse_addr
           && this->ACE_SOCK::set_option (SOL_SOCKET,
@@ -199,7 +199,6 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
                                      ACE_Protocol_Info *protocolinfo,
                                      ACE_SOCK_GROUP g,
                                      u_long flags,
-                                     ACE_QoS_Manager *qos_manager,
                                      ACE_QoS_Session *qos_session)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe");
@@ -234,26 +233,25 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       // same as the QoS session address.
       if (mcast_addr == qos_session->dest_addr ()) 
       {
-
         // Subscribe to the QoS session.
-        ACE_UNUSED_ARG (qos_manager);
-#if 0
-        if (qos_manager->join_qos_session (qos_session) == -1)
+        if (this->qos_manager_.join_qos_session (qos_session) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to join QoS Session\n"),
                             -1);
-#endif
-
       } 
       else
-      {
+        {
+          if (this->close () != 0)
+            ACE_ERROR ((LM_ERROR,
+                        "Unable to close socket\n"));
+          
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Dest Addr in the QoS Session does")
                              ACE_TEXT (" not match the address passed into")
                              ACE_TEXT (" subscribe\n")),
                             -1);
-      }
-
+        }
+      
       sockaddr_in mult_addr;
 
       if (protocol_family == ACE_FROM_PROTOCOL_INFO)
