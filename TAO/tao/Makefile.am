@@ -9,14 +9,16 @@
 ## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
 
 includedir = @includedir@/tao
-pkgconfigdatadir = ${prefix}/lib/pkgconfig
+pkgconfigdatadir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+pkgconfigdata_DATA =
 lib_LTLIBRARIES =
+
 ## Makefile.TAO.am 
 
 lib_LTLIBRARIES += libTAO.la
@@ -122,6 +124,7 @@ libTAO_la_SOURCES = \
   GIOP_Message_State.cpp \
   GIOP_Message_Version.cpp \
   GIOP_Utils.cpp \
+  GUIResource_Factory.cpp \
   IFR_Client_Adapter.cpp \
   IIOPA.cpp \
   IIOPC.cpp \
@@ -305,10 +308,8 @@ libTAO_la_SOURCES = \
   orb_typesA.cpp \
   orb_typesC.cpp \
   params.cpp \
-  qt_resource.cpp \
   skip.cpp \
-  target_specification.cpp \
-  xt_resource.cpp
+  target_specification.cpp
 
 libTAO_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -319,329 +320,591 @@ libTAO_la_LIBADD = \
 nobase_include_HEADERS = \
   Abstract_Servant_Base.h \
   Acceptor_Filter.h \
+  Acceptor_Impl.cpp \
   Acceptor_Impl.h \
   Acceptor_Registry.h \
+  Acceptor_Registry.i \
   Adapter.h \
   Adapter_Factory.h \
   Adapter_Registry.h \
   Allocator.h \
   Any.h \
+  Any.i \
+  AnySeq.pidl \
   AnySeqC.h \
+  AnySeqC.inl \
   AnySeqS.h \
   Any_Arg_Traits.h \
+  Any_Array_Impl_T.cpp \
   Any_Array_Impl_T.h \
+  Any_Array_Impl_T.inl \
   Any_Basic_Impl.h \
+  Any_Basic_Impl_T.cpp \
   Any_Basic_Impl_T.h \
+  Any_Basic_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
   Any_Impl.h \
+  Any_Impl_T.cpp \
   Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Special_Impl_T.cpp \
   Any_Special_Impl_T.h \
+  Any_Special_Impl_T.inl \
   Any_SystemException.h \
   Any_Unknown_IDL_Type.h \
   Arg_Traits_T.h \
   Argument.h \
+  Array_VarOut_T.cpp \
   Array_VarOut_T.h \
+  Array_VarOut_T.inl \
   Asynch_Queued_Message.h \
   Asynch_Reply_Dispatcher_Base.h \
+  Asynch_Reply_Dispatcher_Base.i \
   Auto_Functor.h \
+  BD_String_Argument_T.cpp \
   BD_String_Argument_T.h \
+  BD_String_Argument_T.inl \
+  BD_String_SArgument_T.cpp \
   BD_String_SArgument_T.h \
+  BD_String_SArgument_T.inl \
   Base_Transport_Property.h \
+  Base_Transport_Property.inl \
+  Basic_Argument_T.cpp \
   Basic_Argument_T.h \
+  Basic_Argument_T.inl \
   Basic_Arguments.h \
+  Basic_SArgument_T.cpp \
   Basic_SArgument_T.h \
+  Basic_SArgument_T.inl \
   Basic_SArguments.h \
   Basic_Types.h \
   BiDir_Adapter.h \
   Bind_Dispatcher_Guard.h \
+  Bind_Dispatcher_Guard.i \
   Block_Flushing_Strategy.h \
   Blocked_Connect_Strategy.h \
+  BooleanSeq.pidl \
   BooleanSeqC.h \
+  BooleanSeqC.inl \
   BooleanSeqS.h \
+  Bounds.pidl \
   BoundsC.h \
+  BoundsC.inl \
+  Buffer_Allocator_T.cpp \
   Buffer_Allocator_T.h \
   Buffering_Constraint_Policy.h \
+  Buffering_Constraint_Policy.i \
   CDR.h \
+  CDR.i \
   CDR_Encaps_Codec.h \
+  CONV_FRAME.pidl \
   CONV_FRAMEC.h \
+  CONV_FRAMEC.inl \
   CONV_FRAMES.h \
+  CONV_FRAMES.inl \
+  CONV_FRAMES_T.cpp \
   CONV_FRAMES_T.h \
+  CONV_FRAMES_T.inl \
   CORBALOC_Parser.h \
+  CORBALOC_Parser.i \
   CORBANAME_Parser.h \
+  CORBANAME_Parser.i \
   CORBA_String.h \
+  CORBA_String.inl \
   CORBA_methods.h \
   Cache_Entries.h \
+  Cache_Entries.inl \
+  CharSeq.pidl \
   CharSeqC.h \
+  CharSeqC.inl \
   CharSeqS.h \
   Cleanup_Func_Registry.h \
+  Cleanup_Func_Registry.inl \
   ClientRequestInfo.h \
+  ClientRequestInfo.inl \
   ClientRequestInfo_i.h \
+  ClientRequestInfo_i.inl \
   ClientRequestInterceptor_Adapter.h \
+  ClientRequestInterceptor_Adapter.inl \
   Client_Strategy_Factory.h \
   CodecFactory.h \
   CodecFactory_ORBInitializer.h \
   Codeset_Manager.h \
   Codeset_Translator_Factory.h \
+  Codeset_Translator_Factory_T.cpp \
   Codeset_Translator_Factory_T.h \
   Collocated_Invocation.h \
   Collocation_Proxy_Broker.h \
   Collocation_Resolver.h \
   Collocation_Strategy.h \
+  Condition.cpp \
   Condition.h \
+  Condition.inl \
   Connect_Strategy.h \
   Connection_Handler.h \
+  Connection_Handler.inl \
   Connection_Purging_Strategy.h \
+  Connection_Purging_Strategy.inl \
+  Connector_Impl.cpp \
   Connector_Impl.h \
   Connector_Registry.h \
+  Connector_Registry.i \
+  Current.pidl \
   CurrentC.h \
+  CurrentC.inl \
   DLL_Parser.h \
+  DLL_Parser.i \
   Default_Collocation_Resolver.h \
   Default_Endpoint_Selector_Factory.h \
   Default_Protocols_Hooks.h \
   Default_Stub_Factory.h \
   Default_Thread_Lane_Resources_Manager.h \
+  Domain.pidl \
   DomainC.h \
+  DomainC.inl \
+  DoubleSeq.pidl \
   DoubleSeqC.h \
+  DoubleSeqC.inl \
   DoubleSeqS.h \
+  Dynamic.pidl \
   DynamicC.h \
+  DynamicC.inl \
   Dynamic_Adapter.h \
+  Dynamic_Parameter.pidl \
   Dynamic_ParameterC.h \
+  Dynamic_ParameterC.inl \
   Encodable.h \
   Endpoint.h \
+  Endpoint.i \
   Endpoint_Selector_Factory.h \
   Environment.h \
+  Environment.i \
   Exception.h \
+  Exception.i \
   Exception_Data.h \
   Exclusive_TMS.h \
   FILE_Parser.h \
+  FILE_Parser.i \
   Fault_Tolerance_Service.h \
+  Fault_Tolerance_Service.i \
+  Fixed_Array_Argument_T.cpp \
   Fixed_Array_Argument_T.h \
+  Fixed_Array_Argument_T.inl \
+  Fixed_Array_SArgument_T.cpp \
   Fixed_Array_SArgument_T.h \
+  Fixed_Array_SArgument_T.inl \
+  Fixed_Size_Argument_T.cpp \
   Fixed_Size_Argument_T.h \
+  Fixed_Size_Argument_T.inl \
+  Fixed_Size_SArgument_T.cpp \
   Fixed_Size_SArgument_T.h \
+  Fixed_Size_SArgument_T.inl \
+  FloatSeq.pidl \
   FloatSeqC.h \
+  FloatSeqC.inl \
   FloatSeqS.h \
   Flushing_Strategy.h \
+  GIOP.pidl \
   GIOPC.h \
+  GIOPC.inl \
   GIOPS.h \
+  GIOPS.inl \
+  GIOPS_T.cpp \
   GIOPS_T.h \
+  GIOPS_T.inl \
   GIOP_Message_Base.h \
   GIOP_Message_Generator_Parser.h \
   GIOP_Message_Generator_Parser_10.h \
   GIOP_Message_Generator_Parser_11.h \
   GIOP_Message_Generator_Parser_12.h \
   GIOP_Message_Generator_Parser_Impl.h \
+  GIOP_Message_Generator_Parser_Impl.inl \
   GIOP_Message_Lite.h \
   GIOP_Message_Locate_Header.h \
+  GIOP_Message_Locate_Header.i \
   GIOP_Message_State.h \
+  GIOP_Message_State.inl \
   GIOP_Message_Version.h \
+  GIOP_Message_Version.inl \
   GIOP_Utils.h \
+  GUIResource_Factory.h \
   IFR_Client_Adapter.h \
+  IIOP.pidl \
   IIOPC.h \
+  IIOPC.inl \
   IIOP_Acceptor.h \
+  IIOP_Acceptor.i \
   IIOP_Connection_Handler.h \
   IIOP_Connector.h \
   IIOP_Endpoint.h \
+  IIOP_Endpoint.i \
+  IIOP_Endpoints.pidl \
   IIOP_EndpointsC.h \
+  IIOP_EndpointsC.inl \
   IIOP_Factory.h \
   IIOP_Lite_Factory.h \
   IIOP_Profile.h \
   IIOP_Transport.h \
+  IOP.pidl \
   IOPC.h \
+  IOPC.i \
   IOPS.h \
+  IOPS.i \
+  IOPS_T.cpp \
   IOPS_T.h \
+  IOPS_T.i \
+  IOP_Codec.pidl \
   IOP_CodecC.h \
+  IOP_CodecC.i \
+  IOP_IOR.pidl \
   IOP_IORC.h \
+  IOP_IORC.i \
   IORInterceptor_Adapter.h \
   IORInterceptor_Adapter_Factory.h \
   IOR_Parser.h \
   Incoming_Message_Queue.h \
+  Incoming_Message_Queue.inl \
   Interceptor_List.h \
+  Interceptor_List.inl \
+  InterfaceDef.pidl \
+  InvalidName.pidl \
   Invocation_Adapter.h \
+  Invocation_Adapter.inl \
   Invocation_Base.h \
+  Invocation_Base.inl \
   Invocation_Endpoint_Selectors.h \
   Invocation_Utils.h \
   LF_CH_Event.h \
   LF_Connect_Strategy.h \
   LF_Event.h \
+  LF_Event.inl \
   LF_Event_Binder.h \
+  LF_Event_Binder.inl \
   LF_Event_Loop_Thread_Helper.h \
+  LF_Event_Loop_Thread_Helper.inl \
   LF_Follower.h \
+  LF_Follower.inl \
   LF_Follower_Auto_Adder.h \
+  LF_Follower_Auto_Adder.inl \
   LF_Follower_Auto_Ptr.h \
+  LF_Follower_Auto_Ptr.inl \
   LF_Invocation_Event.h \
   LF_Strategy.h \
   LF_Strategy_Complete.h \
+  LF_Strategy_Complete.inl \
   LRU_Connection_Purging_Strategy.h \
   Leader_Follower.h \
+  Leader_Follower.i \
   Leader_Follower_Flushing_Strategy.h \
   LocalObject.h \
+  LocalObject.i \
   LocateRequest_Invocation.h \
   LocateRequest_Invocation_Adapter.h \
+  LongDoubleSeq.pidl \
   LongDoubleSeqC.h \
+  LongDoubleSeqC.inl \
   LongDoubleSeqS.h \
+  LongLongSeq.pidl \
   LongLongSeqC.h \
+  LongLongSeqC.inl \
   LongLongSeqS.h \
+  LongSeq.pidl \
   LongSeqC.h \
+  LongSeqC.inl \
   LongSeqS.h \
   MCAST_Parser.h \
+  MCAST_Parser.i \
   MProfile.h \
+  MProfile.i \
   Managed_Types.h \
+  Managed_Types.i \
   Marshal.h \
+  Marshal.i \
+  Messaging_PolicyValue.pidl \
   Messaging_PolicyValueC.h \
+  Messaging_PolicyValueC.inl \
+  Messaging_SyncScope.pidl \
   Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.inl \
   Muxed_TMS.h \
   NVList.h \
+  NVList.i \
   New_Leader_Generator.h \
   OBV_Constants.h \
   ORB.h \
+  ORB.i \
   ORBInitInfo.h \
+  ORBInitInfo.inl \
   ORBInitializer_Registry.h \
   ORB_Constants.h \
   ORB_Core.h \
+  ORB_Core.i \
   ORB_Core_Auto_Ptr.h \
+  ORB_Core_Auto_Ptr.inl \
   ORB_Table.h \
+  ORB_Table.inl \
   Object.h \
+  Object.i \
+  ObjectIdList.pidl \
   ObjectIdListC.h \
+  ObjectIdListC.inl \
   ObjectKey_Table.h \
+  Object_Argument_T.cpp \
   Object_Argument_T.h \
+  Object_Argument_T.inl \
+  Object_Key.pidl \
   Object_KeyC.h \
+  Object_KeyC.inl \
   Object_Loader.h \
   Object_Proxy_Broker.h \
   Object_Proxy_Impl.h \
   Object_Ref_Table.h \
+  Object_SArgument_T.cpp \
   Object_SArgument_T.h \
+  Object_SArgument_T.inl \
+  Object_T.cpp \
   Object_T.h \
+  Objref_VarOut_T.cpp \
   Objref_VarOut_T.h \
+  OctetSeq.pidl \
   OctetSeqC.h \
+  OctetSeqC.inl \
   OctetSeqS.h \
   PICurrent.h \
+  PICurrent.inl \
   PICurrent_Copy_Callback.h \
   PICurrent_ORBInitializer.h \
+  PI_Forward.pidl \
   PI_ForwardC.h \
+  PI_ForwardC.inl \
+  ParameterMode.pidl \
   ParameterModeC.h \
+  ParameterModeC.inl \
   ParameterModeS.h \
   Parser_Registry.h \
+  Parser_Registry.i \
   Pluggable_Messaging.h \
   Pluggable_Messaging_Utils.h \
+  Pluggable_Messaging_Utils.i \
+  Policy.pidl \
   PolicyC.h \
+  PolicyC.inl \
   PolicyFactory_Registry.h \
   PolicyS.h \
+  Policy_Forward.pidl \
   Policy_ForwardC.h \
+  Policy_ForwardC.i \
   Policy_Manager.h \
+  Policy_Manager.i \
   Policy_Set.h \
+  Policy_Set.i \
   Policy_Validator.h \
+  Pollable.pidl \
   PollableC.h \
+  PollableC.inl \
   PollableS.h \
+  PollableS.inl \
+  PollableS_T.cpp \
   PollableS_T.h \
+  PollableS_T.inl \
   PortableInterceptor.h \
+  PortableInterceptor.pidl \
   PortableInterceptorC.h \
+  PortableInterceptorC.inl \
   PortableInterceptorS.h \
   Principal.h \
+  Principal.i \
   Profile.h \
+  Profile.i \
   Profile_Transport_Resolver.h \
+  Profile_Transport_Resolver.inl \
   Protocol_Factory.h \
   Protocols_Hooks.h \
+  Pseudo_VarOut_T.cpp \
   Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.inl \
   Queued_Message.h \
+  Queued_Message.inl \
   Reactive_Connect_Strategy.h \
   Reactive_Flushing_Strategy.h \
   Refcounted_ObjectKey.h \
+  Refcounted_ObjectKey.inl \
   Remote_Invocation.h \
   Remote_Object_Proxy_Broker.h \
   Reply_Dispatcher.h \
+  Reply_Dispatcher.i \
   RequestInfo_Util.h \
   Request_Dispatcher.h \
   Resource_Factory.h \
   Resume_Handle.h \
+  Resume_Handle.inl \
+  Seq_Out_T.cpp \
   Seq_Out_T.h \
+  Seq_Out_T.inl \
+  Seq_Var_T.cpp \
   Seq_Var_T.h \
+  Seq_Var_T.inl \
   Sequence.h \
+  Sequence.i \
+  Sequence_T.cpp \
   Sequence_T.h \
+  Sequence_T.i \
   Server_Strategy_Factory.h \
   Service_Callbacks.h \
   Service_Context.h \
+  Service_Context.inl \
+  Services.pidl \
   ServicesC.h \
+  ServicesC.inl \
   ServicesS.h \
+  ServicesS.inl \
+  ServicesS_T.cpp \
   ServicesS_T.h \
+  ServicesS_T.inl \
   Services_Activate.h \
+  ShortSeq.pidl \
   ShortSeqC.h \
+  ShortSeqC.inl \
   ShortSeqS.h \
+  Special_Basic_Argument_T.cpp \
   Special_Basic_Argument_T.h \
+  Special_Basic_Argument_T.inl \
   Special_Basic_Arguments.h \
+  Special_Basic_SArgument_T.cpp \
   Special_Basic_SArgument_T.h \
+  Special_Basic_SArgument_T.inl \
   Special_Basic_SArguments.h \
+  StringSeq.pidl \
   StringSeqC.h \
+  StringSeqC.inl \
   StringSeqS.h \
   Stub.h \
+  Stub.i \
   Stub_Factory.h \
   Sync_Strategies.h \
   Synch_Invocation.h \
+  Synch_Invocation.inl \
   Synch_Queued_Message.h \
   Synch_Refcountable.h \
+  Synch_Refcountable.inl \
   Synch_Reply_Dispatcher.h \
   SystemException.h \
+  SystemException.inl \
+  TAO.pidl \
   TAOC.h \
+  TAOC.inl \
   TAOS.h \
+  TAOS.inl \
+  TAOS_T.cpp \
   TAOS_T.h \
+  TAOS_T.inl \
   TAO_Export.h \
   TAO_Internal.h \
   TAO_Server_Request.h \
+  TAO_Server_Request.i \
+  TAO_Singleton.cpp \
   TAO_Singleton.h \
+  TAO_Singleton.inl \
   TAO_Singleton_Manager.h \
+  TAO_Singleton_Manager.inl \
   TC_Constants_Forward.h \
   TSS_Resources.h \
   Tagged_Components.h \
+  Tagged_Components.i \
   Tagged_Profile.h \
+  Tagged_Profile.i \
   Thread_Lane_Resources.h \
   Thread_Lane_Resources_Manager.h \
   Thread_Per_Connection_Handler.h \
+  TimeBase.pidl \
   TimeBaseC.h \
+  TimeBaseC.inl \
   TimeBaseS.h \
+  TimeBaseS.inl \
+  TimeBaseS_T.cpp \
   TimeBaseS_T.h \
+  TimeBaseS_T.inl \
   Timeprobe.h \
   Transport.h \
+  Transport.inl \
   Transport_Acceptor.h \
+  Transport_Acceptor.inl \
   Transport_Cache_Manager.h \
+  Transport_Cache_Manager.inl \
   Transport_Connector.h \
+  Transport_Connector.inl \
   Transport_Descriptor_Interface.h \
+  Transport_Descriptor_Interface.inl \
   Transport_Mux_Strategy.h \
   Transport_Timer.h \
   TypeCodeFactory_Adapter.h \
   Typecode.h \
+  Typecode.i \
   Typecode_Constants.h \
+  Typecode_types.pidl \
   Typecode_typesC.h \
+  Typecode_typesC.inl \
   Typecode_typesS.h \
+  UB_String_Argument_T.cpp \
   UB_String_Argument_T.h \
+  UB_String_Argument_T.inl \
   UB_String_Arguments.h \
+  UB_String_SArgument_T.cpp \
   UB_String_SArgument_T.h \
+  UB_String_SArgument_T.inl \
   UB_String_SArguments.h \
+  ULongLongSeq.pidl \
   ULongLongSeqC.h \
+  ULongLongSeqC.inl \
   ULongLongSeqS.h \
+  ULongSeq.pidl \
   ULongSeqC.h \
+  ULongSeqC.inl \
   ULongSeqS.h \
+  UShortSeq.pidl \
   UShortSeqC.h \
+  UShortSeqC.inl \
   UShortSeqS.h \
   UTF16_BOM_Factory.h \
   UTF16_BOM_Translator.h \
   UserException.h \
+  UserException.inl \
   Valuetype_Adapter.h \
+  VarOut_T.cpp \
   VarOut_T.h \
+  VarOut_T.inl \
+  Var_Array_Argument_T.cpp \
   Var_Array_Argument_T.h \
+  Var_Array_Argument_T.inl \
+  Var_Array_SArgument_T.cpp \
   Var_Array_SArgument_T.h \
+  Var_Array_SArgument_T.inl \
+  Var_Size_Argument_T.cpp \
   Var_Size_Argument_T.h \
+  Var_Size_Argument_T.inl \
+  Var_Size_SArgument_T.cpp \
   Var_Size_SArgument_T.h \
+  Var_Size_SArgument_T.inl \
   Version.h \
+  WCharSeq.pidl \
   WCharSeqC.h \
+  WCharSeqC.inl \
   WCharSeqS.h \
+  WStringSeq.pidl \
   WStringSeqC.h \
+  WStringSeqC.inl \
   WStringSeqS.h \
   Wait_On_LF_No_Upcall.h \
   Wait_On_Leader_Follower.h \
   Wait_On_Reactor.h \
   Wait_On_Read.h \
   Wait_Strategy.h \
+  Wait_Strategy.inl \
+  WrongTransaction.pidl \
   WrongTransactionC.h \
+  WrongTransactionC.inl \
   corba.h \
   corbafwd.h \
   debug.h \
@@ -652,290 +915,26 @@ nobase_include_HEADERS = \
   default_server.h \
   objectid.h \
   operation_details.h \
+  operation_details.i \
+  orb.idl \
+  orb_types.pidl \
   orb_typesC.h \
+  orb_typesC.inl \
   orb_typesS.h \
   orbconf.h \
   params.h \
-  qt_resource.h \
-  target_specification.h \
-  varbase.h \
-  xt_resource.h \
-  Acceptor_Registry.i \
-  Any.i \
-  AnySeqC.inl \
-  Any_Array_Impl_T.inl \
-  Any_Basic_Impl_T.inl \
-  Any_Dual_Impl_T.inl \
-  Any_Impl_T.inl \
-  Any_Special_Impl_T.inl \
-  Array_VarOut_T.inl \
-  Asynch_Reply_Dispatcher_Base.i \
-  BD_String_Argument_T.inl \
-  BD_String_SArgument_T.inl \
-  Base_Transport_Property.inl \
-  Basic_Argument_T.inl \
-  Basic_SArgument_T.inl \
-  Bind_Dispatcher_Guard.i \
-  BooleanSeqC.inl \
-  BoundsC.inl \
-  Buffering_Constraint_Policy.i \
-  CDR.i \
-  CONV_FRAMEC.inl \
-  CONV_FRAMES.inl \
-  CONV_FRAMES_T.inl \
-  CORBALOC_Parser.i \
-  CORBANAME_Parser.i \
-  CORBA_String.inl \
-  Cache_Entries.inl \
-  CharSeqC.inl \
-  Cleanup_Func_Registry.inl \
-  ClientRequestInfo.inl \
-  ClientRequestInfo_i.inl \
-  ClientRequestInterceptor_Adapter.inl \
-  Condition.inl \
-  Connection_Handler.inl \
-  Connection_Purging_Strategy.inl \
-  Connector_Registry.i \
-  CurrentC.inl \
-  DLL_Parser.i \
-  DomainC.inl \
-  DoubleSeqC.inl \
-  DynamicC.inl \
-  Dynamic_ParameterC.inl \
-  Endpoint.i \
-  Environment.i \
-  Exception.i \
-  FILE_Parser.i \
-  Fault_Tolerance_Service.i \
-  Fixed_Array_Argument_T.inl \
-  Fixed_Array_SArgument_T.inl \
-  Fixed_Size_Argument_T.inl \
-  Fixed_Size_SArgument_T.inl \
-  FloatSeqC.inl \
-  GIOPC.inl \
-  GIOPS.inl \
-  GIOPS_T.inl \
-  GIOP_Message_Generator_Parser_Impl.inl \
-  GIOP_Message_Locate_Header.i \
-  GIOP_Message_State.inl \
-  GIOP_Message_Version.inl \
-  IIOPC.inl \
-  IIOP_Acceptor.i \
-  IIOP_Endpoint.i \
-  IIOP_EndpointsC.inl \
-  IOPC.i \
-  IOPS.i \
-  IOPS_T.i \
-  IOP_CodecC.i \
-  IOP_IORC.i \
-  Incoming_Message_Queue.inl \
-  Interceptor_List.inl \
-  Invocation_Adapter.inl \
-  Invocation_Base.inl \
-  LF_Event.inl \
-  LF_Event_Binder.inl \
-  LF_Event_Loop_Thread_Helper.inl \
-  LF_Follower.inl \
-  LF_Follower_Auto_Adder.inl \
-  LF_Follower_Auto_Ptr.inl \
-  LF_Strategy_Complete.inl \
-  Leader_Follower.i \
-  LocalObject.i \
-  LongDoubleSeqC.inl \
-  LongLongSeqC.inl \
-  LongSeqC.inl \
-  MCAST_Parser.i \
-  MProfile.i \
-  Managed_Types.i \
-  Marshal.i \
-  Messaging_PolicyValueC.inl \
-  Messaging_SyncScopeC.inl \
-  NVList.i \
-  ORB.i \
-  ORBInitInfo.inl \
-  ORB_Core.i \
-  ORB_Core_Auto_Ptr.inl \
-  ORB_Table.inl \
-  Object.i \
-  ObjectIdListC.inl \
-  Object_Argument_T.inl \
-  Object_KeyC.inl \
-  Object_SArgument_T.inl \
-  OctetSeqC.inl \
-  PICurrent.inl \
-  PI_ForwardC.inl \
-  ParameterModeC.inl \
-  Parser_Registry.i \
-  Pluggable_Messaging_Utils.i \
-  PolicyC.inl \
-  Policy_ForwardC.i \
-  Policy_Manager.i \
-  Policy_Set.i \
-  PollableC.inl \
-  PollableS.inl \
-  PollableS_T.inl \
-  PortableInterceptorC.inl \
-  Principal.i \
-  Profile.i \
-  Profile_Transport_Resolver.inl \
-  Pseudo_VarOut_T.inl \
-  Queued_Message.inl \
-  Refcounted_ObjectKey.inl \
-  Reply_Dispatcher.i \
-  Resume_Handle.inl \
-  Seq_Out_T.inl \
-  Seq_Var_T.inl \
-  Sequence.i \
-  Sequence_T.i \
-  Service_Context.inl \
-  ServicesC.inl \
-  ServicesS.inl \
-  ServicesS_T.inl \
-  ShortSeqC.inl \
-  Special_Basic_Argument_T.inl \
-  Special_Basic_SArgument_T.inl \
-  StringSeqC.inl \
-  Stub.i \
-  Synch_Invocation.inl \
-  Synch_Refcountable.inl \
-  SystemException.inl \
-  TAOC.inl \
-  TAOS.inl \
-  TAOS_T.inl \
-  TAO_Server_Request.i \
-  TAO_Singleton.inl \
-  TAO_Singleton_Manager.inl \
-  Tagged_Components.i \
-  Tagged_Profile.i \
-  TimeBaseC.inl \
-  TimeBaseS.inl \
-  TimeBaseS_T.inl \
-  Transport.inl \
-  Transport_Acceptor.inl \
-  Transport_Cache_Manager.inl \
-  Transport_Connector.inl \
-  Transport_Descriptor_Interface.inl \
-  Typecode.i \
-  Typecode_typesC.inl \
-  UB_String_Argument_T.inl \
-  UB_String_SArgument_T.inl \
-  ULongLongSeqC.inl \
-  ULongSeqC.inl \
-  UShortSeqC.inl \
-  UserException.inl \
-  VarOut_T.inl \
-  Var_Array_Argument_T.inl \
-  Var_Array_SArgument_T.inl \
-  Var_Size_Argument_T.inl \
-  Var_Size_SArgument_T.inl \
-  WCharSeqC.inl \
-  WStringSeqC.inl \
-  Wait_Strategy.inl \
-  WrongTransactionC.inl \
-  operation_details.i \
-  orb_typesC.inl \
   params.i \
-  qt_resource.i \
+  target_specification.h \
   target_specification.i \
-  xt_resource.i \
-  Acceptor_Impl.cpp \
-  Any_Array_Impl_T.cpp \
-  Any_Basic_Impl_T.cpp \
-  Any_Dual_Impl_T.cpp \
-  Any_Impl_T.cpp \
-  Any_Special_Impl_T.cpp \
-  Array_VarOut_T.cpp \
-  BD_String_Argument_T.cpp \
-  BD_String_SArgument_T.cpp \
-  Basic_Argument_T.cpp \
-  Basic_SArgument_T.cpp \
-  Buffer_Allocator_T.cpp \
-  CONV_FRAMES_T.cpp \
-  Codeset_Translator_Factory_T.cpp \
-  Condition.cpp \
-  Connector_Impl.cpp \
-  Fixed_Array_Argument_T.cpp \
-  Fixed_Array_SArgument_T.cpp \
-  Fixed_Size_Argument_T.cpp \
-  Fixed_Size_SArgument_T.cpp \
-  GIOPS_T.cpp \
-  IOPS_T.cpp \
-  Object_Argument_T.cpp \
-  Object_SArgument_T.cpp \
-  Object_T.cpp \
-  Objref_VarOut_T.cpp \
-  PollableS_T.cpp \
-  Pseudo_VarOut_T.cpp \
-  Seq_Out_T.cpp \
-  Seq_Var_T.cpp \
-  Sequence_T.cpp \
-  ServicesS_T.cpp \
-  Special_Basic_Argument_T.cpp \
-  Special_Basic_SArgument_T.cpp \
-  TAOS_T.cpp \
-  TAO_Singleton.cpp \
-  TimeBaseS_T.cpp \
-  UB_String_Argument_T.cpp \
-  UB_String_SArgument_T.cpp \
-  VarOut_T.cpp \
-  Var_Array_Argument_T.cpp \
-  Var_Array_SArgument_T.cpp \
-  Var_Size_Argument_T.cpp \
-  Var_Size_SArgument_T.cpp \
-  orb.idl \
-  AnySeq.pidl \
-  BooleanSeq.pidl \
-  Bounds.pidl \
-  CONV_FRAME.pidl \
-  CharSeq.pidl \
-  Current.pidl \
-  Domain.pidl \
-  DoubleSeq.pidl \
-  Dynamic.pidl \
-  Dynamic_Parameter.pidl \
-  FloatSeq.pidl \
-  GIOP.pidl \
-  IIOP.pidl \
-  IIOP_Endpoints.pidl \
-  IOP.pidl \
-  IOP_Codec.pidl \
-  IOP_IOR.pidl \
-  InterfaceDef.pidl \
-  InvalidName.pidl \
-  LongDoubleSeq.pidl \
-  LongLongSeq.pidl \
-  LongSeq.pidl \
-  Messaging_PolicyValue.pidl \
-  Messaging_SyncScope.pidl \
-  ObjectIdList.pidl \
-  Object_Key.pidl \
-  OctetSeq.pidl \
-  PI_Forward.pidl \
-  ParameterMode.pidl \
-  Policy.pidl \
-  Policy_Forward.pidl \
-  Pollable.pidl \
-  PortableInterceptor.pidl \
-  Services.pidl \
-  ShortSeq.pidl \
-  StringSeq.pidl \
-  TAO.pidl \
-  TimeBase.pidl \
-  Typecode_types.pidl \
-  ULongLongSeq.pidl \
-  ULongSeq.pidl \
-  UShortSeq.pidl \
-  WCharSeq.pidl \
-  WStringSeq.pidl \
-  WrongTransaction.pidl \
-  orb_types.pidl
+  varbase.h
 
-pkgconfigdata_DATA = TAO.pc
+pkgconfigdata_DATA += TAO.pc
 
 TAO.pc: ${top_srcdir}/config.status ${srcdir}/TAO.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/TAO.pc.in
 
 EXTRA_DIST = \
+  TAO.pc.in \
   tao.rc
 
 
@@ -967,14 +966,14 @@ libTAO_BiDirGIOP_la_LIBADD = \
 
 nobase_include_HEADERS += \
   BiDir_GIOP/BiDirGIOP.h \
+  BiDir_GIOP/BiDirPolicy.pidl \
   BiDir_GIOP/BiDirPolicyC.h \
+  BiDir_GIOP/BiDirPolicyC.inl \
   BiDir_GIOP/BiDirPolicy_Validator.h \
   BiDir_GIOP/BiDir_ORBInitializer.h \
   BiDir_GIOP/BiDir_PolicyFactory.h \
   BiDir_GIOP/BiDir_Policy_i.h \
-  BiDir_GIOP/bidirgiop_export.h \
-  BiDir_GIOP/BiDirPolicyC.inl \
-  BiDir_GIOP/BiDirPolicy.pidl
+  BiDir_GIOP/bidirgiop_export.h
 
 pkgconfigdata_DATA += TAO_BiDirGIOP.pc
 
@@ -982,6 +981,7 @@ TAO_BiDirGIOP.pc: ${top_srcdir}/config.status ${srcdir}/BiDir_GIOP/TAO_BiDirGIOP
         ${top_srcdir}/config.status --file $@:${srcdir}/BiDir_GIOP/TAO_BiDirGIOP.pc.in
 
 EXTRA_DIST += \
+  BiDir_GIOP/TAO_BiDirGIOP.pc.in \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
 
 
@@ -1044,69 +1044,69 @@ libTAO_PortableServer_la_LIBADD = \
 
 nobase_include_HEADERS += \
   PortableServer/Active_Object_Map.h \
+  PortableServer/Active_Object_Map.i \
   PortableServer/Collocated_Object_Proxy_Broker.h \
   PortableServer/Default_Acceptor_Filter.h \
   PortableServer/Default_Policy_Validator.h \
   PortableServer/Default_Servant_Dispatcher.h \
+  PortableServer/ImplRepo.pidl \
   PortableServer/ImplRepoC.h \
+  PortableServer/ImplRepoC.inl \
   PortableServer/ImplRepoS.h \
+  PortableServer/ImplRepoS.inl \
   PortableServer/ImplRepo_i.h \
   PortableServer/Key_Adapters.h \
   PortableServer/Local_Servant_Base.h \
+  PortableServer/Local_Servant_Base.inl \
   PortableServer/ORB_Manager.h \
   PortableServer/ORT_Adapter.h \
   PortableServer/ORT_Adapter_Factory.h \
   PortableServer/Object_Adapter.h \
+  PortableServer/Object_Adapter.i \
   PortableServer/Object_Adapter_Factory.h \
   PortableServer/Operation_Table.h \
   PortableServer/PICurrent_Guard.h \
   PortableServer/POA.h \
+  PortableServer/POA.i \
   PortableServer/POAManager.h \
+  PortableServer/POAManager.i \
   PortableServer/POA_Cached_Policies.h \
+  PortableServer/POA_Cached_Policies.i \
   PortableServer/POA_Policies.h \
   PortableServer/POA_Policy_Set.h \
+  PortableServer/POA_Policy_Set.i \
   PortableServer/PolicyS.h \
+  PortableServer/PolicyS.inl \
+  PortableServer/PolicyS_T.cpp \
   PortableServer/PolicyS_T.h \
+  PortableServer/PolicyS_T.inl \
   PortableServer/PortableGroup_Hooks.h \
   PortableServer/PortableServer.h \
+  PortableServer/PortableServer.pidl \
   PortableServer/PortableServerC.h \
+  PortableServer/PortableServerC.inl \
   PortableServer/PortableServerS.h \
   PortableServer/PortableServer_ORBInitializer.h \
   PortableServer/PortableServer_PolicyFactory.h \
+  PortableServer/PortableServer_include.pidl \
   PortableServer/PortableServer_includeC.h \
   PortableServer/PortableServer_includeS.h \
   PortableServer/Servant_Base.h \
+  PortableServer/Servant_Base.i \
   PortableServer/Servant_Dispatcher.h \
   PortableServer/Servant_Location.h \
   PortableServer/ServerInterceptorAdapter.h \
+  PortableServer/ServerInterceptorAdapter.inl \
+  PortableServer/ServerObject.pidl \
   PortableServer/ServerObjectC.h \
+  PortableServer/ServerObjectC.inl \
   PortableServer/ServerObjectS.h \
+  PortableServer/ServerObjectS.inl \
   PortableServer/ServerRequestInfo.h \
+  PortableServer/ServerRequestInfo.inl \
   PortableServer/Upcall_Wrapper.h \
   PortableServer/poa_macros.h \
-  PortableServer/portableserver_export.h \
-  PortableServer/Active_Object_Map.i \
-  PortableServer/ImplRepoC.inl \
-  PortableServer/ImplRepoS.inl \
-  PortableServer/Local_Servant_Base.inl \
-  PortableServer/Object_Adapter.i \
-  PortableServer/POA.i \
-  PortableServer/POAManager.i \
-  PortableServer/POA_Cached_Policies.i \
-  PortableServer/POA_Policy_Set.i \
-  PortableServer/PolicyS.inl \
-  PortableServer/PolicyS_T.inl \
-  PortableServer/PortableServerC.inl \
-  PortableServer/Servant_Base.i \
-  PortableServer/ServerInterceptorAdapter.inl \
-  PortableServer/ServerObjectC.inl \
-  PortableServer/ServerObjectS.inl \
-  PortableServer/ServerRequestInfo.inl \
-  PortableServer/PolicyS_T.cpp \
-  PortableServer/ImplRepo.pidl \
-  PortableServer/PortableServer.pidl \
-  PortableServer/PortableServer_include.pidl \
-  PortableServer/ServerObject.pidl
+  PortableServer/portableserver_export.h
 
 pkgconfigdata_DATA += TAO_PortableServer.pc
 
@@ -1114,6 +1114,7 @@ TAO_PortableServer.pc: ${top_srcdir}/config.status ${srcdir}/PortableServer/TAO_
         ${top_srcdir}/config.status --file $@:${srcdir}/PortableServer/TAO_PortableServer.pc.in
 
 EXTRA_DIST += \
+  PortableServer/TAO_PortableServer.pc.in \
   PortableServer/TAO_PortableServer.rc
 
 
@@ -1147,21 +1148,21 @@ libTAO_IFR_Client_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  IFR_Client/IFR_BaseC.h \
-  IFR_Client/IFR_BaseS.h \
-  IFR_Client/IFR_BasicC.h \
-  IFR_Client/IFR_Client_Adapter_Impl.h \
-  IFR_Client/IFR_ComponentsC.h \
-  IFR_Client/IFR_ExtendedC.h \
-  IFR_Client/ifr_client_export.h \
-  IFR_Client/IFR_BaseC.inl \
-  IFR_Client/IFR_BasicC.inl \
-  IFR_Client/IFR_ComponentsC.inl \
-  IFR_Client/IFR_ExtendedC.inl \
   IFR_Client/IFR_Base.pidl \
+  IFR_Client/IFR_BaseC.h \
+  IFR_Client/IFR_BaseC.inl \
+  IFR_Client/IFR_BaseS.h \
   IFR_Client/IFR_Basic.pidl \
+  IFR_Client/IFR_BasicC.h \
+  IFR_Client/IFR_BasicC.inl \
+  IFR_Client/IFR_Client_Adapter_Impl.h \
   IFR_Client/IFR_Components.pidl \
-  IFR_Client/IFR_Extended.pidl
+  IFR_Client/IFR_ComponentsC.h \
+  IFR_Client/IFR_ComponentsC.inl \
+  IFR_Client/IFR_Extended.pidl \
+  IFR_Client/IFR_ExtendedC.h \
+  IFR_Client/IFR_ExtendedC.inl \
+  IFR_Client/ifr_client_export.h
 
 pkgconfigdata_DATA += TAO_IFR_Client.pc
 
@@ -1169,6 +1170,7 @@ TAO_IFR_Client.pc: ${top_srcdir}/config.status ${srcdir}/IFR_Client/TAO_IFR_Clie
         ${top_srcdir}/config.status --file $@:${srcdir}/IFR_Client/TAO_IFR_Client.pc.in
 
 EXTRA_DIST += \
+  IFR_Client/TAO_IFR_Client.pc.in \
   IFR_Client/TAO_IFR_Client.rc
 
 
@@ -1197,11 +1199,11 @@ libTAO_Domain_la_LIBADD = \
 
 nobase_include_HEADERS += \
   Domain/DomainS.h \
-  Domain/DomainS_T.h \
-  Domain/domain_export.h \
   Domain/DomainS.i \
+  Domain/DomainS_T.cpp \
+  Domain/DomainS_T.h \
   Domain/DomainS_T.i \
-  Domain/DomainS_T.cpp
+  Domain/domain_export.h
 
 pkgconfigdata_DATA += TAO_Domain.pc
 
@@ -1209,6 +1211,7 @@ TAO_Domain.pc: ${top_srcdir}/config.status ${srcdir}/Domain/TAO_Domain.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/Domain/TAO_Domain.pc.in
 
 EXTRA_DIST += \
+  Domain/TAO_Domain.pc.in \
   Domain/TAO_Domain.rc
 
 
@@ -1252,10 +1255,10 @@ nobase_include_HEADERS += \
   DynamicAny/DynStruct_i.h \
   DynamicAny/DynUnion_i.h \
   DynamicAny/DynamicAny.h \
+  DynamicAny/DynamicAny.pidl \
   DynamicAny/DynamicAnyC.h \
-  DynamicAny/dynamicany_export.h \
   DynamicAny/DynamicAnyC.i \
-  DynamicAny/DynamicAny.pidl
+  DynamicAny/dynamicany_export.h
 
 pkgconfigdata_DATA += TAO_DynamicAny.pc
 
@@ -1263,6 +1266,7 @@ TAO_DynamicAny.pc: ${top_srcdir}/config.status ${srcdir}/DynamicAny/TAO_DynamicA
         ${top_srcdir}/config.status --file $@:${srcdir}/DynamicAny/TAO_DynamicAny.pc.in
 
 EXTRA_DIST += \
+  DynamicAny/TAO_DynamicAny.pc.in \
   DynamicAny/TAO_DynamicAny.rc
 
 
@@ -1295,22 +1299,22 @@ libTAO_Valuetype_la_LIBADD = \
 
 nobase_include_HEADERS += \
   Valuetype/AbstractBase.h \
+  Valuetype/AbstractBase.inl \
   Valuetype/AbstractBase_Invocation_Adapter.h \
+  Valuetype/AbstractBase_T.cpp \
   Valuetype/AbstractBase_T.h \
+  Valuetype/Sequence_T.cpp \
   Valuetype/Sequence_T.h \
+  Valuetype/Sequence_T.inl \
   Valuetype/ValueBase.h \
+  Valuetype/ValueBase.inl \
   Valuetype/ValueFactory.h \
   Valuetype/ValueFactory_Map.h \
   Valuetype/Value_CORBA_methods.h \
+  Valuetype/Value_VarOut_T.cpp \
   Valuetype/Value_VarOut_T.h \
   Valuetype/Valuetype_Adapter_Impl.h \
-  Valuetype/valuetype_export.h \
-  Valuetype/AbstractBase.inl \
-  Valuetype/Sequence_T.inl \
-  Valuetype/ValueBase.inl \
-  Valuetype/AbstractBase_T.cpp \
-  Valuetype/Sequence_T.cpp \
-  Valuetype/Value_VarOut_T.cpp
+  Valuetype/valuetype_export.h
 
 pkgconfigdata_DATA += TAO_Valuetype.pc
 
@@ -1318,6 +1322,7 @@ TAO_Valuetype.pc: ${top_srcdir}/config.status ${srcdir}/Valuetype/TAO_Valuetype.
         ${top_srcdir}/config.status --file $@:${srcdir}/Valuetype/TAO_Valuetype.pc.in
 
 EXTRA_DIST += \
+  Valuetype/TAO_Valuetype.pc.in \
   Valuetype/TAO_Valuetype.rc
 
 
@@ -1363,36 +1368,36 @@ nobase_include_HEADERS += \
   Messaging/AMH_Response_Handler.h \
   Messaging/Asynch_Invocation.h \
   Messaging/Asynch_Invocation_Adapter.h \
+  Messaging/Asynch_Invocation_Adapter.inl \
   Messaging/Asynch_Reply_Dispatcher.h \
   Messaging/Asynch_Timeout_Handler.h \
   Messaging/Connection_Timeout_Policy_i.h \
   Messaging/Messaging.h \
+  Messaging/Messaging.pidl \
   Messaging/MessagingC.h \
+  Messaging/MessagingC.i \
   Messaging/MessagingS.h \
+  Messaging/MessagingS.i \
+  Messaging/MessagingS_T.cpp \
   Messaging/MessagingS_T.h \
+  Messaging/MessagingS_T.i \
+  Messaging/Messaging_No_Impl.pidl \
   Messaging/Messaging_No_ImplC.h \
+  Messaging/Messaging_No_ImplC.i \
   Messaging/Messaging_ORBInitializer.h \
   Messaging/Messaging_PolicyFactory.h \
   Messaging/Messaging_Policy_i.h \
-  Messaging/Messaging_RT_PolicyC.h \
-  Messaging/Messaging_SyncScope_PolicyC.h \
-  Messaging/TAO_ExtC.h \
-  Messaging/messaging_export.h \
-  Messaging/Asynch_Invocation_Adapter.inl \
-  Messaging/MessagingC.i \
-  Messaging/MessagingS.i \
-  Messaging/MessagingS_T.i \
-  Messaging/Messaging_No_ImplC.i \
   Messaging/Messaging_Policy_i.i \
-  Messaging/Messaging_RT_PolicyC.i \
-  Messaging/Messaging_SyncScope_PolicyC.i \
-  Messaging/TAO_ExtC.i \
-  Messaging/MessagingS_T.cpp \
-  Messaging/Messaging.pidl \
-  Messaging/Messaging_No_Impl.pidl \
   Messaging/Messaging_RT_Policy.pidl \
+  Messaging/Messaging_RT_PolicyC.h \
+  Messaging/Messaging_RT_PolicyC.i \
   Messaging/Messaging_SyncScope_Policy.pidl \
-  Messaging/TAO_Ext.pidl
+  Messaging/Messaging_SyncScope_PolicyC.h \
+  Messaging/Messaging_SyncScope_PolicyC.i \
+  Messaging/TAO_Ext.pidl \
+  Messaging/TAO_ExtC.h \
+  Messaging/TAO_ExtC.i \
+  Messaging/messaging_export.h
 
 pkgconfigdata_DATA += TAO_Messaging.pc
 
@@ -1400,6 +1405,7 @@ TAO_Messaging.pc: ${top_srcdir}/config.status ${srcdir}/Messaging/TAO_Messaging.
         ${top_srcdir}/config.status --file $@:${srcdir}/Messaging/TAO_Messaging.pc.in
 
 EXTRA_DIST += \
+  Messaging/TAO_Messaging.pc.in \
   Messaging/TAO_Messaging.rc
 
 
@@ -1442,24 +1448,24 @@ libTAO_DynamicInterface_la_LIBADD = \
 
 nobase_include_HEADERS += \
   DynamicInterface/Context.h \
+  DynamicInterface/Context.inl \
   DynamicInterface/DII_Arguments.h \
+  DynamicInterface/DII_Arguments.inl \
   DynamicInterface/DII_CORBA_methods.h \
   DynamicInterface/DII_Invocation.h \
+  DynamicInterface/DII_Invocation.inl \
   DynamicInterface/DII_Invocation_Adapter.h \
   DynamicInterface/DII_Reply_Dispatcher.h \
   DynamicInterface/Dynamic_Adapter_Impl.h \
   DynamicInterface/Dynamic_Implementation.h \
   DynamicInterface/ExceptionList.h \
-  DynamicInterface/Request.h \
-  DynamicInterface/Server_Request.h \
-  DynamicInterface/Unknown_User_Exception.h \
-  DynamicInterface/dynamicinterface_export.h \
-  DynamicInterface/Context.inl \
-  DynamicInterface/DII_Arguments.inl \
-  DynamicInterface/DII_Invocation.inl \
   DynamicInterface/ExceptionList.inl \
+  DynamicInterface/Request.h \
   DynamicInterface/Request.inl \
-  DynamicInterface/Server_Request.inl
+  DynamicInterface/Server_Request.h \
+  DynamicInterface/Server_Request.inl \
+  DynamicInterface/Unknown_User_Exception.h \
+  DynamicInterface/dynamicinterface_export.h
 
 pkgconfigdata_DATA += TAO_DynamicInterface.pc
 
@@ -1470,6 +1476,7 @@ endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
+  DynamicInterface/TAO_DynamicInterface.pc.in \
   DynamicInterface/TAO_DynamicInterface.rc
 
 
@@ -1503,20 +1510,20 @@ libTAO_ObjRefTemplate_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  ObjRefTemplate/Default_ORT.pidl \
   ObjRefTemplate/Default_ORTC.h \
+  ObjRefTemplate/Default_ORTC.inl \
   ObjRefTemplate/ORT_Adapter_Factory_Impl.h \
   ObjRefTemplate/ORT_Adapter_Impl.h \
   ObjRefTemplate/ObjectReferenceTemplate.h \
+  ObjRefTemplate/ObjectReferenceTemplate.pidl \
   ObjRefTemplate/ObjectReferenceTemplateC.h \
+  ObjRefTemplate/ObjectReferenceTemplateC.inl \
   ObjRefTemplate/ObjectReferenceTemplate_i.h \
+  ObjRefTemplate/ObjectReferenceTemplate_include.pidl \
   ObjRefTemplate/ObjectReferenceTemplate_includeC.h \
   ObjRefTemplate/ObjectReferenceTemplate_includeS.h \
-  ObjRefTemplate/ort_export.h \
-  ObjRefTemplate/Default_ORTC.inl \
-  ObjRefTemplate/ObjectReferenceTemplateC.inl \
-  ObjRefTemplate/Default_ORT.pidl \
-  ObjRefTemplate/ObjectReferenceTemplate.pidl \
-  ObjRefTemplate/ObjectReferenceTemplate_include.pidl
+  ObjRefTemplate/ort_export.h
 
 pkgconfigdata_DATA += TAO_ObjRefTemplate.pc
 
@@ -1524,6 +1531,7 @@ TAO_ObjRefTemplate.pc: ${top_srcdir}/config.status ${srcdir}/ObjRefTemplate/TAO_
         ${top_srcdir}/config.status --file $@:${srcdir}/ObjRefTemplate/TAO_ObjRefTemplate.pc.in
 
 EXTRA_DIST += \
+  ObjRefTemplate/TAO_ObjRefTemplate.pc.in \
   ObjRefTemplate/TAO_ObjRefTemplate.rc
 
 
@@ -1558,19 +1566,19 @@ libTAO_IORInterceptor_la_LIBADD = \
 
 nobase_include_HEADERS += \
   IORInterceptor/IORInfo.h \
+  IORInterceptor/IORInfo.inl \
+  IORInterceptor/IORInfo.pidl \
   IORInterceptor/IORInfoC.h \
+  IORInterceptor/IORInfoC.inl \
   IORInterceptor/IORInterceptor.h \
+  IORInterceptor/IORInterceptor.pidl \
   IORInterceptor/IORInterceptorC.h \
+  IORInterceptor/IORInterceptorC.inl \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h \
   IORInterceptor/IORInterceptor_Adapter_Impl.h \
   IORInterceptor/IORInterceptor_List.h \
-  IORInterceptor/iorinterceptor_export.h \
-  IORInterceptor/IORInfo.inl \
-  IORInterceptor/IORInfoC.inl \
-  IORInterceptor/IORInterceptorC.inl \
   IORInterceptor/IORInterceptor_List.inl \
-  IORInterceptor/IORInfo.pidl \
-  IORInterceptor/IORInterceptor.pidl
+  IORInterceptor/iorinterceptor_export.h
 
 pkgconfigdata_DATA += TAO_IORInterceptor.pc
 
@@ -1578,6 +1586,7 @@ TAO_IORInterceptor.pc: ${top_srcdir}/config.status ${srcdir}/IORInterceptor/TAO_
         ${top_srcdir}/config.status --file $@:${srcdir}/IORInterceptor/TAO_IORInterceptor.pc.in
 
 EXTRA_DIST += \
+  IORInterceptor/TAO_IORInterceptor.pc.in \
   IORInterceptor/TAO_IORInterceptor.rc
 
 
@@ -1606,12 +1615,12 @@ libTAO_IORManip_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  IORManipulation/IOR.pidl \
   IORManipulation/IORC.h \
+  IORManipulation/IORC.i \
   IORManipulation/IORManip_Loader.h \
   IORManipulation/IORManipulation.h \
-  IORManipulation/ior_manip_export.h \
-  IORManipulation/IORC.i \
-  IORManipulation/IOR.pidl
+  IORManipulation/ior_manip_export.h
 
 pkgconfigdata_DATA += TAO_IORManip.pc
 
@@ -1619,6 +1628,7 @@ TAO_IORManip.pc: ${top_srcdir}/config.status ${srcdir}/IORManipulation/TAO_IORMa
         ${top_srcdir}/config.status --file $@:${srcdir}/IORManipulation/TAO_IORManip.pc.in
 
 EXTRA_DIST += \
+  IORManipulation/TAO_IORManip.pc.in \
   IORManipulation/TAO_IORManip.rc
 
 
@@ -1648,12 +1658,12 @@ libTAO_IORTable_la_LIBADD = \
 
 nobase_include_HEADERS += \
   IORTable/IORTable.h \
+  IORTable/IORTable.pidl \
   IORTable/IORTableC.h \
+  IORTable/IORTableC.i \
   IORTable/IOR_Table_Impl.h \
   IORTable/Table_Adapter.h \
-  IORTable/iortable_export.h \
-  IORTable/IORTableC.i \
-  IORTable/IORTable.pidl
+  IORTable/iortable_export.h
 
 pkgconfigdata_DATA += TAO_IORTable.pc
 
@@ -1661,6 +1671,7 @@ TAO_IORTable.pc: ${top_srcdir}/config.status ${srcdir}/IORTable/TAO_IORTable.pc.
         ${top_srcdir}/config.status --file $@:${srcdir}/IORTable/TAO_IORTable.pc.in
 
 EXTRA_DIST += \
+  IORTable/TAO_IORTable.pc.in \
   IORTable/TAO_IORTable.rc
 
 
@@ -1722,10 +1733,15 @@ nobase_include_HEADERS += \
   RTCORBA/Multi_Priority_Mapping.h \
   RTCORBA/Network_Priority_Mapping.h \
   RTCORBA/Network_Priority_Mapping_Manager.h \
+  RTCORBA/Network_Priority_Mapping_Manager.i \
   RTCORBA/Priority_Mapping.h \
   RTCORBA/Priority_Mapping_Manager.h \
+  RTCORBA/Priority_Mapping_Manager.i \
   RTCORBA/RTCORBA.h \
+  RTCORBA/RTCORBA.pidl \
   RTCORBA/RTCORBAC.h \
+  RTCORBA/RTCORBAC.inl \
+  RTCORBA/RTCORBA_include.pidl \
   RTCORBA/RTCORBA_includeC.h \
   RTCORBA/RTCORBA_includeS.h \
   RTCORBA/RT_Current.h \
@@ -1743,17 +1759,12 @@ nobase_include_HEADERS += \
   RTCORBA/RT_Stub_Factory.h \
   RTCORBA/RT_Thread_Lane_Resources_Manager.h \
   RTCORBA/RT_Transport_Descriptor.h \
+  RTCORBA/RT_Transport_Descriptor.inl \
   RTCORBA/RT_Transport_Descriptor_Property.h \
+  RTCORBA/RT_Transport_Descriptor_Property.inl \
   RTCORBA/Thread_Pool.h \
   RTCORBA/rtcorba_export.h \
-  RTCORBA/rtcorba_typedefs.h \
-  RTCORBA/Network_Priority_Mapping_Manager.i \
-  RTCORBA/Priority_Mapping_Manager.i \
-  RTCORBA/RTCORBAC.inl \
-  RTCORBA/RT_Transport_Descriptor.inl \
-  RTCORBA/RT_Transport_Descriptor_Property.inl \
-  RTCORBA/RTCORBA.pidl \
-  RTCORBA/RTCORBA_include.pidl
+  RTCORBA/rtcorba_typedefs.h
 
 pkgconfigdata_DATA += TAO_RTCORBA.pc
 
@@ -1763,6 +1774,7 @@ TAO_RTCORBA.pc: ${top_srcdir}/config.status ${srcdir}/RTCORBA/TAO_RTCORBA.pc.in
 endif BUILD_RT_CORBA
 
 EXTRA_DIST += \
+  RTCORBA/TAO_RTCORBA.pc.in \
   RTCORBA/TAO_RTCORBA.rc
 
 
@@ -1801,17 +1813,17 @@ libTAO_RTPortableServer_la_LIBADD = \
 
 nobase_include_HEADERS += \
   RTPortableServer/RTPortableServer.h \
+  RTPortableServer/RTPortableServer.pidl \
   RTPortableServer/RTPortableServerC.h \
+  RTPortableServer/RTPortableServerC.inl \
   RTPortableServer/RT_Acceptor_Filters.h \
   RTPortableServer/RT_Collocation_Resolver.h \
   RTPortableServer/RT_Object_Adapter_Factory.h \
   RTPortableServer/RT_POA.h \
+  RTPortableServer/RT_POA.i \
   RTPortableServer/RT_Policy_Validator.h \
   RTPortableServer/RT_Servant_Dispatcher.h \
-  RTPortableServer/rtportableserver_export.h \
-  RTPortableServer/RTPortableServerC.inl \
-  RTPortableServer/RT_POA.i \
-  RTPortableServer/RTPortableServer.pidl
+  RTPortableServer/rtportableserver_export.h
 
 pkgconfigdata_DATA += TAO_RTPortableServer.pc
 
@@ -1821,13 +1833,14 @@ TAO_RTPortableServer.pc: ${top_srcdir}/config.status ${srcdir}/RTPortableServer/
 endif BUILD_RT_CORBA
 
 EXTRA_DIST += \
+  RTPortableServer/TAO_RTPortableServer.pc.in \
   RTPortableServer/TAO_RTPortableServer.rc
 
 
 ## Makefile.RTScheduler.am 
 
-if BUILD_RT_CORBA
 if BUILD_CORBA_MESSAGING
+if BUILD_RT_CORBA
 
 lib_LTLIBRARIES += libTAO_RTScheduler.la
 
@@ -1861,28 +1874,29 @@ nobase_include_HEADERS += \
   RTScheduling/Current.h \
   RTScheduling/Distributable_Thread.h \
   RTScheduling/RTScheduler.h \
+  RTScheduling/RTScheduler.pidl \
   RTScheduling/RTSchedulerC.h \
+  RTScheduling/RTSchedulerC.i \
   RTScheduling/RTScheduler_Initializer.h \
   RTScheduling/RTScheduler_Loader.h \
   RTScheduling/RTScheduler_Manager.h \
+  RTScheduling/RTScheduler_Manager.i \
+  RTScheduling/RTScheduler_include.pidl \
   RTScheduling/RTScheduler_includeC.h \
   RTScheduling/Request_Interceptor.h \
   RTScheduling/ThreadAction.h \
-  RTScheduling/rtscheduler_export.h \
-  RTScheduling/RTSchedulerC.i \
-  RTScheduling/RTScheduler_Manager.i \
-  RTScheduling/RTScheduler.pidl \
-  RTScheduling/RTScheduler_include.pidl
+  RTScheduling/rtscheduler_export.h
 
 pkgconfigdata_DATA += TAO_RTScheduler.pc
 
 TAO_RTScheduler.pc: ${top_srcdir}/config.status ${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
 
-endif BUILD_CORBA_MESSAGING
 endif BUILD_RT_CORBA
+endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
+  RTScheduling/TAO_RTScheduler.pc.in \
   RTScheduling/TAO_RTScheduler.rc
 
 
@@ -1909,8 +1923,8 @@ libTAO_SmartProxies_la_LIBADD = \
 
 nobase_include_HEADERS += \
   SmartProxies/Smart_Proxies.h \
-  SmartProxies/smartproxies_export.h \
-  SmartProxies/Smart_Proxies.inl
+  SmartProxies/Smart_Proxies.inl \
+  SmartProxies/smartproxies_export.h
 
 pkgconfigdata_DATA += TAO_SmartProxies.pc
 
@@ -1918,7 +1932,8 @@ TAO_SmartProxies.pc: ${top_srcdir}/config.status ${srcdir}/SmartProxies/TAO_Smar
         ${top_srcdir}/config.status --file $@:${srcdir}/SmartProxies/TAO_SmartProxies.pc.in
 
 EXTRA_DIST += \
-  SmartProxies/SmartProxies.rc
+  SmartProxies/SmartProxies.rc \
+  SmartProxies/TAO_SmartProxies.pc.in
 
 
 ## Makefile.Strategies.am 
@@ -1980,20 +1995,25 @@ libTAO_Strategies_la_LIBADD = \
 
 nobase_include_HEADERS += \
   Strategies/DIOP_Acceptor.h \
+  Strategies/DIOP_Acceptor.i \
   Strategies/DIOP_Connection_Handler.h \
   Strategies/DIOP_Connector.h \
   Strategies/DIOP_Endpoint.h \
+  Strategies/DIOP_Endpoint.i \
   Strategies/DIOP_Factory.h \
   Strategies/DIOP_Profile.h \
   Strategies/DIOP_Transport.h \
   Strategies/FIFO_Connection_Purging_Strategy.h \
   Strategies/LFU_Connection_Purging_Strategy.h \
   Strategies/LF_Strategy_Null.h \
+  Strategies/LF_Strategy_Null.inl \
   Strategies/NULL_Connection_Purging_Strategy.h \
   Strategies/SCIOP_Acceptor.h \
+  Strategies/SCIOP_Acceptor.i \
   Strategies/SCIOP_Connection_Handler.h \
   Strategies/SCIOP_Connector.h \
   Strategies/SCIOP_Endpoint.h \
+  Strategies/SCIOP_Endpoint.i \
   Strategies/SCIOP_Factory.h \
   Strategies/SCIOP_Lite_Factory.h \
   Strategies/SCIOP_Profile.h \
@@ -2002,6 +2022,7 @@ nobase_include_HEADERS += \
   Strategies/SHMIOP_Connection_Handler.h \
   Strategies/SHMIOP_Connector.h \
   Strategies/SHMIOP_Endpoint.h \
+  Strategies/SHMIOP_Endpoint.i \
   Strategies/SHMIOP_Factory.h \
   Strategies/SHMIOP_Profile.h \
   Strategies/SHMIOP_Transport.h \
@@ -2009,24 +2030,18 @@ nobase_include_HEADERS += \
   Strategies/UIOP_Connection_Handler.h \
   Strategies/UIOP_Connector.h \
   Strategies/UIOP_Endpoint.h \
+  Strategies/UIOP_Endpoint.i \
   Strategies/UIOP_Factory.h \
   Strategies/UIOP_Lite_Factory.h \
   Strategies/UIOP_Profile.h \
   Strategies/UIOP_Transport.h \
   Strategies/advanced_resource.h \
   Strategies/sciop_endpoints.h \
+  Strategies/sciop_endpoints.i \
+  Strategies/sciop_endpoints.pidl \
   Strategies/strategies_export.h \
   Strategies/uiop_endpoints.h \
-  Strategies/DIOP_Acceptor.i \
-  Strategies/DIOP_Endpoint.i \
-  Strategies/LF_Strategy_Null.inl \
-  Strategies/SCIOP_Acceptor.i \
-  Strategies/SCIOP_Endpoint.i \
-  Strategies/SHMIOP_Endpoint.i \
-  Strategies/UIOP_Endpoint.i \
-  Strategies/sciop_endpoints.i \
   Strategies/uiop_endpoints.i \
-  Strategies/sciop_endpoints.pidl \
   Strategies/uiop_endpoints.pidl
 
 pkgconfigdata_DATA += TAO_Strategies.pc
@@ -2035,8 +2050,154 @@ TAO_Strategies.pc: ${top_srcdir}/config.status ${srcdir}/Strategies/TAO_Strategi
         ${top_srcdir}/config.status --file $@:${srcdir}/Strategies/TAO_Strategies.pc.in
 
 EXTRA_DIST += \
+  Strategies/TAO_Strategies.pc.in \
   Strategies/TAO_Strategies.rc
 
+
+## Makefile.TAO_FlResource.am 
+
+if BUILD_ACE_FLREACTOR
+if BUILD_FL
+if BUILD_GL
+if BUILD_X11
+
+lib_LTLIBRARIES += libTAO_FlResource.la
+
+libTAO_FlResource_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_FLRESOURCE_BUILD_DLL
+
+libTAO_FlResource_la_SOURCES = \
+  FlResource_Factory.cpp \
+  FlResource_Loader.cpp
+
+libTAO_FlResource_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_FlResource_la_LIBADD = \
+  $(ACE_BUILDDIR)/ace//libACE_FlReactor.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  FlResource_Factory.h \
+  FlResource_Loader.h \
+  TAO_FlResource_Export.h
+
+endif BUILD_X11
+endif BUILD_GL
+endif BUILD_FL
+endif BUILD_ACE_FLREACTOR
+
+## Makefile.TAO_QtResource.am 
+
+if BUILD_ACE_QTREACTOR
+if BUILD_QT
+
+lib_LTLIBRARIES += libTAO_QtResource.la
+
+libTAO_QtResource_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(QTDIR)/include \
+  -DQT_THREAD_SUPPORT \
+  -DTAO_QTRESOURCE_BUILD_DLL
+
+libTAO_QtResource_la_SOURCES = \
+  QtResource_Factory.cpp \
+  QtResource_Loader.cpp
+
+libTAO_QtResource_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_QtResource_la_LIBADD = \
+  $(ACE_BUILDDIR)/ace//libACE_QtReactor.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  -lqt-mt
+
+nobase_include_HEADERS += \
+  QtResource_Factory.h \
+  QtResource_Loader.h \
+  TAO_QtResource_Export.h
+
+endif BUILD_QT
+endif BUILD_ACE_QTREACTOR
+
+## Makefile.TAO_TkResource.am 
+
+if BUILD_ACE_TKREACTOR
+if BUILD_TK
+
+lib_LTLIBRARIES += libTAO_TkResource.la
+
+libTAO_TkResource_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_TKRESOURCE_BUILD_DLL
+
+libTAO_TkResource_la_SOURCES = \
+  TkResource_Factory.cpp \
+  TkResource_Loader.cpp
+
+libTAO_TkResource_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_TkResource_la_LIBADD = \
+  $(ACE_BUILDDIR)/ace//libACE_TkReactor.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  TAO_TkResource_Export.h \
+  TkResource_Factory.h \
+  TkResource_Loader.h
+
+endif BUILD_TK
+endif BUILD_ACE_TKREACTOR
+
+## Makefile.TAO_XtResource.am 
+
+if BUILD_ACE_XTREACTOR
+if BUILD_X11
+if BUILD_XT
+
+lib_LTLIBRARIES += libTAO_XtResource.la
+
+libTAO_XtResource_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_XTRESOURCE_BUILD_DLL
+
+libTAO_XtResource_la_SOURCES = \
+  XtResource_Factory.cpp \
+  XtResource_Loader.cpp
+
+libTAO_XtResource_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_XtResource_la_LIBADD = \
+  $(ACE_BUILDDIR)/ace//libACE_XtReactor.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  TAO_XtResource_Export.h \
+  XtResource_Factory.h \
+  XtResource_Loader.h
+
+endif BUILD_XT
+endif BUILD_X11
+endif BUILD_ACE_XTREACTOR
 
 ## Makefile.TypeCodeFactory.am 
 
@@ -2064,13 +2225,13 @@ libTAO_TypeCodeFactory_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  TypeCodeFactory/TypeCodeFactory.pidl \
   TypeCodeFactory/TypeCodeFactoryC.h \
+  TypeCodeFactory/TypeCodeFactoryC.inl \
   TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h \
   TypeCodeFactory/TypeCodeFactory_Loader.h \
   TypeCodeFactory/TypeCodeFactory_i.h \
-  TypeCodeFactory/typecodefactory_export.h \
-  TypeCodeFactory/TypeCodeFactoryC.inl \
-  TypeCodeFactory/TypeCodeFactory.pidl
+  TypeCodeFactory/typecodefactory_export.h
 
 pkgconfigdata_DATA += TAO_TypeCodeFactory.pc
 
@@ -2078,6 +2239,7 @@ TAO_TypeCodeFactory.pc: ${top_srcdir}/config.status ${srcdir}/TypeCodeFactory/TA
         ${top_srcdir}/config.status --file $@:${srcdir}/TypeCodeFactory/TAO_TypeCodeFactory.pc.in
 
 EXTRA_DIST += \
+  TypeCodeFactory/TAO_TypeCodeFactory.pc.in \
   TypeCodeFactory/TypeCodeFactory.rc
 
 
@@ -2113,17 +2275,21 @@ nobase_include_HEADERS += \
   Utils/Implicit_Deactivator.h \
   Utils/ORB_Destroyer.h \
   Utils/PolicyList_Destroyer.h \
+  Utils/PolicyList_Destroyer.inl \
   Utils/RIR_Narrow.h \
   Utils/Servant_Var.h \
+  Utils/Servant_Var.inl \
   Utils/Server_Main.h \
-  Utils/utils_export.h \
-  Utils/PolicyList_Destroyer.inl \
-  Utils/Servant_Var.inl
+  Utils/utils_export.h
 
 pkgconfigdata_DATA += TAO_Utils.pc
 
 TAO_Utils.pc: ${top_srcdir}/config.status ${srcdir}/TAO_Utils.pc.in
         ${top_srcdir}/config.status --file $@:${srcdir}/TAO_Utils.pc.in
+
+EXTRA_DIST += \
+  TAO_Utils.pc.in
+
 
 ## Clean up template repositories, etc.
 clean-local:
