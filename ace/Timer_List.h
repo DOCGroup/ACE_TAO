@@ -109,18 +109,6 @@ public:
   // Returns 1 if cancellation succeeded and 0 if the <timer_id>
   // wasn't found.
 
-  virtual int expire (const ACE_Time_Value &current_time);
-  // Run the <handle_timeout> method for all Timers whose values are
-  // <= <cur_time>.  This does not account for <timer_skew>.  Returns
-  // the number of <Event_Handler>s for which <handle_timeout> was
-  // called.
-
-  virtual int expire (void);
-  // Run the <handle_timeout> method for all Timers whose values are
-  // <= <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.
-  // Returns the number of <Event_Handler>s for which <handle_timeout>
-  // was called.
-
 private:
   virtual void reschedule (ACE_Timer_Node *);
   // Reschedule an "interval" <ACE_Timer_Node>.

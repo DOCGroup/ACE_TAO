@@ -150,7 +150,7 @@ public:
   // Returns 1 if cancellation succeeded and 0 if the <timer_id>
   // wasn't found.
 
-  virtual int expire (const ACE_Time_Value &current_time) = 0;
+  virtual int expire (const ACE_Time_Value &current_time);
   // Run the <handle_timeout> method for all Timers whose values are
   // <= <cur_time>.  This does not account for <timer_skew>.  Returns
   // the number of <Event_Handler>s for which <handle_timeout> was
