@@ -82,4 +82,3 @@ be_visitor_interface_fwd_cdr_op_ci::visit_interface_fwd (
 
   return 0;
 }
-

@@ -1285,4 +1285,3 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
           << included_file
           << end_delimiter << "\n";
 }
-
