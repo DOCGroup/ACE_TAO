@@ -1,3 +1,8 @@
+Tue Oct 10 21:54:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/msvc_auto_compile.pl (Build_Core): Updated LIB core build
+	  dsp list.
+
 Tue Oct 10 18:51:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile.bor:
