@@ -12,6 +12,12 @@ Tue Oct 21 07:14:24 1997  David L. Levine  <levine@cs.wustl.edu>
 	  sometimes needs to be cast to be used.  Thanks to Brian Mendel
 	  for reporting this.
 
+	* include/makeinclude/platform_vxworks*.GNU: added VXWORKS=1 macro,
+	  for use by individual Makefiles to suppress VxWorks builds.
+
+	* examples/System_V_IPC: suppress VxWorks builds because the builds
+	  fail, and the examples wouldn't run anyways.
+
 Tue Oct 21 02:23:26 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.23, released Tue Oct 21 02:23:26 1997.
