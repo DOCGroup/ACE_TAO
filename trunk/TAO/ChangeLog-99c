@@ -1,3 +1,17 @@
+Sat Mar 20 15:21:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_i.h:
+          
+          Implemented persistance for the number of cans.  It saves
+          it to a file.
+
+        * orbsvcs/tests/ImplRepo/nestea_server.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.h:
+
+          Removed leftover references to Paper Airplanes.
+
 Sat Mar 20 14:40:10 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * examples/Quoter/Factor_Finder.dsp:
