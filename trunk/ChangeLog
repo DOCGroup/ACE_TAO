@@ -1,3 +1,11 @@
+Mon Mar  5 18:54:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/PerlACE/Process_Unix.pm:
+
+          Updated the signal detection to not pay attention to TERM and
+          KILL.  Will print out better output when signals cause a process
+          to exit during most calls like Kill () or TerminateWaitKill ().
+
 Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Synch_T.{h,i}: Added a new ACE_Guard constructor that
