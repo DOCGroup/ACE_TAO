@@ -1,6 +1,9 @@
 // $Id$
 
 #include "Strategy_Scheduler.h"
+#if defined (quantify)
+  #include <quantify.h>
+#endif /* quantify */
 
 // period times, in 100 nanoseconds
 #define ONE_HZ    10000000
@@ -173,7 +176,14 @@ run_schedule (ACE_Scheduler_Strategy &strategy,
     return -1;
   }
 
+#if defined (quantify)
+  quantify_start_recording_data ();
+#endif /* quantify */
   ACE_DynScheduler::status_t status = scheduler.schedule ();
+#if defined (quantify)
+  quantify_stop_recording_data ();
+#endif /* quantify */
+
   switch (status)
   {
     case ACE_DynScheduler::SUCCEEDED:
