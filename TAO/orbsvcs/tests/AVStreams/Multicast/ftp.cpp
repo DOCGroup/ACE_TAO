@@ -105,10 +105,10 @@ FTP_Client_StreamEndPoint::set_protocol_object (const char *flowname,
 }
 
 
-Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb_,
-                                                        PortableServer::POA_ptr poa_,
+Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb,
+                                                        PortableServer::POA_ptr poa,
                                                         Client *client)
-  :ENDPOINT_STRATEGY (orb_, poa_),
+  :ENDPOINT_STRATEGY (orb, poa),
    client_ (client)
 {
 }
