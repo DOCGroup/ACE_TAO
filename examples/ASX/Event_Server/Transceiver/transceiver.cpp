@@ -9,66 +9,21 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Get_Opt.h"
 
-// Port number of event server.
-static u_short port_number;
-
-// Name of event server.
-static char *host_name;
-
-// Are we playing the Consumer ('C') or Supplier ('S') role?
-static char role = 'S';
-
-// Handle the command-line arguments.
-
-static void
-parse_args (int argc, char *argv[])
-{
-  ACE_Get_Opt get_opt (argc, argv, "Ch:p:S");
-
-  port_number = ACE_DEFAULT_SERVER_PORT;
-  host_name = ACE_DEFAULT_SERVER_HOST;
-
-  for (int c; (c = get_opt ()) != -1; )
-    switch (c)
-      {
-      case 'C':
-	role = c;
-	break;
-      case 'h':
-	host_name = get_opt.optarg;
-	break;
-      case 'p':
-	port_number = ACE_OS::atoi (get_opt.optarg);
-	break;
-      case 'S':
-	role = c;
-	break;
-      default:
-	ACE_ERROR ((LM_ERROR,
-		    "usage: %n [-p portnum] [-h host_name]\n%a", 1));
-	/* NOTREACHED */
-	break;
-      }
-
-  // Increment by 1 if we're the supplier to mirror the default
-  // behavior of the Event_Server (which sets the Consumer port to
-  // ACE_DEFAULT_SERVER_PORT and the Supplier port to
-  // ACE_DEFAULT_SERVER_PORT + 1).
-  if (role == 'S' && port_number == ACE_DEFAULT_SERVER_PORT)
-    port_number++;
-}
-
 class Event_Transceiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
   // = TITLE
   //     Generate and receives messages from the event server.
   //
   // = DESCRIPTION
   //     This class is both a consumer and supplier of events, i.e.,
-  //     it is a ``transceiver.''
-{
+  //     it's a ``transceiver.''
 public:
   // = Initialization method.
+  Event_Transceiver (int argc, char *argv[]);
+  // Performs the actual initialization.
+
   Event_Transceiver (void);
+  // No-op constructor (required by the <ACE_Connector>).
 
   // = Svc_Handler hook called by the <ACE_Connector>.
   virtual int open (void *);
@@ -88,15 +43,71 @@ private:
   int receiver (void);
   // Reads data from socket and writes to ACE_STDOUT.
 
-  int forwarder (void);
+  int transmitter (void);
   // Writes data from ACE_STDIN to socket.
+
+  int parse_args (int argc, char *argv[]);
+  // Parse the command-line arguments.
+
+  u_short port_number_;
+  // Port number of event server.
+
+  char *host_name_;
+  // Name of event server.
+
+  char *role_;
+  // Are we playing the Consumer or Supplier role?
 };
+
+// Handle the command-line arguments.
+
+int
+Event_Transceiver::parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opt (argc, argv, "Ch:p:S");
+
+  this->port_number_ = ACE_DEFAULT_SERVER_PORT;
+  this->host_name_ = ACE_DEFAULT_SERVER_HOST;
+  this->role_ = "Supplier";
+
+  for (int c; (c = get_opt ()) != -1; )
+    switch (c)
+      {
+      case 'C':
+	this->role_ = "Consumer";
+	break;
+      case 'h':
+	this->host_name_ = get_opt.optarg;
+	break;
+      case 'p':
+	this->port_number_ = ACE_OS::atoi (get_opt.optarg);
+	break;
+      case 'S':
+	this->role_ = "Supplier";
+	break;
+      default:
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage: %n [-CS] [-h host_name] [-p portnum] \n"),
+                          -1);
+	/* NOTREACHED */
+	break;
+      }
+
+  // Increment by 1 if we're the supplier to mirror the default
+  // behavior of the Event_Server (which sets the Consumer port to
+  // ACE_DEFAULT_SERVER_PORT and the Supplier port to
+  // ACE_DEFAULT_SERVER_PORT + 1).  Note that this is kind of a
+  // hack...
+  if (ACE_OS::strcmp (this->role_, "Supplier") == 0
+      && this->port_number_ == ACE_DEFAULT_SERVER_PORT)
+    this->port_number_++;
+}
 
 int
 Event_Transceiver::handle_close (ACE_HANDLE,
 				 ACE_Reactor_Mask)
 {
-  ACE_Reactor::end_event_loop();
+  ACE_Reactor::end_event_loop ();
   return 0;
 }
 
@@ -107,41 +118,76 @@ Event_Transceiver::handle_signal (int signum,
 				  siginfo_t *,
 				  ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) received signal %S\n",
+              signum));
 
-  ACE_Reactor::end_event_loop();
+  ACE_Reactor::end_event_loop ();
   return 0;
 }
 
 Event_Transceiver::Event_Transceiver (void)
 {
-  ACE_Sig_Set sig_set;
+}
 
-  sig_set.sig_add (SIGINT);
-  sig_set.sig_add (SIGQUIT);
-
-  if (ACE_Reactor::instance ()->register_handler
-      (sig_set, this) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
-
-  // We need to register <this> here before we're connected since
-  // otherwise <get_handle> will return the connection socket handle
-  // for the peer.
-  else if (ACE::register_stdin_handler (this,
-					ACE_Reactor::instance (),
-					ACE_Thread_Manager::instance ()) == -1)
+Event_Transceiver::Event_Transceiver (int argc, char *argv[])
+{
+  if (this->parse_args (argc, argv) == -1)
     ACE_ERROR ((LM_ERROR,
-		"%p\n",
-		"register_stdin_handler"));
+                "%p\n",
+                "parse_args"));
+  else
+    {
+      ACE_Sig_Set sig_set;
+
+      sig_set.sig_add (SIGINT);
+      sig_set.sig_add (SIGQUIT);
+
+      // Register to handle the SIGINT and SIGQUIT signals.
+      if (ACE_Reactor::instance ()->register_handler
+          (sig_set,
+           this) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "register_handler"));
+
+      // We need to register <this> here before we're connected since
+      // otherwise <get_handle> will return the connection socket
+      // handle for the peer.
+      else if (ACE::register_stdin_handler (this,
+                                            ACE_Reactor::instance (),
+                                            ACE_Thread_Manager::instance ()) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "register_stdin_handler"));
+
+      // Address of the server.
+      ACE_INET_Addr server_addr (this->port_number_,
+                                 this->host_name_);
+
+      ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR> connector;
+
+      // We need a pointer here because connect takes a reference to a
+      // pointer!
+      Event_Transceiver *etp = this;
+
+      // Establish the connection to the Event Server.
+      if (connector.connect (etp,
+                             server_addr) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    this->host_name_));
+    }
 }
 
 int
 Event_Transceiver::open (void *)
 {
-  // Register ourselves to be notified when there's data on the
-  // socket.
+  // Register ourselves to be notified when there's data to read on
+  // the socket.
   if (ACE_Reactor::instance ()->register_handler
-	   (this, ACE_Event_Handler::READ_MASK) == -1)
+      (this,
+       ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "register_handler"),
@@ -152,18 +198,19 @@ Event_Transceiver::open (void *)
 int
 Event_Transceiver::handle_input (ACE_HANDLE handle)
 {
+  // Determine whether we play the role of a consumer or a supplier.
   if (handle == ACE_STDIN)
-    return this->forwarder ();
+    return this->transmitter ();
   else
     return this->receiver ();
 }
 
-
 int
-Event_Transceiver::forwarder (void)
+Event_Transceiver::transmitter (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) entering %s forwarder\n",
-	      role == 'C' ? "Consumer" : "Supplier"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) entering %s transmitter\n",
+	      this->role_));
 
   char buf[BUFSIZ];
   ssize_t n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
@@ -172,45 +219,54 @@ Event_Transceiver::forwarder (void)
   if (n <= 0 || this->peer ().send_n (buf, n) != n)
     result = -1;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) leaving %s forwarder\n",
-	      role == 'C' ? "Consumer" : "Supplier"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) leaving %s transmitter\n",
+	      this->role_));
   return result;
 }
 
 int
 Event_Transceiver::receiver (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) entering %s receiver\n",
-	      role == 'C' ? "Consumer" : "Supplier"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) entering %s receiver\n",
+	      this->role_));
 
   char buf[BUFSIZ];
 
   ssize_t n = this->peer ().recv (buf, sizeof buf);
   int result = 0;
 
-  if (n <= 0 || ACE_OS::write (ACE_STDOUT, buf, n) != n)
+  if (n <= 0 
+      || ACE_OS::write (ACE_STDOUT, buf, n) != n)
     result = -1;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) leaving %s receiver\n",
-	      role == 'C' ? "Consumer" : "Supplier"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) leaving %s receiver\n",
+	      this->role_));
   return result;
 }
 
 int
 main (int argc, char *argv[])
 {
-  ACE_Service_Config daemon (argv[0]);
+  if (ACE_Service_Config::open (argv[0]) == -1
+      && errno != ENOENT)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n", 
+                       "open"),
+                       -1);
 
-  parse_args (argc, argv);
+  // Create and initialize the transceiver.
+  Event_Transceiver transceiver (argc, argv);
 
-  ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR> connector;
-  Event_Transceiver transceiver, *tp = &transceiver;
+  // Demonstrate how we can check if a constructor failed...
+  if (ACE_LOG_MSG->op_status () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "Event_Transceiver constructor failed"),
+                       -1);
 
-  ACE_INET_Addr server_addr (port_number, host_name);
-
-  // Establish the connection to the Event Server.
-  if (connector.connect (tp, server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", host_name), 1);
 
   // Run event loop until either the event server shuts down or we get
   // a SIGINT.

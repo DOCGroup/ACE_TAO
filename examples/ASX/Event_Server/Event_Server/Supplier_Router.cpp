@@ -17,9 +17,12 @@ Supplier_Router::svc (void)
        )
     {
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) warning: Supplier_Router is forwarding a message via send_peers\n"));
+		  "(%t) warning: Supplier_Router is "
+                  "forwarding a message via send_peers\n"));
 
-      // Broadcast the message to the Suppliers.
+      // Broadcast the message to the Suppliers, even though this is
+      // "incorrect" (assuming a oneway flow of events from Suppliers
+      // to Consumers)!
 
       if (this->context ()->send_peers (mb) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, 
@@ -27,35 +30,39 @@ Supplier_Router::svc (void)
 			   -1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) stopping svc in Supplier_Router\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) stopping svc in Supplier_Router\n"));
   return 0;
 }
 
 Supplier_Router::Supplier_Router (Peer_Router_Context *prc)
   : Peer_Router (prc)
 {
+  // Increment the reference count.
   this->context ()->duplicate ();
 }
 
-// Initialize the Supplier Router. 
+// Initialize the Supplier Router.
 
 int
 Supplier_Router::open (void *)
 {
   if (this->is_reader ())
     {
-      // Set the Peer_Router_Context to point back to us so that all the
-      // Peer_Handler's <put> their incoming <Message_Blocks> to our
-      // reader Task.
+      // Set the <Peer_Router_Context> to point back to us so that all
+      // the Peer_Handler's <put> their incoming <Message_Blocks> to
+      // our reader Task.
       this->context ()->peer_router (this);
       return 0;
     }
 
   else // if (this->is_writer ()
     {
+      // Increment the reference count.
+      this->context ()->duplicate ();      
+
       // Make this an active object to handle the error cases in a
       // separate thread.
-      this->context ()->duplicate ();      
       return this->activate (Options::instance ()->t_flags ());
     }
 }
@@ -65,7 +72,8 @@ Supplier_Router::open (void *)
 int
 Supplier_Router::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) closing Supplier_Router %s\n",
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t) closing Supplier_Router %s\n",
   	      this->is_reader () ? "reader" : "writer"));
 
   if (this->is_writer ())
@@ -94,19 +102,23 @@ Supplier_Router::put (ACE_Message_Block *mb,
     }
 
   // If we're the reader then we are responsible for pass messages up
-  // to the next Module's writer Task.
-
+  // to the next Module's reader Task.  Note that in a "real"
+  // application this is likely where we'd take a look a the actual
+  // information that was in the message, e.g., in order to figure out
+  // what operation it was and what it's "parameters" where, etc.
   else if (this->is_reader ())
     return this->put_next (mb);
+
   else // if (this->is_writer ())
     {
       // Someone is trying to write to the Supplier.  In this
-      // implementation this is considered an error.  However, we'll
+      // implementation this is considered an "error."  However, we'll
       // just go ahead and forward the message to the Supplier (who
       // hopefully is prepared to receive it).
-      ACE_DEBUG ((LM_WARNING, "(%t) warning: sending to a Supplier\n"));
+      ACE_DEBUG ((LM_WARNING,
+                  "(%t) warning: sending to a Supplier\n"));
 
-      // Queue up the message to processed by Supplier_Router::svc().
+      // Queue up the message to processed by <Supplier_Router::svc>.
       // Since we don't expect to be getting many of these messages,
       // we queue them up and run them in a separate thread to avoid
       // taxing the main thread.
@@ -114,7 +126,7 @@ Supplier_Router::put (ACE_Message_Block *mb,
     }
 }
 
-// Return information about the Supplier_Router ACE_Module. 
+// Return information about the <Supplier_Router>.
 
 int 
 Supplier_Router::info (char **strp, size_t length) const
@@ -126,13 +138,17 @@ Supplier_Router::info (char **strp, size_t length) const
   if (this->context ()->acceptor ().get_local_addr (addr) == -1)
     return -1;
   
-  ACE_OS::sprintf (buf, "%s\t %d/%s %s (%s)\n",
-		   mod_name, addr.get_port_number (), "tcp",
-		   "# supplier router", this->is_reader () ? "reader" : "writer");
-  
+  ACE_OS::sprintf (buf,
+                   "%s\t %d/%s %s (%s)\n",
+		   mod_name,
+                   addr.get_port_number (),
+                   "tcp",
+		   "# supplier router",
+                   this->is_reader () ? "reader" : "writer");
   if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)
     return -1;
   else
     ACE_OS::strncpy (*strp, mod_name, length);
+
   return ACE_OS::strlen (mod_name);
 }
