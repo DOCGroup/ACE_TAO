@@ -735,25 +735,27 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
                                                    int dont_call)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::cancel");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   int number_of_cancellations = 0;
 
   // Try to locate the ACE_Timer_Node that matches the timer_id.
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
-  for (size_t i = 0; i < this->cur_size_; )
-    {
-      if (this->heap_[i]->get_type () == type)
-        {
-          ACE_Timer_Node_T<TYPE> *temp = this->remove (i);
+    for (size_t i = 0; i < this->cur_size_; )
+      {
+        if (this->heap_[i]->get_type () == type)
+          {
+            ACE_Timer_Node_T<TYPE> *temp = this->remove (i);
 
-          number_of_cancellations++;
+            number_of_cancellations++;
 
-          this->free_node (temp);
-        }
-      else
-        i++;
-    }
+            this->free_node (temp);
+          }
+        else
+          i++;
+      }
+  }
 
   if (dont_call == 0)
     this->upcall_functor ().cancellation (*this, type);
