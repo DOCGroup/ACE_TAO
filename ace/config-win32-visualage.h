@@ -18,6 +18,14 @@
 #define ACE_CC_PREPROCESSOR ""
 #define ACE_CC_PREPROCESSOR_ARGS ""
 
+// By default WIN32 has FD_SETSIZE of 64, which places the limit
+// between 61 and 64 on the number of clients a server using the
+// Select Reactor can support at the same time (i.e., 64 - standard in,
+// out, error).  He we raise the limit to 1024.  Adjust the definition
+// below if you need to raise or lower it.
+//
+#define FD_SETSIZE 1024
+
 //These need to be defined for VisualAgeC++
 #define ERRMAX 256 /* Needed for following define */
 #define ACE_LACKS_SYS_NERR /* Needed for sys_nerr in Log_Msg.cpp */

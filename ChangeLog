@@ -1,8 +1,19 @@
+Sat Jul 22 22:10:35 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* config-win32-common.h
+	* config-win32-visualage.h:
+	
+	  By default WIN32 has FD_SETSIZE of 64, which places the limit
+	  between 61 and 64 on the number of clients a server using the
+	  Select Reactor can support at the same time (i.e., 64 - standard
+	  in, out, error).  Raised the limit to 1024.
+
 Fri Jul 21 21:24:09 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Parse_Node.cpp: Updated the ACE_Object_Name and ACE_Function_Node
-	  constructors to use the new ACE::ldname() method rather than
-	  ACE::strnew().  Thanks to Chris Kohlhoff for this fix.
+	* ace/Parse_Node.cpp: Updated the ACE_Object_Name and
+	  ACE_Function_Node constructors to use the new ACE::ldname()
+	  method rather than ACE::strnew().  Thanks to Chris Kohlhoff for
+	  this fix.
 
 	* ace/ACE.cpp: Added a new method called ACE::ldname() so that
 	  dynamic loading performed by the service configurator work the
