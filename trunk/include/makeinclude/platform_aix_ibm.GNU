@@ -109,7 +109,7 @@ DCFLAGS     += -g
 ifeq ($(XLCVERSION),0x0306)
   SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
   TEMPINCDIR  = tempinc
-  CCFLAGS    += -qlanglvl=ansi -qflag=e:e -qonce -qtempinc=$(TEMPINCDIR)
+  CCFLAGS    += -qlanglvl=ansi -qflag=e:e -qonce -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_PRAGMA
   SOFLAGS    += -p 0
 # ibmcxx_build turns on the extra step for instantiating and compiling
 # template instances in rules.lib.GNU.
@@ -119,7 +119,7 @@ else    # Visual Age 5 and 6
   SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
   ifeq ($(XLCVERSION),0x0500)
     TEMPINCDIR  = tempinc
-    CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qonce -qtempinc=$(TEMPINCDIR)
+    CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qonce -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_PRAGMA
   else
     ifeq ($(XLCVERSION),0x0600)
       TEMPINCDIR = tempinc
@@ -127,9 +127,9 @@ else    # Visual Age 5 and 6
 # warns that __C99_RESTRICT is reserved. When that workaround is gone, this
 # ifeq can be removed also. -qflag=w:w is what we want in the end.
       ifeq (502,$(AIX_VERS))
-        CCFLAGS    += -qflag=e:e -qstaticinline -qfuncsect -qtempinc=$(TEMPINCDIR)
+        CCFLAGS    += -qflag=e:e -qstaticinline -qfuncsect -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_SOURCE
       else
-        CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qtempinc=$(TEMPINCDIR)
+        CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_SOURCE
       endif
     else
       CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
