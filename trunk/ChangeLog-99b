@@ -5,6 +5,10 @@ Tue Apr 13 08:21:41 1999  Steve Huston  <shuston@riverace.com>
           option, mt_orbix, to control whether the MT or non-MT variant of
           Orbix is used.  Default is MT; to use non-MT, "make mt_orbix=0".
 
+        * ace/config-sunos5.x-sunc++-4.x-orbix.h: Include correct config-sunos5
+          file based on OS version at compile time.  Allow site config to
+          specify ACE_HAS_MT_ORBIX 0.
+
 Mon Apr 12 14:24:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU (realclean.local):
