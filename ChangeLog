@@ -1,3 +1,9 @@
+Fri Feb 11 13:26:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_Acceptor.cpp (accept): Changed to use
+	  ACE_reinterpret_cast to cast (sockaddr *) to (sockaddr_in *).
+	  This eliminate the warning on HPUX aCC compiler.
+
 Fri Feb 11 01:16:15 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_Acceptor.cpp:
