@@ -148,21 +148,23 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_START_TEST (ASYS_TEXT ("Reactor_Exceptions_Test"));
 
 #if defined (ACE_HAS_EXCEPTIONS)
-  My_Reactor reactor;
-
-  u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
-
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("Starting tracing\n")));
 
-  ACE_Reactor::instance (&reactor);
-  ACE_Thread_Manager *thr_mgr =
-    ACE_Thread_Manager::instance ();
+  u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
 
   ACE_INET_Addr local_addr (port);
   ACE_INET_Addr remote_addr (port,
                              ACE_DEFAULT_SERVER_HOST);
+  // Put the <handler> before the <reactor> so that they'll be cleaned
+  // up in the proper order.
   My_Handler handler (local_addr);
+
+  My_Reactor reactor;
+
+  ACE_Reactor::instance (&reactor);
+  ACE_Thread_Manager *thr_mgr =
+    ACE_Thread_Manager::instance ();
 
   if (ACE_Reactor::instance ()->register_handler
       (&handler,
@@ -183,8 +185,9 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_SOCK_Dgram dgram ((ACE_INET_Addr &) ACE_Addr::sap_any);
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
-    dgram.send (ASYS_TEXT ("Hello"), sizeof (ASYS_TEXT ("Hello")), remote_addr);
-
+    dgram.send (ASYS_TEXT ("Hello"),
+                sizeof (ASYS_TEXT ("Hello")),
+                remote_addr);
   // Barrier to wait for the other thread to return.
   thr_mgr->wait ();
 
