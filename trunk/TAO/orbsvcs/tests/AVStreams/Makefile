@@ -9,6 +9,7 @@
 #----------------------------------------------------------------------------
 
 DIRS  =	benchmark \
+	Simple \
 	Latency \
 	Pluggable \
 	Full_Profile \
