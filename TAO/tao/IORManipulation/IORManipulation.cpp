@@ -313,7 +313,7 @@ CORBA::Boolean
 TAO_IOR_Manipulation_impl:: remove_primary_tag (
     TAO_IOP::TAO_IOR_Property_ptr prop,
     CORBA::Object_ptr ior
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_ARG_DECL)
 	ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return prop->remove_primary_tag (ior ACE_ENV_ARG_PARAMETER);
