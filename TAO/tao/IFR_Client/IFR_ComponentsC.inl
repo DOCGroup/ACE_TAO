@@ -529,4 +529,3 @@ CORBA::ComponentIR::HomeDef::HomeDef (
 }
 
 #endif /* end #if !defined */
-

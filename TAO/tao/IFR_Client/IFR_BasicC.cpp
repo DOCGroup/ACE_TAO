@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "IFR_BasicC.h"
@@ -39,6 +39,7 @@
 #include "tao/Special_Basic_Arguments.h"
 #include "tao/UB_String_Arguments.h"
 #include "tao/Var_Size_Argument_T.h"
+#include "tao/Any_Arg_Traits.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -46,51 +47,15 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "IFR_BasicC.i"
+#include "IFR_BasicC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:65
 
 // Arg traits specializations.
 namespace TAO
 {
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:582
-
-#if !defined (_CORBA_ANY__ARG_TRAITS_CS_)
-#define _CORBA_ANY__ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::Any>
-    : public
-        Var_Size_Arg_Traits_T<
-            CORBA::Any,
-            CORBA::Any_var,
-            CORBA::Any_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:537
-
-#if !defined (_CORBA_DEFINITIONKIND__ARG_TRAITS_CS_)
-#define _CORBA_DEFINITIONKIND__ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::DefinitionKind>
-    : public
-        Basic_Arg_Traits_T<
-            CORBA::DefinitionKind
-          >
-  {
-  };
-
-#endif /* end #if !defined */
 
 #if !defined (_CORBA_CONTAINED__ARG_TRAITS_CS_)
 #define _CORBA_CONTAINED__ARG_TRAITS_CS_
@@ -103,23 +68,6 @@ namespace TAO
             CORBA::Contained_var,
             CORBA::Contained_out,
             TAO::Objref_Traits<CORBA::Contained>
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_CONTAINER__ARG_TRAITS_CS_)
-#define _CORBA_CONTAINER__ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::Container>
-    : public
-        Object_Arg_Traits_T<
-            CORBA::Container_ptr,
-            CORBA::Container_var,
-            CORBA::Container_out,
-            TAO::Objref_Traits<CORBA::Container>
           >
   {
   };
@@ -144,7 +92,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:618
+  // be\be_visitor_arg_traits.cpp:612
 
 #if !defined (_CORBA_INTERFACEDEF_FULLINTERFACEDESCRIPTION__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEF_FULLINTERFACEDESCRIPTION__ARG_TRAITS_CS_
@@ -163,7 +111,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
+  // be\be_visitor_arg_traits.cpp:383
 
 #if !defined (_CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_
@@ -180,64 +128,9 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
-#if !defined (_CORBA_VALUEDEF__ARG_TRAITS_CS_)
-#define _CORBA_VALUEDEF__ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::ValueDef>
-    : public
-        Object_Arg_Traits_T<
-            CORBA::ValueDef_ptr,
-            CORBA::ValueDef_var,
-            CORBA::ValueDef_out,
-            TAO::Objref_Traits<CORBA::ValueDef>
-          >
-  {
-  };
-
-#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
-
-#if !defined (_CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_)
-#define _CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::ValueDefSeq>
-    : public
-        Var_Size_Arg_Traits_T<
-            CORBA::ValueDefSeq,
-            CORBA::ValueDefSeq_var,
-            CORBA::ValueDefSeq_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
-
-#if !defined (_CORBA_ABSTRACTINTERFACEDEFSEQ__ARG_TRAITS_CS_)
-#define _CORBA_ABSTRACTINTERFACEDEFSEQ__ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::AbstractInterfaceDefSeq>
-    : public
-        Var_Size_Arg_Traits_T<
-            CORBA::AbstractInterfaceDefSeq,
-            CORBA::AbstractInterfaceDefSeq_var,
-            CORBA::AbstractInterfaceDefSeq_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
+  // be\be_visitor_arg_traits.cpp:383
 
 #if !defined (_CORBA_STRUCTMEMBERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_STRUCTMEMBERSEQ__ARG_TRAITS_CS_
@@ -256,26 +149,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
-
-#if !defined (_CORBA_INITIALIZERSEQ__ARG_TRAITS_CS_)
-#define _CORBA_INITIALIZERSEQ__ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::InitializerSeq>
-    : public
-        Var_Size_Arg_Traits_T<
-            CORBA::InitializerSeq,
-            CORBA::InitializerSeq_var,
-            CORBA::InitializerSeq_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
+  // be\be_visitor_arg_traits.cpp:383
 
 #if !defined (_CORBA_EXCDESCRIPTIONSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXCDESCRIPTIONSEQ__ARG_TRAITS_CS_
@@ -294,26 +168,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
-
-#if !defined (_CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_)
-#define _CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::ExtInitializerSeq>
-    : public
-        Var_Size_Arg_Traits_T<
-            CORBA::ExtInitializerSeq,
-            CORBA::ExtInitializerSeq_var,
-            CORBA::ExtInitializerSeq_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
+  // be\be_visitor_arg_traits.cpp:383
 
 #if !defined (_CORBA_UNIONMEMBERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_UNIONMEMBERSEQ__ARG_TRAITS_CS_
@@ -332,7 +187,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
+  // be\be_visitor_arg_traits.cpp:383
 
 #if !defined (_CORBA_ENUMMEMBERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_ENUMMEMBERSEQ__ARG_TRAITS_CS_
@@ -453,7 +308,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:537
+  // be\be_visitor_arg_traits.cpp:574
 
 #if !defined (_CORBA_PRIMITIVEKIND__ARG_TRAITS_CS_)
 #define _CORBA_PRIMITIVEKIND__ARG_TRAITS_CS_
@@ -470,7 +325,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
+  // be\be_visitor_arg_traits.cpp:383
 
 #if !defined (_CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_
@@ -489,7 +344,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:537
+  // be\be_visitor_arg_traits.cpp:574
 
 #if !defined (_CORBA_ATTRIBUTEMODE__ARG_TRAITS_CS_)
 #define _CORBA_ATTRIBUTEMODE__ARG_TRAITS_CS_
@@ -523,7 +378,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:618
+  // be\be_visitor_arg_traits.cpp:612
 
 #if !defined (_CORBA_EXTATTRIBUTEDESCRIPTION__ARG_TRAITS_CS_)
 #define _CORBA_EXTATTRIBUTEDESCRIPTION__ARG_TRAITS_CS_
@@ -559,7 +414,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:537
+  // be\be_visitor_arg_traits.cpp:574
 
 #if !defined (_CORBA_OPERATIONMODE__ARG_TRAITS_CS_)
 #define _CORBA_OPERATIONMODE__ARG_TRAITS_CS_
@@ -576,7 +431,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
+  // be\be_visitor_arg_traits.cpp:383
 
 #if !defined (_CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_)
 #define _CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_
@@ -595,7 +450,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:379
+  // be\be_visitor_arg_traits.cpp:383
 
 #if !defined (_CORBA_CONTEXTIDSEQ__ARG_TRAITS_CS_)
 #define _CORBA_CONTEXTIDSEQ__ARG_TRAITS_CS_
@@ -631,7 +486,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:618
+  // be\be_visitor_arg_traits.cpp:612
 
 #if !defined (_CORBA_INTERFACEATTREXTENSION_EXTFULLINTERFACEDESCRIPTION__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEATTREXTENSION_EXTFULLINTERFACEDESCRIPTION__ARG_TRAITS_CS_
@@ -718,8 +573,8 @@ TAO::Collocation_Proxy_Broker *
       CORBA_Repository_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::Contained>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::RepositoryId>::in_arg_val _tao_search_id (search_id);
+  TAO::Arg_Traits< CORBA::Contained>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::RepositoryId>::in_arg_val _tao_search_id (search_id);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -746,7 +601,7 @@ TAO::Collocation_Proxy_Broker *
 // be\be_visitor_operation/operation_cs.cpp:78
 
 CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
-    CORBA::TypeCode_ptr tc
+    ::CORBA::TypeCode_ptr tc
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -763,8 +618,8 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
       CORBA_Repository_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::TypeCode>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::TypeCode>::in_arg_val _tao_tc (tc);
+  TAO::Arg_Traits< ::CORBA::TypeCode>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::TypeCode>::in_arg_val _tao_tc (tc);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -791,7 +646,7 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::PrimitiveDef_ptr CORBA::Repository::get_primitive (
-    CORBA::PrimitiveKind kind
+    ::CORBA::PrimitiveKind kind
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -808,8 +663,8 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
       CORBA_Repository_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::PrimitiveDef>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::PrimitiveKind>::in_arg_val _tao_kind (kind);
+  TAO::Arg_Traits< CORBA::PrimitiveDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::PrimitiveKind>::in_arg_val _tao_kind (kind);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -836,7 +691,7 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::StringDef_ptr CORBA::Repository::create_string (
-    CORBA::ULong bound
+    ::CORBA::ULong bound
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -853,8 +708,8 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
       CORBA_Repository_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::StringDef>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ULong>::in_arg_val _tao_bound (bound);
+  TAO::Arg_Traits< CORBA::StringDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_bound (bound);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -881,7 +736,7 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::WstringDef_ptr CORBA::Repository::create_wstring (
-    CORBA::ULong bound
+    ::CORBA::ULong bound
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -898,8 +753,8 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
       CORBA_Repository_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::WstringDef>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ULong>::in_arg_val _tao_bound (bound);
+  TAO::Arg_Traits< CORBA::WstringDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_bound (bound);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -926,8 +781,8 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::SequenceDef_ptr CORBA::Repository::create_sequence (
-    CORBA::ULong bound,
-    CORBA::IDLType_ptr element_type
+    ::CORBA::ULong bound,
+    ::CORBA::IDLType_ptr element_type
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -944,9 +799,9 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
       CORBA_Repository_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::SequenceDef>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ULong>::in_arg_val _tao_bound (bound);
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_element_type (element_type);
+  TAO::Arg_Traits< CORBA::SequenceDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_bound (bound);
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_element_type (element_type);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -974,8 +829,8 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::ArrayDef_ptr CORBA::Repository::create_array (
-    CORBA::ULong length,
-    CORBA::IDLType_ptr element_type
+    ::CORBA::ULong length,
+    ::CORBA::IDLType_ptr element_type
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -992,9 +847,9 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
       CORBA_Repository_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ArrayDef>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ULong>::in_arg_val _tao_length (length);
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_element_type (element_type);
+  TAO::Arg_Traits< CORBA::ArrayDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_length (length);
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_element_type (element_type);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1022,8 +877,8 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::FixedDef_ptr CORBA::Repository::create_fixed (
-    CORBA::UShort digits,
-    CORBA::Short scale
+    ::CORBA::UShort digits,
+    ::CORBA::Short scale
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1040,9 +895,9 @@ CORBA::TypeCode_ptr CORBA::Repository::get_canonical_typecode (
       CORBA_Repository_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::FixedDef>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::UShort>::in_arg_val _tao_digits (digits);
-  TAO::Arg_Traits<CORBA::Short>::in_arg_val _tao_scale (scale);
+  TAO::Arg_Traits< CORBA::FixedDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::UShort>::in_arg_val _tao_digits (digits);
+  TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_scale (scale);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1091,7 +946,7 @@ void
 CORBA::Repository::_tao_any_destructor (void *_tao_void_pointer)
 {
   Repository *_tao_tmp_pointer =
-    ACE_static_cast (Repository *, _tao_void_pointer);
+    static_cast<Repository *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -1255,7 +1110,7 @@ void
 CORBA::ModuleDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ModuleDef *_tao_tmp_pointer =
-    ACE_static_cast (ModuleDef *, _tao_void_pointer);
+    static_cast<ModuleDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -1360,7 +1215,7 @@ CORBA::ModuleDescription::_tao_any_destructor (
   )
 {
   ModuleDescription *_tao_tmp_pointer =
-    ACE_static_cast (ModuleDescription *, _tao_void_pointer);
+    static_cast<ModuleDescription *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -1430,7 +1285,7 @@ CORBA::TypeCode_ptr CORBA::ConstantDef::type (
       CORBA_ConstantDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::TypeCode>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::TypeCode>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1472,7 +1327,7 @@ CORBA::TypeCode_ptr CORBA::ConstantDef::type (
       CORBA_ConstantDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::IDLType>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1498,7 +1353,7 @@ CORBA::TypeCode_ptr CORBA::ConstantDef::type (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::ConstantDef::type_def (
-    CORBA::IDLType_ptr type_def
+    ::CORBA::IDLType_ptr type_def
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1515,8 +1370,8 @@ void CORBA::ConstantDef::type_def (
       CORBA_ConstantDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_type_def (type_def);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_type_def (type_def);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1557,7 +1412,7 @@ CORBA::Any * CORBA::ConstantDef::value (
       CORBA_ConstantDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::Any>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::Any>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1583,7 +1438,7 @@ CORBA::Any * CORBA::ConstantDef::value (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::ConstantDef::value (
-    const CORBA::Any & value
+    const ::CORBA::Any & value
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1600,8 +1455,8 @@ void CORBA::ConstantDef::value (
       CORBA_ConstantDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::Any>::in_arg_val _tao_value (value);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_value (value);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1647,7 +1502,7 @@ void
 CORBA::ConstantDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ConstantDef *_tao_tmp_pointer =
-    ACE_static_cast (ConstantDef *, _tao_void_pointer);
+    static_cast<ConstantDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -1748,7 +1603,7 @@ CORBA::ConstantDescription::_tao_any_destructor (
   )
 {
   ConstantDescription *_tao_tmp_pointer =
-    ACE_static_cast (ConstantDescription *, _tao_void_pointer);
+    static_cast<ConstantDescription *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -1818,7 +1673,7 @@ TAO::Collocation_Proxy_Broker *
       CORBA_StructDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::StructMemberSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::StructMemberSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1844,7 +1699,7 @@ TAO::Collocation_Proxy_Broker *
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::StructDef::members (
-    const CORBA::StructMemberSeq & members
+    const ::CORBA::StructMemberSeq & members
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1861,8 +1716,8 @@ void CORBA::StructDef::members (
       CORBA_StructDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::StructMemberSeq>::in_arg_val _tao_members (members);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::StructMemberSeq>::in_arg_val _tao_members (members);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1909,7 +1764,7 @@ void
 CORBA::StructDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   StructDef *_tao_tmp_pointer =
-    ACE_static_cast (StructDef *, _tao_void_pointer);
+    static_cast<StructDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -2079,7 +1934,7 @@ CORBA::TypeCode_ptr CORBA::UnionDef::discriminator_type (
       CORBA_UnionDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::TypeCode>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::TypeCode>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2121,7 +1976,7 @@ CORBA::TypeCode_ptr CORBA::UnionDef::discriminator_type (
       CORBA_UnionDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::IDLType>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2147,7 +2002,7 @@ CORBA::TypeCode_ptr CORBA::UnionDef::discriminator_type (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::UnionDef::discriminator_type_def (
-    CORBA::IDLType_ptr discriminator_type_def
+    ::CORBA::IDLType_ptr discriminator_type_def
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2164,8 +2019,8 @@ void CORBA::UnionDef::discriminator_type_def (
       CORBA_UnionDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_discriminator_type_def (discriminator_type_def);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_discriminator_type_def (discriminator_type_def);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2206,7 +2061,7 @@ void CORBA::UnionDef::discriminator_type_def (
       CORBA_UnionDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::UnionMemberSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::UnionMemberSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2232,7 +2087,7 @@ void CORBA::UnionDef::discriminator_type_def (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::UnionDef::members (
-    const CORBA::UnionMemberSeq & members
+    const ::CORBA::UnionMemberSeq & members
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2249,8 +2104,8 @@ void CORBA::UnionDef::members (
       CORBA_UnionDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::UnionMemberSeq>::in_arg_val _tao_members (members);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::UnionMemberSeq>::in_arg_val _tao_members (members);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2297,7 +2152,7 @@ void
 CORBA::UnionDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   UnionDef *_tao_tmp_pointer =
-    ACE_static_cast (UnionDef *, _tao_void_pointer);
+    static_cast<UnionDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -2467,7 +2322,7 @@ TAO::Collocation_Proxy_Broker *
       CORBA_EnumDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::EnumMemberSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::EnumMemberSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2493,7 +2348,7 @@ TAO::Collocation_Proxy_Broker *
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::EnumDef::members (
-    const CORBA::EnumMemberSeq & members
+    const ::CORBA::EnumMemberSeq & members
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2510,8 +2365,8 @@ void CORBA::EnumDef::members (
       CORBA_EnumDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::EnumMemberSeq>::in_arg_val _tao_members (members);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::EnumMemberSeq>::in_arg_val _tao_members (members);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2557,7 +2412,7 @@ void
 CORBA::EnumDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   EnumDef *_tao_tmp_pointer =
-    ACE_static_cast (EnumDef *, _tao_void_pointer);
+    static_cast<EnumDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -2723,7 +2578,7 @@ TAO::Collocation_Proxy_Broker *
       CORBA_AliasDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::IDLType>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2749,7 +2604,7 @@ TAO::Collocation_Proxy_Broker *
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::AliasDef::original_type_def (
-    CORBA::IDLType_ptr original_type_def
+    ::CORBA::IDLType_ptr original_type_def
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2766,8 +2621,8 @@ void CORBA::AliasDef::original_type_def (
       CORBA_AliasDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_original_type_def (original_type_def);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_original_type_def (original_type_def);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2813,7 +2668,7 @@ void
 CORBA::AliasDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   AliasDef *_tao_tmp_pointer =
-    ACE_static_cast (AliasDef *, _tao_void_pointer);
+    static_cast<AliasDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -2984,7 +2839,7 @@ void
 CORBA::NativeDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   NativeDef *_tao_tmp_pointer =
-    ACE_static_cast (NativeDef *, _tao_void_pointer);
+    static_cast<NativeDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -3150,7 +3005,7 @@ TAO::Collocation_Proxy_Broker *
       CORBA_PrimitiveDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::PrimitiveKind>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::PrimitiveKind>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -3197,7 +3052,7 @@ void
 CORBA::PrimitiveDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   PrimitiveDef *_tao_tmp_pointer =
-    ACE_static_cast (PrimitiveDef *, _tao_void_pointer);
+    static_cast<PrimitiveDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -3355,7 +3210,7 @@ CORBA::ULong CORBA::StringDef::bound (
       CORBA_StringDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ULong>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -3381,7 +3236,7 @@ CORBA::ULong CORBA::StringDef::bound (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::StringDef::bound (
-    CORBA::ULong bound
+    ::CORBA::ULong bound
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3398,8 +3253,8 @@ void CORBA::StringDef::bound (
       CORBA_StringDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ULong>::in_arg_val _tao_bound (bound);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_bound (bound);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -3445,7 +3300,7 @@ void
 CORBA::StringDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   StringDef *_tao_tmp_pointer =
-    ACE_static_cast (StringDef *, _tao_void_pointer);
+    static_cast<StringDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -3603,7 +3458,7 @@ CORBA::ULong CORBA::WstringDef::bound (
       CORBA_WstringDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ULong>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -3629,7 +3484,7 @@ CORBA::ULong CORBA::WstringDef::bound (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::WstringDef::bound (
-    CORBA::ULong bound
+    ::CORBA::ULong bound
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3646,8 +3501,8 @@ void CORBA::WstringDef::bound (
       CORBA_WstringDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ULong>::in_arg_val _tao_bound (bound);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_bound (bound);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -3693,7 +3548,7 @@ void
 CORBA::WstringDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   WstringDef *_tao_tmp_pointer =
-    ACE_static_cast (WstringDef *, _tao_void_pointer);
+    static_cast<WstringDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -3851,7 +3706,7 @@ CORBA::ULong CORBA::SequenceDef::bound (
       CORBA_SequenceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ULong>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -3877,7 +3732,7 @@ CORBA::ULong CORBA::SequenceDef::bound (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::SequenceDef::bound (
-    CORBA::ULong bound
+    ::CORBA::ULong bound
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3894,8 +3749,8 @@ void CORBA::SequenceDef::bound (
       CORBA_SequenceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ULong>::in_arg_val _tao_bound (bound);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_bound (bound);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -3936,7 +3791,7 @@ CORBA::TypeCode_ptr CORBA::SequenceDef::element_type (
       CORBA_SequenceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::TypeCode>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::TypeCode>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -3978,7 +3833,7 @@ CORBA::TypeCode_ptr CORBA::SequenceDef::element_type (
       CORBA_SequenceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::IDLType>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4004,7 +3859,7 @@ CORBA::TypeCode_ptr CORBA::SequenceDef::element_type (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::SequenceDef::element_type_def (
-    CORBA::IDLType_ptr element_type_def
+    ::CORBA::IDLType_ptr element_type_def
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4021,8 +3876,8 @@ void CORBA::SequenceDef::element_type_def (
       CORBA_SequenceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_element_type_def (element_type_def);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_element_type_def (element_type_def);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4068,7 +3923,7 @@ void
 CORBA::SequenceDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   SequenceDef *_tao_tmp_pointer =
-    ACE_static_cast (SequenceDef *, _tao_void_pointer);
+    static_cast<SequenceDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -4226,7 +4081,7 @@ CORBA::ULong CORBA::ArrayDef::length (
       CORBA_ArrayDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ULong>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4252,7 +4107,7 @@ CORBA::ULong CORBA::ArrayDef::length (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::ArrayDef::length (
-    CORBA::ULong length
+    ::CORBA::ULong length
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4269,8 +4124,8 @@ void CORBA::ArrayDef::length (
       CORBA_ArrayDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ULong>::in_arg_val _tao_length (length);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_length (length);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4311,7 +4166,7 @@ CORBA::TypeCode_ptr CORBA::ArrayDef::element_type (
       CORBA_ArrayDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::TypeCode>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::TypeCode>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4353,7 +4208,7 @@ CORBA::TypeCode_ptr CORBA::ArrayDef::element_type (
       CORBA_ArrayDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::IDLType>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4379,7 +4234,7 @@ CORBA::TypeCode_ptr CORBA::ArrayDef::element_type (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::ArrayDef::element_type_def (
-    CORBA::IDLType_ptr element_type_def
+    ::CORBA::IDLType_ptr element_type_def
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4396,8 +4251,8 @@ void CORBA::ArrayDef::element_type_def (
       CORBA_ArrayDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_element_type_def (element_type_def);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_element_type_def (element_type_def);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4443,7 +4298,7 @@ void
 CORBA::ArrayDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ArrayDef *_tao_tmp_pointer =
-    ACE_static_cast (ArrayDef *, _tao_void_pointer);
+    static_cast<ArrayDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -4601,7 +4456,7 @@ CORBA::TypeCode_ptr CORBA::ExceptionDef::type (
       CORBA_ExceptionDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::TypeCode>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::TypeCode>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4643,7 +4498,7 @@ CORBA::TypeCode_ptr CORBA::ExceptionDef::type (
       CORBA_ExceptionDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::StructMemberSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::StructMemberSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4669,7 +4524,7 @@ CORBA::TypeCode_ptr CORBA::ExceptionDef::type (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::ExceptionDef::members (
-    const CORBA::StructMemberSeq & members
+    const ::CORBA::StructMemberSeq & members
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4686,8 +4541,8 @@ void CORBA::ExceptionDef::members (
       CORBA_ExceptionDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::StructMemberSeq>::in_arg_val _tao_members (members);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::StructMemberSeq>::in_arg_val _tao_members (members);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4734,7 +4589,7 @@ void
 CORBA::ExceptionDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ExceptionDef *_tao_tmp_pointer =
-    ACE_static_cast (ExceptionDef *, _tao_void_pointer);
+    static_cast<ExceptionDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -4880,7 +4735,7 @@ void CORBA::ExceptionDefSeq::_tao_any_destructor (
   )
 {
   ExceptionDefSeq * _tao_tmp_pointer =
-    ACE_static_cast (ExceptionDefSeq *, _tao_void_pointer);
+    static_cast<ExceptionDefSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -4952,7 +4807,7 @@ CORBA::TypeCode_ptr CORBA::AttributeDef::type (
       CORBA_AttributeDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::TypeCode>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::TypeCode>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4994,7 +4849,7 @@ CORBA::TypeCode_ptr CORBA::AttributeDef::type (
       CORBA_AttributeDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::IDLType>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5020,7 +4875,7 @@ CORBA::TypeCode_ptr CORBA::AttributeDef::type (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::AttributeDef::type_def (
-    CORBA::IDLType_ptr type_def
+    ::CORBA::IDLType_ptr type_def
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5037,8 +4892,8 @@ void CORBA::AttributeDef::type_def (
       CORBA_AttributeDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_type_def (type_def);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_type_def (type_def);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5079,7 +4934,7 @@ void CORBA::AttributeDef::type_def (
       CORBA_AttributeDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::AttributeMode>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::AttributeMode>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5105,7 +4960,7 @@ void CORBA::AttributeDef::type_def (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::AttributeDef::mode (
-    CORBA::AttributeMode mode
+    ::CORBA::AttributeMode mode
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5122,8 +4977,8 @@ void CORBA::AttributeDef::mode (
       CORBA_AttributeDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::AttributeMode>::in_arg_val _tao_mode (mode);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::AttributeMode>::in_arg_val _tao_mode (mode);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5169,7 +5024,7 @@ void
 CORBA::AttributeDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   AttributeDef *_tao_tmp_pointer =
-    ACE_static_cast (AttributeDef *, _tao_void_pointer);
+    static_cast<AttributeDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -5270,7 +5125,7 @@ CORBA::AttributeDescription::_tao_any_destructor (
   )
 {
   AttributeDescription *_tao_tmp_pointer =
-    ACE_static_cast (AttributeDescription *, _tao_void_pointer);
+    static_cast<AttributeDescription *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -5283,7 +5138,7 @@ CORBA::ExtAttributeDescription::_tao_any_destructor (
   )
 {
   ExtAttributeDescription *_tao_tmp_pointer =
-    ACE_static_cast (ExtAttributeDescription *, _tao_void_pointer);
+    static_cast<ExtAttributeDescription *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -5353,7 +5208,7 @@ TAO::Collocation_Proxy_Broker *
       CORBA_ExtAttributeDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ExcDescriptionSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ExcDescriptionSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5379,7 +5234,7 @@ TAO::Collocation_Proxy_Broker *
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::ExtAttributeDef::get_exceptions (
-    const CORBA::ExcDescriptionSeq & get_exceptions
+    const ::CORBA::ExcDescriptionSeq & get_exceptions
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5396,8 +5251,8 @@ void CORBA::ExtAttributeDef::get_exceptions (
       CORBA_ExtAttributeDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ExcDescriptionSeq>::in_arg_val _tao_get_exceptions (get_exceptions);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ExcDescriptionSeq>::in_arg_val _tao_get_exceptions (get_exceptions);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5438,7 +5293,7 @@ void CORBA::ExtAttributeDef::get_exceptions (
       CORBA_ExtAttributeDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ExcDescriptionSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ExcDescriptionSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5464,7 +5319,7 @@ void CORBA::ExtAttributeDef::get_exceptions (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::ExtAttributeDef::set_exceptions (
-    const CORBA::ExcDescriptionSeq & set_exceptions
+    const ::CORBA::ExcDescriptionSeq & set_exceptions
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5481,8 +5336,8 @@ void CORBA::ExtAttributeDef::set_exceptions (
       CORBA_ExtAttributeDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ExcDescriptionSeq>::in_arg_val _tao_set_exceptions (set_exceptions);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ExcDescriptionSeq>::in_arg_val _tao_set_exceptions (set_exceptions);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5523,7 +5378,7 @@ void CORBA::ExtAttributeDef::set_exceptions (
       CORBA_ExtAttributeDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ExtAttributeDescription>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ExtAttributeDescription>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5570,7 +5425,7 @@ void
 CORBA::ExtAttributeDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ExtAttributeDef *_tao_tmp_pointer =
-    ACE_static_cast (ExtAttributeDef *, _tao_void_pointer);
+    static_cast<ExtAttributeDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -5675,7 +5530,7 @@ CORBA::ParameterDescription::_tao_any_destructor (
   )
 {
   ParameterDescription *_tao_tmp_pointer =
-    ACE_static_cast (ParameterDescription *, _tao_void_pointer);
+    static_cast<ParameterDescription *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -5726,7 +5581,7 @@ void CORBA::ParDescriptionSeq::_tao_any_destructor (
   )
 {
   ParDescriptionSeq * _tao_tmp_pointer =
-    ACE_static_cast (ParDescriptionSeq *, _tao_void_pointer);
+    static_cast<ParDescriptionSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -5773,7 +5628,7 @@ void CORBA::ContextIdSeq::_tao_any_destructor (
   )
 {
   ContextIdSeq * _tao_tmp_pointer =
-    ACE_static_cast (ContextIdSeq *, _tao_void_pointer);
+    static_cast<ContextIdSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -5845,7 +5700,7 @@ CORBA::TypeCode_ptr CORBA::OperationDef::result (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::TypeCode>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::TypeCode>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5887,7 +5742,7 @@ CORBA::TypeCode_ptr CORBA::OperationDef::result (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::IDLType>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5913,7 +5768,7 @@ CORBA::TypeCode_ptr CORBA::OperationDef::result (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::OperationDef::result_def (
-    CORBA::IDLType_ptr result_def
+    ::CORBA::IDLType_ptr result_def
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5930,8 +5785,8 @@ void CORBA::OperationDef::result_def (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_result_def (result_def);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_result_def (result_def);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5972,7 +5827,7 @@ void CORBA::OperationDef::result_def (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ParDescriptionSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ParDescriptionSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -5998,7 +5853,7 @@ void CORBA::OperationDef::result_def (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::OperationDef::params (
-    const CORBA::ParDescriptionSeq & params
+    const ::CORBA::ParDescriptionSeq & params
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6015,8 +5870,8 @@ void CORBA::OperationDef::params (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ParDescriptionSeq>::in_arg_val _tao_params (params);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ParDescriptionSeq>::in_arg_val _tao_params (params);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6057,7 +5912,7 @@ void CORBA::OperationDef::params (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::OperationMode>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::OperationMode>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6083,7 +5938,7 @@ void CORBA::OperationDef::params (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::OperationDef::mode (
-    CORBA::OperationMode mode
+    ::CORBA::OperationMode mode
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6100,8 +5955,8 @@ void CORBA::OperationDef::mode (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::OperationMode>::in_arg_val _tao_mode (mode);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::OperationMode>::in_arg_val _tao_mode (mode);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6142,7 +5997,7 @@ void CORBA::OperationDef::mode (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ContextIdSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ContextIdSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6168,7 +6023,7 @@ void CORBA::OperationDef::mode (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::OperationDef::contexts (
-    const CORBA::ContextIdSeq & contexts
+    const ::CORBA::ContextIdSeq & contexts
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6185,8 +6040,8 @@ void CORBA::OperationDef::contexts (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ContextIdSeq>::in_arg_val _tao_contexts (contexts);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ContextIdSeq>::in_arg_val _tao_contexts (contexts);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6227,7 +6082,7 @@ void CORBA::OperationDef::contexts (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ExceptionDefSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ExceptionDefSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6253,7 +6108,7 @@ void CORBA::OperationDef::contexts (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::OperationDef::exceptions (
-    const CORBA::ExceptionDefSeq & exceptions
+    const ::CORBA::ExceptionDefSeq & exceptions
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6270,8 +6125,8 @@ void CORBA::OperationDef::exceptions (
       CORBA_OperationDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::ExceptionDefSeq>::in_arg_val _tao_exceptions (exceptions);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::ExceptionDefSeq>::in_arg_val _tao_exceptions (exceptions);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6317,7 +6172,7 @@ void
 CORBA::OperationDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   OperationDef *_tao_tmp_pointer =
-    ACE_static_cast (OperationDef *, _tao_void_pointer);
+    static_cast<OperationDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -6418,7 +6273,7 @@ CORBA::OperationDescription::_tao_any_destructor (
   )
 {
   OperationDescription *_tao_tmp_pointer =
-    ACE_static_cast (OperationDescription *, _tao_void_pointer);
+    static_cast<OperationDescription *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -6463,7 +6318,7 @@ void CORBA::RepositoryIdSeq::_tao_any_destructor (
   )
 {
   RepositoryIdSeq * _tao_tmp_pointer =
-    ACE_static_cast (RepositoryIdSeq *, _tao_void_pointer);
+    static_cast<RepositoryIdSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -6516,7 +6371,7 @@ void CORBA::OpDescriptionSeq::_tao_any_destructor (
   )
 {
   OpDescriptionSeq * _tao_tmp_pointer =
-    ACE_static_cast (OpDescriptionSeq *, _tao_void_pointer);
+    static_cast<OpDescriptionSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -6569,7 +6424,7 @@ void CORBA::AttrDescriptionSeq::_tao_any_destructor (
   )
 {
   AttrDescriptionSeq * _tao_tmp_pointer =
-    ACE_static_cast (AttrDescriptionSeq *, _tao_void_pointer);
+    static_cast<AttrDescriptionSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -6622,7 +6477,7 @@ void CORBA::ExtAttrDescriptionSeq::_tao_any_destructor (
   )
 {
   ExtAttrDescriptionSeq * _tao_tmp_pointer =
-    ACE_static_cast (ExtAttrDescriptionSeq *, _tao_void_pointer);
+    static_cast<ExtAttrDescriptionSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -6694,7 +6549,7 @@ TAO::Collocation_Proxy_Broker *
       CORBA_InterfaceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::InterfaceDefSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::InterfaceDefSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6720,7 +6575,7 @@ TAO::Collocation_Proxy_Broker *
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::InterfaceDef::base_interfaces (
-    const CORBA::InterfaceDefSeq & base_interfaces
+    const ::CORBA::InterfaceDefSeq & base_interfaces
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6737,8 +6592,8 @@ void CORBA::InterfaceDef::base_interfaces (
       CORBA_InterfaceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::InterfaceDefSeq>::in_arg_val _tao_base_interfaces (base_interfaces);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::InterfaceDefSeq>::in_arg_val _tao_base_interfaces (base_interfaces);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6780,8 +6635,8 @@ CORBA::Boolean CORBA::InterfaceDef::is_a (
       CORBA_InterfaceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::RepositoryId>::in_arg_val _tao_interface_id (interface_id);
+  TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::RepositoryId>::in_arg_val _tao_interface_id (interface_id);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6813,7 +6668,7 @@ CORBA::InterfaceDef::FullInterfaceDescription::_tao_any_destructor (
   )
 {
   FullInterfaceDescription *_tao_tmp_pointer =
-    ACE_static_cast (FullInterfaceDescription *, _tao_void_pointer);
+    static_cast<FullInterfaceDescription *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -6837,7 +6692,7 @@ CORBA::InterfaceDef::FullInterfaceDescription::_tao_any_destructor (
       CORBA_InterfaceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::InterfaceDef::FullInterfaceDescription>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::InterfaceDef::FullInterfaceDescription>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6866,8 +6721,8 @@ CORBA::InterfaceDef::FullInterfaceDescription::_tao_any_destructor (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode
+    ::CORBA::IDLType_ptr type,
+    ::CORBA::AttributeMode mode
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6884,12 +6739,12 @@ CORBA::InterfaceDef::FullInterfaceDescription::_tao_any_destructor (
       CORBA_InterfaceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::AttributeDef>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::RepositoryId>::in_arg_val _tao_id (id);
-  TAO::Arg_Traits<CORBA::Identifier>::in_arg_val _tao_name (name);
-  TAO::Arg_Traits<CORBA::VersionSpec>::in_arg_val _tao_version (version);
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_type (type);
-  TAO::Arg_Traits<CORBA::AttributeMode>::in_arg_val _tao_mode (mode);
+  TAO::Arg_Traits< CORBA::AttributeDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::RepositoryId>::in_arg_val _tao_id (id);
+  TAO::Arg_Traits< CORBA::Identifier>::in_arg_val _tao_name (name);
+  TAO::Arg_Traits< CORBA::VersionSpec>::in_arg_val _tao_version (version);
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_type (type);
+  TAO::Arg_Traits< CORBA::AttributeMode>::in_arg_val _tao_mode (mode);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -6923,11 +6778,11 @@ CORBA::InterfaceDef::FullInterfaceDescription::_tao_any_destructor (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr result,
-    CORBA::OperationMode mode,
-    const CORBA::ParDescriptionSeq & params,
-    const CORBA::ExceptionDefSeq & exceptions,
-    const CORBA::ContextIdSeq & contexts
+    ::CORBA::IDLType_ptr result,
+    ::CORBA::OperationMode mode,
+    const ::CORBA::ParDescriptionSeq & params,
+    const ::CORBA::ExceptionDefSeq & exceptions,
+    const ::CORBA::ContextIdSeq & contexts
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6944,15 +6799,15 @@ CORBA::InterfaceDef::FullInterfaceDescription::_tao_any_destructor (
       CORBA_InterfaceDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::OperationDef>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::RepositoryId>::in_arg_val _tao_id (id);
-  TAO::Arg_Traits<CORBA::Identifier>::in_arg_val _tao_name (name);
-  TAO::Arg_Traits<CORBA::VersionSpec>::in_arg_val _tao_version (version);
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_result (result);
-  TAO::Arg_Traits<CORBA::OperationMode>::in_arg_val _tao_mode (mode);
-  TAO::Arg_Traits<CORBA::ParDescriptionSeq>::in_arg_val _tao_params (params);
-  TAO::Arg_Traits<CORBA::ExceptionDefSeq>::in_arg_val _tao_exceptions (exceptions);
-  TAO::Arg_Traits<CORBA::ContextIdSeq>::in_arg_val _tao_contexts (contexts);
+  TAO::Arg_Traits< CORBA::OperationDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::RepositoryId>::in_arg_val _tao_id (id);
+  TAO::Arg_Traits< CORBA::Identifier>::in_arg_val _tao_name (name);
+  TAO::Arg_Traits< CORBA::VersionSpec>::in_arg_val _tao_version (version);
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_result (result);
+  TAO::Arg_Traits< CORBA::OperationMode>::in_arg_val _tao_mode (mode);
+  TAO::Arg_Traits< CORBA::ParDescriptionSeq>::in_arg_val _tao_params (params);
+  TAO::Arg_Traits< CORBA::ExceptionDefSeq>::in_arg_val _tao_exceptions (exceptions);
+  TAO::Arg_Traits< CORBA::ContextIdSeq>::in_arg_val _tao_contexts (contexts);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -7009,7 +6864,7 @@ void
 CORBA::InterfaceDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   InterfaceDef *_tao_tmp_pointer =
-    ACE_static_cast (InterfaceDef *, _tao_void_pointer);
+    static_cast<InterfaceDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -7118,7 +6973,7 @@ CORBA::InterfaceDescription::_tao_any_destructor (
   )
 {
   InterfaceDescription *_tao_tmp_pointer =
-    ACE_static_cast (InterfaceDescription *, _tao_void_pointer);
+    static_cast<InterfaceDescription *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -7177,7 +7032,7 @@ CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription::_tao_any_destructor 
   )
 {
   ExtFullInterfaceDescription *_tao_tmp_pointer =
-    ACE_static_cast (ExtFullInterfaceDescription *, _tao_void_pointer);
+    static_cast<ExtFullInterfaceDescription *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -7201,7 +7056,7 @@ CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription::_tao_any_destructor 
       CORBA_InterfaceAttrExtension_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -7230,10 +7085,10 @@ CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription::_tao_any_destructor 
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode,
-    const CORBA::ExceptionDefSeq & get_exceptions,
-    const CORBA::ExceptionDefSeq & set_exceptions
+    ::CORBA::IDLType_ptr type,
+    ::CORBA::AttributeMode mode,
+    const ::CORBA::ExceptionDefSeq & get_exceptions,
+    const ::CORBA::ExceptionDefSeq & set_exceptions
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -7250,14 +7105,14 @@ CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription::_tao_any_destructor 
       CORBA_InterfaceAttrExtension_setup_collocation ();
     }
   
-  TAO::Arg_Traits<CORBA::ExtAttributeDef>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::RepositoryId>::in_arg_val _tao_id (id);
-  TAO::Arg_Traits<CORBA::Identifier>::in_arg_val _tao_name (name);
-  TAO::Arg_Traits<CORBA::VersionSpec>::in_arg_val _tao_version (version);
-  TAO::Arg_Traits<CORBA::IDLType>::in_arg_val _tao_type (type);
-  TAO::Arg_Traits<CORBA::AttributeMode>::in_arg_val _tao_mode (mode);
-  TAO::Arg_Traits<CORBA::ExceptionDefSeq>::in_arg_val _tao_get_exceptions (get_exceptions);
-  TAO::Arg_Traits<CORBA::ExceptionDefSeq>::in_arg_val _tao_set_exceptions (set_exceptions);
+  TAO::Arg_Traits< CORBA::ExtAttributeDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::RepositoryId>::in_arg_val _tao_id (id);
+  TAO::Arg_Traits< CORBA::Identifier>::in_arg_val _tao_name (name);
+  TAO::Arg_Traits< CORBA::VersionSpec>::in_arg_val _tao_version (version);
+  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_type (type);
+  TAO::Arg_Traits< CORBA::AttributeMode>::in_arg_val _tao_mode (mode);
+  TAO::Arg_Traits< CORBA::ExceptionDefSeq>::in_arg_val _tao_get_exceptions (get_exceptions);
+  TAO::Arg_Traits< CORBA::ExceptionDefSeq>::in_arg_val _tao_set_exceptions (set_exceptions);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -7309,7 +7164,7 @@ void
 CORBA::InterfaceAttrExtension::_tao_any_destructor (void *_tao_void_pointer)
 {
   InterfaceAttrExtension *_tao_tmp_pointer =
-    ACE_static_cast (InterfaceAttrExtension *, _tao_void_pointer);
+    static_cast<InterfaceAttrExtension *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -7465,7 +7320,7 @@ void
 CORBA::ExtInterfaceDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ExtInterfaceDef *_tao_tmp_pointer =
-    ACE_static_cast (ExtInterfaceDef *, _tao_void_pointer);
+    static_cast<ExtInterfaceDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -7644,7 +7499,7 @@ void
 CORBA::AbstractInterfaceDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   AbstractInterfaceDef *_tao_tmp_pointer =
-    ACE_static_cast (AbstractInterfaceDef *, _tao_void_pointer);
+    static_cast<AbstractInterfaceDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -7820,7 +7675,7 @@ void
 CORBA::ExtAbstractInterfaceDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ExtAbstractInterfaceDef *_tao_tmp_pointer =
-    ACE_static_cast (ExtAbstractInterfaceDef *, _tao_void_pointer);
+    static_cast<ExtAbstractInterfaceDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -8003,7 +7858,7 @@ void
 CORBA::LocalInterfaceDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   LocalInterfaceDef *_tao_tmp_pointer =
-    ACE_static_cast (LocalInterfaceDef *, _tao_void_pointer);
+    static_cast<LocalInterfaceDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -8179,7 +8034,7 @@ void
 CORBA::ExtLocalInterfaceDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ExtLocalInterfaceDef *_tao_tmp_pointer =
-    ACE_static_cast (ExtLocalInterfaceDef *, _tao_void_pointer);
+    static_cast<ExtLocalInterfaceDef *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -8307,7 +8162,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::PrimitiveKind &_tao_enumva
   
   if (_tao_result == 1)
     {
-      _tao_enumval = ACE_static_cast (CORBA::PrimitiveKind, _tao_temp);
+      _tao_enumval = static_cast<CORBA::PrimitiveKind> (_tao_temp);
     }
   
   return _tao_result;
@@ -8886,7 +8741,7 @@ CORBA::Boolean operator<< (
     const CORBA::ExceptionDefSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -8964,7 +8819,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::AttributeMode &_tao_enumva
   
   if (_tao_result == 1)
     {
-      _tao_enumval = ACE_static_cast (CORBA::AttributeMode, _tao_temp);
+      _tao_enumval = static_cast<CORBA::AttributeMode> (_tao_temp);
     }
   
   return _tao_result;
@@ -9124,7 +8979,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::OperationMode &_tao_enumva
   
   if (_tao_result == 1)
     {
-      _tao_enumval = ACE_static_cast (CORBA::OperationMode, _tao_temp);
+      _tao_enumval = static_cast<CORBA::OperationMode> (_tao_temp);
     }
   
   return _tao_result;
@@ -9171,7 +9026,7 @@ CORBA::Boolean operator<< (
     const CORBA::ParDescriptionSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -9243,7 +9098,7 @@ CORBA::Boolean operator<< (
     const CORBA::ContextIdSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -9389,7 +9244,7 @@ CORBA::Boolean operator<< (
     const CORBA::RepositoryIdSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -9462,7 +9317,7 @@ CORBA::Boolean operator<< (
     const CORBA::OpDescriptionSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -9534,7 +9389,7 @@ CORBA::Boolean operator<< (
     const CORBA::AttrDescriptionSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -9606,7 +9461,7 @@ CORBA::Boolean operator<< (
     const CORBA::ExtAttrDescriptionSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -10019,18 +9874,9 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#if !defined (_CORBA_DEFINITIONKIND__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_DEFINITIONKIND__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::DefinitionKind>;
-
-  template class TAO::Basic_Arg_Traits_T<CORBA::DefinitionKind>;
-
-#endif /* end #if !defined */
 
 #if !defined (_CORBA_CONTAINED__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_CONTAINED__ARG_TRAITS_TMPLINST_CS_
@@ -10121,24 +9967,6 @@ CORBA::Boolean operator>> (
     TAO::Narrow_Utils<
         CORBA::Repository
       >;
-
-#if !defined (_CORBA_CONTAINER__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_CONTAINER__ARG_TRAITS_TMPLINST_CS_
-
-  template class
-    TAO::Arg_Traits<
-        CORBA::Container
-      >;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::Container_ptr,
-        CORBA::Container_var,
-        CORBA::Container_out,
-        TAO::Objref_Traits<CORBA::Container>
-      >;
-
-#endif /* end #if !defined */
 
   template class
     TAO::Objref_Traits<
@@ -10552,38 +10380,6 @@ CORBA::Boolean operator>> (
         CORBA::NativeDef
       >;
 
-#if !defined (_CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_
-
-  template class
-    TAO::Arg_Traits<
-        CORBA::ValueDef
-      >;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::ValueDef_ptr,
-        CORBA::ValueDef_var,
-        CORBA::ValueDef_out,
-        TAO::Objref_Traits<CORBA::ValueDef>
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::ValueDefSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::ValueDefSeq,
-        CORBA::ValueDefSeq_var,
-        CORBA::ValueDefSeq_out
-      >;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Objref_Traits<
         CORBA::AbstractInterfaceDef
@@ -10603,20 +10399,6 @@ CORBA::Boolean operator>> (
     TAO::Narrow_Utils<
         CORBA::AbstractInterfaceDef
       >;
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::AbstractInterfaceDefSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::AbstractInterfaceDefSeq,
-        CORBA::AbstractInterfaceDefSeq_var,
-        CORBA::AbstractInterfaceDefSeq_out
-      >;
-
-#endif /* end #if !defined */
 
   template class
     TAO::Objref_Traits<
@@ -10715,20 +10497,6 @@ CORBA::Boolean operator>> (
 #if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
 
-  template class TAO::Arg_Traits<CORBA::InitializerSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::InitializerSeq,
-        CORBA::InitializerSeq_var,
-        CORBA::InitializerSeq_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
   template class TAO::Arg_Traits<CORBA::ExcDescriptionSeq>;
 
   template class
@@ -10736,20 +10504,6 @@ CORBA::Boolean operator>> (
         CORBA::ExcDescriptionSeq,
         CORBA::ExcDescriptionSeq_var,
         CORBA::ExcDescriptionSeq_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::ExtInitializerSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::ExtInitializerSeq,
-        CORBA::ExtInitializerSeq_var,
-        CORBA::ExtInitializerSeq_out
       >;
 
 #endif /* end #if !defined */
@@ -11535,15 +11289,6 @@ CORBA::Boolean operator>> (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#if !defined (_CORBA_DEFINITIONKIND__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_DEFINITIONKIND__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::DefinitionKind>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<CORBA::DefinitionKind>
-
-#endif /* end #if !defined */
-
 #if !defined (_CORBA_CONTAINED__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_CONTAINED__ARG_TRAITS_TMPLINST_CS_
 
@@ -11563,8 +11308,38 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
 # pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::Contained_ptr, \
+        CORBA::Contained_var \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::PrimitiveDef_ptr, \
+        CORBA::PrimitiveDef_var \
+      >
+
+# pragma instantiate \
     TAO::In_Basic_Argument_T< \
         CORBA::PrimitiveKind \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::StringDef_ptr, \
+        CORBA::StringDef_var \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::WstringDef_ptr, \
+        CORBA::WstringDef_var \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::SequenceDef_ptr, \
+        CORBA::SequenceDef_var \
       >
 
 # pragma instantiate \
@@ -11573,6 +11348,18 @@ CORBA::Boolean operator>> (
       >
 
 # pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::ArrayDef_ptr, \
+        CORBA::ArrayDef_var \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::FixedDef_ptr, \
+        CORBA::FixedDef_var \
+      >
+
+# pragma instantiate \
     TAO::Objref_Traits< \
         CORBA::Repository \
       >
@@ -11592,24 +11379,6 @@ CORBA::Boolean operator>> (
         CORBA::Repository \
       >
 
-#if !defined (_CORBA_CONTAINER__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_CONTAINER__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate \
-    TAO::Arg_Traits< \
-        CORBA::Container \
-      >
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::Container_ptr, \
-        CORBA::Container_var, \
-        CORBA::Container_out, \
-        TAO::Objref_Traits<CORBA::Container> \
-      >
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO::Objref_Traits< \
         CORBA::ModuleDef \
@@ -11628,6 +11397,12 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO::Narrow_Utils< \
         CORBA::ModuleDef \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::IDLType_ptr, \
+        CORBA::IDLType_var \
       >
 
 # pragma instantiate \
@@ -11669,6 +11444,12 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
 # pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::StructMemberSeq, \
+        CORBA::StructMemberSeq_var \
+      >
+
+# pragma instantiate \
     TAO::In_Var_Size_Argument_T< \
         CORBA::StructMemberSeq \
       >
@@ -11694,6 +11475,12 @@ CORBA::Boolean operator>> (
       >
 
 # pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::UnionMemberSeq, \
+        CORBA::UnionMemberSeq_var \
+      >
+
+# pragma instantiate \
     TAO::In_Var_Size_Argument_T< \
         CORBA::UnionMemberSeq \
       >
@@ -11716,6 +11503,12 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO::Narrow_Utils< \
         CORBA::UnionDef \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::EnumMemberSeq, \
+        CORBA::EnumMemberSeq_var \
       >
 
 # pragma instantiate \
@@ -11761,6 +11554,12 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO::Narrow_Utils< \
         CORBA::AliasDef \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::InterfaceDefSeq, \
+        CORBA::InterfaceDefSeq_var \
       >
 
 # pragma instantiate \
@@ -11876,8 +11675,26 @@ CORBA::Boolean operator>> (
       >
 
 # pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::InterfaceDef::FullInterfaceDescription, \
+        CORBA::InterfaceDef::FullInterfaceDescription_var \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::AttributeDef_ptr, \
+        CORBA::AttributeDef_var \
+      >
+
+# pragma instantiate \
     TAO::In_Basic_Argument_T< \
         CORBA::AttributeMode \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::OperationDef_ptr, \
+        CORBA::OperationDef_var \
       >
 
 # pragma instantiate \
@@ -11974,38 +11791,6 @@ CORBA::Boolean operator>> (
         CORBA::NativeDef \
       >
 
-#if !defined (_CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate \
-    TAO::Arg_Traits< \
-        CORBA::ValueDef \
-      >
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::ValueDef_ptr, \
-        CORBA::ValueDef_var, \
-        CORBA::ValueDef_out, \
-        TAO::Objref_Traits<CORBA::ValueDef> \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::ValueDefSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::ValueDefSeq, \
-        CORBA::ValueDefSeq_var, \
-        CORBA::ValueDefSeq_out \
-      >
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO::Objref_Traits< \
         CORBA::AbstractInterfaceDef \
@@ -12025,20 +11810,6 @@ CORBA::Boolean operator>> (
     TAO::Narrow_Utils< \
         CORBA::AbstractInterfaceDef \
       >
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::AbstractInterfaceDefSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::AbstractInterfaceDefSeq, \
-        CORBA::AbstractInterfaceDefSeq_var, \
-        CORBA::AbstractInterfaceDefSeq_out \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO::Objref_Traits< \
@@ -12137,20 +11908,6 @@ CORBA::Boolean operator>> (
 #if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
 
-# pragma instantiate TAO::Arg_Traits<CORBA::InitializerSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::InitializerSeq, \
-        CORBA::InitializerSeq_var, \
-        CORBA::InitializerSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
 # pragma instantiate TAO::Arg_Traits<CORBA::ExcDescriptionSeq>
 
 # pragma instantiate \
@@ -12158,20 +11915,6 @@ CORBA::Boolean operator>> (
         CORBA::ExcDescriptionSeq, \
         CORBA::ExcDescriptionSeq_var, \
         CORBA::ExcDescriptionSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::ExtInitializerSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::ExtInitializerSeq, \
-        CORBA::ExtInitializerSeq_var, \
-        CORBA::ExtInitializerSeq_out \
       >
 
 #endif /* end #if !defined */
@@ -12221,6 +11964,11 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* end #if !defined */
+
+# pragma instantiate \
+    TAO::Ret_Basic_Argument_T< \
+        CORBA::PrimitiveKind \
+      >
 
 # pragma instantiate \
     TAO::Objref_Traits< \
@@ -12534,6 +12282,11 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
 # pragma instantiate \
+    TAO::Ret_Basic_Argument_T< \
+        CORBA::AttributeMode \
+      >
+
+# pragma instantiate \
     TAO::Objref_Traits< \
         CORBA::AttributeDef \
       >
@@ -12618,8 +12371,20 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
 # pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::ExcDescriptionSeq, \
+        CORBA::ExcDescriptionSeq_var \
+      >
+
+# pragma instantiate \
     TAO::In_Var_Size_Argument_T< \
         CORBA::ExcDescriptionSeq \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::ExtAttributeDescription, \
+        CORBA::ExtAttributeDescription_var \
       >
 
 # pragma instantiate \
@@ -12762,6 +12527,29 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
 # pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::ParDescriptionSeq, \
+        CORBA::ParDescriptionSeq_var \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Basic_Argument_T< \
+        CORBA::OperationMode \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::ContextIdSeq, \
+        CORBA::ContextIdSeq_var \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::ExceptionDefSeq, \
+        CORBA::ExceptionDefSeq_var \
+      >
+
+# pragma instantiate \
     TAO::Objref_Traits< \
         CORBA::OperationDef \
       >
@@ -12873,6 +12661,18 @@ CORBA::Boolean operator>> (
       >
 
 # pragma instantiate \
+    TAO::Ret_Var_Size_Argument_T< \
+        CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription, \
+        CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var \
+      >
+
+# pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::ExtAttributeDef_ptr, \
+        CORBA::ExtAttributeDef_var \
+      >
+
+# pragma instantiate \
     TAO::Objref_Traits< \
         CORBA::InterfaceAttrExtension \
       >
@@ -12893,4 +12693,3 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

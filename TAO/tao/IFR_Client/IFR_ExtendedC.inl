@@ -205,4 +205,3 @@ CORBA::ValueBoxDef::ValueBoxDef (
 }
 
 #endif /* end #if !defined */
-

@@ -17,7 +17,7 @@ lib_LTLIBRARIES =
 CLEANFILES =
 BUILT_SOURCES =
 
-## Makefile.CosNaming.am 
+## Makefile.CosNaming.am
 
 BUILT_SOURCES += \
   CosNamingS_T.cpp \
@@ -70,7 +70,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST = \
   CosNaming.rc
 
-## Makefile.CosProperty.am 
+## Makefile.CosProperty.am
 
 BUILT_SOURCES += \
   CosPropertyServiceS_T.cpp \
@@ -142,7 +142,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   CosProperty.rc
 
-## Makefile.AV.am 
+## Makefile.AV.am
 
 BUILT_SOURCES += \
   AVStreamsS_T.cpp \
@@ -352,7 +352,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   AV.rc
 
-## Makefile.CosConcurrency.am 
+## Makefile.CosConcurrency.am
 
 BUILT_SOURCES += \
   CosConcurrencyControlS_T.cpp \
@@ -432,7 +432,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   CosConcurrency.rc
 
-## Makefile.CosEvent.am 
+## Makefile.CosEvent.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -557,7 +557,7 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   CosEvent.rc
 
-## Makefile.Svc_Utils.am 
+## Makefile.Svc_Utils.am
 
 BUILT_SOURCES += \
   RtecBaseS_T.cpp \
@@ -670,7 +670,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Svc_Utils.rc
 
-## Makefile.CosEvent_Skel.am 
+## Makefile.CosEvent_Skel.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -730,7 +730,7 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   CosEvent_Skel.rc
 
-## Makefile.CosEvent_Serv.am 
+## Makefile.CosEvent_Serv.am
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
@@ -851,7 +851,7 @@ endif BUILD_CORBA_MESSAGING
 EXTRA_DIST += \
   CosEvent_Serv.rc
 
-## Makefile.CosLifeCycle.am 
+## Makefile.CosLifeCycle.am
 
 BUILT_SOURCES += \
   CosLifeCycleS_T.cpp \
@@ -961,7 +961,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   CosLifeCycle.rc
 
-## Makefile.FTORB_Utils.am 
+## Makefile.FTORB_Utils.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -1071,7 +1071,7 @@ nobase_include_HEADERS += \
 
 endif !BUILD_MINIMUM_CORBA
 
-## Makefile.PortableGroup.am 
+## Makefile.PortableGroup.am
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
@@ -1279,7 +1279,7 @@ endif BUILD_CORBA_MESSAGING
 EXTRA_DIST += \
   PortableGroup.rc
 
-## Makefile.CosLoadBalancing.am 
+## Makefile.CosLoadBalancing.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_AMI
@@ -1453,7 +1453,7 @@ endif BUILD_CORBA_MESSAGING
 EXTRA_DIST += \
   CosLoadBalancing.rc
 
-## Makefile.CosNaming_Skel.am 
+## Makefile.CosNaming_Skel.am
 
 lib_LTLIBRARIES += libTAO_CosNaming_Skel.la
 
@@ -1489,7 +1489,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   CosNaming_Skel.rc
 
-## Makefile.CosNaming_Serv.am 
+## Makefile.CosNaming_Serv.am
 
 if BUILD_CORBA_MESSAGING
 
@@ -1557,7 +1557,7 @@ endif BUILD_CORBA_MESSAGING
 EXTRA_DIST += \
   CosNaming_Serv.rc
 
-## Makefile.CosNotification.am 
+## Makefile.CosNotification.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -1731,7 +1731,7 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   CosNotification.rc
 
-## Makefile.ETCL.am 
+## Makefile.ETCL.am
 
 lib_LTLIBRARIES += libTAO_ETCL.la
 
@@ -1766,7 +1766,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   ETCL.rc
 
-## Makefile.CosNotification_Skel.am 
+## Makefile.CosNotification_Skel.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -1839,7 +1839,7 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   CosNotification_Skel.rc
 
-## Makefile.CosNotification_Serv.am 
+## Makefile.CosNotification_Serv.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -2122,7 +2122,7 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   CosNotification_Serv.rc
 
-## Makefile.CosNotification_Persist.am 
+## Makefile.CosNotification_Persist.am
 
 if BUILD_ACEXML
 if !BUILD_MINIMUM_CORBA
@@ -2176,7 +2176,7 @@ noinst_HEADERS += \
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_ACEXML
 
-## Makefile.CosTime.am 
+## Makefile.CosTime.am
 
 BUILT_SOURCES += \
   TimeServiceS_T.cpp \
@@ -2256,7 +2256,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   CosTime.rc
 
-## Makefile.CosTrading.am 
+## Makefile.CosTrading.am
 
 BUILT_SOURCES += \
   CosTradingS_T.cpp \
@@ -2353,7 +2353,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   CosTrading.rc
 
-## Makefile.CosTrading_Skel.am 
+## Makefile.CosTrading_Skel.am
 
 lib_LTLIBRARIES += libTAO_CosTrading_Skel.la
 
@@ -2401,7 +2401,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   CosTrading_Skel.rc
 
-## Makefile.CosTrading_Serv.am 
+## Makefile.CosTrading_Serv.am
 
 Trader = \
   Trader/Constraint_Interpreter.cpp \
@@ -2470,7 +2470,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   CosTrading_Serv.rc
 
-## Makefile.DsLogAdmin.am 
+## Makefile.DsLogAdmin.am
 
 BUILT_SOURCES += \
   DsLogAdminS_T.cpp \
@@ -2544,7 +2544,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   DsLogAdmin.rc
 
-## Makefile.DsEventLogAdmin.am 
+## Makefile.DsEventLogAdmin.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -2602,7 +2602,7 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   DsEventLogAdmin.rc
 
-## Makefile.DsLogAdmin_Skel.am 
+## Makefile.DsLogAdmin_Skel.am
 
 lib_LTLIBRARIES += libTAO_DsLogAdmin_Skel.la
 
@@ -2641,7 +2641,7 @@ nobase_include_HEADERS += \
   DsLogAdminS_T.cpp \
   DsLogNotificationS_T.cpp
 
-## Makefile.DsLogAdmin_Serv.am 
+## Makefile.DsLogAdmin_Serv.am
 
 DsLogAdmin = \
   Log/BasicLogFactory_i.cpp \
@@ -2692,7 +2692,7 @@ nobase_include_HEADERS += \
   Log/Log_Constraint_Visitors.h \
   Log/Log_i.h
 
-## Makefile.DsEventLogAdmin_Skel.am 
+## Makefile.DsEventLogAdmin_Skel.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -2734,7 +2734,7 @@ nobase_include_HEADERS += \
 
 endif !BUILD_MINIMUM_CORBA
 
-## Makefile.DsEventLogAdmin_Serv.am 
+## Makefile.DsEventLogAdmin_Serv.am
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
@@ -2792,7 +2792,7 @@ nobase_include_HEADERS += \
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.DsNotifyLogAdmin.am 
+## Makefile.DsNotifyLogAdmin.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -2852,7 +2852,7 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   DsNotifyLogAdmin.rc
 
-## Makefile.DsNotifyLogAdmin_Skel.am 
+## Makefile.DsNotifyLogAdmin_Skel.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -2898,7 +2898,7 @@ nobase_include_HEADERS += \
 
 endif !BUILD_MINIMUM_CORBA
 
-## Makefile.DsNotifyLogAdmin_Serv.am 
+## Makefile.DsNotifyLogAdmin_Serv.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -2953,7 +2953,7 @@ nobase_include_HEADERS += \
 
 endif !BUILD_MINIMUM_CORBA
 
-## Makefile.FTRT_ClientORB.am 
+## Makefile.FTRT_ClientORB.am
 
 if BUILD_CORBA_MESSAGING
 
@@ -2994,7 +2994,7 @@ nobase_include_HEADERS += \
 
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.RTEvent.am 
+## Makefile.RTEvent.am
 
 if BUILD_CORBA_MESSAGING
 
@@ -3389,7 +3389,7 @@ endif BUILD_CORBA_MESSAGING
 EXTRA_DIST += \
   RTEvent.rc
 
-## Makefile.FtRtEvent.am 
+## Makefile.FtRtEvent.am
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
@@ -3598,7 +3598,7 @@ nobase_include_HEADERS += \
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.FTRT_EventChannel.am 
+## Makefile.FTRT_EventChannel.am
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
@@ -3719,7 +3719,7 @@ nobase_include_HEADERS += \
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.FT_ClientORB.am 
+## Makefile.FT_ClientORB.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_ACE_UUID
@@ -3780,7 +3780,7 @@ endif !BUILD_MINIMUM_CORBA
 endif BUILD_ACE_UUID
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.FT_ServerORB.am 
+## Makefile.FT_ServerORB.am
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
@@ -3831,7 +3831,7 @@ nobase_include_HEADERS += \
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.FaultTolerance.am 
+## Makefile.FaultTolerance.am
 
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
@@ -4077,7 +4077,7 @@ endif BUILD_ACE_UUID
 EXTRA_DIST += \
   FaultTolerance.rc
 
-## Makefile.HTIOP.am 
+## Makefile.HTIOP.am
 
 BUILT_SOURCES += \
   HTIOPS_T.cpp \
@@ -4173,7 +4173,7 @@ nobase_include_HEADERS += \
   HTIOPS_T.cpp \
   HTIOP.idl
 
-## Makefile.IFRService.am 
+## Makefile.IFRService.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -4322,14 +4322,14 @@ nobase_include_HEADERS += \
   IFRService/ValueDef_i.h \
   IFRService/ValueMemberDef_i.h \
   IFRService/WstringDef_i.h \
-  IFRService/IFR_BaseS.i \
-  IFRService/IFR_BaseS_T.i \
-  IFRService/IFR_BasicS.i \
-  IFRService/IFR_BasicS_T.i \
-  IFRService/IFR_ComponentsS.i \
-  IFRService/IFR_ComponentsS_T.i \
-  IFRService/IFR_ExtendedS.i \
-  IFRService/IFR_ExtendedS_T.i \
+  IFRService/IFR_BaseS.inl \
+  IFRService/IFR_BaseS_T.inl \
+  IFRService/IFR_BasicS.inl \
+  IFRService/IFR_BasicS_T.inl \
+  IFRService/IFR_ComponentsS.inl \
+  IFRService/IFR_ComponentsS_T.inl \
+  IFRService/IFR_ExtendedS.inl \
+  IFRService/IFR_ExtendedS_T.inl \
   IFRService/IFR_BaseS_T.cpp \
   IFRService/IFR_BasicS_T.cpp \
   IFRService/IFR_ComponentsS_T.cpp \
@@ -4341,7 +4341,7 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   IFRService.rc
 
-## Makefile.RTCORBAEvent.am 
+## Makefile.RTCORBAEvent.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
@@ -4388,7 +4388,7 @@ nobase_include_HEADERS += \
 endif BUILD_RT_CORBA
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.RTCosScheduling.am 
+## Makefile.RTCosScheduling.am
 
 if BUILD_RT_CORBA
 if BUILD_INTERCEPTORS
@@ -4472,7 +4472,7 @@ nobase_include_HEADERS += \
 endif BUILD_INTERCEPTORS
 endif BUILD_RT_CORBA
 
-## Makefile.RTSched.am 
+## Makefile.RTSched.am
 
 BUILT_SOURCES += \
   RtecSchedulerS_T.cpp \
@@ -4583,7 +4583,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   RTSched.rc
 
-## Makefile.RTOLDEvent.am 
+## Makefile.RTOLDEvent.am
 
 if BUILD_CORBA_MESSAGING
 
@@ -4654,7 +4654,7 @@ endif BUILD_CORBA_MESSAGING
 EXTRA_DIST += \
   RTOldEvent.rc
 
-## Makefile.RTEventLogAdmin.am 
+## Makefile.RTEventLogAdmin.am
 
 if BUILD_CORBA_MESSAGING
 

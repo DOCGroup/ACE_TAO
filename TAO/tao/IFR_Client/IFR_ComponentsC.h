@@ -26,20 +26,23 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_ORIG_IFR_COMPONENTSC_H_
-#define _TAO_IDL_ORIG_IFR_COMPONENTSC_H_
+#ifndef _TAO_IDL_IFR_COMPONENTSC_H_
+#define _TAO_IDL_IFR_COMPONENTSC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ifr_client_export.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Typecode.h"
@@ -48,7 +51,6 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
-
 #include "IFR_ExtendedC.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -64,9 +66,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -75,7 +75,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -98,7 +98,7 @@ namespace CORBA
   {
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_COMPONENTDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_COMPONENTDEF__VAR_OUT_CH_
@@ -121,7 +121,7 @@ namespace CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_HOMEDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_HOMEDEF__VAR_OUT_CH_
@@ -144,7 +144,7 @@ namespace CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_EVENTDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_EVENTDEF__VAR_OUT_CH_
@@ -173,7 +173,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_EVENTDEF_CH_
     
     class TAO_IFR_Client_Export EventDef
-      : public virtual CORBA::ExtValueDef
+      : public virtual ::CORBA::ExtValueDef
     {
     public:
       friend class TAO::Narrow_Utils<EventDef>;
@@ -252,7 +252,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EventDef;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_CONTAINER__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_CONTAINER__VAR_OUT_CH_
@@ -281,7 +281,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_CONTAINER_CH_
     
     class TAO_IFR_Client_Export Container
-      : public virtual CORBA::Container
+      : public virtual ::CORBA::Container
     {
     public:
       friend class TAO::Narrow_Utils<Container>;
@@ -315,8 +315,8 @@ namespace CORBA
           const char * id,
           const char * name,
           const char * version,
-          CORBA::ComponentIR::ComponentDef_ptr base_component,
-          const CORBA::InterfaceDefSeq & supports_interfaces
+          ::CORBA::ComponentIR::ComponentDef_ptr base_component,
+          const ::CORBA::InterfaceDefSeq & supports_interfaces
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -330,10 +330,10 @@ namespace CORBA
           const char * id,
           const char * name,
           const char * version,
-          CORBA::ComponentIR::HomeDef_ptr base_home,
-          CORBA::ComponentIR::ComponentDef_ptr managed_component,
-          const CORBA::InterfaceDefSeq & supports_interfaces,
-          CORBA::ValueDef_ptr primary_key
+          ::CORBA::ComponentIR::HomeDef_ptr base_home,
+          ::CORBA::ComponentIR::ComponentDef_ptr managed_component,
+          const ::CORBA::InterfaceDefSeq & supports_interfaces,
+          ::CORBA::ValueDef_ptr primary_key
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -347,13 +347,13 @@ namespace CORBA
           const char * id,
           const char * name,
           const char * version,
-          CORBA::Boolean is_custom,
-          CORBA::Boolean is_abstract,
-          CORBA::ValueDef_ptr base_value,
-          CORBA::Boolean is_truncatable,
-          const CORBA::ValueDefSeq & abstract_base_values,
-          const CORBA::InterfaceDefSeq & supported_interfaces,
-          const CORBA::ExtInitializerSeq & initializers
+          ::CORBA::Boolean is_custom,
+          ::CORBA::Boolean is_abstract,
+          ::CORBA::ValueDef_ptr base_value,
+          ::CORBA::Boolean is_truncatable,
+          const ::CORBA::ValueDefSeq & abstract_base_values,
+          const ::CORBA::InterfaceDefSeq & supported_interfaces,
+          const ::CORBA::ExtInitializerSeq & initializers
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -412,7 +412,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Container;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_MODULEDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_MODULEDEF__VAR_OUT_CH_
@@ -441,8 +441,8 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_MODULEDEF_CH_
     
     class TAO_IFR_Client_Export ModuleDef
-      : public virtual CORBA::ModuleDef,
-        public virtual CORBA::ComponentIR::Container
+      : public virtual ::CORBA::ModuleDef,
+        public virtual ::CORBA::ComponentIR::Container
     {
     public:
       friend class TAO::Narrow_Utils<ModuleDef>;
@@ -521,7 +521,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ModuleDef;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_REPOSITORY__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_REPOSITORY__VAR_OUT_CH_
@@ -550,8 +550,8 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_REPOSITORY_CH_
     
     class TAO_IFR_Client_Export Repository
-      : public virtual CORBA::Repository,
-        public virtual CORBA::ComponentIR::Container
+      : public virtual ::CORBA::Repository,
+        public virtual ::CORBA::ComponentIR::Container
     {
     public:
       friend class TAO::Narrow_Utils<Repository>;
@@ -630,7 +630,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Repository;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_PROVIDESDEF__VAR_OUT_CH_
@@ -659,7 +659,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_PROVIDESDEF_CH_
     
     class TAO_IFR_Client_Export ProvidesDef
-      : public virtual CORBA::Contained
+      : public virtual ::CORBA::Contained
     {
     public:
       friend class TAO::Narrow_Utils<ProvidesDef>;
@@ -700,7 +700,7 @@ namespace CORBA
       // be\be_visitor_operation/operation_ch.cpp:46
       
       virtual void interface_type (
-          CORBA::InterfaceDef_ptr interface_type
+          ::CORBA::InterfaceDef_ptr interface_type
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -797,7 +797,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProvidesDescription;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_USESDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_USESDEF__VAR_OUT_CH_
@@ -826,7 +826,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_USESDEF_CH_
     
     class TAO_IFR_Client_Export UsesDef
-      : public virtual CORBA::Contained
+      : public virtual ::CORBA::Contained
     {
     public:
       friend class TAO::Narrow_Utils<UsesDef>;
@@ -867,7 +867,7 @@ namespace CORBA
       // be\be_visitor_operation/operation_ch.cpp:46
       
       virtual void interface_type (
-          CORBA::InterfaceDef_ptr interface_type
+          ::CORBA::InterfaceDef_ptr interface_type
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -888,7 +888,7 @@ namespace CORBA
       // be\be_visitor_operation/operation_ch.cpp:46
       
       virtual void is_multiple (
-          CORBA::Boolean is_multiple
+          ::CORBA::Boolean is_multiple
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -986,7 +986,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UsesDescription;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_EVENTPORTDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_EVENTPORTDEF__VAR_OUT_CH_
@@ -1015,7 +1015,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_EVENTPORTDEF_CH_
     
     class TAO_IFR_Client_Export EventPortDef
-      : public virtual CORBA::Contained
+      : public virtual ::CORBA::Contained
     {
     public:
       friend class TAO::Narrow_Utils<EventPortDef>;
@@ -1056,7 +1056,7 @@ namespace CORBA
       // be\be_visitor_operation/operation_ch.cpp:46
       
       virtual void event (
-          CORBA::ComponentIR::EventDef_ptr event
+          ::CORBA::ComponentIR::EventDef_ptr event
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -1164,7 +1164,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EventPortDescription;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_EMITSDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_EMITSDEF__VAR_OUT_CH_
@@ -1193,7 +1193,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_EMITSDEF_CH_
     
     class TAO_IFR_Client_Export EmitsDef
-      : public virtual CORBA::ComponentIR::EventPortDef
+      : public virtual ::CORBA::ComponentIR::EventPortDef
     {
     public:
       friend class TAO::Narrow_Utils<EmitsDef>;
@@ -1272,7 +1272,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EmitsDef;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_PUBLISHESDEF__VAR_OUT_CH_
@@ -1301,7 +1301,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_PUBLISHESDEF_CH_
     
     class TAO_IFR_Client_Export PublishesDef
-      : public virtual CORBA::ComponentIR::EventPortDef
+      : public virtual ::CORBA::ComponentIR::EventPortDef
     {
     public:
       friend class TAO::Narrow_Utils<PublishesDef>;
@@ -1380,7 +1380,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PublishesDef;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_CONSUMESDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_CONSUMESDEF__VAR_OUT_CH_
@@ -1409,7 +1409,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_CONSUMESDEF_CH_
     
     class TAO_IFR_Client_Export ConsumesDef
-      : public virtual CORBA::ComponentIR::EventPortDef
+      : public virtual ::CORBA::ComponentIR::EventPortDef
     {
     public:
       friend class TAO::Narrow_Utils<ConsumesDef>;
@@ -1494,7 +1494,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_COMPONENTDEF_CH_
     
     class TAO_IFR_Client_Export ComponentDef
-      : public virtual CORBA::ExtInterfaceDef
+      : public virtual ::CORBA::ExtInterfaceDef
     {
     public:
       friend class TAO::Narrow_Utils<ComponentDef>;
@@ -1535,7 +1535,7 @@ namespace CORBA
       // be\be_visitor_operation/operation_ch.cpp:46
       
       virtual void base_component (
-          CORBA::ComponentIR::ComponentDef_ptr base_component
+          ::CORBA::ComponentIR::ComponentDef_ptr base_component
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -1556,7 +1556,7 @@ namespace CORBA
       // be\be_visitor_operation/operation_ch.cpp:46
       
       virtual void supported_interfaces (
-          const CORBA::InterfaceDefSeq & supported_interfaces
+          const ::CORBA::InterfaceDefSeq & supported_interfaces
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -1570,7 +1570,7 @@ namespace CORBA
           const char * id,
           const char * name,
           const char * version,
-          CORBA::InterfaceDef_ptr interface_type
+          ::CORBA::InterfaceDef_ptr interface_type
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -1584,8 +1584,8 @@ namespace CORBA
           const char * id,
           const char * name,
           const char * version,
-          CORBA::InterfaceDef_ptr interface_type,
-          CORBA::Boolean is_multiple
+          ::CORBA::InterfaceDef_ptr interface_type,
+          ::CORBA::Boolean is_multiple
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -1599,7 +1599,7 @@ namespace CORBA
           const char * id,
           const char * name,
           const char * version,
-          CORBA::ComponentIR::EventDef_ptr event
+          ::CORBA::ComponentIR::EventDef_ptr event
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -1613,7 +1613,7 @@ namespace CORBA
           const char * id,
           const char * name,
           const char * version,
-          CORBA::ComponentIR::EventDef_ptr event
+          ::CORBA::ComponentIR::EventDef_ptr event
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -1627,7 +1627,7 @@ namespace CORBA
           const char * id,
           const char * name,
           const char * version,
-          CORBA::ComponentIR::EventDef_ptr event
+          ::CORBA::ComponentIR::EventDef_ptr event
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -1891,7 +1891,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ComponentDescription;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_FACTORYDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_FACTORYDEF__VAR_OUT_CH_
@@ -1920,7 +1920,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_FACTORYDEF_CH_
     
     class TAO_IFR_Client_Export FactoryDef
-      : public virtual CORBA::OperationDef
+      : public virtual ::CORBA::OperationDef
     {
     public:
       friend class TAO::Narrow_Utils<FactoryDef>;
@@ -1999,7 +1999,7 @@ namespace CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_FactoryDef;
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:611
+    // be\be_interface.cpp:598
 
 #if !defined (_CORBA_COMPONENTIR_FINDERDEF__VAR_OUT_CH_)
 #define _CORBA_COMPONENTIR_FINDERDEF__VAR_OUT_CH_
@@ -2028,7 +2028,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_FINDERDEF_CH_
     
     class TAO_IFR_Client_Export FinderDef
-      : public virtual CORBA::OperationDef
+      : public virtual ::CORBA::OperationDef
     {
     public:
       friend class TAO::Narrow_Utils<FinderDef>;
@@ -2113,7 +2113,7 @@ namespace CORBA
 #define _CORBA_COMPONENTIR_HOMEDEF_CH_
     
     class TAO_IFR_Client_Export HomeDef
-      : public virtual CORBA::ExtInterfaceDef
+      : public virtual ::CORBA::ExtInterfaceDef
     {
     public:
       friend class TAO::Narrow_Utils<HomeDef>;
@@ -2154,7 +2154,7 @@ namespace CORBA
       // be\be_visitor_operation/operation_ch.cpp:46
       
       virtual void base_home (
-          CORBA::ComponentIR::HomeDef_ptr base_home
+          ::CORBA::ComponentIR::HomeDef_ptr base_home
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -2175,7 +2175,7 @@ namespace CORBA
       // be\be_visitor_operation/operation_ch.cpp:46
       
       virtual void supported_interfaces (
-          const CORBA::InterfaceDefSeq & supported_interfaces
+          const ::CORBA::InterfaceDefSeq & supported_interfaces
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -2196,7 +2196,7 @@ namespace CORBA
       // be\be_visitor_operation/operation_ch.cpp:46
       
       virtual void managed_component (
-          CORBA::ComponentIR::ComponentDef_ptr managed_component
+          ::CORBA::ComponentIR::ComponentDef_ptr managed_component
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -2217,7 +2217,7 @@ namespace CORBA
       // be\be_visitor_operation/operation_ch.cpp:46
       
       virtual void primary_key (
-          CORBA::ValueDef_ptr primary_key
+          ::CORBA::ValueDef_ptr primary_key
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -2231,8 +2231,8 @@ namespace CORBA
           const char * id,
           const char * name,
           const char * version,
-          const CORBA::ParDescriptionSeq & params,
-          const CORBA::ExceptionDefSeq & exceptions
+          const ::CORBA::ParDescriptionSeq & params,
+          const ::CORBA::ExceptionDefSeq & exceptions
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -2246,8 +2246,8 @@ namespace CORBA
           const char * id,
           const char * name,
           const char * version,
-          const CORBA::ParDescriptionSeq & params,
-          const CORBA::ExceptionDefSeq & exceptions
+          const ::CORBA::ParDescriptionSeq & params,
+          const ::CORBA::ExceptionDefSeq & exceptions
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
@@ -2460,17 +2460,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_COMPONENTDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::ComponentDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::ComponentDef>
   {
-    static CORBA::ComponentIR::ComponentDef_ptr duplicate (
-        CORBA::ComponentIR::ComponentDef_ptr
+    static ::CORBA::ComponentIR::ComponentDef_ptr duplicate (
+        ::CORBA::ComponentIR::ComponentDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::ComponentDef_ptr
+        ::CORBA::ComponentIR::ComponentDef_ptr
       );
-    static CORBA::ComponentIR::ComponentDef_ptr nil (void);
+    static ::CORBA::ComponentIR::ComponentDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::ComponentDef_ptr p,
+        ::CORBA::ComponentIR::ComponentDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2481,17 +2481,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_HOMEDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::HomeDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::HomeDef>
   {
-    static CORBA::ComponentIR::HomeDef_ptr duplicate (
-        CORBA::ComponentIR::HomeDef_ptr
+    static ::CORBA::ComponentIR::HomeDef_ptr duplicate (
+        ::CORBA::ComponentIR::HomeDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::HomeDef_ptr
+        ::CORBA::ComponentIR::HomeDef_ptr
       );
-    static CORBA::ComponentIR::HomeDef_ptr nil (void);
+    static ::CORBA::ComponentIR::HomeDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::HomeDef_ptr p,
+        ::CORBA::ComponentIR::HomeDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2502,17 +2502,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_EVENTDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::EventDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::EventDef>
   {
-    static CORBA::ComponentIR::EventDef_ptr duplicate (
-        CORBA::ComponentIR::EventDef_ptr
+    static ::CORBA::ComponentIR::EventDef_ptr duplicate (
+        ::CORBA::ComponentIR::EventDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::EventDef_ptr
+        ::CORBA::ComponentIR::EventDef_ptr
       );
-    static CORBA::ComponentIR::EventDef_ptr nil (void);
+    static ::CORBA::ComponentIR::EventDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::EventDef_ptr p,
+        ::CORBA::ComponentIR::EventDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2523,17 +2523,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_CONTAINER__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::Container>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::Container>
   {
-    static CORBA::ComponentIR::Container_ptr duplicate (
-        CORBA::ComponentIR::Container_ptr
+    static ::CORBA::ComponentIR::Container_ptr duplicate (
+        ::CORBA::ComponentIR::Container_ptr
       );
     static void release (
-        CORBA::ComponentIR::Container_ptr
+        ::CORBA::ComponentIR::Container_ptr
       );
-    static CORBA::ComponentIR::Container_ptr nil (void);
+    static ::CORBA::ComponentIR::Container_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::Container_ptr p,
+        ::CORBA::ComponentIR::Container_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2544,17 +2544,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_MODULEDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::ModuleDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::ModuleDef>
   {
-    static CORBA::ComponentIR::ModuleDef_ptr duplicate (
-        CORBA::ComponentIR::ModuleDef_ptr
+    static ::CORBA::ComponentIR::ModuleDef_ptr duplicate (
+        ::CORBA::ComponentIR::ModuleDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::ModuleDef_ptr
+        ::CORBA::ComponentIR::ModuleDef_ptr
       );
-    static CORBA::ComponentIR::ModuleDef_ptr nil (void);
+    static ::CORBA::ComponentIR::ModuleDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::ModuleDef_ptr p,
+        ::CORBA::ComponentIR::ModuleDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2565,17 +2565,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_REPOSITORY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::Repository>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::Repository>
   {
-    static CORBA::ComponentIR::Repository_ptr duplicate (
-        CORBA::ComponentIR::Repository_ptr
+    static ::CORBA::ComponentIR::Repository_ptr duplicate (
+        ::CORBA::ComponentIR::Repository_ptr
       );
     static void release (
-        CORBA::ComponentIR::Repository_ptr
+        ::CORBA::ComponentIR::Repository_ptr
       );
-    static CORBA::ComponentIR::Repository_ptr nil (void);
+    static ::CORBA::ComponentIR::Repository_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::Repository_ptr p,
+        ::CORBA::ComponentIR::Repository_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2586,17 +2586,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_PROVIDESDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::ProvidesDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::ProvidesDef>
   {
-    static CORBA::ComponentIR::ProvidesDef_ptr duplicate (
-        CORBA::ComponentIR::ProvidesDef_ptr
+    static ::CORBA::ComponentIR::ProvidesDef_ptr duplicate (
+        ::CORBA::ComponentIR::ProvidesDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::ProvidesDef_ptr
+        ::CORBA::ComponentIR::ProvidesDef_ptr
       );
-    static CORBA::ComponentIR::ProvidesDef_ptr nil (void);
+    static ::CORBA::ComponentIR::ProvidesDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::ProvidesDef_ptr p,
+        ::CORBA::ComponentIR::ProvidesDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2607,17 +2607,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_USESDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::UsesDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::UsesDef>
   {
-    static CORBA::ComponentIR::UsesDef_ptr duplicate (
-        CORBA::ComponentIR::UsesDef_ptr
+    static ::CORBA::ComponentIR::UsesDef_ptr duplicate (
+        ::CORBA::ComponentIR::UsesDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::UsesDef_ptr
+        ::CORBA::ComponentIR::UsesDef_ptr
       );
-    static CORBA::ComponentIR::UsesDef_ptr nil (void);
+    static ::CORBA::ComponentIR::UsesDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::UsesDef_ptr p,
+        ::CORBA::ComponentIR::UsesDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2628,17 +2628,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_EVENTPORTDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::EventPortDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::EventPortDef>
   {
-    static CORBA::ComponentIR::EventPortDef_ptr duplicate (
-        CORBA::ComponentIR::EventPortDef_ptr
+    static ::CORBA::ComponentIR::EventPortDef_ptr duplicate (
+        ::CORBA::ComponentIR::EventPortDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::EventPortDef_ptr
+        ::CORBA::ComponentIR::EventPortDef_ptr
       );
-    static CORBA::ComponentIR::EventPortDef_ptr nil (void);
+    static ::CORBA::ComponentIR::EventPortDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::EventPortDef_ptr p,
+        ::CORBA::ComponentIR::EventPortDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2649,17 +2649,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_EMITSDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::EmitsDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::EmitsDef>
   {
-    static CORBA::ComponentIR::EmitsDef_ptr duplicate (
-        CORBA::ComponentIR::EmitsDef_ptr
+    static ::CORBA::ComponentIR::EmitsDef_ptr duplicate (
+        ::CORBA::ComponentIR::EmitsDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::EmitsDef_ptr
+        ::CORBA::ComponentIR::EmitsDef_ptr
       );
-    static CORBA::ComponentIR::EmitsDef_ptr nil (void);
+    static ::CORBA::ComponentIR::EmitsDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::EmitsDef_ptr p,
+        ::CORBA::ComponentIR::EmitsDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2670,17 +2670,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_PUBLISHESDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::PublishesDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::PublishesDef>
   {
-    static CORBA::ComponentIR::PublishesDef_ptr duplicate (
-        CORBA::ComponentIR::PublishesDef_ptr
+    static ::CORBA::ComponentIR::PublishesDef_ptr duplicate (
+        ::CORBA::ComponentIR::PublishesDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::PublishesDef_ptr
+        ::CORBA::ComponentIR::PublishesDef_ptr
       );
-    static CORBA::ComponentIR::PublishesDef_ptr nil (void);
+    static ::CORBA::ComponentIR::PublishesDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::PublishesDef_ptr p,
+        ::CORBA::ComponentIR::PublishesDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2691,17 +2691,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_CONSUMESDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::ConsumesDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::ConsumesDef>
   {
-    static CORBA::ComponentIR::ConsumesDef_ptr duplicate (
-        CORBA::ComponentIR::ConsumesDef_ptr
+    static ::CORBA::ComponentIR::ConsumesDef_ptr duplicate (
+        ::CORBA::ComponentIR::ConsumesDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::ConsumesDef_ptr
+        ::CORBA::ComponentIR::ConsumesDef_ptr
       );
-    static CORBA::ComponentIR::ConsumesDef_ptr nil (void);
+    static ::CORBA::ComponentIR::ConsumesDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::ConsumesDef_ptr p,
+        ::CORBA::ComponentIR::ConsumesDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2712,17 +2712,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_FACTORYDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::FactoryDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::FactoryDef>
   {
-    static CORBA::ComponentIR::FactoryDef_ptr duplicate (
-        CORBA::ComponentIR::FactoryDef_ptr
+    static ::CORBA::ComponentIR::FactoryDef_ptr duplicate (
+        ::CORBA::ComponentIR::FactoryDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::FactoryDef_ptr
+        ::CORBA::ComponentIR::FactoryDef_ptr
       );
-    static CORBA::ComponentIR::FactoryDef_ptr nil (void);
+    static ::CORBA::ComponentIR::FactoryDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::FactoryDef_ptr p,
+        ::CORBA::ComponentIR::FactoryDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2733,17 +2733,17 @@ namespace TAO
 #define _CORBA_COMPONENTIR_FINDERDEF__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_IFR_Client_Export Objref_Traits<CORBA::ComponentIR::FinderDef>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::FinderDef>
   {
-    static CORBA::ComponentIR::FinderDef_ptr duplicate (
-        CORBA::ComponentIR::FinderDef_ptr
+    static ::CORBA::ComponentIR::FinderDef_ptr duplicate (
+        ::CORBA::ComponentIR::FinderDef_ptr
       );
     static void release (
-        CORBA::ComponentIR::FinderDef_ptr
+        ::CORBA::ComponentIR::FinderDef_ptr
       );
-    static CORBA::ComponentIR::FinderDef_ptr nil (void);
+    static ::CORBA::ComponentIR::FinderDef_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ComponentIR::FinderDef_ptr p,
+        ::CORBA::ComponentIR::FinderDef_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -3079,13 +3079,13 @@ TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::C
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ComponentIR::HomeDescription &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "IFR_ComponentsC.i"
+#include "IFR_ComponentsC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -3096,4 +3096,5 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Componen
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 
