@@ -104,6 +104,8 @@ TAO_ServantBase::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
+  // This doesn't take multiple ORBs into account, but it's being
+  // used only to resolve the IFR, so we should be ok.
   return adapter->get_interface (TAO_ORB_Core_instance ()->orb (),
                                  this->_interface_repository_id ()
                                  ACE_ENV_ARG_PARAMETER);
