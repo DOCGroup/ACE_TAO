@@ -335,8 +335,6 @@ TAO_Persistent_Context_Index::create_index (void)
 int
 TAO_Persistent_Context_Index::create_index_helper (void *buffer)
 {
-  ACE_NEW_RETURN (this->index_,
-                  (buffer) CONTEXT_INDEX (this->allocator_),
-                  -1);
+  this->index_ = new (buffer) CONTEXT_INDEX (this->allocator_);
   return 0;
 }

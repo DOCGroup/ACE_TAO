@@ -8,7 +8,7 @@
 
   <body>
   <hr><p>
-    <h3>TAO Performance Tuning</h3>
+    <h3>TAO Compile-time and Run-time Performance Tuning</h3>
 
     <a name="overview"></a>
     <h3>Overview</h3>
@@ -35,7 +35,9 @@
     <!-- this. ;-) -->
 
     <!-- Shouldnt be an issue though :-) -->
-      and latency for a variety of applications. </p>
+      and latency for a variety of applications.  We also explain
+      various ways to speedup the compilation of ACE+TAO and
+      applications that use ACE+TAO.</p>
 
      <p>
       As with most applications, including compilers, enabling
@@ -85,7 +87,7 @@
           <!-- over. Why did I start that in the first place. Late -->
           <!-- realisation :-)-->
 
-	<a href="#throughput">Optimizing Throughput</a>
+	<a href="#throughput">Optimizing Run-time Throughput</a>
 	<ul>
 	  <li>
 	    <a href="#client_throughput">Optimizing Client Throughput</a>
@@ -96,13 +98,24 @@
 	</ul>
       </li>
       <li>
-	<a href="#scalability">Optimizing Scalability</a>
+	<a href="#scalability">Optimizing Run-time Scalability</a>
 	<ul>
 	  <li>
 	    <a href="#client_scalability">Optimizing Client Scalability</a>
 	  </li>
 	  <li>
 	    <a href="#server_scalability">Optimizing Server Scalability</a>
+	  </li>
+	</ul>
+      </li>
+      <li>
+	<a href="#compile">Reducing Compilation Time</a>
+	<ul>
+	  <li>
+	    <a href="#compile_optimization">Optimization</a>
+	  </li>
+	  <li>
+	    <a href="#compile_inlinling">Inlining</a>
 	  </li>
 	</ul>
       </li>
@@ -127,7 +140,7 @@
     </p>
 
     <a name="client_throughput"></a>
-    <h3>Optimizing Client Throughput</h3>
+    <h4>Optimizing Client Throughput</h4>
 
     <p>
       Client ORB throughput optimizations improve the rate at which
@@ -350,7 +363,7 @@
     </ul>
 
     <a name="server_throughput"></a>
-    <h3>Optimizing Server Throughput</h3>
+    <h4>Optimizing Server Throughput</h4>
 
     <p>
       Throughput on the server side can be improved by configuring TAO
@@ -405,7 +418,7 @@
     </p>
 
     <a name="client_scalability"></a>
-    <h3>Optimizing Client Scalability</h3>
+    <h4>Optimizing Client Scalability</h4>
 
     <p>
       In order to optimize TAO for scalability on the client side,
@@ -429,7 +442,7 @@
     </p>
 
     <a name="server_scalability"></a>
-    <h3>Optimizing Server Scalability</h3>
+    <h4>Optimizing Server Scalability</h4>
 
     <p>
       Scalability on the server side depends greatly on the
@@ -541,11 +554,44 @@
       the reason why it is often not used in practice.
     </p>
 
+    <p><hr><p>
+    <a name="compile"></a>
+    <h3>Reducing Compilation Time</h3>
+
+    <a name="compile_optimization"></a>
+    <h4>Optimization</h4>
+
+When developing software that uses ACE+TAO you can reduce the time it
+takes to compile your software by not enabling you compiler's optimizer
+flags. These often take the form -O&lt;n&gt;.<P>
+
+Disabling optimization for your application will come at the cost of run
+time performance, so you should normally only do this during
+development, keeping your test and release build optimized. <P>
+
+    <a name="compile_inlinling"></a>
+    <h4>Inlining</h4>
+
+When compiler optimization is disabled, it is frequently the case that
+no inlining will be performed. In this case the ACE inlining will be
+adding to your compile time without any appreciable benefit. You can
+therefore decrease compile times further by build building your
+application with the -DACE_NO_INLINE C++ flag. <P>
+
+In order for code built with -DACE_NO_INLINE to link, you will need to
+be using a version of ACE+TAO built with the "inline=0" make flag. <P>
+
+In order to accommodate both inline and non-inline builds of your
+application it will be necessary to build two copies of your ACE+TAO
+libraries, one with inlining and one without. You can then use your
+ACE_ROOT and TAO_ROOT variables to point at the appropriate
+installation.<P>
+
     <hr><P>
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Tue Jul 30 13:34:24 CDT 2002
+Last modified: Thu Dec 12 10:10:49 CST 2002
 <!-- hhmts end -->
   </body>
 </html>

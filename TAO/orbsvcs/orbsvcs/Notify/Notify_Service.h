@@ -105,7 +105,6 @@ public:
 };
 
 static TAO_NS_Cos_Notification_Service_Initializer TAO_NS_Cos_Notification_Service_initializer;
-
 ACE_STATIC_SVC_DECLARE (TAO_NS_Notify_Service)
 ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_Notify_Service)
 

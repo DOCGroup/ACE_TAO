@@ -1,3 +1,15 @@
+Thu Dec 12 10:10:53 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp: Fixed
+	  an inappropriate use of ACE_NEW_RETURN where a placement new
+ 	  operator will suffice.  Thanks to Torsten Kuepper
+ 	  <torsten.kuepper@nokia.com> for reporting this.  Fixes [bugid
+ 	  1396].	
+  
+	* docs/performance.html: Added suggestions on how to speedup
+	  compilation times for ACE+TAO and applications.  Thanks to Alex
+ 	  Hornby <alex@anvil.com> for contributing these suggestions.
+
 Thu Dec 12 10:29:11 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_tmplinst.cpp:
