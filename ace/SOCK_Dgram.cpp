@@ -205,9 +205,13 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
   // Determine the total length of all the buffers in <iov>.
   for (i = 0; i < n; i++)
+#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530))
+    // The iov_len is unsigned in Borland. If we go ahead and try the
+    // if, it will emit a warning.
     if (iov[i].iov_len < 0)
       return -1;
     else
+#endif
       length += iov[i].iov_len;
 
   char *buf;
@@ -248,9 +252,13 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   size_t i;
 
   for (i = 0; i < n; i++)
+#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530))
+    // The iov_len is unsigned in Borland. If we go ahead and try the
+    // if, it will emit a warning.
     if (iov[i].iov_len < 0)
       return -1;
     else
+#endif
       length += iov[i].iov_len;
 
   char *buf;

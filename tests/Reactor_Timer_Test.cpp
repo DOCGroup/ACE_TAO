@@ -46,7 +46,7 @@ public:
 
       count += (1 + odd);
 
-      if (current_count == ACE_MAX_TIMERS - 1)
+      if (long(current_count) == long(ACE_MAX_TIMERS - 1))
         done = 1;
 
       return 0;

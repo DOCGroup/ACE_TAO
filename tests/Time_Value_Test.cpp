@@ -22,11 +22,6 @@
 // Note, for this test the config.h file *must* come first!
 #include "ace/inc_user_config.h"
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 // Force test of ACE_U_LongLong class on Solaris, et al.
 #if defined (ACE_HAS_STHREADS)
 # include <limits.h>
@@ -50,6 +45,11 @@ USELIB("..\ace\aced.lib");
 
 #include "test_config.h"
 #include "ace/ACE.h"
+
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_STHREADS)
 static

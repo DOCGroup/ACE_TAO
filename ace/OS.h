@@ -494,11 +494,11 @@ private:
 # define ACE_UNUSED_ARG(a) (a)
 #endif /* ghs */
 
-#if defined (__sgi) || defined (ghs) || defined (DEC_CXX)
+#if defined (__sgi) || defined (ghs) || defined (DEC_CXX) || defined(__BORLANDC__)
 # define ACE_NOTREACHED(a)
 #else
 # define ACE_NOTREACHED(a) a
-#endif /* defined (__sgi) || defined (ghs) || defined (DEC_CXX) */
+#endif /* defined (__sgi) || defined (ghs) || defined (DEC_CXX) || defined(__BORLANDC__) */
 
 #if defined (ACE_REQUIRES_FUNC_DEFINITIONS)
 // It just evaporated ;-) Not pleasant.
@@ -2550,8 +2550,13 @@ typedef void (*ACE_SignalHandlerV)(...);
 #   define ACE_SEH_FINALLY if (1)
 # else
 #   if defined(__BORLANDC__)
-#     define ACE_SEH_TRY try
-#     define ACE_SEH_FINALLY catch(...)
+#     if (__BORLANDC__ >= 0x0530) /* Borland C++ Builder 3.0 */
+#       define ACE_SEH_TRY try
+#       define ACE_SEH_FINALLY __finally
+#     else
+#       define ACE_SEH_TRY try
+#       define ACE_SEH_FINALLY catch(...)
+#     endif
 #   else
 #     define ACE_SEH_TRY __try
 #     define ACE_SEH_FINALLY __finally

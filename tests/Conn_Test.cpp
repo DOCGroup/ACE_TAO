@@ -32,6 +32,11 @@
 #include "ace/Get_Opt.h"
 #include "Conn_Test.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 // Default number of clients/servers.
 static int n_servers = 4;
 static int n_clients = 10;
@@ -397,18 +402,19 @@ server (void *arg)
   for (;;)
     {
       // Create a new <Svc_Handler> to consume the data.
-
-      int result = acceptor->accept (svc_handler,
-                                     &cli_addr
-// Timing out is the only way for threads to stop accepting, since we
-// don't have signals
+      
 #if defined (ACE_LACKS_FORK)
-                                     , options
-                                     );
+      int result = acceptor->accept (svc_handler,
+                                     &cli_addr,
+                                     options);
 #else  /* ! ACE_LACKS_FORK */
-                                     );
-  ACE_UNUSED_ARG (options);
+      int result = acceptor->accept (svc_handler,
+                                     &cli_addr);
+      ACE_UNUSED_ARG (options);
 #endif /* ! ACE_LACKS_FORK */
+      
+      // Timing out is the only way for threads to stop accepting,
+      // since we don't have signals
 
       if (result == -1)
         {
@@ -423,9 +429,8 @@ server (void *arg)
 
       svc_handler->recv_data ();
     }
-
-  /* NOTREACHED */
-  return 0;
+  
+  ACE_NOTREACHED(return 0);
 }
 
 #if !defined (ACE_LACKS_FORK)
@@ -659,6 +664,12 @@ template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Svc_Handler>;
 template class ACE_Auto_Basic_Array_Ptr<pid_t>;
+#if defined (__BORLANDC__)
+// Borland C++ doesn't link with these instantiations in the ACE library.
+template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+template class ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>;
+template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
+#endif /* defined (__BORLANDC__) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Addr<ACE_INET_Addr>
@@ -689,4 +700,10 @@ template class ACE_Auto_Basic_Array_Ptr<pid_t>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Svc_Tuple<Svc_Handler>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<pid_t>
+#if defined (__BORLANDC__)
+// Borland C++ doesn't link with these instantiations in the ACE library.
+#pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
+#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>
+#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
+#endif /* defined (__BORLANDC__) */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
