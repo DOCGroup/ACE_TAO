@@ -179,7 +179,11 @@ module
       ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1->name ());
 
       if (((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
-        yyerrno++;
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("Problem with static\n")));
+          yyerrno++;
+        }
     }
   | suspend
     {
@@ -241,6 +245,9 @@ svc_location
         }
       else
         {
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("Unable to find service: %s\n"),
+                      ASYS_WIDE_STRING ($1)));
           ++yyerrno;
           $$ = 0;
         }
