@@ -1038,27 +1038,27 @@ TAO_Resource_Factory::parse_args (int argc, char **argv)
 }
 
 #define IMPLEMENT_PRE_GET_METHOD(methodname,rtype,membername)\
-rtype TAO_Resource_Factory::##methodname(void)\
+rtype TAO_Resource_Factory::methodname(void)\
 {\
   switch (resource_source_)\
     {\
     case TAO_GLOBAL:\
-      return &GLOBAL_PRE_ALLOCATED::instance ()->##membername;\
+      return &GLOBAL_PRE_ALLOCATED::instance ()->membername;\
     case TAO_TSS:\
-      return &TSS_PRE_ALLOCATED::instance ()->##membername;\
+      return &TSS_PRE_ALLOCATED::instance ()->membername;\
     }\
   return 0;\
 }
 
 #define IMPLEMENT_APP_GET_METHOD(methodname,rtype,membername)\
-rtype TAO_Resource_Factory::##methodname(void)\
+rtype TAO_Resource_Factory::methodname(void)\
 {\
   switch (resource_source_)\
     {\
     case TAO_GLOBAL:\
-      return GLOBAL_APP_ALLOCATED::instance ()->##membername;\
+      return GLOBAL_APP_ALLOCATED::instance ()->membername;\
     case TAO_TSS:\
-      return TSS_APP_ALLOCATED::instance ()->##membername;\
+      return TSS_APP_ALLOCATED::instance ()->membername;\
     }\
   return 0;\
 }
