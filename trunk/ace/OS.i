@@ -5794,7 +5794,7 @@ ACE_OS::gethrtime (void)
 
   return ACE_MAKE_QWORD (least, most);
 #else
-  const ACE_Time_Value now = ACE_OS::gettimeofday (void);
+  const ACE_Time_Value now = ACE_OS::gettimeofday ();
   return now.msec () * 1000000L /* nanoseconds/millsecond */;
 #endif /* ACE_HAS_HI_RES_TIMER */
 }

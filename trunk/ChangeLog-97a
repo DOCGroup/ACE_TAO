@@ -1,3 +1,16 @@
+Wed Mar  5 14:33:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Fixed a bug in gethrtime
+
+	  const ACE_Time_Value now = ACE_OS::gettimeofday (void);
+
+	  which should be
+
+	  const ACE_Time_Value now = ACE_OS::gettimeofday ();
+
+	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
+ 	  this.
+
 Tue Mar  4 16:37:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp (main): Make life
