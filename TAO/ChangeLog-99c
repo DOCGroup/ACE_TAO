@@ -1,3 +1,7 @@
+Wed Jul 14 12:43:51 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/TAO.cpp (init): replaced "RootPOA" with TAO_OBJID_ROOTPOA.
+
 Wed Jul 14 12:34:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Callback_Quoter/Makefile: don't build on/for
