@@ -1,3 +1,30 @@
+Tue Dec  9 17:24:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.dsp:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.dsp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.dsp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.dsp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.dsp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.dsp:
+	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+	* orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+	* orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+	* orbsvcs/examples/RtEC/MCast/MCast.dsp:
+	* orbsvcs/examples/Notify/Filter/Filter.dsp:
+	* orbsvcs/examples/Notify/Lanes/Consumer.dsp:
+	* orbsvcs/examples/Notify/Lanes/Supplier.dsp:
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
+	* orbsvcs/examples/Notify/ThreadPool/Consumer.dsp:
+	* orbsvcs/examples/Notify/ThreadPool/Supplier.dsp:
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+	* orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+	* examples/Simple/bank/client.dsp:
+	* examples/Logging/Logging_Service.dsp:
+	* examples/Logging/Logging_Test.dsp:
+	* docs/tutorials/Quoter/AMI/client.dsp:
+	* orbsvcs/tests/Concurrency/CC_client.dsp:
+	  Fixed release configurations
+
 Tue Dec  9 16:26:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/Redundant_Naming/client.dsp:
