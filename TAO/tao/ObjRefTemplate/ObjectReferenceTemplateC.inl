@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:56
+// be/be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
 PortableInterceptor::ObjectReferenceFactory::ObjectReferenceFactory (void)
@@ -44,7 +44,7 @@ PortableInterceptor::ObjectReferenceFactory::_tao_obv_static_repository_id ()
 }
 
 // TAO_IDL - Generated from 
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:56
+// be/be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
 PortableInterceptor::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
@@ -59,4 +59,3 @@ PortableInterceptor::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/PortableInterceptor/ObjectReferenceTemplate:1.0";
 }
-

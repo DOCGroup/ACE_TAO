@@ -1,3 +1,20 @@
+Fri Dec  3 05:19:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ObjRefTemplate/ObjectReferenceTemplate.h:
+
+	  New file that needs to be included by clients. 
+
+	* tao/ObjRefTemplate/Default_ORTC.h:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.inl:
+
+	  Included the above file. 
+	
+	* tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
+
+	  Added a safe #define for including ObjectReferenceTemplateC.h.
+
 Thu Dec  2 21:21:47 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_argument.cpp:
