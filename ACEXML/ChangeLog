@@ -1,3 +1,13 @@
+Mon Jul 14 18:49:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/svcconf/Makefile:
+        * common/Makefile:
+        * examples/SAXPrint/Makefile:
+        * parser/parser/Makefile:
+        * tests/Makefile:
+          Removed windows specific rules. They are not needed and only
+          cause problems when using a different command shell then cmd
+          like msys. This solves errors in the MinGW build.
 Sat Jul 5 13:33:36 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Makefile:
