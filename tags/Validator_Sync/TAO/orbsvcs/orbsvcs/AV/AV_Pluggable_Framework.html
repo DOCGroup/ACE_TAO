@@ -1,0 +1,377 @@
+<!$Id$>
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (X11; U; Linux 2.2.16-22 i686) [Netscape]">
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<center>
+<h1>
+Implementing Pluggable Protocol in TAO AV Streaming Service</h1></center>
+
+<center>
+<h4>
+<a href="mailto:naga@cs.wustl.edu">Nagarajan Surendran </a>and <a href="mailto:yamuna@cs.wustl.edu">Yamuna
+Krishnamurthy</a></h4></center>
+
+<center>Center for Distributed Object Computing
+<br>Washington University in St.Louis</center>
+
+<hr WIDTH="100%">
+<h3>
+Overview</h3>
+Traditionally DOC Middleware has provided facilities to design application-level
+objects at a higher level of abstraction, away from low-level details of
+network programming and distribution. The aspect of multimedia application
+that could benefit from this is an interoperable standard design of multimedia
+interfaces defined in IDL. The OMG A/V Specification defines such a set
+of interfaces which helps in type-safe ,robust and flexible applications.
+Also as proved in our earlier work,ORBs with IIOP implementation cannot
+be used for streaming multimedia data since they're optimized for request-response
+semantics. To circumvent this the application developer will have to use
+Out of Band data connection to stream the data while using the ORB to negotiate
+QoS, bind type-safe devices and explore their properties.
+<p>Also it is important for a Multimedia framework to have the ability
+to support different transports and be able to plug and configure them
+dynamically and statically .For example, a wireless link based application
+may want to use the Wireless link protocol to stream the data. RTP is gaining
+wide significance as the Transport protocol for streaming Audio and Video
+Data over the Internet. Our framework provides an implementation of RTP/RTCP
+for the audio/video profile. RTP is internet-centric and doesn't provide
+facilities to transport&nbsp; IDL-defined flows. SFP is a Simple Flow Protocol
+specified by the OMG for A/V Streaming and it can be mapped to different
+transports like UDP, RTP and ATM AAL5. Our framework provides an implementation
+of SFP that runs over UDP and multicast UDP.
+<p>The OMG specification defines the flow specification syntax that is
+to be used for the bind_devs calls for connection establishment. It defines
+the protocol names and also the syntax for specifying the transport/flow
+protocol information but it doesn't define any interfaces for the protocol
+implementation as such. Our framework bridges this gap by defining a uniform
+API&nbsp; for the different flow protocols like RTP and SFP while taking
+care of the variations using a Policy interface. We solve this with our
+Pluggable Protocol Framework using design patterns like Layer,
+<br>Acceptor, Connector, Facade and Abstract Factory. Please look at this
+<a href="http://www.cs.wustl.edu/~naga/pluggable_av.ps.gz">paper</a>
+for more documentation on the TAO AV Service Pluggable Protocol Framework.
+<p>
+<hr WIDTH="100%">
+<h3>
+Implementing the Pluggable Protocol</h3>
+In order to add a new pluggable transport and flow protocol to the AVStreams
+framework, without making changes to the framework itself, the pluggable
+protocol must implement the following components of the Pluggable Protocol
+framework:
+<h4>
+The Transport Protocol Components</h4>
+
+<h4>
+<i>Acceptor and Connector:&nbsp;</i></h4>
+These are implementations of the Acceptor and Connector design patterns.
+In the case of connectionless protocols like UDP, calling accept and connect
+will result in the creation of handlers immediately.
+<p>The pluggable transport protocol implementation should inherit from
+the following abstract classes declared in <a href="./Transport.h">&lt;orbsvcs/orbsvcs/AV/Transport.h>:</a>
+<p>/**
+<br>&nbsp;* @class TAO_AV_Acceptor
+<br>&nbsp;* @brief
+<br>&nbsp;*/
+<br>class TAO_AV_Export TAO_AV_Acceptor
+<br>{
+<br>public:
+<br>&nbsp; TAO_AV_Acceptor (void);
+<br>&nbsp; virtual ~TAO_AV_Acceptor (void);
+<br>&nbsp; virtual int open (TAO_Base_StreamEndPoint *endpoint,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Core *av_core,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_FlowSpec_Entry *entry,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Flow_Protocol_Factory *factory) = 0;
+<p>&nbsp; virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Core *av_core,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_FlowSpec_Entry *entry,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Flow_Protocol_Factory *factory) = 0;
+<p>&nbsp; const char *flowname ();
+<br>&nbsp; virtual int close (void) = 0;
+<br>protected:
+<br>&nbsp; ACE_CString flowname_;
+<br>&nbsp; TAO_AV_Core *av_core_;
+<br>&nbsp; ACE_Addr *address_;
+<br>};
+<br>&nbsp;
+<p>/**
+<br>&nbsp;* @class TAO_AV_Connector
+<br>&nbsp;* @brief
+<br>&nbsp;*/
+<br>class TAO_AV_Export TAO_AV_Connector
+<br>{
+<br>public:
+<br>&nbsp; TAO_AV_Connector (void);
+<br>&nbsp; virtual ~TAO_AV_Connector (void);
+<br>&nbsp; const char *flowname (void);
+<p>&nbsp; virtual int open (TAO_Base_StreamEndPoint *endpoint,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Core *av_core,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Flow_Protocol_Factory *factory) = 0;
+<p>&nbsp; virtual int connect (TAO_FlowSpec_Entry *entry,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Transport *&amp;transport) = 0;
+<p>&nbsp; virtual int close (void) = 0;
+<br>protected:
+<br>&nbsp; ACE_CString flowname_;
+<br>};
+<br>&nbsp;
+<br>&nbsp;
+<h4>
+<i>Transport and Transport Factory:</i></h4>
+The transport class provides a common interface for different protocols
+for performing operations like open, close, send and recv. The trasnport
+factory is an interface for creating acceptors and connectors.
+<p>The pluggable transport protocol implementation should inherit from
+the following abstract classes declared in&nbsp;<a href="./Transport.h">
+&lt;orbsvcs/orbsvcs/AV/Transport.h>:</a><i></i>
+<p>/**
+<br>&nbsp;* @class TAO_AV_Transport
+<br>&nbsp;* @brief A Base class for the different transport protocols.
+<br>&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All the different
+transports should derive and implement
+<br>&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the open,close,send
+and recv methods.
+<br>&nbsp;*/
+<br>class TAO_AV_Export TAO_AV_Transport
+<br>{
+<br>public:
+<br>&nbsp; TAO_AV_Transport (void);
+<p>&nbsp; virtual ~TAO_AV_Transport (void);
+<p>&nbsp; virtual int open (ACE_Addr *address) = 0;
+<p>&nbsp; virtual int close (void) = 0;
+<p>&nbsp; virtual int mtu (void) = 0;
+<br>&nbsp; virtual ACE_Addr *get_peer_addr (void) = 0;
+<br>&nbsp; virtual ACE_Addr *get_local_addr (void);
+<p>&nbsp; virtual ssize_t send (const ACE_Message_Block *mblk,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ACE_Time_Value *s = 0) = 0;
+<p>&nbsp; /// Write the contents of the buffer of length len to the connection.
+<br>&nbsp; virtual ssize_t send (const char *buf,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size_t len,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ACE_Time_Value *s = 0) = 0;
+<p>&nbsp; /// Write the contents of iovcnt iovec's to the connection.
+<br>&nbsp; virtual ssize_t send (const iovec *iov,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+int iovcnt,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ACE_Time_Value *s = 0) = 0;
+<p>&nbsp; /// Read len bytes from into buf.
+<br>&nbsp; virtual ssize_t recv (char *buf,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size_t len,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ACE_Time_Value *s = 0) = 0;
+<p>&nbsp; /// Read len bytes from into buf using flags.
+<br>&nbsp; virtual ssize_t recv (char *buf,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size_t len,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+int flags,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ACE_Time_Value *s = 0) = 0;
+<p>&nbsp; ///&nbsp; Read received data into the iovec buffers.
+<br>&nbsp; virtual ssize_t recv (iovec *iov,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+int iovcnt,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ACE_Time_Value *s = 0) = 0;
+<p>};
+<br>&nbsp;
+<p>/**
+<br>&nbsp;* @class TAO_AV_Transport_Factory
+<br>&nbsp;* @brief
+<br>&nbsp;*/
+<br>class TAO_AV_Export TAO_AV_Transport_Factory : public ACE_Service_Object
+<br>{
+<br>public:
+<br>&nbsp; /// Initialization hook.
+<br>&nbsp; TAO_AV_Transport_Factory (void);
+<br>&nbsp; virtual ~TAO_AV_Transport_Factory (void);
+<br>&nbsp; virtual int init (int argc, char *argv[]);
+<br>&nbsp; virtual int match_protocol (const char *protocol_string);
+<br>&nbsp; virtual TAO_AV_Acceptor *make_acceptor (void);
+<br>&nbsp; virtual TAO_AV_Connector *make_connector (void);
+<br>};
+<br>&nbsp;
+<h4>
+<i>Flow handler :</i></h4>
+All the transport handlers derive from the&nbsp; TAO_AV_Flow_Handler which
+has methods to start and stop and provide flow specific functionality for
+timeout upcalls to the Callbacks.
+<p>The pluggable transport protocol implementation should inherit from
+the following abstract class declared in<a href="./Transport.h">
+&lt;orbsvcs/orbsvcs/AV/Transport.h>:</a>
+<p>/**
+<br>&nbsp;* @class TAO_AV_Flow_Handler
+<br>&nbsp;* @brief
+<br>&nbsp;*/
+<br>class TAO_AV_Export TAO_AV_Flow_Handler
+<br>{
+<br>public:
+<br>&nbsp; /// Constructor.
+<br>&nbsp; TAO_AV_Flow_Handler (void);
+<p>&nbsp; /// Start/stop the flow handler.
+<br>&nbsp; virtual int start (TAO_FlowSpec_Entry::Role role);
+<br>&nbsp; virtual int stop&nbsp; (TAO_FlowSpec_Entry::Role role);
+<p>&nbsp; /// Schedule timer. Uses the get_timeout method on the callback.
+<br>&nbsp; virtual int schedule_timer (void);
+<p>&nbsp; /// get the transport.
+<br>&nbsp; TAO_AV_Transport *transport (void);
+<p>&nbsp; /// set/get protocol_object.
+<br>&nbsp; TAO_AV_Protocol_Object* protocol_object (void);
+<br>&nbsp; void protocol_object (TAO_AV_Protocol_Object *protocol_object);
+<p>&nbsp; /// set the callback.
+<br>&nbsp; void callback (TAO_AV_Callback *callback);
+<p>&nbsp; /// Handle timeout. called from reactor.
+<br>&nbsp; int handle_timeout (const ACE_Time_Value &amp;tv, const void
+*arg = 0);
+<p>&nbsp; /// set the remote address.
+<br>&nbsp; virtual int set_remote_address (ACE_Addr *address);
+<p>&nbsp; /// get the underlying event handler. To be overridden by the
+derived clases.
+<br>&nbsp; virtual ACE_Event_Handler* event_handler (void) = 0;
+<p>&nbsp; virtual int change_qos (AVStreams::QoS);
+<p>protected:
+<br>&nbsp; TAO_AV_Transport *transport_;
+<br>&nbsp; TAO_AV_Callback *callback_;
+<br>&nbsp; TAO_AV_Protocol_Object *protocol_object_;
+<br>&nbsp; long timer_id_;
+<br>&nbsp; ACE_Reactor *reactor_;
+<br>&nbsp; void *timeout_arg_;
+<br>};
+<br>&nbsp;
+<h3>
+The Flow&nbsp;Protocol Components</h3>
+
+<h4>
+<i>Flow Protocol Factory:</i></h4>
+The&nbsp; flow protocol factory is an interface for creating flow protocol
+objects.
+<p>The pluggable flow protocol implementation should inherit from the following
+abstract class declared in <a href="./Protocol_Factory.h">&lt;orbsvcs/orbsvcs/AV/Protocol_Factory>:</a>
+<p>/**
+<br>&nbsp;* @class TAO_AV_Flow_Protocol_Factory
+<br>&nbsp;* @brief
+<br>&nbsp;*/
+<br>class TAO_AV_Export TAO_AV_Flow_Protocol_Factory : public ACE_Service_Object
+<br>{
+<br>public:
+<br>&nbsp; /// Initialization hook.
+<br>&nbsp; TAO_AV_Flow_Protocol_Factory (void);
+<br>&nbsp; virtual ~TAO_AV_Flow_Protocol_Factory (void);
+<br>&nbsp; virtual int init (int argc, char *argv[]);
+<br>&nbsp; virtual int match_protocol (const char *flow_string);
+<br>&nbsp; virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry
+*entry,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_Base_StreamEndPoint *endpoint,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Flow_Handler *handler,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Transport *transport);
+<br>&nbsp; virtual const char *control_flow_factory (void);
+<br>};
+<br>&nbsp;
+<h4>
+<i>Protocol Object:</i></h4>
+This is a concrete implementation providing the flow protocol functionality.
+Applications use this interface to send frames and the Protocol_Object
+uses application specified&nbsp; Callback objects to deliver frames.
+<p>The pluggable flow protocol implementation should inherit from the following
+abstract class declared in <a href="./Protocol_Factory.h">&lt;orbsvcs/orbsvcs/AV/Protocol_Factory>:</a>
+<p>/**
+<br>&nbsp;* @class TAO_AV_Protocol_Object
+<br>&nbsp;* @brief
+<br>&nbsp;*/
+<br>class TAO_AV_Export TAO_AV_Protocol_Object
+<br>{
+<br>public:
+<br>&nbsp; TAO_AV_Protocol_Object (void);
+<p>&nbsp; /// constructor.
+<br>&nbsp; TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Transport *transport);
+<p>&nbsp; /// Destructor
+<br>&nbsp; virtual ~TAO_AV_Protocol_Object (void);
+<p>&nbsp; virtual int open (TAO_AV_Callback *callback,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_Transport *transport);
+<p>&nbsp; virtual int handle_input (void) = 0;
+<p>&nbsp; /// Called on a control object.
+<br>&nbsp; virtual int handle_control_input (ACE_Message_Block *control_frame,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+const ACE_Addr &amp;peer_address);
+<p>&nbsp; /// set/get policies.
+<br>&nbsp; virtual int set_policies (const TAO_AV_PolicyList &amp;policy_list);
+<br>&nbsp; virtual TAO_AV_PolicyList get_policies (void);
+<p>&nbsp; /// start/stop the flow.
+<br>&nbsp; virtual int start (void);
+<br>&nbsp; virtual int stop (void);
+<p>&nbsp; /// send a data frame.
+<br>&nbsp; virtual int send_frame (ACE_Message_Block *frame,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_frame_info *frame_info = 0) = 0;
+<p>&nbsp; /// send a frame in iovecs.
+<br>&nbsp; virtual int send_frame (const iovec *iov,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+int iovcnt,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TAO_AV_frame_info *frame_info = 0) = 0;
+<p>&nbsp; virtual int send_frame (const char *buf,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size_t len) = 0;
+<p>&nbsp; /// end the stream.
+<br>&nbsp; virtual void control_object (TAO_AV_Protocol_Object *object);
+<br>&nbsp; virtual int destroy (void) = 0;
+<br>&nbsp; TAO_AV_Transport *transport (void);
+<br>protected:
+<br>&nbsp; TAO_AV_Transport *transport_;
+<br>&nbsp; TAO_AV_PolicyList policy_list_;
+<br>&nbsp; TAO_AV_Callback *callback_;
+<br>};
+<p>For an example of how all the above components are implemented refer
+to the implementation of the UDP transport <a href="./UDP.h">&lt;orbsvcs/orbsvcs/AV/UDP.h>&nbsp;</a>
+and&nbsp;<a href="./UDP.cpp">&lt;orbsvcs/orbsvcs/AV/UDP.cpp></a>
+<p>
+<hr WIDTH="100%">
+<h3>
+Using a Pluggable Protocol</h3>
+Once the TAO&nbsp;AV&nbsp;pluggable transport and flow protocols are implemented
+they can be loaded into the AV&nbsp;Streams framework by adding their entries
+to the Service Configurator file (eg. svc.conf) for that protocol:
+<p>A typical svc.conf will look like this:
+<p>dynamic TAO_AV_Resource_Factory Service_Object * TAO_AV:_make_TAO_AV_Resource_Factory()
+""
+<br>dynamic ATM_Factory Service_Object * TAO_AV:_make_TAO_AV_ATM_Factory()
+""
+<br>static TAO_AV_Resource_Factory "-AVTransportFactory ATM_Factory"
+<br>dynamic SFP_Factory Service_Object * TAO_AV:_make_TAO_AV_SFP_Factory()
+""
+<br>static TAO_AV_Resource_Factory "-AVFlowProtocolFactory SFP_Factory"
+<p>The TAO_AV_Resource_Factory is a the default resource factory that helps
+to load the different transport and flow protocols to the corresponding
+factory sets.
+<p><b><i>NOTE: The TAO_AV_Resource_Factory must be loaded in order to load
+the pluggable protocols, ie. the first statement shown above is mandatory
+to load the protocols.</i></b><b><i></i></b>
+<p>The above entries show how to add a transport factory eg. ATM&nbsp;Factory
+and a flow protocol factory eg. SFP&nbsp;Factory. The -AVTransportFactory
+option causes the specified transport protocol factory to be loaded into
+the AV Core and the -AVFlowProtocolFactory option causes the specified
+flow protocol factory to be loaded into the AV&nbsp;Core.
+</body>
+</html>

@@ -1,0 +1,7 @@
+#
+# Makefile for building the Chat example
+# 
+
+MAKEFILES = Chat_Client.bor Chat_Server.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
