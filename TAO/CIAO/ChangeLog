@@ -1,3 +1,11 @@
+Wed Jan 14 15:22:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CIDLC/README
+	* CIDLC/README.html:
+
+	  HTML'ised README into a new file README.html and removed the
+	  ascii equivalent of it.
+
 Wed Jan 14 11:30:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/releasenotes/index.html:
