@@ -187,18 +187,21 @@ public:
    *        execute a @c chroot() to the appropriate directory.
    *        @sa ACE::daemonize().
    * - '-d' Turn on debugging mode
-   * - '-f' Option to read in the list of svc.conf file names
-   * - '-k' Option to read a wide string where in the logger output can
-   *        be written
-   * - '-y' Option required to use statically linked services.
-   *        A static service repostory will be constructed if the flag
-   *        is used.  Use this flag to override the default
-   *        <ignore_static_svcs> flag at run-time.
-   * - '-n' Option to avoid using any statically linked services, which
-   *        eliminates the need to construct the static service repository.
-   * - '-S' Option to read in the list of services on the command-line
-   *        Please observe the difference between options '-f' that looks
-   *        for a list of files and here a list of services.
+   * - '-f' Specifies a configuration file name other than the default
+   *        svc.conf. Can be specified multiple times to use multiple files.
+   * - '-k' Specifies the rendezvous point to use for the ACE distributed
+   *        logger.
+   * - '-y' Explicitly enables the use of static services. This flag
+   *        overrides the @a ignore_static_svcs parameter value.
+   * - '-n' Explicitly disables the use of static services. This flag
+   *        overrides the @a ignore_static_svcs parameter value.
+   * - '-s' Specifies a signal number other than SIGHUP to trigger reprocessing
+   *        of the configuration file(s). Ignored for platforms that do not
+   *        have POSIX signals, such as Windows.
+   * - '-S' Specifies a service directive string. Enclose the string in quotes
+   *        and escape any embedded quotes with a backslash. This option
+   *        specifies service directives without the need for a configuration
+   *        file.
    *
    * @param argc The number of commandline arguments.
    * @param argv The array with commandline arguments
