@@ -1,5 +1,7 @@
 
-ACE_RCSID(Two_Objects, Two_Objects, "$Id$")
+//
+// $Id$
+//
 
 #include "worker.h"
 
