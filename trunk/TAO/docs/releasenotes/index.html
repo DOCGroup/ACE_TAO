@@ -690,10 +690,11 @@ Future work:
 <A NAME="dove"></A>The DOVE Demo</H3>
 Point of contact: <A HREF="mailto:mk1@cec.wustl.edu">Michael Kircher</A>.
 
-<P>DOVE is described in detail on the following site: <A HREF="http://www.cs.wustl.edu/~schmidt/dove.html">DOVE
-documentation</A>
+<P><A HREF="http://www.cs.wustl.edu/~schmidt/dove.html">DOVE</A> is
+documented in detail <A
+HREF="http://www.cs.wustl.edu/~schmidt/DOVE_and_LifeCycleService.ps.gz">online</A>.
+This discussion focuses on the following goals:<P>
 
-<P>We focus on the following goals at the moment:
 <UL>
 <LI>
 Have a DOVE Browser running using Java Beans as vizualization components.</LI>
@@ -711,36 +712,39 @@ The DOVE Browser uses independent visualization components (Java Beans)
 and the Event Channel as DOVE Agent. Connections can be established between
 monitored metrics and the visualization components.
 
-<P>We have three major components: Observables (monitored metrics), Observers
-(a Java Bean for displaying the metric) and a DataHandler (for demultiplexing
-the monitored metrics to the appropriate Observables). Each component inherits
-from a base class, so that a certain behavior of the components can be
-assured for each component. Relationships between components are based
-on these base classes.
+<P>We have three major components: Observables (monitored metrics),
+Observers (a Java Bean for displaying the metric) and a DataHandler
+(for demultiplexing the monitored metrics to the appropriate
+Observables). Each component inherits from a base class, so that a
+certain behavior of the components can be assured for each
+component. Relationships between components are based on these base
+classes.
 
-<P>The used Java Beans are required to conform to some standards, as they
-have to support a function called "getProperty" which allows the DOVE Browser
-to determine if the vizualization capabilities of a specific Java Bean
-are sufficient to display the metric. A JavaBean is for example a Java
-Panel which shows a Graph of the delivered doubles. So all metrics can
-be displayed by this visualization component which can be expressed by
-a single double.
+<P>The used Java Beans are required to conform to some standards, as
+they have to support a function called "getProperty" which allows the
+DOVE Browser to determine if the vizualization capabilities of a
+specific Java Bean are sufficient to display the metric. A JavaBean is
+for example a Java Panel which shows a Graph of the delivered
+doubles. So all metrics can be displayed by this visualization
+component which can be expressed by a single double.
 
-<P>The DataHandler is connected to the Event Push Consumer (PUSH, because
-we use the push concept of the Event Service). The Event Push Consumer
-does not know what kind of data is transported. The only component knowing
-all the details about the dependencies of the metrics is the DataHandler.
-This separation allows easy extension and change of the demo.
+<P>The DataHandler is connected to the Event Push Consumer (PUSH,
+because we use the push concept of the Event Service). The Event Push
+Consumer does not know what kind of data is transported. The only
+component knowing all the details about the dependencies of the
+metrics is the DataHandler.  This separation allows easy extension and
+change of the demo.
 
 <P><A HREF="http://students.cec.wustl.edu/~mk1/dove.html">Object Diagrams</A>
 are available about this new concept.
 
-<P>Event Service events are used as communication between DOVE Applications
-and the DOVE Browser. The DOVE MIB analyses the event data field of all
-events and stores this information into a file. The event data filed is
-of type CORBA::Any and the DOVE MIB has no notion of what is conveyed in
-this field. So the DOVE MIB has to discover the content via the embedded
-type code information. Future work includes:
+<P>Event Service events are used as communication between DOVE
+Applications and the DOVE Browser. The DOVE MIB analyses the event
+data field of all events and stores this information into a file. The
+event data filed is of type CORBA::Any and the DOVE MIB has no notion
+of what is conveyed in this field. So the DOVE MIB has to discover the
+content via the embedded type code information. Future work includes:
+
 <UL>
 <LI>
 Enhancing MIB functionality</LI>

@@ -33,26 +33,53 @@ class ACE_Message_Queue : public ACE_Message_Queue_Base
   // = DESCRIPTION
   //     An <ACE_Message_Queue> is the central queueing facility for
   //     messages in the ASX framework.  If <ACE_SYNCH_DECL> is
-  //     ACE_MT_SYNCH then all operations are thread-safe.  Otherwise,
-  //     if it's <ACE_NULL_SYNCH> then there's no locking overhead.
+  //     <ACE_MT_SYNCH> then all operations are thread-safe.
+  //     Otherwise, if it's <ACE_NULL_SYNCH> then there's no locking
+  //     overhead.
 public:
   friend class ACE_Message_Queue_Iterator<ACE_SYNCH_USE>;
   friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>;
 
   // = Traits
-  typedef ACE_Message_Queue_Iterator<ACE_SYNCH_USE> ITERATOR;
-  typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE> REVERSE_ITERATOR;
+  typedef ACE_Message_Queue_Iterator<ACE_SYNCH_USE> 
+          ITERATOR;
+  typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE> 
+          REVERSE_ITERATOR;
 
   // = Initialization and termination methods.
-  ACE_Message_Queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
-                     size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
+  ACE_Message_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
+                     size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
                      ACE_Notification_Strategy * = 0);
+  // Initialize an <ACE_Message_Queue>.  The <high_water_mark>
+  // determines how many bytes can be stored in a queue before it's
+  // considered "full."  Supplier threads must block until the queue
+  // is no longer full.  The <low_water_mark> determines how many
+  // bytes must be in the queue before supplier threads are allowed to
+  // enqueue additional <ACE_Message_Block>s.  By default, the
+  // <high_water_mark> equals the <low_water_mark>, which means that
+  // suppliers will be able to enqueue new messages as soon as a
+  // consumer removes any message from the queue.  Making the
+  // <low_water_mark> smaller than the <high_water_mark> forces
+  // consumers to drain more messages from the queue before suppliers
+  // can enqueue new messages, which can minimize the "silly window
+  // syndrome."
 
-  // Create a message queue with all the defaults.
   virtual int open (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                     size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                     ACE_Notification_Strategy * = 0);
-  // Create a message queue with all the defaults.
+  // Initialize an <ACE_Message_Queue>.  The <high_water_mark>
+  // determines how many bytes can be stored in a queue before it's
+  // considered "full."  Supplier threads must block until the queue
+  // is no longer full.  The <low_water_mark> determines how many
+  // bytes must be in the queue before supplier threads are allowed to
+  // enqueue additional <ACE_Message_Block>s.  By default, the
+  // <high_water_mark> equals the <low_water_mark>, which means that
+  // suppliers will be able to enqueue new messages as soon as a
+  // consumer removes any message from the queue.  Making the
+  // <low_water_mark> smaller than the <high_water_mark> forces
+  // consumers to drain more messages from the queue before suppliers
+  // can enqueue new messages, which can minimize the "silly window
+  // syndrome."
 
   virtual int close (void);
   // Close down the message queue and release all resources.
@@ -119,15 +146,20 @@ public:
   virtual size_t message_count (void);
   // Number of total messages on the queue.
 
-  // = Flow control routines
+  // = Flow control methods.
+
   virtual size_t high_water_mark (void);
   // Get high watermark.
   virtual void high_water_mark (size_t hwm);
-  // Set high watermark.
+  // Set the high watermark, which determines how many bytes can be
+  // stored in a queue before it's considered "full."
+
   virtual size_t low_water_mark (void);
   // Get low watermark.
   virtual void low_water_mark (size_t lwm);
-  // Set low watermark.
+  // Set the low watermark, which determines how many bytes must be in
+  // the queue before supplier threads are allowed to enqueue
+  // additional <ACE_Message_Block>s.
 
   // = Activation control methods.
 
