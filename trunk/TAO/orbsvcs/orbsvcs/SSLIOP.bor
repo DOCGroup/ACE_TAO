@@ -23,15 +23,20 @@ OBJFILES = \
 	$(OBJDIR)\SSLIOP_Acceptor.obj \
 	$(OBJDIR)\SSLIOP_Connection_Handler.obj \
 	$(OBJDIR)\SSLIOP_Connector.obj \
+	$(OBJDIR)\SSLIOP_Credentials.obj \
 	$(OBJDIR)\SSLIOP_Current.obj \
 	$(OBJDIR)\SSLIOP_Current_Impl.obj \
         $(OBJDIR)\SSLIOP_Endpoint.obj \
 	$(OBJDIR)\SSLIOP_Factory.obj \
 	$(OBJDIR)\SSLIOP_Invocation_Interceptor.obj \
 	$(OBJDIR)\SSLIOP_ORBInitializer.obj \
+	$(OBJDIR)\SSLIOP_PrincipalAuthenticator.obj \
 	$(OBJDIR)\SSLIOP_Profile.obj \
+	$(OBJDIR)\SSLIOP_ReceivedCredentials.obj \
+	$(OBJDIR)\SSLIOP_TargetCredentials.obj \
 	$(OBJDIR)\SSLIOP_Transport.obj \
 	$(OBJDIR)\SSLIOP_Util.obj \
+	$(OBJDIR)\SSLIOP_X509.obj \
         $(OBJDIR)\SSLIOPC.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
