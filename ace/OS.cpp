@@ -27,18 +27,18 @@ ACE_RCSID(ace, OS, "$Id$")
 # include "ace/Object_Manager.h"
 
 # if defined (ACE_HAS_WINCE)
-const wchar_t *ACE_OS::day_of_week_name[] = {__TEXT ("Sun"), __TEXT ("Mon"),
-                                             __TEXT ("Tue"), __TEXT ("Wed"),
-                                             __TEXT ("Thr"), __TEXT ("Fri"),
-                                             __TEXT ("Sat")};
-const wchar_t *ACE_OS::month_name[] = {__TEXT ("Jan"), __TEXT ("Feb"),
-                                       __TEXT ("Mar"), __TEXT ("Apr"),
-                                       __TEXT ("May"), __TEXT ("Jun"),
-                                       __TEXT ("Jul"), __TEXT ("Aug"),
-                                       __TEXT ("Sep"), __TEXT ("Oct"),
-                                       __TEXT ("Nov"), __TEXT ("Dec") };
+const wchar_t *ACE_OS::day_of_week_name[] = {ACE_TEXT ("Sun"), ACE_TEXT ("Mon"),
+                                             ACE_TEXT ("Tue"), ACE_TEXT ("Wed"),
+                                             ACE_TEXT ("Thr"), ACE_TEXT ("Fri"),
+                                             ACE_TEXT ("Sat")};
+const wchar_t *ACE_OS::month_name[] = {ACE_TEXT ("Jan"), ACE_TEXT ("Feb"),
+                                       ACE_TEXT ("Mar"), ACE_TEXT ("Apr"),
+                                       ACE_TEXT ("May"), ACE_TEXT ("Jun"),
+                                       ACE_TEXT ("Jul"), ACE_TEXT ("Aug"),
+                                       ACE_TEXT ("Sep"), ACE_TEXT ("Oct"),
+                                       ACE_TEXT ("Nov"), ACE_TEXT ("Dec") };
 
-static const ASYS_TCHAR *ACE_OS_CTIME_R_FMTSTR = __TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
+static const ASYS_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
 # endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
@@ -301,7 +301,7 @@ ACE_OS::uname (struct utsname *name)
   // ACE_TRACE ("ACE_OS::uname");
 # if defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
-  ACE_OS::strcpy (name->sysname, __TEXT ("Win32"));
+  ACE_OS::strcpy (name->sysname, ACE_TEXT ("Win32"));
 
   OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -310,21 +310,21 @@ ACE_OS::uname (struct utsname *name)
   SYSTEM_INFO sinfo;
   ::GetSystemInfo(&sinfo);
 
-  ACE_OS::strcpy (name->sysname, __TEXT ("Win32"));
+  ACE_OS::strcpy (name->sysname, ACE_TEXT ("Win32"));
 
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
   {
     // Get information from the two structures
     ACE_OS::sprintf (name->release,
 #   if defined (ACE_HAS_WINCE)
-                     __TEXT ("Windows CE %d.%d"),
+                     ACE_TEXT ("Windows CE %d.%d"),
 #   else
-                     __TEXT ("Windows NT %d.%d"),
+                     ACE_TEXT ("Windows NT %d.%d"),
 #   endif /* ACE_HAS_WINCE */
                      vinfo.dwMajorVersion,
                      vinfo.dwMinorVersion);
     ACE_OS::sprintf (name->version,
-                     __TEXT ("Build %d %s"),
+                     ACE_TEXT ("Build %d %s"),
                      vinfo.dwBuildNumber,
                      vinfo.szCSDVersion);
 
@@ -334,8 +334,8 @@ ACE_OS::uname (struct utsname *name)
     // -1 is necessary for because of the space between processor and
     // subtype in the machine name.
     const int bufsize = ((sizeof (name->machine) / sizeof (TCHAR)) / 2) - 1;
-    TCHAR processor[bufsize] = __TEXT ("Unknown");
-    TCHAR subtype[bufsize] = __TEXT ("Unknown");
+    TCHAR processor[bufsize] = ACE_TEXT ("Unknown");
+    TCHAR subtype[bufsize] = ACE_TEXT ("Unknown");
 
     WORD arch;
 #if (! defined(__BORLANDC__))
@@ -370,69 +370,69 @@ ACE_OS::uname (struct utsname *name)
     switch (arch)
     {
     case PROCESSOR_ARCHITECTURE_INTEL:
-      ACE_OS::strcpy (processor, __TEXT ("Intel"));
+      ACE_OS::strcpy (processor, ACE_TEXT ("Intel"));
       if (sinfo.wProcessorLevel == 3)
-        ACE_OS::strcpy (subtype, __TEXT ("80386"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("80386"));
       else if (sinfo.wProcessorLevel == 4)
-        ACE_OS::strcpy (subtype, __TEXT ("80486"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("80486"));
       else if (sinfo.wProcessorLevel == 5)
-        ACE_OS::strcpy (subtype, __TEXT ("Pentium"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium"));
       else if (sinfo.wProcessorLevel == 6)
-        ACE_OS::strcpy (subtype, __TEXT ("Pentium Pro"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium Pro"));
       else if (sinfo.wProcessorLevel == 7)  // I'm guessing here
-        ACE_OS::strcpy (subtype, __TEXT ("Pentium II"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium II"));
       break;
     case PROCESSOR_ARCHITECTURE_MIPS:
-      ACE_OS::strcpy (processor, __TEXT ("MIPS"));
-      ACE_OS::strcpy (subtype, __TEXT ("R4000"));
+      ACE_OS::strcpy (processor, ACE_TEXT ("MIPS"));
+      ACE_OS::strcpy (subtype, ACE_TEXT ("R4000"));
       break;
     case PROCESSOR_ARCHITECTURE_ALPHA:
-      ACE_OS::strcpy (processor, __TEXT ("Alpha"));
-      ACE_OS::sprintf (subtype, __TEXT ("%d"), sinfo.wProcessorLevel);
+      ACE_OS::strcpy (processor, ACE_TEXT ("Alpha"));
+      ACE_OS::sprintf (subtype, ACE_TEXT ("%d"), sinfo.wProcessorLevel);
       break;
     case PROCESSOR_ARCHITECTURE_PPC:
-      ACE_OS::strcpy (processor, __TEXT ("PPC"));
+      ACE_OS::strcpy (processor, ACE_TEXT ("PPC"));
       if (sinfo.wProcessorLevel == 1)
-        ACE_OS::strcpy (subtype, __TEXT ("601"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("601"));
       else if (sinfo.wProcessorLevel == 3)
-        ACE_OS::strcpy (subtype, __TEXT ("603"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("603"));
       else if (sinfo.wProcessorLevel == 4)
-        ACE_OS::strcpy (subtype, __TEXT ("604"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("604"));
       else if (sinfo.wProcessorLevel == 6)
-        ACE_OS::strcpy (subtype, __TEXT ("603+"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("603+"));
       else if (sinfo.wProcessorLevel == 9)
-        ACE_OS::strcpy (subtype, __TEXT ("804+"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("804+"));
       else if (sinfo.wProcessorLevel == 20)
-        ACE_OS::strcpy (subtype, __TEXT ("620"));
+        ACE_OS::strcpy (subtype, ACE_TEXT ("620"));
       break;
     case PROCESSOR_ARCHITECTURE_UNKNOWN:
     default:
       // @@ We could provide WinCE specific info here.  But let's
       //    defer that to some later point.
-      ACE_OS::strcpy (processor, __TEXT ("Unknown"));
+      ACE_OS::strcpy (processor, ACE_TEXT ("Unknown"));
       break;
     }
-    ACE_OS::sprintf(name->machine, __TEXT ("%s %s"), processor, subtype);
+    ACE_OS::sprintf(name->machine, ACE_TEXT ("%s %s"), processor, subtype);
   }
   else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
   {
     // Get Windows 95 Information
-    ACE_OS::strcpy (name->release, __TEXT ("Windows 95"));
-    ACE_OS::sprintf (name->version, __TEXT ("%d"), LOWORD (vinfo.dwBuildNumber));
+    ACE_OS::strcpy (name->release, ACE_TEXT ("Windows 95"));
+    ACE_OS::sprintf (name->version, ACE_TEXT ("%d"), LOWORD (vinfo.dwBuildNumber));
     if (sinfo.dwProcessorType == PROCESSOR_INTEL_386)
-      ACE_OS::strcpy (name->machine, __TEXT ("Intel 80386"));
+      ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel 80386"));
     else if (sinfo.dwProcessorType == PROCESSOR_INTEL_486)
-      ACE_OS::strcpy (name->machine, __TEXT ("Intel 80486"));
+      ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel 80486"));
     else if (sinfo.dwProcessorType == PROCESSOR_INTEL_PENTIUM)
-      ACE_OS::strcpy (name->machine, __TEXT ("Intel Pentium"));
+      ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel Pentium"));
   }
   else
   {
     // We don't know what this is!
 
-    ACE_OS::strcpy (name->release, __TEXT ("???"));
-    ACE_OS::strcpy (name->version, __TEXT ("???"));
-    ACE_OS::strcpy (name->machine, __TEXT ("???"));
+    ACE_OS::strcpy (name->release, ACE_TEXT ("???"));
+    ACE_OS::strcpy (name->version, ACE_TEXT ("???"));
+    ACE_OS::strcpy (name->machine, ACE_TEXT ("???"));
   }
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
@@ -799,7 +799,7 @@ ACE_OS::mktemp (wchar_t *s)
     return 0;
   else
     {
-      wchar_t *xxxxxx = ACE_OS::strstr (s, __TEXT ("XXXXXX"));
+      wchar_t *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
 
       if (xxxxxx == 0)
         // the template string doesn't contain "XXXXXX"!
@@ -815,15 +815,15 @@ ACE_OS::mktemp (wchar_t *s)
           // condition if multiple threads in a process use the same
           // template).  This appears to match the behavior of the
           // Solaris 2.5 mktemp().
-          ACE_OS::sprintf (xxxxxx, __TEXT ("%05d%c"), getpid (), unique_letter);
+          ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%05d%c"), getpid (), unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
               if (++unique_letter <= L'z')
-                ACE_OS::sprintf (xxxxxx, __TEXT ("%05d%c"), getpid (), unique_letter);
+                ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%05d%c"), getpid (), unique_letter);
               else
                 {
                   // maximum of 26 unique files per template, per process
-                  ACE_OS::sprintf (xxxxxx, __TEXT ("%s"), L"");
+                  ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%s"), L"");
                   return s;
                 }
             }
@@ -3674,10 +3674,10 @@ ACE_OS::socket_init (int version_high, int version_low)
       if (error != 0)
 #   if defined (ACE_HAS_WINCE)
         {
-          wchar_t fmt[] = __TEXT ("%s failed, WSAGetLastError returned %d");
+          wchar_t fmt[] = ACE_TEXT ("%s failed, WSAGetLastError returned %d");
           wchar_t buf[80];  // @@ Eliminate magic number.
-          ACE_OS::sprintf (buf, fmt, __TEXT ("WSAStartup"), error);
-          ::MessageBox (NULL, buf, __TEXT ("WSAStartup failed!"), MB_OK);
+          ACE_OS::sprintf (buf, fmt, ACE_TEXT ("WSAStartup"), error);
+          ::MessageBox (NULL, buf, ACE_TEXT ("WSAStartup failed!"), MB_OK);
         }
 #   else
         cerr << "WSAStartup failed, WSAGetLastError returned " << error << endl;
@@ -3703,10 +3703,10 @@ ACE_OS::socket_fini (void)
         {
           int error = ::WSAGetLastError ();
 #   if defined (ACE_HAS_WINCE)
-          wchar_t fmt[] = __TEXT ("%s failed, WSAGetLastError returned %d");
+          wchar_t fmt[] = ACE_TEXT ("%s failed, WSAGetLastError returned %d");
           wchar_t buf[80];  // @@ Eliminate magic number.
-          ACE_OS::sprintf (buf, fmt, __TEXT ("WSACleanup"), error);
-          ::MessageBox (NULL, buf , __TEXT ("WSACleanup failed!"), MB_OK);
+          ACE_OS::sprintf (buf, fmt, ACE_TEXT ("WSACleanup"), error);
+          ::MessageBox (NULL, buf , ACE_TEXT ("WSACleanup failed!"), MB_OK);
 #   else
           cerr << "WSACleanup failed, WSAGetLastError returned " << error << endl;
 #   endif /* ACE_HAS_WINCE */

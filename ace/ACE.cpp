@@ -111,7 +111,7 @@ ACE::unique_name (const void *object,
   // <object>.
   TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
-                   __TEXT ("%x%d"),
+                   ACE_TEXT ("%x%d"),
                    object,
                    ACE_OS::getpid ());
   ACE_OS::strncpy (name,
@@ -2826,13 +2826,13 @@ ACE::get_ip_interfaces (size_t &count,
 #else /* Winsock 2 && MSVC 5 or later */
 
   const TCHAR *SVCS_KEY1 =
-    __TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
+    ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
   const TCHAR *LINKAGE_KEY1 =
-    __TEXT ("SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Linkage");
-  const TCHAR *TCP_PARAM_SUBKEY = __TEXT ("\\Parameters\\Tcpip");
-  const TCHAR *BIND_NAME_ID =  __TEXT ("Bind");
-  const TCHAR *IPADDR_NAME_ID = __TEXT ("IPAddress");
-  const TCHAR *INVALID_TCPIP_DEVICE_ADDR = __TEXT ("0.0.0.0");
+    ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Linkage");
+  const TCHAR *TCP_PARAM_SUBKEY = ACE_TEXT ("\\Parameters\\Tcpip");
+  const TCHAR *BIND_NAME_ID =  ACE_TEXT ("Bind");
+  const TCHAR *IPADDR_NAME_ID = ACE_TEXT ("IPAddress");
+  const TCHAR *INVALID_TCPIP_DEVICE_ADDR = ACE_TEXT ("0.0.0.0");
 
   TCHAR raw_buffer[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
   DWORD raw_buflen = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
@@ -2847,7 +2847,7 @@ ACE::get_ip_interfaces (size_t &count,
   // return buffer contains NULL delimited strings
 
   ACE_Tokenizer dev_names (raw_buffer);
-  dev_names.delimiter (__TEXT('\0'));
+  dev_names.delimiter (ACE_TEXT('\0'));
   int n_interfaces = 0;
 
   // Count the number of interfaces

@@ -366,7 +366,7 @@ ACE_Process_Options::setenv (LPCTSTR variable_name,
   TCHAR newformat[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Add in the variable name.
-  ACE_OS::sprintf (newformat, __TEXT ("%s=%s"), variable_name, format);
+  ACE_OS::sprintf (newformat, ACE_TEXT ("%s=%s"), variable_name, format);
 
   TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
@@ -509,7 +509,7 @@ ACE_Process_Options::command_line (LPTSTR argv[])
       ACE_OS::strcat (command_line_buf_, argv[i]);
       while (argv[++i])
         {
-          ACE_OS::strcat (command_line_buf_, __TEXT (" "));
+          ACE_OS::strcat (command_line_buf_, ACE_TEXT (" "));
           ACE_OS::strcat (command_line_buf_, argv[i]);
         }
     }
