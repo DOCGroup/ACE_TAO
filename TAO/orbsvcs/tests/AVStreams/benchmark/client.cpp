@@ -510,7 +510,6 @@ template class TAO_AV_Endpoint_Reactive_Strategy<Client_StreamEndPoint,TAO_VDev,
 template class TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 template class ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>;
-template class ACE_Condition<ACE_SYNCH_MUTEX> ;
 template class ACE_Singleton<Globals,ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
@@ -518,6 +517,5 @@ template class ACE_Singleton<Globals,ACE_SYNCH_MUTEX>;
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Condition<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Singleton <Globals,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton <Globals,ACE_SYNCH_MUTEX> 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
