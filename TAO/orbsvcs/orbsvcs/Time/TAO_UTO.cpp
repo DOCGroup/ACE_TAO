@@ -3,6 +3,7 @@
 
 #include "TAO_UTO.h"
 #include "TAO_TIO.h"
+#include "ace/OS.h"
 
 // Constructor.
 
@@ -22,8 +23,9 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
 #if defined (ACE_LACKS_U_LONGLONG_T)
   this->attr_utc_time_.inacchi = 0;
 #else
-  this->attr_utc_time_.inacchi = (CORBA::UShort) (inaccuracy >> 32) & (0xFFFF); 
-#endif /* VXWORKS || CHORUS*/
+  this->attr_utc_time_.inacchi = ACE_static_cast (CORBA::UShort, (inaccuracy >> 32) & 0xFFFF);
+
+#endif /* ACE_LACKS_U_LONGLONG_T */
 
   this->attr_utc_time_.tdf = tdf;
   
