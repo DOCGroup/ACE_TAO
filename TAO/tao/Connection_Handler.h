@@ -57,15 +57,6 @@ public:
   /// Set the underlying transport object
   void transport (TAO_Transport* transport);
 
-# if 0
-  /// NOTE: NO longer used
-  /// Did the process of non-blocking connection initialization
-  /// complete?
-  int is_connect_complete (void) const;
-
-  /// Was the non-blocking connection initialization successful?
-  int is_connect_successful (void) const;
-#endif /*if 0*/
   /// Is the state final?
   int is_finalized (void);
 
@@ -93,6 +84,16 @@ public:
   /// reference to this object can call the event handler methods.
   virtual int handle_input (ACE_HANDLE fd) = 0;
 
+  /// This method is invoked from the svc () method of the Svc_Handler
+  /// Object.
+  int svc_i (void);
+
+  /// A open () hook
+  /**
+   * See Thread_Per_Connection_Handler for a use case
+   */
+  virtual int open_handler (void *) = 0;
+
 protected:
 
   /// Destructor
@@ -112,21 +113,6 @@ protected:
   int set_socket_option (ACE_SOCK &sock,
                          int snd_size,
                          int rcv_size);
-
-  /// This method is invoked from the svc () method of the Svc_Handler
-  /// Object.
-  int svc_i (void);
-
-  /****
-   * Not sure where they are defined and used.. Looks legacy.
-   *
-   * Increment and decrement the number of upcalls that have gone
-   * this handler. Returns the upcall count. The calls are
-   * safe..
-   * int incr_pending_upcalls (void);
-   * int decr_pending_upcalls (void);
-   * int pending_upcalls (void) const;
-   */
 
   //@{
   /**
@@ -172,6 +158,7 @@ protected:
    */
   virtual void pos_io_hook (int & return_value);
   //@}
+
 
 private:
   /// Pointer to the TAO_ORB_Core

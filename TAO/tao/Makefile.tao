@@ -98,6 +98,7 @@ PLUGGABLE_PROTOCOLS_FILES = \
   Endpoint \
   Connector_Registry \
   Connection_Handler \
+  Thread_Per_Connection_Handler \
   Acceptor_Registry \
   Protocol_Factory \
   Acceptor_Filter \

@@ -25,13 +25,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB_Core.h"
-#include "tao/ORB_Table.h"
-#include "tao/Server_Strategy_Factory.h"
-#include "tao/Connector_Registry.h"
-#include "tao/Transport_Cache_Manager.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Transport.h"
+#include "ORB_Core.h"
+// #include "ORB_Table.h"
+#include "Server_Strategy_Factory.h"
+// #include "Connector_Registry.h"
+#include "Transport_Cache_Manager.h"
+#include "Thread_Lane_Resources.h"
+#include "Transport.h"
+#include "Thread_Per_Connection_Handler.h"
 
 #include "ace/Object_Manager.h"
 
@@ -103,8 +104,17 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
   // thread-per-connection concurrency model
 
   if (f->activate_server_connections ())
-    return sh->activate (f->server_connection_thread_flags (),
-                         f->server_connection_thread_count ());
+    {
+      TAO_Thread_Per_Connection_Handler *tpch = 0;
+
+      ACE_NEW_RETURN (tpch,
+                      TAO_Thread_Per_Connection_Handler (sh),
+                      -1);
+
+      return tpch->activate (f->server_connection_thread_flags (),
+                             f->server_connection_thread_count ());
+    }
+
 
   // reactive concurrency model. We may want to register ourselves
   // with the reactor. Call the register handler on the transport.
