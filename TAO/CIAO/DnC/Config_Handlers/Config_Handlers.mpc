@@ -14,11 +14,16 @@ project (Config_Handlers) : taolib {
     Utils.cpp
     ID_Handler.cpp
     CEPE_Handler.cpp
+    CRDD_Handler.cpp
     DP_Handler.cpp
     ERE_Handler.cpp
     IDD_Handler.cpp
     IRDD_Handler.cpp
     MDD_Handler.cpp
+    PCD_Handler.cpp
+    PPM_Handler.cpp
+    PSPE_Handler.cpp
+    PSPR_Handler.cpp
     RDD_Handler.cpp
     RS_Handler.cpp
     SP_Handler.cpp
