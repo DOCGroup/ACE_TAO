@@ -1,3 +1,36 @@
+Tue Jul 29 09:39:58 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/vcpartialmacros.mpt:
+
+          Modified to add to pch_defines instead of assigning.
+
+        * bin/MakeProjectCreator/templates/bordll.mpt:
+        * bin/MakeProjectCreator/templates/borexe.mpt:
+        * bin/MakeProjectCreator/templates/common.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+        * bin/MakeProjectCreator/templates/gnudll.mpt:
+        * bin/MakeProjectCreator/templates/gnuexe.mpt:
+        * bin/MakeProjectCreator/templates/makedll.mpt:
+        * bin/MakeProjectCreator/templates/nmakedll.mpt:
+        * bin/MakeProjectCreator/templates/nmakeexe.mpt:
+        * bin/MakeProjectCreator/templates/va4iccdll.mpt:
+        * bin/MakeProjectCreator/templates/va4iccdllexe.mpt:
+        * bin/MakeProjectCreator/templates/va4icclib.mpt:
+        * bin/MakeProjectCreator/templates/va4icclibexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dspdll.mpt:
+        * bin/MakeProjectCreator/templates/vc6dspdllexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplib.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplibexe.mpt:
+        * bin/MakeProjectCreator/templates/vc7dll.mpt:
+        * bin/MakeProjectCreator/templates/vc7exe.mpt:
+
+          Added the common.mpt for a place to put common template input
+          settings and added an include of common to each template input
+          file.
+
 Tue Jul 29 09:01:44 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * Kokyu/tests/DSRT_MIF/DSRT_MIF.mpc:

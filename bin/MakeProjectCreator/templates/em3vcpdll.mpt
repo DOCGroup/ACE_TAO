@@ -1,4 +1,5 @@
 conditional_include "idl_compiler_win32"
+conditional_include "common"
 
 configurations        = Release Debug
 platform_longs        = "WCE ARM" "WCE x86" "WCE emulator"

@@ -1,4 +1,5 @@
 conditional_include "idl_compiler_win32"
+conditional_include "common"
 
 configurations     = Release Debug "Static Release" "Static Debug"
 common_defines     = WIN32 _WINDOWS
