@@ -1,3 +1,20 @@
+Fri Nov 20 00:58:35 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/DLL.h (ACE_DLL): Added a new constructor which allows auto
+	  opening of the dynamically linked library.
+
+	* ace/DLL.h (get_handle): Added a method which returns teh handle
+	  to the user.
+	
+	* ace/DLL.cpp (ACE_DLL): Added the auto-open feature taking care
+	  of more than one open calls.
+
+	* ace/DLL.cpp (get_handle): The orphan flag decides whether the 
+	  handle is orphaned or given to the user temporarily.
+	
+	* ace/DLL.cpp (open): Added a check so that a already existing
+	  handle is closed before the next open is done.
+		
 Fri Nov 20 23:40:12 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/00[567]/client_handler.cpp :
