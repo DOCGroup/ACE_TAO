@@ -244,7 +244,7 @@ public:
                            ACE_ENV_ARG_DECL);
 
   /// Used in our destruction when we are in an Any.
-  static void (*_tao_any_destructor) (void *);
+  static void _tao_any_destructor (void *);
 
   // private:
   //
