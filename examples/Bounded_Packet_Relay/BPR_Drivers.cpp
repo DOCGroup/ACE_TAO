@@ -12,10 +12,13 @@
 //    the different implementations of the Timer_Queue.
 //
 // = AUTHOR
-//    Chris Gill           <cdgill@cs.wustl.edu>
+//    Chris Gill           <cdgill@cs.wustl.edu>  and
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu>
 //
-//    Based on examples/Timer_Queue/Driver.cpp, written by
-//    Douglas Schmidt      <schmidt@cs.wustl.edu> &&
+//    Based on the Timer Queue Test example written by
+//
+//    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 //
 // ============================================================================
@@ -28,33 +31,36 @@
 
 ACE_RCSID(Bounded_Packet_Relay, BPR_Driver, "$Id$")
 
+// Constructor.
+
 Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr)
-  // @@ Chris, please fix this formatting as per other comments ...
-  : ACE_Task_Base (input_task_mgr)
-  , send_input_msg_cmd_ (0)
-  , input_rate_ (ACE_ONE_SECOND_IN_USECS)
-  , reactor_
-  , is_active_ (0)
+  : ACE_Task_Base (input_task_mgr),
+    send_input_msg_cmd_ (0),
+    input_rate_ (ACE_ONE_SECOND_IN_USECS),
+    reactor_,
+    is_active_ (0)
 {
 }
-  // ctor
+
+// Destructor.
 
 Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (void)
 {
   delete send_input_msg_cmd_;
 }
-  // dtor
  
+// Sets send input message command in the input device driver object.
+
 int
 Input_Device_Wrapper_Base::set_send_input_msg_cmd (Command_Base *send_input_msg_cmd)
 {
-  // delete the old command (if any) first
+  // Delete the old command (if any), then set the new command.
   delete send_input_msg_cmd_;
-
   send_input_msg_cmd_ = send_input_msg_cmd;
   return 0;
 }
-  // sets send input message command in the input device driver object
+
+// Sets period between when input messages are produced.
 
 int 
 Input_Device_Wrapper_Base::set_input_period (u_long input_period)
@@ -62,23 +68,32 @@ Input_Device_Wrapper_Base::set_input_period (u_long input_period)
   input_period_ = input_period;
   return 0;
 }
-  // sets period between when input messages are produced
+
+// Sets count of messages to send.
 
 int 
 Input_Device_Wrapper_Base::set_send_count (long count)
 {
   send_count_ = count;
 }
-  // sets count of messages to send
+
+// Request that the input device stop sending messages
+// and terminate its thread.  Should return 1 if it will do so, 0
+// if it has already done so, or -1 if there is a problem doing so.
 
 int 
 Input_Device_Wrapper_Base::request_stop (void)
 {
-  is_active_ = 0;
+  if (is_active_)
+  {
+    is_active_ = 0;
+    return 1;
+  }
+
+  return 0;
 }
-  // request that the input device stop sending messages
-  // and terminate its thread.  Should return 1 if it will do so, 0
-  // if it has already done so, or -1 if there is a problem doing so.
+
+// This method runs the input device loop in the new thread.
 
 int 
 Input_Device_Wrapper_Base::svc (void)
@@ -87,12 +102,12 @@ Input_Device_Wrapper_Base::svc (void)
   ACE_Time_Value timeout;
   ACE_Message_Block *message;
 
-  // set a flag ti indicate we're active
+  // Set a flag to indicate we're active.
   is_active_ = 1;
 
-  // start with the total count of messages to send
+  // Start with the total count of messages to send.
   for (count = send_count_;
-       // while we're still marked active, and there are packets to send
+       // While we're still marked active, and there are packets to send.
        is_active_ && count != 0;
        )
   {
@@ -125,7 +140,7 @@ Input_Device_Wrapper_Base::svc (void)
                         -1);
     }
 
-    // if all went well, decrement count of messages to send,
+    // If all went well, decrement count of messages to send,
     // and run the reactor event loop unti we get a timeout
     // or something happens in a registered upcall.
     if (count > 0) 
@@ -139,7 +154,10 @@ Input_Device_Wrapper_Base::svc (void)
 
   return 0;
 }
-  // This method runs the input device loop in the new thread.
+
+// Sends a newly created message block, carrying data
+// read from the underlying input device, by passing a
+// pointer to the message block to its command execution.
 
 int 
 Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
@@ -154,32 +172,31 @@ Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
                         -1);
     }
 }
-  // sends a newly created message block, carrying data
-  // read from the underlying input device, by passing a
-  // pointer to the message block to its command execution
+
+// Constructor.
 
 template <class SYNCH>
 Bounded_Packet_Relay<SYNCH>::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
                                                    Input_Device_Wrapper_Base *input_wrapper,
                                                    Output_Device_Wrapper_Base *output_wrapper)
-  : input_task_mgr_ (input_task_mgr)
-  // @@ Chris, please fix the formatting...
-  , input_wrapper_ (input_wrapper)
-  , input_thread_handle_ (0)
-  , output_wrapper_ (output_wrapper)
-  , queue_
-  , is_active_ (0)
-  , transmission_lock_
-  , queue_lock_
-  , transmission_number_ (0)
-  , packets_sent_ (0)
-  , status_ (Bounded_Packet_Relay<SYNCH>::UN_INITIALIZED)
-  , elapsed_duration_ (0)
+  : input_task_mgr_ (input_task_mgr),
+    input_wrapper_ (input_wrapper),
+    input_thread_handle_ (0),
+    output_wrapper_ (output_wrapper),
+    queue_,
+    is_active_ (0),
+    transmission_lock_,
+    queue_lock_,
+    transmission_number_ (0),
+    packets_sent_ (0),
+    status_ (Bounded_Packet_Relay<SYNCH>::UN_INITIALIZED),
+    elapsed_duration_ (0)
 {
   if (input_task_mgr_ == 0)
     input_task_mgr_ = ACE_Thread_Manager::instance ();
 }
-  // ctor
+
+// Destructor.
 
 template <class SYNCH>
 Bounded_Packet_Relay<SYNCH>::~Bounded_Packet_Relay (void)
@@ -187,49 +204,51 @@ Bounded_Packet_Relay<SYNCH>::~Bounded_Packet_Relay (void)
   delete input_wrapper_;
   delete output_wrapper_;
 }
-  // dtor
+
+// Requests output be sent to output device.
 
 template <class SYNCH> int
 Bounded_Packet_Relay<SYNCH>::send_input (void)
 {
   ACE_Message_Block *item;
 
-  // don't block, return immediately if queue is empty
+  // Don't block, return immediately if queue is empty.
   if (queue_.dequeue_head (item, ACE_OS::gettimeofday ()) < 0)
     return 1;
 
-  // if a message block was dequeued, send it to the output device
+  // If a message block was dequeued, send it to the output device.
   if (output_wrapper_->write_output_message ((void *) item) < 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
                        "failed to write to output device object"), 
                       -1);
 
-  // if all went OK, increase count of packets sent
+  // If all went OK, increase count of packets sent.
   ++packets_sent_;
   return 0;
 }
-  // Requests output be sent to output device.
+
+// Requests a transmission be started.
 
 template <class SYNCH> int
 Bounded_Packet_Relay<SYNCH>::start_transmission (u_long packet_count,
                                                  u_long arrival_period,
                                                  u_long logging_level)
 {
-  // serialize access to start and end transmission calls,
-  // statistics reporting calls
+  // Serialize access to start and end transmission calls,
+  // statistics reporting calls.
   ACE_GUARD_RETURN (SYNCH, ace_mon, this->transmission_lock_, -1);
 
-  // if a transmission is already in progress, just return
+  // If a transmission is already in progress, just return.
   if (status_ == STARTED)
     return 1;
 
-  // Update statistics for a new transmission
+  // Update statistics for a new transmission.
   ++transmission_number;
   packets_sent_ = 0;
   status_ = STARTED;
   transmission_start_ = ACE_OS::gettimeofday ();  
 
-  // initialize the output device
+  // Initialize the output device.
   if (output_wrapper_->modify_device_settings ((void *) &logging level) < 0)
   {
     status_ = ERROR;
@@ -239,7 +258,7 @@ Bounded_Packet_Relay<SYNCH>::start_transmission (u_long packet_count,
                       -1);
   }
 
-  // initialize the input device
+  // Initialize the input device.
   if (input_wrapper_->set_input_period (u_long input_period) < 0)
   {
     status_ = ERROR;
@@ -249,7 +268,7 @@ Bounded_Packet_Relay<SYNCH>::start_transmission (u_long packet_count,
                       -1);
   }
 
-  // activate the input device and save a handle to the new thread
+  // Activate the input device and save a handle to the new thread.
   if (input_wrapper_->activate () < 0)
   {
     status_ = ERROR;
@@ -259,23 +278,24 @@ Bounded_Packet_Relay<SYNCH>::start_transmission (u_long packet_count,
                       -1);
   }
 
-  // If all went well, return success
+  // If all went well, return success.
   return 0;
 }
-  // Requests a transmission be started.
+
+// Requests a transmission be ended.
 
 template <class SYNCH> int
 Bounded_Packet_Relay<SYNCH>::end_transmission (Transmission_Status status)
 {
-  // serialize access to start and end transmission calls,
-  // statistics reporting calls
+  // Serialize access to start and end transmission calls,
+  // statistics reporting calls.
   ACE_GUARD_RETURN (SYNCH, ace_mon, this->transmission_lock_, -1);
 
-  // if a transmission is not already in progress, just return
+  // If a transmission is not already in progress, just return.
   if (status_ != STARTED)
     return 1;
 
-  // ask the the input thread to stop
+  // Ask the the input thread to stop.
   if (input_wrapper_->request_stop () < 0)
   {
     status_ = ERROR;
@@ -285,7 +305,7 @@ Bounded_Packet_Relay<SYNCH>::end_transmission (Transmission_Status status)
                       -1);
   }
  
-  // wait for input thread to stop
+  // Wait for input thread to stop.
   if (input_task_mgr_->wait_task (input_wrapper_) < 0)
   {
     status_ = ERROR;
@@ -295,21 +315,22 @@ Bounded_Packet_Relay<SYNCH>::end_transmission (Transmission_Status status)
                       -1);
   }
 
-  // if all went well, set passed status, stamp end time, return success
+  // If all went well, set passed status, stamp end time, return success.
   status_ = status;
   transmission_end_ = ACE_OS::gettimeofday ();  
   return 0;
 }
-  // Requests a transmission be ended.
+
+// Requests a report of statistics from the last transmission.
 
 template <class SYNCH> int
 Bounded_Packet_Relay<SYNCH>::report_statistics (void)
 {
-  // serialize access to start and end transmission calls,
-  // statistics reporting calls
+  // Serialize access to start and end transmission calls,
+  // statistics reporting calls.
   ACE_GUARD_RETURN (SYNCH, ace_mon, this->transmission_lock_, -1);
 
-  // if a transmission is already in progress, just return
+  // If a transmission is already in progress, just return.
   if (status_ == STARTED)
     return 1;
 
@@ -340,11 +361,11 @@ Bounded_Packet_Relay<SYNCH>::report_statistics (void)
       break;
   }
 
-  // calculate duration of trasmission
+  // Calculate duration of trasmission.
   ACE_Time_Value duration (transmission_end_);
   duration -= transmission_start_;
 
-  // report transmission statistics
+  // Report transmission statistics.
   // @@ Chris, please don't use ACE_OS::fprintf(), use ACE_DEBUG or ACE_ERROR instead...
   if (ACE_OS::fprintf (ACE_STDOUT,
                    "\n\nStatisics for transmission %lu:\n\n"
@@ -375,7 +396,8 @@ Bounded_Packet_Relay<SYNCH>::report_statistics (void)
                       -1);
   return 0;
 }
-  // Requests a report of statistics from the last transmission.
+
+// Public entry point to which to push input.
 
 template <class SYNCH> int
 Bounded_Packet_Relay<SYNCH>::receive_input (void * arg)
@@ -388,9 +410,8 @@ Bounded_Packet_Relay<SYNCH>::receive_input (void * arg)
                       -1);
   return 0;
 }
-  // public entry point to which to push input.
 
-// Parse the input and execute the corresponding command
+// Parse the input and execute the corresponding command.
 
 template <class TQ, class RECEIVER, class ACTION> int
 Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
@@ -408,9 +429,9 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *b
       u_long count;
 
       // We just reread the option, this simplies parsing
-      // (since sscanf can do it for us.)
+      // (since sscanf can do it for us).
       if (::sscanf (buf, "%d %lu", &option, &count) < 2)
-        // if there was not enough information on the line, 
+        // If there was not enough information on the line, 
         // ignore option and try the next line.
         return 0;
 
@@ -422,14 +443,14 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *b
       break;
     }
 
-    case 2:  // set arrival period
+    case 2:  // Set the arrival period.
     {
       u_long usec;
 
       // We just reread the option, this simplies parsing
-      // (since sscanf can do it for us.)
+      // (since sscanf can do it for us).
       if (::sscanf (buf, "%d %lu", &option, &usec) < 2)
-        // if there was not enough information on the line, 
+        // If there was not enough information on the line, 
         // ignore option and try the next line.
         return 0;
 
@@ -441,14 +462,14 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *b
       break;
     }
 
-    case 3:  // set transmit period
+    case 3:  // Set transmit period.
     {
       u_long usec;
 
       // We just reread the option, this simplies parsing
-      // (since sscanf can do it for us.)
+      // (since sscanf can do it for us).
       if (::sscanf (buf, "%d %lu", &option, &usec) < 2)
-        // if there was not enough information on the line, 
+        // If there was not enough information on the line, 
         // ignore option and try the next line.
         return 0;
 
@@ -460,14 +481,14 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *b
       break;
     }
 
-    case 4:  // set duration limit
+    case 4:  // Set duration limit.
     {
       u_long usec;
 
       // We just reread the option, this simplies parsing
-      // (since sscanf can do it for us.)
+      // (since sscanf can do it for us).
       if (::sscanf (buf, "%d %lu", &option, &usec) < 2)
-        // if there was not enough information on the line, 
+        // If there was not enough information on the line, 
         // ignore option and try the next line.
         return 0;
 
@@ -479,14 +500,14 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *b
       break;
     }
 
-    case 5:  // set logging level
+    case 5:  // Set logging level.
     {
       u_long level;
 
       // We just reread the option, this simplies parsing
-      // (since sscanf can do it for us.)
+      // (since sscanf can do it for us).
       if (::sscanf (buf, "%d %lu", &option, &level) < 2)
-        // if there was not enough information on the line, 
+        // If there was not enough information on the line, 
         // ignore option and try the next line.
         return 0;
 
@@ -498,15 +519,15 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *b
       break;
     }
 
-    case 6: // run one transmission
+    case 6: // Run one transmission.
       return run_transmission_cmd_->execute (0);
       /* NOTREACHED */
 
-    case 7: // report statistics
+    case 7: // Report statistics.
       return report_stats_cmd_->execute (0);
       /* NOTREACHED */
 
-    case 8: // shut down the driver
+    case 8: // Shut down the driver.
       return shutdown_cmd_->execute (0);
       /* NOTREACHED */
 
@@ -535,7 +556,7 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::run (void)
   ACE_NOTREACHED (return 0);
 }
 
-// gets the next request from the user input.
+// Gets the next request from the user input.
 
 template <class TQ, class RECEIVER, class ACTION> int
 Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::get_next_request (void)
@@ -548,7 +569,7 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::get_next_request (void)
   ACE_OS::fprintf (ACE_STDERR, "Please enter your choice: ");
   ACE_OS::fflush (ACE_STDERR);
 
-  // reads input from the user
+  // Reads input from the user.
   if (this->read_input (buf, sizeof buf) <= 0)
     return -1;
 
