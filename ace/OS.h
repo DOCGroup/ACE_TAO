@@ -4645,6 +4645,7 @@ public:
                      char *const envp[]);
   static void _exit (int status = 0);
   static void exit (int status = 0);
+  static void abort (void);
   static pid_t fork (void);
   static pid_t fork (const char *program_name);
   static pid_t fork_exec (ASYS_TCHAR *argv[]);

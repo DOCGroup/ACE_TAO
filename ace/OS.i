@@ -1163,6 +1163,12 @@ ACE_OS::_exit (int status)
 #endif /* VXWORKS */
 }
 
+ACE_INLINE void
+ACE_OS::abort (void)
+{
+  ::abort ();
+}
+
 ACE_INLINE void *
 ACE_OS::malloc (size_t nbytes)
 {
