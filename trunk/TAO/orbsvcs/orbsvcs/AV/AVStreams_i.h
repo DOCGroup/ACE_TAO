@@ -109,9 +109,6 @@ typedef ACE_Hash_Map_Iterator <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,A
 
 #include "AV_Core.h"
 
-int deactivate_servant (PortableServer::Servant servant);
-char *get_flowname (const char *flow_spec_entry_str);
-
 class TAO_AV_Export AV_Null_MediaCtrl
   : public virtual POA_Null_MediaCtrl,
     public virtual PortableServer::RefCountServantBase

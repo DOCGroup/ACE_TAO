@@ -223,14 +223,14 @@ TAO_FDev<T_Producer, T_Consumer>::destroy (AVStreams::FlowEndPoint_ptr /* the_ep
 {
   // @@ Shouldn't the parameters be made use of!
   // Destroy/delete all the producers and consumers.
-  
+
   TAO_FlowProducer *producer_i;
 
   for (PRODUCER_LIST_ITERATOR producer_list_iterator (this->producer_list_);
        (producer_i = producer_list_iterator.next ()) != 0;
        producer_list_iterator.advance ())
     {
-      deactivate_servant (producer_i);
+      TAO_AV_Core::deactivate_servant (producer_i);
       delete producer_i;
     }
 
@@ -240,10 +240,10 @@ TAO_FDev<T_Producer, T_Consumer>::destroy (AVStreams::FlowEndPoint_ptr /* the_ep
        (consumer_i = consumer_list_iterator.next ()) != 0;
        consumer_list_iterator.advance ())
     {
-      deactivate_servant (consumer_i);
+      TAO_AV_Core::deactivate_servant (consumer_i);
       delete consumer_i;
     }
-  int result = deactivate_servant (this);
+  int result = TAO_AV_Core::deactivate_servant (this);
   if (result < 0)
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_StreamEndPoint::destroy failed\n"));
 }
