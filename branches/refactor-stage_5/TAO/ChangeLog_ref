@@ -1,14 +1,12 @@
+Mon Aug 25 17:39:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/Asynch_Invocation_Adapter.cpp (TAO): 
+	* tao/Messaging/Asynch_Invocation_Adapter.h:
+	* tao/Messaging/Asynch_Invocation.h:
+	* tao/Messaging/Asynch_Invocation.cpp: Invocation code for the
+	  asynch operations.
+
 Thu Aug 21 17:59:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * tests/Bench/AMI/AMI_Test_Client.dsp:
-        * tests/Bench/AMI/AMI_Test_Server.dsp:
-        * tests/Bench/AMI/AMI_Test_Simple_Client.dsp:
-
-          Fixed some settings on these projects.
-
-        * tests/Bench/AMI/ami_test.idl:
-
-          Added file to repository.
 
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_visitor_traits.cpp:
