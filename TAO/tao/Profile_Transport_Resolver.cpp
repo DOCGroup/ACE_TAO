@@ -12,6 +12,10 @@
 #include "Object.h"
 
 
+#if !defined (__ACE_INLINE__)
+# include "Profile_Transport_Resolver.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (tao,
            Profile_Transport_Resolver,
            "$Id$")
@@ -39,18 +43,6 @@ namespace TAO
       }
   }
 
-  TAO_Stub *
-  Profile_Transport_Resolver::stub (void) const
-  {
-    return this->stub_;
-  }
-
-  CORBA::Object_ptr
-  Profile_Transport_Resolver::object (void) const
-  {
-    return CORBA::Object::_duplicate (this->obj_);
-  }
-
   void
   Profile_Transport_Resolver::profile (TAO_Profile *p)
   {
@@ -69,18 +61,6 @@ namespace TAO
         if (tmp)
           (void) tmp->_decr_refcnt ();
     }
-  }
-
-  TAO_Profile *
-  Profile_Transport_Resolver::profile (void) const
-  {
-    return this->profile_;
-  }
-
-  TAO_Transport *
-  Profile_Transport_Resolver::transport (void) const
-  {
-    return this->transport_;
   }
 
 
@@ -133,11 +113,11 @@ namespace TAO
     if (conn_reg == 0)
       {
         ACE_THROW_RETURN (CORBA::INTERNAL (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
-                          EINVAL),
-                        CORBA::COMPLETED_NO),
-                        0);
+            CORBA::SystemException::_tao_minor_code (
+              TAO_DEFAULT_MINOR_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO),
+                          0);
       }
 
     ACE_Time_Value connection_timeout;

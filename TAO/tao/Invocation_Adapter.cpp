@@ -61,15 +61,26 @@ namespace TAO
                                       this->number_args_,
                                       ex_data,
                                       ex_count);
+
+    // If we have a collocation proxy broker in our process space for
+    // <this->target_>, just take a guess and invoke the collocated
+    // path.
     if (this->cpb_)
-      return this->invoke_collocated (stub,
-                                      op_details
-                                      ACE_ENV_ARG_PARAMETER);
+      {
+        this->invoke_collocated (stub,
+                                 op_details
+                                 ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+    else
+      {
+        this->invoke_remote (stub,
+                             op_details
+                             ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
 
-    return this->invoke_remote (stub,
-                                op_details
-                                ACE_ENV_ARG_PARAMETER);
-
+    return;
   }
 
   void
@@ -77,22 +88,20 @@ namespace TAO
                                          TAO_Operation_Details &details
                                          ACE_ENV_ARG_DECL)
   {
+    // Cache the target to a local variable.
+    // @@ NOTE: Leak if forwarded
     CORBA::Object *effective_target = this->target_;
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
 
+    ACE_Time_Value *max_wait_time = 0;
+
     while (status == TAO_INVOKE_START ||
            status == TAO_INVOKE_RESTART)
       {
-        if (TAO_debug_level > 2 &&
-            status == TAO_INVOKE_RESTART)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ")
-                        ACE_TEXT ("handling forwarded locations \n")));
-          }
-
+        // This is a second test of the target to determine whether it
+        // is really collocated or not.
         Collocation_Strategy strat =
           this->cpb_->get_strategy (effective_target
                                     ACE_ENV_ARG_PARAMETER);
@@ -101,27 +110,39 @@ namespace TAO
         if (strat == TAO_CS_REMOTE_STRATEGY ||
             strat == TAO_CS_LAST)
           {
-            this->invoke_remote (stub,
-                                 details
-                                 ACE_ENV_ARG_PARAMETER);
 
+
+            status =
+              this->invoke_remote_i (stub,
+                                     details,
+                                     effective_target,
+                                     max_wait_time
+                                     ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+          }
+        else
+          {
+            Collocated_Invocation coll_inv (effective_target,
+                                            this->target_,
+                                            details,
+                                            this->type_ == TAO_TWOWAY_INVOCATION);
+
+            status = coll_inv.invoke (this->cpb_,
+                                      strat
+                                      ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
 
-            return;
+            if (status == TAO_INVOKE_RESTART)
+              effective_target = coll_inv.steal_forwarded_reference ();
           }
 
-        Collocated_Invocation coll_inv (effective_target,
-                                        this->target_,
-                                        details,
-                                        this->type_ == TAO_TWOWAY_INVOCATION);
-
-        status = coll_inv.invoke (this->cpb_,
-                                  strat
-                                  ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-
-        if (status == TAO_INVOKE_RESTART)
-          effective_target = coll_inv.steal_forwarded_reference ();
+        if (TAO_debug_level > 2 &&
+            status == TAO_INVOKE_RESTART)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ",
+                        "handling forwarded locations \n"));
+          }
       }
   }
 
@@ -130,17 +151,10 @@ namespace TAO
                                      TAO_Operation_Details &op
                                      ACE_ENV_ARG_DECL)
   {
+    // @@NOTE: Leak if forwarding does happen
     CORBA::Object *effective_target = this->target_;
 
-    ACE_Time_Value tmp_wait_time;
-    bool is_timeout  =
-      this->get_timeout (tmp_wait_time);
-
     ACE_Time_Value *max_wait_time = 0;
-
-    if (is_timeout)
-      max_wait_time = &tmp_wait_time;
-
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
@@ -148,6 +162,13 @@ namespace TAO
     while (status == TAO_INVOKE_START ||
            status == TAO_INVOKE_RESTART)
       {
+        status = this->invoke_remote_i (stub,
+                                        op,
+                                        effective_target,
+                                        max_wait_time
+                                        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
         if (TAO_debug_level > 2 &&
             status == TAO_INVOKE_RESTART)
           {
@@ -155,72 +176,6 @@ namespace TAO
                         ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ")
                         ACE_TEXT ("handling forwarded locations \n")));
           }
-
-        Profile_Transport_Resolver resolver (effective_target,
-                                             stub);
-
-        resolver.resolve (max_wait_time
-                          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-
-        // Update the request id now that we have a transport
-        op.request_id (resolver.transport ()->tms ()->request_id ());
-
-        if (this->type_ == TAO_ONEWAY_INVOCATION)
-          {
-            bool has_synchronization = false;
-            Messaging::SyncScope sync_scope;
-            stub->orb_core ()->call_sync_scope_hook (stub,
-                                                     has_synchronization,
-                                                     sync_scope);
-
-            if (has_synchronization)
-              op.response_flags (sync_scope);
-            else
-              op.response_flags (Messaging::SYNC_WITH_TRANSPORT);
-
-            TAO::Synch_Oneway_Invocation synch (this->target_,
-                                                resolver,
-                                                op);
-
-            status =
-              synch.remote_oneway (max_wait_time
-                                   ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
-
-            if (status == TAO_INVOKE_RESTART)
-              effective_target = synch.steal_forwarded_reference ();
-          }
-        else if (this->type_ == TAO_TWOWAY_INVOCATION
-                 && this->mode_ == TAO_SYNCHRONOUS_INVOCATION)
-          {
-            // @@ NOTE:Need to change this to something better. Too many
-            // hash defines meaning the same  thing..
-            op.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
-            TAO::Synch_Twoway_Invocation synch (this->target_,
-                                                resolver,
-                                                op);
-
-            status =
-              synch.remote_twoway (max_wait_time
-                                   ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
-
-            if (status == TAO_INVOKE_RESTART)
-              effective_target = synch.steal_forwarded_reference ();
-          }
-        else if (this->type_ == TAO_TWOWAY_INVOCATION
-                 && this->mode_ == TAO_ASYNCHRONOUS_CALLBACK_INVOCATION)
-          {
-            // Should never get here..
-            ACE_THROW (CORBA::INTERNAL (
-               CORBA::SystemException::_tao_minor_code (
-                 TAO_DEFAULT_MINOR_CODE,
-                 EINVAL),
-               CORBA::COMPLETED_NO));
-          }
-
-
       }
   }
 
@@ -251,4 +206,91 @@ namespace TAO
     return stub;
   }
 
+  Invocation_Status
+  Invocation_Adapter::invoke_remote_i (TAO_Stub *stub,
+                                       TAO_Operation_Details &op,
+                                       CORBA::Object *&effective_target,
+                                       ACE_Time_Value *&max_wait_time
+                                       ACE_ENV_ARG_DECL)
+  {
+    // Should never get here..
+    if (this->type_ == TAO_TWOWAY_INVOCATION
+        && this->mode_ == TAO_ASYNCHRONOUS_CALLBACK_INVOCATION)
+      {
+
+        ACE_THROW (CORBA::INTERNAL (
+               CORBA::SystemException::_tao_minor_code (
+                 TAO_DEFAULT_MINOR_CODE,
+                 EINVAL),
+               CORBA::COMPLETED_NO));
+      }
+
+    ACE_Time_Value tmp_wait_time;
+    bool is_timeout  =
+      this->get_timeout (tmp_wait_time);
+
+    if (is_timeout)
+      max_wait_time = &tmp_wait_time;
+
+    // Create the resolver which will pick (or create) for us a
+    // transport and a profile from the effective_target.
+    Profile_Transport_Resolver resolver (effective_target,
+                                         stub);
+
+    resolver.resolve (max_wait_time
+                      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    // Update the request id now that we have a transport
+    op.request_id (resolver.transport ()->tms ()->request_id ());
+
+    Invocation_Status s = TAO_INVOKE_FAILURE;
+
+    if (this->type_ == TAO_ONEWAY_INVOCATION)
+      {
+        // Grab the syncscope policy from the ORB.
+        bool has_synchronization = false;
+        Messaging::SyncScope sync_scope;
+        stub->orb_core ()->call_sync_scope_hook (stub,
+                                                 has_synchronization,
+                                                 sync_scope);
+
+        if (has_synchronization)
+          op.response_flags (sync_scope);
+        else
+          op.response_flags (Messaging::SYNC_WITH_TRANSPORT);
+
+        TAO::Synch_Oneway_Invocation synch (this->target_,
+                                            resolver,
+                                            op);
+
+        Invocation_Status s =
+          synch.remote_oneway (max_wait_time
+                               ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+        if (s == TAO_INVOKE_RESTART)
+          effective_target = synch.steal_forwarded_reference ();
+      }
+    else if (this->type_ == TAO_TWOWAY_INVOCATION
+             && this->mode_ == TAO_SYNCHRONOUS_INVOCATION)
+      {
+        // @@ NOTE:Need to change this to something better. Too many
+        // hash defines meaning the same  thing..
+        op.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
+        TAO::Synch_Twoway_Invocation synch (this->target_,
+                                            resolver,
+                                            op);
+
+
+          synch.remote_twoway (max_wait_time
+                               ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+        if (s == TAO_INVOKE_RESTART)
+          effective_target = synch.steal_forwarded_reference ();
+      }
+
+    return s;
+  }
 } // End namespace TAO

@@ -1,3 +1,25 @@
+Mon Aug 25 18:39:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/Invocation_Base.inl:
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h: Added doxygen documentation. Created an
+	  inlined file for optimization purposes.
+
+        * tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Profile_Transport_Resolver.inl: Added doxygen
+	  documentation. Created an inlined file for optimization
+	  purposes. 
+	
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h: Added a new method inoke_remote_i
+	  (). This method now houses some refactored code that could be
+	  used by the collocated and remote calls. 
+
+	* tao/Sequence_T.cpp: Removed SunCC4.2 specific #if defines. 
+
+	* tao/TAO.dsp: Added new inlined files into the project.
+
 Mon Aug 25 17:39:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Messaging/Asynch_Invocation_Adapter.cpp (TAO): 

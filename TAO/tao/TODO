@@ -45,3 +45,11 @@
 . Memory leaks with Transport, run valgrind in Param_Test
 
 . Move traits classes in the header file to the cpp file.
+
+. Collocation and AMI
+
+. Try a build with MESSAGING == 0;
+
+. Real-time CORBA
+
+. Code set translators 

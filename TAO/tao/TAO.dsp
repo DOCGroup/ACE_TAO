@@ -2369,6 +2369,10 @@ SOURCE=.\Invocation.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation_Base.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation_Endpoint_Selectors.i
 # End Source File
 # Begin Source File
@@ -2566,6 +2570,10 @@ SOURCE=.\Principal.i
 # Begin Source File
 
 SOURCE=.\Profile.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Profile_Transport_Resolver.inl
 # End Source File
 # Begin Source File
 
