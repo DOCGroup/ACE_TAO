@@ -114,10 +114,16 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
                 case '\a':
                   this->TAO_OutStream::print ("'\\a'");
                   break;
+                case '\\':
+                  this->TAO_OutStream::print ("'\\'");
+                  break;
+                case '\?':
+                  this->TAO_OutStream::print ("'?'");
+                  break;
               default:
                 this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
               }
- 	        else
+ 	        else 
 	          this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
           break;
         case AST_Expression::EV_wchar:
