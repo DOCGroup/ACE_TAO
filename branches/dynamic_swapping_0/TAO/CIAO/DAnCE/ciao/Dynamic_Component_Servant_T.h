@@ -30,7 +30,7 @@
 namespace CIAO
 {
   template <typename COMP_SERVANT, typename COMP_EXEC, 
-            typename COMP_EXEC_VAR, typename EXEC>
+            typename COMP_EXEC_VAR, typename EXEC, typename COMP>
   class Dynamic_Component_Servant
     : public virtual Dynamic_Component_Servant_Base
   {
@@ -43,6 +43,8 @@ namespace CIAO
 
   protected:
     EXEC_VAR executor_;
+
+    Components::CCMHome_var home_;
   };
 }
 
