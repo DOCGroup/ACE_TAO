@@ -1,3 +1,10 @@
+Thu Feb  6 16:37:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Stub.cpp (ior_info_): 
+	* tao/Invocation.cpp:
+	* tao/ClientRequestInfo_i.cpp: Added error checks to the last
+	  checkins. 
+
 Sun Jan 26 23:50:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Profile.cpp:
