@@ -41,6 +41,12 @@ public:
   Service_Type service_type (void);
 
   /**
+   * Set/Get active status.
+   */
+  int active (int a);
+  int active (void);
+
+  /**
    * Set/get initializer path.
    */
   int path (const ACEXML_Char *n);
@@ -66,6 +72,7 @@ public:
 protected:
   ACEXML_Char *name_;
   Service_Type service_type_;
+  int active_;
   ACEXML_Char *path_;
   ACEXML_Char *init_func_;
   ACEXML_Char *init_params_;
@@ -276,6 +283,30 @@ protected:
    */
   int get_stream_id (ACEXML_Attributes *alist,
                      ACEXML_Env &xmlenv);
+
+  /**
+   * Get the only attribute in <resume>, <suspend>, <remove>
+   */
+  int get_id (ACEXML_Attributes *alist,
+              ACEXML_Env &xmlenv);
+
+  /**
+   * Get the dynamic tag attributes.
+   */
+  int get_dynamic_attrs (ACEXML_Attributes *alist,
+                         ACEXML_Env &xmlenv);
+
+  /**
+   * Get the initializer tag attributes.
+   */
+  int get_initializer_attrs (ACEXML_Attributes *alist,
+                             ACEXML_Env &xmlenv);
+
+  /**
+   * Get the static tag attributes.
+   */
+  int get_static_attrs (ACEXML_Attributes *alist,
+                        ACEXML_Env &xmlenv);
 
 private:
   /// We are parsing a stream definition
