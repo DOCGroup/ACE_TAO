@@ -1,3 +1,17 @@
+Sun Feb 13 07:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled the notify filter performance test under Irix, it hangs
+          forever
+
+        * ace/Asynch_IO.h:
+          Updated some method signatures so that they are exactly the same
+          as used in the implementation to resolve Doxygen warnings
+
+        * ace/config-doxygen.h:
+          Added define of ACE_HAS_ICMP_SUPPORT to 1 so that icmp classes are
+          also parsed by doxygen
+
 Sat Feb 12 09:00:51 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
