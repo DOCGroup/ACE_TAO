@@ -63,7 +63,7 @@ TAO_Time_Service_Clerk::secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (ACE_ENV_SINGLE_ARG_PARAMETER),
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     CosTime::UTO::_nil ());
 }
 
