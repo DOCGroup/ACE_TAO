@@ -55,13 +55,15 @@ public:
   /**
    * Constructor.  Messages received by this EH will be forwarded to
    * the \a recv.  \a net_if can be used to specify NIC where multicast
-   * messages are expected.
+   * messages are expected. \buf_sz would be used to alter the default
+   * buffer size.
    *
    * See comments for receiver_ data member on why raw pointer is
    * used for the \a recv argument.
    */
   TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
-                    const ACE_TCHAR *net_if = 0);
+                    const ACE_TCHAR *net_if = 0,
+		    CORBA::ULong buf_sz = 0);
 
   /// Destructor.
   virtual ~TAO_ECG_Mcast_EH (void);
@@ -263,6 +265,9 @@ private:
    * receiver and handler.
    */
   TAO_ECG_Dgram_Handler * receiver_;
+
+  /// SOCKbuf size
+  CORBA::ULong recvbuf_size_;
 
   /// Event Channel Observer.  Detects changes in EC consumer subscriptions.
   /// ORDER DEPENDENCY: this member should be declared before
