@@ -37,7 +37,7 @@ SHFLAGS       = <%shflags%>
 TEMPINCDIR    = <%tempinc%>/<%project_name%>
 <%endif%>
 <%endfor%>
-CPPFLAGS      = $(PICFLAGS)<%if(cppflags)%> <%cppflags%><%endif%><%foreach(configurations)%><%if(tempinc)%> <%tempincopt%>$(TEMPINCDIR)<%endif%><%endfor%><%foreach(platforms)%><%if(extraflags)%> <%extraflags%><%endif%><%endfor%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%><%if(includes)%><%foreach(includes)%> -I<%include%><%endfor%><%endif%><%if(macros)%><%foreach(macros)%> -D<%macro%><%endfor%><%endif%>
+CPPFLAGS      = $(PICFLAGS)<%if(cppflags)%> <%cppflags%><%endif%><%foreach(configurations)%><%if(tempinc)%> <%tempincopt%>$(TEMPINCDIR)<%endif%><%endfor%><%foreach(platforms)%><%if(extraflags)%> <%extraflags%><%endif%><%endfor%><%foreach(configurations)%><%if(compilerflags)%> <%compilerflags%><%endif%><%endfor%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%><%if(includes)%><%foreach(includes)%> -I<%include%><%endfor%><%endif%><%if(macros)%><%foreach(macros)%> -D<%macro%><%endfor%><%endif%>
 <%if(idl_files)%>
 IDL_FILES     =<%foreach(idl_files)%> <%noextension(idl_file)%><%endfor%>
 IDL_SRC       =<%foreach(idl_files)%> <%noextension(idl_file)%>C.cpp <%noextension(idl_file)%>S.cpp<%endfor%>
@@ -79,7 +79,6 @@ PATH            := $(PATH):<%custom_type->libpath%>
 <%endfor%>
 .PRECIOUS: $(GENERATED_DIRTY)
 all: $(GENERATED_DIRTY)
-$(SRC): $(GENERATED_DIRTY)
 
 <%endif%>
 <%foreach(configurations)%>

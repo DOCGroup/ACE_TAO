@@ -316,6 +316,7 @@ endif
 <%endif%>
 
 <%endif%>
+<%marker(circuit)%>
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -433,7 +434,6 @@ GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_o
 ifneq ($(GENERATED_DIRTY),)
 .PRECIOUS: $(GENERATED_DIRTY)
 all: $(GENERATED_DIRTY)
-<%source_files%>: $(GENERATED_DIRTY)
 endif
 
 <%endif%>

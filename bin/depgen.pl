@@ -194,8 +194,9 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
       usageAndExit($base, 'Invalid use of -t');
     }
   }
-  elsif ($arg =~ /^\-/) {
+  elsif ($arg =~ /^[\-+]/) {
     ## We will ignore unknown options
+    ## Some options for aCC start with +
   }
   else {
     push(@files, $arg);
