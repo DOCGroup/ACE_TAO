@@ -12,8 +12,11 @@
 #include "ace/Object_Manager.h"
 #include "ace/SString.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Guard_T.h"
 
-ACE_RCSID(ace, DLL, "$Id$")
+ACE_RCSID (ace,
+	   DLL_Manager,
+	   "$Id$")
 
 /******************************************************************/
 

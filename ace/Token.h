@@ -28,21 +28,23 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/OS.h"
-
-#if defined (ACE_TOKEN_USES_SEMAPHORE)
-#  include "ace/Semaphore.h"
-#else
-#  include "ace/Condition_Thread_Mutex.h"
-#endif /* ACE_TOKEN_USES_SEMAPHORE */
-
-class ACE_Thread_Mutex;
-class ACE_Time_Value;
-//class ACE_Condition_Attributes;
+#include "ace/Thread_Mutex.h"
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || defined (VXWORKS) || defined (ACE_PSOS)
 // If platforms support semaphores with timed wait, then we use semaphores instead of c.v.
 # define ACE_TOKEN_USES_SEMAPHORE
 #endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || VXWORKS || ACE_PSOS */
+
+//class ACE_Thread_Mutex;
+class ACE_Time_Value;
+//class ACE_Condition_Attributes;
+
+#if defined (ACE_TOKEN_USES_SEMAPHORE)
+#  include "ace/Semaphore.h"
+#endif /* ACE_TOKEN_USES_SEMAPHORE */
+
+#include "ace/Condition_Thread_Mutex.h"
+
 
 /**
  * @class ACE_Token
