@@ -172,9 +172,9 @@ public:
                      Components::InvalidName,
                      Components::AlreadyConnected,
                      Components::InvalidConnection));
-  virtual void unsubscribe (const char * publisher_name,
-                            Components::Cookie * ck
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual ::Components::EventConsumerBase_ptr unsubscribe (const char * publisher_name,
+                                                           Components::Cookie * ck
+                                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName,
                      Components::InvalidConnection));

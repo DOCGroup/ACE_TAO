@@ -112,11 +112,12 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
 
   // @@ Create a new callback servant.
   CIAO::Activator_Callback_Impl *callback_servant = 0;
-  ACE_NEW_RETURN (callback_servant,
-                  CIAO::Activator_Callback_Impl (this->orb_.in (),
-                                                 this->callback_poa_.in (),
-                                                 this->objref_.in ()),
-                  0);
+  ACE_NEW_THROW_EX (callback_servant,
+                    CIAO::Activator_Callback_Impl (this->orb_.in (),
+                                                   this->callback_poa_.in (),
+                                                   this->objref_.in ()),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
 
   PortableServer::ServantBase_var servant_var (callback_servant);
   PortableServer::ObjectId_var cb_id
@@ -226,9 +227,10 @@ CIAO::ServerActivator_Impl::get_component_servers (ACE_ENV_SINGLE_ARG_DECL)
 
   Components::Deployment::ComponentServers_var retval;
 
-  ACE_NEW_RETURN (retval.out (),
-                  Components::Deployment::ComponentServers (),
-                  0);
+  ACE_NEW_THROW_EX (retval.out (),
+                    Components::Deployment::ComponentServers (),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
 
   CORBA::ULong len = this->cs_set_.size ();
   retval->length (len);          // resize

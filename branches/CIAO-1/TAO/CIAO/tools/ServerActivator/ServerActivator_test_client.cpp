@@ -40,6 +40,23 @@ parse_args (int argc, char *argv[])
 }
 
 int
+write_IOR(const char* ior)
+{
+  FILE* ior_output_file_ =
+    ACE_OS::fopen ("hello.ior", "w");
+
+  if (ior_output_file_)
+    {
+      ACE_OS::fprintf (ior_output_file_,
+                       "%s",
+                       ior);
+      ACE_OS::fclose (ior_output_file_);
+    }
+
+  return 0;
+}
+
+int
 main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
@@ -88,12 +105,52 @@ main (int argc, char *argv[])
             = comserv->create_container (config
                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-        }
 
-      ACE_OS::sleep (2);
+          // now install a fake home:
+          Components::ConfigValues com_config (4);
+          com_config.length (4);
 
-      if (test_container)
-        {
+          Components::ConfigValue_ptr item = new OBV_Components::ConfigValue ();
+
+          item->name (CORBA::string_dup ("CIAO-executor-path"));
+          item->value () <<= CORBA::string_dup ("hello_executors");
+          com_config[0] = item;
+
+          item = new OBV_Components::ConfigValue ();
+          item->name (CORBA::string_dup ("CIAO-executor-entrypt"));
+          item->value () <<= CORBA::string_dup ("createHelloHome_Impl");
+          com_config[1] = item;
+
+          item = new OBV_Components::ConfigValue ();
+          item->name (CORBA::string_dup ("CIAO-servant-path"));
+          item->value () <<= CORBA::string_dup ("hello_servants");
+          com_config[2] = item;
+
+          item = new OBV_Components::ConfigValue ();
+          item->name (CORBA::string_dup ("CIAO-servant-entrypt"));
+          item->value () <<= CORBA::string_dup ("createHelloHome_Servant");
+          com_config[3] = item;
+
+          //      ACE_OS::sleep (2);
+
+          Components::CCMHome_var home =
+            container->install_home ("a",
+                                     "b",
+                                     com_config
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          CORBA::String_var hior =
+            orb->object_to_string (home ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          write_IOR (hior.in ());
+
+          while (1)
+            {
+              ACE_OS::sleep (1);
+            }
+
           ACE_DEBUG ((LM_DEBUG, "Try removing a ComponentServer\n"));
           comserv->remove_container (container
                                      ACE_ENV_ARG_PARAMETER);

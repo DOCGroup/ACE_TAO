@@ -1,3 +1,31 @@
+Fri Feb 14 23:15:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/todo.html:  Added info on why the Assembly tools should
+	  be responsible of the act of home registration.
+
+	* ciao/Container_Impl.cpp:
+	* ciao/ServerActivator_Impl.cpp:
+	* ciao/ComponentServer_Impl.cpp: Changed the use of ACE_NEW_RETURN
+	  to ACE_NEW_THROW_EX.
+
+	* ciao/ComponentServer_Impl.h: Cosmetic changes.
+
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Fixed <unsubscribe>
+	  signature based on RTF 1.1.
+
+	* tools/ComponentServer/ComponentServer.cpp: Added comments
+	  explaining why we are not init'ing the component server right
+	  now.
+
+	* tools/ServerActivator/README:
+	* examples/handcrafted/Hello/client.cpp:
+	* tools/ServerActivator/ServerActivator_test_client.cpp: Forced in
+	  hack to test out installing the HelloWorldHome using the new
+	  ServerActivator -> ComponentServer -> Container interfaces.
+
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp: Fix
+
 Fri Feb 14 17:10:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/ConfigValues.html: Updated more supported ConfigValues types.

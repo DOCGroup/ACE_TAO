@@ -21,9 +21,10 @@ CIAO::Container_Impl::init (const ::Components::ConfigValues &options
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_NEW_RETURN (this->config_,
-                  Components::ConfigValues (),
-                  -1);
+  ACE_NEW_THROW_EX (this->config_,
+                    Components::ConfigValues (),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (-1);
 
   *this->config_ = options;
 
@@ -36,9 +37,10 @@ CIAO::Container_Impl::init (const ::Components::ConfigValues &options
 
   // @@ Fish out the ComponentServer object reference from <options>.
 
-  ACE_NEW_RETURN (this->container_,
-                  CIAO::Session_Container (this->orb_.in ()),
-                  -1);
+  ACE_NEW_THROW_EX (this->container_,
+                    CIAO::Session_Container (this->orb_.in ()),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (-1);
 
   return this->container_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -49,9 +51,10 @@ CIAO::Container_Impl::configuration (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   Components::ConfigValues *retval;
 
-  ACE_NEW_RETURN (retval,
-                  Components::ConfigValues (),
-                  0);
+  ACE_NEW_THROW_EX (retval,
+                    Components::ConfigValues (),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
 
   *retval = this->config_;
 
@@ -140,9 +143,10 @@ CIAO::Container_Impl::get_homes (ACE_ENV_SINGLE_ARG_DECL)
 
   Components::CCMHomes_var retval;
 
-  ACE_NEW_RETURN (retval.out (),
-                  Components::CCMHomes (),
-                  0);
+  ACE_NEW_THROW_EX (retval.out (),
+                    Components::CCMHomes (),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
 
   CORBA::ULong len = this->home_set_.size ();
   retval->length (len);          // resize

@@ -27,26 +27,28 @@ CIAO::ComponentServer_Impl::init (::Components::ConfigValues &options
   // implementation that actually interacts with installed
   // homes/components.
 
-  ACE_NEW_RETURN (this->config_,
-                  ::Components::ConfigValues (),
-                  -1);
+  ACE_NEW_THROW_EX (this->config_,
+                    ::Components::ConfigValues (),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (-1);
 
   *this->config_ = options;
 
   // We will probably need two ORBs in this process.  One for the
   // deployment framework, and one for the actual components.
-  return -1;
+  return 0;
 }
 
 ::Components::ConfigValues *
-CIAO::ComponentServer_Impl::configuration (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CIAO::ComponentServer_Impl::configuration (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Components::ConfigValues *retval;
 
-  ACE_NEW_RETURN (retval,
-                  Components::ConfigValues (),
-                  0);
+  ACE_NEW_THROW_EX (retval,
+                    Components::ConfigValues (),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
 
   *retval = this->config_;
 
@@ -69,11 +71,12 @@ CIAO::ComponentServer_Impl::create_container (const Components::ConfigValues & c
 {
   CIAO::Container_Impl *container_servant = 0;
 
-  ACE_NEW_RETURN (container_servant,
-                  CIAO::Container_Impl (this->orb_.in (),
-                                        this->poa_.in (),
-                                        this->get_objref ()),
-                  0);
+  ACE_NEW_THROW_EX (container_servant,
+                    CIAO::Container_Impl (this->orb_.in (),
+                                          this->poa_.in (),
+                                          this->get_objref ()),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
 
   PortableServer::ServantBase_var safe_servant (container_servant);
   container_servant->init (config ACE_ENV_ARG_PARAMETER);
@@ -145,9 +148,10 @@ CIAO::ComponentServer_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL)
 
   Components::Deployment::Containers_var retval;
 
-  ACE_NEW_RETURN (retval.out (),
-                  Components::Deployment::Containers (),
-                  0);
+  ACE_NEW_THROW_EX (retval.out (),
+                    Components::Deployment::Containers (),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
 
   CORBA::ULong len = this->container_set_.size ();
   retval->length (len);          // resize
