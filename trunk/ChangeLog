@@ -1,3 +1,17 @@
+Thu Sep 23 14:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-dmc.h:
+          New config file for the Digital Mars C++ compiler (see
+          www.digitalmars.com). Not fully working, but a first version.
+
+        * include/makeinclude/platform_win32_dmc.GNU:
+          New GNU file for the DMC compiler, also first version
+
+        * ace/config-win32.h:
+          Added check for __DMC__
+
+          More small changes for the DMC compiler will follow
+
 Wed Sep 22 14:40:15 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/ACE.cpp:
