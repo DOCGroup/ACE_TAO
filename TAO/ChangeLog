@@ -1,3 +1,10 @@
+Fri Oct  1 11:40:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Changed to refer to $(ACE_BUILDDIR)/Kokyu/libKokyu.la instead of
+	  -lKokyu.
+
 Fri Oct  1 11:29:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Fault_Detector/Fault_Detector.mpc:

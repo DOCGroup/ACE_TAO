@@ -4562,7 +4562,7 @@ libTAO_RTKokyuEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_RTKokyuEvent_la_LIBADD = \
-  -lKokyu \
+  $(ACE_BUILDDIR)/Kokyu/libKokyu.la \
   libTAO_RTSched.la \
   libTAO_CosNaming.la \
   libTAO_RTEvent.la \
