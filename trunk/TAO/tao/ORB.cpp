@@ -1332,7 +1332,7 @@ CORBA::ORB_init (int &argc,
 
   // The ORB was initialized already, just return that one!
   if (oc != 0)
-    return oc->orb ();
+    return CORBA::ORB::_duplicate (oc->orb ());
 
   // @@ As part of the ORB re-architecture this will the point where
   //    we locate the right ORB (from a table) and use that one

@@ -1,3 +1,16 @@
+Mon Jul 12 20:40:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+	  The ORB returned from CORBA::ORB_init() should be duplicated
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	  Use an ORB-per-thread to minimize contention and simplify memory 
+	  managment of per-ORB-per-thread resources.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+	  Fixed the InputCDRAllocator argument
+
 Mon Jul 12 19:23:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
