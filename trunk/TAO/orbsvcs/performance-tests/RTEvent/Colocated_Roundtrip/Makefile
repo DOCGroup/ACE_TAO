@@ -55,28 +55,29 @@ driver: $(addprefix $(VDIR),$(driver_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/driver.o .obj/driver.o .obj/driver.o .obj/driver.o: driver.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
+.obj/driver.o .obj/driver.so .shobj/driver.o .shobj/driver.so: driver.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_String.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -103,9 +104,7 @@ driver: $(addprefix $(VDIR),$(driver_OBJS))
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -241,8 +240,8 @@ driver: $(addprefix $(VDIR),$(driver_OBJS))
   ../lib/RTCORBA_Setup.inl ../lib/PriorityBand_Setup.h \
   ../lib/PriorityBand_Setup.inl ../lib/SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
-  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
+  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/ValueBase.h \
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
@@ -252,6 +251,8 @@ driver: $(addprefix $(VDIR),$(driver_OBJS))
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+  $(TAO_ROOT)/tao/TAOC.h \
+  $(TAO_ROOT)/tao/TAOC.i \
   ../lib/SyncScope_Setup.inl ../lib/RTClient_Setup.inl \
   ../lib/RTPOA_Setup.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
@@ -422,9 +423,6 @@ driver: $(addprefix $(VDIR),$(driver_OBJS))
   $(TAO_ROOT)/tao/Strategies/strategies_export.h \
   $(TAO_ROOT)/tao/default_resource.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
-  $(TAO_ROOT)/tao/Pluggable.h \
-  $(TAO_ROOT)/tao/Pluggable.i \
-  $(TAO_ROOT)/tao/Protocol_Factory.h \
   $(TAO_ROOT)/tao/default_resource.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \

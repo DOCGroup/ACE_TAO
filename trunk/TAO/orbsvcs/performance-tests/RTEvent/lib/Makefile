@@ -109,16 +109,11 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Consumer.o .obj/Consumer.o .obj/Consumer.o .obj/Consumer.o: Consumer.cpp Consumer.h rtec_perf_export.h \
+.obj/Consumer.o .obj/Consumer.so .shobj/Consumer.o .shobj/Consumer.so: Consumer.cpp Consumer.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -126,11 +121,15 @@ realclean: clean
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -138,6 +137,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -157,9 +158,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -308,9 +307,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
@@ -357,16 +356,11 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i
 
-.obj/Supplier.o .obj/Supplier.o .obj/Supplier.o .obj/Supplier.o: Supplier.cpp Supplier.h rtec_perf_export.h \
+.obj/Supplier.o .obj/Supplier.so .shobj/Supplier.o .shobj/Supplier.so: Supplier.cpp Supplier.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -374,11 +368,15 @@ realclean: clean
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -386,6 +384,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -405,9 +405,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -556,9 +554,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
@@ -600,17 +598,12 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
   Implicit_Deactivator.h Implicit_Deactivator.inl
 
-.obj/Loopback_Consumer.o .obj/Loopback_Consumer.o .obj/Loopback_Consumer.o .obj/Loopback_Consumer.o: Loopback_Consumer.cpp Loopback_Consumer.h \
+.obj/Loopback_Consumer.o .obj/Loopback_Consumer.so .shobj/Loopback_Consumer.o .shobj/Loopback_Consumer.so: Loopback_Consumer.cpp Loopback_Consumer.h \
   Loopback_Supplier.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -618,11 +611,15 @@ realclean: clean
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -630,6 +627,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -649,9 +648,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -800,9 +797,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
@@ -850,17 +847,12 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i
 
-.obj/Loopback_Supplier.o .obj/Loopback_Supplier.o .obj/Loopback_Supplier.o .obj/Loopback_Supplier.o: Loopback_Supplier.cpp Loopback_Supplier.h \
+.obj/Loopback_Supplier.o .obj/Loopback_Supplier.so .shobj/Loopback_Supplier.o .shobj/Loopback_Supplier.so: Loopback_Supplier.cpp Loopback_Supplier.h \
   rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -868,11 +860,15 @@ realclean: clean
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -880,6 +876,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -899,9 +897,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -1050,9 +1046,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
@@ -1094,25 +1090,24 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
   Implicit_Deactivator.h Implicit_Deactivator.inl
 
-.obj/ORB_Holder.o .obj/ORB_Holder.o .obj/ORB_Holder.o .obj/ORB_Holder.o: ORB_Holder.cpp ORB_Holder.h rtec_perf_export.h \
+.obj/ORB_Holder.o .obj/ORB_Holder.so .shobj/ORB_Holder.o .shobj/ORB_Holder.so: ORB_Holder.cpp ORB_Holder.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -1120,6 +1115,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -1139,9 +1136,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -1233,28 +1228,29 @@ realclean: clean
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i ORB_Holder.inl
 
-.obj/RT_Class.o .obj/RT_Class.o .obj/RT_Class.o .obj/RT_Class.o: RT_Class.cpp RT_Class.h rtec_perf_export.h \
+.obj/RT_Class.o .obj/RT_Class.so .shobj/RT_Class.o .shobj/RT_Class.so: RT_Class.cpp RT_Class.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_String.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -1263,32 +1259,29 @@ realclean: clean
   $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Sched_Params.i \
   RT_Class.inl $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
-.obj/RTEC_Initializer.o .obj/RTEC_Initializer.o .obj/RTEC_Initializer.o .obj/RTEC_Initializer.o: RTEC_Initializer.cpp RTEC_Initializer.h \
+.obj/RTEC_Initializer.o .obj/RTEC_Initializer.so .shobj/RTEC_Initializer.o .shobj/RTEC_Initializer.so: RTEC_Initializer.cpp RTEC_Initializer.h \
   rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -1296,6 +1289,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -1315,9 +1310,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -1565,26 +1558,25 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/RTCORBA_Setup.o .obj/RTCORBA_Setup.o .obj/RTCORBA_Setup.o .obj/RTCORBA_Setup.o: RTCORBA_Setup.cpp RTCORBA_Setup.h rtec_perf_export.h \
+.obj/RTCORBA_Setup.o .obj/RTCORBA_Setup.so .shobj/RTCORBA_Setup.o .shobj/RTCORBA_Setup.so: RTCORBA_Setup.cpp RTCORBA_Setup.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -1592,6 +1584,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -1611,9 +1605,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -1735,22 +1727,16 @@ realclean: clean
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i RIR_Narrow.cpp \
-  RT_Class.h \
-  $(ACE_ROOT)/ace/Sched_Params.h \
+  RT_Class.h $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i \
   RT_Class.inl
 
-.obj/Send_Task.o .obj/Send_Task.o .obj/Send_Task.o .obj/Send_Task.o: Send_Task.cpp Send_Task.h Servant_var.h \
+.obj/Send_Task.o .obj/Send_Task.so .shobj/Send_Task.o .shobj/Send_Task.so: Send_Task.cpp Send_Task.h Servant_var.h \
   $(ACE_ROOT)/ace/Swap.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Swap.inl \
   $(ACE_ROOT)/ace/Swap.cpp Servant_var.inl \
   Servant_var.cpp \
@@ -1758,11 +1744,15 @@ realclean: clean
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -1770,6 +1760,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -1789,9 +1781,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -1944,9 +1934,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
@@ -2024,17 +2014,12 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i
 
-.obj/Client_Group.o .obj/Client_Group.o .obj/Client_Group.o .obj/Client_Group.o: Client_Group.cpp Client_Group.h Servant_var.h \
+.obj/Client_Group.o .obj/Client_Group.so .shobj/Client_Group.o .shobj/Client_Group.so: Client_Group.cpp Client_Group.h Servant_var.h \
   $(ACE_ROOT)/ace/Swap.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Swap.inl \
   $(ACE_ROOT)/ace/Swap.cpp Servant_var.inl \
   Servant_var.cpp \
@@ -2042,11 +2027,15 @@ realclean: clean
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -2054,6 +2043,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -2073,9 +2064,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -2228,9 +2217,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
@@ -2277,25 +2266,24 @@ realclean: clean
   Auto_Disconnect.h Auto_Functor.h Auto_Functor.inl Auto_Functor.cpp \
   Auto_Disconnect.inl Auto_Disconnect.cpp
 
-.obj/ORB_Task.o .obj/ORB_Task.o .obj/ORB_Task.o .obj/ORB_Task.o: ORB_Task.cpp ORB_Task.h rtec_perf_export.h \
+.obj/ORB_Task.o .obj/ORB_Task.so .shobj/ORB_Task.o .shobj/ORB_Task.so: ORB_Task.cpp ORB_Task.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -2303,6 +2291,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -2322,9 +2312,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -2460,21 +2448,18 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   ORB_Task.inl
 
-.obj/SyncScope_Setup.o .obj/SyncScope_Setup.o .obj/SyncScope_Setup.o .obj/SyncScope_Setup.o: SyncScope_Setup.cpp SyncScope_Setup.h \
+.obj/SyncScope_Setup.o .obj/SyncScope_Setup.so .shobj/SyncScope_Setup.o .shobj/SyncScope_Setup.so: SyncScope_Setup.cpp SyncScope_Setup.h \
   rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
+  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
   $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2482,6 +2467,9 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -2489,6 +2477,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -2508,9 +2498,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -2560,7 +2548,6 @@ realclean: clean
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/corbafwd.i \
-  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
   $(TAO_ROOT)/tao/ValueBase.h \
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
@@ -2622,10 +2609,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/IOPC.h \
-  $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+  $(TAO_ROOT)/tao/TAOC.h \
+  $(TAO_ROOT)/tao/TAOC.i \
   SyncScope_Setup.inl RIR_Narrow.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Services.h \
@@ -2634,17 +2621,12 @@ realclean: clean
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i RIR_Narrow.cpp
 
-.obj/Loopback_Pair.o .obj/Loopback_Pair.o .obj/Loopback_Pair.o .obj/Loopback_Pair.o: Loopback_Pair.cpp Loopback_Pair.h Servant_var.h \
+.obj/Loopback_Pair.o .obj/Loopback_Pair.so .shobj/Loopback_Pair.o .shobj/Loopback_Pair.so: Loopback_Pair.cpp Loopback_Pair.h Servant_var.h \
   $(ACE_ROOT)/ace/Swap.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Swap.inl \
   $(ACE_ROOT)/ace/Swap.cpp Servant_var.inl \
   Servant_var.cpp \
@@ -2652,11 +2634,15 @@ realclean: clean
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -2664,6 +2650,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -2683,9 +2671,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -2838,9 +2824,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
@@ -2884,17 +2870,12 @@ realclean: clean
   Auto_Functor.inl Auto_Functor.cpp Auto_Disconnect.inl \
   Auto_Disconnect.cpp
 
-.obj/Client_Pair.o .obj/Client_Pair.o .obj/Client_Pair.o .obj/Client_Pair.o: Client_Pair.cpp Client_Pair.h Servant_var.h \
+.obj/Client_Pair.o .obj/Client_Pair.so .shobj/Client_Pair.o .shobj/Client_Pair.so: Client_Pair.cpp Client_Pair.h Servant_var.h \
   $(ACE_ROOT)/ace/Swap.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Swap.inl \
   $(ACE_ROOT)/ace/Swap.cpp Servant_var.inl \
   Servant_var.cpp \
@@ -2902,11 +2883,15 @@ realclean: clean
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -2914,6 +2899,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -2933,9 +2920,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -3088,9 +3073,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
@@ -3136,26 +3121,25 @@ realclean: clean
   Auto_Functor.inl Auto_Functor.cpp Auto_Disconnect.inl \
   Auto_Disconnect.cpp
 
-.obj/RTPOA_Setup.o .obj/RTPOA_Setup.o .obj/RTPOA_Setup.o .obj/RTPOA_Setup.o: RTPOA_Setup.cpp RTPOA_Setup.h rtec_perf_export.h \
+.obj/RTPOA_Setup.o .obj/RTPOA_Setup.so .shobj/RTPOA_Setup.o .shobj/RTPOA_Setup.so: RTPOA_Setup.cpp RTPOA_Setup.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
   $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -3163,6 +3147,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -3182,9 +3168,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -3316,26 +3300,25 @@ realclean: clean
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
   RTCORBA_Setup.inl
 
-.obj/PriorityBand_Setup.o .obj/PriorityBand_Setup.o .obj/PriorityBand_Setup.o .obj/PriorityBand_Setup.o: PriorityBand_Setup.cpp PriorityBand_Setup.h \
+.obj/PriorityBand_Setup.o .obj/PriorityBand_Setup.so .shobj/PriorityBand_Setup.o .shobj/PriorityBand_Setup.so: PriorityBand_Setup.cpp PriorityBand_Setup.h \
   rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -3343,6 +3326,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -3362,9 +3347,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -3489,18 +3472,13 @@ realclean: clean
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
   RTCORBA_Setup.inl RIR_Narrow.h RIR_Narrow.cpp
 
-.obj/Send_Task_Stopper.o .obj/Send_Task_Stopper.o .obj/Send_Task_Stopper.o .obj/Send_Task_Stopper.o: Send_Task_Stopper.cpp Send_Task_Stopper.h \
+.obj/Send_Task_Stopper.o .obj/Send_Task_Stopper.so .shobj/Send_Task_Stopper.o .shobj/Send_Task_Stopper.so: Send_Task_Stopper.cpp Send_Task_Stopper.h \
   Send_Task.h Servant_var.h \
   $(ACE_ROOT)/ace/Swap.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Swap.inl \
   $(ACE_ROOT)/ace/Swap.cpp Servant_var.inl \
   Servant_var.cpp \
@@ -3508,11 +3486,15 @@ realclean: clean
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -3520,6 +3502,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -3539,9 +3523,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -3694,9 +3676,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
@@ -3775,26 +3757,25 @@ realclean: clean
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   Task_Activator.inl Task_Activator.cpp Send_Task_Stopper.inl
 
-.obj/ORB_Task_Activator.o .obj/ORB_Task_Activator.o .obj/ORB_Task_Activator.o .obj/ORB_Task_Activator.o: ORB_Task_Activator.cpp ORB_Task_Activator.h \
+.obj/ORB_Task_Activator.o .obj/ORB_Task_Activator.so .shobj/ORB_Task_Activator.o .shobj/ORB_Task_Activator.so: ORB_Task_Activator.cpp ORB_Task_Activator.h \
   ORB_Task.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -3802,6 +3783,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -3821,9 +3804,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -3961,27 +3942,26 @@ realclean: clean
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   Task_Activator.inl Task_Activator.cpp ORB_Task_Activator.inl
 
-.obj/RTClient_Setup.o .obj/RTClient_Setup.o .obj/RTClient_Setup.o .obj/RTClient_Setup.o: RTClient_Setup.cpp RTClient_Setup.h \
+.obj/RTClient_Setup.o .obj/RTClient_Setup.so .shobj/RTClient_Setup.o .shobj/RTClient_Setup.so: RTClient_Setup.cpp RTClient_Setup.h \
   $(ACE_ROOT)/ace/pre.h RTCORBA_Setup.h \
   rtec_perf_export.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -3989,6 +3969,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -4008,9 +3990,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -4134,8 +4114,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ORB.i \
   PriorityBand_Setup.inl SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
-  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
+  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/ValueBase.h \
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
@@ -4145,29 +4125,30 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+  $(TAO_ROOT)/tao/TAOC.h \
+  $(TAO_ROOT)/tao/TAOC.i \
   SyncScope_Setup.inl RTClient_Setup.inl RIR_Narrow.h RIR_Narrow.cpp
 
-.obj/RTServer_Setup.o .obj/RTServer_Setup.o .obj/RTServer_Setup.o .obj/RTServer_Setup.o: RTServer_Setup.cpp RTServer_Setup.h \
+.obj/RTServer_Setup.o .obj/RTServer_Setup.so .shobj/RTServer_Setup.o .shobj/RTServer_Setup.so: RTServer_Setup.cpp RTServer_Setup.h \
   $(ACE_ROOT)/ace/pre.h RTClient_Setup.h \
   RTCORBA_Setup.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -4175,6 +4156,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -4194,9 +4177,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -4320,8 +4301,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ORB.i \
   PriorityBand_Setup.inl SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
-  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
+  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/ValueBase.h \
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
@@ -4331,6 +4312,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+  $(TAO_ROOT)/tao/TAOC.h \
+  $(TAO_ROOT)/tao/TAOC.i \
   SyncScope_Setup.inl RTClient_Setup.inl RTPOA_Setup.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
   $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
@@ -4341,26 +4324,25 @@ realclean: clean
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
   RTPOA_Setup.inl RTServer_Setup.inl RIR_Narrow.h RIR_Narrow.cpp
 
-.obj/EC_Destroyer.o .obj/EC_Destroyer.o .obj/EC_Destroyer.o .obj/EC_Destroyer.o: EC_Destroyer.cpp EC_Destroyer.h rtec_perf_export.h \
+.obj/EC_Destroyer.o .obj/EC_Destroyer.so .shobj/EC_Destroyer.o .shobj/EC_Destroyer.so: EC_Destroyer.cpp EC_Destroyer.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -4368,6 +4350,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -4387,9 +4371,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -4518,9 +4500,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
@@ -4550,25 +4532,24 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
   EC_Destroyer.inl
 
-.obj/Federated_TestC.o .obj/Federated_TestC.o .obj/Federated_TestC.o .obj/Federated_TestC.o: Federated_TestC.cpp Federated_TestC.h \
+.obj/Federated_TestC.o .obj/Federated_TestC.so .shobj/Federated_TestC.o .shobj/Federated_TestC.so: Federated_TestC.cpp Federated_TestC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -4576,6 +4557,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -4595,9 +4578,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -4726,23 +4707,13 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   rtec_perf_export.h Federated_TestC.i \
   $(TAO_ROOT)/tao/Stub.h \
-  $(TAO_ROOT)/tao/Pluggable.h \
-  $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \
-  $(TAO_ROOT)/tao/Profile.h \
-  $(TAO_ROOT)/tao/Tagged_Components.h \
-  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
-  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
-  $(TAO_ROOT)/tao/Tagged_Components.i \
-  $(TAO_ROOT)/tao/GIOP_Message_Version.h \
-  $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
-  $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -4755,7 +4726,6 @@ realclean: clean
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(TAO_ROOT)/tao/Protocol_Factory.h \
   $(TAO_ROOT)/tao/params.h \
   $(TAO_ROOT)/tao/params.i \
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
@@ -4833,21 +4803,14 @@ realclean: clean
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/LF_Event.h \
   $(TAO_ROOT)/tao/LF_Event.inl \
-  $(TAO_ROOT)/tao/TAOC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
-  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
-  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/TAOC.i \
+  $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+  $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
   $(TAO_ROOT)/tao/operation_details.h \
   $(TAO_ROOT)/tao/Service_Context.h \
   $(TAO_ROOT)/tao/Service_Context.inl \
   $(TAO_ROOT)/tao/target_specification.h \
   $(TAO_ROOT)/tao/target_specification.i \
   $(TAO_ROOT)/tao/operation_details.i \
-  $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
-  $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
   $(TAO_ROOT)/tao/Invocation.i \
   $(TAO_ROOT)/tao/PortableInterceptor.h \
   $(TAO_ROOT)/tao/RequestInfo_Util.h \
@@ -4856,25 +4819,24 @@ realclean: clean
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/Federated_TestS.o .obj/Federated_TestS.o .obj/Federated_TestS.o .obj/Federated_TestS.o: Federated_TestS.cpp Federated_TestS.h \
+.obj/Federated_TestS.o .obj/Federated_TestS.so .shobj/Federated_TestS.o .shobj/Federated_TestS.so: Federated_TestS.cpp Federated_TestS.h \
   $(ACE_ROOT)/ace/pre.h Federated_TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -4882,6 +4844,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -4901,9 +4865,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -5032,9 +4994,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   rtec_perf_export.h Federated_TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -5084,12 +5046,12 @@ realclean: clean
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Active_Map_Manager.h \
@@ -5144,9 +5106,6 @@ realclean: clean
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/Policy_Manager.i \
   $(TAO_ROOT)/tao/Resource_Factory.h \
-  $(TAO_ROOT)/tao/Pluggable.h \
-  $(TAO_ROOT)/tao/Pluggable.i \
-  $(TAO_ROOT)/tao/Protocol_Factory.h \
   $(TAO_ROOT)/tao/params.h \
   $(TAO_ROOT)/tao/params.i \
   $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -5175,14 +5134,6 @@ realclean: clean
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
-  $(TAO_ROOT)/tao/Profile.h \
-  $(TAO_ROOT)/tao/Tagged_Components.h \
-  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
-  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
-  $(TAO_ROOT)/tao/Tagged_Components.i \
-  $(TAO_ROOT)/tao/GIOP_Message_Version.h \
-  $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
-  $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/Stub.i \
   $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
@@ -5197,25 +5148,24 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/Loopback.o .obj/Loopback.o .obj/Loopback.o .obj/Loopback.o: Loopback.cpp Loopback.h Federated_TestS.h \
+.obj/Loopback.o .obj/Loopback.so .shobj/Loopback.o .shobj/Loopback.so: Loopback.cpp Loopback.h Federated_TestS.h \
   $(ACE_ROOT)/ace/pre.h Federated_TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -5223,6 +5173,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -5242,9 +5194,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -5373,9 +5323,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   rtec_perf_export.h Federated_TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -5449,27 +5399,26 @@ realclean: clean
   Auto_Functor.inl Auto_Functor.cpp Auto_Disconnect.inl \
   Auto_Disconnect.cpp Implicit_Deactivator.h Implicit_Deactivator.inl
 
-.obj/Implicit_Deactivator.o .obj/Implicit_Deactivator.o .obj/Implicit_Deactivator.o .obj/Implicit_Deactivator.o: Implicit_Deactivator.cpp Implicit_Deactivator.h \
+.obj/Implicit_Deactivator.o .obj/Implicit_Deactivator.so .shobj/Implicit_Deactivator.o .shobj/Implicit_Deactivator.so: Implicit_Deactivator.cpp Implicit_Deactivator.h \
   rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -5477,6 +5426,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -5496,9 +5447,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -5597,25 +5546,24 @@ realclean: clean
   $(ACE_ROOT)/ace/Swap.inl \
   $(ACE_ROOT)/ace/Swap.cpp
 
-.obj/Peer_Base.o .obj/Peer_Base.o .obj/Peer_Base.o .obj/Peer_Base.o: Peer_Base.cpp Peer_Base.h Federated_TestS.h \
+.obj/Peer_Base.o .obj/Peer_Base.so .shobj/Peer_Base.o .shobj/Peer_Base.so: Peer_Base.cpp Peer_Base.h Federated_TestS.h \
   $(ACE_ROOT)/ace/pre.h Federated_TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -5623,6 +5571,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -5642,9 +5592,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -5773,9 +5721,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   rtec_perf_export.h Federated_TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -5833,11 +5781,13 @@ realclean: clean
   RTCORBA_Setup.inl PriorityBand_Setup.h PriorityBand_Setup.inl \
   SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
-  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
+  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+  $(TAO_ROOT)/tao/TAOC.h \
+  $(TAO_ROOT)/tao/TAOC.i \
   SyncScope_Setup.inl RTClient_Setup.inl RTPOA_Setup.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
   $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
@@ -5915,26 +5865,25 @@ realclean: clean
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
 
-.obj/Control.o .obj/Control.o .obj/Control.o .obj/Control.o: Control.cpp Control.h \
+.obj/Control.o .obj/Control.so .shobj/Control.o .shobj/Control.so: Control.cpp Control.h \
   $(ACE_ROOT)/ace/pre.h Federated_TestS.h \
   Federated_TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
@@ -5942,6 +5891,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
@@ -5961,9 +5912,7 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
@@ -6092,9 +6041,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   rtec_perf_export.h Federated_TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -6125,39 +6074,38 @@ realclean: clean
   $(ACE_ROOT)/ace/Basic_Stats.h \
   $(ACE_ROOT)/ace/Basic_Stats.inl
 
-.obj/Client_Options.o .obj/Client_Options.o .obj/Client_Options.o .obj/Client_Options.o: Client_Options.cpp Client_Options.h \
-  $(ACE_ROOT)/ace/pre.h \
+.obj/Client_Options.o .obj/Client_Options.so .shobj/Client_Options.o .shobj/Client_Options.so: Client_Options.cpp Client_Options.h \
+  $(ACE_ROOT)/ace/pre.h rtec_perf_export.h \
   $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Arg_Shifter.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/OS_String.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Record.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
+  $(ACE_ROOT)/ace/OS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

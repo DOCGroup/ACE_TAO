@@ -70,7 +70,7 @@ Control::join (Federated_Test::Peer_ptr peer
     {
       peer_shutdown[i] = this->peers_[i].in ();
     }
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "Control (%P|%t) Building the federation\n"));
 
@@ -121,7 +121,7 @@ Control::join (Federated_Test::Peer_ptr peer
                                                  ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
 
-              disconnects[lcount] = auto_ptr<Loopback_Disconnect> (
+              disconnects[lcount].reset(
                   new Loopback_Disconnect (loopbacks[lcount].in ())
                   );
               lcount++;
