@@ -1,3 +1,25 @@
+Tue Nov 04 01:00:51 1997    <nw1@COYOTE>
+
+	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw: Renamed former test.dsw
+ 	  to IDL_Cubit.dsw.
+
+	* tests/Cubit/TAO/IDL_Cubit/{client,server}.dsp: Renamed
+ 	  executables for debug version to client.exe and server.exe on
+ 	  NT.
+
+	* tests/Cubit/TAO/DII_Cubit/DII_Cubit.dsw: Renamed former test.dsw
+	  to DII_Cubit.dsw.
+
+	* tests/Cubit/TAO/DII_Cubit/{client,server}.dsp: Renamed
+	  executables for debug version to client.exe and server.exe on
+	  NT. 
+
+	* tests/Cubit/TAO/IDL_Cubit/Cubit.mak: Added cubit.idl into
+	  makefile and its custom build settings.
+
+	* tests/Cubit/TAO/MT_Cubit/MT_Cubit.dsw: Renamed former
+	  MTCubit.dsw to MT_Cubit.dsw.
+
 Mon Nov 03 23:16:06 1997    <nw1@COYOTE>
 
 	* tests/Cubit/TAO/DII_Cubit/svr.cpp:
