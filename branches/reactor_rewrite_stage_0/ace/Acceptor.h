@@ -22,7 +22,7 @@
 
 #include "ace/Service_Object.h"
 #include "ace/Svc_Handler.h"
-#include "ace/Strategies.h"
+
 
 /**
  * @class ACE_Acceptor

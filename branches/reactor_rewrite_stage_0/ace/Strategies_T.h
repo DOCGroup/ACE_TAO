@@ -14,7 +14,8 @@
 #define ACE_STRATEGIES_T_H
 #include "ace/pre.h"
 
-#include "ace/Strategies.h"
+#include "ace/Hash_Map_Manager.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +25,7 @@
 #include "ace/Reactor.h"
 #include "ace/Synch_Options.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Hash_Map_Manager.h"
+
 
 // Needed for broken linkers that can't grok long symbols.
 #define ACE_Refcounted_Hash_Recyclable ARHR
