@@ -121,7 +121,7 @@ TAO_PG_PropertyManager::get_type_properties (
 
   ACE_Hash_Map_Entry<const char *, PortableGroup::Properties> * entry;
   if (this->type_properties_.find (type_id, entry) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
   PortableGroup::Properties & type_properties = entry->int_id_;
 
@@ -183,7 +183,7 @@ TAO_PG_PropertyManager::remove_type_properties (
 void
 TAO_PG_PropertyManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr /* object_group */,
-    const PortableGroup::Properties & overrides
+    const PortableGroup::Properties & /* overrides */
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound,
@@ -241,7 +241,7 @@ TAO_PG_PropertyManager::get_properties (
   CORBA::ULong type_props_len = 0;
   PortableGroup::Properties * type_properties = 0;
   ACE_Hash_Map_Entry<const char *, PortableGroup::Properties> * type_entry;
-  if (this->type_properties_.find (type_id, type_entry) == 0)
+  if (this->type_properties_.find (type_id.in (), type_entry) == 0)
     {
       type_properties = &type_entry->int_id_;
       type_props_len = type_properties->length ();
