@@ -7,6 +7,7 @@
 #include "NodeManager/NodeDaemonC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"
+#include "ace/Auto_Ptr.h"
 using namespace std;
 
 const char * exec_ior = "file://exec_mgr.ior";
@@ -88,13 +89,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // get a reference to the parser.
-      std::auto_ptr<DOMBuilder> plan_parser (CIAO::Config_Handler::Utils::
-                                             create_parser ());
+      auto_ptr<DOMBuilder> plan_parser (CIAO::Config_Handler::Utils::
+                                        create_parser ());
       CIAO::Config_Handler::Config_Error_Handler handler;
       plan_parser->setErrorHandler(&handler);
 
-      std::auto_ptr<DOMBuilder> tpd_parser (CIAO::Config_Handler::Utils::
-                                            create_parser ());
+      auto_ptr<DOMBuilder> tpd_parser (CIAO::Config_Handler::Utils::
+                                       create_parser ());
       CIAO::Config_Handler::Config_Error_Handler tpd_handler;
       tpd_parser->setErrorHandler(&tpd_handler);
 

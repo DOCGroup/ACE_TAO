@@ -48,8 +48,8 @@ installPackage (const char* installation_name,
     {
       CIAO::Config_Handler::Config_Error_Handler tpd_err_handler;
       CIAO::Config_Handler::Config_Error_Handler pc_err_handler;
-      std::auto_ptr<DOMBuilder> tpd_parser (CIAO::Config_Handler::Utils::
-                                            create_parser ());
+      auto_ptr<DOMBuilder> tpd_parser (CIAO::Config_Handler::Utils::
+                                       create_parser ());
       tpd_parser->setErrorHandler(&tpd_err_handler);
       DOMDocument* tpd_doc = tpd_parser->parseURI (location);
 
@@ -65,8 +65,8 @@ installPackage (const char* installation_name,
       ACE_TString package_location = top_pc_handler.
           process_TopLevelPackageDescription ();
 
-      std::auto_ptr<DOMBuilder> pc_parser (CIAO::Config_Handler::Utils::
-                                           create_parser ());
+      auto_ptr<DOMBuilder> pc_parser (CIAO::Config_Handler::Utils::
+                                      create_parser ());
       pc_parser->setErrorHandler(&pc_err_handler);
       DOMDocument* pc_doc = pc_parser->parseURI (package_location.c_str());
 
