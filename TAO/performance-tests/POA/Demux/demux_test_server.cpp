@@ -55,11 +55,9 @@ Demux_Test_Server::init (int argc, char *argv [],
   // Grab the ORB
   ACE_TRY_EX(GET_ORB)
     {
-      char *orb_name = "internet"; // unused by TAO
-
       // get the underlying ORB
       this->orb_ =
-        CORBA::ORB_init (argc, argv, orb_name, ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK_EX(GET_ORB);
     }
   ACE_CATCHANY
@@ -245,7 +243,7 @@ Demux_Test_Server::init (int argc, char *argv [],
 
       for (j = 0; j < this->num_objs_; j++)
         {
-	  PortableServer::ObjectId_var id;
+          PortableServer::ObjectId_var id;
 
           if (!use_user_id_)
             {
