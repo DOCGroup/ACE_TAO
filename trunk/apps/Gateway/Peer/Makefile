@@ -16,8 +16,10 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
 SHOBJ	= $(addsuffix .so,$(FILES))
 
-LDLIBS	=  $(addprefix .shobj/,$(SHOBJ)) 
- 
+LDLIBS	=  $(addprefix .shobj/,$(SHOBJ))
+#### -lGateway is needed for template instantiations with g++ -fno-implicit-templates
+LIBS	= -lGateway
+
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD 	= $(VBIN)
