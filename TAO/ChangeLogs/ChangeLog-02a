@@ -1,3 +1,9 @@
+Wed May 30 13:19:27 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/QoS_UDP.i: 
+
+	  Added the definition for setting the flow handler negotiator.
+
 Wed May 30 12:06:21 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Singleton.cpp:

@@ -31,3 +31,9 @@ TAO_AV_UDP_QoS_Flow_Handler::qos_session (ACE_QoS_Session *qos_session)
 {
   this->qos_session_ = qos_session;
 }
+
+ACE_INLINE void
+TAO_AV_UDP_QoS_Flow_Handler::negotiator (AVStreams::Negotiator_ptr negotiator)
+{
+  this->negotiator_ = AVStreams::Negotiator::_duplicate (negotiator);
+}
