@@ -60,12 +60,12 @@ public:
 
   // = Constructors for each of the various types of literals.
 
-  TAO_ETCL_Literal_Constraint (CORBA::Any* any);
-  TAO_ETCL_Literal_Constraint (CORBA::ULong uinteger);
-  TAO_ETCL_Literal_Constraint (CORBA::Long integer);
-  TAO_ETCL_Literal_Constraint (CORBA::Boolean boolean);
-  TAO_ETCL_Literal_Constraint (CORBA::Double doub);
-  TAO_ETCL_Literal_Constraint (const char* str);
+  explicit TAO_ETCL_Literal_Constraint (CORBA::Any* any);
+  explicit TAO_ETCL_Literal_Constraint (CORBA::ULong uinteger);
+  explicit TAO_ETCL_Literal_Constraint (CORBA::Long integer);
+  explicit TAO_ETCL_Literal_Constraint (CORBA::Boolean boolean);
+  explicit TAO_ETCL_Literal_Constraint (CORBA::Double doub);
+  explicit TAO_ETCL_Literal_Constraint (const char* str);
 
   TAO_ETCL_Literal_Constraint (const TAO_ETCL_Literal_Constraint& lit);
   // Copy constructor
