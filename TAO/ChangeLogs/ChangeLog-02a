@@ -1,3 +1,20 @@
+Sat Mar  3 00:16:46 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/ForwardRequest/Makefile:
+
+	  Updated dependencies.  Fixed one part of the build problems.
+
+	  (TAO_IDLFLAGS):
+
+	  Added missing IDL include path.  `ServerRequestInterceptor.idl'
+	  includes "tao/PortableInterceptor.pidl".  This is the other part
+	  of the build fix.
+
+	  (realclean):
+
+	  Added missing clean rules for the `ServerRequestInterceptor*'
+	  stubs and skeletons.
+
 Fri Mar 02 23:54:41 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/OctetSeqC.cpp:
