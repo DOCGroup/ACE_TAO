@@ -1,3 +1,9 @@
+Fri May 22 16:00:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/MT_SOCK_Test.cpp (spawn): We must check for !defined
+ 	  (ACE_LACKS_FORK) rather test for VxWorks or Win32.  Thanks to
+ 	  Steven Coy for reporting this.
+
 Fri May 22 20:01:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: moved ACE_IO_Vector declaration ahead of OS.i #include.
