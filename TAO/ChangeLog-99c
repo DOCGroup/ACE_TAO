@@ -1,8 +1,8 @@
 Sat Nov 20 20:40:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_{ch, cs}.cpp:
-	  Just to keep Old G++ Complier (version < 2.8) happy, added
-	  declaraton and definition of the destructor for Smart_Proxy_Base
+	  Just to keep Old G++ Compiler (version < 2.8) happy, added
+	  declaration and definition of the destructor for Smart_Proxy_Base
 	  class instead of banking on the implicit one.
 			
 Fri Nov 19 22:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
