@@ -147,8 +147,8 @@ public:
   ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
 			   const RtecEventComm::Time &time,
 			   RtecScheduler::handle_t rt_info);
-  // Set consumer_ to <consumer> and sets single_event_.time_ to
-  // <time>.  Sets use_single_event_ to 1.  <rt_info> describes the
+  // Set consumer_ to <consumer> and sets single_event_.creation_time_
+  // to <time>.  Sets use_single_event_ to 1.  <rt_info> describes the
   // method receiving this dispatch.
 
   ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,

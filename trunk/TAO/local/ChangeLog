@@ -1,3 +1,13 @@
+Wed Dec  3 16:11:39 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/Latency.h: 
+	* tests/Latency.cpp: 
+	* bin/Event_Service/Event_Channel.cpp: 
+	* bin/Event_Service/Dispatching_Modules.i: 
+	* bin/Event_Service/Dispatching_Modules.h: 
+	  Use the new timestamps on the Events to track the movement of
+	  the events on the EC.
+
 Wed Dec 03 09:27:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* local/bin/Event_Service/Event_Channel.cpp: added

@@ -38,10 +38,6 @@ static int shutting_down = 0;
 // and talk directly to consumers.  For testing only :-)
 static Latency_Consumer **consumer;
 
-// This is a global variable, set up when the Event is created. Used
-// on round trip measurements.
-static ACE_hrtime_t event_push_time;
-
 // ************************************************************
 
 Latency_Consumer::Latency_Consumer (const int measure_jitter)
@@ -49,7 +45,16 @@ Latency_Consumer::Latency_Consumer (const int measure_jitter)
     min_latency_ (INT_MAX),
     max_latency_ (INT_MIN),
     total_latency_ (0),
-    total_pushes_ (0)
+    total_pushes_ (0),
+    min_to_ec_ (INT_MAX),
+    max_to_ec_ (INT_MIN),
+    sum_to_ec_ (0),
+    min_in_ec_ (INT_MAX),
+    max_in_ec_ (INT_MIN),
+    sum_in_ec_ (0),
+    min_from_ec_ (INT_MAX),
+    max_from_ec_ (INT_MIN),
+    sum_from_ec_ (0)
 {
 }
 
@@ -148,21 +153,52 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
 	  if (measure_jitter_)
 	    {
 	      // @@ TOTAL HACK
-	      ACE_hrtime_t t; // = event_push_time;
-	      ACE_OS::memcpy (&t, &events[i].time_, sizeof (t));
+	      ACE_hrtime_t creation;
+	      ACE_OS::memcpy (&creation, &events[i].creation_time_,
+			      sizeof (creation));
 
-	      const ACE_hrtime_t elapsed = ACE_OS::gethrtime () - t;
+	      ACE_hrtime_t ec_recv;
+	      ACE_OS::memcpy (&ec_recv, &events[i].ec_recv_time_,
+			      sizeof (ec_recv));
+
+	      ACE_hrtime_t ec_send;
+	      ACE_OS::memcpy (&ec_send, &events[i].ec_send_time_,
+			      sizeof (ec_send));
+
+	      const ACE_hrtime_t now = ACE_OS::gethrtime ();
+	      const ACE_hrtime_t elapsed = now - creation;
 	      // Note: the division by 1 provides transparent support of
 	      // ACE_U_LongLong.
 	      ACE_Time_Value latency (elapsed / ACE_ONE_SECOND_IN_NSECS,
 				      (elapsed / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
+	      const ACE_hrtime_t to_ec_nsecs = ec_recv - creation;
+	      ACE_Time_Value to_ec (to_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
+				    (to_ec_nsecs / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
+	      
+	      const ACE_hrtime_t in_ec_nsecs = ec_send - ec_recv;
+	      ACE_Time_Value in_ec (in_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
+				    (in_ec_nsecs / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
+
+	      const ACE_hrtime_t from_ec_nsecs = now - ec_send;
+	      ACE_Time_Value from_ec (from_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
+				      (from_ec_nsecs / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
+
 	      if (! shutting_down)
 		{
+		  ++total_pushes_;
 		  if (min_latency_ > latency) min_latency_ = latency;
 		  if (max_latency_ < latency) max_latency_ = latency;
 		  total_latency_ += latency;
-		  ++total_pushes_;
+		  if (min_to_ec_ > to_ec) min_to_ec_ = to_ec;
+		  if (max_to_ec_ < to_ec) max_to_ec_ = to_ec;
+		  sum_to_ec_ += to_ec;
+		  if (min_in_ec_ > in_ec) min_in_ec_ = in_ec;
+		  if (max_in_ec_ < in_ec) max_in_ec_ = in_ec;
+		  sum_in_ec_ += in_ec;
+		  if (min_from_ec_ > from_ec) min_from_ec_ = from_ec;
+		  if (max_from_ec_ < from_ec) max_from_ec_ = from_ec;
+		  sum_from_ec_ += from_ec;
 		}
 	    }
 	}
@@ -211,6 +247,40 @@ Latency_Consumer::print_stats () /* const */
                   "%s: Latency in msec (min/max/avg): "
                     "%5.3f/%5.3f/%5.3f\n",
                   entry_point (), lat_min, lat_max, lat_avg));
+
+      double to_ec_min =
+	(min_to_ec_.sec () * 1000000.0 + min_to_ec_.usec ()) / 1000.0;
+      double to_ec_max =
+	(max_to_ec_.sec () * 1000000.0 + max_to_ec_.usec ()) / 1000.0;
+      double to_ec_avg = 
+        (sum_to_ec_.sec () * 1000000.0 + sum_to_ec_.usec ()) / total_pushes_ / 1000.0;
+      ACE_DEBUG ((LM_TRACE,
+                  "%s: From test to EC (min/max/avg): "
+		  "%5.3f/%5.3f/%5.3f\n",
+                  entry_point (), to_ec_min, to_ec_max, to_ec_avg));
+
+      double in_ec_min =
+	(min_in_ec_.sec () * 1000000.0 + min_in_ec_.usec ()) / 1000.0;
+      double in_ec_max =
+	(max_in_ec_.sec () * 1000000.0 + max_in_ec_.usec ()) / 1000.0;
+      double in_ec_avg = 
+        (sum_in_ec_.sec () * 1000000.0 + sum_in_ec_.usec ()) / total_pushes_ / 1000.0;
+      ACE_DEBUG ((LM_TRACE,
+                  "%s: In the EC (min/max/avg): "
+		  "%5.3f/%5.3f/%5.3f\n",
+                  entry_point (), in_ec_min, in_ec_max, in_ec_avg));
+
+      double from_ec_min =
+	(min_from_ec_.sec () * 1000000.0 + min_from_ec_.usec ()) / 1000.0;
+      double from_ec_max =
+	(max_from_ec_.sec () * 1000000.0 + max_from_ec_.usec ()) / 1000.0;
+      double from_ec_avg = 
+        (sum_from_ec_.sec () * 1000000.0 + sum_from_ec_.usec ()) / total_pushes_ / 1000.0;
+      ACE_DEBUG ((LM_TRACE,
+                  "%s: From EC to test (min/max/avg): "
+		  "%5.3f/%5.3f/%5.3f\n",
+                  entry_point (), from_ec_min, from_ec_max, from_ec_avg));
+
     }
 }
 
@@ -421,7 +491,8 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 	      // @@ TOTAL HACK
 	      // event_push_time = ACE_OS::gethrtime ();
 	      ACE_hrtime_t t = ACE_OS::gethrtime ();
-	      ACE_OS::memcpy (&event.time_, &t, sizeof (event.time_));
+	      ACE_OS::memcpy (&event.creation_time_, &t,
+			      sizeof (event.creation_time_));
 	    }
 
 	  // @@ ACE_TIMEPROBE_RESET;
@@ -718,7 +789,7 @@ main (int argc, char *argv [])
         CosNaming::NamingContext::_narrow (objref, ACE_TRY_ENV);
       ACE_CHECK_ENV;
 
-      ACE_Scheduler_Factory::use_config (naming_context);
+      ACE_Scheduler_Factory::use_config (naming_context.ptr ());
 
       // Allocate the timeprobe instance now, so we don't measure
       // the cost of doing it later.
@@ -750,7 +821,7 @@ main (int argc, char *argv [])
 	  sprintf (supplier_name, "supplier-%d", i+1);
 	  // Only the first supplier timestamps its messages.
 	  int master = (i==0);
-	  if (supplier [i]->open_supplier (ec,
+	  if (supplier [i]->open_supplier (ec.ptr (),
 					   supplier_name,
 					   master) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR, "Supplier open failed.\n"), -1);
@@ -765,7 +836,7 @@ main (int argc, char *argv [])
 	  char buf [BUFSIZ];
 	  sprintf (buf, "consumer-%d", i+1);
 
-	  if (consumer [i]->open_consumer (ec, buf) == -1)
+	  if (consumer [i]->open_consumer (ec.ptr (), buf) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR, "Someone was feeling introverted.\n"),
 			      -1);
 	}
