@@ -5,6 +5,7 @@
 
 #include "ace/Based_Pointer_T.h"
 #include "ace/Based_Pointer_Repository.h"
+#include "ace/Log_Msg.h"
 
 #   define ACE_TRACEX(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 
