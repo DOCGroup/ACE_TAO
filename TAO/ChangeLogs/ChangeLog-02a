@@ -1,3 +1,10 @@
+Wed Jun 13 16:54:56 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (get_cached_policy): Added missing guard to
+	  avoid the compilation of this method when
+	  TAO_HAS_CORBA_MESSAGING == 0.
+	  
+
 Wed Jun 13 16:10:17 2001  Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp: 
@@ -29,6 +36,7 @@ Wed Jun 13 15:01:11 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 	  Updated dependencies since some old RT CORBA header files were
 	  being included.
 
+>>>>>>> 1.3749
 Wed Jun 13 13:50:27 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
