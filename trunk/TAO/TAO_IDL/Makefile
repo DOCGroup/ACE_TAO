@@ -195,12 +195,12 @@ endif # ! CROSS-COMPILE
 
 fe/fe_lookup.cpp: fe/keywords.dat
 	rm -f fe/fe_lookup.cpp
-	echo "// $Id$" > fe/fe_lookup.cpp
+	echo "// \$$Id\$$" > fe/fe_lookup.cpp
 	echo "#include	\"idl.h\"" >> fe/fe_lookup.cpp
 	echo "#include	\"idl_extern.h\"" >> fe/fe_lookup.cpp
 	echo "#include	\"fe_private.h\"" >> fe/fe_lookup.cpp
 	$(ACE_ROOT)/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_  \
-			-L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup fe/keywords.dat \
+			-L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ fe/keywords.dat \
 			 >> fe/fe_lookup.cpp
 
 fe/lex.yy.cpp:	fe/idl.ll

@@ -1,3 +1,12 @@
+Thu Oct 22 14:09:12 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/fe/fe_lookup.cpp:
+	  TAO_IDL/Makefile:
+	  
+	  Since GPERF had issued a warning indicating collision of keys, I
+	  used an additional -k1,2,$ option to GPERF. Thanks to Doug
+	  Schmidt for suggesting this. The collisions are now resolved.
+
 Thu Oct 22 11:01:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp (visit_interface):
