@@ -1,3 +1,9 @@
+Thu Oct 21 13:20:59 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+       * tests/Big_Reply/Client_Task.cpp:
+         Fixed a memory leak which caused the test to fail when memory
+         was exausted before the test had completed.
+
 Thu Oct 21 10:58:25 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/LoadBalancer/LoadManager.cpp:
