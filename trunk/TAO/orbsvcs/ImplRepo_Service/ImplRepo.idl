@@ -1,6 +1,5 @@
 // $Id$
 
-#include "simple_object.idl"
 #include "Ping.idl"
 
 interface Implementation_Repository
@@ -101,9 +100,10 @@ interface Implementation_Repository
   // in the Implementation Repository.
 
 //  Profile server_is_running (in string server,
-  void server_is_running (in string server,
-                          in INET_Addr addr,
-                          in Ping_Object ping);
+  string server_is_running (in string server,
+//                          in INET_Addr addr,
+                          in Object ior,
+                          in Object ping);
 
   // Used to notify the Implementation Repository that <server> is alive and
   // well at <addr>.

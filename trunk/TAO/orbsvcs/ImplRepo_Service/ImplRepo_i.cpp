@@ -6,70 +6,120 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Process.h"
 
-ACE_RCSID(ImplRepo, ImplRepo_i, "$Id$")
+ACE_RCSID(ImplRepo_Service, ImplRepo_i, "$Id$")
 
 ImplRepo_i::ImplRepo_i (void)
   : ior_output_file_ (0),
     server_key_ (0),
-    server_impl_ (0),
+    forwarder_impl_ (0),
     activator_ (0)
 {
 }
 
+
+// Starts the server <server> if it is not already started
 void ImplRepo_i::start (const char *server)
 {
-  char *cl;
+  int status;
+  // Find out if it is already running
+  char *ping_ior;
+  status = this->repository_.get_ping_ior (server, ping_ior);
 
-  int status = this->repository_.get_comm_line (server, cl);
-
-  if (status == 0)
+  if (status != 0)
   {
-    ACE_DEBUG ((LM_DEBUG, "Starting %s\n", server));
-
-    ACE_Process_Options proc_opts;
-
-    proc_opts.command_line (cl);
-
-    ACE_Process proc;
-
-    proc.spawn (proc_opts);
-
-    ACE_OS::sleep (2);
-    delete [] cl;
+    ACE_ERROR ((LM_ERROR, "ERROR starting %s: No ping object\n", server));
+    return;
   }
-  else
+
+  TAO_TRY
   {
-    ACE_DEBUG ((LM_DEBUG, "ERROR starting %s\n", server));
+    CORBA::Object_var object =
+      this->orb_manager_.orb ()->string_to_object (ping_ior, TAO_TRY_ENV);
+    TAO_CHECK_ENV;
+
+    Ping_Object_var ping_object = Ping_Object::_narrow (object.in(), TAO_TRY_ENV);
+    TAO_CHECK_ENV;
+
+    if (CORBA::is_nil (ping_object.in ()))
+    {
+      ACE_ERROR ((LM_ERROR,
+                 "invalid Ping Object ior: <%s>\n",
+                 ping_ior));
+      return;
+    }
+    
+    ping_object->ping (TAO_TRY_ENV);
+    TAO_CHECK_ENV;
   }
+  TAO_CATCHANY
+  {
+    // Start it up
+    char *cl;
+
+    status = this->repository_.get_comm_line (server, cl);
+
+    if (status == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Starting %s\n", server));
+
+      ACE_Process_Options proc_opts;
+
+      proc_opts.command_line (cl);
+
+      ACE_Process proc;
+
+      proc.spawn (proc_opts);
+
+      ACE_OS::sleep (2);
+      delete [] cl;
+    }
+    else
+    {
+      ACE_DEBUG ((LM_DEBUG, "ERROR starting %s\n", server));
+    }
+  }
+  TAO_ENDTRY;
 }
 
-void ImplRepo_i::server_is_running (const char *server,
-                                    CORBA::Object_ptr &obj,
-                                    const Implementation_Repository::INET_Addr &addr,
-                                    CORBA::Environment &_env)
-{
-  this->server_impl_->forward_to (obj);
 
+// Register the current location of the server
+CORBA::String ImplRepo_i::server_is_running (const char *server,
+                                             //const Implementation_Repository::INET_Addr &addr,
+                                             CORBA::Object_ptr ior,
+                                             CORBA::Object_ptr ping,
+                                             CORBA::Environment &_env)
+{
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Server is running!\n"));
 
-  IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, obj->_stubobj ());
+  // Update the record in the repository
+  Repository::Record rec;
+  this->repository_.resolve (server, rec);
+  delete [] rec.ior;
+  delete [] rec.ping_ior;
+  rec.ior = ACE::strnew (this->orb_manager_.orb ()->object_to_string (ior, _env));
+  rec.ping_ior = ACE::strnew (this->orb_manager_.orb ()->object_to_string (ping, _env));
+  this->repository_.update (server, rec);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "The old IOR is: <%s>\n", this->orb_manager_.orb ()->object_to_string (obj, _env)));
+    ACE_DEBUG ((LM_DEBUG, "The old IOR is: <%s>\n", this->orb_manager_.orb ()->object_to_string (ior, _env)));
+
+  // Change the ior to ping to the IR instead, and return that 
+  IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, ior->_stubobj ());
 
   ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->addr ();
 
+  // We are assuming that we are on the same machine right now
   iiop_obj->profile.port = my_addr.get_port_number ();
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "The new IOR is: <%s>\n", this->orb_manager_.orb ()->object_to_string (obj, _env)));
+    ACE_DEBUG ((LM_DEBUG, "The new IOR is: <%s>\n", this->orb_manager_.orb ()->object_to_string (ior, _env)));
 
+  return this->orb_manager_.orb ()->object_to_string (ior, _env);
 }
 
 
 // Reads the Server factory ior from a file
-
 int
 ImplRepo_i::read_ior (char *filename)
 {
@@ -150,14 +200,14 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &_env)
     if (retval != 0)
       return retval;
 
-    ACE_NEW_RETURN (this->server_impl_,
-                    IR_Simple_i (this->orb_manager_.orb (),
-                                 this->orb_manager_.child_poa (),
-                                 this),
+    ACE_NEW_RETURN (this->forwarder_impl_,
+                    IR_Forwarder (this->orb_manager_.orb (),
+                                  this->orb_manager_.child_poa (),
+                                  this),
                     -1);
 
     CORBA::String_var str  =
-      this->orb_manager_.activate (this->server_impl_);
+      this->orb_manager_.activate (this->forwarder_impl_);
     if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, "The server IOR is: <%s>\n", str.in ()));
 
@@ -181,7 +231,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &_env)
     ACE_OS::fclose (ir_file);
 
     ACE_NEW_RETURN (this->activator_,
-                    IR_Adapter_Activator(this->server_impl_),
+                    IR_Adapter_Activator(this->forwarder_impl_),
                     -1);
 
     PortableServer::AdapterActivator_var activator =
@@ -208,109 +258,25 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &_env)
 int
 ImplRepo_i::run (CORBA::Environment& env)
 {
-  /*
-  ACE_CString name = "firstPOA";
-  PortableServer::POA_var first_poa =
-    this->orb_manager_.root_poa()->find_POA (name.c_str (),
-                        1,
-                        env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::find_POA");
-      return -1;
-    }
-
-  // Use the TAO_POA name_separator (which is '/') to find a childPOA
-  // of firstPOA named secondPOA.
-
-  name += TAO_POA::name_separator ();
-  name += "secondPOA";
-  PortableServer::POA_var second_poa =
-    this->orb_manager_.root_poa()->find_POA (name.c_str (),
-                        1,
-                        env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::find_POA");
-      return -1;
-    }
-
-  // Create a hierarchical string of POA names
-  // eg. thirdPOA/forthPOA/fifthPOA thirdPOA being the root of the
-  // hierarchy with forthPOA as its child and fifthPOA as its
-  // grandchild.
-
-  name = "thirdPOA";
-  name += TAO_POA::name_separator ();
-  name += "forthPOA";
-  name += TAO_POA::name_separator ();
-  name += "fifthPOA";
-
-  // Try to find the fifth_poa by passing the hierarchy of POA names
-  // resulting in the creation of third and forth POAs as well as the
-  // fifth POA.
-
-  PortableServer::POA_var fifth_poa =
-    this->orb_manager_.root_poa()->find_POA (name.c_str (),
-                        1,
-                        env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::find_POA");
-      return -1;
-    }
-
-  // Get the names of all the POAs
-
-  CORBA::String_var root_poa_name =
-    this->orb_manager_.root_poa()->the_name (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::_narrow");
-      return -1;
-    }
-
-  CORBA::String_var first_poa_name =
-    first_poa->the_name (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::_narrow");
-      return -1;
-    }
-
-  CORBA::String_var second_poa_name =
-    second_poa->the_name (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::_narrow");
-      return -1;
-    }
-
-  CORBA::String_var fifth_poa_name =
-    fifth_poa->the_name (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::_narrow");
-      return -1;
-    }
-
-
-  ACE_DEBUG((LM_DEBUG,"%s\n%s\n%s\n%s\n",
-       root_poa_name.in (),
-       first_poa_name.in (),
-       second_poa_name.in (),
-       fifth_poa_name.in ()));
-
-*/
   if (this->orb_manager_.run (env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "IR_Server_i::run"), -1);
   return 0;
 }
 
+char *
+ImplRepo_i::get_forward (const char *server)
+{
+
+  char *forward;
+  if (this->repository_.get_ior (server, forward) != 0)
+    return 0;
+  return forward;
+}
+
 ImplRepo_i::~ImplRepo_i (void)
 {
-  if (this->server_impl_ != 0)
-    delete this->server_impl_;
+  if (this->forwarder_impl_ != 0)
+    delete this->forwarder_impl_;
   if (this->activator_ != 0)
     delete this->activator_;
 }
@@ -321,15 +287,15 @@ ImplRepo_i::register_server (const char *server,
                              CORBA::Environment &env)
 {
   Repository::Record rec;
-  rec.comm_line = options.command_line_;
-  rec.env = options.environment_;
-  rec.wdir = options.working_directory_;
+  rec.comm_line = CORBA::string_dup (options.command_line_);
+  rec.env = CORBA::string_dup (options.environment_);
+  rec.wdir = CORBA::string_dup (options.working_directory_);
   rec.ior = "";
   rec.ping_ior = "";
 
   int status = this->repository_.add (server, rec);
 
-  if (status == -1)
+  if (status == 1)
   {
     ACE_DEBUG ((LM_DEBUG, "Server %s Already Registered\n", server));
     TAO_THROW_ENV (Implementation_Repository::Already_Registered (), env);
@@ -340,7 +306,7 @@ ImplRepo_i::register_server (const char *server,
 }
 
 
-IR_Adapter_Activator::IR_Adapter_Activator (IR_Simple_i_ptr servant)
+IR_Adapter_Activator::IR_Adapter_Activator (IR_Forwarder *servant)
 : servant_ (servant)
 {
   // Nothing
@@ -444,93 +410,77 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 }
 
 
-
-
-// Constructor
-IR_Simple_i::IR_Simple_i (CORBA::ORB_ptr orb_ptr,
-                                PortableServer::POA_ptr poa_ptr,
-                                ImplRepo_i *ir_impl)
-  : ir_impl_ (ir_impl),
-    orb_var_ (CORBA::ORB::_duplicate (orb_ptr)),
-    poa_var_ (PortableServer::POA::_duplicate (poa_ptr)),
-    forward_to_ptr_ (CORBA::Object::_nil ())
+int IR_Forwarder::forward (char *name, CORBA::Environment &env)
 {
-}
+  this->ir_impl_->start (name);
+  char *forward = this->ir_impl_->get_forward (name);
 
-// Destructor
+  ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", forward));
 
-IR_Simple_i::~IR_Simple_i (void)
-{
-}
+  CORBA::Object_ptr forward_object = this->orb_var_->string_to_object (forward);
 
-// Cube a long
-
-CORBA::Long
-IR_Simple_i::simple_method (CORBA::Long l, CORBA::Environment &env)
-{
-  return this->forward (env);
-}
-
-// Shutdown.
-
-void IR_Simple_i::shutdown (CORBA::Environment &env)
-{
-  this->forward (env);
-}
-
-int IR_Simple_i::forward (CORBA::Environment &env)
-{
-  this->ir_impl_->start ("Simple_Server");
-
-  ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n",
-    this->orb_var_->object_to_string (this->forward_to_ptr_)));
-
-  if (!CORBA::is_nil (this->forward_to_ptr_))
+  if (!CORBA::is_nil (forward_object))
     {
-      env.exception (new PortableServer::ForwardRequest (this->forward_to_ptr_));
-/*
-      ACE_DEBUG ((LM_DEBUG, "Forwarding...\n"));
-
-      PortableServer::ObjectId_var oid =
-        this->poa_var_->servant_to_id (this, env);
-
-      if (env.exception () != 0)
-        return -1;
-
-      PortableServer::Servant servant = this->poa_var_->_servant ();
-      if (servant == 0)
-        {
-//          CORBA::Exception *exception = new Foo::Cannot_Forward;
-//          env.exception (exception);
-          return -1;
-        }
-
-      void *ptr = servant->_downcast ("IDL:PortableServer/POA:1.0");
-      POA_PortableServer::POA *poa = (POA_PortableServer::POA *) ptr;
-      TAO_POA *tao_poa = ACE_dynamic_cast (TAO_POA *, poa);
-
-      tao_poa->forward_object (oid.in (),
-                               this->forward_to_var_.in (),
-                               env);*/
+      env.exception (new PortableServer::ForwardRequest (forward_object));
       return 0;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG, "Forward_to reference is nil.\n"));
-//      CORBA::Exception *exception = new Foo::Cannot_Forward;
-//      env.exception (exception);
       return -1;
     }
 }
 
-void IR_Simple_i::forward_to (CORBA::Object_ptr forward_to_ptr)
+
+// Constructor
+IR_Forwarder::IR_Forwarder (CORBA::ORB_ptr orb_ptr,
+                            PortableServer::POA_ptr poa_ptr,
+                            ImplRepo_i *ir_impl)
+  : ir_impl_ (ir_impl),
+    orb_var_ (CORBA::ORB::_duplicate (orb_ptr)),
+    poa_var_ (PortableServer::POA::_duplicate (poa_ptr))
 {
-  IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, forward_to_ptr->_stubobj ());
-  IIOP::Profile *new_profile = new IIOP::Profile;
-  *new_profile = iiop_obj->profile;
-  IIOP_Object *new_iiop_obj = new IIOP_Object (iiop_obj->type_id, *new_profile);
+}
 
-  this->forward_to_ptr_ =
-    new CORBA_Object (new_iiop_obj, forward_to_ptr->_servant ());
+CORBA::RepositoryId 
+IR_Forwarder::_primary_interface (const PortableServer::ObjectId &oid,
+                                  PortableServer::POA_ptr poa,
+                                  CORBA::Environment &env)
+{
+  return 0;
+}
 
+void 
+IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
+                      CORBA::Environment &env)
+{
+  // Get the POA Current object reference
+  CORBA::Object_var obj = this->orb_var_->resolve_initial_references ("POACurrent");
+
+  // Narrow the object reference to a POA Current reference
+  PortableServer::Current_var poa_current = PortableServer::Current::_narrow (obj.in (), env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::Current::_narrow");
+      return;
+    }
+  
+  // The servant determines the key associated with the database entry
+  // represented by self
+  PortableServer::ObjectId_var oid = poa_current->get_object_id (env);
+  if (env.exception () != 0)
+    return;
+
+  // Now convert the id into a string
+  CORBA::String_var key = PortableServer::ObjectId_to_string (oid.in ());
+  
+  ACE_DEBUG ((LM_DEBUG, "Object is: %s\n", key));
+
+  PortableServer::POA_ptr poa = poa_current->get_POA (env);
+  if (env.exception () != 0)
+    return;
+
+  ACE_DEBUG ((LM_DEBUG, "POA is: %s\n", poa->the_name ()));
+
+  this->forward (poa->the_name(), env);
 }

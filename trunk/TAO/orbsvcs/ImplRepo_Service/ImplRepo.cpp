@@ -3,7 +3,7 @@
 
 #include "ImplRepo_i.h"
 
-ACE_RCSID(ImplRepo, ImplRepo, "$Id$")
+ACE_RCSID(ImplRepo_Service, ImplRepo, "$Id$")
 
 int
 main (int argc, char *argv[])

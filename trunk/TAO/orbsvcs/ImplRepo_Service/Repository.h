@@ -39,6 +39,9 @@ public:
 
   int add (const char *key, const Repository::Record &rec);
   // Add a new server to the Repository
+
+  int update (const char *key, const Repository::Record &rec);
+  // Updates an existing key with <rec>
   
   int remove (const char *key);
   // Removes the server from the Repository
@@ -50,6 +53,7 @@ public:
   int get_comm_line (const char *key, char *&comm_line);
   int get_env (const char *key, char *&env);
   int get_wdir (const char *key, char *&wdir);
+  int get_ping_ior (const char *key, char *&ping_ior);
   int get_ior (const char *key, char *&ior);
 
   // Dump method

@@ -26,13 +26,11 @@
 
 // Forward declarations.
 class ImplRepo_i;
-class IR_Simple_i;
+class IR_Forwarder;
 
 // Typedefs.
 typedef ImplRepo_i *ImplRepo_i_ptr;
 typedef ImplRepo_i_ptr ImplRepo_i_ref;
-typedef IR_Simple_i *IR_Simple_i_ptr;
-typedef IR_Simple_i_ptr IR_Simple_i_ref;
 
 class IR_Adapter_Activator : public POA_PortableServer::AdapterActivator
 {
@@ -45,13 +43,13 @@ class IR_Adapter_Activator : public POA_PortableServer::AdapterActivator
   //    with default servants.
 public:
   // Constructor
-  IR_Adapter_Activator (IR_Simple_i_ptr servant);
+  IR_Adapter_Activator (IR_Forwarder *servant);
 
   virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                           const char *name,
                                           CORBA_Environment &_env = CORBA_Environment::default_environment ());
 private:
-  IR_Simple_i_ptr servant_;
+  IR_Forwarder *servant_;
 };
 
 class ImplRepo_i : public POA_Implementation_Repository
@@ -72,24 +70,28 @@ public:
                                 const Implementation_Repository::Process_Options &options,
                                 CORBA::Environment &env);
 
-  virtual void server_is_running (const char *server,
-                                  const Implementation_Repository::INET_Addr &addr,
-                                  Ping_Object_ptr ping,
-                                  CORBA::Environment &_tao_environment);
+  virtual CORBA::String server_is_running (const char *server,
+                                           //const Implementation_Repository::INET_Addr &addr,
+                                           CORBA::Object_ptr ior,
+                                           CORBA::Object_ptr ping,
+                                           CORBA::Environment &_tao_environment);
 
   // = Other methods
 
   int init (int argc, char **argv, CORBA::Environment& env);
-  // Initialize the Server state - parsing arguments and waiting
+  // Initialize the Server state - parsing arguments and waiting.
 
   int run (CORBA::Environment& env);
-  // Run the orb
+  // Runs the orb.
 
   void start (const char *server);
-  // Starts the program registered as <server>
+  // Starts the program registered as <server>.
+
+  char *get_forward (const char *server);
+  // Returns the ior of the server that needs to be forwarded to.
 
 private:
-  IR_Simple_i *server_impl_;
+  IR_Forwarder *forwarder_impl_;
 
   IR_Adapter_Activator *activator_;
   // Used for the forwarding of any type of POA.
@@ -122,43 +124,31 @@ private:
   // The command line arguments.
 };
 
-class IR_Simple_i: public POA_simple_object
+class IR_Forwarder: public  PortableServer::DynamicImplementation
 {
-  // = TITLE
-  //    Simple Object Implementation
-  //
-  // = DESCRIPTION
-  //    Implementation of a simple object that has two methods, one that
-  //    returns the cube of a long, another that shuts down the server.
 public:
-  //  = Constructor and Destructor
-  IR_Simple_i (CORBA::ORB_ptr orb_ptr,
-                  PortableServer::POA_ptr poa_ptr,
-                  ImplRepo_i *ir_impl);
+  IR_Forwarder::IR_Forwarder (CORBA::ORB_ptr orb_ptr,
+                              PortableServer::POA_ptr poa_ptr,
+                              ImplRepo_i *ir_impl);
 
-  ~IR_Simple_i (void);
+  virtual void invoke (CORBA::ServerRequest_ptr request,
+                       CORBA::Environment &env);
+  // The invoke() method receives requests issued to any CORBA
+  // object incarnated by the DSI servant and performs the
+  // processing necessary to execute the request.
 
-  // = Interface methods
-  virtual CORBA::Long simple_method (CORBA::Long l,
-                                     CORBA::Environment &env);
-  // Just cubes the long parameter
-
-  virtual void shutdown (CORBA::Environment &env);
-  // Shutdown routine.
-
-  // = Other methods
-  void forward_to (CORBA::Object_ptr forward_to_ptr);
-  // Sets the ior of the forward to ptr)
+  CORBA::RepositoryId _primary_interface (const PortableServer::ObjectId &oid,
+                                          PortableServer::POA_ptr poa,
+                                          CORBA::Environment &env);
 
 private:
-  int forward (CORBA::Environment &env);
+  int forward (char *name, CORBA::Environment &env);
 
   class ImplRepo_i *ir_impl_;
 
   CORBA::ORB_var orb_var_;
   PortableServer::POA_var poa_var_;
-  CORBA::Object_ptr forward_to_ptr_;
-};
 
+};
 
 #endif /* IMPLREPO_I_H */
