@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="CosEC RTEC_Based Lib Static" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="CosEC RTEC_Based Library Static" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=CosEC RTEC_Based Lib Static - Win32 Static Debug
+CFG=CosEC RTEC_Based Library Static - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=CosEC RTEC_Based Lib Static - Win32 Static Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "TAO_RTEC_COSEC.mak" CFG="CosEC RTEC_Based Lib Static - Win32 Static Debug"
+!MESSAGE NMAKE /f "TAO_RTEC_COSEC.mak" CFG="CosEC RTEC_Based Library Static - Win32 Static Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "CosEC RTEC_Based Lib Static - Win32 Static Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "CosEC RTEC_Based Lib Static - Win32 Static Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "CosEC RTEC_Based Library Static - Win32 Static Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "CosEC RTEC_Based Library Static - Win32 Static Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "CosEC RTEC_Based Lib Static - Win32 Static Release"
+!IF  "$(CFG)" == "CosEC RTEC_Based Library Static - Win32 Static Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -52,7 +52,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo 
 # ADD LIB32 /nologo /out:"TAO_RTEC_COSECs.lib" 
 
-!ELSEIF  "$(CFG)" == "CosEC RTEC_Based Lib Static - Win32 Static Debug"
+!ELSEIF  "$(CFG)" == "CosEC RTEC_Based Library Static - Win32 Static Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -79,8 +79,8 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "CosEC RTEC_Based Lib Static - Win32 Static Release"
-# Name "CosEC RTEC_Based Lib Static - Win32 Static Debug"
+# Name "CosEC RTEC_Based Library Static - Win32 Static Release"
+# Name "CosEC RTEC_Based Library Static - Win32 Static Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"

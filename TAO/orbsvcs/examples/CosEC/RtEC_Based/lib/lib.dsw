@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "CosEC RTEC_Based Lib"=.\TAO_RTEC_COSEC.dsp - Package Owner=<4>
+Project: "CosEC RTEC_Based Library"=.\TAO_RTEC_COSEC.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosEC RTEC_Based Lib Static"=.\TAO_RTEC_COSEC_static.dsp - Package Owner=<4>
+Project: "CosEC RTEC_Based Library Static"=.\TAO_RTEC_COSEC_static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

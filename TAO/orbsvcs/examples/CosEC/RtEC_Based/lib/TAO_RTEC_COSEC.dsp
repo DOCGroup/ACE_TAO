@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="CosEC RTEC_Based Lib" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="CosEC RTEC_Based Library" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
-CFG=CosEC RTEC_Based Lib - Win32 Debug
+CFG=CosEC RTEC_Based Library - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,14 +13,14 @@ CFG=CosEC RTEC_Based Lib - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "TAO_RTEC_COSEC.mak" CFG="CosEC RTEC_Based Lib - Win32 Debug"
+!MESSAGE NMAKE /f "TAO_RTEC_COSEC.mak" CFG="CosEC RTEC_Based Library - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "CosEC RTEC_Based Lib - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "CosEC RTEC_Based Lib - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "CosEC RTEC_Based Lib - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "CosEC RTEC_Based Lib - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosEC RTEC_Based Library - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosEC RTEC_Based Library - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosEC RTEC_Based Library - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosEC RTEC_Based Library - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -31,7 +31,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "CosEC RTEC_Based Lib - Win32 MFC Release"
+!IF  "$(CFG)" == "CosEC RTEC_Based Library - Win32 MFC Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -57,7 +57,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /machine:I386
 # ADD LINK32 /nologo /dll /machine:I386 ../../../../../../ace/ACEmfc.lib ../../../../../tao/TAOmfc.lib ../../../../../tao/PortableServer/TAO_PortableServermfc.lib ../../../../orbsvcs/TAO_CosNamingmfc.lib ../../../../orbsvcs/TAO_RTEventmfc.lib ../../../../orbsvcs/TAO_Svc_Utilsmfc.lib ../../../../orbsvcs/TAO_CosEventmfc.lib /out:"../../../../../../bin/TAO_RTEC_COSECmfc.dll" 
 
-!ELSEIF  "$(CFG)" == "CosEC RTEC_Based Lib - Win32 MFC Debug"
+!ELSEIF  "$(CFG)" == "CosEC RTEC_Based Library - Win32 MFC Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -83,7 +83,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /machine:I386 /debug /pdbtype:sept
 # ADD LINK32 /nologo /dll /machine:I386 /debug /pdbtype:sept ../../../../../../ace/ACEmfcd.lib ../../../../../tao/TAOmfcd.lib ../../../../../tao/PortableServer/TAO_PortableServermfcd.lib ../../../../orbsvcs/TAO_CosNamingmfcd.lib ../../../../orbsvcs/TAO_RTEventmfcd.lib ../../../../orbsvcs/TAO_Svc_Utilsmfcd.lib ../../../../orbsvcs/TAO_CosEventmfcd.lib /out:"../../../../../../bin/TAO_RTEC_COSECmfcd.dll" 
 
-!ELSEIF  "$(CFG)" == "CosEC RTEC_Based Lib - Win32 Release"
+!ELSEIF  "$(CFG)" == "CosEC RTEC_Based Library - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -109,7 +109,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /machine:I386
 # ADD LINK32 /nologo /dll /machine:I386 ../../../../../../ace/ACE.lib ../../../../../tao/TAO.lib ../../../../../tao/PortableServer/TAO_PortableServer.lib ../../../../orbsvcs/TAO_CosNaming.lib ../../../../orbsvcs/TAO_RTEvent.lib ../../../../orbsvcs/TAO_Svc_Utils.lib ../../../../orbsvcs/TAO_CosEvent.lib /out:"../../../../../../bin/TAO_RTEC_COSEC.dll" 
 
-!ELSEIF  "$(CFG)" == "CosEC RTEC_Based Lib - Win32 Debug"
+!ELSEIF  "$(CFG)" == "CosEC RTEC_Based Library - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -139,10 +139,10 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "CosEC RTEC_Based Lib - Win32 MFC Release"
-# Name "CosEC RTEC_Based Lib - Win32 MFC Debug"
-# Name "CosEC RTEC_Based Lib - Win32 Release"
-# Name "CosEC RTEC_Based Lib - Win32 Debug"
+# Name "CosEC RTEC_Based Library - Win32 MFC Release"
+# Name "CosEC RTEC_Based Library - Win32 MFC Debug"
+# Name "CosEC RTEC_Based Library - Win32 Release"
+# Name "CosEC RTEC_Based Library - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
