@@ -1,3 +1,14 @@
+Mon Aug  4 13:08:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+        * ace/os_include/os_errno.h:
+          Moved some additional error code definitions to os_errno.h.
+          This will fix compile errors on FreeBSD.
+
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_ARPA_INET_H.  This will fix compile problems on
+          Windows.
+
 Mon Aug  4 09:31:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_dlfcn.h:
