@@ -1,3 +1,6 @@
+Mon Jun 21 11:52:10 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * Fixed problem with Makefile - removed POAS.h from PUB_HDRS
+
 Mon Jun 21 11:32:12 1999  Steve Huston  <shuston@riverace.com>
 
         * TAO_IDL/Makefile: The platform_macros.GNU file can now set a
