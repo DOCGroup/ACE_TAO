@@ -3,6 +3,7 @@
 
 // ARGV.i
 
+// Return the number of args
 ACE_INLINE size_t
 ACE_ARGV::argc (void) const
 {
@@ -10,23 +11,56 @@ ACE_ARGV::argc (void) const
   return this->argc_;
 }
 
-ACE_INLINE char *
-ACE_ARGV::buf (void) const
+// Return the state of this ACE_ARGV
+ACE_INLINE int
+ACE_ARGV::state(void) const
+{
+  ACE_TRACE ("ACE_ARGV::state");
+  return this->state_;
+}
+
+// Return the arguments in a space-separated string
+ACE_INLINE const char *
+ACE_ARGV::buf (void)
 {
   ACE_TRACE ("ACE_ARGV::buf");
-  return this->buf_;
+
+  if (this->buf_ == 0 && this->state_ == ITERATIVE) 
+    this->create_buf_from_queue();
+
+  return (const char *)this->buf_;
 }
 
-ACE_INLINE char *
-ACE_ARGV::operator[] (int i) const
+// Subscript operator.  
+ACE_INLINE const char *
+ACE_ARGV::operator[] (int i)
 {
   ACE_TRACE ("ACE_ARGV::operator[]");
-  return this->argv_[i];
+
+  // Don't go out of bounds
+  if (i >= this->argc_)
+    return 0;
+
+  return (const char *)(this->argv()[i]);
 }
 
+// Return the arguments in an entry-per-argument array
 ACE_INLINE char **
-ACE_ARGV::argv (void) const
+ACE_ARGV::argv (void)
 {
   ACE_TRACE ("ACE_ARGV::argv");
+
+  // Try to create the argv_ if it isn't there
+  if (this->argv_ == 0) {
+    
+    if (this->state_ == ITERATIVE && this->buf_ == 0)
+      this->create_buf_from_queue();
+
+    // Convert buf_ to argv_
+    this->string_to_array();
+  }
+
   return this->argv_;
 }
+
+
