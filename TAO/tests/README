@@ -249,6 +249,12 @@ how to run the following tests:
 
           This example illustrates the usage of the QtReactor from TAO.
 
+        . Reliable_Oneways
+
+          A regression test for reliable oneways.  It is based on the
+	  fact that different SyncScope policies can detect different
+	  errors in a request.
+
         . RTCORBA
 
           A collection of tests exercising features from RTCORBA 1.0
