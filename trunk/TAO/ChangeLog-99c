@@ -1,3 +1,8 @@
+Fri May 28 09:56:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	  Fixed bug in processing for forward declarations.
+
 Fri May 28 04:41:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/compiler.html: Added documentation for -Gv flag (to

@@ -579,15 +579,13 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_ROOT_CI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CI);
       break;
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CH);
-      break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CS);
       break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CS:
