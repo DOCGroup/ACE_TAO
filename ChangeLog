@@ -16,7 +16,7 @@ Fri May  7 08:08:05 2004  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/templates/gnu.mpd:
 
           Reverted my change from Thu May  6 12:16:16 2004.  It can cause
-          problems when all the generated files are presesent, but are
+          problems when all the generated files are present, but are
           out-of-date.
 
 Fri May  7 12:15:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
