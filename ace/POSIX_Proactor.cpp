@@ -1033,9 +1033,9 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
   // Null handler function.
   reaction.sa_sigaction =
     ACE_SIGNAL_C_FUNC (&ACE_POSIX_SIG_Proactor::null_handler);
-  int sigaction_return = sigaction (signal_number,
-                                    &reaction,
-                                    0);
+  int sigaction_return = ACE_OS::sigaction (signal_number,
+                                            &reaction,
+                                            0);
   if (sigaction_return == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p\n",
