@@ -9,6 +9,7 @@
 #include "tao/Transport.h"
 #include "tao/Muxed_TMS.h"
 #include "tao/Pluggable_Messaging.h"
+#include "tao/Auto_Functor.h"
 #include "tao/ORB_Constants.h"
 
 ACE_RCSID (tao,
@@ -36,22 +37,6 @@ namespace TAO
                                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::Exception))
   {
-    // Register a reply dispatcher for this invocation. Use the
-    // preallocated reply dispatcher.
-    TAO_Bind_Dispatcher_Guard dispatch_guard (this->details_.request_id (),
-                                              this->rd_,
-                                              this->resolver_.transport ()->tms ());
-
-
-    if (dispatch_guard.status () != 0)
-      {
-        // @@ What is the right way to handle this error? Do we need
-        // to call the interceptors in this case?
-        ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                           CORBA::COMPLETED_NO),
-                          TAO_INVOKE_FAILURE);
-      }
-
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
@@ -62,7 +47,8 @@ namespace TAO
     // This auto_ptr is required when interceptors are called. If any
     // of the interceptors throws an exception or returns with an
     // error we need to delete the reply handler.
-    auto_ptr<TAO_Asynch_Reply_Dispatcher_Base> safe_rd (this->rd_);
+    TAO::Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base,
+      TAO::ARDB_Refcount_Functor> safe_rd (this->rd_);
 
     s =
       this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -74,6 +60,28 @@ namespace TAO
     if (s != TAO_INVOKE_SUCCESS)
       return s;
 #endif /*TAO_HAS_INTERCEPTORS */
+
+    // Register a reply dispatcher for this invocation. Use the
+    // preallocated reply dispatcher.
+    TAO_Bind_Dispatcher_Guard dispatch_guard (
+        this->details_.request_id (),
+        this->rd_,
+        this->resolver_.transport ()->tms ());
+
+    if (dispatch_guard.status () != 0)
+      {
+        // @@ What is the right way to handle this error? Do we need
+        // to call the interceptors in this case?
+        ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                               CORBA::COMPLETED_NO),
+                          TAO_INVOKE_FAILURE);
+      }
+
+    // Do not unbind during destruction. We need the entry to be
+    // there in the map since the reply dispatcher depends on
+    // that. This is also a trigger to loose the ownership of the
+    // reply dispatcher.
+    dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
 
     TAO_OutputCDR &cdr =
       this->resolver_.transport ()->messaging_object ()->out_stream ();
@@ -103,10 +111,14 @@ namespace TAO
         ACE_TRY_CHECK;
 
 #if TAO_HAS_INTERCEPTORS == 1
-        // This auto_ptr is required when interceptors are called. If any
-        // of the interceptors throws an exception or returns with an
-        // error we need to delete the reply handler.
-        auto_ptr<TAO_Asynch_Reply_Dispatcher_Base> safe_rd2 (this->rd_);
+        // NOTE: We don't need to do the auto_ptr <> trick. We got here
+        // in the first place since the message was sent properly,
+        // which implies a reply would be available. Therefore the
+        // reply dispatcher should be available for another thread to
+        // collect and dispatch the reply. In MT cases, things are
+        // more hairy. Just imagine what happens when another thread
+        // is collecting the reply when we are happily invoking
+        // interceptors?
 
         // Nothing great on here. If we get a restart during send or a
         // proper send, we are supposed to call receiver_other ()
@@ -115,9 +127,6 @@ namespace TAO
           this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        if (tmp != TAO_INVOKE_FAILURE)
-          safe_rd2.release ();
-
         // We got an error during the interception.
         if (s == TAO_INVOKE_SUCCESS && tmp != TAO_INVOKE_SUCCESS)
           s = tmp;
@@ -125,14 +134,11 @@ namespace TAO
 
         // If an error occurred just return. At this point all the
         // endpoint interception would have been invoked. The callee
-        // wold take care of the rest.
+        // would take care of the rest.
         if (s != TAO_INVOKE_SUCCESS)
           return s;
 
-        // Do not unbind during destruction. We need the entry to be
-        // there in the map since the reply dispctaher depends on
-        // that.
-        dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
+
 
         // NOTE: Not sure how things are handles with exclusive muxed
         // strategy.

@@ -329,6 +329,7 @@ DYNAMIC_ANY_FILES =
 
 TEMPLATE_FILES = \
   Acceptor_Impl \
+  Auto_Functor \
   Connector_Impl \
   Connector_Impl \
   Sequence_T \

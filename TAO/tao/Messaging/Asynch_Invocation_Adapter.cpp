@@ -10,7 +10,7 @@
 #include "tao/Muxed_TMS.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
-#include "ace/Auto_Ptr.h"
+#include "tao/Auto_Functor.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Asynch_Invocation_Adapter.inl"
@@ -112,8 +112,15 @@ namespace TAO
         if (this->get_timeout (r.stub (),
                                tmp))
           {
+            TAO::Utils::Auto_Functor<TAO_Asynch_Reply_Dispatcher_Base,
+              TAO::ARDB_Refcount_Functor> safe_rd (this->rd_);
+
             this->rd_->schedule_timer (op.request_id (),
-                                       *max_wait_time);
+                                       *max_wait_time
+                                       ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+
+            safe_rd.release ();
           }
       }
 
