@@ -9,8 +9,6 @@
 #include "ace/Token_Invariants.i"
 #endif /* __ACE_INLINE__ */
 
-// Lock the creation of the Singleton.
-ACE_TOKEN_CONST::MUTEX ACE_Token_Invariant_Manager::creation_lock_;
 ACE_Token_Invariant_Manager *ACE_Token_Invariant_Manager::instance_ = 0;
 
 ACE_Token_Invariant_Manager *
@@ -21,7 +19,10 @@ ACE_Token_Invariant_Manager::instance (void)
   // Perform the Double-Check pattern...
   if (instance_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, creation_lock_, 0);
+      ACE_MT (ACE_TOKEN_CONST::MUTEX *lock =
+        ACE_Managed_Object<ACE_TOKEN_CONST::MUTEX>::get_preallocated_object
+          (ACE_Object_Manager::ACE_TOKEN_INVARIANTS_CREATION_LOCK);
+        ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, *lock, 0));
 
       if (instance_ == 0)
         {
@@ -65,9 +66,9 @@ ACE_Token_Invariant_Manager::acquired (const ACE_Token_Proxy *proxy)
   else // ACE_Tokens::RWLOCK.
     {
       if (proxy->type () == ACE_RW_Token::READER)
-	return this->reader_acquired (proxy->name ());
+        return this->reader_acquired (proxy->name ());
       else // ACE_RW_Token::WRITER.
-	return this->writer_acquired (proxy->name ());
+        return this->writer_acquired (proxy->name ());
     }
 }
 
@@ -148,7 +149,7 @@ ACE_Token_Invariant_Manager::dump (void) const
 
 int
 ACE_Token_Invariant_Manager::get_mutex (const char *token_name,
-					ACE_Mutex_Invariants *&inv)
+                                        ACE_Mutex_Invariants *&inv)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::get_mutex");
   TOKEN_NAME name (token_name);
@@ -160,14 +161,14 @@ ACE_Token_Invariant_Manager::get_mutex (const char *token_name,
       ACE_NEW_RETURN (new_invariant, ACE_Mutex_Invariants, -1);
 
       if (mutex_collection_.bind (name, new_invariant) == -1)
-	{
-	  delete new_invariant;
-	  return -1;
-	}
+        {
+          delete new_invariant;
+          return -1;
+        }
 
       if (mutex_collection_.find (name, inv) == -1)
-	// We did not find one in the collection.
-	return -1;
+        // We did not find one in the collection.
+        return -1;
     }
 
   return 0;
@@ -175,7 +176,7 @@ ACE_Token_Invariant_Manager::get_mutex (const char *token_name,
 
 int
 ACE_Token_Invariant_Manager::get_rwlock (const char *token_name,
-					 ACE_RWLock_Invariants *&inv)
+                                         ACE_RWLock_Invariants *&inv)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::get_rwlock");
   TOKEN_NAME name (token_name);
@@ -187,11 +188,11 @@ ACE_Token_Invariant_Manager::get_rwlock (const char *token_name,
       ACE_NEW_RETURN (new_invariant, ACE_RWLock_Invariants, -1);
 
       if (rwlock_collection_.bind (name, new_invariant) == -1)
-	return -1;
+        return -1;
 
       if (rwlock_collection_.find (name, inv) == -1)
-	// We did not find one in the collection.
-	return -1;
+        // We did not find one in the collection.
+        return -1;
     }
 
   return 0;
@@ -334,8 +335,8 @@ ACE_RWLock_Invariants::dump (void) const
   ACE_TRACE ("ACE_RWLock_Invariants::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "writers_ = %d\n",
-	      "readers_ = %d\n",
-	      writers_, readers_));
+              "readers_ = %d\n",
+              writers_, readers_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -354,4 +355,3 @@ template class ACE_Map_Entry<ACE_Token_Name, ACE_RWLock_Invariants *>;
 #pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry<ACE_Token_Name, ACE_RWLock_Invariants *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
