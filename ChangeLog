@@ -1,3 +1,23 @@
+Thu Dec 26 17:11:54 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/make_release: Fixed the following problems in the release
+	  script which caused problems during the beta cutting process: 
+	  
+	   - cvs commits of TAO/Changelog TAO/VERSION etc. failed. The
+  	     failure was because we were also commiting taoversion.mpb but
+	     from $TAO_ROOT as "cvs commit ChangeLog VERSION
+	     other_files ../bin/Makeyada". Using ../ to indicate files in
+	     higher directories is an unpardonable mistake for cvs
+	     1.10.x. It used to work 1.9.x. But with 1.10* versions the
+	     protocol changed disallowing the ../ 
+
+	   - we didnt set the file permissions on the generated files
+	     properly 
+
+	   - the generated files from mpc were not added to the list of
+	     files for which LF->CRLF conversions are supposed to be
+	     masked during zip! 
+
 Thu Dec 26 16:17:41 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/tests.mpc: For DLL Test Lib, the source is DLL_Test_Impl.cpp,
