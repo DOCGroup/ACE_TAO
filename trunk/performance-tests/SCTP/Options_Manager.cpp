@@ -69,7 +69,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
 
     // Declare options with ACE_Get_Opt
     int c;
-    ACE_Get_Opt * get_opt=NULL;
+    ACE_Get_Opt * get_opt = 0;
     if (!ACE_OS::strcmp(ACE_TEXT ("client-opts"), opts_set)){
       get_opt = new ACE_Get_Opt(argc, argv, ACE_TEXT("c:nt:m:M:x:b:C:i:p:H:s:h"));
 

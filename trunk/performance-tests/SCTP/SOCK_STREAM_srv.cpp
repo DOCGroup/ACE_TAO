@@ -24,7 +24,7 @@ extern "C" {
 };
 #else
 #ifndef IPPROTO_SCTP
-#define IPPROTO_SCTP 132 /* always the same value on every platform */ 
+#define IPPROTO_SCTP 132 /* always the same value on every platform */
 #endif
 #define SCTP_NODELAY -1
 #endif
@@ -64,7 +64,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     msgBufSize = ACE_NTOHL(msgBufSize);
 
     // allocate the buffer for the message payload
-    ACE_CDR::Octet * msgBuf=NULL;
+    ACE_CDR::Octet * msgBuf = 0;
     ACE_NEW_RETURN(msgBuf,
                    ACE_CDR::Octet[msgBufSize],
                    0);
@@ -95,7 +95,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
   dataModeStream->close();
   delete dataModeStream;
 
-  return NULL;
+  return 0;
 }
 
 // sets up the dataModeSocket Stream, reads the test header infomation
