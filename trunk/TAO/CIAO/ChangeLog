@@ -2,6 +2,8 @@ Sun May  9 13:06:48 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Deployment.mpc:
 	* DnC/Config_Handlers/Config_Handlers.mpc:
+	  Added requries += dnc to avoid unintentional build of DnC 
+          directory. 
 
 Sun May  9 09:08:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
