@@ -1,3 +1,10 @@
+Tue Dec 21 09:32:34 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp: removed
+          ACE_Equal_To<DsLogAdmin::LogId> explicit instantiation,
+          because it duplicated the ACE_Equal_To <CORBA::ULong>
+          instantiation in tao/Transport_Mux_Strategy.cpp.
+
 Tue Dec 21 08:34:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile (TAO_ORBSVCS_SRCS): removed
