@@ -1,3 +1,9 @@
+Tue Oct 12 07:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+          Create the correct ServantRetentionStrategy based on the set
+          policies
+
 Tue Oct 12 07:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp,i}:
