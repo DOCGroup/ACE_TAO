@@ -31,8 +31,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
-  if (this->ssl_ == 0
-      || !SSL_is_init_finished (this->ssl_))
+  if (!this->ssl_init_finished ())
     {
       ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::send - init\n"));
       return -1;
@@ -57,8 +56,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
-  if (this->ssl_ == 0
-      || !SSL_is_init_finished (this->ssl_))
+  if (!this->ssl_init_finished ())
     {
       ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::recv - init\n"));
       return -1;
@@ -84,8 +82,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
-  if (this->ssl_ == 0
-      || !SSL_is_init_finished (this->ssl_))
+  if (!this->ssl_init_finished ())
     {
       ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::send - init\n"));
       return -1;
@@ -102,8 +99,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
-  if (this->ssl_ == 0
-      || !SSL_is_init_finished (this->ssl_))
+  if (!this->ssl_init_finished ())
     {
       ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::recv - init\n"));
       return -1;
@@ -166,7 +162,7 @@ ACE_SSL_SOCK_Stream::close (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close");
 
-  this->ssl_close ();
+  (void) this->ssl_close ();
 
   return this->stream_.close ();
 }

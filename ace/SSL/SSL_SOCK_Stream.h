@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -11,6 +11,8 @@
 //
 // = AUTHOR
 //    John Heitmann
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
+//    Ossama Othman <othman@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -244,14 +246,9 @@ public:
 
   friend class ACE_SSL_SOCK_Connector;
   friend class ACE_SSL_SOCK_Acceptor;
-private:
-  int enter_recv_timedwait (const ACE_Time_Value* timeout, int& val) const;
-  void leave_recv_timedwait (const ACE_Time_Value* timeout, int val) const;
-  int enter_send_timedwait (const ACE_Time_Value* timeout, int& val) const;
-  void leave_send_timedwait (const ACE_Time_Value* timeout, int val) const;
-  // Helper functions which control selecting() and blocking.
 
-  ACE_SOCK_Stream& peer ();
+private:
+  ACE_SOCK_Stream& peer (void);
   // Return the underlying <ACE_SOCK_Stream> which ssl runs on top of.
 
   ACE_SOCK_Stream stream_;
