@@ -935,14 +935,14 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       ////////////////////////////////////////////////////////////////
       // catch all the remaining -ORB args                          //
       ////////////////////////////////////////////////////////////////
-      else if (arg_shifter.cur_arg_strncasecmp
-               ("-ORB") != -1)
+      else if (arg_shifter.cur_arg_strncasecmp ("-ORB") != -1)
         {
-          if (TAO_debug_level > 0)
+          if (TAO_debug_level > 0)     
             ACE_DEBUG ((LM_WARNING,
                         ASYS_TEXT ("WARNING: Unknown \"-ORB\" option <%s>.\n")
                         ASYS_TEXT ("         Removing it from the argument list.\n"),
-                        current_arg));
+                        ((current_arg == 0) ? "<NULL>" : current_arg)));
+
           arg_shifter.consume_arg ();
         }
 

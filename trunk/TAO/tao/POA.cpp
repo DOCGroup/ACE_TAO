@@ -3676,7 +3676,7 @@ void
 TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Startup\n"));
+    ACE_DEBUG ((LM_DEBUG, "Notifying IMR of startup\n"));
 
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();
 
