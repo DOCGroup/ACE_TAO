@@ -1,3 +1,30 @@
+Wed May 09 13:55:56 2001  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.h:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.h:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/Pluggable_Messaging.h:
+        * tao/Pluggable_Messaging_Utils.cpp:
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/Pluggable_Messaging_Utils.i:
+        * tao/TAO_Server_Request.cpp:
+
+          Extracted most of TAO_Pluggable_Reply_Params into a
+          base class TAO_Pluggable_Reply_Params_Base, leaving
+          out the InputCDR member. This base class is now used
+          by TAO_ServerRequest, which does not need the cdr
+          stream, eliminating the overhead of its construction.
+          The client side request classes use the original
+          class, now a subclass, that adds the InpurCDR member.
+          This closes [BUGID:900].
+
 Wed May  9 11:56:55 2001  Ossama Othman  <ossama@uci.edu>
 
 	* docs/interceptors.html (HREF):
