@@ -2837,8 +2837,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                         (ACE_THR_C_FUNC) ace_thread_adapter,
                                         0,
                                         0,
-                                        ACE_LOG_MSG->seh_except_selector(),
-                                        ACE_LOG_MSG->seh_except_handler()),
+                                        ACE_OS_Object_Manager::seh_except_selector(),
+                                        ACE_OS_Object_Manager::seh_except_handler()),
                     -1);
 # else
     ACE_NEW_RETURN (thread_args,
