@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 ACE_INLINE TAO_AcceptorSetItor
