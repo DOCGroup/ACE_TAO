@@ -460,7 +460,7 @@ public:
   int ref_counter (void);
 
   /// Release ref counter.
-  int release (void);
+  int release (int close = 0);
 
   /// Releases resources allocated by <ACE_Malloc>.
   int remove (void);
