@@ -1010,6 +1010,14 @@ private:
   CORBA::ORB_ptr &ptr_;
 };
 
+const char *TAO_ORB_Timeprobe_Description[];
+
+enum
+{
+  TAO_CORBA_ORB_RUN_START = 0,
+  TAO_CORBA_ORB_RUN_END
+};
+
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"
 #endif /* __ACE_INLINE__ */

@@ -16,10 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_ENABLE_TIMEPROBES)
-# define ACE_ENABLE_TIMEPROBES
-#endif /* ! ACE_ENABLE_TIMEPROBES */
-
+#define ACE_ENABLE_TIMEPROBES
 //#define ACE_MT_TIMEPROBES
 //#define ACE_TSS_TIMEPROBES
 
@@ -30,6 +27,8 @@
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
+#if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *events_descriptions_0[] =
 {
@@ -42,7 +41,21 @@ static const char *events_descriptions_0[] =
   "Event Six",
   "Event Seven",
   "Event Eight",
-  "Event Nine",
+  "Event Nine"
+};
+
+enum
+{
+  EVENT_ZERO = 0,
+  EVENT_ONE,
+  EVENT_TWO,
+  EVENT_THREE,
+  EVENT_FOUR,
+  EVENT_FIVE,
+  EVENT_SIX,
+  EVENT_SEVEN,
+  EVENT_EIGHT,
+  EVENT_NINE
 };
 
 static const char *events_descriptions_1[] =
@@ -51,10 +64,21 @@ static const char *events_descriptions_1[] =
   "Work end"
 };
 
+enum
+{
+  WORK_START = 100,
+  WORK_END
+};
+
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_1, WORK_START);
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_0, EVENT_ZERO);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
+
 static void
 work (int time)
 {
-  ACE_FUNCTION_TIMEPROBE (100);
+  ACE_FUNCTION_TIMEPROBE (WORK_START);
   ACE_OS::sleep (time);
 }
 
@@ -65,16 +89,13 @@ main (int, ASYS_TCHAR *[])
 
   ACE_TIMEPROBE ("Starting Test");
 
-  for (int i = 1; i < 3; i++)
+  for (int i = 0; i < 3; i++)
     {
       work (i);
-      ACE_TIMEPROBE (i);
+      ACE_TIMEPROBE (EVENT_ZERO + i);
     }
 
   ACE_TIMEPROBE ("Ending Test");
-
-  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_1, 100);
-  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_0, 0);
 
   ACE_TIMEPROBE_PRINT;
 

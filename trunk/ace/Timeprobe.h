@@ -3,7 +3,15 @@
 #if !defined (ACE_TIMEPROBE_H)
 #define ACE_TIMEPROBE_H
 
-#include "ace/Containers.h"
+#include "ace/OS.h"
+
+#if defined (ACE_ENABLE_TIMEPROBES)
+  #if !defined (ACE_COMPILE_TIMEPROBES)
+    #define (ACE_COMPILE_TIMEPROBES)
+  #endif /* ACE_COMPILE_TIMEPROBES */
+#endif /* ACE_ENABLE_TIMEPROBES */
+
+#if defined (ACE_COMPILE_TIMEPROBES)
 
 class ACE_Export ACE_Event_Descriptions
 {  
@@ -84,10 +92,12 @@ typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>
         ACE_TIMEPROBE_SINGLETON;
 #  endif /* ACE_TSS_TIMEPROBES */
 
+#endif /* ACE_COMPILE_TIMEPROBES */
+
 // If ACE_ENABLE_TIMEPROBES is defined, the macros below will
 // work. Otherwise, they just vanish.  Using this macro, you can
 // control which files/libraries are probed.
-#if defined (ACE_ENABLE_TIMEPROBES)
+#if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
 
 #  define ACE_TIMEPROBE_RESET ACE_TIMEPROBE_SINGLETON::instance ()->reset ()
 #  define ACE_TIMEPROBE(id) ACE_TIMEPROBE_SINGLETON::instance ()->timeprobe (id)
@@ -96,14 +106,14 @@ typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>
 #  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) static int ace_timeprobe_##descriptions##_return = ACE_TIMEPROBE_SINGLETON::instance ()->event_descriptions (descriptions, minimum_id)
 #  define ACE_FUNCTION_TIMEPROBE(X) ACE_Function_Timeprobe<ACE_TIMEPROBE_WITH_LOCKING> function_timeprobe (*ACE_TIMEPROBE_SINGLETON::instance (), X)
 
-#else /* ACE_ENABLE_TIMEPROBES */
+#else /* ACE_ENABLE_TIMEPROBES && ACE_COMPILE_TIMEPROBES */
 
 #  define ACE_TIMEPROBE_RESET
 #  define ACE_TIMEPROBE(id)
 #  define ACE_TIMEPROBE_PRINT
 #  define ACE_TIMEPROBE_PRINT_ABSOLUTE
-#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id)
+#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) 
 #  define ACE_FUNCTION_TIMEPROBE(X)
 
-#endif /* ACE_ENABLE_TIMEPROBES */
+#endif /* ACE_ENABLE_TIMEPROBES && ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_TIMEPROBE_H */

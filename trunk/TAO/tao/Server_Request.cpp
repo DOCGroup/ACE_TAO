@@ -21,15 +21,16 @@ static const char *TAO_Server_Request_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   TAO_SERVER_REQUEST_START = 400,
   TAO_SERVER_REQUEST_END
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
-                                  TAO_SERVER_REQUEST_START)
+                                  TAO_SERVER_REQUEST_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // {77420086-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_IIOP_ServerRequest,

@@ -3,6 +3,10 @@
 #if !defined (ACE_TIMEPROBE_T_C)
 #define ACE_TIMEPROBE_T_C
 
+#include "ace/OS.h"
+
+#if defined (ACE_COMPILE_TIMEPROBES)
+
 #include "ace/Timeprobe.h"
 #include "ace/High_Res_Timer.h"
 
@@ -225,4 +229,5 @@ ACE_Function_Timeprobe<Timeprobe>::~ACE_Function_Timeprobe (void)
   this->timeprobe_.timeprobe (this->event_ + 1);
 }
 
+#endif /* ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_TIMEPROBE_T_C */

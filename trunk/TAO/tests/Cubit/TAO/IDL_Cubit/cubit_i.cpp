@@ -47,6 +47,7 @@ static const char *Cubit_i_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   CUBIT_I_CUBE_OCTET_START = 10000,
   CUBIT_I_CUBE_OCTET_END,
 
@@ -69,11 +70,11 @@ enum
   CUBIT_I_CUBE_OCTET_SEQUENCE_END
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_i_Timeprobe_Description,
-                                  CUBIT_I_CUBE_OCTET_START)
+                                  CUBIT_I_CUBE_OCTET_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // Constructor
 

@@ -30,17 +30,18 @@ static const char *Event_Latency_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER = 20000,
   EVENT_LATENCY_START_WITH_NEW_EVENT_IN_SUPPLIER,
   EVENT_LATENCY_SUPPLIER_STARTS_PUSHING_EVENT,
   EVENT_LATENCY_SUPPLIER_ENDS_PUSHING_EVENT
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Event_Latency_Timeprobe_Description,
-                                  EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER)
+                                  EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 static const char usage [] = "[-? |\n"
 "            [-c <consumers> [4]]\n"

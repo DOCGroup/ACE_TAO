@@ -25,17 +25,18 @@ static const char *TAO_RT_Task_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   TAO_RT_TASK_START_EXECUTE = 5200,
   TAO_RT_TASK_END_EXECUTE,
   TAO_RT_TASK_SYNCH_THREADS_PRIORITY_REQUESTED,
   TAO_RT_TASK_SYNCH_THREADS_PRIORITY_OBTAINED
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_RT_Task_Timeprobe_Description,
-                                  TAO_RT_TASK_START_EXECUTE)
+                                  TAO_RT_TASK_START_EXECUTE);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 class ACE_RT_Task_Shutdown : public ACE_RT_Task_Command
 // = TITLE

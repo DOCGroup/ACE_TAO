@@ -23,6 +23,7 @@ static const char *TAO_Connect_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START = 300,
   TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_END,
 
@@ -33,11 +34,11 @@ enum
   TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description,
-                                  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START)
+                                  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager* t)
   : TAO_SVC_HANDLER (t, 0, 0),

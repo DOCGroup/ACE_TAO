@@ -25,17 +25,18 @@ static const char *TAO_Dispatching_Modules_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   TAO_DISPATCHING_MODULES_DISPATCH_THE_EVENT = 5000,
   TAO_DISPATCHING_MODULES_PUSH_SOURCE_TYPE_CORRELATION_MODULE,
   TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_REQUESTED,
   TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_OBTAINED
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Dispatching_Modules_Timeprobe_Description,
-                                  TAO_DISPATCHING_MODULES_DISPATCH_THE_EVENT)
+                                  TAO_DISPATCHING_MODULES_DISPATCH_THE_EVENT);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // ************************************************************
 
