@@ -1,6 +1,5 @@
 // $Id$
 // NamingTreeCtrl.cpp : implementation file
-//
 
 #include "stdafx.h"
 #include "NamingViewer.h"
@@ -19,16 +18,15 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CNamingTreeCtrl
 
-CNamingTreeCtrl::CNamingTreeCtrl()
+CNamingTreeCtrl::CNamingTreeCtrl (void)
 {
-  m_ContextPopup.LoadMenu(IDR_CONTEXT_POPUP);
-  m_ObjectPopup.LoadMenu(IDR_OBJECT_POPUP);
+  m_ContextPopup.LoadMenu (IDR_CONTEXT_POPUP);
+  m_ObjectPopup.LoadMenu (IDR_OBJECT_POPUP);
 }
 
-CNamingTreeCtrl::~CNamingTreeCtrl()
+CNamingTreeCtrl::~CNamingTreeCtrl (void)
 {
 }
-
 
 BEGIN_MESSAGE_MAP(CNamingTreeCtrl, CTreeCtrl)
 	//{{AFX_MSG_MAP(CNamingTreeCtrl)
@@ -51,19 +49,19 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CNamingTreeCtrl message handlers
 
-void CNamingTreeCtrl::OnRButtonDown(UINT nFlags, CPoint point) 
+void CNamingTreeCtrl::OnRButtonDown (UINT nFlags, CPoint point) 
 {
-	// TODO: Add your message handler code here and/or call default
-  // Special case here - this causes the entry to be selected when the right button
-  // is the first to be hit.  strange
-  OnLButtonDown(nFlags, point);
+  // TODO: Add your message handler code here and/or call default
+  // Special case here - this causes the entry to be selected when the
+  // right button is the first to be hit.  strange
+  OnLButtonDown (nFlags, point);
   
   // Now find the item were hitting
   HTREEITEM hItem = HitTest(point);
   if(!hItem)
-  {
-    return;
-  }
+    {
+      return;
+    }
   SelectItem(hItem);
 
   POINT Point = point;
@@ -72,19 +70,19 @@ void CNamingTreeCtrl::OnRButtonDown(UINT nFlags, CPoint point)
 
   // If this is not a context, show the object popup
   if(!pObject->IsContext())
-  {
-    if(!m_ObjectPopup.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this))
     {
-      TRACE0("TrackPopupMenu Failed");
+      if(!m_ObjectPopup.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this))
+        {
+          TRACE0("TrackPopupMenu Failed");
+        }
     }
-  }
   else
-  {
-    if(!m_ContextPopup.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this))
     {
-      TRACE0("TrackPopupMenu Failed");
+      if(!m_ContextPopup.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this))
+        {
+          TRACE0("TrackPopupMenu Failed");
+        }
     }
-  }
 }
 
 void CNamingTreeCtrl::OnContextPopupViewreference() 
@@ -239,7 +237,10 @@ void CNamingTreeCtrl::Resolve(CosNaming::NamingContext_ptr pRootContext)
   if(!CORBA::is_nil(pRootContext))
   {
     HTREEITEM hItem = InsertItem("Root");
-    SetItemData(hItem, (DWORD)new CNamingObject(pRootContext));
+    CosNaming::Name Name;
+    Name.length(1);
+    Name[0].id = CORBA::string_dup("Root");
+    SetItemData(hItem, (DWORD)new CNamingObject(Name, pRootContext, true));
     ListContext(hItem);
   }
 }
