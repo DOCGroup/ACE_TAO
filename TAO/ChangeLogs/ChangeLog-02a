@@ -1,3 +1,13 @@
+Wed Nov 15 03:39:56 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (establish_components):
+
+	  According to the Portable Interceptors specification,
+	  IORInterceptor::establish_components() must not throw an
+	  exception.  If it does, then the ORB is supposed to ignore it
+	  and continue processing the remaining IORInterceptors, so we now
+	  catch any exception and ignore it.
+
 Wed Nov 15 02:20:56 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.i (tss_cleanup_funcs):
