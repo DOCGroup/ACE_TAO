@@ -399,7 +399,7 @@ TAO_Exceptions::init_standard_exceptions (CORBA::Environment &env)
                                            sizeof tc_buf_ ## name, env);
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
-    }
+}
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 int \

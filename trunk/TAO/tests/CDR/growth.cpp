@@ -110,28 +110,36 @@ main (int argc, char *argv[])
 
       for (int i = 0; i < n; ++i)
 	{
-	  writing.start ();
+	  writing.start_incr ();
 	  TAO_OutputCDR output;
 
 	  if (test_write (output, x) != 0)
 	    {
 	      return 1;
 	    }
-	  writing.stop();
+	  writing.stop_incr ();
 
-	  reading.start ();
+	  reading.start_incr ();
 	  TAO_InputCDR input (output);
 	  if (test_read (input, x) != 0)
 	    {
 	      return 1;
 	    }
-	  reading.stop ();
+	  reading.stop_incr ();
 	}
       double m = n * x;
-      ACE_hrtime_t wusecs;
-      writing.elapsed_microseconds (wusecs);
-      ACE_hrtime_t rusecs;
-      reading.elapsed_microseconds (rusecs);
+
+      ACE_Time_Value wtv;
+      writing.elapsed_time_incr (wtv);
+      ACE_hrtime_t wusecs = wtv.sec ();
+      wusecs *= ACE_ONE_SECOND_IN_USECS;
+      wusecs += wtv.usec ();
+
+      ACE_Time_Value rtv;
+      reading.elapsed_time_incr (rtv);
+      ACE_hrtime_t rusecs = rtv.sec ();
+      rusecs *= ACE_ONE_SECOND_IN_USECS;
+      rusecs += rtv.usec ();
 
       double write_average = wusecs / m;
       double read_average = rusecs / m;

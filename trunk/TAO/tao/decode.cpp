@@ -1062,108 +1062,77 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                     case CORBA::tk_null:
                     case CORBA::tk_void:
                       return CORBA::TypeCode::TRAVERSE_CONTINUE;
+
                     case CORBA::tk_short:
                     case CORBA::tk_ushort:
                       // For primitives, compute the size only once
-                      while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                        {
-                          continue_decoding = stream->read_short (*(CORBA::Short *) value);
-                          value += size;
-                        }
-                      //                      CORBA::release (tc2);
+		      continue_decoding = continue_decoding &&
+			stream->read_short_array
+			((CORBA::Short *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
+
                     case CORBA::tk_long:
                     case CORBA::tk_ulong:
                     case CORBA::tk_float:
+                    case CORBA::tk_enum:
                       // For primitives, compute the size only once
-                      while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                        {
-                          continue_decoding =
-                            stream->read_long (*(CORBA::Long *) value);
-                          value += size;
-                        }
-                      // CORBA::release (tc2);
+		      continue_decoding = continue_decoding &&
+			stream->read_long_array
+			((CORBA::Long *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
+
                     case CORBA::tk_double:
                     case CORBA::tk_longlong:
                     case CORBA::tk_ulonglong:
                       // For primitives, compute the size only once
-                      while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                        {
-                          continue_decoding =
-                            stream->read_longlong (*(CORBA::LongLong *) value);
-                          value += size;
-                        }
-                      // CORBA::release (tc2);
+		      continue_decoding = continue_decoding &&
+			stream->read_longlong_array
+			((CORBA::LongLong *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
+
                     case CORBA::tk_boolean:
                       // For primitives, compute the size only once
-                      while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                        {
-                          continue_decoding =
-                            stream->read_boolean (*(CORBA::Boolean *) value);
-                          value += size;
-                        }
-                      // CORBA::release (tc2);
+		      continue_decoding = continue_decoding &&
+			stream->read_octet_array
+			((CORBA::Octet *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
+
                     case CORBA::tk_char:
                     case CORBA::tk_octet:
                       // For primitives, compute the size only once
-                      while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                        {
-                          continue_decoding =
-                            stream->read_char (*(CORBA::Char *) value);
-                          value += size;
-                        }
-                      // CORBA::release (tc2);
+		      continue_decoding = continue_decoding &&
+			stream->read_octet_array
+			((CORBA::Octet *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
+
                     case CORBA::tk_longdouble:
                       // For primitives, compute the size only once
-                      while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                        {
-                          continue_decoding =
-                            stream->read_longdouble (*(CORBA::LongDouble *) value);
-                          value += size;
-                        }
-                      // CORBA::release (tc2);
+		      continue_decoding = continue_decoding &&
+			stream->read_longdouble_array
+			((CORBA::LongDouble *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
+
                     case CORBA::tk_wchar:
                       // For primitives, compute the size only once
-                      while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                        {
-                          continue_decoding =
-                            stream->read_wchar (*(CORBA::WChar *) value);
-                          value += size;
-                        }
-                      // CORBA::release (tc2);
+		      continue_decoding = continue_decoding &&
+			stream->read_wchar_array
+			((CORBA::WChar *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
-                    case CORBA::tk_enum:
-                      // For primitives, compute the size only once
-                      while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                        {
-                          continue_decoding =
-                            stream->read_long (*(CORBA::Long *) value);
-                          value += size;
 
-                        }
-                      // CORBA::release (tc2);
-                      if (continue_decoding == CORBA::B_TRUE)
-                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                      break;
                       // handle all aggregate types here
                     case CORBA::tk_objref:
                     case CORBA::tk_string:
@@ -1244,109 +1213,77 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                 case CORBA::tk_null:
                 case CORBA::tk_void:
                   return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                case CORBA::tk_short:
-                case CORBA::tk_ushort:
 
-                  // For primitives, compute the size only once
-                  while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                    {
-                      continue_decoding =
-                        stream->read_short (*(CORBA::Short *) value);
-                      value += size;
-                    }
-                  // CORBA::release (tc2);
-                  if (continue_decoding == CORBA::B_TRUE)
-                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                  break;
-                case CORBA::tk_long:
-                case CORBA::tk_ulong:
-                case CORBA::tk_float:
-                  // For primitives, compute the size only once
-                  while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                    {
-                      continue_decoding =
-                        stream->read_long (*(CORBA::Long *) value);
-                      value += size;
-                    }
-                  // CORBA::release (tc2);
-                  if (continue_decoding == CORBA::B_TRUE)
-                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                  break;
-                case CORBA::tk_double:
-                case CORBA::tk_longlong:
-                case CORBA::tk_ulonglong:
-                  // For primitives, compute the size only once
-                  while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                    {
-                      continue_decoding =
-                        stream->read_longlong (*(CORBA::LongLong *) value);
-                      value += size;
-                    }
-                  // CORBA::release (tc2);
-                  if (continue_decoding == CORBA::B_TRUE)
-                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                  break;
-                case CORBA::tk_boolean:
-                  // For primitives, compute the size only once
-                  while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                    {
-                      continue_decoding =
-                        stream->read_boolean (*(CORBA::Boolean *) value);
-                      value += size;
-                    }
-                  // CORBA::release (tc2);
-                  if (continue_decoding == CORBA::B_TRUE)
-                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                  break;
-                case CORBA::tk_char:
-                case CORBA::tk_octet:
-                  // For primitives, compute the size only once
-                  while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                    {
-                      continue_decoding =
-                        stream->read_char (*(CORBA::Char *) value);
-                      value += size;
-                    }
-                  // CORBA::release (tc2);
-                  if (continue_decoding == CORBA::B_TRUE)
-                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                  break;
-                case CORBA::tk_longdouble:
-                  // For primitives, compute the size only once
-                  while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                    {
-                      continue_decoding =
-                        stream->read_longdouble (*(CORBA::LongDouble *) value);
-                      value += size;
-                    }
-                  // CORBA::release (tc2);
-                  if (continue_decoding == CORBA::B_TRUE)
-                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                  break;
-                case CORBA::tk_wchar:
-                  // For primitives, compute the size only once
-                  while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                    {
-                      continue_decoding =
-                        stream->read_wchar (*(CORBA::WChar *) value);
-                      value += size;
-                    }
-                  // CORBA::release (tc2);
-                  if (continue_decoding == CORBA::B_TRUE)
-                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                  break;
-                case CORBA::tk_enum:
-                  // For primitives, compute the size only once
-                  while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                    {
-                      continue_decoding =
-                        stream->read_long (*(CORBA::Long *) value);
-                      value += size;
-                    }
-                  // CORBA::release (tc2);
-                  if (continue_decoding == CORBA::B_TRUE)
-                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                  break;
+		case CORBA::tk_short:
+		case CORBA::tk_ushort:
+		  // For primitives, compute the size only once
+		  continue_decoding = continue_decoding &&
+		    stream->read_short_array
+		    ((CORBA::Short *) value, bounds);
+		  if (continue_decoding == CORBA::B_TRUE)
+		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+		  break;
+
+		case CORBA::tk_long:
+		case CORBA::tk_ulong:
+		case CORBA::tk_float:
+		case CORBA::tk_enum:
+		  // For primitives, compute the size only once
+		  continue_decoding = continue_decoding &&
+		    stream->read_long_array
+		    ((CORBA::Long *) value, bounds);
+		  if (continue_decoding == CORBA::B_TRUE)
+		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+		  break;
+
+		case CORBA::tk_double:
+		case CORBA::tk_longlong:
+		case CORBA::tk_ulonglong:
+		  // For primitives, compute the size only once
+		  continue_decoding = continue_decoding &&
+		    stream->read_longlong_array
+		    ((CORBA::LongLong *) value, bounds);
+		  if (continue_decoding == CORBA::B_TRUE)
+		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+		  break;
+
+		case CORBA::tk_boolean:
+		  // For primitives, compute the size only once
+		  continue_decoding = continue_decoding &&
+		    stream->read_octet_array
+		    ((CORBA::Octet *) value, bounds);
+		  if (continue_decoding == CORBA::B_TRUE)
+		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+		  break;
+
+		case CORBA::tk_char:
+		case CORBA::tk_octet:
+		  // For primitives, compute the size only once
+		  continue_decoding = continue_decoding &&
+		    stream->read_octet_array
+		    ((CORBA::Octet *) value, bounds);
+		  if (continue_decoding == CORBA::B_TRUE)
+		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+		  break;
+
+		case CORBA::tk_longdouble:
+		  // For primitives, compute the size only once
+		  continue_decoding = continue_decoding &&
+		    stream->read_longdouble_array
+		    ((CORBA::LongDouble *) value, bounds);
+		  if (continue_decoding == CORBA::B_TRUE)
+		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+		  break;
+
+		case CORBA::tk_wchar:
+		  // For primitives, compute the size only once
+		  continue_decoding = continue_decoding &&
+		    stream->read_wchar_array
+		    ((CORBA::WChar *) value, bounds);
+		  if (continue_decoding == CORBA::B_TRUE)
+		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+		  break;
+
                   // handle all aggregate types here
                 case CORBA::tk_any:
                 case CORBA::tk_TypeCode:
