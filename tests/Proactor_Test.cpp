@@ -1571,13 +1571,13 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     if (result.error () == 0 && result.bytes_transferred () > 0)
       {
         this->total_snd_ += result.bytes_transferred ();
-	if (this->total_snd_ >= xfer_limit)
-	  {
-	    ACE_DEBUG ((LM_DEBUG,
-			ACE_TEXT ("(%t) Client %d sent %d, limit %d\n"),
-			this->id_, this->total_snd_, xfer_limit));
-	    this->close ();
-	  }
+        if (this->total_snd_ >= xfer_limit)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%t) Client %d sent %d, limit %d\n"),
+                        this->id_, this->total_snd_, xfer_limit));
+            this->close ();
+          }
         if (duplex != 0)   // full duplex, continue write
           {
             if ((this->total_snd_- this->total_rcv_) < 1024*32 ) //flow control
@@ -1809,7 +1809,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'x':  // xfer limit
         xfer_limit = static_cast<size_t> (ACE_OS::atoi (get_opt.opt_arg ()));
         if (xfer_limit == 0)
-	  xfer_limit = 1;          // Bare minimum.
+          xfer_limit = 1;          // Bare minimum.
         break;
       case 'b':  // both client and server
         both = 1;
