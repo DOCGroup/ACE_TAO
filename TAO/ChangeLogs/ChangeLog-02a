@@ -1,3 +1,12 @@
+Mon Mar 12 11:08:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+    * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+
+      Removed code that was registering the connection handler with
+      the connection caching mechanism. We need to shortcut it, as we
+      use our own concept. The code was actually causing problems for 
+      Craig Rodrigues <rodrigc@mediaone.net>, thanks for reporting.
+
 Mon Mar 12 01:01:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AV_Core.h (TAO_AV_Core): deactivate_servant()
