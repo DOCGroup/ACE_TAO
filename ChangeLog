@@ -1,4 +1,11 @@
-Tue NOv 14 14:19:42 2000  Darrell Brunsch <brunsch@uci.edu>
+Tue Nov 14 17:43:26 2000  Steve Huston  <shuston@riverace.com>
+
+        * examples/Reactor/Proactor/test_aiocb_ace.cpp: Fixed to work
+          correctly if one of the aio ops completes, but not the other,
+          during a pass through the Test_Aio::do_aio loop. Thanks to
+          John Buckman <john@lyris.com> for reporting this.
+
+Tue Nov 14 14:19:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Log_Record.cpp:
 
