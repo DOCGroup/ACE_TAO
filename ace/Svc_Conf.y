@@ -27,7 +27,7 @@ ACE_Obstack *ace_obstack;
 %type <type_> type status
 %type <parse_node_> dynamic static suspend resume remove module_list stream
 %type <parse_node_> stream_modules module svc_config_entry 
-%type <ACE_Static_Node_> stream_ops
+%type <static_node_> stream_ops
 %type <svc_record_> svc_location
 %type <location_node_> svc_initializer
 
@@ -94,9 +94,9 @@ stream
     {
       $$ = new ACE_Stream_Node ($2, $3);
     }
-  | ACE_USTREAM ACE_IDENT { $<ACE_Static_Node_>$ = new ACE_Static_Node ($2); } stream_modules
+  | ACE_USTREAM ACE_IDENT { $<static_node_>$ = new ACE_Static_Node ($2); } stream_modules
     {
-      $$ = new ACE_Dummy_Node ($<ACE_Static_Node_>3, $4);
+      $$ = new ACE_Dummy_Node ($<static_node_>3, $4);
     }
   ;
 
@@ -113,7 +113,7 @@ stream_modules
   : ACE_LBRACE 
     { 
       // Initialize left context...
-      $<ACE_Static_Node_>$ = $<ACE_Static_Node_>0; 
+      $<static_node_>$ = $<static_node_>0; 
     } 
    module_list ACE_RBRACE
     {
@@ -130,52 +130,52 @@ module_list
 module 
   : dynamic 
     {
-      ACE_ARGV args ($<ACE_Static_Node_>1->parameters ());
-      ACE_Module_Type *mt = get_module ($<ACE_Static_Node_>-1, $<ACE_Static_Node_>1);
+      ACE_ARGV args ($<static_node_>1->parameters ());
+      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1);
 
-      if (::strcmp ($<ACE_Static_Node_>1->name (), 
+      if (::strcmp ($<static_node_>1->name (), 
 		    ((MT_Module *) mt->object ())->name ()) != 0)
 	ACE_ERROR ((LM_ERROR, "warning, service name %s is different from Module name %s\n",
-		   $<ACE_Static_Node_>1->name (), ((MT_Module *) mt->object ())->name ()));
+		   $<static_node_>1->name (), ((MT_Module *) mt->object ())->name ()));
 
       if (mt->init (args.argc (), args.argv ()) == -1
-	  || ((ACE_Stream_Type *) ($<ACE_Static_Node_>-1)->record ()->type ())->push (mt) == -1)
+	  || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
 	{
 	  ACE_ERROR ((LM_ERROR, "dynamic initialization failed for Module %s\n",
-		     $<ACE_Static_Node_>1->name ()));
+		     $<static_node_>1->name ()));
 	  yyerrno++;
 	}
     }
   | static  
     { 
-      ACE_Module_Type *mt = get_module ($<ACE_Static_Node_>-1, $<ACE_Static_Node_>1->name ());
-      if (::strcmp ($<ACE_Static_Node_>1->name (), 
+      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
+      if (::strcmp ($<static_node_>1->name (), 
 		    ((MT_Module *) mt->object ())->name ()) != 0)
 	ACE_ERROR ((LM_ERROR, "warning, service name %s is different from Module name %s\n",
-		   $<ACE_Static_Node_>1->name (), ((MT_Module *) mt->object ())->name ()));
-      if (((ACE_Stream_Type *) ($<ACE_Static_Node_>-1)->record ()->type ())->push (mt) == -1)
+		   $<static_node_>1->name (), ((MT_Module *) mt->object ())->name ()));
+      if (((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
 	yyerrno++;
     }
   | suspend 
     { 
-      ACE_Module_Type *mt = get_module ($<ACE_Static_Node_>-1, $<ACE_Static_Node_>1->name ());
+      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
       if (mt != 0)
 	mt->suspend ();
     }
   | resume  
     {
-      ACE_Module_Type *mt = get_module ($<ACE_Static_Node_>-1, $<ACE_Static_Node_>1->name ());
+      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
       if (mt != 0)
 	mt->resume ();
     }
   | remove  
     { 
-      ACE_Module_Type *mt = get_module ($<ACE_Static_Node_>-1, $<ACE_Static_Node_>1->name ());
+      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
       if (mt != 0 
-	  && ((ACE_Stream_Type *) ($<ACE_Static_Node_>-1)->record ()->type ())->remove (mt) == -1)
+	  && ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->remove (mt) == -1)
 	{
 	  ACE_ERROR ((LM_ERROR, "cannot remove Module_Type %s from STREAM_Type %s\n",
-		     $<ACE_Static_Node_>1->name (), ($<ACE_Static_Node_>-1)->name ()));
+		     $<static_node_>1->name (), ($<static_node_>-1)->name ()));
 	  yyerrno++;
 	}
     }
