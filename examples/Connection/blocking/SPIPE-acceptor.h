@@ -8,11 +8,12 @@
 #include "ace/Acceptor.h"
 #include "ace/SPIPE_Stream.h"
 #include "ace/SPIPE_Acceptor.h"
+#include "ace/Asynch_IO.h"
 
 // This is the class that does the work once the ACE_Oneshot_Acceptor
 // has accepted a connection.
 
-class Svc_Handler : public ACE_Svc_Handler <ACE_SPIPE_STREAM, ACE_NULL_SYNCH>
+class Svc_Handler : public ACE_Svc_Handler <ACE_SPIPE_STREAM, ACE_NULL_SYNCH>, public ACE_Handler
 {
 public:
   Svc_Handler (void);
@@ -20,13 +21,13 @@ public:
 
   virtual int open (void *);
 
-  virtual ACE_Message_Block *get_message (void);
-
-  virtual int handle_input_complete (ACE_Message_Block *msg, 
-				    long bytes_transfered);
+  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  // This is called when asynchronous read from the socket complete
   // Handle data from the client.
 
 private:
+  ACE_Asynch_Read_Stream ar_;
+  ACE_Message_Block mb_;
 };
 
 class IPC_Server : public ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>
@@ -61,3 +62,4 @@ private:
 };
 
 #endif /* SP_ACCEPTOR_H */
+

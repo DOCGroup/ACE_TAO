@@ -9,8 +9,12 @@
 #include "SPIPE-acceptor.h"
 
 Svc_Handler::Svc_Handler (void)
+  : mb_ (BUFSIZ + 1)
 {
+  // An extra byte for null termination.
+  this->mb_.size (BUFSIZ);
 }
+
 
 Svc_Handler::~Svc_Handler (void)
 {
@@ -21,35 +25,25 @@ Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "client connected on handle %d\n",
 	      this->peer ().get_handle ()));
-  return ACE_Service_Config::proactor ()->initiate 
-    (this, ACE_Event_Handler::READ_MASK);
+  if (this->ar_.open (*this, this->peer ().get_handle ()) == -1)
+    return -1;  
+  return this->ar_.read (this->mb_, this->mb_.size ());
 }
 
-ACE_Message_Block *
-Svc_Handler::get_message (void)
+void 
+Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 {
-  // An extra byte for null termination.
-  ACE_Message_Block *message = 
-    new ACE_Message_Block (BUFSIZ + 1);
-  message->size (BUFSIZ);
-  return message;
-}
-
-int 
-Svc_Handler::handle_input_complete (ACE_Message_Block *msg, 
-				    long bytes_transfered)
-{
-  if (bytes_transfered > 0)
+  if (result.success () && result.bytes_transferred () > 0)
     {
-      msg->base ()[msg->length ()] = '\0';
+      result.message_block ().rd_ptr ()[result.message_block ().length ()] = '\0';
       // Print out the message received from the server.
-      ACE_DEBUG ((LM_DEBUG, "(%t) message size %d.\n", msg->length ()));
-      ACE_DEBUG ((LM_DEBUG, "%s", msg->rd_ptr ()));
+      ACE_DEBUG ((LM_DEBUG, "(%t) message size %d.\n", result.message_block ().length ()));
+      ACE_DEBUG ((LM_DEBUG, "%s", result.message_block ().rd_ptr ()));
       
-      return 1; // Reinvoke a recv() operation.
+      this->ar_.read (this->mb_, this->mb_.size ());
     }
   else
-    return -1; // Close down.
+    ACE_Service_Config::end_proactor_event_loop ();
 }
 
 IPC_Server::IPC_Server (void)
