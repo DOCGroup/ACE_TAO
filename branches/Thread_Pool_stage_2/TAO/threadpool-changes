@@ -181,6 +181,10 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    <allow_borrowing> are disabled since we do not support
 	    them.
 
+          - (create_dynamic_threads): In addition to the default flags
+            (THR_NEW_LWP and THR_JOINABLE), add in flags to set the
+            scope and scheduling policies when creating RT threads.
+
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp
 	  (set_default_server_protocol_policy): Don't include all the
 	  protocols that the ORB knows about in the default server
@@ -199,6 +203,21 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           
           - (Initializer): Removed.       
 
+          - (init): Handle the scheduling policy variable in terms of
+            THR_SCHED_* values instead of ACE_SCHED_* values since
+            ACE_OS::thr_create expects THR_SCHED_* values.
+
+            However, ACE_Sched_Params::priority_min() and
+            ACE_Sched_Params::priority_max() expect ACE_SCHED_*
+            values.  Therefore, a conversion from THR_SCHED_* values
+            to ACE_SCHED_* values is done in
+            TAO_RT_ORBInitializer::pre_init().
+
+            Also, added the ability for the user to specify the
+            scheduling scope of the RT threads through the new
+            ORBScopePolicy option.  The option supports the PROCESS
+            and SYSTEM scopes with PROCESS being the default.
+  
 	* tao/RTCORBA/RT_ORB.cpp:
 
 	  - (TAO_RT_ORB): Cache the <tp_manager> from the
@@ -207,6 +226,9 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - (pre_init): Register the
             RT_Thread_Lane_Resources_Manager_Factory with the service
             configurator.
+
+         - (TAO_RT_CORBA_Priority_Normalizer): Removed since it was no
+           longer needed.
 
 	* tao/RTCORBA/RT_Mutex.cpp (try_lock): Make sure that
 	  mutex::tryacquire() returning -1 with errno == EBUSY is not
@@ -223,6 +245,21 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - Replaced TAO_Default_Endpoint_Selector with
 	    TAO_RT_Default_Endpoint_Selector so that we are sure to
 	    take private connection into account.
+
+        * tao/RTCORBA/Direct_Priority_Mapping.cpp:
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:        
+        
+          - Removed special code in the constructors that was added to
+            handle incorrect priorities reported by
+            ACE_Sched_Params::priority_min() and
+            ACE_Sched_Params::priority_max().  This code was not
+            needed after Joe's fixes.
+
+          - Changed <policy_> type from int to long.
+
+	* tao/RTCORBA/RT_ORBInitializer.cpp (pre_init): Set the
+          scheduling policy and scope policy into ORB Parameters.
+          Also, converted THR_SCHED_* values into ACE_SCHED_* values.
 
 	* tao/RTCORBA/RTCORBA.cpp:
 
@@ -304,6 +341,9 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
          - (poa_extension_initializer): Removed since it was no longer
            needed.
 
+         - (TAO_CORBA_Priority_Normalizer): Removed since it was no
+           longer needed.
+
          - (resource_factory_from_service_config_,
             client_factory_from_service_config_, 
             server_factory_from_service_config_):
@@ -322,6 +362,9 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB.cpp (create_stub_object): Removed unused method.  In
 	  addition, stub creation really belongs to the POA.
+
+	* tao/param.cpp: Added the scheduling policy and scope policy
+          for RTCORBA threads created by the ORB.
 
 	* tao/Tagged_Profile.cpp (extract_object_key): 
 	* tao/IIOP_Transport.cpp (set_bidir_context_info): 
@@ -587,10 +630,6 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  Removed Reactor_Per_Priority.
 	
-	* tests/RTCORBA/check_supported_priorities.cpp: Common check
-	  used by several RT tests to make sure multiple priorities
-	  are supported.
-
 	* tests/RTCORBA/Policy_Combinations: New test added that
           combines and tests several RT policies in different ways.
 
@@ -629,6 +668,41 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             Without Lanes   YES   SERVER_DECLARED
             With Lanes      YES   CLIENT_PROPAGATED
             With Lanes      YES   SERVER_DECLARED
+
+	* tests/RTCORBA/Linear_Priority: This is a test for the Linear
+          Priority mapping in TAO.  In addition, this test combines
+          and tests several RT policies in different ways.  This test
+          can also be used for testing the different scheduling
+          policies (e.g., FIFO, RR, OTHER) by using the ORBSchedPolicy
+          and ORBScopePolicy options in svc.conf file.
+
+          - The server can be setup to use bands or no bands and
+            thread lanes or no lanes.
+
+          - The client can be setup to use bands or no bands and
+            different invocation priorities.  It creates a thread for
+            each invocation priority and issues multiple requests to
+            the server from each thread.
+
+          - The following policy combinations are tested in this
+            example:
+            __________________________________________________
+
+            Server-side   Thread   Client-side  Multi-priority
+               Bands       Lanes      Bands        Clients
+            __________________________________________________
+
+                NO          NO          NO           NO
+                YES         NO          NO           NO
+                NO          YES         NO           NO
+                YES         YES         NO           NO
+                NO          NO          YES          NO
+                NO          YES         YES          NO
+                NO          NO          NO           YES
+                YES         NO          NO           YES
+                YES         YES         NO           YES      
+                NO          NO          YES          YES
+                NO          YES         YES          YES
 
 	* tests/RTCORBA/Thread_Pool:
 
@@ -758,8 +832,9 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  - README: Updated to reflect changes in the test.
 
-	* tests/RTCORBA/check_supported_priorities.cpp: New file for
-	  checking support for multiple priority levels.
+	* tests/RTCORBA/check_supported_priorities.cpp: Common check
+	  used by several RT tests to make sure multiple priorities
+	  are supported.
 
 	* tests/RTCORBA/RTCORBA_tests.dsw: 
 	* tests/RTCORBA/Makefile: 
@@ -812,3 +887,6 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
           Updated RTCORBA documentation to reflect new thread-pool
           support.
+
+        * docs/Options.html: Added documentation for new
+          -ORBScopePolicy option.
