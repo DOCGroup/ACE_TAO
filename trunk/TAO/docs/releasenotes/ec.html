@@ -8,8 +8,7 @@
 </HEAD>
 <BODY TEXT="#000000" BGCOLOR="#FFFFFF">
 
-<H3>
-Event Service Status</H3>
+<H3>TAO's Real-time Event Service</H3>
 Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
 <H4>
 Last Updated: $Date$</H4>
@@ -49,12 +48,6 @@ The Scheduling Service seems to compute proper schedules, but it is not
 possible to download them, apparently there is a marshalling problem for
 sequences of complex structures.</DD>
 
-<BR>&nbsp;
-<P>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
 <P>Due to this problem we have been unable to test the run-time scheduler
 and performance it is impossible to complete performance measurements and
 optimizations: the (global) scheduling service latency and overhead is
@@ -62,7 +55,8 @@ at least as large as the EC itself.
 <P><B>Note:</B> This does not seem to be the case anymore, but the comment
 will remain here until I can confirm that the problem dissapeared.
 <DT>
-<I>Run-time scheduler requires re-link</I></DT>
+
+<P><I>Run-time scheduler requires re-link</I></DT>
 
 <DD>
 During a normal execution of the system there is no need to use the a global
@@ -70,12 +64,6 @@ Real-time Scheduling Service, a faster, collocated implementation for the
 service is available. Obviously the scheduling information is precomputed
 in some config run.</DD>
 
-<BR>&nbsp;
-<P>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
 <P>Unfortunately the current scheme requires a relink of all the involved
 applications against the generated tables for the run-time scheduling service.
 <P>We should be able to download the schedule to the interested parties,
@@ -90,27 +78,16 @@ the global scheduler pre-loads this schedule and the clients simply download
 the precomputed schedule, and all scheduling queries are to a local scheduling
 service, without any further contact to the global instance.
 <DT>
-<I>Users have no control over service collocations</I></DT>
+<P><I>Users have no control over service collocations</I></DT>
 
-<BR>&nbsp;
-<P>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
 <P>The user should have complete control of services collocation, using
 ACE Service Configurator; currently the services must be explicitly instantiated
 by the user.
 <DT>
-<I>The <TT>TAO_EC_Gateway_IIOP</TT> objects publish events coming from
+
+<P><I>The <TT>TAO_EC_Gateway_IIOP</TT> objects publish events coming from
 multiple suppliers</I></DT>
 
-<BR>&nbsp;
-<P>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
 <P>This objects receive the events from a "remote" EC and pushes them into
 a "local" EC, it subscribes to the disjunction of the events in the local
 consumers and it uses the same event types/<TT>supplier_ids</TT> to connect
@@ -120,14 +97,9 @@ may end up with an invalid publication. We need to have different local
 suppliers for each remote <TT>supplier_id</TT> potentially shared between
 all the local <TT>Gateways</TT>.
 <DT>
-<I>There is no <TT>CosEventChannel</TT> interface</I></DT>
 
-<BR>&nbsp;
-<P>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
+<P><I>There is no <TT>CosEventChannel</TT> interface</I></DT>
+
 <P>This is more of a warning than an issue. TAO's Real-time Event Channel
 is <B>not</B> an implementation of the CORBAservices Event Channel; it
 provides a similar set of features, and the interfaces are also similar,
@@ -140,14 +112,8 @@ algorithms uses for normal function calls.
 on top of TAO's Real-time Event Channel, but this is a low priority task,
 since our sponsors have no need for such a beast.
 <DT>
-<I>Further details:</I></DT>
+<P><I>Further details:</I></DT>
 
-<BR>&nbsp;
-<P>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
 <P>Many lower level issues and tasks can be found in the <A HREF="TODO.html">TODO
 list</A>.</DL>
 
@@ -163,12 +129,6 @@ Compile everything under <TT>$TAO_ROOT/orbsvcs</TT>, this needs, obviously,
 <TT>$TAO_ROOT/tao</TT>
 and the IDL compiler in <TT>$TAO_ROOT/TAO_IDL</TT>.</LI>
 
-<BR>&nbsp;
-<P>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
-<BR>&nbsp;
 <P>Run the naming service, the scheduling service, the event service and
 the test in <TT>$TAO_ROOT/TAO/orbsvcs/tests/Event_Latency</TT>; remember
 to give a different port to each one, using the <TT>-ORBport</TT> option.
@@ -243,48 +203,6 @@ to implement custom marshalling or late dermashalling of the event payload.
 Future versions of the test will help measuring the EC throughput, hence
 the name.</LI>
 </UL>
-
-<HR WIDTH="100%">
-<H3>
-COS-compliant Event Service Status</H3>
-
-<H4>
-Last Updated: Sat Jan&nbsp; 2 01:17:33 CST 1999</H4>
-Point of contact: <A HREF="mailto:pradeep@cs.wustl.edu">Pradeep Gore</A>
-<P>The COS compliant Event Service implements the <A HREF="http://siesta.cs.wustl.edu/~coryan/Docs/formal/97-12-11.pdf">Event
-Service Specification</A>
-<BR>This implementation is based on the Real Time Event service.
-<H3>
-Features in this release:</H3>
-
-<UL>
-<LI>
-The Event Channel (<TT>$TAO_ROOT/orbsvcs/orbsvcs/CosEvent</TT>) supports
-the <TT>push </TT>style event&nbsp; communication.</LI>
-
-<LI>
-A simple test (<TT>$TAO_ROOT/orbsvcs/tests/CosEC_Basic</TT>) demonstrates
-how to create and use the event channel.</LI>
-</UL>
-
-<H3>
-Current Work:</H3>
-
-<UL>
-<LI>
-<TT>Event Service</TT>: The Event Service will create an event channel
-and register it with the naming service, Push style consumers and producers</LI>
-
-<BR>can then connect to the service and send /receive events.
-<LI>
-<TT>CosEC_Multiple</TT>:&nbsp; This test demonstrates how multiple CosEC's
-connect to one RtEC and how multiple consumers and producers exchange<BR>
-events in this configuration.</LI>
-
-<BR>&nbsp;
-<P>&nbsp;</UL>
-
-<UL>&nbsp;</UL>
 
 </BODY>
 </HTML>
