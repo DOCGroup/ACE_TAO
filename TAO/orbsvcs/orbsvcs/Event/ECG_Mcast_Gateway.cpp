@@ -293,7 +293,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
 
   if (endpoint != 0)
   {
-    refendpoint = endpoint;
+    refendpoint.reset (endpoint);
   }
   else
   {
@@ -430,7 +430,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
       ACE_NEW_RETURN (h,
                       TAO_ECG_Simple_Mcast_EH (receiver),
                       handler);
-      handler = h;
+      handler.reset (h);
 
       h->reactor (reactor);
       if (h->open (address_server_arg, nic) != 0)
@@ -443,7 +443,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
       ACE_NEW_RETURN (h,
                       TAO_ECG_Mcast_EH (receiver, nic),
                       handler);
-      handler = h;
+      handler.reset (h);
 
       h->reactor (reactor);
 
@@ -457,7 +457,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
       ACE_NEW_RETURN (h,
                       TAO_ECG_UDP_EH (receiver),
                       handler);
-      handler = h;
+      handler.reset (h);
       h->reactor (reactor);
 
       ACE_INET_Addr ipaddr;
