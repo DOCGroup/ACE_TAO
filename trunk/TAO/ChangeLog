@@ -1,3 +1,13 @@
+Mon Nov 24 17:57:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/Notify/Lanes/Makefile:
+	* orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc:
+	* orbsvcs/examples/Notify/ThreadPool/Makefile:
+	* orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:
+	* orbsvcs/tests/Notify/RT_lib/Makefile:
+
+	  These tests don't build in a minimum_corba build.
+
 Mon Nov 24 15:24:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/IFR_Service/IFR_Service.dsp:
