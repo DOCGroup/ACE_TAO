@@ -39,16 +39,15 @@ main (int argc, char *argv[])
               "\n\tIDL_Cubit: server\n\n"));
   ACE_TRY_NEW_ENV
     {
-      if (cubit_server.init (argc, argv, ACE_TRY_ENV) == -1)
+      int ret = cubit_server.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (ret == -1)
         {
-          ACE_TRY_ENV.print_exception ("Initialization Exception");
           return -1;
-        }
-      else
-        {
-          cubit_server.run (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+      cubit_server.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
