@@ -1,3 +1,7 @@
+Tue Jul 20 21:31:50 1999  Jim Rogers  jrogers@viasoft.com
+
+        * ace/config-mvs.h: added ACE_HAS_EXCEPTIONS.
+
 Tue Jul 20 21:23:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.* (next_key,total_keys):  with TSS_EMULATION,
