@@ -167,8 +167,6 @@ IFR_DII_Client::get_operation_def (CORBA::Environment &ACE_TRY_ENV)
 void 
 IFR_DII_Client::create_dii_request (CORBA::Environment &ACE_TRY_ENV)
 {
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
   this->req_ = this->target_->_request (this->op_name.in (),
                                         ACE_TRY_ENV);
   ACE_CHECK;
@@ -232,19 +230,11 @@ IFR_DII_Client::create_dii_request (CORBA::Environment &ACE_TRY_ENV)
           }
       }
     }
-
-#else
-
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 }
 
 void 
 IFR_DII_Client::invoke_and_display (CORBA::Environment &ACE_TRY_ENV)
 {
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
   this->req_->invoke (ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -289,12 +279,6 @@ IFR_DII_Client::invoke_and_display (CORBA::Environment &ACE_TRY_ENV)
                       ACE_TEXT ("status: out of stock\n")));
         }
     }
-
-#else
-
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 }
 
 
