@@ -24,12 +24,6 @@
 #include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
-// Default address for shared memory mapped files and SYSV shared memory
-// (defaults to 64 M).
-# if !defined (ACE_DEFAULT_BASE_ADDR)
-#   define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024))
-# endif /* ACE_DEFAULT_BASE_ADDR */
-
 #if defined (ACE_HAS_MALLOC_STATS)
 #  include "ace/Atomic_Op.h"
 #  if defined (ACE_HAS_THREADS)

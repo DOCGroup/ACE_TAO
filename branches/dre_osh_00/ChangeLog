@@ -1,3 +1,23 @@
+Sun May 11 14:42:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Moved more code, as listed below.
+
+        * ace/Basic_Types.h:
+          Changed #includes to use new headers.  Moved MAXPATHLEN
+          to ace/os_include/limits.h.
+
+        * ace/Malloc.h:
+        * ace/Default_Constants.h:
+          Moved ACE_DEFAULT_BASE_ADDR here.
+
+        * ace/os_include/limits.h:
+          Added conditional include of <sys/param.h>.  Moved howmany
+          macro and MAXPATHLEN here.  Added POSIX PATH_MAX.
+
+        * ace/os_include/time.h:
+          Moved timespec_t typedef for ACE_PSOS here.
+
 Sat May 10 21:39:05 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:
