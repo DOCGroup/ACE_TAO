@@ -273,7 +273,7 @@ TAO_Marshal_String::deep_free (CORBA::TypeCode_ptr,
 			       CORBA::Environment &)
 {
   CORBA::string_free (*(CORBA::String *) source);
-  //  *(CORBA::String *)source = 0;
+  *(CORBA::String *)source = 0;
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
