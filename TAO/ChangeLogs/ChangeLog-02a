@@ -1,3 +1,9 @@
+Thu Jul 12 20:40:51 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+
+	  Corrected placement of an ACE_CHECK_RETURN statement.
+
 Thu Jul 12 20:29:42 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.i (resolve_rt_orb, resolve_rt_current):

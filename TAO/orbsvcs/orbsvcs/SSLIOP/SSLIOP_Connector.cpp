@@ -161,8 +161,9 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   if (!CORBA::is_nil (trust_policy.in ()))
     {
       tmp_trust = trust_policy->trust (ACE_TRY_ENV);
-      trust = &tmp_trust;
       ACE_CHECK_RETURN (-1);
+
+      trust = &tmp_trust;
     }
 
   // Check if the user overrode the default Quality-of-Protection for
