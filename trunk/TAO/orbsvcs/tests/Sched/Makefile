@@ -11,12 +11,7 @@ endif
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs/orbsvcs/Sched \
             -I$(TAO_ROOT)/orbsvcs \
-	    -I$(TAO_ROOT)
-
-ifdef quantify
-  CCFLAGS += -Dquantify
-  CPPFLAGS += -I/pkg/purify/quantify-2.1-solaris2
-endif # quantify
+            -I$(TAO_ROOT)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
