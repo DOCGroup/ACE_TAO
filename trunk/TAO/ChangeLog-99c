@@ -1,3 +1,10 @@
+Tue Jun 08 00:15:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Loader/Servant_Activator.cpp (ServantActivator_i):
+	* examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant):
+
+	  Fixed void* to function pointer cast.
+
 Tue Jun  8 00:19:02 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * Files modified: Acceptor_Registry.cpp, Acceptor_Registry.h,
