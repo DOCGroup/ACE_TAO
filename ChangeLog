@@ -1,3 +1,9 @@
+Wed Apr 24 18:53:56 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/rules.local.GNU (clean.local): Reverted the
+	  change "Wed Apr 24 16:08:30 2002  Balachandran Natarajan
+	  <bala@cs.wustl.edu>" since it is bogus.
+
 Wed Apr 24 16:08:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/rules.local.GNU: Added a rule to clean up
