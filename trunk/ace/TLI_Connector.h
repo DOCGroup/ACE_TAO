@@ -93,6 +93,10 @@ public:
   int reset_new_handle (ACE_HANDLE handle);
   // Resets any event associations on this handle
 
+  // = Meta-type info
+  typedef ACE_INET_Addr PEER_ADDR;
+  typedef ACE_TLI_Stream PEER_STREAM;
+
   void dump (void) const;
   // Dump the state of an object.
 
