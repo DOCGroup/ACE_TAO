@@ -1,3 +1,8 @@
+Wed Aug 25 14:49:11 2004  Rich Seibel <seibel_r@ociweb.com>
+
+        * ace/Basic_Types.h:
+        added __x86_64 to long double to satisy opteron.
+
 Wed Aug 25 11:15:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ACE-INSTALL.html:
