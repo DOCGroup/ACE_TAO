@@ -1,3 +1,13 @@
+Fri Sep 24 12:39:31 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* build/Linux/include/makeinclude/platform_linux.GNU:
+	  Provide reasonable defaults for Boost.Test
+
+	* bin/MakeProjectCreator/config/boost_unit_test.mpb:
+	  Different sites may have different configurations for boost,
+	  made the options needed to compile with it configurable via the
+	  platform_macros.GNU file.
+
 Fri Sep 24 10:21:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Server_Concurrrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:

@@ -3,5 +3,9 @@
 
 project {
   requires += boost
-  lit_libs += boost_unit_test_framework
+  verbatim(gnuace,local) {
+    CPPFLAGS += $(PLATFORM_BOOST_CPPFLAGS)
+    LDFLAGS  += $(PLATFORM_BOOST_LDFLAGS)
+    LDLIBS   += $(PLATFORM_BOOST_UTF_LIBS)
+  }
 }
