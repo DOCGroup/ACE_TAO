@@ -130,6 +130,12 @@ namespace TAO
     typedef Inout_UB_String_SArgument_T<T,T_var>        inout_arg_val;
     typedef Out_UB_String_SArgument_T<T,T_var>          out_arg_val;
     typedef Ret_UB_String_SArgument_T<T,T_var>          ret_val;
+
+    typedef Const_Argument_T<in_type>                   in_arg_base;
+    typedef Mutable_Argument_T<inout_type>              inout_arg_base;
+    typedef Mutable_Argument_T<inout_type>              out_arg_base;
+    typedef Mutable_Argument_T<inout_type>              ret_base;
+
   };
 };
 

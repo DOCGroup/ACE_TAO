@@ -143,12 +143,6 @@ namespace TAO
     typedef Out_Var_Size_Argument_T<T,T_out>            out_arg_val;
     typedef Ret_Var_Size_Argument_T<T,T_var>            ret_val;
 
-    typedef Const_Argument_T<in_type>                   in_arg_base;
-    typedef Mutable_Argument_T<inout_type>              inout_arg_base;
-    typedef Mutable_Argument_T<ret_type &>              out_arg_base;
-    typedef Mutable_Argument_T<ret_type &>              ret_base;
-
-
     typedef Var_Size_Tag                                idl_tag;
   };
 }

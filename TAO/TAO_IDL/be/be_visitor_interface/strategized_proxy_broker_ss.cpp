@@ -100,6 +100,9 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
 //       << "->servant_orb_var ()->orb_core ()"
 //       << be_uidt_nl
 //       << ");" << be_uidt_nl << be_nl
+      << "TAO_Abstract_ServantBase * const servant ="
+      << " obj->_servant ();" << be_nl
+      << be_nl
       << "TAO_Collocated_Skeleton collocated_skel;" << be_nl
       << "int const status = servant->_find (op," << be_nl
       << "                                   collocated_skel," << be_nl
@@ -110,9 +113,6 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "ACE_THROW (CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, "
       << "CORBA::COMPLETED_NO));" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "TAO_Abstract_ServantBase * const servant ="
-      << " obj->_servant ();" << be_nl
-      << be_nl
       << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl
       << "collocated_skel (servant," << be_nl

@@ -47,7 +47,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
-      *os << "static CORBA::TypeCode_ptr const _tao_exceptions[] = " << be_idt_nl;
+      *os << "static CORBA::TypeCode_ptr const exceptions[] = " << be_idt_nl;
       *os << "{" << be_idt_nl;
 
       // Initialize an iterator to iterate thru the exception list.
@@ -69,14 +69,14 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
         }
 
       *os << be_uidt_nl << "};" << be_uidt_nl
-          << "static size_t const _tao_nexceptions = "
+          << "static size_t const nexceptions = "
           << node->exceptions()->length () << ";";
     }
   else
     {
-      *os << "static CORBA::TypeCode_ptr const _tao_exceptions[] = {};"
+      *os << "static CORBA::TypeCode_ptr const exceptions[] = {};"
           << be_nl
-          << "static size_t const _tao_nexceptions = 0;";
+          << "static size_t const nexceptions = 0;";
     }
 
   *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl << be_nl;

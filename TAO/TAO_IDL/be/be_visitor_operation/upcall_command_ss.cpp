@@ -109,7 +109,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
 
   if (!node->void_return_type ())
     {
-      os << "static_cast<TAO::Arg_Traits< ";
+      os << "static_cast<TAO::SArg_Traits< ";
 
       this->gen_arg_template_param_name (node,
                                          node->return_type (),
@@ -189,7 +189,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
         AST_Argument::narrow_from_decl (si.item ());
 
       os << (index == 1 ? "" : ",") << be_nl
-         << "static_cast<TAO::Arg_Traits< ";
+         << "static_cast<TAO::SArg_Traits< ";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),

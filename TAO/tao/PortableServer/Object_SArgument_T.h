@@ -135,6 +135,12 @@ namespace TAO
     typedef Inout_Object_SArgument_T<T_ptr,T_var>         inout_arg_val;
     typedef Out_Object_SArgument_T<T_ptr,T_var,T_out>     out_arg_val;
     typedef Ret_Object_SArgument_T<T_ptr,T_var>           ret_val;
+
+    typedef Const_Argument_T<in_type>                     in_arg_base;
+    typedef Mutable_Argument_T<inout_type>                inout_arg_base;
+    typedef Mutable_Argument_T<out_type>                  out_arg_base;
+    typedef Mutable_Argument_T<inout_type>                ret_base;
+
   };
 }
 

@@ -110,12 +110,14 @@ protected:
   /// Assignment operator.
   TAO_ServantBase &operator= (const TAO_ServantBase &);
 
-  virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                            void *servant_upcall
+  virtual void synchronous_upcall_dispatch (TAO_ServerRequest & req,
+                                            void * servant_upcall,
+                                            void * derived_this
                                             ACE_ENV_ARG_DECL);
 
-  virtual void asynchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                             void *servant_upcall
+  virtual void asynchronous_upcall_dispatch (TAO_ServerRequest & req,
+                                             void * servant_upcall,
+                                             void * derived_this
                                              ACE_ENV_ARG_DECL);
 
 protected:

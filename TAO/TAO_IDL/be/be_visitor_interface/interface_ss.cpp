@@ -254,7 +254,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "void " << full_skel_name
       << "::_interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request, " << be_nl
-      << "void * servant_upcall" << be_nl
+      << "void * servant_upcall," << be_nl
+      << "void * servant" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
@@ -272,10 +273,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // Get the right object implementation.
   *os << node->full_skel_name () << " * const impl =" << be_idt_nl
       << "static_cast<" << be_idt_nl
-      << node->full_skel_name () << " *> (" << be_idt_nl
-      << "static_cast<TAO_Object_Adapter::Servant_Upcall *> (" << be_idt_nl
-      << "servant_upcall)->servant ()" << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl << be_nl;
+      << node->full_skel_name () << " *> (servant);" << be_uidt
+      << be_uidt_nl;
 
   *os << "CORBA::InterfaceDef_ptr _tao_retval = " << be_idt_nl
       << "impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);"
@@ -312,7 +311,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << "void " << full_skel_name
         << "::_component_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
-        << "void * servant_upcall" << be_nl
+        << "void * servant_upcall," << be_nl
+        << "void * servant" << be_nl
         << "ACE_ENV_ARG_DECL" << be_uidt_nl
         << ")" << be_uidt_nl;
     *os << "{" << be_idt_nl;
@@ -362,10 +362,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     // Get the right object implementation.
     *os << node->full_skel_name () << " * const impl =" << be_idt_nl
         << "static_cast<" << be_idt_nl
-        << node->full_skel_name () << " *> (" << be_idt_nl
-        << "static_cast<TAO_Object_Adapter::Servant_Upcall *> (" << be_idt_nl
-        << "servant_upcall)->servant ()" << be_uidt_nl
-        << ");" << be_uidt << be_uidt << be_uidt_nl << be_nl;
+        << node->full_skel_name () << " *> (servant);" << be_uidt
+        << be_uidt_nl;
 
     // Upcall_Command instantiation.
     *os << be_nl
@@ -375,11 +373,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     if (!get_component.void_return_type ()
         || get_component.argument_count () > 0)
       {
-        // server_request.operations_details () will be non-zero in the
+        // server_request.operation_details () will be non-zero in the
         // thru-POA collocation case.  Use them if available.
         *os << "," << be_nl
-            << "server_request.operations_details ()" << be_nl
-            << "? server_request.operations_details ()->args ()" << be_nl
+            << "server_request.operation_details ()" << be_nl
+            << "? server_request.operation_details ()->args ()" << be_nl
             << ": args";
       }
 
@@ -624,13 +622,14 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
 
   *os << "void " << node->full_skel_name ()
       << "::_dispatch (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *servant_upcall" << be_nl
+      << "TAO_ServerRequest & req," << be_nl
+      << "void * servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "this->synchronous_upcall_dispatch (req," << be_nl
-      << "                                   servant_upcall" << be_nl
+      << "                                   servant_upcall," << be_nl
+      << "                                   this" << be_nl
       << "                                   ACE_ENV_ARG_PARAMETER);"
       << be_uidt_nl;
   *os << "}";
