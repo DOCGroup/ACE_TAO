@@ -532,18 +532,15 @@ main (int argc, char *argv[])
 	  exit (-1);
 	  /* NOTREACHED */
 	case 0:
+	  signal (SIGCHLD, SIG_IGN);
+	  server (0);
+	  break;
+	  /* NOTREACHED */
+	default:
 	  client (&server_addr);
-
 	  // Shutdown the server process.
 	  if (ACE_OS::kill (pid, SIGINT) == 0)
             ACE_OS::wait ();
-
-	  /* NOTREACHED */
-	default:
-	  signal (SIGCHLD, SIG_IGN);
-	  server (0);
-
-	  break;
 	  break;
 	  /* NOTREACHED */
 	}
