@@ -344,11 +344,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO_UIOP_Endpoint_Info
 #if !defined _TAO_CDR_OP_TAO_UIOPEndpointSequence_I_
 #define _TAO_CDR_OP_TAO_UIOPEndpointSequence_I_
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_Strategies_Export operator<< (
     TAO_OutputCDR &,
     const TAO_UIOPEndpointSequence &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_Strategies_Export operator>> (
     TAO_InputCDR &,
     TAO_UIOPEndpointSequence &
   );
