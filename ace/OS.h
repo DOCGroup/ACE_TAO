@@ -5447,6 +5447,7 @@ public:
   static int ioctl (ACE_HANDLE handle,
                     int cmd,
                     void * = 0);
+  // UNIX-style <ioctl>.
   static int ioctl (ACE_HANDLE socket,
 		    u_long io_control_code,
 		    void *in_buffer_p,
