@@ -3,10 +3,15 @@
 # This platform macros file is intended to work with
 # Digital UNIX 4.0 (OSF/1 4.0), using the cxx compiler..
 
-debug = 1
-exceptions = 1
-rtti = 1
-
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(exceptions))
+  exceptions = 1
+endif
+ifeq (,$(rtti))
+  rtti = 1
+endif
 ifeq (,$(threads))
   threads = 1
 endif
