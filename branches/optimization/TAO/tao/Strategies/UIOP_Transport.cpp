@@ -145,7 +145,6 @@ TAO_UIOP_Transport::recv (char *buf,
                                                    max_wait_time);
 }
 
-
 int
 TAO_UIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
                                           int block)

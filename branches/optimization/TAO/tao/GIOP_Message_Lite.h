@@ -253,6 +253,13 @@ private:
 
   /// A buffer that we will use to initialise the CDR stream
   char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
+
+  /// The InputCDR stream in which the incoming messages are
+  /// read. This will be used to decode the messages.
+  TAO_InputCDR input_cdr_;
+
+  /// The offset of the write pointer of the input cdr stream
+  size_t current_offset_;
 };
 
 

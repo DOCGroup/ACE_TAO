@@ -129,9 +129,9 @@ public:
    * not clear this this is the best place to specify this.  The actual
    * timeout values will be kept in the Policies.
    */
-  virtual ssize_t read (char *buf,
-                        size_t len,
-                        const ACE_Time_Value *s = 0) = 0;
+  ssize_t read (char *buf,
+                size_t len,
+                const ACE_Time_Value *s = 0);
 
 
   /// Fill into <output> the right headers to make a request.

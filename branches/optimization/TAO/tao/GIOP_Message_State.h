@@ -115,9 +115,6 @@ public:
   /// Request Id from the Fragment header
   CORBA::ULong request_id;
 
-  /// This is the InputCDR that will be used to decode the message.
-  TAO_InputCDR cdr;
-
   /**
    * The fragments are collected in a chain of message blocks (using
    * the cont() field).  When the complete message is received the

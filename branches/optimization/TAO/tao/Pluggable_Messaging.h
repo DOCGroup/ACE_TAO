@@ -141,7 +141,7 @@ public:
   virtual int is_ready_for_bidirectional (void) = 0;
 
   /// Are there any more messages that needs processing?
-  virtual int more_messages (void) = 0;
+  virtual int more_messages (void);
 };
 
 #if defined (__ACE_INLINE__)
