@@ -3,12 +3,20 @@ Sun Jul 19 22:21:17 1998  David L. Levine  <levine@cs.wustl.edu>
         * apps/gperf/src/new.cpp (new): wrapped assignment with
           parens where used as a conditional.
 
+        * apps/gperf/src/Iterator.cpp (Iterator),
+          List_Node.cpp (List_Node), Hash_Table.cpp (Hash_Table):
+          reordered initializers to match declaration order.
+
+        * apps/gperf/src/Hash_Table.cpp (~Hash_Table): cast sizeof
+          to int to avoid compiler (g++/Linux alpha) warning about
+          mismatch with %d format specifier.
+
 Sun Jul 19 00:48:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ACE.cpp (ldfind): Re-enabled searching for *d.dll before
-	  *.dll for debug version of ACE.  There was a premature return
-	  error in the logic.  This is now the default behavior and has to
-	  be disabled explicitly by defining ACE_DISABLE_DEBUG_DLL_CHECK.
+        * ace/ACE.cpp (ldfind): Re-enabled searching for *d.dll before
+          *.dll for debug version of ACE.  There was a premature return
+          error in the logic.  This is now the default behavior and has to
+          be disabled explicitly by defining ACE_DISABLE_DEBUG_DLL_CHECK.
 
 Sat Jul 18 22:51:59 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -16,8 +24,8 @@ Sat Jul 18 22:51:59 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Jul 18 22:48:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* There was a typo in the Makefile where CE-status should have
-	  been CE-status.txt.  Thanks to Nanbor for fixing this.
+        * There was a typo in the Makefile where CE-status should have
+          been CE-status.txt.  Thanks to Nanbor for fixing this.
 
 Sat Jul 18 22:14:07 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -25,90 +33,90 @@ Sat Jul 18 22:14:07 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Jul 18 21:11:52 1998  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_hpux_aCC.GNU: Added +W829 to suppress
-	  "string literal to char * is deprecated".  I was going to fix these
-	  in ACE, but TAO just wore me down... ;-)
+        * include/makeinclude/platform_hpux_aCC.GNU: Added +W829 to suppress
+          "string literal to char * is deprecated".  I was going to fix these
+          in ACE, but TAO just wore me down... ;-)
 
 Sat Jul 18 Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/Upgradable_RW_Test.cpp: Changed the time measurement
-	  completely. Before we meassured end-to-end. Now we meassure
-	  only the time spend in actual doing things. At the end
-	  all the time spend is summarized.
-	
-	* tests/Upgradable_RW_Test.h: Added this file, which contains
-	  definitions for the test.
+        * tests/Upgradable_RW_Test.cpp: Changed the time measurement
+          completely. Before we meassured end-to-end. Now we meassure
+          only the time spend in actual doing things. At the end
+          all the time spend is summarized.
+
+        * tests/Upgradable_RW_Test.h: Added this file, which contains
+          definitions for the test.
 
 Sat Jul 18 19:47:45 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/ACE.cpp: Looks like we are having some trouble with the
-	  loading of *d.dll before *.dll on NT, so it is now disabled
-	  by default (until the problem is solved).  To enable use:
-	  ACE_USE_DEBUG_DLL_CHECK.
+        * ace/ACE.cpp: Looks like we are having some trouble with the
+          loading of *d.dll before *.dll on NT, so it is now disabled
+          by default (until the problem is solved).  To enable use:
+          ACE_USE_DEBUG_DLL_CHECK.
 
 Sat Jul 18 13:51:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* apps/Makefile: Always compile the gperf directory by default
- 	  now.
+        * apps/Makefile: Always compile the gperf directory by default
+          now.
 
-	* ace/config-sunos5.5.h: Added a new flag called ACE_HAS_GPERF,
- 	  which should be enabled if the OS/compiler platform can compile
- 	  GPERF.  This will determine if we can use perfect hashing in
- 	  TAO!
+        * ace/config-sunos5.5.h: Added a new flag called ACE_HAS_GPERF,
+          which should be enabled if the OS/compiler platform can compile
+          GPERF.  This will determine if we can use perfect hashing in
+          TAO!
 
 Sat Jul 18 10:52:49 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* ace/Svc_Conf_l.cpp: 
-	* ace/Svc_Conf_y.cpp: 
-	Move the Id and added ACE_RCSID.
-	The #line commands changed their line numbers.
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp:
+        Move the Id and added ACE_RCSID.
+        The #line commands changed their line numbers.
 
-	* ace/Svc_Conf.l: 
-	* ace/Svc_Conf.y: 
-	Added an ACE_RCSID, and erased a few white spaces at the end.
+        * ace/Svc_Conf.l:
+        * ace/Svc_Conf.y:
+        Added an ACE_RCSID, and erased a few white spaces at the end.
 
-	* etc/Svc_Conf_l.cpp.diff: 
-	* etc/Svc_Conf_y.cpp.diff: 
-	Got rid of a couple of RCS Ids that were being "replaced" by the
-	patches. These were probably a maintenance problem and didn't
-	really add much. I also cleaned up the patches: there were a
-	couple of useless replacements (lines with white spaces at the
-	ends, etc.), and some of the line offsets were wrong (but patch
-	could still catch them with its fuzz factors). Now the patches
-	apply cleanly.
+        * etc/Svc_Conf_l.cpp.diff:
+        * etc/Svc_Conf_y.cpp.diff:
+        Got rid of a couple of RCS Ids that were being "replaced" by the
+        patches. These were probably a maintenance problem and didn't
+        really add much. I also cleaned up the patches: there were a
+        couple of useless replacements (lines with white spaces at the
+        ends, etc.), and some of the line offsets were wrong (but patch
+        could still catch them with its fuzz factors). Now the patches
+        apply cleanly.
 
 Sat Jul 18 9:00:00 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* DCS: Born 36 years ago, at this moment.  Yow, I've now become
-	  a "perfect square" ;-)
+        * DCS: Born 36 years ago, at this moment.  Yow, I've now become
+          a "perfect square" ;-)
 
 Fri Jul 17 18:30:10 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T.cpp (connect_svc_handler): The activation of
- 	  the newly created handler is moved outside the scope of the lock
- 	  of the cached connector.  This is necessary to avoid subtle
- 	  deadlock conditions with this lock and the Reactor lock.  Thanks
- 	  to Micheal for finding this race condition.
+        * ace/Strategies_T.cpp (connect_svc_handler): The activation of
+          the newly created handler is moved outside the scope of the lock
+          of the cached connector.  This is necessary to avoid subtle
+          deadlock conditions with this lock and the Reactor lock.  Thanks
+          to Micheal for finding this race condition.
 
 Fri Jul 17 13:53:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Threads/barrier2.cpp (ACE_MT_SYNCH>): Cleaned up the
-	  coding style in this example.
+        * examples/Threads/barrier2.cpp (ACE_MT_SYNCH>): Cleaned up the
+          coding style in this example.
 
-	* ace/TTY_IO.cpp (control): Added entries for 300 baud.  Thanks to
- 	  the ever vigilant Arturo Montes <mitosys@colomsat.com.co> for
- 	  reporting this.
+        * ace/TTY_IO.cpp (control): Added entries for 300 baud.  Thanks to
+          the ever vigilant Arturo Montes <mitosys@colomsat.com.co> for
+          reporting this.
 
 Fri Jul 17 14:51:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Makefile (CONTROLLED_FILES): Added CE-status to distribution.
-  	  Thanks to David for reminding this.
+        * Makefile (CONTROLLED_FILES): Added CE-status to distribution.
+          Thanks to David for reminding this.
 
 Fri Jul 17 12:48:26 1998  Steve Huston  <shuston@riverace.com>
 
-	* tests/Semaphore_Test.cpp: Removed unused variable, and disabled the
-	  test for platforms with POSIX semaphores since POSIX semaphores
-	  don't do timeouts (which this test stresses).
+        * tests/Semaphore_Test.cpp: Removed unused variable, and disabled the
+          test for platforms with POSIX semaphores since POSIX semaphores
+          don't do timeouts (which this test stresses).
 
 Fri Jul 17 07:32:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -190,14 +198,14 @@ Thu Jul 16 12:50:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
           executables regarding of how they get compiled.
 
           I modified the ldfind so that when a debug version ACE is
- 	  searching for a DLL file, it will first try to find the debug
- 	  version of that DLL by suffixing the name with 'd'.  If it can't
- 	  be found, it then searches for the name specified.  The release
- 	  version doesn't try to do this.  Now, we can specify only the
- 	  "normal" dll names in svc.conf files and ACE can pick up the
- 	  right dlls for you without changing svc.conf files.  However,
- 	  you need to follow the Win32 DLL naming convention as described
- 	  above.
+          searching for a DLL file, it will first try to find the debug
+          version of that DLL by suffixing the name with 'd'.  If it can't
+          be found, it then searches for the name specified.  The release
+          version doesn't try to do this.  Now, we can specify only the
+          "normal" dll names in svc.conf files and ACE can pick up the
+          right dlls for you without changing svc.conf files.  However,
+          you need to follow the Win32 DLL naming convention as described
+          above.
 
           I don't expect this feature to cause any backward compatibility
           problem.  However, if in the rare event, it does cause you
