@@ -30,7 +30,7 @@
 
 /**
  * @class CORBA_LocalObject
- @@ NW: It is not clear whether minimum CORBA should support
+ * @@ NW: It is not clear whether minimum CORBA should support
  * LocalObject or not.  I think it should.
  */
 class TAO_Export CORBA_LocalObject : public virtual CORBA_Object

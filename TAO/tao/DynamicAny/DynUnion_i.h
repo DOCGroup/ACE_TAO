@@ -26,6 +26,13 @@
 
 #include "DynUnion_i_T.h"
 
+#if defined (_MSC_VER)
+# if (_MSC_VER >= 1200)
+#  pragma warning(push)
+# endif /* _MSC_VER >= 1200 */
+# pragma warning (disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_DynamicAny_Export TAO_DynUnion_i : public virtual DynamicAny::DynUnion, public virtual TAO_Local_RefCounted_Object
 {
   // = TITLE
@@ -734,6 +741,10 @@ private:
   CORBA::ULong current_index_;
   // Index of the active member
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+# pragma warning(pop)
+#endif /* _MSC_VER */
 
 #include "ace/post.h"
 #endif /* TAO_DYNUNION_I_H */

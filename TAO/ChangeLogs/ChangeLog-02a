@@ -1,11 +1,31 @@
+Mon Mar 26 21:34:04 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/DynamicAny/DynAnyFactory.h:
+        * tao/DynamicAny/DynAny_i.h:
+        * tao/DynamicAny/DynArray_i.h:
+        * tao/DynamicAny/DynEnum_i.h:
+        * tao/DynamicAny/DynSequence_i.h:
+        * tao/DynamicAny/DynStruct_i.h:
+        * tao/DynamicAny/DynUnion_i.h:
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+        * orbsvcs/ImplRepo_Service/Locator.h:
+          Fixed warnings about inheritance via dominance.
+
+        * orbsvcs/ImplRepo_Service/NT_Service.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+          Add missing #includes for Win32
+
+        * tao/LocalObject.h:
+          Minor cosmetic fix
+
 Mon Mar 26 23:29:47 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* Leader_Follower.{i,h,cpp}
-	* Wait_On_Leader_Follower.cpp
+        * Leader_Follower.{i,h,cpp}
+        * Wait_On_Leader_Follower.cpp
 
-	Implemented the Leader_Follower component of the ORD to use a
-	stack instead of a heap, using the same strategy as in ACE_Token.
-	This fixes Bug 721.
+        Implemented the Leader_Follower component of the ORB to use a
+        stack instead of a heap, using the same strategy as in ACE_Token.
+        This fixes Bug 721.
 
 Mon Mar 26 22:34:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -30,15 +50,15 @@ Mon Mar 26 22:20:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/Strategies/UIOP_Connection_Handler.cpp:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
         * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp: Fixed a
-	  problem with SunCC 4.2. SunCC4.2 doesn't like a reinterpret_cast
-	  of an int to an int.
+          problem with SunCC 4.2. SunCC4.2 doesn't like a reinterpret_cast
+          of an int to an int.
 
 Sat Mar 24 07:44:05 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/NT_Naming_Service.cpp: Added a patch
-	  to make it possible to pass multiple arguments to the
- 	  NT_Naming_Service.  Thanks to Martin Johnson
- 	  <mjhn@bigpond.net.au> for reporting this.
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp: Added a patch
+          to make it possible to pass multiple arguments to the
+          NT_Naming_Service.  Thanks to Martin Johnson
+          <mjhn@bigpond.net.au> for reporting this.
 
 Mon Mar 26 13:06:10 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -448,15 +468,27 @@ Sun Mar 25 11:17:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           change.
 
 Sun Mar 25 08:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+<<<<<<< ChangeLog
 
-	* orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++.
+        * orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++.
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Removed redundant
-	  guards  in the files. This should fix a small compilation
-	  problem in LYNX-I386 builds.
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Removed redundant
+          guards  in the files. This should fix a small compilation
+          problem in LYNX-I386 builds.
+=======
+
+        * orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++.
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Removed redundant
+          guards  in the files. This should fix a small compilation
+          problem in LYNX-I386 builds.
+>>>>>>> 1.2956
 
 Sun Mar 25 07:42:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -746,8 +778,8 @@ Wed Mar 21 23:13:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
           Fixed TAO_Export macro for TAO_Synch_Refcountable.  Thanks to
- 	  Johnny Willemsen <johnny.willemsen@meco.nl> for suggesting this
- 	  fix.
+          Johnny Willemsen <johnny.willemsen@meco.nl> for suggesting this
+          fix.
 
 Wed Mar 21 23:57:44 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
@@ -830,8 +862,8 @@ Wed Mar 21 08:02:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/RTCORBA/Explicit_Binding/client.cpp: Fixed a possible typo
           that was giving false alarms in the nightly builds. The message
- 	  read "ERROR: <validate_connection> returned true". The message
- 	  was not right, as this is not an error.
+          read "ERROR: <validate_connection> returned true". The message
+          was not right, as this is not an error.
 
 Tue Mar 20 21:53:17 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -852,15 +884,15 @@ Tue Mar 20 21:53:17 2001  Ossama Othman  <ossama@uci.edu>
 
         * orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
           Increased timeout for server IOR file.  It wasn't long enough
- 	  for some slow machines.
+          for some slow machines.
 
 Tue Mar 20 20:01:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp (make_idle):
           The function was not checking if cache_map_entry_ was null
- 	  before using it.  This field is set to 0 once the underlying
- 	  connection is closed, this can be done by another thread, while
- 	  the Transport has not been idled by the thread making a request.
+          before using it.  This field is set to 0 once the underlying
+          connection is closed, this can be done by another thread, while
+          the Transport has not been idled by the thread making a request.
 
 Tue Mar 20 16:55:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -878,12 +910,12 @@ Tue Mar 20 16:55:38 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tests/Client_Leaks/client.cpp:
         * tests/Client_Leaks/server.cpp:
           Several improvements to the test to make it more reliable and
- 	  faster.  The process factory uses callback interfaces to receive
- 	  the new child IOR.  Both the client and the process factory are
- 	  multithreaded, to speed up the test by increasing concurrency
- 	  during process creation.  The child processes are detached to
- 	  avoid zombies and to minimize the need of using the
- 	  ACE_Process_Manager.
+          faster.  The process factory uses callback interfaces to receive
+          the new child IOR.  Both the client and the process factory are
+          multithreaded, to speed up the test by increasing concurrency
+          during process creation.  The child processes are detached to
+          avoid zombies and to minimize the need of using the
+          ACE_Process_Manager.
 
 Tue Mar 20 18.54:01  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
@@ -965,11 +997,11 @@ Mon Mar 19 16:37:21 2001  Chris Cleeland  <cleeland_c@ociweb.com>
         * tao/Transport.h:
 
           Added new thread-safe TAO_Synch_Refcountable class (which uses
- 	  TAO_SYNCH_MUTEX to insure thread-safe reference counting), and
- 	  changed the private base of TAO_Transport to use it rather than
- 	  ACE_Refcountable.  Now refcounting of Transport objects should
- 	  be thread-safe.  Thanks to Carlos O'Ryan for catching this! [Bug
- 	  814]
+          TAO_SYNCH_MUTEX to insure thread-safe reference counting), and
+          changed the private base of TAO_Transport to use it rather than
+          ACE_Refcountable.  Now refcounting of Transport objects should
+          be thread-safe.  Thanks to Carlos O'Ryan for catching this! [Bug
+          814]
 
 Mon Mar 19 15:09:52 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -992,9 +1024,9 @@ Mon Mar 19 15:09:52 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/POA/wait_for_completion/wait_for_completion.cpp (main):
           The servant was not removed from the POA at the end of the
- 	  program.  When the POA died in the static destructors, it tried
- 	  to reach for the dead servant causing a seg fault.  This was
- 	  fixed by destroying the POA before the servant died.
+          program.  When the POA died in the static destructors, it tried
+          to reach for the dead servant causing a seg fault.  This was
+          fixed by destroying the POA before the servant died.
 
 Mon Mar 19 14:20:38 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -1019,7 +1051,7 @@ Mon Mar 19 15:28:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Throughput: Added a space between the svc conf
           file and the option "-m". This could be the problem that has
- 	  been dodging the builds for quite sometime.
+          been dodging the builds for quite sometime.
 
 Mon Mar 19 11:37:43 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -1042,17 +1074,17 @@ Mon Mar 19 11:28:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/ORB_Core.cpp:
         * tao/ORB_Core.i: Moved the method service_context_list () from
           the .i file to .cpp file. This was causing SunCC 4.2 to choke
- 	  when the debugging symbols were off and caused the clients
- 	  linked with TAO to dump a core. Thanks to Carlos for suggesting
- 	  that some methods in .i file could be the source of the problem.
+          when the debugging symbols were off and caused the clients
+          linked with TAO to dump a core. Thanks to Carlos for suggesting
+          that some methods in .i file could be the source of the problem.
 
 Mon Mar 19 09:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Typecode.cpp:
           The code was not checking for exceptions with ACE_CHECK or
- 	  ACE_CHECK_RETURN, but was using the return values.  This is
- 	  clearly broken and can result in some nasty behavior on
- 	  platforms without native exceptions.
+          ACE_CHECK_RETURN, but was using the return values.  This is
+          clearly broken and can result in some nasty behavior on
+          platforms without native exceptions.
 
         * tao/Transport.cpp:
           Cosmetic fixes to fit the ACE-guidelines.
@@ -1198,8 +1230,8 @@ Sun Mar 18 13:30:00 2001  Ossama Othman  <ossama@uci.edu>
 
         * tao/Exception.cpp (_info):
           Fixed _is_a() call on CORBA::BAD_PARAM() exception.  The
- 	  repository ID passed to the _is_a() call was missing the
- 	  version.
+          repository ID passed to the _is_a() call was missing the
+          version.
 
 Sun Mar 18 11:50:57 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -1384,7 +1416,7 @@ Sat Mar 17 10:26:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/BiDirectional_NestedUpcall/test_i.cpp (test_method):
           Changed connection_cache () as transport_cache (). This fixes
- 	  some of the compile errors in g++.
+          some of the compile errors in g++.
 
 Sat Mar 17 10:23:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -1530,7 +1562,7 @@ Fri Mar 16 15:48:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
           Regroup code to use a single #if 0/#endif instead of multiple
- 	  sections of commented out code, easier to work that way.
+          sections of commented out code, easier to work that way.
 
         * tests/Client_Leaks/Process_Factory.cpp:
           Fixed Fuzz warning (i.e., missing ACE_CHECK_RETURN)
