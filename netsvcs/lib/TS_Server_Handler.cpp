@@ -28,6 +28,9 @@ public:
   // Activate this instance of the <ACE_TS_Server_Handler> (called by the
   // <ACE_Strategy_Acceptor>).
 
+  ~ACE_TS_Server_Handler (void);
+  // Must be allocated dynamically.
+
 protected:
   // = Helper routines for the operations exported to clients.
 
@@ -66,9 +69,6 @@ private:
 
   ACE_INET_Addr addr_;
   // Address of client we are connected with.
-
-  ~ACE_TS_Server_Handler (void);
-  // Ensure dynamic allocation...
 };
 
 class ACE_TS_Server_Acceptor : public ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>

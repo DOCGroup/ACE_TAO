@@ -84,7 +84,7 @@ private:
   float work_i (float, int);
   char *name_i (void);
 
-  const char *name_;
+  char *name_;
   ACE_Activation_Queue activation_queue_;
   Scheduler *scheduler_;
 };

@@ -68,7 +68,7 @@ public:
   const char *name_i (void);
 
 private:
-  const char *name_;
+  char *name_;
   ACE_Activation_Queue activation_queue_;
   Scheduler *scheduler_;
 

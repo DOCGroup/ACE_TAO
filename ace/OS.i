@@ -4379,10 +4379,10 @@ ACE_OS::mprotect (void *addr, size_t len, int prot)
 #if defined (ACE_WIN32)
   DWORD dummy; // Sigh!
   return ::VirtualProtect(addr, len, prot, &dummy) ? 0 : -1;  
-#elif !defined (ACE_LACKS_MMAP)
+#elif !defined (ACE_LACKS_MPROTECT)
   ACE_OSCALL_RETURN (::mprotect ((ACE_MMAP_TYPE) addr, len, prot), int, -1);
 #else
-  ACE_NOTSUP_RETURN ((int) MAP_FAILED);
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
 
@@ -4408,7 +4408,7 @@ ACE_OS::munmap (void *addr, size_t len)
 #elif !defined (ACE_LACKS_MMAP)
   ACE_OSCALL_RETURN (::munmap ((ACE_MMAP_TYPE) addr, len), int, -1);
 #else
-  ACE_NOTSUP_RETURN ((int) MAP_FAILED);
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
 

@@ -135,6 +135,7 @@ ACE_LACKS_MALLOC_H			Platform lacks malloc.h
 ACE_LACKS_MKTEMP			ACE has no mktemp()
 ACE_LACKS_MMAP				The platform doesn't have mmap(2) (e.g., SCO UNIX).
 ACE_LACKS_MODE_MASKS			Platform/compiler doesn't have open() mode masks.
+ACE_LACKS_MPROTECT			The platform doesn't have mprotect(2) (e.g., EPLX real time OS from CDC (based on LYNX))
 ACE_LACKS_MSGBUF_T			Platform lacks struct msgbuf (e.g., NT and MSV).
 ACE_LACKS_MSYNC				Platform lacks msync() (e.g., Linux)
 ACE_LACKS_PARAM_H			Platform lacks <sys/param.h> (e.g., MVS)

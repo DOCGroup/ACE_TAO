@@ -59,6 +59,15 @@ ACE_TSS_cleanup (void *ptr)
 }
 #endif /* ACE_MT_SAFE */
 
+// This is only needed here because we can't afford to call
+// ACE_LOG_MSG->instance() from within ACE_Log_Msg::instance() or else
+// we will recurse infinitely!
+
+#define ACE_NEW_RETURN_I(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+     } while (0)
+
 ACE_Log_Msg *
 ACE_Log_Msg::instance (void)
 {
@@ -72,7 +81,7 @@ ACE_Log_Msg::instance (void)
     {
       // Initialize the static recursive lock here.  Note that we
       // can't rely on the constructor being called at this point.
-      ACE_NEW_RETURN (lock_, ACE_Recursive_Thread_Mutex, 0);
+      ACE_NEW_RETURN_I (lock_, ACE_Recursive_Thread_Mutex, 0);
       once_ = 1;
     }  
 
@@ -84,8 +93,8 @@ ACE_Log_Msg::instance (void)
   // Check to see if this is the first time in for this thread.
   if (*(int **) tss_log_msg == 0)
     // Allocate memory off the heap and store it in a pointer in
-    // thread-specific storage (on the stack...).
-    ACE_NEW_RETURN (*tss_log_msg, ACE_Log_Msg, 0);
+    // thread-specific storage (i.e., on the stack...).
+    ACE_NEW_RETURN_I (*tss_log_msg, ACE_Log_Msg, 0);
 
   return *tss_log_msg;
 #elif !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -108,7 +117,7 @@ ACE_Log_Msg::instance (void)
 	{
 	  // Initialize the static recursive lock here.  Note that we
 	  // can't rely on the constructor being called at this point.
-	  ACE_NEW_RETURN (lock_, ACE_Recursive_Thread_Mutex, 0);
+	  ACE_NEW_RETURN_I (lock_, ACE_Recursive_Thread_Mutex, 0);
 
 	  if (ACE_OS::thr_keycreate (&key_,
 				     &ACE_TSS_cleanup) != 0)
@@ -135,7 +144,7 @@ ACE_Log_Msg::instance (void)
       // Allocate memory off the heap and store it in a pointer in
       // thread-specific storage (on the stack...).
 
-      ACE_NEW_RETURN (tss_log_msg, ACE_Log_Msg, 0);
+      ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
 
       // Store the dynamically allocated pointer in thread-specific
       // storage.
@@ -153,6 +162,7 @@ ACE_Log_Msg::instance (void)
   return &log_msg;
 #endif /* defined (ACE_MT_SAFE) */
 }
+#undef ACE_NEW_RETURN_I
 
 // Name of the local host.
 const char *ACE_Log_Msg::local_host_ = 0;
@@ -274,7 +284,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 		    | LM_ALERT
 		    | LM_EMERGENCY)
 {
-  ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
+  // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 }
 
 // Open the sender-side of the Message ACE_Queue.
