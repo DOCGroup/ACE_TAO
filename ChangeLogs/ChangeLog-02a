@@ -1,3 +1,8 @@
+Mon Jun 19 02:47:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/CORBA_macros.h: Fixed misspell of deprecated.  Thanks to
+          Ossama for pointing this out.
+
 Sun Jun 18 11:39:48 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: rework environment
@@ -42,9 +47,9 @@ Sun Jun 18 03:18:21 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
           ACE_TRY_EX are used together.  Therefore, I have added two new
           macros ACE_RE_THROW and ACE_RE_THROW_EX.
 
-          The old macro is now depricated.  If you are absolutely sure
+          The old macro is now deprecated.  If you are absolutely sure
           that you are not using the old ACE_RETHROW macro as mentioned
-          above, you can define ACE_HAS_DEPRICATED_ACE_RETHROW in your
+          above, you can define ACE_HAS_DEPRECATED_ACE_RETHROW in your
           ace/config.h file and continue to use ACE_RETHROW.  However,
           you should move to the new macros as soon as possible.
 
@@ -7025,7 +7030,7 @@ Sat Feb 12 17:06:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 Sat Feb 12 15:15:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/README (ACE_HAS_POSITION_INDEPENDENT_POINTERS): Renamed
-          the depricated ACE_HAS_POSITION_INDEPENDENT_MALLOC to
+          the deprecated ACE_HAS_POSITION_INDEPENDENT_MALLOC to
           ACE_HAS_POSITION_INDEPENDENT_POINTERS.
 
         * ace/OS.h: Made ACE_HAS_POSITION_INDEPENDENT_POINTERS=1 the default
@@ -7044,7 +7049,7 @@ Sat Feb 12 15:15:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
           to ACE_HAS_POSITION_INDEPENDENT_POINTERS.
 
         * ace/config-sunos5.5.h:
-        * ace/config-win32-common.h: Removed depricated
+        * ace/config-win32-common.h: Removed deprecated
           ACE_HAS_POSITION_INDEPENDENT_MALLOC.
 
 Sat Feb 12 14:40:20 2000  David L. Levine  <levine@cs.wustl.edu>
