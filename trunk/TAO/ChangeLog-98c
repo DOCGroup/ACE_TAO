@@ -13,7 +13,8 @@ Wed Apr 08 10:02:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Runtime_Scheduler.{h,i},
           orbsvcs/orbsvcs/Config_Scheduler.{h,i} (set):
-          removed const from Criticality and Info_Type arguments.
+          removed const from Criticality and Info_Type arguments.  Thanks
+          to Doug and Irfan for reporting this.
 
 Wed Apr 08 07:41:53 1998  Brian Mendel  <brian.r.mendel@boeing.com>
 
