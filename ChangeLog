@@ -1,3 +1,14 @@
+Fri Feb 27 08:51:20 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug where 'specific' assignments were always added to
+          existing values.  It did not allow for straight assigments or
+          subtractions.  Now, specific assigments (additions and
+          subtractions) are processed as they are read instead of at the end
+          of the project.
+
 Fri Feb 27 11:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:
@@ -13,55 +24,55 @@ Fri Feb 27 09:02:07 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Feb 26 18:08:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Reactor/Client.cpp: Add missing #include
-	  "ace/OS_NS_string.h" to get ACE_OS::strlen().
+        * examples/APG/Reactor/Client.cpp: Add missing #include
+          "ace/OS_NS_string.h" to get ACE_OS::strlen().
 
 Thu Feb 26 18:02:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* m4/tls.m4: Add handling for ACE_TLS_LDFLAGS so user can specify
-	  linker options (e.g. -L) necessary to find SSL libs.
+        * m4/tls.m4: Add handling for ACE_TLS_LDFLAGS so user can specify
+          linker options (e.g. -L) necessary to find SSL libs.
 
 Thu Feb 26 12:26:28 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Makefile.am (Bug_1576_Regression_Test):
+        * tests/Makefile.am (Bug_1576_Regression_Test):
 
-	  Added this test to the list of tests.  It was missing.  Thanks
-	  to Kevin Stacy <kevin_405@yahoo.com> for reporting the problem.
+          Added this test to the list of tests.  It was missing.  Thanks
+          to Kevin Stacy <kevin_405@yahoo.com> for reporting the problem.
 
-	* tests/DLL_Test.cpp (dynamic_cast_test):
+        * tests/DLL_Test.cpp (dynamic_cast_test):
 
-	  Corrected spelling in error message.
+          Corrected spelling in error message.
 
-	* THANKS:
+        * THANKS:
 
-	  Added Kevin Stacy to the hall of fame.
+          Added Kevin Stacy to the hall of fame.
 
 Thu Feb 26 10:54:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile:
+        * Makefile:
 
-	  Removed the CIAO_Core target, since it was brain dead in the
-	  first place. Thanks to Ed Mulholland for motivating this.
+          Removed the CIAO_Core target, since it was brain dead in the
+          first place. Thanks to Ed Mulholland for motivating this.
 
 Thu Feb 26 11:15:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: In declaration of
-	  ACE_Output_Handler, add "using ACE_Service_Handler::open;" before
-	  declaring the override of it. Helps to disambiguate which open()
-	  we mean, ACE_Task::open(), or ACE_Service_Handler::open(). Sun
-	  Forte 8 complained about this ambiguity. Thanks to Johnny Willemsen
-	  for reporting this and working on a fix.
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: In declaration of
+          ACE_Output_Handler, add "using ACE_Service_Handler::open;" before
+          declaring the override of it. Helps to disambiguate which open()
+          we mean, ACE_Task::open(), or ACE_Service_Handler::open(). Sun
+          Forte 8 complained about this ambiguity. Thanks to Johnny Willemsen
+          for reporting this and working on a fix.
 
 Wed Feb 25 13:11:47 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_unistd.inl: Added support for ACE_OS::fsync().
-	  Thanks to Michel Drapeau <michel.drapeau@asdfsadfh.com> for
-	  reporting this.
+        * ace/OS_NS_unistd.inl: Added support for ACE_OS::fsync().
+          Thanks to Michel Drapeau <michel.drapeau@asdfsadfh.com> for
+          reporting this.
 
 Wed Feb 25 16:37:11 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Proactor_Test_IPV6.cpp: Fixed problem introduced in change
-	  earlier today.
+        * tests/Proactor_Test_IPV6.cpp: Fixed problem introduced in change
+          earlier today.
 
 Wed Feb 25 11:39:38 2004  Chad Elliott  <elliott_c@ociweb.com>
 
