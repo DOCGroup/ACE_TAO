@@ -1,3 +1,8 @@
+Mon Oct 23 11:20:53 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/Malloc_T.i:
+	  Add missing function, now things actually link.
+
 Mon Oct 23 10:02:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Malloc_T.h:
