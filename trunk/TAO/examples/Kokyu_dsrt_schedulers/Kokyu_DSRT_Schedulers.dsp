@@ -277,7 +277,7 @@ SOURCE=.\FP_Scheduling.idl
 
 # PROP Intermediate_Dir "Release\"
 # PROP Ignore_Default_Tool 1
-USERDEP__FP_SC="..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl"	
+USERDEP__FP_SC="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking IDL compiler
 InputPath=.\FP_Scheduling.idl
 InputName=FP_Scheduling
@@ -302,7 +302,7 @@ BuildCmds= \
 
 # PROP Intermediate_Dir "Debug\"
 # PROP Ignore_Default_Tool 1
-USERDEP__FP_SC="..\..\..\bin\tao_idl -Ge 1 $(InputName).idl"	
+USERDEP__FP_SC="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking IDLCompiler
 InputPath=.\FP_Scheduling.idl
 InputName=FP_Scheduling
@@ -339,7 +339,7 @@ SOURCE=.\Kokyu_qos.idl
 !IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__KOKYU="..\..\..\bin\Release\tao_idl"	
+USERDEP__KOKYU="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\Kokyu_qos.idl
 InputName=Kokyu_qos
@@ -400,6 +400,7 @@ SOURCE=.\MIF_Scheduling.idl
 !IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__MIF_S="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\MIF_Scheduling.idl
 InputName=MIF_Scheduling
@@ -430,6 +431,7 @@ BuildCmds= \
 
 # PROP Intermediate_Dir "Debug\"
 # PROP Ignore_Default_Tool 1
+USERDEP__MIF_S="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking IDL compiler
 InputPath=.\MIF_Scheduling.idl
 InputName=MIF_Scheduling
@@ -467,7 +469,7 @@ SOURCE=.\MUF_Scheduling.idl
 
 # PROP Intermediate_Dir "Release\"
 # PROP Ignore_Default_Tool 1
-USERDEP__MUF_S="..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl"	
+USERDEP__MUF_S="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking IDL compiler
 InputPath=.\MUF_Scheduling.idl
 InputName=MUF_Scheduling
@@ -492,7 +494,7 @@ BuildCmds= \
 
 # PROP Intermediate_Dir "Debug\"
 # PROP Ignore_Default_Tool 1
-USERDEP__MUF_S="..\..\..\bin\tao_idl -Ge 1 $(InputName).idl"	
+USERDEP__MUF_S="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking IDLCompiler
 InputPath=.\MUF_Scheduling.idl
 InputName=MUF_Scheduling

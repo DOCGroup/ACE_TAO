@@ -116,13 +116,13 @@ SOURCE=.\test.idl
 !IF  "$(CFG)" == "ForwardRequest Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test
 
 BuildCmds= \
-	..\..\..\..\..\bin\Release\tao_idl -Ge 1  -Gv -DCORBA3 -I..\..\..\..\tao -I..\..\..\.. $(InputName).idl
+	..\..\..\..\..\bin\Release\tao_idl -Ge 1 -I..\..\..\..\tao -I..\..\..\.. $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -154,13 +154,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "ForwardRequest Client - Win32 Debug"
 
-USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -Ge 1 -Gv -DCORBA3 -I..\..\..\..\tao -I..\..\..\.. $(InputName).idl
+	..\..\..\..\..\bin\tao_idl -Ge 1 -I..\..\..\..\tao -I..\..\..\.. $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

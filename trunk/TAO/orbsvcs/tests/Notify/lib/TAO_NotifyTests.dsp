@@ -398,6 +398,7 @@ SOURCE=.\Activation_Manager.idl
 !IF  "$(CFG)" == "TAO_NotifyTests DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__ACTIV="..\..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 OutDir=.\.
 InputPath=.\Activation_Manager.idl
@@ -428,6 +429,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "TAO_NotifyTests DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__ACTIV="..\..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 OutDir=.\.
 InputPath=.\Activation_Manager.idl
