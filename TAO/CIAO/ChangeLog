@@ -1,3 +1,10 @@
+Mon May 17 16:17:40 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Plan_Handler.cpp:
+        * DnC/Config_Handlers/Plan_Handler.h:
+
+          Updated the handler to handle updated IDREFs.
+
 Mon May 17 10:11:46 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Plan_Handler.h:
