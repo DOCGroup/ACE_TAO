@@ -6,11 +6,11 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "ace/pre.h"
+#include  /**/ <ace/pre.h>
 
-#include "orbsvcs/FT_NotifierS.h"
-#include "orbsvcs/FT_FaultDetectorFactoryC.h"
-#include "ace/Vector_T.h"
+#include <orbsvcs/FT_NotifierS.h>
+#include <orbsvcs/FT_FaultDetectorFactoryC.h>
+#include <ace/Vector_T.h>
 
 //////////////////////
 // Forward references
@@ -164,10 +164,8 @@ private:
    * A human-readable string to distinguish this from other Notifiers.
    */
   ACE_CString identity_;
-
-
 };
 
-#include "ace/post.h"
+#include /**/ <ace/post.h>
 
 #endif /* STUBFAULTNOTIFIER_H_  */

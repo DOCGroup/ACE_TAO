@@ -120,11 +120,10 @@ void Fault_Detector_i::run()
 
 void Fault_Detector_i::notify()
 {
-  CosNotification::StructuredEvent *  pEvent;
-  ACE_NEW_NORETURN(pEvent, CosNotification::StructuredEvent );
-  if (pEvent != 0)
+  CosNotification::StructuredEvent_var  vEvent;
+  ACE_NEW_NORETURN(vEvent, CosNotification::StructuredEvent );
+  if (vEvent.ptr() != 0)
   {
-    CosNotification::StructuredEvent_var vEvent(pEvent);
     short length = 2;
     if( object_type_ != 0)
     {

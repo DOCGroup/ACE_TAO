@@ -2,7 +2,6 @@
 //
 // $Id$
 
-#include <ace/pre.h>
 #include "StubFaultConsumer.h"
 #include <ace/Get_Opt.h>
 #include <tao/PortableServer/ORB_Manager.h>
@@ -256,4 +255,3 @@ void StubFaultConsumer::disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_D
 //# pragma instantiate ACE_Vector < const char * >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#include "ace/post.h"

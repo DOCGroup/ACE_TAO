@@ -85,3 +85,30 @@ project(*Analyzer): taoclient, fault_tolerance, orbsvcsexe {
     run_test_notifier.pl
   }
 }
+
+project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
+  exename = ft_registry
+
+  Source_Files {
+    FTAPP_FactoryRegistry_Main.cpp
+    FactoryRegistry_i.cpp
+  }
+
+//  // Custom folder: script to run this test
+//  Define_Custom(Script){
+//    inputext = .pl, .py, .rb
+//    generic_outputext = .txt
+//  }
+//
+//  Script_Files {
+//    run_test_detector.pl
+//  }
+
+  // explicitly omit IDL files
+  IDL_Files {
+  }
+  Documentation_Files {
+    // pretend the pl file is documentation for now
+    run_test_registry.pl
+  }
+}
