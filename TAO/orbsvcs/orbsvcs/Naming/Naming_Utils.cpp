@@ -158,16 +158,13 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 	{
           // Get the naming context ptr to NameService and register
           // with the POA.
-          this->naming_context_ =
-            this->naming_context_impl_._this (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
 	  PortableServer::ObjectId_var id =
 	    PortableServer::string_to_ObjectId ("NameService");
 
-	  child_poa->activate_object_with_id (id.in (),
-					      &this->naming_context_impl_,
-					      TAO_TRY_ENV);
+          this->naming_context_ =
+            child_poa->activate_object_with_id (id.in (),
+                                                &this->naming_context_impl_,
+                                                TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
 	  // Stringify the objref we'll be implementing, and print it
