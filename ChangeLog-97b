@@ -1,3 +1,8 @@
+Sun Oct 19 17:55:34 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* etc/purify.solaris2: the contents of my ~/.purify file
+	  for Solaris 2.x.  The ACE tests purify cleanly with it.
+
 Sun Oct 19 13:49:17 1997  Carlos O'Ryan  <coryan@MILONGA>
 
 	* ace/Proactor.cpp: 
