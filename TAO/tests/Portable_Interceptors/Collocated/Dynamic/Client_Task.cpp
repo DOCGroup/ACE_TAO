@@ -53,7 +53,6 @@ Client_Task::svc (void)
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   return 0;
 
