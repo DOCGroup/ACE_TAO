@@ -27,7 +27,7 @@
 template <class T>
 class ACE_Active_Map_Manager : public ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>
 {
-  // = TITLE  
+  // = TITLE
   //     Define a map abstraction that associates system generated
   //     keys with user specified values.
   //
@@ -107,7 +107,7 @@ public:
   // into the "out" parameter <old_key> and <old_value>.  The function
   // fails if <key> is not in the map.
 
-  int find (const ACE_Active_Map_Manager_Key &key, 
+  int find (const ACE_Active_Map_Manager_Key &key,
             T &value);
   // Locate <value> associated with <key>.
 
@@ -129,7 +129,7 @@ public:
   int unbind (const ACE_Active_Map_Manager_Key &key);
   // Remove <key> from the map.
 
-  int unbind (const ACE_Active_Map_Manager_Key &key, 
+  int unbind (const ACE_Active_Map_Manager_Key &key,
               T &value);
   // Remove <key> from the map, and return the <value> associated with
   // <key>.
@@ -147,6 +147,9 @@ public:
 
   size_t total_size (void);
   // Return the total size of the map.
+
+  static const ACE_Active_Map_Manager_Key npos (void);
+  // Returns a key that cannot be found in the map.
 
   void dump (void) const;
   // Dump the state of an object.

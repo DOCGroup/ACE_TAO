@@ -1,3 +1,10 @@
+Tue Feb 23 14:12:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Active_Map_Manager_T.h (npos): Added a new static member
+	  function that returns a key that cannot be found in the map.
+	  Thanks to "Fernando D. Mato Mira" <matomira@acm.org> for
+	  suggesting this.
+
 Tue Feb 23 12:15:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Svc_Conf.y:
