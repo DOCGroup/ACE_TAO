@@ -187,21 +187,6 @@
 #  define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
-// Some ACE classes always use inline functions to maintain high
-// performance, but some platforms have buggy inline function support.
-// In this case, we don't use inline with them.
-# if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#   if defined (ASYS_INLINE)
-#     undef ASYS_INLINE
-#   endif /* ASYS_INLINE */
-#   define ASYS_INLINE
-#   if defined (ACE_HAS_INLINED_OSCALLS)
-#     undef ACE_HAS_INLINED_OSCALLS
-#   endif /* ACE_HAS_INLINED_OSCALLS */
-# else
-#   define ASYS_INLINE inline
-# endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 // =========================================================================
 // EXPLICIT macro
 // =========================================================================
