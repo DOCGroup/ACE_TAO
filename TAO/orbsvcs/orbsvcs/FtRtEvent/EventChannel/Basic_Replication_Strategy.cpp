@@ -10,9 +10,12 @@ ACE_RCSID (EventChannel,
            Basic_Replication_Strategy,
            "$Id$")
 
+/// The mutex has to be recursive; otherwise, if the second replicate_request() is 
+/// called while the first replicate_request() is waiting for reply, we will get
+/// a deadlock.
 Basic_Replication_Strategy::Basic_Replication_Strategy(bool mt)
 : sequence_num_(0)
-, mutex_(mt ? new ACE_Thread_Mutex : 0)
+, mutex_(mt ? new ACE_Recursive_Thread_Mutex : 0)
 {
 }
 
