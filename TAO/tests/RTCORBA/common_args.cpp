@@ -157,7 +157,7 @@ get_values (const char *test_type,
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       result = ::sscanf (working_string,
-                         "%lu",
+                         "%ul",
                          &values[i]);
       if (result == 0 || result == EOF)
         break;
