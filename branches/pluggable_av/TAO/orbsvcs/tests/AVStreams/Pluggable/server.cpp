@@ -26,6 +26,16 @@ FTP_Server_StreamEndPoint::make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&hand
 }
 
 int
+FTP_Server_StreamEndPoint::make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler)
+{
+  ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::make_udp_flow_handler"));
+  ACE_NEW_RETURN (handler,
+                  FTP_Server_UDP_MCast_Flow_Handler,
+                  -1);
+}
+
+
+int
 FTP_Server_StreamEndPoint::get_sfp_callback (const char *flowname,
                                              TAO_SFP_Callback *&callback)
 {
@@ -81,6 +91,12 @@ FTP_Server_UDP_Flow_Handler::handle_input (ACE_HANDLE fd)
 
 int
 FTP_Server_TCP_Flow_Handler::handle_input (ACE_HANDLE fd)
+{
+  return FTP_Server_Flow_Handler::input (fd);
+}
+
+int
+FTP_Server_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE fd)
 {
   return FTP_Server_Flow_Handler::input (fd);
 }
