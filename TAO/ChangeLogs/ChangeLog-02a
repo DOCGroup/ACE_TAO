@@ -1,3 +1,12 @@
+Wed Apr 17 13:23:20 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Makefile (ORB_CORE_FILES):
+
+	  Always compile and link Messaging_SyncScopeC into libTAO, not
+	  just when "corba_messaging == 1".  It defines the
+	  Messaging::SyncScope constants required for all configurations
+	  of TAO.
+
 Wed Apr 17 13:09:02 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Messaging/Messaging_ORBInitializer.cpp

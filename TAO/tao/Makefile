@@ -1,4 +1,3 @@
-
 #----------------------------------------------------------------------------
 #
 #      $Id$
@@ -186,6 +185,7 @@ ORB_CORE_FILES = \
   Object_KeyC \
   Protocols_Hooks \
   Default_Protocols_Hooks \
+  Messaging_SyncScopeC \
   Invocation \
   Invocation_Endpoint_Selectors \
   Asynch_Invocation \
@@ -334,8 +334,7 @@ DIRS += \
 ORB_CORE_FILES += \
   Policy_Manager \
   Buffering_Constraint_Policy \
-  Messaging_PolicyValueC \
-  Messaging_SyncScopeC
+  Messaging_PolicyValueC
 
 endif # corba_messaging
 
