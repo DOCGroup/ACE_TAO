@@ -602,6 +602,7 @@ public:
 
 private:
   ACE_Hash_Map_Manager <ACE_Hash_Addr <ACE_PEER_CONNECTOR_ADDR,SVC_HANDLER>, SVC_HANDLER*, MUTEX> connection_cache_;
+  // Table that maintains the cache of connected <SVC_HANDLER>s.
 };
 
 template <class SVC_HANDLER>
