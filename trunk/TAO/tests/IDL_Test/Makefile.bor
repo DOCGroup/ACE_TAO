@@ -42,6 +42,7 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
 
 LIBFILES = $(ACE_LIB) $(TAO_LIB)
 
+IDLDIR = .
 CPPDIR = .
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
