@@ -11,8 +11,8 @@
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           amh_si, 
+ACE_RCSID (be_visitor_interface,
+           amh_si,
            "$Id$")
 
 be_visitor_amh_interface_si::be_visitor_amh_interface_si (
@@ -42,7 +42,7 @@ be_visitor_amh_interface_si::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  int status = 
+  int status =
     node->traverse_inheritance_graph (
               be_visitor_amh_interface_si::gen_skel_helper,
               os
@@ -212,10 +212,10 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
 
-		  *os << ancestor_amh_name
-		      << "* const impl = static_cast<"
-		      << derived_amh_name
-		      << " *> (obj);" << be_nl;
+                  *os << ancestor_amh_name
+                      << "* const impl = static_cast<"
+                      << derived_amh_name
+                      << " *> (obj);" << be_nl;
 
                   *os << ancestor_amh_name
                       << "::_set_" << d->local_name ()
