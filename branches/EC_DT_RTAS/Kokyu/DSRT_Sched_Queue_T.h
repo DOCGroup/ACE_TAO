@@ -124,7 +124,13 @@ namespace Kokyu
     int most_eligible (DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>&
                        item);
 
+    /**
+     * change blocked_prio_ item to inactive_prio_
+     */
+    int change_prio (int old_prio, int new_prio, int policy);
+
     void dump();
+//    int find(Guid_t guid, RB_Tree_Dispatch_Item_Node* RB_node);
 
   private:
 
@@ -138,6 +144,7 @@ namespace Kokyu
      * </code>.
      *
      */
+/*
     class Guid_Hash
     {
     public:
@@ -148,7 +155,7 @@ namespace Kokyu
         return guid_hash(id);
       }
     };
-
+*/
     // RB_Tree related typedefs
     typedef ACE_RB_Tree <DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>,
                          DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>,
@@ -168,7 +175,7 @@ namespace Kokyu
     Dispatch_Items_Priority_Queue::ENTRY PRIO_QUEUE_ENTRY;
 
     // Hash map related typedefs
-    typedef ACE_Hash_Map_Manager_Ex<Guid_t,
+/*    typedef ACE_Hash_Map_Manager_Ex<Guid_t,
                                     RB_Tree_Dispatch_Item_Node*,
                                     Guid_Hash,
                                     ACE_Equal_To<Guid_t>,
@@ -185,7 +192,7 @@ namespace Kokyu
     typedef ACE_Hash_Map_Entry <Guid_t,
                                 RB_Tree_Dispatch_Item_Node*>
     Dispatch_Items_Hash_Map_Entry;
-
+*/
     /**
      * Lock used to protect the state of the scheduler queue. A
      * separate lock is not used for the internal RB_Tree and hashmap.
@@ -199,12 +206,14 @@ namespace Kokyu
      * hash map, whereas the qos value is used as the key for the
      * RB_Tree.
      */
-    Dispatch_Items_Hash_Map dispatch_items_hash_map_;
+//    Dispatch_Items_Hash_Map dispatch_items_hash_map_;
 
     /**
      * RB_Tree implementation of priority queue of schedulable items.
      */
     Dispatch_Items_Priority_Queue dispatch_items_prio_queue_;
+    int find_i(Guid_t guid, RB_Tree_Dispatch_Item_Node* &RB_node);
+
   };
 }
 

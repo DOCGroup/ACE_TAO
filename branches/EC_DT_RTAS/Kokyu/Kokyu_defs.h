@@ -17,7 +17,6 @@
 #include "ace/Message_Block.h"
 #include "ace/Sched_Params.h"
 #include "ace/Malloc_Allocator.h"
-#include "ace/Counter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -88,7 +87,7 @@ namespace Kokyu
     // type of dispatching queue
     Dispatching_Type_t dispatching_type_;
 
-    //allocator to be used for dynamic memory allocation. If each
+    //allocator to be used for dynamic memory allocation. If each 
     //thread gets its own memory pool, contention will be less
     ACE_Allocator *allocator_;
 
@@ -133,10 +132,10 @@ namespace Kokyu
   class Kokyu_Export Dispatch_Command
     {
     public:
-      Dispatch_Command(int dont_delete = 0,
-                       ACE_Allocator *allocator = 0);
+      Dispatch_Command(int dont_delete = 0, 
+                       ACE_Allocator *allocator = 0); 
       //dont_delete indicates whether this object needs to be deleted once processed.
-      //allocator indicates the ACE_Allocator, if any, from which this object was created.
+      //allocator indicates the ACE_Allocator, if any, from which this object was created. 
       //This same allocator has to be used for the deletion also
 
       /// Command callback
@@ -145,11 +144,6 @@ namespace Kokyu
       int can_be_deleted () const;
 
       void destroy (void);
-
-      const Object_ID getID (void) const;
-      const Object_ID* getID_ptr (void) const;
-      void setID (Object_ID);
-
     protected:
       /// Destructor
       // only inheritance is possible and object should be on heap,
@@ -161,7 +155,6 @@ namespace Kokyu
       ACE_Allocator *allocator_;
       //if this object has to be deleted, then delete it using the allocator
       //if one is present.
-      Object_ID oid_;
     };
 
   enum DSRT_Sched_Type_t
@@ -169,7 +162,7 @@ namespace Kokyu
       DSRT_FP,
       DSRT_MUF,
       DSRT_EDF,
-      DSRT_MIF
+      DSRT_MLF
     };
 
   enum DSRT_Dispatcher_Impl_t
@@ -200,7 +193,7 @@ namespace Kokyu
   {
   public:
     Dispatcher_Task* task_;
-
+    
     Dispatch_Deferrer_Attributes();
   };
 #endif //KOKYU_HAS_RELEASE_GUARD
