@@ -34,7 +34,8 @@ namespace CIAO
     {}
 
     Domain_Handler::Domain_Handler (DOMNodeIterator* iter, bool release)
-      : traverse_ (0), doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
+      : traverse_ (0), doc_ (0), root_ (0), filter_ (0), iter_ (iter),
+        release_ (release)
     {}
 
     void Domain_Handler::dump (Deployment::Domain& domain)
@@ -48,10 +49,13 @@ namespace CIAO
           for (CORBA::ULong j = 0; j < domain.node[i].resource.length (); ++j)
             {
               ACE_DEBUG ((LM_DEBUG, "     Resource %d: \n", j + 1));
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", domain.node[i].resource[j].name.in ()));
-              for (CORBA::ULong k = 0; k < domain.node[i].resource[j].resourceType.length (); ++k)
+              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", 
+                          domain.node[i].resource[j].name.in ()));
+              for (CORBA::ULong k = 0; 
+                   k < domain.node[i].resource[j].resourceType.length (); ++k)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n", domain.node[i].resource[j].resourceType[k].in ()));
+                  ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n", 
+                              domain.node[i].resource[j].resourceType[k].in ()));
                 }
             }
 
@@ -59,14 +63,17 @@ namespace CIAO
             {
               ACE_DEBUG ((LM_DEBUG, "     Connection %d: \n", j + 1));
               int value = domain.node[i].connectionRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", domain.interconnect[value].name.in ()));
+              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", 
+                          domain.interconnect[value].name.in ()));
             }
 
-          for (CORBA::ULong j = 0; j < domain.node[i].sharedResourceRef.length (); ++j)
+          for (CORBA::ULong j = 0; 
+               j < domain.node[i].sharedResourceRef.length (); ++j)
             {
               ACE_DEBUG ((LM_DEBUG, "     SharedResource %d: \n", j + 1));
               int value = domain.node[i].sharedResourceRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", domain.sharedResource[value].name.in ()));
+              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", 
+                          domain.sharedResource[value].name.in ()));
             }
 
         }
@@ -79,8 +86,10 @@ namespace CIAO
           for (CORBA::ULong j = 0; j < domain.bridge[i].resource.length (); ++j)
             {
               ACE_DEBUG ((LM_DEBUG, "     Resource %d: \n", j + 1));
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", domain.bridge[i].resource[j].name.in ()));
-              for (CORBA::ULong k = 0; k < domain.bridge[i].resource[j].resourceType.length (); ++k)
+              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", 
+                          domain.bridge[i].resource[j].name.in ()));
+              for (CORBA::ULong k = 0; 
+                   k < domain.bridge[i].resource[j].resourceType.length (); ++k)
                 {
                   ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n", domain.bridge[i].resource[j].resourceType[k].in ()));
                 }
@@ -243,15 +252,6 @@ namespace CIAO
                               acemapname = domain.sharedResource[i].name.in ();
                               id_map_.bind (aceattrnodevalue, i);
                             }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                            {
-                              i = domain.sharedResource.length ();
-                              domain.sharedResource.length (i + 1);
-
-                              this->process_domain_sr (domain.sharedResource[i]);
-                              acemapname = domain.sharedResource[i].name.in ();
-                              id_map_.bind (aceattrnodevalue, i);
-                            }
                           else if (strattrnodename == XStr (ACE_TEXT ("href")))
                             {
                               i = domain.sharedResource.length ();
@@ -313,14 +313,6 @@ namespace CIAO
                           attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                            {
-                              i = domain.node.length ();
-                              domain.node.length (i + 1);
-                              this->process_domain_node (domain.node[i]);
-                              acemapname = domain.node[i].name.in ();
-                              id_map_.bind (aceattrnodevalue, i);
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
                             {
                               i = domain.node.length ();
                               domain.node.length (i + 1);
@@ -394,14 +386,6 @@ namespace CIAO
                               acemapname = domain.interconnect[i].name.in ();
                               id_map_.bind (aceattrnodevalue, i);
                             }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                            {
-                              i = (domain.interconnect.length ());
-                              domain.interconnect.length (i + 1);
-                              this->process_domain_interconnect (domain.interconnect[i]);
-                              acemapname = domain.interconnect[i].name.in ();
-                              id_map_.bind (aceattrnodevalue, i);
-                            }
                           else if (strattrnodename == XStr (ACE_TEXT ("href")))
                             {
                               i = (domain.interconnect.length ());
@@ -459,14 +443,6 @@ namespace CIAO
                           attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                            {
-                              i = domain.bridge.length ();
-                              domain.bridge.length (i + 1);
-                              this->process_domain_bridge (domain.bridge[i]);
-                              acemapname = domain.bridge[i].name.in ();
-                              id_map_.bind (aceattrnodevalue, i);
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
                             {
                               i = domain.bridge.length ();
                               domain.bridge.length (i + 1);
@@ -536,14 +512,6 @@ namespace CIAO
                           attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                            {
-                              i = (domain.infoProperty.length ());
-                              domain.infoProperty.length (i + 1);
-                              Property_Handler::process_Property (this->iter_,
-                                                                  domain.infoProperty[i]);
-                              id_map_.bind (aceattrnodevalue, i);
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
                             {
                               i = (domain.infoProperty.length ());
                               domain.infoProperty.length (i + 1);
@@ -809,14 +777,6 @@ namespace CIAO
                                                                                      domain_node.resource[resource_length].property[property_length]);
                                               id_map_.bind (aceattrnodevalue, property_length);
                                             }
-                                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                            {
-                                              property_length = domain_node.resource[resource_length].property.length ();
-                                              domain_node.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                     domain_node.resource[resource_length].property[property_length]);
-                                              id_map_.bind (aceattrnodevalue, property_length);
-                                            }
                                           else if (strattrnodename == XStr (ACE_TEXT ("href")))
                                             {
                                               property_length = domain_node.resource[resource_length].property.length ();
@@ -951,119 +911,6 @@ namespace CIAO
                                                                                              domain_node.resource[resource_length].property[property_length]);
                                                       id_map_.bind (aceattrnodevalue, property_length);
                                                     }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_node.resource[resource_length].property.length ();
-                                                      domain_node.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                             domain_node.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("href")))
-                                                    {
-                                                      property_length = domain_node.resource[resource_length].property.length ();
-                                                      domain_node.resource[resource_length].property.length (property_length + 1);
-                                                      xml_url = aceattrnodevalue.c_str ();
-                                                      result = aceattrnodevalue.c_str ();
-                                                      doc_path = XMLString::transcode ( doc_->getDocumentURI ());
-                                                      result.makeRelativeTo (XMLString::transcode (doc_path.c_str ()));
-                                                      final_url = XMLString::transcode (result.getURLText ());
-
-                                                      if (xml_url.isRelative ())
-                                                        {
-                                                          DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_node.resource[resource_length].property[property_length]);
-                                                        }
-                                                      else
-                                                        {
-                                                          url_string = aceattrnodevalue.c_str ();
-                                                          DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_node.resource[resource_length].property[property_length]);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                      else
-                                        {
-                                        }
-                                    }
-                                  else
-                                    {
-                                      node = this->iter_->previousNode ();
-                                      break;
-                                    }
-                                }
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                            {
-                              for (node = this->iter_->nextNode();
-                                   node != 0;
-                                   node = this->iter_->nextNode())
-                                {
-                                  node_name = node->getNodeName ();
-                                  if (node_name == XStr (ACE_TEXT ("name")))
-                                    {
-                                      node = this->iter_->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-                                      domain_node.resource[resource_length].name = XMLString::transcode (text->getNodeValue ());
-                                      acemapname = domain_node.resource[resource_length].name.in ();
-                                      id_map_.bind (aceattrnodevalue, resource_length);
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("resourceType")))
-                                    {
-                                      node = this->iter_->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-
-                                      resource_type_length = domain_node.resource[resource_length].resourceType.length ();
-                                      domain_node.resource[resource_length].resourceType.length (resource_type_length + 1);
-                                      domain_node.resource[resource_length].resourceType[resource_type_length] = XMLString::transcode (text->getNodeValue ());
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("property")))
-                                    {
-                                      if (node->hasAttributes ())
-                                        {
-                                          property_node_map = node->getAttributes ();
-                                          attr_length = property_node_map->getLength ();
-
-                                          if (attr_length == 1)
-                                            {
-                                              property_length = domain_node.resource[resource_length].property.length ();
-                                              domain_node.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                     domain_node.resource[resource_length].property[property_length]);
-                                            }
-                                          else if (attr_length > 1)
-                                            {
-                                              for (j = 0; j < attr_length; j++)
-                                                {
-                                                  attribute_node = property_node_map->item (j);
-                                                  strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodename = XMLString::transcode (attribute_node->getNodeName ());
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                                                    {
-                                                      property_length = domain_node.resource[resource_length].property.length ();
-                                                      domain_node.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                             domain_node.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_node.resource[resource_length].property.length ();
-                                                      domain_node.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                             domain_node.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
                                                   else if (strattrnodename == XStr (ACE_TEXT ("href")))
                                                     {
                                                       property_length = domain_node.resource[resource_length].property.length ();
@@ -1136,12 +983,6 @@ namespace CIAO
                           this->index_ = this->index_ + 1;
                           idref_map_.bind (this->index_, aceattrnodevalue);
                         }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_node.connectionRef[connection_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
                     }
                 }
               else
@@ -1165,12 +1006,6 @@ namespace CIAO
                       attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
-                        {
-                          domain_node.sharedResourceRef[shared_resource_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
                         {
                           domain_node.sharedResourceRef[shared_resource_ref_length] = 0;
                           this->index_ = this->index_ + 1;
@@ -1296,14 +1131,6 @@ namespace CIAO
                                                                                      domain_bridge.resource[resource_length].property[property_length]);
                                               id_map_.bind (aceattrnodevalue, property_length);
                                             }
-                                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                            {
-                                              property_length = domain_bridge.resource[resource_length].property.length ();
-                                              domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                     domain_bridge.resource[resource_length].property[property_length]);
-                                              id_map_.bind (aceattrnodevalue, property_length);
-                                            }
                                           else if (strattrnodename == XStr (ACE_TEXT ("href")))
                                             {
                                               property_length = domain_bridge.resource[resource_length].property.length ();
@@ -1437,119 +1264,6 @@ namespace CIAO
                                                                                              domain_bridge.resource[resource_length].property[property_length]);
                                                       id_map_.bind (aceattrnodevalue, property_length);
                                                     }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_bridge.resource[resource_length].property.length ();
-                                                      domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                             domain_bridge.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("href")))
-                                                    {
-                                                      property_length = domain_bridge.resource[resource_length].property.length ();
-                                                      domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                                      xml_url = aceattrnodevalue.c_str ();
-                                                      result = aceattrnodevalue.c_str ();
-                                                      doc_path = XMLString::transcode ( doc_->getDocumentURI ());
-                                                      result.makeRelativeTo (XMLString::transcode (doc_path.c_str ()));
-                                                      final_url = XMLString::transcode (result.getURLText ());
-
-                                                      if (xml_url.isRelative ())
-                                                        {
-                                                          DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_bridge.resource[resource_length].property[property_length]);
-                                                        }
-                                                      else
-                                                        {
-                                                          url_string = aceattrnodevalue.c_str ();
-                                                          DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_bridge.resource[resource_length].property[property_length]);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                      else
-                                        {
-                                        }
-                                    }
-                                  else
-                                    {
-                                      node = this->iter_->previousNode ();
-                                      break;
-                                    }
-                                }
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                            {
-                              for (node = this->iter_->nextNode();
-                                   node != 0;
-                                   node = this->iter_->nextNode())
-                                {
-                                  node_name = node->getNodeName ();
-                                  if (node_name == XStr (ACE_TEXT ("name")))
-                                    {
-                                      node = this->iter_->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-                                      domain_bridge.resource[resource_length].name = XMLString::transcode (text->getNodeValue ());
-                                      acemapname = domain_bridge.resource[resource_length].name.in ();
-                                      id_map_.bind (aceattrnodevalue, resource_length);
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("resourceType")))
-                                    {
-                                      node = this->iter_->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-
-                                      resource_type_length = domain_bridge.resource[resource_length].resourceType.length ();
-                                      domain_bridge.resource[resource_length].resourceType.length (resource_type_length + 1);
-                                      domain_bridge.resource[resource_length].resourceType[resource_type_length] = XMLString::transcode (text->getNodeValue ());
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("property")))
-                                    {
-                                      if (node->hasAttributes ())
-                                        {
-                                          property_node_map = node->getAttributes ();
-                                          attr_length = property_node_map->getLength ();
-
-                                          if (attr_length == 1)
-                                            {
-                                              property_length = domain_bridge.resource[resource_length].property.length ();
-                                              domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                     domain_bridge.resource[resource_length].property[property_length]);
-                                            }
-                                          else if (attr_length > 1)
-                                            {
-                                              for (j = 0; j < attr_length; j++)
-                                                {
-                                                  attribute_node = property_node_map->item (j);
-                                                  strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodename = XMLString::transcode (attribute_node->getNodeName ());
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                                                    {
-                                                      property_length = domain_bridge.resource[resource_length].property.length ();
-                                                      domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                             domain_bridge.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_bridge.resource[resource_length].property.length ();
-                                                      domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                             domain_bridge.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
                                                   else if (strattrnodename == XStr (ACE_TEXT ("href")))
                                                     {
                                                       property_length = domain_bridge.resource[resource_length].property.length ();
@@ -1618,12 +1332,6 @@ namespace CIAO
                       attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
-                        {
-                          domain_bridge.connectRef[connect_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
                         {
                           domain_bridge.connectRef[connect_ref_length] = 0;
                           this->index_ = this->index_ + 1;
@@ -1743,14 +1451,6 @@ namespace CIAO
                                           attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                                            {
-                                              property_length = domain_ic.resource[resource_length].property.length ();
-                                              domain_ic.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                     domain_ic.resource[resource_length].property[property_length]);
-                                              id_map_.bind (aceattrnodevalue, property_length);
-                                            }
-                                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
                                             {
                                               property_length = domain_ic.resource[resource_length].property.length ();
                                               domain_ic.resource[resource_length].property.length (property_length + 1);
@@ -1893,119 +1593,6 @@ namespace CIAO
                                                                                              domain_ic.resource[resource_length].property[property_length]);
                                                       id_map_.bind (aceattrnodevalue, property_length);
                                                     }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_ic.resource[resource_length].property.length ();
-                                                      domain_ic.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                             domain_ic.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("href")))
-                                                    {
-                                                      property_length = domain_ic.resource[resource_length].property.length ();
-                                                      domain_ic.resource[resource_length].property.length (property_length + 1);
-                                                      xml_url = aceattrnodevalue.c_str ();
-                                                      result = aceattrnodevalue.c_str ();
-                                                      doc_path = XMLString::transcode ( doc_->getDocumentURI ());
-                                                      result.makeRelativeTo (XMLString::transcode (doc_path.c_str ()));
-                                                      final_url = XMLString::transcode (result.getURLText ());
-
-                                                      if (xml_url.isRelative ())
-                                                        {
-                                                          DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_ic.resource[resource_length].property[property_length]);
-                                                        }
-                                                      else
-                                                        {
-                                                          url_string = aceattrnodevalue.c_str ();
-                                                          DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_ic.resource[resource_length].property[property_length]);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                      else
-                                        {
-                                        }
-                                    }
-                                  else
-                                    {
-                                      node = this->iter_->previousNode ();
-                                      break;
-                                    }
-                                }
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                            {
-                              for (node = this->iter_->nextNode();
-                                   node != 0;
-                                   node = this->iter_->nextNode())
-                                {
-                                  node_name = node->getNodeName ();
-                                  if (node_name == XStr (ACE_TEXT ("name")))
-                                    {
-                                      node = this->iter_->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-                                      domain_ic.resource[resource_length].name = XMLString::transcode (text->getNodeValue ());
-                                      acemapname = domain_ic.resource[resource_length].name.in ();
-                                      id_map_.bind (aceattrnodevalue, resource_length);
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("resourceType")))
-                                    {
-                                      node = this->iter_->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-
-                                      resource_type_length = (domain_ic.resource[resource_length].resourceType.length ());
-                                      domain_ic.resource[resource_length].resourceType.length (resource_type_length + 1);
-                                      domain_ic.resource[resource_length].resourceType[resource_type_length] = XMLString::transcode (text->getNodeValue ());
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("property")))
-                                    {
-                                      if (node->hasAttributes ())
-                                        {
-                                          property_node_map = node->getAttributes ();
-                                          attr_length = property_node_map->getLength ();
-
-                                          if (attr_length == 1)
-                                            {
-                                              property_length = domain_ic.resource[resource_length].property.length ();
-                                              domain_ic.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                     domain_ic.resource[resource_length].property[property_length]);
-                                            }
-                                          else if (attr_length > 1)
-                                            {
-                                              for (j = 0; j < attr_length; j++)
-                                                {
-                                                  attribute_node = property_node_map->item (j);
-                                                  strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodename = XMLString::transcode (attribute_node->getNodeName ());
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                                                    {
-                                                      property_length = domain_ic.resource[resource_length].property.length ();
-                                                      domain_ic.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                             domain_ic.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_ic.resource[resource_length].property.length ();
-                                                      domain_ic.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                                             domain_ic.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
                                                   else if (strattrnodename == XStr (ACE_TEXT ("href")))
                                                     {
                                                       property_length = domain_ic.resource[resource_length].property.length ();
@@ -2079,12 +1666,6 @@ namespace CIAO
                           this->index_ = this->index_ + 1;
                           idref_map_.bind (this->index_, aceattrnodevalue);
                         }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_ic.connectRef[connect_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
                     }
                 }
               else
@@ -2110,12 +1691,6 @@ namespace CIAO
                       attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
-                        {
-                          domain_ic.connectionRef[connection_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
                         {
                           domain_ic.connectionRef[connection_ref_length] = 0;
                           this->index_ = this->index_ + 1;
@@ -2197,12 +1772,6 @@ namespace CIAO
                           this->index_ = this->index_ + 1;
                           idref_map_.bind (this->index_, aceattrnodevalue);
                         }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_sr.nodeRef[node_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
                     }
                 }
               else
@@ -2232,14 +1801,6 @@ namespace CIAO
                           attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                            {
-                              property_length = domain_sr.property.length ();
-                              domain_sr.property.length (property_length + 1);
-                              SP_Handler::process_SatisfierProperty (this->iter_,
-                                                                     domain_sr.property[property_length]);
-                              id_map_.bind (aceattrnodevalue, property_length);
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
                             {
                               property_length = domain_sr.property.length ();
                               domain_sr.property.length (property_length + 1);
@@ -2540,14 +2101,6 @@ namespace CIAO
                                                                                      domain_node.resource[resource_length].property[property_length]);
                                               id_map_.bind (aceattrnodevalue, property_length);
                                             }
-                                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                            {
-                                              property_length = domain_node.resource[resource_length].property.length ();
-                                              domain_node.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (iter,
-                                                                                     domain_node.resource[resource_length].property[property_length]);
-                                              id_map_.bind (aceattrnodevalue, property_length);
-                                            }
                                           else if (strattrnodename == XStr (ACE_TEXT ("href")))
                                             {
                                               property_length = domain_node.resource[resource_length].property.length ();
@@ -2682,119 +2235,6 @@ namespace CIAO
                                                                                              domain_node.resource[resource_length].property[property_length]);
                                                       id_map_.bind (aceattrnodevalue, property_length);
                                                     }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_node.resource[resource_length].property.length ();
-                                                      domain_node.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (iter,
-                                                                                             domain_node.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("href")))
-                                                    {
-                                                      property_length = domain_node.resource[resource_length].property.length ();
-                                                      domain_node.resource[resource_length].property.length (property_length + 1);
-                                                      xml_url = aceattrnodevalue.c_str ();
-                                                      result = aceattrnodevalue.c_str ();
-                                                      doc_path = XMLString::transcode ( doc_->getDocumentURI ());
-                                                      result.makeRelativeTo (XMLString::transcode (doc_path.c_str ()));
-                                                      final_url = XMLString::transcode (result.getURLText ());
-
-                                                      if (xml_url.isRelative ())
-                                                        {
-                                                          DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_node.resource[resource_length].property[property_length]);
-                                                        }
-                                                      else
-                                                        {
-                                                          url_string = aceattrnodevalue.c_str ();
-                                                          DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_node.resource[resource_length].property[property_length]);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                      else
-                                        {
-                                        }
-                                    }
-                                  else
-                                    {
-                                      node = iter->previousNode ();
-                                      break;
-                                    }
-                                }
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                            {
-                              for (node = iter->nextNode();
-                                   node != 0;
-                                   node = iter->nextNode())
-                                {
-                                  node_name = node->getNodeName ();
-                                  if (node_name == XStr (ACE_TEXT ("name")))
-                                    {
-                                      node = iter->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-                                      domain_node.resource[resource_length].name = XMLString::transcode (text->getNodeValue ());
-                                      acemapname = domain_node.resource[resource_length].name.in ();
-                                      id_map_.bind (aceattrnodevalue, resource_length);
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("resourceType")))
-                                    {
-                                      node = iter->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-
-                                      resource_type_length = (domain_node.resource[resource_length].resourceType.length ());
-                                      domain_node.resource[resource_length].resourceType.length (resource_type_length + 1);
-                                      domain_node.resource[resource_length].resourceType[resource_type_length] = XMLString::transcode (text->getNodeValue ());
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("property")))
-                                    {
-                                      if (node->hasAttributes ())
-                                        {
-                                          property_node_map = node->getAttributes ();
-                                          attr_length = property_node_map->getLength ();
-
-                                          if (attr_length == 1)
-                                            {
-                                              property_length = domain_node.resource[resource_length].property.length ();
-                                              domain_node.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (iter,
-                                                                                     domain_node.resource[resource_length].property[property_length]);
-                                            }
-                                          else if (attr_length > 1)
-                                            {
-                                              for (j = 0; j < attr_length; j++)
-                                                {
-                                                  attribute_node = property_node_map->item (j);
-                                                  strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodename = XMLString::transcode (attribute_node->getNodeName ());
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                                                    {
-                                                      property_length = domain_node.resource[resource_length].property.length ();
-                                                      domain_node.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (iter,
-                                                                                             domain_node.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_node.resource[resource_length].property.length ();
-                                                      domain_node.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (iter,
-                                                                                             domain_node.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
                                                   else if (strattrnodename == XStr (ACE_TEXT ("href")))
                                                     {
                                                       property_length = domain_node.resource[resource_length].property.length ();
@@ -2867,12 +2307,6 @@ namespace CIAO
                           this->index_ = this->index_ + 1;
                           idref_map_.bind (this->index_, aceattrnodevalue);
                         }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_node.connectionRef[connection_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
                     }
                 }
               else
@@ -2896,12 +2330,6 @@ namespace CIAO
                       attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
-                        {
-                          domain_node.sharedResourceRef[shared_resource_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
                         {
                           domain_node.sharedResourceRef[shared_resource_ref_length] = 0;
                           this->index_ = this->index_ + 1;
@@ -2993,12 +2421,6 @@ namespace CIAO
                           this->index_ = this->index_ + 1;
                           idref_map_.bind (this->index_, aceattrnodevalue);
                         }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_sr.nodeRef[node_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
                     }
                 }
               else
@@ -3028,14 +2450,6 @@ namespace CIAO
                           attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                            {
-                              property_length = domain_sr.property.length ();
-                              domain_sr.property.length (property_length + 1);
-                              SP_Handler::process_SatisfierProperty (iter,
-                                                                     domain_sr.property[property_length]);
-                              id_map_.bind (aceattrnodevalue, property_length);
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
                             {
                               property_length = domain_sr.property.length ();
                               domain_sr.property.length (property_length + 1);
@@ -3203,14 +2617,6 @@ namespace CIAO
                                                                                      domain_ic.resource[resource_length].property[property_length]);
                                               id_map_.bind (aceattrnodevalue, property_length);
                                             }
-                                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                            {
-                                              property_length = domain_ic.resource[resource_length].property.length ();
-                                              domain_ic.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (iter,
-                                                                                     domain_ic.resource[resource_length].property[property_length]);
-                                              id_map_.bind (aceattrnodevalue, property_length);
-                                            }
                                           else if (strattrnodename == XStr (ACE_TEXT ("href")))
                                             {
                                               property_length = domain_ic.resource[resource_length].property.length ();
@@ -3344,119 +2750,6 @@ namespace CIAO
                                                                                              domain_ic.resource[resource_length].property[property_length]);
                                                       id_map_.bind (aceattrnodevalue, property_length);
                                                     }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_ic.resource[resource_length].property.length ();
-                                                      domain_ic.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (iter,
-                                                                                             domain_ic.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("href")))
-                                                    {
-                                                      property_length = domain_ic.resource[resource_length].property.length ();
-                                                      domain_ic.resource[resource_length].property.length (property_length + 1);
-                                                      xml_url = aceattrnodevalue.c_str ();
-                                                      result = aceattrnodevalue.c_str ();
-                                                      doc_path = XMLString::transcode ( doc_->getDocumentURI ());
-                                                      result.makeRelativeTo (XMLString::transcode (doc_path.c_str ()));
-                                                      final_url = XMLString::transcode (result.getURLText ());
-
-                                                      if (xml_url.isRelative ())
-                                                        {
-                                                          DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_ic.resource[resource_length].property[property_length]);
-                                                        }
-                                                      else
-                                                        {
-                                                          url_string = aceattrnodevalue.c_str ();
-                                                          DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_ic.resource[resource_length].property[property_length]);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                      else
-                                        {
-                                        }
-                                    }
-                                  else
-                                    {
-                                      node = iter->previousNode ();
-                                      break;
-                                    }
-                                }
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                            {
-                              for (node = iter->nextNode();
-                                   node != 0;
-                                   node = iter->nextNode())
-                                {
-                                  node_name = node->getNodeName ();
-                                  if (node_name == XStr (ACE_TEXT ("name")))
-                                    {
-                                      node = iter->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-                                      domain_ic.resource[resource_length].name = XMLString::transcode (text->getNodeValue ());
-                                      acemapname = domain_ic.resource[resource_length].name.in ();
-                                      id_map_.bind (aceattrnodevalue, resource_length);
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("resourceType")))
-                                    {
-                                      node = iter->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-
-                                      resource_type_length = (domain_ic.resource[resource_length].resourceType.length ());
-                                      domain_ic.resource[resource_length].resourceType.length (resource_type_length + 1);
-                                      domain_ic.resource[resource_length].resourceType[resource_type_length] = XMLString::transcode (text->getNodeValue ());
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("property")))
-                                    {
-                                      if (node->hasAttributes ())
-                                        {
-                                          property_node_map = node->getAttributes ();
-                                          attr_length = property_node_map->getLength ();
-
-                                          if (attr_length == 1)
-                                            {
-                                              property_length = domain_ic.resource[resource_length].property.length ();
-                                              domain_ic.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (iter,
-                                                                                     domain_ic.resource[resource_length].property[property_length]);
-                                            }
-                                          else if (attr_length > 1)
-                                            {
-                                              for (j = 0; j < attr_length; j++)
-                                                {
-                                                  attribute_node = property_node_map->item (j);
-                                                  strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodename = XMLString::transcode (attribute_node->getNodeName ());
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                                                    {
-                                                      property_length = domain_ic.resource[resource_length].property.length ();
-                                                      domain_ic.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (iter,
-                                                                                             domain_ic.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_ic.resource[resource_length].property.length ();
-                                                      domain_ic.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (iter,
-                                                                                             domain_ic.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
                                                   else if (strattrnodename == XStr (ACE_TEXT ("href")))
                                                     {
                                                       property_length = domain_ic.resource[resource_length].property.length ();
@@ -3530,12 +2823,6 @@ namespace CIAO
                           this->index_ = this->index_ + 1;
                           idref_map_.bind (this->index_, aceattrnodevalue);
                         }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_ic.connectRef[connect_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
                     }
                 }
               else
@@ -3561,12 +2848,6 @@ namespace CIAO
                       attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
-                        {
-                          domain_ic.connectionRef[connection_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
                         {
                           domain_ic.connectionRef[connection_ref_length] = 0;
                           this->index_ = this->index_ + 1;
@@ -3696,14 +2977,6 @@ namespace CIAO
                                           attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                                            {
-                                              property_length = domain_bridge.resource[resource_length].property.length ();
-                                              domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (iter,
-                                                                                     domain_bridge.resource[resource_length].property[property_length]);
-                                              id_map_.bind (aceattrnodevalue, property_length);
-                                            }
-                                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
                                             {
                                               property_length = domain_bridge.resource[resource_length].property.length ();
                                               domain_bridge.resource[resource_length].property.length (property_length + 1);
@@ -3844,119 +3117,6 @@ namespace CIAO
                                                                                              domain_bridge.resource[resource_length].property[property_length]);
                                                       id_map_.bind (aceattrnodevalue, property_length);
                                                     }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_bridge.resource[resource_length].property.length ();
-                                                      domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (iter,
-                                                                                             domain_bridge.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("href")))
-                                                    {
-                                                      property_length = domain_bridge.resource[resource_length].property.length ();
-                                                      domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                                      xml_url = aceattrnodevalue.c_str ();
-                                                      result = aceattrnodevalue.c_str ();
-                                                      doc_path = XMLString::transcode ( doc_->getDocumentURI ());
-                                                      result.makeRelativeTo (XMLString::transcode (doc_path.c_str ()));
-                                                      final_url = XMLString::transcode (result.getURLText ());
-
-                                                      if (xml_url.isRelative ())
-                                                        {
-                                                          DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_bridge.resource[resource_length].property[property_length]);
-                                                        }
-                                                      else
-                                                        {
-                                                          url_string = aceattrnodevalue.c_str ();
-                                                          DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                                          this->parse_satisfier_property_href_doc (href_doc, 
-                                                                                                   DOMNodeFilter::SHOW_ELEMENT |
-                                                                                                   DOMNodeFilter::SHOW_TEXT,
-                                                                                                   domain_bridge.resource[resource_length].property[property_length]);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                      else
-                                        {
-                                        }
-                                    }
-                                  else
-                                    {
-                                      node = iter->previousNode ();
-                                      break;
-                                    }
-                                }
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                            {
-                              for (node = iter->nextNode();
-                                   node != 0;
-                                   node = iter->nextNode())
-                                {
-                                  node_name = node->getNodeName ();
-                                  if (node_name == XStr (ACE_TEXT ("name")))
-                                    {
-                                      node = iter->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-                                      domain_bridge.resource[resource_length].name = XMLString::transcode (text->getNodeValue ());
-                                      acemapname = domain_bridge.resource[resource_length].name.in ();
-                                      id_map_.bind (aceattrnodevalue, resource_length);
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("resourceType")))
-                                    {
-                                      node = iter->nextNode();
-                                      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-
-                                      resource_type_length = domain_bridge.resource[resource_length].resourceType.length ();
-                                      domain_bridge.resource[resource_length].resourceType.length (resource_type_length + 1);
-                                      domain_bridge.resource[resource_length].resourceType[resource_type_length] = XMLString::transcode (text->getNodeValue ());
-                                    }
-                                  else if (node_name == XStr (ACE_TEXT ("property")))
-                                    {
-                                      if (node->hasAttributes ())
-                                        {
-                                          property_node_map = node->getAttributes ();
-                                          attr_length = property_node_map->getLength ();
-
-                                          if (attr_length == 1)
-                                            {
-                                              property_length = domain_bridge.resource[resource_length].property.length ();
-                                              domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                              SP_Handler::process_SatisfierProperty (iter,
-                                                                                     domain_bridge.resource[resource_length].property[property_length]);
-                                            }
-                                          else if (attr_length > 1)
-                                            {
-                                              for (j = 0; j < attr_length; j++)
-                                                {
-                                                  attribute_node = property_node_map->item (j);
-                                                  strattrnodename = attribute_node->getNodeName ();
-                                                  attrnodename = XMLString::transcode (attribute_node->getNodeName ());
-                                                  attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
-                                                  if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                                                    {
-                                                      property_length = domain_bridge.resource[resource_length].property.length ();
-                                                      domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (iter,
-                                                                                             domain_bridge.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
-                                                  else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
-                                                    {
-                                                      property_length = domain_bridge.resource[resource_length].property.length ();
-                                                      domain_bridge.resource[resource_length].property.length (property_length + 1);
-                                                      SP_Handler::process_SatisfierProperty (iter,
-                                                                                             domain_bridge.resource[resource_length].property[property_length]);
-                                                      id_map_.bind (aceattrnodevalue, property_length);
-                                                    }
                                                   else if (strattrnodename == XStr (ACE_TEXT ("href")))
                                                     {
                                                       property_length = domain_bridge.resource[resource_length].property.length ();
@@ -4025,12 +3185,6 @@ namespace CIAO
                       attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                       if (strattrnodename == XStr (ACE_TEXT ("XMI:IDREF")))
-                        {
-                          domain_bridge.connectRef[connect_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                      else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
                         {
                           domain_bridge.connectRef[connect_ref_length] = 0;
                           this->index_ = this->index_ + 1;
@@ -4127,14 +3281,6 @@ namespace CIAO
                           attrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                            {
-                              property_length = domain_resource.property.length ();
-                              domain_resource.property.length (property_length + 1);
-                              SP_Handler::process_SatisfierProperty (iter,
-                                                                     domain_resource.property[property_length]);
-                              id_map_.bind (aceattrnodevalue, property_length);
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("XMI:ID")))
                             {
                               property_length = domain_resource.property.length ();
                               domain_resource.property.length (property_length + 1);
