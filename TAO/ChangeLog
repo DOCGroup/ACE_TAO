@@ -1,3 +1,35 @@
+Fri Jan  7 22:46:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Generate pkg-config *.pc files from templates.
+
+	* orbsvcs/orbsvcs/TAO_CosEvent.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosEvent_Serv.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosEvent_Skel.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosNaming.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosNaming_Serv.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosNaming_Skel.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosNotification.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosNotification_Serv.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosNotification_Skel.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosTrading.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosTrading_Serv.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosTrading_Skel.pc.in:
+	* orbsvcs/orbsvcs/TAO_DsEventLogAdmin.pc.in:
+	* orbsvcs/orbsvcs/TAO_DsEventLogAdmin_Serv.pc.in:
+	* orbsvcs/orbsvcs/TAO_DsEventLogAdmin_Skel.pc.in:
+	* orbsvcs/orbsvcs/TAO_DsLogAdmin.pc.in:
+	* orbsvcs/orbsvcs/TAO_DsLogAdmin_Serv.pc.in:
+	* orbsvcs/orbsvcs/TAO_DsLogAdmin_Skel.pc.in:
+	* orbsvcs/orbsvcs/TAO_DsNotifyLogAdmin.pc.in:
+	* orbsvcs/orbsvcs/TAO_DsNotifyLogAdmin_Serv.pc.in:
+	* orbsvcs/orbsvcs/TAO_DsNotifyLogAdmin_Skel.pc.in:
+	* orbsvcs/orbsvcs/TAO_ETCL.pc.in:
+	* orbsvcs/orbsvcs/TAO_Svc_Utils.pc.in:
+
+	  New files, pkg-config *.pc templates.
+
 Fri Jan  7 19:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Two_Objects/Two_Objects.mpc:

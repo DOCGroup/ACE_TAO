@@ -1,6 +1,7 @@
 ##  Process this file with automake to create Makefile.in
 
 includedir = @includedir@/orbsvcs
+pkgconfigdatadir = ${prefix}/lib/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -66,6 +67,11 @@ nobase_include_HEADERS += \
   Naming/naming_export.h \
   CosNamingC.inl \
   CosNaming.idl
+
+pkgconfigdata_DATA = TAO_CosNaming.pc
+
+TAO_CosNaming.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming.pc.in
 
 EXTRA_DIST = \
   CosNaming.rc
@@ -552,6 +558,11 @@ nobase_include_HEADERS += \
   CosTypedEventChannelAdmin.idl \
   CosTypedEventComm.idl
 
+pkgconfigdata_DATA += TAO_CosEvent.pc
+
+TAO_CosEvent.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosEvent.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosEvent.pc.in
+
 endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
@@ -667,6 +678,11 @@ nobase_include_HEADERS += \
   RtecBase.idl \
   TimeBase.idl
 
+pkgconfigdata_DATA += TAO_Svc_Utils.pc
+
+TAO_Svc_Utils.pc: ${top_builddir}/config.status ${srcdir}/TAO_Svc_Utils.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_Svc_Utils.pc.in
+
 EXTRA_DIST += \
   Svc_Utils.rc
 
@@ -724,6 +740,11 @@ nobase_include_HEADERS += \
   CosEventCommS_T.cpp \
   CosTypedEventChannelAdminS_T.cpp \
   CosTypedEventCommS_T.cpp
+
+pkgconfigdata_DATA += TAO_CosEvent_Skel.pc
+
+TAO_CosEvent_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosEvent_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosEvent_Skel.pc.in
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -838,6 +859,11 @@ nobase_include_HEADERS += \
   CosEvent/CEC_TypedEventChannel.i \
   CosEvent/CEC_TypedProxyPushConsumer.i \
   CosEvent/CEC_TypedSupplierAdmin.i
+
+pkgconfigdata_DATA += TAO_CosEvent_Serv.pc
+
+TAO_CosEvent_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosEvent_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosEvent_Serv.pc.in
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
@@ -1477,6 +1503,11 @@ nobase_include_HEADERS += \
   CosNamingS_T.inl \
   CosNamingS_T.cpp
 
+pkgconfigdata_DATA += TAO_CosNaming_Skel.pc
+
+TAO_CosNaming_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming_Skel.pc.in
+
 EXTRA_DIST += \
   CosNaming_Skel.rc
 
@@ -1542,6 +1573,11 @@ nobase_include_HEADERS += \
   Naming/Storable_Naming_Context_Activator.h \
   Naming/Transient_Naming_Context.h \
   Naming/Storable.inl
+
+pkgconfigdata_DATA += TAO_CosNaming_Serv.pc
+
+TAO_CosNaming_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming_Serv.pc.in
 
 endif BUILD_CORBA_MESSAGING
 
@@ -1717,6 +1753,11 @@ nobase_include_HEADERS += \
   Event_Forwarder.idl \
   NotifyExt.idl
 
+pkgconfigdata_DATA += TAO_CosNotification.pc
+
+TAO_CosNotification.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNotification.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNotification.pc.in
+
 endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
@@ -1753,6 +1794,11 @@ nobase_include_HEADERS += \
   ETCL/ETCL_Interpreter.h \
   ETCL/ETCL_y.h \
   ETCL/ETCL_Constraint.i
+
+pkgconfigdata_DATA += TAO_ETCL.pc
+
+TAO_ETCL.pc: ${top_builddir}/config.status ${srcdir}/TAO_ETCL.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_ETCL.pc.in
 
 EXTRA_DIST += \
   ETCL.rc
@@ -1824,6 +1870,11 @@ nobase_include_HEADERS += \
   CosNotifyFilterS_T.cpp \
   Event_ForwarderS_T.cpp \
   NotifyExtS_T.cpp
+
+pkgconfigdata_DATA += TAO_CosNotification_Skel.pc
+
+TAO_CosNotification_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNotification_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNotification_Skel.pc.in
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -2067,6 +2118,11 @@ nobase_include_HEADERS += \
   Notify/ProxySupplier_T.cpp \
   Notify/Proxy_T.cpp
 
+pkgconfigdata_DATA += TAO_CosNotification_Serv.pc
+
+TAO_CosNotification_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNotification_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNotification_Serv.pc.in
+
 endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
@@ -2299,6 +2355,12 @@ nobase_include_HEADERS += \
   CosTradingDynamic.idl \
   CosTradingRepos.idl
 
+
+pkgconfigdata_DATA += TAO_CosTrading.pc
+
+TAO_CosTrading.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTrading.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTrading.pc.in
+
 EXTRA_DIST += \
   CosTrading.rc
 
@@ -2346,6 +2408,11 @@ nobase_include_HEADERS += \
   CosTradingDynamicS_T.cpp \
   CosTradingReposS_T.cpp \
   CosTradingS_T.cpp
+
+pkgconfigdata_DATA += TAO_CosTrading_Skel.pc
+
+TAO_CosTrading_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTrading_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTrading.pc.in
 
 EXTRA_DIST += \
   CosTrading_Skel.rc
@@ -2415,6 +2482,11 @@ nobase_include_HEADERS += \
   Trader/Interpreter_Utils_T.cpp \
   Trader/Offer_Iterators_T.cpp \
   Trader/Trader_T.cpp
+
+pkgconfigdata_DATA += TAO_CosTrading_Serv.pc
+
+TAO_CosTrading_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTrading_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTrading_Serv.pc.in
 
 EXTRA_DIST += \
   CosTrading_Serv.rc
@@ -2490,6 +2562,11 @@ nobase_include_HEADERS += \
   DsLogAdmin.idl \
   DsLogNotification.idl
 
+pkgconfigdata_DATA += TAO_DsLogAdmin.pc
+
+TAO_DsLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsLogAdmin.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsLogAdmin.pc.in
+
 EXTRA_DIST += \
   DsLogAdmin.rc
 
@@ -2546,6 +2623,11 @@ nobase_include_HEADERS += \
   DsEventLogAdminC.inl \
   DsEventLogAdmin.idl
 
+pkgconfigdata_DATA += TAO_DsEventLogAdmin.pc
+
+TAO_DsEventLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsEventLogAdmin.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsEventLogAdmin.pc.in
+
 endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
@@ -2589,6 +2671,11 @@ nobase_include_HEADERS += \
   DsLogNotificationS_T.inl \
   DsLogAdminS_T.cpp \
   DsLogNotificationS_T.cpp
+
+pkgconfigdata_DATA += TAO_DsLogAdmin_Skel.pc
+
+TAO_DsLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsLogAdmin_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsLogAdmin_Skel.pc.in
 
 ## Makefile.DsLogAdmin_Serv.am
 
@@ -2641,6 +2728,12 @@ nobase_include_HEADERS += \
   Log/Log_Constraint_Visitors.h \
   Log/Log_i.h
 
+
+pkgconfigdata_DATA += TAO_DsLogAdmin_Serv.pc
+
+TAO_DsLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsLogAdmin_Serv.pc.in
+
 ## Makefile.DsEventLogAdmin_Skel.am
 
 if !BUILD_MINIMUM_CORBA
@@ -2680,6 +2773,11 @@ nobase_include_HEADERS += \
   DsEventLogAdminS.inl \
   DsEventLogAdminS_T.inl \
   DsEventLogAdminS_T.cpp
+
+pkgconfigdata_DATA += TAO_DsEventLogAdmin_Skel.pc
+
+TAO_DsEventLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsEventLogAdmin.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsEventLogAdmin.pc.in
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -2737,6 +2835,11 @@ nobase_include_HEADERS += \
   Log/EventLogFactory_i.h \
   Log/EventLogNotification.h \
   Log/EventLog_i.h
+
+pkgconfigdata_DATA += TAO_DsEventLogAdmin_Serv.pc
+
+TAO_DsEventLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsEventLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsEventLogAdmin.pc.in
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
@@ -2796,6 +2899,11 @@ nobase_include_HEADERS += \
   DsNotifyLogAdminC.inl \
   DsNotifyLogAdmin.idl
 
+pkgconfigdata_DATA += TAO_DsNotifyLogAdmin.pc
+
+TAO_DsNotifyLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsNotifyLogAdmin.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsNotifyLogAdmin.pc.in
+
 endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
@@ -2844,6 +2952,11 @@ nobase_include_HEADERS += \
   DsNotifyLogAdminS.inl \
   DsNotifyLogAdminS_T.inl \
   DsNotifyLogAdminS_T.cpp
+
+pkgconfigdata_DATA += TAO_DsNotifyLogAdmin_Skel.pc
+
+TAO_DsNotifyLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsNotifyLogAdmin_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsNotifyLogAdmin_Skel.pc.in
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -2899,6 +3012,11 @@ nobase_include_HEADERS += \
   Log/NotifyLogFactory_i.h \
   Log/NotifyLogNotification.h \
   Log/NotifyLog_i.h
+
+pkgconfigdata_DATA += TAO_DsNotifyLogAdmin_Serv.pc
+
+TAO_DsNotifyLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsNotifyLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsNotifyLogAdmin_Serv.pc.in
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -3106,6 +3224,10 @@ RTEvent = \
   Event/EC_Group_Scheduling.cpp \
   Event/EC_Lifetime_Utils.cpp \
   Event/EC_Lifetime_Utils_T.cpp \
+  Event/EC_MT_Dispatching.cpp \
+  Event/EC_Masked_Type_Filter.cpp \
+  Event/EC_Negation_Filter.cpp \
+  Event/EC_Null_Factory.cpp \
   Event/EC_Null_Scheduling.cpp \
   Event/EC_ObserverStrategy.cpp \
   Event/EC_Per_Supplier_Filter.cpp \
@@ -3266,10 +3388,6 @@ nobase_include_HEADERS += \
   Event/EC_Group_Scheduling.inl \
   Event/EC_Lifetime_Utils.i \
   Event/EC_Lifetime_Utils_T.i \
-  Event/EC_MT_Dispatching.i \
-  Event/EC_Masked_Type_Filter.i \
-  Event/EC_Negation_Filter.i \
-  Event/EC_Null_Factory.i \
   Event/EC_Null_Scheduling.i \
   Event/EC_ObserverStrategy.i \
   Event/EC_Per_Supplier_Filter.i \
@@ -4809,8 +4927,7 @@ nobase_include_HEADERS += \
   Notify/RT_POA_Helper.h \
   Notify/RT_Properties.h \
   Notify/Structured/RT_StructuredProxyPushSupplier.h \
-  Notify/RT_Properties.inl \
-  Notify/Structured/RT_StructuredProxyPushSupplier.inl
+  Notify/RT_Properties.inl
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
