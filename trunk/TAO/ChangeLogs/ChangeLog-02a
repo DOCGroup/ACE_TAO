@@ -1,3 +1,9 @@
+Wed Mar 15 19:46:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP.cpp:
+	* tao/GIOP.h:
+	* tao/GIOP.i: Removed these files from the repository.
+
 Wed Mar 15 19:39:20 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile: Upadted the Makefile.
