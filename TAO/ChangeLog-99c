@@ -1,3 +1,9 @@
+Wed Mar 24 09:00:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: 
+	  This is the only file outside $TAO_ROOT/tao that was using
+	  STUB_Object.
+
 Wed Mar 24 06:13:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Invocation.cpp (invoke_i): removed ACE_NOTREACHED
