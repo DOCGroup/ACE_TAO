@@ -1,3 +1,27 @@
+Thu Jun  1 08:43:14 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin\fuzz.pl: (added)
+          
+          Fuzz is a script whose purpose is to check through ACE/TAO 
+          files for easy to spot (by a perl script, at least) problems.
+
+          Usage is:
+          fuzz.pl [-dhm] [-l level]
+
+              -d         turn on debugging
+              -h         display this help
+              -l level   set detection level (default = 5)
+              -m         only check locally modified files (uses cvs)
+
+          It currently has checks for these:
+
+          - ACE/ASYS_INLINE in .cpp files (level 2+)
+          - $ID string in .h/.i/.cpp files (level 2+)
+          - Bare inline in a .i file (level 2+)
+          - Inclusion of math.h in a .h/.i/.cpp file (level 3+)
+          - Check for lines of > 80 chars in .h/.i/.cpp (level 6+)
+          - Check for use of // in a preproc directive (level 3+)
+
 Wed May 31 16:30:44 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in (AC_REVISION):
