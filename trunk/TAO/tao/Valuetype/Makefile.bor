@@ -22,7 +22,7 @@ CPPDIR = .
 
 INCDIR_NAME = tao\Valuetype
 INCLUDES = \
-	*.h *.inl
+	*.h *.inl *_T.cpp
 
 LIBFILES = $(TAO_LIB) $(ACE_LIB)
 
