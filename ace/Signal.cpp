@@ -1,4 +1,3 @@
-// Signal.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -42,7 +41,7 @@ static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ACE
 #endif /* ACE_HAS_SIG_C_FUNC */
 
 // Array of Event_Handlers that will handle the signals.
-ACE_Event_Handler *ACE_Sig_Handler::signal_handlers_[NSIG];
+ACE_Event_Handler *ACE_Sig_Handler::signal_handlers_[ACE_NSIG];
 
 // Remembers if a signal has occurred.
 sig_atomic_t ACE_Sig_Handler::sig_pending_ = 0;
@@ -151,7 +150,7 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   this->sa_.sa_flags = sig_flags;
 
   // Structure assignment...
-  this->sa_.sa_mask = sig_mask.sigset (); 
+  this->sa_.sa_mask = sig_mask.sigset ();
 
 #if !defined(ACE_HAS_TANDEM_SIGNALS)
   this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
@@ -174,9 +173,9 @@ ACE_Sig_Handler::sig_pending (void)
 {
   ACE_TRACE ("ACE_Sig_Handler::sig_pending");
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
-	  ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
-	  (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
-	  ACE_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
+          ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
+          (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
+          ACE_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
   return ACE_Sig_Handler::sig_pending_ != 0;
 }
 
@@ -185,9 +184,9 @@ ACE_Sig_Handler::sig_pending (int pending)
 {
   ACE_TRACE ("ACE_Sig_Handler::sig_pending");
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
-	  ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
-	  (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
-	  ACE_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
+          ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
+          (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
+          ACE_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
   ACE_Sig_Handler::sig_pending_ = pending;
 }
 
@@ -434,17 +433,17 @@ public:
   static ACE_SIG_HANDLERS_SET *instance (int signum);
 
 private:
-  static ACE_SIG_HANDLERS_SET *sig_handlers_[NSIG];
+  static ACE_SIG_HANDLERS_SET *sig_handlers_[ACE_NSIG];
 };
 
 /* static */
-ACE_SIG_HANDLERS_SET *ACE_Sig_Handlers_Set::sig_handlers_[NSIG];
+ACE_SIG_HANDLERS_SET *ACE_Sig_Handlers_Set::sig_handlers_[ACE_NSIG];
 
 /* static */
 ACE_SIG_HANDLERS_SET *
 ACE_Sig_Handlers_Set::instance (int signum)
 {
-  if (signum <= 0 || signum >= NSIG)
+  if (signum <= 0 || signum >= ACE_NSIG)
     return 0; // This will cause problems...
   else if (ACE_Sig_Handlers_Set::sig_handlers_[signum] == 0)
     ACE_NEW_RETURN (ACE_Sig_Handlers_Set::sig_handlers_[signum], ACE_SIG_HANDLERS_SET, 0);

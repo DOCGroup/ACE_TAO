@@ -744,7 +744,7 @@ ACE_Log_Msg::log (const char *format_str,
                     int sig = va_arg (argp, int);
                     type = SKIP_SPRINTF;
 #if defined (ACE_HAS_SYS_SIGLIST)
-                    if (sig >= 0 && sig < NSIG)
+                    if (sig >= 0 && sig < ACE_NSIG)
                       ACE_OS::strcpy (bp, _sys_siglist[sig]);
                     else
                       ACE_OS::sprintf (bp, "<unknown signal> %d", sig);
