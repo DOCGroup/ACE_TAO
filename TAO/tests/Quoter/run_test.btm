@@ -95,7 +95,7 @@ REM read in the IOR from the file
 for %%d in (@%nsiorfile) do set ior=%%d
 
 REM Start the factory finder
-start "Quoter Factory Finder" %leave FactoryFinder.exe -ORBport %ffport -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf svc.conf
+start "Quoter Factory Finder" %leave Factory_Finder.exe -ORBport %ffport -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf svc.conf
 
 %done
 
