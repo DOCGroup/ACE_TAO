@@ -1,3 +1,10 @@
+Mon Jul 16 9:17:43 2001  Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * performance-tests/Throughput/client.bor:
+        * performance-tests/Throughput/server.bor:
+          Corrected definitions of CFLAGS and LIBFILES to fix Borland
+          compile error.
+
 Mon Jul 16 07:49:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
  	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
