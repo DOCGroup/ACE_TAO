@@ -50,7 +50,7 @@ protected:
   virtual int send (ACE_Message_Block *blocks[], size_t &count);
 };
 
-class AC_Input_Handler 
+class AC_Input_Handler
   : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> {
 public:
   AC_Input_Handler (AC_Output_Handler *handler = 0)
@@ -71,7 +71,7 @@ protected:
   ACE_Handle_Set connected_clients_;
 };
 
-class AC_CLD_Acceptor 
+class AC_CLD_Acceptor
   : public ACE_Acceptor<AC_Input_Handler, ACE_SOCK_Acceptor> {
 public:
   // Constructor.
@@ -79,7 +79,7 @@ public:
     : output_handler_ (handler), input_handler_ (handler) {}
 
 protected:
-  typedef ACE_Acceptor<AC_Input_Handler, ACE_SOCK_Acceptor> 
+  typedef ACE_Acceptor<AC_Input_Handler, ACE_SOCK_Acceptor>
           PARENT;
 
   // <ACE_Acceptor> factory method.
@@ -96,10 +96,10 @@ protected:
   AC_Input_Handler input_handler_;
 };
 
-class AC_CLD_Connector 
+class AC_CLD_Connector
   : public ACE_Connector<AC_Output_Handler, ACE_SOCK_Connector> {
 public:
-  typedef ACE_Connector<AC_Output_Handler, ACE_SOCK_Connector> 
+  typedef ACE_Connector<AC_Output_Handler, ACE_SOCK_Connector>
           PARENT;
 
   // Constructor.
@@ -109,7 +109,7 @@ public:
   // Destructor frees the SSL resources.
   virtual ~AC_CLD_Connector (void) {
     SSL_free (ssl_);
-    SSL_CTX_free (ssl_ctx_);    
+    SSL_CTX_free (ssl_ctx_);
   }
 
   // Initialize the Connector.
@@ -179,10 +179,10 @@ int AC_Output_Handler::open (void *connector) {
   int bufsiz = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
   peer ().set_option (SOL_SOCKET, SO_SNDBUF,
                       &bufsiz, sizeof bufsiz);
-  if (reactor ()->register_handler 
+  if (reactor ()->register_handler
        (this, ACE_Event_Handler::READ_MASK) == -1)
     return -1;
-  if (msg_queue ()->activate () 
+  if (msg_queue ()->activate ()
       == ACE_Message_Queue_Base::WAS_ACTIVE) {
     msg_queue ()->high_water_mark (QUEUE_MAX);
     return activate (THR_SCOPE_SYSTEM);
@@ -221,7 +221,7 @@ int AC_Output_Handler::svc () {
       } else if (errno != EWOULDBLOCK) break;
       else if (message_index == 0) continue;
     } else {
-      if (mblk->size () == 0 
+      if (mblk->size () == 0
           && mblk->msg_type () == ACE_Message_Block::MB_STOP)
         { mblk->release (); break; }
       blocks[message_index] = mblk;
@@ -267,7 +267,7 @@ int AC_Output_Handler::send (ACE_Message_Block *blocks[], size_t &count) {
 int AC_Input_Handler::open (void *) {
   ACE_HANDLE handle = peer ().get_handle ();
   if (reactor ()->register_handler
-        (handle, this, ACE_Event_Handler::READ_MASK) == -1) 
+        (handle, this, ACE_Event_Handler::READ_MASK) == -1)
     return -1;
   connected_clients_.set_bit (handle);
   return 0;
@@ -275,7 +275,7 @@ int AC_Input_Handler::open (void *) {
 
 int AC_Input_Handler::close (u_int) {
   ACE_Message_Block *shutdown_message = 0;
-  ACE_NEW_RETURN 
+  ACE_NEW_RETURN
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
   output_handler_->put (shutdown_message);
@@ -289,8 +289,8 @@ int AC_Input_Handler::handle_input (ACE_HANDLE handle) {
   ACE_Message_Block *mblk = 0;
   Logging_Handler logging_handler (handle);
 
-  if (logging_handler.recv_log_record (mblk) != -1) 
-    if (output_handler_->put (mblk->cont ()) != -1) { 
+  if (logging_handler.recv_log_record (mblk) != -1)
+    if (output_handler_->put (mblk->cont ()) != -1) {
       mblk->cont (0);
       mblk->release ();
       return 0; // Success return.
@@ -306,11 +306,11 @@ int AC_Input_Handler::handle_close (ACE_HANDLE handle,
 
 /********************************************************/
 
-int AC_CLD_Acceptor::make_svc_handler (AC_Input_Handler *&sh) 
+int AC_CLD_Acceptor::make_svc_handler (AC_Input_Handler *&sh)
 { sh = &input_handler_; return 0; }
 
 
-int AC_CLD_Acceptor::handle_close (ACE_HANDLE, 
+int AC_CLD_Acceptor::handle_close (ACE_HANDLE,
                                    ACE_Reactor_Mask) {
   PARENT::handle_close ();
   input_handler_.close ();
@@ -352,10 +352,10 @@ int AC_CLD_Connector::connect_svc_handler
      ACE_Time_Value *timeout,
      const ACE_SOCK_Connector::PEER_ADDR &local_addr,
      int reuse_addr, int flags, int perms) {
-  if (PARENT::connect_svc_handler 
+  if (PARENT::connect_svc_handler
       (svc_handler, remote_addr, timeout,
        local_addr, reuse_addr, flags, perms) == -1) return -1;
-  SSL_clear (ssl_);  
+  SSL_clear (ssl_);
   SSL_set_fd (ssl_, svc_handler->get_handle ());
 
   SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
@@ -425,7 +425,7 @@ int AC_Client_Logging_Daemon::init
   return 0;
 }
 
-int AC_Client_Logging_Daemon::fini () 
+int AC_Client_Logging_Daemon::fini ()
 { return acceptor_.close (); }
 
 ACE_FACTORY_DEFINE (AC_CLD, AC_Client_Logging_Daemon)
