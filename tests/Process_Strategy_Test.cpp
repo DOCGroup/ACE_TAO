@@ -51,8 +51,7 @@
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
 
-typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR>
-	ACCEPTOR;
+typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
 // Create an Options Singleton.
 typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
@@ -61,14 +60,47 @@ typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
 static int connections = 0;
 
 // Use this to show down the process gracefully.
+static void 
+connection_completed ()
+{
+  // Increment connection counter
+  connections++;
+ 
+  // If all connections have been serviced
+  if (connections == ACE_MAX_ITERATIONS + 1)
+    // Make sure that the event loop is interrupted
+    ACE_Reactor::instance()->wakeup_all_threads ();
+}
 
+// Have all connections been serviced?
 static int
 done (void)
 {
-  if (OPTIONS::instance ()->concurrency_type () == Options::PROCESS)
-    return connections == 1;
-  else
-    return connections == ACE_MAX_ITERATIONS + 1;
+  return connections == ACE_MAX_ITERATIONS + 1;
+}
+
+// Constructor
+Process_Strategy::Process_Strategy (size_t n_processes,
+                                    ACE_Event_Handler *acceptor,
+                                    ACE_Reactor *r,
+                                    int flags)
+  : ACE_Process_Strategy<Counting_Service> (n_processes, acceptor, r, flags)
+{
+}
+
+// Overwrite the process creation method to include connection
+// counting
+int 
+Process_Strategy::activate_svc_handler (Counting_Service *svc_handler,
+                                        void *arg)
+{
+  // Call down to the base class
+  int result = ACE_Process_Strategy<Counting_Service>::activate_svc_handler (svc_handler, arg);
+  
+  // Connection is now complete
+  connection_completed ();
+  
+  return result;
 }
 
 ACE_File_Lock &
@@ -93,11 +125,11 @@ Options::Options (void)
   :
   // Choose to use processes by default.
 #if !defined (ACE_LACKS_FORK)
-    concurrency_type_ (PROCESS)
+  concurrency_type_ (PROCESS)
 #elif defined (ACE_HAS_THREADS)
-    concurrency_type_ (THREAD)
+  concurrency_type_ (THREAD)
 #else
-    concurrency_type_ (REACTIVE)
+  concurrency_type_ (REACTIVE)
 #endif /* !ACE_LACKS_FORK */
 {
 }
@@ -164,8 +196,7 @@ Options::parse_args (int argc, char *argv[])
     case Options::PROCESS:
 #if !defined (ACE_LACKS_FORK)
       ACE_NEW_RETURN (this->concurrency_strategy_,
-		      ACE_Process_Strategy<Counting_Service>
-		      (1, this, ACE_Reactor::instance()),
+		      Process_Strategy (1, this, ACE_Reactor::instance()),
 		      -1);
       break;
 #else
@@ -175,7 +206,7 @@ Options::parse_args (int argc, char *argv[])
 #if defined (ACE_HAS_THREADS)
       ACE_NEW_RETURN (this->concurrency_strategy_,
 		      ACE_Thread_Strategy<Counting_Service>
-			  (ACE_Thread_Manager::instance (),
+                      (ACE_Thread_Manager::instance (),
 		       THR_NEW_LWP, 1),
 		      -1);
       break;
@@ -191,13 +222,6 @@ Options::parse_args (int argc, char *argv[])
       break;
     }
 
-#if !defined (ACE_WIN32) && !defined (VXWORKS)
-  // Register to handle <SIGCHLD> when a child exits.
-  if (ACE_Reactor::instance ()->register_handler (SIGCHLD, this) == -1)
-    return -1;
-#endif /* !defined (ACE_WIN32) && !defined (VXWORKS) */
-  if (ACE_Reactor::instance ()->register_handler (SIGINT, this) == -1)
-    return -1;
   return 0;
 }
 
@@ -211,28 +235,6 @@ void
 Options::concurrency_type (Options::Concurrency_Type cs)
 {
   this->concurrency_type_ = cs;
-}
-
-// Reap child processes.
-
-int
-Options::handle_signal (int signum, siginfo_t *, ucontext_t *)
-{
-  switch (signum)
-    {
-    case SIGCHLD:
-      pid_t pid;
-
-      while ((pid = ACE_OS::waitpid (-1, 0, WNOHANG)) > 0)
-	continue;
-      break;
-
-    case SIGINT:
-      ACE_Reactor::end_event_loop();
-      break;
-    }
-
-  return 0;
 }
 
 Counting_Service::Counting_Service (ACE_Thread_Manager *)
@@ -361,7 +363,7 @@ Counting_Service::handle_close (ACE_HANDLE,
                                 ACE_Reactor_Mask)
 {
   // Done with another connection.
-  connections++;
+  connection_completed ();
 
   // Call down to base class
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close ();
@@ -532,15 +534,12 @@ main (int argc, char *argv[])
 	  exit (-1);
 	  /* NOTREACHED */
 	case 0:
-	  signal (SIGCHLD, SIG_IGN);
+	  ACE_OS::signal (SIGCHLD, SIG_IGN);
 	  server (0);
 	  break;
 	  /* NOTREACHED */
 	default:
 	  client (&server_addr);
-	  // Shutdown the server process.
-	  if (ACE_OS::kill (pid, SIGINT) == 0)
-            ACE_OS::wait ();
 	  break;
 	  /* NOTREACHED */
 	}
@@ -558,7 +557,7 @@ main (int argc, char *argv[])
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       // Wait for the threads to exit.
-	  ACE_Thread_Manager::instance ()->wait ();
+      ACE_Thread_Manager::instance ()->wait ();
 #else
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) only one thread may be run in a process on this platform\n%a",

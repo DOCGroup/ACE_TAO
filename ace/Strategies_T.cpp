@@ -361,6 +361,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
 
   if (result == -1)
     svc_handler->close (0);
+
   return result;
 }
 
