@@ -289,9 +289,9 @@ operator<< (TAO_OutputCDR &cdr, const CORBA::Any &any)
 CORBA::Boolean
 operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_var tc;
 
-  if ((cdr >> tc) == 0)
+  if ((cdr >> tc.out ()) == 0)
     {
       return 0;
     }

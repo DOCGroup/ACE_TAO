@@ -1,3 +1,13 @@
+Sun Oct 26 13:11:54 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Typecode.cpp:
+
+          Removed redundant duplications of type codes, which are now
+          handled automatically in the Any_Impl constructor. Thanks to
+          Sunil Rottoo <srottoo@adacelcanada.com> for tracking down
+          the cause of these memory leaks.
+
 Sun Oct 26 11:13:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp: Explicit
