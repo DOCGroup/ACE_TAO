@@ -959,7 +959,7 @@ POA_CORBA_ConstructionPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy (
   TAO_Stub *stub
 )
-  :  ACE_NESTED_CLASS (POA_CORBA, _tao_thru_poa_collocated_Policy (stub)),
+  : _tao_thru_poa_collocated_Policy (stub),
     CORBA_Object (stub, 1)
 {
 }
