@@ -1,3 +1,10 @@
+Sat Dec  8 17:07:01 2001  Ossama Othman  <ossama@uci.edu>
+
+	* bin/fuzz.pl (check_for_missing_rir_env):
+
+	  Check for TAO_ENV_ARG_PARAMETER instead of ACE_TRY_ENV.  TAO now
+	  uses the former instead of the latter.
+
 Sat Dec  8 09:39:48 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS.cpp (string_to_argv): Improved the support for quoted strings.
