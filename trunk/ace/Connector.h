@@ -180,11 +180,15 @@ public:
 protected:
   // = Helpful typedefs.
 
-  typedef ACE_Svc_Tuple<SVC_HANDLER> AST;
+  typedef ACE_Svc_Tuple<SVC_HANDLER> 
+          AST;
 
-  typedef ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *, ACE_SYNCH_RW_MUTEX> MAP_MANAGER;
-  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *, ACE_SYNCH_RW_MUTEX> MAP_ITERATOR;
-  typedef ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *> MAP_ENTRY;
+  typedef ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *, ACE_SYNCH_RW_MUTEX> 
+          MAP_MANAGER;
+  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *, ACE_SYNCH_RW_MUTEX> 
+          MAP_ITERATOR;
+  typedef ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *> 
+          MAP_ENTRY;
 
   // = The following two methods define the Connector's strategies for
   // creating, connecting, and activating SVC_HANDLER's, respectively.
