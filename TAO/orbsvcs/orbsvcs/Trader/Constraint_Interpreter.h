@@ -3,15 +3,15 @@
 // ========================================================================
 // $Id$
 //
-// = LIBRARY 
+// = LIBRARY
 //    orbsvcs
-//  
-// = FILENAME 
+//
+// = FILENAME
 //    Constraint_Interpreter.h
-// 
+//
 // = AUTHOR
 //    Seth Widoff <sbw1@cs.wustl.edu>
-// 
+//
 // ========================================================================
 
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
@@ -27,21 +27,21 @@
 class TAO_Interpreter
 // = TITLE
 //      TAO_Interpreter is the superclass for all interpreters. Its
-//      build tree method invokes the yacc parser to parse a constraint 
-//      or preference string. 
-{   
+//      build tree method invokes the yacc parser to parse a constraint
+//      or preference string.
+{
 protected:
 
   TAO_Interpreter (void) : root_ (0) {}
 
   ~TAO_Interpreter (void);
-  
+
   int build_tree (const char* preferences);
   // Using the Yacc generated parser, construct an expression
   // tree representing <constraints> from the tokens returned by it.
 
   static int is_empty_string (const char* str);
-  
+
   TAO_Constraint* root_;
   // The root of the expression tree, not equal to null if build_tree
   // successfully builds a tree from the constraints.
@@ -57,7 +57,7 @@ class TAO_Constraint_Interpreter : public TAO_Interpreter
 //   TAO_Constraint_Interpreter will, given a constraint string whose
 //   syntax and semantics comply with the trader specification for the
 //   constraint language, determine if a CosTrading::Offer meets the
-//   constraints. 
+//   constraints.
 //
 // = DESCRIPTION
 //   TAO_Constraint_Interpreter will first build an expression tree
@@ -69,28 +69,28 @@ class TAO_Constraint_Interpreter : public TAO_Interpreter
 //   whether the offer meets the constraints.
 {
 public:
-  
+
   TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* constraints,
                               CORBA::Environment& env)
-    TAO_THROW_SPEC (CosTrading::IllegalConstraint);
-  
+    TAO_THROW_SPEC ((CosTrading::IllegalConstraint));
+
   TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
                               const char* constraints,
                               CORBA::Environment& env)
-    TAO_THROW_SPEC (CosTrading::IllegalConstraint);
+    TAO_THROW_SPEC ((CosTrading::IllegalConstraint));
   // This constructor builds an expression tree representing the
   // constraint specified in <constraints>, and throws an Illegal
   // Constraint exception if the constraint given has syntax errors or
   // semantic errors, such as mismatched types.
-  
+
   ~TAO_Constraint_Interpreter (void);
   // Destructor
 
   CORBA::Boolean evaluate (CosTrading::Offer* offer);
 
   CORBA::Boolean evaluate (TAO_Constraint_Evaluator& evaluator);
-  
+
   // Determine whether an offer fits the constraints with which the
   // tree was constructed. This method is thread safe (hopefully).
 };
@@ -127,14 +127,14 @@ public:
 
   // Parse the preference string, determining first if it's
   // valid. Throw an IllegalPreference exception if the preference
-  // doesn't conform to the BNF grammar for preferences. 
-  
+  // doesn't conform to the BNF grammar for preferences.
+
   ~TAO_Preference_Interpreter(void);
   // Destructor
 
   void order_offer (CosTrading::Offer* offer,
                     CosTrading::OfferId offer_id = 0);
-  
+
   void order_offer (TAO_Constraint_Evaluator& evaluator,
                     CosTrading::Offer* offer,
                     CosTrading::OfferId offer_id = 0);
@@ -143,11 +143,11 @@ public:
 
   int remove_offer (CosTrading::Offer*& offer,
                     CosTrading::OfferId& offer_id);
-  
+
   int remove_offer (CosTrading::Offer*& offer);
-  // Remove the next offer. The offer returned will be the next in the 
+  // Remove the next offer. The offer returned will be the next in the
   // ordering determined by the preference string.
-  
+
   int num_offers (void);
   // Return the number of offers remaining in the ordering.
 
@@ -156,24 +156,24 @@ private:
   TAO_Preference_Interpreter (const TAO_Preference_Interpreter&);
   TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&);
   // Disallow copying.
-  
+
   struct Preference_Info
   {
     CORBA::Boolean evaluated_;
     // True if the preference evaluation didn't return an error for this offer.
-    
+
     TAO_Literal_Constraint value_;
     // The value of the preference evaluation.
 
     CosTrading::OfferId offer_id_;
     // The offer id of this offer.
-    
+
     CosTrading::Offer* offer_;
     // A pointer to the offer.
   };
-  
-  typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers; 
-  
+
+  typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers;
+
   Ordered_Offers offers_;
   // The ordered list of offers.
 };
@@ -192,7 +192,7 @@ extern int yylex(void);
 #define YY_INPUT(b, r, ms) (r = TAO_Lex_String_Input::copy_into(b, ms))
 
 #undef yyerror
-#define yyerror(x) 
+#define yyerror(x)
 
 class TAO_Lex_String_Input
 // = TITLE
@@ -201,14 +201,14 @@ class TAO_Lex_String_Input
 //   EOF, and call TAO_Lex_String_Input::reset() with the new string,
 //   prior to calling yyparse.
 {
-public:  
+public:
 
   static void reset(char* input_string);
   // Reset the lex input.
-  
+
   static int copy_into(char* buf, int max_size);
   // Method lex will call to read from the input string.
-  
+
 private:
 
   static char* string_;
@@ -220,7 +220,7 @@ private:
 // The union used by lex and yacc to build the Abstract Syntax Tree.
 typedef union
 {
-  TAO_Constraint* constraint_;	
+  TAO_Constraint* constraint_;
 } YYSTYPE;
 
 extern YYSTYPE yylval;
