@@ -2,6 +2,12 @@
 
 #include "tao/ORB_Core.h"
 
+ACE_INLINE ACE_Lock &
+TAO_Object_Adapter::lock (void)
+{
+  return *this->lock_;
+}
+
 /* static */
 ACE_INLINE CORBA::ULong
 TAO_Object_Adapter::transient_poa_name_size ()
@@ -32,6 +38,16 @@ TAO_Object_Adapter::find_servant (const TAO_ObjectKey &key,
 }
 
 ACE_INLINE int
+TAO_Object_Adapter::find_persistent_poa (const poa_name &system_name,
+                                         TAO_POA *&poa,
+                                         CORBA_Environment &ACE_TRY_ENV)
+{
+  return this->hint_strategy_->find_persistent_poa (system_name,
+                                                    poa,
+                                                    ACE_TRY_ENV);
+}
+
+ACE_INLINE int
 TAO_Object_Adapter::find_poa (const poa_name &system_name,
                               CORBA::Boolean activate_it,
                               CORBA::Boolean root,
@@ -52,16 +68,6 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
                                        poa_creation_time,
                                        poa);
     }
-}
-
-ACE_INLINE int
-TAO_Object_Adapter::find_persistent_poa (const poa_name &system_name,
-                                         TAO_POA *&poa,
-                                         CORBA_Environment &ACE_TRY_ENV)
-{
-  return this->hint_strategy_->find_persistent_poa (system_name,
-                                                    poa,
-                                                    ACE_TRY_ENV);
 }
 
 ACE_INLINE int
@@ -106,8 +112,3 @@ TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
                                                       system_name);
 }
 
-ACE_INLINE ACE_Lock &
-TAO_Object_Adapter::lock (void)
-{
-  return *this->lock_;
-}

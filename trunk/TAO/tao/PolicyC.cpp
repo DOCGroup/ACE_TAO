@@ -344,6 +344,20 @@ const char* CORBA_Policy::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/Policy:1.0";
 }
 
+CORBA_Policy_ptr
+CORBA_Policy::_duplicate (CORBA_Policy_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->_incr_refcnt ();
+  return obj;
+}
+
+CORBA_Policy_ptr
+CORBA_Policy::_nil (void)
+{
+  return (CORBA_Policy_ptr)0;
+}
+
 // *************************************************************
 // CORBA_PolicyList
 // *************************************************************
