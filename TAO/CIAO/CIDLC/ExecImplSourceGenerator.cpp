@@ -336,9 +336,9 @@ namespace
   {
     ReadOnlyAttributeEmitter (Context& c, T& scope)
       : EmitterBase (c),
+        scope_ (scope),
         read_type_name_emitter_ (c.os ()),
-        return_emitter_ (c.os ()),
-        scope_ (scope)
+        return_emitter_ (c.os ())
     {
       read_belongs_.node_traverser (read_type_name_emitter_);
       return_belongs_.node_traverser (return_emitter_);
@@ -781,7 +781,7 @@ namespace
     }
 
     virtual void
-    post (Type& t)
+    post (Type&)
     {
     }
   };
@@ -1274,7 +1274,7 @@ ExecImplSourceEmitter::ExecImplSourceEmitter (std::ostream& os_,
 {}
 
 void
-ExecImplSourceEmitter::pre (TranslationUnit& u)
+ExecImplSourceEmitter::pre (TranslationUnit&)
 {
   os << COPYRIGHT;
 
@@ -1364,7 +1364,7 @@ ExecImplSourceEmitter::generate (TranslationUnit& u)
 }
 
 void
-ExecImplSourceEmitter::post (TranslationUnit& u)
+ExecImplSourceEmitter::post (TranslationUnit&)
 {
 }
 
