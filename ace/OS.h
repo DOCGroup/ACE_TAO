@@ -3613,6 +3613,15 @@ struct sigaction
 #   define ACE_NONBLOCK O_NDELAY
 # endif /* ACE_HAS_POSIX_NONBLOCK */
 
+// These are used by the <ACE_IPC_SAP::enable> and
+// <ACE_IPC_SAP::disable> methods.  They must be unique and cannot
+// conflict with the value of <ACE_NONBLOCK>.  We make the numbers
+// negative here so they won't conflict with other values like SIGIO,
+// etc.
+#define ACE_SIGIO -1
+#define ACE_URGENT -2
+#define ACE_CLOEXEC -3
+
 # define LOCALNAME 0
 # define REMOTENAME 1
 

@@ -1,14 +1,23 @@
+Thu Jul 16 15:41:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/IPC_SAP: Cleaned up the enable() and disable() methods and
+ 	  documentation so they correctly use the new ACE_* macros
+ 	  described in the following bullet.
+
+	* ace/OS.h: Added new ACE_SIGIO, ACE_SIGURG, and ACE_CLOEXEC flags
+ 	  that should be used instead of the SIGIO or SIGURG, etc., in
+ 	  order to ensure uniqueness.  However, legacy code will continue
+ 	  to work.
+
 Thu Jul 16 15:02:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Synch_T.h: 
-	  Use ACE_Condition_Thread_Mutex instead of
-	  ACE_Condition<ACE_Thread_Mutex> as the default condition
-	  variable (ACE_SYNCH_CONDITION), this removes some headaches wrt
-	  template instantiation.
+	* ace/Synch_T.h: Use ACE_Condition_Thread_Mutex instead of
+ 	  ACE_Condition<ACE_Thread_Mutex> as the default condition
+ 	  variable (ACE_SYNCH_CONDITION), this removes some headaches wrt
+ 	  template instantiation.
 
-	* ace/IPC_SAP.cpp: 
-	  Added support for the close-on-exec flag. We use the F_SETFD
-	  macro.
+	* ace/IPC_SAP.cpp: Added support for the close-on-exec flag. We
+ 	  use the new ACE_CLOEXEC macro for this.
 
 Thu Jul 16 12:50:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
