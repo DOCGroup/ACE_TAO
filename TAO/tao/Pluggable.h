@@ -459,8 +459,10 @@ public:
   virtual char object_key_delimiter (void) const = 0;
   // Return the object key delimiter to use or expect.
 
+#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   virtual int purge_connections (void) = 0;
   // Purge "old" connections.
+#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 protected:
   virtual void make_profile (const char *endpoint,
