@@ -556,7 +556,13 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 
   FT::FTDomainId domain_id = 0;
   // note the cast in the next line makes ANY >>= work.
-  if (! ::TAO_PG::find (decoder, ::FT::FT_DOMAIN_ID, ACE_static_cast (const char *, domain_id)) )
+  const char * domain_id_string = 0;
+  if (::TAO_PG::find (decoder, ::FT::FT_DOMAIN_ID, domain_id_string) )
+  {
+    // NOTE the assumption that we can assign a char * to a domain id
+    domain_id = ACE_const_cast (char *, domain_id_string);
+  }
+  else
   {
     domain_id = this->domain_;
 
@@ -582,15 +588,16 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   }
 
   FT::TypeId object_type = 0;
-  if (! ::TAO_PG::find (decoder, ::FT::FT_TYPE_ID, ACE_static_cast (const char *, object_type)) )
+  const char * object_type_string;
+  if (::TAO_PG::find (decoder, ::FT::FT_TYPE_ID, object_type_string))
+  {
+    object_type = ACE_const_cast (char *, object_type_string);
+  }
+  else
   {
     object_type = "unknown";
     // Not required: missingParameter = 1;
     ACE_DEBUG ((LM_DEBUG, "Object type not given.\n"));
-  }
-  else
-  {
-    ACE_DEBUG ((LM_DEBUG, "Object type: %s\n", object_type));
   }
 
   FT::ObjectGroupId group_id = 0;
