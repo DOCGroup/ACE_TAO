@@ -25,16 +25,26 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_UTO *uto = 0;
 
-  // This is the difference in seconds between
-  // 15th October 1582 and 1st Jan 1970. It needs to be added to the system
-  // time to make the base time as 15th October 1582. The decimal value of
-  // the offset is 1.221929 * 10^10.
+  // UNIX systems use 1st Jan. 1970 as the Base Time. The CORBA Time
+  // Service uses the Universal Time Coordinated (UTC) representation
+  // of time from the X/Open DCE Time Service. The UTC time signals
+  // broadcast by the WWV radio station of the National Bureau of
+  // Standards deliver time that is easier to handle in this
+  // representation. UTC time is defined as :
+  // 
+  //  Time Units : 100 nanosecs
+  //  Base Time  : 15th October 1582 00:00:00
+  //  Approximate range : AD 30,000
+  //
+  //  To construct the UTC time from UNIX time we need to add the
+  //  difference of days between 15th October 1582 and 1st Jan
+  //  1970. This difference is 141427 days or 0x2D8539C80 secs.
 
 #if defined (ACE_LACKS_LONGLONG_T)
-  CORBA::ULongLong TAO_Time_Base_Offset (0xD8539190, 2);
+  CORBA::ULongLong TAO_Time_Base_Offset (0xD8539C80, 2);
   // (Lower 32 bits of the offset in hex, Upper 32 bits of the offset in hex)
 #else
-  CORBA::ULongLong TAO_Time_Base_Offset = ACE_UINT64_LITERAL(0x2D8539190);
+  CORBA::ULongLong TAO_Time_Base_Offset = ACE_UINT64_LITERAL(0x2D8539C80);
 #endif
 
   // Return the local time of the system as a UTO.
@@ -128,3 +138,12 @@ TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
   ACE_CHECK_RETURN (CosTime::TIO::_nil ());
   return tio->_this ();
 }
+
+
+
+
+
+
+
+
+
