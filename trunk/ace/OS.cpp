@@ -4829,6 +4829,169 @@ spa (FUNCPTR entry, ...)
   // successful
   return ret > 0 ? 0 : ret;
 }
+
+
+
+// A helper function for the extended spa functions
+static void
+add_to_argv (int& argc, char** argv, int max_args, char* string)
+{
+  char indouble   = 0;
+  size_t previous = 0; 
+  size_t length   = ACE_OS_String::strlen (string);
+
+  // We use <= to make sure that we get the last argument
+  for (size_t i = 0; i <= length; i++)
+    {
+      // Is it a double quote that hasn't been escaped?
+      if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))
+        {
+          indouble ^= 1;
+          if (indouble) 
+            {
+              // We have just entered a double quoted string, so
+              // save the starting position of the contents.
+              previous = i + 1;
+            }
+          else
+            {
+              // We have just left a double quoted string, so
+              // zero out the ending double quote.
+              string[i] = '\0';
+            }
+        }
+      else if (string[i] == '\\')  // Escape the next character
+        {
+          // The next character is automatically
+          // skipped because of the strcpy
+          ACE_OS_String::strcpy (string + i, string + i + 1);
+          length--;
+        }
+      else if (!indouble &&
+               (ACE_OS::ace_isspace (string[i]) || string[i] == '\0'))
+        {
+          string[i] = '\0';
+          if (argc < max_args)
+            {
+              argv[argc] = string + previous;
+              argc++;
+            }
+          else
+            {
+              ACE_OS::fprintf (stderr, "spae(): number of arguments "
+                                       "limited to %d\n", max_args);
+            }
+
+          // Skip over whitespace in between arguments
+          for(++i; i < length && ACE_OS::ace_isspace (string[i]); ++i)
+            {
+            }
+
+          // Save the starting point for the next time around
+          previous = i;
+
+          // Make sure we don't skip over a character due
+          // to the above loop to skip over whitespace
+          i--;
+        }
+    }
+}
+
+// This global function can be used from the VxWorks shell to pass
+// arguments to a C main () function.
+//
+// usage: -> spae main, "arg1 arg2 \"arg3 with spaces\""
+//
+// All arguments must be within double quotes, even numbers.
+int
+spae (FUNCPTR entry, ...)
+{
+  static const int WINDSH_ARGS = 10;
+  static const int MAX_ARGS    = 128;
+  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
+  va_list pvar;
+  int argc = 1;
+
+  // Peel off arguments to spa () and put into argv.  va_arg () isn't
+  // necessarily supposed to return 0 when done, though since the
+  // VxWorks shell uses a fixed number (10) of arguments, it might 0
+  // the unused ones.
+  va_start (pvar, entry);
+
+  int i = 0;
+  for (char* str = va_arg (pvar, char*);
+       str != 0 && i < WINDSH_ARGS; str = va_arg (pvar, char*), ++i)
+    {
+      add_to_argv(argc, argv, MAX_ARGS, str);
+    }
+
+  // fill unused argv slots with 0 to get rid of leftovers
+  // from previous invocations
+  for (i = argc; i < MAX_ARGS; ++i)
+    argv[i] = 0;
+
+  // The hard-coded options are what ::sp () uses, except for the
+  // larger stack size (instead of ::sp ()'s 20000).
+  const int ret = ::taskSpawn (argv[0],    // task name
+                               100,        // task priority
+                               VX_FP_TASK, // task options
+                               ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
+                               entry,      // entry point
+                               argc,       // first argument to main ()
+                               (int) argv, // second argument to main ()
+                               0, 0, 0, 0, 0, 0, 0, 0);
+  va_end (pvar);
+
+  // ::taskSpawn () returns the taskID on success: return 0 instead if
+  // successful
+  return ret > 0 ? 0 : ret;
+}
+
+
+// This global function can be used from the VxWorks shell to pass
+// arguments to a C main () function.  The function will be run
+// within the shells task.
+//
+// usage: -> spaef main, "arg1 arg2 \"arg3 with spaces\""
+//
+// All arguments must be within double quotes, even numbers.
+// Unlike the spae function, this fuction executes the supplied
+// routine in the foreground, rather than spawning it in a separate
+// task.
+int
+spaef (FUNCPTR entry, ...)
+{
+  static const int WINDSH_ARGS = 10;
+  static const int MAX_ARGS    = 128;
+  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
+  va_list pvar;
+  int argc = 1;
+
+  // Peel off arguments to spa () and put into argv.  va_arg () isn't
+  // necessarily supposed to return 0 when done, though since the
+  // VxWorks shell uses a fixed number (10) of arguments, it might 0
+  // the unused ones.
+  va_start (pvar, entry);
+
+  int i = 0;
+  for (char* str = va_arg (pvar, char*);
+       str != 0 && i < WINDSH_ARGS; str = va_arg (pvar, char*), ++i)
+    {
+      add_to_argv(argc, argv, MAX_ARGS, str);
+    }
+
+  // fill unused argv slots with 0 to get rid of leftovers
+  // from previous invocations
+  for (i = argc; i < MAX_ARGS; ++i)
+    argv[i] = 0;
+
+  int ret = entry (argc, argv);
+
+  va_end (pvar);
+
+  // Return the return value of the invoked ace_main routine.
+  return ret;
+}
 # endif /* VXWORKS */
 
 # if !defined (ACE_HAS_SIGINFO_T)
