@@ -20,7 +20,7 @@
 
 
 #if defined (__ACE_INLINE__)
-#include "workS_T.i"
+#include "InterfaceS_T.i"
 #endif /* defined INLINE */
 
 
