@@ -1,3 +1,9 @@
+Sun Aug  5 14:31:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/run_tests.lst: Ossama suggested that we dont run the
+	  Service_Config_Test in static builds.
+	
+
 Fri Aug 04 3:33:31 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	
 	* ace/QoS/SOCK_Dgram_Mcast_QoS.h:
