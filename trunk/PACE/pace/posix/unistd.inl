@@ -83,7 +83,7 @@ pace_dup (PACE_HANDLE fildes)
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 PACE_HANDLE
-pace_dup2 (PACE_HANDLE fildes, int fildes2)
+pace_dup2 (PACE_HANDLE fildes, PACE_HANDLE fildes2)
 {
   return dup2 (fildes, fildes2);
 }
@@ -294,7 +294,7 @@ pace_link (const char * existing, const char * new_link)
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 pace_off_t
-pace_lseek (int fildes, pace_off_t offset, int whence)
+pace_lseek (PACE_HANDLE fildes, pace_off_t offset, int whence)
 {
   return lseek (fildes, offset, whence);
 }

@@ -100,7 +100,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.2.1.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE PACE_HANDLE pace_dup2 (PACE_HANDLE fildes, int fildes2);
+  PACE_INLINE PACE_HANDLE pace_dup2 (PACE_HANDLE fildes, PACE_HANDLE fildes2);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
@@ -330,7 +330,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.5.3.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE pace_off_t pace_lseek (int fildes, off_t offset, int whence);
+  PACE_INLINE pace_off_t pace_lseek (PACE_HANDLE fildes,
+                                     off_t offset, int whence);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
