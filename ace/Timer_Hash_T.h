@@ -56,7 +56,7 @@ public:
                const void *arg,
                const ACE_Time_Value &cur_time);
 
-  /// This method is called when the timer is canceled
+  /// This method is called when the timer is cancelled
   int cancellation (TIMER_QUEUE &timer_queue,
                     ACE_Event_Handler *handler);
 
