@@ -25,9 +25,10 @@ FILES	= mutex_test \
 	  pipe_thr_test \
 	  pipe_proc_test \
 	  Options \
-	  Benchmark
+	  Benchmark \
+	  Benchmark_Base
 
-LSRC	= $(addsuffix .cpp,$(FILES)) 
+LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
 SHOBJ	= $(addsuffix .so,$(FILES))
 
