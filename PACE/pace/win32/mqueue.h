@@ -35,7 +35,7 @@ extern "C" {
   /* Temporary fix until we emulate these funcs.
      typedef struct mq_attr pace_mq_attr
    */
-  typedef struct { int a_; } pace_mq_attr;00
+  typedef struct mq_attr { int a_; } pace_mq_attr;
 #endif /* PACE_MQ_ATTR */
 
 #if defined (PACE_HAS_CPLUSPLUS)
