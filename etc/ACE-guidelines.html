@@ -116,6 +116,12 @@ bgcolor="#ffffff">
         <strong><code>#include</code></strong> and
         <strong><code>filename</code></strong>, as shown in the above
         example.  This avoids dependency problems with Visual C++.<p>
+
+    <li>Be very careful with names of macros and enum values.  It's
+        always best to prefix them with something like <code>ACE_</code>
+        or <code>TAO_<code>.  There are too many system headers out
+        there that #define <code>OK</code>, <code>SUCCESS</code>,
+        <code>ERROR</code>, and so on.<p>
   </ul>
 
   <li><strong>C++ Syntax and Constructs</strong><p>
