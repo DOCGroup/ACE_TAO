@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/corbafwd.h"
+
 #include "ace/Hash_Map_Manager_T.h"
 
 #include "tao/TAO_Export.h"
@@ -73,6 +75,7 @@ public:
   int bind (const char *orb_id, TAO_ORB_Core *orb_core);
   TAO_ORB_Core* find (const char *orb_id);
   int unbind (const char *orb_id);
+  TAO_ORB_Core* const * get_orbs( size_t& num_orbs );
   //@}
 
   /// Obtain the first ORB for the ORB_Core_instance() implementation
@@ -81,6 +84,17 @@ public:
   /// Return a unique instance
   static TAO_ORB_Table *instance (void);
 
+  /// Set the ORB related to the orb_id as the default ORB and not the
+  /// ORB that is first binded.
+  void set_default (const char *orb_id);
+  
+  /// Method the ORB invokes to specify that it doesnt want to be the
+  /// default ORB if there are more than one ORB registered.
+  void not_default (const char *orb_id);
+
+  /// Accessor to the underlying table_ 
+  Table * table (void);
+   
 private:
 
   /// Prevent copying
@@ -89,11 +103,21 @@ private:
 
 private:
 
+  /// Update our list of orbs
+  void update_orbs();
+
+  /// Variable to check if the first ORB decides not to be the default
+  CORBA::Boolean first_orb_not_default_;
+
   /// The implementation.
   Table table_;
 
   /// The first ORB created by the user
   TAO_ORB_Core *first_orb_;
+
+  /// List of orbs for get_orbs call
+  TAO_ORB_Core **orbs_;
+  size_t       num_orbs_;
 
 };
 

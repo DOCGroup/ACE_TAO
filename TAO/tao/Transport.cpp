@@ -116,6 +116,8 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , handler_lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
   , id_ ((size_t) this)
   , purging_order_ (0)
+  , recv_buffer_size_ (0)
+  , sent_byte_count_ (0)
   , char_translator_ (0)
   , wchar_translator_ (0)
   , tcs_set_ (0)
@@ -739,6 +741,9 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
   // no bytes are sent send() can only return 0 or -1
   ACE_ASSERT (byte_count != 0);
 
+  // Total no. of bytes sent for a send call
+  this->sent_byte_count_ += byte_count;
+
   if (TAO_debug_level > 4)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -761,6 +766,10 @@ TAO_Transport::drain_queue_i (void)
 
   // We loop over all the elements in the queue ...
   TAO_Queued_Message *i = this->head_;
+
+  // reset the value so that the counting is done for each new send
+  // call.
+  this->sent_byte_count_ = 0;
 
   while (i != 0)
     {
@@ -1196,6 +1205,13 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
       recv_size =
         this->messaging_object ()->header_length ();
     }
+
+  // Saving the size of the received buffer in case any one needs to
+  // get the size of the message thats received in the
+  // context. Obviously the value will be changed for each recv call
+  // and the user is supposed to invoke the accessor only in the
+  // invocation context to get meaningful information.
+  this->recv_buffer_size_ = recv_size;
 
   // Read the message into the  message block that we have created on
   // the stack.
@@ -1993,6 +2009,18 @@ TAO_Transport_Cache_Manager &
 TAO_Transport::transport_cache_manager (void)
 {
   return this->orb_core_->lane_resources ().transport_cache ();
+}
+
+size_t
+TAO_Transport::recv_buffer_size (void)
+{
+  return this->recv_buffer_size_;
+}
+
+size_t
+TAO_Transport::sent_byte_count (void)
+{
+  return this->sent_byte_count_;
 }
 
 void
