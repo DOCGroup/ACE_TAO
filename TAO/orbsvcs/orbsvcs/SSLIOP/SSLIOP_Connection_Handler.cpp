@@ -2,17 +2,12 @@
 #include "SSLIOP_Current.h"
 #include "SSLIOP_Endpoint.h"
 
-#include "tao/Timeprobe.h"
 #include "tao/debug.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
-#include "tao/CDR.h"
-#include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Endpoint.h"
 #include "tao/IIOP_Connection_Handler.h"
 #include "tao/Transport_Cache_Manager.h"
-#include "tao/Resume_Handle.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Wait_Strategy.h"
 #include "ace/os_include/netinet/os_tcp.h"
@@ -22,7 +17,7 @@
 # include "SSLIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (TAO_SSLIOP,
+ACE_RCSID (SSLIOP,
            SSLIOP_Connection_Handler,
            "$Id$")
 
@@ -84,16 +79,13 @@ TAO_SSLIOP_Connection_Handler::open (void *)
 {
   if (this->set_socket_option (this->peer (),
                                tcp_properties_->send_buffer_size,
-                               tcp_properties_->recv_buffer_size)
-      == -1)
+                               tcp_properties_->recv_buffer_size) == -1)
     return -1;
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
-
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *)
-                                &this->tcp_properties_->no_delay,
+                                (void *) &this->tcp_properties_->no_delay,
                                 sizeof (int)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
@@ -102,6 +94,29 @@ TAO_SSLIOP_Connection_Handler::open (void *)
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
         return -1;
+
+      // Enable partial SSL writes.
+      //
+      // By default, OpenSSL attempts to send the entire chunk of
+      // data.  This is fine for relatively small chunks of data.
+      // However, if SSL_write() returns with an SSL_ERROR_WANT_WRITE
+      // (basically an EWOULDBLOCK) when using non-blocking I/O, TAO
+      // may attempt to resend the same data with a potentially
+      // different buffer address.  Such a scenario is prone to happen
+      // when sending large chunks of data that cause flow control to
+      // occur.  For most protocol implementations this is fine.
+      // OpenSSL, on the other hand, requires that the same arguments
+      // be passed to SSL_write() if an SSL_ERROR_WANT_WRITE error
+      // occured on a previous SSL_write() attempt, which cannot be
+      // guaranteed by TAO's current message queuing/construction
+      // code, often resulting in a "bad write retry" OpenSSL error.
+      // To work around this issue, we enable partial SSL_write()s in
+      // SSL/TLS connections created by TAO's SSLIOP pluggable
+      // protocol.  Doing so makes SSL_write() behave like write(2).
+      //
+      // This isn't an issue when using blocking I/O.
+      (void) ::SSL_set_mode (this->peer ().ssl (),
+                             SSL_MODE_ENABLE_PARTIAL_WRITE);
     }
 
   // Called by the <Strategy_Acceptor> when the handler is
@@ -177,7 +192,7 @@ TAO_SSLIOP_Connection_Handler::close_connection (void)
 int
 TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  int result =
+  const int result =
     this->handle_input_eh (h, this);
 
   if (result == -1)
@@ -192,7 +207,7 @@ TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  int result =
+  const int result =
     this->handle_output_eh (handle, this);
 
   if (result == -1)
@@ -289,7 +304,7 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
   IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
-  CORBA::ULong len = listen_list.length ();
+  const CORBA::ULong len = listen_list.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -339,7 +354,7 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int retval = this->transport ()->recache_transport (&prop);
+      const int retval = this->transport ()->recache_transport (&prop);
       if (retval == -1)
         return retval;
 
