@@ -15,13 +15,13 @@ TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: !MINIMUM !ST
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test_lite.pl: !MINIMUM !ST !STATIC
 TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST
 
-TAO/performance-tests/Single_Threaded_Latency/run_test.pl
-TAO/performance-tests/Thread_Pool_Latency/run_test.pl: !ST
-TAO/performance-tests/Thread_Per_Connection_Latency/run_test.pl: !ST
-TAO/performance-tests/AMI_Latency/run_test.pl: !MINIMUM !ST
-TAO/performance-tests/DSI_Latency/run_test.pl: !MINIMUM
-TAO/performance-tests/DII_Latency/run_test.pl: !MINIMUM
-TAO/performance-tests/Deferred_Latency/run_test.pl: !MINIMUM
+TAO/performance-tests/Latency/Single_Threaded/run_test.pl
+TAO/performance-tests/Latency/Thread_Pool/run_test.pl: !ST
+TAO/performance-tests/Latency/Thread_Per_Connection/run_test.pl: !ST
+TAO/performance-tests/Latency/AMI/run_test.pl: !MINIMUM !ST
+TAO/performance-tests/Latency/DSI/run_test.pl: !MINIMUM
+TAO/performance-tests/Latency/DII/run_test.pl: !MINIMUM
+TAO/performance-tests/Latency/Deferred/run_test.pl: !MINIMUM
 
 TAO/performance-tests/Throughput/run_test.pl
 
