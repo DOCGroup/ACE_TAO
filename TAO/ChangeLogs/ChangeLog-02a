@@ -1,3 +1,10 @@
+Thu Apr  4 13:53:58 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tao/PortableServer/AMH_Response_Handler.h: 
+	* tao/PortableServer/AMH_Response_Handler.cpp: 
+	  Removed the inefficient huge locks in each method, split them to
+	  only protect shared variables.
+	
 Thu Apr  4 14:21:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAOACE.dsw (Package): Added TAO DLL as a dependency to the
