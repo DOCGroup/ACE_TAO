@@ -799,7 +799,7 @@ public:
     void operator= (const ServantRetentionPolicy&);
   };
 
-#endif /* end #if !defined /
+#endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_ServantRetentionPolicy;
 
@@ -819,7 +819,7 @@ public:
   class RequestProcessingPolicy;
   typedef RequestProcessingPolicy *RequestProcessingPolicy_ptr;
 
-#endif /* end #if !defined /
+#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CH_
