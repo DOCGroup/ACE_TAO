@@ -40,7 +40,8 @@ project : orbsvcslib, core, naming, iormanip, portablegroup, ami {
       LoadBalancing/LB_ObjectReferenceFactory.cpp
       LoadBalancing/LB_ORBInitializer.cpp
       LoadBalancing/LB_Component.cpp
-      LoadBalancing/LB_CPU_Monitor.cpp
+      LoadBalancing/LB_CPU_Utilization_Monitor.cpp
+      LoadBalancing/LB_CPU_Load_Average_Monitor.cpp
     }
   }
 }
