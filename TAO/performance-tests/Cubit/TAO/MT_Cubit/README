@@ -1,10 +1,13 @@
+// $Id$
+
 The MT-Cubit example
 --------------------
 
 Compiling
 ---------
 
-Makefile is provided. Use make to compile.
+Makefile is provided.  Use make to compile.  Except, see below for
+VxWorks-specific instructions for building the client.
 
 You can either run the server in the background in the same window as
 the client or open a separate window for the client and server.
@@ -25,15 +28,15 @@ by the client.
 client:
 -------
 
-./client [-ORBobjrefstyle url] 
-	 [-p <port_num>]
- 	 [-h <server_hostname>]
+./client [-ORBobjrefstyle url]
+         [-p <port_num>]
+         [-h <server_hostname>]
          [-d <datatype>]
-	 [-n <num_calls>]
- 	 [-t <num_of_clients>]
-	 [-r]
+         [-n <num_calls>]
+         [-t <num_of_clients>]
+         [-r]
 
-[-ORBobjrefstyle url]  Makes the IOR appear in URL format instead 
+[-ORBobjrefstyle url]  Makes the IOR appear in URL format instead
    of that ugly number sequence format.
 
 <port_num> is the port number of the highest priority servant and
@@ -57,15 +60,27 @@ client:
 
 <num_of_clients> is the total number of concurrent clients to be
    created. The clients will have successively decreasing
-   priorities. 
+   priorities.
 
 [-r] this option can be used to turn on the thread-per-rate tests.
 
-[-o] enables oneway calls instead of two-way calls.  The oneway call 
+[-o] enables oneway calls instead of two-way calls.  The oneway call
    is a noop call (for now).
 
-[-x] makes the client call the shutdown() method on the servant which 
+[-x] makes the client call the shutdown() method on the servant which
    invokes the shutdown() method on the ORB and causes it to exit.
+
+To build the client for VxWorks, for running the server and client
+on a single target:
+
+  % make BIN=client ACELIB= LDLIBS=$ACE_ROOT/ace/.obj/High_Res_Timer.o
+
+To run the server and client on a single target:
+
+  -> ld < server
+  -> ld < client
+  -> spa server, "-s", "-f", "ior.txt", "-t", "2"
+  -> spa client, "-s", "-f", "ior.txt", "-t", "2", "-n", "1000"
 
 Results
 -------
