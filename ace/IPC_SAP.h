@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_IPC_SAP_H
 #define ACE_IPC_SAP_H
@@ -33,7 +32,7 @@ public:
   /// Default dtor.
   ~ACE_IPC_SAP (void);
 
-  /// Interface for ioctl.
+  /// Interface for <ioctl>.
   int control (int cmd, void *) const;
 
   // = Common I/O handle options related to sockets.
