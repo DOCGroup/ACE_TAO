@@ -18,19 +18,19 @@ content="text/html; charset=iso-8859-1">
 <p><code><b>tao_ir </b>[<a href="../Options.html">ORB options</a>] <a href="#examples">command</a>
 [command-arguments]</code></p>
 
-<p><i>ORB_options</i> is the ORB options to be given.&nbsp; This is where
-options like &quot;-ORBImplRepoIOR&quot; would be placed.&nbsp; <i>command </i>is
-one of the supported commands like add, remove, etc.&nbsp; <i>command-arguments</i>
-are dependent on the command used.&nbsp; For example, <i>add </i>will need a
+<p><i>ORB_options</i> is the ORB options to be given. This is where
+options like &quot;-ORBImplRepoIOR&quot; would be placed. <i>command </i>is
+one of the supported commands like add, remove, etc. <i>command-arguments</i>
+are dependent on the command used. For example, <i>add </i>will need a
 server name for registration, but list does not necessarily need any arguments.</p>
 
 <hr>
 
 <h3><a name="examples">Examples</a></h3>
 <p>There is a file in the current directory name <i>implrepo.ior</i> that
-contains the IOR of the Implementation Repository.&nbsp; The server executable
-is called <i>airplane.exe</i> and the POA name used by the object is <i>plane</i>.&nbsp;
-The server needs the -i option to use the IR and the IOR of the IR.&nbsp; So the
+contains the IOR of the Implementation Repository. The server executable
+is called <i>airplane.exe</i> and the POA name used by the object is <i>plane</i>.
+The server needs the -i option to use the IR and the IOR of the IR. So the
 command would be:</p>
 
 <p><code>tao_ir -ORBImplRepoIOR file://implrepo.ior add plane -c &quot;airplane.exe
@@ -87,7 +87,7 @@ C:\airplane\.</p>
 <hr>
 
 <h3><a name="activate">activate</a></h3>
-<p><code><b>tao_ir </b>[<a href="../Options.html">ORB options</a>] activate <i>name </i>[-h]&nbsp;</code></p>
+<p><code><b>tao_ir </b>[<a href="../Options.html">ORB options</a>] activate <i>name </i>[-h]</code></p>
 
 <p>Activate a server through the Implementation Repository. The <i>name</i> is
 the server (POA) name that is used to identify the server.</p>
@@ -109,8 +109,8 @@ the server (POA) name that is used to identify the server.</p>
 <p><code><b>tao_ir </b>[<a href="../Options.html">ORB options</a>] add <i>name </i>[-h]
 [-c <i>command</i>] [-w <i>working_dir</i>]</code></p>
 
-<p>Creates a new server entry in the Implementation Repository.&nbsp; The <i>name</i>
-must be be the name of the POA that the object resides in.&nbsp;&nbsp;</p>
+<p>Creates a new server entry in the Implementation Repository. The <i>name</i>
+must be be the name of the POA that the object resides in.</p>
 
 <table border="1">
   <tr>
@@ -160,7 +160,7 @@ identified by its server (POA) name.</p>
 <hr>
 
 <h3><a name="remove">remove</a></h3>
-<p><code><b>tao_ir </b>[<a href="../Options.html">ORB options</a>] add <i>name </i>[-h]&nbsp;</code></p>
+<p><code><b>tao_ir </b>[<a href="../Options.html">ORB options</a>] add <i>name </i>[-h]</code></p>
 
 <p>Removes a server entry from the Implementation Repository. The <i>name</i> is
 the server (POA) name that is used to identify the server.</p>
@@ -179,7 +179,7 @@ the server (POA) name that is used to identify the server.</p>
 <hr>
 
 <h3><a name="shutdown">shutdown</a></h3>
-<p><code><b>tao_ir </b>[<a href="../Options.html">ORB options</a>] shutdown <i>name </i>[-h]&nbsp;</code></p>
+<p><code><b>tao_ir </b>[<a href="../Options.html">ORB options</a>] shutdown <i>name </i>[-h]</code></p>
 
 <p>Shuts down a server through the Implementation Repository. The <i>name</i> is
 the server (POA) name that is used to identify the server.</p>
@@ -202,7 +202,7 @@ the server (POA) name that is used to identify the server.</p>
 [-c <i>command</i>] [-w <i>working_dir</i>]</code></p>
 
 <p><code>Update a server entry in the Implementation Repository. </code>The <i>name</i>
-is the server (POA) name that is used to identify the server.&nbsp;&nbsp;</p>
+is the server (POA) name that is used to identify the server.</p>
 
 <table border="1">
   <tr>
