@@ -1,3 +1,0 @@
-project(POA Policies): taoserver {
-  exename = Policies
-}

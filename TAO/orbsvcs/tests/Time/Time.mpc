@@ -1,3 +1,0 @@
-project(*client): taoserver, namingexe, time {
-  exename  = client
-}

@@ -1,4 +1,0 @@
-project: taoexe, ifr_client {
-  avoids  += minimum_corba
-  exename  = IFR_Test
-}
