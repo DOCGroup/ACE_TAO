@@ -1,3 +1,12 @@
+Tue Nov 18 12:11:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/LoadBalancer/Makefile.LoadManager:
+	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+
+	  Fixed brain damaged way of doing things. Checks for whether
+	  certain options have been turned on or off made sure that they
+	  would never be built.
+
 Tue Nov 18 12:03:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosNotification:
