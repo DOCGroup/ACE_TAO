@@ -98,7 +98,7 @@ main (int argc, char *argv[])
 
   task_stats.init (100000);
 
-  TAO_debug_level =1;
+//  TAO_debug_level =1;
 
   CPULoad::calibrate(10);
 
