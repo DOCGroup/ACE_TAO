@@ -58,7 +58,6 @@ be_sequence::gen_name (void)
 {
   char namebuf [NAMEBUFSIZE];
   be_type *bt; // base type;
-  be_sequence *seq;
 
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);  // reset the buffer
   // retrieve the base type
