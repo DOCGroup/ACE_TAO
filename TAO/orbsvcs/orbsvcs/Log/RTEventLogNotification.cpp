@@ -45,8 +45,8 @@ TAO_RTEventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NO
 
 void
 TAO_RTEventLogNotification::obtainProxyConsumer (ACE_ENV_SINGLE_ARG_DECL)
-{  
-  RtecEventChannelAdmin::SupplierAdmin_var supplier_admin = 
+{
+  RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     event_channel_->for_suppliers();
 
   consumer_ = supplier_admin->obtain_push_consumer();
@@ -75,7 +75,11 @@ TAO_RTEventLogNotification::send_notification (const CORBA::Any& any)
   event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
   event[0].header.source = 1;
   event[0].header.ttl    = 1;
+#ifndef TAO_LACKS_EVENT_CHANNEL_ANY
   event[0].data.any_value <<= any;
+#else
+  ACE_UNUSED_ARG (any);
+#endif
 
   consumer_->push(event);
 }
