@@ -175,7 +175,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
             {
               this->profile_ =
                 ACE_const_cast(TAO_Profile*,profile);
-              
+
             }
         }
 
@@ -312,30 +312,30 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // Then fill in the rest of the RequestHeader
   //
   // The target specification mode
-  
-  if (this->stub_->addressing_mode () == 
+
+  if (this->stub_->addressing_mode () ==
       TAO_Target_Specification::Key_Addr)
     {
       this->target_spec_.target_specifier (
-            this->profile_->object_key ()); 
+            this->profile_->object_key ());
     }
-  else if (this->stub_->addressing_mode () == 
+  else if (this->stub_->addressing_mode () ==
            TAO_Target_Specification::Profile_Addr)
     {
       this->target_spec_.target_specifier (
             this->profile_->create_tagged_profile ());
     }
-  else if (this->stub_->addressing_mode () == 
+  else if (this->stub_->addressing_mode () ==
            TAO_Target_Specification::Reference_Addr)
     {
       // We need to call the method seperately. If there is no
       // IOP::IOR info, the call would create the info and return the
       // index that we need.
       // @@Will not work for RT CORBA as the index we get would be
-      // wrong. 
+      // wrong.
       CORBA::ULong index = this->create_ior_info ();
       this->target_spec_.target_specifier (this->ior_info_,
-                                           index); 
+                                           index);
     }
 
   // Update the response flags
@@ -540,13 +540,13 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 }
 
 
-CORBA::ULong 
+CORBA::ULong
 TAO_GIOP_Invocation::create_ior_info (void)
 {
   // Get the list of profiles
-  const TAO_MProfile &mprofile = 
+  const TAO_MProfile &mprofile =
     this->stub_->base_profiles ();
-  
+
   if (this->ior_info_.profiles.length () == 0)
     {
       // We are making a copy, it is expensive. We want a copy of the
@@ -556,31 +556,31 @@ TAO_GIOP_Invocation::create_ior_info (void)
       // get the info
 
       // @@ There should be a better way to do this - Bala
-      TAO_MProfile *multi_prof = 
+      TAO_MProfile *multi_prof =
         this->stub_->make_profiles ();
-      
+
       // Get the number of elements
       CORBA::ULong count = multi_prof->profile_count ();
-      
-      // Set the number of elements in the sequence of tagged_profile 
+
+      // Set the number of elements in the sequence of tagged_profile
       this->ior_info_.profiles.length (count);
-      
+
       // Call the create_tagged_profile one every member of the
       // profile and make the sequence
       for (CORBA::ULong index = 0;
            index < count;
            ++index)
         {
-          TAO_Profile *prof = 
+          TAO_Profile *prof =
             multi_prof->get_profile (index);
-          
+
           this->ior_info_.profiles[index] =
             prof->create_tagged_profile ();
         }
-      
+
       delete multi_prof;
     }
-  
+
   return mprofile.get_current_handle ();
 }
 
@@ -960,7 +960,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       {
         // We have received an exception with a request to change the
         // addressing mode. First let us read the mode that the
-        // server/agent asks for. 
+        // server/agent asks for.
         CORBA::Short addr_mode = 0;
         if (this->inp_stream ().read_short (addr_mode) == 0)
           {
@@ -970,15 +970,15 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
                                               CORBA::COMPLETED_MAYBE),
                               TAO_INVOKE_OK);
           }
-        
+
         // Now set this addressing mode in the stub object, so that
         // the next invocation need not go through this.
         this->stub_->addressing_mode (addr_mode);
-        
+
         // Now restart the invocation
         return TAO_INVOKE_RESTART;
       }
-      
+
     }
 
   return TAO_INVOKE_OK;
@@ -1000,7 +1000,7 @@ TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
 
   if (ssp)
     {
-      this->sync_scope_ = ssp->synchronization ();
+      ssp->get_synchronization (this->sync_scope_);
     }
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
@@ -1207,7 +1207,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       {
         // We have received an exception with a request to change the
         // addressing mode. First let us read the mode that the
-        // server/agent asks for. 
+        // server/agent asks for.
         CORBA::Short addr_mode = 0;
         if (rd.reply_cdr ().read_short (addr_mode) == 0)
           {
@@ -1217,11 +1217,11 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                                               CORBA::COMPLETED_MAYBE),
                               TAO_INVOKE_OK);
           }
-        
+
         // Now set this addressing mode in the stub object, so that
         // the next invocation need not go through this.
         this->stub_->addressing_mode (addr_mode);
-        
+
         // Now restart the invocation
         return TAO_INVOKE_RESTART;
       }
@@ -1355,7 +1355,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     {
     case TAO_GIOP_OBJECT_HERE:
       break;
-      
+
     case TAO_GIOP_UNKNOWN_OBJECT:
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
                                                  CORBA::COMPLETED_YES),
@@ -1398,7 +1398,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       {
         // We have received an exception with a request to change the
         // addressing mode. First let us read the mode that the
-        // server/agent asks for. 
+        // server/agent asks for.
         CORBA::Short addr_mode = 0;
         if (this->rd_.reply_cdr ().read_short (addr_mode) == 0)
           {
@@ -1408,11 +1408,11 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                                               CORBA::COMPLETED_MAYBE),
                               TAO_INVOKE_OK);
           }
-        
+
         // Now set this addressing mode in the stub object, so that
         // the next invocation need not go through this.
         this->stub_->addressing_mode (addr_mode);
-        
+
         // Now restart the invocation
         return TAO_INVOKE_RESTART;
       }

@@ -28,12 +28,6 @@ TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (CORBA::Environment &)
   return this->relative_expiry_;
 }
 
-TimeBase::TimeT
-TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (void)
-{
-  return this->relative_expiry_;
-}
-
 CORBA::PolicyType
 TAO_RelativeRoundtripTimeoutPolicy::policy_type (CORBA_Environment &)
 {
@@ -97,7 +91,7 @@ TAO_RelativeRoundtripTimeoutPolicy::destroy (CORBA_Environment &)
 void
 TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 {
-  TimeBase::TimeT t = this->relative_expiry ();
+  TimeBase::TimeT t = this->relative_expiry_;
   TimeBase::TimeT seconds = t / 10000000u;
   TimeBase::TimeT microseconds = (t % 10000000u) / 10;
   time_value.set (ACE_U64_TO_U32 (seconds),
@@ -162,6 +156,12 @@ TAO_Sync_Scope_Policy::clone (void) const
                   TAO_Sync_Scope_Policy (*this),
                   0);
   return copy;
+}
+
+Messaging::SyncScope
+TAO_Sync_Scope_Policy::synchronization (CORBA::Environment &)
+{
+  return this->synchronization_;
 }
 
 CORBA::Policy_ptr

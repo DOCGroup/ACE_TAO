@@ -56,6 +56,12 @@ TAO_Buffering_Constraint_Policy::clone (void) const
   return copy;
 }
 
+TAO::BufferingConstraint
+TAO_Buffering_Constraint_Policy::buffering_constraint (CORBA::Environment &)
+{
+  return this->buffering_constraint_;
+}
+
 CORBA::Policy_ptr
 TAO_Buffering_Constraint_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
 {
