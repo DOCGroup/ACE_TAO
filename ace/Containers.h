@@ -169,6 +169,8 @@ template <class T> class ACE_Unbounded_Queue;
 template <class T> class ACE_Unbounded_Queue_Iterator;
 template <class T> class ACE_Unbounded_Stack;
 template <class T> class ACE_Unbounded_Stack_Iterator;
+template <class T> class ACE_Ordered_MultiSet;
+template <class T> class ACE_Ordered_MultiSet_Iterator;
 
 template<class T>
 class ACE_Node
@@ -198,6 +200,35 @@ private:
   T item_;
   // Current value of the item in this node.
 };
+
+template<class T>
+class ACE_DNode
+{
+  // = TITLE
+  //     Implementation element in a bilinked list.
+  friend class ACE_Ordered_MultiSet<T>;
+  friend class ACE_Ordered_MultiSet_Iterator<T>;
+
+public:
+
+  ~ACE_DNode (void);
+  // This isn't necessary, but it keeps the compiler happy.
+
+private:
+
+  // = Initialization methods
+  ACE_DNode (const T &i, ACE_DNode<T> *n = 0, ACE_DNode<T> *p = 0);
+
+  ACE_DNode<T> *next_;
+  // Pointer to next element in the list of <ACE_DNode>s.
+
+  ACE_DNode<T> *prev_;
+  // Pointer to previous element in the list of <ACE_DNode>s.
+
+  T item_;
+  // Current value of the item in this node.
+};
+
 
 template <class T>
 class ACE_Unbounded_Stack
@@ -1028,6 +1059,174 @@ private:
   size_t max_size_;
   // Maximum size of the set.
 };
+
+template <class T>
+class ACE_Ordered_MultiSet_Iterator
+{
+  // = TITLE
+  //     Implement an iterator over an ordered multiset.
+  //     This class template requires that < operator semantics be defined 
+  //     for the parameterized type <T>, but does not impose any restriction
+  //     on how that ordering operator is implemented.
+
+public:
+
+  friend class ACE_Ordered_MultiSet<T>;
+
+  // = Initialization method.
+  ACE_Ordered_MultiSet_Iterator (ACE_Ordered_MultiSet<T> &s);
+
+  // = Iteration methods.
+
+  int next (T *&next_item);
+  // Pass back the <next_item> that hasn't been seen in the ordered multiset.
+  // Returns 0 when all items have been seen, else 1.
+
+  int first (void);
+  // Repositions the iterator at the first item in the ordered multiset
+  // Returns 0 if the list is empty else 1.
+
+  int last (void);
+  // Repositions the iterator at the last item in the ordered multiset
+  // Returns 0 if the list is empty else 1.
+
+  int advance (void);
+  // Move forward by one element in the set.  Returns 0 when all the
+  // items in the set have been seen, else 1.
+
+  int retreat (void);
+  // Move backward by one element in the set.  Returns 0 when all the
+  // items in the set have been seen, else 1.
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+
+  ACE_DNode<T> *current_;
+  // Pointer to the current node in the iteration.
+
+  ACE_Ordered_MultiSet<T> &set_;
+  // Pointer to the set we're iterating over.
+};
+
+template <class T>
+class ACE_Ordered_MultiSet
+{
+  // = TITLE
+  //     Implement a simple ordered multiset of <T> of unbounded size.
+  //     This class template requires that < operator semantics be defined 
+  //     for the parameterized type <T>, but does not impose any restriction
+  //     on how that ordering operator is implemented.
+  //
+  // = DESCRIPTION
+  //     This implementation of an unordered set uses a circular
+  //     linked list with a dummy node.  This implementation does not
+  //     allow duplicates, but it maintains FIFO ordering of insertions.
+public:
+  friend class ACE_Ordered_MultiSet_Iterator<T>;
+
+  // Trait definition.
+  typedef ACE_Ordered_MultiSet_Iterator<T> ITERATOR;
+
+  // = Initialization and termination methods.
+  ACE_Ordered_MultiSet (ACE_Allocator *alloc = 0);
+  // Constructor.  Use user specified allocation strategy
+  // if specified.
+
+  ACE_Ordered_MultiSet (const ACE_Ordered_MultiSet<T> &);
+  // Copy constructor.
+
+  ~ACE_Ordered_MultiSet (void);
+  // Destructor.
+
+  void operator= (const ACE_Ordered_MultiSet<T> &);
+  // Assignment operator.
+
+  // = Check boundary conditions.
+
+  int is_empty (void) const;
+  // Returns 1 if the container is empty, otherwise returns 0.
+
+  size_t size (void) const;
+  // Size of the set.
+
+  // = Classic unordered set operations.
+
+  int insert (const T &new_item);
+  // Insert <new_item> into the ordered multiset.
+  // Returns -1 if failures occur, else 0.
+
+  int insert (const T &new_item, ITERATOR &iter);
+  // Insert <new_item> into the ordered multiset, starting its search at 
+  // the node pointed to by the iterator, and if insetion was successful, 
+  // updates the iterator to point to the newly inserted node.
+  // Returns -1 if failures occur, else 0.
+
+  int remove (const T &item);
+  // Remove first occurrence of <item> from the set.  Returns 0 if
+  // it removes the item, -1 if it can't find the item.
+
+  int find (const T &item, ITERATOR &iter) const;
+  // Finds first occurrance of <item> in the multiset, using the iterator's
+  // current position as a hint to improve performance. If find succeeds,
+  // it positions the iterator at that node and returns 0, or if it cannot
+  // locate the node, it leaves the iterator alone and just returns -1.
+
+  void reset (void);
+  // Reset the <ACE_Ordered_MultiSet> to be empty.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+
+  int insert_from (const T &item, ACE_DNode<T> *start_position,
+                   ACE_DNode<T> **new_position);
+  // Insert <item>, starting its search at the position given,
+  // and if successful updates the passed pointer to point to 
+  // the newly inserted item's node.
+
+  int locate (const T &item, ACE_DNode<T> *start_position, 
+              ACE_DNode<T> *&new_position) const;
+  // looks for first occurance of <item> in the ordered set, using the 
+  // passed starting position as a hint: if there is such an instance, it
+  // updates the new_position pointer to point to this node and returns 0;
+  // if there is no such node, then if there is a node before where the 
+  // item would have been, it updates the new_position pointer to point
+  // to this node and returns -1; if there is no such node, then if there
+  // is a node after where the item would have been, it updates the 
+  // new_position pointer to point to this node (or 0 if there is no such 
+  // node) and returns 1; 
+
+  void delete_nodes (void);
+  // Delete all the nodes in the Set.
+
+  void copy_nodes (const ACE_Ordered_MultiSet<T> &);
+  // Copy nodes into this set.
+
+  ACE_DNode<T> *head_;
+   // Head of the bilinked list of Nodes.
+
+  ACE_DNode<T> *tail_;
+   // Head of the bilinked list of Nodes.
+
+  size_t cur_size_;
+  // Current size of the set.
+
+  ACE_Allocator *allocator_;
+  // Allocation strategy of the set.
+};
+
 
 #if defined (__ACE_INLINE__)
 #include "ace/Containers.i"
