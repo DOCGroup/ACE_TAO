@@ -15,28 +15,28 @@ ACE_RCSID(ESF, ESF_Immediate_Changes, "$Id$")
 
 // ****************************************************************
 
-template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
-TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
+template<class PROXY, class C, class I, class L>
+TAO_ESF_Immediate_Changes<PROXY,C,I,L>::
     TAO_ESF_Immediate_Changes (void)
 {
 }
 
-template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
-TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    TAO_ESF_Immediate_Changes (const COLLECTION &collection)
+template<class PROXY, class C, class I, class L>
+TAO_ESF_Immediate_Changes<PROXY,C,I,L>::
+    TAO_ESF_Immediate_Changes (const C &collection)
       :  collection_ (collection)
 {
 }
 
-template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
-TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
+template<class PROXY, class C, class I, class L> void
+TAO_ESF_Immediate_Changes<PROXY,C,I,L>::
     for_each (TAO_ESF_Worker<PROXY> *worker,
               CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
+  ACE_GUARD (L, ace_mon, this->lock_);
 
-  ITERATOR end = this->collection_.end ();
-  for (ITERATOR i = this->collection_.begin (); i != end; ++i)
+  I end = this->collection_.end ();
+  for (I i = this->collection_.begin (); i != end; ++i)
     {
       worker->work ((*i), ACE_TRY_ENV);
       ACE_CHECK;
