@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(taoclient) : taoexe {
-  exename = client
-}

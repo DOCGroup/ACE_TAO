@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(ec_typed_events)  {
-  macros  += TAO_HAS_TYPED_EVENT_CHANNEL
-  libs    += TAO_IFR_Client TAO_DynamicInterface
-  after   += IFR_Client DynamicInterface
-}
