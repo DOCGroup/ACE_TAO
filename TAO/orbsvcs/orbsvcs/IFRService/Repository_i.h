@@ -61,7 +61,7 @@ class TAO_StringDef_i;
 class TAO_StructDef_i;
 class TAO_UnionDef_i;
 class TAO_ValueBoxDef_i;
-class TAO_ValueDef_i;
+class TAO_ExtValueDef_i;
 class TAO_ValueMemberDef_i;
 class TAO_WstringDef_i;
 
@@ -351,7 +351,7 @@ protected:
   GEN_IR_OBJECT (StructDef) \
   GEN_IR_OBJECT (UnionDef) \
   GEN_IR_OBJECT (ValueBoxDef) \
-  GEN_IR_OBJECT (ValueDef) \
+  GEN_IR_OBJECT (ExtValueDef) \
   GEN_IR_OBJECT (ValueMemberDef) \
   GEN_IR_OBJECT (WstringDef)
 

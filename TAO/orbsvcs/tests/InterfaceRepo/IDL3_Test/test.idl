@@ -12,6 +12,9 @@ module help
   interface c_supp1 {};
   interface c_supp2 {};
   component c_base {};
+  valuetype v_base {};
+  interface v_supp1 {};
+  abstract interface v_supp2 {};
 };
 
 module help
@@ -46,8 +49,12 @@ module mod
     consumes help::c_consumes1 test_consumes1;
   };
 
-  valuetype test_valuetype
+  valuetype test_valuetype 
+    : help::v_base supports help::v_supp1, help::v_supp2
   {
+    attribute long c_attr1 
+      getraises (help::doh) 
+      setraises (help::whups, help::doh);
   };
 };
 

@@ -161,22 +161,27 @@ TAO_ValueDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
     
-  ACE_TString holder;
+  ACE_TString base_id;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
                                               "base_value",
-                                              holder);
+                                              base_id);
   CORBA::TypeCode_var base_tc = CORBA::TypeCode::_nil ();
                                               
   if (status == 0)
     {
+      ACE_TString base_path;
       this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
-                                                holder.fast_rep (),
-                                                holder);
-      TAO_IDLType_i *base_type =
-        TAO_IFR_Service_Utils::path_to_idltype (holder,
-                                                this->repo_);
-      base_tc = base_type->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+                                                base_id.fast_rep (),
+                                                base_path);
+      ACE_Configuration_Section_Key base_key;
+      this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                           base_path,
+                                           base_key,
+                                           0);
+      TAO_ValueDef_i base_type (this->repo_);
+      base_type.section_key (base_key);
+      base_tc = base_type.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
     }
     

@@ -42,7 +42,7 @@ const CORBA::ULong PUT_EXCEP_LEN[] =
 
 const CORBA::ULong COMP_SUPPORTED_LEN = 2;
 
-const char *SUPPORTED_IDS[] = 
+const char *COMP_SUPPORTED_IDS[] = 
   {
     "IDL:help/c_supp1:1.0",
     "IDL:help/c_supp2:1.0"
@@ -110,6 +110,14 @@ const char *PUBLISHES_IDS[] =
 const char *CONSUMES_IDS[] =
   {
     "IDL:help/c_consumes1:1.0"
+  };
+
+const CORBA::ULong VT_SUPPORTED_LEN = 2;
+
+const char *VT_SUPPORTED_IDS[] = 
+  {
+    "IDL:help/v_supp1:1.0",
+    "IDL:help/v_supp2:1.0"
   };
 
 IDL3_Client::IDL3_Client (void)
@@ -367,6 +375,44 @@ IDL3_Client::valuetype_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
+  CORBA::ExtValueDef_var evd = 
+    CORBA::ExtValueDef::_narrow (result.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (evd.in ()))
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "valuetype_test: narrow to ExtValueDef failed\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::ExtValueDef::ExtFullValueDescription_var desc =
+    evd->describe_ext_value (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  int status = this->valuetype_attribute_test (desc
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  status = this->valuetype_inheritance_test (evd
+                                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -492,7 +538,8 @@ IDL3_Client::component_inheritance_test (
       str = supported[i].in ()->id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-      if (str.in () == 0 || ACE_OS::strcmp (str.in (), SUPPORTED_IDS[i]) != 0)
+      if (str.in () == 0 
+          || ACE_OS::strcmp (str.in (), COMP_SUPPORTED_IDS[i]) != 0)
         {
           if (this->debug_)
             {
@@ -809,4 +856,163 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
   return 0;
 }
 
+int
+IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd
+                                         ACE_ENV_ARG_DECL)
+{
+  CORBA::ValueDef_var bvd = vd->base_value (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (bvd.in ()))
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "valuetype_inheritance_test: "
+                      "base valuetype is null\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::String_var str = bvd->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (str.in () ==0 || ACE_OS::strcmp (str.in (), VT_BASE_ID) != 0)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "valuetype_inheritance_test: "
+                      "wrong repo id for base valuetype\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::InterfaceDefSeq_var supported = 
+    vd->supported_interfaces (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  CORBA::ULong length = supported->length ();
+
+  if (length != VT_SUPPORTED_LEN)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "valuetype_inheritance_test: "
+                      "wrong number of supported interfaces\n"));
+        }
+
+      return -1;
+    }
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      str = supported[i].in ()->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      if (str.in () == 0 
+          || ACE_OS::strcmp (str.in (), VT_SUPPORTED_IDS[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_inheritance_test: "
+                          "bad id on supported interface #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+    }
+
+  return 0;
+}
+
+int
+IDL3_Client::valuetype_attribute_test (
+    CORBA::ExtValueDef::ExtFullValueDescription_var &desc
+    ACE_ENV_ARG_DECL
+  )
+{
+  if (desc->attributes.length () != ATTRS_LEN)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "valuetype_attribute_test: wrong number of attrs\n"));
+        }
+
+      return -1;
+    }
+
+  const char *tmp = 0;
+
+  for (CORBA::ULong i = 0; i < ATTRS_LEN; ++i)
+    {
+      tmp = desc->attributes[i].name.in ();
+
+      if (tmp == 0 || ACE_OS::strcmp (tmp, ATTR_LOCAL_NAMES[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_attribute_test: "
+                          "wrong local name for attribute #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      CORBA::TCKind kind = 
+        desc->attributes[i].type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      if (kind != ATTR_TC_KINDS[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_attribute_test: "
+                          "wrong TCKind for attribute #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      if (desc->attributes[i].get_exceptions.length () != GET_EXCEP_LEN[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_attribute_test: "
+                          "wrong number of get-exceptions"
+                          " for attribute #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      if (desc->attributes[i].put_exceptions.length () != PUT_EXCEP_LEN[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_attribute_test: "
+                          "wrong number of put-exceptions"
+                          " for attribute #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+    }
+
+  return 0;
+}
 

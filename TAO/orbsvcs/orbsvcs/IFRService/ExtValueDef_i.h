@@ -83,7 +83,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
-      const char * d,
+      const char *id,
       const char *name,
       const char *version,
       CORBA::IDLType_ptr type,
@@ -95,7 +95,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExtAttributeDef_ptr create_ext_attribute_i (
-      const char * d,
+      const char *id,
       const char *name,
       const char *version,
       CORBA::IDLType_ptr type,

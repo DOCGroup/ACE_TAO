@@ -2482,7 +2482,11 @@ TAO_Container_i::create_value_common (
                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (path);
           
-      const char *base_value_id = base_value->_interface_repository_id ();
+      ACE_TString base_value_id;
+      this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
+                                                "id",
+                                                base_value_id);
+
       this->repo_->config ()->set_string_value (new_key,
                                                 "base_value",
                                                 base_value_id);
@@ -2501,7 +2505,7 @@ TAO_Container_i::create_value_common (
                                                  "count",
                                                  length);
                                  
-      const char *base_id = 0;
+      ACE_TString base_id;
       const char *base_path = 0;
       char *stringified = 0;
 
@@ -2528,7 +2532,11 @@ TAO_Container_i::create_value_common (
                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (path);
           
-          base_id = abstract_base_values[i]->_interface_repository_id ();
+          this->repo_->config ()->get_string_value (
+              TAO_IFR_Service_Utils::tmp_key_,
+              "id",
+              base_id
+            );
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (bases_key,
                                                     stringified,
@@ -2548,7 +2556,7 @@ TAO_Container_i::create_value_common (
       this->repo_->config ()->set_integer_value (supported_key,
                                                  "count",
                                                  length);
-      const char *supported_id = 0;
+      ACE_TString supported_id;
       const char *supported_path = 0;
       CORBA::ULong kind = 0;
       CORBA::Boolean concrete_seen = 0;
@@ -2595,8 +2603,11 @@ TAO_Container_i::create_value_common (
                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (path);
 
-          supported_id = 
-            supported_interfaces[i]->_interface_repository_id ();
+          this->repo_->config ()->get_string_value (
+              TAO_IFR_Service_Utils::tmp_key_,
+              "id",
+              supported_id
+            );
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (supported_key,
                                                     stringified,
