@@ -221,8 +221,11 @@ ACE_Module<ACE_SYNCH_2>::close_i (int which,
     {
       // Only delete the Tasks if there aren't any more threads
       // running in them.
-      if (task->thr_count () == 0)
-	delete task;
+      task->wait ();
+
+      ACE_ASSERT (task->thr_count () == 0);
+
+      delete task;
     }
 
   // Set the tasks pointer to 0 so that we don't try to close()

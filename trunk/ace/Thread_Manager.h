@@ -152,6 +152,10 @@ public:
   // treated as "absolute" time.  Returns 0 on success and -1 on
   // failure.
 
+  int wait_grp (int grp_id);
+  // Block until there are no more threads running in a group.
+  // Returns 0 on success and -1 on failure.
+
   // = Accessors for ACE_Thread_Descriptors.
   int thread_descriptor (ACE_thread_t, ACE_Thread_Descriptor &);
   // Return the thread descriptor (indexed by ACE_thread_t).  Returns 0 on
@@ -219,17 +223,10 @@ public:
   // method resembles the old apply_thr() method, and suspend_task()
   // resembles suspend_thr().
   
-  int wait_task (ACE_Task_Base *task, 
-		 const ACE_Time_Value *timeout = 0);
-  // Block until there are no more threads running or <timeout>
-  // expires in an ACE_Task.  Returns 0 on success and -1 on failure.
-
-  int wait_group (int grp_id, 
-		  const ACE_Time_Value *timeout = 0);
-  // Block until there are no more threads running or <timeout>
-  // expires in a group.  Returns 0 on success and -1 on failure.
-
   // = Operations on ACE_Tasks.
+  int wait_task (ACE_Task_Base *task)
+  // Block until there are no more threads running in <task>.  Returns
+  // 0 on success and -1 on failure.
   int suspend_task (ACE_Task_Base *task);
   // Suspend all threads in an ACE_Task.
   int resume_task (ACE_Task_Base *task);
@@ -244,10 +241,10 @@ public:
   // functionality.
 
   int num_tasks_in_group (int grp_id);
-  // Returns the number of ACE_Task in a group.
+  // Returns the number of <ACE_Task> in a group.
 
   int num_threads_in_task (ACE_Task_Base *task);
-  // Returns the number of threads in an ACE_Task.
+  // Returns the number of threads in an <ACE_Task>.
 
   int task_list (int grp_id, 
 		 ACE_Task_Base *task_list[],

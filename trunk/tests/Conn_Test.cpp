@@ -359,7 +359,8 @@ client (void *arg)
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
-  ACE_INET_Addr server_addr (remote_addr->get_port_number (), "localhost");
+  ACE_INET_Addr server_addr (remote_addr->get_port_number (), 
+			     ACE_DEFAULT_SERVER_HOST);
   CONNECTOR connector;
 
   NULL_CREATION_STRATEGY creation_strategy;
@@ -437,8 +438,6 @@ main (int, char *[])
 
   // Acceptor
   ACCEPTOR acceptor;
-
-  // Create a server address.
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
@@ -462,7 +461,7 @@ main (int, char *[])
 	  break;
 	  /* NOTREACHED */
 	default:
-	  client (&server_addr);
+	  client ((void *) &server_addr);
 	  ACE_OS::wait ();
 	  break;
 	  /* NOTREACHED */

@@ -27,8 +27,6 @@
 
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
-static short PORT = ACE_DEFAULT_SERVER_PORT;
-
 /* The biggest drawback to an iostream is that it generally
    eats up whitespace when performing a get (>>) operation.
 
@@ -160,17 +158,18 @@ client (void *arg = 0)
 #endif /* ACE_HAS_THREADS */
 
   ACE_SOCK_IOStream server;
-  ACE_INET_Addr addr (PORT, ACE_DEFAULT_SERVER_HOST);
+  ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
+  ACE_INET_Addr addr (remote_addr->get_port_number (), 
+		      ACE_DEFAULT_SERVER_HOST);
   ACE_SOCK_Connector connector;
 
   if (connector.connect (server, addr) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "(%t) %p\n", "Failed to connect to server thread"));
-      return (void *) -1;
-    }
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "(%t) %p\n", "Failed to connect to server thread"), 
+		      0);
 
   // Send a string to the server which it can interpret as a qchar[]
-  char *str = "\"This is a test     string.\"";
+  const char *str = "\"This is a test     string.\"";
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client Sending:  (%s)\n", str));
   server << str << endl;
 
@@ -194,17 +193,17 @@ client (void *arg = 0)
   // iostream will pull them out by using the whitespace provided by
   // the server.
 
-   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client Receiving\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client Receiving\n"));
  
-   int i;
-   float f1, f2;
-   long l;
-   double d;
-   server >> i;
-   server >> f1;
-   server >> l;
-   server >> f2;
-   server >> d;
+  int i;
+  float f1, f2;
+  long l;
+  double d;
+  server >> i;
+  server >> f1;
+  server >> l;
+  server >> f2;
+  server >> d;
 
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%P|%t) Client Received: int %d float %f long %d float %f double %f\n", 
@@ -235,32 +234,36 @@ client (void *arg = 0)
 // begin a two-way conversation.
 
 static void *
-server (void * = 0)
+server (void *arg = 0)
 {
   ACE_NEW_THREAD;
 
+  ACE_SOCK_Acceptor *acceptor = (ACE_SOCK_Acceptor *) arg;
+  ACE_SOCK_IOStream client_handler;
+  ACE_INET_Addr server_addr;
+
+  if (acceptor->get_local_addr (server_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), 0);
+
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());
-#endif /* ACE_HAS_THREADS */
-
-  ACE_INET_Addr addr (PORT);
-  ACE_SOCK_Acceptor acceptor (addr);
-  ACE_SOCK_IOStream client_handler;
 
   if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (client), 
-					     0,
+					     (void *) &server_addr,
 					     THR_NEW_LWP | THR_DETACHED) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "(%t) %p\n", "spawing client thread"));
-      return (void *) -1;
-    }
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "(%t) %p\n", "spawing client thread"), 
+		      0);
+#endif /* ACE_HAS_THREADS */
 
-  if (acceptor.accept (client_handler) == -1)
-    ACE_DEBUG ((LM_ERROR, "(%P|%t) Failed to accept new client_handler"));
+  if (acceptor->accept (client_handler) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "(%P|%t) Failed to accept new client_handler"),
+		      0);
 
   // Read a qbuf[] from the client.  Notice that all of the client's
   // whitespace is preserved.
-  qchar qbuf[1024];
+  qchar qbuf[BUFSIZ];
   ACE_OS::memset (qbuf, 0, sizeof qbuf);
   client_handler >> qbuf;
   ACE_DEBUG ((LM_DEBUG, 
@@ -274,11 +277,12 @@ server (void * = 0)
   // Compared to the method above, this is quite messy.  Notice also
   // that whitespace is lost.
 
-  char buf[1024];
+  char buf[BUFSIZ];
   ACE_OS::memset (buf, 0, sizeof buf);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Received: ("));
 
-  while (ACE_OS::strlen (buf) == 0  ||  buf[ACE_OS::strlen (buf) - 1] != '"')
+  while (ACE_OS::strlen (buf) == 0 
+	 || buf[ACE_OS::strlen (buf) - 1] != '"')
     {
       client_handler >> buf;
       ACE_DEBUG ((LM_DEBUG, "%s ", buf));
@@ -321,23 +325,25 @@ server (void * = 0)
   return 0;
 }
 
-static void
+static int
 spawn (void)
 {
+  // Acceptor;
+  ACE_SOCK_Acceptor acceptor;
+
+  if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "open"), -1));
 #if defined (ACE_HAS_THREADS)
-  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (server),
-					     0,
-					     THR_NEW_LWP | THR_DETACHED) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "%p\n","spawning server thread"));
-      return;
-    }
+  else if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (server),
+						  &acceptor,
+						  THR_NEW_LWP | THR_DETACHED) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "%p\n", "spawning server thread"), 
+		      -1);
 
   // Wait for the client and server thread to exit.
   ACE_Service_Config::thr_mgr ()->wait ();
-
 #elif !defined (ACE_LACKS_EXEC)
-  server ();
 
   switch (ACE_OS::fork ("child"))
     {
@@ -345,30 +351,31 @@ spawn (void)
       ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
       ACE_OS::_exit (-1);
     case 0: // In child
-      {
-	client ();
-	break;
-      }
+      ACE_INET_Addr server_addr;
+
+      if (acceptor.get_local_addr (server_addr) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
+      else
+	client ((void *) &server_addr);
+      break;
     default: // In parent
-      {
-	// Allow the client to exit, then remove the Process_Mutex.
-	ACE_OS::wait ();
-	break;
-      }
+      server (&acceptor);
+
+      // Allow the client to exit, then remove the Process_Mutex.
+      ACE_OS::wait ();
+      break;
     }
 #else
-  ACE_ERROR ((LM_ERROR, 
-	      "threads *and* processes not supported on this platform\n%"));
+  ACE_ERROR_RETURN ((LM_ERROR, 
+		     "threads *and* processes not supported on this platform\n%"),
+		    -1);
 #endif /* ACE_HAS_THREADS */	
 }
 
 int
-main (int argc, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("IOStream_Test");
-
-  if (argc > 1)
-    PORT = ACE_OS::atoi (argv[1]);
 
   spawn ();
 

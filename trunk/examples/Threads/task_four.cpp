@@ -147,8 +147,10 @@ Invoker_Task::svc (void)
   // the Thread_Manager when the thread begins.
 
   ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
-  Worker_Task **worker_task = new Worker_Task *[n_tasks_];
+  Worker_Task **worker_task;
    
+  ACE_NEW (worker_task, Worker_Task *[n_tasks_], -1);
+
   size_t task;
 
   for (task = 0; 

@@ -56,7 +56,9 @@ public:
   // Receive an <n> byte <buf> from the datagram socket (uses
   // recvfrom(3)).
 
-  ssize_t recv (iovec *io_vec, ACE_Addr &addr, int flags) const;
+  ssize_t recv (iovec *io_vec, 
+		ACE_Addr &addr, 
+		int flags) const;
   // Allows a client to read from a socket without having to provide a
   // buffer to read.  This method determines how much data is in the
   // socket, allocates a buffer of this size, reads in the data, and
@@ -76,6 +78,19 @@ public:
                 int flags = 0) const;    
   // Recv an <iovec> of size <n> to the datagram socket (uses
   // recvmsg(3)).
+
+  ssize_t recv (void *buf, 
+		size_t n, 
+		ACE_Addr &addr, 
+		int flags, 
+		const ACE_Time_Value *timeout) const;
+  // Wait up to <timeout> amount of time to receive a datagram into
+  // <buf>.  The <ACE_Time_Value> indicates how long to blocking
+  // trying to receive.  If <timeout> == 0, the caller will block
+  // until action is possible, else will wait until the relative time
+  // specified in *<timeout> elapses).  If <recv> times out a -1 is
+  // returned with <errno == ETIME>.  If it succeeds the number of
+  // bytes received is returned.
 
   void dump (void) const;
   // Dump the state of an object.
