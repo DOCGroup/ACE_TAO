@@ -83,8 +83,6 @@ foreach $o (@server_opts) {
 
     my $args = "$o -o $iorfile";
 
-    print "Server Arguments: $args\n";
-
     unlink $iorfile;
 
     $SV->Arguments ($args);
