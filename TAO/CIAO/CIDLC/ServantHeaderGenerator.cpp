@@ -1141,6 +1141,11 @@ namespace
         interface_emitter.edge_traverser (defines);
         interface_emitter.edge_traverser (inherits);
 
+        AttributeEmitter attribute_emitter (ctx);
+        ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
+        defines.node_traverser (attribute_emitter);
+        defines.node_traverser (read_only_attribute_emitter);
+
         OperationEmitter operation_emitter (ctx);
         defines.node_traverser (operation_emitter);
         inherits.node_traverser (interface_emitter);

@@ -1,3 +1,12 @@
+Tue Mar 16 10:34:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        
+          Added instantiation of generators for regular and readonly
+          attributes in interfaces supported by components. The 
+          corresponding code generation in the servant source file
+          was already there.
+
 Tue Mar 16 10:36:21 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CIAO-INSTALL.html:
