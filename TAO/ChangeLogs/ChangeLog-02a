@@ -35,7 +35,7 @@ Tue Mar 27 09:02:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Param_Test/anyop.bor
         * tests/Param_Test/Makefile.bor
-        Added BCB makefile for the anyop test
+          Added BCB makefile for the anyop test
 
         * tests/MProfile_Forwarding/*.bor
         * tests/Smart_Proxies/Benchmark/*.bor
@@ -48,16 +48,16 @@ Tue Mar 27 09:02:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * tests/NestedUpcall/Simple/*.bor
         * tests/NestedUpcall/Triangle_Test/*.bor
         * tests/Object_Loader/*.bor
-        Added BCB makefiles for these tests
+          Added BCB makefiles for these tests
 
         * tests/CDR/makefile.bor
         * tests/makefile.bor
-        Updated this BCB makefile that it builds all tests and removed all
-        other BCB makefiles in this directory because they are not needed
-        anymore
+          Updated this BCB makefile that it builds all tests and removed
+	  all other BCB makefiles in this directory because they are not
+	  needed anymore
 
         * tests/Leader_Followers/client.bor
-        Corrected these makefiles
+          Corrected these makefiles
 
         * tests/Makefile.bor
         * tests/NestedUpcall/Makefile.bor
@@ -68,17 +68,17 @@ Tue Mar 27 09:02:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * examples/POA/Makefile.bor
         * examples/OBV/Makefile.bor
         * examples/Content_Server/Makefile.bor
-        Updated or added these BCB makefiles to include new makefiles
+          Updated or added these BCB makefiles to include new makefiles
 
         * tests/Smart_Proxies/Collocation/*.bor
-        Updated the BCB makefiles
+          Updated the BCB makefiles
 
         * performance-tests/Callback/*.bor
         * performance-tests/Pluggable/*.bor
         * performance-tests/POA/Object_Creation_And_Registration/*.bor
         * performance-tests/Cubit/TAO/IDL_Cubit/*.bor
         * performance-tests/Cubit/TAO/MT_Cubit/*.bor
-        Added BCB makefiles for these performance-tests
+          Added BCB makefiles for these performance-tests
 
         * examples/Simple/time-date/*.bor
         * examples/POA/TIE/*.bor
@@ -87,13 +87,13 @@ Tue Mar 27 09:02:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * examples/OBV/Typed_Events/*.bor
         * examples/Content_Server/SMI_Iterator/*.bor
         * examples/Buffered_AMI/*.bor
-        Added BCB makefiles for these examples
+          Added BCB makefiles for these examples
 
         * examples/Simple/bank/*.bor
         * examples/Simple/grid/*.bor
         * examples/Simple/time/*.bor
-        Corrected executable names so that the perl test scripts can find
-        the executables
+          Corrected executable names so that the perl test scripts can
+	  find the executables. 
 
 Mon Mar 26 21:34:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -120,9 +120,9 @@ Mon Mar 26 23:29:47 2001  Krishnakumar B  <kitty@cs.wustl.edu>
         * Leader_Follower.{i,h,cpp}
         * Wait_On_Leader_Follower.cpp
 
-        Implemented the Leader_Follower component of the ORB to use a
-        stack instead of a heap, using the same strategy as in ACE_Token.
-        This fixes Bug 721.
+          Implemented the Leader_Follower component of the ORB to use a
+	  stack instead of a heap, using the same strategy as in
+	  ACE_Token. This fixes Bug 721.
 
 Mon Mar 26 22:34:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
