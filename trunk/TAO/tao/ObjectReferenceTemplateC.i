@@ -426,6 +426,7 @@ PortableInterceptor::ObjectReferenceTemplateSeq_out::operator[] (CORBA::ULong in
 
 #endif /* end #if !defined */
 
+#if defined (__ACE_INLINE__)
 //@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
@@ -434,9 +435,10 @@ TAO_NAMESPACE CORBA
 }
 TAO_NAMESPACE_CLOSE
 //@@ Boris: end experimental
-
+#endif /*__ACE_INLINE__*/
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
+#if defined (__ACE_INLINE__)
 //@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
@@ -445,7 +447,7 @@ TAO_NAMESPACE CORBA
 }
 TAO_NAMESPACE_CLOSE
 //@@ Boris: end experimental
-
+#endif /*__ACE_INLINE__*/
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
 

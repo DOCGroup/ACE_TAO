@@ -1,3 +1,8 @@
+Tue Feb 12 15:02:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ObjectReferenceTemplateC.i: Regenerated the code after the
+	  change to the IDL compiler.
+
 Tue Feb 12 14:52:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_valuetype.cpp (gen_helper_inline): Hacked up the
