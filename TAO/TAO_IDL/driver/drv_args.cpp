@@ -113,38 +113,46 @@ DRV_usage (void)
        << GTDEVEL (" [flag | file]*\n");
   cerr << GTDEVEL ("Legal flags:\n");
   cerr << GTDEVEL (" -A...\t\t\tlocal implementation-specific escape\n");
-  cerr << GTDEVEL (" -cs\t\t\tClient stub's file name ending. Default is C.cpp\n");
+  cerr << GTDEVEL (" -bback_end\t\tcauses specified back end to be used\n");
   cerr << GTDEVEL (" -ci\t\t\tClient inline file name ending. Default is C.i\n");
+  cerr << GTDEVEL (" -cs\t\t\tClient stub's file name ending. Default is C.cpp\n");
   cerr << GTDEVEL (" -Dname[=value]\t\tdefines name for preprocessor\n");
   cerr << GTDEVEL (" -E\t\t\truns preprocessor only, prints on stdout\n");
-  cerr << GTDEVEL (" -Idir\t\t\tincludes dir in search path for preprocessor\n");
   cerr << GTDEVEL (" -g <gperf_path>\tPath for the GPERF program. Default is $ACE_ROOT/bin/gperf\n");
+  cerr << GTDEVEL (" -Gc\t\t\tenable Compiled marshaling (default is interpretive)\n");
+  cerr << GTDEVEL (" -Gi\t\t\tenable Interpretive marshaling (default)\n");
+  cerr << GTDEVEL (" -Ge\t\t\tenable C++ Exception support (suppressed by default)\n");
+  cerr << GTDEVEL (" -Gt\t\t\tenable optimized TypeCode support (unopt by default)\n");
+  cerr << GTDEVEL (" -GI[h|s|b|e|c]\tGenerate Implemenation Files \n");
+  cerr << GTDEVEL ("  \t\t\th - Implementation header file name ending. Default is I.h \n");
+  cerr << GTDEVEL ("  \t\t\ts - Implementation skeleton file name ending. Default is I.cpp\n");
+  cerr << GTDEVEL ("  \t\t\tb - Prefix to the implementation class names. Default is 'no prefix' \n");
+  cerr << GTDEVEL ("  \t\t\te - Suffix to the implementation class names. Default is _i\n");
+  cerr << GTDEVEL ("  \t\t\tc - Generate copy construtors\n");
+  //  cerr << GTDEVEL ("  \t\t\ta - Generate copy assigment operator\n");
   cerr << GTDEVEL (" -hc\t\t\tClient's header file name ending. Default is C.h\n");
   cerr << GTDEVEL (" -hs\t\t\tServer's header file name ending. Default is S.h\n");
   cerr << GTDEVEL (" -hT\t\t\tServer's template hdr file name ending. Default is S_T.h\n");
   cerr << GTDEVEL (" -H dynamic_hash\t\tTo force dynamic hashed operation lookup strategy. Default is perfect hashing\n");
   cerr << GTDEVEL (" -H linear_search\t\tTo force linear searchoperation lookup strategy\n");
   cerr << GTDEVEL (" -H binary_search\t\tTo force binary search operation lookup strategy\n");
+  cerr << GTDEVEL (" -Idir\t\t\tincludes dir in search path for preprocessor\n");
   cerr << GTDEVEL (" -o <output_dir>\tOutput directory for the generated files. Default is current directory\n");
-  cerr << GTDEVEL (" -ss\t\t\tServer's skeleton file name ending. Default is S.cpp\n");
-  cerr << GTDEVEL (" -sT\t\t\tServer's template skeleton file name ending. Default is S_T.cpp\n");
   cerr << GTDEVEL (" -si\t\t\tServer's inline file name ending. Default is S.i\n");
+  cerr << GTDEVEL (" -ss\t\t\tServer's skeleton file name ending. Default is S.cpp\n");
   cerr << GTDEVEL (" -st\t\t\tServer's template inline file name ending. Default S_T.i\n");
-  cerr << GTDEVEL (" -Uname\t\t\tundefines name for preprocessor\n");
-  cerr << GTDEVEL (" -V\t\t\tprints version info then exits\n");
-  cerr << GTDEVEL (" -W[p|b],arg1,argn\tpasses args to preprocessor or BE\n");
-  cerr << GTDEVEL (" -Yp,path\t\tdefines location of preprocessor\n");
-  cerr << GTDEVEL (" -bback_end\t\tcauses specified back end to be used\n");
-  cerr << GTDEVEL (" -u\t\t\tprints usage message and exits\n");
-  cerr << GTDEVEL (" -v\t\t\ttraces compilation stages\n");
-  cerr << GTDEVEL (" -w\t\t\tsuppresses IDL compiler warning messages\n");
+  cerr << GTDEVEL (" -sT\t\t\tServer's template skeleton file name ending. Default is S_T.cpp\n");
   cerr << GTDEVEL (" -Sa\t\t\tsuppress Any support (support enabled by default)\n");
   cerr << GTDEVEL (" -St\t\t\tsuppress TypeCode support (support enabled by default)\n");
-  cerr << GTDEVEL (" -Gc\t\t\tenable Compiled marshaling (default is interpretive)\n");
-  cerr << GTDEVEL (" -Gi\t\t\tenable Interpretive marshaling (default)\n");
-  cerr << GTDEVEL (" -Ge\t\t\tenable C++ Exception support (suppressed by default)\n");
-  cerr << GTDEVEL (" -Gt\t\t\tenable optimized TypeCode support (unopt by default)\n");
+  cerr << GTDEVEL (" -u\t\t\tprints usage message and exits\n");
+  cerr << GTDEVEL (" -Uname\t\t\tundefines name for preprocessor\n");
+  cerr << GTDEVEL (" -v\t\t\ttraces compilation stages\n");
+  cerr << GTDEVEL (" -V\t\t\tprints version info then exits\n");
+  cerr << GTDEVEL (" -w\t\t\tsuppresses IDL compiler warning messages\n");
+  cerr << GTDEVEL (" -W[p|b],arg1,argn\tpasses args to preprocessor or BE\n");
+  cerr << GTDEVEL (" -Yp,path\t\tdefines location of preprocessor\n");
   cerr << GTDEVEL ("    \t\t\tNo effect if TypeCode generation is suppressed\n");
+
 }
 
 /*
@@ -162,6 +170,11 @@ DRV_parse_args (long ac, char **av)
 
   DRV_cpp_init ();
   idl_global->set_prog_name (av[0]);
+  //i = 1;
+  /*
+  while (a[i][0] == '-')
+    {
+  */
   for (i = 1; i < ac; i++)
     {
       if (av[i][0] == '-')
@@ -200,6 +213,8 @@ DRV_parse_args (long ac, char **av)
               //       Default is "S.h".
               // <-hT Server's template hdr file name ending>
               //       Default is "S_T.h".
+              // <-hI Server's implementation header file name ending>
+              //       Default is "I.h".
 
               if (av[i][2] == 'c')
                 {
@@ -218,6 +233,12 @@ DRV_parse_args (long ac, char **av)
                 {
                   // Server Template header ending.
                   idl_global->server_template_hdr_ending (av[i+1]);
+                  i++;
+                }
+              else if (av[i][2] == 'I')
+                {
+                  // Server Template header ending.
+                  idl_global->implementation_hdr_ending (av[i+1]);
                   i++;
                 }
               else
@@ -241,11 +262,13 @@ DRV_parse_args (long ac, char **av)
                   idl_global->client_stub_ending (av[i+1]);
                   i++;
                 }
+              
               else if (av[i][2] == 'i')
                 {
                   idl_global->client_inline_ending (av[i+1]);
                   i++;
                 }
+              
               else
                 {
                   // I expect 's' or 'i' after 'c'.
@@ -265,6 +288,8 @@ DRV_parse_args (long ac, char **av)
               //      Default is "S.i".
               // <-st Server's template inline file name ending>
               //      Default is "S_T.i".
+              // <-sI Server's implementation skeleton file name ending>
+              //      Default is "I.cpp".
 
               if (av[i][2] == 's')
                 {
@@ -286,6 +311,13 @@ DRV_parse_args (long ac, char **av)
                   idl_global->server_template_inline_ending (av[i+1]);
                   i++;
                 }
+              
+              else if (av[i][2] == 'I')
+                {
+                  idl_global->implementation_skel_ending (av[i+1]);
+                  i++;
+                }
+              
               else
                 {
                   // I expect 's' or 'T' or 'i' or 't' after 's'.
@@ -498,14 +530,65 @@ DRV_parse_args (long ac, char **av)
                   // optimized typecode support
                   idl_global->opt_tc (1);
                 }
+              else if (av[i][2] == 'I')
+
+                {
+                  int options = ACE_OS::strlen(av[i]) - 3;
+                  int j;
+                  int k=i;
+                  //cout<<"The option is "<<options<<endl;
+                  // optimized typecode support
+                  idl_global->gen_impl_files (1);
+                  for (j=0;j<options;j++)
+                    {
+                      //cout<<"The option string is "<<av[i+1]<<endl;
+                      if (av[k][j+3] == 's')
+                        {
+                          
+                          idl_global->implementation_skel_ending (av[i+1]);
+                          i++;
+                        }
+                      else if (av[k][j+3] == 'h')
+                        {
+                          idl_global->implementation_hdr_ending (av[i+1]);
+                          i++;
+                        }
+                      else if (av[k][j+3] == 'b')
+                        {
+                          idl_global->impl_class_prefix(av[i+1]);
+                          i++;
+                        }
+                      else if (av[k][j+3] == 'e')
+                        {
+                          idl_global->impl_class_suffix(av[i+1]);
+                          i++;
+                        }
+                      else if (av[k][j+3] == 'c')
+                        {
+                          idl_global->gen_copy_ctor(1);
+                        }
+                      else if (av[k][j+3] == 'a')
+                        {
+                          idl_global->gen_assign_op(1);
+                        }
+                      else if (isalpha(av[k][j+3] ))
+                        {
+                          cerr << GTDEVEL ("IDL: Illegal option '") << av[i] << "'\n";
+                          idl_global->set_compile_flags (idl_global->compile_flags () |
+                                                     IDL_CF_ONLY_USAGE);
+                        }
+                    }
+                }
               else
                 {
+                  //cout<<"It is here...WHY??"<<endl;
                   cerr << GTDEVEL("IDL: missing argument after '")
                        << av[i]
                        << GTDEVEL("' flag\n");
                   ACE_OS::exit (99);
                 }
               break;
+              
             default:
               cerr << GTDEVEL ("IDL: Illegal option '") << av[i] << "'\n";
               idl_global->set_compile_flags (idl_global->compile_flags () |
@@ -516,6 +599,7 @@ DRV_parse_args (long ac, char **av)
       else
         DRV_push_file (av[i]);
     }
+
 
   // Let us try to use Perfect Hashing Operation Lookup Strategy. Let
   // us check whether things are fine with GPERF.

@@ -3763,8 +3763,10 @@ tags:
  be_include/be_visitor_interface/interface_ci.h \
  be_include/be_visitor_interface/interface_cs.h \
  be_include/be_visitor_interface/interface_sh.h \
+ be_include/be_visitor_interface/interface_ih.h \
  be_include/be_visitor_interface/interface_si.h \
  be_include/be_visitor_interface/interface_ss.h \
+ be_include/be_visitor_interface/interface_is.h \
  be_include/be_visitor_interface/collocated_sh.h \
  be_include/be_visitor_interface/collocated_ss.h \
  be_include/be_visitor_interface/any_op_ch.h \
@@ -6375,8 +6377,10 @@ tags:
  be_include/be_visitor_interface/interface_ci.h \
  be_include/be_visitor_interface/interface_cs.h \
  be_include/be_visitor_interface/interface_sh.h \
+ be_include/be_visitor_interface/interface_ih.h \
  be_include/be_visitor_interface/interface_si.h \
  be_include/be_visitor_interface/interface_ss.h \
+ be_include/be_visitor_interface/interface_is.h \
  be_include/be_visitor_interface/collocated_sh.h \
  be_include/be_visitor_interface/collocated_ss.h \
  be_include/be_visitor_interface/any_op_ch.h \
@@ -6392,6 +6396,7 @@ tags:
  be_include/be_visitor_module.h be_include/be_visitor_module/module.h \
  be_include/be_visitor_module/module_ch.h \
  be_include/be_visitor_module/module_sh.h \
+ be_include/be_visitor_module/module_ih.h \
  be_include/be_visitor_module/any_op.h \
  be_include/be_visitor_module/cdr_op.h \
  be_include/be_visitor_operation.h \
@@ -6399,13 +6404,16 @@ tags:
  be_include/be_visitor_operation/operation_ch.h \
  be_include/be_visitor_operation/operation_cs.h \
  be_include/be_visitor_operation/operation_sh.h \
+ be_include/be_visitor_operation/operation_ih.h \
  be_include/be_visitor_operation/operation_ss.h \
+ be_include/be_visitor_operation/operation_is.h \
  be_include/be_visitor_operation/tie_sh.h \
  be_include/be_visitor_operation/tie_si.h \
  be_include/be_visitor_operation/collocated_sh.h \
  be_include/be_visitor_operation/collocated_ss.h \
  be_include/be_visitor_operation/arglist.h \
  be_include/be_visitor_operation/rettype.h \
+ be_include/be_visitor_operation/rettype_is.h \
  be_include/be_visitor_operation/rettype_vardecl_cs.h \
  be_include/be_visitor_operation/rettype_pre_docall_cs.h \
  be_include/be_visitor_operation/rettype_docall_cs.h \
@@ -6428,6 +6436,8 @@ tags:
  be_include/be_visitor_root/root_sh.h \
  be_include/be_visitor_root/root_si.h \
  be_include/be_visitor_root/root_ss.h \
+ be_include/be_visitor_root/root_is.h \
+ be_include/be_visitor_root/root_ih.h \
  be_include/be_visitor_root/any_op.h \
  be_include/be_visitor_root/cdr_op.h be_include/be_visitor_sequence.h \
  be_include/be_visitor_sequence/sequence_ch.h \
@@ -7666,8 +7676,10 @@ tags:
  be_include/be_visitor_interface/interface_ci.h \
  be_include/be_visitor_interface/interface_cs.h \
  be_include/be_visitor_interface/interface_sh.h \
+ be_include/be_visitor_interface/interface_ih.h \
  be_include/be_visitor_interface/interface_si.h \
  be_include/be_visitor_interface/interface_ss.h \
+ be_include/be_visitor_interface/interface_is.h \
  be_include/be_visitor_interface/collocated_sh.h \
  be_include/be_visitor_interface/collocated_ss.h \
  be_include/be_visitor_interface/any_op_ch.h \
@@ -7681,8 +7693,10 @@ tags:
  be/be_visitor_interface/interface_ci.cpp \
  be/be_visitor_interface/interface_cs.cpp \
  be/be_visitor_interface/interface_sh.cpp \
+ be/be_visitor_interface/interface_ih.cpp \
  be/be_visitor_interface/interface_si.cpp \
  be/be_visitor_interface/interface_ss.cpp \
+ be/be_visitor_interface/interface_is.cpp \
  be/be_visitor_interface/collocated_sh.cpp \
  be/be_visitor_interface/collocated_ss.cpp \
  be/be_visitor_interface/tie_sh.cpp be/be_visitor_interface/tie_si.cpp \
@@ -7900,9 +7914,11 @@ tags:
  be_include/be_visitor_decl.h be_include/be_visitor_module/module.h \
  be_include/be_visitor_module/module_ch.h \
  be_include/be_visitor_module/module_sh.h \
+ be_include/be_visitor_module/module_ih.h \
  be_include/be_visitor_module/any_op.h \
  be_include/be_visitor_module/cdr_op.h be/be_visitor_module/module.cpp \
  be/be_visitor_module/module_ch.cpp be/be_visitor_module/module_sh.cpp \
+be/be_visitor_module/module_ih.cpp \
  be/be_visitor_module/any_op.cpp be/be_visitor_module/cdr_op.cpp
 .obj/be_visitor_operation.o .obj/be_visitor_operation.so .shobj/be_visitor_operation.o .shobj/be_visitor_operation.so: be/be_visitor_operation.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -8009,13 +8025,16 @@ tags:
  be_include/be_visitor_operation/operation_ch.h \
  be_include/be_visitor_operation/operation_cs.h \
  be_include/be_visitor_operation/operation_sh.h \
+ be_include/be_visitor_operation/operation_ih.h \
  be_include/be_visitor_operation/operation_ss.h \
+ be_include/be_visitor_operation/operation_is.h \
  be_include/be_visitor_operation/tie_sh.h \
  be_include/be_visitor_operation/tie_si.h \
  be_include/be_visitor_operation/collocated_sh.h \
  be_include/be_visitor_operation/collocated_ss.h \
  be_include/be_visitor_operation/arglist.h \
  be_include/be_visitor_operation/rettype.h \
+ be_include/be_visitor_operation/rettype_is.h \
  be_include/be_visitor_operation/rettype_vardecl_cs.h \
  be_include/be_visitor_operation/rettype_pre_docall_cs.h \
  be_include/be_visitor_operation/rettype_docall_cs.h \
@@ -8042,8 +8061,11 @@ tags:
  be/be_visitor_operation/operation_ch.cpp \
  be/be_visitor_operation/operation_cs.cpp \
  be/be_visitor_operation/operation_sh.cpp \
+ be/be_visitor_operation/operation_ih.cpp \
  be/be_visitor_operation/operation_ss.cpp \
+ be/be_visitor_operation/operation_is.cpp \
  be/be_visitor_operation/rettype.cpp \
+ be/be_visitor_operation/rettype_is.cpp \
  be/be_visitor_operation/rettype_assign_ss.cpp \
  be/be_visitor_operation/rettype_docall_cs.cpp \
  be/be_visitor_operation/rettype_marshal_ss.cpp \
@@ -8163,11 +8185,15 @@ tags:
  be_include/be_visitor_root/root_sh.h \
  be_include/be_visitor_root/root_si.h \
  be_include/be_visitor_root/root_ss.h \
+ be_include/be_visitor_root/root_is.h \
+ be_include/be_visitor_root/root_ih.h \
  be_include/be_visitor_root/any_op.h \
  be_include/be_visitor_root/cdr_op.h be/be_visitor_root/root.cpp \
  be/be_visitor_root/root_ch.cpp be/be_visitor_root/root_ci.cpp \
  be/be_visitor_root/root_cs.cpp be/be_visitor_root/root_sh.cpp \
  be/be_visitor_root/root_si.cpp be/be_visitor_root/root_ss.cpp \
+ be/be_visitor_root/root_is.cpp \
+ be/be_visitor_root/root_ih.cpp \
  be/be_visitor_root/any_op.cpp be/be_visitor_root/cdr_op.cpp
 .obj/be_visitor_scope.o .obj/be_visitor_scope.so .shobj/be_visitor_scope.o .shobj/be_visitor_scope.so: be/be_visitor_scope.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \

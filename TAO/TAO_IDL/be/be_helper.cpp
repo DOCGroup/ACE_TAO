@@ -212,6 +212,12 @@ TAO_OutStream::gen_ifdef_macro (const char *flatname, const char *suffix)
     case TAO_OutStream::TAO_SVR_HDR:
       ACE_OS::strcat (macro, "SH_");
       break;
+    case TAO_OutStream::TAO_IMPL_HDR:
+      ACE_OS::strcat (macro, "IH_");
+      break;
+    case TAO_OutStream::TAO_IMPL_SKEL:
+      ACE_OS::strcat (macro, "IS_");
+      break;
     case TAO_OutStream::TAO_SVR_INL:
       ACE_OS::strcat (macro, "SI_");
       break;

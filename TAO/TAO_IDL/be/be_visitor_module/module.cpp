@@ -83,8 +83,10 @@ be_visitor_module::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
     case TAO_CodeGen::TAO_MODULE_CI:
     case TAO_CodeGen::TAO_MODULE_SH:
+    case TAO_CodeGen::TAO_MODULE_IH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IS:
       return 0; // nothing to be done
     default:
       {
@@ -154,8 +156,10 @@ be_visitor_module::visit_enum (be_enum *node)
       break;
     case TAO_CodeGen::TAO_MODULE_CI:
     case TAO_CodeGen::TAO_MODULE_SH:
+    case TAO_CodeGen::TAO_MODULE_IH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IS:
       return 0; // nothing to be done
     default:
       {
@@ -227,8 +231,10 @@ be_visitor_module::visit_exception (be_exception *node)
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_MODULE_SH:
+    case TAO_CodeGen::TAO_MODULE_IH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IS:
       return 0; // nothing to be done
     default:
       {
@@ -290,11 +296,17 @@ be_visitor_module::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_MODULE_SH:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SH);
       break;
+    case TAO_CodeGen::TAO_MODULE_IH:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_IH);
+      break;
     case TAO_CodeGen::TAO_MODULE_SI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SI);
       break;
     case TAO_CodeGen::TAO_MODULE_SS:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SS);
+      break;
+    case TAO_CodeGen::TAO_MODULE_IS:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_IS);
       break;
     case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH);
@@ -372,6 +384,8 @@ be_visitor_module::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IH:
+    case TAO_CodeGen::TAO_MODULE_IS:
       return 0; // nothing to be done
     default:
       {
@@ -443,8 +457,10 @@ be_visitor_module::visit_structure (be_structure *node)
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_MODULE_SH:
+    case TAO_CodeGen::TAO_MODULE_IH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IS:
       return 0; // nothing to be done
     default:
       {
@@ -516,8 +532,10 @@ be_visitor_module::visit_union (be_union *node)
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_MODULE_SH:
+    case TAO_CodeGen::TAO_MODULE_IH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IS:
       return 0; // nothing to be done
     default:
       {
@@ -591,6 +609,8 @@ be_visitor_module::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IH:
+    case TAO_CodeGen::TAO_MODULE_IS:
       return 0; // nothing to be done
     default:
       {

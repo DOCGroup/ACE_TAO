@@ -31,7 +31,9 @@ be_decl::be_decl (void)
     cli_stub_gen_ (I_FALSE),
     cli_inline_gen_ (I_FALSE),
     srv_hdr_gen_ (I_FALSE),
+    impl_hdr_gen_ (I_FALSE),
     srv_skel_gen_ (I_FALSE),
+    impl_skel_gen_ (I_FALSE),
     srv_inline_gen_ (I_FALSE),
     cli_hdr_any_op_gen_ (I_FALSE),
     cli_stub_any_op_gen_ (I_FALSE),
@@ -56,7 +58,9 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_stub_gen_ (I_FALSE),
     cli_inline_gen_ (I_FALSE),
     srv_hdr_gen_ (I_FALSE),
+    impl_hdr_gen_ (I_FALSE),
     srv_skel_gen_ (I_FALSE),
+    impl_skel_gen_ (I_FALSE),
     srv_inline_gen_ (I_FALSE),
     cli_hdr_any_op_gen_ (I_FALSE),
     cli_stub_any_op_gen_ (I_FALSE),
@@ -205,6 +209,7 @@ be_decl::compute_flatname (void)
       // in the first loop compute the total length
       namelen = 0;
       i = new UTL_IdListActiveIterator (this->name ());
+      
       while (!(i->is_done ()))
         {
           if (!first)
@@ -253,6 +258,9 @@ be_decl::compute_flatname (void)
   return;
 }
 
+
+
+
 const char*
 be_decl::flatname (void)
 {
@@ -261,6 +269,9 @@ be_decl::flatname (void)
 
   return this->flatname_;
 }
+
+
+
 
 // compute stringified repository ID
 void
@@ -586,9 +597,21 @@ be_decl::srv_hdr_gen (void)
 }
 
 idl_bool
+be_decl::impl_hdr_gen (void)
+{
+  return this->impl_hdr_gen_;
+}
+
+idl_bool
 be_decl::srv_skel_gen (void)
 {
   return this->srv_skel_gen_;
+}
+
+idl_bool
+be_decl::impl_skel_gen (void)
+{
+  return this->impl_skel_gen_;
 }
 
 idl_bool
@@ -651,6 +674,13 @@ be_decl::srv_hdr_gen (idl_bool val)
 {
   this->srv_hdr_gen_ = val;
 }
+
+void
+be_decl::impl_hdr_gen (idl_bool val)
+{
+  this->impl_hdr_gen_ = val;
+}
+
 
 void
 be_decl::srv_skel_gen (idl_bool val)

@@ -270,6 +270,81 @@ void be_interface::in_mult_inheritance (int mi)
     this->in_mult_inheritance_ = mi;
 }
 
+//gen copy constructors
+void 
+be_interface::gen_copy_ctors (TAO_OutStream* os)
+{
+  this->traverse_inheritance_graph(be_interface::gen_copy_ctors_helper,os);
+  return;
+}
+
+int 
+be_interface::gen_copy_ctors_helper (be_interface* node, be_interface* base, TAO_OutStream *os)
+{
+  static int first = 0;
+  if(node != base)
+    {
+      if(first)
+        {
+          *os << idl_global->impl_class_prefix () << base->flatname () << idl_global->impl_class_suffix () << " (t)"
+              << ", " << base->full_skel_name () << " (t)";          
+          first = 0;
+        }
+      else
+        {
+          *os << ", " << idl_global->impl_class_prefix () << base->flatname () << idl_global->impl_class_suffix () << " (t)" 
+              << ", " << base->full_skel_name () << " (t)";   ;
+         
+        }
+    }
+  else
+    {
+      *os << ":";
+      first = 1;
+    }
+
+  return 1;
+  
+}
+  
+//generate default constructors
+void 
+be_interface::gen_def_ctors (TAO_OutStream* os)
+{
+  this->traverse_inheritance_graph(be_interface::gen_def_ctors_helper,os);
+  return;
+}
+  
+
+int 
+be_interface::gen_def_ctors_helper (be_interface* node, be_interface* base, TAO_OutStream *os)
+{
+
+  static int first = 0;
+  if(node != base)
+    {
+      if(first)
+        {
+          *os << idl_global->impl_class_prefix () << base->flatname () << idl_global->impl_class_suffix () << " ()";          
+          first = 0;
+        }
+      else
+        {
+          *os << ", " << idl_global->impl_class_prefix () << base->flatname () << idl_global->impl_class_suffix () << " ()";
+         
+        }
+    }
+  else
+    {
+      *os << ":";
+      first = 1;
+    }
+
+   return 1;
+  
+}
+
+
 // generate the var definition
 int
 be_interface::gen_var_defn (void)

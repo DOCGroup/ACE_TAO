@@ -27,6 +27,8 @@ TAO_CodeGen *tao_cg = 0;
 /* BE global Data */
 TAO_CodeGen::TAO_CodeGen (void)
   : client_header_ (0),
+    implementation_header_(0),
+    implementation_skeleton_(0),
     client_stubs_ (0),
     client_inline_ (0),
     server_header_ (0),
@@ -48,6 +50,8 @@ TAO_CodeGen::~TAO_CodeGen (void)
 {
   delete this->client_header_;
   delete this->server_header_;
+  delete this->implementation_header_;
+  delete this->implementation_skeleton_;
   delete this->server_template_header_;
   delete this->client_stubs_;
   delete this->server_skeletons_;
@@ -613,6 +617,171 @@ TAO_CodeGen::server_template_inline (void)
   return this->server_template_inline_;
 }
 
+
+// set the server header stream.
+int
+TAO_CodeGen::start_implementation_header (const char *fname)
+{
+  // @@ We are making use of "included_idl_files" that is in the 
+  // idl_global. We need to make sure the validity of those files.
+
+
+  idl_global->validate_included_idl_files ();
+  
+  // retrieve the singleton instance to the outstream factory
+  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // retrieve a specialized instance
+  this->implementation_header_ = factory->make_outstream ();
+  if (!this->implementation_header_)
+    {
+      return -1;
+    }
+
+  if (this->implementation_header_->open (fname, TAO_OutStream::TAO_IMPL_HDR) == -1)
+    return -1;
+  else
+    {
+      // now generate the #ifndef clause
+      static char macro_name [NAMEBUFSIZE];
+
+      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+      const char *suffix = ACE_OS::strrchr (fname, '.');
+      if (suffix == 0)
+        {
+          // File seems to have no extension, so let us take the name
+          // as it is.
+          if (fname == 0)
+            // bad file name
+            return -1;
+          else 
+            suffix = fname;
+        }
+
+      for (int i=0; i < (suffix - fname); i++)
+        if (isalpha (fname [i]))
+          macro_name[i] = toupper (fname [i]);
+        else if (isdigit (fname [i]))
+          macro_name[i] = fname[i];
+      else
+      macro_name[i] = '_';
+
+      ACE_OS::strcat (macro_name, "_H_");
+
+      this->implementation_header_->print ("#ifndef %s\n", macro_name);      
+      this->implementation_header_->print ("#define %s\n\n", macro_name);
+      
+      // We must include all the skeleton headers corresponding to
+      // IDL files included by the current IDL file.
+      // We will use the included IDL file names as they appeared
+      // in the original main IDL file, not the one  which went
+      // thru CC preprocessor.
+      for (size_t j = 0;
+           j < idl_global->n_included_idl_files ();
+           ++j)
+            {
+              char* idl_name =
+                idl_global->included_idl_files ()[j];
+              
+              // Stringifying the name.
+              String idl_name_str (idl_name);
+              
+              const char* implementation_hdr =
+                IDL_GlobalData::be_get_implementation_hdr (&idl_name_str, 1);
+              
+              this->implementation_header_->print ("#include \"%s\"\n",
+                                           implementation_hdr);
+            }
+      
+      *this->implementation_header_ << "#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+                            << "#pragma once\n"
+                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
+
+      const char* server_hdr =
+        IDL_GlobalData::be_get_server_hdr_fname (1);
+
+      *this->implementation_header_<< "#include \""<<server_hdr<<"\"\n\n";
+         
+      return 0;
+    }
+}
+
+
+// get the implementation header stream
+TAO_OutStream *
+TAO_CodeGen::implementation_header (void)
+{
+  return this->implementation_header_;
+}
+
+
+// set the implementation skeleton stream.
+int
+TAO_CodeGen::start_implementation_skeleton (const char *fname)
+{
+  // @@ We are making use of "included_idl_files" that is in the 
+  // idl_global. We need to make sure the validity of those files.
+  idl_global->validate_included_idl_files ();
+  
+  // retrieve the singleton instance to the outstream factory
+  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // retrieve a specialized instance
+  this->implementation_skeleton_ = factory->make_outstream ();
+  if (!this->implementation_skeleton_)
+    {
+      return -1;
+    }
+
+  if (this->implementation_skeleton_->open (fname, TAO_OutStream::TAO_IMPL_SKEL) == -1)
+    return -1;
+  else
+    {
+
+           
+
+      static char macro_name [NAMEBUFSIZE];
+
+      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+      const char *suffix = ACE_OS::strrchr (fname, '.');
+
+
+      if (suffix == 0)
+        {
+          // File seems to have no extension, so let us take the name
+          // as it is.
+          if (fname == 0)
+            // bad file name
+            return -1;
+          else 
+            suffix = fname;
+        }
+
+      // convert letters in fname to upcase
+      for (int i=0; i < (suffix - fname); i++)
+        if (isalpha (fname [i]))
+          macro_name[i] = fname [i];
+        else 
+          macro_name[i] = fname[i];
+       
+
+      const char* impl_hdr =
+        IDL_GlobalData::be_get_implementation_hdr_fname ();
+            
+      this->implementation_skeleton_->print ("#include \"%s\"\n\n", impl_hdr);
+           
+      return 0;
+    }
+}
+
+
+// get the implementation header stream
+TAO_OutStream *
+TAO_CodeGen::implementation_skeleton (void)
+{
+  return this->implementation_skeleton_;
+}
+
 // put the last #endif in the client and server headers
 int
 TAO_CodeGen::end_client_header (void)
@@ -653,6 +822,43 @@ TAO_CodeGen::end_server_header (void)
 
   // code to put the last #endif
   *this->server_header_ << "\n#endif /* if !defined */\n";
+  return 0;
+}
+
+int
+TAO_CodeGen::end_implementation_header (const char *fname)
+{
+  static char macro_name [NAMEBUFSIZE];
+  
+  ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+  const char *suffix = ACE_OS::strrchr (fname, '.');
+  if (suffix == 0)
+    {
+      // File seems to have no extension, so let us take the name
+      // as it is.
+      if (fname == 0)
+        // bad file name
+        return -1;
+      else 
+        suffix = fname;
+    }
+  
+  
+  // convert letters in fname to upcase
+  for (int i=0; i < (suffix - fname); i++)
+    if (isalpha (fname [i]))
+      macro_name[i] = toupper (fname [i]);
+    else if (isdigit (fname [i]))
+      macro_name[i] = fname[i];
+    else
+      macro_name[i] = '_';
+  
+  ACE_OS::strcat (macro_name, "_H_");
+  
+  
+  // code to put the last #endif
+  //*this->implementation_header_ << "\n#endif /* %s  */\n";
+  this->implementation_header_->print ("\n#endif /* %s  */\n", macro_name);
   return 0;
 }
 

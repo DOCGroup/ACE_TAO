@@ -28,6 +28,7 @@
 #include "be_visitor_module/module.cpp"
 #include "be_visitor_module/module_ch.cpp"
 #include "be_visitor_module/module_sh.cpp"
+#include "be_visitor_module/module_ih.cpp"
 #include "be_visitor_module/any_op.cpp"
 #include "be_visitor_module/cdr_op.cpp"
 

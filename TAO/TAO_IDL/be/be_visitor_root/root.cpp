@@ -81,12 +81,18 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CS);
       break;
+
+    case TAO_CodeGen::TAO_ROOT_IH:  
+      (void) tao_cg->end_implementation_header (idl_global->be_get_implementation_hdr_fname (0));
+      break;
     case TAO_CodeGen::TAO_ROOT_SH:
       (void) tao_cg->end_server_header ();
       (void) tao_cg->end_server_template_header ();
       return 0;
 
     case TAO_CodeGen::TAO_ROOT_CI:
+      break;
+    case TAO_CodeGen::TAO_ROOT_IS:
       break;
     case TAO_CodeGen::TAO_ROOT_SI:
       return 0; // nothing to be done
@@ -105,7 +111,7 @@ int be_visitor_root::visit_root (be_root *node)
 
   // *ASG* - this is a tempoaray hack soln so that our CDR operators get
   // generated in the *.i file rather than the *.cpp file
-  if (this->ctx_->state () != TAO_CodeGen::TAO_ROOT_CI)
+  if (this->ctx_->state () != TAO_CodeGen::TAO_ROOT_CI && this->ctx_->state () != TAO_CodeGen::TAO_ROOT_IH && this->ctx_->state () != TAO_CodeGen::TAO_ROOT_IS)
     {
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
@@ -144,9 +150,11 @@ int be_visitor_root::visit_root (be_root *node)
       ctx.state (TAO_CodeGen::TAO_ROOT_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_CS:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
+    case TAO_CodeGen::TAO_ROOT_IS:
       return 0; // nothing to be done
     default:
       {
@@ -221,8 +229,10 @@ be_visitor_root::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
+    case TAO_CodeGen::TAO_ROOT_IS:
       return 0; // nothing to be done
     default:
       {
@@ -428,11 +438,17 @@ be_visitor_root::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_ROOT_SH:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SH);
       break;
+    case TAO_CodeGen::TAO_ROOT_IH:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_IH);
+      break;
     case TAO_CodeGen::TAO_ROOT_SI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SI);
       break;
     case TAO_CodeGen::TAO_ROOT_SS:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_IS:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_IS);
       break;
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH);
@@ -577,6 +593,12 @@ be_visitor_root::visit_module (be_module *node)
       break;
     case TAO_CodeGen::TAO_ROOT_SS:
       ctx.state (TAO_CodeGen::TAO_MODULE_SS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_IS:
+      ctx.state (TAO_CodeGen::TAO_MODULE_IS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_IH:
+      ctx.state (TAO_CodeGen::TAO_MODULE_IH);
       break;
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
       ctx.state (TAO_CodeGen::TAO_MODULE_ANY_OP_CH);
