@@ -3170,11 +3170,7 @@ ACE::set_handle_limit (int new_limit,
 #endif /* ACE_LACKS_RLIMIT */
     }
 
-  // Irix complains without this return statement.  DEC cxx
-  // (correctly) says that it's not reachable.  ACE_NOTREACHED won't
-  // work here, because it handles both platforms the same.
-  // IRIX does not complain anymore [7.2]
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 int
