@@ -1,4 +1,5 @@
-	* examples/Simple/bank/run_test.pl: Added this script 
+$Id$
+	 * examples/Simple/bank/run_test.pl: Added this script 
 	  with proper sleep time between server and client.
 
 
