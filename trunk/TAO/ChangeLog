@@ -1,3 +1,12 @@
+Mon Mar  8 21:47:39 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* tao/Acceptor_Impl.cpp: An application that linked against TAO
+	  crashed inside TAO (dangling pointer access) if the default ACE
+ 	  reactor is deleted before the orb is deactivated.  Fixed this by
+ 	  making sure the ORB uses the same reactor as the
+ 	  ACE_Accept_Strategy.  Thanks to Peter Hercek <peter@syncad.com>
+ 	  for this fix.
+
 Mon Mar  8 13:53:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* NEWS:
