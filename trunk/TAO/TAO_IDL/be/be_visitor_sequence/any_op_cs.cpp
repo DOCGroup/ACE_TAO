@@ -97,7 +97,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "delete _tao_elem;" << be_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "return 0;" <<be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl  // else any does not own the data
       << "{" << be_idt_nl
