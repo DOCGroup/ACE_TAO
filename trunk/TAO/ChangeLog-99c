@@ -66,33 +66,34 @@ Tue Apr 06 05:04:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/POA.cpp: Phase two of the new POA design is complete.
 
-          - We now have support for active demuxing of POA. For transient
-            POAs, we directly use an active demuxing key in the object key
-            since transient POAs cannot be reactivated.  For persistent
-            POAs, we have added a active demux hint field in the object
-            key.  This hint is in addition to the persistent POA name.
+          - We now have support for active demuxing of POAs. For transient
+	    POAs, we directly use an active demuxing key in the object key
+	    since transient POAs cannot be reactivated.  For persistent
+	    POAs, we have added a active demux hint field in the object
+	    key.  This hint is in addition to the persistent POA name.
 
-          - POA identifiers for transient POAs in the object key are of
-            fixed size. For persistent POAs, the object key contains a
-            number that specifies how long the POA name is.  This feature
-            speeds up things since there is no need for sequential, byte
-            by byte searching for field separators.
+          - Transient POAs identifiers in the object key are of fixed
+	    size. For persistent POAs, the object key contains a number
+	    that specifies how long the POA name is.  This feature speeds
+	    up things since there is no need for sequential, byte by byte
+	    searching for field separators.
 
           - The use of the active demux hint for the POA name in the
-            object key is optional.  If used, the lookups are faster
-            (unless the hint is invalidated by a deactivation or by
-            restarting a persistent POA).  However, using the hint results in
-            a larger IOR, and more memory being used in the active object map.
-            This option can be controlled through the -ORBactivehintinpoanames
-            runtime switch and is turned on by default.
+	    object key is optional.  If used, the lookups are faster
+	    (unless the hint is invalidated by a deactivation or by
+	    restarting a persistent POA).  However, using the hint results
+	    in a larger IOR, and more memory being used in the active
+	    object map.  This option can be controlled through the
+	    -ORBactivehintinpoanames runtime switch and is turned on by
+	    default.
 
           - The POA related classes have been rewritten with respect to
-            exceptions.  Memory management in case of exceptions from
-            servants and in case of dynamic memory / constructor failures
-            have been greatly improved through the use of auto pointer and
-            the new ACE_NEW_THROW_EX macro.  One of the problems related
-            to exceptions was that the POA Current was not reset properly.
-            This has also been fixed.
+	    exceptions.  Memory management in case of exceptions from
+	    servants and in case of dynamic memory / constructor failures
+	    have been greatly improved through the use of auto pointers
+	    and the new ACE_NEW_THROW_EX macro.  One of the problems
+	    related to exceptions was that the POA Current was not reset
+	    properly.  This has also been fixed.
 
           - New file Object_Adapter contains an abstraction for all the
             POAs in the ORB.  This class is used to hold the Object
@@ -125,10 +126,10 @@ Tue Apr 06 05:04:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
             instead to the Root POAs.
 
           - POA objects and POA Manager objects now contain a reference to
-            lock rather than a lock instance.  The locks coming from the
-            Object Adapter.  This change was made to centralize the
-            locking and reduce the number of locks grabbed during request
-            dispatching.
+	    lock rather than a lock instance.  The lock comes from the
+	    Object Adapter.  This change was made to centralize the
+	    locking and reduce the number of locks grabbed during request
+	    dispatching.
 
           - Added ids for POA policies.
 
