@@ -1252,7 +1252,6 @@ main (int argc, ACE_TCHAR *argv [])
             }
         }
 
-#if !defined (VXWORKS)
       // Then Yield test.
       Yield_Test yield_test (num_iterations);
       // Wait for all tasks to exit.
@@ -1268,7 +1267,6 @@ main (int argc, ACE_TCHAR *argv [])
                   (ACE_UINT32)
                     (yield_test.elapsed_time () % (num_iterations * 2u)) *
                       1000u / num_iterations / 2u));
-#endif /* ! VXWORKS */
 
       Synchronized_Suspend_Resume_Test
         synchronized_suspend_resume_test (num_iterations);
@@ -1296,10 +1294,8 @@ main (int argc, ACE_TCHAR *argv [])
       context_switch_test_stats.print_summary (3, num_iterations * 2u);
     }
 
-#if !defined (VXWORKS)
   ACE_OS::printf ("\nyield_test: ");
   yield_test_stats.print_summary (3, num_iterations * 2u);
-#endif /* ! VXWORKS */
 
   ACE_OS::printf ("\nsynchronized suspend-resume test: ");
   synchronized_suspend_resume_test_stats.print_summary (3,
