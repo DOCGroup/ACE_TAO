@@ -117,7 +117,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
 {
   ACE_DEBUG ((LM_DEBUG,
               "create_constrained_propertyset\n"));
-  TAO_PropertySet *new_set;
+  TAO_PropertySet *new_set = 0;
 
   TAO_TRY
     {
@@ -652,7 +652,7 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
   // Define multiple exceptions object.
   CosPropertyService::MultipleExceptions multi_ex;
 
-  for (int pi = 0; pi < sequence_length; pi++)
+  for (size_t pi = 0; pi < sequence_length; pi++)
     {
       TAO_TRY
         {
@@ -774,7 +774,7 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
   CosProperty_Hash_Entry_ptr entry_ptr;
   CosProperty_Hash_Iterator iterator (this->hash_table_);
 
-  for (int ni = 0;
+  for (size_t ni = 0;
        ni < sequence_length;
        ni++, iterator.advance ())
     if (iterator.next (entry_ptr) != 0)
