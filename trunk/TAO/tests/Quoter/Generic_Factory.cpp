@@ -179,7 +179,7 @@ Quoter_Generic_Factory_Server::init (int argc,
         life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
 				  		                                    "Bryan 503",               // location
 					  	                                    "Generic Factory",         // description
-						                                      object_var,
+						                                      object_var.in (),
 						                                      TAO_TRY_ENV);
         TAO_CHECK_ENV;
         ACE_DEBUG ((LM_DEBUG,
