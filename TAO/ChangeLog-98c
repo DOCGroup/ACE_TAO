@@ -1,70 +1,75 @@
+Tue Dec 22 07:44:07 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Marshal.i (deep_free): commented out unused parameter
+          "source".
+
 Tue Dec 22 03:33:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Exception.{h,cpp}: If you try to catch the same exception
-	  twice, VC will complain.  Added a new TAO_DONT_CATCH class for
-	  use when we want to disable catching all exceptions.
+        * tao/Exception.{h,cpp}: If you try to catch the same exception
+          twice, VC will complain.  Added a new TAO_DONT_CATCH class for
+          use when we want to disable catching all exceptions.
 
 Tue Dec 22 02:37:38 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/Servant_Activator.h:
-	  Added an ACE_HASH_MAP_MANAGER member which associates an
-	  ObjectId with an dll.
+        * examples/POA/On_Demand_Loading/Servant_Activator.h:
+          Added an ACE_HASH_MAP_MANAGER member which associates an
+          ObjectId with an dll.
 
-	* examples/POA/On_Demand_Loading/Servant_Activator.cpp
-	  (activate_servant): The dll object is bound to the ObjectId of
-	  the servant.
+        * examples/POA/On_Demand_Loading/Servant_Activator.cpp
+          (activate_servant): The dll object is bound to the ObjectId of
+          the servant.
 
-	* examples/POA/On_Demand_Loading/Servant_Activator.cpp
-	  (deactivate_servant): The dll object is removed from the servant
-	  hash map.
+        * examples/POA/On_Demand_Loading/Servant_Activator.cpp
+          (deactivate_servant): The dll object is removed from the servant
+          hash map.
 
 Tue Dec 22 01:12:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h: Defined TAO_CATCHANY as
-	  TAO_CATCH (TAO_DONT_CATCH, ex) when building DEBUG library
-	  (when ACE_NDEBUG is _not_ defined.)  This will make un-expected
-	  exception very out-standing and let debuggers have a chance to
-	  catch these exceptions for us.
+        * tao/try_macros.h: Defined TAO_CATCHANY as
+          TAO_CATCH (TAO_DONT_CATCH, ex) when building DEBUG library
+          (when ACE_NDEBUG is _not_ defined.)  This will make un-expected
+          exception very out-standing and let debuggers have a chance to
+          catch these exceptions for us.
 
-	* orbsvcs/orbsvcs/Trader/Trader_T.cpp (extract): Changed to use
-	  any's >>= operator to extract a sequence.  No need to decode it
-	  yourself.
+        * orbsvcs/orbsvcs/Trader/Trader_T.cpp (extract): Changed to use
+          any's >>= operator to extract a sequence.  No need to decode it
+          yourself.
 
 Mon Dec 21 21:42:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp
-	  (TAO_Literal_Constraint): Strings carried by any's are managed
-	  by any's.  They must be duplicated before assigned to others.
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp
+          (TAO_Literal_Constraint): Strings carried by any's are managed
+          by any's.  They must be duplicated before assigned to others.
 
 Mon Dec 21 20:45:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Generic_Servant/MyFooServant.cpp: Changed
- 	  ACE_Svc_Export to GENERIC_SERVANT_Export.
+        * examples/POA/Generic_Servant/MyFooServant.cpp: Changed
+          ACE_Svc_Export to GENERIC_SERVANT_Export.
 
 Mon Dec 21 17:05:25 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* TAO/TAO-INSTALL.html: Updated the installation notes to indicate
- 	  that all of TAO should be built.  Thanks to Brian Wallis
- 	  <Brian.Wallis@sr.com.au> for reporting this.
+        * TAO/TAO-INSTALL.html: Updated the installation notes to indicate
+          that all of TAO should be built.  Thanks to Brian Wallis
+          <Brian.Wallis@sr.com.au> for reporting this.
 
 Mon Dec 21 17:05:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Marshal.i (deep_free):
-	* tao/decode.cpp:
-	* tao/encode.cpp:  More memory management bug fixes for Any with
-	  Any.
+        * tao/Marshal.i (deep_free):
+        * tao/decode.cpp:
+        * tao/encode.cpp:  More memory management bug fixes for Any with
+          Any.
 
 Mon Dec 21 11:56:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_array/array_ch.cpp (visit_array): Fixed
- 	  the functions to use TAO_NAMESPACE_STORAGE_CLASS instead of
- 	  static.  Thanks to Patrice Bensoussan <pbensoussan@amadeus.net>
- 	  for reporting this bug.
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp (visit_array): Fixed
+          the functions to use TAO_NAMESPACE_STORAGE_CLASS instead of
+          static.  Thanks to Patrice Bensoussan <pbensoussan@amadeus.net>
+          for reporting this bug.
 
 Mon Dec 21 09:15:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.i:
-	  Fixed some warnings reported by David.
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.i:
+          Fixed some warnings reported by David.
 
 Mon Dec 21 08:30:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
