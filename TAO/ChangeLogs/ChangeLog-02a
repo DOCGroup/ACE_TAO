@@ -1,8 +1,18 @@
+Sun Aug 20 18:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+	  
+	  Rectified the broken exception support and ACE_THROW_SPEC
+	  generation.
+
 Sun Aug 20 16:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/paramlist.cpp:
 	  Resolved some generation errors.
-
+	
 	* tests/Makefile:
 	* tests/AMI/Makefile:
         * tests/Leader_Followers/Makefile:
