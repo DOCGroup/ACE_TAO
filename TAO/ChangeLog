@@ -1,3 +1,9 @@
+Sat Nov 30 13:38:34 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+
+	  Changes to project settings.
+
 Sat Nov 30 09:38:33 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport_Cache_Manager.cpp: Added a second check after
