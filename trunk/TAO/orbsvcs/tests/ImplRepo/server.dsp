@@ -133,10 +133,6 @@ SOURCE=.\Simple_ObjectS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\server.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\server_impl.h
 # End Source File
 # Begin Source File
