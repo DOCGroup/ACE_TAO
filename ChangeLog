@@ -1,3 +1,8 @@
+Wed Aug 29 18:52:12 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tests/Bound_Ptr_Test.cpp:
+          Removed a stray asterisk that was causing compilation failures.
+
 Wed Aug 29 17:54:52 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/libDLL_Test.icc:
