@@ -240,6 +240,7 @@
 #define ACE_HAS_SYS_SIGLIST
 
 #if defined (_REENTRANT) || \
+ (defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE - 0 >= 199506L)) || \
  defined (_POSIX_PTHREAD_SEMANTICS)
   // Compile using multi-thread libraries.
 # define ACE_HAS_THREADS
@@ -274,7 +275,9 @@
 # define ACE_NEEDS_LWP_PRIO_SET
 # define ACE_HAS_THR_YIELD
 # define ACE_LACKS_PTHREAD_YIELD
-#endif /* _REENTRANT || _POSIX_PTHREAD_SEMANTICS */
+#endif /* _REENTRANT  \
+       (defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE - 0 >= 199506L)) || \
+       _POSIX_PTHREAD_SEMANTICS */
 
 # define ACE_HAS_PRIOCNTL
 
