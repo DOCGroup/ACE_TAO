@@ -356,8 +356,6 @@ public:
   int next_free (void) const;
   // Searches the array for the next free element, returns -1 if none
   // is found.
-  // @@ Discuss what is the right interface to create ObjectId's
-  // assigned by the Object Table...
 
   // Implement TAO_Dynamic_Hash_ObjTable....
   virtual int find (const PortableServer::Servant servant);
