@@ -45,7 +45,12 @@ USELIB("..\ace\aced.lib");
 
 // The number of children to run, it can be changed using the -c
 // option.
-static int opt_nchildren = 10;
+static int opt_nchildren =
+#if defined (__Lynx__)
+  5;
+#else  /* ! __Lynx__ */
+ 10;
+#endif /* ! __Lynx__ */
 
 // The number of loops per children, it can be changed using the -l
 // option.
