@@ -93,9 +93,6 @@
 // (does anyone know how to figure out the right values?!)
 #define ACE_DEFAULT_MAX_SEGMENTS 6
 
-// Maximum number of <ACE_Event_Handler>s supported by <ACE_Timer_Heap>.
-#define ACE_DEFAULT_MAX_TIMERS 20000
-
 // Used by the FIFO tests.
 #define ACE_DEFAULT_RENDEZVOUS "/tmp/fifo.ace"
 
@@ -1449,6 +1446,14 @@ extern "C" int sigwait (sigset_t *set);
 #if defined (ACE_HAS_SOCKIO_H)
 #include /**/ <sys/sockio.h>
 #endif /* ACE_HAS_SOCKIO_ */
+
+#if !defined (_SC_TIMER_MAX)
+#define _SC_TIMER_MAX 44
+#endif /* _SC_TIMER_MAX */
+
+// Default number of <ACE_Event_Handler>s supported by
+// <ACE_Timer_Heap>.
+#define ACE_DEFAULT_TIMERS _SC_TIMER_MAX
 
 // There must be a better way to do this...
 #if !defined (RLIMIT_NOFILE)

@@ -9,8 +9,8 @@
 #include "Event_Analyzer.h"
 #include "Supplier_Router.h"
 
-typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_MT_SYNCH> MT_Module;
+typedef ACE_Stream<ACE_SYNCH> MT_Stream;
+typedef ACE_Module<ACE_SYNCH> MT_Module;
 
 class Quit_Handler : public ACE_Sig_Adapter
   // = TITLE
@@ -49,6 +49,7 @@ Quit_Handler::handle_input (ACE_HANDLE)
 int
 main (int argc, char *argv[])
 {
+#if defined (ACE_HAS_THREADS)
   ACE_Service_Config daemon;
   
   Options::instance ()->parse_args (argc, argv);
@@ -134,5 +135,8 @@ main (int argc, char *argv[])
   // Wait for the threads to exit.
   ACE_Service_Config::thr_mgr ()->wait ();
   ACE_DEBUG ((LM_DEBUG, "exiting main\n"));
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   return 0;
 }

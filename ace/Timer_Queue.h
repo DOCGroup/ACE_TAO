@@ -38,7 +38,7 @@ class ACE_Export ACE_Timer_Node
   friend class ACE_Timer_Heap;
   friend class ACE_Timer_Heap_Iterator;
 
-  // = Initialization method.
+  // = Initialization methods.
   ACE_Timer_Node (ACE_Event_Handler *h, 
 		  const void *a, 
 		  const ACE_Time_Value &t, 
@@ -46,6 +46,9 @@ class ACE_Export ACE_Timer_Node
 		  ACE_Timer_Node *n, 
 		  int timer_id);
   // Constructor.
+
+  ACE_Timer_Node (void);
+  // Default constructor.
 
   ACE_Event_Handler *handler_;
   // Handler to invoke <handle_timeout> on when a timeout occurs.
@@ -182,6 +185,12 @@ protected:
 
   virtual ACE_Timer_Queue_Iterator &iterator (void) = 0;
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
+
+  virtual ACE_Timer_Node *alloc_node (void) = 0;
+  // Factory method that allocates a new node.
+
+  virtual void free_node (ACE_Timer_Node *) = 0;
+  // Factory method that frees a previously allocated node.
 
 #if defined (ACE_MT_SAFE)
   ACE_Recursive_Thread_Mutex lock_; 

@@ -24,11 +24,14 @@ ACE_Timer_Heap_Iterator::next (ACE_Timer_Node *&node,
     }
 }
 
-ACE_Timer_Heap::ACE_Timer_Heap (size_t size)
+ACE_Timer_Heap::ACE_Timer_Heap (size_t size,
+				int preallocate)
   : max_size_ (size),
     cur_size_ (0),
     iterator_ (*this),
-    freelist_ (0)
+    timer_ids_freelist_ (0),
+    preallocated_nodes_ (0),
+    preallocated_nodes_freelist_ (0)
 {
   ACE_TRACE ("ACE_Timer_Heap::ACE_Timer_Heap");
 
@@ -43,6 +46,24 @@ ACE_Timer_Heap::ACE_Timer_Heap (size_t size)
   // array.
   for (int i = 0; i < size; i++)
     this->timer_ids_[i] = -(i + 1);
+
+  if (preallocate)
+    {
+      ACE_NEW (this->preallocated_nodes_,
+	       ACE_Timer_Node[size]);
+      
+      // Form the freelist by linking the next_ pointers together.
+      for (int j = 1; j < size; j++)
+	this->preallocated_nodes_[j - 1].next_ = 
+	  &this->preallocated_nodes_[j];
+
+      // NULL-terminate the freelist.
+      this->preallocated_nodes_[size - 1].next_ = 0;
+
+      // Assign the freelist pointer to the front of the list.
+      this->preallocated_nodes_freelist_ = 
+	&this->preallocated_nodes_[0];
+    }
 }
 
 ACE_Timer_Heap::~ACE_Timer_Heap (void)
@@ -50,6 +71,7 @@ ACE_Timer_Heap::~ACE_Timer_Heap (void)
   ACE_TRACE ("ACE_Timer_Heap::~ACE_Timer_Heap");
   delete [] this->heap_;
   delete [] this->timer_ids_;
+  delete [] this->preallocated_nodes_;
 }
 
 int
@@ -57,10 +79,10 @@ ACE_Timer_Heap::pop_freelist (void)
 {
   ACE_TRACE ("ACE_Timer_Heap::pop_freelist");
 
-  int new_id = this->freelist_;
+  int new_id = this->timer_ids_freelist_;
   // The freelist values in the <timer_ids_> are negative, so we need
   // to negate them to get the next freelist "pointer."
-  this->freelist_ = -this->timer_ids_[this->freelist_];
+  this->timer_ids_freelist_ = -this->timer_ids_[this->timer_ids_freelist_];
   return new_id;
 }
 
@@ -71,8 +93,8 @@ ACE_Timer_Heap::push_freelist (int old_id)
 
   // The freelist values in the <timer_ids_> are negative, so we need
   // to negate them to get the next freelist "pointer."
-  this->timer_ids_[old_id] = -this->freelist_;
-  this->freelist_ = old_id;
+  this->timer_ids_[old_id] = -this->timer_ids_freelist_;
+  this->timer_ids_freelist_ = old_id;
 }
 
 int
@@ -272,6 +294,40 @@ ACE_Timer_Heap::reschedule (ACE_Timer_Node *expired)
   this->insert (expired);
 }
 
+ACE_Timer_Node *
+ACE_Timer_Heap::alloc_node (void)
+{
+  ACE_Timer_Node *temp;
+
+  // Only allocate a node if we are *not* using the preallocated heap.
+  if (this->preallocated_nodes_ == 0)
+    ACE_NEW_RETURN (temp,
+		    ACE_Timer_Node,
+		    -1);
+  else
+    {
+      temp = this->preallocated_nodes_freelist_;
+
+      // Remove the element from the freelist.
+      this->preallocated_nodes_freelist_ = 
+	this->preallocated_nodes_freelist_->next_;
+    }
+  return temp;
+}
+
+void
+ACE_Timer_Heap::free_node (ACE_Timer_Node *node)
+{
+  // Only free up a node if we are *not* using the preallocated heap.
+  if (this->preallocated_nodes_ == 0)
+    delete node;
+  else
+    {
+      node->next_ = this->preallocated_nodes_freelist_;
+      this->preallocated_nodes_freelist_ = node;
+    }
+}
+
 // Insert a new handler that expires at time future_time; if interval
 // is > 0, the handler will be reinvoked periodically.
 
@@ -285,30 +341,30 @@ ACE_Timer_Heap::schedule (ACE_Event_Handler *handler,
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  int timer_id = -1;
-
   if (this->cur_size_ < this->max_size_)
     {
       // Obtain the next unique sequence number.
-      timer_id = this->timer_id ();
+      int timer_id = this->timer_id ();
 
-      ACE_Timer_Node *temp;
+      // Obtain the memory to the new node.
+      ACE_Timer_Node *temp = this->alloc_node ();
 
-      ACE_NEW_RETURN (temp,
-                      ACE_Timer_Node (handler, 
-                                      arg, 
-                                      future_time,
-                                      interval, 
-                                      0,
-                                      timer_id),
-                      -1);
-      
-      this->insert (temp);
+      if (temp)
+	{
+	  // Use operator placement new.
+	  new (temp) ACE_Timer_Node (handler, 
+				     arg, 
+				     future_time,
+				     interval, 
+				     0,
+				     timer_id);
+	  this->insert (temp);
+	  return timer_id;
+	}
     }
-  else
-    errno = ENOMEM;
-
-  return timer_id;
+  // Failure return.
+  errno = ENOMEM;
+  return -1;
 }
 
 // Locate and remove the single <ACE_Event_Handler> with a value of
@@ -337,7 +393,7 @@ ACE_Timer_Heap::cancel (int timer_id,
       if (arg != 0)
         *arg = temp->arg_;
 
-      delete temp;
+      this->free_node (temp);
       return 1;
     }
 }
@@ -361,7 +417,7 @@ ACE_Timer_Heap::cancel (ACE_Event_Handler *handler)
       if (this->heap_[i]->handler_ == handler)
         {
           ACE_Timer_Node *temp = this->remove (i);
-          delete temp;
+          this->free_node (temp);
           number_of_cancellations++;
         }
       else

@@ -48,7 +48,7 @@ protected:
 
 class ACE_Export ACE_Timer_List : public ACE_Timer_Queue
   // = TITLE 
-  //      Provides an interface to timers.
+  //      Provides a simple implementation of timers.
   //
   // = DESCRIPTION
   //      This implementation uses a linked list of absolute times.
@@ -61,7 +61,9 @@ class ACE_Export ACE_Timer_List : public ACE_Timer_Queue
   //      More clever implementations could use a delta-list, a heap,
   //      or timing wheels, etc.  For instance, <ACE_Timer_Heap>
   //      is a subclass of <ACE_Timer_List> that implements a
-  //      heap-based callout queue.
+  //      heap-based callout queue.  For most applications, the
+  //      <ACE_Timer_Heap> will perform substantially faster than the
+  //      <ACE_Timer_List>.
 {
   friend class ACE_Timer_List_Iterator;
 public: 
@@ -111,6 +113,14 @@ public:
 
   virtual void dump (void) const;
   // Dump the state of an object.
+
+protected:
+  virtual ACE_Timer_Node *alloc_node (void);
+  // Factory method that allocates a new node (uses operator new).
+
+  virtual void free_node (ACE_Timer_Node *);
+  // Factory method that frees a previously allocated node (uses
+  // operator delete).
 
 private:
   int timer_id (void);

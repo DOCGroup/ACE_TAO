@@ -126,8 +126,4 @@ private:
   void operator= (const Peer_Router &) {}
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Peer_Router.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
 #endif /* _PEER_ROUTER_H */

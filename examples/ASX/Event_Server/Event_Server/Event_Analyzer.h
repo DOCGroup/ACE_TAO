@@ -9,7 +9,7 @@
 #include "ace/Task.h"
 #include "ace/Synch.h"
 
-class Event_Analyzer : public ACE_Task<ACE_MT_SYNCH>
+class Event_Analyzer : public ACE_Task<ACE_SYNCH>
   // = TITLE
   //     This is a "no-op" class that just forwards all its message
   //     blocks onto its neighboring Module in the Stream.  In a real
