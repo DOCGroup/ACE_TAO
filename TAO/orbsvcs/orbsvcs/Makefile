@@ -68,7 +68,7 @@ ifndef TAO_ORBSVCS
 
     # The Load Balancer requires POA ServantLocator support, which
     # Minimum CORBA disables.
-    TAO_ORBSVCS += LoadBalancing
+    TAO_ORBSVCS += CosLoadBalancing
 
     # The PortableGroup library requires several methods on the POA,
     # which are disabled by Minimum CORBA.
@@ -95,8 +95,11 @@ endif
 ifneq (,$(findstring  Time, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosTime
 endif
-ifneq (,$(findstring  LoadBalancing, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.CosNaming Makefile.PortableGroup Makefile.LoadBalancing
+ifneq (,$(findstring  CosLoadBalancing, $(TAO_ORBSVCS)))
+  MKLIST += \
+	Makefile.CosNaming \
+	Makefile.PortableGroup \
+	Makefile.CosLoadBalancing
 endif
 ifneq (,$(findstring  Concurrency, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosConcurrency

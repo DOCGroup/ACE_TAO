@@ -38,7 +38,7 @@ TAO_LB_ORBInitializer::pre_init (
     {
       obj = info->resolve_initial_references ("RootPOA"
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::ORB::InvalidName, ex)
     {
