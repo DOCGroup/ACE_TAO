@@ -1,3 +1,13 @@
+Thu Oct 31 10:52:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+
+          Added checks for successful opening of an ACE_Configuration 
+          section so that subsequent iteration of values or subsections
+          (which will fail) can be skipped. Thanks to Nick Cross 
+          <nick.cross@prismtechnologies.com> for reporting the bug.
+
 Thu Oct 31 10:50:16 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * tao/ValueBase.h:
