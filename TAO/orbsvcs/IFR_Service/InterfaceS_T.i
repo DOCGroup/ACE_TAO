@@ -225,7 +225,7 @@ IR::Contained::Description * POA_IR::Contained_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::Contained_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -365,7 +365,7 @@ IR::Contained_ptr POA_IR::Container_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::Container_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -384,7 +384,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::Container_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -403,7 +403,7 @@ IR::ContainedSeq * POA_IR::Container_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::Container_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -444,7 +444,7 @@ IR::ConstantDef_ptr POA_IR::Container_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -467,7 +467,7 @@ IR::StructDef_ptr POA_IR::Container_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -488,8 +488,8 @@ IR::UnionDef_ptr POA_IR::Container_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -511,7 +511,7 @@ IR::EnumDef_ptr POA_IR::Container_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -532,7 +532,7 @@ IR::AliasDef_ptr POA_IR::Container_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -553,7 +553,7 @@ IR::InterfaceDef_ptr POA_IR::Container_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -580,11 +580,11 @@ IR::ValueDef_ptr POA_IR::Container_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -611,7 +611,7 @@ IR::ValueBoxDef_ptr POA_IR::Container_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -632,7 +632,7 @@ IR::ExceptionDef_ptr POA_IR::Container_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -924,7 +924,7 @@ CORBA::TypeCode_ptr POA_IR::Repository_tie<T>::get_canonical_typecode  (
 
 template <class T> ACE_INLINE
 IR::PrimitiveDef_ptr POA_IR::Repository_tie<T>::get_primitive  (
-    IR::PrimitiveKind kind,
+    IR_PrimitiveKind kind,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -970,7 +970,7 @@ IR::WstringDef_ptr POA_IR::Repository_tie<T>::create_wstring  (
 template <class T> ACE_INLINE
 IR::SequenceDef_ptr POA_IR::Repository_tie<T>::create_sequence  (
     CORBA::ULong bound,
-    IR::IDLType_ptr element_type,
+    IR_IDLType_ptr element_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -987,7 +987,7 @@ IR::SequenceDef_ptr POA_IR::Repository_tie<T>::create_sequence  (
 template <class T> ACE_INLINE
 IR::ArrayDef_ptr POA_IR::Repository_tie<T>::create_array  (
     CORBA::ULong length,
-    IR::IDLType_ptr element_type,
+    IR_IDLType_ptr element_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1035,7 +1035,7 @@ IR::Contained_ptr POA_IR::Repository_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::Repository_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1054,7 +1054,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::Repository_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1073,7 +1073,7 @@ IR::ContainedSeq * POA_IR::Repository_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::Repository_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -1114,7 +1114,7 @@ IR::ConstantDef_ptr POA_IR::Repository_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1137,7 +1137,7 @@ IR::StructDef_ptr POA_IR::Repository_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1158,8 +1158,8 @@ IR::UnionDef_ptr POA_IR::Repository_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1181,7 +1181,7 @@ IR::EnumDef_ptr POA_IR::Repository_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1202,7 +1202,7 @@ IR::AliasDef_ptr POA_IR::Repository_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1223,7 +1223,7 @@ IR::InterfaceDef_ptr POA_IR::Repository_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -1250,11 +1250,11 @@ IR::ValueDef_ptr POA_IR::Repository_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1281,7 +1281,7 @@ IR::ValueBoxDef_ptr POA_IR::Repository_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1302,7 +1302,7 @@ IR::ExceptionDef_ptr POA_IR::Repository_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1448,8 +1448,8 @@ IR::ComponentDef_ptr POA_IR::ComponentRepository_tie<T>::create_component  (
     const char * id,
     const char * name,
     const char * version,
-    IR::ComponentDef_ptr base_component,
-    const IR::InterfaceDefSeq & supports_interfaces,
+    IR_ComponentDef_ptr base_component,
+    const IR_InterfaceDefSeq & supports_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1471,9 +1471,9 @@ IR::HomeDef_ptr POA_IR::ComponentRepository_tie<T>::create_home  (
     const char * id,
     const char * name,
     const char * version,
-    IR::HomeDef_ptr base_home,
-    IR::ComponentDef_ptr managed_component,
-    IR::ValueDef_ptr primary_key,
+    IR_HomeDef_ptr base_home,
+    IR_ComponentDef_ptr managed_component,
+    IR_ValueDef_ptr primary_key,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1523,7 +1523,7 @@ CORBA::TypeCode_ptr POA_IR::ComponentRepository_tie<T>::get_canonical_typecode  
 
 template <class T> ACE_INLINE
 IR::PrimitiveDef_ptr POA_IR::ComponentRepository_tie<T>::get_primitive  (
-    IR::PrimitiveKind kind,
+    IR_PrimitiveKind kind,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1569,7 +1569,7 @@ IR::WstringDef_ptr POA_IR::ComponentRepository_tie<T>::create_wstring  (
 template <class T> ACE_INLINE
 IR::SequenceDef_ptr POA_IR::ComponentRepository_tie<T>::create_sequence  (
     CORBA::ULong bound,
-    IR::IDLType_ptr element_type,
+    IR_IDLType_ptr element_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1586,7 +1586,7 @@ IR::SequenceDef_ptr POA_IR::ComponentRepository_tie<T>::create_sequence  (
 template <class T> ACE_INLINE
 IR::ArrayDef_ptr POA_IR::ComponentRepository_tie<T>::create_array  (
     CORBA::ULong length,
-    IR::IDLType_ptr element_type,
+    IR_IDLType_ptr element_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1634,7 +1634,7 @@ IR::Contained_ptr POA_IR::ComponentRepository_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::ComponentRepository_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1653,7 +1653,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::ComponentRepository_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1672,7 +1672,7 @@ IR::ContainedSeq * POA_IR::ComponentRepository_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::ComponentRepository_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -1713,7 +1713,7 @@ IR::ConstantDef_ptr POA_IR::ComponentRepository_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1736,7 +1736,7 @@ IR::StructDef_ptr POA_IR::ComponentRepository_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1757,8 +1757,8 @@ IR::UnionDef_ptr POA_IR::ComponentRepository_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1780,7 +1780,7 @@ IR::EnumDef_ptr POA_IR::ComponentRepository_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1801,7 +1801,7 @@ IR::AliasDef_ptr POA_IR::ComponentRepository_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1822,7 +1822,7 @@ IR::InterfaceDef_ptr POA_IR::ComponentRepository_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -1849,11 +1849,11 @@ IR::ValueDef_ptr POA_IR::ComponentRepository_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1880,7 +1880,7 @@ IR::ValueBoxDef_ptr POA_IR::ComponentRepository_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -1901,7 +1901,7 @@ IR::ExceptionDef_ptr POA_IR::ComponentRepository_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2059,7 +2059,7 @@ IR::Contained_ptr POA_IR::ModuleDef_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::ModuleDef_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2078,7 +2078,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::ModuleDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2097,7 +2097,7 @@ IR::ContainedSeq * POA_IR::ModuleDef_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::ModuleDef_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -2138,7 +2138,7 @@ IR::ConstantDef_ptr POA_IR::ModuleDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2161,7 +2161,7 @@ IR::StructDef_ptr POA_IR::ModuleDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2182,8 +2182,8 @@ IR::UnionDef_ptr POA_IR::ModuleDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2205,7 +2205,7 @@ IR::EnumDef_ptr POA_IR::ModuleDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2226,7 +2226,7 @@ IR::AliasDef_ptr POA_IR::ModuleDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2247,7 +2247,7 @@ IR::InterfaceDef_ptr POA_IR::ModuleDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -2274,11 +2274,11 @@ IR::ValueDef_ptr POA_IR::ModuleDef_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2305,7 +2305,7 @@ IR::ValueBoxDef_ptr POA_IR::ModuleDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2326,7 +2326,7 @@ IR::ExceptionDef_ptr POA_IR::ModuleDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2499,7 +2499,7 @@ IR::Contained::Description * POA_IR::ModuleDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::ModuleDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -2650,7 +2650,7 @@ IR::IDLType_ptr POA_IR::ConstantDef_tie<T>::type_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::ConstantDef_tie<T>::type_def  (
-    IR::IDLType_ptr type_def,
+    IR_IDLType_ptr type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2829,7 +2829,7 @@ IR::Contained::Description * POA_IR::ConstantDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::ConstantDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -3090,7 +3090,7 @@ IR::Contained::Description * POA_IR::TypedefDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::TypedefDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -3241,7 +3241,7 @@ IR::StructMemberSeq * POA_IR::StructDef_tie<T>::members  (
 
 template <class T> ACE_INLINE
 void POA_IR::StructDef_tie<T>::members  (
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3271,7 +3271,7 @@ IR::Contained_ptr POA_IR::StructDef_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::StructDef_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3290,7 +3290,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::StructDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3309,7 +3309,7 @@ IR::ContainedSeq * POA_IR::StructDef_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::StructDef_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -3350,7 +3350,7 @@ IR::ConstantDef_ptr POA_IR::StructDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3373,7 +3373,7 @@ IR::StructDef_ptr POA_IR::StructDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3394,8 +3394,8 @@ IR::UnionDef_ptr POA_IR::StructDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3417,7 +3417,7 @@ IR::EnumDef_ptr POA_IR::StructDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3438,7 +3438,7 @@ IR::AliasDef_ptr POA_IR::StructDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3459,7 +3459,7 @@ IR::InterfaceDef_ptr POA_IR::StructDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -3486,11 +3486,11 @@ IR::ValueDef_ptr POA_IR::StructDef_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3517,7 +3517,7 @@ IR::ValueBoxDef_ptr POA_IR::StructDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3538,7 +3538,7 @@ IR::ExceptionDef_ptr POA_IR::StructDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3711,7 +3711,7 @@ IR::Contained::Description * POA_IR::StructDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::StructDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -3875,7 +3875,7 @@ IR::IDLType_ptr POA_IR::UnionDef_tie<T>::discriminator_type_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::UnionDef_tie<T>::discriminator_type_def  (
-    IR::IDLType_ptr discriminator_type_def,
+    IR_IDLType_ptr discriminator_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3903,7 +3903,7 @@ IR::UnionMemberSeq * POA_IR::UnionDef_tie<T>::members  (
 
 template <class T> ACE_INLINE
 void POA_IR::UnionDef_tie<T>::members  (
-    const IR::UnionMemberSeq & members,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3933,7 +3933,7 @@ IR::Contained_ptr POA_IR::UnionDef_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::UnionDef_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3952,7 +3952,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::UnionDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3971,7 +3971,7 @@ IR::ContainedSeq * POA_IR::UnionDef_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::UnionDef_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -4012,7 +4012,7 @@ IR::ConstantDef_ptr POA_IR::UnionDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -4035,7 +4035,7 @@ IR::StructDef_ptr POA_IR::UnionDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -4056,8 +4056,8 @@ IR::UnionDef_ptr POA_IR::UnionDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -4079,7 +4079,7 @@ IR::EnumDef_ptr POA_IR::UnionDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -4100,7 +4100,7 @@ IR::AliasDef_ptr POA_IR::UnionDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -4121,7 +4121,7 @@ IR::InterfaceDef_ptr POA_IR::UnionDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -4148,11 +4148,11 @@ IR::ValueDef_ptr POA_IR::UnionDef_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -4179,7 +4179,7 @@ IR::ValueBoxDef_ptr POA_IR::UnionDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -4200,7 +4200,7 @@ IR::ExceptionDef_ptr POA_IR::UnionDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -4373,7 +4373,7 @@ IR::Contained::Description * POA_IR::UnionDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::UnionDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -4524,7 +4524,7 @@ IR::EnumMemberSeq * POA_IR::EnumDef_tie<T>::members  (
 
 template <class T> ACE_INLINE
 void POA_IR::EnumDef_tie<T>::members  (
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -4675,7 +4675,7 @@ IR::Contained::Description * POA_IR::EnumDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::EnumDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -4826,7 +4826,7 @@ IR::IDLType_ptr POA_IR::AliasDef_tie<T>::original_type_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::AliasDef_tie<T>::original_type_def  (
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -4977,7 +4977,7 @@ IR::Contained::Description * POA_IR::AliasDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::AliasDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -5251,7 +5251,7 @@ IR::Contained::Description * POA_IR::NativeDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::NativeDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -6044,7 +6044,7 @@ IR::IDLType_ptr POA_IR::SequenceDef_tie<T>::element_type_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::SequenceDef_tie<T>::element_type_def  (
-    IR::IDLType_ptr element_type_def,
+    IR_IDLType_ptr element_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6232,7 +6232,7 @@ IR::IDLType_ptr POA_IR::ArrayDef_tie<T>::element_type_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::ArrayDef_tie<T>::element_type_def  (
-    IR::IDLType_ptr element_type_def,
+    IR_IDLType_ptr element_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6392,7 +6392,7 @@ IR::StructMemberSeq * POA_IR::ExceptionDef_tie<T>::members  (
 
 template <class T> ACE_INLINE
 void POA_IR::ExceptionDef_tie<T>::members  (
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6543,7 +6543,7 @@ IR::Contained::Description * POA_IR::ExceptionDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::ExceptionDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -6577,7 +6577,7 @@ IR::Contained_ptr POA_IR::ExceptionDef_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::ExceptionDef_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -6596,7 +6596,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::ExceptionDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -6615,7 +6615,7 @@ IR::ContainedSeq * POA_IR::ExceptionDef_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::ExceptionDef_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -6656,7 +6656,7 @@ IR::ConstantDef_ptr POA_IR::ExceptionDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -6679,7 +6679,7 @@ IR::StructDef_ptr POA_IR::ExceptionDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6700,8 +6700,8 @@ IR::UnionDef_ptr POA_IR::ExceptionDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6723,7 +6723,7 @@ IR::EnumDef_ptr POA_IR::ExceptionDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6744,7 +6744,7 @@ IR::AliasDef_ptr POA_IR::ExceptionDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6765,7 +6765,7 @@ IR::InterfaceDef_ptr POA_IR::ExceptionDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -6792,11 +6792,11 @@ IR::ValueDef_ptr POA_IR::ExceptionDef_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6823,7 +6823,7 @@ IR::ValueBoxDef_ptr POA_IR::ExceptionDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6844,7 +6844,7 @@ IR::ExceptionDef_ptr POA_IR::ExceptionDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7013,7 +7013,7 @@ IR::IDLType_ptr POA_IR::AttributeDef_tie<T>::type_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::AttributeDef_tie<T>::type_def  (
-    IR::IDLType_ptr type_def,
+    IR_IDLType_ptr type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7041,7 +7041,7 @@ IR::AttributeMode POA_IR::AttributeDef_tie<T>::mode  (
 
 template <class T> ACE_INLINE
 void POA_IR::AttributeDef_tie<T>::mode  (
-    IR::AttributeMode mode,
+    IR_AttributeMode mode,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7192,7 +7192,7 @@ IR::Contained::Description * POA_IR::AttributeDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::AttributeDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -7343,7 +7343,7 @@ IR::IDLType_ptr POA_IR::OperationDef_tie<T>::result_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::OperationDef_tie<T>::result_def  (
-    IR::IDLType_ptr result_def,
+    IR_IDLType_ptr result_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7371,7 +7371,7 @@ IR::ParDescriptionSeq * POA_IR::OperationDef_tie<T>::params  (
 
 template <class T> ACE_INLINE
 void POA_IR::OperationDef_tie<T>::params  (
-    const IR::ParDescriptionSeq & params,
+    const IR_ParDescriptionSeq & params,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7399,7 +7399,7 @@ IR::OperationMode POA_IR::OperationDef_tie<T>::mode  (
 
 template <class T> ACE_INLINE
 void POA_IR::OperationDef_tie<T>::mode  (
-    IR::OperationMode mode,
+    IR_OperationMode mode,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7427,7 +7427,7 @@ IR::ContextIdSeq * POA_IR::OperationDef_tie<T>::contexts  (
 
 template <class T> ACE_INLINE
 void POA_IR::OperationDef_tie<T>::contexts  (
-    const IR::ContextIdSeq & contexts,
+    const IR_ContextIdSeq & contexts,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7455,7 +7455,7 @@ IR::ExceptionDefSeq * POA_IR::OperationDef_tie<T>::exceptions  (
 
 template <class T> ACE_INLINE
 void POA_IR::OperationDef_tie<T>::exceptions  (
-    const IR::ExceptionDefSeq & exceptions,
+    const IR_ExceptionDefSeq & exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7606,7 +7606,7 @@ IR::Contained::Description * POA_IR::OperationDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::OperationDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -7744,7 +7744,7 @@ IR::InterfaceDefSeq * POA_IR::InterfaceDef_tie<T>::base_interfaces  (
 
 template <class T> ACE_INLINE
 void POA_IR::InterfaceDef_tie<T>::base_interfaces  (
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7833,10 +7833,10 @@ IR::AttributeDef_ptr POA_IR::InterfaceDef_tie<T>::create_attribute  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
-    IR::AttributeMode mode,
-    const IR::ExceptionDefSeq & get_exceptions,
-    const IR::ExceptionDefSeq & put_exceptions,
+    IR_IDLType_ptr type,
+    IR_AttributeMode mode,
+    const IR_ExceptionDefSeq & get_exceptions,
+    const IR_ExceptionDefSeq & put_exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7860,11 +7860,11 @@ IR::OperationDef_ptr POA_IR::InterfaceDef_tie<T>::create_operation  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr result,
-    IR::OperationMode mode,
-    const IR::ParDescriptionSeq & params,
-    const IR::ExceptionDefSeq & exceptions,
-    const IR::ContextIdSeq & contexts,
+    IR_IDLType_ptr result,
+    IR_OperationMode mode,
+    const IR_ParDescriptionSeq & params,
+    const IR_ExceptionDefSeq & exceptions,
+    const IR_ContextIdSeq & contexts,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7901,7 +7901,7 @@ IR::Contained_ptr POA_IR::InterfaceDef_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::InterfaceDef_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -7920,7 +7920,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::InterfaceDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -7939,7 +7939,7 @@ IR::ContainedSeq * POA_IR::InterfaceDef_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::InterfaceDef_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -7980,7 +7980,7 @@ IR::ConstantDef_ptr POA_IR::InterfaceDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -8003,7 +8003,7 @@ IR::StructDef_ptr POA_IR::InterfaceDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8024,8 +8024,8 @@ IR::UnionDef_ptr POA_IR::InterfaceDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8047,7 +8047,7 @@ IR::EnumDef_ptr POA_IR::InterfaceDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8068,7 +8068,7 @@ IR::AliasDef_ptr POA_IR::InterfaceDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8089,7 +8089,7 @@ IR::InterfaceDef_ptr POA_IR::InterfaceDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -8116,11 +8116,11 @@ IR::ValueDef_ptr POA_IR::InterfaceDef_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8147,7 +8147,7 @@ IR::ValueBoxDef_ptr POA_IR::InterfaceDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8168,7 +8168,7 @@ IR::ExceptionDef_ptr POA_IR::InterfaceDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8341,7 +8341,7 @@ IR::Contained::Description * POA_IR::InterfaceDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::InterfaceDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -8505,7 +8505,7 @@ IR::IDLType_ptr POA_IR::ValueMemberDef_tie<T>::type_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::ValueMemberDef_tie<T>::type_def  (
-    IR::IDLType_ptr type_def,
+    IR_IDLType_ptr type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8684,7 +8684,7 @@ IR::Contained::Description * POA_IR::ValueMemberDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::ValueMemberDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -8822,7 +8822,7 @@ IR::InterfaceDefSeq * POA_IR::ValueDef_tie<T>::supported_interfaces  (
 
 template <class T> ACE_INLINE
 void POA_IR::ValueDef_tie<T>::supported_interfaces  (
-    const IR::InterfaceDefSeq & supported_interfaces,
+    const IR_InterfaceDefSeq & supported_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8850,7 +8850,7 @@ IR::InitializerSeq * POA_IR::ValueDef_tie<T>::initializers  (
 
 template <class T> ACE_INLINE
 void POA_IR::ValueDef_tie<T>::initializers  (
-    const IR::InitializerSeq & initializers,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8878,7 +8878,7 @@ IR::ValueDef_ptr POA_IR::ValueDef_tie<T>::base_value  (
 
 template <class T> ACE_INLINE
 void POA_IR::ValueDef_tie<T>::base_value  (
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -8906,7 +8906,7 @@ IR::ValueDefSeq * POA_IR::ValueDef_tie<T>::abstract_base_values  (
 
 template <class T> ACE_INLINE
 void POA_IR::ValueDef_tie<T>::abstract_base_values  (
-    const IR::ValueDefSeq & abstract_base_values,
+    const IR_ValueDefSeq & abstract_base_values,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9023,7 +9023,7 @@ IR::ValueMemberDef_ptr POA_IR::ValueDef_tie<T>::create_value_member  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     CORBA::Visibility access,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -9046,10 +9046,10 @@ IR::AttributeDef_ptr POA_IR::ValueDef_tie<T>::create_attribute  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
-    IR::AttributeMode mode,
-    const IR::ExceptionDefSeq & get_exceptions,
-    const IR::ExceptionDefSeq & put_exceptions,
+    IR_IDLType_ptr type,
+    IR_AttributeMode mode,
+    const IR_ExceptionDefSeq & get_exceptions,
+    const IR_ExceptionDefSeq & put_exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9073,11 +9073,11 @@ IR::OperationDef_ptr POA_IR::ValueDef_tie<T>::create_operation  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr result,
-    IR::OperationMode mode,
-    const IR::ParDescriptionSeq & params,
-    const IR::ExceptionDefSeq & exceptions,
-    const IR::ContextIdSeq & contexts,
+    IR_IDLType_ptr result,
+    IR_OperationMode mode,
+    const IR_ParDescriptionSeq & params,
+    const IR_ExceptionDefSeq & exceptions,
+    const IR_ContextIdSeq & contexts,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9114,7 +9114,7 @@ IR::Contained_ptr POA_IR::ValueDef_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::ValueDef_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -9133,7 +9133,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::ValueDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -9152,7 +9152,7 @@ IR::ContainedSeq * POA_IR::ValueDef_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::ValueDef_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -9193,7 +9193,7 @@ IR::ConstantDef_ptr POA_IR::ValueDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -9216,7 +9216,7 @@ IR::StructDef_ptr POA_IR::ValueDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9237,8 +9237,8 @@ IR::UnionDef_ptr POA_IR::ValueDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9260,7 +9260,7 @@ IR::EnumDef_ptr POA_IR::ValueDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9281,7 +9281,7 @@ IR::AliasDef_ptr POA_IR::ValueDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9302,7 +9302,7 @@ IR::InterfaceDef_ptr POA_IR::ValueDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -9329,11 +9329,11 @@ IR::ValueDef_ptr POA_IR::ValueDef_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9360,7 +9360,7 @@ IR::ValueBoxDef_ptr POA_IR::ValueDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9381,7 +9381,7 @@ IR::ExceptionDef_ptr POA_IR::ValueDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9554,7 +9554,7 @@ IR::Contained::Description * POA_IR::ValueDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::ValueDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -9705,7 +9705,7 @@ IR::IDLType_ptr POA_IR::ValueBoxDef_tie<T>::original_type_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::ValueBoxDef_tie<T>::original_type_def  (
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -9856,7 +9856,7 @@ IR::Contained::Description * POA_IR::ValueBoxDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::ValueBoxDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -10143,7 +10143,7 @@ IR::Contained::Description * POA_IR::ProvidesDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::ProvidesDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -10430,7 +10430,7 @@ IR::Contained::Description * POA_IR::UsesDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::UsesDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -10719,7 +10719,7 @@ IR::Contained::Description * POA_IR::EventDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::EventDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -11008,7 +11008,7 @@ IR::Contained::Description * POA_IR::EmitsDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::EmitsDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -11297,7 +11297,7 @@ IR::Contained::Description * POA_IR::PublishesDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::PublishesDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -11586,7 +11586,7 @@ IR::Contained::Description * POA_IR::ConsumesDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::ConsumesDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -11724,7 +11724,7 @@ IR::InterfaceDefSeq * POA_IR::ComponentDef_tie<T>::supported_interfaces  (
 
 template <class T> ACE_INLINE
 void POA_IR::ComponentDef_tie<T>::supported_interfaces  (
-    const IR::InterfaceDefSeq & supported_interfaces,
+    const IR_InterfaceDefSeq & supported_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11833,7 +11833,7 @@ IR::ProvidesDef_ptr POA_IR::ComponentDef_tie<T>::create_provides  (
     const char * id,
     const char * name,
     const char * version,
-    IR::InterfaceDef_ptr interface_type,
+    IR_InterfaceDef_ptr interface_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11854,7 +11854,7 @@ IR::UsesDef_ptr POA_IR::ComponentDef_tie<T>::create_uses  (
     const char * id,
     const char * name,
     const char * version,
-    IR::InterfaceDef_ptr interface_type,
+    IR_InterfaceDef_ptr interface_type,
     CORBA::Boolean is_multiple,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -11877,7 +11877,7 @@ IR::EmitsDef_ptr POA_IR::ComponentDef_tie<T>::create_emits  (
     const char * id,
     const char * name,
     const char * version,
-    IR::ValueDef_ptr value,
+    IR_ValueDef_ptr value,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11898,7 +11898,7 @@ IR::PublishesDef_ptr POA_IR::ComponentDef_tie<T>::create_publishes  (
     const char * id,
     const char * name,
     const char * version,
-    IR::ValueDef_ptr value,
+    IR_ValueDef_ptr value,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11919,7 +11919,7 @@ IR::ConsumesDef_ptr POA_IR::ComponentDef_tie<T>::create_consumes  (
     const char * id,
     const char * name,
     const char * version,
-    IR::ValueDef_ptr value,
+    IR_ValueDef_ptr value,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11950,7 +11950,7 @@ IR::InterfaceDefSeq * POA_IR::ComponentDef_tie<T>::base_interfaces  (
 
 template <class T> ACE_INLINE
 void POA_IR::ComponentDef_tie<T>::base_interfaces  (
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12039,10 +12039,10 @@ IR::AttributeDef_ptr POA_IR::ComponentDef_tie<T>::create_attribute  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
-    IR::AttributeMode mode,
-    const IR::ExceptionDefSeq & get_exceptions,
-    const IR::ExceptionDefSeq & put_exceptions,
+    IR_IDLType_ptr type,
+    IR_AttributeMode mode,
+    const IR_ExceptionDefSeq & get_exceptions,
+    const IR_ExceptionDefSeq & put_exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12066,11 +12066,11 @@ IR::OperationDef_ptr POA_IR::ComponentDef_tie<T>::create_operation  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr result,
-    IR::OperationMode mode,
-    const IR::ParDescriptionSeq & params,
-    const IR::ExceptionDefSeq & exceptions,
-    const IR::ContextIdSeq & contexts,
+    IR_IDLType_ptr result,
+    IR_OperationMode mode,
+    const IR_ParDescriptionSeq & params,
+    const IR_ExceptionDefSeq & exceptions,
+    const IR_ContextIdSeq & contexts,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12107,7 +12107,7 @@ IR::Contained_ptr POA_IR::ComponentDef_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::ComponentDef_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -12126,7 +12126,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::ComponentDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -12145,7 +12145,7 @@ IR::ContainedSeq * POA_IR::ComponentDef_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::ComponentDef_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -12186,7 +12186,7 @@ IR::ConstantDef_ptr POA_IR::ComponentDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -12209,7 +12209,7 @@ IR::StructDef_ptr POA_IR::ComponentDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12230,8 +12230,8 @@ IR::UnionDef_ptr POA_IR::ComponentDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12253,7 +12253,7 @@ IR::EnumDef_ptr POA_IR::ComponentDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12274,7 +12274,7 @@ IR::AliasDef_ptr POA_IR::ComponentDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12295,7 +12295,7 @@ IR::InterfaceDef_ptr POA_IR::ComponentDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -12322,11 +12322,11 @@ IR::ValueDef_ptr POA_IR::ComponentDef_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12353,7 +12353,7 @@ IR::ValueBoxDef_ptr POA_IR::ComponentDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12374,7 +12374,7 @@ IR::ExceptionDef_ptr POA_IR::ComponentDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12547,7 +12547,7 @@ IR::Contained::Description * POA_IR::ComponentDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::ComponentDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -12849,7 +12849,7 @@ IR::Contained::Description * POA_IR::PrimaryKeyDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::PrimaryKeyDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -13000,7 +13000,7 @@ IR::IDLType_ptr POA_IR::FactoryDef_tie<T>::result_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::FactoryDef_tie<T>::result_def  (
-    IR::IDLType_ptr result_def,
+    IR_IDLType_ptr result_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13028,7 +13028,7 @@ IR::ParDescriptionSeq * POA_IR::FactoryDef_tie<T>::params  (
 
 template <class T> ACE_INLINE
 void POA_IR::FactoryDef_tie<T>::params  (
-    const IR::ParDescriptionSeq & params,
+    const IR_ParDescriptionSeq & params,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13056,7 +13056,7 @@ IR::OperationMode POA_IR::FactoryDef_tie<T>::mode  (
 
 template <class T> ACE_INLINE
 void POA_IR::FactoryDef_tie<T>::mode  (
-    IR::OperationMode mode,
+    IR_OperationMode mode,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13084,7 +13084,7 @@ IR::ContextIdSeq * POA_IR::FactoryDef_tie<T>::contexts  (
 
 template <class T> ACE_INLINE
 void POA_IR::FactoryDef_tie<T>::contexts  (
-    const IR::ContextIdSeq & contexts,
+    const IR_ContextIdSeq & contexts,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13112,7 +13112,7 @@ IR::ExceptionDefSeq * POA_IR::FactoryDef_tie<T>::exceptions  (
 
 template <class T> ACE_INLINE
 void POA_IR::FactoryDef_tie<T>::exceptions  (
-    const IR::ExceptionDefSeq & exceptions,
+    const IR_ExceptionDefSeq & exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13263,7 +13263,7 @@ IR::Contained::Description * POA_IR::FactoryDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::FactoryDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -13414,7 +13414,7 @@ IR::IDLType_ptr POA_IR::FinderDef_tie<T>::result_def  (
 
 template <class T> ACE_INLINE
 void POA_IR::FinderDef_tie<T>::result_def  (
-    IR::IDLType_ptr result_def,
+    IR_IDLType_ptr result_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13442,7 +13442,7 @@ IR::ParDescriptionSeq * POA_IR::FinderDef_tie<T>::params  (
 
 template <class T> ACE_INLINE
 void POA_IR::FinderDef_tie<T>::params  (
-    const IR::ParDescriptionSeq & params,
+    const IR_ParDescriptionSeq & params,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13470,7 +13470,7 @@ IR::OperationMode POA_IR::FinderDef_tie<T>::mode  (
 
 template <class T> ACE_INLINE
 void POA_IR::FinderDef_tie<T>::mode  (
-    IR::OperationMode mode,
+    IR_OperationMode mode,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13498,7 +13498,7 @@ IR::ContextIdSeq * POA_IR::FinderDef_tie<T>::contexts  (
 
 template <class T> ACE_INLINE
 void POA_IR::FinderDef_tie<T>::contexts  (
-    const IR::ContextIdSeq & contexts,
+    const IR_ContextIdSeq & contexts,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13526,7 +13526,7 @@ IR::ExceptionDefSeq * POA_IR::FinderDef_tie<T>::exceptions  (
 
 template <class T> ACE_INLINE
 void POA_IR::FinderDef_tie<T>::exceptions  (
-    const IR::ExceptionDefSeq & exceptions,
+    const IR_ExceptionDefSeq & exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13677,7 +13677,7 @@ IR::Contained::Description * POA_IR::FinderDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::FinderDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV
@@ -13883,7 +13883,7 @@ IR::PrimaryKeyDef_ptr POA_IR::HomeDef_tie<T>::create_primary_key  (
     const char * id,
     const char * name,
     const char * version,
-    IR::ValueDef_ptr primary_key,
+    IR_ValueDef_ptr primary_key,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13904,8 +13904,8 @@ IR::FactoryDef_ptr POA_IR::HomeDef_tie<T>::create_factory  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::ParDescriptionSeq & params,
-    const IR::ExceptionDefSeq & exceptions,
+    const IR_ParDescriptionSeq & params,
+    const IR_ExceptionDefSeq & exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13927,8 +13927,8 @@ IR::FinderDef_ptr POA_IR::HomeDef_tie<T>::create_finder  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::ParDescriptionSeq & params,
-    const IR::ExceptionDefSeq & exceptions,
+    const IR_ParDescriptionSeq & params,
+    const IR_ExceptionDefSeq & exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -13960,7 +13960,7 @@ IR::InterfaceDefSeq * POA_IR::HomeDef_tie<T>::base_interfaces  (
 
 template <class T> ACE_INLINE
 void POA_IR::HomeDef_tie<T>::base_interfaces  (
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -14049,10 +14049,10 @@ IR::AttributeDef_ptr POA_IR::HomeDef_tie<T>::create_attribute  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
-    IR::AttributeMode mode,
-    const IR::ExceptionDefSeq & get_exceptions,
-    const IR::ExceptionDefSeq & put_exceptions,
+    IR_IDLType_ptr type,
+    IR_AttributeMode mode,
+    const IR_ExceptionDefSeq & get_exceptions,
+    const IR_ExceptionDefSeq & put_exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -14076,11 +14076,11 @@ IR::OperationDef_ptr POA_IR::HomeDef_tie<T>::create_operation  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr result,
-    IR::OperationMode mode,
-    const IR::ParDescriptionSeq & params,
-    const IR::ExceptionDefSeq & exceptions,
-    const IR::ContextIdSeq & contexts,
+    IR_IDLType_ptr result,
+    IR_OperationMode mode,
+    const IR_ParDescriptionSeq & params,
+    const IR_ExceptionDefSeq & exceptions,
+    const IR_ContextIdSeq & contexts,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -14117,7 +14117,7 @@ IR::Contained_ptr POA_IR::HomeDef_tie<T>::lookup  (
 
 template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::HomeDef_tie<T>::contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -14136,7 +14136,7 @@ template <class T> ACE_INLINE
 IR::ContainedSeq * POA_IR::HomeDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -14155,7 +14155,7 @@ IR::ContainedSeq * POA_IR::HomeDef_tie<T>::lookup_name  (
 
 template <class T> ACE_INLINE
 IR::Container::DescriptionSeq * POA_IR::HomeDef_tie<T>::describe_contents  (
-    IR::DefinitionKind limit_type,
+    IR_DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
     CORBA::Environment &ACE_TRY_ENV
@@ -14196,7 +14196,7 @@ IR::ConstantDef_ptr POA_IR::HomeDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr type,
+    IR_IDLType_ptr type,
     const CORBA::Any & value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -14219,7 +14219,7 @@ IR::StructDef_ptr POA_IR::HomeDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -14240,8 +14240,8 @@ IR::UnionDef_ptr POA_IR::HomeDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr discriminator_type,
-    const IR::UnionMemberSeq & members,
+    IR_IDLType_ptr discriminator_type,
+    const IR_UnionMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -14263,7 +14263,7 @@ IR::EnumDef_ptr POA_IR::HomeDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::EnumMemberSeq & members,
+    const IR_EnumMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -14284,7 +14284,7 @@ IR::AliasDef_ptr POA_IR::HomeDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type,
+    IR_IDLType_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -14305,7 +14305,7 @@ IR::InterfaceDef_ptr POA_IR::HomeDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::InterfaceDefSeq & base_interfaces,
+    const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
     CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
@@ -14332,11 +14332,11 @@ IR::ValueDef_ptr POA_IR::HomeDef_tie<T>::create_value  (
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    IR::ValueDef_ptr base_value,
+    IR_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const IR::ValueDefSeq & abstract_base_values,
-    const IR::InterfaceDefSeq & supported_interfaces,
-    const IR::InitializerSeq & initializers,
+    const IR_ValueDefSeq & abstract_base_values,
+    const IR_InterfaceDefSeq & supported_interfaces,
+    const IR_InitializerSeq & initializers,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -14363,7 +14363,7 @@ IR::ValueBoxDef_ptr POA_IR::HomeDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
-    IR::IDLType_ptr original_type_def,
+    IR_IDLType_ptr original_type_def,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -14384,7 +14384,7 @@ IR::ExceptionDef_ptr POA_IR::HomeDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
-    const IR::StructMemberSeq & members,
+    const IR_StructMemberSeq & members,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -14557,7 +14557,7 @@ IR::Contained::Description * POA_IR::HomeDef_tie<T>::describe  (
 
 template <class T> ACE_INLINE
 void POA_IR::HomeDef_tie<T>::move  (
-    IR::Container_ptr new_container,
+    IR_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
     CORBA::Environment &ACE_TRY_ENV

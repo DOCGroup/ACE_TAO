@@ -69,8 +69,8 @@ TAO_CodeGen::make_visitor (be_visitor_context *ctx)
   if (this->visitor_factory_ == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO_CodeGen::make_visitor - "
-                         "No Visitor Factory\n\n"),
+                         ACE_TEXT ("TAO_CodeGen::make_visitor - ")
+                         ACE_TEXT ("No Visitor Factory\n\n")),
                         0);
     }
 
@@ -83,7 +83,10 @@ TAO_CodeGen::upcase (const char *str)
 {
   static char upcase_str [NAMEBUFSIZE];
 
-  ACE_OS::memset (upcase_str, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (upcase_str, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
   // Convert letters in str to upper case.
   for (unsigned int i=0; i < ACE_OS::strlen (str); i++)
     {
@@ -97,6 +100,7 @@ TAO_CodeGen::upcase (const char *str)
           upcase_str[i] = str[i];
         }
     }
+
   return upcase_str;
 }
 
@@ -128,36 +132,53 @@ TAO_CodeGen::start_client_header (const char *fname)
       // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
-      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+      ACE_OS::memset (macro_name, 
+                      '\0', 
+                      NAMEBUFSIZE);
+
       const char *suffix = ACE_OS::strrchr (fname, '.');
+
       if (suffix == 0)
         {
           // File seems to have no extension, so let us take the name
           // as it is.
           if (fname == 0)
-            // bad file name
-            return -1;
+            {
+              // Bad file name.
+              return -1;
+            }
           else
-            suffix = fname;
+            {
+              suffix = fname;
+            }
         }
 
       ACE_OS::sprintf (macro_name, "_TAO_IDL_");
+
       // Convert letters in fname to upper case.
       for (int i=0; i < (suffix - fname); i++)
         {
           if (isalpha (fname [i]))
-            macro_name[i+9] = (char) toupper (fname [i]);
+            {
+              macro_name[i+9] = (char) toupper (fname [i]);
+            }
           else if (isdigit (fname [i]))
-            macro_name[i+9] = fname[i];
+            {
+              macro_name[i+9] = fname[i];
+            }
           else
-            macro_name[i+9] = '_';
+            {
+              macro_name[i+9] = '_';
+            }
         }
 
       ACE_OS::strcat (macro_name, "_H_");
 
       // Generate the #ifndef ... #define statements.
-      this->client_header_->print ("#ifndef %s\n", macro_name);
-      this->client_header_->print ("#define %s\n\n", macro_name);
+      this->client_header_->print ("#ifndef %s\n", 
+                                   macro_name);
+      this->client_header_->print ("#define %s\n\n", 
+                                   macro_name);
 
       if (be_global->pre_include () != 0)
         {
@@ -166,7 +187,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                                 << "\"\n";
         }
 
-      // Including standard files
+      // Including standard files.
 
       // Switch between changing or non-changing standard include files
       // include files, so that #include statements can be
@@ -259,6 +280,32 @@ TAO_CodeGen::start_client_header (const char *fname)
             }
         }
 
+      // Include the smart proxy base class if smart proxies are enabled.
+      if (be_global->gen_smart_proxies () == I_TRUE)
+        {
+          *this->client_header_ << "#include ";
+
+          if (be_global->changing_standard_include_files () == 1)
+            {
+              *this->client_header_ << "\"";
+            }
+          else
+            {
+              *this->client_header_ << "<";
+            }
+
+          *this->client_header_ << "tao/SmartProxies/Smart_Proxies.h";
+
+          if (be_global->changing_standard_include_files () == 1)
+            {
+              *this->client_header_ << "\"\n";
+            }
+          else
+            {
+              *this->client_header_ << ">\n";
+            }
+        }
+
       // We must include all the skeleton headers corresponding to
       // IDL files included by the current IDL file.
       // We will use the included IDL file names as they appeared
@@ -268,8 +315,7 @@ TAO_CodeGen::start_client_header (const char *fname)
            j < idl_global->n_included_idl_files ();
            j++)
         {
-          char* idl_name =
-                idl_global->included_idl_files ()[j];
+          char* idl_name = idl_global->included_idl_files ()[j];
 
           // Make a String out of it.
           UTL_String idl_name_str = idl_name;
@@ -280,18 +326,19 @@ TAO_CodeGen::start_client_header (const char *fname)
 
           // Get the clnt header from the IDL file name.
           const char* client_hdr =
-            BE_GlobalData::be_get_client_hdr (&idl_name_str, 1);
+            BE_GlobalData::be_get_client_hdr (&idl_name_str, 
+                                              1);
 
           // Sanity check and then print.
           if (client_hdr != 0)
             {
               this->client_header_->print ("#include \"%s\"\n",
-                                               client_hdr);
+                                           client_hdr);
             }
           else
             {
               ACE_ERROR ((LM_WARNING,
-                          "WARNING, invalid file '%s' included\n",
+                          ACE_TEXT ("WARNING, invalid file '%s' included\n"),
                           idl_name));
             }
         }
@@ -306,21 +353,22 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << be_nl << be_nl;
 
       // Generate export macro for nested classes.
-      *this->client_header_
-        << "#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
-        << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
-        << "#    undef TAO_EXPORT_NESTED_MACRO\n"
-        << "#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */\n"
-        << "#  define TAO_EXPORT_NESTED_MACRO "
-        << be_global->stub_export_macro ()
-        << be_nl
-        << "#endif /* TAO_EXPORT_NESTED_CLASSES */\n\n";
+      *this->client_header_ << "#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
+                            << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
+                            << "#    undef TAO_EXPORT_NESTED_MACRO\n"
+                            << "#  endif /* defined "
+                            << "(TAO_EXPORT_NESTED_MACRO) */\n"
+                            << "#  define TAO_EXPORT_NESTED_MACRO "
+                            << be_global->stub_export_macro ()
+                            << be_nl
+                            << "#endif /* TAO_EXPORT_NESTED_CLASSES */\n\n";
 
       *this->client_header_ << "#if defined(_MSC_VER)\n"
                             << "#if (_MSC_VER >= 1200)\n"
                             << "#pragma warning(push)\n"
                             << "#endif /* _MSC_VER >= 1200 */\n"
                             << "#pragma warning(disable:4250)\n";
+
       if (be_global->use_raw_throw ())
         {
           *this->client_header_ << "#pragma warning(disable:4290)\n";
@@ -463,6 +511,7 @@ TAO_CodeGen::start_server_header (const char *fname)
         }
 
       ACE_OS::sprintf (macro_name, "_TAO_IDL_");
+
       // Convert letters in fname to upper case.
       for (int i=0; i < (suffix - fname); i++)
         {
@@ -551,8 +600,7 @@ TAO_CodeGen::start_server_header (const char *fname)
            j < idl_global->n_included_idl_files ();
            ++j)
         {
-          char* idl_name =
-            idl_global->included_idl_files ()[j];
+          char* idl_name = idl_global->included_idl_files ()[j];
 
           // String'ifying the name.
           UTL_String idl_name_str (idl_name);
@@ -584,8 +632,8 @@ TAO_CodeGen::start_server_header (const char *fname)
         << "#include \"tao/PortableServer/PortableServer.h\"\n"
         << "#include \"tao/PortableServer/Servant_Base.h\"\n"
         << "#include \"tao/PortableServer/Collocated_Object.h\"\n"
-	<< "#include \"tao/PortableServer/ThruPOA_Object_Proxy_Impl.h\"\n"
-	<< "#include \"tao/PortableServer/Direct_Object_Proxy_Impl.h\"\n"
+	      << "#include \"tao/PortableServer/ThruPOA_Object_Proxy_Impl.h\"\n"
+	      << "#include \"tao/PortableServer/Direct_Object_Proxy_Impl.h\"\n"
         << "#include \"tao/PortableServer/ServerRequestInfo.h\"\n"
         << "\n";
 
@@ -594,6 +642,7 @@ TAO_CodeGen::start_server_header (const char *fname)
                             << "#pragma warning(push)\n"
                             << "#endif /* _MSC_VER >= 1200 */\n"
                             << "#pragma warning(disable:4250)\n";
+
       if (be_global->use_raw_throw ())
         {
           *this->server_header_ << "#pragma warning(disable:4290)\n";
@@ -664,7 +713,10 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
-      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+      ACE_OS::memset (macro_name, 
+                      '\0', 
+                      NAMEBUFSIZE);
+
       const char *suffix = ACE_OS::strrchr (fname, '.');
 
       if (suffix == 0)
@@ -681,10 +733,12 @@ TAO_CodeGen::start_server_template_header (const char *fname)
               suffix = fname;
             }
         }
-      ACE_OS::sprintf (macro_name, "_TAO_IDL_");
+
+      ACE_OS::sprintf (macro_name, 
+                       "_TAO_IDL_");
 
       // Convert letters in fname to upper case.
-      for (int i=0; i < (suffix - fname); i++)
+      for (int i = 0; i < (suffix - fname); ++i)
         {
           if (isalpha (fname [i]))
             {
@@ -751,7 +805,9 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       return -1;
     }
 
-  if (this->server_skeletons_->open (fname, TAO_OutStream::TAO_SVR_IMPL) == -1)
+  if (this->server_skeletons_->open (fname, 
+                                     TAO_OutStream::TAO_SVR_IMPL) 
+        == -1)
     {
       return -1;
     }
@@ -817,7 +873,10 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
-      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+      ACE_OS::memset (macro_name, 
+                      '\0', 
+                      NAMEBUFSIZE);
+
       const char *suffix = ACE_OS::strrchr (fname, '.');
 
       if (suffix == 0)
@@ -925,7 +984,8 @@ TAO_CodeGen::start_server_template_inline (const char *fname)
       return -1;
     }
 
-  return this->server_template_inline_->open (fname, TAO_OutStream::TAO_SVR_INL);
+  return this->server_template_inline_->open (fname, 
+                                              TAO_OutStream::TAO_SVR_INL);
 }
 
 // Get the server template inline stream.
@@ -968,7 +1028,10 @@ TAO_CodeGen::start_implementation_header (const char *fname)
       // Now generate the #ifndef clause.
       static char macro_name [NAMEBUFSIZE];
 
-      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+      ACE_OS::memset (macro_name, 
+                      '\0', 
+                      NAMEBUFSIZE);
+
       const char *suffix = ACE_OS::strrchr (fname, '.');
 
       if (suffix == 0)
@@ -986,7 +1049,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
             }
         }
 
-      for (int i=0; i < (suffix - fname); i++)
+      for (int i = 0; i < (suffix - fname); ++i)
         {
           if (isalpha (fname [i]))
             {
@@ -1007,8 +1070,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
       this->implementation_header_->print ("#ifndef %s\n", macro_name);
       this->implementation_header_->print ("#define %s\n\n", macro_name);
 
-      const char* server_hdr =
-        BE_GlobalData::be_get_server_hdr_fname (1);
+      const char* server_hdr = BE_GlobalData::be_get_server_hdr_fname (1);
 
       *this->implementation_header_<< "#include \"" << server_hdr <<"\"\n\n";
 
@@ -1059,7 +1121,10 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
     {
       static char macro_name [NAMEBUFSIZE];
 
-      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+      ACE_OS::memset (macro_name, 
+                      '\0', 
+                      NAMEBUFSIZE);
+
       const char *suffix = ACE_OS::strrchr (fname, '.');
 
 
@@ -1079,7 +1144,7 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
         }
 
       // Convert letters in fname to upper case.
-      for (int i=0; i < (suffix - fname); i++)
+      for (int i = 0; i < (suffix - fname); ++i)
         {
           if (isalpha (fname [i]))
             {
@@ -1094,7 +1159,8 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
       const char* impl_hdr =
         BE_GlobalData::be_get_implementation_hdr_fname ();
 
-      this->implementation_skeleton_->print ("#include \"%s\"\n\n", impl_hdr);
+      this->implementation_skeleton_->print ("#include \"%s\"\n\n", 
+                                             impl_hdr);
 
       return 0;
     }
@@ -1180,7 +1246,10 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 {
   static char macro_name [NAMEBUFSIZE];
 
-  ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (macro_name, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
   const char *suffix = ACE_OS::strrchr (fname, '.');
 
   if (suffix == 0)
@@ -1199,7 +1268,7 @@ TAO_CodeGen::end_implementation_header (const char *fname)
     }
 
   // Convert letters in fname to upper case.
-  for (int i=0; i < (suffix - fname); i++)
+  for (int i = 0; i < (suffix - fname); ++i)
     {
       if (isalpha (fname [i]))
         {
@@ -1215,10 +1284,12 @@ TAO_CodeGen::end_implementation_header (const char *fname)
         }
     }
 
-  ACE_OS::strcat (macro_name, "_H_");
+  ACE_OS::strcat (macro_name, 
+                  "_H_");
 
   // Code to put the last #endif.
-  this->implementation_header_->print ("\n#endif /* %s  */\n", macro_name);
+  this->implementation_header_->print ("\n#endif /* %s  */\n", 
+                                       macro_name);
   return 0;
 }
 
@@ -1274,6 +1345,7 @@ TAO_CodeGen::end_server_template_skeletons (void)
 {
   // Code to put the last #endif.
   *this->server_template_skeletons_ << "\n#endif /* ifndef */\n";
+
   return 0;
 }
 

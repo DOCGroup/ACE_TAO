@@ -15,7 +15,8 @@ DIRS = \
   DynamicInterface \
   IORManipulation \
   IORTable \
-  Strategies
+  Strategies \
+  SmartProxies
 
 # These are headers for things which are exported and must be
 # installed.  (Currently not used).
@@ -164,7 +165,6 @@ ORB_CORE_FILES = \
   DynamicC \
   OctetSeqC \
   StringSeqC \
-  Smart_Proxies \
   ORB_Core \
   ORB_Table \
   Leader_Follower \

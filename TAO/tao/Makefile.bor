@@ -10,7 +10,8 @@ DIRS = \
         DynamicInterface \
         IORTable \
         IORManipulation \
-        Strategies
+        Strategies \
+	SmartProxies
 
 OBJFILES = \
 	$(OBJDIR)\Abstract_Servant_Base.obj \
@@ -106,7 +107,6 @@ OBJFILES = \
 	$(OBJDIR)\DynamicC.obj \
 	$(OBJDIR)\OctetSeqC.obj \
 	$(OBJDIR)\StringSeqC.obj \
-	$(OBJDIR)\Smart_Proxies.obj \
 	$(OBJDIR)\Object_Ref_Table.obj \
 	$(OBJDIR)\ORB_Core.obj \
 	$(OBJDIR)\ORB_Table.obj \

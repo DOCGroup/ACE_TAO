@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
+LDLIBS = -lTAO_SmartProxies -lTAO
 LDFLAGS += -L$(ACE_ROOT)/bin
 
 IDL_FILES = test

@@ -50,14 +50,14 @@ Ptest::init (int argc,
         }
 
       this->repo_ =
-        IR::Repository::_narrow (object.in (),
-                                 ACE_TRY_ENV);
+        IR_Repository::_narrow (object.in (),
+                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->repo_.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "IR::Repository::_narrow failed\n"),
+                             "IR_Repository::_narrow failed\n"),
                             -1);
         }
     }
@@ -135,10 +135,10 @@ Ptest::populate (CORBA::Environment &ACE_TRY_ENV)
       ACE_TEXT ("\n============== POPULATE ==============\n\n")
     ));
 
-  IR::StructMemberSeq members (2);
+  IR_StructMemberSeq members (2);
   members.length (2);
   members[0].name = CORBA::string_dup ("long_mem");
-  members[0].type_def = this->repo_->get_primitive (IR::pk_long,
+  members[0].type_def = this->repo_->get_primitive (pk_long,
                                                     ACE_TRY_ENV);
   ACE_CHECK;
   members[0].type = members[0].type_def->type (ACE_TRY_ENV);
@@ -153,24 +153,24 @@ Ptest::populate (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
 
-  IR::StructDef_var svar = this->repo_->create_struct ("IDL:my_struct:1.0",
-                                                       "my_struct",
-                                                       "1.0",
-                                                       members,
-                                                       ACE_TRY_ENV);
+  IR_StructDef_var svar = this->repo_->create_struct ("IDL:my_struct:1.0",
+                                                      "my_struct",
+                                                      "1.0",
+                                                      members,
+                                                      ACE_TRY_ENV);
   ACE_CHECK;
 
-  IR::EnumMemberSeq def_members (2);
+  IR_EnumMemberSeq def_members (2);
   def_members.length (2);
 
   def_members[0] = CORBA::string_dup ("ZERO");
   def_members[1] = CORBA::string_dup ("ONE");
 
-  IR::EnumDef_var e_def_var = svar->create_enum ("IDL:my_def_enum:1.0",
-                                                 "my_enum",
-                                                 "1.0",
-                                                 def_members,
-                                                 ACE_TRY_ENV);
+  IR_EnumDef_var e_def_var = svar->create_enum ("IDL:my_def_enum:1.0",
+                                                "my_enum",
+                                                "1.0",
+                                                def_members,
+                                                ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -189,9 +189,9 @@ Ptest::query (CORBA::Environment &ACE_TRY_ENV)
     "my_enum"
   };
 
-  IR::ContainedSeq_var contents = this->repo_->contents (IR::dk_all,
-                                                         0,
-                                                         ACE_TRY_ENV);
+  IR_ContainedSeq_var contents = this->repo_->contents (dk_all,
+                                                        0,
+                                                        ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::ULong length = contents->length ();
@@ -205,13 +205,13 @@ Ptest::query (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::ULong i = 0;
 
-  IR::StructDef_var svar = IR::StructDef::_narrow (contents[i],
-                                                   ACE_TRY_ENV);
+  IR_StructDef_var svar = IR_StructDef::_narrow (contents[i],
+                                                 ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (svar.in ()));
 
-  IR::StructMemberSeq_var out_members = svar->members (ACE_TRY_ENV);
+  IR_StructMemberSeq_var out_members = svar->members (ACE_TRY_ENV);
   ACE_CHECK;
 
   length = out_members->length ();
@@ -232,9 +232,29 @@ Ptest::query (CORBA::Environment &ACE_TRY_ENV)
                     out_members[i].name.in ()));
 
       if (i == length - 1)
-        ACE_ASSERT (!ACE_OS::strcmp (out_members[i].name, "my_enum"));
+        {
+          if (ACE_OS::strcmp (out_members[i].name, "my_enum"))
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("persistence_test::query::members -")
+                          ACE_TEXT ("incorrect local name in item %d"),
+                          i));
+
+              return;
+            }
+        }
       else
-        ACE_ASSERT (!ACE_OS::strcmp (out_members[i].name, members[i]));
+        {
+          if (ACE_OS::strcmp (out_members[i].name, members[i]))
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("persistence_test::query::members -")
+                          ACE_TEXT ("incorrect local name in item %d"),
+                          i));
+
+              return;
+            }
+        }
     }
 
 #if defined (ACE_NDEBUG)
