@@ -178,6 +178,13 @@ Cubit_Task::create_servants (void)
         PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      PortableServer::POAManager_var manager =
+        poa->the_POAManager(ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      manager->activate(ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Create the array of cubit implementations.
       ACE_NEW_RETURN (this->servants_,
                       Cubit_i *[this->num_of_objs_],
