@@ -16,7 +16,7 @@ OBJ     = $(SRC:%.cpp=$(VDIR)%.o)
 LSRC    = $(addsuffix .cpp,$(FILES))
 
 # This is needed to add ACE to the libs for the shared library.
-LIBS    += $(ACELIB)
+ACE_SHLIBS    += $(ACELIB)
 
 
 #----------------------------------------------------------------------------

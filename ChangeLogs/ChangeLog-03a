@@ -1,3 +1,12 @@
+Fri Jan  3 21:46:00 2003  John Michael Zorko  <j.zorko@att.net>
+
+        * netsvcs/clients/Naming/Client/Makefile: Added $(ACELIB) to
+          ACE_SHLIBS to fix multple -lACE problem.  This wasn't an
+          issue on Mac OS X 10.2, but could be on other platforms.
+
+        * examples/ASX/CCM_App/Makefile: same as above
+        * netsvcs/clients/Naming/Dump_Restore/Makefile: same as above
+
 Wed Jan  8 19:27:49 2003  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Block.h: Doxygenized comments for release() and copy().
