@@ -1,3 +1,8 @@
+Tue Feb 29 16:23:41 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Handle_Set.h: Added some explanation to a few ACE_Handle_Set
+          member functions to clarify their purpose and use.
+
 Tue Feb 29 13:48:24 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Updated a comment about using ACE_Malloc for class-specific
