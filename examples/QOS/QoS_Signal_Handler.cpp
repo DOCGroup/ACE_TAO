@@ -1,6 +1,7 @@
 // QoS_Signal_Handler.cpp
 // $Id$
 
+#include "ace/Log_Msg.h"
 #include "QoS_Signal_Handler.h"
 
 ACE_RCSID(QOS, QoS_Signal_Handler,"$Id$")
