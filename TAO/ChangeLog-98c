@@ -1,3 +1,8 @@
+Fri Apr  3 18:39:21 1998  Steve Huston  <shuston@riverace.com>
+
+	* tests/POA/On_Demand_Activation/Makefile: Changed LSRC to SRC to
+	  match today's changes to ACE's rules.bin.GNU.
+
 Fri Apr  3 17:43:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.h: 
