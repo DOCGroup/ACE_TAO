@@ -1,3 +1,11 @@
+Fri Apr 11 02:35:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+        
+        * bin/g++_metric.sh:
+        * bin/generate_compile_stats.sh:
+        
+          Added new files for gathering and processing compile-
+          time statistics.
+
 Thu Apr 10 14:14:17 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
