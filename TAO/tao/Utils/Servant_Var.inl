@@ -54,23 +54,26 @@ operator=(T * p)
   return *this;
 }
 
-template <class T>
-ACE_INLINE TAO::Utils::Servant_Var<T>::
-~Servant_Var()
+template <class T> ACE_INLINE
+TAO::Utils::Servant_Var<T>::~Servant_Var ()
+  ACE_THROW_SPEC (())
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
   // Unfortunately, there is no throw spec on _remove_ref, so we
   // can't assume that it will not throw.  If it does, then we are in
   // trouble.  In any event, we can't let the exception escape our
   // destructor.
   if (ptr_ != 0)
   {
-    try
-    {
-      ptr_->_remove_ref();
-    }
-    catch (...)
-    {
-    }
+    ACE_TRY
+      {
+        ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHALL
+      {
+      }
+    ACE_ENDTRY;
   }
 }
 
