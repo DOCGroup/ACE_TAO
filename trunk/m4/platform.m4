@@ -30,6 +30,9 @@ dnl At some point the below platform specific settings should be automated
 dnl as much as possible!  We set things manually just to get things going
 dnl with the auto{conf,make}/libtool integration into the ACE source tree.
 
+dnl These settings need to be done _after_ the header, function and library
+dnl checks!
+
 dnl Platform specific flags
 case "$target" in
   *aix3*)
