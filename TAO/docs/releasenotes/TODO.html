@@ -206,6 +206,8 @@
 	      to create them.
 	    <BR>[STATUS] SII is working OK, we still need to complete
 	    the support for DII.
+	    <BR>[STATUS] The DII support was completed, but remains
+	    untested.
 	  <P></LI>
 
 	  <LI>Add the _raise() method to the exceptions.
@@ -248,6 +250,9 @@
 	    alternative mapping, but are very useful.
 	    <BR>[STATUS] This seems to be OK now, the code seems to
 	    compile and work correctly now.
+	    <BR>[STATUS] We need a new macro (TAO_TRY_THROW) to use
+	    inside the TAO_TRY blocks, because TAO_THROW will not go
+	    into the TAO_CATCH blocks, even if the exceptions match.
 	  <P></LI>
 
 	  <LI>We need to test the ORB for resource leaking in the
