@@ -1,0 +1,17 @@
+// $Id$
+
+project(RTComponentServer): ciao_server,rt_server {
+
+  exename = RTComponentServer
+
+  Source_Files {
+    ComponentServer_Task.cpp
+    RTComponentServer.cpp
+  }
+}
+
+// project(ComponentServer_test_client) : ciao_server {
+//   Source_Files {
+//     ComponentServer_test_client.cpp
+//   }
+// }
