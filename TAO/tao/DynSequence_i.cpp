@@ -197,7 +197,6 @@ TAO_DynSequence_i::set_elements (const CORBA_AnySeq& value,
       else
         {
           ACE_THROW (CORBA_DynAny::InvalidSeq ());
-          break;
         }
     }
 }
