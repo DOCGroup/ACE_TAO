@@ -1,3 +1,10 @@
+Thu Apr  1 12:17:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	  Moved _duplicate() to the .cpp file again, this eliminates a
+	  pesky warning from the broken g++ 2.7.X compilers.
+
 Thu Apr 01 03:26:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO/tao/ORB_Core.{h,cpp}:
