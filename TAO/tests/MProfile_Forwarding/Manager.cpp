@@ -1,7 +1,10 @@
 //$Id$
-#include "ace/Get_Opt.h"
 #include "Manager.h"
+
 #include "tao/IORManipulation/IORManip_Loader.h"
+
+#include "ace/SString.h"
+#include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
 const char *first_ior = 0;

@@ -1,3 +1,21 @@
+Sat Jan 29 23:36:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/AMH/Sink_Server/AMH_Servant.cpp:
+	* examples/Event_Comm/Consumer_Input_Handler.h:
+	* examples/POA/POA_BiDir/POA_BiDir.cpp:
+	* examples/RTCORBA/Activity/Activity.cpp:
+	* examples/Simple/time-date/server.cpp:
+	* orbsvcs/ImplRepo_Service/Activator_Info.h:
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.h:
+	* orbsvcs/tests/InterfaceRepo/Application_Test/test_i.cpp:
+	* orbsvcs/tests/Notify/lib/Driver.h:
+	* tests/MProfile_Forwarding/Manager.cpp:
+
+	  Added missing header include directives that are necessary due
+	  to inter-header dependency reductions in ACE.
+
 Sat Jan 29 00:43:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
@@ -8,7 +26,7 @@ Sat Jan 29 00:43:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 Sat Jan 29 02:31:21 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
-        
+
           Modified the handler-creating behavior to allow limited
           processing of imported nodes. This is so a base interface
           from another file will get a handler created and its

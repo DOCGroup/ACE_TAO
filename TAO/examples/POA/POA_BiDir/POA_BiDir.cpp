@@ -23,8 +23,11 @@
 #include "tao/Any.h"
 #include "tao/ORB.h"
 
-ACE_RCSID (POA_BiDir, 
-           POA_BiDir, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (POA_BiDir,
+           POA_BiDir,
            "$Id$")
 
 void

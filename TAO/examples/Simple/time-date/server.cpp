@@ -19,9 +19,12 @@
 // ============================================================================
 
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Misc, main, "$Id$")
+ACE_RCSID (time-date,
+           server,
+           "$Id$")
 
 int
 main (int argc, char *argv[])
