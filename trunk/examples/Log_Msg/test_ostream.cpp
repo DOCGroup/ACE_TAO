@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples/Log_Msg
-// 
+//
 // = FILENAME
 //    test_ostream.cpp
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Irfan Pyarali
-// 
+//
 // ============================================================================
 
 #include "ace/OS.h"
@@ -23,7 +23,7 @@
 ACE_RCSID(Log_Msg, test_ostream, "$Id$")
 
 int
-main (int argc, char *argv[])
+main (int, char *[])
 {
   // This message should show up in stderr.
   ACE_DEBUG ((LM_DEBUG,
@@ -42,11 +42,12 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "third message\n"));
 
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   // Create a persistent store.
   const char *filename = "output";
   int flags = ios::out | ios::trunc;
   ofstream myostream (filename, flags);
-  
+
   // Check for errors.
   if (myostream.bad ())
     return 1;
@@ -56,12 +57,15 @@ main (int argc, char *argv[])
 
   // This message should show up in the ostream.
   ACE_DEBUG ((LM_DEBUG,
-              "forth message\n"));
-  
+              "fourth message\n"));
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
-  // This message should show up in stderr and the ostream.
+  // This message should show up in stderr and the ostream (without
+  // ACE_LACKS_IOSTREAM_TOTALLY).
   ACE_DEBUG ((LM_DEBUG,
               "fifth message\n"));
+
   return 0;
 }
