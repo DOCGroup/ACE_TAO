@@ -1,3 +1,12 @@
+Wed Dec  9 11:03:13 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+	
+	  In the visit_interface and visit_interface_fwd methods, we were
+          not generating the fully scoped name for code generated in the
+	  *.i or *.cpp file. Thanks to Naga (naga@cs.wustl.edu) for
+	  submitting the bugreport. 
+	
 Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * README, VERSION: expanded mention of BUG-REPORT-FORM.
