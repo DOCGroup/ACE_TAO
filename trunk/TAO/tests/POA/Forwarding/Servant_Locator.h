@@ -28,8 +28,11 @@ class MyFooServantLocator : public POA_PortableServer::ServantLocator
   //   This class is used by a POA with USE_SERVANT_MANAGER and
   //   NON_RETAIN policy.
 public:
-  MyFooServantLocator (CORBA::Object_ptr forward_to_ptr);
+  MyFooServantLocator (CORBA::ORB_ptr orb_ptr,
+                       CORBA::Object_ptr forward_to_ptr);
   // constructor
+
+  ~MyFooServantLocator ();
 
   virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
                                              PortableServer::POA_ptr adapter,
@@ -51,17 +54,19 @@ public:
   void forward (CORBA::Environment &env);
   
 private:
+  CORBA::ORB_var orb_var_;
+
   int counter_;
   // Counter for number of invocations of this.
   
-  PortableServer::Servant servant;
+  PortableServer::Servant servant_ptr_;
   // There really exists only one servant, which is returned all the
   // time.
   
-  CORBA::Object_ptr forward_to_ptr_;
+  CORBA::Object_var forward_to_var_;
   // location to forward to
 
-  u_int forwarding;
+  u_int forwarding_;
   // flag to tell if to forward or not.
 };
 

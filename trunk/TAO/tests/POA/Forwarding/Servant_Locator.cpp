@@ -21,24 +21,32 @@
 #include "Servant_Locator.h"
 #include "MyFooServant.h"
 
-MyFooServantLocator::MyFooServantLocator (CORBA::Object_ptr forward_to_ptr)
-  : counter_ (0),
-  forward_to_ptr_ (CORBA::Object::_duplicate (forward_to_ptr)),
-  forwarding (0),  // by default do not forward
-  servant (0)
+MyFooServantLocator::MyFooServantLocator (CORBA::ORB_ptr orb_ptr,
+                                          CORBA::Object_ptr forward_to_ptr)
+  : orb_var_ (CORBA::ORB::_duplicate (orb_ptr)), 
+    counter_ (0),
+    forward_to_var_ (CORBA::Object::_duplicate (forward_to_ptr)),
+    forwarding_ (0),  // by default do not forward
+    servant_ptr_ (0)
 {
 }
 
+MyFooServantLocator::~MyFooServantLocator ()
+{
+  delete servant_ptr_;
+}
+
+
 PortableServer::Servant
 MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
-                                PortableServer::POA_ptr poa,
+                                PortableServer::POA_ptr poa_ptr,
                                 const char *operation,
                                 PortableServer::ServantLocator::Cookie &cookie,
                                 CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (operation);
 
-  if (forwarding == 0) // do not forward
+  if (this->forwarding_ == 0) // do not forward
     {
 
       // Convert ObjectID to String.
@@ -52,10 +60,11 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
 
       if (ACE_OS::strstr (s.in (), "Foo") != 0)
         {
-          if (servant == 0)
+          if (this->servant_ptr_ == 0)
             {
-              servant = new MySecondFooServant (this,
-                                                127);
+              this->servant_ptr_ = new MySecondFooServant (orb_var_.in(),
+                                                           this,
+                                                           127);
 
               // Return the servant as the cookie , used as a check when
               // postinvoke is called on this MyFooServantLocator.
@@ -63,7 +72,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
             }
           // reuse the old servant
        
-          return servant;
+          return this->servant_ptr_;
         }
       else
         {
@@ -75,7 +84,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
   else // now forward, in throwing the ForwardRequest Exception
   {
     // Throw forward exception
-    env.exception (new PortableServer::ForwardRequest (this->forward_to_ptr_));
+    env.exception (new PortableServer::ForwardRequest (this->forward_to_var_));
 
     ACE_DEBUG ((LM_DEBUG,"MyFooServantLocator::preinvoke: Threw the ForwardRequest exception.\n"));
     return 0;
@@ -101,6 +110,6 @@ MyFooServantLocator::postinvoke (const PortableServer::ObjectId &oid,
 void 
 MyFooServantLocator::forward (CORBA::Environment &env)
 {
-  this->forwarding = 1;
+  this->forwarding_ = 1;
 }
 
