@@ -273,7 +273,13 @@ libACE_IPC_la_SOURCES = \
   UPIPE_Acceptor.cpp \
   UPIPE_Connector.cpp \
   UPIPE_Stream.cpp \
-  XTI_ATM_Mcast.cpp
+  XTI_ATM_Mcast.cpp \
+  MEM_Acceptor.cpp \
+  MEM_Addr.cpp \
+  MEM_Connector.cpp \
+  MEM_IO.cpp \
+  MEM_SAP.cpp \
+  MEM_Stream.cpp
 
 libACE_Svcconf_la_SOURCES = \
   DLL.cpp \
@@ -324,7 +330,8 @@ libACE_Other_la_SOURCES = \
   Registry_Name_Space.cpp \
   Remote_Name_Space.cpp \
   QoS_Session_Impl.cpp \
-  QoS_Session_Factory.cpp
+  QoS_Session_Factory.cpp \
+  QoS_Manager.cpp
 
 libACE_la_SOURCES = \
   $(libACE_OS_la_SOURCES) \
@@ -541,6 +548,12 @@ HEADER_FILES = \
   Log_Msg.h \
   Log_Priority.h \
   Log_Record.h \
+  MEM_Acceptor.h \
+  MEM_Addr.h \
+  MEM_Connector.h \
+  MEM_IO.h \
+  MEM_SAP.h \
+  MEM_Stream.h \
   Malloc.h \
   Malloc_Base.h \
   Malloc_T.h \
@@ -580,6 +593,7 @@ HEADER_FILES = \
   Process.h \
   Process_Manager.h \
   Profile_Timer.h \
+  QoS_Manager.h \
   QoS_Session.h \
   QoS_Session_Factory.h \
   QoS_Session_Impl.h \
@@ -687,6 +701,8 @@ HEADER_FILES = \
   config.h \
   inc_user_config.h \
   iosfwd.h \
+  post.h \
+  pre.h \
   streams.h \
   ws2tcpip.h
 ## Make sure config.h is in the above header list!
@@ -772,6 +788,12 @@ INLINE_FILES = \
   Local_Tokens.i \
   Log_Msg.i \
   Log_Record.i \
+  MEM_Acceptor.i \
+  MEM_Addr.i \
+  MEM_Connector.i \
+  MEM_IO.i \
+  MEM_SAP.i \
+  MEM_Stream.i \
   Malloc.i \
   Malloc_T.i \
   Managed_Object.i \
@@ -878,6 +900,7 @@ INLINE_FILES = \
   WIN32_Asynch_IO.i \
   WIN32_Proactor.i \
   XTI_ATM_Mcast.i
+
 
 ## It would be good to remove pkgincludedir.  However, we want to install
 ## headers in "$(prefix)/ace" not "$(prefix)/ACE" because the source files
