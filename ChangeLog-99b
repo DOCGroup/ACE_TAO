@@ -1,27 +1,35 @@
+Fri Oct 01 13:05:24 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile: move instructions for creating kits down in
+          the file, and added note that they're intended for
+          ACE+TAO developers and maintainers, only.  Thanks to
+          Rick Hess <rick.hess@lmco.com> for pointing out that
+          that wasn't clear.
+
 Fri Oct 1 08:23:36 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
-	* ace/ATM_Connector.{h,i}: Added add_leaf method and functionality.
+        * ace/ATM_Connector.{h,i}: Added add_leaf method and functionality.
 
 Thu Sep 30 16:55:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Task_Test.cpp (main): Added a short example illustrating
-	  how the new ACE_Thread_Hook mechanism works.
+        * tests/Task_Test.cpp (main): Added a short example illustrating
+          how the new ACE_Thread_Hook mechanism works.
 
-	* ace/OS.cpp: Added new support for the thread_hook to
- 	  ACE_OS_Object_Manager.
+        * ace/OS.cpp: Added new support for the thread_hook to
+          ACE_OS_Object_Manager.
 
-	* ace/OS.cpp (invoke): Added support for a virtual "start_hook()"
-	  method in a new ACE_Thread_Hook class.  This makes it possible
- 	  for users to subclass ACE_Thread_Hook perform initialization
- 	  operations before the thread entry point method is called back.
-  	  Thanks to Chris Hafey <chris@stentorsoft.com> for this
- 	  suggestion.
+        * ace/OS.cpp (invoke): Added support for a virtual "start_hook()"
+          method in a new ACE_Thread_Hook class.  This makes it possible
+          for users to subclass ACE_Thread_Hook perform initialization
+          operations before the thread entry point method is called back.
+          Thanks to Chris Hafey <chris@stentorsoft.com> for this
+          suggestion.
 
 Thu Sep 30 20:40:42 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* bin/run_all_list.pm:
-	  Added TAO/examples/Load_Balancing demo to the list of daily
-	  executed tests.
+        * bin/run_all_list.pm:
+          Added TAO/examples/Load_Balancing demo to the list of daily
+          executed tests.
 
 Thu Sep 30 11:36:20 1999  Charles Frasch  <cfrasch@spawar.navy.mil>
 
@@ -31,9 +39,9 @@ Thu Sep 30 11:36:20 1999  Charles Frasch  <cfrasch@spawar.navy.mil>
 
 Thu Sep 30 11:13:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Pipe.cpp (open): Don't use socketpair() for pipes on LynxOS
-	  since this doesn't work for some reason.  Instead, use the
- 	  socket emulation.  Thanks to David Levine for reporting this.
+        * ace/Pipe.cpp (open): Don't use socketpair() for pipes on LynxOS
+          since this doesn't work for some reason.  Instead, use the
+          socket emulation.  Thanks to David Levine for reporting this.
 
 Thu Sep 30 10:30:00 1999  Kirthika Parameswraan <kirthika@cs.wustl.edu>
 

@@ -5,42 +5,7 @@
 #       applications
 #----------------------------------------------------------------------------
 
-#### The "release" and "releaseall" targets can be used to create
-#### the ACE and ACE+TAO kits.  By default, each creates a new beta
-#### release.  To create a new minor or major release, add REL=minor
-#### or REL=major, respectively, to the make invocation.
-####
-#### NOTE: the REL modifier applies to _both_ ACE and TAO in
-#### releaseall!
-####
-#### To create a new ACE minor release and a TAO beta release:
-####   % make release REL=minor
-####   % cd TAO
-####   % make release
-####
-#### There are some other release/releaseall options [default value is in
-#### brackets]:
-####   ACE_TAG [ACE version in your workspace]: prepend tag with -ta
-####   TAO_TAG [TAO version in your workspace]: prepend tag with -tt
-####
-####   NOTE: the ACE and TAO versions will be updated automatically
-####   by release/releaseall.  ACE_TAG and TAO_TAG can be overridden
-####   to kit a particular version.
-####
-####   APPLY_NEW_TAG [enabled]: set to null to disable
-####   CHECK [disabled]: set to -n to see what make_release will do, but not
-####     do it
-####   GENERATE_MAN_PAGES [enabled]: set to null to disable regeneration of
-####     the ACE_wrappers/man/ hierarchy
-####   INSTALL_KIT [enabled]: set to null to not install in public
-####     ftp/http directory on host ace
-####   REL [beta]: set to minor or major, optionally, when applying a new tag
-####   ZIP_FILES [enabled]: set to -z to disable creation of .zip files
-####
-#### Example creation of ACE-only kit, version ACE-5_0_1 from current
-#### workspace:
-#### make release ACE_TAG='-ta ACE-5_0_1' APPLY_NEW_TAG= \
-####   GENERATE_MAN_PAGES= INSTALL_KIT= ZIP_FILES=-z
+#### Please see ACE-INSTALL.html for build information.
 
 #----------------------------------------------------------------------------
 #       Local macros
@@ -81,6 +46,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 
+# Optional TAO targets.
+-include $(ACE_ROOT)/TAO/tao_targets.GNU
+
 # For the following to work you need to compile the
 # $(ACE_ROOT)/bin/clone.cpp file and install it in your ~/bin
 # directory (or some place similar).
@@ -91,6 +59,48 @@ clone:
         do \
                 (clone -s $(ACE_ROOT)/$$dir $$dir) \
         done
+
+#### NOTE:  The following comments describe how to create kits.
+####        It's intended for use by ACE+TAO developers and
+####        maintainers only.  ACE+TAO users need not be concerned
+####        with creating kits, just unpacking and using them.
+
+#### The "release" and "releaseall" targets can be used to create
+#### the ACE and ACE+TAO kits.  By default, each creates a new beta
+#### release.  To create a new minor or major release, add REL=minor
+#### or REL=major, respectively, to the make invocation.
+####
+#### NOTE: the REL modifier applies to _both_ ACE and TAO in
+#### releaseall!
+####
+#### To create a new ACE minor release and a TAO beta release:
+####   % make release REL=minor
+####   % cd TAO
+####   % make release
+####
+#### There are some other release/releaseall options [default value is in
+#### brackets]:
+####   ACE_TAG [ACE version in your workspace]: prepend tag with -ta
+####   TAO_TAG [TAO version in your workspace]: prepend tag with -tt
+####
+####   NOTE: the ACE and TAO versions will be updated automatically
+####   by release/releaseall.  ACE_TAG and TAO_TAG can be overridden
+####   to kit a particular version.
+####
+####   APPLY_NEW_TAG [enabled]: set to null to disable
+####   CHECK [disabled]: set to -n to see what make_release will do, but not
+####     do it
+####   GENERATE_MAN_PAGES [enabled]: set to null to disable regeneration of
+####     the ACE_wrappers/man/ hierarchy
+####   INSTALL_KIT [enabled]: set to null to not install in public
+####     ftp/http directory on host ace
+####   REL [beta]: set to minor or major, optionally, when applying a new tag
+####   ZIP_FILES [enabled]: set to -z to disable creation of .zip files
+####
+#### Example creation of ACE-only kit, version ACE-5_0_1 from current
+#### workspace:
+#### make release ACE_TAG='-ta ACE-5_0_1' APPLY_NEW_TAG= \
+####   GENERATE_MAN_PAGES= INSTALL_KIT= ZIP_FILES=-z
 
 CONTROLLED_FILES = \
         ACE-INSTALL.html \
@@ -170,22 +180,22 @@ RELEASE_LIB_FILES = \
 .PHONY: release releasetao releaseall tag
 
 ACE_TAG_VALUE = $(shell head -1 VERSION | perl -ne \
-               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";')
-ACE_TAG = -ta $(ACE_TAG_VALUE)
+                's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";')
+ACE_TAG       = -ta $(ACE_TAG_VALUE)
 TAO_TAG_VALUE = $(shell head -1 TAO/VERSION | perl -ne \
-               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "TAO-$$_";') 
-TAO_TAG = -tt $(TAO_TAG_VALUE)
-APPLY_NEW_TAG = tag
-CHECK =
+                's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "TAO-$$_";')
+TAO_TAG       = -tt $(TAO_TAG_VALUE)
+APPLY_NEW_TAG      = tag
+CHECK              =
 GENERATE_MAN_PAGES = -g
-INSTALL_KIT = -i
-REL = beta
-ZIP_FILES =
+INSTALL_KIT        = -i
+REL                = beta
+ZIP_FILES          =
 
 #### The release target creates the ACE (only) kit.
 release: $(APPLY_NEW_TAG)
 	@$(ACE_ROOT)/bin/make_release -k ace $(ACE_TAG) \
-          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
+         $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
 
 tag:
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -v $(REL) -u
@@ -195,7 +205,7 @@ tag:
 #### creates the combined ACE-TAO kit.
 releasetao:
 	@$(ACE_ROOT)/bin/make_release -k ace+tao $(ACE_TAG) $(TAO_TAG) \
-          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
+         $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
 
 #### The releaseall target:
 ####   1) Creates the ACE kit.
@@ -219,6 +229,3 @@ show_release_lib_files:
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
-
-# Optional TAO targets.
--include $(ACE_ROOT)/TAO/tao_targets.GNU
