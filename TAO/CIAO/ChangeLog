@@ -1,3 +1,10 @@
+Fri Jun 20 10:21:10 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+
+          Added inheritance from qt_moc and removed the custom definition
+          for MOC_Files.
+
 Thu Jun 19 07:54:42 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
