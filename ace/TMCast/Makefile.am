@@ -10,46 +10,38 @@
 
 nobase_include_HEADERS =
 lib_LTLIBRARIES =
-## Makefile.SSL.am 
+## Makefile.TMCast.am 
 
-if BUILD_SSL
-lib_LTLIBRARIES += libACE_SSL.la
+if BUILD_EXCEPTIONS
+if BUILD_THREADS
+lib_LTLIBRARIES += libTMCast.la
 
-libACE_SSL_la_CPPFLAGS = \
+libTMCast_la_CPPFLAGS = \
   -I$(top_builddir) \
   -I$(top_srcdir) \
   -I$(top_srcdir) \
-  -DACE_SSL_BUILD_DLL
+  -DTMCAST_BUILD_DLL
 
-libACE_SSL_la_SOURCES = \
-  SSL_Asynch_BIO.cpp \
-  SSL_Asynch_Stream.cpp \
-  SSL_Context.cpp \
-  SSL_SOCK.cpp \
-  SSL_SOCK_Acceptor.cpp \
-  SSL_SOCK_Connector.cpp \
-  SSL_SOCK_Stream.cpp
+libTMCast_la_SOURCES = \
+  Group.cpp \
+  Protocol.cpp
 
-libACE_SSL_la_LIBADD = \
- $(top_srcdir)/ace/libACE.la
+libTMCast_la_LIBADD = \
+ $(top_builddir)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  SSL_Asynch_BIO.h \
-  SSL_Asynch_Stream.h \
-  SSL_Context.h \
-  SSL_Export.h \
-  SSL_SOCK.h \
-  SSL_SOCK_Acceptor.h \
-  SSL_SOCK_Connector.h \
-  SSL_SOCK_Stream.h \
-  sslconf.h \
-  SSL_Context.inl \
-  SSL_SOCK.i \
-  SSL_SOCK_Acceptor.i \
-  SSL_SOCK_Connector.i \
-  SSL_SOCK_Stream.i
+  Export.hpp \
+  FaultDetector.hpp \
+  Group.hpp \
+  GroupFwd.hpp \
+  LinkListener.hpp \
+  MTQueue.hpp \
+  Messaging.hpp \
+  Protocol.hpp \
+  TransactionController.hpp
 
-endif BUILD_SSL
+endif BUILD_THREADS
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:
