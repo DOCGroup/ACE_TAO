@@ -96,7 +96,7 @@ ACE_QOS_Event_Handler::handle_qos (ACE_HANDLE)
   ACE_OVERLAPPED ace_overlapped;
 
   iovec iov;
-  iov.iov_base = "Hello";
+  iov.iov_base = (void *) "Hello";
   iov.iov_len = 5;
 
   // For some really weird reason if I do not define the following
