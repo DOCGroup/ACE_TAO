@@ -6,7 +6,7 @@
 /// ImplRepo related.
 ///
 
-#include "tao/PortableServer/ImplRepo_i.h"
+#include "tao/ImR_Client/ServerObject_i.h"
 
 ServerObject_i::ServerObject_i (CORBA::ORB_ptr orb,
                                 PortableServer::POA_ptr poa)

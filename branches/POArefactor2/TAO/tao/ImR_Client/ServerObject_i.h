@@ -19,7 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ServerObjectS.h"
+#include "tao/ImR_Client/ServerObjectS.h"
+#include "tao/ImR_Client/imr_client_export.h"
 
 /**
  * @class ServerObject_i
@@ -30,7 +31,7 @@
  * \nosubgrouping
  *
  **/
-class TAO_PortableServer_Export ServerObject_i
+class TAO_IMR_Client_Export ServerObject_i
   : public POA_ImplementationRepository::ServerObject,
     public PortableServer::RefCountServantBase
 {

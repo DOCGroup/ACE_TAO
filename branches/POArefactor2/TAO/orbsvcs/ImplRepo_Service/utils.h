@@ -2,7 +2,7 @@
 #ifndef TAO_IMR_UTILS_H
 #define TAO_IMR_UTILS_H
 
-#include "tao/PortableServer/ImplRepoC.h"
+#include "tao/ImR_Client/ImplRepoC.h"
 
 #include "ace/SString.h"
 
@@ -12,7 +12,7 @@
 
 class ImR_Utils {
 public:
-  static ACE_CString activationModeToString(ImplementationRepository::ActivationMode mode) 
+  static ACE_CString activationModeToString(ImplementationRepository::ActivationMode mode)
   {
     switch (mode )
     {
@@ -29,7 +29,7 @@ public:
       return "";
     }
   }
-  static ImplementationRepository::ActivationMode parseActivationMode(const ACE_CString& s) 
+  static ImplementationRepository::ActivationMode parseActivationMode(const ACE_CString& s)
   {
     if (s == "NORMAL")
       return ImplementationRepository::NORMAL;
@@ -42,10 +42,10 @@ public:
 
     return ImplementationRepository::NORMAL;
   }
-  static ACE_CString envListToString(const ImplementationRepository::EnvironmentList& lst) 
+  static ACE_CString envListToString(const ImplementationRepository::EnvironmentList& lst)
   {
     ACE_CString ret;
-    for (CORBA::ULong n = 0; n < lst.length(); ++n) 
+    for (CORBA::ULong n = 0; n < lst.length(); ++n)
     {
       ret += "name=\"";
       ret += lst[n].name.in();
@@ -55,7 +55,7 @@ public:
     }
     return ret;
   }
-  static ImplementationRepository::EnvironmentList parseEnvList(const ACE_CString& s) 
+  static ImplementationRepository::EnvironmentList parseEnvList(const ACE_CString& s)
   {
     ImplementationRepository::EnvironmentList ret(10);
 
@@ -64,17 +64,17 @@ public:
     const ACE_CString ENDTAG = "\"";
 
     ssize_t i = 0;
-    
+
     for (CORBA::ULong idx = 0; ; ++idx)
     {
-      // find name 
+      // find name
       ssize_t j = s.find(NAMETAG, i);
       if (j == ACE_CString::npos) break;
       j += NAMETAG.length();
       ssize_t k = s.find(ENDTAG, j + 1);
       if (k == ACE_CString::npos) break;
       ACE_CString name = s.substr(j, k - j);
-      
+
       i = k + 1;
 
       // find value

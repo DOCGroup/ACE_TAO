@@ -2756,6 +2756,18 @@ TAO_Root_POA::ort_adapter_factory_name (void)
   return TAO_POA_Static_Resources::instance ()->ort_adapter_factory_name_.c_str();
 }
 
+void
+TAO_Root_POA::imr_client_adapter_name (const char *name)
+{
+  TAO_POA_Static_Resources::instance ()->imr_client_adapter_name_ = name;
+}
+
+const char *
+TAO_Root_POA::imr_client_adapter_name (void)
+{
+  return TAO_POA_Static_Resources::instance ()->imr_client_adapter_name_.c_str();
+}
+
 PortableServer::POAManager_ptr
 TAO_Root_POA::the_POAManager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -2801,7 +2813,8 @@ TAO_POA_Static_Resources::instance (void)
 }
 
 TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
-  : ort_adapter_factory_name_ ("ORT_Adapter_Factory")
+  : ort_adapter_factory_name_ ("ORT_Adapter_Factory"),
+    imr_client_adapter_name_ ("ImR_Client_Adapter")
 {
 }
 

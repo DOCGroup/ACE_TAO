@@ -439,6 +439,12 @@ public:
 
   static const char *ort_adapter_factory_name (void);
 
+  /// Sets the value of TAO_POA_Static_Resources::imr_client_adapter_name_.
+  static void imr_client_adapter_name (const char *name);
+
+  /// Gets the value of TAO_POA_Static_Resources::imr_client_adapter_name_.
+  static const char *imr_client_adapter_name (void);
+
   CORBA::Object_ptr invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL);
 
   CORBA::Boolean system_id (void);
@@ -951,6 +957,13 @@ public:
    */
   ACE_CString ort_adapter_factory_name_;
 
+  /**
+   * Name of the service object for functions that make calls on
+   * the Implementation Repository. The default value is "ImR_Client_Adapter".
+   * If TAO_IMR_CLient is linked, imr_client_adapter_name() will be
+   * called to set the value to "Concrete_ImR_Client_Adapter".
+   */
+  ACE_CString imr_client_adapter_name_;
 private:
   /// Constructor.
   TAO_POA_Static_Resources (void);

@@ -1,3 +1,11 @@
+Thu Dec 16 10:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Only set FL and GL flags when they are not set
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Removed setting of PACE root, we don't use this anymore
+
 Wed Dec 15 17:05:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/Test_Output.cpp: When resetting msg_ostream to cerr, specify

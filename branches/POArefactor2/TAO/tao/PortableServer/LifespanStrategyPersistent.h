@@ -56,28 +56,6 @@ namespace TAO
       virtual void check_state (ACE_ENV_SINGLE_ARG_DECL);
 
     private:
-      /// @name Implementation repository related methods
-      //@{
-
-      // @@ Johnny, for the timebeing could you please comment out the
-      //all the ImR related code? I am not sure whether this is the
-      //right place foir these. May be they are. We can get to them
-      //later.
-      // @Bala, I think the triggering of the ImR should be here, the question
-      // whether this functionality must be here or use an adapter with a
-      // separate library, important is that the code is out of the POA
-      /// ImplRepo helper method, notify the ImplRepo on startup
-      void imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL);
-
-      /// ImplRepo helper method, notify the ImplRepo on shutdown
-      void imr_notify_shutdown (void);
-      //@}
-
-      /// Implementation Repository Server Object
-      ServerObject_i *server_object_;
-
-      /// Flag for whether the ImR should be used or not.
-      bool use_imr_;
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */
