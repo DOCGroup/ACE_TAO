@@ -1,3 +1,14 @@
+Sun May  6 11:15:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:	
+
+	  Added clean termination of the processes using the signal_handler.
+	
 Sun May  6 12:36:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
@@ -69,8 +80,11 @@ Sat May  5 13:27:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
 	* orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
 	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:	
 	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h:
 	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+
 	  Added clean unbinding of the object references from the Naming
 	  Service  on termination of processes. Also fixed bugs that were
 	  breaking the test on many platforms.
