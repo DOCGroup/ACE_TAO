@@ -79,13 +79,8 @@ Mon Oct 14 17:23:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  CORBA::Any implementation which assumes that the data is totally
 	  contained within the Any. Using the optimization created problems
           for Any's that are copied between different threads. Thanks to
-          Chen Jian <jchen@huawei.com> for reporting this problem.
+          Jian Chen <jchen@huawei.com> for reporting this problem.
 
-<<<<<<< ChangeLog
-	* THANKS: Added Chen Jian <jchen@huawei.com> to the hall of fame.
-
-=======
->>>>>>> 4.4188
 Mon Oct 14  10:12:31 2002  Steve Huston  <shuston@riverace.com>
 
         Fix for Bugzilla # 1316:
