@@ -872,9 +872,11 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
               return d;
             }
           else
-          // This is an instance of a reopened modules that matches the
-          // input indentifier, but the rest of the scoped name didn't
-          // match.
+          // If the index has been incremented, it means the identifier 
+          // matched on a previous call to this function, but after
+          // returning, the rest of the scoped name didn't match. So we 
+          // see if there's another matching identifier to the 'head' of
+          // the scoped name we're working with.
             {
               index--;
               i->next ();
@@ -887,8 +889,20 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
 
   delete i;
 
-  // OK, not found, return NULL
-  return NULL;
+  // OK, not found, check if this scope is a module, and if so,
+  // look in previous openings, if any.
+  d = ScopeAsDecl (this);
+
+  if (d->node_type () == AST_Decl::NT_module)
+    {
+      AST_Module *m = AST_Module::narrow_from_decl (d);
+
+      return m->look_in_previous (e);
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 /*

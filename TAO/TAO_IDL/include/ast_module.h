@@ -113,6 +113,15 @@ public:
   // TypeCode, TCKind and ValueBase to its scope.
   void add_CORBA_members (void);
 
+  // Add decls from previous opening of this module to the
+  // 'previous' set of this module, along with the argument's
+  // own 'previous' set.
+  void add_to_previous (AST_Module *m);
+
+  // Called by lookup_by_name_local, to check for declaration
+  // in a previous opening of this module.
+  AST_Decl *look_in_previous (Identifier *e);
+
 private:
   friend void fe_populate(AST_Module *m);
   friend int tao_yyparse();
@@ -134,6 +143,9 @@ private:
   virtual AST_Native            *fe_add_native (AST_Native              *n);
 
   idl_bool pd_has_nested_valuetype;
+
+  ACE_Unbounded_Set<AST_Decl *> previous_;
+  // Container for declaration from previous openings of this module.
 };
 
 #endif           // _AST_MODULE_AST_MODULE_HH

@@ -155,8 +155,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       // The default proxy will either be returned else be transformed to
       // a smart one!
       *os << "if (CORBA::is_nil (default_proxy))" << be_idt_nl
-          << "ACE_NEW_RETURN (default_proxy, "
-          << bt->nested_type_name (this->ctx_->scope ())
+          << "ACE_NEW_RETURN (default_proxy, ::" << bt->name ()
           << " (stub), " << bt->nested_type_name (this->ctx_->scope ())
           << "::_nil ());"<< be_uidt_nl
           << "#if (TAO_HAS_SMART_PROXIES == 1)" << be_idt_nl
