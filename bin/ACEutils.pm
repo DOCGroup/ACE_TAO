@@ -36,7 +36,7 @@ sub uniqueid
 sub waitforfile
 {
   local($file) = @_;
-  sleep 1 while (!(-e $file));
+  sleep 1 while (!(-e $file && -s $file));
 }
 
 sub waitforfile_timed
@@ -44,7 +44,7 @@ sub waitforfile_timed
   my $file = shift;
   my $maxtime = shift;
   while ($maxtime-- != 0) {
-    if (-e $file) {
+    if (-e $file && -s $file) {
       return 0;
     }
     sleep 1;
