@@ -1,3 +1,7 @@
+Fri Jun 29 07:09:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/DynamicAny/DynUnion_i.cpp: Fixed a warning in g++.
+
 Fri Jun 29 03:14:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Strategies/Reactor_Per_Priority.cpp (reactor): Changed to
