@@ -1039,8 +1039,8 @@ TAO_PropertySet::delete_property (const char *property_name,
       TAO_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_NO));
     }
 
-  // Deallocate the memory.
-  delete entry_ptr;
+  // @@ Purify this and check. Deallocate the memory. 
+  // delete entry_ptr;
 
   ACE_DEBUG ((LM_DEBUG, "delete_property done\n"));
 
