@@ -90,6 +90,10 @@ namespace TAO
       {
         stub->_incr_refcnt ();
       }
+    else
+      {
+        return T::_duplicate (dynamic_cast<T *> (obj));
+      }
 
     bool collocated =
       !CORBA::is_nil (stub->servant_orb_var ().ptr ())
