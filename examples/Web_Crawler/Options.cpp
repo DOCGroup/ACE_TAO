@@ -13,9 +13,9 @@ Options::parse_args (int argc, char *argv[])
 
   ACE_LOG_MSG->open (argv[0]);
 
-  this->hostname_ = "www.cs.wustl.edu";
-  this->uri_ = "~kirthika/auto_purge_client.html";
-  this->recurse_ = 1; //0;
+  this->hostname_ = "tao.cs.wustl.edu";
+  this->uri_ = "index.html";//"~kirthika/auto_purge_client.html";
+  this->recurse_ = 0;
   this->debug_ = 0;
   this->timeout_.sec (ACE_DEFAULT_TIMEOUT);
   this->url_filter_ = 0;
