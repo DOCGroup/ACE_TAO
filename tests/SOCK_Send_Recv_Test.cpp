@@ -47,7 +47,7 @@ client (void *arg)
 {
   ACE_INET_Addr *    remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr      server_addr (remote_addr->get_port_number (),
-                                  ASYS_TEXT ("localhost"));
+                                  ACE_LOCALHOST);
   ACE_SOCK_Stream    cli_stream;
   ACE_SOCK_Connector con;
   ACE_Time_Value     timeout (ACE_DEFAULT_TIMEOUT);
