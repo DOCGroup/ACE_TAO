@@ -223,17 +223,10 @@ start_servant (Task_State *ts, ACE_Thread_Manager &thread_manager)
    ACE_DEBUG ((LM_DEBUG,
                "(%t) Argument parsing waiting done\n"));
 
-   ACE_DEBUG ((LM_DEBUG,
-               "<< Before start_barrier.wait()\n"));
-         GLOBALS::instance ()->barrier_->wait ();
-   ACE_DEBUG ((LM_DEBUG,
-               ">> After start_barrier.wait()\n"));
+   GLOBALS::instance ()->barrier_->wait ();
 
    ts->one_ior_ = high_priority_task->get_servant_ior (0);
 
-   ACE_DEBUG ((LM_DEBUG,
-               "ts->one_ior_ = \"%s\"\n",
-               ts->one_ior_));
    return 0;
 }
 
@@ -279,10 +272,6 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
   GLOBALS::instance ()->num_of_objs = 1;
 
   ACE_Thread_Manager server_thread_manager;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) ts->argc_=%d\n",
-              ts->argc_));
 
   GLOBALS::instance ()->use_name_service = 0;
 
