@@ -338,12 +338,6 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
                 ACE_LIB_TEXT ("opening dynamic service %s\n"),
                 sr->name ()));
 
-  if (ACE_Service_Repository::instance ()->insert (sr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("insertion failed, %p\n"),
-                       sr->name ()),
-                      -1);
-
   if (sr->type ()->init (args.argc (),
                          args.argv ()) == -1)
     {
