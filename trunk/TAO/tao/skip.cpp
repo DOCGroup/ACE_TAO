@@ -23,8 +23,11 @@
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Environment.h"
-#include "tao/ValueBase.h"
 #include "tao/debug.h"
+#include "tao/Valuetype_Adapter.h"
+#include "tao/ORB_Core.h"
+
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tao, 
 
@@ -948,12 +951,23 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
 
+      TAO_Valuetype_Adapter *adapter =
+        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
+            TAO_ORB_Core::valuetype_adapter_name ()
+          );
+
+      if (adapter == 0)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (),
+                            CORBA::TypeCode::TRAVERSE_STOP);
+        }
+
       if (value_tag == 0) // Null value type pointer.
         {
           //We are done.
           return retval;
         }
-      else if (value_tag & TAO_OBV_GIOP_Flags::Type_info_single)
+      else if (value_tag & adapter->type_info_single ())
         {
           // Skip a single repository id which is of type string.
           stream->skip_string ();
@@ -968,6 +982,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
   // Handle our base valuetype if any.
   param = tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
   if (param->kind () != CORBA::tk_null)
     {
       retval = this->skip (param.in (), stream ACE_ENV_ARG_PARAMETER);

@@ -39,10 +39,10 @@
 #include "be_visitor.h"
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
-#include "ace/SString.h"
+#include "ace/String_Base.h"
 
-ACE_RCSID (be,
-           be_decl,
+ACE_RCSID (be, 
+           be_decl, 
            "$Id$")
 
 // Default Constructor

@@ -37,6 +37,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corbafwd.h"
 #include "tao/VarOut_T.h"
 #include "tao/Seq_Var_T.h"
@@ -45,6 +46,7 @@
 #include "tao/PolicyC.h"
 #include "tao/TimeBaseC.h"
 #include "tao/Encodable.h"
+#include "tao/Any_Basic_Impl_T.h"
 
 // Forward references.
 class TAO_Priority_Mapping_Manager;

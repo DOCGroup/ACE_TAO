@@ -37,9 +37,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/TAO_Export.h"
-#include "tao/Any_T.h"
 #include "tao/VarOut_T.h"
-#include "tao/Any_T.h"
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

@@ -24,8 +24,7 @@ SRC = $(addsuffix .cpp, $(BIN) Test_impl) $(IDL_SRC)
 CLIENT_OBJS = TreeBaseC.o TreeControllerC.o TreeNodeC.o client.o
 SERVER_OBJS = $(IDL_SRC:.cpp=.o) Test_impl.o server.o
 
-# Allow valuetypes
-TAO_IDLFLAGS += -Gv -Ge 1
+TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -49,7 +48,7 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_VT_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), TreeBase$(ext) \

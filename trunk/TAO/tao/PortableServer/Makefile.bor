@@ -47,10 +47,12 @@ OBJFILES = \
 RESOURCE = $(OBJDIR)\TAO_PortableServer.res
 
 !ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS)
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) \
+         $(TAO_IORINTERCEPTOR_CFLAGS)
 !else
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) \
-	-DTAO_PORTABLESERVER_BUILD_DLL
+         $(TAO_IORINTERCEPTOR_CFLAGS) $(TAO_ORT_CFLAGS) \
+         -DTAO_PORTABLESERVER_BUILD_DLL
 !endif
 
 CPPDIR = .
@@ -58,6 +60,10 @@ CPPDIR = .
 INCDIR_NAME = tao\PortableServer
 INCLUDES = *.h *.i *.inl *_T.cpp PortableServer.pidl ImplRepo.pidl
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB)
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_ORT_LIB) \
+        $(TAO_IORINTERCEPTOR_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

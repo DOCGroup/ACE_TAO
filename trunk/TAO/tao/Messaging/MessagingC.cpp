@@ -189,7 +189,7 @@ Messaging::ExceptionHolder::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-
+  
   return (ExceptionHolder *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
 }
 

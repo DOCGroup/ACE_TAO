@@ -24,6 +24,8 @@
 
 struct iovec;
 
+struct iovec;
+
 class ACE_Message_Block;
 class ACE_Allocator;
 

@@ -35,7 +35,7 @@
 #include "Thread_Lane_Resources_Manager.h"
 
 #include "Protocols_Hooks.h"
-
+#include "IORInterceptor_Adapter.h"
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 # include "Buffering_Constraint_Policy.h"
@@ -114,6 +114,8 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     dynamic_adapter_name_ ("Dynamic_Adapter"),
     ifr_client_adapter_name_ ("IFR_Client_Adapter"),
     typecodefactory_adapter_name_ ("TypeCodeFactory_Adapter"),
+    iorinterceptor_adapter_name_ ("IORInterceptor_Adapter"),
+    valuetype_adapter_name_ ("Valuetype_Adapter"),
     poa_factory_name_ ("TAO_POA"),
     poa_factory_directive_ ("dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()")
 {
@@ -1205,12 +1207,38 @@ TAO_ORB_Core::typecodefactory_adapter_name (void)
   return TAO_ORB_Core_Static_Resources::instance ()->typecodefactory_adapter_name_.c_str();
 }
 
+void
+TAO_ORB_Core::iorinterceptor_adapter_name (const char *name)
+{
+  TAO_ORB_Core_Static_Resources::instance ()->iorinterceptor_adapter_name_ = name;
+}
+
+const char *
+TAO_ORB_Core::iorinterceptor_adapter_name (void)
+{
+  return TAO_ORB_Core_Static_Resources::instance ()->iorinterceptor_adapter_name_.c_str();
+}
+
+void
+TAO_ORB_Core::valuetype_adapter_name (const char *name)
+{
+  TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_name_ = name;
+}
+
+const char *
+TAO_ORB_Core::valuetype_adapter_name (void)
+{
+  return TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_name_.c_str();
+}
+
 TAO_Resource_Factory *
 TAO_ORB_Core::resource_factory (void)
 {
   // Check if there is a cached reference.
   if (this->resource_factory_ != 0)
-    return this->resource_factory_;
+    {
+      return this->resource_factory_;
+    }
 
   // Look in the service repository for an instance.
   this->resource_factory_ =
@@ -1951,6 +1979,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 
       len = client_interceptors.size ();
       ilen = len;
+
       for (size_t i = 0; i < len; ++i)
         {
           // Destroy the interceptors in reverse order in case the array
@@ -1974,6 +2003,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 
       len = server_interceptors.size ();
       ilen = len;
+
       for (size_t j = 0; j < len; ++j)
         {
           // Destroy the interceptors in reverse order in case the array
@@ -1999,6 +2029,17 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 
       len = ior_interceptors.size ();
       ilen = len;
+
+      TAO_IORInterceptor_Adapter *adapter =
+        ACE_Dynamic_Service<TAO_IORInterceptor_Adapter>::instance (
+            TAO_ORB_Core::iorinterceptor_adapter_name ()
+          );
+
+      if (adapter == 0)
+        {
+          ACE_THROW (CORBA::INTERNAL ());
+        }
+
       for (size_t k = 0; k < len; ++k)
         {
           // Destroy the interceptors in reverse order in case the array
@@ -2006,7 +2047,9 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
           // occurs afterwards.
           --ilen;
 
-          ior_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          adapter->tao_iorinterceptor_destroy (ior_interceptors,
+                                               ilen
+                                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Since Interceptor::destroy() can throw an exception, decrease
@@ -2021,8 +2064,11 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
     {
       // .. catch all the exceptions..
       if (TAO_debug_level > 3)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("(%P|%t) Exception in TAO_ORB_Core::destroy_interceptors () \n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("(%P|%t) Exception in TAO_ORB_Core"),
+                      ACE_LIB_TEXT ("::destroy_interceptors () \n")));
+        }
     }
   ACE_ENDTRY;
 

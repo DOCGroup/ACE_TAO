@@ -163,10 +163,6 @@ SOURCE=.\Abstract_Servant_Base.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\AbstractBase.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Acceptor_Filter.cpp
 # End Source File
 # Begin Source File
@@ -547,6 +543,10 @@ SOURCE=.\IOR_Parser.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInterceptor_Adapter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Leader_Follower.cpp
 # End Source File
 # Begin Source File
@@ -674,11 +674,6 @@ SOURCE=.\ObjectIdListC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectReferenceTemplateC.cpp
-# ADD CPP /GR
-# End Source File
-# Begin Source File
-
 SOURCE=.\OctetSeqC.cpp
 # ADD CPP /GR
 # End Source File
@@ -717,6 +712,10 @@ SOURCE=.\params.cpp
 # Begin Source File
 
 SOURCE=.\Parser_Registry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PI_ForwardC.cpp
 # End Source File
 # Begin Source File
 
@@ -972,15 +971,7 @@ SOURCE=.\TypeCodeFactory_Adapter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ValueBase.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory_Map.cpp
+SOURCE=.\Valuetype_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -1013,10 +1004,6 @@ SOURCE=.\Abstract_Servant_Base.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\AbstractBase.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Acceptor_Filter.h
 # End Source File
 # Begin Source File
@@ -1033,15 +1020,31 @@ SOURCE=.\any.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_T.h
+SOURCE=.\Any_Array_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Basic_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Dual_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Basic_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Impl_T.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\arg_shifter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Array_VarOut_T.h
 # End Source File
 # Begin Source File
 
@@ -1417,6 +1420,10 @@ SOURCE=.\IOR_Parser.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInterceptor_Adapter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Leader_Follower.h
 # End Source File
 # Begin Source File
@@ -1549,10 +1556,6 @@ SOURCE=.\ObjectIdListC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectReferenceTemplateC.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Objref_VarOut_T.h
 # End Source File
 # Begin Source File
@@ -1598,6 +1601,10 @@ SOURCE=.\params.h
 # Begin Source File
 
 SOURCE=.\Parser_Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PI_ForwardC.h
 # End Source File
 # Begin Source File
 
@@ -1669,10 +1676,6 @@ SOURCE=.\Protocols_Hooks.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pseudo_Value_VarOut_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Pseudo_VarOut_T.h
 # End Source File
 # Begin Source File
@@ -1717,7 +1720,11 @@ SOURCE=.\Resume_Handle.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Seq_VarOut_T.h
+SOURCE=.\Seq_Out_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Seq_Var_T.h
 # End Source File
 # Begin Source File
 
@@ -1869,19 +1876,7 @@ SOURCE=.\TypeCodeFactory_Adapter.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Value_VarOut_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueBase.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory_Map.h
+SOURCE=.\Valuetype_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -1917,10 +1912,6 @@ SOURCE=.\WrongTransactionC.h
 # PROP Default_Filter "i;inl"
 # Begin Source File
 
-SOURCE=.\AbstractBase.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Acceptor_Filter.i
 # End Source File
 # Begin Source File
@@ -1937,7 +1928,27 @@ SOURCE=.\any.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_T.inl
+SOURCE=.\Any_Array_Impl_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Basic_Impl_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Dual_Impl_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Impl_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Basic_Impl_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Impl_T.inl
 # End Source File
 # Begin Source File
 
@@ -2285,10 +2296,6 @@ SOURCE=.\ObjectIdListC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectReferenceTemplateC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Objref_VarOut_T.inl
 # End Source File
 # Begin Source File
@@ -2322,6 +2329,10 @@ SOURCE=.\params.i
 # Begin Source File
 
 SOURCE=.\Parser_Registry.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PI_ForwardC.i
 # End Source File
 # Begin Source File
 
@@ -2389,7 +2400,11 @@ SOURCE=.\Resume_Handle.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Seq_VarOut_T.inl
+SOURCE=.\Seq_Out_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Seq_Var_T.inl
 # End Source File
 # Begin Source File
 
@@ -2493,22 +2508,6 @@ SOURCE=.\typecode.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Value_VarOut_T.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueBase.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory_Map.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\VarOut_T.inl
 # End Source File
 # End Group
@@ -2525,7 +2524,32 @@ SOURCE=.\tao.rc
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Any_T.cpp
+SOURCE=.\Any_Array_Impl_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Basic_Impl_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Dual_Impl_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Impl_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Basic_Impl_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Impl_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
@@ -2545,27 +2569,22 @@ SOURCE=.\Objref_VarOut_T.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pseudo_Value_VarOut_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Pseudo_VarOut_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Seq_VarOut_T.cpp
+SOURCE=.\Seq_Out_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Seq_Var_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Sequence_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\Value_VarOut_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

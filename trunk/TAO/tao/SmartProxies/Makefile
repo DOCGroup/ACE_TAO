@@ -49,7 +49,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Smart_Proxies.o .obj/Smart_Proxies.so .shobj/Smart_Proxies.o .shobj/Smart_Proxies.so: Smart_Proxies.cpp Smart_Proxies.h \
+.obj/Smart_Proxies.o .obj/Smart_Proxies.SO .shobj/Smart_Proxies.o .shobj/Smart_Proxies.SO: Smart_Proxies.cpp Smart_Proxies.h \
   $(ACE_ROOT)/ace/pre.h smartproxies_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -90,8 +90,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -221,6 +220,9 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
   $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/VarOut_T.h \
+  $(TAO_ROOT)/tao/VarOut_T.inl \
+  $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/TAO_Singleton.h \

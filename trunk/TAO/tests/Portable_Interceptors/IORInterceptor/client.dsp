@@ -116,6 +116,10 @@ SOURCE=.\FOO_Client_ORBInitializer.h
 
 SOURCE=.\FOO_ClientRequestInterceptor.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\testC.h
+# End Source File
 # End Group
 # Begin Group "IDL Files"
 

@@ -15,13 +15,19 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR___CI_)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR___CI_
@@ -56,10 +62,11 @@ TAO::Any_Impl_T<PortableInterceptor::Interceptor>::demarshal_value (TAO_InputCDR
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_CURRENT___CI_)
 #define _PORTABLEINTERCEPTOR_CURRENT___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -90,10 +97,11 @@ TAO::Any_Impl_T<PortableInterceptor::Current>::demarshal_value (TAO_InputCDR &)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___CI_)
 #define _PORTABLEINTERCEPTOR_REQUESTINFO___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -124,7 +132,7 @@ TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::demarshal_value (TAO_InputCDR
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___CI_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___CI_
@@ -159,10 +167,11 @@ TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::demarshal_value (TAO_In
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO___CI_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -193,10 +202,11 @@ TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::demarshal_value (TAO_In
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___CI_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -227,10 +237,11 @@ TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::demarshal_value 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___CI_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -261,75 +272,7 @@ TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::demarshal_value 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_PORTABLEINTERCEPTOR_IORINFO___CI_)
-#define _PORTABLEINTERCEPTOR_IORINFO___CI_
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::IORInfo>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::IORInfo>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::IORInfo>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR___CI_)
-#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR___CI_
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY___CI_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY___CI_
@@ -363,11 +306,44 @@ TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputC
 
 #endif /* end #if !defined */
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::DuplicateName>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::DuplicateName>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::InvalidName>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::InvalidName>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO___CI_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -398,10 +374,11 @@ TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::demarshal_value (TAO_InputCDR
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER___CI_)
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -510,3 +487,4 @@ CORBA::Boolean operator>> (
 {
   return 1;
 }
+

@@ -49,7 +49,8 @@ protected:
   /// Register an in interceptor with interceptor list.
   size_t add_interceptor_i (
       PortableInterceptor::Interceptor_ptr interceptor
-      ACE_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL
+    )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
@@ -61,7 +62,8 @@ protected:
 
   /// Return the interceptor in sequence element <index>.
   virtual PortableInterceptor::Interceptor_ptr interceptor (
-   size_t index) = 0;
+      size_t index
+    ) = 0;
 
 };
 
@@ -93,7 +95,7 @@ public:
                         ACE_ENV_ARG_DECL);
 
   /// Return reference to the underlying Portable Interceptor array.
-  TYPE &interceptors (void);
+  TYPE & interceptors (void);
 
 protected:
 
@@ -186,11 +188,16 @@ public:
   ~TAO_IORInterceptor_List (void);
 
   /// Register an IOR interceptor.
-  void add_interceptor (PortableInterceptor::IORInterceptor_ptr i
+  void add_interceptor (PortableInterceptor::IORInterceptor_ptr
                         ACE_ENV_ARG_DECL);
 
+  /// Callback made from the IORInterceptor_Adaper_Impl, where the
+  /// knowledge of type resides.
+  size_t add_interceptor_helper (PortableInterceptor::Interceptor_ptr
+                                 ACE_ENV_ARG_DECL);
+
   /// Return reference to the underlying Portable Interceptor array.
-  TYPE &interceptors (void);
+  TYPE & interceptors (void);
 
 protected:
 

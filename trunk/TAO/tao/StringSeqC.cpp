@@ -24,7 +24,6 @@
 
 
 #include "StringSeqC.h"
-#include "Any_T.h"
 #include "CDR.h"
 
 #if defined (__BORLANDC__)
@@ -34,6 +33,8 @@
 #if !defined (__ACE_INLINE__)
 #include "StringSeqC.i"
 #endif /* !defined INLINE */
+
+#include "Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50

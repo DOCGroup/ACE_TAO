@@ -36,6 +36,8 @@
 #include "tao/Exception.h"
 #include "tao/PolicyC.h"
 #include "tao/OctetSeqC.h"
+#include "tao/Any_Dual_Impl_T.h"
+#include "tao/Any_Basic_Impl_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

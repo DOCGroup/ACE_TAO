@@ -4,14 +4,10 @@
 
 #include "Client_Task.h"
 
-#include "ace/Basic_Stats.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
-
-#include "tao/Strategies/advanced_resource.h"
-
 
 Client_Task::Client_Task (int &argc, char **argv)
   : argc_ (argc)

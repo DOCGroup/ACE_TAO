@@ -70,8 +70,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/BiDirGIOP.o .obj/BiDirGIOP.so .shobj/BiDirGIOP.o .shobj/BiDirGIOP.so: BiDirGIOP.cpp BiDirGIOP.h \
-  $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
+.obj/BiDirGIOP.o .obj/BiDirGIOP.SO .shobj/BiDirGIOP.o .shobj/BiDirGIOP.SO: BiDirGIOP.cpp BiDirGIOP.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -111,8 +110,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -250,15 +248,16 @@ endif
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
   $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/VarOut_T.h \
+  $(TAO_ROOT)/tao/VarOut_T.inl \
+  $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
@@ -268,23 +267,15 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i BiDirPolicyC.i \
   BiDir_ORBInitializer.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/VarOut_T.h \
-  $(TAO_ROOT)/tao/VarOut_T.inl \
-  $(TAO_ROOT)/tao/VarOut_T.cpp \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
-  $(TAO_ROOT)/tao/ValueBase.h \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/ValueBase.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -293,8 +284,7 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/LocalObject.i \
-  BiDirPolicy_Validator.h \
+  $(TAO_ROOT)/tao/LocalObject.i BiDirPolicy_Validator.h \
   $(TAO_ROOT)/tao/Policy_Validator.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -367,7 +357,7 @@ endif
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i
 
-.obj/BiDirPolicyC.o .obj/BiDirPolicyC.so .shobj/BiDirPolicyC.o .shobj/BiDirPolicyC.so: BiDirPolicyC.cpp BiDirGIOP.h \
+.obj/BiDirPolicyC.o .obj/BiDirPolicyC.SO .shobj/BiDirPolicyC.o .shobj/BiDirPolicyC.SO: BiDirPolicyC.cpp BiDirGIOP.h \
   $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -408,8 +398,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -547,15 +536,16 @@ endif
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
   $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/VarOut_T.h \
+  $(TAO_ROOT)/tao/VarOut_T.inl \
+  $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
@@ -564,15 +554,15 @@ endif
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PolicyC.i BiDirPolicyC.i
 
-.obj/BiDir_ORBInitializer.o .obj/BiDir_ORBInitializer.so .shobj/BiDir_ORBInitializer.o .shobj/BiDir_ORBInitializer.so: BiDir_ORBInitializer.cpp BiDir_ORBInitializer.h \
+.obj/BiDir_ORBInitializer.o .obj/BiDir_ORBInitializer.SO .shobj/BiDir_ORBInitializer.o .shobj/BiDir_ORBInitializer.SO: BiDir_ORBInitializer.cpp BiDir_ORBInitializer.h \
   $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
-  $(TAO_ROOT)/tao/Object.h \
-  $(TAO_ROOT)/tao/Policy_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/TAO_Export.h \
+  $(TAO_ROOT)/tao/OctetSeqC.h \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -584,7 +574,6 @@ endif
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Export.h \
-  $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
@@ -607,8 +596,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -718,63 +706,57 @@ endif
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Objref_VarOut_T.h \
-  $(TAO_ROOT)/tao/varbase.h \
-  $(TAO_ROOT)/tao/Objref_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Objref_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/Object.h \
+  $(TAO_ROOT)/tao/Policy_ForwardC.h \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Objref_VarOut_T.h \
+  $(TAO_ROOT)/tao/varbase.h \
+  $(TAO_ROOT)/tao/Objref_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Objref_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/IOP_IORC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.i \
-  $(TAO_ROOT)/tao/IOP_IORC.i \
-  $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
-  $(TAO_ROOT)/tao/Any.h \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
-  $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
-  $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
   $(TAO_ROOT)/tao/VarOut_T.cpp \
+  $(TAO_ROOT)/tao/IOP_IORC.i \
+  $(TAO_ROOT)/tao/Object.i \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
-  $(TAO_ROOT)/tao/ValueBase.h \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/ValueBase.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -789,15 +771,15 @@ endif
   $(ACE_ROOT)/ace/Service_Object.i BiDirPolicyC.h \
   BiDirPolicyC.i
 
-.obj/BiDir_PolicyFactory.o .obj/BiDir_PolicyFactory.so .shobj/BiDir_PolicyFactory.o .shobj/BiDir_PolicyFactory.so: BiDir_PolicyFactory.cpp BiDir_PolicyFactory.h \
+.obj/BiDir_PolicyFactory.o .obj/BiDir_PolicyFactory.SO .shobj/BiDir_PolicyFactory.o .shobj/BiDir_PolicyFactory.SO: BiDir_PolicyFactory.cpp BiDir_PolicyFactory.h \
   $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
-  $(TAO_ROOT)/tao/Object.h \
-  $(TAO_ROOT)/tao/Policy_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/TAO_Export.h \
+  $(TAO_ROOT)/tao/OctetSeqC.h \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -809,7 +791,6 @@ endif
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Export.h \
-  $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
@@ -832,8 +813,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -943,63 +923,57 @@ endif
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Objref_VarOut_T.h \
-  $(TAO_ROOT)/tao/varbase.h \
-  $(TAO_ROOT)/tao/Objref_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Objref_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/Object.h \
+  $(TAO_ROOT)/tao/Policy_ForwardC.h \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Objref_VarOut_T.h \
+  $(TAO_ROOT)/tao/varbase.h \
+  $(TAO_ROOT)/tao/Objref_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Objref_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/IOP_IORC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.i \
-  $(TAO_ROOT)/tao/IOP_IORC.i \
-  $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
-  $(TAO_ROOT)/tao/Any.h \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
-  $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
-  $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
   $(TAO_ROOT)/tao/VarOut_T.cpp \
+  $(TAO_ROOT)/tao/IOP_IORC.i \
+  $(TAO_ROOT)/tao/Object.i \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
-  $(TAO_ROOT)/tao/ValueBase.h \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/ValueBase.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -1014,7 +988,7 @@ endif
   $(ACE_ROOT)/ace/Service_Object.i BiDirPolicyC.h \
   BiDirPolicyC.i BiDir_Policy_i.h BiDir_Policy_i.inl
 
-.obj/BiDir_Policy_i.o .obj/BiDir_Policy_i.so .shobj/BiDir_Policy_i.o .shobj/BiDir_Policy_i.so: BiDir_Policy_i.cpp BiDir_Policy_i.h \
+.obj/BiDir_Policy_i.o .obj/BiDir_Policy_i.SO .shobj/BiDir_Policy_i.o .shobj/BiDir_Policy_i.SO: BiDir_Policy_i.cpp BiDir_Policy_i.h \
   $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1055,8 +1029,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -1194,15 +1167,16 @@ endif
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
   $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/VarOut_T.h \
+  $(TAO_ROOT)/tao/VarOut_T.inl \
+  $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
@@ -1217,9 +1191,6 @@ endif
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/VarOut_T.h \
-  $(TAO_ROOT)/tao/VarOut_T.inl \
-  $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
@@ -1251,20 +1222,15 @@ endif
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
-  $(TAO_ROOT)/tao/ValueBase.h \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/ValueBase.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -1314,7 +1280,7 @@ endif
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
   $(TAO_ROOT)/tao/Stub.i
 
-.obj/BiDirPolicy_Validator.o .obj/BiDirPolicy_Validator.so .shobj/BiDirPolicy_Validator.o .shobj/BiDirPolicy_Validator.so: BiDirPolicy_Validator.cpp \
+.obj/BiDirPolicy_Validator.o .obj/BiDirPolicy_Validator.SO .shobj/BiDirPolicy_Validator.o .shobj/BiDirPolicy_Validator.SO: BiDirPolicy_Validator.cpp \
   BiDirPolicy_Validator.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1355,8 +1321,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1495,15 +1460,16 @@ endif
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
   $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/VarOut_T.h \
+  $(TAO_ROOT)/tao/VarOut_T.inl \
+  $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
@@ -1518,9 +1484,6 @@ endif
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/VarOut_T.h \
-  $(TAO_ROOT)/tao/VarOut_T.inl \
-  $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
@@ -1549,20 +1512,15 @@ endif
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
-  $(TAO_ROOT)/tao/ValueBase.h \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Pseudo_Value_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/ValueBase.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/IOPC.h \

@@ -30,10 +30,8 @@
 
 
 #include "Default_ORTC.h"
-#include "tao/Any.h"
-#include "tao/ValueFactory.h"
-
-
+#include "tao/Any_Impl_T.h"
+#include "tao/Valuetype/ValueFactory.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -142,7 +140,7 @@ TAO_Default_ORT::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-
+  
   return (ObjectReferenceTemplate *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
 }
 

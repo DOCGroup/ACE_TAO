@@ -36,7 +36,13 @@
 // The definitions are included in the same order as they are declared
 // in corbafwd.h
 #include "tao/Typecode.h"
-#include "tao/Any_T.h"
+
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Basic_Impl_T.h"
+#include "tao/Any_Special_Impl_T.h"
+#include "tao/Any_Special_Basic_Impl_T.h"
+#include "tao/Any_Array_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
 
 #include "tao/Environment.h"
 #include "tao/Exception.h"
@@ -51,9 +57,6 @@
 
 #include "tao/CurrentC.h"
 #include "tao/BoundsC.h"
-#include "tao/ValueBase.h"
-#include "tao/ValueFactory.h"
-#include "tao/AbstractBase.h"
 #include "tao/PolicyC.h"
 #include "tao/ServicesC.h"
 #include "tao/DomainC.h"
@@ -70,8 +73,6 @@
 
 // Template _var and _out classes.
 #include "tao/Objref_VarOut_T.h"
-#include "tao/Value_VarOut_T.h"
-#include "tao/Pseudo_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/Array_VarOut_T.h"

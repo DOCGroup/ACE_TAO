@@ -3,6 +3,7 @@
 #include "POAManager.h"
 #include "POA.h"
 #include "poa_macros.h"
+#include "tao/IORInterceptor/IORInterceptorC.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Interceptor_List.h"
 #include "tao/ORB_Core.h"

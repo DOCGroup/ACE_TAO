@@ -84,8 +84,15 @@ ACE_RCSID (util,
 
 static long seen_once[INCREMENT] = {0};
 
+IDL_GlobalData::dsf::dsf (void)
+  : valuetype_seen_ (0),
+    abstract_iface_seen_ (0),
+    iface_seq_seen_ (0)
+{}
+
 IDL_GlobalData::IDL_GlobalData (void)
-  : pd_root (0),
+  : decls_seen_info_ (0),
+    pd_root (0),
     pd_gen (0),
     pd_err (0),
     pd_err_count (0),
@@ -182,6 +189,14 @@ IDL_GlobalData::IDL_GlobalData (void)
 #  endif /* ACE_WIN32 */
 #endif /* ACE_GPERF */
     }
+
+  // Initialize the decls seen info masks
+
+  const ACE_UINT64 cursor = 1U;
+
+  ACE_SET_BITS (this->decls_seen_masks.valuetype_seen_,       cursor);
+  ACE_SET_BITS (this->decls_seen_masks.abstract_iface_seen_,  cursor << 1);
+  ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,       cursor << 2);
 }
 
 IDL_GlobalData::~IDL_GlobalData (void)

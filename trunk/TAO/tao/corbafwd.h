@@ -343,7 +343,6 @@ namespace CORBA
    */
   //@{
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Object_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (AbstractBase_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
@@ -362,7 +361,6 @@ namespace CORBA
    */
   //@{
   TAO_NAMESPACE_INLINE_FUNCTION void release (Object_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (AbstractBase_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
