@@ -1,3 +1,11 @@
+Fri Oct 27 17:04:02 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/OS_Test.cpp:
+
+          Changed the arrays ([]) to array pointers (*) since the
+          pointer arithmatic I do doesn't seem to work with the 
+          arrays.
+
 Fri Oct 27 15:45:57 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/ace_dll.dsp:
