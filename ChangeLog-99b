@@ -1,3 +1,10 @@
+Tue Aug 17 20:51:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp:
+	  The TP Reactor also experiments a performance hit if signal
+	  masking is enabled.
+
 Tue Aug 17 19:10:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/OS.cpp: Fixed typo.
