@@ -1394,6 +1394,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   connector.stop ();
   acceptor.stop ();
 
+  ACE_Proactor::instance()->close_singleton ();
+
   // now compare the files - available only when on same machine
 
   int success = 0;

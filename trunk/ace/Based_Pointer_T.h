@@ -17,6 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
+#include "ace/Basic_Types.h"
 
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
@@ -136,10 +137,10 @@ public:
   void dump (void) const;
 
 protected:
-  long target_;
+  ptrdiff_t target_;
 
   /// Keep track of our offset from the base pointer.
-  long base_offset_;
+  ptrdiff_t base_offset_;
 };
 
 /**

@@ -151,7 +151,16 @@ namespace ACE_OS {
   ACE_TCHAR *mktemp (ACE_TCHAR *t);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int putenv (const ACE_TCHAR *string);
+  int putenv (const char *string);
+
+#if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
+  // Windows is the only platform that supports a wchar_t environment.
+  // Since other platforms make @a string part of the environment, it's
+  // a certain memory leak to copy and transform wchar_t to char for
+  // emulating this, so it's not attempted.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int putenv (const wchar_t *string);
+#endif /* ACE_HAS_WCHAR && ACE_WIN32 */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void qsort (void *base,

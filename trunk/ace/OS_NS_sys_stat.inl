@@ -152,7 +152,7 @@ ACE_OS::lstat (const ACE_TCHAR *file, ACE_stat *stp)
 }
 
 ACE_INLINE int
-ACE_OS::mkdir (const ACE_TCHAR *path, mode_t mode)
+ACE_OS::mkdir (const char *path, mode_t mode)
 {
 #if defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (path);
@@ -204,9 +204,6 @@ ACE_OS::mkdir (const ACE_TCHAR *path, mode_t mode)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (path, 0),
                                           ace_result_),
                         int, -1);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_UNUSED_ARG (mode);
-  ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);
 #elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
   ACE_OSCALL_RETURN (::mkdir (path), int, -1);
@@ -214,6 +211,26 @@ ACE_OS::mkdir (const ACE_TCHAR *path, mode_t mode)
   ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
 #endif /* ACE_PSOS_LACKS_PHILE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+
+ACE_INLINE int
+ACE_OS::mkdir (const wchar_t *path, mode_t mode)
+{
+#if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (mode);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (CreateDirectory (path, 0),
+                                          ace_result_),
+                        int, -1);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_UNUSED_ARG (mode);
+  ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);
+#else
+  return ACE_OS::mkdir (ACE_Wide_To_Ascii (path).char_rep (), mode);
+#endif /* ACE_HAS_WINCE */
+}
+
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
@@ -229,7 +246,7 @@ ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
 }
 
 ACE_INLINE int
-ACE_OS::stat (const ACE_TCHAR *file, ACE_stat *stp)
+ACE_OS::stat (const char *file, ACE_stat *stp)
 {
   ACE_OS_TRACE ("ACE_OS::stat");
 #if defined (VXWORKS)
@@ -267,18 +284,51 @@ ACE_OS::stat (const ACE_TCHAR *file, ACE_stat *stp)
    // Solaris for intel uses an macro for stat(), this macro is a
    // wrapper for _xstat().
   ACE_OSCALL_RETURN (::_xstat (_STAT_VER, file, stp), int, -1);
-#elif defined (__BORLANDC__)  && (__BORLANDC__ <= 0x540) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
 #elif defined (ACE_WIN32)
-#   if defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
-#   else
   ACE_OSCALL_RETURN (::_stat (file, (struct _stat *) stp), int, -1);
-#   endif /* ACE_USES_WCHAR */
 #else /* VXWORKS */
   ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
 #endif /* VXWORKS */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::stat (const wchar_t *file, ACE_stat *stp)
+{
+  ACE_OS_TRACE ("ACE_OS::stat");
+#if defined (ACE_HAS_WINCE)
+  ACE_TEXT_WIN32_FIND_DATA fdata;
+
+  HANDLE fhandle;
+
+  fhandle = ::FindFirstFile (file, &fdata);
+  if (fhandle == INVALID_HANDLE_VALUE)
+    {
+      ACE_OS::set_errno_to_last_error ();
+      return -1;
+    }
+  else if (fdata.nFileSizeHigh != 0)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  else
+    {
+      stp->st_size = fdata.nFileSizeLow;
+      stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
+      stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
+    }
+  return 0;
+#elif defined (__BORLANDC__)  && (__BORLANDC__ <= 0x540)
+  ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
+#elif defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
+#else /* ACE_HAS_WINCE */
+  ACE_Wide_To_Ascii nfile (file);
+  return ACE_OS::stat (nfile.char_rep (), stp);
+#endif /* ACE_HAS_WINCE */
+}
+#endif /* ACE_HAS_WCHAR */
 
 #if !defined (ACE_WIN32)
 

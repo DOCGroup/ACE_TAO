@@ -1253,7 +1253,7 @@ ACE_OS::ualarm (const ACE_Time_Value &tv,
 }
 
 ACE_INLINE int
-ACE_OS::unlink (const ACE_TCHAR *path)
+ACE_OS::unlink (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
 # if defined (VXWORKS)
@@ -1269,14 +1269,30 @@ ACE_OS::unlink (const ACE_TCHAR *path)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (path), ace_result_),
                         int, -1);
 # elif defined (ACE_LACKS_UNLINK)
-    ACE_UNUSED_ARG (path);
-    ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wunlink (path), int, -1);
+  ACE_UNUSED_ARG (path);
+  ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::unlink (path), int, -1);
 # endif /* VXWORKS */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::unlink (const wchar_t *path)
+{
+  ACE_OS_TRACE ("ACE_OS::unlink");
+# if defined (ACE_HAS_WINCE)
+  // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (path), ace_result_),
+                        int, -1);
+# elif defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::_wunlink (path), int, -1);
+# else
+  ACE_Wide_To_Ascii npath (path);
+  return ACE_OS::unlink (npath.char_rep ());
+# endif /* ACE_HAS_WINCE */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE ssize_t
 ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)

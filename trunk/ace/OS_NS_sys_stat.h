@@ -67,15 +67,26 @@ namespace ACE_OS {
              ACE_stat *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int mkdir (const ACE_TCHAR *path,
+  int mkdir (const char *path,
              mode_t mode = ACE_DEFAULT_DIR_PERMS);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int mkdir (const wchar_t *path,
+             mode_t mode = ACE_DEFAULT_DIR_PERMS);
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int mkfifo (const ACE_TCHAR *file,
               mode_t mode = ACE_DEFAULT_FILE_PERMS);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int stat (const ACE_TCHAR *file, ACE_stat *);
+  int stat (const char *file, ACE_stat *);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int stat (const wchar_t *file, ACE_stat *);
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   mode_t umask (mode_t cmask);

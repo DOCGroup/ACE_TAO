@@ -1,3 +1,94 @@
+Fri May 14 14:22:49 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Service_Repository.{h cpp} (insert): If there's no space left in
+	  in the service repository, set errno to ENOSPC before returning -1.
+	  (remove): Added an optional argument that can receive the
+	  service record pointer for the removed service. If the pointer is
+	  returned to the caller, it is not deleted. If the pointer is not
+	  returned to the caller (the default) it is deleted (this is the
+	  historic behavior). This is needed to properly support removing
+	  a service record quickly after inserting it during service
+	  initialization. See "Tue Mar 16 2004 <Ivan.Murphy@siemens.com>
+	  ACE version 5.4 P4", below.
+
+Thu May 13 14:40:12 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Functor.{h i}: The ACE_Hash, ACE_Equal_To, and ACE_Less_Than
+	  "char"-type specializations were being done as ACE_TCHAR, and if
+	  ACE_USES_WCHAR defined, also as ACE_ANTI_TCHAR. These are now changed
+	  to always do 'char' and, if ACE_HAS_WCHAR, also wchar_t. Thus,
+	  they're both compiled whenever possible and not only when
+	  ACE_USES_WCHAR is set up.
+
+	* ace/OS_NS_stdio.{h, inl}: Added wchar_t variants of tempnam ()
+	  and rename ().
+
+	* ace/OS_NS_sys_stat.{h, inl}: Added a wchar_t variant of stat ().
+
+	* ace/OS_NS_unistd.{h, inl}: Added a wchar_t variant of unlink ().
+
+	* examples/Web_Crawler/Command_Processor.cpp (execute): Make sure
+	  the URL path string is narrow. (insert): Use ACE_TEXT around
+	  string literals.
+
+	* examples/Web_Crawler/HTTP_URL.{h cpp} (send_request): Change return
+	  type from int to ssize_t, matching the normal types used in ACE.
+	  Use size_t, not int, for string size.
+
+	* examples/Web_Crawler/Mem_Map_Stream.cpp (recv): Cast the length
+	  to off_t to match what seek() expects.
+
+	* examples/Web_Crawler/main.cpp:
+	* examples/Web_Crawler/Web_Crawler.{h, cpp}:
+	* examples/Web_Crawler/Options.{h, cpp}: Changed main() to ACE_TMAIN()
+	  and all the command line options processing to ACE_TCHAR.
+
+	* examples/Web_Crawler/URL_Addr.cpp: Add ACE_TEXT to string literals.
+
+	Changes merged in from Siemens Medical Systems:
+	Tue May 11 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P15
+        * tests/Proactor_Scatter_Gather_Test.cpp: Close down the proactor
+	  before finishing otherwise the object manager will hang.
+
+	Mon Apr 26 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P13
+        * ace/Registry_Name_Space.cpp: Removed 64-bit warnings.
+
+	Fri Apr 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P12
+        * ace/Based_Pointer_T.h: Made target_ and base_offset_ type
+	  ptrdiff_t instead of long to avoid problems with 64bit.
+
+	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P8
+	* ace/DLL_Manager.cpp:
+	* ace/NT_Service.cpp:
+	  Use ACE_LIB_TEXT instead of ACE_TEXT.
+
+	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P7
+	* ace/OS_NS_sys_stat.{h,inl}: Added a wchar version of mkdir().
+
+	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P6
+	* ace/OS_NS_fcntl.cpp (open):
+	* ace/OS_NS_stdio.{h inl}:
+	* ace/OS_NS_sys_mman.inl (mmap):
+	* ace/OS_NS_Thread.inl (mutex_init, event_init, sema_init):
+	  Added a thread safe method
+	  ACE_OS::default_win32_security_attributes_r().
+
+	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P4
+	* ace/Service_Config.cpp: Insert component into repository before 
+          calling init as in the init the component may access the service
+	  repository.
+
+	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P3
+        * ace/Functor.i,h: Added the classes ACE_Hash<const wchar_t *> and
+	  ACE_Hash<wchar_t *> which had gone missing between 5.0.7 and
+	  5.3.1/5.4.
+
+	Wed Feb 25 2004  Ivan Murphy <Ivan.Murphy@siemens.com>	ACE 5.4 P2
+	* ace/OS_NS_stdio.{h,cpp,inl}: Added wchar version of fopen().
+
+	Wed Feb 25 2004  Ivan Murphy <Ivan.Murphy@siemens.com>	ACE 5.4 P1
+	* ace/OS_NS_stdlib.{h,inl}: Added wchar_t version of putenv().
+
 Fri May 14 10:00:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac:

@@ -101,7 +101,7 @@ public:
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Hash<signed
+ * @class ACE_Hash<signed char>
  *
  * @brief Function object for hashing a signed char
  */
@@ -114,7 +114,7 @@ public:
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Hash<unsigned
+ * @class ACE_Hash<unsigned char>
  *
  * @brief Function object for hashing an unsigned char
  */
@@ -196,28 +196,28 @@ public:
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Hash<const
+ * @class ACE_Hash<const char *>
  *
  * @brief Function object for hashing a const string
  */
-class ACE_Export ACE_Hash<const ACE_TCHAR *>
+class ACE_Export ACE_Hash<const char *>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const ACE_TCHAR *t) const;
+  unsigned long operator () (const char *t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Hash<ACE_TCHAR
+ * @class ACE_Hash<char *>
  *
  * @brief Function object for hashing a string
  */
-class ACE_Export ACE_Hash<ACE_TCHAR *>
+class ACE_Export ACE_Hash<char *>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const ACE_TCHAR *t) const;
+  unsigned long operator () (const char *t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -234,35 +234,35 @@ public:
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Equal_To<const
+ * @class ACE_Equal_To<const char *>
  *
  * @brief Function object for determining whether two const strings are equal.
  */
-class ACE_Export ACE_Equal_To<const ACE_TCHAR *>
+class ACE_Export ACE_Equal_To<const char *>
 {
 public:
   /// Simply calls ACE_OS::strcmp
-  int operator () (const ACE_TCHAR *lhs,
-                   const ACE_TCHAR *rhs) const;
+  int operator () (const char *lhs,
+                   const char *rhs) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Equal_To<ACE_TCHAR
+ * @class ACE_Equal_To<char *>
  *
  * @brief Function object for determining whether two non-const
  * strings are equal.
  */
-class ACE_Export ACE_Equal_To<ACE_TCHAR *>
+class ACE_Export ACE_Equal_To<char *>
 {
 public:
   /// Simply calls ACE_OS::strcmp
-  int operator () (const ACE_TCHAR *lhs,
-                   const ACE_TCHAR *rhs) const;
+  int operator () (const char *lhs,
+                   const char *rhs) const;
 };
 
- ACE_TEMPLATE_SPECIALIZATION
- /**
+ACE_TEMPLATE_SPECIALIZATION
+/**
  * @class ACE_Equal_To<ACE_UINT16>
  *
  * @brief Function object for determining whether two unsigned
@@ -339,122 +339,139 @@ public:
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Less_Than<const
+ * @class ACE_Less_Than<const char*>
  *
  * @brief Function object for determining whether the first const string
  * is less than the second const string.
  */
-class ACE_Export ACE_Less_Than<const ACE_TCHAR *>
+class ACE_Export ACE_Less_Than<const char *>
 {
 public:
   /// Simply calls ACE_OS::strcmp
-  int operator () (const ACE_TCHAR *lhs,
-                   const ACE_TCHAR *rhs) const;
+  int operator () (const char *lhs,
+                   const char *rhs) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Less_Than<ACE_TCHAR
+ * @class ACE_Less_Than<char *>
  *
  * @brief Function object for determining whether the first string
  * is less than the second string.
  */
-class ACE_Export ACE_Less_Than<ACE_TCHAR *>
+class ACE_Export ACE_Less_Than<char *>
 {
 public:
   /// Simply calls ACE_OS::strcmp
-  int operator () (const ACE_TCHAR *lhs,
-                   const ACE_TCHAR *rhs) const;
+  int operator () (const char *lhs,
+                   const char *rhs) const;
 };
 
-#if defined (ACE_USES_WCHAR)
+#if defined (ACE_HAS_WCHAR)
 
+#  if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
+// MSVC uses ACE_UINT16 as wchar_t, and since there's a ACE_Hash<ACE_UINT16>,
+// there can't be a ACE_Hash<wchar_t>.
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Less_Than<const
+ * @class ACE_Hash<wchar_t>
  *
- * @brief Function object for determining whether the first const string
- * is less than the second const string.
+ * @brief Function object for hashing a wchar_t
  */
-class ACE_Export ACE_Less_Than<const ACE_ANTI_TCHAR *>
+class ACE_Export ACE_Hash<wchar_t>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
-  int operator () (const ACE_ANTI_TCHAR *lhs,
-                   const ACE_ANTI_TCHAR *rhs) const;
+  /// Simply returns t
+  unsigned long operator () (wchar_t t) const;
 };
+#  endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Less_Than<ACE_ANTI_TCHAR
- *
- * @brief Function object for determining whether the first string
- * is less than the second string.
- */
-class ACE_Export ACE_Less_Than<ACE_ANTI_TCHAR *>
-{
-public:
-  /// Simply calls ACE_OS::strcmp
-  int operator () (const ACE_ANTI_TCHAR *lhs,
-                   const ACE_ANTI_TCHAR *rhs) const;
-};
-
-ACE_TEMPLATE_SPECIALIZATION
-/**
- * @class ACE_Hash<const
+ * @class ACE_Hash<const wchar_t *>
  *
  * @brief Function object for hashing a const string
  */
-class ACE_Export ACE_Hash<const ACE_ANTI_TCHAR *>
+class ACE_Export ACE_Hash<const wchar_t *>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const ACE_ANTI_TCHAR *t) const;
+  unsigned long operator () (const wchar_t *t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Hash<ACE_ANTI_TCHAR
+ * @class ACE_Hash<wchar_t *>
  *
  * @brief Function object for hashing a string
  */
-class ACE_Export ACE_Hash<ACE_ANTI_TCHAR *>
+class ACE_Export ACE_Hash<wchar_t *>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const ACE_ANTI_TCHAR *t) const;
+  unsigned long operator () (const wchar_t *t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Equal_To<const
+ * @class ACE_Equal_To<const wchar_t *>
  *
  * @brief Function object for determining whether two const strings are equal.
  */
-class ACE_Export ACE_Equal_To<const ACE_ANTI_TCHAR *>
+class ACE_Export ACE_Equal_To<const wchar_t *>
 {
 public:
   /// Simply calls ACE_OS::strcmp
-  int operator () (const ACE_ANTI_TCHAR *lhs,
-                   const ACE_ANTI_TCHAR *rhs) const;
+  int operator () (const wchar_t *lhs,
+                   const wchar_t *rhs) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
- * @class ACE_Equal_To<ACE_ANTI_TCHAR
+ * @class ACE_Equal_To<wchar_t *>
  *
  * @brief Function object for determining whether two non-const
  * strings are equal.
  */
-class ACE_Export ACE_Equal_To<ACE_ANTI_TCHAR *>
+class ACE_Export ACE_Equal_To<wchar_t *>
 {
 public:
   /// Simply calls ACE_OS::strcmp
-  int operator () (const ACE_ANTI_TCHAR *lhs,
-                   const ACE_ANTI_TCHAR *rhs) const;
+  int operator () (const wchar_t *lhs,
+                   const wchar_t *rhs) const;
 };
 
-#endif  // ACE_USES_WCHAR
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Less_Than<const wchar_t *>
+ *
+ * @brief Function object for determining whether the first const string
+ * is less than the second const string.
+ */
+class ACE_Export ACE_Less_Than<const wchar_t *>
+{
+public:
+  /// Simply calls ACE_OS::strcmp
+  int operator () (const wchar_t *lhs,
+                   const wchar_t *rhs) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Less_Than<wchar_t *>
+ *
+ * @brief Function object for determining whether the first string
+ * is less than the second string.
+ */
+class ACE_Export ACE_Less_Than<wchar_t *>
+{
+public:
+  /// Simply calls ACE_OS::strcmp
+  int operator () (const wchar_t *lhs,
+                   const wchar_t *rhs) const;
+};
+
+#endif  // ACE_HAS_WCHAR
 
 #if defined (__ACE_INLINE__)
 #include "ace/Functor.i"

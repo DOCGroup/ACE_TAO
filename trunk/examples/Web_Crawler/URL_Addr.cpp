@@ -91,8 +91,8 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s)
 
   // First split off the path_name.
 
-  ACE_TCHAR *path_name = ACE_OS::strchr (t, '/');
-  const ACE_TCHAR *name = "index.html";
+  ACE_TCHAR *path_name = ACE_OS::strchr (t, ACE_TEXT ('/'));
+  const ACE_TCHAR *name = ACE_TEXT ("index.html");
   if (path_name != 0)
     {
       if (ACE_OS::strlen (path_name + 1) > 0)

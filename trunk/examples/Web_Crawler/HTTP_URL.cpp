@@ -23,10 +23,10 @@ HTTP_URL::HTTP_URL (const ACE_URL_Addr &url_addr,
   ACE_DEBUG ((LM_DEBUG, "HTTP_URL %s\n", url_addr.addr_to_string ()));
 }
 
-int
+ssize_t
 HTTP_URL::send_request (void)
 {
-  int commandsize = 
+  size_t commandsize = 
     ACE_OS::strlen (this->url_addr ().get_path_name ())
     + ACE_OS::strlen (this->url_addr ().get_host_name ())
     + 20 // Extra
@@ -43,7 +43,7 @@ HTTP_URL::send_request (void)
 
   ACE_OS::sprintf (cmd_ptr.get (),
                    "GET /%s HTTP/1.1\r\n",
-                   this->url_addr ().get_path_name ());
+                   ACE_TEXT_ALWAYS_CHAR (this->url_addr ().get_path_name ()));
   
   // Send the GET command to the connected server.
   if (this->stream ().send_n (cmd_ptr.get (),
@@ -53,13 +53,14 @@ HTTP_URL::send_request (void)
     {
       ACE_OS::sprintf (cmd_ptr.get (),
                        "Host: %s\r\n\r\n",
-                       this->url_addr ().get_host_name ());
+                       ACE_TEXT_ALWAYS_CHAR (this->url_addr ().get_host_name ()));
   
       // IMP: The length of teh command has to be sent!
-      int retval = this->stream ().send_n (cmd_ptr.get (),
-                                           ACE_OS::strlen (cmd_ptr.get ()),
-                                           ACE_const_cast (ACE_Time_Value *,
-                                                           OPTIONS::instance ()->timeout ()));
+      ssize_t retval =
+        this->stream ().send_n (cmd_ptr.get (),
+                                ACE_OS::strlen (cmd_ptr.get ()),
+                                ACE_const_cast (ACE_Time_Value *,
+                                                OPTIONS::instance ()->timeout ()));
       this->stream ().svc_handler ()->idle (0);
       if (retval <= 0)
         return -1;

@@ -715,18 +715,24 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 # elif defined (ACE_HAS_WTHREADS)
   m->type_ = lock_scope;
 
+  SECURITY_ATTRIBUTES sa_buffer;
+  SECURITY_DESCRIPTOR sd_buffer;
   switch (lock_scope)
     {
     case USYNC_PROCESS:
 #   if defined (ACE_HAS_WINCE)
       // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
-      m->proc_mutex_ = ::CreateMutexW (ACE_OS::default_win32_security_attributes (sa),
-                                       FALSE,
-                                       ACE_Ascii_To_Wide (name).wchar_rep ());
+      m->proc_mutex_ =
+        ::CreateMutexW (ACE_OS::default_win32_security_attributes_r
+                          (sa, &sa_buffer, &sd_buffer),
+                        FALSE,
+                        ACE_Ascii_To_Wide (name).wchar_rep ());
 #   else /* ACE_HAS_WINCE */
-      m->proc_mutex_ = ::CreateMutexA (ACE_OS::default_win32_security_attributes (sa),
-                                       FALSE,
-                                       name);
+      m->proc_mutex_ =
+        ::CreateMutexA (ACE_OS::default_win32_security_attributes_r
+                          (sa, &sa_buffer, &sd_buffer),
+                        FALSE,
+                        name);
 #   endif /* ACE_HAS_WINCE */
       if (m->proc_mutex_ == 0)
         ACE_FAIL_RETURN (-1);
@@ -834,14 +840,18 @@ ACE_OS::event_init (ACE_event_t *event,
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
+  SECURITY_ATTRIBUTES sa_buffer;
+  SECURITY_DESCRIPTOR sd_buffer;
 # if defined (ACE_HAS_WINCE)
   // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
-  *event = ::CreateEventW (ACE_OS::default_win32_security_attributes(sa),
+  *event = ::CreateEventW (ACE_OS::default_win32_security_attributes_r
+                             (sa, &sa_buffer, &sd_buffer),
                            manual_reset,
                            initial_state,
                            ACE_Ascii_To_Wide (name).wchar_rep ());
 # else /* ACE_HAS_WINCE */
-  *event = ::CreateEventA (ACE_OS::default_win32_security_attributes(sa),
+  *event = ::CreateEventA (ACE_OS::default_win32_security_attributes_r
+                             (sa, &sa_buffer, &sd_buffer),
                            manual_reset,
                            initial_state,
                            name);
@@ -892,7 +902,10 @@ ACE_OS::event_init (ACE_event_t *event,
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
-  *event = ::CreateEventW (ACE_OS::default_win32_security_attributes(sa),
+  SECURITY_ATTRIBUTES sa_buffer;
+  SECURITY_DESCRIPTOR sd_buffer;
+  *event = ::CreateEventW (ACE_OS::default_win32_security_attributes_r
+                             (sa, &sa_buffer, &sd_buffer),
                            manual_reset,
                            initial_state,
                            name);
@@ -1290,12 +1303,16 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 {
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
   m->type_ = lock_scope;
+  SECURITY_ATTRIBUTES sa_buffer;
+  SECURITY_DESCRIPTOR sd_buffer;
   switch (lock_scope)
     {
     case USYNC_PROCESS:
-      m->proc_mutex_ = ::CreateMutexW (ACE_OS::default_win32_security_attributes (sa),
-                                       FALSE,
-                                       name);
+      m->proc_mutex_ =
+        ::CreateMutexW (ACE_OS::default_win32_security_attributes_r
+                          (sa, &sa_buffer, &sd_buffer),
+                        FALSE,
+                        name);
       if (m->proc_mutex_ == 0)
         ACE_FAIL_RETURN (-1);
       else
@@ -2667,11 +2684,13 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (arg);
   // Create the semaphore with its value initialized to <count> and
   // its maximum value initialized to <max>.
-  *s =
-    ::CreateSemaphoreA (ACE_OS::default_win32_security_attributes (sa),
-                        count,
-                        max,
-                        name);
+  SECURITY_ATTRIBUTES sa_buffer;
+  SECURITY_DESCRIPTOR sd_buffer;
+  *s = ::CreateSemaphoreA
+    (ACE_OS::default_win32_security_attributes_r (sa, &sa_buffer, &sd_buffer),
+     count,
+     max,
+     name);
 
   if (*s == 0)
     ACE_FAIL_RETURN (-1);
@@ -2758,11 +2777,13 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (arg);
   // Create the semaphore with its value initialized to <count> and
   // its maximum value initialized to <max>.
-  *s =
-    ::CreateSemaphoreW (ACE_OS::default_win32_security_attributes (sa),
-                        count,
-                        max,
-                        name);
+  SECURITY_ATTRIBUTES sa_buffer;
+  SECURITY_DESCRIPTOR sd_buffer;
+  *s = ::CreateSemaphoreW
+    (ACE_OS::default_win32_security_attributes_r (sa, &sa_buffer, &sd_buffer),
+     count,
+     max,
+     name);
 
   if (*s == 0)
     ACE_FAIL_RETURN (-1);
