@@ -47,22 +47,13 @@ int be_visitor_interface_interceptors_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_type *bt;
-  
-  // set the right type;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-  // output the class defn
-
   // generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
   // that only legal syntactic elements appear in our scope.
-  
+
   os->indent ();
   *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
-  
+
    // generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
       // that only legal syntactic elements appear in our scope.
@@ -93,7 +84,7 @@ int be_visitor_interface_interceptors_cs::visit_interface (be_interface *node)
     delete visitor;*/
 
   *os  << "#endif /* TAO_HAS_INTERCEPTORS */\n";
-  
+
   return 0;
 
 }

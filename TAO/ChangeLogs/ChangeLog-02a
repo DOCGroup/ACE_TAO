@@ -1,9 +1,19 @@
+Tue Sep 05 11:10:47 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+        * tao/Profile.cpp:
+          Fixed warnings about unused variables
+
 Tue Sep  5 11:26:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * be/be_visitor_operation/operation_cs.cpp: Added a line in the
-	  generated code to reset the reply_received field in the
-	  Invocation class. This was added on <Fri Jul 21 17:54:55 2000
-	  <bala@cs.wustl.edu> but seem to have dissappeared in between.
+          generated code to reset the reply_received field in the
+          Invocation class. This was added on <Fri Jul 21 17:54:55 2000
+          <bala@cs.wustl.edu> but seem to have dissappeared in between.
 
 Tue Sep  5 10:51:53 2000  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -17,24 +27,24 @@ Tue Sep  5 10:51:53 2000  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Sep  4 22:18:16 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Stub.cpp:
+        * tao/Stub.cpp:
 
-	  Changed the use of <MProfile::get_next> to
-	  <MProfile::get_profile> in the TAO_Stub constructor.  <get_next>
-	  method has side effects, and was corrupting the state of the
-	  stub's <base_profiles_> member.  This fixes the following bug in
-	  the orb: if the invocation using the first profile in the IOR
-	  does not succeed for whatever reason, e.g., protocol not
-	  supported, the invocation will fail without going through other
-	  profiles.
+          Changed the use of <MProfile::get_next> to
+          <MProfile::get_profile> in the TAO_Stub constructor.  <get_next>
+          method has side effects, and was corrupting the state of the
+          stub's <base_profiles_> member.  This fixes the following bug in
+          the orb: if the invocation using the first profile in the IOR
+          does not succeed for whatever reason, e.g., protocol not
+          supported, the invocation will fail without going through other
+          profiles.
 
 Sun Sep 03 19:40:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* TAO_IDL/TAO_IDL_BE_DLL.dsp:
-	* TAO_IDL/TAO_IDL_FE_DLL.dsp:
-	* TAO_IDL/tao_idl.dsp:
-	  Go the IDL compiler to compile under Win32/Release,
-	  unfortunately it crashes at run-time.
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/tao_idl.dsp:
+          Go the IDL compiler to compile under Win32/Release,
+          unfortunately it crashes at run-time.
 
 Sun Sep  3 15:35:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
