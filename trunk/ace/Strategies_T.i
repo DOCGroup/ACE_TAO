@@ -1,11 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-template<class ADDR_T> ASYS_INLINE
-ACE_Hash_Addr<ADDR_T>::~ACE_Hash_Addr (void)
-{
-}
-
 template<class SVC_HANDLER> ASYS_INLINE
 ACE_Recycling_Strategy<SVC_HANDLER>::~ACE_Recycling_Strategy (void)
 {
@@ -380,48 +375,6 @@ ACE_Refcounted_Hash_Recyclable<T>::operator== (const T &rhs) const
     return 0;
   else
     return this->t_ == rhs;
-}
-
-template<class ADDR_T> ASYS_INLINE
-ACE_Hash_Addr<ADDR_T>::ACE_Hash_Addr (void)
-  : hash_value_ (0)
-{
-}
-
-template<class ADDR_T> ASYS_INLINE
-ACE_Hash_Addr<ADDR_T>::ACE_Hash_Addr (const ADDR_T &a)
-  : hash_value_ (0),
-    addr_ (a)
-{
-  this->hash ();
-}
-
-template<class ADDR_T> ASYS_INLINE u_long
-ACE_Hash_Addr<ADDR_T>::hash (void) const
-{
-  // In doing the check below, we take chance of paying a performance
-  // price when the hash value is zero.  But, that will (hopefully)
-  // happen far less often than a non-zero value, so this caching
-  // strategy should pay off, esp. if hash computation is expensive
-  // relative to the simple comparison.
-
-  if (this->hash_value_ == 0)
-    ((ACE_Hash_Addr<ADDR_T> *) this)->hash_value_ = this->hash_i (addr_);
-
-  return this->hash_value_;
-}
-
-template<class ADDR_T> ASYS_INLINE u_long
-ACE_Hash_Addr<ADDR_T>::hash_i (const ADDR_T &b) const
-{
-  ACE_UNUSED_ARG (b);
-  return 0;
-}
-
-template<class ADDR_T> ASYS_INLINE int
-ACE_Hash_Addr<ADDR_T>::operator== (const ACE_Hash_Addr<ADDR_T> &rhs) const
-{
-  return this->addr_ == rhs.addr_;
 }
 
 template <class SVC_HANDLER> ASYS_INLINE int
