@@ -1,3 +1,4 @@
+<!--$Id$-->
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
@@ -20,7 +21,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
 				Optimization="0"
-				AdditionalIncludeDirectories="..,../CCF"
+				AdditionalIncludeDirectories="../CCF, .."
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;BOOST_REGEX_NO_LIB;BOOST_REGEX_STATIC_LINK"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -73,7 +74,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
-				AdditionalIncludeDirectories="..,../CCF"
+				AdditionalIncludeDirectories="../CCF, .."
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="4"
 				ForceConformanceInForLoopScope="TRUE"
