@@ -1,3 +1,8 @@
+Sat Jul 13 14:26:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/POA/Persistent_ID/server.cpp (method): 
+	* tao/Utils/RIR_Narrow.cpp: Fixed fuzz errors.
+
 Sat Jul 13 13:22:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Stack_Recursion/Makefile:
