@@ -347,16 +347,22 @@ ACE_Capabilities::getent (const char *fname,
   return -1;
 }
 
-#if defined(ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Equal_To<ACE_CString>;
-template class ACE_Hash<ACE_CString>;
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>;
-// template class ACE_Hash_Map_Iterator_Base<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_CString,ACE_CapEntry*>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,ACE_CapEntry*>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
