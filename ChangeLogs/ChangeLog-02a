@@ -1,3 +1,11 @@
+Sat Feb 26 19:47:05 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Local_Tokens.cpp (ACE_TPQ_Entry):
+
+	  Needed to go a step further.  Taking the jackhammer approach by
+	  switching to a C style cast until a better solution presents
+	  itself.
+
 Sat Feb 26 13:40:57 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Local_Tokens.cpp (ACE_TPQ_Entry):
