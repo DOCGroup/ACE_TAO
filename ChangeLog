@@ -1,3 +1,9 @@
+Fri Oct 15 01:28:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* netsvcs/lib/Makefile.am:
+
+	  Changed to install netsvcs library.
+
 Fri Oct 15 06:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Vector_Test.cpp:

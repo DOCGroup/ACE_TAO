@@ -9,7 +9,7 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
 ## Makefile.netsvcs.am 
-noinst_LTLIBRARIES = libnetsvcs.la
+lib_LTLIBRARIES = libnetsvcs.la
 
 libnetsvcs_la_CPPFLAGS = \
   -I$(top_builddir) \
