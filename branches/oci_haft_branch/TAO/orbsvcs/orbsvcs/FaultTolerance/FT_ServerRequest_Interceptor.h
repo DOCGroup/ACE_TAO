@@ -34,8 +34,9 @@
 
 namespace IOP
 {
-  class ServiceContext;
+  struct ServiceContext;
 }
+
 namespace TAO
 {
   /**

@@ -1,3 +1,18 @@
+Tue Sep 23 17:19:48 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+	  Added inheritance from orbsvcsexe base project to resolve include
+	  path problems.
+
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+	  Manipulated the SourceFiles list to resolve some link errors.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
+	  Changed forward declaration of IOP::ServiceContext to quiet
+	  compiler warnings on VC++ 6.0.
+
 Tue Sep 23 17:03:40 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/tests/FT_App/FT_App.mpc:
