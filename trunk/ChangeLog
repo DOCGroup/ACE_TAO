@@ -1,3 +1,11 @@
+Tue Mar  5 05:51:44 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Process.cpp (spawn): If fork()/exec() fail, call ACE_OS::_exit()
+	  rather than ACE_OS::exit() to avoid destructors being called
+ 	  that will yield hang problems.  Thanks to Renjie Tang
+ 	  <rtang@informatica.com> and Max V. Zinal <Zlat0@mail.ru> for
+ 	  this suggestion.  This fixes BugID 1147.
+
 Tue Mar  5 12:24:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Auto_IncDec_T.h:
