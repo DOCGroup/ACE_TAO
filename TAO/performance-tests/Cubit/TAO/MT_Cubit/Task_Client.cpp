@@ -431,7 +431,7 @@ Client::svc (void)
 
   char **argv = tmp_args2.argv ();
 
-  u_int naming_success = CORBA::B_FALSE;
+  u_int naming_success = 0;
 
   orb = CORBA::ORB_init (argc,
                          argv,
@@ -596,14 +596,14 @@ Client::svc (void)
               }
             else
               {
-                naming_success = CORBA::B_TRUE;
+                naming_success = 1;
                 ACE_DEBUG ((LM_DEBUG,
                             " (%t) Cubit object resolved to the name \"%s\".\n",
                             buffer));
               }
           }
 
-        if (naming_success == CORBA::B_FALSE)
+        if (naming_success == 0)
           {
             char *my_ior =
               ts_->use_utilization_test_ == 1

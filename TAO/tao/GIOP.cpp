@@ -128,8 +128,8 @@ operator<<(TAO_OutputCDR& cdr, const TAO_GIOP_ServiceContext& x)
 {
   if ( (cdr << x.context_id)
        && (cdr << x.context_data) )
-    return CORBA::B_TRUE;
-  return CORBA::B_FALSE;
+    return 1;
+  return 0;
 }
 
 CORBA_Boolean
@@ -138,8 +138,8 @@ operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContext& x)
 {
   if ( (cdr >> x.context_id)
        && (cdr >> x.context_data) )
-    return CORBA::B_TRUE;
-  return CORBA::B_FALSE;
+    return 1;
+  return 0;
 }
 
 CORBA_Boolean
@@ -286,7 +286,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                           "(%P|%t) closing conn %d after fault %p\n",
                           peer.get_handle (), "GIOP::send_request"));
               handler->close ();
-              return CORBA::B_FALSE;
+              return 0;
             }
           else if (n == 0)
             {
@@ -295,7 +295,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                           "EOF, closing conn %d\n",
                           peer.get_handle ()));
               handler->close ();
-              return CORBA::B_FALSE;
+              return 0;
             }
           iovcnt = 0;
         }
@@ -310,7 +310,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                       "(%P|%t) closing conn %d after fault %p\n",
                       peer.get_handle (), "GIOP::send_request"));
           handler->close ();
-          return CORBA::B_FALSE;
+          return 0;
         }
       else if (n == 0)
         {
@@ -319,12 +319,12 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                       "EOF, closing conn %d\n",
                       peer.get_handle ()));
           handler->close ();
-          return CORBA::B_FALSE;
+          return 0;
         }
       iovcnt = 0;
     }
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 // Server sends an "I'm shutting down now, any requests you've sent me
@@ -701,7 +701,7 @@ TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
   msg.reset ();
 
   // if (msg.size () < TAO_GIOP_HEADER_LEN)
-  // return CORBA::B_FALSE;
+  // return 0;
 
   static CORBA::Octet header[] = {
     'G', 'I', 'O', 'P',
@@ -718,7 +718,7 @@ TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
   CORBA::ULong size = 0;
   msg.write_ulong (size);
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 CORBA::Boolean
@@ -734,7 +734,7 @@ TAO_GIOP::start_message_lite (TAO_GIOP::Message_Type type,
 
   msg.write_octet (type);
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 CORBA::Boolean

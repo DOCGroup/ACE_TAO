@@ -227,12 +227,12 @@ void Marshal_DSI_Impl::_Marshal_is_a_skel(CORBA_ServerRequest &req,
   cout << "object id = " << ((char *)value) << endl;
   if (strcmp ((char *)value, (char *)type_id) == 0
       || strcmp ((char *)value, _tc_CORBA_Object->id(env)) == 0)
-    retval = new CORBA_Boolean (CORBA_B_TRUE);
+    retval = new CORBA_Boolean (1);
   else
-    retval = new CORBA_Boolean (CORBA_B_FALSE);
+    retval = new CORBA_Boolean (0);
 
   CORBA_Any  		*any =
-    new CORBA_Any (_tc_CORBA_Boolean, retval, CORBA_B_TRUE);
+    new CORBA_Any (_tc_CORBA_Boolean, retval, 1);
 
   req.result (any, env);
   dexc (env, "_is_a, result");
@@ -267,7 +267,7 @@ void Marshal_DSI_Impl::_Marshal_test_short_skel(CORBA_ServerRequest &req,
   nv2->value ()->replace (_tc_CORBA_Short, &s2, 0, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -300,7 +300,7 @@ void Marshal_DSI_Impl::_Marshal_test_long_skel(CORBA_ServerRequest &req,
   nv2->value ()->replace (_tc_CORBA_Long, &l2, 0, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -333,7 +333,7 @@ void Marshal_DSI_Impl::_Marshal_test_octet_skel(CORBA_ServerRequest &req,
   nv2->value ()->replace (_tc_CORBA_Octet, &o2, 0, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -366,7 +366,7 @@ void Marshal_DSI_Impl::_Marshal_test_char_skel(CORBA_ServerRequest &req,
   nv2->value ()->replace (_tc_CORBA_Char, &c2, 0, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -399,7 +399,7 @@ void Marshal_DSI_Impl::_Marshal_test_double_skel(CORBA_ServerRequest &req,
   nv2->value ()->replace (_tc_CORBA_Double, &d2, 0, env);
 
   // result - NO result
-  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   req.result(any, env);
 }
 
@@ -439,7 +439,7 @@ void Marshal_DSI_Impl::_Marshal_test_struct_skel(CORBA_ServerRequest &req,
   nv2->value ()->replace (Marshal::_tc_Marshal_Struct, ms2, 1, env);
 
   // result - NO result
-  //  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  //  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   //  req.result(any, env);
 }
 
@@ -473,7 +473,7 @@ void Marshal_DSI_Impl::_Marshal_test_union_skel(CORBA_ServerRequest &req,
   nv2->value ()->replace (Marshal::_tc_Marshal_Union, u2, 0, env);
 
   // result - NO result
-  //  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  //  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   //  req.result(any, env);
 }
 
@@ -506,7 +506,7 @@ void Marshal_DSI_Impl::_Marshal_test_any_skel(CORBA_ServerRequest &req,
   nv2->value ()->replace (_tc_CORBA_Any, a2, 1, env);
 
   // result - NO result
-  //  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  //  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   //  req.result(any, env);
 }
 
@@ -539,7 +539,7 @@ void Marshal_DSI_Impl::_Marshal_test_sequence_skel(CORBA_ServerRequest &req,
   nv2->value ()->replace (Marshal::_tc_AnySeq, as2, 1, env);
 
   // result - NO result
-  //  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, CORBA_B_TRUE);
+  //  CORBA_Any *any = new CORBA_Any(_tc_CORBA_Void, 0, 1);
   //  req.result(any, env);
 }
 

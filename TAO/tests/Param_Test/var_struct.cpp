@@ -102,15 +102,15 @@ Test_Var_Struct::add_args (CORBA::NVList_ptr param_list,
 {
   CORBA::Any in_arg (Param_Test::_tc_Var_Struct, 
                     &this->in_, 
-                    CORBA::B_FALSE);
+                    0);
 
   CORBA::Any inout_arg (Param_Test::_tc_Var_Struct, 
                         &this->inout_.inout (), // .out () causes crash 
-                        CORBA::B_FALSE);
+                        0);
 
   CORBA::Any out_arg (Param_Test::_tc_Var_Struct, 
                       &this->out_.inout (),
-                      CORBA::B_FALSE);
+                      0);
 
   // add parameters
   param_list->add_value ("s1",
@@ -131,7 +131,7 @@ Test_Var_Struct::add_args (CORBA::NVList_ptr param_list,
   // add return value
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Var_Struct,
                                             &this->ret_.inout (), // see above
-                                            CORBA::B_FALSE, // does not own
+                                            0, // does not own
                                             env);
   return 0;
 }

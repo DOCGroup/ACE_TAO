@@ -207,9 +207,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   os->indent ();
   *os << "(!ACE_OS::strcmp ((char *)value, "
       << "CORBA::_tc_Object->id (_tao_environment))))"
-      << be_idt_nl << "return CORBA::B_TRUE;" << be_uidt_nl
+      << be_idt_nl << "return 1;" << be_uidt_nl
       << "else" << be_idt_nl
-      << "return CORBA::B_FALSE;" << be_uidt << be_uidt << be_uidt_nl
+      << "return 0;" << be_uidt << be_uidt << be_uidt_nl
       << "}\n\n";
 
   // generate code for the _non_existent skeleton
@@ -232,7 +232,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "{\"_non_existent\", 1, 1, " << node->flatname ()
       << "_non_existent_paramdata};" << be_nl;
   *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
-  *os << "CORBA::Boolean _tao_retval = CORBA::B_FALSE;" << be_nl;
+  *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
   *os << "_tao_server_request.marshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
       << "_tao_skel_environment," << be_nl

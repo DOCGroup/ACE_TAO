@@ -148,7 +148,7 @@ Cubit_Task::initialize_orb (void)
       // Check the environment and return 1 if exception occurred or
       // nil pointer.
       if (TAO_TRY_ENV.exception () != 0 ||
-      CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
+      CORBA::is_nil (this->naming_context_.in ())==1 )
       return -1;
       */
 
@@ -283,7 +283,7 @@ Cubit_Task::create_servants (void)
           cubit_name[0].id =
             CORBA::string_dup (buffer);
 
-          if (CORBA::is_nil (this->mt_cubit_context_.in ()) == CORBA::B_FALSE)
+          if (CORBA::is_nil (this->mt_cubit_context_.in ()) == 0)
             {
               this->mt_cubit_context_->bind (cubit_name,
                                              cubit.in (),

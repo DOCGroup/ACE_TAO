@@ -66,7 +66,7 @@ operator>> (TAO_InputCDR& cdr, CORBA_Principal*& x)
     }
   else
     {
-      ACE_NEW_RETURN (x, CORBA::Principal, CORBA::B_FALSE);
+      ACE_NEW_RETURN (x, CORBA::Principal, 0);
       x->id.length (length);
       cdr.read_octet_array (x->id.get_buffer (), length);
     }

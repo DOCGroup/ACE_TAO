@@ -34,7 +34,7 @@ ACE_RCSID(TAO, test1, "$Id$")
     extern const TAO_Call_Data test1_ ## typename ## _calldata; \
     \
     const TAO_Call_Data test1_ ## typename ## _calldata = { \
-	"test_" #typename, CORBA_B_TRUE, \
+	"test_" #typename, 1, \
 	4, &test1_ ## typename ## _paramdata [0], \
 	0, 0, \
     }; \
@@ -73,7 +73,7 @@ ACE_RCSID(TAO, test1, "$Id$")
 // that the server returns some kind of system exception.
 //
 static const TAO_Call_Data illegal_calldata = {
-    "+_illegal", CORBA_B_TRUE,
+    "+_illegal", 1,
     0, 0,
     0, 0
 };
@@ -96,7 +96,7 @@ test_illegal (test1_ptr target, CORBA_Environment &env)
 
 extern const TAO_Call_Data test1_void_calldata;
 const TAO_Call_Data test1_void_calldata = {
-    "test_void", CORBA_B_TRUE,
+    "test_void", 1,
     0, 0,
     0, 0
 };
@@ -150,7 +150,7 @@ static const TAO_Param_Data test1_float_paramdata [4] = {
 extern const TAO_Call_Data test1_float_calldata;
 
 const TAO_Call_Data test1_float_calldata = {
-    "test_float", CORBA_B_TRUE,
+    "test_float", 1,
     4 , &test1_float_paramdata [0],
     0 , 0
 };
@@ -277,7 +277,7 @@ static CORBA_Long oc_x1 [] = {
     BIG_ENDIAN_LONG (tk_long)
 };
 static CORBA_TypeCode tc_x1 (tk_except, sizeof oc_x1,
-	    (unsigned char *)&oc_x1, CORBA_B_FALSE);
+	    (unsigned char *)&oc_x1, 0);
 CORBA_TypeCode_ptr	_tc_test1_x1 = &tc_x1;
 
 
@@ -318,7 +318,7 @@ static CORBA_Long oc_x2 [] = {
     BIG_ENDIAN_LONG (tk_long)
 };
 static CORBA_TypeCode tc_x2 (tk_except, sizeof oc_x2,
-	    (unsigned char *)&oc_x2, CORBA_B_FALSE);
+	    (unsigned char *)&oc_x2, 0);
 CORBA_TypeCode_ptr	_tc_test1_x2 = &tc_x2;
 
 
@@ -336,7 +336,7 @@ static CORBA_TypeCode_ptr test1_test_throw_excepts [2] = {
 extern const TAO_Call_Data test1_test_throw_calldata;
 
 const TAO_Call_Data test1_test_throw_calldata = {
-    "test_throw", CORBA_B_TRUE,
+    "test_throw", 1,
     1, &test1_test_throw_paramdata [0],
     2, &test1_test_throw_excepts [0]
 };
@@ -368,7 +368,7 @@ test1_test_throw (
 //
 
 static const TAO_Call_Data test1_please_exit_calldata = {
-    "please_exit", CORBA_B_FALSE,
+    "please_exit", 0,
     0, 0,
     0, 0
 };

@@ -403,8 +403,8 @@ main (int argc, char *argv [])
 
       ec = 0;
 
-      root_poa->destroy (CORBA::B_TRUE,
-                         CORBA::B_TRUE,
+      root_poa->destroy (1,
+                         1,
                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 

@@ -66,7 +66,7 @@ public:
 
   CORBA_Any (CORBA::TypeCode_ptr type,
              void *value = 0,
-             CORBA::Boolean any_owns_data = CORBA::B_FALSE);
+             CORBA::Boolean any_owns_data = 0);
   // Constructor. The any_owns_data flag determines if the Any owns the value
 
   CORBA_Any (CORBA::TypeCode_ptr type,
@@ -191,7 +191,7 @@ public:
   {
     from_string (char* s,
                  CORBA::ULong b,
-                 CORBA::Boolean nocopy = CORBA::B_FALSE);
+                 CORBA::Boolean nocopy = 0);
     char *val_;
     CORBA::ULong bound_;
     CORBA::Boolean nocopy_;

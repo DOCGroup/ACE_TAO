@@ -883,7 +883,7 @@ Cubit_Client::run (int testing_collocation)
   if (testing_collocation)
     {
       // @@ Nanbor, this code should be split into a separate method.
-      TAO_ORB_Core_instance ()->using_collocation (CORBA::B_FALSE);
+      TAO_ORB_Core_instance ()->using_collocation (0);
       // Make sure we call the following method "remotely" so
       // the right ORB could be used.
 

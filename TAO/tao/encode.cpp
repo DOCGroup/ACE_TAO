@@ -39,7 +39,7 @@ TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
                                void *context,
                                CORBA::Environment &env)
 {
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
+  CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation
@@ -83,7 +83,7 @@ TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
     }
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_encoding == CORBA::B_TRUE)
+      && continue_encoding == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -145,7 +145,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
                               void *context,
                               CORBA::Environment &env)
 {
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
+  CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
   CORBA::TypeCode_ptr tc2;         // typecode to be encoded
 
@@ -153,7 +153,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
 
   // encode the "kind" field of the typecode
   continue_encoding = stream->write_ulong ((CORBA::ULong) tc2->kind_);
-  if (continue_encoding == CORBA::B_TRUE)
+  if (continue_encoding == 1)
     {
       // now encode the parameters, if any
       switch (tc2->kind_)
@@ -172,7 +172,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
           // this, only nested inside others!
         case ~0u:
           dmsg ("indirected typecode at top level!");
-          continue_encoding = CORBA::B_FALSE;
+          continue_encoding = 0;
           break;
 
           // The rest have "complex" parameter lists that are
@@ -194,7 +194,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
           }
         }
     }
-  if (continue_encoding == CORBA::B_TRUE)
+  if (continue_encoding == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -212,7 +212,7 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
                                void *context,
                                CORBA::Environment &env)
 {
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
+  CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
   CORBA::Principal_ptr p = *(CORBA::Principal_ptr *) data;
@@ -227,7 +227,7 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
     }
   else
     continue_encoding = stream->write_long (0);
-  if (continue_encoding == CORBA::B_TRUE)
+  if (continue_encoding == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -362,7 +362,7 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
 {
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
+  CORBA::Boolean continue_encoding = 1;
   CORBA::TypeCode_ptr param;
   CORBA::Long size, alignment, align_offset;
 
@@ -374,7 +374,7 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
 
       for (int i = 0;
            i < member_count && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-             && continue_encoding == CORBA::B_TRUE;
+             && continue_encoding == 1;
            i++)
         {
           param = tc->member_type (i, env);
@@ -473,7 +473,7 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
       return CORBA::TypeCode::TRAVERSE_STOP;
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_encoding == CORBA::B_TRUE)
+      && continue_encoding == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -505,7 +505,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
       CORBA::ULong member_count;
       CORBA::Long default_index;
       CORBA::TypeCode_ptr default_tc = 0;
-      CORBA::Boolean discrim_matched = CORBA::B_FALSE;
+      CORBA::Boolean discrim_matched = 0;
 
       TAO_Base_Union *base_union = (TAO_Base_Union *)data;
       void *member_val;
@@ -550,7 +550,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                     CORBA::Short s;
                                     *member_label >>= s;
                                     if (s == *(CORBA::Short *) discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_ushort:
@@ -558,7 +558,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                     CORBA::UShort s;
                                     *member_label >>= s;
                                     if (s == *(CORBA::UShort *) discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_long:
@@ -566,7 +566,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                     CORBA::Long l;
                                     *member_label >>= l;
                                     if (l == *(CORBA::Long *) discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_ulong:
@@ -574,7 +574,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                     CORBA::ULong l;
                                     *member_label >>= l;
                                     if (l == *(CORBA::ULong *) discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_enum:
@@ -585,7 +585,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                                          ());
                                     (void)stream.decode (discrim_tc, &l, 0, env);
                                     if (l == *(CORBA::Long *) discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_char:
@@ -593,20 +593,20 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                     CORBA::Char c;
                                     *member_label >>= CORBA::Any::to_char (c);
                                     if (c == *(CORBA::Char *) discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_wchar:
                                   // @@ ASG TO-DO
                                   if (*(CORBA::WChar *) member_label->value () == *(CORBA::WChar *) discrim_val)
-                                    discrim_matched = CORBA::B_TRUE;
+                                    discrim_matched = 1;
                                   break;
                                 case CORBA::tk_boolean:
                                   {
                                     CORBA::Boolean b;
                                     *member_label >>= CORBA::Any::to_boolean (b);
                                     if (b == *(CORBA::Boolean *) discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 default:
@@ -735,7 +735,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               void *context,
                               CORBA::Environment &env)
 {
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
+  CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
   TAO_Base_Sequence *seq = (TAO_Base_Sequence *)data;
   CORBA::TypeCode::traverse_status retval =
@@ -781,7 +781,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               continue_encoding = continue_encoding &&
                                 stream->write_short_array
                                 ((CORBA::Short*)value, bounds);
-                              if (continue_encoding == CORBA::B_TRUE)
+                              if (continue_encoding == 1)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
@@ -793,7 +793,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               continue_encoding = continue_encoding &&
                                 stream->write_long_array
                                 ((CORBA::Long*)value, bounds);
-                              if (continue_encoding == CORBA::B_TRUE)
+                              if (continue_encoding == 1)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
@@ -804,7 +804,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               continue_encoding = continue_encoding &&
                                 stream->write_longlong_array
                                 ((CORBA::LongLong*)value, bounds);
-                              if (continue_encoding == CORBA::B_TRUE)
+                              if (continue_encoding == 1)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
@@ -813,7 +813,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               continue_encoding = continue_encoding &&
                                 stream->write_boolean_array
                                 ((CORBA::Boolean*)value, bounds);
-                              if (continue_encoding == CORBA::B_TRUE)
+                              if (continue_encoding == 1)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
@@ -822,7 +822,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               continue_encoding = continue_encoding &&
                                 stream->write_char_array
                                 ((CORBA::Char*)value, bounds);
-                              if (continue_encoding == CORBA::B_TRUE)
+                              if (continue_encoding == 1)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
@@ -849,7 +849,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                                   }
                               }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-                              if (continue_encoding == CORBA::B_TRUE)
+                              if (continue_encoding == 1)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
@@ -858,7 +858,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               continue_encoding = continue_encoding &&
                                 stream->write_longdouble_array
                                 ((CORBA::LongDouble*)value, bounds);
-                              if (continue_encoding == CORBA::B_TRUE)
+                              if (continue_encoding == 1)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
@@ -867,7 +867,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               continue_encoding = continue_encoding &&
                                 stream->write_wchar_array
                                 ((CORBA::WChar*)value, bounds);
-                              if (continue_encoding == CORBA::B_TRUE)
+                              if (continue_encoding == 1)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
@@ -926,7 +926,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
     {
       // length is 0, encode it
       continue_encoding = stream->write_ulong (len);
-      if (continue_encoding == CORBA::B_TRUE)
+      if (continue_encoding == 1)
         return CORBA::TypeCode::TRAVERSE_CONTINUE;
 
     }
@@ -945,7 +945,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                            void *context,
                            CORBA::Environment &env)
 {
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
+  CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
@@ -976,7 +976,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                   continue_encoding = continue_encoding &&
                     stream->write_short_array
                     ((CORBA::Short*)value, bounds);
-                  if (continue_encoding == CORBA::B_TRUE)
+                  if (continue_encoding == 1)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
 
@@ -987,7 +987,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                   continue_encoding = continue_encoding &&
                     stream->write_long_array
                     ((CORBA::Long*)value, bounds);
-                  if (continue_encoding == CORBA::B_TRUE)
+                  if (continue_encoding == 1)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
 
@@ -998,7 +998,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                   continue_encoding = continue_encoding &&
                     stream->write_longlong_array
                     ((CORBA::LongLong*)value, bounds);
-                  if (continue_encoding == CORBA::B_TRUE)
+                  if (continue_encoding == 1)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
 
@@ -1007,7 +1007,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                   continue_encoding = continue_encoding &&
                     stream->write_boolean_array
                     ((CORBA::Boolean*)value, bounds);
-                  if (continue_encoding == CORBA::B_TRUE)
+                  if (continue_encoding == 1)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
 
@@ -1017,7 +1017,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                   continue_encoding = continue_encoding &&
                     stream->write_octet_array
                     ((CORBA::Octet*)value, bounds);
-                  if (continue_encoding == CORBA::B_TRUE)
+                  if (continue_encoding == 1)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
 
@@ -1026,7 +1026,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                   continue_encoding = continue_encoding &&
                     stream->write_longdouble_array
                     ((CORBA::LongDouble*)value, bounds);
-                  if (continue_encoding == CORBA::B_TRUE)
+                  if (continue_encoding == 1)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
 
@@ -1035,7 +1035,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                   continue_encoding = continue_encoding &&
                     stream->write_wchar_array
                     ((CORBA::WChar*)value, bounds);
-                  if (continue_encoding == CORBA::B_TRUE)
+                  if (continue_encoding == 1)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
 
@@ -1044,7 +1044,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                   continue_encoding = continue_encoding &&
                     stream->write_long_array
                     ((CORBA::Long*)value, bounds);
-                  if (continue_encoding == CORBA::B_TRUE)
+                  if (continue_encoding == 1)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
                   // handle all aggregate types here
@@ -1092,7 +1092,7 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
                            CORBA::Environment &env)
 {
   CORBA::TypeCode_ptr tc2;  // typecode of the aliased type
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
+  CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
   CORBA::TypeCode::traverse_status   retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation
@@ -1157,7 +1157,7 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
   }
   //  tc2->_decr_refcnt ();
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_encoding == CORBA::B_TRUE)
+      && continue_encoding == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -1177,7 +1177,7 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
                             CORBA::Environment &env)
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
+  CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
   if (env.exception () == 0)
@@ -1199,7 +1199,7 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
 
       for (int i = 0;
            i < member_count && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-             && continue_encoding == CORBA::B_TRUE;
+             && continue_encoding == 1;
            i++)
         {
           param = tc->member_type (i, env);
@@ -1277,7 +1277,7 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
     return CORBA::TypeCode::TRAVERSE_STOP;
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_encoding == CORBA::B_TRUE)
+      && continue_encoding == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {

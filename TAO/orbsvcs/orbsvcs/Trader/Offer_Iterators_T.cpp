@@ -71,7 +71,7 @@ next_n (CORBA::ULong n,
   CORBA::ULong max_possible_offers_in_sequence =
     (n <  this->offer_ids_.size ()) ? n : this->offer_ids_.size ();
 
-  ACE_NEW_RETURN (offers, CosTrading::OfferSeq, CORBA::B_FALSE);
+  ACE_NEW_RETURN (offers, CosTrading::OfferSeq, 0);
   offers->length (max_possible_offers_in_sequence);
 
   // While there are entries left and we haven't filled <offers>

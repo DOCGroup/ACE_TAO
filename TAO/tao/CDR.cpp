@@ -285,10 +285,10 @@ TAO_OutputCDR::write_1 (const CORBA::Octet* x)
   if (this->adjust (1, buf) == 0)
     {
       *ACE_reinterpret_cast(CORBA::Octet*, buf) = *x;
-      return CORBA::B_TRUE;
+      return 1;
     }
 
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -299,21 +299,21 @@ TAO_OutputCDR::write_2 (const CORBA::UShort* x)
     {
 #if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       *ACE_reinterpret_cast(CORBA::UShort*,buf) = *x;
-      return CORBA::B_TRUE;
+      return 1;
 #else
       if (!this->do_byte_swap_)
         {
           *ACE_reinterpret_cast(CORBA::UShort*,buf) = *x;
-          return CORBA::B_TRUE;
+          return 1;
         }
       else
         {
           CDR::swap_2 (ACE_reinterpret_cast(char*,x), buf);
-          return CORBA::B_TRUE;
+          return 1;
         }
 #endif /* TAO_ENABLE_SWAP_ON_WRITE */
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -324,21 +324,21 @@ TAO_OutputCDR::write_4 (const CORBA::ULong* x)
     {
 #if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       *ACE_reinterpret_cast(CORBA::ULong*,buf) = *x;
-      return CORBA::B_TRUE;
+      return 1;
 #else
       if (!this->do_byte_swap_)
         {
           *ACE_reinterpret_cast(CORBA::ULong*,buf) = *x;
-          return CORBA::B_TRUE;
+          return 1;
         }
       else
         {
           CDR::swap_4 (ACE_reinterpret_cast(char*,x), buf);
-          return CORBA::B_TRUE;
+          return 1;
         }
 #endif /* TAO_ENABLE_SWAP_ON_WRITE */
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -349,21 +349,21 @@ TAO_OutputCDR::write_8 (const CORBA::ULongLong* x)
     {
 #if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       *ACE_reinterpret_cast(CORBA::ULongLong*,buf) = *x;
-      return CORBA::B_TRUE;
+      return 1;
 #else
       if (!this->do_byte_swap_)
         {
           *ACE_reinterpret_cast(CORBA::ULongLong*,buf) = *x;
-          return CORBA::B_TRUE;
+          return 1;
         }
       else
         {
           CDR::swap_8 (ACE_reinterpret_cast(char*,x), buf);
-          return CORBA::B_TRUE;
+          return 1;
         }
 #endif /* TAO_ENABLE_SWAP_ON_WRITE */
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -374,21 +374,21 @@ TAO_OutputCDR::write_16 (const CORBA::LongDouble* x)
     {
 #if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       *ACE_reinterpret_cast(CORBA::LongDouble*,buf) = *x;
-      return CORBA::B_TRUE;
+      return 1;
 #else
       if (!this->do_byte_swap_)
         {
           *ACE_reinterpret_cast(CORBA::LongDouble*,buf) = *x;
-          return CORBA::B_TRUE;
+          return 1;
         }
       else
         {
           CDR::swap_16 (ACE_reinterpret_cast(char*,x), buf);
-          return CORBA::B_TRUE;
+          return 1;
         }
 #endif /* TAO_ENABLE_SWAP_ON_WRITE */
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -402,12 +402,12 @@ TAO_OutputCDR::write_array (const void* x,
     {
 #if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       ACE_OS::memcpy (buf, x, size*length);
-      return CORBA::B_TRUE;
+      return 1;
 #else
       if (!this->do_byte_swap_)
         {
           ACE_OS::memcpy (buf, x, size*length);
-          return CORBA::B_TRUE;
+          return 1;
         }
       else
         {
@@ -431,7 +431,7 @@ TAO_OutputCDR::write_array (const void* x,
             default:
               // TODO: print something?
               this->good_bit_ = 0;
-              return CORBA::B_FALSE;
+              return 0;
             }
           char *source = ACE_reinterpret_cast(char*,x);
           char *end = target + size*length;
@@ -443,7 +443,7 @@ TAO_OutputCDR::write_array (const void* x,
 #endif /* TAO_ENABLE_SWAP_ON_WRITE */
     }
   this->good_bit_ = 0;
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -468,7 +468,7 @@ TAO_OutputCDR::write_string (CORBA::ULong len,
           return this->write_char (0);
         }
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -489,7 +489,7 @@ TAO_OutputCDR::write_wstring (CORBA::ULong len,
           return this->write_wchar (0);
         }
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -512,7 +512,7 @@ TAO_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
 			      CDR::OCTET_ALIGN,
 			      length) )
 	{
-	  return CORBA::B_FALSE;
+	  return 0;
 	}
 #else
       // If the mb does not own its data we are forced to make a copy.
@@ -524,7 +524,7 @@ TAO_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
 				   CDR::OCTET_ALIGN,
 				   length))
 	    {
-	      return CORBA::B_FALSE;
+	      return 0;
 	    }
 	  continue;
 	}
@@ -537,7 +537,7 @@ TAO_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
 				   CDR::OCTET_ALIGN,
 				   length) )
 	    {
-	      return CORBA::B_FALSE;
+	      return 0;
 	    }
 	  continue;
 	}
@@ -552,11 +552,11 @@ TAO_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
       else
 	{
 	  this->good_bit_ = 0;
-	  return CORBA::B_FALSE;
+	  return 0;
 	}
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
     }
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 CORBA_Boolean
@@ -711,11 +711,11 @@ TAO_InputCDR::read_string (CORBA::Char*& x)
     {
       x = CORBA::string_alloc (len);
       if (this->read_char_array (x, len))
-        return CORBA::B_TRUE;
+        return 1;
       CORBA::string_free (x);
     }
   x = 0;
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -727,12 +727,12 @@ TAO_InputCDR::read_wstring (CORBA::WChar*& x)
     {
       x = CORBA::wstring_alloc (len);
       if (this->read_wchar_array (x, len))
-        return CORBA::B_TRUE;
+        return 1;
 
       CORBA::wstring_free (x);
     }
   x = 0;
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 ACE_INLINE char*
@@ -778,11 +778,11 @@ TAO_InputCDR::read_1 (CORBA::Octet* x)
     {
       *x = *ACE_reinterpret_cast(CORBA::Octet*,this->rd_ptr());
       this->start_.rd_ptr (1);
-      return CORBA::B_TRUE;
+      return 1;
     }
 
   this->good_bit_ = 0;
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -803,9 +803,9 @@ TAO_InputCDR::read_2 (CORBA::UShort* x)
 #else
       *x = *ACE_reinterpret_cast(CORBA::UShort*,buf);
 #endif /* TAO_DISABLE_SWAP_ON_READ */
-      return CORBA::B_TRUE;
+      return 1;
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -826,9 +826,9 @@ TAO_InputCDR::read_4 (CORBA::ULong* x)
 #else
       *x = *ACE_reinterpret_cast(CORBA::ULong*,buf);
 #endif /* TAO_DISABLE_SWAP_ON_READ */
-      return CORBA::B_TRUE;
+      return 1;
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -849,9 +849,9 @@ TAO_InputCDR::read_8 (CORBA::ULongLong* x)
 #else
       *x = *ACE_reinterpret_cast(CORBA::ULongLong*,buf);
 #endif /* TAO_DISABLE_SWAP_ON_READ */
-      return CORBA::B_TRUE;
+      return 1;
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -874,9 +874,9 @@ TAO_InputCDR::read_16 (CORBA::LongDouble* x)
 #else
       *x = *ACE_reinterpret_cast(CORBA::LongDouble*,buf);
 #endif /* TAO_DISABLE_SWAP_ON_READ */
-      return CORBA::B_TRUE;
+      return 1;
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -915,7 +915,7 @@ TAO_InputCDR::read_array (void* x,
             default:
               // TODO: print something?
               this->good_bit_ = 0;
-              return CORBA::B_FALSE;
+              return 0;
             }
           char *target = ACE_reinterpret_cast(char*,x);
           char *end = target + size*length;
@@ -929,7 +929,7 @@ TAO_InputCDR::read_array (void* x,
 #endif /* TAO_DISABLE_SWAP_ON_READ */
       return this->good_bit_;
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -957,12 +957,12 @@ TAO_InputCDR::skip_string (void)
       if (this->rd_ptr () + len <= this->end ())
         {
           this->rd_ptr (len);
-          return CORBA::B_TRUE;
+          return 1;
         }
       this->good_bit_ = 0;
     }
 
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 CORBA_Boolean
@@ -971,8 +971,8 @@ TAO_InputCDR::skip_bytes (size_t len)
   if (this->rd_ptr () + len <= this->end ())
     {
       this->rd_ptr (len);
-      return CORBA::B_TRUE;
+      return 1;
     }
   this->good_bit_ = 0;
-  return CORBA::B_FALSE;
+  return 0;
 }

@@ -125,15 +125,15 @@ Test_ObjRef_Sequence::add_args (CORBA::NVList_ptr param_list,
 {
   CORBA::Any in_arg (Param_Test::_tc_Coffee_Mix,
                      (void *) &this->in_,
-                     CORBA::B_FALSE);
+                     0);
 
   CORBA::Any inout_arg (Param_Test::_tc_Coffee_Mix,
                         &this->inout_.inout (),
-                        CORBA::B_FALSE);
+                        0);
 
   CORBA::Any out_arg (Param_Test::_tc_Coffee_Mix,
                       &this->out_.inout (),
-                      CORBA::B_FALSE);
+                      0);
 
   // add parameters
   param_list->add_value ("s1",
@@ -154,7 +154,7 @@ Test_ObjRef_Sequence::add_args (CORBA::NVList_ptr param_list,
   // add return value
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Coffee_Mix,
                                             &this->ret_.inout (),
-                                            CORBA::B_FALSE, // does not own
+                                            0, // does not own
                                             env);
   return 0;
 }

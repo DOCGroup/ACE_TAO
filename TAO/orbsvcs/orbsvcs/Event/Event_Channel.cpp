@@ -1307,8 +1307,8 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
 {
   ACE_GUARD (ACE_ES_MUTEX, ace_mon, this->lock_);
 
-  c_qos.is_gateway = CORBA::B_TRUE;
-  s_qos.is_gateway = CORBA::B_TRUE;
+  c_qos.is_gateway = 1;
+  s_qos.is_gateway = 1;
 
   int count = 0;
   {
@@ -3202,8 +3202,8 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
 {
   ACE_GUARD (ACE_ES_MUTEX, ace_mon, this->lock_);
 
-  c_qos.is_gateway = CORBA::B_TRUE;
-  s_qos.is_gateway = CORBA::B_TRUE;
+  c_qos.is_gateway = 1;
+  s_qos.is_gateway = 1;
 
   int count = 0;
   {

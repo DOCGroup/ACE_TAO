@@ -644,8 +644,8 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
                             CORBA::Environment& _env) const
   TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
-  CORBA::Boolean def_value = CORBA::B_TRUE,
-    return_value = CORBA::B_TRUE;
+  CORBA::Boolean def_value = 1,
+    return_value = 1;
   const TAO_Support_Attributes_i& support_attrs =
     this->trader_.support_attributes ();
 
@@ -661,7 +661,7 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
       def_value = support_attrs.supports_proxy_offers ();
       break;
     case EXACT_TYPE_MATCH:
-      def_value = CORBA::B_FALSE;
+      def_value = 0;
       break;
     default:
       break;
@@ -679,9 +679,9 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
       else
         value >>= CORBA::Any::to_boolean (return_value);
 
-      if (def_value == CORBA::B_FALSE &&
+      if (def_value == 0 &&
           pol != EXACT_TYPE_MATCH)
-        return_value = CORBA::B_FALSE;
+        return_value = 0;
     }
   else
     return_value = def_value;
@@ -927,7 +927,7 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
         }
     }
 
-  policy_seq.replace (REQUEST_ID + 1, counter, policy_buffer, CORBA::B_TRUE);
+  policy_seq.replace (REQUEST_ID + 1, counter, policy_buffer, 1);
 }
 
 
@@ -974,7 +974,7 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
                   CosTrading::TraderName new_name (length - 1,
                                                    length - 1,
                                                    buf,
-                                                   CORBA::B_TRUE);
+                                                   1);
 
                   new_policy.value <<= new_name;
                   counter++;
@@ -990,7 +990,7 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
     }
 
   // Create the new sequence
-  policy_seq.replace (REQUEST_ID + 1, counter, policy_buffer, CORBA::B_TRUE);
+  policy_seq.replace (REQUEST_ID + 1, counter, policy_buffer, 1);
 }
 
   // *************************************************************
@@ -1152,8 +1152,8 @@ merge_properties (CosTrading::PropertySeq& modifies,
 
   // The properties pass inspection. Claim this memory until it's time
   // to affect changes.
-  CosTrading::Property* props_buf = modifies.get_buffer (CORBA::B_TRUE);
-  this->merge_props_.replace (length, length, props_buf, CORBA::B_TRUE);
+  CosTrading::Property* props_buf = modifies.get_buffer (1);
+  this->merge_props_.replace (length, length, props_buf, 1);
 
   // Merge these properties with the original set.
   for (i = 0; i < length; i++)
@@ -1185,7 +1185,7 @@ TAO_Offer_Modifier::affect_change (void)
   CORBA::ULong merge_length = this->merge_props_.length ();
   // Scrap the existing property sequence and begin a new one
   CosTrading::Property* prop_buf =
-    this->offer_->properties.get_buffer (CORBA::B_TRUE);
+    this->offer_->properties.get_buffer (1);
   this->offer_->properties.length (total_length);
 
   // Copy in the unaffected and modified props into the offer,
@@ -1227,7 +1227,7 @@ TAO_Offer_Filter::TAO_Offer_Filter (TAO_Policies& policies,
     dp_ (policies.use_dynamic_properties (_env)),
     mod_ (policies.use_modifiable_properties (_env))
 {
-  if (policies.exact_type_match (_env) == CORBA::B_TRUE)
+  if (policies.exact_type_match (_env) == 1)
     {
       TAO_String_Hash_Key exact_match
         (TAO_Policies::POLICY_NAMES[TAO_Policies::EXACT_TYPE_MATCH]);
@@ -1263,7 +1263,7 @@ TAO_Offer_Filter::ok_to_consider (CosTrading::Offer* offer)
     TAO_Policies::POLICY_NAMES[TAO_Policies::USE_MODIFIABLE_PROPERTIES];
   TAO_String_Hash_Key use_dyns =
     TAO_Policies::POLICY_NAMES[TAO_Policies::USE_DYNAMIC_PROPERTIES];
-  CORBA::Boolean return_value = CORBA::B_TRUE;
+  CORBA::Boolean return_value = 1;
   TAO_Property_Evaluator prop_eval (*offer);
 
   // If we should screen offers, determine if this offer is unworthy
@@ -1375,7 +1375,7 @@ TAO_Offer_Filter::limits_applied (void)
       temp[i++] = CORBA::string_dup ((const char*) *policy_name_ptr);
     }
 
-  return new CosTrading::PolicyNameSeq (size, size, temp, CORBA::B_TRUE);
+  return new CosTrading::PolicyNameSeq (size, size, temp, 1);
 }
 
   // *************************************************************
@@ -1471,8 +1471,8 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
     }
   else if (this->policy_ == CosTrading::Lookup::all)
     {
-      CosTrading::Property* props = s_props.get_buffer (CORBA::B_FALSE);
-      d_props.replace (length, length, props, CORBA::B_FALSE);
+      CosTrading::Property* props = s_props.get_buffer (0);
+      d_props.replace (length, length, props, 0);
     }
 }
 

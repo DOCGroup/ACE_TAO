@@ -346,7 +346,7 @@ TAO_Unbounded_Sequence (CORBA::ULong length,
   :  TAO_Unbounded_Base_Sequence (length,
                                   length,
                                   mb->rd_ptr (),
-                                  CORBA::B_FALSE),
+                                  0),
      mb_ (ACE_Message_Block::duplicate (mb))
 {
 }
@@ -395,7 +395,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong max,
       ACE_Message_Block::release (this->mb_);
       this->mb_ = 0;
     }
-  else if (this->buffer_ && this->release_ == CORBA::B_TRUE)
+  else if (this->buffer_ && this->release_ == 1)
     {
       CORBA::Octet* tmp = ACE_reinterpret_cast(CORBA::Octet*,this->buffer_);
       TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (tmp);

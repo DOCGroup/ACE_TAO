@@ -93,15 +93,15 @@ Test_Objref_Struct::add_args (CORBA::NVList_ptr param_list,
 {
   CORBA::Any in_arg (Param_Test::_tc_Objref_Struct, 
                     &this->in_, 
-                    CORBA::B_FALSE);
+                    0);
 
   CORBA::Any inout_arg (Param_Test::_tc_Objref_Struct, 
                         &this->inout_.inout (), // .out () causes crash 
-                        CORBA::B_FALSE);
+                        0);
 
   CORBA::Any out_arg (Param_Test::_tc_Objref_Struct, 
                       &this->out_.inout (),
-                      CORBA::B_FALSE);
+                      0);
 
   // add parameters
   param_list->add_value ("s1",
@@ -122,7 +122,7 @@ Test_Objref_Struct::add_args (CORBA::NVList_ptr param_list,
   // add return value
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Objref_Struct,
                                             &this->ret_.inout (), // see above
-                                            CORBA::B_FALSE, // does not own
+                                            0, // does not own
                                             env);
   return 0;
 }
@@ -134,30 +134,30 @@ Test_Objref_Struct::check_validity (void)
   if (this->in_.x != this->inout_->x
       || this->in_.x != this->out_->x
       || this->in_.x != this->ret_->x)
-    return CORBA::B_FALSE;
+    return 0;
 
   CORBA::Environment env;
   if (CORBA::is_nil (this->in_.y.in ())
       || CORBA::is_nil (this->out_->y.in ())
       || CORBA::is_nil (this->ret_->y.in ())
       || CORBA::is_nil (this->inout_->y.in ()) )
-    return CORBA::B_FALSE;
+    return 0;
 
   Coffee::Desc_var s_in = this->in_.y->description (env);
-  if (env.exception () != 0) return CORBA::B_FALSE;
+  if (env.exception () != 0) return 0;
   Coffee::Desc_var s_out = this->out_->y->description (env);
-  if (env.exception () != 0) return CORBA::B_FALSE;
+  if (env.exception () != 0) return 0;
   Coffee::Desc_var s_inout = this->inout_->y->description (env);
-  if (env.exception () != 0) return CORBA::B_FALSE;
+  if (env.exception () != 0) return 0;
   Coffee::Desc_var s_ret = this->ret_->y->description (env);
-  if (env.exception () != 0) return CORBA::B_FALSE;
+  if (env.exception () != 0) return 0;
 
   if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
       || ACE_OS::strcmp (s_in->name, s_inout->name) != 0
       || ACE_OS::strcmp (s_in->name, s_ret->name) != 0 )
-    return CORBA::B_FALSE;
+    return 0;
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 CORBA::Boolean

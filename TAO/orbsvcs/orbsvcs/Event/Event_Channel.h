@@ -180,7 +180,7 @@ public:
          CONSUMER = 1, SUPPLIER = 2,
          SHUTDOWN = CONSUMER | SUPPLIER };
 
-  ACE_EventChannel (CORBA::Boolean activate_threads = CORBA::B_TRUE,
+  ACE_EventChannel (CORBA::Boolean activate_threads = 1,
 		    u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE,
 		    TAO_Module_Factory* factory = 0);
   // Construction of the given <type>.  Check the **_CHANNEL

@@ -102,15 +102,15 @@ Test_Bounded_String_Sequence::add_args (CORBA::NVList_ptr param_list,
 {
   CORBA::Any in_arg (Param_Test::_tc_Bounded_StrSeq, 
                      (void *) &this->in_.in (),
-                     CORBA::B_FALSE);
+                     0);
 
   CORBA::Any inout_arg (Param_Test::_tc_Bounded_StrSeq,
                         &this->inout_.inout (),
-                        CORBA::B_FALSE);
+                        0);
 
   CORBA::Any out_arg (Param_Test::_tc_Bounded_StrSeq,
                       &this->out_.inout (), // .out () causes crash
-                      CORBA::B_FALSE);
+                      0);
 
   // add parameters
   param_list->add_value ("s1",
@@ -131,7 +131,7 @@ Test_Bounded_String_Sequence::add_args (CORBA::NVList_ptr param_list,
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Bounded_StrSeq,
                                             &this->ret_.inout (), // see above
-                                            CORBA::B_FALSE, // does not own
+                                            0, // does not own
                                             env);
   return 0;
 }

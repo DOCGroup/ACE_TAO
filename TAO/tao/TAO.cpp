@@ -243,7 +243,7 @@ TAO_ORB_Manager::~TAO_ORB_Manager (void)
   CORBA::Environment env;
 
   if (CORBA::is_nil (this->poa_.in ()) == 0)
-    this->poa_->destroy (CORBA::B_TRUE,
-                         CORBA::B_TRUE,
+    this->poa_->destroy (1,
+                         1,
                          env);
 }

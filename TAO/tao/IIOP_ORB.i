@@ -2,8 +2,8 @@
 
 ACE_INLINE
 IIOP_ORB::IIOP_ORB(void)
-  : use_omg_ior_format_(CORBA::B_FALSE),
-    optimize_collocation_objects_ (CORBA::B_TRUE)
+  : use_omg_ior_format_(0),
+    optimize_collocation_objects_ (1)
 {
 }
 

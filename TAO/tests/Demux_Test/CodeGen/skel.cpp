@@ -207,11 +207,11 @@ long GenServerSkels(ACE_Unbounded_Queue<ACE_CString> &arr, int limit)
   skel << "\tCORBA_String value = *(CORBA_String *)nv->value()->value();" << endl;
   skel << "\tif (strcmp((char *)value,(char *)_tao_typeid) == 0" << endl;
   skel << "\t   || strcmp((char *)value, _tc_CORBA_Object->id(env)) == 0)" << endl;
-  skel << "\t\tretval = new CORBA_Boolean(CORBA_B_TRUE);" << endl;
+  skel << "\t\tretval = new CORBA_Boolean(1);" << endl;
   skel << "\telse" << endl;
-  skel << "\t\tretval = new CORBA_Boolean(CORBA_B_FALSE);" << endl;
+  skel << "\t\tretval = new CORBA_Boolean(0);" << endl;
   skel << "\tCORBA_Any *any = new CORBA_Any(_tc_CORBA_Boolean, retval," <<
-    "CORBA_B_TRUE);" << endl;
+    "1);" << endl;
   skel << "\treq.result(any, env);" << endl;
   skel << "\tdexc(env, \"_is_a, result\");" << endl;
   skel << "}" << endl;

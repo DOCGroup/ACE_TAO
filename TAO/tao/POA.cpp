@@ -1268,16 +1268,16 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                   return;
                 }
 
-              CORBA::Boolean remaining_activations = CORBA::B_FALSE;
+              CORBA::Boolean remaining_activations = 0;
 
               if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID &&
                   this->active_object_map ().find (servant) != -1)
-                remaining_activations = CORBA::B_TRUE;
+                remaining_activations = 1;
 
               this->servant_activator_->etherealize (id,
                                                      self.in (),
                                                      servant,
-                                                     CORBA::B_TRUE,
+                                                     1,
                                                      remaining_activations,
                                                      env);
             }
@@ -1585,16 +1585,16 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &oid,
       if (env.exception () != 0)
         return;
 
-      CORBA::Boolean remaining_activations = CORBA::B_FALSE;
+      CORBA::Boolean remaining_activations = 0;
 
       if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID &&
           this->active_object_map ().find (servant) != -1)
-        remaining_activations = CORBA::B_TRUE;
+        remaining_activations = 1;
 
       this->servant_activator_->etherealize (oid,
                                              self.in (),
                                              servant,
-                                             CORBA::B_FALSE,
+                                             0,
                                              remaining_activations,
                                              env);
     }
@@ -1768,7 +1768,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       // WrongAdapter exception is raised.
       PortableServer::ObjectId id;
       TAO_POA::String poa_name;
-      CORBA::Boolean persistent = CORBA::B_FALSE;
+      CORBA::Boolean persistent = 0;
       TAO_Temporary_Creation_Time poa_creation_time;
 
       int result = this->parse_key (key.in (),
@@ -1830,7 +1830,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   TAO_ObjectKey_var key = reference->_key (env);
   PortableServer::ObjectId id;
   TAO_POA::String poa_name;
-  CORBA::Boolean persistent = CORBA::B_FALSE;
+  CORBA::Boolean persistent = 0;
   TAO_Temporary_Creation_Time poa_creation_time;
 
   int result = this->parse_key (key.in (),
@@ -1945,7 +1945,7 @@ TAO_POA::locate_poa_i (const TAO_ObjectKey &key,
   ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_POA_I_START);
 
   TAO_POA::String poa_name;
-  CORBA::Boolean persistent = CORBA::B_FALSE;
+  CORBA::Boolean persistent = 0;
   TAO_Temporary_Creation_Time poa_creation_time;
 
   int result = this->parse_key (key,
@@ -2434,7 +2434,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   id.replace (how_many,
               how_many,
               (CORBA::Octet *) &key[starting_at],
-              CORBA::B_FALSE);
+              0);
 
   // Success
   return 0;
@@ -2528,7 +2528,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   return new TAO_ObjectKey (buffer_size,
                             buffer_size,
                             buffer,
-                            CORBA::B_TRUE);
+                            1);
 }
 
 int
@@ -2651,7 +2651,7 @@ TAO_POA::string_to_ObjectId (const char *string)
   return new PortableServer::ObjectId (buffer_size,
                                        buffer_size,
                                        buffer,
-                                       CORBA::B_TRUE);
+                                       1);
 }
 
 PortableServer::ObjectId *
@@ -2668,7 +2668,7 @@ TAO_POA::string_to_ObjectId (const char *string,
   return new PortableServer::ObjectId (size,
                                        size,
                                        buffer,
-                                       CORBA::B_TRUE);
+                                       1);
 }
 
 PortableServer::ObjectId *
@@ -2693,7 +2693,7 @@ TAO_POA::wstring_to_ObjectId (const CORBA::WChar *string)
   return new PortableServer::ObjectId (buffer_size,
                                        buffer_size,
                                        buffer,
-                                       CORBA::B_TRUE);
+                                       1);
 }
 
 CORBA::String
@@ -3006,30 +3006,30 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                                       env);
 
   if (env.exception () != 0)
-    return CORBA::B_FALSE;
+    return 0;
   else
     {
       PortableServer::AdapterActivator_var activator = this->_this (env);
       if (env.exception () != 0)
         {
-          child->destroy (CORBA::B_FALSE,
-                          CORBA::B_FALSE,
+          child->destroy (0,
+                          0,
                           env);
-          return CORBA::B_FALSE;
+          return 0;
         }
 
       child->the_activator (activator.in (), env);
 
       if (env.exception () != 0)
         {
-          child->destroy (CORBA::B_FALSE,
-                          CORBA::B_FALSE,
+          child->destroy (0,
+                          0,
                           env);
-          return CORBA::B_FALSE;
+          return 0;
         }
 
       // Finally everything is fine
-      return CORBA::B_TRUE;
+      return 1;
     }
 }
 

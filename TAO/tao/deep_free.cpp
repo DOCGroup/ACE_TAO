@@ -308,7 +308,7 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   CORBA::Long  default_index;
   CORBA::ULong i;
   CORBA::TypeCode_ptr default_tc = 0;
-  CORBA::Boolean discrim_matched = CORBA::B_FALSE;
+  CORBA::Boolean discrim_matched = 0;
 
   discrim_tc = tc->discriminator_type (env);
   // get the discriminator type
@@ -350,29 +350,29 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
                                 case CORBA::tk_ushort:
                                   if (*(CORBA::Short *)member_label->value () ==
                                       *(CORBA::Short *)discrim_val)
-                                    discrim_matched = CORBA::B_TRUE;
+                                    discrim_matched = 1;
                                   break;
                                 case CORBA::tk_long:
                                 case CORBA::tk_ulong:
                                 case CORBA::tk_enum:
                                   if (*(CORBA::ULong *)member_label->value () ==
                                       *(CORBA::ULong *)discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   break;
                                 case CORBA::tk_char:
                                   if (*(CORBA::Char *)member_label->value () ==
                                       *(CORBA::Char *)discrim_val)
-                                    discrim_matched = CORBA::B_TRUE;
+                                    discrim_matched = 1;
                                   break;
                                 case CORBA::tk_wchar:
                                   if (*(CORBA::WChar *)member_label->value () ==
                                       *(CORBA::WChar *)discrim_val)
-                                    discrim_matched = CORBA::B_TRUE;
+                                    discrim_matched = 1;
                                   break;
                                 case CORBA::tk_boolean:
                                   if (*(CORBA::Boolean *)member_label->value () ==
                                       *(CORBA::Boolean *)discrim_val)
-                                    discrim_matched = CORBA::B_TRUE;
+                                    discrim_matched = 1;
                                   break;
                                 default:
                                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));

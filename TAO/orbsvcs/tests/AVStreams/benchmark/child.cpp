@@ -51,7 +51,7 @@ Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Bench_Server_StreamEndPoint::handle_connection_requested:() length =%d\n",
               the_spec.length ()));
 
-  return CORBA::B_TRUE;
+  return 1;
 
   ACE_INET_Addr client_addr (the_spec [0]);
   u_short local_port = 0;
@@ -64,7 +64,7 @@ Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Connection to server failed: %p\n",
                        "connect"),
-                      CORBA::B_FALSE);
+                      0);
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) tcp connect succeeded %d\n",this->tcp_stream_.get_handle ()));
   
   int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
@@ -92,16 +92,16 @@ Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
 
   ACE_NEW_RETURN (this->stream_handler_,
                   ttcp_Stream_Handler (this->tcp_stream_.get_handle ()),
-                  CORBA::B_FALSE);
+                  0);
   int result;
 
   result = TAO_ORB_Core_instance ()->reactor ()->register_handler (this->stream_handler_,
                                                                    ACE_Event_Handler::READ_MASK);
   if (result < 0)
-    return CORBA::B_FALSE;
+    return 0;
 
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) register handler for tcp_Stream success\n"));
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 ttcp_Stream_Handler::ttcp_Stream_Handler (int control_fd)
