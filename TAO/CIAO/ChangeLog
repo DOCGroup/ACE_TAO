@@ -1,6 +1,15 @@
+Mon Jul 19 14:16:10 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * ciao/ServerActivator_Impl.cpp (init): Use the argument
+          spawn_delay to set the value of the delay in seconds that the
+          ServerActivator waits for the ComponentServer to come up. This
+          is needed when the ComponentServer is not able to come up before
+          the hardcoded value of 5 seconds passes by, which happens when
+          running the ComponentServer under Valgrind.
+
 Mon Jul 19 12:47:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* DAnCE/ciao/CCM_Core.mpc: 
+	* DAnCE/ciao/CCM_Core.mpc:
 
 	  Added ifr_client to Deployment_stub and Deployment_svnt. This
 	  should fix VC6 build issues.
