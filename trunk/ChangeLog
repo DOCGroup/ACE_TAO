@@ -1,3 +1,21 @@
+Sun Jun 13 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-aix-4.x.h:
+        * ace/config-hpux-10.x-g++.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-vxworks5.x.h:
+        * ace/README:
+          Added new macro ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION.
+          With the GCC compiler on HPUX, AIX and VxWorks we need to explictly
+          instantiate static template members to assure that we have the static
+          only once. This new macro is a side effect of bug 1823. We check
+          for GNU and one of the mentioned OS's in the cpp files but this
+          is hard to maintain and once in a while we find that in a certain
+          file we lack a check for a certain OS. This new macro will be used
+          as replacement so that we can control whether to instantiate the
+          static template members from the config files. The changes to the
+          cpp files will follow soon.
+
 Sat Jun 12 17:16:53 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Message_Queue_T.cpp (dequeue_prio_i): Change the use of
