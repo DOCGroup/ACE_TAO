@@ -25,6 +25,7 @@ INS_i::orb (CORBA::ORB_ptr o)
 
 char * 
 INS_i::test_ins (CORBA::Environment &env)
+ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Inside Operation\n"));
