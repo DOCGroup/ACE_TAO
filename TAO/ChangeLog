@@ -1,3 +1,23 @@
+Thu Nov 27 13:10:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/ImplRepo_Service/implrepo.dsp: 
+	* orbsvcs/ImplRepo_Service/tao_imr.dsp: 
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp: 
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp: 
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp: 
+	* orbsvcs/tests/FaultTolerance/IOGR/server.dsp: 
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp: 
+	* orbsvcs/tests/ImplRepo/airplane_client.dsp: 
+	* orbsvcs/tests/ImplRepo/airplane_server.dsp: 
+	* orbsvcs/tests/ImplRepo/nestea_client.dsp: 
+	* orbsvcs/tests/ImplRepo/nestea_server.dsp: 
+
+	  Another set of dsp fixes. If these get reset again by someone,
+	  I may have to use the lead pipe that I have stacked in the
+	  corner of my room and pay a visit to those friends :-)! 
+
+	  BTW, there are a lot more remaining.
+
 Thu Nov 27 12:35:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Concurrency/CC_client.dsp:
