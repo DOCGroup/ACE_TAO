@@ -13,7 +13,7 @@
 #include "HTBP_Session.inl"
 #endif
 
-ACE_RCSID(HTBP,ACE_HTBP_Session," $");
+ACE_RCSID(HTBP,ACE_HTBP_Session," $")
 
 ACE::HTBP::Session::Session_Map ACE::HTBP::Session::session_map_;
 ACE_UINT32 ACE::HTBP::Session::last_session_id_ = 0;
