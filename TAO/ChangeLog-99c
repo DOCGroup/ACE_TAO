@@ -1,3 +1,15 @@
+Thu Mar 11 19:55:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Object.cpp: 
+	  Fixed template instantiations and some warnings.
+
+	* tao/encode.cpp: 
+	  Removed unused variable.
+
+	* tests/Param_Test/run_test.pl: 
+	  Use IOR object references, they are actually easier than
+	  URL-style.
+
 Thu Mar 11 19:07:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.h:
