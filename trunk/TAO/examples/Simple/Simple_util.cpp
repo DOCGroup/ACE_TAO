@@ -372,6 +372,8 @@ Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &ACE_TR
       return -1;
     }
   ACE_ENDTRY;
+  
+  return 0;
 }
 
 template <class InterfaceObj, class Var> int 
