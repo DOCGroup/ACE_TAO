@@ -54,7 +54,7 @@ FTP_Client_Callback::handle_timeout (void *)
   ACE_Message_Block mb (BUFSIZ);
   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame"));
   char *buf = mb.rd_ptr ();
-  cerr << "message block size" << mb.size () << endl;
+  //cerr << "message block size" << mb.size () << endl;
   int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
   if (n < 0)
     {
@@ -72,12 +72,14 @@ FTP_Client_Callback::handle_timeout (void *)
                 {
                   ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
                   AVStreams::flowSpec stop_spec (1);
-                  ACE_DECLARE_NEW_CORBA_ENV;
+                  //ACE_DECLARE_NEW_CORBA_ENV;
                   CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
-                  ACE_CHECK_RETURN (-1);
+                  ACE_TRY_CHECK;
                   CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
                   //TAO_AV_CORE::instance ()->stop_run ();
                   TAO_AV_CORE::instance ()->orb_manager ()->fini (ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
                   return 0;
                 }
               ACE_CATCHANY
@@ -93,7 +95,7 @@ FTP_Client_Callback::handle_timeout (void *)
       else
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread error\n"),-1);
     }
-  cerr << "read bytes = " << n << endl;
+  //cerr << "read bytes = " << n << endl;
   mb.wr_ptr (n);
   int result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
