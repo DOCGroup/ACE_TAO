@@ -199,7 +199,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Forward Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TREEB="..\..\..\..\bin\Release\tao_idl.exe"	"..\..\..\..\bin\tao_idl.exe"	
+USERDEP__TREEB="..\..\..\..\bin\tao_idl.exe"	"..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TreeBase.idl
 InputName=TreeBase
@@ -282,7 +282,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Forward Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TREEC="..\..\..\..\bin\Release\tao_idl.exe"	"..\..\..\..\bin\tao_idl.exe"	
+USERDEP__TREEC="..\..\..\..\bin\tao_idl.exe"	"..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TreeController.idl
 InputName=TreeController
@@ -365,7 +365,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Forward Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TREEN="..\..\..\..\bin\Release\tao_idl.exe"	"..\..\..\..\bin\tao_idl.exe"	
+USERDEP__TREEN="..\..\..\..\bin\tao_idl.exe"	"..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TreeNode.idl
 InputName=TreeNode
