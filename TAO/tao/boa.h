@@ -33,6 +33,10 @@
 #include "tao/svrrqst.h"
 #endif  /* 0 */
 
+#include "tao/corba.h"
+
+class TAO_GIOP_RequestHeader;
+
 // @@ Why does this inherit from IUnknown?
 class CORBA_BOA : public IUnknown
 {
@@ -66,6 +70,15 @@ public:
   // BOA" objects won't want those semantics as much as "Anonymous"
   // ones.
 
+  virtual void handle_request (TAO_GIOP_RequestHeader hdr,
+                               CDR &request_body,
+                               CDR &response,
+                               TAO_Dispatch_Context *some_info,
+                               CORBA::Environment &env);
+  // Entry point for the ORB Core to hand off a request for processing
+  // and eventual dispatch.  Derived classes can override this to
+  // perform their own processing.
+  
   typedef void (CORBA_BOA::*dsi_handler) (CORBA::OctetSeq &obj_id,
 					  CORBA::ServerRequest &request,
 					  void *context,
