@@ -17,13 +17,8 @@ use Cwd;
 use Env qw(ACE_ROOT PATH);
 
 ################################################################################
-
-$config_list = new PerlACE::ConfigList;
-
-$config_list->load ($ACE_ROOT."/bin/auto_run_tests.lst");
-
 if (!getopts ('ac:ds:t') || $opt_h) {
-    print "auto_run_tests.pl [-a] [-c config] [-h] [-s sandbox] [-t]\n";
+    print "auto_run_tests.pl [-a] [-c config] [-h] [-s sandbox] [-o] [-t]\n";
     print "\n";
     print "Runs the tests listed in auto_run_tests.lst\n";
     print "\n";
@@ -32,11 +27,38 @@ if (!getopts ('ac:ds:t') || $opt_h) {
     print "    -c config   Run the tests for the <config> configuration\n";
     print "    -h          display this help\n";
     print "    -s sandbox  Runs each program using a sandbox program\n";
-    print "    -t          TAO tests only\n";
+    print "    -o          ORB test only\n";
+    print "    -t          TAO tests (other than ORB tests) only\n";
     print "\n";
     print "Configs: " . $config_list->list_configs () . "\n";
     exit (1);
 }
+
+my @file_list;
+
+if ($opt_a) {
+push (@file_list, "/bin/ace_tests.lst");
+}
+
+if ($opt_o) {
+push (@file_list, "/bin/tao_orb_tests.lst");
+}
+
+if ($opt_t) {
+push (@file_list, "/bin/tao_other_tests.lst");
+}
+
+if (scalar(@file_list) == 0) {
+push (@file_list, "/bin/ace_tests.lst");
+push (@file_list, "/bin/tao_orb_tests.lst");
+push (@file_list, "/bin/tao_other_tests.lst");
+}
+
+foreach my$test_lst (@file_list) {
+
+my $config_list = new PerlACE::ConfigList;
+
+$config_list->load ($ACE_ROOT.$test_lst);
 
 # Insures that we search for stuff in the current directory.
 $PATH .= $Config::Config{path_sep} . '.';
@@ -44,13 +66,6 @@ $PATH .= $Config::Config{path_sep} . '.';
 foreach $test ($config_list->valid_entries ()) {
     my $directory = ".";
     my $program = ".";
-
-    if ($opt_a && $test =~ /^TAO/) {
-        next;
-    }
-    elsif ($opt_t && $test !~ /^TAO/) {
-        next;
-    }
 
     if ($test =~ /(.*)\/([^\/]*)$/) {
         $directory = $1;
@@ -110,4 +125,5 @@ foreach $test ($config_list->valid_entries ()) {
     if ($result > 0) {
         print "Error: $test returned with status $result\n";
     }
+}
 }
