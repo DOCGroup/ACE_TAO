@@ -1,3 +1,24 @@
+Wed Mar 30 13:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	* tao/Any.cpp:
+	* tao/DomainC.cpp:
+	* tao/Exception.cpp:
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+	* tao/IORManipulation/IORA.cpp:
+	* tao/PortableServer/Object_SArg_Traits.h:
+	* tao/PortableServer/POAManagerA.cpp:
+	* tao/PortableServer/PortableServerA.cpp:
+	* tao/PortableServer/TypeCode_SArg_Traits.h:
+	* tao/RTCORBA/RTCORBAA.cpp:
+	* tao/Valuetype/ValueBase.h:
+	* tao/Valuetype/ValueFactory.h:
+	  Use template<> instead of ACE_TEMPLATE_SPECIALIZATION
+
 Wed Mar 30 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/DynAny_Test/data.cpp:
