@@ -1,3 +1,19 @@
+Fri Jun  4 15:38:18 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DnC/ciao/Deployment_Core.idl
+
+          Change the "Connection" IDL type by replacing the "string name"
+          field with three more fields, i.e., "string instanceName",
+          "string portName" and "CCMComponentPortKind kind". We feel the
+          old one in DnC spec is not well defined and make the run-time
+          thing harder.
+          
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Finished all the functionality to handle connections and all
+          other things required.
+
 Fri Jun  4 15:32:50 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/tests/NodeApplicationTest/RoundTripEI.idl:

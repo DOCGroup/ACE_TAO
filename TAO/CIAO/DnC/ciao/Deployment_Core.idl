@@ -52,9 +52,10 @@ module Deployment
   // local node and to make the implementation not very cumbersome
   // I changed the connection struct to include some extra informations.
   struct Connection {
-    string component_inst_name;
-    string port_name;
-    CCMComponentPortKind port_kind;
+    string instanceName;
+    string portName;
+    CCMComponentPortKind kind;
+
     // the endpoints member is change to endpoint.
     // Since we will not have more than 1 objref in there.
     Object endpoint;

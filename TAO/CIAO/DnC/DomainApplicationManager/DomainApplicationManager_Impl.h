@@ -26,6 +26,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Vector_T.h"
 #include "ace/Functor.h"
+#include "ace/OS_NS_string.h"
 #include "DeploymentS.h"
 
 #include "tao/Valuetype/ValueBase.h"
@@ -60,7 +61,6 @@ namespace CIAO
       ::Deployment::DeploymentPlan_var child_plan_;
       ::Deployment::NodeApplicationManager_var node_application_manager_;
       ::Deployment::NodeApplication_var node_application_;
-      ::Deployment::Connections_var connections_;
     } Chained_Artifacts;
 
     /// Constructor
@@ -186,6 +186,21 @@ namespace CIAO
      */
     int split_plan (void);
 
+
+    /** 
+     * Cache the incoming connections, which is a sequence of Connections,
+     * into the <all_connections_> list.
+     */
+    void add_connections (::Deployment::Connections & incoming_conn);
+
+    /** 
+     * Given a child deployment plan, find the <Connections> sequence
+     * of the "providedReference" for the component instances in the
+     * child deployment plan as Receiver side.
+     */
+    void get_outgoing_connections (::Deployment::Connections_out outgoing_conn,
+                                   ::Deployment::DeploymentPlan &plan);
+
   protected:
     /// location of the Domainapplication
     CORBA::String_var domainapp_path_;
@@ -240,18 +255,10 @@ namespace CIAO
     /// UUID from the Plan
     CORBA::String_var uuid_;
 
-    /// Maintain a list of NodeApplicationManager references, each of which
-    /// is returned by calling the preparePlan() method on the
-    /// corresponding NodeManager object.
-    // Object_Set<Deployment::NodeApplicationManager,
-    //            Deployment::NodeApplicationManager_var>
-    //   node_application_manager_set_;
+    /// Maintain a list of <Connections>, each of which is obtained by 
+    /// calling the startLaunch() method on the NodeApplicationManager object.
+    ::Deployment::Connections_var all_connections_;
 
-    /// Maintain a list of NodeApplication references paired with the
-    /// Deployment::Connections_var type variable.
-    /// Each pair is obtained by calling the startLaunch() method on
-    /// the corresponding NodeApplicationManager object.
-    //ACE_Vector<Node_Application_Para> node_application_vec_;
   };
 }
 

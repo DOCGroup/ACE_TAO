@@ -23,7 +23,8 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
     deployment_file_ (CORBA::string_dup (deployment_file)),
     deployment_config_ (orb)
 {
-  // @@
+  // Initialize the <all_connections_> sequence.
+  this->all_connections_->length (0);
 }
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
@@ -277,6 +278,97 @@ split_plan (void)
 
 void
 CIAO::DomainApplicationManager_Impl::
+add_connections (::Deployment::Connections & incoming_conn)
+{
+  CORBA::ULong old_len = this->all_connections_->length ();
+
+  // Expand the length of the <all_connection_> sequence.
+  this->all_connections_->length (old_len + incoming_conn.length ());
+
+  // Store the connections to the <all_conections_> sequence
+  for (CORBA::ULong i = 0; i < incoming_conn.length (); i++)
+  {
+    (*this->all_connections_)[old_len + i] = incoming_conn[i];
+  }
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+get_outgoing_connections (::Deployment::Connections_out provided,
+                          ::Deployment::DeploymentPlan &plan)
+{
+  ::Deployment::Connections_var retn_connections;
+  ACE_NEW (retn_connections,
+           ::Deployment::Connections);
+
+  // For each component instance in the child plan ...
+  for (CORBA::ULong i = 0; i < plan.instance.length (); i++)
+    {
+      // Get the component instance name
+      CORBA::String_var instance_name = plan.instance[i].name;
+
+      // Find out all the PlanConnectionDescriptions from the global plan 
+      // where this component instance plays the role as either "receptacle"
+      // or "event sink".
+      for (CORBA::ULong j = 0; j < this->plan_.connection.length (); j++)
+        {
+          ::Deployment::PlanConnectionDescription tmp_conn
+            = this->plan_.connection[j];
+
+          ::Deployment::PlanSubcomponentPortEndpoint dest_endpoint
+            = tmp_conn.internalEndpoint[1]; /* The "destination" end point */
+
+          // instanceRef of this particular receiver side component instance.
+          CORBA::ULong dest_instanceRef = dest_endpoint.instanceRef;
+          
+          // Check whether the name is the same as <instance_name>.
+          if (! ACE_OS::strcmp (this->plan_.instance[dest_instanceRef].name.in (),
+                                instance_name.in ()))
+            continue; // This connection is not got involved.
+
+          // Otherwise, this connection is what we are interested in ...
+
+          ::Deployment::PlanSubcomponentPortEndpoint src_endpoint
+            = tmp_conn.internalEndpoint[0]; /* The "source" end point */
+
+          // instanceRef of the provider side component instance.
+          CORBA::ULong src_instanceRef = src_endpoint.instanceRef;
+
+          // Get the prvoider side component instance name and port name.
+          CORBA::String_var provider_name = 
+            this->plan_.instance[src_instanceRef].name;
+
+          CORBA::String_var port_name = src_endpoint.portName;
+
+          // Fetch the connections out from the <all_connections_> by
+          // comparing the "component instance name" and "port name".
+          for (CORBA::ULong k = 0; k < this->all_connections_->length (); k++)
+            {
+              if (! ACE_OS::strcmp ((*this->all_connections_)[k].instanceName.in (),
+                                    provider_name.in ()))
+                continue;
+             
+              if (! ACE_OS::strcmp ((*this->all_connections_)[k].portName.in (),
+                                    port_name.in ()))
+                continue;
+
+              CORBA::ULong length = retn_connections->length ();
+              retn_connections->length (length + 1);
+
+              (*retn_connections)[length] = this->all_connections_[k];
+              (*retn_connections)[length].kind = src_endpoint.kind;
+            }
+        }
+    }
+
+    provided = retn_connections._retn ();
+    return;
+}
+
+
+
+void
+CIAO::DomainApplicationManager_Impl::
 startLaunch (const ::Deployment::Properties & configProperty,
              ::CORBA::Boolean start
              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -317,14 +409,12 @@ startLaunch (const ::Deployment::Properties & configProperty,
                                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // @@@ TODO: Analyze the Connections returned by calling
-          // startLaunch(), get the corresponding Connections which
-          // will be used for finishLaunch().  @@ Need a helper class
-          // to do this.
-          // Cache the NodeApplication object reference and
-          // Connections variable.
+          // Cache the returned set of connections into the list.
+          this->add_connections (retn_connections);
+
+          // Cache the returned NodeApplication object reference into
+          // the hash table.
           (entry->int_id_).node_application_ = my_na;
-          (entry->int_id_).connections_ = retn_connections; // @@TODO: Need to Change this.
         }
     }
   ACE_CATCHANY
@@ -365,8 +455,9 @@ finishLaunch (::CORBA::Boolean start
             (entry->int_id_).node_application_;
 
           // Get the Connections variable.
-          ::Deployment::Connections_var my_connections =
-            (entry->int_id_).connections_;
+          ::Deployment::Connections_var my_connections;
+          this->get_outgoing_connections (my_connections.out (),
+                                          (entry->int_id_).child_plan_);
 
           // Invoke finishLaunch() operation on NodeApplication.
           my_na->finishLaunch (my_connections,
