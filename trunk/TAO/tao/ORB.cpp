@@ -30,7 +30,7 @@ static const char *TAO_ORB_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   TAO_CORBA_ORB_RUN_START = 0,
   TAO_CORBA_ORB_RUN_END
 };
@@ -45,34 +45,34 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
 static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
 {
   TAO_ENCAP_BYTE_ORDER,   // byte order
-  47, 
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4f52), 
-  ACE_NTOHL (0x422f496e), 
-  ACE_NTOHL (0x636f6e73), 
-  ACE_NTOHL (0x69737465), 
-  ACE_NTOHL (0x6e745479), 
-  ACE_NTOHL (0x7065436f), 
-  ACE_NTOHL (0x64653a31), 
-  ACE_NTOHL (0x2e3000fd), // repository ID = 
+  47,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f4f52),
+  ACE_NTOHL (0x422f496e),
+  ACE_NTOHL (0x636f6e73),
+  ACE_NTOHL (0x69737465),
+  ACE_NTOHL (0x6e745479),
+  ACE_NTOHL (0x7065436f),
+  ACE_NTOHL (0x64653a31),
+  ACE_NTOHL (0x2e3000fd), // repository ID =
                           // IDL:omg.org/CORBA/ORB/InconsistentTypeCode:1.0
-  21, 
-  ACE_NTOHL (0x496e636f), 
-  ACE_NTOHL (0x6e736973), 
-  ACE_NTOHL (0x74656e74), 
+  21,
+  ACE_NTOHL (0x496e636f),
+  ACE_NTOHL (0x6e736973),
+  ACE_NTOHL (0x74656e74),
   ACE_NTOHL (0x54797065),
-  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0x436f6465),
   ACE_NTOHL (0xfdfdfd),   // name = InconsistentTypeCode
   0,                      // member count
 };
 
 static CORBA::TypeCode _tc__tc_CORBA_ORB_InconsistentTypeCode (
-    CORBA::tk_except, 
-    sizeof (_oc_CORBA_ORB_InconsistentTypeCode), 
-    (char *) &_oc_CORBA_ORB_InconsistentTypeCode, 
+    CORBA::tk_except,
+    sizeof (_oc_CORBA_ORB_InconsistentTypeCode),
+    (char *) &_oc_CORBA_ORB_InconsistentTypeCode,
     0,
     sizeof (CORBA_ORB_InconsistentTypeCode));
 
@@ -85,7 +85,7 @@ int CORBA_ORB::orb_init_count_ = 0;
 CORBA::ORB_ptr CORBA::instance_ = 0;
 
 // ORB exception typecode initialization.
-CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode = 
+CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode =
   &_tc__tc_CORBA_ORB_InconsistentTypeCode;
 
 CORBA::String_var::String_var (char *p)
@@ -129,6 +129,33 @@ CORBA::LongDouble::operator!= (CORBA::LongDouble &rhs)
   return ACE_OS::memcmp (this->ld, rhs.ld, 16) != 0;
 }
 #endif /* NONNATIVE_LONGDOUBLE */
+
+CORBA_ORB::InvalidName::InvalidName (void)
+{
+}
+
+void
+CORBA_ORB::InvalidName::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
+CORBA_ORB::InvalidName*
+CORBA_ORB::InvalidName::_narrow (CORBA_Exception *ex)
+{
+  if (ex->_is_a ("IDL:omg.orb/CORBA/ORB/InvalidName:1.0"))
+    return ACE_dynamic_cast (CORBA_ORB::InvalidName*, ex);
+  return 0;
+}
+
+int
+CORBA_ORB::InvalidName::_is_a (const char* interface_id) const
+{
+  return ((ACE_OS::strcmp (interface_id,
+			  "IDL:omg.orb/CORBA/ORB/InvalidName:1.0") ==
+	   0)
+	  || CORBA_UserException::_is_a (interface_id));
+}
 
 CORBA_ORB::CORBA_ORB (void)
   : refcount_ (1),
@@ -194,7 +221,7 @@ CORBA_ORB::open (void)
     return 1;
 
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
-  
+
   if (this->open_called_ == 1)
     return 1;
 
@@ -289,17 +316,17 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 
   {
     ACE_Guard<ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
-    
+
     while (TAO_ORB_Core_instance ()->leader_available ())
       {
         if (TAO_ORB_Core_instance ()->add_follower (this->cond_become_leader_) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ORB::run: Failed to add a follower thread\n"));
-        this->cond_become_leader_->wait ();     
+        this->cond_become_leader_->wait ();
       }
     TAO_ORB_Core_instance ()->set_leader_thread ();
   }
-  
+
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
 
   // Set the owning thread of the Reactor to the one which we're
@@ -320,7 +347,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 
   int result = 1;
   // 1 to detect that nothing went wrong
-  
+
   // Loop "forever" handling client requests.
   while (this->should_shutdown () == 0)
     {
@@ -332,10 +359,10 @@ CORBA_ORB::run (ACE_Time_Value *tv)
           ACE_TIMEPROBE_RESET;
           counter = 0;
 	}
-      
+
       ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
 #endif /* 0 */
-      
+
       switch (r->handle_events (tv))
 	{
         case 0: // Timed out, so we return to caller.
@@ -346,7 +373,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
           result = -1;
           break;
           /* NOTREACHED */
-        default: 
+        default:
           // Some handlers were dispatched, so keep on processing
 	  // requests until we're told to shutdown .
           break;
@@ -355,7 +382,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
       if (result == 0 || result == -1)
         break;
     }
-  
+
   if (result != -1)
     {
       if (TAO_ORB_Core_instance ()->unset_leader_wake_up_follower () == -1)
@@ -387,7 +414,7 @@ CORBA_ORB::resolve_root_poa (const char *adapter_name,
                                                      poa_manager,
                                                      policies,
                                                      active_object_map);
-  
+
   if (env.exception () != 0)
     return CORBA_Object::_nil ();
 
@@ -524,7 +551,7 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
             }
 
           this->trading_service_ =
-            this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE, 
+            this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE,
                                         port,
                                         timeout);
         }
@@ -596,14 +623,14 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
                   if (TAO_debug_level > 0)
                     ACE_DEBUG ((LM_DEBUG,
                                 "%s; Sent multicast.  Reply port is %u."
-                                "# of bytes sent is %d.\n", 
+                                "# of bytes sent is %d.\n",
                                 __FILE__,
                                 response_addr.get_port_number (),
                                 n_bytes));
 
                   // Wait for response until
                   // TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
-                  ACE_Time_Value tv (timeout == 0 
+                  ACE_Time_Value tv (timeout == 0
                                      ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
                                      : *timeout);
 
@@ -640,14 +667,22 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
         }
       multicast.close ();
     }
-  
+
   // Return ior.
   return return_value;
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (CORBA::String name,
-                                       ACE_Time_Value *timeout)
+                                       CORBA_Environment &_env)
+{
+  return this->resolve_initial_references (name, 0, _env);
+}
+
+CORBA_Object_ptr
+CORBA_ORB::resolve_initial_references (CORBA::String name,
+                                       ACE_Time_Value *timeout,
+                                       CORBA_Environment &_env)
 {
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     return this->resolve_name_service (timeout);
@@ -658,7 +693,7 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
     return this->resolve_poa_current ();
   else
-    return CORBA_Object::_nil ();
+    TAO_THROW_RETURN (CORBA_ORB::InvalidName (), CORBA_Object::_nil ());
 }
 
 int
@@ -678,21 +713,21 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
       env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
       return 0;
     }
-  
+
   CORBA::String id;
 
   if (type_id)
     id = CORBA::string_copy (type_id);
   else
     id = 0;
-  
+
   IIOP_Object *data = 0;
   data = new IIOP_Object (id,
                           IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
                                          key));
   if (data == 0)
     env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-  
+
   return data;
 }
 
@@ -729,56 +764,56 @@ CORBA_ORB::leader_follower_info (void)
 
 // Dynamic Any factory functions.
 
-ACE_INLINE 
-CORBA_DynAny_ptr       
+ACE_INLINE
+CORBA_DynAny_ptr
 CORBA_ORB::create_dyn_any       (const CORBA_Any& any,
                                  CORBA::Environment& env)
 {
   return TAO_DynAny_i::create_dyn_any (any, env);
 }
 
-ACE_INLINE 
-CORBA_DynAny_ptr       
+ACE_INLINE
+CORBA_DynAny_ptr
 CORBA_ORB::create_basic_dyn_any (CORBA_TypeCode_ptr tc,
 		                 CORBA::Environment& env)
 {
   return TAO_DynAny_i::create_dyn_any (tc, env);
 }
 
-ACE_INLINE 
-CORBA_DynStruct_ptr    
+ACE_INLINE
+CORBA_DynStruct_ptr
 CORBA_ORB::create_dyn_struct    (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
 {
   return TAO_DynAny_i::create_dyn_struct (tc, env);
 }
 
-ACE_INLINE 
-CORBA_DynSequence_ptr  
+ACE_INLINE
+CORBA_DynSequence_ptr
 CORBA_ORB::create_dyn_sequence  (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
 {
   return TAO_DynAny_i::create_dyn_sequence (tc, env);
 }
 
-ACE_INLINE 
-CORBA_DynArray_ptr     
+ACE_INLINE
+CORBA_DynArray_ptr
 CORBA_ORB::create_dyn_array     (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
 {
   return TAO_DynAny_i::create_dyn_array (tc, env);
 }
 
-ACE_INLINE 
-CORBA_DynUnion_ptr     
+ACE_INLINE
+CORBA_DynUnion_ptr
 CORBA_ORB::create_dyn_union     (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
 {
   return TAO_DynAny_i::create_dyn_union (tc, env);
 }
 
-ACE_INLINE 
-CORBA_DynEnum_ptr      
+ACE_INLINE
+CORBA_DynEnum_ptr
 CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
 {
@@ -1026,7 +1061,7 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
 // ****************************************************************
 
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
-#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> 
+#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
