@@ -402,6 +402,30 @@ be_visitor_valuetype_field_cdr_ci::visit_valuetype_fwd (be_valuetype_fwd *)
 }
 
 int
+be_visitor_valuetype_field_cdr_ci::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_valuetype_field_cdr_ci::visit_component_fwd (be_component_fwd *node)
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_valuetype_field_cdr_ci::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_valuetype_field_cdr_ci::visit_eventtype_fwd (be_eventtype_fwd *node)
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+int
 be_visitor_valuetype_field_cdr_ci::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
