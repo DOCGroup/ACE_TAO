@@ -21,286 +21,776 @@
 #include "be.h"
 #include "be_visitor_root.h"
 
-// Root visitor for client header
-be_visitor_root_ch::be_visitor_root_ch (void)
+// Generic Root visitor
+be_visitor_root::be_visitor_root (be_visitor_context *ctx)
+  : be_visitor_scope (ctx)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  this->os_ = cg->client_header ();
+}
+
+be_visitor_root::~be_visitor_root (void)
+{
+}
+
+// this method must be overridden by the derived root visitors
+int
+be_visitor_root::init (void)
+{
+  return -1;
+}
+
+// visit the Root node and its scope
+int be_visitor_root::visit_root (be_root *node)
+{
+  // open the appropriate output file based on what state we are in. The
+  // overridden "init" method of derived classes will do the job.
+  if (this->init () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::init - "
+                         "failed to initialize context\n"), -1);
+    }
+
+  // all we have to do is to visit the scope
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::visit_root - "
+                         "codegen for scope failed\n"), -1);
+    }
+  return 0;
+}
+
+// =all common visit methods for root visitor
+
+// visit a constant
+int
+be_visitor_root::visit_constant (be_constant *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_CONSTANT_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      ctx.state (TAO_CodeGen::TAO_CONSTANT_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_constant - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+      break;
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_constant - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_constant - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+//visit an enum
+int
+be_visitor_root::visit_enum (be_enum *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_ENUM_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      ctx.state (TAO_CodeGen::TAO_ENUM_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_enum - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+      break;
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_enum - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_enum - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+// visit an exception
+int
+be_visitor_root::visit_exception (be_exception *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_exception - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+      break;
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_exception - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_exception - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+// visit an interface
+int
+be_visitor_root::visit_interface (be_interface *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SH:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_SH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SI:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_SI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SS:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_SS);
+      break;
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_interface - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+      break;
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_interface - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_interface - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+// visit an interface_fwd
+int
+be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_interface_fwd - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+      break;
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_interface_fwd - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_interface_fwd - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+// visit an module
+int
+be_visitor_root::visit_module (be_module *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_MODULE_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      ctx.state (TAO_CodeGen::TAO_MODULE_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      ctx.state (TAO_CodeGen::TAO_MODULE_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SH:
+      ctx.state (TAO_CodeGen::TAO_MODULE_SH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SI:
+      ctx.state (TAO_CodeGen::TAO_MODULE_SI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SS:
+      ctx.state (TAO_CodeGen::TAO_MODULE_SS);
+      break;
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_module - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+      break;
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_module - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_module - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+// visit an structure
+int
+be_visitor_root::visit_structure (be_structure *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_structure - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+      break;
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_structure - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_structure - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+// visit an union
+int
+be_visitor_root::visit_union (be_union *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_UNION_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      ctx.state (TAO_CodeGen::TAO_UNION_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      ctx.state (TAO_CodeGen::TAO_UNION_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_union - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+      break;
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_union - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_union - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+// visit an typedef
+int
+be_visitor_root::visit_typedef (be_typedef *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_typedef - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+      break;
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_typedef - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_typedef - "
+                         "failed to accept visitor"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+// ********************************
+// Root visitor for client header
+// ********************************
+
+be_visitor_root_ch::be_visitor_root_ch (be_visitor_context *ctx)
+  : be_visitor_root (ctx)
+{
 }
 
 be_visitor_root_ch::~be_visitor_root_ch (void)
 {
 }
 
-int be_visitor_root_ch::visit_root (be_root *node)
+int
+be_visitor_root_ch::init (void)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT_CH); // set the code generation state
-
-  // open the client-side header file
-  if (cg->client_header (idl_global->be_get_client_hdr_fname ()) == -1)
+  // first open the client-side header file for writing
+  if (tao_cg->client_header (idl_global->be_get_client_hdr_fname ()) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_root: Error opening client header\n"));
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_visitor_root_ch::init - "
+                  "Error opening client header file\n"));
       return -1;
     }
-  // delegate the task of code generation to the scope
-  if (node->be_scope::gen_client_header () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_root: code generation for scope failed\n"));
-      return -1;
-    }
-  cg->pop ();
 
-  // at this point, we must be in the initial state
-  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
-
-  (void) cg->end_client_header (); // generate the last #endif
+  this->ctx_->stream (tao_cg->client_header ());
   return 0;
 }
 
-int be_visitor_root_ch::visit_sequence (be_sequence *node)
-{
-  ACE_UNUSED_ARG (node);
-  return 0;
-}
-
+// *********************************
 // Root visitor for client inline
+// *********************************
 
-be_visitor_root_ci::be_visitor_root_ci (void)
+be_visitor_root_ci::be_visitor_root_ci (be_visitor_context *ctx)
+  : be_visitor_root (ctx)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  this->os_ = cg->client_inline ();
 }
 
 be_visitor_root_ci::~be_visitor_root_ci (void)
 {
 }
 
-int be_visitor_root_ci::visit_root (be_root *node)
+int
+be_visitor_root_ci::init (void)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT_CI); // set the code generation state
-
-  // open the client-side inline file
-  if (cg->client_inline (idl_global->be_get_client_inline_fname ()) == -1)
+  // first open the client-side inline file for writing
+  if (tao_cg->client_inline (idl_global->be_get_client_inline_fname ()) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_root: Error opening client inline file\n"));
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_visitor_root_ci - "
+                  "Error opening client inline file\n"));
       return -1;
     }
-  // delegate the task of code generation to the scope
-  if (node->be_scope::gen_client_inline () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_root: code generation for scope failed\n"));
-      return -1;
-    }
-  cg->pop ();
 
-  // at this point, we must be in the initial state
-  //  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
-
+  this->ctx_->stream (tao_cg->client_inline ());
   return 0;
 }
 
-int be_visitor_root_ci::visit_sequence (be_sequence *)
-{
-  return 0;
-}
-
+// ***********************************
 // Root visitor for client stubs
+// ***********************************
 
-be_visitor_root_cs::be_visitor_root_cs (void)
+be_visitor_root_cs::be_visitor_root_cs (be_visitor_context *ctx)
+  : be_visitor_root (ctx)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  this->os_ = cg->client_stubs ();
 }
 
 be_visitor_root_cs::~be_visitor_root_cs (void)
 {
 }
 
-int be_visitor_root_cs::visit_root (be_root *node)
+int
+be_visitor_root_cs::init (void)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT_CS); // set the code generation state
-
-  // open the client-side stub file
-  if (cg->client_stubs (idl_global->be_get_client_stub_fname ()) == -1)
+  // first open the file
+  if (tao_cg->client_stubs (idl_global->be_get_client_stub_fname ()) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_root: Error opening client stubs file\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root_cs - "
+                         "Error opening client stub file\n"), -1);
     }
-  // delegate the task of code generation to the scope
-  if (node->be_scope::gen_client_stubs () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_root: code generation for scope failed\n"));
-      return -1;
-    }
-  cg->pop ();
 
-  // at this point, we must be in the initial state
-  //  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
-
+  this->ctx_->stream (tao_cg->client_stubs ()); // init stream
   return 0;
 }
 
-int be_visitor_root_cs::visit_sequence (be_sequence *)
-{
-  return 0;
-}
-
+// ***********************************
 // Root visitor for server header
+// ***********************************
 
-be_visitor_root_sh::be_visitor_root_sh (void)
+be_visitor_root_sh::be_visitor_root_sh (be_visitor_context *ctx)
+  : be_visitor_root (ctx)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  this->os_ = cg->server_header ();
 }
 
 be_visitor_root_sh::~be_visitor_root_sh (void)
 {
 }
 
-int be_visitor_root_sh::visit_root (be_root *node)
+int
+be_visitor_root_sh::init (void)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT_SH); // set the code generation state
-
-  // open the server-side header file
-  if (cg->server_header (idl_global->be_get_server_hdr_fname ()) == -1)
+  // open the file
+  if (tao_cg->server_header (idl_global->be_get_server_hdr_fname ()) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_root: Error opening server header\n"));
-      return -1;
-    }
-  // delegate the task of code generation to the scope
-  if (node->be_scope::gen_server_header () == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "be_root: server code generation for scope failed\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root_sh::init - "
+                         "Error opening server header file\n"), -1);
     }
 
-  cg->pop ();
-
-  // at this point, we must be in the initial state
-  //  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
-
-  (void) cg->end_server_header (); // generate the last #endif statement
+  // set the stream and the next state
+  this->ctx_->stream (tao_cg->server_header ());
   return 0;
 }
 
-int be_visitor_root_sh::visit_sequence (be_sequence *)
-{
-  return 0;
-}
-
+// ***********************************************
 // Root visitor for server inline
+// ***********************************************
 
-be_visitor_root_si::be_visitor_root_si (void)
+be_visitor_root_si::be_visitor_root_si (be_visitor_context *ctx)
+  : be_visitor_root (ctx)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  this->os_ = cg->server_inline ();
 }
 
 be_visitor_root_si::~be_visitor_root_si (void)
 {
 }
 
-int be_visitor_root_si::visit_root (be_root *node)
+int
+be_visitor_root_si::init (void)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT_SI); // set the code generation state
-
-  // open the server-side inline file
-  if (cg->server_inline (idl_global->be_get_server_inline_fname ()) == -1)
+  // first open the file for writing
+  if (tao_cg->server_inline (idl_global->be_get_server_inline_fname ()) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_root: Error opening server inline file\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root_si::init - "
+                         "server inline open failed\n"), -1);
     }
-  // delegate the task of code generation to the scope
-  if (node->be_scope::gen_server_inline () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_root: code generation for scope failed\n"));
-      return -1;
-    }
-  cg->pop ();
 
-  // at this point, we must be in the initial state
-  //  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
-
+  this->ctx_->stream (tao_cg->server_inline ()); // init stream
   return 0;
 }
 
-int be_visitor_root_si::visit_sequence (be_sequence *)
-{
-  return 0;
-}
+// ******************************************************
+// Root visitor for server skeletons
+// ******************************************************
 
-// Root visitor for server server
-
-be_visitor_root_ss::be_visitor_root_ss (void)
+be_visitor_root_ss::be_visitor_root_ss (be_visitor_context *ctx)
+  : be_visitor_root (ctx)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  this->os_ = cg->server_skeletons ();
 }
 
 be_visitor_root_ss::~be_visitor_root_ss (void)
 {
 }
 
-int be_visitor_root_ss::visit_root (be_root *node)
+int
+be_visitor_root_ss::init (void)
 {
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ROOT_SS); // set the code generation state
-
-  // open the server-side skeleton file
-  if (cg->server_skeletons (idl_global->be_get_server_skeleton_fname ()) == -1)
+  // first open the file for writing
+  if (tao_cg->server_skeletons (idl_global->be_get_server_skeleton_fname ()) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_root: Error opening server skeletons file\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root_ss::init - "
+                         "Error opening server skeletons file\n"), -1);
     }
-  // delegate the task of code generation to the scope
-  if (node->be_scope::gen_server_skeletons () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_root: code generation for scope failed\n"));
-      return -1;
-    }
-  cg->pop ();
 
-  // at this point, we must be in the initial state
-  //  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_INITIAL);
-
+  this->ctx_->stream (tao_cg->server_skeletons ()); // set stream
   return 0;
 }
-
-int be_visitor_root_ss::visit_sequence (be_sequence *)
-{
-  return 0;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<be_visitor_root_ch, ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Singleton<be_visitor_root_ci, ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Singleton<be_visitor_root_cs, ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Singleton<be_visitor_root_sh, ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Singleton<be_visitor_root_si, ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Singleton<be_visitor_root_ss, ACE_SYNCH_RECURSIVE_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<be_visitor_root_ch, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Singleton<be_visitor_root_ci, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Singleton<be_visitor_root_cs, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Singleton<be_visitor_root_sh, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Singleton<be_visitor_root_si, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Singleton<be_visitor_root_ss, ACE_SYNCH_RECURSIVE_MUTEX>
-#endif

@@ -5,7 +5,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    be_codegen.h
+//    be_codegen.cpp
 //
 // = DESCRIPTION
 //
@@ -18,6 +18,8 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+
+TAO_CodeGen *tao_cg = TAO_CODEGEN::instance ();
 
 static const int CHUNK = 100;
 
@@ -55,10 +57,10 @@ TAO_CodeGen::~TAO_CodeGen (void)
 
 // visitor factory method
 be_visitor *
-TAO_CodeGen::make_visitor (TAO_CodeGen::CG_STATE st)
+TAO_CodeGen::make_visitor (be_visitor_context *ctx)
 {
   ACE_ASSERT (this->visitor_factory_ != 0);
-  return this->visitor_factory_->make_visitor (st);
+  return this->visitor_factory_->make_visitor (ctx);
 }
 
 // factory method
@@ -363,12 +365,11 @@ TAO_CodeGen::server_header (const char *fname)
           ACE_OS::sprintf (macro_name, "_TAO_IDL_");
           // convert letters in fname to upcase
           for (int i=0; i < (suffix - fname); i++)
-            {
-              if (isalpha (fname [i]))
-                {
-                  macro_name[i+9] = toupper (fname [i]);
-                }
-            }
+            if (isalpha (fname [i]))
+              macro_name[i+9] = toupper (fname [i]);
+            else
+              macro_name[i+9] = fname[i];
+
           ACE_OS::strcat (macro_name, "_H_");
 
           this->server_header_->print ("#if !defined (%s)\n", macro_name);

@@ -1,3 +1,134 @@
+Tue Mar 10 16:09:56 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/cdr.{h,cpp}: Added a get_string and put_string method for
+	retrieving and encoding a string. This uses "memcpy" rather than
+	having to go through a get_char/put_char for every byte of the
+	string.
+
+	* tao/connect.cpp: In "handle_request", the marshaling of inout,
+	out, and return value parameters was done inside this method after
+	the operation skeleton had returned. This required unnecessary
+	heap allocation of these parameters. Allocating these parameters
+	on the skeleton call stack was not possible since the marshaling
+	took place after the skeleton had returned. To eliminate these
+	unnecessary waste, 2 new methods on the ServerRequest class are
+	added that perform the demarshaling and marshaling while the
+	skeleton call stack is active. More explanation on these is given
+	below.
+
+	* tao/{encode, decode}.cpp: Used the get_string and put_string
+	methods on the CDR class.
+
+	* tao/giop.*: Added a method called "stream" that returns a
+	reference to the underlying CDR stream. This is helpful when you
+	need access to the stream so that data types can be marshaled into
+	the stream using a compiled form of marshaling. This form of
+	marshaling will soon be added to TAO IDL compiler.
+
+	* tao/object.{h, cpp}: Added a method called "stubobj" which
+	returns a pointer to the underlying Stub_Object. This method
+	eliminates the need to call QueryInterface inside every stub. This
+	way some code size is reduced.
+
+	Also, removed the "get_most_derived" method as well as the "void
+	*sub_" data member which was useless.
+
+	* tao/svrrqst.{h, i, cpp}: Added a new file svrrqst.i. Added two
+	new methods on class IIOP_ServerRequest. These methods enable
+	demarshaling and marshaling of parameters while the operation
+	skeleton's call stack is active. The interface to these methods is
+	exactly like the one used by do_call i.e., a table driven
+	approach. Two new data structures - TAO_Param_data_Skel and
+	TAO_Call_Data_Skel are added. These two tables behave in exactly
+	the same way as the TAO_Param_Data and TAO_Call_Data tables. See
+	the generated code to see how these are used by the demarshal and
+	marshal methods.
+
+	Two more methods and data members are added to this class -
+	"incoming" and "outgoing". These are the CDR streams that indicate
+	the incoming and the outgoing CDR streams.
+
+	An additional "init_reply" method is added that is useful for the
+	compiled marshaling. This is still experimental.
+
+	* TAO_IDL: This is the first release of the new TAO_IDL compiler
+	based on the Visitor pattern. All the old files and code is still
+	included in this release until the transition is complete.
+
+	Although the Visitor pattern is used, we still maintain all the
+	code generation states we had in the previous version of the
+	compiler. The reason is that we maintain a Factory of Visitors
+	indexed on these enumerated states. The downside is the necessity
+	to have states and a larger code size. The larger code size is due
+	to the fact that everytime a Visitor is required, we must first
+	set the appropriate state and then ask the factory to produce it
+	for us. The positive side of this design is that almost all the
+	Visitor files are independent of each other. They only deal with
+	an abstract base level Visitors. The Factory will produce the
+	appropriate specialized Visitor which is a subclass of the base
+	"visitor" class. An additional benefit is that we can switch from
+	having to generate code that uses Interpretive marshaling to
+	compiled marshaling. Visitors for compiled marshaling will be
+	added later. Here are the files that are added:
+
+        be_include/
+                be_visitor.h
+                be_visitor_args.h
+                be_visitor_attribute.h
+                be_visitor_constant.h
+                be_visitor_context.h
+                be_visitor_decl.h
+                be_visitor_enum.h
+                be_visitor_field.h
+                be_visitor_interface.h
+                be_visitor_interface_fwd.h
+                be_visitor_module.h
+                be_visitor_operation.h
+                be_visitor_root.h
+                be_visitor_scope.h
+                be_visitor_sequence.h
+                be_visitor_structure.h
+                be_visitor_typedef.h
+                be_visitor_union.h
+                be_visitor_union_branch.h
+        be/
+                be_visitor.cpp
+                be_visitor_args.cpp
+                be_visitor_attribute.cpp
+                be_visitor_constant.cpp
+                be_visitor_context.cpp
+                be_visitor_decl.cpp
+                be_visitor_enum.cpp
+                be_visitor_exception.cpp
+                be_visitor_field.cpp
+                be_visitor_interface.cpp
+                be_visitor_interface_fwd.cpp
+                be_visitor_module.cpp
+                be_visitor_operation.cpp
+                be_visitor_root.cpp
+                be_visitor_scope.cpp
+                be_visitor_sequence.cpp
+                be_visitor_structure.cpp
+                be_visitor_typedef.cpp
+                be_visitor_union.cpp
+                be_visitor_union_branch.cpp
+
+	NOTE: Code generation for attributes is achieved by using a crude
+	form of the Adapter pattern. We convert the Attribute node into
+	one or possibly two operation nodes and add scope elements that
+	are arguments. The code gene ration is then handed over to the
+	Operation Visitors.
+
+	* be/be_interpretive.cpp: This file defined the implementation of
+	the Factory of Visitors for intepretive marshaling.
+
+	* be_include/be_codegen.h: Added a few more states. Some others
+	are now useless. They will be removed eventually. Also added the
+	Abstract Factory for Visitors.
+
+	* Makefile: Modofoed to include all the visitor files and ran
+	"make depend" on it.
+
 Tue Mar 10 13:22:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Event_Latency/Makefile,
@@ -45,12 +176,12 @@ Mon Mar 09 22:27:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
  	    buffer. The TAO_Temporary_Creation_Time is a special class
  	    that tracks the creation time only during the lifetime of the
  	    upcall.
-	    
+
 	  - parse_key_permanent_id() and parse_key_temporary_id() were
  	    added so that the parse_key() routine can distinguish when to
  	    create a new id and when to create a special id which is only
  	    used during the lifetime of the upcall.
-	    
+
 	  - rfind() was added so that the TAO_POA::String::rfind() does
  	    not have to be used.
 
@@ -60,17 +191,17 @@ Mon Mar 09 22:27:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  - Changed create_object_key() and parse_key() so that the old
  	    format of:
-	    
+
 	    Transient/Seconds/MicroSecond/POAName/ObjectId
-	    
+
 	    to:
 
 	    T/TimeStampPOAName/ObjectId
-	    
+
 	  - Removed excessive memcpy() and strcpy() calls in parse_key().
 
 	  - Changed create_object_id() to not include the POA name.
-	  
+
 	  - Changed is_poa_generated_id() to take the changes to
  	    create_object_id() into account.
 
@@ -86,10 +217,10 @@ Mon Mar  9 15:23:19 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 Mon Mar  9 14:57:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/sequence.h: 
-	* tao/sequence.cpp: 
-	* tao/sequence_T.h: 
-	* tao/sequence_T.cpp: 
+	* tao/sequence.h:
+	* tao/sequence.cpp:
+	* tao/sequence_T.h:
+	* tao/sequence_T.cpp:
 	  Removed the _narrow_fixup() method, it was causing problem with
 	  sequences of TypeCodes and it is not really needed: the
 	  functionality can be implemented in the stubs (skeletons) and/or

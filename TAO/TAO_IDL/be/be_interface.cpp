@@ -754,10 +754,11 @@ int be_interface::gen_server_header (void)
 
   *sh << "};\n\n";
 
+#if 0
   be_visitor_collocated_sh visitor;
   this->accept (&visitor);
   *sh << "\n";
-
+#endif
   cg->pop ();
   return 0;
 }
@@ -933,10 +934,11 @@ int be_interface::gen_server_skeletons (void)
 
   cg->pop ();
 
+#if 0
   be_visitor_collocated_ss visitor;
   this->accept (&visitor);
   *ss << "\n";
-
+#endif
   *ss << this->name () << "*" << be_nl
       << this->full_skel_name ()
       << "::_this (CORBA_Environment &_env)" << be_nl

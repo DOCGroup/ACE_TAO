@@ -554,8 +554,8 @@ TAO_Bounded_String_Sequence<MAX>::operator=
       this->buffer_ =
 	TAO_Bounded_String_Sequence<T>::allocbuf (rhs.maximum_);
     }
-  TAO_Bounded_Base_Sequence::operator= (rhs); 
-  
+  TAO_Bounded_Base_Sequence::operator= (rhs);
+
   char* *tmp1 = ACE_reinterpret_cast(char* *,this->buffer_);
   char* *tmp2 = ACE_reinterpret_cast(char* *,seq.buffer_);
   for (CORBA::ULong i=0; i < seq.length_; i++)

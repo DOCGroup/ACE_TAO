@@ -32,7 +32,7 @@ public:
   virtual ~TAO_Visitor_Factory (void);
   // destructor
 
-  virtual be_visitor *make_visitor (TAO_CodeGen::CG_STATE) = 0;
+  virtual be_visitor *make_visitor (be_visitor_context *) = 0;
   // create the right visitor
 
 };

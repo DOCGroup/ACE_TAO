@@ -62,7 +62,6 @@ interface Param_Test
                                   out Fixed_Struct s3);
 
   // sequences and typedefs
-  typedef sequence<string> StrSeq1;
   typedef sequence<string> StrSeq;
   StrSeq test_strseq (in StrSeq s1,
                       inout StrSeq s2,
@@ -103,6 +102,18 @@ interface Param_Test
   Coffee make_coffee (); // make a Coffee object
   Coffee test_objref (in Coffee o1, inout Coffee o2, out Coffee o3);
 
+  // Any
+  //  any test_any (in any a1, inout any a2, out any a3);
+
+  // test simple objects
+  //  Object test_object (in Object o1, inout Object o2, out Object o3);
+
+  // test typecodes
+  //  TypeCode test_typecode (in TypeCode t1, inout TypeCode t2, out TypeCode t3);
+
+  // sequence of typecodes
+  //  typedef sequence<TypeCode> TypeCodeSeq;
+  //  TypeCodeSeq test_tcseq (in TypeCodeSeq t1,  inout TypeCodeSeq t2, out TypeCodeSeq t3);
   /*
   long test_long (in long l1,
                   inout long l2,

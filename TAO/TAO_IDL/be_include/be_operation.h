@@ -20,6 +20,8 @@
 #if !defined (BE_OPERATION_H)
 #define BE_OPERATION_H
 
+class be_argument;
+
 /*
  * BE_Operation
  */
@@ -62,6 +64,9 @@ public:
   // Any of the arguments or the return value is a <native> type.
   // This is important because in that case no code should be
   // generated for the stubs.
+
+  be_argument *add_argument_to_scope (be_argument *arg);
+  // add an argument to the scope
 
   // Visiting
   virtual int accept (be_visitor *visitor);
