@@ -11,6 +11,8 @@
 
 #include "Process_Element.h"
 
+BEGIN_DEPLOYMENT_NAMESPACE
+
 /*
  *  Base class for the process function classes.
  */
@@ -325,3 +327,4 @@ process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
   return result;
 }
 
+END_DEPLOYMENT_NAMESPACE

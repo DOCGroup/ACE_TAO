@@ -13,6 +13,8 @@
 #include <iostream>
 #include <memory>
 
+BEGIN_DEPLOYMENT_NAMESPACE
+
 template <typename VALUE, typename DATA>
 void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 DOMDocument* doc,
@@ -89,3 +91,5 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
         }
     }
 }
+
+END_DEPLOYMENT_NAMESPACE

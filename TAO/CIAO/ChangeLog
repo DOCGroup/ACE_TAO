@@ -1,4 +1,12 @@
-Wed Jun 23 03:14:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Wed Jun 23 11:48:10 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+	* DnC/Config_Handlers/Process_Element.h:
+	* DnC/Config_Handlers/Process_Element.i:
+	* DnC/Config_Handlers/Process_Element.tpp:
+
+	The functions and classes are placed in the deployment namespace.
+
+4Wed Jun 23 03:14:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
 	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
