@@ -1,3 +1,22 @@
+Fri Mar 28 11:34:38 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Task.{h,cpp},Thread_Manager.h: changed remaining
+	  priority types to long and defaults to -1.
+
+	* ace/Thread_Manager.cpp (spawn_i): don't clobber errno!
+	  ACE_OS::thr_create () sets errno and returns -1.  So,
+	  its return value should not be used to set errno.
+
+	* examples/ASX/Event_Server/Event_Server/Makefile,
+	                            Transceiver/Makefile:
+	  added -lGateway to LIBS to pick up its template
+	  instantiations during links.
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp,
+	                            Transceiver/transceiver.cpp,
+	           UPIPE_Event_Server/{Consumer,Supplier}_Router.cpp:
+	  added template specializations.
+
 Thu Mar 27 21:10:59 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/IOStream.h: only use built-in ipfx{0,1} () with __GNUC__,
