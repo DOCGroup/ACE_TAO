@@ -28,7 +28,7 @@ public:
   // Destructor
   virtual ~MyFooServant (void);
 
-  //Returns the Default POA of this Servant object
+  // Returns the Default POA of this Servant object
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
   // Simple doit method

@@ -21,13 +21,13 @@
 #include "tao/POAC.h"
 #include "tao/POA_CORBA.h"
 
-class POA_PortableServer
+class TAO_Export POA_PortableServer
 {
 public:
 
   class ThreadPolicy;
   typedef ThreadPolicy *ThreadPolicy_ptr;
-  class ThreadPolicy : public virtual POA_CORBA::Policy
+  class TAO_Export ThreadPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     ThreadPolicy (void);
@@ -65,7 +65,7 @@ public:
 #if !defined (_PORTABLESERVER_THREADPOLICY___COLLOCATED_SH_)
 #define _PORTABLESERVER_THREADPOLICY___COLLOCATED_SH_
 
-  class _tao_collocated_ThreadPolicy    : public virtual PortableServer::ThreadPolicy,
+  class TAO_Export _tao_collocated_ThreadPolicy    : public virtual PortableServer::ThreadPolicy,
       public virtual POA_CORBA::_tao_collocated_Policy
   {
   public:
@@ -100,7 +100,7 @@ public:
 
   class LifespanPolicy;
   typedef LifespanPolicy *LifespanPolicy_ptr;
-  class LifespanPolicy : public virtual POA_CORBA::Policy
+  class TAO_Export LifespanPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     LifespanPolicy (void);
@@ -139,7 +139,7 @@ public:
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___COLLOCATED_SH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___COLLOCATED_SH_
 
-  class _tao_collocated_LifespanPolicy    : public virtual PortableServer::LifespanPolicy,
+  class TAO_Export _tao_collocated_LifespanPolicy    : public virtual PortableServer::LifespanPolicy,
       public virtual POA_CORBA::_tao_collocated_Policy
   {
   public:
@@ -175,7 +175,7 @@ public:
 
   class IdUniquenessPolicy;
   typedef IdUniquenessPolicy *IdUniquenessPolicy_ptr;
-  class IdUniquenessPolicy : public virtual POA_CORBA::Policy
+  class TAO_Export IdUniquenessPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     IdUniquenessPolicy (void);
@@ -214,7 +214,7 @@ public:
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___COLLOCATED_SH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___COLLOCATED_SH_
 
-  class _tao_collocated_IdUniquenessPolicy    : public virtual PortableServer::IdUniquenessPolicy,
+  class TAO_Export _tao_collocated_IdUniquenessPolicy    : public virtual PortableServer::IdUniquenessPolicy,
       public virtual POA_CORBA::_tao_collocated_Policy
   {
   public:
@@ -250,7 +250,7 @@ public:
 
   class IdAssignmentPolicy;
   typedef IdAssignmentPolicy *IdAssignmentPolicy_ptr;
-  class IdAssignmentPolicy : public virtual POA_CORBA::Policy
+  class TAO_Export IdAssignmentPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     IdAssignmentPolicy (void);
@@ -289,7 +289,7 @@ public:
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___COLLOCATED_SH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___COLLOCATED_SH_
 
-  class _tao_collocated_IdAssignmentPolicy    : public virtual PortableServer::IdAssignmentPolicy,
+  class TAO_Export _tao_collocated_IdAssignmentPolicy    : public virtual PortableServer::IdAssignmentPolicy,
       public virtual POA_CORBA::_tao_collocated_Policy
   {
   public:
@@ -325,7 +325,7 @@ public:
 
   class ImplicitActivationPolicy;
   typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
-  class ImplicitActivationPolicy : public virtual POA_CORBA::Policy
+  class TAO_Export ImplicitActivationPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     ImplicitActivationPolicy (void);
@@ -364,7 +364,7 @@ public:
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___COLLOCATED_SH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___COLLOCATED_SH_
 
-  class _tao_collocated_ImplicitActivationPolicy    : public virtual PortableServer::ImplicitActivationPolicy,
+  class TAO_Export _tao_collocated_ImplicitActivationPolicy    : public virtual PortableServer::ImplicitActivationPolicy,
       public virtual POA_CORBA::_tao_collocated_Policy
   {
   public:
@@ -400,7 +400,7 @@ public:
 
   class ServantRetentionPolicy;
   typedef ServantRetentionPolicy *ServantRetentionPolicy_ptr;
-  class ServantRetentionPolicy : public virtual POA_CORBA::Policy
+  class TAO_Export ServantRetentionPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     ServantRetentionPolicy (void);
@@ -439,7 +439,7 @@ public:
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___COLLOCATED_SH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___COLLOCATED_SH_
 
-  class _tao_collocated_ServantRetentionPolicy    : public virtual PortableServer::ServantRetentionPolicy,
+  class TAO_Export _tao_collocated_ServantRetentionPolicy    : public virtual PortableServer::ServantRetentionPolicy,
       public virtual POA_CORBA::_tao_collocated_Policy
   {
   public:
@@ -475,7 +475,7 @@ public:
 
   class RequestProcessingPolicy;
   typedef RequestProcessingPolicy *RequestProcessingPolicy_ptr;
-  class RequestProcessingPolicy : public virtual POA_CORBA::Policy
+  class TAO_Export RequestProcessingPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     RequestProcessingPolicy (void);
@@ -514,7 +514,7 @@ public:
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___COLLOCATED_SH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___COLLOCATED_SH_
 
-  class _tao_collocated_RequestProcessingPolicy    : public virtual PortableServer::RequestProcessingPolicy,
+  class TAO_Export _tao_collocated_RequestProcessingPolicy    : public virtual PortableServer::RequestProcessingPolicy,
       public virtual POA_CORBA::_tao_collocated_Policy
   {
   public:
@@ -550,7 +550,7 @@ public:
 
   class POAManager;
   typedef POAManager *POAManager_ptr;
-  class POAManager :  public virtual PortableServer::LocalServantBase
+  class TAO_Export POAManager :  public virtual PortableServer::LocalServantBase
   {
   protected:
     POAManager (void);
@@ -582,7 +582,7 @@ public:
 #if !defined (_PORTABLESERVER_POAMANAGER___COLLOCATED_SH_)
 #define _PORTABLESERVER_POAMANAGER___COLLOCATED_SH_
 
-  class _tao_collocated_POAManager    : public virtual PortableServer::POAManager
+  class TAO_Export _tao_collocated_POAManager    : public virtual PortableServer::POAManager
   {
   public:
     _tao_collocated_POAManager (
@@ -647,7 +647,7 @@ public:
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___COLLOCATED_SH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___COLLOCATED_SH_
 
-  class _tao_collocated_AdapterActivator    : public virtual PortableServer::AdapterActivator
+  class TAO_Export _tao_collocated_AdapterActivator    : public virtual PortableServer::AdapterActivator
   {
   public:
     _tao_collocated_AdapterActivator (
@@ -699,7 +699,7 @@ public:
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___COLLOCATED_SH_)
 #define _PORTABLESERVER_SERVANTMANAGER___COLLOCATED_SH_
 
-  class _tao_collocated_ServantManager    : public virtual PortableServer::ServantManager
+  class TAO_Export _tao_collocated_ServantManager    : public virtual PortableServer::ServantManager
   {
   public:
     _tao_collocated_ServantManager (
@@ -750,7 +750,7 @@ public:
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___COLLOCATED_SH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___COLLOCATED_SH_
 
-  class _tao_collocated_ServantActivator    : public virtual PortableServer::ServantActivator,
+  class TAO_Export _tao_collocated_ServantActivator    : public virtual PortableServer::ServantActivator,
       public virtual _tao_collocated_ServantManager
   {
   public:
@@ -819,7 +819,7 @@ public:
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___COLLOCATED_SH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___COLLOCATED_SH_
 
-  class _tao_collocated_ServantLocator    : public virtual PortableServer::ServantLocator,
+  class TAO_Export _tao_collocated_ServantLocator    : public virtual PortableServer::ServantLocator,
       public virtual _tao_collocated_ServantManager
   {
   public:
@@ -858,7 +858,7 @@ public:
 
   class POA;
   typedef POA *POA_ptr;
-  class POA :  public virtual PortableServer::LocalServantBase
+  class TAO_Export POA :  public virtual PortableServer::LocalServantBase
   {
   protected:
     POA (void);
@@ -942,7 +942,7 @@ public:
 #if !defined (_PORTABLESERVER_POA___COLLOCATED_SH_)
 #define _PORTABLESERVER_POA___COLLOCATED_SH_
 
-  class _tao_collocated_POA    : public virtual PortableServer::POA
+  class TAO_Export _tao_collocated_POA    : public virtual PortableServer::POA
   {
   public:
     _tao_collocated_POA (
@@ -1084,7 +1084,7 @@ public:
 
   class Current;
   typedef Current *Current_ptr;
-  class Current : public virtual POA_CORBA::Current
+  class TAO_Export Current : public virtual POA_CORBA::Current
   {
   protected:
     Current (void);
@@ -1114,7 +1114,7 @@ public:
 #if !defined (_PORTABLESERVER_CURRENT___COLLOCATED_SH_)
 #define _PORTABLESERVER_CURRENT___COLLOCATED_SH_
 
-  class _tao_collocated_Current    : public virtual PortableServer::Current,
+  class TAO_Export _tao_collocated_Current    : public virtual PortableServer::Current,
       public virtual POA_CORBA::_tao_collocated_Current
   {
   public:
