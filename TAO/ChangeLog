@@ -1,3 +1,10 @@
+Sat Mar 22 19:52:58 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Collocation_Tests: New test for Collocation. This test has
+	  the capability to test collocation in all possible
+	  collocation configurations. This checkin is just a dummy checkin
+	  since the test actually fails badly with TAO.
+
 Sat Mar 22 16:47:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/ORBEndpoint.html: Updated obsolete SHMIOP endpoint
