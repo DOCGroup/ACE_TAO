@@ -1,3 +1,9 @@
+Wed Mar 21 07:23:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/SOCK_Connector_Test.cpp (find_another_host): Make the
+	  test a bit more resilent against errors with gethostbyname().
+  	  Thanks to Lu Yunhai <luyunhai@huawei.com> for this fix.
+
 Tue Mar 20 17:31:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/run_test.lst:
