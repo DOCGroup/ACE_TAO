@@ -25,6 +25,9 @@
 
 #include "tao/Interceptor_List.h"
 
+typedef
+ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*> TAO_ObjectReferenceFactory_Array;
+
 /**
  * @class TAO_IORInterceptor_List
  *
@@ -52,6 +55,12 @@ public:
 
   /// Return reference to the underlying Portable Interceptor array.
   TYPE & interceptors (void);
+
+  void adapter_state_changed (
+      const TAO_ObjectReferenceFactory_Array &array_obj_ref_template,
+      PortableInterceptor::AdapterState state
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
 
