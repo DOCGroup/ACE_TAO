@@ -7,6 +7,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
+#include <dsui_types.h>
 
 ACE_CString sched_policy_str = "fifo";
 
@@ -54,6 +55,8 @@ int MyCommand::execute()
 
 int main (int argc, char** argv)
 {
+  ds_control ds_cntl ("edf", "edf-enabled.dsui");
+
   Kokyu::ConfigInfoSet config_info(3);
 
   int sched_policy=ACE_SCHED_FIFO;
