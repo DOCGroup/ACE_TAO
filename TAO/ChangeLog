@@ -20,6 +20,7 @@ Fri Jan 28 21:07:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/CORBANAME_Parser.cpp:
 	* tao/DynamicInterface/Request.h:
 	* orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
 
 	  Include "ace/SString.h" since to pull in complete ACE string
 	  class declarations.  Necessitated by include directive
