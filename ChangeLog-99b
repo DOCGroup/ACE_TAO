@@ -3,6 +3,9 @@ Sat Feb 27 17:25:52 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/Makefile: updated dependencies.  They didn't have
           any .shobj dependencies, just .obj.
 
+        * tests/Makefile: ran make depend.  It didn't have any
+          dependencies.
+
 Sat Feb 27 13:31:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS.h: Added a set of ACE_THREAD_GUARD macros that use
