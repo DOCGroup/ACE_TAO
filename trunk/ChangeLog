@@ -1,3 +1,17 @@
+Mon Aug 06 11:10:24 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Svc_Conf_l.cpp:
+
+	  More Unicode fixes.  Flex's allocation function uses malloc() as
+	  its underlying allocator.  Since it only accepts the size in
+	  bytes, allocate "size * sizeof (ACE_TCHAR)" when allocating
+	  string buffers.  This should clear up some strange looking text
+	  "unknown character" messages emanating from the Service
+	  Configurator's underlying text scanner.
+
+	  Note that these changes do not fix the cause of the "unknown
+	  character."  Those fixes should soon follow.
+
 Mon Aug 06 09:04:04 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Svc_Conf.l:
