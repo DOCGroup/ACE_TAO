@@ -1,3 +1,10 @@
+Thu Sep  9 07:16:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+
+	  Updated inheritance.
+
 Thu Sep  9 07:05:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Notify/lib/Notify_lib.mpc:
