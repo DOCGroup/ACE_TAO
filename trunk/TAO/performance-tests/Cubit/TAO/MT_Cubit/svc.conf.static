@@ -1,9 +1,0 @@
-# $Id$
-#
-# See svc.conf in the same directory for more information.
-# To use this file instead of the default svc.conf, add
-# -ORBsvcconf svc.conf.static to your command line invocations
-# of the server and client.
-static Resource_Factory "-ORBresources tss -ORBinputcdrallocator tss"
-static Client_Strategy_Factory "-ORBiiopprofilelock null -ORBclientconnectionhandler RW"
-static Server_Strategy_Factory "-ORBconcurrency thread-per-connection -ORBpoalock null -ORBconnectorlock null -ORBallowreactivationofsystemids 0"
