@@ -8,7 +8,7 @@ ACE_RCSID (Xt_Stopwatch,
            server,
            "$Id$")
 
-#include "tao/xt_resource_loader.h"
+#include "tao/XtResource_Loader.h"
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"
 #include "timer.h"
@@ -59,7 +59,7 @@ main (int argc, char *argv[])
                                      NULL,
                                      0);
 
-  TAO_XtResource_Loader xt_loader (app);
+  TAO::XtResource_Loader xt_loader (app);
 
   Stopwatch_display stopwatch (toplevel);
 

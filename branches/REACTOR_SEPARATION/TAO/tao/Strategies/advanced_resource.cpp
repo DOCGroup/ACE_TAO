@@ -175,12 +175,12 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
           else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("fl")) == 0)
             this->report_option_value_error (
-                ACE_TEXT("FlReactor not supported. Please use TAO_FlResource_Factory or TAO_FlResource_Loader instead."),
+                ACE_TEXT("FlReactor not supported by Advanced_Resources_Factory. Please use TAO_FlResource_Loader instead."),
                          current_arg);
           else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("tk")) == 0)
             this->report_option_value_error (
-                ACE_TEXT("TkReactor not supported. Please use TAO_TkResource_Factory or TAO_TkResource_Loader instead."),
+                ACE_TEXT("TkReactor not supported by Advanced_Resources_Factory. Please use TAO_TkResource_Loader instead."),
                          current_arg);
           else
             this->report_option_value_error (ACE_TEXT("-ORBReactorType"), current_arg);

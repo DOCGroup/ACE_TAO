@@ -104,6 +104,10 @@ class TAO_ClientRequestInfo;
 class TAO_Transport_Sync_Strategy;
 class TAO_Sync_Strategy;
 class TAO_Policy_Validator;
+namespace TAO
+{
+  class GUIResource_Factory;
+}
 
 namespace CORBA
 {
@@ -189,7 +193,6 @@ public:
   /// current thread.
   TAO_ClientRequestInfo *client_request_info_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
 };
 
 
@@ -375,8 +378,8 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
   /// Returns pointer to the resource factory.
   TAO_Resource_Factory *resource_factory (void);
 
-  /// Returns pointer to the factory for creating reactor
-  TAO_Resource_Factory *reactor_factory (void);
+  /// Returns pointer to the factory for creating gui resources
+  TAO::GUIResource_Factory *gui_resource_factory (void);
 
   /// Returns pointer to the client factory.
   TAO_Client_Strategy_Factory *client_factory (void);
@@ -415,8 +418,12 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
   /// Sets the value of TAO_ORB_Core::resource_factory_
   static void set_resource_factory (const char *resource_factory_name);
 
-  /// Sets the value of TAO_ORB_Core::reactor_resource_factory_
-  static void set_reactor_factory (const char *reactor_resource_factory_name);
+  /** Sets the value of TAO_ORB_Core::gui_resource_factory_.
+   *
+   *  Sets the value of gui_resource_factory in TSS. ORB_Core is responsible
+   *  for releasing this factory if needed.
+   */
+  static void set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_factory);
 
   /// Sets the value of TAO_ORB_Core::protocols_hooks_
   static void set_protocols_hooks (const char *protocols_hooks_name);
@@ -435,9 +442,6 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
 
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
   TAO_Protocols_Hooks * get_protocols_hooks (void);
-
-  /// return the reactor created from reactor_factory or resource_factory
-  ACE_Reactor * get_reactor (void);
 
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
   static void dynamic_adapter_name (const char *name);
@@ -1161,9 +1165,6 @@ protected:
   /// Handle to the factory for resource information..
   TAO_Resource_Factory *resource_factory_;
 
-  /// Handle to the  factory for creating reactor
-  TAO_Resource_Factory *reactor_factory_;
-
 #if 0
   /// @@todo All these need to go!
   /// The allocators for the message blocks
@@ -1411,15 +1412,6 @@ public:
    * to be "Advanced_Resource_Factory".
    */
   ACE_CString resource_factory_name_;
-
-  /**
-   * Name of the factory for creating reactor.
-   * The default value is "", which means that reactor should be created using ordinary
-   * resource factory . If this name is set, then reactor is created using this factory
-   * instead of resource_factory. If reactor_factory fails to create reactor, then
-   * resource_factor is enforced to create reactor.
-   */
-  ACE_CString reactor_factory_name_;
 
   /**
    * Name of the service object for DII request creation that needs

@@ -3,7 +3,7 @@
 #include "Progress_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-#include "tao/fl_resource_loader.h"
+#include "tao/FlResource_Loader.h"
 
 ACE_RCSID (FL_Callback,
            progress,
@@ -55,7 +55,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  TAO_FlResource_Loader fl_loader;
+  TAO::FlResource_Loader fl_loader;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {

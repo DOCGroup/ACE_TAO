@@ -1,6 +1,0 @@
-// -*- MPC -*-
-project: taolib, ace_flreactor {
-  requires += tao_flreactor
-  after    += tao_flreactor
-  libs     += TAO_FlReactor
-}

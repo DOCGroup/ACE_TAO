@@ -1,3 +1,86 @@
+Wed Jan 19 22:52:34 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/Xt_Stopwatch/server.cpp:
+	* tests/Xt_Stopwatch/client.cpp:
+	* tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
+	* tests/Xt_Stopwatch/Client.h:
+	* tests/QtTests/test_i.h:
+	* tests/QtTests/server.cpp:
+	* tests/QtTests/client.h:
+	* tests/QtTests/client.cpp:
+	* tests/QtTests/QtTests.mpc:
+	* tests/FL_Cube/server.cpp:
+	* tests/FL_Cube/client.cpp:
+	* tests/FL_Cube/FL_Cube.mpc:
+	* tao/Strategies/advanced_resource.cpp:
+	* tao/xt_resource_loader.h:
+	* tao/xt_resource_loader.cpp:
+	* tao/xt_resource.i:
+	* tao/xt_resource.h:
+	* tao/xt_resource.cpp:
+	* tao/tk_resource_loader.h:
+	* tao/tk_resource_loader.cpp:
+	* tao/tk_resource.i:
+	* tao/tk_resource.h:
+	* tao/tk_resource.cpp:
+	* tao/tao_xtreactor.mpc:
+	* tao/tao_tkreactor.mpc:
+	* tao/tao_qtreactor.mpc:
+	* tao/tao_flreactor.mpc:
+	* tao/tao.mpc:
+	* tao/qt_resource_loader.h:
+	* tao/qt_resource_loader.cpp:
+	* tao/qt_resource.i:
+	* tao/qt_resource.h:
+	* tao/qt_resource.cpp:
+	* tao/fl_resource_loader.h:
+	* tao/fl_resource_loader.cpp:
+	* tao/fl_resource.i:
+	* tao/fl_resource.h:
+	* tao/fl_resource.cpp:
+	* tao/XtResource_Loader.h:
+	* tao/XtResource_Loader.cpp:
+	* tao/XtResource_Factory.h:
+	* tao/XtResource_Factory.cpp:
+	* tao/XtResource.mpc:
+	* tao/TkResource_Loader.h:
+	* tao/TkResource_Loader.cpp:
+	* tao/TkResource_Factory.h:
+	* tao/TkResource_Factory.cpp:
+	* tao/TkResource.mpc:
+	* tao/TSS_Resources.h:
+	* tao/TSS_Resources.cpp:
+	* tao/TAO_XtResource_Export.h:
+	* tao/TAO_XtReactor_export.h:
+	* tao/TAO_TkResource_Export.h:
+	* tao/TAO_TkReactor_export.h:
+	* tao/TAO_QtResource_Export.h:
+	* tao/TAO_QtReactor_export.h:
+	* tao/TAO_FlResource_Export.h:
+	* tao/TAO_FlReactor_export.h:
+	* tao/Qt_Resources_Export.h:
+	* tao/Qt_Resource_Factory.h:
+	* tao/Qt_Resource_Factory.cpp:
+	* tao/QtResource_Loader.h:
+	* tao/QtResource_Loader.cpp:
+	* tao/QtResource_Factory.h:
+	* tao/QtResource_Factory.cpp:
+	* tao/QtResource.mpc:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/Leader_Follower.cpp:
+	* tao/GUI_Resource_Factory.h:
+	* tao/GUIResource_Factory.h:
+	* tao/GUIResource_Factory.cpp:
+	* tao/FlResource_Loader.h:
+	* tao/FlResource_Loader.cpp:
+	* tao/FlResource_Factory.h:
+	* tao/FlResource_Factory.cpp:
+	* tao/FlResource.mpc:
+	* examples/AMI/FL_Callback/progress.cpp (Module):
+	* examples/AMI/FL_Callback/FL_Callback.mpc (Module):
+	Naming more constistent and new GUIResources loading schema.
+
 Sat Jan 15 00:19:04 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/tk_resource_loader.h (Module):

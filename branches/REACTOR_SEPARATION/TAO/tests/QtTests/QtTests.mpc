@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver, tao_qtreactor  {
+project(*server): taoexe, portableserver, tao_qtresource  {
 
   MOC_Files {
     test_i.h
@@ -14,7 +14,7 @@ project(*server): taoexe, portableserver, tao_qtreactor  {
   }
 }
 
-project(*client): taoexe, tao_qtreactor {
+project(*client): taoexe, tao_qtresource {
 
   MOC_Files {
     client.h
