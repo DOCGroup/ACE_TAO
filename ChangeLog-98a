@@ -1,3 +1,54 @@
+Mon Mar 16 00:22:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* CE-status: Updated CE port status.
+
+	* ace/config-WinCE.h: Added macro definitions for EOF and BUFSIZ.
+	
+	* ace/OS.{h,i} (ace_isspace): Added both char and wchar version
+	  functions.  Notice that this can't be called isspace because
+	  most compilers implement isspace as a macro.
+	  (dlerror,dlsym): Added wchar version of these functions under CE.
+
+	* ace/OS.cpp (fork_exec): Modified parameters passed to
+	  CreateProcess under CE.
+
+	* ace/ARGV.{h,i,cpp}: Unicodize this class under CE.  Notice that
+	  under CE, you won't be able to use environment variable
+	  substitution since there's no environment variable at all.  
+
+	* ace/Reactor.cpp: Don't include Service_Config.h and
+	  WFMO_Reactor.h under CE for now. Prevent Reactor from
+	  reconfigure the service configurator. 
+
+	* ace/Task.cpp: Don't include Service_Config.h under CE for now.
+	  Prevent Task_Base from reconfigure the service configurator.
+	
+	* ace/SString.cpp: Don't include Service_Config.h under CE for
+	  now.
+
+	* ace/Svc_Conf.h:
+	* ace/Shared_Object.{h,cpp}:
+	* ace/Service_Type.{h,i,cpp}:
+	* ace/Service_Repository.{h,cpp}:
+	* ace/Service_Object.{h,i,cpp}:
+	* ace/Service_Manager.{h,cpp}:
+	* ace/Service_Config.{h,i,cpp}: Unicodize service configurator
+	  related classes.  I still need to find a point which breaks the
+	  usage of char functions that flex and yacc use and wchar
+	  functions that most CE functions use.
+
+	* ace/Get_Opt.{h,cpp}: 
+	* ace/Local_Token.{h,i,cpp}:
+	* ace/Map_Manager.cpp:
+	* ace/Message_Queue.cpp:
+	* ace/Module.{h,i,cpp}:
+	* ace/Parse_Node.cpp:
+	* ace/Pipe.cpp:
+	* ace/Stream.{h,cpp}:
+	* ace/Stream_Module.{h,cpp}:
+	* ace/Token_Manager.{h,cpp}:
+	* ace/Activation_Queue.cpp: Unicodize classes. Regular CE stuff.
+
 Sat Mar 14 06:43:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.h,config-win32-common.h,config-irix*.h:
