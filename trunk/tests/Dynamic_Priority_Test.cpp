@@ -693,6 +693,10 @@ main (int, ASYS_TCHAR *[])
       ACE_DEBUG ((LM_MAX,
                   "preempt: user is not superuser, "
                   "so remain in time-sharing class\n"));
+    else if (ACE_OS::last_error () == ENOTSUP)
+      ACE_DEBUG ((LM_MAX,
+                  "preempt: process scope scheduling not supported, "
+                  "so remain in time-sharing class\n"));
     else
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%n: ACE_OS::sched_params failed\n%a"),
