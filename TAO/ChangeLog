@@ -1,3 +1,8 @@
+Sat Jul 27 19:38:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Added BCB4 and BCB6 to supported platforms.
+
 Fri Jul 26 21:07:03 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Profile.cpp (policies):
@@ -13,7 +18,7 @@ Fri Jul 26 21:07:03 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/DynamicInterface/Server_Request.cpp (arguments, set_result):
 	* tao/PortableServer/POA.cpp (activate_object_with_id_i):
-	
+
 	  Logically "ORed" BAD_INV_ORDER minor code with TAO_OMG_VMCID.
 	  Standard OMG exception minor codes must be logically "ORed" with
 	  the OMG VMCID constant.
@@ -30,7 +35,7 @@ Fri Jul 26 18:32:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	Merged from branch allocators_lanes. This merge basically moves
 	some of the allocators that are global in nature to lanes. This
 	help RTCORBA use cases. Details of the changes are explained
-	below. 
+	below.
 
 	Thu Jul 25 07:17:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -66,26 +71,26 @@ Fri Jul 26 11:22:55 2002  Charles Frasch <cfrasch@spawar.navy.mil>
 	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h
 	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp
 
-	  Corectly cancel timers in the shutdown methods. The timers 
-	  are scheduled in the activate methods but an 
-	  ACE_Reactor::remove_handler() call was being made rather 
+	  Corectly cancel timers in the shutdown methods. The timers
+	  are scheduled in the activate methods but an
+	  ACE_Reactor::remove_handler() call was being made rather
 	  than the correct ACE_Reactor::cancel_timer().
 
 Fri Jul 26 09:26:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/PSS/Server_i.cpp (get_status): 
+	* orbsvcs/examples/PSS/Server_i.cpp (get_status):
 	  Fixed unused variable warning.
-	
+
 Fri Jul 26 09:23:53 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/PSS/client.cpp (main): 
-	* orbsvcs/examples/PSS/Simple_Naming_i.cpp (find): 
-	* orbsvcs/PSS/PSDL_Code_Gen.cpp: 
+	* orbsvcs/examples/PSS/client.cpp (main):
+	* orbsvcs/examples/PSS/Simple_Naming_i.cpp (find):
+	* orbsvcs/PSS/PSDL_Code_Gen.cpp:
 	  Fixed inline build's compilation errors.
 
 Fri Jul 26 09:02:11 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/ORT/Server_IORInterceptor.cpp: 
+	* orbsvcs/examples/ORT/Server_IORInterceptor.cpp:
 	* orbsvcs/examples/ORT/sum_server_i.cpp:
 	* orbsvcs/examples/ORT/client.cpp:
 	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp:
@@ -101,10 +106,10 @@ Fri Jul 26 15:35:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Fri Jul 26 07:38:48 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/PSS/Makefile (PSDL_l.cpp): 
+	* orbsvcs/PSS/Makefile (PSDL_l.cpp):
 	  Updated to run the other two makefiles in the directory.
 
-	* orbsvcs/PSS/PSDL_Scope.cpp (check_identifier): 
+	* orbsvcs/PSS/PSDL_Scope.cpp (check_identifier):
 	  Fixed uninitialized warning.
 
 Fri Jul 26 08:08:47 2002  Chad Elliott  <elliott_c@ociweb.com>

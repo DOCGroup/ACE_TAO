@@ -19,8 +19,8 @@
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Solaris 2.5, 2.6, 7, and 8, Windows NT/2000 (MSVC 5.x, 6.x, and 7.x and
-        Borland C++ Builder 5), Linux/Intel, Linux/Alpha, VxWorks, LynxOS,
+    <td>Solaris 2.5, 2.6, 7, and 8, Windows NT/2000/XP (MSVC 5.x, 6.x, and 7.x and
+        Borland C++ Builder 4, 5, and 6), Linux/Intel, Linux/Alpha, VxWorks, LynxOS,
         Digital UNIX 4.0 and 5.0, IRIX 6.x, and QNX Neutrino 2.0
     </td>
   </tr>
@@ -276,7 +276,7 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
     </P>
 
 <HR><P>
-<H3>On Windows NT and Windows 2000</H3>
+<H3>On Windows NT and Windows 2000 and Windows XP</H3>
 
 <P><CODE>TAO_IDL</CODE> does not contain its own preprocessor, so it
 needs to use an external preprocessor.  Depending on which compiler was
@@ -344,7 +344,7 @@ difference being that you should run:<BR>
 <BLOCKQUOTE><CODE>
 make -f Makefile.bor
 </CODE></BLOCKQUOTE><P>
-from the ACE_ROOT\TAO directory instead of ACE_ROOT\ace.<P>
+from the $ACE_ROOT\TAO directory instead of $ACE_ROOT\ace.<P>
 
 For more detailed information on building and using TAO with Borland's
 C++ Builder environment, please see the <A
