@@ -308,7 +308,8 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
                        ASYS_TEXT ("insertion failed, %p\n"),
                        sr->name ()),
                       -1);
-  else if (sr->type ()->init (args.argc (), args.argv ()) == -1)
+  else if (sr->type ()->init (args.argc (),
+                              args.argv ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("dynamic initialization failed for %s\n"),
                        sr->name ()),
@@ -556,7 +557,9 @@ ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
 // Signal handling API to trigger dynamic reconfiguration.
 
 void
-ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
+ACE_Service_Config::handle_signal (int sig,
+                                   siginfo_t *, 
+                                   ucontext_t *)
 {
   ACE_TRACE ("ACE_Service_Config::handle_signal");
 
@@ -565,12 +568,10 @@ ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
                 ASYS_TEXT ("error, signal %S does match %S\n"),
                 sig, 
                 ACE_Service_Config::signum_));
-
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,  
                 ASYS_TEXT ("signal %S occurred\n"), 
                 sig));
-
   ACE_Service_Config::reconfig_occurred_ = 1;
 }
 
@@ -591,7 +592,6 @@ ACE_Service_Config::reconfigure (void)
                     ASYS_TEXT ("beginning reconfiguration at %s"), 
                     ACE_OS::ctime (&t)));
     }
-
   if (ACE_Service_Config::process_directives () == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),

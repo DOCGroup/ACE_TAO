@@ -10,9 +10,9 @@ ACE_RCSID(ace, Svc_Conf_y, "$Id$")
 
 // Prototypes.
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
-                                    ACE_Static_Node *svc_type);
+                                        ACE_Static_Node *svc_type);
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
-                                    const char *svc_name);
+                                        const char *svc_name);
 
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 // Force the pretty debugging code to compile.
@@ -150,17 +150,26 @@ module_list
 module
   : dynamic
     {
-      if ($<static_node_>1 != 0)
+      ACE_Static_Node *svc_type = $<static_node_>1;
+
+      if (svc_type != 0)
         {
-          ACE_ARGV args (ASYS_WIDE_STRING ($<static_node_>1->parameters ()));
-          ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1);
+          ACE_Static_Node *module = $<static_node_>-1;
+
+          ACE_ARGV args (ASYS_WIDE_STRING (svc_type->parameters ()));
+          ACE_Module_Type *mt = ace_get_module (module,
+                                                svc_type);
+          ACE_Stream_Type *st =
+            ACE_dynamic_cast (ACE_Stream_Type *,
+                              ACE_const_cast (ACE_Service_Type_Impl *,
+                                              module->record ()->type ()));
 
           if (mt->init (args.argc (), args.argv ()) == -1
-              || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
+              || st->push (mt) == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           ASYS_TEXT ("dynamic initialization failed for Module %s\n"),
-                          ASYS_WIDE_STRING ($<static_node_>1->name ())));
+                          ASYS_WIDE_STRING (svc_type->name ())));
               yyerrno++;
             }
         }
@@ -174,26 +183,35 @@ module
     }
   | suspend
     {
-      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1->name ());
+      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1,
+                                            $<static_node_>1->name ());
       if (mt != 0)
         mt->suspend ();
     }
   | resume
     {
-      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1->name ());
+      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1,
+                                            $<static_node_>1->name ());
       if (mt != 0)
         mt->resume ();
     }
   | remove
     {
-      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1->name ());
-      if (mt != 0
-          && ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->remove (mt) == -1)
+      ACE_Static_Node *stream = $<static_node_>-1;
+      ACE_Static_Node *module = $<static_node_>1;
+      ACE_Module_Type *mt = ace_get_module (stream,
+                                            module->name ());
+
+      ACE_Stream_Type *st =
+        ACE_dynamic_cast (ACE_Stream_Type *,
+                          ACE_const_cast (ACE_Service_Type_Impl *,
+                                          stream->record ()->type ()));
+      if (mt != 0 && st->remove (mt) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
-                      ASYS_WIDE_STRING ($<static_node_>1->name ()),
-                      ASYS_WIDE_STRING (($<static_node_>-1)->name ())));
+                      ASYS_WIDE_STRING (module->name ()),
+                      ASYS_WIDE_STRING (stream->name ())));
           yyerrno++;
         }
     }
@@ -308,7 +326,11 @@ ace_get_module (ACE_Static_Node *str_rec,
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
-  ACE_Stream_Type *st = sr == 0 ? 0 : (ACE_Stream_Type *) type;
+  ACE_Stream_Type *st = sr == 0 
+    ? 0 
+    : ACE_dynamic_cast (ACE_Stream_Type *,
+                        ACE_const_cast (ACE_Service_Type_Impl *,
+                                        type));
   ACE_Module_Type *mt = st == 0 ? 0 : st->find (ASYS_WIDE_STRING (svc_name));
 
   if (sr == 0 || st == 0 || mt == 0)
