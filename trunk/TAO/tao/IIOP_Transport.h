@@ -13,7 +13,7 @@
 //     IIOP Transport specific processing
 //
 // = AUTHOR
-//     Fred Kuhns
+//     Fred Kuhns <fredk@cs.wustl.edu>
 //
 // ============================================================================
 

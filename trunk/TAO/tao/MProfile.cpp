@@ -17,42 +17,39 @@ TAO_MProfile::set (CORBA::ULong sz)
     {
       // We do, so release all of our profiles.
       for (TAO_PHandle h = 0; h < this->size_; h++ )
-        {
-          if (this->pfiles_[h])
-            {
-              this->pfiles_[h]->_decr_refcnt ();
-              this->pfiles_[h] = 0;
-            }
-        }
+        if (this->pfiles_[h])
+          {
+            this->pfiles_[h]->_decr_refcnt ();
+            this->pfiles_[h] = 0;
+          }
 
-      if (size_)
+      if (this->size_)
         delete [] this->pfiles_;
 
-    if (fwded_mprofile_)
-      delete fwded_mprofile_;
+      if (this->fwded_mprofile_)
+        delete this->fwded_mprofile_;
 
-    pfiles_ = 0;
-    current_ = 0;
-    size_ = 0;
-    last_= 0;
+      this->pfiles_ = 0;
+      this->current_ = 0;
+      this->size_ = 0;
+      this->last_= 0;
 
-    return  0;
-  }
+      return 0;
+    }
 
-  // see if we already have an existing profile list
-  // or if we need to get ridof what we have
+  // See if we already have an existing profile list or if we need to
+  // get ridof what we have.
+  // @@ Fred, please be consistent with your use of this-> as a prefix
+  // for data members.  
   if (size_)
     {
-
       // We do, so release all of our profiles.
       for (TAO_PHandle h = 0; h < size_; h++)
-        {
-          if (this->pfiles_[h])
-            {
-              this->pfiles_[h]->_decr_refcnt ();
-              this->pfiles_[h] = 0;
-            }
-        }
+        if (this->pfiles_[h])
+          {
+            this->pfiles_[h]->_decr_refcnt ();
+            this->pfiles_[h] = 0;
+          }
 
       // Next see if we can reuse our profile list memory Since
       if (this->size_ != sz)
@@ -61,22 +58,20 @@ TAO_MProfile::set (CORBA::ULong sz)
           delete [] this->pfiles_;
 
           ACE_NEW_RETURN (this->pfiles_,
-                          TAO_Profile_ptr [sz],
+                          TAO_Profile_ptr[sz],
                           -1);
         }
     }
   else
-    {
-      // first time, initialize!
-      ACE_NEW_RETURN (this->pfiles_,
-                      TAO_Profile_ptr [sz],
-                      -1);
-    } // this->pfiles_
+    // first time, initialize!
+    ACE_NEW_RETURN (this->pfiles_,
+                    TAO_Profile_ptr [sz],
+                    -1);
+  // this->pfiles_
 
   ACE_OS::memset (this->pfiles_,
                   0,
                   sizeof (TAO_Profile_ptr) * sz);
-
   size_ = sz;
   this->last_ = 0;
   this->current_ = 0;
@@ -95,7 +90,7 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
   // this->size_.  This is so we can use set () to trim a profile
   // list!!
 
-  if (! mprofile)
+  if (mprofile == 0)
     return this->set ((CORBA::ULong) 0);
 
   this->set (mprofile->last_);
@@ -103,7 +98,7 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
   // set indexes ...
   this->last_ = mprofile->last_;
 
-  // these are set in set (ULong);
+  // These are set in set (ULong);
   // this->current_ = 0;
   // this->fwded_mprofile_ = 0;
 
@@ -115,12 +110,10 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
           this->pfiles_[h] = mprofile->pfiles_[h];
           this->pfiles_[h]->_incr_refcnt ();
         }
-    } // for (TAO_PHandle ...)
+    }
 
   if (mprofile->fwded_mprofile_)
-    {
-      this->fwded_mprofile_ = mprofile->fwded_mprofile_;
-    }
+    this->fwded_mprofile_ = mprofile->fwded_mprofile_;
 
   return 1;
 }

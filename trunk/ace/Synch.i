@@ -646,7 +646,7 @@ ACE_INLINE void
 ACE_Recursive_Thread_Mutex::set_thread_id (ACE_thread_t t)
 {
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::set_thread_id");
-#if !defined (ACE_HAS_RECURSIVE_MUTEX)
+#if !defined (ACE_HAS_RECURSIVE_MUTEXES)
   this->recursive_mutex_.owner_id_ = t;
 #endif /* ACE_HAS_RECURSIVE_MUTEX */
 }
