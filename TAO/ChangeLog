@@ -1,3 +1,10 @@
+Tue Feb 11 13:58:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/vc7_orbsvcs.mwc: Added this temporary file that
+	  specifies nightly VC7 build targets under orbsvcs.
+
+	* tao/tao.mpc: Added LF_Invocation_Event.cpp and LF_CH_Event.cpp.
+
 Tue Feb 11 12:48:12 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         * utils/catior/catior.cpp:
@@ -7,7 +14,7 @@ Tue Feb 11 12:48:12 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 	  should be ok since RT CORBA is built by default. Did not
 	  wish to have two versions of catior pgm, or some conditional
 	  compiles.
-	
+
 Tue Feb 11 07:11:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DLL_ORB/client.bor:
