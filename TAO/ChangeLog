@@ -1,3 +1,16 @@
+Fri Aug 23 11:29:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be_be_visitor_constant/constant_cs.cpp:
+
+          Made code generation for constants always inline
+          in the header file, since we no longer support
+          platforms without namespaces. If this change doesn't
+          cause any unforseen problems on any platforms, I'll
+          remove the client source visitor altogether, as well
+          as the command line options to generate constants
+          inline, and make it the default.
+
 Fri Aug 23 10:33:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
