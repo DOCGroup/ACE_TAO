@@ -38,18 +38,10 @@ DIRS  = CDR \
 	MProfile_Forwarding \
 	Native_Exceptions \
 	Faults \
-	Param_Test \
-	DSI_Gateway \
-	AMI \
-	AMI_Timeouts \
-	Timeout \
-	Timed_Buffered_Oneways \
 	Smart_Proxies \
 	Portable_Interceptors \
 	Explicit_Event_Loop \
 	DynAny_Test \
-	Policies \
-	LongUpcalls \
 	RTCORBA \
 	Forwarding \
 	Exposed_Policies \
@@ -57,26 +49,17 @@ DIRS  = CDR \
 	Single_Read \
 	QtTests \
 	Multiple \
-	Crashed_Callback \
 	Client_Leaks \
 	Server_Leaks \
 	Muxing \
-	Hello \
 	Cache_Growth_Test \
-	MT_Timeout \
 	Crash_On_Write \
-	Reliable_Oneways \
-	Blocking_Sync_None \
-	Oneway_Buffering \
 	Queued_Message_Test \
 	Big_Oneways \
 	Big_Twoways \
 	Big_Reply \
-	Big_Request_Muxing \
 	Oneways_Invoking_Twoways \
-	AMI_Buffering \
-	DLL_ORB \
-	Two_Objects 
+	DLL_ORB
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -87,12 +70,37 @@ endif
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+
+DIRS += \
+	AMI \
+	AMI_Buffering \
+	AMI_Timeouts \
+	Big_Request_Muxing \
+	Blocking_Sync_None \
+	Crashed_Callback \
+	DSI_Gateway \
+	Hello \
+	LongUpcalls \
+	MT_Timeout \
+	Oneway_Buffering \
+	Param_Test \
+	Policies \
+	Reliable_Oneways \
+	Strategies \
+	Timed_Buffered_Oneways \
+	Timeout \
+	Two_Objects
+
+endif # corba_messaging
+
 
 ifdef VXWORKS
   DIRS := TestUtils $(DIRS)
 endif
 
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
