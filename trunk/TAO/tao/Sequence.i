@@ -375,4 +375,26 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
   this->release_ = 0;
 }
 
+ACE_INLINE void
+TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong max,
+                                               CORBA::ULong length,
+                                               CORBA::Octet *data,
+                                               CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->mb_ != 0)
+    {
+      ACE_Message_Block::release (this->mb_);
+      this->mb_ = 0;
+    }
+  else if (this->buffer_ && this->release_ == 1)
+    {
+      CORBA::Octet* tmp = ACE_reinterpret_cast(CORBA::Octet*,this->buffer_);
+      TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (tmp);
+    }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
