@@ -1,3 +1,7 @@
+Thu Nov 04 15:19:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 5.0.8 released.
+
 Thu Nov 04 08:16:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * config-linux-common.h: only enabled ACE_HAS_SIGTIMEDWAIT
