@@ -163,7 +163,6 @@ namespace CORBA
     typedef char *ObjectId;
     typedef CORBA::String_var ObjectId_var;
     typedef CORBA::String_out ObjectId_out;
-    static CORBA::TypeCode_ptr _tc_ObjectId;
 
     typedef CORBA::ORB_ObjectIdList ObjectIdList;
     typedef CORBA::ORB_ObjectIdList_var ObjectIdList_var;
