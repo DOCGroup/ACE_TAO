@@ -10,6 +10,8 @@
 
 BIN   	= main
 
+LIB = libJAWS.a
+
 FILES  	= \
 	HTTP_Server \
 	HTTP_Config \
@@ -22,13 +24,13 @@ FILES  	= \
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
-SHOBJ	= $(addsuffix .so,$(FILES))
 
-LDLIBS	= $(addprefix .shobj/,$(SHOBJ))
- 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD 	= $(VBIN)
+LDLIBS  = -lJAWS
+LIBS    = -lACE
+
+BUILD 	= $(VOBJS) $(VLIB) $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
