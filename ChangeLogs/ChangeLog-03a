@@ -1,3 +1,8 @@
+Tue Apr 16 19:07:22 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: Basically replaced; new version also
+          tests new ACE_Asynch_Connector facility.
+
 Tue Apr 16 18:42:39 2002  Steve Huston  <shuston@riverace.com>
 
         New feature, ACE_Asynch_Connect, contributed by Alex Libman
