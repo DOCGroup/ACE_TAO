@@ -1,42 +1,45 @@
 Tue Nov 11 20:18:27 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* Makefile: Added the tests directory to RELEASE_LIB_FILES since
- 	  this is pretty important to determine whether ACE works.  Thanks
- 	  to Chuck Gehr for this suggestion.
+        * Makefile: Added the tests directory to RELEASE_LIB_FILES since
+          this is pretty important to determine whether ACE works.  Thanks
+          to Chuck Gehr for this suggestion.
 
-	* tests/UNIXclerk.conf: Changed "merengue" to "localhost." 
-	  Thanks to Steve Coy for this suggestion.
+        * tests/UNIXclerk.conf: Changed "merengue" to "localhost." 
+          Thanks to Steve Coy for this suggestion.
 
-	* ace/config-lynxos.h (getopt): Missing 't' from const => see
- 	  getopt prototype parameter list.  Thanks to Manojkumar Acharya
- 	  <mja@cvsf325.gpt.co.uk>.
+        * ace/config-lynxos.h (getopt): Missing 't' from const => see
+          getopt prototype parameter list.  Thanks to Manojkumar Acharya
+          <mja@cvsf325.gpt.co.uk>.
 
 Tue Nov 11 08:09:16 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (inet_aton): declare local ip_addr as an ACE_UINT32
+          instead of a long.  Real programmers only use 64-bit machines.
 
         * ace/INET_Addr.cpp (get_host_name): added ACE_UNUSED_ARG (len);
           for VxWorks only.
 
 Tue Nov 11 13:19:46 1997  Torbjorn Lindgren  <tl@funcom.com>
 
-	* include/makeinclude/rules.local.GNU: Fixed so that the ACE
-	makefiles doesn't create circular symlinks (happens if
-	something fails when building libACE.* with "make -k", or when
-	doing parallel builds). It's now possible to do parallel
-	builds of libACE.* without having to clean up a mess afterwards.
+        * include/makeinclude/rules.local.GNU: Fixed so that the ACE
+        makefiles doesn't create circular symlinks (happens if
+        something fails when building libACE.* with "make -k", or when
+        doing parallel builds). It's now possible to do parallel
+        builds of libACE.* without having to clean up a mess afterwards.
 
-	* include/makeinclude/platform_irix6.x-sgic++.GNU: Removed
-	.so build with links instead (ace/apps/examples/tests and my own
-	programs all work well with this, and the manual seems to suggest
-	that it hasn't ever been necessary on this platform)
+        * include/makeinclude/platform_irix6.x-sgic++.GNU: Removed
+        .so build with links instead (ace/apps/examples/tests and my own
+        programs all work well with this, and the manual seems to suggest
+        that it hasn't ever been necessary on this platform)
 
-	* ace/config-irix6.x-sgic++-nothreads.h: Added
-	ACE_HAS_XPG4_MULTIBYTE_CHAR for SGI IRIX 6.[2-5].
+        * ace/config-irix6.x-sgic++-nothreads.h: Added
+        ACE_HAS_XPG4_MULTIBYTE_CHAR for SGI IRIX 6.[2-5].
 
 Tue Nov 11 04:50:06 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* examples/Reactor/Multicast/server.cpp (handle_timeout): Fixed a
-	  typo.  Thanks to Sandro Doro <doros@aureus.sublink.org> for
-	  reporting this.
+        * examples/Reactor/Multicast/server.cpp (handle_timeout): Fixed a
+          typo.  Thanks to Sandro Doro <doros@aureus.sublink.org> for
+          reporting this.
 
 Tue Nov 11 04:20:09 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -44,25 +47,25 @@ Tue Nov 11 04:20:09 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Nov 11 01:44:39 1997    <irfan@TWOSTEP>
 
-	* examples/Naming/test_open.cpp (main): Added a new naming test
- 	  that binds to the net_local server and tries to bind entries to
- 	  it.
+        * examples/Naming/test_open.cpp (main): Added a new naming test
+          that binds to the net_local server and tries to bind entries to
+          it.
 
-	* netsvcs/lib/Name_Handler.cpp: Added a new class called
- 	  Naming_Context.  This helper class adds the correct default
- 	  constructor to the ACE_Naming_Context class so that we can use
- 	  it in ACE_Singleton.
+        * netsvcs/lib/Name_Handler.cpp: Added a new class called
+          Naming_Context.  This helper class adds the correct default
+          constructor to the ACE_Naming_Context class so that we can use
+          it in ACE_Singleton.
 
-	  Previously, each Name_Handler was getting its own
- 	  Naming_Context.  This is obviously incorrect as the mapping
- 	  address in already occupied by the first Name_Handler.
-  	  Therefore, the Naming_Context was changed into a Singleton
- 	  accessable by all Name_Handlers.
+          Previously, each Name_Handler was getting its own
+          Naming_Context.  This is obviously incorrect as the mapping
+          address in already occupied by the first Name_Handler.
+          Therefore, the Naming_Context was changed into a Singleton
+          accessable by all Name_Handlers.
 
-	* ace/WFMO_Reactor.cpp (handle_additions && handle_deletions):
- 	  Changed code to make sure that we should not make the upcall
- 	  until all the internal data structures have been updated.  This
- 	  is to protect against upcalls that try to deregister again.
+        * ace/WFMO_Reactor.cpp (handle_additions && handle_deletions):
+          Changed code to make sure that we should not make the upcall
+          until all the internal data structures have been updated.  This
+          is to protect against upcalls that try to deregister again.
 
 Tue Nov 11 01:28:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -70,57 +73,57 @@ Tue Nov 11 01:28:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Nov 10 21:30:04 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* INET_Addr.cpp: In the ACE_INET_Addr::get_host_name (char
-	hostname[], size_t len) method, an unnecessary local variable
-	called "name" was being used and the actual parameter "hostname"
-	was never getting updated. The local variable is now removed and
-	we use the actual parameter everywhere.
+        * INET_Addr.cpp: In the ACE_INET_Addr::get_host_name (char
+        hostname[], size_t len) method, an unnecessary local variable
+        called "name" was being used and the actual parameter "hostname"
+        was never getting updated. The local variable is now removed and
+        we use the actual parameter everywhere.
 
 Mon Nov 10 20:44:43 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
-	* etc/ACE-guidelines.html: Added a section for ACE Design Rules,
-	  and added a design rule about sentinels.
+        * etc/ACE-guidelines.html: Added a section for ACE Design Rules,
+          and added a design rule about sentinels.
 
 Mon Nov 10 18:11:05 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
-	* ace/Singleton.h (ACE_TSS_Singleton): Changed ACE_TSS<TYPE> to
-	  ACE_TSS_TYPE (TYPE), so that the ACE_TSS_TYPE macro (defined in
-	  OS.h) gets used. (Irfan's suggestion.)
+        * ace/Singleton.h (ACE_TSS_Singleton): Changed ACE_TSS<TYPE> to
+          ACE_TSS_TYPE (TYPE), so that the ACE_TSS_TYPE macro (defined in
+          OS.h) gets used. (Irfan's suggestion.)
 
 Mon Nov 10 17:02:40 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.h: Reformatted the #ifdef structure of the
-	  ACE_HAS_XPG4_MULTIBYTE_CHAR to conform to ACE usage.
+        * ace/OS.h: Reformatted the #ifdef structure of the
+          ACE_HAS_XPG4_MULTIBYTE_CHAR to conform to ACE usage.
 
-	* ace/Service_Repository.cpp: The close() method needed a '\n' in
- 	  one of the debug messages.  Thanks to Steve Coy for reporting
- 	  this.
+        * ace/Service_Repository.cpp: The close() method needed a '\n' in
+          one of the debug messages.  Thanks to Steve Coy for reporting
+          this.
 
 Mon Nov 10 14:09:24 1997  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.h, OS.i, README:  Added new macro, ACE_HAS_XPG4_MULTIBYTE_CHAR
-	  for platforms which supply wchar.h and wide character functions.
-	  Added the use if it in OS.h, and use the functions in OS.i,
-	  strlen and strcpy with wchar_t arguments.
+        * ace/OS.h, OS.i, README:  Added new macro, ACE_HAS_XPG4_MULTIBYTE_CHAR
+          for platforms which supply wchar.h and wide character functions.
+          Added the use if it in OS.h, and use the functions in OS.i,
+          strlen and strcpy with wchar_t arguments.
 
-	* ace/config-hpux-10.x.h, config-aix-4.2.x.h, config-mvs.h,
-	  config-sunos5.5-sunc++-4.x.h: Added ACE_HAS_XPG4_MULTIBYTE_CHAR.
+        * ace/config-hpux-10.x.h, config-aix-4.2.x.h, config-mvs.h,
+          config-sunos5.5-sunc++-4.x.h: Added ACE_HAS_XPG4_MULTIBYTE_CHAR.
 
 Mon Nov 10 13:33:02 1997    <irfan@TWOSTEP>
 
-	* ace/OS.h (ACE_WRITE_GUARD): Added macros for ACE_WRITE_GUARD and
- 	  ACE_READ_GUARD. Thanks to Brian Raven <Brian.Raven@liffe.com>
- 	  for suggesting this.
+        * ace/OS.h (ACE_WRITE_GUARD): Added macros for ACE_WRITE_GUARD and
+          ACE_READ_GUARD. Thanks to Brian Raven <Brian.Raven@liffe.com>
+          for suggesting this.
 
-	* tests/Thread_Mutex_Test.cpp: Modified version of Mutex_Test that
- 	  exclusively works on a Thread_Mutex.
+        * tests/Thread_Mutex_Test.cpp: Modified version of Mutex_Test that
+          exclusively works on a Thread_Mutex.
 
-	* tests/Mutex_Test.cpp: Removed this test.  It have been
- 	  superseded by Thread_Mutex_Test and Process_Mutex_Test.
+        * tests/Mutex_Test.cpp: Removed this test.  It have been
+          superseded by Thread_Mutex_Test and Process_Mutex_Test.
 
-	* ace/OS.i (thread_mutex_trylock): Fixed the return value and
- 	  errno for this system call such that it is consistent with other
- 	  trylock calls.
+        * ace/OS.i (thread_mutex_trylock): Fixed the return value and
+          errno for this system call such that it is consistent with other
+          trylock calls.
 
 Mon Nov 10 10:21:55 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -151,24 +154,24 @@ Sun Nov 09 23:29:43 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Nov 09 22:18:30 1997    <irfan@TWOSTEP>
 
-	* ace/config-win32-common.h (ACE_HAS_ANSI_CASTS): VC++ compilers
- 	  support ANSI style casts.
+        * ace/config-win32-common.h (ACE_HAS_ANSI_CASTS): VC++ compilers
+          support ANSI style casts.
 
-	* ace/OS.h (ACE_static_cast): Added ANSI style cast macros to ACE.
-  	  Thanks to Stephen Coy <stevec@magna.com.au> for suggesting this.
+        * ace/OS.h (ACE_static_cast): Added ANSI style cast macros to ACE.
+          Thanks to Stephen Coy <stevec@magna.com.au> for suggesting this.
 
 Sun Nov  9 21:34:16 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS: Enhanced ACE_OS so that it *always* defines
- 	  implementations for the wchar_t versions of strlen() and
- 	  strcpy(), even if the platform doesn't explicitly support
- 	  UNICODE.  This is necessary since TAO needs these functions.
+        * ace/OS: Enhanced ACE_OS so that it *always* defines
+          implementations for the wchar_t versions of strlen() and
+          strcpy(), even if the platform doesn't explicitly support
+          UNICODE.  This is necessary since TAO needs these functions.
 
-	* ace/OS.h: Added a typedef for wchar_t to handle the case where
- 	  the OS doesn't support UNICODE.
+        * ace/OS.h: Added a typedef for wchar_t to handle the case where
+          the OS doesn't support UNICODE.
 
-	* ace/ACE.cpp: Added hex character routines from TAO since they
- 	  are generally useful.
+        * ace/ACE.cpp: Added hex character routines from TAO since they
+          are generally useful.
 
         * ace/OS.h: Moved the TAO-specific #defines into TAO, where they
           belong.  Thanks to David Levine and Chris Cleeland for insisting
@@ -176,22 +179,22 @@ Sun Nov  9 21:34:16 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Sun Nov 09 17:55:50 1997    <nw1@COYOTE>
 
-	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp (open):
- 	  Removed codes that reset a socket's non-blocking flag.  This has
- 	  been taken care of by ACE_Acceptor::activate_svc_handler now and
- 	  resetting this flag twice on NT caused us grief.  Thanks to
- 	  Georges Ata <George_ata@srt.ccmail.compuserve.com> for reporting
- 	  the bug.
+        * examples/ASX/Event_Server/Event_Server/Peer_Router.cpp (open):
+          Removed codes that reset a socket's non-blocking flag.  This has
+          been taken care of by ACE_Acceptor::activate_svc_handler now and
+          resetting this flag twice on NT caused us grief.  Thanks to
+          Georges Ata <George_ata@srt.ccmail.compuserve.com> for reporting
+          the bug.
 
-	* ace/ACE.i (hex2byte,nibble2hex): Replaced ACE_INLINE to inline
- 	  for these two functions.  Functions in this file are always
- 	  inlined.
+        * ace/ACE.i (hex2byte,nibble2hex): Replaced ACE_INLINE to inline
+          for these two functions.  Functions in this file are always
+          inlined.
 
-	* ace/config-win32-common.h (ACE_LACKS_RLIMIT): Added this flags
-	  so we don't need to treat ACE_WIN32 specially.
+        * ace/config-win32-common.h (ACE_LACKS_RLIMIT): Added this flags
+          so we don't need to treat ACE_WIN32 specially.
 
-	* ace/OS.i (getrlimit,setrlimit): Removed unnecessary conditional
-	  flag ACE_WIN32.
+        * ace/OS.i (getrlimit,setrlimit): Removed unnecessary conditional
+          flag ACE_WIN32.
 
         * ace/Thread_Manager.cpp (wait): Merged the two blocks within this
           function so that we can avoid relase/acquire lock
