@@ -129,6 +129,11 @@ client (void *arg)
                          150,
                          &buffer2[150],
                          105);
+  if (len != 255)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) %p; len is %d, but should be 255!\n", len));
+    }
   ACE_ASSERT (len == 255);
 
   for (i = 0; i < 255; i++)
