@@ -973,7 +973,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
             {
-              *os << "return " << bt->name () << "::_narrow (retval);" << nl;
+              *os << "return " << bt->name () << "::_narrow (retval, env);" << nl;
             }
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
