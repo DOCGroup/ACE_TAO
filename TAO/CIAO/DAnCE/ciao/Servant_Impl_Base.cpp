@@ -61,16 +61,17 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
+    CORBA::Object_var objref =
+      this->container_->get_objref (this);
 
-    CORBA::Object_var objref = this->container_->get_objref (this);
-    Components::CCMObject_var ccmobjref = 
+    Components::CCMObject_var ccmobjref =
       Components::CCMObject::_narrow (objref.in ()
                                       ACE_ENV_ARG_PARAMETER);
     PortableServer::ObjectId_var oid;
-    this->container_->uninstall_component
-      (ccmobjref.in (),
-       oid.out ()
-       ACE_ENV_ARG_PARAMETER);
+
+    this->container_->uninstall_component ( ccmobjref.in (),
+                                            oid.out ()
+                                            ACE_ENV_ARG_PARAMETER);
   }
 
   ::Components::ConnectionDescriptions *
