@@ -197,6 +197,17 @@ public:
   static int bind_port (ACE_HANDLE handle);
   // Bind a new unused port to <handle>.
 
+  static int get_bcast_addr (ACE_UINT32 &bcast_addr,
+			     const char *hostname = 0,
+			     ACE_UINT32 host_addr = 0,
+			     ACE_HANDLE handle = ACE_INVALID_HANDLE);
+  // Get our broadcast address based on our <host_addr>.  If
+  // <hostname> is non-0 we'll use it to determine our IP address.  If
+  // <handle> is not <ACE_INVALID_HANDLE> then we'll use this to
+  // determine our broadcast address, otherwise we'll have to create a
+  // socket internally (and free it).  Returns -1 on failure and 0 on
+  // success.
+
   static int handle_timed_accept (ACE_HANDLE listener,
 				  ACE_Time_Value *timeout, 
 				  int restart);
