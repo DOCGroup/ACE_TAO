@@ -19,8 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// @@ This include needs to go after Ossama's checkin
-#include "tao/PolicyC.h"
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Object_KeyC.h"
 
@@ -29,6 +27,12 @@ class TAO_MProfile;
 class TAO_Stub;
 class TAO_Endpoint;
 class TAO_ORB_Core;
+
+/// Forward declaration of PolicyList
+namespace CORBA
+{
+  class PolicyList;
+}
 
 /**
  * @class TAO_Profile
@@ -50,6 +54,11 @@ public:
   /// If you have a virtual method you need a virtual dtor.
   virtual ~TAO_Profile (void);
 
+  /**
+   * @name Non virtual methods for the profile classes.
+  */
+
+  //@{
   /// The tag, each concrete class will have a specific tag value.
   CORBA::ULong tag (void) const;
 
@@ -82,58 +91,25 @@ public:
   void add_tagged_component (const IOP::TaggedComponent &component
                              ACE_ENV_ARG_DECL);
 
-  /// The object key delimiter.
-  virtual char object_key_delimiter (void) const = 0;
+  /**
+   * Return the current addressing mode for this profile.
+   * In almost all cases, this is TAO_Target_Specification::Key_Addr.
+   */
+  CORBA::Short addressing_mode (void) const;
+  //@}
 
-  /// Initialize this object using the given input string.
-  /// Supports URL style of object references
-  virtual void parse_string (const char *string
-                             ACE_ENV_ARG_DECL) = 0;
 
-  /// Return a string representation for this profile.  client must
-  /// deallocate memory.
-  virtual char* to_string (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  /**
+   * @name Template methods that needs to be implemented by the
+   * concrete classes. Some of the methods may be overridden only
+   * under specila circumstances.
+   */
+  //@{
+  /// Encode this profile in a stream, i.e. marshal it.
+  virtual int encode (TAO_OutputCDR &stream) const;
 
   /// Initialize this object using the given CDR octet string.
-  virtual int decode (TAO_InputCDR& cdr) = 0;
-
-  /// Encode this profile in a stream, i.e. marshal it.
-  virtual int encode (TAO_OutputCDR &stream) const = 0;
-
-  /**
-   * Encodes this profile's endpoints into a tagged component.
-   * This is done only if RTCORBA is enabled, since currently this is
-   * the only case when we have more than one endpoint per profile.
-   */
-  virtual int encode_endpoints (void) = 0;
-
-  /// @@ deprecated. return a reference to the Object Key.
-  virtual const TAO::ObjectKey &object_key (void) const = 0;
-
-  /// Obtain the object key, return 0 if the profile cannot be parsed.
-  /// The memory is owned by the caller!
-  virtual TAO::ObjectKey *_key (void) const = 0;
-
-  /**
-   * Return pointer to this profile's endpoint.  If the profile
-   * contains more than one endpoint, i.e., a list, the method returns
-   * the head of the list.
-   */
-  virtual TAO_Endpoint *endpoint (void) = 0;
-
-  /// Return how many endpoints this profile contains.
-  virtual size_t endpoint_count (void) = 0;
-
-  /**
-   * Return true if this profile is equivalent to other_profile.  Two
-   * profiles are equivalent iff their tag, object_key, version and
-   * all endpoints are the same.
-   */
-  virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
-
-  /// Return a hash value for this object.
-  virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL) = 0;
+  virtual int decode (TAO_InputCDR& cdr);
 
   /**
    * This method is used to get the IOP::TaggedProfile. The profile
@@ -192,22 +168,88 @@ public:
   virtual void addressing_mode (CORBA::Short addr_mode
                                 ACE_ENV_ARG_DECL);
 
+
+
+  /// The object key delimiter.
+  virtual char object_key_delimiter (void) const = 0;
+
+  /// Initialize this object using the given input string.
+  /// Supports URL style of object references
+  virtual void parse_string (const char *string
+                             ACE_ENV_ARG_DECL);
+
+  /// Return a string representation for this profile.  Client must
+  /// deallocate memory. Only one endpoint is included into the
+  /// string.
+  virtual char* to_string (ACE_ENV_SINGLE_ARG_DECL) = 0;
+
   /**
-   * Return the current addressing mode for this profile.
-   * In almost all cases, this is TAO_Target_Specification::Key_Addr.
+   * Encodes this profile's endpoints into a tagged component.
+   * This is done only if RTCORBA is enabled, since currently this is
+   * the only case when we have more than one endpoint per profile.
    */
-  CORBA::Short addressing_mode (void) const;
+  virtual int encode_endpoints (void) = 0;
+
+  /// @@ deprecated. return a reference to the Object Key.
+  virtual const TAO::ObjectKey &object_key (void) const = 0;
+
+  /// Obtain the object key, return 0 if the profile cannot be parsed.
+  /// The memory is owned by the caller!
+  virtual TAO::ObjectKey *_key (void) const = 0;
+
+  /**
+   * Return pointer to this profile's endpoint.  If the profile
+   * contains more than one endpoint, i.e., a list, the method returns
+   * the head of the list.
+   */
+  virtual TAO_Endpoint *endpoint (void) = 0;
+
+  /// Return how many endpoints this profile contains.
+  virtual size_t endpoint_count (void) = 0;
+
+  /**
+   * Return true if this profile is equivalent to other_profile.  Two
+   * profiles are equivalent iff their tag, object_key, version and
+   * all endpoints are the same.
+   */
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
+
+  /// Return a hash value for this object.
+  virtual CORBA::ULong hash (CORBA::ULong max
+                             ACE_ENV_ARG_DECL) = 0;
+  //@}
 
 protected:
+  /**
+   * @name Protected template methods.
+   */
+
+  //@@{
+  /// Decode the protocol specific profile details.
+  virtual int decode_profile (TAO_InputCDR &cdr) = 0;
+
+  /// Creates an encapsulation of the ProfileBody struct in the <cdr>
+  virtual void create_profile_body (TAO_OutputCDR &cdr) const = 0;
+
+  /**
+   * Helper for <decode>.  Decodes endpoints from a tagged component.
+   * Decode only if RTCORBA is enabled.  Furthermore, we may not find
+   * TAO_TAG_ENDPOINTS component, e.g., if we are talking to nonRT
+   * version of TAO or some other ORB.  This is not an error, and we
+   * must proceed.  Return 0 on success and -1 on failure.
+   */
+  virtual int decode_endpoints (void) = 0;
+
+  /// Protocol specific implementation of parse_string ()
+  virtual void parse_string_i (const char *string
+                               ACE_ENV_ARG_DECL) = 0;
+  //@}
 
   /// To be used by inherited classes
   TAO_Profile (CORBA::ULong tag,
                TAO_ORB_Core *orb_core,
                const TAO::ObjectKey &key,
                const TAO_GIOP_Message_Version &version);
-
-  /// Creates an encapsulation of the ProfileBody struct in the <cdr>
-  virtual void create_profile_body (TAO_OutputCDR &cdr) const = 0;
 
   /// Helper method that encodes the endpoints for RTCORBA as
   /// tagged_components.
@@ -229,7 +271,6 @@ private:
   // Profiles should not be copied!
   ACE_UNIMPLEMENTED_FUNC (TAO_Profile (const TAO_Profile&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Profile&))
-
 
 protected:
 
@@ -319,10 +360,14 @@ public:
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
-private:
 
+  virtual int decode_profile (TAO_InputCDR &cdr);
+  virtual int decode_endpoints (void);
+private:
   virtual void create_profile_body (TAO_OutputCDR &encap) const;
 
+  virtual void parse_string_i (const char *string
+                               ACE_ENV_ARG_DECL);
 private:
   TAO_opaque body_;
 };
