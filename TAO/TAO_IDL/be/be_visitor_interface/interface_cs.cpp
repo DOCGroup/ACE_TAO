@@ -75,7 +75,11 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << node->full_name () << "_ptr " << node->full_name ()
       << "::_unchecked_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Environment &" << be_uidt_nl
+      << "CORBA::Environment &";
+  if (idl_global->gen_locality_constraint ())
+    *os << " ACE_TRY_ENV";
+
+  *os << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
