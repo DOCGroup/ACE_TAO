@@ -7,7 +7,7 @@
 #include "ace/Naming_Context.h"
 #include "ace/Remote_Name_Space.h"
 #include "ace/Local_Name_Space.h"
-#include "ace/Registry_Name_Space.h"
+//#include "ace/Registry_Name_Space.h"
 
 // Make life easier later on...
 
