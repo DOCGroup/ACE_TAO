@@ -4,6 +4,10 @@ Mon Dec  2 09:57:15 1996  David L. Levine  <levine@cs.wustl.edu>
 	* tests/*.cpp: removed trailing .cpp from argument to
  	  ACE_START_TEST because it would appear in the log file name
 
+	* tests/SV_Shared_Memory_Test.cpp: moved ACE_END_TEST into
+ 	  child process case, so that it gets called before returning
+ 	  from main()
+
 Mon Dec  2 00:08:51 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
 	* ace/Log_Record.cpp (dump): There was an error on line 19 of
