@@ -1,3 +1,9 @@
+Mon Sep 13 09:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added TAO/orbsvcs/orbsvcs/CosNaming_Serv to the list of projects
+          to build first.
+
 Sun Sep 12 17:20:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/rteventlogadmin.mpb
