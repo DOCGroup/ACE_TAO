@@ -61,7 +61,6 @@ Thu Sep 17 18:51:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
           Revert back to iovec instead of ACE_IO_Vector.
 
-
 Thu Sep 17 18:33:19 EDT 1998  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/002/server.pp
@@ -107,7 +106,7 @@ Thu Sep 17 16:30:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           routines expecting WSABUF*.
           But Win32 does not provide any functions to go scatter-gather
           over files, so this is only used for sockets, new methods:
-          ACE_OS::sendv() and ACE_OS::recv() were added for this
+          ACE_OS::sendv() and ACE_OS::recvv() were added for this
           purpose, the old emulation is used for the other classes. Users
           writing to higher-level components (such as ACE_SOCK or
           ACE_SOCK_Dgram) will benefit from this without any changes to
