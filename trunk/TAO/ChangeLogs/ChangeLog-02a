@@ -1,3 +1,13 @@
+Mon Nov 13 16:12:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
+
+        * tests/RTCORBA/Client_Protocol/svc_unix.conf:
+        * tests/RTCORBA/Client_Protocol/svc_nt.conf.conf:
+        * tests/RTCORBA/Client_Protocol/run_test.pl:
+
+        * tests/RTCORBA/Client_Protocol/Client_Protocol.dsw
+
+		  Updated to get it working. 
+
 Mon Nov 13 17:40:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Invocation.i:
