@@ -118,3 +118,16 @@ TAO_Transport::check_event_handler_i (const char *caller)
     }
   return 0;
 }
+
+/*****************************************************/
+ACE_INLINE
+TAO_Transport_Refcount_Guard::TAO_Transport_Refcount_Guard (TAO_Transport *t)
+  :tr_ (TAO_Transport::_duplicate (t))
+{
+}
+
+ACE_INLINE
+TAO_Transport_Refcount_Guard::~TAO_Transport_Refcount_Guard (void)
+{
+  TAO_Transport::release (this->tr_);
+}

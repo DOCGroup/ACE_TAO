@@ -24,8 +24,8 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,
-	   TAO_Server_Request,
-	   "$Id$")
+           TAO_Server_Request,
+           "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -44,20 +44,22 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
-				  TAO_SERVER_REQUEST_START);
+                                  TAO_SERVER_REQUEST_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
-				      TAO_InputCDR &input,
-				      TAO_OutputCDR &output,
-				      TAO_Transport *transport,
-				      TAO_ORB_Core *orb_core)
+                                      TAO_InputCDR &input,
+                                      TAO_OutputCDR &output,
+                                      TAO_Transport *transport,
+                                      TAO_ORB_Core *orb_core)
   : mesg_base_ (mesg_base),
     operation_ (),
     incoming_ (&input),
     outgoing_ (&output),
-    transport_(TAO_Transport::_duplicate (transport)),
+    // transport already duplicated in
+    // TAO_Transport::process_parsed_messages ()
+    transport_(transport),
     response_expected_ (0),
     deferred_reply_ (0),
     sync_with_server_ (0),
@@ -73,7 +75,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
   , rs_pi_current_ ()
-#endif	/* TAO_HAS_INTERCEPTORS == 1 */
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
   // No-op.
@@ -81,19 +83,21 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 
 // This constructor is used, by the locate request code.
 TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
-				      CORBA::ULong request_id,
-				      CORBA::Boolean response_expected,
-				      CORBA::Boolean deferred_reply,
-				      TAO_ObjectKey &object_key,
-				      const char *operation,
-				      TAO_OutputCDR &output,
-				      TAO_Transport *transport,
-				      TAO_ORB_Core *orb_core,
-				      int &parse_error)
+                                      CORBA::ULong request_id,
+                                      CORBA::Boolean response_expected,
+                                      CORBA::Boolean deferred_reply,
+                                      TAO_ObjectKey &object_key,
+                                      const char *operation,
+                                      TAO_OutputCDR &output,
+                                      TAO_Transport *transport,
+                                      TAO_ORB_Core *orb_core,
+                                      int &parse_error)
   : mesg_base_ (mesg_base),
     operation_ (operation),
     incoming_ (0),
     outgoing_ (&output),
+    // transport already duplicated in
+    // TAO_Transport::process_parsed_messages ()
     transport_ (TAO_Transport::_duplicate (transport)),
     response_expected_ (response_expected),
     deferred_reply_ (deferred_reply),
@@ -109,7 +113,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
   , rs_pi_current_ ()
-#endif	/* TAO_HAS_INTERCEPTORS == 1 */
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
   this->profile_.object_key (object_key);
   parse_error = 0;
@@ -117,7 +121,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 
 TAO_ServerRequest::~TAO_ServerRequest (void)
 {
-  TAO_Transport::release (this->transport_);
 }
 
 CORBA::ORB_ptr
@@ -167,7 +170,7 @@ TAO_ServerRequest::init_reply (void)
 
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_,
-					   reply_params);
+                                           reply_params);
 
   // Finish the GIOP Reply header, then marshal the exception.
   if (reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD)
@@ -176,11 +179,11 @@ TAO_ServerRequest::init_reply (void)
       CORBA::Object_ptr object_ptr = this->forward_location_.in ();
 
       if ((*this->outgoing_ << object_ptr) == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      ACE_TEXT ("TAO_GIOP_ServerRequest::marshal - ")
-		      ACE_TEXT ("encoding forwarded objref failed\n")));
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO_GIOP_ServerRequest::marshal - ")
+                      ACE_TEXT ("encoding forwarded objref failed\n")));
+        }
     }
 }
 
@@ -207,7 +210,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
 
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_,
-					   reply_params);
+                                           reply_params);
 
   // Send the message.
   int result = this->transport_->send_message (*this->outgoing_,
@@ -217,15 +220,15 @@ TAO_ServerRequest::send_no_exception_reply (void)
   if (result == -1)
     {
       if (TAO_debug_level > 0)
-	{
-	  // No exception but some kind of error, yet a response
-	  // is required.
-	  ACE_ERROR ((
-		      LM_ERROR,
-		      ACE_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
-		      ACE_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")
-		      ));
-	}
+        {
+          // No exception but some kind of error, yet a response
+          // is required.
+          ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
+                      ACE_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")
+                      ));
+        }
     }
 }
 
@@ -238,14 +241,14 @@ TAO_ServerRequest::tao_send_reply (void)
   if (result == -1)
     {
       if (TAO_debug_level > 0)
-	{
-	  // No exception but some kind of error, yet a response
-	  // is required.
-	  ACE_ERROR ((LM_ERROR,
-		      ACE_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
-		      ACE_TEXT ("TAO_ServerRequest::tao_send_reply")));
+        {
+          // No exception but some kind of error, yet a response
+          // is required.
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
+                      ACE_TEXT ("TAO_ServerRequest::tao_send_reply")));
 
-	}
+        }
     }
 }
 
@@ -272,9 +275,9 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
 
       // Check whether we are able to downcast the exception
       if (CORBA::SystemException::_downcast (&ex) != 0)
-	{
-	  reply_params.reply_status_ = TAO_GIOP_SYSTEM_EXCEPTION;
-	}
+        {
+          reply_params.reply_status_ = TAO_GIOP_SYSTEM_EXCEPTION;
+        }
 
       // Create a new output CDR stream
 
@@ -289,38 +292,38 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
       char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #endif /* ACE_HAS_PURIFY */
       TAO_OutputCDR output (repbuf,
-			    sizeof repbuf,
-			    TAO_ENCAP_BYTE_ORDER,
-			    this->orb_core_->output_cdr_buffer_allocator (),
-			    this->orb_core_->output_cdr_dblock_allocator (),
-			    this->orb_core_->output_cdr_msgblock_allocator (),
-			    this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-			    TAO_DEF_GIOP_MAJOR,
-			    TAO_DEF_GIOP_MINOR,
-			    this->orb_core_->to_iso8859 (),
-			    this->orb_core_->to_unicode ());*/
+                            sizeof repbuf,
+                            TAO_ENCAP_BYTE_ORDER,
+                            this->orb_core_->output_cdr_buffer_allocator (),
+                            this->orb_core_->output_cdr_dblock_allocator (),
+                            this->orb_core_->output_cdr_msgblock_allocator (),
+                            this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                            TAO_DEF_GIOP_MAJOR,
+                            TAO_DEF_GIOP_MINOR,
+                            this->orb_core_->to_iso8859 (),
+                            this->orb_core_->to_unicode ());*/
 #endif /* 0 */
 
       // Make the reply message
       if (this->mesg_base_->generate_exception_reply (*this->outgoing_,
-						      reply_params,
-						      ex) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      ACE_TEXT ("TAO: (%P|%t|%N|%l): ")
-		      ACE_TEXT ("could not make exception reply\n")));
+                                                      reply_params,
+                                                      ex) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l): ")
+                      ACE_TEXT ("could not make exception reply\n")));
 
-	}
+        }
 
       // Send the message
       if (this->transport_->send_message (*this->outgoing_,
                                           0,
                                           TAO_Transport::TAO_REPLY) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
-		      ACE_TEXT ("could not send exception reply\n")));
-	}
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
+                      ACE_TEXT ("could not send exception reply\n")));
+        }
     }
   else if (TAO_debug_level > 0)
     {
@@ -331,7 +334,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
       // down, since it really isn't the client's fault.
 
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("(%P|%t) exception thrown ")
-		  ACE_TEXT ("but client is not waiting a response\n")));
+                  ACE_TEXT ("(%P|%t) exception thrown ")
+                  ACE_TEXT ("but client is not waiting a response\n")));
     }
 }
