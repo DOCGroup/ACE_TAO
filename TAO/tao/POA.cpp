@@ -1148,9 +1148,11 @@ TAO_POA::find_POA_i_optimized (const TAO_POA::String &adapter_name,
           if (env.exception () != 0)
             return 0;
 
+          ACE_CString null_terminated_adapter_name (adapter_name);
+
           CORBA::Boolean success =
             this->adapter_activator_->unknown_adapter (self.in (),
-                                                       adapter_name.c_str (),
+                                                       null_terminated_adapter_name.c_str (),
                                                        env);
           // Check for exceptions
           if (env.exception () != 0)
