@@ -8,8 +8,11 @@
 
 #include "ace/Service_Types.h"
 #include "ace/DLL.h"
+#include "ace/ACE.h"
 
-ACE_RCSID(ace, Service_Object, "$Id$")
+ACE_RCSID (ace,
+	   Service_Object,
+	   "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)

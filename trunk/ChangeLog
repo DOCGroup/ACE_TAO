@@ -1,3 +1,44 @@
+Mon Aug  4 22:41:24 2003  <Ossama Othman <ossama@dre.vanderbilt.edu>
+
+	* ace/DLL_Manager.cpp:
+
+	  Include "ace/Guard_T.h" to pull in ACE_Guard template
+	  declaration.
+
+	* ace/MEM_Addr.cpp:
+
+	  Include "ace/OS.h" to pull in ACE_OS::strtoul() static function
+	  prototype.
+
+	* ace/Process_Semaphore.h:
+
+	  Include "ace/Semaphore.h" to pull in the ACE_Semaphore class
+	  declaration for the (ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS)
+	  case.
+
+	* ace/Service_Object.cpp:
+
+	  Include "ace/ACE.h" to pull in ACE::strnew() function prototype.
+
+	* ace/Service_Repository.cpp:
+
+	  Include "ace/ACE.h" to pull in ACE::debug() function prototype.
+
+	* ace/Token.h:
+
+	  Fixed compile-time problems in MSVC++ builds.  Some headers must
+	  still be included for the ACE_TOKEN_USES_SEMAPHORE case.
+
+	* ace/WIN32_Asynch_IO.h:
+
+	  Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
+	  declaration.
+
+	* ace/WIN32_Proactor.h:
+
+	  Include "ace/Auto_Event.h" to pull in ACE_Auto_Event class
+	  declaration.
+
 Mon Aug  4 04:28:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Condition_Recursive_Thread_Mutex.cpp:

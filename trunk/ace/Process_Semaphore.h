@@ -26,7 +26,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS))
-#include "ace/SV_Semaphore_Complex.h"
+# include "ace/SV_Semaphore_Complex.h"
+#else
+# include "ace/Semaphore.h"
 #endif /* !(ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS) */
 
 /**
