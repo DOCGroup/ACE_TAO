@@ -1,3 +1,17 @@
+Wed May 29 12:31:53 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CORBA_String.cpp (operator>>):
+
+	  Allocate space for the wide string to be extracted before
+	  performing the actual extraction.  Addresses memory access
+	  violations.
+
+	  Extract the wide string using the istream::read() unformatted
+	  input method.  The operator>>() extraction operator cannot be
+	  used on some platforms (e.g. g++ 2.95) due to ambiguous and/or
+	  missing overloaded extraction operators.  Fixes compile-time
+	  errors in g++ 2.95.x builds.
+
 Wed May 29 09:15:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
