@@ -333,7 +333,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
   delete [] svc_config_argv;
 
   // check for errors returned from TAO_Internal::open_services()
-  if (result != 0)
+  if (result != 0 && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "ORB Core unable to initialize the Service Configurator"),
