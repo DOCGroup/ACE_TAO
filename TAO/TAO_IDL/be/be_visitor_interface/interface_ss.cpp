@@ -108,10 +108,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 		       "be_visitor_interface_ss::visit_interface - "
 		       " copy ctor generation failed\n"), -1);
   *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
-      << "{}\n";
+      << "{}\n" << be_nl;
 
-  // destructor
-  os->indent ();
   *os << "// skeleton destructor" << be_nl;
 
   if (!node->is_nested ())
@@ -127,7 +125,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         " (void)" << be_nl;
     }
   *os << "{\n";
-  *os << "}\n";
+  *os << "}\n\n";
 
 
   // generate code for elements in the scope (e.g., operations)
@@ -141,6 +139,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   // generate code for the _is_a skeleton
+  // @@ TODO Use compiled marshaling here!!!
   os->indent ();
   *os << "void " << node->full_skel_name ()
       << "::_is_a_skel (" << be_idt << be_idt_nl
@@ -190,32 +189,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "}\n\n";
 
 
-  os->indent ();
-  *os << "CORBA::Boolean " << node->full_skel_name ()
-      << "::_is_a (" << be_idt << be_idt_nl
-      << "const char* value," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "if (\n" << be_idt;
-  if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::"
-                         "visit_interface - "
-                         "traversal of inhertance graph failed\n"),
-                        -1);
-    }
-
-  os->indent ();
-  *os << "(!ACE_OS::strcmp ((char *)value, "
-      << "CORBA::_tc_Object->id (ACE_TRY_ENV))))"
-      << be_idt_nl << "return 1;" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "return 0;" << be_uidt << be_uidt << be_uidt_nl
-      << "}\n\n";
-
   // generate code for the _non_existent skeleton
+  // @@ TODO Use compiled marshaling here!!! Or remove this method!
   os->indent ();
   *os << "void " << node->full_skel_name ()
       << "::_non_existent_skel (" << be_idt << be_idt_nl
@@ -243,6 +218,31 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "&_tao_retval " << be_uidt_nl
       << ");" << be_uidt_nl;
   *os << "}\n\n";
+
+  os->indent ();
+  *os << "CORBA::Boolean " << node->full_skel_name ()
+      << "::_is_a (" << be_idt << be_idt_nl
+      << "const char* value," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "if (\n" << be_idt;
+  if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_ss::"
+                         "visit_interface - "
+                         "traversal of inhertance graph failed\n"),
+                        -1);
+    }
+
+  os->indent ();
+  *os << "(!ACE_OS::strcmp ((char *)value, "
+      << "CORBA::_tc_Object->id (ACE_TRY_ENV))))"
+      << be_idt_nl << "return 1;" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "return 0;" << be_uidt << be_uidt << be_uidt_nl
+      << "}\n\n";
 
   os->indent ();
   *os << "void* " << node->full_skel_name ()
@@ -302,6 +302,22 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   os->decr_indent ();
   *os << "}\n\n";
 
+  *os << "\n";
+
+  // the _this () operation
+  *os << node->name () << "*" << be_nl
+      << node->full_skel_name ()
+      << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
+      << "{" << be_idt_nl
+      << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
+      << "ACE_CHECK_RETURN (0);" << be_nl
+    //      << "if (ACE_TRY_ENV.exception () != 0)" << be_idt_nl
+    //      << "return 0;" << be_uidt_nl
+      << "return new " << node->full_coll_name ()
+      << " (this, stub);" << be_uidt << be_nl;
+
+  *os << "}\n\n";
+
   // generate the collocated class impl
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS);
@@ -325,21 +341,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
   delete visitor;
 
-  *os << "\n";
-
-  // the _this () operation
-  *os << node->name () << "*" << be_nl
-      << node->full_skel_name ()
-      << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
-      << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK_RETURN (0);" << be_nl
-    //      << "if (ACE_TRY_ENV.exception () != 0)" << be_idt_nl
-    //      << "return 0;" << be_uidt_nl
-      << "return new " << node->full_coll_name ()
-      << " (this, stub);" << be_uidt << be_nl;
-
-  *os << "}\n\n";
-
-   return 0;
+  *os << "\n\n";
+  
+  return 0;
 }

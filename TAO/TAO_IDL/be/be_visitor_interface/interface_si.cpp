@@ -60,25 +60,6 @@ be_visitor_interface_si::visit_interface (be_interface *node)
                         -1);
     }
 
-  os->indent (); // start with whatever indentation level we are at
-  *os << "ACE_INLINE CORBA::Boolean" << be_nl;
-  *os << node->full_skel_name () << "::in_mult_inheritance (void)" << be_nl
-      << "{" << be_idt_nl;
-  switch (node->in_mult_inheritance ())
-    {
-    case 0:
-      *os << "return 0;";
-      break;
-    case 1:
-      *os << "return 1;";
-      break;
-    default:
-      // error
-      return -1;
-    }
-  *os << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   // Generate skeletons for operations of our base classes. These skeletons
   // just cast the pointer to the appropriate type before invoking the
   // call. Hence we generate these in the inline file
