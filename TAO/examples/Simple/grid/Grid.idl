@@ -19,8 +19,7 @@ interface Grid
       // range.
     };
 
-  // = Default LOCATIONS and VALUE for set and get values 
-  //   from the grid.
+  // = Constants for LOCATIONS and VALUE.
   const short DEFAULT_LOCATION = 1;
   const short DEFAULT_VALUE = 100;
 
@@ -39,7 +38,7 @@ interface Grid
 interface Grid_Factory
 {
   // = TITLE
-  //   Create a <Grid_Factory>
+  //   Factory that creates a <Grid>
 
   // = Default height and width for a <Grid>.
   const short DEFAULT_HEIGHT = 10;

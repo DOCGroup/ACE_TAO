@@ -22,13 +22,14 @@ int
 Grid_Client_i::parse_args (int argc,
                            char *argv[])
 {
-  // Parses some of the options that are
-  // specific to this example
+  // Parses some of the options that are specific to this example
   ACE_Get_Opt get_opts (argc, argv, "w:h:p:q:v:");
 
+  // @@ Bala, please check your style more carefully.
   int c= 0;
   int result = 0;
 
+  // @@ Bala, please check your style more carefully.
   while ((c= get_opts ()) != -1)
     switch (c)
       {
@@ -50,6 +51,7 @@ Grid_Client_i::parse_args (int argc,
         value_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
       }
+  // @@ Bala, please check your style more carefully.
   if (setx_ == 0 )
     setx_ = Grid::DEFAULT_LOCATION;
   if (sety_ == 0 )
@@ -70,10 +72,10 @@ Grid_Client_i::run (int argc,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-
   TAO_TRY 
     {
-      //Make the Grid
+      // Make the Grid.
+      // @@ Bala, please check your style more carefully.
       Grid_ptr grid = client->make_grid ( width_,
                                            height_,
                                            TAO_TRY_ENV);
@@ -116,13 +118,8 @@ Grid_Client_i::run (int argc,
   return 0;
 }
 
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 template class Client<Grid_Factory,Grid_Factory_var>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate Client<Grid_Factory,Grid_Factory_var>
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
