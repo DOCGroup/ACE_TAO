@@ -129,6 +129,10 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
     ACE_dynamic_cast (const TAO_UIOP_Profile *,
                       pfile);
 
+  // Make sure the dynamically cast pointer is valid.
+  if (profile == 0)
+    return 0;
+
   // For UNIX Files this is relatively cheap.
   ACE_UNIX_Addr address;
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
