@@ -526,8 +526,8 @@ DRV_parse_args (long ac, char **av)
                 }
               else if (av[i][2] == 'i')
                 {
-                  // exception support
-                  idl_global->compiled_marshaling (1);
+                  // interpretive marshaling support
+                  idl_global->compiled_marshaling (0);
                 }
               else if (av[i][2] == 'e')
                 {
