@@ -213,8 +213,11 @@ class ACE_Static_Allocator : public ACE_Static_Allocator_Base
   //     <malloc> and <calloc> to optimize memory allocation from this
   //     pool.
 public:
-  ACE_Static_Allocator (void);
-  // This function <{must}> be inlined!!!
+  ACE_Static_Allocator (void):
+    : ACE_Static_Allocator_Base (this->pool_, POOL_SIZE)
+  {
+    // This function <{must}> be inlined!!!
+  }
 
 private:
   char pool_[POOL_SIZE];
