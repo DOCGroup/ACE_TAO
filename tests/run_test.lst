@@ -84,7 +84,7 @@ Recursive_Mutex_Test: !ST
 Refcounted_Auto_Ptr_Test
 Reverse_Lock_Test
 Semaphore_Test
-Service_Config_Test
+Service_Config_Test: !STATIC
 Sigset_Ops_Test
 Simple_Message_Block_Test: !chorus
 Svc_Handler_Test
