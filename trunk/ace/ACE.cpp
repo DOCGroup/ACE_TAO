@@ -8,6 +8,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SString.h"
 #include "ace/Process.h"
+#include "ace/Object_Manager.h"
 #include "ace/Version.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
@@ -21,6 +22,18 @@ const char ACE::hex_chars_[] = "0123456789abcdef";
 
 // Size of a VM page.
 size_t ACE::pagesize_ = 0;
+
+int
+ACE::init (void)
+{
+  return ACE_Object_Manager::init ();
+}
+
+int
+ACE::fini (void)
+{
+  return ACE_Object_Manager::fini ();
+}
 
 u_int
 ACE::major_version (void)
@@ -110,7 +123,7 @@ ACE::terminate_process (pid_t pid)
                    FALSE, // New handle is not inheritable.
                    pid);
 
-  if (process_handle == ACE_INVALID_HANDLE 
+  if (process_handle == ACE_INVALID_HANDLE
       || process_handle == NULL)
     return -1;
   else
@@ -149,7 +162,7 @@ ACE::process_active (pid_t pid)
     return -1;
 #else
   // Create a handle for the given process id.
-  ACE_HANDLE process_handle = 
+  ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_QUERY_INFORMATION, FALSE, pid);
   if (process_handle == ACE_INVALID_HANDLE
       || process_handle == NULL)
@@ -212,8 +225,8 @@ ACE::execname (const char *old_name)
       char *new_name;
 
       size_t size =
-        ACE_OS::strlen (old_name) 
-        + ACE_OS::strlen (".exe") 
+        ACE_OS::strlen (old_name)
+        + ACE_OS::strlen (".exe")
         + 1;
 
       ACE_NEW_RETURN (new_name,
@@ -291,9 +304,9 @@ ACE::execname (const wchar_t *old_name)
     {
       wchar_t *new_name;
 
-      size_t size = 
-        ACE_OS::strlen (old_name) 
-        + ACE_OS::strlen (L".exe") 
+      size_t size =
+        ACE_OS::strlen (old_name)
+        + ACE_OS::strlen (L".exe")
         + 1;
 
       ACE_NEW_RETURN (new_name,
@@ -366,7 +379,7 @@ ACE::hash_pjw (const ACE_USHORT16 *str, size_t len)
 u_long
 ACE::hash_pjw (const ACE_USHORT16 *str)
 {
-  return ACE::hash_pjw (str, ACE_WString::strlen (str));  
+  return ACE::hash_pjw (str, ACE_WString::strlen (str));
 }
 
 // The CRC routine was taken from the FreeBSD implementation of cksum,
@@ -553,7 +566,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
   ASYS_TCHAR searchfilename[MAXPATHLEN + 2];
 
   // Create a copy of filename to work with.
-  if (ACE_OS::strlen (filename) + 1 
+  if (ACE_OS::strlen (filename) + 1
       > (sizeof tempcopy / sizeof (ASYS_TCHAR)))
     {
       errno = ENOMEM;
@@ -614,9 +627,9 @@ ACE::ldfind (const ASYS_TCHAR filename[],
     }
 
   // Make sure we've got enough space in searchfilename.
-  if (ACE_OS::strlen (searchfilename) 
-      + ACE_OS::strlen (ACE_DLL_PREFIX) 
-      + got_suffix ? 0 : ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename / 
+  if (ACE_OS::strlen (searchfilename)
+      + ACE_OS::strlen (ACE_DLL_PREFIX)
+      + got_suffix ? 0 : ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename /
                                                          sizeof (ASYS_TCHAR)))
     {
       errno = ENOMEM;
@@ -627,7 +640,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
   size_t len_searchfilename = ACE_OS::strlen (searchfilename);
   searchfilename [len_searchfilename] = 'd';
   searchfilename [len_searchfilename+1] = 0;
-  
+
   for (int tag = 1; tag >= 0; tag --)
     {
       if (tag == 0)
@@ -646,8 +659,8 @@ ACE::ldfind (const ASYS_TCHAR filename[],
       else
         {
 #if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
-	  // Revert to native path name separators.
-	  ACE::strrepl (searchpathname,
+          // Revert to native path name separators.
+          ACE::strrepl (searchpathname,
                         '/',
                         ACE_DIRECTORY_SEPARATOR_CHAR);
 #endif /* ACE_DIRECTORY_SEPARATOR_CHAR */
@@ -679,7 +692,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
     {
       char *ld_path = ACE_OS::getenv (ACE_LD_SEARCH_PATH);
 
-      if (ld_path != 0 
+      if (ld_path != 0
           && (ld_path = ACE_OS::strdup (ld_path)) != 0)
         {
           // strtok has the strange behavior of not separating the
@@ -713,8 +726,8 @@ ACE::ldfind (const ASYS_TCHAR filename[],
                   break;
                 }
               else if (ACE_OS::strlen (path_entry)
-                       + 1 
-                       + ACE_OS::strlen (searchfilename) 
+                       + 1
+                       + ACE_OS::strlen (searchfilename)
                        >= maxpathnamelen)
                 {
                   errno = ENOMEM;
@@ -1591,12 +1604,12 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       if (n <= 0)
         {
           if (n == 0)
-	    {
-	      errno = ECONNREFUSED;
-	      h = ACE_INVALID_HANDLE;
-	    }
-	  else if (errno != EWOULDBLOCK && errno != EAGAIN)
-	    h = ACE_INVALID_HANDLE;
+            {
+              errno = ECONNREFUSED;
+              h = ACE_INVALID_HANDLE;
+            }
+          else if (errno != EWOULDBLOCK && errno != EAGAIN)
+            h = ACE_INVALID_HANDLE;
         }
     }
 
@@ -1664,8 +1677,8 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
             return -1;
           /* NOTREACHED */
         case 0:
-          if (timeout != 0 
-              && timeout->sec () == 0 
+          if (timeout != 0
+              && timeout->sec () == 0
               && timeout->usec () == 0)
             errno = EWOULDBLOCK;
           else
@@ -2114,7 +2127,7 @@ ACE::recvfrom (ACE_HANDLE handle,
                                          flags,
                                          addr,
                                          addrlen);
-      ACE::leave_recv_timedwait (handle, 
+      ACE::leave_recv_timedwait (handle,
                                  timeout,
                                  val);
       return bytes_read;
@@ -2253,7 +2266,7 @@ ACE::recv_n (ACE_HANDLE handle,
   // Actual number of bytes read in each attempt.
   ssize_t n;
 
-  for (bytes_received = 0; 
+  for (bytes_received = 0;
        bytes_received < len;
        bytes_received += n)
     {
@@ -2279,7 +2292,7 @@ ACE::is_prime (const u_long n,
          ++factor)
       if (n / factor * factor == n)
         return factor;
-  
+
   return 0;
 }
 
@@ -2474,7 +2487,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 
       if (ACE_OS::ioctl (s, SIOCGIFFLAGS, (char *) &flags) == -1)
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("%p\n"),
                       ASYS_TEXT ("ACE::get_bcast_addr:")
                       ASYS_TEXT (" ioctl (get interface flags)")));
@@ -2483,7 +2496,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 
       if (ACE_BIT_DISABLED (flags.ifr_flags, IFF_UP))
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("%p\n"),
                       ASYS_TEXT ("ACE::get_bcast_addr:")
                       ASYS_TEXT ("Network interface is not up")));
@@ -2498,7 +2511,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
           if (ACE_OS::ioctl (s,
                              SIOCGIFBRDADDR,
                              (char *) &if_req) == -1)
-            ACE_ERROR ((LM_ERROR, 
+            ACE_ERROR ((LM_ERROR,
                         ASYS_TEXT ("%p\n"),
                         ASYS_TEXT ("ACE::get_bcast_addr:")
                         ASYS_TEXT ("ioctl (get broadaddr)")));
@@ -2520,7 +2533,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
             }
         }
       else
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("%p\n"),
                     ASYS_TEXT ("ACE::get_bcast_addr:")
                     ASYS_TEXT ("Broadcast is not enable for this interface.")));
@@ -2566,10 +2579,10 @@ ACE::count_interfaces (ACE_HANDLE handle,
    // algorithm
 
    // Probably hard to put this many ifs in a unix box..
-  const int MAX_IF = 50; 
+  const int MAX_IF = 50;
 
   // HACK - set to an unreasonable number
-  int num_ifs = MAX_IF; 
+  int num_ifs = MAX_IF;
 
   struct ifconf ifcfg;
   size_t ifreq_size = num_ifs * sizeof (struct ifreq);
@@ -2633,7 +2646,7 @@ ACE::get_handle (void)
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined (sparc)
   handle = ACE_OS::open ("/dev/udp", O_RDONLY);
-#elif defined (__unix) || defined (__Lynx__)  
+#elif defined (__unix) || defined (__Lynx__)
   // Note: DEC CXX doesn't define "unix" BSD compatible OS: HP UX,
   // AIX, SunOS 4.x
 
@@ -2693,7 +2706,7 @@ ACE::get_ip_interfaces (size_t &count,
   ACE_TRACE ("ACE::get_ip_interfaces");
 
 #if defined (ACE_WIN32)
-  const TCHAR *SVCS_KEY1 = 
+  const TCHAR *SVCS_KEY1 =
     __TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
   const TCHAR *LINKAGE_KEY1 =
     __TEXT ("SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Linkage");
@@ -2742,13 +2755,13 @@ ACE::get_ip_interfaces (size_t &count,
       else
         {
           // rest of string from offset 8
-          the_dev = the_dev.substring (8);  
+          the_dev = the_dev.substring (8);
           ifdevkey += the_dev;
           ifdevkey += TCP_PARAM_SUBKEY;
 
           // b. extract value
           // Gets overwritten on each call
-          buf_len = sizeof(buffer);   
+          buf_len = sizeof(buffer);
           if (get_reg_value (ifdevkey.fast_rep (),
                              IPADDR_NAME_ID,
                              buffer,
@@ -2772,10 +2785,10 @@ ACE::get_ip_interfaces (size_t &count,
   size_t num_ifs;
 
   // Call specific routine as necessary.
-  ACE_HANDLE handle = get_handle();     
+  ACE_HANDLE handle = get_handle();
 
   if (handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,  
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("ACE::get_ip_interfaces:open")),
                       -1);
