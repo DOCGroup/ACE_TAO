@@ -82,6 +82,10 @@ Indent : #
 	# uncluttered.  The perl script referenced here pulls the dependency
 	# stuff back out of the Makefile and into a file ".depend" which we then
 	# include just like the makefile components above.
+	#
+	# NOTE:  The 'depend' target expects to have GCC available.
+	# You can do the same thing with other compilers  but the ACE 
+	# makefiles and utilities are only wired up to work with GCC.
 Depend : depend
 	perl ../fix.Makefile
 

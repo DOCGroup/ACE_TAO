@@ -8,8 +8,6 @@
    The ACE_Acceptor<> template lives in the ace/Acceptor.h header file. You'll
    find a very consitent naming convention between the ACE objects and the
    headers where they can be found.  In general, the ACE object ACE_Foobar will
-
-
    be found in ace/Foobar.h.
  */
 

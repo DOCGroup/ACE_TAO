@@ -158,6 +158,12 @@ int Client_Handler::handle_input (ACE_HANDLE _handle)
 		   Remove ourselves from the reactor and ask to be put into the thread pool's
 		   queue of work.  (You should be able to use suspend_handler() but I've had
 		   problems with that.)
+
+           By removing ourselves from the reactor, we're guaranteed
+           that we won't be called back until the thread pool picks us 
+           up out of the queue.  If we didn't remove ourselves, then
+           the reactor would continue to invoke handle_input() and we
+           don't want that to happen.
 		 */
   		this->reactor()->remove_handler( this, REMOVE_MASK );
 		return this->thread_pool()->enqueue(this);
@@ -188,6 +194,10 @@ int Client_Handler::handle_input (ACE_HANDLE _handle)
   {
 	if( rval != -1 )
 	{
+        /*
+          If we don't remember to re-register ourselves, then we won't 
+          be able to respond to any future client requests.
+         */
 		this->reactor()->register_handler( this, REGISTER_MASK );
 	}
   }

@@ -28,9 +28,32 @@ is a good technique but then you need a way to signal the "listening" threads.
 The ACE_Message_Queue is a better approach:  Create blocks of data and enqueue
 them in one thread while another thread (or threads) dequeue and perform work.
 <P>
-<HR WIDTH="100%">
-<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page02.html">Continue
-This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+Kirthika's Abstract:
+<UL>
+The Message Queue is a FIFO accessible from multiple threads.
+That is, a thread puts the produced blocks of data on the message queue
+to be consumed by some other thread/threads and processed. In this
+tutorial, we see how effectively the Message Queue in a ACE_Task can be
+used to pass data among threads in the thread pool. 
+(this is very similar to 
+<A HREF="../007/page01.html">Tutorial 7</A>
+ wherein we implemented a
+thread-pool server).Here, actual data is passed between the threads and
+also an ACE_Barrier has been used to provide synchronisation among
+multiple threads.
+<P>
+The Message Queue consists of Message Blocks, each of which has a read
+and write pointer. Using these pointers the message blocks can be
+accessed for reading and writing operations. The ACE_Task::svc() method
+will put the block onto the queue without bothering about the existence 
+of a consumer for that block. A thread from the thread pool obtains the
+block from the queue, and checks to see whether the block_type is
+MB_HANGUP. If so, it puts the block back on the queue for its 
+peers and exits. Otherwise, it reads the block and processes it before
+releasing it.
+<P>
+This simple tutorial makes us aware of the usage and importance of the
+Message Queue which could be used to our advantage especially for
+multithreaded applications.
+</UL><P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page02.html">Continue This Tutorial</A>]</CENTER>

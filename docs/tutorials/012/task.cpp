@@ -2,7 +2,8 @@
 // $Id$
 
 #include "task.h"
-#include "data.h"
+#include "block.h"
+#include "work.h"
 
 /*
   Boring default constructor.  Be sure our barrier_ is initialized in
