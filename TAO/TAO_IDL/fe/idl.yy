@@ -651,7 +651,7 @@ inheritance_spec
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -857,7 +857,7 @@ opt_truncatable :
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = I_FALSE;
         }
         ;
@@ -871,7 +871,7 @@ supports_spec :
         }
         |   /* EMPTY */
         {
-//      |   /* EMPTY */
+/*      |    EMPTY */
           $$ = 0;
         }
         ;
@@ -1096,7 +1096,7 @@ scoped_names
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -1946,7 +1946,7 @@ declarators
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -1999,7 +1999,7 @@ simple_declarators
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -2649,7 +2649,7 @@ case_labels
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -3232,7 +3232,7 @@ array_dims
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -3343,7 +3343,7 @@ opt_readonly
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*     |  EMPTY */
           $$ = I_FALSE;
         }
         ;
@@ -3512,7 +3512,7 @@ opt_op_attribute
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = AST_Operation::OP_noflags;
         }
         ;
@@ -3843,7 +3843,7 @@ opt_raises
         | /* EMPTY */
         {
           $$ = 0;
-//      | /* EMPTY */
+/*      |  EMPTY */
         }
         ;
 
@@ -3867,7 +3867,7 @@ opt_context
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -3913,7 +3913,7 @@ string_literals
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -4098,7 +4098,7 @@ component_inheritance_spec
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -4262,7 +4262,7 @@ opt_multiple
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = I_FALSE;
         }
         ;
@@ -4467,7 +4467,7 @@ home_inheritance_spec
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -4481,7 +4481,7 @@ primary_key_spec
         }
         | /* EMPTY */
         {
-//      | /* EMPTY */
+/*      |  EMPTY */
           $$ = 0;
         }
         ;
