@@ -36,10 +36,7 @@ public:
   friend class CORBA_Object;
 
   virtual ~TAO_ServantBase (void);
-  // destructor
-
-  TAO_ServantBase &operator= (const TAO_ServantBase &);
-  // assignment operator.
+  // Destructor.
 
   virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Returns the default POA for this servant.
@@ -50,6 +47,10 @@ public:
 
   virtual CORBA::Boolean _non_existent (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Default <_non_existent>: always returns false.
+
+  // = Reference counting hooks: no-ops by default.
+  virtual void _add_ref (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual void _remove_ref (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.
@@ -63,6 +64,9 @@ protected:
 
   TAO_ServantBase (const TAO_ServantBase &);
   // Copy constructor, protected so no instances can be created.
+
+  TAO_ServantBase &operator= (const TAO_ServantBase &);
+  // assignment operator.
 
   virtual void _dispatch (CORBA::ServerRequest &request,
                           void *context,
