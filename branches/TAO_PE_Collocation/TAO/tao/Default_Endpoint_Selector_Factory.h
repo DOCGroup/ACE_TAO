@@ -62,10 +62,13 @@ public:
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
                              ACE_ENV_SINGLE_ARG_DECL);
 
+#if !defined (TAO_HAS_COLLOCATION)
 protected:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
   TAO_Default_Endpoint_Selector *default_endpoint_selector_;
+#endif
+
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Endpoint_Selector_Factory)

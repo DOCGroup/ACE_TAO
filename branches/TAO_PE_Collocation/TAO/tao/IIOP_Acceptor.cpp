@@ -4,9 +4,12 @@
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Codeset_Manager.h"
-#include "tao/Transport.h"
 #include "tao/ORB_Core.h"
 #include "tao/CDR.h"
+
+#if !defined (TAO_HAS_COLLOCATION)
+# include "tao/Transport.h"
+#endif
 
 #if !defined(__ACE_INLINE__)
 #include "tao/IIOP_Acceptor.i"
@@ -21,6 +24,7 @@ ACE_RCSID (tao,
            IIOP_Acceptor,
            "$Id$")
 
+#if !defined (TAO_HAS_COLLOCATION)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -50,21 +54,46 @@ template class TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTO
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#else
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>;
+template class ACE_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
+#pragma instantiate ACE_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif
+
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
-  : TAO_Acceptor (IOP::TAG_INTERNET_IOP),
-    addrs_ (0),
-    port_span_ (1),
-    hosts_ (0),
-    hostname_in_ior_ (0),
-    endpoint_count_ (0),
-    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
-    lite_flag_ (flag),
-    base_acceptor_ (),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0),
-    accept_strategy_ (0)
+  : TAO_Acceptor (IOP::TAG_INTERNET_IOP)
+  , addrs_ (0)
+  , port_span_ (1)
+  , hosts_ (0)
+  , hostname_in_ior_ (0)
+  , endpoint_count_ (0)
+  , version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)
+  , orb_core_ (0)
+  , lite_flag_ (flag)
+  , base_acceptor_ ()
+#if !defined (TAO_HAS_COLLOCATION)
+  , creation_strategy_ (0)
+  , concurrency_strategy_ (0)
+  , accept_strategy_ (0)
+#endif
 {
+
 }
 
 TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
@@ -73,9 +102,13 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
   // strategies.
   this->close ();
 
+#if !defined (TAO_HAS_COLLOCATION)
+
   delete this->creation_strategy_;
   delete this->concurrency_strategy_;
   delete this->accept_strategy_;
+
+#endif
 
   delete [] this->addrs_;
 
@@ -259,6 +292,7 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 int
 TAO_IIOP_Acceptor::close (void)
 {
+
   return this->base_acceptor_.close ();
 }
 
@@ -270,6 +304,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          const char *address,
                          const char *options)
 {
+
   this->orb_core_ = orb_core;
 
   if (this->hosts_ != 0)
@@ -396,6 +431,7 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  int minor,
                                  const char *options)
 {
+
   this->orb_core_ = orb_core;
 
   if (this->hosts_ != 0)
@@ -439,6 +475,8 @@ int
 TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   ACE_NEW_RETURN (this->creation_strategy_,
                   CREATION_STRATEGY (this->orb_core_,
                                      this->lite_flag_),
@@ -451,16 +489,30 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   ACE_NEW_RETURN (this->accept_strategy_,
                   ACCEPT_STRATEGY (this->orb_core_),
                   -1);
+#endif
+
+  //  this->creation_strategy_ = 0;
+  //this->concurrency_strategy_ = 0;
+  //this->accept_strategy_ = 0;
 
   unsigned short requested_port = addr.get_port_number ();
   if (requested_port == 0)
     {
+
+#if !defined (TAO_HAS_COLLOCATION)
       // don't care, i.e., let the OS choose an ephemeral port
       if (this->base_acceptor_.open (addr,
                                      reactor,
                                      this->creation_strategy_,
                                      this->accept_strategy_,
                                      this->concurrency_strategy_) == -1)
+#else
+     if (this->base_acceptor_.open (addr,
+                                    reactor,
+                                    0,
+                                    0,
+                                    0) == -1)
+#endif
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -490,11 +542,20 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
 
           // Now try to actually open on that port
           a.set_port_number ((u_short)p);
+
+#if !defined (TAO_HAS_COLLOCATION)
           if (this->base_acceptor_.open (a,
                                          reactor,
                                          this->creation_strategy_,
                                          this->accept_strategy_,
                                          this->concurrency_strategy_) != -1)
+#else
+         if (this->base_acceptor_.open (a,
+                                        reactor,
+                                        0,
+                                        0,
+                                        0) != -1)
+#endif
             {
               found_a_port = true;
               break;

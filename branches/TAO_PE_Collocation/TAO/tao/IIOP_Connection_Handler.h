@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Stream.h"
-
 #include "tao/Connection_Handler.h"
 #include "tao/Basic_Types.h"
 
@@ -54,11 +53,9 @@ class TAO_Pluggable_Messaging;
  * the Connector
  */
 
-
 class TAO_Export TAO_IIOP_Connection_Handler : public TAO_IIOP_SVC_HANDLER,
                                                public TAO_Connection_Handler
 {
-
 public:
 
   TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = 0);
