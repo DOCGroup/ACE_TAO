@@ -1390,7 +1390,7 @@ Petr Tuma <petr.tuma@mff.cuni.cz>
 Greg Burley  <Burley@tabq.com.au>
 Marvin Greenberg <mgreenberg@dctd.saic.com>
 Mike Connors <mike.connors@ghs.com>
-Ben Flight <ben.flight@wanadoo.fr> 
+Ben Flight <ben.flight@wanadoo.fr>
 Bob Jolliffe <bjolliffe@cs.up.ac.za>
 Jesse <jesse@thrownet.com>
 Robert Handl <Robert.Handl@era.ericsson.se>
@@ -1431,6 +1431,7 @@ Zoran Cetusic <ZoranC@inter-intelli.com>
 Patrick Bennett <Patrick.Bennett@inin.com>
 Felix Wyss <Felix.Wyss@inin.com>
 Tim Rydell <tim.rydell@gd-ais.com>
+Petr Shelomovsky <pedrodon@trustworks.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
