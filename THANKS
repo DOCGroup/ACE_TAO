@@ -35,7 +35,6 @@ Nagarajan Surendran <naga@cs.wustl.edu>
 Nanbor Wang <nanbor@cs.wustl.edu>
 Seth Widoff <sbw1@cs.wustl.edu>
 Torben Worm <tworm@cs.wustl.edu>
-Andreas Terstegge <Andreas.Terstegge@nokia.com>
 
 I would also like to thank all the following people who have also
 contributed to ACE and TAO over the years:
@@ -786,6 +785,12 @@ Rick Hess <rick.hess@lmco.com>
 David Dunn <dunn@tripos.com>
 Jaymes Galvin <galvinj@agcs.com>
 Marat <c_marat@mypad.com>
+Sergey Nemanov <sergey.nemanov@intel.com>
+Vladimir Kondratiev <vladimir.kondratiev@intel.com>
+John Glynn <Jjg9419@bjc.org>
+Raymond Wiker <raymond@orion.no>
+Michael Pitman <mcp@mira.net>
+Andreas Terstegge <Andreas.Terstegge@nokia.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

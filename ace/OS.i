@@ -4301,12 +4301,16 @@ ACE_OS::event_wait (ACE_event_t *event)
         {
           event->waiting_threads_++;
 
-          if (ACE_OS::cond_wait (&event->condition_,
-                                 &event->lock_) != 0)
-            {
-              result = -1;
-              error = errno;
-            }
+          while (event->is_signaled_ == 0)
+            if (ACE_OS::cond_wait (&event->condition_,
+                                   &event->lock_) != 0)
+              {
+                result = -1;
+                error = errno;
+                break;
+                // Something went wrong...
+              }
+
           event->waiting_threads_--;
         }
 

@@ -366,11 +366,12 @@ public:
   // 'I', indent according to nesting depth
   // 'e', 'E', 'f', 'F', 'g', 'G': print a double
   // 'l', print line number where an error occurred.
+  // 'm': Return the message corresponding to errno value, e.g., as done by <strerror>
   // 'N': print file name where the error occurred.
   // 'n': print the name of the program (or "<unknown>" if not set)
   // 'o': print as an octal number
   // 'P': print out the current process id
-  // 'p': print out the appropriate errno value from sys_errlist
+  // 'p': print out the appropriate errno message from sys_errlist, e.g., as done by <perror>
   // 'Q': print out the uint64 number
   // 'r': call the function pointed to by the corresponding argument
   // 'R': print return status
