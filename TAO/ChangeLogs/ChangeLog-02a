@@ -1,3 +1,9 @@
+Sat Dec 30 10:39:41 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional/test_i.cpp:
+	* tests/BiDirectional_NestedUpcall/test_i.cpp: Fixed warnings in
+	  g++ builds. 
+
 Fri Dec 29 12:05:02 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional/test_i.cpp: Changed the wrong usage of

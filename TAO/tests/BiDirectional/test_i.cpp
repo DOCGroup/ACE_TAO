@@ -58,8 +58,7 @@ Simple_Server_i::call_client (CORBA::Environment &ACE_TRY_ENV)
           this->callback_->callback_method (ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
 
-          TAO_ORB_Core *orb_core = this->orb_->orb_core ();
-          ACE_ASSERT (orb_core->connection_cache ().total_size () > 1);
+          ACE_ASSERT (this->orb_->orb_core ()->connection_cache ().total_size () > 1);
         }
 
       this->callback_->shutdown (ACE_TRY_ENV);
