@@ -54,6 +54,7 @@
 #if defined (_MSC_VER)
 
 # define ACE_CC_NAME "Visual C++"
+# define ACE_CC_COMPILER "CL.EXE"
 
 #if (_MSC_VER >= 1200)
 # define ACE_CC_MAJOR_VERSION 6
