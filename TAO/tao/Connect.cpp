@@ -610,6 +610,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
         }
       return result;
     }
+#if defined (TAO_HAS_EXCEPTIONS)
   TAO_CATCHALL
     {
       // @@ TODO some c++ exception or another, but what do we do with
@@ -622,6 +623,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
       //      this->handle_close ();
       return -1;
     }
+#endif /* TAO_HAS_EXCEPTIONS */
   TAO_ENDTRY;
 
   if (response_required)
