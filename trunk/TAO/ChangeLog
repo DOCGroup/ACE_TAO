@@ -1,3 +1,255 @@
+Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+        Updated framework for TAO's Notification Service:
+        - Fixes bugs related to Notification Object Lifecycle,
+        - Fixes bugs related to incorrect ID assignments,
+        - Fixes implementation of SequenceProxys and Event Batch.
+        - Contains base framwork for adding RT-CORBA extensions.
+
+        Added Files:
+        * orbsvcs/orbsvcs/NotifyExt.idl:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp :
+        * orbsvcs/orbsvcs/Notify/Admin.h :
+        * orbsvcs/orbsvcs/Notify/Admin.inl:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.h :
+        * orbsvcs/orbsvcs/Notify/AdminProperties.inl:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.inl :
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+        * orbsvcs/orbsvcs/Notify/Builder.inl :
+        * orbsvcs/orbsvcs/Notify/Constraint_Interpreter.cpp :
+        * orbsvcs/orbsvcs/Notify/Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Notify/Constraint_Visitors.cpp :
+        * orbsvcs/orbsvcs/Notify/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.inl:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp :
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.inl :
+        * orbsvcs/orbsvcs/Notify/Container.cpp:
+        * orbsvcs/orbsvcs/Notify/Container.h:
+        * orbsvcs/orbsvcs/Notify/Container.inl :
+        * orbsvcs/orbsvcs/Notify/Container_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Container_T.h :
+        * orbsvcs/orbsvcs/Notify/Container_T.inl:
+        * orbsvcs/orbsvcs/Notify/Destroy_Callback.h :
+        * orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.h :
+        * orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.inl:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp :
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.inl :
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h :
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.inl:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.h :
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h :
+        * orbsvcs/orbsvcs/Notify/EventChannel.inl:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp :
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.inl :
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * orbsvcs/orbsvcs/Notify/EventType.h:
+        * orbsvcs/orbsvcs/Notify/EventType.inl :
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h :
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.inl:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.cpp :
+        * orbsvcs/orbsvcs/Notify/Event_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.inl :
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h :
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.inl:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Observer.h :
+        * orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.h :
+        * orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.inl:
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.cpp :
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
+        * orbsvcs/orbsvcs/Notify/Factory.cpp :
+        * orbsvcs/orbsvcs/Notify/Factory.h:
+        * orbsvcs/orbsvcs/Notify/Factory.inl:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp :
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.h:
+        * orbsvcs/orbsvcs/Notify/FilterFactory.h :
+        * orbsvcs/orbsvcs/Notify/ID_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/ID_Factory.h :
+        * orbsvcs/orbsvcs/Notify/ID_Factory.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp :
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.inl :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.inl :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.cpp :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.h :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.inl :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.inl :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.cpp :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.h :
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.inl:
+        * orbsvcs/orbsvcs/Notify/Notify_Service.cpp :
+        * orbsvcs/orbsvcs/Notify/Notify_Service.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Service.inl :
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.inl :
+        * orbsvcs/orbsvcs/Notify/Object_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Object_T.h:
+        * orbsvcs/orbsvcs/Notify/Object_T.inl :
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h :
+        * orbsvcs/orbsvcs/Notify/POA_Helper.inl:
+        * orbsvcs/orbsvcs/Notify/Peer.cpp:
+        * orbsvcs/orbsvcs/Notify/Peer.h :
+        * orbsvcs/orbsvcs/Notify/Peer.inl:
+        * orbsvcs/orbsvcs/Notify/Pending_Worker_T.cpp :
+        * orbsvcs/orbsvcs/Notify/Pending_Worker_T.h:
+        * orbsvcs/orbsvcs/Notify/Pending_Worker_T.inl :
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.h :
+        * orbsvcs/orbsvcs/Notify/Properties.inl:
+        * orbsvcs/orbsvcs/Notify/Property.h:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.cpp :
+        * orbsvcs/orbsvcs/Notify/PropertySeq.h:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.inl :
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.cpp:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.h :
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.inl:
+        * orbsvcs/orbsvcs/Notify/Property_T.cpp :
+        * orbsvcs/orbsvcs/Notify/Property_T.h:
+        * orbsvcs/orbsvcs/Notify/Property_T.inl:
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp :
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+        * orbsvcs/orbsvcs/Notify/Proxy.inl:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.h :
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.inl:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.inl :
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.h :
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.inl:
+        * orbsvcs/orbsvcs/Notify/Proxy_T.cpp
+        * orbsvcs/orbsvcs/Notify/Proxy_T.h :
+        * orbsvcs/orbsvcs/Notify/Proxy_T.inl:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.cpp :
+        * orbsvcs/orbsvcs/Notify/QoSProperties.h:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.inl :
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h :
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.inl:
+        * orbsvcs/orbsvcs/Notify/Refcountable.cpp :
+        * orbsvcs/orbsvcs/Notify/Refcountable.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable.inl:
+        * orbsvcs/orbsvcs/Notify/Service.h :
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.cpp :
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.h :
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.inl:
+        * orbsvcs/orbsvcs/Notify/Supplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Supplier.h:
+        * orbsvcs/orbsvcs/Notify/Supplier.inl:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp :
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.inl :
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h :
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.inl:
+        * orbsvcs/orbsvcs/Notify/Types.cpp
+        * orbsvcs/orbsvcs/Notify/Types.h :
+        * orbsvcs/orbsvcs/Notify/Types.inl:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h :
+        * orbsvcs/orbsvcs/Notify/Worker_Task.inl:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.inl :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.inl :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.inl :
+        * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.h :
+        * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.inl :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.inl :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.inl :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h :
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.inl :
+
+        Revised implementation files for the Notification Service.
+
+        * orbsvcs/Notify_Service/Notify_Server.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/svc.conf:
+
+        Changes to obtain the Notification Factory via Service Object.
+
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+
+        New source and idl files added.
+
 Sat Oct 26 14:44:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ORT/server.bor:
