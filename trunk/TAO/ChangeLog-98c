@@ -1,3 +1,16 @@
+Tue Aug 04 16:42:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Multiple_Inheritance: This module is used as a test for
+ 	  IDL interfaces that inherit from multiple interfaces.  The
+ 	  "diamond of death" inheritance hierarchy is used in this example
+ 	  where there is a common base class (A), two classes deriving
+ 	  from the common base class (B and C) and then a final derived
+ 	  class (D) that inherits from both B and C.
+
+	  The client starts off with CORBA Object, narrows to interface A,
+ 	  then B, then C, and finally D. It calls all the methods on each
+ 	  interface.
+
 Tue Aug  4 16:00:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Added a section on the use of <corba.h>

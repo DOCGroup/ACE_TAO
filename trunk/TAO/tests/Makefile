@@ -15,6 +15,7 @@ DIRS  = CDR \
 	OctetSeq \
 	Param_Test \
 	NestedUpcall \
+	Multiple_Inheritance \
 	POA \
 	Quoter \
 	Thruput \
