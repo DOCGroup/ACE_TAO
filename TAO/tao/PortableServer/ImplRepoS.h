@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_IMPLREPOS_H_
-#define _TAO_IDL_IMPLREPOS_H_
+#ifndef _TAO_IDL_ORIG_IMPLREPOS_H_
+#define _TAO_IDL_ORIG_IMPLREPOS_H_
 
 #include "ace/pre.h"
 #include "ImplRepoC.h"
@@ -55,7 +55,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
   class _TAO_ServerObject_Direct_Proxy_Impl;
   class _TAO_ServerObject_Strategized_Proxy_Broker;
   
-  class TAO_PortableServer_Export ServerObject :  public virtual PortableServer::ServantBase
+  class TAO_PortableServer_Export ServerObject
+    : public virtual PortableServer::ServantBase
   {
   protected:
     ServerObject (void);
@@ -269,7 +270,8 @@ class _TAO_Administration_ThruPOA_Proxy_Impl;
 class _TAO_Administration_Direct_Proxy_Impl;
 class _TAO_Administration_Strategized_Proxy_Broker;
 
-class TAO_PortableServer_Export Administration :  public virtual PortableServer::ServantBase
+class TAO_PortableServer_Export Administration
+  : public virtual PortableServer::ServantBase
 {
 protected:
   Administration (void);
@@ -772,7 +774,8 @@ class _TAO_ServerInformationIterator_ThruPOA_Proxy_Impl;
 class _TAO_ServerInformationIterator_Direct_Proxy_Impl;
 class _TAO_ServerInformationIterator_Strategized_Proxy_Broker;
 
-class TAO_PortableServer_Export ServerInformationIterator :  public virtual PortableServer::ServantBase
+class TAO_PortableServer_Export ServerInformationIterator
+  : public virtual PortableServer::ServantBase
 {
 protected:
   ServerInformationIterator (void);
