@@ -7,6 +7,7 @@
 // for the same types of data.
 
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/Singleton.h"

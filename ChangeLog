@@ -6,6 +6,9 @@ Wed Jun 16 16:51:52 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/SSL/SSL_SOCK_Acceptor.cpp:
 	* ace/SSL/SSL_SOCK_Connector.cpp:
+	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
 	* tests/SOCK_Test_IPv6.cpp:
 	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
 	* tests/Proactor_Test_IPV6.cpp: Added missing #include directives
