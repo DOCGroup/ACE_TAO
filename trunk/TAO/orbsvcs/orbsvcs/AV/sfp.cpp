@@ -65,7 +65,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
       return;
     }
 
-  frame_header_len = static_cast<u_int>(output_cdr.total_length ());
+  frame_header_len = static_cast<u_int> (output_cdr.total_length ());
   // fill in the default fragment message fields.
   fragment.magic_number [0] = 'F';
   fragment.magic_number [1] = 'R';
@@ -78,7 +78,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
       return;
     }
 
-  fragment_len = static_cast<u_int>(output_cdr.total_length ());
+  fragment_len = static_cast<u_int> (output_cdr.total_length ());
   // fill in the default Start message fields.
   start.magic_number [0] = '=';
   start.magic_number [1] = 'S';
@@ -94,7 +94,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
       return;
     }
 
-  start_len = static_cast<u_int>(output_cdr.total_length ());
+  start_len = static_cast<u_int> (output_cdr.total_length ());
   // fill in the default StartReply message fields.
   start_reply.magic_number [0] = '=';
   start_reply.magic_number [1] = 'S';
@@ -108,7 +108,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
       return;
     }
 
-  start_reply_len = static_cast<u_int>(output_cdr.total_length ());
+  start_reply_len = static_cast<u_int> (output_cdr.total_length ());
 
   // fill in the default Credit message fields.
   credit.magic_number [0] = '=';
@@ -122,7 +122,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
       ACE_ERROR ((LM_ERROR, "TAO_SFP constructor\n"));
       return;
     }
-  credit_len = static_cast<u_int>(output_cdr.total_length ());
+  credit_len = static_cast<u_int> (output_cdr.total_length ());
 }
 
 int
@@ -284,7 +284,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
       ACE_NEW_RETURN (new_node,
                       TAO_SFP_Fragment_Node,
                       0);
-      new_node->fragment_info_.frag_sz = static_cast<CORBA::ULong>(data->length ());
+      new_node->fragment_info_.frag_sz = static_cast<CORBA::ULong> (data->length ());
       new_node->fragment_info_.frag_number = 0;
       if (state.frame_.source_ids.length () > 0)
         new_node->fragment_info_.source_id = state.frame_.source_ids [0];
@@ -596,11 +596,11 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
                             TAO_OutputCDR &stream,
                             ACE_Message_Block *mb)
 {
-  CORBA::ULong total_len = static_cast<CORBA::ULong>(stream.total_length ());
+  CORBA::ULong total_len = static_cast<CORBA::ULong> (stream.total_length ());
   if (mb != 0)
     {
       for (ACE_Message_Block *temp = mb;temp != 0;temp = temp->cont ())
-        total_len += static_cast<CORBA::ULong>(temp->length ());
+        total_len += static_cast<CORBA::ULong> (temp->length ());
 
       char *buf = (char *) stream.buffer ();
       size_t offset = TAO_SFP_MESSAGE_SIZE_OFFSET;
@@ -617,7 +617,7 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
         *ACE_reinterpret_cast (CORBA::ULong *,
                                buf + offset) = total_len;
       else
-        ACE_CDR::swap_4 (reinterpret_cast<char *>(&total_len),
+        ACE_CDR::swap_4 (reinterpret_cast<char *> (&total_len),
                          buf + offset);
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
     }
@@ -711,7 +711,7 @@ TAO_SFP_Base::read_start_message (TAO_AV_Transport *transport,
   char *buf = input.rd_ptr ();
   int n = transport->recv (buf,
                            start_len);
-  if (n != static_cast<int>(start_len))
+  if (n != static_cast<int> (start_len))
     ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_start\n"),0);
   else
     {
@@ -731,7 +731,7 @@ TAO_SFP_Base::read_start_reply_message (TAO_AV_Transport *transport,
   char *buf = input.rd_ptr ();
   int n = transport->recv (buf,
                            start_reply_len);
-  if (n != static_cast<int>(start_len))
+  if (n != static_cast<int> (start_len))
     ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_start_reply_message"),0);
   else
     {
@@ -750,7 +750,7 @@ TAO_SFP_Base::read_credit_message (TAO_AV_Transport *transport,
   char *buf = input.rd_ptr ();
   int n = transport->recv (buf,
                            credit_len);
-  if (n != static_cast<int>(credit_len))
+  if (n != static_cast<int> (credit_len))
     ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_credit_message"),0);
   else
     {
@@ -769,7 +769,7 @@ TAO_SFP_Base::read_endofstream_message (TAO_AV_Transport *transport,
   char *buf = input.rd_ptr ();
   int n = transport->recv (buf,
                            frame_header_len);
-  if (n != static_cast<int>(frame_header_len))
+  if (n != static_cast<int> (frame_header_len))
     ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
   else
     {
@@ -789,7 +789,7 @@ TAO_SFP_Base::peek_frame_header (TAO_AV_Transport *transport,
   int n = transport->recv (buf,
                            frame_header_len,
                            MSG_PEEK);
-  if (n != static_cast<int>(frame_header_len))
+  if (n != static_cast<int> (frame_header_len))
     ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
   else
     {
@@ -809,7 +809,7 @@ TAO_SFP_Base::peek_fragment_header (TAO_AV_Transport *transport,
   int n = transport->recv (buf,
                            fragment_len,
                            MSG_PEEK);
-  if (n != static_cast<int>(fragment_len))
+  if (n != static_cast<int> (fragment_len))
     ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
   else
     {
@@ -946,7 +946,7 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
                 return 0;
             }
           size_t last_len,current_len;
-          int message_len = static_cast<int>(out_stream.total_length ());
+          int message_len = static_cast<int> (out_stream.total_length ());
           ACE_Message_Block *mb = frame;
           ACE_Message_Block *fragment_mb =
             this->get_fragment (mb,
@@ -1096,7 +1096,7 @@ TAO_SFP_Object::set_policies (const TAO_AV_PolicyList& policies)
         case TAO_AV_SFP_CREDIT_POLICY:
           {
             TAO_AV_SFP_Credit_Policy *credit_policy =
-              reinterpret_cast<TAO_AV_SFP_Credit_Policy*>(policy);
+              reinterpret_cast<TAO_AV_SFP_Credit_Policy*> (policy);
             this->max_credit_ = credit_policy->value ();
           }
         default:

@@ -270,7 +270,7 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  CORBA::ULong size = static_cast<CORBA::ULong>(key_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (key_queue.size ());
 
   CORBA::UnionMemberSeq *members = 0;
   ACE_NEW_THROW_EX (members,
@@ -427,38 +427,38 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
   switch (kind)
   {
     case CORBA::tk_char:
-      member.label <<= CORBA::Any::from_char (static_cast<CORBA::Char>(value));
+      member.label <<= CORBA::Any::from_char (static_cast<CORBA::Char> (value));
       break;
     case CORBA::tk_wchar:
-      member.label <<= CORBA::Any::from_wchar (static_cast<CORBA::WChar>(value));
+      member.label <<= CORBA::Any::from_wchar (static_cast<CORBA::WChar> (value));
       break;
     case CORBA::tk_boolean:
-      member.label <<= CORBA::Any::from_boolean (static_cast<CORBA::Boolean>(value));
+      member.label <<= CORBA::Any::from_boolean (static_cast<CORBA::Boolean> (value));
       break;
     case CORBA::tk_short:
-      member.label <<= static_cast<CORBA::Short>(value);
+      member.label <<= static_cast<CORBA::Short> (value);
       break;
     case CORBA::tk_ushort:
-      member.label <<= static_cast<CORBA::UShort>(value);
+      member.label <<= static_cast<CORBA::UShort> (value);
       break;
     case CORBA::tk_long:
-      member.label <<= static_cast<CORBA::Long>(value);
+      member.label <<= static_cast<CORBA::Long> (value);
       break;
     case CORBA::tk_ulong:
-      member.label <<= static_cast<CORBA::ULong>(value);
+      member.label <<= static_cast<CORBA::ULong> (value);
       break;
 #if !defined (ACE_LACKS_LONGLONG_T)
     case CORBA::tk_longlong:
-      member.label <<= static_cast<CORBA::LongLong>(value);
+      member.label <<= static_cast<CORBA::LongLong> (value);
       break;
 #endif /* ACE_LACKS_LONGLONG_T */
     case CORBA::tk_ulonglong:
-      member.label <<= static_cast<CORBA::ULongLong>(value);
+      member.label <<= static_cast<CORBA::ULongLong> (value);
       break;
     case CORBA::tk_enum:
     {
       TAO_OutputCDR cdr;
-      cdr.write_ulong (static_cast<CORBA::ULong>(value));
+      cdr.write_ulong (static_cast<CORBA::ULong> (value));
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW (impl,
                TAO::Unknown_IDL_Type (tc.in (),

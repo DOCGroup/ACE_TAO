@@ -234,7 +234,7 @@ void TAO::FT_FaultConsumer::push_structured_event (
       ACE_TEXT (
         "TAO::FT_FaultConsumer::push_structured_event: "
         "Received Fault notification(%d):\n"),
-      static_cast<unsigned int>(this->notifications_)
+      static_cast<unsigned int> (this->notifications_)
     ));
   }
 

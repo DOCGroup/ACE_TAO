@@ -93,9 +93,9 @@ main (int argc, char *argv[])
           ACE_ASSERT (rt_info->period ==
             infos [i].period);
           ACE_ASSERT (rt_info->criticality ==
-            static_cast<RtecScheduler::Criticality_t>(infos [i].criticality));
+            static_cast<RtecScheduler::Criticality_t> (infos [i].criticality));
           ACE_ASSERT (rt_info->importance ==
-            static_cast<RtecScheduler::Importance_t>(infos [i].importance));
+            static_cast<RtecScheduler::Importance_t> (infos [i].importance));
           ACE_ASSERT (rt_info->quantum ==
             infos [i].quantum);
           ACE_ASSERT (rt_info->threads ==
@@ -107,20 +107,20 @@ main (int argc, char *argv[])
           ACE_ASSERT (rt_info->preemption_priority ==
             infos [i].preemption_priority);
           ACE_ASSERT (rt_info->info_type ==
-            static_cast<RtecScheduler::Info_Type_t>(infos [i].info_type));
+            static_cast<RtecScheduler::Info_Type_t> (infos [i].info_type));
 
           // Make sure the values in the scheduler's internal RT_Info are OK.
           // Scheduler will generate messages if any values don't match.
           runtime_scheduler->set (infos [i].handle,
-                                  static_cast<RtecScheduler::Criticality_t>(infos [i].criticality),
+                                  static_cast<RtecScheduler::Criticality_t> (infos [i].criticality),
                                   infos [i].worst_case_execution_time,
                                   infos [i].typical_execution_time,
                                   infos [i].cached_execution_time,
                                   infos [i].period,
-                                  static_cast<RtecScheduler::Importance_t>(infos [i].importance),
+                                  static_cast<RtecScheduler::Importance_t> (infos [i].importance),
                                   infos [i].quantum,
                                   infos [i].threads,
-                                  static_cast<RtecScheduler::Info_Type_t>(infos [i].info_type)
+                                  static_cast<RtecScheduler::Info_Type_t> (infos [i].info_type)
                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 

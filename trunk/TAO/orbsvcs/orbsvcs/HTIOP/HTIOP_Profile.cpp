@@ -303,7 +303,7 @@ TAO::HTIOP::Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    1 /* object key separator */ +
                    ACE_OS::strlen (key.in ()));
 
-  char * buf = CORBA::string_alloc (static_cast<CORBA::ULong>(buflen));
+  char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
   static const char digits [] = "0123456789";
 
@@ -396,7 +396,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
-  tagged_component.component_data.length (static_cast<CORBA::ULong>(length));
+  tagged_component.component_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
 
@@ -428,7 +428,7 @@ TAO::HTIOP::Profile::decode_endpoints (void)
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast<const char*>(buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.
@@ -436,7 +436,7 @@ TAO::HTIOP::Profile::decode_endpoints (void)
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"boolean byte_order extraction failed\n"),
                           -1);
-      in_cdr.reset_byte_order (static_cast<int>(byte_order));
+      in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       HTIOPEndpointSequence endpoints;

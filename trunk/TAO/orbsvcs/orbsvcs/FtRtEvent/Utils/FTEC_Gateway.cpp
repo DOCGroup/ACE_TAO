@@ -106,7 +106,7 @@ class Interceptor_Destoryer : public TAO_ORB_Core
 {
 public:
   inline static void execute(CORBA::ORB_ptr orb ACE_ENV_ARG_DECL) {
-    static_cast<Interceptor_Destoryer*>(orb->orb_core())->do_it(ACE_ENV_SINGLE_ARG_PARAMETER);
+    static_cast<Interceptor_Destoryer*> (orb->orb_core())->do_it(ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 private:
   Interceptor_Destoryer();

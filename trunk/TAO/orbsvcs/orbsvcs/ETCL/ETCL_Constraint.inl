@@ -33,7 +33,7 @@ TAO_ETCL_Union_Value::TAO_ETCL_Union_Value (int sign,
      string_ (0)
 {
   this->integer_ =
-    dynamic_cast<TAO_ETCL_Literal_Constraint*>(integer);
+    dynamic_cast<TAO_ETCL_Literal_Constraint*> (integer);
 }
 
 ACE_INLINE
@@ -42,7 +42,7 @@ TAO_ETCL_Union_Value::TAO_ETCL_Union_Value (TAO_ETCL_Constraint *string)
      integer_ (0)
 {
   this->string_ =
-    dynamic_cast<TAO_ETCL_Literal_Constraint*>(string);
+    dynamic_cast<TAO_ETCL_Literal_Constraint*> (string);
 }
 
 ACE_INLINE int
@@ -72,7 +72,7 @@ TAO_ETCL_Union_Pos::TAO_ETCL_Union_Pos (TAO_ETCL_Constraint *union_value,
   :  component_ (component)
 {
   this->union_value_ =
-    dynamic_cast<TAO_ETCL_Union_Value*>(union_value);
+    dynamic_cast<TAO_ETCL_Union_Value*> (union_value);
 }
     
 ACE_INLINE TAO_ETCL_Union_Value *
@@ -97,7 +97,7 @@ TAO_ETCL_Component_Pos::TAO_ETCL_Component_Pos (
   :  component_ (component)
 {
   this->integer_ =
-    dynamic_cast<TAO_ETCL_Literal_Constraint*>(integer);
+    dynamic_cast<TAO_ETCL_Literal_Constraint*> (integer);
 }
 
 ACE_INLINE TAO_ETCL_Literal_Constraint *
@@ -122,7 +122,7 @@ TAO_ETCL_Component_Assoc::TAO_ETCL_Component_Assoc (
   :  component_ (component)
 {
   this->identifier_ =
-    dynamic_cast<TAO_ETCL_Identifier*>(identifier);
+    dynamic_cast<TAO_ETCL_Identifier*> (identifier);
 }
 
 ACE_INLINE TAO_ETCL_Identifier *
@@ -147,7 +147,7 @@ TAO_ETCL_Component_Array::TAO_ETCL_Component_Array (
   :  component_ (component)
 {
   this->integer_ =
-    dynamic_cast<TAO_ETCL_Literal_Constraint*>(integer);
+    dynamic_cast<TAO_ETCL_Literal_Constraint*> (integer);
 }
 
 ACE_INLINE TAO_ETCL_Literal_Constraint *
@@ -184,7 +184,7 @@ TAO_ETCL_Component::TAO_ETCL_Component (TAO_ETCL_Constraint *identifier,
   :  component_ (component)
 {
   this->identifier_ =
-    dynamic_cast<TAO_ETCL_Identifier*>(identifier);
+    dynamic_cast<TAO_ETCL_Identifier*> (identifier);
 }
 
 ACE_INLINE TAO_ETCL_Identifier *

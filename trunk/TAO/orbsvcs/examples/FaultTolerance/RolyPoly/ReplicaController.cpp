@@ -444,7 +444,7 @@ namespace
                                        ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    TAO_InputCDR cdr (reinterpret_cast<const char*>(svc->context_data.get_buffer ()),
+    TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
                       svc->context_data.length ());
 
     CORBA::Boolean byte_order;
@@ -455,7 +455,7 @@ namespace
       ACE_THROW (CORBA::BAD_CONTEXT ());
     }
 
-    cdr.reset_byte_order (static_cast<int>(byte_order));
+    cdr.reset_byte_order (static_cast<int> (byte_order));
 
     // Funny, the following two lines should normally translate
     // just to one ctor call. But because we have to use this

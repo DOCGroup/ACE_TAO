@@ -161,7 +161,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
       {
         if (DEBUG_LEVEL > 0) ACE_DEBUG ( (LM_DEBUG,
           ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
-          static_cast<int>(this->proxy ()->id ()),
+          static_cast<int> (this->proxy ()->id ()),
           request->sequence ()
           ));
         ace_mon.acquire ();
@@ -226,7 +226,7 @@ TAO_Notify_SequencePushConsumer::get_ior (ACE_CString & iorstr) const
   {
     CORBA::String_var ior = orb->object_to_string (this->push_consumer_.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    iorstr = static_cast<const char *>(ior.in ());
+    iorstr = static_cast<const char *> (ior.in ());
     result = true;
   }
   ACE_CATCHANY

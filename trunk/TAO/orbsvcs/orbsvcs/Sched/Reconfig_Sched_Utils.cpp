@@ -209,7 +209,7 @@ TAO_RT_Info_Tuple::~TAO_RT_Info_Tuple ()
 void
 TAO_RT_Info_Tuple::operator = (const RtecScheduler::RT_Info &info)
 {
-  static_cast<TAO_RT_Info_Ex>(*this) = info;
+  static_cast<TAO_RT_Info_Ex> (*this) = info;
 }
 
 
@@ -955,7 +955,7 @@ TAO_Reconfig_Sched_Strategy_Base::comp_tuple_finish_times (const void *first, co
   // make Sun C++ 4.2 happy.
   TAO_RT_Info_Tuple **first_tuple =
     ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
-                          const_cast<void *>(first));
+                          const_cast<void *> (first));
 
   //volatile_token is a TAO_Reconfig_Scheduler_Entry*, but we need to treat it as a void*
   void * first_entry = ACE_LONGLONG_TO_PTR (void *,
@@ -963,7 +963,7 @@ TAO_Reconfig_Sched_Strategy_Base::comp_tuple_finish_times (const void *first, co
 
   TAO_RT_Info_Tuple **second_tuple =
     ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
-                          const_cast<void *>(second));
+                          const_cast<void *> (second));
 
   //volatile_token is a TAO_Reconfig_Scheduler_Entry*, but we need to treat it as a void*
   void * second_entry = ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
@@ -1109,10 +1109,10 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const 
   // make Sun C++ 4.2 happy.
   TAO_Reconfig_Scheduler_Entry **first =
     ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
-                          const_cast<void *>(s));
+                          const_cast<void *> (s));
   TAO_Reconfig_Scheduler_Entry **second =
     ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
-                          const_cast<void *>(t));
+                          const_cast<void *> (t));
 
   // Check the converted pointers.
   if (first == 0 || *first == 0)
@@ -1164,7 +1164,7 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
   // make Sun C++ 4.2 happy.
   TAO_RT_Info_Tuple **first =
     ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
-                          const_cast<void *>(s));
+                          const_cast<void *> (s));
 
   TAO_Reconfig_Scheduler_Entry * first_entry =
       ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
@@ -1172,7 +1172,7 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
 
   TAO_RT_Info_Tuple **second =
     ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
-                          const_cast<void *>(t));
+                          const_cast<void *> (t));
 
   TAO_Reconfig_Scheduler_Entry * second_entry =
       ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
@@ -1313,10 +1313,10 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const 
   // make Sun C++ 4.2 happy.
   TAO_Reconfig_Scheduler_Entry **first =
     ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
-                          const_cast<void *>(s));
+                          const_cast<void *> (s));
   TAO_Reconfig_Scheduler_Entry **second =
     ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
-                          const_cast<void *>(t));
+                          const_cast<void *> (t));
 
   // Check the converted pointers.
   if (first == 0 || *first == 0)
@@ -1371,7 +1371,7 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
   // make Sun C++ 4.2 happy.
   TAO_RT_Info_Tuple **first =
     ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
-                          const_cast<void *>(s));
+                          const_cast<void *> (s));
 
   TAO_Reconfig_Scheduler_Entry * first_entry =
       ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
@@ -1379,7 +1379,7 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
 
   TAO_RT_Info_Tuple **second =
     ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
-                          const_cast<void *>(t));
+                          const_cast<void *> (t));
 
   TAO_Reconfig_Scheduler_Entry * second_entry =
       ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
@@ -1543,10 +1543,10 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const v
   // make Sun C++ 4.2 happy.
   TAO_Reconfig_Scheduler_Entry **first =
     ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
-                          const_cast<void *>(s));
+                          const_cast<void *> (s));
   TAO_Reconfig_Scheduler_Entry **second =
     ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
-                          const_cast<void *>(t));
+                          const_cast<void *> (t));
 
   // Check the converted pointers.
   if (first == 0 || *first == 0)
@@ -1601,7 +1601,7 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
   // make Sun C++ 4.2 happy.
   TAO_RT_Info_Tuple **first =
     ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
-                          const_cast<void *>(s));
+                          const_cast<void *> (s));
 
   TAO_Reconfig_Scheduler_Entry * first_entry =
     ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
@@ -1609,7 +1609,7 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
 
   TAO_RT_Info_Tuple **second =
     ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
-                          const_cast<void *>(t));
+                          const_cast<void *> (t));
 
   TAO_Reconfig_Scheduler_Entry * second_entry =
     ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,

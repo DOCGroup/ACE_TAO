@@ -844,7 +844,7 @@ TAO::SSLIOP::Connector::cancel_svc_handler (
   TAO_Connection_Handler * svc_handler)
 {
   TAO::SSLIOP::Connection_Handler* handler=
-    dynamic_cast<TAO::SSLIOP::Connection_Handler*>(svc_handler);
+    dynamic_cast<TAO::SSLIOP::Connection_Handler*> (svc_handler);
 
   if (handler)
     {

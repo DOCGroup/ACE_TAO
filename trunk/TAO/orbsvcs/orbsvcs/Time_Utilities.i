@@ -40,8 +40,8 @@ ORBSVCS_Time::Time_Value_to_TimeT (TimeBase::TimeT& lhs,
                                    const ACE_Time_Value& rhs)
 {
   ACE_hrtime_t t =
-    static_cast<ACE_hrtime_t>(rhs.sec ()) * ACE_U_ONE_SECOND_IN_NSECS +
-    static_cast<ACE_hrtime_t>(rhs.usec ()) * 1000u;
+    static_cast<ACE_hrtime_t> (rhs.sec ()) * ACE_U_ONE_SECOND_IN_NSECS +
+    static_cast<ACE_hrtime_t> (rhs.usec ()) * 1000u;
 
   ORBSVCS_Time::hrtime_to_TimeT (lhs, t);
 }

@@ -42,7 +42,7 @@ TAO_Notify_Admin::~TAO_Notify_Admin ()
 void
 TAO_Notify_Admin::init (TAO_Notify::Topology_Parent * parent ACE_ENV_ARG_DECL)
 {
-  this->ec_ = dynamic_cast<TAO_Notify_EventChannel *>(parent);
+  this->ec_ = dynamic_cast<TAO_Notify_EventChannel *> (parent);
   ACE_ASSERT (this->ec_ != 0);
 
   this->ec_->_incr_refcnt ();
@@ -175,7 +175,7 @@ TAO_Notify_Admin::load_child (const ACE_CString &type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Admin reload subscription %d\n")
-      , static_cast<int>(id)
+      , static_cast<int> (id)
       ));
     // since we initialized our subscribed types to everything
     // in the constructor. we have to clear it out first.
@@ -186,7 +186,7 @@ TAO_Notify_Admin::load_child (const ACE_CString &type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Admin reload filter_admin %d\n")
-      , static_cast<int>(id)
+      , static_cast<int> (id)
       ));
     result = & this->filter_admin_;
   }

@@ -362,9 +362,9 @@ void StubFaultNotifier::push_structured_fault (
     "FaultNotifier:   Header EventType domain: %s\n"
     "FaultNotifier:   Header EventType type: %s\n"
     "FaultNotifier:   Header EventName: %s\n",
-    static_cast<const char *>(event.header.fixed_header.event_type.domain_name),
-    static_cast<const char *>(event.header.fixed_header.event_type.type_name),
-    static_cast<const char *>(event.header.fixed_header.event_name)
+    static_cast<const char *> (event.header.fixed_header.event_type.domain_name),
+    static_cast<const char *> (event.header.fixed_header.event_type.type_name),
+    static_cast<const char *> (event.header.fixed_header.event_name)
     ));
   const CosNotification::FilterableEventBody & filterable = event.filterable_data;
 
@@ -374,7 +374,7 @@ void StubFaultNotifier::push_structured_fault (
     const CosNotification::Property & property = filterable[nProp];
     ACE_ERROR ((LM_ERROR,
       "FaultNotifier:   Property Name: %s\n",
-      static_cast<const char *>(property.name)
+      static_cast<const char *> (property.name)
       ));
     //@@ we could stand to decode more--just for completeness
   }

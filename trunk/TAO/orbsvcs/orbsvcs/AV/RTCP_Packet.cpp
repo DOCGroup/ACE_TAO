@@ -97,7 +97,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
     {
       size_t text_length = ACE_OS::strlen(text);
       memcpy(this->reason_, text, text_length);
-      this->reason_length_ = static_cast<unsigned char>(text_length);
+      this->reason_length_ = static_cast<unsigned char> (text_length);
     }
   else
     this->reason_length_ = 0;

@@ -105,7 +105,7 @@ TAO_Notify_ConsumerAdmin::load_child (const ACE_CString &type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Admin reload proxy %d\n")
-      , static_cast<int>(id)
+      , static_cast<int> (id)
       ));
     result = this->load_proxy(id, CosNotifyChannelAdmin::ANY_EVENT, attrs ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
@@ -114,7 +114,7 @@ TAO_Notify_ConsumerAdmin::load_child (const ACE_CString &type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Admin reload proxy %d\n")
-      , static_cast<int>(id)
+      , static_cast<int> (id)
       ));
     result = this->load_proxy(id, CosNotifyChannelAdmin::STRUCTURED_EVENT, attrs ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
@@ -123,7 +123,7 @@ TAO_Notify_ConsumerAdmin::load_child (const ACE_CString &type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Admin reload proxy %d\n")
-      , static_cast<int>(id)
+      , static_cast<int> (id)
       ));
     result = this->load_proxy(id, CosNotifyChannelAdmin::SEQUENCE_EVENT, attrs ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
@@ -133,7 +133,7 @@ TAO_Notify_ConsumerAdmin::load_child (const ACE_CString &type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Admin reload proxy %d\n")
-      , static_cast<int>(id)
+      , static_cast<int> (id)
       ));
     result = this->load_proxy(id, attrs ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);

@@ -105,8 +105,8 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
     return -1;
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet>(major),
-                                static_cast<CORBA::Octet>(minor));
+    this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                static_cast<CORBA::Octet> (minor));
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;

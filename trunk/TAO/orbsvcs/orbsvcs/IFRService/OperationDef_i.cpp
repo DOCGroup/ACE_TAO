@@ -207,7 +207,7 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  CORBA::ULong size = static_cast<CORBA::ULong>(key_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (key_queue.size ());
 
   CORBA::ParDescriptionSeq *pd_seq = 0;
   ACE_NEW_THROW_EX (pd_seq,
@@ -241,7 +241,7 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
                                                  "mode",
                                                  mode);
 
-      retval[i].mode = static_cast<CORBA::ParameterMode>(mode);
+      retval[i].mode = static_cast<CORBA::ParameterMode> (mode);
 
       ACE_TString type_path;
       this->repo_->config ()->get_string_value (key,
@@ -356,7 +356,7 @@ TAO_OperationDef_i::mode_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                                              "mode",
                                              mode);
 
-  return static_cast<CORBA::OperationMode>(mode);
+  return static_cast<CORBA::OperationMode> (mode);
 }
 
 void
@@ -431,7 +431,7 @@ TAO_OperationDef_i::contexts_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  CORBA::ULong size = static_cast<CORBA::ULong>(context_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (context_queue.size ());
 
   CORBA::ContextIdSeq *ci_seq = 0;
   ACE_NEW_THROW_EX (ci_seq,
@@ -541,7 +541,7 @@ TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
         }
     }
 
-  CORBA::ULong size = static_cast<CORBA::ULong>(path_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (path_queue.size ());
 
   CORBA::ExceptionDefSeq *ed_seq = 0;
   ACE_NEW_THROW_EX (ed_seq,
@@ -680,7 +680,7 @@ TAO_OperationDef_i::make_description (
             }
         }
 
-      CORBA::ULong size = static_cast<CORBA::ULong>(path_queue.size ());
+      CORBA::ULong size = static_cast<CORBA::ULong> (path_queue.size ());
 
       od.exceptions.length (size);
 

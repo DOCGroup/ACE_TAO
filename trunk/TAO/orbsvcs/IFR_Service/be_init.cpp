@@ -31,7 +31,7 @@ BE_save_orb_args (int &argc, char *argv[])
 
           // If the arg ends with either .idl or .pidl, we're done.
 
-          int len = static_cast<int>(tmp.length ());
+          int len = static_cast<int> (tmp.length ());
           int pos = tmp.find (".idl");
 
           if (len - pos == 4)

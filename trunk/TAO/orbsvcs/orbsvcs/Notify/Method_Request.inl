@@ -32,7 +32,7 @@ TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event * event)
       ACE_Time_Value current = ACE_OS::gettimeofday () +
 # if defined (ACE_CONFIG_WIN32_H)
         ACE_Time_Value (
-                        static_cast<long>(timeout.value ()));
+                        static_cast<long> (timeout.value ()));
 # else
       ACE_Time_Value (timeout.value () / 1);
 # endif /* ACE_CONFIG_WIN32_H */

@@ -1,3 +1,12 @@
+Thu Jan 27 11:39:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/.../*.{cpp,h,i,inl}:
+
+	  Ossama let me know that my ACE-style to C++ cast conversion
+	  script didn't add a space between the ">" and the "(", which
+	  violates the ACE/TAO conventions.  I wrote another script to
+	  fix the damage, which fixed up a lot of other cases as well.
+
 Thu Jan 27 10:37:19 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/ImR/Combined_Service/run_test.pl:

@@ -95,7 +95,7 @@ TAO_Repository_i::lookup_id_i (const char *search_id
                                     kind);
 
   CORBA::DefinitionKind def_kind =
-    static_cast<CORBA::DefinitionKind>(kind);
+    static_cast<CORBA::DefinitionKind> (kind);
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (def_kind,
@@ -666,7 +666,7 @@ TAO_Repository_i::create_sections (void)
       for (u_int i = 0; i < num_pkinds; ++i)
         {
           ACE_Configuration_Section_Key key;
-          CORBA::PrimitiveKind pkind = static_cast<CORBA::PrimitiveKind>(i);
+          CORBA::PrimitiveKind pkind = static_cast<CORBA::PrimitiveKind> (i);
 
           this->config_->open_section (this->pkinds_key_,
                                        this->pkind_to_string (pkind),
@@ -908,7 +908,7 @@ TAO_Repository_i::select_container (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_LocalInterface:
       return this->ExtLocalInterfaceDef_servant_->_tied_object ();
     case CORBA::dk_Repository:
-      return const_cast<TAO_Repository_i *>(this);
+      return const_cast<TAO_Repository_i *> (this);
     case CORBA::dk_Struct:
       return this->StructDef_servant_->_tied_object ();
     case CORBA::dk_Union:

@@ -43,7 +43,7 @@ max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::UnknownMaxLeft))
 {
-  return static_cast<CORBA::ULong>(this->offer_ids_.size ());
+  return static_cast<CORBA::ULong> (this->offer_ids_.size ());
 }
 
 template <class MAP_LOCK_TYPE> CORBA::Boolean
@@ -57,7 +57,7 @@ next_n (CORBA::ULong n,
 
   CORBA::ULong max_possible_offers_in_sequence =
     (n <  this->offer_ids_.size ()) ? n :
-       static_cast<CORBA::ULong>(this->offer_ids_.size ());
+       static_cast<CORBA::ULong> (this->offer_ids_.size ());
 
   ACE_NEW_THROW_EX (offers,
                     CosTrading::OfferSeq,

@@ -1165,7 +1165,7 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
       repo->config ()->get_integer_value (member_key,
                                           "access",
                                           access);
-      vm_seq[i].access = static_cast<CORBA::Visibility>(access);
+      vm_seq[i].access = static_cast<CORBA::Visibility> (access);
     }
 }
 
@@ -1209,7 +1209,7 @@ TAO_IFR_Service_Utils::path_to_def_kind (ACE_TString &path,
   repo->config ()->get_integer_value (TAO_IFR_Service_Utils::tmp_key_,
                                       "def_kind",
                                       kind);
-  return static_cast<CORBA::DefinitionKind>(kind);
+  return static_cast<CORBA::DefinitionKind> (kind);
 }
 
 CORBA::DefinitionKind
