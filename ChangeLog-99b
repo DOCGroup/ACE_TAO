@@ -1,3 +1,23 @@
+Fri Mar 26 17:02:00 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+	  Improved ACE_HAS_USING_KEYWORD test so that it works for platforms
+	  that support the `using' keyword but don't have the `std' namespace.
+
+	  Updated ACE_HAS_TEMPLATE_SPECIALIZATION test so that it works for
+	  compilers that require the "template<>" syntax for specialization.
+
+	  Improved ACE_HAS_ONLY_SCHED_OTHER by checking for run time errors
+	  when a thread scheduling policy other than SCHED_OTHER is set.
+	  Thanks to David for suggesting this modification.
+	
+	* m4/acinclude.m4:
+	  Added support for converting warnings to errors for Sun C++.
+	
+	* m4/threads.m4:
+	  Added test to check if `-Kthread' compiler flag enables thread
+	  support.  SCO UnixWare 7 uses this flag.
+
 Fri Mar 26 07:21:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Reactor_Performance_Test.cpp (handle_input): wrapped
