@@ -1,5 +1,13 @@
 Mo Jun 1  10:16:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
+	* docs/orbsvcs.html: Added the LifeCycle Service to the list
+	  of services.
+
+	* docs/releasenotes/index.html: Added new information about 
+	  DOVE to the file.
+
+Mo Jun 1  10:16:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
         * orbsvcs/LifeCycle_Service: Created the LifeCycle Service.
 
 	* orbsvcs/Makefile: Added the LifeCycle Service to the list
