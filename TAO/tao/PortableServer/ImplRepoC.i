@@ -32,7 +32,7 @@ ImplementationRepository::ServerObject::ServerObject (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : Object (objref, _tao_collocated, servant)
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)
 {
   this->ImplementationRepository_ServerObject_setup_collocation (_tao_collocated);
 }
@@ -103,7 +103,7 @@ ImplementationRepository::EnvironmentVariable_var::operator= (const ::Implementa
               EnvironmentVariable (*_tao_struct_var.ptr_),
               *this
             );
-          
+
           if (deep_copy != 0)
             {
               EnvironmentVariable *tmp = deep_copy;
@@ -113,7 +113,7 @@ ImplementationRepository::EnvironmentVariable_var::operator= (const ::Implementa
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -136,20 +136,20 @@ ImplementationRepository::EnvironmentVariable_var::operator const ::Implementati
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_var::operator ::ImplementationRepository::EnvironmentVariable &() // cast 
+ImplementationRepository::EnvironmentVariable_var::operator ::ImplementationRepository::EnvironmentVariable &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_var::operator ::ImplementationRepository::EnvironmentVariable &() const // cast 
+ImplementationRepository::EnvironmentVariable_var::operator ::ImplementationRepository::EnvironmentVariable &() const // cast
 {
   return *this->ptr_;
 }
 
 // Variable-size types only.
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_var::operator ::ImplementationRepository::EnvironmentVariable *&() // cast 
+ImplementationRepository::EnvironmentVariable_var::operator ::ImplementationRepository::EnvironmentVariable *&() // cast
 {
   return this->ptr_;
 }
@@ -232,7 +232,7 @@ ImplementationRepository::EnvironmentVariable_out::operator= (EnvironmentVariabl
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 ImplementationRepository::EnvironmentVariable_out::operator ::ImplementationRepository::EnvironmentVariable *&() // cast
 {
   return this->ptr_;
@@ -250,7 +250,7 @@ ImplementationRepository::EnvironmentVariable_out::operator-> (void)
   return this->ptr_;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:99
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -279,7 +279,7 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Envir
 }
 
 ACE_INLINE
-ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum) 
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (maximum))
 {
 }
@@ -307,12 +307,12 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Envir
         _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (this->maximum_);
       ImplementationRepository::EnvironmentVariable * const tmp2 =
         ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
           tmp1[i] = tmp2[i];
         }
-      
+
       this->buffer_ = tmp1;
     }
   else
@@ -331,7 +331,7 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Envir
     {
       return *this;
     }
-  
+
   if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -339,9 +339,9 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Envir
           // Free the old buffer.
           ImplementationRepository::EnvironmentVariable *tmp =
             ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable *, this->buffer_);
-          
+
           _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (tmp);
-          
+
           this->buffer_ =
             _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (rhs.maximum_);
         }
@@ -351,19 +351,19 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Envir
       this->buffer_ =
         _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (rhs.maximum_);
     }
-  
+
   TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
+
   ImplementationRepository::EnvironmentVariable *tmp1 =
     ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable *, this->buffer_);
   ImplementationRepository::EnvironmentVariable * const tmp2 =
     ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable * ACE_CAST_CONST, rhs.buffer_);
-  
+
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       tmp1[i] = tmp2[i];
     }
-  
+
   return *this;
 }
 
@@ -395,7 +395,7 @@ ImplementationRepository::EnvironmentVariable *
 ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::get_buffer (CORBA::Boolean orphan)
 {
   ImplementationRepository::EnvironmentVariable *result = 0;
-  
+
   if (orphan == 0)
     {
       // We retain ownership.
@@ -425,7 +425,7 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Envir
           this->release_ = 0;
         }
     }
-  
+
   return result;
 }
 
@@ -447,26 +447,26 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Envir
 {
   this->maximum_ = max;
   this->length_ = length;
-  
+
   if (this->buffer_ && this->release_ == 1)
     {
       ImplementationRepository::EnvironmentVariable *tmp =
         ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable*, this->buffer_);
       _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (tmp);
     }
-  
+
   this->buffer_ = data;
   this->release_ = release;
 }
 
 #endif /* end #if !defined */
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CI_)
 #define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CI_
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_ci.cpp:226
 
 // *************************************************************
@@ -530,7 +530,7 @@ ImplementationRepository::EnvironmentList_var::operator= (const ::Implementation
               EnvironmentList (*p.ptr_),
               *this
             );
-          
+
           if (deep_copy != 0)
             {
               EnvironmentList *tmp = deep_copy;
@@ -540,7 +540,7 @@ ImplementationRepository::EnvironmentList_var::operator= (const ::Implementation
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -565,20 +565,20 @@ ImplementationRepository::EnvironmentList_var::operator const ::ImplementationRe
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_var::operator ::ImplementationRepository::EnvironmentList &() // cast 
+ImplementationRepository::EnvironmentList_var::operator ::ImplementationRepository::EnvironmentList &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_var::operator ::ImplementationRepository::EnvironmentList &() const // cast 
+ImplementationRepository::EnvironmentList_var::operator ::ImplementationRepository::EnvironmentList &() const // cast
 {
   return *this->ptr_;
 }
 
 // Variable-size types only.
 ACE_INLINE
-ImplementationRepository::EnvironmentList_var::operator ::ImplementationRepository::EnvironmentList *&() // cast 
+ImplementationRepository::EnvironmentList_var::operator ::ImplementationRepository::EnvironmentList *&() // cast
 {
   return this->ptr_;
 }
@@ -636,7 +636,7 @@ ImplementationRepository::EnvironmentList_var::ptr (void) const
   return this->ptr_;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_ci.cpp:567
 
 // *************************************************************
@@ -772,7 +772,7 @@ ImplementationRepository::StartupOptions_var::operator= (const ::ImplementationR
               StartupOptions (*_tao_struct_var.ptr_),
               *this
             );
-          
+
           if (deep_copy != 0)
             {
               StartupOptions *tmp = deep_copy;
@@ -782,7 +782,7 @@ ImplementationRepository::StartupOptions_var::operator= (const ::ImplementationR
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -805,20 +805,20 @@ ImplementationRepository::StartupOptions_var::operator const ::ImplementationRep
 }
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_var::operator ::ImplementationRepository::StartupOptions &() // cast 
+ImplementationRepository::StartupOptions_var::operator ::ImplementationRepository::StartupOptions &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_var::operator ::ImplementationRepository::StartupOptions &() const // cast 
+ImplementationRepository::StartupOptions_var::operator ::ImplementationRepository::StartupOptions &() const // cast
 {
   return *this->ptr_;
 }
 
 // Variable-size types only.
 ACE_INLINE
-ImplementationRepository::StartupOptions_var::operator ::ImplementationRepository::StartupOptions *&() // cast 
+ImplementationRepository::StartupOptions_var::operator ::ImplementationRepository::StartupOptions *&() // cast
 {
   return this->ptr_;
 }
@@ -901,7 +901,7 @@ ImplementationRepository::StartupOptions_out::operator= (StartupOptions *_tao_st
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 ImplementationRepository::StartupOptions_out::operator ::ImplementationRepository::StartupOptions *&() // cast
 {
   return this->ptr_;
@@ -983,7 +983,7 @@ ImplementationRepository::ServerInformation_var::operator= (const ::Implementati
               ServerInformation (*_tao_struct_var.ptr_),
               *this
             );
-          
+
           if (deep_copy != 0)
             {
               ServerInformation *tmp = deep_copy;
@@ -993,7 +993,7 @@ ImplementationRepository::ServerInformation_var::operator= (const ::Implementati
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -1016,20 +1016,20 @@ ImplementationRepository::ServerInformation_var::operator const ::Implementation
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_var::operator ::ImplementationRepository::ServerInformation &() // cast 
+ImplementationRepository::ServerInformation_var::operator ::ImplementationRepository::ServerInformation &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_var::operator ::ImplementationRepository::ServerInformation &() const // cast 
+ImplementationRepository::ServerInformation_var::operator ::ImplementationRepository::ServerInformation &() const // cast
 {
   return *this->ptr_;
 }
 
 // Variable-size types only.
 ACE_INLINE
-ImplementationRepository::ServerInformation_var::operator ::ImplementationRepository::ServerInformation *&() // cast 
+ImplementationRepository::ServerInformation_var::operator ::ImplementationRepository::ServerInformation *&() // cast
 {
   return this->ptr_;
 }
@@ -1112,7 +1112,7 @@ ImplementationRepository::ServerInformation_out::operator= (ServerInformation *_
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 ImplementationRepository::ServerInformation_out::operator ::ImplementationRepository::ServerInformation *&() // cast
 {
   return this->ptr_;
@@ -1130,7 +1130,7 @@ ImplementationRepository::ServerInformation_out::operator-> (void)
   return this->ptr_;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:99
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -1159,7 +1159,7 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Serve
 }
 
 ACE_INLINE
-ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum) 
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (maximum))
 {
 }
@@ -1187,12 +1187,12 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Serve
         _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (this->maximum_);
       ImplementationRepository::ServerInformation * const tmp2 =
         ACE_reinterpret_cast (ImplementationRepository::ServerInformation * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
           tmp1[i] = tmp2[i];
         }
-      
+
       this->buffer_ = tmp1;
     }
   else
@@ -1211,7 +1211,7 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Serve
     {
       return *this;
     }
-  
+
   if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -1219,9 +1219,9 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Serve
           // Free the old buffer.
           ImplementationRepository::ServerInformation *tmp =
             ACE_reinterpret_cast (ImplementationRepository::ServerInformation *, this->buffer_);
-          
+
           _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (tmp);
-          
+
           this->buffer_ =
             _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (rhs.maximum_);
         }
@@ -1231,19 +1231,19 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Serve
       this->buffer_ =
         _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (rhs.maximum_);
     }
-  
+
   TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
+
   ImplementationRepository::ServerInformation *tmp1 =
     ACE_reinterpret_cast (ImplementationRepository::ServerInformation *, this->buffer_);
   ImplementationRepository::ServerInformation * const tmp2 =
     ACE_reinterpret_cast (ImplementationRepository::ServerInformation * ACE_CAST_CONST, rhs.buffer_);
-  
+
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       tmp1[i] = tmp2[i];
     }
-  
+
   return *this;
 }
 
@@ -1275,7 +1275,7 @@ ImplementationRepository::ServerInformation *
 ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::get_buffer (CORBA::Boolean orphan)
 {
   ImplementationRepository::ServerInformation *result = 0;
-  
+
   if (orphan == 0)
     {
       // We retain ownership.
@@ -1305,7 +1305,7 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Serve
           this->release_ = 0;
         }
     }
-  
+
   return result;
 }
 
@@ -1327,26 +1327,26 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Serve
 {
   this->maximum_ = max;
   this->length_ = length;
-  
+
   if (this->buffer_ && this->release_ == 1)
     {
       ImplementationRepository::ServerInformation *tmp =
         ACE_reinterpret_cast (ImplementationRepository::ServerInformation*, this->buffer_);
       _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (tmp);
     }
-  
+
   this->buffer_ = data;
   this->release_ = release;
 }
 
 #endif /* end #if !defined */
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CI_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CI_
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_ci.cpp:226
 
 // *************************************************************
@@ -1410,7 +1410,7 @@ ImplementationRepository::ServerInformationList_var::operator= (const ::Implemen
               ServerInformationList (*p.ptr_),
               *this
             );
-          
+
           if (deep_copy != 0)
             {
               ServerInformationList *tmp = deep_copy;
@@ -1420,7 +1420,7 @@ ImplementationRepository::ServerInformationList_var::operator= (const ::Implemen
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -1445,20 +1445,20 @@ ImplementationRepository::ServerInformationList_var::operator const ::Implementa
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_var::operator ::ImplementationRepository::ServerInformationList &() // cast 
+ImplementationRepository::ServerInformationList_var::operator ::ImplementationRepository::ServerInformationList &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_var::operator ::ImplementationRepository::ServerInformationList &() const // cast 
+ImplementationRepository::ServerInformationList_var::operator ::ImplementationRepository::ServerInformationList &() const // cast
 {
   return *this->ptr_;
 }
 
 // Variable-size types only.
 ACE_INLINE
-ImplementationRepository::ServerInformationList_var::operator ::ImplementationRepository::ServerInformationList *&() // cast 
+ImplementationRepository::ServerInformationList_var::operator ::ImplementationRepository::ServerInformationList *&() // cast
 {
   return this->ptr_;
 }
@@ -1516,7 +1516,7 @@ ImplementationRepository::ServerInformationList_var::ptr (void) const
   return this->ptr_;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_ci.cpp:567
 
 // *************************************************************
@@ -1600,7 +1600,7 @@ ImplementationRepository::Administration::Administration (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : Object (objref, _tao_collocated, servant)
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)
 {
   this->ImplementationRepository_Administration_setup_collocation (_tao_collocated);
 }
@@ -1619,7 +1619,7 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : Object (objref, _tao_collocated, servant)
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)
 {
   this->ImplementationRepository_ServerInformationIterator_setup_collocation (_tao_collocated);
 }
@@ -1820,12 +1820,12 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, ImplementationRepository::Activat
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (ImplementationRepository::ActivationMode, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1964,4 +1964,3 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     ImplementationRepository::Administration_ptr &
   );
-

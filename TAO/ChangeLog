@@ -1,3 +1,22 @@
+Fri Feb 21 13:40:41 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IOPC.cpp:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/IORManipulation/IORC.cpp:
+	* tao/IORTable/IORTableC.cpp:
+	* tao/Messaging/MessagingC.i:
+	* tao/Messaging/MessagingC.cpp:
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableServer/ImplRepoC.i:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImR_LocatorC.cpp:
+	* tao/PortableServer/PortableServerC.cpp:
+
+	  Wrap some base class initializations and method calls with the
+	  ACE_NESTED_CLASS macro to work around MSVC++ 6 namespace brain
+	  damage.  This should also address problems exhibited in the
+	  Borland C++ 6 build due to a missing class scope.
+
 Fri Feb 21 13:07:33 2003  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_interface.cpp (gen_stub_ctor):
