@@ -159,9 +159,6 @@ Quoter_Server::init_naming_service (CORBA::Environment& env)
 int
 Quoter_Server::run (CORBA::Environment& env)
 {
-  //orb_manager_.poa_manager_->activate (env);
-  // TAO_CHECK_ENV_RETURN (env,1);
-
   if (orb_manager_.orb()->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

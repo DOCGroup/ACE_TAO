@@ -1,3 +1,8 @@
+Tue Apr 14 19:35:50 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tests/Quoter/*: Quoter example is running using the Cos LifeCycle
+	  Factory Finder.
+
 Tue Apr 14 16:37:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/encode.cpp: 

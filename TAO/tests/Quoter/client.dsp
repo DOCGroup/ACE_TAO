@@ -1,4 +1,4 @@
-# Microsoft Developer Studio Project File - Name="Quoter Client" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
@@ -17,10 +17,8 @@ CFG=client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "client - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "client - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -114,7 +112,7 @@ SOURCE=.\QuoterC.h
 SOURCE=.\QuoterS.h
 # End Source File
 # End Group
-# Begin Group "Include Files"
+# Begin Group "Inline Files"
 
 # PROP Default_Filter "i"
 # Begin Source File

@@ -17,6 +17,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
 #include "FactoryFinderImpl.h"
+#include "QuoterC.h"
 
 static const char usage [] = 
 "[-? |\n[-O[RBport] ORB port number]]";
@@ -61,8 +62,8 @@ QuoterFactoryFinderImpl::find_factories (const CosLifeCycle::Key &factory_key,
                                        env_here);
 
   // see if there is an exception, if yes then throw the NoFactory exception
-  if (env_here.exception () != 0) {
-    // throw a NoFactory exception  
+  if (env_here.exception () != 0) // throw a NoFactory exception  
+  { 
     _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
     return 0;
   }
@@ -76,9 +77,8 @@ QuoterFactoryFinderImpl::find_factories (const CosLifeCycle::Key &factory_key,
     namingContext_var->resolve (quoterContextName, env_here);
 
   // see if there is an exception, if yes then throw the NoFactory exception
-  if (env_here.exception () != 0) {
-
-    // throw a NoFactory exception  
+  if (env_here.exception () != 0) // throw a NoFactory exception  
+  { 
     _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
     return 0;
   }
@@ -88,8 +88,8 @@ QuoterFactoryFinderImpl::find_factories (const CosLifeCycle::Key &factory_key,
                                            env_here);
 
   // see if there is an exception, if yes then throw the NoFactory exception
-  if (env_here.exception () != 0) {
-    // throw a NoFactory exception  
+  if (env_here.exception () != 0) // throw a NoFactory exception  
+  { 
     _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
     return 0;
   }
@@ -105,22 +105,20 @@ QuoterFactoryFinderImpl::find_factories (const CosLifeCycle::Key &factory_key,
     quoterNamingContext_var->resolve (factoryName, env_here);
   
   // see if there is an exception, if yes then throw the NoFactory exception
-  if (env_here.exception () != 0) {
-
-    // throw a NoFactory exception  
-    _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
-    return 0;
-  }
-
-  // Check if it is a valid Quoter Factory reference
-  if (CORBA::is_nil (quoterFactoryObject_var.in())) {
-
-    // throw a NoFactory exception  
+  if (env_here.exception () != 0) // throw a NoFactory exception  
+  { 
     _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
     return 0;
   }
 
   // were able to get a reference to Quoter Factory
+
+  // Check if it is a valid Quoter Factory reference
+  if (CORBA::is_nil (quoterFactoryObject_var.in())) 
+  { // throw a NoFactory exception  
+    _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+    return 0;
+  }
   else { 
 
     // create a sequence of factories object
@@ -139,15 +137,14 @@ QuoterFactoryFinderImpl::find_factories (const CosLifeCycle::Key &factory_key,
     factories_ptr->length (1);      
 
     // Check if it is a valid Quoter Factory reference.
-    if (CORBA::is_nil (quoterFactoryObject_var.in ())) 
-    {
-      // throw a NoFactory exception.
+    if (CORBA::is_nil (quoterFactoryObject_var.in ())) // throw a NoFactory exception.
+    {      
       _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
       return 0;
     }
 
     // insert the object reference 
-    (*factories_ptr)[0] = quoterFactoryObject_var;
+    (*factories_ptr)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.ptr());
 
     ACE_DEBUG ((LM_DEBUG,"Have reference to a Quoter Factory.\n"));
     return factories_ptr;
