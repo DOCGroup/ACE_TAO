@@ -474,8 +474,8 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
 
   if (n == -1)
     {
-      //if (errno == EAGAIN)
-      // return -1;
+      if (errno == EAGAIN)
+        return -1;
 
       if (errno == EWOULDBLOCK)
         return 0;
