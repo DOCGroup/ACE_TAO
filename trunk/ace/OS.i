@@ -3595,6 +3595,8 @@ ACE_OS::getprotobyname_r (const char *name,
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buffer);
   ACE_SOCKCALL_RETURN (::getprotobyname ((char *) name),
                        struct protoent *, 0);
 #else
@@ -3918,6 +3920,9 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (h_errnop);
   ACE_SOCKCALL_RETURN (::gethostbyaddr ((char *) addr, (ACE_SOCKET_LEN) length, type),
                        struct hostent *, 0);
 #else
@@ -3964,6 +3969,9 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (h_errnop);
   ACE_SOCKCALL_RETURN (::gethostbyname ((char *) name), struct hostent *, 0);
 #else
   ACE_UNUSED_ARG (h_errnop);
@@ -4014,6 +4022,8 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (result);
   ACE_SOCKCALL_RETURN (::getservbyname ((char *) svc, (char *) proto),
                        struct servent *, 0);
 #else
