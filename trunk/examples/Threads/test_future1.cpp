@@ -211,7 +211,7 @@ Scheduler::svc (void)
     {
       // Dequeue the next method object (we use an auto pointer in
       // case an exception is thrown in the <call>).
-      auto_ptr<ACE_Method_Object> mo (this->activation_queue_.dequeue ());
+      ACE_Auto_Ptr<ACE_Method_Object> mo (this->activation_queue_.dequeue ());
 
       ACE_DEBUG ((LM_DEBUG, "(%t) calling method object\n"));
       // Call it.
