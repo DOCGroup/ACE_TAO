@@ -1,3 +1,8 @@
+Tue Jan 16 10:39:13 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/IIOP_Transport.cpp:
+	  Fixed RCSID macro
+
 Tue Jan 16 12:09:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/StringSeqC.h:

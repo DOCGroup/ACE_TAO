@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Connection_Handler.h"
 #include "tao/IIOP_Acceptor.h"
@@ -19,14 +18,11 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
 
-
-
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Transport.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, IIOP_Transport, "$Id: ")
-
+ACE_RCSID (tao, IIOP_Transport, "$Id$")
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
