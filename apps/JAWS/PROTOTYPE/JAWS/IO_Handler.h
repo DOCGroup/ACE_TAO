@@ -106,6 +106,9 @@ public:
   virtual ACE_HANDLE handle (void) = 0;
   // Returns the socket handle for this handler
 
+  virtual void task (JAWS_Pipeline_Handler *ph) = 0;
+  virtual JAWS_Pipeline_Handler *task (void) = 0;
+
   virtual int status (void) = 0;
 
   enum { IDLE = 0,
@@ -157,12 +160,14 @@ protected:
   virtual void write_error (void);
   virtual void confirmation_message_complete (void);
   virtual void error_message_complete (void);
+  virtual void task (JAWS_Pipeline_Handler *ph);
 
   virtual JAWS_IO_Handler_Factory *factory (void);
   virtual ACE_HANDLE handle (void);
 
   virtual void done (void);
   virtual int status (void);
+  virtual JAWS_Pipeline_Handler *task (void);
 
 private:
   int status_;
@@ -220,6 +225,9 @@ protected:
   virtual void confirmation_message_complete (void);
   virtual void error_message_complete (void);
   virtual JAWS_Handler_Factory *factory (void);
+  virtual void task (JAWS_Pipeline_Handler *ph);
+  virtual JAWS_Pipeline_Handler *task (void);
+
 
 private:
   ACE_Message_Block *state_;

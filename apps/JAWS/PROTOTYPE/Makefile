@@ -21,7 +21,7 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 LDLIBS  = -lJAWS
 
-BUILD 	= $(LDLIBS) $(VBIN)
+BUILD 	= $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

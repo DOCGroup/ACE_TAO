@@ -32,7 +32,7 @@ JAWS_IO_Acceptor::accept (size_t)
 int
 JAWS_IO_Synch_Acceptor::open (const ACE_INET_Addr &local_sap)
 {
-  return this->acceptor_->open (local_sap, 0, PF_INET, 5, 0);
+  return this->acceptor_->open (local_sap);
 }
 
 int
