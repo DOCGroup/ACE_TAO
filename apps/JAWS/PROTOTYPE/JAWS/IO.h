@@ -186,8 +186,9 @@ protected:
     ERROR_MESSAGE
   };
 
-  virtual void send_message (const char *buffer,
-                             int length,
+  virtual void send_message (JAWS_IO_Handler *ioh,
+                             const char *buffer,
+                             unsigned int length,
                              int act);
 
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
