@@ -5,11 +5,10 @@
 //  -> type(path) returns the type of the path matched by extension.
 //  -> app(path) returns the app for the path matched by extension.
 
-#ifndef HTTP_HELPERS_H_
-#define HTTP_HELPERS_H_
+#if !defined (HTTP_HELPERS_H)
+#define HTTP_HELPERS_H
 
-#include "ace/Log_Msg.h"
-#include "ace/Synch_T.h"
+#include "ace/Synch.h"
 
 class HTTP_Status_Code
 {
@@ -31,7 +30,8 @@ public:
     STATUS_INTERNAL_SERVER_ERROR = 500,
     STATUS_NOT_IMPLEMENTED = 501,
     STATUS_BAD_GATEWAY = 502,
-    STATUS_SERVICE_UNAVAILABLE = 503
+    STATUS_SERVICE_UNAVAILABLE = 503,
+    STATUS_INSUFFICIENT_DATA = 399
   };
 
   enum {MAX_STATUS_CODE=599};
@@ -43,8 +43,5 @@ private:
 
 };
 
-#endif
+#endif /* HTTP_HELPERS_H */
 
-/// Local Variables:
-/// mode: c++
-/// End:
