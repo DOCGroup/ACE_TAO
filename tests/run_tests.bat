@@ -16,6 +16,7 @@ Mutex_Test
 Naming_Test
 Pipe_Test
 Priority_Buffer_Test
+Process_Mutex_Test
 Reactor_Timer_Test
 Reactors_Test
 Reader_Writer_Test

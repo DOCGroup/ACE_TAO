@@ -79,6 +79,7 @@ run Tokens_Test
 run Map_Manager_Test
 run Message_Queue_Test
 run Pipe_Test
+run Process_Mutex_Test
 
 echo "Tests complete..."
 
