@@ -203,20 +203,6 @@ TAO_Transport::read_process_message (ACE_Time_Value * /* max_wait_time */,
   ACE_NOTSUP_RETURN (-1);
 }
 
-// Read and handle the reply. Returns 0 when there is Short Read on
-// the connection. Returns 1 when the full reply is read and
-// handled. Returns -1 on errors.
-// If <block> is 1, then reply is read in a blocking manner.
-
-
-
-int
-TAO_Transport::handle_client_input (int /* block */,
-                                    ACE_Time_Value * /* max_wait_time */)
-{
-  ACE_NOTSUP_RETURN (-1);
-}
-
 int
 TAO_Transport::register_handler (void)
 {

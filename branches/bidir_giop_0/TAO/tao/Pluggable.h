@@ -181,13 +181,6 @@ public:
   // been successfully read, the message is processed by delegating
   // the responsibility to the underlying messaging object.
 
-  virtual int handle_client_input (int block = 0,
-                                   ACE_Time_Value *max_wait_time = 0);
-  // Read and handle the reply. Returns 0 when there is Short Read on
-  // the connection. Returns 1 when the full reply is read and
-  // handled. Returns -1 on errors.
-  // If <block> is 1, then reply is read in a blocking manner.
-
   virtual int register_handler (void);
   // Register the handler with the reactor. Will be called by the Wait
   // Strategy if Reactor is used  for that strategy. Default

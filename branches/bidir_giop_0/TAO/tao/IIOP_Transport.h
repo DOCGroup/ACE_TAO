@@ -47,11 +47,6 @@ typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
  *
  */
 
-// @@ TODO: Looks like most of the Transport classes like
-// TAO_IIOP_Transport, TAO_UIOP_Transport, TAO_YADA_Transport share
-// quite some common code. Need to abstract them out. This could save
-// us some foot print -- Bala
-
 class TAO_Export TAO_IIOP_Transport : public TAO_Transport
 {
 public:
@@ -105,12 +100,10 @@ public:
   virtual int read_process_message (ACE_Time_Value *max_time_value = 0,
                                     int block =0);
 
-  /// Do I need this -- Bala??
-  virtual int handle_client_input (int block = 0,
-                                   ACE_Time_Value *max_time_value = 0);
-
   virtual int register_handler (void);
 
+  /// @@TODO: These methods IMHO should have more meaningful
+  /// names. The names seem to indicate nothing.
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,

@@ -78,6 +78,13 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
                                                                          arg) == -1)
     return -1;
 
+  // The service handler has been activated. Now cache the handler.
+  if (sh->add_handler_to_cache () == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Could not add the handler to Cache \n")));
+    }
+
   TAO_Server_Strategy_Factory *f =
     this->orb_core_->server_factory ();
 

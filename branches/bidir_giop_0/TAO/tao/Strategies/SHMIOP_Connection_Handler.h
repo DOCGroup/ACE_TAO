@@ -1,59 +1,38 @@
 // This may look like C, but it's really -*- C++ -*-
+
 // ===================================================================
 /**
- *  @file   IIOP_Connection_Handler.h
+ *  @file   SHMIOP_Connection_Handler.h
  *
  *  $Id$
  *
- *  @author Originally by Chris Cleeland as IIOP_Connect.h
+ *  @author Originally by Nanbor Wang <nanbor@cs.wustl.edu> as UIOP_Connect.h
  *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
 
-#ifndef TAO_IIOP_CONNECTION_HANDLER_H
-#define TAO_IIOP_CONNECTION_HANDLER_H
+#ifndef TAO_SHMIOP_CONNECT_H
+#define TAO_SHMIOP_CONNECT_H
 #include "ace/pre.h"
 
-#include "ace/Reactor.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Acceptor.h"
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
+#include "ace/Reactor.h"
+#include "ace/Acceptor.h"
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-#include "tao/IIOP_Transport.h"
-
-// Forward Decls
-class TAO_Pluggable_Messaging;
+#include "SHMIOP_Transport.h"
 
 // ****************************************************************
-
 /**
- * @class TAO_IIOP_Properties
- *
- * @brief TCP protocol properties specification for a set of
- *  connections.
- *
- */
-
-class TAO_Export TAO_IIOP_Properties
-{
-
-public:
-  int send_buffer_size;
-  int recv_buffer_size;
-  int no_delay;
-};
-
-
-// ****************************************************************
-
-/**
- * @class TAO_IIOP_Connection_Handler
+ * @class TAO_SHMIOP_Connection_Handler
  *
  * @brief  Handles requests on a single connection.
  *
@@ -62,23 +41,23 @@ public:
  */
 
 
-class TAO_Export TAO_IIOP_Connection_Handler : public TAO_IIOP_SVC_HANDLER,
-                                               public TAO_Connection_Handler
+class TAO_Strategies_Export TAO_SHMIOP_Connection_Handler : public TAO_SHMIOP_SVC_HANDLER,
+                                                            public TAO_Connection_Handler
 {
 
 public:
 
-  TAO_IIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
+  TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor. <arg> parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
-  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
+  TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core,
                                CORBA::Boolean flag,
                                void *arg);
 
 
   /// Destructor.
-  ~TAO_IIOP_Connection_Handler (void);
+  ~TAO_SHMIOP_Connection_Handler (void);
 
   /// Called by the <Strategy_Acceptor> when the handler is completely
   /// connected.  Argument is unused.
@@ -138,22 +117,22 @@ protected:
 private:
 
   /// Transport object reference.
-  TAO_IIOP_Transport transport_;
+  TAO_SHMIOP_Transport transport_;
 
   /// Reference count.It is used to count nested upcalls on this
   /// svc_handler i.e., the connection can close during nested upcalls,
   /// you should not delete the svc_handler until the stack unwinds
   /// from the nested upcalls.
   u_long refcount_;
-
-  /// TCP configuration for this connection.
-  TAO_IIOP_Properties *tcp_properties_;
 };
 
 
+
 #if defined (__ACE_INLINE__)
-#include "tao/IIOP_Connection_Handler.i"
+#include "SHMIOP_Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
+
 #include "ace/post.h"
-#endif /* TAO_IIOP_CONNECTION_HANDLER_H */
+#endif /* TAO_SHMIOP_CONNECT_H */

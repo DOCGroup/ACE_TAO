@@ -30,11 +30,11 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/Pluggable.h"
-#include "SHMIOP_Connect.h"
+#include "SHMIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "ace/Acceptor.h"
 #include "ace/MEM_Acceptor.h"
-
+#include "tao/GIOP_Message_State.h"
 // TAO SHMIOP_Acceptor concrete call defination
 
 class TAO_Strategies_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
@@ -52,10 +52,10 @@ public:
   ~TAO_SHMIOP_Acceptor (void);
   // Destructor.
 
-  typedef ACE_Strategy_Acceptor<TAO_SHMIOP_Server_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_SHMIOP_Server_Connection_Handler> TAO_SHMIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_SHMIOP_Server_Connection_Handler> TAO_SHMIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_SHMIOP_Server_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_ACCEPT_STRATEGY;
+  typedef ACE_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_BASE_ACCEPTOR;
+  typedef TAO_Creation_Strategy<TAO_SHMIOP_Connection_Handler> TAO_SHMIOP_CREATION_STRATEGY;
+  typedef TAO_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler> TAO_SHMIOP_CONCURRENCY_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_ACCEPT_STRATEGY;
 
   // = The TAO_Acceptor methods, check the documentation in
   //   Pluggable.h for details.
