@@ -6006,7 +6006,7 @@ ACE_OS_CString::ACE_OS_CString (const char *s)
 
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
-      TYPE *obj_p;\
+      TYPE *obj_p = 0;\
       ACE_NEW_RETURN (obj_p, TYPE, -1);\
       preallocated_object[ID] = (void *) obj_p;\
     }
