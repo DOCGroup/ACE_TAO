@@ -90,10 +90,14 @@ ACE_Log_Msg::instance (void)
 
   // Get the tss_log_msg from thread-specific storage, using one of
   // the "spare" fields in the task control block.  Note that no locks
-  // are required here since this is within our thread context...
+  // are required here since this is within our thread context.
+  // This assumes that the sizeof the spare1 field is the same size
+  // as a pointer; it is (it's an int) in VxWorks 5.2-5.3.
   ACE_Log_Msg **tss_log_msg = (ACE_Log_Msg **) &taskIdCurrent->spare1;
 
   // Check to see if this is the first time in for this thread.
+  // This assumes that the spare1 field in the task control block is
+  // initialized to 0, which holds true for VxWorks 5.2-5.3.
   if (*(int **) tss_log_msg == 0)
     // Allocate memory off the heap and store it in a pointer in
     // thread-specific storage (i.e., on the stack...).
@@ -686,7 +690,9 @@ ACE_Log_Msg::log (const char *format_str,
 
   if (abort_prog)
     {
-      ACE_OS::fprintf (stderr, "ACE_Log_Msg::log(): abort requested\n");
+      // _always_ print a message to stderr if aborting, not verbose
+      // to help avoid recursive aborts if something is hosed
+      log_record.print (ACE_Log_Msg::local_host_, 0);
       ACE_OS::exit (exit_value);
     }
 
