@@ -1,43 +1,45 @@
 Mon Jan 18 20:41:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Message_Block.h: Clarified that the wr_ptr() is incremented
- 	  by n as a result of the copy operation.  Thanks to Zoran
- 	  Ivanovic <zorani@pathcom.com> for suggesting this.
+        * ace/Message_Block.h: Clarified that the wr_ptr() is incremented
+          by n as a result of the copy operation.  Thanks to Zoran
+          Ivanovic <zorani@pathcom.com> for suggesting this.
 
-	* ace/INET_Addr.h (ACE_INET_Addr): Changed the default for
- 	  ipaddr_format to 1 (which is what it had been originally) rather
- 	  than 0 since the original way is faster since it doesn't use
- 	  DNS.  Thanks to Zoran Ivanovic <zorani@pathcom.com> for finding
- 	  this.
+        * ace/INET_Addr.h (ACE_INET_Addr): Changed the default for
+          ipaddr_format to 1 (which is what it had been originally) rather
+          than 0 since the original way is faster since it doesn't use
+          DNS.  Thanks to Zoran Ivanovic <zorani@pathcom.com> for finding
+          this.
 
 Mon Jan 18 20:31:47 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/006/client_handler.cpp: 
-	Typo...
-	
-	* docs/tutorials/006/*.html: 
-	* docs/tutorials/006/combine.shar: 
-	Colorized, added Kirthika's abstract.
+        * docs/tutorials/006/client_handler.cpp:
+        Typo...
+
+        * docs/tutorials/006/*.html:
+        * docs/tutorials/006/combine.shar:
+        Colorized, added Kirthika's abstract.
 
 Mon Jan 18 16:19:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (open): If a file is open with _O_TEMPORARY flag set
-	  on Win32, we also set the FILE_ATTRIBUTE_TEMPORARY so OS will
-	  try to cache it in memory to speed up access.
+        * ace/OS.cpp (open): If a file is open with _O_TEMPORARY flag set
+          on Win32, we also set the FILE_ATTRIBUTE_TEMPORARY so OS will
+          try to cache it in memory to speed up access.
 
-	* ace/ACE.cpp (open_temp_file): On Win32, temporary file should be
-	  opened with _O_TEMPORARY flag set, not FILE_DELETE_ON_CLOSE.
+        * ace/ACE.cpp (open_temp_file): On Win32, temporary file should be
+          opened with _O_TEMPORARY flag set, not FILE_DELETE_ON_CLOSE.
 
-	* include/makeinclude/wrapper_macros.GNU: My previous fix of
-	  avoiding multiple definition of ACE_NDEBUG was not correct.  Now
-	  the macro check where should the definition go to.  Thanks to
-	  David for showing me the right way to do this.
+        * include/makeinclude/wrapper_macros.GNU: My previous fix of
+          avoiding multiple definition of ACE_NDEBUG was not correct.  Now
+          the macro check where should the definition go to.  Thanks to
+          David for showing me the right way to do this.
 
 Mon Jan 18 11:23:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * include/makeinclude/platform_irix6.x-sgic++.GNU:
           Added the -multigot flag when building shared libraries,
           otherwise TAO/orbsvcs is too big.
+
+Mon Jan 18 09:54:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: moved ACE_HAS_PRIOCNTL #define so
           that it's defined even without threads.  Thanks to
@@ -47,7 +49,6 @@ Mon Jan 18 11:23:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           that Doug added Saturday.  It's not necessary with the
           above fix to config-sunos5.5.h.
 
-Mon Jan 18 09:54:54 1999  David L. Levine  <levine@cs.wustl.ed
         * examples/Log_Msg/test_ostream.cpp: don't try to create the
           ofstream if ACE_LACKS_IOSTREAM_TOTALLY.  Also, removed
           declarations of unused argc/argv arguments because some
