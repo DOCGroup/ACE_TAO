@@ -75,8 +75,6 @@ run_main (int, ACE_TCHAR *[])
   errors += check (ACE_TEXT ("ACE_SIZEOF_CHAR: %u%s"),
                    sizeof (char), ACE_SIZEOF_CHAR);
 #if defined (ACE_HAS_WCHAR)
-  // This is pointless - since ACE_SIZEOF_WCHAR is defined to sizeof (wchar_t)
-  // but oh well...
   errors += check (ACE_TEXT ("ACE_SIZEOF_WCHAR: %u%s"),
                    sizeof (wchar_t), ACE_SIZEOF_WCHAR);
 #endif /* ACE_HAS_WCHAR */
