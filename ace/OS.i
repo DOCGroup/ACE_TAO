@@ -180,6 +180,15 @@ ACE_Time_Value::ACE_Time_Value (const timeval &tv)
 }
 
 ACE_INLINE 
+ACE_Time_Value::ACE_Time_Value ()
+{
+  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
+  this->set (0, 0);
+
+  // Don't need to normalize time value of (0, 0).
+}
+
+ACE_INLINE 
 ACE_Time_Value::ACE_Time_Value (long sec, long usec)
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");

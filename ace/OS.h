@@ -386,7 +386,10 @@ public:
 
   // = Initialization methods.
 
-  ACE_Time_Value (long sec = 0, long usec = 0);
+  ACE_Time_Value ();
+  // Default Constructor.
+
+  ACE_Time_Value (long sec, long usec = 0);
   // Constructor.
 
   // = Methods for converting to/from various time formats.
