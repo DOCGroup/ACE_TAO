@@ -1119,12 +1119,11 @@ ACE_OS::strtok_r (char *s, const char *tokens, char **lasts)
     *lasts = s;
   if (*s == 0)			// We have reached the end
     return NULL;
-  s = ::strtok (s, tokens);
-  int len;
-  if ((len = ACE_OS::strlen (s)) == ACE_OS::strlen (*lasts))
-    *lasts = s + len;
-  else
-    *lasts = s + len + 1;
+  int l_org = ACE_OS::strlen (s);
+  int l_sub = ACE_OS::strlen (s = ::strtok (s, tokens));
+  *lasts = s + l_sub;
+  if (l_sub != l_org)
+    *lasts += 1;
   return s ;
 #endif /* (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) */
 }
