@@ -358,6 +358,9 @@ protected:
 
   TAO_Policy_Manager_Impl default_policies_;
   // The default policies.
+
+  TAO_Policy_Current policy_current_;
+  // Policy current.
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
   TAO_POA_Current *poa_current_;
@@ -366,9 +369,6 @@ protected:
   // Note that this is a pointer in order to reduce the include file
   // dependencies.
   //
-
-  TAO_Policy_Current policy_current_;
-  // Policy current.
 };
 
 // ****************************************************************

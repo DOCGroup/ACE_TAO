@@ -1,7 +1,5 @@
 // $Id$
 
-#include "tao/ORB_Core.h"
-
 ACE_INLINE
 TAO_Policy_Manager_Impl::TAO_Policy_Manager_Impl (void)
   :  count_ (0)

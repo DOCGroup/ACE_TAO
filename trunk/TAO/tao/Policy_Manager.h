@@ -127,17 +127,18 @@ public:
 
   // = The CORBA::PolicyManager operations
 
-  virtual CORBA::PolicyList * get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-  virtual void set_policy_overrides (
-        const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+  CORBA::PolicyList * get_policy_overrides (
+      const CORBA::PolicyTypeSeq & ts,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+
+  void set_policy_overrides (
+      const CORBA::PolicyList & policies,
+      CORBA::SetOverrideType set_add,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
 
 private:
   TAO_Policy_Manager_Impl manager_impl_;
