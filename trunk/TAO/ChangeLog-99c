@@ -1,35 +1,41 @@
+Tue Jul 20 07:25:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Makefile: fixed POA.cpp build override on LynxOS/PPC,
+          it had gotten munged when updating dependencies.  Expanded
+          out VDIR so that shouldn't happen again.
+
 Mon Jul 19 22:46:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp
-	* tao/UIOP_Connector.cpp
+        * tao/IIOP_Connector.cpp
+        * tao/UIOP_Connector.cpp
 
-	  Added reverse lock template instantiations.
+          Added reverse lock template instantiations.
 
 Mon Jul 19 21:49:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
-	  Fixed several bugs in the manipulation of the bit set and the
-	  creation of the event. Thanks to Paul Calabrese
-	  <calabrese_p@ociweb.com> for reporting these problems and
-	  providing fixes.
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+          Fixed several bugs in the manipulation of the bit set and the
+          creation of the event. Thanks to Paul Calabrese
+          <calabrese_p@ociweb.com> for reporting these problems and
+          providing fixes.
 
 Mon Jul 19 21:39:06 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
 
-	  For operation names that are C++ reserved words, the mapping
-	  has a _cxx_ prepended to the name. However, the skeleton's lookup
-	  strategy still expects the original name. This implies that the
-	  stub send the original name in the request. We were doing this
-	  correctly for the compiled stubs. However, for the interpreted
-	  stubs, we were sending the _cxx_<name> in the request. This is
-	  now fixed.
+          For operation names that are C++ reserved words, the mapping
+          has a _cxx_ prepended to the name. However, the skeleton's lookup
+          strategy still expects the original name. This implies that the
+          stub send the original name in the request. We were doing this
+          correctly for the compiled stubs. However, for the interpreted
+          stubs, we were sending the _cxx_<name> in the request. This is
+          now fixed.
 
 Mon Jul 19 20:00:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/Union_cs.cpp:
-	  Some changes to avert egcs warnings when there is an implicit
-	  default case and an enum discriminator.
+        * TAO_IDL/be/be_visitor_union/Union_cs.cpp:
+          Some changes to avert egcs warnings when there is an implicit
+          default case and an enum discriminator.
 
 Mon Jul 19 19:42:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -136,9 +142,9 @@ Mon Jul 19 11:26:33 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
         * examples/Event_Comm/Event_Comm_i.h:
         * examples/Event_Comm/Event_Comm_i.cpp:
           modified the <subscribe> method to throw CannotSubscribe
-	  exception.
+          exception.
           modified the <unsubscribe> method to throw CannotUnsubscribe
-	  exception.
+          exception.
 
 Mon Jul 19 11:05:23 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
