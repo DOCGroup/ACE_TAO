@@ -1,3 +1,12 @@
+Mon Apr  2 16:22:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+          In the utility function that computes a default index for
+          a union typecode, changed the code to be more friendly to
+          platforms that don't support 64-bit integers. Thanks to
+          Chad Elliott <elliott_c@ociweb.com> for pointing this out.
+
 Mon Apr  2 16:17:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Fixed an error that showed up on static
