@@ -1,3 +1,14 @@
+Wed Jun 21 13:41:27 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/OS_Test.cpp: New test for OS things. All it tests now is
+                             ACE_OS::rename.
+        * tests/OS_Test.dsp: MSVC project file for new test.
+        * tests/tests.dsw: Added OS_Test.dsp.
+        * tests/Makefile: Add new OS_Test.
+        * tests/run_tests.lst: Added OS_Test.
+        * trests/version_tests/OS_Test.dsp: MSVC project file for new test.
+        * tests/version_tests.dsp: Added new OS_Test.dsp.
+
 Wed Jun 21 13:25:41 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (rename): On ACE_HAS_WINNT4 systems (Win NT, 2000), the
