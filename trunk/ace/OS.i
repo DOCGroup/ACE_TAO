@@ -95,12 +95,6 @@ extern "C" int gettimeofday (struct timeval *tp);
 extern "C" int gettimeofday (struct timeval *tp, struct timezone * = 0);
 #elif defined (ACE_HAS_SUNOS4_GETTIMEOFDAY)
 # define ACE_HAS_SVR4_GETTIMEOFDAY
-/*
-#elif defined (ACE_HAS_IRIX_GETTIMEOFDAY)
-extern "C" int gettimeofday (struct timeval *tp, ...);
-#else
-extern "C" int gettimeofday (struct timeval *tp);
-*/
 #endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
 
 #if defined (ACE_LACKS_CONST_TIMESPEC_PTR)

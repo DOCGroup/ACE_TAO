@@ -321,8 +321,6 @@
 // high resolution timers
 //ACE_HAS_INLINED_OSCALLS               Inline all the static class OS
 // methods to remove call overhead
-//ACE_HAS_IRIX_GETTIMEOFDAY             Denotes that IRIX 5.3 has second
-// argument to gettimeofday() which is variable ...
 //ACE_HAS_LIMITED_RUSAGE_T              The rusage_t structure has only two
 // fields.
 //ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as a

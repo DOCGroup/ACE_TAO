@@ -1,5 +1,9 @@
 Sat Sep  5 15:31:33 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace: Removed ACE_HAS_IRIX_GETTIMEOFDAY and all of its uses
+ 	  throughout ACE.  It was no longer necessary.  Thanks to Ossama
+ 	  for reporting this.
+
 	* ace/Synch.h: Added a "no-op" ACE_Barrier for cases where we
  	  don't have ACE_HAS_THREADS enabled.
 
