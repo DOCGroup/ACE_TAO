@@ -192,7 +192,7 @@ TAO_EC_Gateway_IIOP::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& 
               const RtecEventComm::EventHeader& h =
                 sub.dependencies[k].event.header;
               if (h.source != sid
-                  || (0 <= h.type
+                  || (1 <= h.type
                       && h.type < ACE_ES_EVENT_UNDEFINED))
                 continue;
               pub.publications[c].event.header = h;
