@@ -130,6 +130,7 @@ call %run_cmd% %dopure% %platform% Pipe_Test
 call %run_cmd% %dopure% %platform% Priority_Buffer_Test
 call %run_cmd% %dopure% %platform% Priority_Reactor_Test
 call %run_cmd% %dopure% %platform% Priority_Task_Test
+call %run_cmd% %dopure% %platform% Process_Manager_Test
 call %run_cmd% %dopure% %platform% Process_Mutex_Test
 call %run_cmd% %dopure% %platform% Process_Strategy_Test
 call %run_cmd% %dopure% %platform% RB_Tree_Test
@@ -190,13 +191,7 @@ if errorlevel 0 goto fine
 echo.
 echo %exefile% has FAILED!!!
 echo.
-type %temp%\log\%arg%.log | find /I "assertion failed"
-type %temp%\log\%arg%.log | find /I "not supported"
-type %temp%\log\%arg%.log | find /I "no such file or directory"
-type %temp%\log\%arg%.log | find /I "invalid argument"
-type %temp%\log\%arg%.log | find /I "timeout"
-type %temp%\log\%arg%.log | find /I "bad file number"
-type %temp%\log\%arg%.log | find /I "Win32 structured exception"
+type log\%arg%.log | find /I "LM_ERROR"
 echo.
 
 goto done
@@ -208,7 +203,7 @@ goto done
 :fine
 
 rem We should check the log files here to make sure the test ended correctly
-rem type %temp%\log\%arg%.log | find "Ending"
+rem type log\%arg%.log | find "Ending"
 
 :done
 

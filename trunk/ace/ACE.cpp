@@ -994,6 +994,88 @@ ACE::ldopen (const ASYS_TCHAR *filename,
     return ACE_OS::fopen (buf, type);
 }
 
+int
+ACE::get_temp_dir (char *buffer, size_t buffer_len)
+{
+  int result;
+#if defined (ACE_WIN32)
+  
+  // Use the wchar version and convert it to char when
+  // it returns.
+  
+  wchar_t *wcsBuffer;
+  ACE_NEW_RETURN (wcsBuffer, wchar_t[buffer_len], -1);
+
+  ACE_Auto_Basic_Array_Ptr<wchar_t> autoBuffer (wcsBuffer);
+
+  result = ACE::get_temp_dir (autoBuffer.get (), buffer_len);
+
+  if (result != -1)  // Convert the string if there is no error
+    ::WideCharToMultiByte (CP_ACP, 
+                           0, 
+                           autoBuffer.get (), 
+                           -1, 
+                           buffer,
+                           buffer_len,
+                           NULL,
+                           NULL);
+
+#else /* ACE_WIN32 */
+  
+  // On non-win32 platforms, check to see what the TMPDIR environment 
+  // variable is defined to be.  If it doesn't exist, just use /tmp
+  char *tmpdir = ACE_OS::getenv ("TMPDIR");
+
+  if (tmpdir == NULL)
+    tmpdir = "/tmp";
+
+  size_t len = ACE_OS::strlen (tmpdir);
+
+  // Check to see if the buffer is large enough for the string,
+  // another /, and its null character (hence the + 2)
+  if ((len + 2) > buffer_len)
+    {
+      result = -1;
+    }
+  else
+    {
+      ACE_OS::strcpy (buffer, tmpdir);
+
+      // Add a trailing slash because we cannot assume there is already one
+      // at the end.  And having an extra one should not cause problems.
+      buffer[len] = '/';
+      buffer[len + 1] = 0;
+      result = 0;
+    }
+#endif /* ACE_WIN32 */
+  return result;
+}
+
+int
+ACE::get_temp_dir (wchar_t *buffer, size_t buffer_len)
+{
+#if defined (ACE_WIN32)
+  int result;
+
+#if defined (ACE_HAS_WINCE)
+  result = ::CeGetTempPath (buffer_len, buffer);
+#  else /* ACE_HAS_WINCE */
+  result = ::GetTempPathW (buffer_len, buffer);
+#  endif /* ACE_HAS_WINCE */
+
+  // Make sure to return -1 if there is an error
+  if (result == 0 && ::GetLastError () != ERROR_SUCCESS)
+    result = -1;
+
+  return result;
+#else /* ACE_WIN32 */
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (buffer_len);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_WIN32 */
+}
+
+
 ACE_HANDLE
 ACE::open_temp_file (const char *name, int mode, int perm)
 {

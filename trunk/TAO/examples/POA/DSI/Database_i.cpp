@@ -5,7 +5,7 @@
 ACE_RCSID(DSI, Database_i, "$Id$")
 
 DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc (void)
-  : DATABASE_MALLOC (ACE_DEFAULT_BACKING_STORE)
+//  : DATABASE_MALLOC ()
 {
 }
 
@@ -41,7 +41,7 @@ void
 DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  // The servant determines the key associated with thex database
+  // The servant determines the key associated with the database
   // entry represented by self.
   PortableServer::ObjectId_var oid =
     this->poa_current_->get_object_id (ACE_TRY_ENV);

@@ -135,7 +135,7 @@ private:
   // Activation strategy that either forks a new process or spawns a
   // new thread for each client connection.
 
-  const ASYS_TCHAR *filename_;
+  ASYS_TCHAR filename_[MAXPATHLEN + 1];
   // Name of the counting file.
 };
 

@@ -54,7 +54,7 @@ private:
   u_long flags_;
   // Flags we keep track of.
 
-  const char *filename_;
+  char *filename_;
   // File name we're logging to.
 
   int wipeout_logfile_;

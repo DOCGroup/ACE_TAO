@@ -161,8 +161,7 @@ DRV_usage (void)
 #ifdef IDL_HAS_VALUETYPE
   cerr << GTDEVEL (" -Sv\t\t\tdisable OBV (Valuetype) support (disabled by default)\n");
 #endif /* IDL_HAS_VALUETYPE */
-  cerr << GTDEVEL (" -t\t\t\tTemporary directory to be used by the IDL compiler."
-                   "(default is value of environment variable ACE_DEFAULT_TEMP_DIR_ENV)\n");
+  cerr << GTDEVEL (" -t\t\t\tTemporary directory to be used by the IDL compiler.\n");
   cerr << GTDEVEL (" -u\t\t\tprints usage message and exits\n");
   cerr << GTDEVEL (" -Uname\t\t\tundefines name for preprocessor\n");
   cerr << GTDEVEL (" -v\t\t\ttraces compilation stages\n");
@@ -787,12 +786,14 @@ DRV_parse_args (long ac, char **av)
   // Make sure the output directory is valid.
   if (idl_global->temp_dir () == 0)
     {
-      const char* tmpdir = getenv (ACE_DEFAULT_TEMP_DIR_ENV);
-
-      if (tmpdir == 0)
-        tmpdir = ACE_DIRECTORY_SEPARATOR_STR_A
-          "tmp"
-          ACE_DIRECTORY_SEPARATOR_STR_A;
+      char tmpdir[MAXPATHLEN + 1];
+      
+      if (ACE::get_temp_dir (tmpdir, MAXPATHLEN) == 0)
+        {
+          cerr << GTDEVEL ("Error: Temporary path too long, ")
+               << GTDEVEL ("defaulting to current directory\n");
+          ACE_OS::strcpy (tmpdir, ".");
+        }
 
 #if defined(ACE_MVS)
       if (ACE_OS::access (tmpdir, F_OK) == -1
@@ -805,7 +806,7 @@ DRV_parse_args (long ac, char **av)
           cerr << GTDEVEL ("Error: Can't access temporary directory (")
                << tmpdir
                << GTDEVEL ("), using current directory for temp files.\n");
-          tmpdir = ".";
+          ACE_OS::strcpy (tmpdir, ".");
 #if defined(ACE_MVS)
           if (ACE_OS::access (tmpdir, F_OK) == -1
               || ACE_OS::access (tmpdir, R_OK) == -1

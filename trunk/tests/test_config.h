@@ -44,43 +44,29 @@
 
 #if defined (ACE_HAS_WINCE)
 
-#define ACE_DEFAULT_TEST_FILE_A "\\temp\\ace_test_file"
-#define ACE_TEMP_FILE_NAME_A "\\temp\\ace_temp_file"
-#define ACE_LOG_DIRECTORY_A "\\temp\\log\\"
+#define ACE_LOG_DIRECTORY_A "log\\"
 #define MAKE_PIPE_NAME_A(X) "\\\\.\\pipe\\"#X
 
-#define ACE_DEFAULT_TEST_FILE_W ASYS_TEXT (ACE_DEFAULT_TEST_FILE_A)
-#define ACE_TEMP_FILE_NAME_W ASYS_TEXT (ACE_TEMP_FILE_NAME_A)
 #define ACE_LOG_DIRECTORY_W ASYS_TEXT (ACE_LOG_DIRECTORY_A)
 #define MAKE_PIPE_NAME_W(X) ASYS_TEXT (MAKE_PIPE_NAME_A(X))
 
 #elif defined (ACE_WIN32)
 
-#define ACE_DEFAULT_TEST_FILE_A "C:\\temp\\ace_test_file"
-#define ACE_TEMP_FILE_NAME_A "C:\\temp\\ace_temp_file"
-#define ACE_LOG_DIRECTORY_A "C:\\temp\\log\\"
+#define ACE_LOG_DIRECTORY_A "log\\"
 #define MAKE_PIPE_NAME_A(X) "\\\\.\\pipe\\"#X
 
-#define ACE_DEFAULT_TEST_FILE_W L"C:\\temp\\ace_test_file"
-#define ACE_TEMP_FILE_NAME_W L"C:\\temp\\ace_temp_file"
-#define ACE_LOG_DIRECTORY_W L"C:\\temp\\log\\"
+#define ACE_LOG_DIRECTORY_W L"log\\"
 #define MAKE_PIPE_NAME_W(X) L"\\\\.\\pipe\\"#X
 
 #else
 
-#define ACE_DEFAULT_TEST_FILE_A "/tmp/ace_test_file"
-#define ACE_TEMP_FILE_NAME_A "/tmp/ace_temp_file"
 #define ACE_LOG_DIRECTORY_A "log/"
 #define MAKE_PIPE_NAME_A(X) X
 
 #if defined (ACE_HAS_UNICODE)
-#define ACE_DEFAULT_TEST_FILE_W L"/tmp/ace_test_file"
-#define ACE_TEMP_FILE_NAME_W L"/tmp/ace_temp_file"
 #define ACE_LOG_DIRECTORY_W L"log/"
 #define MAKE_PIPE_NAME_W(X) L##X
 #else
-#define ACE_DEFAULT_TEST_FILE_W "/tmp/ace_test_file"
-#define ACE_TEMP_FILE_NAME_W "/tmp/ace_temp_file"
 #define ACE_LOG_DIRECTORY_W "log/"
 #define MAKE_PIPE_NAME_W(X) X
 #endif /* ACE_HAS_UNICODE */
@@ -96,13 +82,9 @@
 #endif /* ACE_HAS_WINCE */
 
 #if defined (UNICODE)
-#define ACE_DEFAULT_TEST_FILE ACE_DEFAULT_TEST_FILE_W
-#define ACE_TEMP_FILE_NAME ACE_TEMP_FILE_NAME_W
 #define ACE_LOG_DIRECTORY ACE_LOG_DIRECTORY_W
 #define MAKE_PIPE_NAME MAKE_PIPE_NAME_W
 #else
-#define ACE_DEFAULT_TEST_FILE ACE_DEFAULT_TEST_FILE_A
-#define ACE_TEMP_FILE_NAME ACE_TEMP_FILE_NAME_A
 #define ACE_LOG_DIRECTORY ACE_LOG_DIRECTORY_A
 #define MAKE_PIPE_NAME MAKE_PIPE_NAME_A
 #endif /* UNICODE */
@@ -321,20 +303,6 @@ ACE_Test_Output::close (void)
   ACE_OS::fclose (this->output_file_);
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
 }
-
-#if 0 /* old WinCE stuff */
-
-#define ACE_START_TEST(NAME) \
-  const ASYS_TCHAR *program = NAME; \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Starting %s test at %D\n"), program))
-
-#define ACE_END_TEST \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
-
-#undef ACE_DEFAULT_TEST_FILE
-#define ACE_DEFAULT_TEST_FILE L"\\temp\\ace_test_file"
-
-#endif /* 0 */
 
 void
 randomize (int array[], size_t size)

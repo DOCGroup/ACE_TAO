@@ -106,7 +106,10 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
                                   reset_new_handle) == -1)
     return -1;
 
-  TCHAR buf [MAXPATHLEN];
+  // Allocate 2 * MAXPATHLEN so we can accomodate the unique
+  // name that gets appended later
+  TCHAR buf [2 * MAXPATHLEN + 1];
+
   ACE_INET_Addr local_addr;
   if (new_stream.get_local_addr (local_addr) == -1)
     return -1;
@@ -120,20 +123,24 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     }
   else
     {
-      LPCTSTR temp_dir =
-        ACE_OS::getenv (ACE_DEFAULT_TEMP_DIR_ENV);
+      TCHAR name[25];
+      // - 24 is so we can append name to the end.
+      if (ACE::get_temp_dir (buf, MAXPATHLEN - 24) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, 
+                      "Temporary path too long, "
+                      "defaulting to current directory\n"));
+          buf[0] = 0;
+        }
 
-      if (temp_dir == 0)
-        temp_dir = ACE_TEXT ("/tmp");
-
-      ACE_OS::sprintf (buf,
-                       ACE_TEXT ("%s%cMEM_Acceptor_%d_"),
-                       temp_dir,
-                       ACE_DIRECTORY_SEPARATOR_CHAR,
+      ACE_OS::sprintf (name,
+                       ACE_TEXT ("MEM_Acceptor_%d_"),
                        local_addr.get_port_number ());
+      ACE_OS::strcat (buf, name);
     }
   TCHAR unique [MAXPATHLEN];
   ACE_OS::unique_name (&new_stream, unique, MAXPATHLEN);
+  
   ACE_OS::strcat (buf, unique);
 
   // Make sure we have a fresh start.
