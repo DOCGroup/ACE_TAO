@@ -31,7 +31,7 @@ main (int argc, char *argv[])
   if (cli_file.get_info (&fileinfo) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_info"), 1);
   else
-    ACE_OS::printf ("fileinfo : mode = %o\nno of lines = %lu\nsize = %lu\n",
+    ACE_OS::printf ("fileinfo : mode = %o\nno of links = %lu\nsize = %lu\n",
                     fileinfo.mode_ & 0777,
                     fileinfo.nlink_,
                     fileinfo.size_);
