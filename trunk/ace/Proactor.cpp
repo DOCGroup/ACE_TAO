@@ -153,21 +153,19 @@ class ACE_Export ACE_AIO_Accept_Handler : public ACE_Handler
   //     will issue a <Asynch_Read> on the pipe. <Asynch_Accept> will
   //     send a result pointer containg all the information through
   //     this pipe.
+  //     Handling the MessageBlock:
+  //     We give this message block to read the result pointer through
+  //     the notify pipe. We expect that to read 4 bytes from the
+  //     notify pipe, for each <accept> call. Before giving this
+  //     message block to another <accept>, we update <wr_ptr> and put
+  //     it in its initial position. 
 public:
   ACE_AIO_Accept_Handler (ACE_Proactor* proactor);
   // Constructor.
 
   ~ACE_AIO_Accept_Handler (void);
   // Destructor.
-
-#if 0
-  int accept (void);
-  // <Asynch_Accept> calls this when an  <accept> call has been issued
-  // by the application. We issue an <Asynch_Read> here on the <pipe>,
-  // so that <Asynch_Accept> can notify us by sending us Result
-  // pointer.
-#endif /* 0 */
-
+  
   int notify (ACE_Asynch_Accept::Result* result);
   // Send this Result to Proactor through the notification pipe.
 
@@ -180,8 +178,8 @@ private:
   // The proactor in use.
 
   ACE_Message_Block message_block_;
-  // Message block to get ACE_Asynch_Accept::Result from
-  // ACE_Asych_Accept.
+  // Message block to get ACE_Asynch_Accept::Result pointer from
+  // ACE_Asych_Accept. 
 
   ACE_Pipe pipe_;
   // Pipe for the communication between Proactor and the
@@ -194,12 +192,9 @@ private:
   // Default constructor. Shouldnt be called.
 };
 
-ACE_AIO_Accept_Handler::ACE_AIO_Accept_Handler (ACE_Proactor* proactor)
+ACE_AIO_Accept_Handler::ACE_AIO_Accept_Handler (ACE_Proactor *proactor)
   : proactor_ (proactor),
-    // @@ The size can be less than this, since I read only the
-    // pointer. 
-    message_block_ (sizeof (ACE_Asynch_Accept::Result))
- 
+    message_block_ (sizeof (ACE_Asynch_Accept::Result *))
 {
   // Open the pipe.
   this->pipe_.open ();
@@ -213,27 +208,13 @@ ACE_AIO_Accept_Handler::ACE_AIO_Accept_Handler (ACE_Proactor* proactor)
                 "%N:%l:%p\n",
                 "Open on Read Stream failed"));
 
-  // Issue an asynch_read on the read_stream.
+  // Issue an asynch_read on the read_stream of the notify pipe. 
   if (this->read_stream_.read (this->message_block_,
-                               sizeof (ACE_Asynch_Accept::Result)) == -1)
+                               sizeof (ACE_Asynch_Accept::Result *)) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%N:%l:%p\n",
                 "Read from stream failed"));
 }
-
-#if 0
-int
-ACE_AIO_Accept_Handler::accept (void)
-{
-  // Issue an asynch_read on the read_stream.
-  if (this->read_stream_.read (this->message_block,
-                               sizeof (ACE_Asynch_Accept::Result)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:%p\n",
-                       "Read from stream failed"),
-                      -1);
-}
-#endif /* 0 */
 
 ACE_AIO_Accept_Handler::~ACE_AIO_Accept_Handler (void)
 {
@@ -242,15 +223,15 @@ ACE_AIO_Accept_Handler::~ACE_AIO_Accept_Handler (void)
 int
 ACE_AIO_Accept_Handler::notify (ACE_Asynch_Accept::Result* result)
 {
-  // Send the result through the pipe.
-  if (ACE_OS::write (this->pipe_.write_handle (),
-                     (void *) result,
-                     sizeof (*result)) < (signed) sizeof (*result))
+  // Send the result pointer through the pipe.
+  int return_val = ACE::send (this->pipe_.write_handle (),
+                              (char *) &result,
+                              sizeof (result));
+  if (return_val != sizeof (result))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P %t):%p\n",
                        "Error:Writing on to pipe failed"),
                       -1);
-
   return 0;
 }
 
@@ -259,17 +240,30 @@ ACE_AIO_Accept_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
 {
   // @@
   ACE_DEBUG ((LM_DEBUG, "ACE_AIO_Accept_Handler::handle_read_stream called\n"));
-
+  
   // The message block actually contains the ACE_Asynch_Accept::Result.
-  ACE_Asynch_Accept::Result* accept_result =
-    (ACE_Asynch_Accept::Result*) result.message_block ().rd_ptr ();
-
+  ACE_Asynch_Accept::Result *accept_result = 0;
+  accept_result = *(ACE_Asynch_Accept::Result **) result.message_block ().rd_ptr ();
+  
   // Do the upcall.
   this->proactor_->application_specific_code (accept_result,
-                                              0,  // Bytes transferred.
+                                              0,  // No Bytes transferred.
                                               1,  // Success.
                                               0,  // Completion token.
                                               0); // Error.
+
+  // Set the message block properly. Put the <wr_ptr> back in the
+  // initial position. 
+  if (this->message_block_.length () > 0)
+      this->message_block_.wr_ptr (this->message_block_.rd_ptr ());
+  
+  // One accept has completed. Issue a read to handle any <accept>s in
+  // the future.
+  if (this->read_stream_.read (this->message_block_,
+                               sizeof (ACE_Asynch_Accept::Result)) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%N:%l:%p\n",
+                "Read from stream failed"));
 }
 #endif /* ACE_HAS_AIO_CALLS */
 
@@ -827,7 +821,7 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
       if (sig_return == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Error:%p\n",
-                           "Error waiting for RT completion signals"),
+                           "Waiting for RT completion signals"),
                           0);
 
       // RT completion signals returned.
@@ -967,7 +961,7 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
               if (nbytes == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    "Error:%p\n",
-                                   "AIO failed"),
+                                   "An AIO has failed"),
                                   -1);
               else
                 {
