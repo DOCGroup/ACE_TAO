@@ -22,13 +22,13 @@
 
 int main (int argc, char *argv [])
 {
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY 
+  ACE_TRY
     {
-      
+
       NContextExt_Client_i client;
-      
+
       if (client.init (argc, argv) == -1)
         return 1;
       else
@@ -40,8 +40,7 @@ int main (int argc, char *argv [])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }
-
