@@ -8,20 +8,20 @@
 CFG=Future_Set_Test - Win32 PharLap ETS Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Future_Set_Test.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Future_Set_Test.mak" CFG="Future_Set_Test - Win32 PharLap ETS Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "Future_Set_Test - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE "Future_Set_Test - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE "Future_Set_Test - Win32 PharLap ETS Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -94,7 +94,7 @@ LINK32=link.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
-# PROP Intermediate_Dir "./ETS_DLL/Debug"
+# PROP Intermediate_Dir ".\ETS_LIB\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "Future_Set_Test"
 CPP=cl.exe
@@ -113,7 +113,7 @@ LINK32=link.exe
 # ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"./Future_Set_Test_ETS.exe" /libpath:"..\ace" /ETS:tests_pharlap_msvc.lnk
 # SUBTRACT LINK32 /pdb:none
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -237,14 +237,14 @@ DEP_CPP_FUTUR=\
 	"..\ace\WFMO_Reactor.i"\
 	"..\ace\ws2tcpip.h"\
 	".\test_config.h"\
-
+	
 NODEP_CPP_FUTUR=\
 	"..\ace\stdcpp.h"\
-
+	
 
 !ELSEIF  "$(CFG)" == "Future_Set_Test - Win32 PharLap ETS Debug"
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
