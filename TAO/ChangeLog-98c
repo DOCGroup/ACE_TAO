@@ -1,3 +1,12 @@
+Fri Jun 26 12:54:25 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/{rettype_post_docall_cs,
+	rettype_pre_docall_cs}.cpp: We were using the underlying node
+	names in the generated code even when those nodes were Typedefed
+	to other names. So in such cases, we should use the typedef name.
+	Thanks to John Geiss <jtgb@eci-esyst.com> for reporting the
+	problem.
+
 Fri Jun 26 11:46:46 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_sequence/gen_{,un}bounded_sequence_ch.cpp:
