@@ -1,3 +1,9 @@
+Sun Jun 17 10:12:49 2001  Craig Rodrigues  <crodrigues@bbn.com>
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp: 
+          add #include "tao/RTCORBA/Priority_Mapping_Manager.h" to fix
+          compilation error. 
+
 Sun Jun 17 08:08:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp: Fixed a
