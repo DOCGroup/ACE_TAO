@@ -1,39 +1,43 @@
+Tue Jun 29 07:07:30 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: allow _ in -l and -m options.
+
 Mon Jun 28 21:31:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: Added a constructor to ACE_Flow_Spec to initialize
-	  its various fields wholesale.  Thanks to Kumar Surender
- 	  <csk037@lmpsil02.comm.mot.com> for this suggestion.
+        * ace/OS: Added a constructor to ACE_Flow_Spec to initialize
+          its various fields wholesale.  Thanks to Kumar Surender
+          <csk037@lmpsil02.comm.mot.com> for this suggestion.
 
-	* ace/SOCK: Added a new constructor and a new open() method
-	  that pass through the QoS information required by WSASocket().
+        * ace/SOCK: Added a new constructor and a new open() method
+          that pass through the QoS information required by WSASocket().
 
-	* ace/{OS,SOCK_Connector,SOCK_Dgram,SOCK_Dgram_Mcast}: Renamed
-	  ACE_Connect_QoS_Params to ACE_QoS_Params since (1) it's used in
- 	  ACE_OS::connect() *and* ACE_OS::join_leaf() and (2) it's used
- 	  for Dgrams, which aren't connection oriented.  Thanks to Kumar
- 	  Surender <csk037@lmpsil02.comm.mot.com> for this suggestion.
+        * ace/{OS,SOCK_Connector,SOCK_Dgram,SOCK_Dgram_Mcast}: Renamed
+          ACE_Connect_QoS_Params to ACE_QoS_Params since (1) it's used in
+          ACE_OS::connect() *and* ACE_OS::join_leaf() and (2) it's used
+          for Dgrams, which aren't connection oriented.  Thanks to Kumar
+          Surender <csk037@lmpsil02.comm.mot.com> for this suggestion.
 
-	* ace/OS: Added set/get methods for time-to-live on the
- 	  ACE_Flow_Spec classes.  This is necessary since RAPI defines
- 	  this.
+        * ace/OS: Added set/get methods for time-to-live on the
+          ACE_Flow_Spec classes.  This is necessary since RAPI defines
+          this.
 
-	* ace/OS: Added a new ACE_OS::recvfrom() method that's a wrapper
-	  for the WSARecvFrom() on Win32 and (will be) an "emulation" on
- 	  non-Win32 platforms.
+        * ace/OS: Added a new ACE_OS::recvfrom() method that's a wrapper
+          for the WSARecvFrom() on Win32 and (will be) an "emulation" on
+          non-Win32 platforms.
 
-	* ace/OS: Added a new ACE_OS::sendto() method that's a wrapper
-	  for the WSASendTo() on Win32 and an "emulation" on non-Win32
- 	  platforms.
+        * ace/OS: Added a new ACE_OS::sendto() method that's a wrapper
+          for the WSASendTo() on Win32 and an "emulation" on non-Win32
+          platforms.
 
-	* ace/OS.h: Updated the QoS documentation to clarify that these
-	  features are appropriate for IntServ (RSVP) *and* DiffServ.
-  	  Thanks to Kumar Surender <csk037@lmpsil02.comm.mot.com>, Vidya
- 	  Narayanan <CVN065@lmpsil02.comm.mot.com> and Pradeep Avasthi
- 	  <Pradeep.Avasthi@motorola.com> suggesting this.
+        * ace/OS.h: Updated the QoS documentation to clarify that these
+          features are appropriate for IntServ (RSVP) *and* DiffServ.
+          Thanks to Kumar Surender <csk037@lmpsil02.comm.mot.com>, Vidya
+          Narayanan <CVN065@lmpsil02.comm.mot.com> and Pradeep Avasthi
+          <Pradeep.Avasthi@motorola.com> suggesting this.
 
-	* ace/SOCK_Dgram.h: Added send() and recv() methods for
-	  ACE_SOCK_Dgram that take overlapped I/O parameters.  This is
- 	  needed for the GQoS WinSock API.
+        * ace/SOCK_Dgram.h: Added send() and recv() methods for
+          ACE_SOCK_Dgram that take overlapped I/O parameters.  This is
+          needed for the GQoS WinSock API.
 
 Mon Jun 28 21:53:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
