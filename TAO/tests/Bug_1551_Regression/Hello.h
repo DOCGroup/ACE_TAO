@@ -32,7 +32,7 @@ private:
 
   bool simulate_crashes_;
 
-  ACE_Atomic_Op<ACE_Thread_Mutex,long> atomic_counter_;
+  ACE_Atomic_Op<ACE_Thread_Mutex::ACE_Thread_Mutex,long> atomic_counter_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
