@@ -5549,6 +5549,8 @@ CORBA::Boolean operator>> (
   return 0; // error
 }
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const Messaging::ReplyHandler_ptr _tao_objref
@@ -5584,5 +5586,7 @@ CORBA::Boolean operator>> (
   ACE_ENDTRY;
   return 0;
 }
+
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
