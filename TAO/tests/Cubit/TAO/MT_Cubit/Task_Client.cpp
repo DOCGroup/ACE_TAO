@@ -390,7 +390,7 @@ Client::svc (void)
   ACE_ARGV tmp_args2 (tmp_buf);
   int argc = tmp_args2.argc ();
 
-  char *const *argv = tmp_args2.argv ();
+  char **argv = tmp_args2.argv ();
 
   u_int naming_success = CORBA::B_FALSE;
 
