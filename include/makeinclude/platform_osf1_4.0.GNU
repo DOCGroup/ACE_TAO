@@ -1,10 +1,12 @@
 # This platform macros file is intended to work with Digital UNIX 4.0 (OSF/1 4.0).
 
-CC		= cxx -g -pthread -ptr $(WRAPPER_ROOT)/ace/cxx_repository 
-CXX		= cxx -w0 -g -pthread -ptr $(WRAPPER_ROOT)/ace/cxx_repository 
+CC		= cxx
+CXX		= $(CC)
+CFLAGS          += -pthread -ptr $(WRAPPER_ROOT)/ace/cxx_repository
+CCFLAGS         += $(CFLAGS) -w0
 DLD		= $(CXX)
 LD		= $(CXX)
-LIBS		+= -pthread -ltli
+LIBS		+= -pthread -ltli -lrt
 PIC		= 
 ARFLAGS		= ruvZ
 # When libraries are archived, a hash index is automatically created so there
