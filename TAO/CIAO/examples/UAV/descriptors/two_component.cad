@@ -16,6 +16,7 @@
 
   <partitioning>
 
+    <processcollocation>
       <homeplacement id="a_SatelliteHome">
         <componentfileref idref="com-Satellite"/>
           <componentinstantiation id="a_Satellite">
@@ -25,6 +26,8 @@
           </registercomponent>
         </componentinstantiation>
       </homeplacement>
+     <destination>SatelliteHost</destination>
+    </processcollocation>
 
     <processcollocation>  
       <homeplacement id="a_CAOCHome">

@@ -74,14 +74,12 @@
           <componentinstantiation id="a_UAV">
         </componentinstantiation>
       </homeplacement>
-      <destination>UAVHost</destination>
 
       <homeplacement id="b_UAVHome">
         <componentfileref idref="com-UAV"/>
           <componentinstantiation id="b_UAV">
         </componentinstantiation>
       </homeplacement>
-      <destination>UAVHost</destination>
       
       <homeplacement id="c_UAVHome">
         <componentfileref idref="com-UAV"/>
@@ -98,7 +96,6 @@
           <componentinstantiation id="a_Engagement">
         </componentinstantiation>
       </homeplacement>
-     <destination>EngagementBattleHost</destination>
            
       <homeplacement id="a_Battle">
         <componentfileref idref="com-Battle"/>
@@ -125,14 +122,12 @@
           <componentinstantiation id="a_UCAV">
         </componentinstantiation>
       </homeplacement>
-      <destination>UAVHost</destination>
 
       <homeplacement id="b_UCAVHome">
         <componentfileref idref="com-UCAV"/>
           <componentinstantiation id="b_UCAV">
         </componentinstantiation>
       </homeplacement>
-      <destination>UAVHost</destination>
       
       <homeplacement id="c_UCAVHome">
         <componentfileref idref="com-UCAV"/>
