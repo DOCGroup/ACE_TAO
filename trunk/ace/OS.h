@@ -4928,7 +4928,7 @@ inline double ace_difftime(time_t t1, time_t t0)
  * This inline function achieves the same effect, without namespace
  * pollution or performance penalties.
  */
-#if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID)
+#if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) && !defined(ACE_WIN32)
 inline char *ace_cuserid(char *user)
 {
   return cuserid(user);
