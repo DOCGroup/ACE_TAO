@@ -80,49 +80,49 @@ TAO_Unbounded_Sequence<T>::freebuf (T *buffer)
 // operations on the generic Bounded sequence class
 // ***************************************************
 
-template <class T> ACE_INLINE T *
-TAO_Bounded_Sequence<T>::ptr (void) const
+template <class T, CORBA::ULong MAX> ACE_INLINE T *
+TAO_Bounded_Sequence<T, MAX>::ptr (void) const
 {
   return (T *) this->buffer_;
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE
-TAO_Bounded_Sequence<T,MAX>::TAO_Bounded_Sequence (void)
+TAO_Bounded_Sequence<T, MAX>::TAO_Bounded_Sequence (void)
 {
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE
-TAO_Bounded_Sequence<T,MAX>::TAO_Bounded_Sequence (CORBA::ULong length,
-						   T *data,
-						   CORBA::Boolean release)
+TAO_Bounded_Sequence<T, MAX>::TAO_Bounded_Sequence (CORBA::ULong length,
+                                                    T *data,
+                                                    CORBA::Boolean release)
   : TAO_Bounded_Base_Sequence (length, MAX, data, release)
 {
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE T &
-TAO_Bounded_Sequence<T,MAX>::operator[] (CORBA::ULong i)
+TAO_Bounded_Sequence<T, MAX>::operator[] (CORBA::ULong i)
 {
   ACE_ASSERT (i < this->maximum_);
-  T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
+  T *tmp = ACE_reinterpret_cast (T*,this->buffer_);
   return tmp[i];
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE const T &
-TAO_Bounded_Sequence<T,MAX>::operator[] (CORBA::ULong i) const
+TAO_Bounded_Sequence<T, MAX>::operator[] (CORBA::ULong i) const
 {
   ACE_ASSERT (i < this->maximum_);
-  T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
+  T* tmp = ACE_reinterpret_cast (T*,this->buffer_);
   return tmp[i];
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE T *
-TAO_Bounded_Sequence<T,MAX>::allocbuf (CORBA::ULong)
+TAO_Bounded_Sequence<T, MAX>::allocbuf (CORBA::ULong)
 {
   return new T[MAX];
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE void
-TAO_Bounded_Sequence<T,MAX>::freebuf (T *buffer)
+TAO_Bounded_Sequence<T, MAX>::freebuf (T *buffer)
 {
   delete[] buffer;
 }
