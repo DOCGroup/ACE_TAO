@@ -1,10 +1,26 @@
+Mon Jan  5 21:38:53 2004    <boris@kolpackov.net>
+
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+	* CIDLC/ExecutorMappingGenerator.cpp:
+
+	  Fixed uninitialized variable bug that resulted in generation
+	  of unused modules.
+	
+	* CCF/Example/CIDL/LocalExecutorMapping/test-0.idl:
+
+	  Added unused module to the test case.
+	
+	* CIDLC/cidlc.cpp:
+
+	  Cosmetic chnages.
+
 Mon Jan  5 20:31:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/RepositoryIdGenerator.cpp:
         * CIDLC/RepositoryIdGenerator.hpp:
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Fixed typos in servant code generation.
 
 Mon Jan  5 19:34:44 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
