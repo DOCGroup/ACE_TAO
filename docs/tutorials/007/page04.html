@@ -34,7 +34,7 @@ I finally had enough code to move it out of the header.
 <font color=red>/* Construct ourselves with a reference to somebody else' Thread_Pool.
    Obvioulsy our concurrency strategy is "<font color=green>thread_pool_</font>" at this point.  */</font>
 <font color=#008888>Client_Acceptor::Client_Acceptor</font> (Thread_Pool &thread_pool)
-  : concurrency_ (thread_pool),
+  : concurrency_ (thread_pool_),
     the_thread_pool_ (thread_pool)
 {
 }
