@@ -3547,11 +3547,10 @@ main ()
 
 /*
  * Verify that we can actually set a STREAM option that ACE uses.
- * This is particularly necessary for platforms that have ioctl
- * conflicts.  For example, the Linux kernel's CDROM ioctls have
- * the same values as glibc 2.1.94's STREAM ioctls.  Attempting to
- * set a STREAM ioctl actually causes one of the CDROM ioctls to be
- * set (unsuccessfully)!
+ * This is particularly necessary for platforms where compiling and
+ * linking succeed but fail at run-time due to a missing actual
+ * STREAMS implementation.  For example, Linux/glibc requires a
+ * STREAMS patch/add-on.
  */
 
   int arg = RMSGN;
