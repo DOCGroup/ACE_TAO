@@ -1,3 +1,9 @@
+Thu May 09 00:06:47 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/WFMO_Reactor: Added the "Static Debug", "Static
+	  Release", and "Release" build configurations to the "Debug"
+	  configuration for all the 16 dsp files in this directory.
+
 Wed May  8 23:57:32 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* bin/nightlybuilds/builds.lst: Move Redhat 7.1 Core build to new scoreboard.
