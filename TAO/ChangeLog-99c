@@ -1,3 +1,11 @@
+Thu Jul 15 20:29:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/IDL_Test/main.cpp:
+	  removed 'argc' and 'argv' from main, they're unused.
+
+	* TAO/tests/IDL_Test/Makefile:
+	  Fixed some typos.
+
 Thu Jul 15 20:26:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
