@@ -121,16 +121,16 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::open
   return 0;
 }
 
-template<class SLH, class LMR, class SS>
-ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::ACE_Server_Logging_Acceptor_T (void) 
-  : receiver_ (LMR (), SS ())
+template<class SLH, class LMR, class SST>
+ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::ACE_Server_Logging_Acceptor_T (void) 
+  : receiver_ (LMR (), SST ())
 {
 }
 
-template<class SLH, class LMR, class SS> int
-ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::init (int argc, char *argv[])
+template<class SLH, class LMR, class SST> int
+ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init (int argc, char *argv[])
 {
-  ACE_TRACE ("ACE_Server_Logging_Acceptor<SLH, LMR, SS>::init");
+  ACE_TRACE ("ACE_Server_Logging_Acceptor<SLH, LMR, SST>::init");
 
   // Use the options hook to parse the command line arguments and set
   // options.
@@ -165,10 +165,10 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::init (int argc, char *argv[])
   return 0;
 }
 
-template<class SLH, class LMR, class SS> int
-ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::parse_args (int argc, char *argv[])
+template<class SLH, class LMR, class SST> int
+ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args (int argc, char *argv[])
 {
-  ACE_TRACE ("ACE_Server_Logging_Acceptor<SLH, LMR, SS>::parse_args");
+  ACE_TRACE ("ACE_Server_Logging_Acceptor<SLH, LMR, SST>::parse_args");
 
   this->service_port_ = ACE_DEFAULT_SERVER_PORT;
 
@@ -194,11 +194,12 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::parse_args (int argc, char *argv[])
   return 0;
 }
 
-template<class SLH, class LMR, class SS> int
-ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::make_svc_handler (SLH *&handler)
+template<class SLH, class LMR, class SST> int
+ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::make_svc_handler (SLH *&handler)
 {
   ACE_NEW_RETURN (handler, 
-	  SLH (ACE_Thread_Manager::instance (), this->receiver()), 
+		  SLH (ACE_Thread_Manager::instance (),
+		       this->receiver()), 
 		  -1);
   return 0;
 }
