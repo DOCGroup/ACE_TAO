@@ -17,6 +17,10 @@
 #include "ace/Condition_Recursive_Thread_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_HAS_DUMP)
+#  include "ace/Log_Msg.h"
+#endif /* ACE_HAS_DUMP */
+
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::remove (void)
