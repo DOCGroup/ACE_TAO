@@ -59,7 +59,7 @@ void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected))
 {
-  TAO_FTRTEC::Trace("TAO_FTEC_ProxyPushConsumer::connect_push_supplier");
+  FTRTEC_TRACE("TAO_FTEC_ProxyPushConsumer::connect_push_supplier");
   if (Request_Context_Repository().is_executed_request())
     return;
 

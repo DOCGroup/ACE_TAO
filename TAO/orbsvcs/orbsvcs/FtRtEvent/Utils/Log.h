@@ -40,6 +40,8 @@ namespace TAO_FTRTEC {
   };
 }
 
+#define FTRTEC_TRACE(x) TAO_FTRTEC::Trace __trace_obj(x)
+
 #if defined(__ACE_INLINE__)
 #include "Log.inl"
 #endif /* __ACE_INLINE__ */
