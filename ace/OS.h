@@ -1902,7 +1902,7 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #       define PTHREAD_CREATE_DETACHED 1
 #     endif /* PTHREAD_CREATE_DETACHED */
 
-#     if !defined (PTHREAD_PROCESS_PRIVATE)
+#     if !defined (PTHREAD_PROCESS_PRIVATE) && !defined (ACE_HAS_PTHREAD_PROCESS_ENUM)
 #       if defined (PTHREAD_MUTEXTYPE_FAST)
 #         define PTHREAD_PROCESS_PRIVATE PTHREAD_MUTEXTYPE_FAST
 #       else
@@ -1910,11 +1910,11 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #       endif /* PTHREAD_MUTEXTYPE_FAST */
 #     endif /* PTHREAD_PROCESS_PRIVATE */
 
-#     if !defined (PTHREAD_PROCESS_SHARED)
+#     if !defined (PTHREAD_PROCESS_SHARED) && !defined (ACE_HAS_PTHREAD_PROCESS_ENUM)
 #       if defined (PTHREAD_MUTEXTYPE_FAST)
 #         define PTHREAD_PROCESS_SHARED PTHREAD_MUTEXTYPE_FAST
 #       else
-#         define PTHREAD_PROCESS_SHARED 0
+#         define PTHREAD_PROCESS_SHARED 1
 #       endif /* PTHREAD_MUTEXTYPE_FAST */
 #     endif /* PTHREAD_PROCESS_SHARED */
 
