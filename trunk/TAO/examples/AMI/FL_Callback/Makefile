@@ -18,15 +18,12 @@ IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
 BIN_UNCHECKED = progress peer
 
-SRC = $(addsuffix .cpp, $(BIN) Peer_i Progress_i) \
+SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Peer_i Progress_i) \
 	$(IDL_SRC)
 
 PROGRESS_OBJS = progress.o Progress_i.o $(IDL_SRC:.cpp=.o)
 PEER_OBJS = peer.o Peer_i.o $(IDL_SRC:.cpp=.o)
 
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1 -GC
 #----------------------------------------------------------------------------
@@ -42,6 +39,10 @@ ifeq ($(fl_reactor),1)
     BIN=$(BIN_UNCHECKED)
   endif # ami
 endif # fl_reactor
+
+BUILD = $(BIN)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+VBIN = $(BIN:%=%$(VAR))
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
