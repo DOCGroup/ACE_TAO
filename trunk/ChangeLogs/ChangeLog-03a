@@ -1,7 +1,9 @@
 Sat Aug 25 20:58:22 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/FILE_IO.i (send_n): Changed to use ACE::write_n to send the
-	  chain of Message_Blocks.  Thanks to Doug for pointing this out.
+	  chain of Message_Blocks.  The originally used ACE::send_n was
+	  causing problem on NT because send_n was restricted for sockets
+	  I/O on NT.  Thanks to Doug for pointing this out.
 
 Sat Aug 25 10:16:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
