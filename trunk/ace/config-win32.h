@@ -52,7 +52,7 @@
 // Define this, if you are using UNICODE. 
 //  Setting applies to  : building ACE, linking with ACE
 //  Runtime restrictions: system must be WinNT (any version)
-// #define ACE_HAS_UNICODE
+#define ACE_HAS_UNICODE
 
 // Uncomment these if you want to integrate ACE and Orbix in Win32.
 //  Setting applies to  : building ACE, linking with ACE
