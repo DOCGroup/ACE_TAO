@@ -20,7 +20,7 @@
 // = AUTHOR
 //    Irfan Pyarali (irfan@cs.wustl.edu),
 //    Tim Harrison (harrison@cs.wustl.edu) and
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu> 
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -85,16 +85,16 @@ public:
   // make sense only when doing file I/O.
 
   ACE_Asynch_Result (ACE_Handler &handler,
-		     const void* act,
-		     ACE_HANDLE event,
-		     u_long offset = 0,
-		     u_long offset_high = 0);
+                     const void* act,
+                     ACE_HANDLE event,
+                     u_long offset = 0,
+                     u_long offset_high = 0);
   // Constructor.
 
 #if defined (ACE_HAS_AIO_CALLS)
   aiocb* aiocb_ptr (void);
-  // Returns the underlying <aio control block> used to issue the aio 
-  // call. 
+  // Returns the underlying <aio control block> used to issue the aio
+  // call.
 #endif /* ACE_HAS_AIO_CALLS */
 
   virtual ~ACE_Asynch_Result (void);
@@ -102,9 +102,9 @@ public:
 
 protected:
   virtual void complete (u_long bytes_transferred,
-			 int success,
-			 const void *completion_key,
-			 u_long error = 0) = 0;
+                         int success,
+                         const void *completion_key,
+                         u_long error = 0) = 0;
   // This is the key method.  Subclasses will override this method to
   // call the correct callback on the handler.
 
@@ -125,13 +125,13 @@ protected:
 
   u_long error_;
   // Error if operation failed.
-  
+
 #if defined (ACE_HAS_AIO_CALLS)
   aiocb *aiocb_ptr_;
   // This is the <aio control block> used to issue the <aio_>
   // call. Let us give this to the OS along with the result, so that
   // on completion we can take this and use it for <aio_error> and
-  // <aio_return>. 
+  // <aio_return>.
 #endif /* ACE_HAS_AIO_CALLS */
 };
 
@@ -146,9 +146,9 @@ class ACE_Export ACE_Asynch_Operation
   //     factor out this code.
 public:
   int open (ACE_Handler &handler,
-	    ACE_HANDLE handle = ACE_INVALID_HANDLE,
-	    const void *completion_key = 0,
-	    ACE_Proactor *proactor = 0);
+            ACE_HANDLE handle = ACE_INVALID_HANDLE,
+            const void *completion_key = 0,
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -207,11 +207,11 @@ public:
   // A do nothing constructor.
 
   int read (ACE_Message_Block &message_block,
-	    u_long bytes_to_read,
-	    const void *act = 0);
+            u_long bytes_to_read,
+            const void *act = 0);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.
-  
+
 protected:
   int shared_read (Result *result);
   // This is the method which does the real work and is there so that
@@ -247,18 +247,18 @@ public:
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
-	    ACE_HANDLE handle,
-	    ACE_Message_Block &message_block,
-	    u_long bytes_to_read,
-	    const void* act,
-	    ACE_HANDLE event);
+            ACE_HANDLE handle,
+            ACE_Message_Block &message_block,
+            u_long bytes_to_read,
+            const void* act,
+            ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Read_Stream factory.
 
     virtual void complete (u_long bytes_transferred,
-			   int success,
-			   const void *completion_key,
-			   u_long error = 0);
+                           int success,
+                           const void *completion_key,
+                           u_long error = 0);
     // ACE_Proactor will call this method when the read completes.
 
   protected:
@@ -293,11 +293,11 @@ public:
   // A do nothing constructor.
 
   int write (ACE_Message_Block &message_block,
-	     u_long bytes_to_write,
-	     const void *act = 0);
+             u_long bytes_to_write,
+             const void *act = 0);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be written from the <message_block>.
-  
+
 protected:
   int shared_write (Result *result);
   // This is the method which does the real work and is there so that
@@ -333,18 +333,18 @@ public:
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
-	    ACE_HANDLE handle,
-	    ACE_Message_Block &message_block,
-	    u_long bytes_to_write,
-	    const void* act,
-	    ACE_HANDLE event);
+            ACE_HANDLE handle,
+            ACE_Message_Block &message_block,
+            u_long bytes_to_write,
+            const void* act,
+            ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Write_Stream factory.
 
     virtual void complete (u_long bytes_transferred,
-			   int success,
-			   const void *completion_key,
-			   u_long error = 0);
+                           int success,
+                           const void *completion_key,
+                           u_long error = 0);
     // ACE_Proactor will call this method when the write completes.
 
   protected:
@@ -377,10 +377,10 @@ class ACE_Export ACE_Asynch_Read_File : public ACE_Asynch_Read_Stream
   //     allows the user to specify an offset for the read.
 public:
   int read (ACE_Message_Block &message_block,
-	    u_long bytes_to_read,
-	    u_long offset = 0,
-	    u_long offset_high = 0,
-	    const void *act = 0);
+            u_long bytes_to_read,
+            u_long offset = 0,
+            u_long offset_high = 0,
+            const void *act = 0);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.  The read will start
   // at <offset> from the beginning of the file.
@@ -411,20 +411,20 @@ public:
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
-	    ACE_HANDLE handle,
-	    ACE_Message_Block &message_block,
-	    u_long bytes_to_read,
-	    const void* act,
-	    u_long offset,
-	    u_long offset_high,
-	    ACE_HANDLE event);
+            ACE_HANDLE handle,
+            ACE_Message_Block &message_block,
+            u_long bytes_to_read,
+            const void* act,
+            u_long offset,
+            u_long offset_high,
+            ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Read_File factory.
 
     virtual void complete (u_long bytes_transferred,
-			   int success,
-			   const void *completion_key,
-			   u_long error = 0);
+                           int success,
+                           const void *completion_key,
+                           u_long error = 0);
     // ACE_Proactor will call this method when the read completes.
   };
 };
@@ -446,10 +446,10 @@ public:
   //     This class differs slightly from ACE_Asynch_Write_Stream as
   //     it allows the user to specify an offset for the write.
   int write (ACE_Message_Block &message_block,
-	     u_long bytes_to_write,
-	     u_long offset = 0,
-	     u_long offset_high = 0,
-	     const void *act = 0);
+             u_long bytes_to_write,
+             u_long offset = 0,
+             u_long offset_high = 0,
+             const void *act = 0);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be write and stored in the <message_block>.  The write will
   // start at <offset> from the beginning of the file.
@@ -481,20 +481,20 @@ public:
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
-	    ACE_HANDLE handle,
-	    ACE_Message_Block &message_block,
-	    u_long bytes_to_write,
-	    const void* act,
-	    u_long offset,
-	    u_long offset_high,
-	    ACE_HANDLE event);
+            ACE_HANDLE handle,
+            ACE_Message_Block &message_block,
+            u_long bytes_to_write,
+            const void* act,
+            u_long offset,
+            u_long offset_high,
+            ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Write_File factory.
 
     virtual void complete (u_long bytes_transferred,
-			   int success,
-			   const void *completion_key,
-			   u_long error = 0);
+                           int success,
+                           const void *completion_key,
+                           u_long error = 0);
     // ACE_Proactor will call this method when the write completes.
   };
 };
@@ -517,16 +517,16 @@ public:
 
 #if defined (ACE_HAS_AIO_CALLS)
   int open (ACE_Handler &handler,
-	    ACE_HANDLE handle = ACE_INVALID_HANDLE,
-	    const void *completion_key = 0,
-	    ACE_Proactor *proactor = 0);
+            ACE_HANDLE handle = ACE_INVALID_HANDLE,
+            const void *completion_key = 0,
+            ACE_Proactor *proactor = 0);
   // (We will also call base class's <open> from here).
 #endif /* ACE_HAS_AIO_CALLS */
 
   int accept (ACE_Message_Block &message_block,
-	      u_long bytes_to_read,
-	      ACE_HANDLE accept_handle = ACE_INVALID_HANDLE,
-	      const void *act = 0);
+              u_long bytes_to_read,
+              ACE_HANDLE accept_handle = ACE_INVALID_HANDLE,
+              const void *act = 0);
   // This starts off an asynchronous accept.  The asynchronous accept
   // call also allows any initial data to be returned to the
   // <handler>.  Upto <bytes_to_read> will be read and stored in the
@@ -554,7 +554,7 @@ public:
 
 #if defined (ACE_HAS_AIO_CALLS)
     friend class ACE_Asynch_Accept_Handler;
-    // This factory does it all, so it needs spl privileges. 
+    // This factory does it all, so it needs spl privileges.
 #endif /* ACE_HAS_AIO_CALLS */
 
     u_long bytes_to_read (void) const;
@@ -575,19 +575,19 @@ public:
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
-	    ACE_HANDLE listen_handle,
-	    ACE_HANDLE accept_handle,
-	    ACE_Message_Block &message_block,
-	    u_long bytes_to_read,
-	    const void* act,
-	    ACE_HANDLE event);
+            ACE_HANDLE listen_handle,
+            ACE_HANDLE accept_handle,
+            ACE_Message_Block &message_block,
+            u_long bytes_to_read,
+            const void* act,
+            ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Accept factory.
 
     virtual void complete (u_long bytes_transferred,
-			   int success,
-			   const void *completion_key,
-			   u_long error = 0);
+                           int success,
+                           const void *completion_key,
+                           u_long error = 0);
     // ACE_Proactor will call this method when the accept completes.
 
   protected:
@@ -607,7 +607,7 @@ public:
 private:
 #if defined (ACE_HAS_AIO_CALLS)
   static void* thread_function  (void* reactor);
-  // The thread function that does handle events 
+  // The thread function that does handle events
 
   ACE_Reactor reactor_;
   // Reactor to wait on the <listen_handle>.
@@ -644,13 +644,13 @@ public:
   // A "do-nothing" constructor.
 
   int transmit_file (ACE_HANDLE file,
-		     Header_And_Trailer *header_and_trailer = 0,
-		     u_long bytes_to_write = 0,
-		     u_long offset = 0,
-		     u_long offset_high = 0,
-		     u_long bytes_per_send = 0,
-		     u_long flags = 0,
-		     const void *act = 0);
+                     Header_And_Trailer *header_and_trailer = 0,
+                     u_long bytes_to_write = 0,
+                     u_long offset = 0,
+                     u_long offset_high = 0,
+                     u_long bytes_per_send = 0,
+                     u_long flags = 0,
+                     const void *act = 0);
   // This starts off an asynchronous transmit file.  The <file> is a
   // handle to an open file.  <header_and_trailer> is a pointer to a
   // data structure that contains pointers to data to send before and
@@ -701,23 +701,23 @@ public:
     // These two should really be protected.  But sometimes it
     // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
-	    ACE_HANDLE socket,
-	    ACE_HANDLE file,
-	    Header_And_Trailer *header_and_trailer,
-	    u_long bytes_to_write,
-	    u_long offset,
-	    u_long offset_high,
-	    u_long bytes_per_send,
-	    u_long flags,
-	    const void *act,
-	    ACE_HANDLE event);
+            ACE_HANDLE socket,
+            ACE_HANDLE file,
+            Header_And_Trailer *header_and_trailer,
+            u_long bytes_to_write,
+            u_long offset,
+            u_long offset_high,
+            u_long bytes_per_send,
+            u_long flags,
+            const void *act,
+            ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Transmit_File factory.
 
     virtual void complete (u_long bytes_transferred,
-			   int success,
-			   const void *completion_key,
-			   u_long error = 0);
+                           int success,
+                           const void *completion_key,
+                           u_long error = 0);
     // ACE_Proactor will call this method when the write completes.
 
   protected:
@@ -753,15 +753,15 @@ public:
     //     and provided a consistent use of ACE_Message_Blocks.
   public:
     Header_And_Trailer (ACE_Message_Block *header = 0,
-			u_long header_bytes = 0,
-			ACE_Message_Block *trailer = 0,
-			u_long trailer_bytes = 0);
+                        u_long header_bytes = 0,
+                        ACE_Message_Block *trailer = 0,
+                        u_long trailer_bytes = 0);
     // Constructor.
 
     void header_and_trailer (ACE_Message_Block *header = 0,
-			     u_long header_bytes = 0,
-			     ACE_Message_Block *trailer = 0,
-			     u_long trailer_bytes = 0);
+                             u_long header_bytes = 0,
+                             ACE_Message_Block *trailer = 0,
+                             u_long trailer_bytes = 0);
     // This method allows all the member to be set in one fell swoop.
 
     ACE_Message_Block *header (void) const;
@@ -789,7 +789,7 @@ public:
 
     u_long header_bytes_;
     // Size of header data.
-    
+
     ACE_Message_Block *trailer_;
     // Trailer data.
 
@@ -843,7 +843,7 @@ public:
   // completes.
 
   virtual void handle_time_out (const ACE_Time_Value &tv,
-				const void *act = 0);
+                                const void *act = 0);
   // Called when timer expires.  <tv> was the requested time value and
   // <act> is the ACT passed when scheduling the timer
 
@@ -899,7 +899,7 @@ public:
   // friend has been figured out.
 
   virtual void addresses (const ACE_INET_Addr &remote_address,
-			  const ACE_INET_Addr &local_address);
+                          const ACE_INET_Addr &local_address);
   // Called by ACE_Asynch_Acceptor to pass the addresses of the new
   // connections.
 
