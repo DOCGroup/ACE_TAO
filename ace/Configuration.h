@@ -218,18 +218,18 @@ public:
                    const ACE_TString& path_in, 
                    ACE_Configuration_Section_Key& key_out, 
                    int create = 1);
-  // expands <path_in> to <key_out> from <key>.  If create is true,
+  // Expands <path_in> to <key_out> from <key>.  If create is true,
   // the subsections are created.  Returns 0 on success, non zero on
   // error The path consists of sections separated by the backslash
   // '\'.
 
-  int export_config (const TCHAR* filename);
-  // exports the configuration database to filename.  if <filename> is
+  virtual int export_config (const TCHAR* filename);
+  // Exports the configuration database to filename.  If <filename> is
   // alredy present, it is overwritten.
 
-  int import_config (const TCHAR* filename);
-  // imports the configuration database from filename.  Any existing data
-  // is not removed.
+  virtual int import_config (const TCHAR* filename);
+  // Imports the configuration database from filename.  Any existing
+  // data is not removed.
 
 protected:
   ACE_Configuration (void);
