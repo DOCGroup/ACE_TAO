@@ -1,3 +1,17 @@
+Mon Nov 02 12:34:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Demux/CodeGen/client.cpp
+	(gen_client_incl_code): This function should return a value.
+
+	* performance-tests/Demux/CodeGen/gen_names.cpp (is_present):
+	  Fixed a syntax error.
+	  (gen_rand): Changed lrand48 () to ACE_OS::rand ().
+
+	* performance-tests/Demux/CodeGen/codegen.h: Removed inclusion of
+	  <iostream.h> and <fstream.h>.  They caused conflicts with
+	  standard C++ library and should be included by ACE's header
+	  files.
+
 1998-11-02  Kirthika Parameswaran  <kirthika@macarena.cs.wustl.edu>
 
 	* examples/Callback_Quoter/Supplier_Timer_Handler.h: 
