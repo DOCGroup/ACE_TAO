@@ -1668,13 +1668,12 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
       // using the key.
       ACE_TSS_Info &info = this->table_ [key_index];
 
-      // Don't bother to check <in_use_> if the program is shutting down.
-      // Doing so will cause a new ACE_TSS object getting created again.
-      if (! ACE_Object_Manager::shutting_down () &&
-          ! in_use_->test_and_clear (info.key_))
-        {
-          --info.thread_count_;
-        }
+      // Don't bother to check <in_use_> if the program is shutting
+      // down.  Doing so will cause a new ACE_TSS object getting
+      // created again.
+      if (!ACE_Object_Manager::shutting_down () 
+          && !in_use_->test_and_clear (info.key_))
+        --info.thread_count_;
 
       info.key_ = ACE_OS::NULL_key;
       info.destructor_ = 0;
@@ -2227,7 +2226,7 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
 {
 // ACE_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
-  if ( ACE_Log_Msg::exists() )
+  if (ACE_Log_Msg::exists ())
     {
       ACE_Log_Msg *inherit_log_ = ACE_LOG_MSG;
       this->ostream_ = inherit_log_->msg_ostream ();
