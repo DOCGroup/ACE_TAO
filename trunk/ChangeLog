@@ -1,32 +1,38 @@
+Tue Feb 20 21:19:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Svc_Conf.h:
+          Add ACE_Export macro for ace_create_service_type() it is used
+          outside the library now.
+
 Tue Feb 20 06:34:26 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_g++.GNU: Make sure to explicitly
-	  set ACE_HAS_GNUG_PRE_2_8.  Thanks to Christian von Mueffling
- 	  <cvm@aiss.de> for reporting this.
+        * include/makeinclude/platform_sunos5_g++.GNU: Make sure to explicitly
+          set ACE_HAS_GNUG_PRE_2_8.  Thanks to Christian von Mueffling
+          <cvm@aiss.de> for reporting this.
 
-	* ace/Thread_Manager.cpp (cancel_grp): Fixed a typo in
-	  the ACE_TRACE macro.  Thanks to Mike Curtis for reporting this.
+        * ace/Thread_Manager.cpp (cancel_grp): Fixed a typo in
+          the ACE_TRACE macro.  Thanks to Mike Curtis for reporting this.
 
 Mon Feb 19 16:38:08 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.{h,cpp}:
-	Added method void handle (ACE_HANDLE) and made it call the base
-	class's handle(ACE_HANDLE) method to remove warning about
-	partial overloading. Fix suggested by Irfan.
+        * ace/Asynch_Acceptor.{h,cpp}:
+        Added method void handle (ACE_HANDLE) and made it call the base
+        class's handle(ACE_HANDLE) method to remove warning about
+        partial overloading. Fix suggested by Irfan.
 
 Sun Feb 18 21:55:16 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* ace/OS.h:
-	Added an extern "C" void ace_mutex_lock_cleanup_adapter before
-	the definition of ACE_PTHREAD_CLEANUP_PUSH to avoid warnings on
-	SunCC 5.x.
+        * ace/OS.h:
+        Added an extern "C" void ace_mutex_lock_cleanup_adapter before
+        the definition of ACE_PTHREAD_CLEANUP_PUSH to avoid warnings on
+        SunCC 5.x.
 
 Sun Feb 18 17:16:41 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* netsvcs/clients/Tokens/manual/manual.cpp (main),
-	* tests/Tokens_Test.cpp (main): Reordered the #ifdefs for the
-	  ACE_HAS_TOKENS_LIBRARY stuff.  Thanks to Kitty for reporting
- 	  this.
+        * netsvcs/clients/Tokens/manual/manual.cpp (main),
+        * tests/Tokens_Test.cpp (main): Reordered the #ifdefs for the
+          ACE_HAS_TOKENS_LIBRARY stuff.  Thanks to Kitty for reporting
+          this.
 
 Sun Feb 18 16:28:45 2001  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -35,29 +41,29 @@ Sun Feb 18 16:28:45 2001  Chris Gill  <cdgill@cs.wustl.edu>
 
 Sun Feb 18 09:59:18 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* netsvcs/clients/Tokens:
-	* netsvcs/servers/main.cpp (main):
-	* netsvcs/servers/svc.conf:
-	* netsvcs/lib/Token_Handler: Only compile this stuff if the
-	  ACE_HAS_TOKENS_LIBRARY macro is enabled.  Thanks to Carlos
-	  for reporting this.
+        * netsvcs/clients/Tokens:
+        * netsvcs/servers/main.cpp (main):
+        * netsvcs/servers/svc.conf:
+        * netsvcs/lib/Token_Handler: Only compile this stuff if the
+          ACE_HAS_TOKENS_LIBRARY macro is enabled.  Thanks to Carlos
+          for reporting this.
 
         * ace/Object_Manager.cpp: Added a check for ACE_HAS_TOKENS_LIBRARY
-	  so we can skip initializing certain things if that macro is
- 	  undefined.
+          so we can skip initializing certain things if that macro is
+          undefined.
 
-	* ace/Token_Collection.*:
-	* ace/Token_Invariants.*:
-	* ace/Token_Manager.*:
-	* ace/Local_Tokens.*:
-  	* ace/Remote_Tokens.*:
-	* ace/Token_Request_Reply.*:
-	  Only compile these files if ACE_HAS_TOKENS_LIBRARY is enabled
-	  since this functionality does not appear to be widely used and
-	  yet it takes up space.
+        * ace/Token_Collection.*:
+        * ace/Token_Invariants.*:
+        * ace/Token_Manager.*:
+        * ace/Local_Tokens.*:
+        * ace/Remote_Tokens.*:
+        * ace/Token_Request_Reply.*:
+          Only compile these files if ACE_HAS_TOKENS_LIBRARY is enabled
+          since this functionality does not appear to be widely used and
+          yet it takes up space.
 
-	* tests/Tokens_Test.cpp (main): Only run this test if
-	  ACE_HAS_TOKENS_LIBRARY is defined.
+        * tests/Tokens_Test.cpp (main): Only run this test if
+          ACE_HAS_TOKENS_LIBRARY is defined.
 
 Sat Feb 17 17:23:46 2001  Darrell Brunsch <brunsch@uci.edu>
 
