@@ -165,7 +165,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
   {
     i = 0;
 
-    HASH_MAP_MANAGER end = map.end ();
+    HASH_MAP_MANAGER::iterator end = map.end ();
     for (HASH_MAP_MANAGER::iterator iter = map.begin ();
          iter != end;
          iter++)
@@ -273,7 +273,7 @@ test_map_manager (size_t table_size, size_t iterations)
   {
     i = 0;
 
-    ITERATOR end = map.end ()
+    ITERATOR end = map.end ();
     for (ITERATOR iter = map.begin ();
          iter != end;
          iter ++)
@@ -394,7 +394,7 @@ test_map_manager (size_t table_size, size_t iterations)
     ENTRY entry;
     k = iterations - 1;
 
-    MAP_MANAGER::reverse_iterator iter rend = map.rend ();
+    MAP_MANAGER::reverse_iterator rend = map.rend ();
 
     for (MAP_MANAGER::reverse_iterator iter = map.rbegin ();
          iter != rend;
