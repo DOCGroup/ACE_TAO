@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
+#include "tao/Exception.h"
 
 
 class TAO_ORB_Core;
