@@ -115,7 +115,7 @@ properly establish multiple connections to that endpoint.</TD></TR>
 <TR>
 <TD><CODE>-ORBCDRtradeoff</CODE> <EM>maxsize</EM></TD>
 <TD><A name="-ORBCDRtradeoff"></a>Control the strategy to tradeoff
-between copy vs no copy marshalling of octet sequences. 
+between copy vs no copy marshalling of octet sequences.
 If an octet sequence is smaller than <EM>maxsize</EM> and the current
 message block contains enough space for it the octet sequence is
 copied instead of appended to the CDR stream.</TD></TR>
@@ -154,6 +154,11 @@ copied instead of appended to the CDR stream.</TD></TR>
 <TD><a name="-ORBpoa"></a>Specify whether each thread uses a global
 (<em>which</em> = <code>global</code>) or a thread-specific
 (<em>which</em> = <code>tss</code>) instance for the Root POA.</TD></TR>
+<TR>
+<TD><CODE>-ORBcoltable</CODE> <EM>which</EM></TD>
+<TD><a name="-ORBcoltable"></a>Specify whether each ORB uses a global
+(<em>which</em> = <code>global</code>) or a per-ORB
+(<em>which</em> = <code>orb</code>) collocation table.</TD></TR>
 </TABLE>
 </P>
 </blockquote>
@@ -192,6 +197,14 @@ POA accesses.  Possible values for <em>lock type</em> are
 used to guarantee exclusive acccess, and <code>null</code>, which
 specifies that no locking be performed.  The default is
 <code>null</code>.</TD></TR>
+<TR>
+<TD><CODE>-ORBcoltbllock</CODE> <EM>lock type</EM></TD>
+<TD><a name="-ORBtoltbllock"></a>Specify the type of lock to be used for
+the global collocation table.  Possible values for <em>lock type</em> are
+<code>thread</code>, which specifies that an inter-thread mutex is
+used to guarantee exclusive acccess, and <code>null</code>, which
+specifies that no locking be performed.  The default is
+<code>thread</code>.</TD></TR>
 <TR>
 <TD><CODE>-ORBpoamgrlock</CODE> <EM>lock type</EM></TD>
 <TD><a name="-ORBpoamgrlock"></a>Specify the type of lock to be used for
