@@ -1,7 +1,14 @@
+Sat Jul 27 17:27:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h: 
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.cpp: 
+	  Fixed the throw_specs.
+	
 Sat Jul 27 07:38:32 CDT 2002 Pradeep Gore <pradeep@oomworks.com>
 
 	* docs/releasenotes/index.html:
 	  Updated with a note announcing start of work Real-Time Notification.
+
 
 Sat Jul 27 20:11:58 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
