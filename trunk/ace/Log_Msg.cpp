@@ -398,6 +398,35 @@ ACE_Log_Msg::close (void)
   // harded coded into the ACE_Object_Manager's shutdown sequence, in
   // its destructor.
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && \
+    (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
+     defined (ACE_HAS_TSS_EMULATION))
+
+     if (key_created_ == 1)
+     {
+       ACE_thread_mutex_t *lock =
+         ACE_reinterpret_cast (ACE_thread_mutex_t *,
+                               ACE_OS_Object_Manager::preallocated_object
+                               [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
+       ACE_OS::thread_mutex_lock (lock);
+
+       if (key_created_ == 1)
+         {
+           // The same as the ACE_TSS_Cleanup's own key doesn't get detached,
+           // the log_msg_tss_key_ won't get detached until
+           // ACE_TSS_Cleanup::free_all_keys_left,
+           // so it will be in the ACE_TSS_Cleanup::table_.
+           // However, there's no resource associated with it, so we don't
+           // need to keyfree it.  The dynamic memory associated with it
+           // was already deleted by ACE_TSS_Cleanup::exit (), so we don't
+           // want to access it again.
+           key_created_ = 0;
+         }
+
+       ACE_OS::thread_mutex_unlock (lock);
+     }
+#endif /* (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) && ACE_MT_SAFE */
+
   ACE_MT (ACE_Log_Msg_Manager::close ());
 }
 
