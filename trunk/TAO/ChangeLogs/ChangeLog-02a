@@ -1,3 +1,14 @@
+Tue Sep 25 17:40:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/AMI_Buffering/client.cpp (run_buffer_size): 
+	* tests/Oneway_Buffering/client.cpp: Changed all the ACE_ERROR
+	  statements to ACE_DEBUG statements. Changed the ERROR in the
+	  debug messages as DEBUG. We know that this test shows a problem
+	  with the ORB/Reactor. The error statements create too much of
+	  noise for the builds czars todo any good work. The bug #982 and
+	  #1031 that has been captured in the bugzilla talks about the
+	  problem.  
+
 Tue Sep 25 11:32:39 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer): 
