@@ -27,13 +27,13 @@ require DependencyEditor;
 # Data Section
 # ************************************************************
 
-my($version)  = '0.3';
+my($version)  = '0.4';
 my($os)       = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? 'Windows' : 'UNIX');
 my(%types)    = ('gnu'   => 1,
                  'nmake' => 1,
                 );
-my(%defaults) = ('UNIX'    => ['/lib/cpp', 'gnu'],
-                 'Windows' => ['CL', 'nmake'],
+my(%defaults) = ('UNIX'    => ['gnu'],
+                 'Windows' => ['nmake'],
                 );
 
 # ************************************************************
@@ -101,26 +101,17 @@ sub usageAndExit {
         "Usage: $base [-D<MACRO>[=VALUE]] [-I<include dir>] [-A] " .
         "[-R <VARNAME>]\n" .
         "       " . (" " x length($base)) .
-        " [-P <preprocessor>] [-f <output file>] [-t <type>] <files...>\n" .
+        " [-f <output file>] [-t <type>] <files...>\n" .
         "\n" .
         "-D   This option sets a macro to an optional value.\n" .
         "-I   The -I option adds an include directory.\n" .
         "-A   Replace \$ACE_ROOT and \$TAO_ROOT paths with \$(ACE_ROOT) " .
         "and \$(TAO_ROOT)\n     respectively.\n" .
         "-R   Replace \$VARNAME paths with \$(VARNAME).\n" .
-        "-P   Specifies which preprocessor to use.\n" .
-        "     The default is ";
-  my(@keys) = sort keys %defaults;
-  for(my $i = 0; $i <= $#keys; ++$i) {
-    my($def) = $keys[$i];
-    print $defaults{$def}->[0] . " on $def" .
-          ($i != $#keys ? $i == $#keys - 1 ? ' and ' : ', ' : '');
-  }
-  print ".\n" .
         "-f   Specifies the output file.  This file will be edited if it " .
         "already\n     exists.\n" .
         "-t   Use specified type (";
-  @keys = sort keys %types;
+  my(@keys) = sort keys %types;
   for(my $i = 0; $i <= $#keys; ++$i) {
     print "$keys[$i]" .
           ($i != $#keys ? $i == $#keys - 1 ? ' or ' : ', ' : '');;
@@ -130,7 +121,7 @@ sub usageAndExit {
   @keys = sort keys %defaults;
   for(my $i = 0; $i <= $#keys; ++$i) {
     my($def) = $keys[$i];
-    print $defaults{$def}->[1] . " on $def" .
+    print $defaults{$def}->[0] . " on $def" .
           ($i != $#keys ? $i == $#keys - 1 ? ' and ' : ', ' : '');
   }
   print ".\n";
@@ -143,8 +134,7 @@ sub usageAndExit {
 # ************************************************************
 
 my($base)    = basename($0);
-my($cpp)     = $defaults{$os}->[0];
-my($type)    = $defaults{$os}->[1];
+my($type)    = $defaults{$os}->[0];
 my(@files)   = ();
 my(%macros)  = ();
 my(@ipaths)  = ();
@@ -194,16 +184,6 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
   elsif ($arg eq '-h') {
     usageAndExit($base);
   }
-  elsif ($arg eq '-P') {
-    ++$i;
-    $arg = $ARGV[$i];
-    if (defined $arg) {
-      $cpp = $arg;
-    }
-    else {
-      usageAndExit($base, 'Invalid use of -P');
-    }
-  }
   elsif ($arg eq '-t') {
     ++$i;
     $arg = $ARGV[$i];
@@ -227,6 +207,6 @@ if (!defined $files[0]) {
 }
 
 my($editor) = new DependencyEditor();
-my($status) = $editor->process($output, $type, $cpp,
+my($status) = $editor->process($output, $type,
                                \%macros, \@ipaths, \%replace, \@files);
 exit($status);

@@ -22,67 +22,53 @@ use DependencyWriterFactory;
 
 sub new {
   my($class)   = shift;
-  my($pre)     = shift;
   my($macros)  = shift;
   my($options) = shift;
   my($ipaths)  = shift;
-  my($self)    = bless {'pre' => new Preprocessor($pre, $macros,
-                                                  $options, $ipaths),
+  my($replace) = shift;
+  my($type)    = shift;
+  my($self)    = bless {'pre'     => new Preprocessor($macros,
+                                                      $options, $ipaths),
+                        'replace' => $replace,
+                        'dwrite'  => DependencyWriterFactory::create($type),
+                        'cwd'     => Cwd::getcwd() . '/',
                        }, $class;
   return $self;
 }
 
 
 sub process {
-  my($self)     = shift;
-  my($file)     = shift;
-  my($objects)  = shift;
-  my($exclude)  = shift;
-  my($replace)  = shift;
-  my($type)     = shift;
-  my(%split)    = ();
-  my(@files)    = ();
+  my($self)    = shift;
+  my($file)    = shift;
+  my($objects) = shift;
+  my($replace) = $self->{'replace'};
+  my(@repkeys) = keys %$replace;
+  my($cwd)     = $self->{'cwd'};
+  my(@files)   = @{$self->{'pre'}->process($file)};
 
-  ## Preprocess the file
-  foreach my $line (@{$self->{'pre'}->process($file)}) {
-    if ($line =~ /^#\s*(line\s+)?\d+\s+\"([\w\\\/:\s\.\-\+\~]+)/) {
-      $split{$2} = 1;
-    }
-  }
+  ## Go through each file
+  foreach my $finc (@files) {
+    ## Remove the current working directory from the front of the
+    ## file.  This will help reduce the size of the dependency file.
+    $finc =~ s/^$cwd//;
 
-  ## Go through each file and exclude those that need exclusion
-  ## and modify those that have elements for replacement
-  my($skip) = 0;
-  foreach my $file (keys %split) {
-    foreach my $exc (@$exclude) {
-      if ($file =~ /^$exc/i) {
-        $skip = 1;
+    ## Modify those that have elements for replacement
+    foreach my $rep (@repkeys) {
+      if ($finc =~ /^$rep/) {
+        $finc =~ s/^$rep/$$replace{$rep}/;
         last;
       }
     }
-    if ($skip) {
-      $skip = 0;
-    }
-    else {
-      foreach my $rep (keys %$replace) {
-        if ($file =~ /^$rep/) {
-          $file =~ s/^$rep/$$replace{$rep}/;
-          last;
-        }
-      }
-      $file =~ s/\\\\/\\/g;
-      $file =~ s/\/\//\\/g;
-      push(@files, $file);
-    }
+
+    ## Remove extra slashes
+    $finc =~ s/\/\//\\/g;
   }
 
   ## Sort the dependencies to make them reproducible
   @files = sort @files;
 
-  ## Allocate the correct type of dependency writer
-  ## and generate the dependency string
-  my($dwrite) = DependencyWriterFactory::create($type);
-  return $dwrite->process($objects, \@files);
+  ## Generate the dependency string
+  return $self->{'dwrite'}->process($objects, \@files);
 }
 
 
