@@ -6,6 +6,7 @@ DIRS = \
         Callback \
         Cubit \
         Latency \
+        Sequence_Latency \
         Pluggable \
         POA \
         RTCorba \
