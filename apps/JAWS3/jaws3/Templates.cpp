@@ -97,4 +97,19 @@ template class JAWS_SYMBOL_TABLE_ITERATOR_BASE;
 template class JAWS_SYMBOL_TABLE_ITERATOR;
 template class JAWS_SYMBOL_TABLE_REVERSE_ITERATOR;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template ACE_Singleton<ACE_Message_Block, ACE_Null_Mutex> *ACE_Singleton<ACE_Message_Block, ACE_Null_Mutex>::singleton_;
+template ACE_Singleton<JAWS_Asynch_IO, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Asynch_IO, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_Concurrency, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Concurrency, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_IO, ACE_Thread_Mutex> *ACE_Singleton<JAWS_IO, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_Options, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Options, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_Reactive_IO, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Reactive_IO, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_Signal_Task, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Signal_Task, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_Synch_IO, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Synch_IO, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_THYBRID_Concurrency, ACE_Thread_Mutex> *ACE_Singleton<JAWS_THYBRID_Concurrency, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_TPOOL_Concurrency, ACE_Thread_Mutex> *ACE_Singleton<JAWS_TPOOL_Concurrency, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_TPR_Concurrency, ACE_Thread_Mutex> *ACE_Singleton<JAWS_TPR_Concurrency, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_Task_Timer, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Task_Timer, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<JAWS_Timer, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Timer, ACE_Thread_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
