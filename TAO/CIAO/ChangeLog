@@ -1,3 +1,9 @@
+Mon Sep 27 11:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/Config_Handlers.mpc:
+          Instead of adding the valuetype and ifr_client to libs, use the
+          corresponding base projects
+
 Mon Sep 27 08:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/examples/BasicSP/EC/EC_exec.cpp:
