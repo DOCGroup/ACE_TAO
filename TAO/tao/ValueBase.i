@@ -3,20 +3,6 @@
 
 // static operations in namespace CORBA ========================
 
-ACE_INLINE void
-CORBA::add_ref (CORBA::ValueBase *val)
-{
-  if (val)
-    val->_add_ref ();
-}
-
-ACE_INLINE void
-CORBA::remove_ref (CORBA::ValueBase *val)
-{
-  if (val)
-    val->_remove_ref ();
-}
-
 // ===========================================================
 
 // constructor

@@ -45,12 +45,6 @@ CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
   return CORBA_Object::_duplicate (obj);
 }
 
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Object_ptr obj)
-{
-  return obj == 0;
-}
-
 ACE_INLINE TAO_Stub *
 CORBA_Object::_stubobj (void) const
 {

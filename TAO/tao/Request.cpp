@@ -13,6 +13,12 @@
 
 ACE_RCSID(tao, Request, "$Id$")
 
+CORBA::Boolean
+CORBA::is_nil (CORBA::Request_ptr req)
+{
+  return (CORBA::Boolean) (req == 0);
+}
+
 void
 CORBA::release (CORBA::Request_ptr req)
 {

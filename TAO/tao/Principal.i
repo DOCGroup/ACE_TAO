@@ -19,12 +19,6 @@ CORBA_Principal::_decr_refcnt (void)
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Principal_ptr principal)
-{
-  return (CORBA::Boolean) (principal == 0);
-}
-
 ACE_INLINE CORBA_Principal*
 CORBA_Principal::_duplicate (CORBA_Principal* x)
 {
@@ -200,4 +194,3 @@ CORBA_Principal_out::operator-> (void)
 {
   return this->ptr_;
 }
-

@@ -4,13 +4,6 @@
 
 // These should never be non-NULL, but the method
 // is required of pseudo objects.
-ACE_INLINE void
-CORBA::release (CORBA::Context_ptr ctx)
-{
-  if (ctx)
-    ctx->_decr_refcnt ();
-}
-
 ACE_INLINE CORBA_Context*
 CORBA_Context::_duplicate (CORBA_Context* x)
 {
@@ -23,12 +16,6 @@ ACE_INLINE CORBA_Context*
 CORBA_Context::_nil (void)
 {
   return (CORBA::Context*)0;
-}
-
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Context_ptr ctx)
-{
-  return ctx == 0;
 }
 
 // *************************************************************
@@ -372,4 +359,3 @@ CORBA_ContextList_out::operator-> (void)
 {
   return this->ptr_;
 }
-

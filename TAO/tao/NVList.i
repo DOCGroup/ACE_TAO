@@ -31,19 +31,6 @@ CORBA_NamedValue::flags (void) const
   return this->flags_;
 }
 
-ACE_INLINE void
-CORBA::release (CORBA::NamedValue_ptr nv)
-{
-  if (nv)
-    nv->_decr_refcnt ();
-}
-
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::NamedValue_ptr nv)
-{
-  return nv == 0;
-}
-
 ACE_INLINE CORBA_NamedValue*
 CORBA_NamedValue::_duplicate (CORBA_NamedValue *x)
 {
@@ -235,19 +222,6 @@ ACE_INLINE CORBA::ULong
 CORBA_NVList::count (void) const
 {
   return this->max_;
-}
-
-ACE_INLINE void
-CORBA::release (CORBA::NVList_ptr nvl)
-{
-  if (nvl)
-    nvl->_decr_refcnt ();
-}
-
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::NVList_ptr nvl)
-{
-  return (CORBA::Boolean) (nvl == 0);
 }
 
 ACE_INLINE CORBA_NVList*
