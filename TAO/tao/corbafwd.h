@@ -148,6 +148,9 @@ TAO_SYSTEM_EXCEPTION_LIST
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
+class CORBA_WrongTransaction;
+typedef CORBA_WrongTransaction *CORBA_WrongTransaction_ptr;
+
 class CORBA_Request;
 class CORBA_Request_var;
 class CORBA_Request_out;
@@ -724,6 +727,11 @@ TAO_SYSTEM_EXCEPTION_LIST
   static CORBA::TypeCode_ptr _tc_ConstructionPolicy;
 
   static const PolicyType SecConstruction;
+
+  typedef CORBA_WrongTransaction WrongTransaction;
+  typedef WrongTransaction *WrongTransaction_ptr;
+  static CORBA::TypeCode_ptr _tc_WrongTransaction;
+
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
 
   // ****************************************************************
