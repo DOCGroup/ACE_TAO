@@ -2,15 +2,22 @@
 project(NavDisplayGUI_exec) : ciao_server {
   depends   += NavDisplay_exec
   sharedname = NavDisplayGUI_exec
-// @@ Notice: Currently, we need to manually change the following Qt library
-//            to qt-mt230nc.lib if you are compiling on Win32.
-  lit_libs  += qt-mt
   libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
   libpaths  += .. ../NavDisplay $(QTDIR)/lib
   dllflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL QT_THREAD_SUPPORT
   includes  += ../NavDisplay $(QTDIR)/include
   idlflags  +=  -I ../NavDisplay -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
   idlgendir = ./
+
+  specific(borland, nmake, em3, vc6, vc7, vc71) {
+    lit_libs += qt-mt230nc
+  }
+
+  // @@ Notice: If you are building with Cygwin, you may need to manually
+  //            change the following Qt library to qt-mt230nc.
+  specific(gnuace, make) {
+    lit_libs += qt-mt
+  }
 
   IDL_Files {
     ../NavDisplay/NavDisplayEI.idl
