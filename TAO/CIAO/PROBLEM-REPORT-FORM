@@ -1,7 +1,9 @@
-[Please use the form below to submit bug reports, problem
+[Please use the PRF form below to submit bug reports, problem
  reports, etc., to the CIAO developers and interested users.
- Send to ciao-users@cs.wustl.edu.  Please send it as plain
- ASCII text, _not_ uuencoded or as an attachment.
+ Send to ciao-users@cs.wustl.edu.  If you are using OCI or PrismTech's
+ versions of CIAO do not send bugs to this mailing list, but
+ instead contact those companies for support.  Please also send your
+ PRF as plain ASCII text, _not_ uuencoded or as an attachment.
 
  We prefer that all bug reports be submitted through our bug tracking
  system.  See $ACE_ROOT/docs/usage-bugzilla.html for more information
