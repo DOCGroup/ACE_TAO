@@ -1,3 +1,20 @@
+Mon Aug 18 12:01:37 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+	* performance-tests/Benchmar/Multi_Threaded/Multi_Threaded.mpc:
+	* performance-tests/Benchmar/Multi_Threaded/client.cpp:
+	* performance-tests/Benchmar/Multi_Threaded/Client_Task.h:
+	* performance-tests/Benchmar/Multi_Threaded/Client_Task.cpp:
+	* performance-tests/Benchmar/Multi_Threaded/run_test.pl:
+	* performance-tests/Benchmar/Multi_Threaded/svc.conf:
+	* performance-tests/Benchmar/Multi_Threaded/NOTE.txt:
+	* performance-tests/Benchmar/Multi_Threaded/README:
+	  Test that measures round-trip latency behavior using a
+	multi-threaded client. 
+
+	* performance-tests/Benchmark/descriptors/Multi_Threaded.cad:
+	* performance-tests/Benchmark/descriptors/CIAO_Installation_Data.ini:
+	  Appropriate CAD file to configure the above experiment
+
 Sun Aug 17 22:43:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/Container_Base.cpp:
