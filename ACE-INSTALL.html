@@ -2424,11 +2424,11 @@ below.</p>
 <ol>
   <li>Make sure that the <code>QTDIR</code> environment variable points to Qt distribution
   folder. Usually this variable is set by Qt distribution, hence one has nothing to do.</li>
-  <li> Add <code>qt=1</code> to your <code>$MPC_ROOT/config/default.features</code> and
-  generate build files using MPC. Alternatively, re-run MPC with <code>-features qt=1</code>
+  <li> Add <code>qt_reactor=1</code> to your <code>$MPC_ROOT/config/default.features</code> and
+  generate build files using MPC. Alternatively, re-run MPC with <code>-features qt_reactor=1</code>
   switch to obtain build files with Qt support.</li>
-  <li>Build ACE using MPC generated files. Add qt=1 command line option to makefile if necessary.
-  After compilation <code>ACE_QtReactor</code> library should be
+  <li>Build ACE using MPC generated files. Add <code>qt_reactor=1</code> command line option to
+  <code>make</code> if necessary.After compilation <code>ACE_QtReactor</code> library should be
   placed in libout directory.</li>
 </ol>
 
@@ -2436,8 +2436,8 @@ To use <code>ACE_QtReactor</code> library in user application one has to ensure 
 described above. Then there are at least two options:
 <ol>
   <li>For MPC based application one has to derive a project from <code>ace_qtreactor</code>
-      and generate build files using <code>-features qt=1</code> switch or by setting
-      <code>qt=1</code> in <code>default.features</code> file. The <code>ace_qtreactor</code> base project
+      and generate build files using <code>-features qt_reactor=1</code> switch or by setting
+      <code>qt_reactor=1</code> in <code>default.features</code> file. The <code>ace_qtreactor</code> base project
       ensures all path variables are set correctly and add links necessary libraries to the
       project, as well as makes the project dependant on necessary features.</li>
   <li>For application with custom build system one has to define path to Qt includes and
@@ -2961,7 +2961,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Fri Dec 10 23:52:23 CET 2004
+Last modified: Sat Dec 11 13:35:44 CET 2004
 <!-- hhmts end -->
 
 

@@ -452,6 +452,7 @@ endif # xt_reactor
 
 ifneq ($(xt_reactor),)
   override ace_with_x11=1
+  override ace_with_xt=1
   ACE_MAKE_OPTIONS += xt_reactor
 endif # xt_reactor
 
@@ -482,7 +483,6 @@ ifeq ($(qt_reactor),0)
 endif # qt_reactor
 
 ifneq ($(qt_reactor),)
-  override ace_with_qt=1
   ACE_MAKE_OPTIONS += qt_reactor
 endif # qt_reactor
 
