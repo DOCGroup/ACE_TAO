@@ -1,3 +1,9 @@
+Sat Jun 26 16:24:39 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp
+	  Updated to reflect Changes in orbsvcs/orbsvcs/Naming.
+
 Sat Jun 26 15:13:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Makefile.am: 

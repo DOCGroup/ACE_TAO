@@ -1,3 +1,9 @@
+Sat Jun 26 16:22:07 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* ace/ace_lib.dsp
+	* ace/ace_dll.dsp:
+	  Updated to include Hash_Map_With_Allocator_T.* files.
+
 Sat Jun 26 16:05:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* acconfig.h:
