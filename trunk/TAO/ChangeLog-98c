@@ -1,33 +1,50 @@
+Thu Dec 31 12:28:31 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): Changed
+	  the _env to TAO_TRY_ENV.
+
+	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp : Changed the _env to TAO_TRY_ENV.
+	  Removed the unreferenced variables as pointed out by IRIX compiler.
+	  Thanks to Carlos for this. Fixed warnings like statement unreachable.
+
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp : Changed the _env to TAO_TRY_ENV.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp : Changed the _env
+	  to TAO_TRY_ENV. Removed some unreferenced variables.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp :Changed the _env
+	  to TAO_TRY_ENV.
+
 Thu Dec 31 11:56:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Fixed several errors and warnings detected by the IRIX
 	  compiler.
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp: 
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
 	  Removed unused variable.
 
-	* TAO_IDL/be/be_visitor_typedef/typedef.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp: 
-	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp: 
-	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp: 
+	* TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
 	  Removed unused variables and unreached statements.
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h: 
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h: 
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
 	  Added several forward declarations.
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: 
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
 	  Removed unnecesary template instantiations.
 
 1998-12-31  Seth Widoff  <swidoff@cs.cmu.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{cpp,h}:
-	  Fixed a crazy #include problem with g++. 
+	  Fixed a crazy #include problem with g++.
 
 Thu Dec 31 09:46:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/Makefile:
 	  Same change as Andy, but also added a dependency between
 	  TimeService.idl and CosTimeBase.idl; this is safer and should
 	  also work when running make -j 2 (or more).
@@ -40,31 +57,31 @@ Thu Dec 31 09:27:05 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-lab
 	  CosTimeBase.idl file was run through the IDL compiler after
 	  TimeService.idl which was causing errors because the generated
 	  files for TimeService were including the generated files for
-	  CosTimeBase. 
+	  CosTimeBase.
 
 Thu Dec 31 03:54:05 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/Loader/Servant_Activator.{h,cpp}: Added the
 	  ServantActivator_i implementation files which load the dll on
 	  creation and make object-servant associations on demand.
-	
+
 	* examples/POA/Loader/Servant_Locator.{h,cpp}: Added the
 	  ServantLocator_i implementation files which load the dll on
 	  creation and obtain and delete servants on demand per client
 	  request.
-	
+
 	* examples/POA/Loader/Server_Manager.{h,cpp}: Helper class
 	  implementation used by the server application.
 
 	* examples/POA/Loader/server.cpp: The server application.
 
 	* examples/POA/Loader/Makefile: Added to the repository.
-	
+
 	* examples/POA/Loader/README: Explains the example.
 
 	* examples/POA/Loader/run_test.pl: Perl script for executing the
 	  example.
-	
+
 	* examples/POA/Generic_Servant/MyFooServant.cpp (supply_servant):
 	  Added this function. It will provide the appropriate servant
 	  depending on the ObjectId passed to it.
@@ -74,15 +91,15 @@ Thu Dec 31 03:54:05 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 Thu Dec 31 00:11:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/tests/Time/Time.dsp: 
-	* orbsvcs/Time_Service/Time_Service.dsp: 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: 
+	* orbsvcs/tests/Time/Time.dsp:
+	* orbsvcs/Time_Service/Time_Service.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
 
 	  Added new Time Service files.
 
 	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed comment typo.
 
-	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp (main): 
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp (main):
 	  Added code to check the effectiveness of the hashing of
  	  servants.
 
@@ -100,11 +117,11 @@ Wed Dec 31 00:01:40 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/server.cpp: Added support so that
 	  the program can break out of main () in case of any exception/error.
-	
+
 	* examples/POA/On_Demand_Loading/Servant_Manager.h:
 	  Made <dllname_> and <create_symbol_> as ACE_CString variables.
 	  Thanks to Irfan for suggesting it.
-	
+
 	* examples/POA/On_Demand_Loading/Servant_Manager.cpp
 	  (parse_string): Changed the method to implement simpler parsing
 	  using  ACE_CString methods.
@@ -119,7 +136,7 @@ Wed Dec 31 00:01:40 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/server.cpp: Removed unnecessary
 	  TAO_TRY macros.
-	 
+
 Wed Dec 30 22:52:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile: on ghs/VxWorks, removed -g suppression for
