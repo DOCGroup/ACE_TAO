@@ -133,6 +133,13 @@ public:
   /// Set the source port for this session.
   virtual void source_port (const u_short &source_port) = 0;
 
+  //Set the source host
+  virtual ACE_INET_Addr* source_addr (void) const = 0;
+  
+  /// Set the source port for this session.
+  virtual void source_addr (ACE_INET_Addr* source_addr) = 0;
+  
+
   /**
    * Returns the version of the underlying RSVP implementation. Is
    * meaningful only when the underlying implementation has
@@ -150,6 +157,9 @@ protected:
 
   /// Destination address for this session.
   ACE_INET_Addr dest_addr_;
+
+  /// Source address for this session.
+  ACE_INET_Addr* src_addr_;
 
   /// Is this a TCP or a UDP session.
   ACE_Protocol_ID protocol_id_;
