@@ -68,11 +68,12 @@ TAO_GIOP_Message_Lite::generate_request_header (
   if (!this->write_protocol_header (TAO_GIOP_REQUEST,
                                     cdr))
     {
-      if (TAO_debug_level > 3)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")),
-                           -1);
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
 
+
+      return -1;
     }
 
   // Now call the implementation for the rest of the header
@@ -80,10 +81,11 @@ TAO_GIOP_Message_Lite::generate_request_header (
                                    spec,
                                    cdr))
     {
-      if (TAO_debug_level > 4)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing request header \n")),
-                           -1);
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing request header \n")));
+
+      return -1;
     }
 
   return 0;
@@ -103,10 +105,10 @@ TAO_GIOP_Message_Lite::generate_locate_request_header (
                                     cdr))
     {
       if (TAO_debug_level > 3)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing GIOPLite header \n")),
-                           -1);
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing GIOPLite header \n")));
 
+      return -1;
     }
 
   // Now call the implementation for the rest of the header
@@ -115,9 +117,10 @@ TAO_GIOP_Message_Lite::generate_locate_request_header (
                                           cdr))
     {
       if (TAO_debug_level > 4)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing locate request header \n")),
-                           -1);
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing locate request header \n")));
+
+      return -1;
     }
 
   return 0;
@@ -135,9 +138,10 @@ TAO_GIOP_Message_Lite::generate_reply_header (
                                     cdr))
     {
       if (TAO_debug_level > 3)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing GIOPLite header \n")),
-                           -1);
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing GIOPLite header \n")));
+
+      return -1;
     }
 
   // Now call the implementation for the rest of the header
@@ -145,9 +149,10 @@ TAO_GIOP_Message_Lite::generate_reply_header (
                                  params))
     {
       if (TAO_debug_level > 4)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing reply header \n")),
-                           -1);
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing reply header \n")));
+
+      return -1;
     }
 
   return 0;

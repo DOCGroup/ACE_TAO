@@ -63,11 +63,11 @@ TAO_GIOP_Message_Base::generate_request_header (
   if (!this->write_protocol_header (TAO_GIOP_REQUEST,
                                     cdr))
     {
-      if (TAO_debug_level > 3)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")),
-                           -1);
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
 
+      return -1;
     }
 
   // Now call the implementation for the rest of the header
@@ -75,10 +75,11 @@ TAO_GIOP_Message_Base::generate_request_header (
                                                       spec,
                                                       cdr))
     {
-      if (TAO_debug_level > 4)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing request header \n")),
-                           -1);
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing request header \n")));
+
+      return -1;
     }
 
   return 0;
@@ -95,11 +96,11 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
   if (!this->write_protocol_header (TAO_GIOP_LOCATEREQUEST,
                                     cdr))
     {
-      if (TAO_debug_level > 3)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")),
-                           -1);
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
 
+      return -1;
     }
 
   // Now call the implementation for the rest of the header
@@ -108,10 +109,13 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
        spec,
        cdr))
     {
-      if (TAO_debug_level > 4)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing locate request header \n")),
-                           -1);
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing locate request header \n")));
+
+
+      return -1;
+
     }
 
   return 0;
@@ -127,10 +131,11 @@ TAO_GIOP_Message_Base::generate_reply_header (
   if (!this->write_protocol_header (TAO_GIOP_REPLY,
                                     cdr))
     {
-      if (TAO_debug_level > 3)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")),
-                           -1);
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+
+      return -1;
     }
 
   ACE_DECLARE_NEW_CORBA_ENV;

@@ -36,16 +36,17 @@ TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
     }
   else
     {
-      if (TAO_debug_level > 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t)TAO_Tagged_Profile \n")),
-                          0);
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t)TAO_Tagged_Profile \n")));
+
+      return 0;
     }
 
   return 1;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_Tagged_Profile::unmarshall_target_address (TAO_InputCDR &cdr)
 {
   CORBA::Boolean hdr_status = cdr.read_short (this->discriminator_);
@@ -72,7 +73,7 @@ TAO_Tagged_Profile::unmarshall_target_address (TAO_InputCDR &cdr)
         }
     }
 
-  return hdr_status; 
+  return hdr_status;
 }
 
 CORBA::Boolean
