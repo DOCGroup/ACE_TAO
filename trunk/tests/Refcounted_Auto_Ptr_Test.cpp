@@ -1,23 +1,21 @@
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Refcounted_Auto_Ptr_Test.cpp
-//
-// = DESCRIPTION
-//    This example tests the <ACE_Refcounted_Auto_Ptr> and illustrates
-//    how they may be dispersed between multiple threads using an
-//    implementation of the Active Object pattern, which is available
-//    at <http://www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.
-//
-// = AUTHOR
-//    Johnny Tucker <johnny_tucker@yahoo.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Refcounted_Auto_Ptr_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This example tests the <ACE_Refcounted_Auto_Ptr> and illustrates
+ *  how they may be dispersed between multiple threads using an
+ *  implementation of the Active Object pattern, which is available
+ *  at <http://www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.
+ *
+ *
+ *  @author Johnny Tucker <johnny_tucker@yahoo.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/ACE.h"
@@ -28,7 +26,9 @@
 #include "ace/Activation_Queue.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 
-ACE_RCSID(tests, Refcounted_Auto_Ptr_Test, "Refcounted_Auto_Ptr_Test.cpp,v 4.8 2000/04/23 04:43:58 brunsch Exp")
+ACE_RCSID (tests,
+           Refcounted_Auto_Ptr_Test,
+           "Refcounted_Auto_Ptr_Test.cpp,v 4.8 2000/04/23 04:43:58 brunsch Exp")
 
 struct Printer
 {
@@ -70,40 +70,42 @@ Printer::print (void)
 
 typedef ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
 
+/**
+ * @class Scheduler
+ *
+ * @brief The scheduler for the Active Object.
+ *
+ * This class also plays the role of the Proxy and the Servant
+ * in the Active Object pattern.  Naturally, these roles could
+ * be split apart from the Scheduler.
+ */
 class Scheduler : public ACE_Task<ACE_SYNCH>
 {
-  // = TITLE
-  //     The scheduler for the Active Object.
-  //
-  // = DESCRIPTION
-  //     This class also plays the role of the Proxy and the Servant
-  //     in the Active Object pattern.  Naturally, these roles could
-  //     be split apart from the Scheduler.
 
   friend class Method_Request_print;
   friend class Method_Request_end;
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   Scheduler (Scheduler * = 0);
-  // Constructor.
 
+  /// Initializer.
   virtual int open (void *args = 0);
-  // Initializer.
 
+  /// Terminator.
   virtual int close (u_long flags = 0);
-  // Terminator.
 
+  /// Destructor.
   virtual ~Scheduler (void);
-  // Destructor.
 
   // = These methods are part of the Active Object Proxy interface.
   void print (Printer_var &printer);
   void end (void);
 
 protected:
+  /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
+  /// and dispatches them.
   virtual int svc (void);
-  // Runs the Scheduler's event loop, which dequeues <Method_Requests>
-  // and dispatches them.
 
 private:
   // = These are the <Scheduler> implementation details.
@@ -111,17 +113,20 @@ private:
   Scheduler *scheduler_;
 };
 
+/**
+ * @class Method_Request_print
+ *
+ * @brief Reification of the <print> method.
+ */
 class Method_Request_print : public ACE_Method_Request
 {
-  // = TITLE
-  //     Reification of the <print> method.
 public:
   Method_Request_print (Scheduler *,
                         Printer_var &printer);
   virtual ~Method_Request_print (void);
 
+  /// This is the entry point into the Active Object method.
   virtual int call (void);
-  // This is the entry point into the Active Object method.
 
 private:
   Scheduler *scheduler_;
@@ -155,10 +160,13 @@ Method_Request_print::call (void)
   return 0;
 }
 
+/**
+ * @class Method_Request_end
+ *
+ * @brief Reification of the <end> method.
+ */
 class Method_Request_end : public ACE_Method_Request
 {
-  // = TITLE
-  //     Reification of the <end> method.
 public:
   Method_Request_end (Scheduler *new_Prime_Scheduler);
   virtual ~Method_Request_end (void);
@@ -279,7 +287,6 @@ static int n_loops = 10;
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>;
-template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
 template class ACE_Auto_Basic_Ptr<Printer>;
 template class ACE_Auto_Basic_Ptr<Scheduler>;
 template class auto_ptr<Scheduler>;
@@ -289,7 +296,6 @@ template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>
-#pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>
 #pragma instantiate ACE_Auto_Basic_Ptr<Printer>
 #pragma instantiate ACE_Auto_Basic_Ptr<Scheduler>
 #pragma instantiate auto_ptr<Scheduler>

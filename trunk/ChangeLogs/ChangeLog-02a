@@ -1,3 +1,9 @@
+Thu May 31 17:29:33 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Refcounted_Auto_Ptr_Test.cpp:
+
+	  Removed duplicate template instantiation.  Fixes a build error.
+
 Thu May 31 15:25:19 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Refcounted_Auto_Ptr.i (ACE_Refcounted_Auto_Ptr_Rep::detach):
