@@ -1,3 +1,10 @@
+Thu Oct  4 17:27:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Logging_Handler.cpp (recv_log_record): Insure that
+          the payload message block is properly aligned for any CDR
+          extraction. Many thanks to Bala for noticing this problem and
+          sending code for the fix.
+
 Thu Oct  4 17:08:39 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
