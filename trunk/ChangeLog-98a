@@ -1,3 +1,13 @@
+Fri Mar 06 08:37:44 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/ace_ld: made perl4-compatible.  Thanks to
+          Jerry Bickle <glbick@most.fw.hac.com> for reporting this.
+
+        * ace/os.i: (sigwait): removed "::" from before sigwait () call
+          with ACE_HAS_ONEARG_SIGWAIT, in case it's a macro.  Thanks
+          to Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for
+          reporting this.
+
 Thu Mar 05 12:36:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_TRACE): Added a missing right paren.
@@ -10,19 +20,19 @@ Thu Mar 05 10:04:06 1998  David L. Levine  <levine@cs.wustl.edu>
 Thu Mar 05 01:33:08 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-WinCE.h: Added more CE stuff.  Ostream is now
-	  redefined as FILE on CE.  
+	  redefined as FILE on CE.
 
 	* ace/OS.{i,cpp}:
 	* ace/Synch_T.cpp
 	* ace/Message_Queue.cpp:
 	* ace/SOCK_Connector.i: Added ASYS_TEXT to numerous
 	  ACE_DEBUG/ACE_ERROR macros.  We must use wide char strings in
-	  CE. 
+	  CE.
 
 	* ace/ACE.{h,cpp}: Redefined sock_error to return wchar string on
 	  CE.  Added ASYS_TEXT to debugging messages.
-	
-	* ace/Trace.{h,cpp}: 
+
+	* ace/Trace.{h,cpp}:
 	* ace/Log_Msg.{h,cpp}:  Made it UNICODE compatible.
 
 	* ace/Log_Record.cpp: Changed how ostream is used on CE.  Although
