@@ -1,3 +1,5 @@
+	
+
 Thu Jul 03 18:53:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/lib/Consumer.h:
@@ -14,6 +16,15 @@ Thu Jul 03 18:53:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           method the reconnect test failed in the daily builds. The removal
           was done in the checkin of Thu Jun 26 17:35:11 UTC 2003. Now the
           RTEvent reconnect with connect test works again.
+
+Thu Jul 3 14:50:08 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/Makefile
+
+	  Added rules to make the RTScheduler library with cygwin/mingw
+	  compilers. Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
+	  providing the patch. This should fix the internal compile errors
+	  on cygwin/mingw builds.
 
 Thu Jul 03 13:20:16 2003  Pradeep Gore  <pradeep@oomworks.com>
 
@@ -196,7 +207,6 @@ Wed Jul 2 15:37:36 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	  Added the /GR option to TAO_RTScheduler.dsp to fix warnings due
 	  to run time type identifcation problem.
-
 
 Wed Jul 2 00:23:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
