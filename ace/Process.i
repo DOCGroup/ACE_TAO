@@ -48,14 +48,14 @@ ACE_Process::kill (int signum)
 
 #if defined (ACE_WIN32)
 
-ACE_INLINE BOOL
+ACE_INLINE int
 ACE_Process_Options::new_console (void) const
 {
   return new_console_;
 }
 
 ACE_INLINE void
-ACE_Process_Options::new_console (BOOL nc)
+ACE_Process_Options::new_console (int nc)
 {
   new_console_ = nc;
 }
@@ -92,22 +92,35 @@ ACE_Process_Options::set_thread_attributes (void)
   return thread_attributes_;
 }
 
+
+ACE_INLINE int
+ACE_Process_Options::handle_inheritence (void)
+{
+  return handle_inheritence_;
+}
+
+ACE_INLINE void
+ACE_Process_Options::handle_inheritence (int hi)
+{
+  handle_inheritence_ = hi;
+}
+
 #else /* !defined (ACE_WIN32) */
 
 ACE_INLINE ACE_HANDLE
-ACE_Process_Options::std_in (void)
+ACE_Process_Options::get_stdin (void)
 {
   return stdin_;
 }
 
 ACE_INLINE ACE_HANDLE 
-ACE_Process_Options::std_out (void)
+ACE_Process_Options::get_stdout (void)
 {
   return stdout_;
 }
 
 ACE_INLINE ACE_HANDLE 
-ACE_Process_Options::std_err (void)
+ACE_Process_Options::get_stderr (void)
 {
   return stderr_;
 }
@@ -146,17 +159,3 @@ ACE_Process_Options::path (LPCTSTR p)
 {
   ACE_OS::strcpy (path_, p);
 }
-
-#if defined (ACE_WIN32)
-ACE_INLINE BOOL
-ACE_Process_Options::handle_inheritence (void)
-{
-  return handle_inheritence_;
-}
-
-ACE_INLINE void
-ACE_Process_Options::handle_inheritence (BOOL hi)
-{
-  handle_inheritence_ = hi;
-}
-#endif /* ACE_WIN32 */
