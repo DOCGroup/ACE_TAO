@@ -1,3 +1,18 @@
+Fri Jul 27 23:17:31 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace_wchar.h: If ACE_HAS_XPG4_MULTIBYTE_CHAR is set, then
+          also set up definitions for functions that are not present
+          (ACE_LACKS_ITOW, ACE_LACKS_WCSICMP, ACE_LACKS_WCSNICMP,
+          ACE_LACKS_WCSDUP).
+
+        * ace/ace_wchar.inl: If not ACE_WIN32, include <string.h> to see
+          strlen().
+
+        * ace/OS_String.inl (strstr): The XPG4 multibyte version of
+          strstr() is wcswcs(), whereas the ANSI C / UNIX98 version is
+          wcsstr(). So if ACE_HAS_XPG4_MULTIBYTE_CHAR is defined, use
+          wcswcs.
+
 Fri Jul 27 21:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added the IDL_Cubut test with GIOP Lite

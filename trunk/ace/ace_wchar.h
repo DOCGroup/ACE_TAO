@@ -122,6 +122,31 @@ typedef wchar_t ACE_ANTI_TCHAR;
 # define ACE_TEXT ACE_LIB_TEXT
 #endif /* ACE_LEGACY_MODE */
 
+// The OS_String module defines some wide-char functions that are not
+// universally available. In particular, they're not part of the
+// XPG4 Worldwide Portability Interface wide-character string handling
+// functions. So, if ACE_HAS_XPG4_MULTIBYTE_CHAR is defined, note that
+// these functions are missing.
+#if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+
+#  if !defined (ACE_LACKS_ITOW)
+#    define ACE_LACKS_ITOW
+#  endif
+
+#  if !defined (ACE_LACKS_WCSICMP)
+#    define ACE_LACKS_WCSICMP
+#  endif
+
+#  if !defined (ACE_LACKS_WCSNICMP)
+#    define ACE_LACKS_WCSNICMP
+#  endif
+
+#  if !defined (ACE_LACKS_WCSDUP)
+#    define ACE_LACKS_WCSDUP
+#  endif
+
+#endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
+
 #if defined ACE_HAS_WCHAR
 /**
  * @class ACE_Wide_To_Ascii

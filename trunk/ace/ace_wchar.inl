@@ -6,6 +6,11 @@
 
 #if defined (ACE_HAS_WCHAR)
 
+#if !defined (ACE_WIN32)
+#  include /**/ <string.h>             // Need to see strlen()
+#endif /* ACE_WIN32 */
+
+
 inline
 ACE_Wide_To_Ascii::~ACE_Wide_To_Ascii (void)
 {
