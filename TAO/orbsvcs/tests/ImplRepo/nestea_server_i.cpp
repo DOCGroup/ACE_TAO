@@ -12,7 +12,6 @@ Nestea_Server_i::Nestea_Server_i (const char *filename)
   : server_impl_ (0),
     ior_output_file_ (0),
     ir_helper_ (0),
-    register_with_ir_ (0),
     use_ir_ (0)
 {
   // Nothing
@@ -27,7 +26,7 @@ Nestea_Server_i::~Nestea_Server_i (void)
 int
 Nestea_Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ir");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:i");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -35,9 +34,6 @@ Nestea_Server_i::parse_args (void)
       {
       case 'd':  // debug flag.
         TAO_debug_level++;
-        break;
-      case 'r':  // Register restart information with the IR.
-        this->register_with_ir_ = 1;
         break;
       case 'i':  // Use the IR
         this->use_ir_ = 1;
@@ -97,16 +93,12 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
       ACE_TRY_CHECK;
 
       if (this->use_ir_ == 1)
-        {
-          ACE_NEW_RETURN (this->ir_helper_, IR_Helper (poa_name,
-                                                       this->orb_manager_.child_poa (),
-                                                       this->orb_manager_.orb (),
-                                                       TAO_debug_level),
-                          -1);
+        ACE_NEW_RETURN (this->ir_helper_, IR_Helper (poa_name,
+                                                     this->orb_manager_.child_poa (),
+                                                     this->orb_manager_.orb (),
+                                                     TAO_debug_level),
+                        -1);
 
-          if (this->register_with_ir_ == 1)
-            this->ir_helper_->register_server ("nestea_server -i");
-        }
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("server");
@@ -115,7 +107,7 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
         this->orb_manager_.child_poa ()->id_to_reference (id.in (),
                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+ 
       if (this->use_ir_ == 1)
         {
           this->ir_helper_->change_object (server_obj.inout (), ACE_TRY_ENV);
