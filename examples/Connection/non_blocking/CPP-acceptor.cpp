@@ -11,7 +11,7 @@
 #define PR_ST_2 ACE_PEER_STREAM_2
 #define PR_AC_1 ACE_PEER_ACCEPTOR_1
 #define PR_AC_2 ACE_PEER_ACCEPTOR_2
-#define PR_AD ACE_PEER_ACCEPTOR_ADDR
+#define PR_AD ACE_PEER_STREAM_ADDR
 #define SH SVC_HANDLER
 
 template <PR_ST_1>
@@ -152,6 +152,9 @@ IPC_Server<SH, PR_AC_2>::svc (void)
 	{ 
 	  if (errno == EWOULDBLOCK && this->reactor ())
 	    this->reactor ()->handle_events ();
+	  else if (errno == ETIMEDOUT)
+	    ACE_ERROR ((LM_ERROR, "accept timed out on handle %d\n", 
+			this->acceptor ().get_handle ()));
 	  else
 	    ACE_ERROR ((LM_ERROR, "%p on handle %d\n", 
 			"accept", this->acceptor ().get_handle ()));
