@@ -7,7 +7,10 @@ Tue Feb 25 21:19:57 1997  David L. Levine  <levine@cs.wustl.edu>
 	  so that /usr/include/sys/termios.h won't be included; it
 	  #defines ECHO, and Svc_Conf_l.cpp has an ECHO symbol.
 
-	* ace/ACE.cpp (sock_error): added ACE_UNUSED_ARG (error).
+	* ace/ACE.cpp (sock_error): added ACE_UNUSED_ARG (error);.
+
+	* ace/Timer_Queue.cpp (ctor): rearranged initializers to
+	  match declaration order.
 
 Tue Feb 25 19:57:54 1997    <harrison@samba.cs.wustl.edu>
 
