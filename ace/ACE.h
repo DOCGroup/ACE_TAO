@@ -444,8 +444,6 @@ public:
                         int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
                         const ACE_TCHAR program_name[] = ACE_LIB_TEXT ("<unknown>"));
 
-  // = Shield us from Win32's inability to select on STDIN.
-
   // = Miscelleous functions.
   /// Rounds the request to a multiple of the page size.
   static size_t round_to_pagesize (off_t length);

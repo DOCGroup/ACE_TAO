@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TIMER_HASH_T_H
 #define ACE_TIMER_HASH_T_H
 #include "ace/pre.h"

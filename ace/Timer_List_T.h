@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_TIMER_LIST_T_H
 #define ACE_TIMER_LIST_T_H

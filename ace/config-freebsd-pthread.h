@@ -207,7 +207,7 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_SOCKLEN_T
 #endif
 
-#if (__FreeBSD_version > 430000)
+#if (__FreeBSD_version > 440000)
 # define _P1003_1B_VISIBLE
 # define ACE_HAS_AIO_CALLS
 # define SIGRTMIN 32

@@ -156,7 +156,7 @@ public:
 
   /**
    * Abstracts away from the differences between Win32 and ACE with
-   * respect to reading from ACE_STDIN (which is non-<select>'able on
+   * respect to reading from ACE_STDIN, which is non-<select>'able on
    * Win32.
    */
   static int register_stdin_handler (ACE_Event_Handler *eh,
