@@ -1,3 +1,10 @@
+Thu Jan  1 21:28:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO-INSTALL.html:
+
+	  Added notes and observations about VC++ 7.1 in the install
+	  file. Thanks to Valery Salamakha <ccapstan@bigpond.net.au>. 
+
 Thu Jan 01 20:10:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
