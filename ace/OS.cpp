@@ -5498,7 +5498,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
-  int error = 0;
+  ACE_Errno_Guard error (errno, 0);
   int msec_timeout;
 
   if (timeout->sec () == 0 && timeout->usec () == 0)
@@ -5648,7 +5648,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // occur because that's the guarantee that we give to our callers.
   ACE_OS::mutex_lock (external_mutex);
 
-  errno = error;
   return result;
 #   endif /* ACE_HAS_WTHREADS || ACE_HAS_VXWORKS || ACE_PSOS */
 # else

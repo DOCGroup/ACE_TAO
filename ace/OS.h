@@ -4709,6 +4709,12 @@ class ACE_Errno_Guard
   //   avoids an unnecessary second access to thread-specific storage
   //   by caching a pointer to the value of errno in TSS.  
 public:
+  ACE_Errno_Guard (int &e, int error):
+#if defined (ACE_MT_SAFE)
+    ep_ (&e),
+#endif /* ACE_MT_SAFE */
+    error_ (error) { }
+
   ACE_Errno_Guard (int &e):
 #if defined (ACE_MT_SAFE)
     ep_ (&e),
@@ -4722,6 +4728,11 @@ public:
 #else
     errno = error_;
 #endif /* ACE_MT_SAFE */
+  }
+
+  void operator= (int error)
+  {
+    this->error_ = error;
   }
 
 private:
