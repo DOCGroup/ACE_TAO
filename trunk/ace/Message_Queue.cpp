@@ -315,13 +315,8 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
   if (!this->deactivated_)
     {
-      size_t msize = 0;
-      ACE_Message_Block *temp;
-
-      for (temp = new_item;
-           temp != 0;
-           temp = temp->cont ())
-        msize += temp->size ();
+      size_t msize = new_item->total_size ();
+      size_t mlength = new_item->total_length ();
       if (::PostQueuedCompletionStatus (this->completion_port_,
                                         msize,
                                         this->deactivated_,
@@ -329,7 +324,7 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
         {
           // Update the states once I succeed.
           this->cur_bytes_ += msize;
-          this->cur_length_ += temp->length ();
+          this->cur_length_ += mlength;
           return ++this->cur_count_;
         }
     }
@@ -374,7 +369,7 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
           {                     // Really get a valid MB from the queue.
             --this->cur_count_;
             this->cur_bytes_ -= msize;
-            this->cur_length_ -= first_item->length ();
+            this->cur_length_ -= first_item->total_length ();
             return this->cur_count_;
           }
         else                    // I am woken up by deactivate ().
