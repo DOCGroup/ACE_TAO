@@ -8,18 +8,6 @@ Thu Nov  5 14:42:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           more clear how to enable/disable threads.  Thanks to Russ
           Noseworthy <rnosewor@objectsciences.com> for reporting this.
 
-Thu Nov 05 13:23:29 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * include/makeinclude/platform_lynxos.GNU: default VERSION
-          to 3.0.0.  We no longer build/test for LynxOS 2.5.0.  Added
-          usage comments.
-
-        * ACE-INSTALL.html: for LynxOS, added link to platform_lynxos.GNU
-          file, for usage information.  Replaced some absolute paths in
-          URLs with relative paths.
-
-Thu Nov  5 07:02:19 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
         * ace/Stream.h: Clarified some subtleties with subclassing from
           ACE_Stream.  Thanks to Stephen Coy for reminding me of this.
 
@@ -29,6 +17,16 @@ Thu Nov  5 07:02:19 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ACE.FAQ.html: Pointed out that ACE is Y2K compliant.  Thanks to
           Fredrik Lindahl <fredrik.lindahl@ausys.se> for suggesting this.
+
+Thu Nov 05 13:23:29 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU: default VERSION
+          to 3.0.0.  We no longer build/test for LynxOS 2.5.0.  Added
+          usage comments.
+
+        * ACE-INSTALL.html: for LynxOS, added link to platform_lynxos.GNU
+          file, for usage information.  Replaced some absolute paths in
+          URLs with relative paths.
 
 Wed Nov  4 23:28:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
