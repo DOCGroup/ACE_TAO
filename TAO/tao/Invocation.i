@@ -65,6 +65,8 @@ TAO_GIOP_Invocation::get_inconsistent_policies (void)
   return this->inconsistent_policies_._retn ();
 }
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 ACE_INLINE TAO_Endpoint_Selection_State
 TAO_GIOP_Invocation::get_endpoint_selection_state (void)
 {
@@ -76,6 +78,8 @@ TAO_GIOP_Invocation::get_stub (void)
 {
   return this->stub_;
 }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 ACE_INLINE void
 TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj,

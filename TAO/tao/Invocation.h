@@ -147,11 +147,15 @@ public:
   /// give up its ownership.  User must deallocate memory.
   CORBA::PolicyList *get_inconsistent_policies (void);
 
+#if (TAO_HAS_RT_CORBA == 1)
+
   /// Get the protected variable <endpoint_selection_state_>
   TAO_Endpoint_Selection_State get_endpoint_selection_state (void);
 
   /// Get the pointer to stub.
   TAO_Stub *get_stub (void);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   /**
    * Add the given object reference to the list of forward profiles.

@@ -15,6 +15,8 @@ TAO_Protocols_Hooks::~TAO_Protocols_Hooks (void)
 {
 }
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 int
 TAO_Protocols_Hooks::call_client_protocols_hook (TAO_ORB_Core *,
                                                  RTCORBA::ProtocolProperties_var &,
@@ -31,6 +33,8 @@ TAO_Protocols_Hooks::call_server_protocols_hook (TAO_ORB_Core *,
 {
   return 0;
 }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 void
 TAO_Protocols_Hooks::call_policy_type_hook (CORBA::PolicyList *&,

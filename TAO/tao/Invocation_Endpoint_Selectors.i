@@ -15,6 +15,8 @@ TAO_Endpoint_Selector_Factory::~TAO_Endpoint_Selector_Factory (void)
 
 // ****************************************************************
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 ACE_INLINE
 TAO_Endpoint_Selection_State::TAO_Endpoint_Selection_State (void)
   : priority_model_policy_ (0),
@@ -28,6 +30,8 @@ TAO_Endpoint_Selection_State::TAO_Endpoint_Selection_State (void)
     max_priority_ (0)
 {
 }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 // ****************************************************************
 
