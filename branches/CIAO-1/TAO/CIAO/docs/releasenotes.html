@@ -14,7 +14,18 @@
 
 <hr>
 <h2>Current Status</h2><a name="status">
-<table border="1" width="90%">
+
+<ol>
+  <li><h3>Latest News</h3>
+      <ul>
+        <li> 22 Nov 2002 - Completed the first handcrafted example
+            <a href="../examples/handcrafted/Hello/README">HelloWorld</a>
+            component implementation.  CIAO now also include a
+            minimally functioning Session container implementation.
+      </ul><p>
+
+  <li> <h3>Status of individual modules</h3>
+<table valign="top" border="1" width="90%">
   <th> Modules </th>
   <th> Status </th>
 
@@ -22,18 +33,35 @@
     <td>CCM Core</td>
     <td>We are currently working on a prototype that enables remote
         component installation using the CCM
-        <code>ComponentInstallation</code> interface.  Since we
+        <code>ComponentInstallation</code> interface, a component
+        server implementation.  Since we
         still don't have a CIDL implementation, we will also write up
         an example to show how the code should be generated in both
         CCIDL compiler and provide example component
-        implementations.</td>
+        implementations.
+
+        There exists 3 libraries in CCM Core.
+        <ol>
+          <li><b>CIAO_Client</b>: contains the client side stubs for
+              CCMObject.  All client programs that use CCMObject must
+              link to this library.
+          <li><b>CIAO_Container</b>: contains the interface
+              definitions and CIAO's container implementation.  All
+              component implementations must link to this library.
+          <li><b>CIAO_Server</b>: contains the stubs to access
+              deployment framework.  We'll need to use this to
+              implement the deployment mechanism.
+        </ol>
+    </td>
   </tr>
 
   <tr>
     <td>TAO_IDL</td>
     <td>TAO_IDL has been extended to handle and generate all the
-        component related keyword but <code>import</code>.  Although
-        the generated code has not been tested extensively.
+        component related keywords but <code>import</code>.  We are
+        currently using the generated mapping, in combination to
+        manually simulation of CIDL generated code to implement CCM
+        component.
         TAO_IDL Check out <a
         href="http://cvs.doc.wustl.edu/ace-latest.cgi/ACE_wrappers/TAO/docs/releasenotes/index.html#idl"> TAO IDL compiler</a> for more details.
     </td>
@@ -57,21 +85,27 @@
           };
         };
 </pre>
-        We will need to generate the implementation for the following
-        interfaces/operations (also see this <a
-        href="imgs/executor-example.png"> example </a>):
+        We will also need to generate the implementation for the
+        following interfaces/operations:
         <ul>
           <li><code>Navigation</code>
           <li><code>Receptacle</code>
           <li><code>Event</code>
-          <li>Internal/callback interface?
-          <li>Executor stuff?
+          <li><code>CCMObject</code>
+          <li>Component specific context
+          <li>Executor
         </ul>
+
+        For the implementation of the three introspection interfaces,
+        one way to implement it is to simply(?) generate the code that
+        build the component meta-data when queried (such as,
+        <code>get_all_facets</code> method,) or to create a generic
+        implementation and use an XML file that describe the component
+        to fill in these meta-data.
     </td>
   </tr>
-
-
 </table>
+</ol>
 <hr>
 <h2>TO-DOs</h2><a name="todos">
 This to-do list is currently arranged in chronological order,
@@ -80,7 +114,7 @@ certain release together.  All interfaces and types are under
 <CODE>Components</code> module namespace if not specified explicitly.
 
 <ul>
-  <li><b>CIAO 0.1 alpha release</b> - (TAO 1.3, Oct. 2002)
+  <li><b>CIAO 0.1 alpha release</b> - (post TAO 1.3, Dec. 2002)
       <UL>
         <li>Default implementation of <code>
             <ul>
@@ -195,7 +229,7 @@ certain release together.  All interfaces and types are under
 <hr>
 <address></address>
 <!-- hhmts start -->
-Last modified: Sun Oct 06 00:03:32 Central Daylight Time 2002
+Last modified: Sun Nov 24 18:41:54 Central Standard Time 2002
 <!-- hhmts end -->
 <address>Nanbor Wang &lt;nanbor@cs.wustl.edu&gt;</address>
 </body> </html>
