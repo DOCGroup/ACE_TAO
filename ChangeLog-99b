@@ -1,3 +1,9 @@
+Tue Apr 13 14:47:18 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Basic_Types_Test.cpp (main): replaced call to sysconf ()
+          with ACE_OS::sysconf ().  Thanks to Erik Ivanenko
+          <erik.ivanenko@utoronto.ca> for noticing this.
+
 Tue Apr 13 14:17:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp: replaced use of ACE_TSS<T> with ACE_WIN32 or
