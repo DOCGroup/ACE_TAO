@@ -1,3 +1,27 @@
+Mon Feb 17 20:59:47 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/IOStream.h: added null ipfx (), etc., methods for ACE_WIN32
+	  because its iostream class doesn't have them.
+
+ 	* ace/OS.h: added #include of <netinet/tcp.h> on VxWorks.
+
+	* ace/Pipe.cpp (open): enabled TCP_NODELAY on VxWorks now that
+	  OS.h #includes <netinet/tcp.h>.
+
+	* ace/ReactorEx.h: made ACE_ReactorEx_Handler_Repository destructor
+	  virtual because the class has other virtual functions.
+
+ 	* tests/IOStream_Test.cpp: removed ACE_WIN32 #ifndef, and
+	  removed q_char bool conversion operator because it shouldn't
+	  be needed.
+
+	* examples/Reactor/Misc/pingpong.cpp (handle_input): cast buf_len
+	  to ssize_t to avoid signed/unsigned comparison.
+
+	* examples/Service_Configurator/IPC-tests/client/\
+	  remote_dgram_client_test.cpp (main): cast mmap.size () to
+	  ssize_t to avoid signed/unsigned comparison.
+
 Mon Feb 17 18:32:29 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: Protected the #ifdef for CLOCK_REALTIME so that it
