@@ -121,7 +121,7 @@ be_visitor_operation_rettype::visit_native (be_native *node)
   else
     bt = node;
 
-  *os << bt->name () << " *";
+  *os << bt->name ();
 
   return 0;
 }
