@@ -45,7 +45,7 @@ public:
   typedef RtecScheduler::Dependency_Info Dependency_Info;
   typedef RtecScheduler::Preemption_Priority Preemption_Priority;
   typedef RtecScheduler::OS_Priority OS_Thread_Priority;
-  typedef RtecScheduler::Sub_Priority Sub_Priority;
+  typedef RtecScheduler::Preemption_Subpriority Sub_Priority;
   typedef RtecScheduler::RT_Info RT_Info;
   typedef RtecScheduler::Time Time;
 

@@ -87,7 +87,7 @@ static RtecScheduler::OS_Priority
 Preemption_Priority (RtecScheduler::handle_t rtinfo)
 {
   RtecScheduler::OS_Priority thread_priority;
-  RtecScheduler::Sub_Priority subpriority;
+  RtecScheduler::Preemption_Subpriority subpriority;
   RtecScheduler::Preemption_Priority preemption_priority;
 
   TAO_TRY
@@ -2896,7 +2896,7 @@ int
 ACE_ES_Priority_Timer::connected (RtecScheduler::handle_t rt_info)
 {
   RtecScheduler::OS_Priority thread_priority;
-  RtecScheduler::Sub_Priority subpriority;
+  RtecScheduler::Preemption_Subpriority subpriority;
   RtecScheduler::Preemption_Priority preemption_priority;
 
   TAO_TRY

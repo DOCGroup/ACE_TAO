@@ -74,8 +74,7 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
   info->quantum = rt_info_[handle].quantum;
   info->threads = rt_info_[handle].threads;
   info->priority = rt_info_[handle].priority;
-  info->static_subpriority = rt_info_[handle].static_subpriority;
-  info->dynamic_subpriority = rt_info_[handle].dynamic_subpriority;
+  info->preemption_subpriority = rt_info_[handle].static_subpriority;
   info->preemption_priority = rt_info_[handle].preemption_priority;
   info->info_type = rt_info_[handle].info_type;
 
@@ -122,7 +121,7 @@ void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
 
 void ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
                                       RtecScheduler::OS_Priority& priority,
-                                      RtecScheduler::Sub_Priority& subpriority,
+                                      RtecScheduler::Preemption_Subpriority& subpriority,
                                       RtecScheduler::Preemption_Priority& p_priority,
                                       CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
@@ -142,7 +141,7 @@ void ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
 
 void ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
                                                   RtecScheduler::OS_Priority& priority,
-                                                  RtecScheduler::Sub_Priority& subpriority,
+                                                  RtecScheduler::Preemption_Subpriority& subpriority,
                                                   RtecScheduler::Preemption_Priority& p_priority,
                                                   CORBA::Environment &_env)
      TAO_THROW_SPEC((CORBA::SystemException,

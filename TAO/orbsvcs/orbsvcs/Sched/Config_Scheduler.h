@@ -59,7 +59,7 @@ public:
 
   virtual void priority (RtecScheduler::handle_t handle,
                          RtecScheduler::OS_Priority& priority,
-                         RtecScheduler::Sub_Priority& subpriority,
+                         RtecScheduler::Preemption_Subpriority& p_subpriority,
                          RtecScheduler::Preemption_Priority& p_priority,
                          CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
@@ -68,7 +68,7 @@ public:
 
   virtual void entry_point_priority (const char * entry_point,
                                      RtecScheduler::OS_Priority& priority,
-                                     RtecScheduler::Sub_Priority& subpriority,
+                                     RtecScheduler::Preemption_Subpriority& p_subpriority,
                                      RtecScheduler::Preemption_Priority& p_priority,
                                      CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,

@@ -180,7 +180,7 @@ int ACE_Scheduler_Factory::dump_schedule
                        info.quantum.high,
                        info.threads,
                        info.priority,
-                       info.static_subpriority,
+                       info.preemption_subpriority,
                        info.preemption_priority,
 		       info.info_type);
     }
@@ -191,3 +191,21 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fclose (file);
   return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
