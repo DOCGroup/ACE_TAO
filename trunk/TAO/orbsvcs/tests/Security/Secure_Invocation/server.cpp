@@ -84,9 +84,9 @@ main (int argc, char *argv[])
       Foo_i *server_impl = 0;
 
       ACE_NEW_RETURN (server_impl,
-		      Foo_i (orb.in (),
-			     security_current.in ()),
-		      -1);
+                      Foo_i (orb.in (),
+                             security_current.in ()),
+                      -1);
 
       PortableServer::ServantBase_var owner_transfer (server_impl);
 
