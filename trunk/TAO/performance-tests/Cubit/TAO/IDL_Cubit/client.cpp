@@ -22,11 +22,8 @@ main (int argc, char **argv)
 
   ACE_TIMEPROBE_PRINT;
 
-#if defined (VXWORKS)
-  // To avoid a memPartFree on VxWorks.
   int status;
   ACE_OS::thr_exit (&status);
-#endif /* VXWORKS */
 
   return retval;
 }
