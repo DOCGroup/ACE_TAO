@@ -23,7 +23,7 @@
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
-#include "TAO/POAC.h"
+#include "tao/POAC.h"
 
 class TAO_Client_Connection_Handler;
 class TAO_POA;
@@ -48,9 +48,9 @@ class TAO_Export TAO_ORB_Core
   //
   // = DESCRIPTION
   //   This is the implementation class for the CORBA::ORB interface.
-  //   The class also encapsulates the access to the ORB resources and 
+  //   The class also encapsulates the access to the ORB resources and
   //   its state.
-  //   Some resources can be TSS or global, those resources are always 
+  //   Some resources can be TSS or global, those resources are always
   //   accessed through a TSS interface, but are allocated using the
   //   Resource_Factory.  If the resource is really global the
   //   Resource_Factory will simply return a pointer to the global
@@ -375,7 +375,7 @@ class TAO_Export TAO_ORB_Core_TSS_Resources
   // = DESCRIPTION
   //   This class is used by the ORB_Core to store the resources
   //   potentially bound to a thread in TSS storage.
-  //   The members are public because only the ORB Core is expected to 
+  //   The members are public because only the ORB Core is expected to
   //   access them.
   //
 public:
