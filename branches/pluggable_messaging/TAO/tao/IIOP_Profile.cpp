@@ -1,10 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
-
-
-
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Connect.h"
 #include "tao/CDR.h"
@@ -15,7 +11,6 @@
 #include "tao/debug.h"
 
 ACE_RCSID(tao, IIOP_Profile, "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Profile.i"

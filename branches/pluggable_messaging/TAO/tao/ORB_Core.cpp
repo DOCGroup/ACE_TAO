@@ -2,6 +2,7 @@
 
 
 
+
 #include "tao/ORB_Core.h"
 
 #include "ace/Env_Value_T.h"
@@ -128,7 +129,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
   ACE_NEW (this->eager_buffering_sync_strategy_,
            TAO_Eager_Buffering_Sync_Strategy);
-
 
   ACE_NEW (this->delayed_buffering_sync_strategy_,
            TAO_Delayed_Buffering_Sync_Strategy);
@@ -349,6 +349,23 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       ////////////////////////////////////////////////////////////////
       // continue with the 'parameter' flags                        //
       ////////////////////////////////////////////////////////////////
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBSvcConfDirective")))
+        {
+          // This is used to pass arguments to the Service
+          // Configurator using the "command line" to provide
+          // configuration information rather than using a svc.conf
+          // file.  Pass the "-S" to the service configurator.
+          this->svc_config_argv_[this->svc_config_argc_++] =
+            CORBA::string_dup ("-S");
+
+          // Pass the next argument.
+          this->svc_config_argv_[this->svc_config_argc_++] =
+            CORBA::string_dup (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+
       else if ((current_arg =
                 arg_shifter.get_the_parameter ("-ORBSvcConf")))
         {
@@ -773,22 +790,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBSvcConfDirective")))
-        {
-          // This is used to pass arguments to the Service
-          // Configurator using the "command line" to provide
-          // configuration information rather than using a svc.conf
-          // file.  Pass the "-S" to the service configurator.
-          this->svc_config_argv_[this->svc_config_argc_++] =
-            CORBA::string_dup ("-S");
-
-          // Pass the next argument.
-          this->svc_config_argv_[this->svc_config_argc_++] =
-            CORBA::string_dup (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
 
       // A new <ObjectID>:<IOR> mapping has been specified. This will be
       // used by the resolve_initial_references ().
@@ -939,14 +940,19 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       ////////////////////////////////////////////////////////////////
       // catch all the remaining -ORB args                          //
       ////////////////////////////////////////////////////////////////
-      else if (arg_shifter.cur_arg_strncasecmp
-               ("-ORB") != -1)
+      else if (arg_shifter.cur_arg_strncasecmp ("-ORB") != -1)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_WARNING,
-                        ASYS_TEXT ("WARNING: Unknown \"-ORB\" option <%s>.\n")
-                        ASYS_TEXT ("         Removing it from the argument list.\n"),
-                        current_arg));
+            {
+              current_arg = arg_shifter.get_current (); 
+              ACE_DEBUG ((LM_WARNING,
+                          ASYS_TEXT ("WARNING: Unknown \"-ORB\" option ")
+                          ASYS_TEXT ("<%s>.\n")
+                          ASYS_TEXT ("         Removing it from the ")
+                          ASYS_TEXT ("argument list.\n"),
+                          ((current_arg == 0) ? "<NULL>" : current_arg)));
+            }
+
           arg_shifter.consume_arg ();
         }
 

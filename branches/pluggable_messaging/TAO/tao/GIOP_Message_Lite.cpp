@@ -179,7 +179,7 @@ TAO_GIOP_Message_Lite::
 
 CORBA::Boolean
 TAO_GIOP_Message_Lite::
-  write_message_header (const TAO_Pluggable_Connector_Params &params, 
+  write_message_header (const TAO_Operation_Details &opdetails,
                         TAO_Pluggable_Header_Type header_type,
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &cdr)
@@ -187,15 +187,12 @@ TAO_GIOP_Message_Lite::
   switch (header_type)
     {
     case TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER:
-      return this->write_request_header (params.svc_ctx,
-                                         params.request_id,
-                                         params.response_flags,
+      return this->write_request_header (opdetails,
                                          spec,
-                                         params.operation_name,
                                          cdr);
       break;
     case TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER:
-      return this->write_locate_request_header (params.request_id,
+      return this->write_locate_request_header (opdetails.request_id (),
                                                 spec,
                                                 cdr);
       break;
@@ -214,9 +211,9 @@ int
 TAO_GIOP_Message_Lite::
   send_message (TAO_Transport *transport,
                 TAO_OutputCDR &stream,
-                ACE_Time_Value *max_wait_time = 0,
-                TAO_Stub *stub = 0,
-                int two_way = 1)
+                ACE_Time_Value *max_wait_time,
+                TAO_Stub *stub,
+                int two_way)
 {
   // Get the header length
   const size_t header_len = TAO_GIOP_LITE_HEADER_LEN;
@@ -398,14 +395,13 @@ TAO_GIOP_Message_Lite::
 
 CORBA::Boolean
 TAO_GIOP_Message_Lite::
-  write_request_header (const IOP::ServiceContextList& /*svc_ctx*/,
-                        CORBA::ULong request_id,
-                        CORBA::Octet response_flags,
+  write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification & spec,
-                        const char * opname,
                         TAO_OutputCDR &out_stream)
 {
-  out_stream << request_id;
+  out_stream << opdetails.request_id ();
+
+  const CORBA::Octet response_flags = opdetails.response_flags ();
 
   // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
   if (response_flags == 131)
@@ -451,7 +447,8 @@ TAO_GIOP_Message_Lite::
       return 0;
     }
   
-  out_stream << opname;
+  out_stream.write_string (opdetails.opname_len (), 
+                           opdetails.opname ());
 
   return 1;
 }                        
@@ -1233,8 +1230,6 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
       if (slot < sizeof (names)/sizeof(names[0]))
         message_name = names [slot];
       
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%N|%l) \n"));
       // Byte order.
       int byte_order = TAO_ENCAP_BYTE_ORDER;
 
@@ -1245,14 +1240,10 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
       if (ptr[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REQUEST ||
           ptr[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REPLY)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%N|%l) \n"));
           // @@ Only works if ServiceContextList is empty....
           id = ACE_reinterpret_cast (CORBA::ULong *,
                                      (char * ) (ptr));
                                
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%N|%l) \n"));
         }
 
       // Print.

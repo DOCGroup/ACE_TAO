@@ -1,5 +1,6 @@
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -163,8 +164,8 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
   // See TAO_Stub.cpp::do_static_call in which a GIOP_Invocation is
   // allocated on stack
 #if 0
-  any->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                            stream->start ());
+  any->byte_order_ = stream->byte_order ();
+  any->cdr_ = ACE_CDR::consolidate (stream->start ());
 #endif
   // one solution is to heap allocate the GIOP_Invocation. However, that
   // would be bad since not all requests will use Anys.
@@ -208,7 +209,10 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
     DEEP_FREE (any->type_, any->value_, 0, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-  any->cdr_ = ACE_Message_Block::duplicate (out.begin ());
+  any->byte_order_ = stream->byte_order ();
+  ACE_NEW_RETURN (any->cdr_, ACE_Message_Block,
+                  CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CDR::consolidate (any->cdr_, out.begin ());
   any->value_ = 0;
 
   if (any->type_)
@@ -798,7 +802,8 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
           {
             CORBA::ULong ul;
             TAO_InputCDR stream ((ACE_Message_Block *)
-                                 member_label->_tao_get_cdr ());
+                                 member_label->_tao_get_cdr (),
+                                 member_label->_tao_byte_order ());
             (void)stream.decode (discrim_tc.in (), &ul, 0, ACE_TRY_ENV);
             //@@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
             ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);

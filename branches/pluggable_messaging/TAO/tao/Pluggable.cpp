@@ -2,6 +2,7 @@
 // $Id$
 
 
+
 #include "tao/Pluggable.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
@@ -18,6 +19,7 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Pluggable.i"
 #endif /* __ACE_INLINE__ */
+
 
 ACE_RCSID(tao, Pluggable, "$Id$")
 
@@ -229,7 +231,7 @@ TAO_Transport::start_request (TAO_ORB_Core *,
 void
 TAO_Transport::start_locate (TAO_ORB_Core *,
                              TAO_Target_Specification & /*spec */,
-                             CORBA::ULong,
+                             TAO_Operation_Details & /* */,
                              TAO_OutputCDR &,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))

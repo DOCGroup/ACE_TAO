@@ -1,12 +1,12 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 #include "tao/ORB_Core.h"
 #include "tao/Connector_Registry.h"
 #include "tao/Profile.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
+
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"

@@ -4,6 +4,9 @@
 #include "tao/debug.h"
 #include "tao/POA.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/GIOP_Message_Acceptors.i"
+#endif /* __ACE_INLINE__ */
 
 int 
 TAO_GIOP_Message_Acceptors::
@@ -678,12 +681,9 @@ set_state (CORBA::Octet def_major,
 
 CORBA::Boolean
 TAO_GIOP_Message_Acceptors::
-  write_request_header (const IOP::ServiceContextList& /*svc_ctx*/,
-                        CORBA::ULong /*request_id */,
-                        CORBA::Octet /*response_flags*/,
-                        TAO_Target_Specification & /*spec*/,
-                        const char* /*opname*/,
-                        TAO_OutputCDR & /*msg*/)
+write_request_header (const TAO_Operation_Details & /**/,
+                      TAO_Target_Specification & /*spec*/,
+                      TAO_OutputCDR & /*msg*/)
 {
    ACE_NOTSUP_RETURN (0);
 }
@@ -700,8 +700,8 @@ TAO_GIOP_Message_Acceptors::
 int
 TAO_GIOP_Message_Acceptors::
 parse_reply (TAO_Message_State_Factory & /*mesg_state*/,
-               TAO_Pluggable_Connector_Params & /*params*/,
-               CORBA::ULong & /*reply_status*/)
+             TAO_Pluggable_Connector_Params & /*params*/,
+             CORBA::ULong & /*reply_status*/)
 {
   ACE_NOTSUP_RETURN (-1);
 }

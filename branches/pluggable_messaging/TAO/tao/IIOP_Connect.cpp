@@ -1,6 +1,7 @@
 // $Id$
 
 
+
 #include "tao/IIOP_Connect.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -12,11 +13,13 @@
 #include "tao/GIOP_Message_Acceptors.h"
 #include "tao/GIOP_Message_Connectors.h"
 
+
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connect.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, IIOP_Connect, "$Id$")
+
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -69,6 +72,7 @@ TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (ACE_Thread_Manager *t)
 TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_Handler_Base (t),
     transport_ (this, 0),
+    acceptor_factory_ (0),
     orb_core_ (0),
     tss_resources_ (0),
     refcount_ (1),
@@ -86,6 +90,7 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_
                                                                         CORBA::Boolean flag)
   : TAO_IIOP_Handler_Base (orb_core),
     transport_ (this, orb_core),
+    acceptor_factory_ (0),
     orb_core_ (orb_core),
     tss_resources_ (orb_core->get_tss_resources ()),
     refcount_ (1),

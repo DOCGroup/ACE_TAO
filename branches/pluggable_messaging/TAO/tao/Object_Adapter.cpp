@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
 #include "tao/ORB.h"
@@ -11,7 +12,9 @@
 # include "tao/Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID(tao, Object_Adapter, "$Id$")
+
 
 // Timeprobes class
 #include "tao/Timeprobe.h"

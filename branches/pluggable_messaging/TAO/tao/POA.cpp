@@ -1,5 +1,6 @@
 // @(#) $Id$
 
+
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
@@ -78,6 +79,7 @@ private:
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, POA, "$Id$")
+
 
 #if !defined (TAO_NO_IOR_TABLE)
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.

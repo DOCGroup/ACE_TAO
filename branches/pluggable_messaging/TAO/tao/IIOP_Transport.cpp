@@ -2,6 +2,7 @@
 // $Id$
 
 
+
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Connect.h"
 #include "tao/IIOP_Profile.h"
@@ -13,6 +14,7 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
+//#include "tao/target_identifier.h"
 
 #include "tao/Pluggable_Messaging.h"
 
@@ -175,7 +177,7 @@ TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core */*orb_core*/,
 void
 TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core */*orb_core*/,
                                          TAO_Target_Specification &spec,
-                                         CORBA::ULong request_id,
+                                         TAO_Operation_Details &opdetails,
                                          TAO_OutputCDR &output,
                                          CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -187,9 +189,7 @@ TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core */*orb_core*/,
        output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
   
-  TAO_Pluggable_Connector_Params params;
-  params.request_id = request_id;
-  if (this->client_mesg_factory_->write_message_header (params,
+  if (this->client_mesg_factory_->write_message_header (opdetails,
                                                         TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER,   
                                                         spec,
                                                         output) == 0)
@@ -327,22 +327,14 @@ TAO_IIOP_Client_Transport::messaging_init (TAO_Pluggable_Messaging_Interface *me
 }
 
 CORBA::Boolean
-TAO_IIOP_Client_Transport::send_request_header (const IOP::ServiceContextList & svc_ctx,  
-                                                CORBA::ULong request_id,
-                                                CORBA::Octet response_flags,
+TAO_IIOP_Client_Transport::send_request_header (TAO_Operation_Details &opdetails,
                                                 TAO_Target_Specification &spec,
-                                                const char* opname,
                                                 TAO_OutputCDR & msg)
 {
-  TAO_Pluggable_Connector_Params params;
-  params.svc_ctx = svc_ctx;
-  params.request_id = request_id;
-  params.response_flags = response_flags;
-  params.operation_name = opname;
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
     CORBA::Boolean retval = 
-      this->client_mesg_factory_->write_message_header (params,
+      this->client_mesg_factory_->write_message_header (opdetails,
                                                         TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER,  
                                                         spec,
                                                         msg);
@@ -424,13 +416,11 @@ TAO_IIOP_Transport::send_request (TAO_Stub *,
 
                                          
 CORBA::Boolean
-TAO_IIOP_Transport::send_request_header (const IOP::ServiceContextList & /*svc_ctx*/,  
-                                         CORBA::ULong /*request_id*/,
-                                         CORBA::Octet /*response_flags*/,
+TAO_IIOP_Transport::send_request_header (TAO_Operation_Details & /**/,
                                          TAO_Target_Specification & /*spec */ ,
-                                         const char* /*opname*/,
                                          TAO_OutputCDR & /*msg*/)
 {
   // We should never be here. So return an error.
   return 0;
 }
+

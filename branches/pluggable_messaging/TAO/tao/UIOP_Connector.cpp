@@ -12,6 +12,7 @@
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
 
+
 ACE_RCSID(tao, UIOP_Connector, "$Id$")
 
 
@@ -455,32 +456,48 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
   if (uiop_profile == 0)
     return -1;
 
-  const ACE_UNIX_Addr &oa =
+  const ACE_UNIX_Addr &remote_address =
     uiop_profile->object_addr ();
 
-  ACE_Synch_Options synch_options;
+  TAO_UIOP_Client_Connection_Handler *svc_handler = 0;
+  int result = 0;
+
   if (max_wait_time != 0)
-    synch_options.set (ACE_Synch_Options::USE_TIMEOUT,
-                       *max_wait_time);
+    {
+      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
+                                       *max_wait_time);
 
-  TAO_UIOP_Client_Connection_Handler* result;
+      // The connect call will set the hint () stored in the Profile
+      // object; but we obtain the transport in the <svc_handler>
+      // variable. Other threads may modify the hint, but we are not
+      // affected.
+      result = this->base_connector_.connect (uiop_profile->hint (),
+                                              svc_handler,
+                                              remote_address,
+                                              synch_options);
+    }
+  else
+    {
+      // The connect call will set the hint () stored in the Profile
+      // object; but we obtain the transport in the <svc_handler>
+      // variable. Other threads may modify the hint, but we are not
+      // affected.
+      result = this->base_connector_.connect (uiop_profile->hint (),
+                                              svc_handler,
+                                              remote_address);
+    }
 
-  // The connect call will set the hint () stored in the Profile
-  // object; but we obtain the transport in the <result>
-  // variable. Other threads may modify the hint, but we are not
-  // affected.
-  if (this->base_connector_.connect (uiop_profile->hint (),
-                                     result,
-                                     oa,
-                                     synch_options) == -1)
-    { // Give users a clue to the problem.
+  if (result == -1)
+    {
+      // Give users a clue to the problem.
       if (TAO_orbdebug)
         {
-          char buffer [MAXPATHLEN + 1];
-          profile->addr_to_string (buffer, MAXPATHLEN);
+          char buffer [MAXNAMELEN * 2];
+          profile->addr_to_string (buffer,
+                                   (MAXNAMELEN * 2) - 1);
           ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) %s:%u, connection to "
-                      "%s failed (%p)\n",
+                      ASYS_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ASYS_TEXT ("%s failed (%p)\n"),
                       __FILE__,
                       __LINE__,
                       buffer,
@@ -489,11 +506,11 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
       return -1;
     }
 
-  transport = result->transport ();
+  transport = svc_handler->transport ();
   int ret_val = 0;
   if (lite_flag_)
     {
-      ret_val = result->init_mesg_protocol (TAO_DEF_GIOP_LITE_MAJOR,
+      ret_val = svc_handler->init_mesg_protocol (TAO_DEF_GIOP_LITE_MAJOR,
                                             TAO_DEF_GIOP_LITE_MINOR);
     }
   else

@@ -1,6 +1,7 @@
 // $Id$
 
 
+
 #include "tao/Invocation.h"
 #include "tao/Stub.h"
 #include "tao/Principal.h"
@@ -73,10 +74,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 
 TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                                           const char *operation,
+                                          CORBA::ULong opname_len,
                                           TAO_ORB_Core* orb_core)
   : stub_ (stub),
-    opname_ (operation),
-    request_id_ (0),
+    op_details_ (operation, opname_len),
     out_stream_ (buffer, sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
@@ -269,11 +270,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
       if (this->transport_ != 0)
         this->transport_->idle ();
 
-      countdown.update ();
       int result = conn_reg->connect (this->profile_,
                                       this->transport_,
                                       this->max_wait_time_);
-      countdown.update ();
       if (result == 0)
         break;
 
@@ -294,12 +293,14 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
             TAO_INVOCATION_CONNECT_MINOR_CODE,
             errno),
           CORBA::COMPLETED_NO));
+
+      countdown.update ();
     }
 
   // Obtain unique request id from the RMS.
-  this->request_id_ = this->transport_->tms ()->request_id ();
+  this->op_details_.request_id (
+        this->transport_->tms ()->request_id ());  
 
-  countdown.update ();
 }
 
 void
@@ -309,25 +310,16 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
 {
   // Then fill in the rest of the RequestHeader
   //
-  // The first element of header is service context list;
-  // transactional context would be acquired here using the
-  // transaction service APIs.  Other kinds of context are as yet
-  // undefined.
-  //
-  // Last element of request header is the principal; no portable way
-  // to get it, we just pass empty principal (convention: indicates
-  // "anybody").  Steps upward in security include passing an
-  // unverified user ID, and then verifying the message (i.e. a dummy
-  // service context entry is set up to hold a digital signature for
-  // this message, then patched shortly before it's sent).
-  TAO_Target_Specification spec;
-  spec.target_specifier (this->profile_->object_key ());
+  
+  // The target specification mode
+  this->target_spec_.target_specifier (this->profile_->object_key ());
+  
+  // Update the response flags
+  this->op_details_.response_flags (response_flags);
 
-  if (this->transport_->send_request_header (this->service_info_,
-                                             this->request_id_,
-                                             response_flags,
-                                             spec,
-                                             this->opname_,   
+  //Send the request for the header
+  if (this->transport_->send_request_header (this->op_details_,
+                                             this->target_spec_,
                                              this->out_stream_) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 }
@@ -351,7 +343,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
   //    Even for oneways: with AMI it is possible to wait for a
   //    response (empty) for oneways, just to make sure that they
   //    arrive, there are policies to control that.
-  countdown.update ();
 
   int result =
     this->transport_->send_request (this->stub_,
@@ -359,7 +350,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
                                     this->out_stream_,
                                     is_roundtrip,
                                     this->max_wait_time_);
-  countdown.update ();
 
   //
   // @@ highly desirable to know whether we wrote _any_ data; if
@@ -541,10 +531,9 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  TAO_Target_Specification spec;
-  spec.target_specifier (this->profile_->object_key ());
+  this->target_spec_.target_specifier (this->profile_->object_key ());
   this->transport_->start_request (this->orb_core_,
-                                   spec,
+                                   this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -604,9 +593,11 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
           const ACE_Message_Block* cdr =
             this->inp_stream ().start ();
-          CORBA_Any any (tcp, 0, 
+
+          CORBA_Any any (tcp, 0,
                          this->inp_stream ().byte_order (),
                          cdr);
+
           CORBA_Exception *exception;
 
           ACE_NEW_THROW_EX (exception,
@@ -729,7 +720,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   // Bind.
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                &this->rd_);
   if (retval == -1)
     {
@@ -911,9 +902,11 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 TAO_GIOP_Oneway_Invocation::
 TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
                             const char *operation,
+                            CORBA::ULong opname_len,
                             TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, operation, orb_core),
+  : TAO_GIOP_Invocation (stub, operation, opname_len, orb_core),
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
+
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Sync_Scope_Policy *ssp = stub->sync_scope ();
@@ -938,11 +931,11 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  TAO_Target_Specification spec;
-  spec.target_specifier (this->profile_->object_key ());
+  // Make sure that you have the right object key
+  this->target_spec_.target_specifier (this->profile_->object_key ());
   
   this->transport_->start_request (this->orb_core_,
-                                   spec,
+                                   this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -960,16 +953,16 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                                           ACE_TRY_ENV);
     }
 
+
   // Create this only if a reply is required.
   TAO_Synch_Reply_Dispatcher rd (this->orb_core_,
-                                 this->service_info_);
-
+                                 this->op_details_.service_info ());
 
   // The rest of this function is very similar to
   // TWO_GIOP_Twoway_Invocation::invoke_i, because we must
   // wait for a reply. See comments in that code.
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                &rd);
   if (retval == -1)
     {
@@ -1144,11 +1137,12 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  TAO_Target_Specification spec;
-  spec.target_specifier (this->profile_->object_key ());
+  // Just make sure that you pass in the object key
+  this->target_spec_.target_specifier (this->profile_->object_key ());
+  
   this->transport_->start_locate (this->orb_core_,
-                                  spec,
-                                  this->request_id_,
+                                  this->target_spec_,
+                                  this->op_details_,
                                   this->out_stream_,
                                   ACE_TRY_ENV);
 }
@@ -1169,7 +1163,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   // Bind.
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                &this->rd_);
   if (retval == -1)
     {

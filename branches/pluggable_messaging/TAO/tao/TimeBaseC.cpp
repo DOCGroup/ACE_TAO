@@ -174,7 +174,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TimeBase::UtcT *&_tao_el
     else
     {
       ACE_NEW_RETURN (_tao_elem, TimeBase::UtcT, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (TimeBase::_tc_UtcT, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -240,7 +241,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TimeBase::IntervalT *&_t
     else
     {
       ACE_NEW_RETURN (_tao_elem, TimeBase::IntervalT, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (TimeBase::_tc_IntervalT, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {

@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -28,6 +29,7 @@
 #include "tao/debug.h"
 
 ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
+
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

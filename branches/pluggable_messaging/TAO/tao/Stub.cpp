@@ -2,6 +2,7 @@
 
 
 
+
 // @ (#)iiopobj.cpp     1.9 95/11/04
 // Copyright 1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -35,6 +36,7 @@
 #include "tao/Timeprobe.h"
 
 ACE_RCSID(tao, TAO_Stub, "$Id$")
+
 
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -340,7 +342,9 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
 
   if (info->is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, info->opname,
+      TAO_GIOP_Twoway_Invocation call (this, 
+                                       info->opname,
+                                       ACE_OS::strlen (info->opname),
                                        this->orb_core_);
 
       ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
@@ -485,7 +489,9 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
     } // if (two way)
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, info->opname,
+      TAO_GIOP_Oneway_Invocation call (this, 
+                                       info->opname,
+                                       ACE_OS::strlen (info->opname),
                                        this->orb_core_);
 
       ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
@@ -617,6 +623,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
     {
       TAO_GIOP_Twoway_Invocation call (this,
                                        opname,
+                                       ACE_OS::strlen (opname),
                                        this->orb_core_);
 
       // Loop as needed for forwarding; see above.
@@ -683,6 +690,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
     {
       TAO_GIOP_Oneway_Invocation call (this,
                                        opname,
+                                       ACE_OS::strlen (opname),
                                        this->orb_core_);
 
       for (;;)
@@ -1161,7 +1169,6 @@ TAO_Stub::sync_strategy (void)
 
       if (scope == Messaging::SYNC_DELAYED_BUFFERING)
         return this->orb_core_->delayed_buffering_sync_strategy ();
-
     }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

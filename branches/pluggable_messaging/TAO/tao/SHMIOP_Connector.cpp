@@ -6,7 +6,6 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/SHMIOP_Profile.h"
-#include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
@@ -323,10 +322,11 @@ typedef ACE_Cached_Connect_Strategy<TAO_SHMIOP_Client_Connection_Handler,
         TAO_CACHED_CONNECT_STRATEGY;
 #endif /* ! TAO_USES_ROBUST_CONNECTION_MGMT */
 
-TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (void)
+TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Octet flag)
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     orb_core_ (0),
-    base_connector_ ()
+    base_connector_ (),
+    lite_flag_ (flag)
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
     ,
     cached_connect_strategy_ (0),
@@ -491,6 +491,31 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
     }
 
   transport = svc_handler->transport ();
+  
+  int ret_val = 0;
+  if (this->lite_flag_)
+    {
+      ret_val = svc_handler->init_mesg_protocol (TAO_DEF_GIOP_LITE_MAJOR,
+                                                 TAO_DEF_GIOP_LITE_MINOR); 
+    }
+  else
+    {
+      // Now that we have the client connection handler object we need to
+      // set the right messaging protocol for the connection handler.
+      const TAO_GIOP_Version& version = shmiop_profile->version ();
+      ret_val = svc_handler->init_mesg_protocol (version.major,
+                                                 version.minor);
+  
+    }
+  if (ret_val == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
+        }
+      return -1;
+    }
   return 0;
 }
 

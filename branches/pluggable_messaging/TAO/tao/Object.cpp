@@ -30,6 +30,7 @@
 
 ACE_RCSID(tao, Object, "$Id$")
 
+
 CORBA_Object::~CORBA_Object (void)
 {
   if (this->protocol_proxy_)
@@ -111,6 +112,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_is_a",
+      5,
       istub->orb_core ()
     );
 
@@ -285,8 +287,9 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 
 
       TAO_GIOP_Twoway_Invocation _tao_call (
-	  istub,
+	        istub,
           "_non_existent",
+          13,
           istub->orb_core ()
         );
 
@@ -431,6 +434,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_interface",
+      10,
       istub->orb_core ()
     );
 

@@ -20,6 +20,7 @@
 
 ACE_RCSID(tao, IORC, "$Id$")
 
+
 TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &ACE_TRY_ENV

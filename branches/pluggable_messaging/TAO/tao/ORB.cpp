@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
@@ -66,6 +67,7 @@ using std::set_unexpected;
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, ORB, "$Id$")
+
 
 static const char ior_prefix [] = "IOR:";
 static const char file_prefix[] = "file://";
@@ -1335,7 +1337,6 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
       //
       // NOTE:  we still "just" assume that native floating point is
       // IEEE.
-
       if (sizeof (CORBA::Short) != 2
           || sizeof (CORBA::Long) != 4
           || sizeof (CORBA::LongLong) != 8

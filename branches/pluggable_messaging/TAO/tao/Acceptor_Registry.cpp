@@ -17,6 +17,7 @@
 
 ACE_RCSID(tao, Acceptor_Registry, "$Id$")
 
+
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
   : acceptors_ (0),
     size_ (0)

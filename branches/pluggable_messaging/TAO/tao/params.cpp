@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/params.h"
 
 #if !defined (__ACE_INLINE__)
@@ -7,6 +8,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, params, "$Id$")
+
 
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)

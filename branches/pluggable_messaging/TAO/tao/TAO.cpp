@@ -1,5 +1,6 @@
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -17,6 +18,7 @@
 #include "tao/Environment.h"
 
 ACE_RCSID(tao, TAO, "$Id$")
+
 
 // constructor
 TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
@@ -303,6 +305,21 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv,
                        ASYS_TEXT ("(%P|%t) TAO_ORB_Manager %p\n"),
                        ASYS_TEXT ("run")),
                       -1);
+  return 0;
+}
+
+int
+TAO_ORB_Manager::fini (CORBA_Environment &ACE_TRY_ENV)
+{
+  this->poa_->destroy (1, 1, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->poa_ = 0;
+
+  this->orb_->destroy (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->orb_ = 0;
   return 0;
 }
 
