@@ -7466,7 +7466,6 @@ AC_CONFIG_FILES([
   Kokyu/tests/EDF/Makefile
   Kokyu/tests/FIFO/Makefile
 ])
-dnl (when using MPC) m4_include([configure.ac.Makefiles])
 
 dnl Configure subdirectories if they are present.
 AM_CONDITIONAL([BUILD_KOKYU],
