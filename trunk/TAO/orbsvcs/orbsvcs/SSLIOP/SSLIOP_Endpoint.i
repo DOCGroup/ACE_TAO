@@ -9,6 +9,33 @@ TAO_SSLIOP_Endpoint::iiop_endpoint (void) const
   return this->iiop_endpoint_;
 }
 
+ACE_INLINE void
+TAO_SSLIOP_Endpoint::iiop_endpoint (TAO_IIOP_Endpoint *iiop_endpoint,
+                                    int destroy)
+{
+  if (iiop_endpoint != 0)
+    {
+      TAO_IIOP_Endpoint *new_endpoint = 0;
+
+      if (destroy)
+        {
+          TAO_Endpoint *endpoint = iiop_endpoint->duplicate ();
+          
+          new_endpoint = ACE_dynamic_cast (TAO_IIOP_Endpoint *,
+                                           endpoint);
+
+        }
+      else
+        new_endpoint = iiop_endpoint;
+
+      if (this->destroy_iiop_endpoint_)
+        delete this->iiop_endpoint_;
+
+      this->iiop_endpoint_ = new_endpoint;
+      this->destroy_iiop_endpoint_ = destroy;
+    }
+}
+
 ACE_INLINE const SSLIOP::SSL &
 TAO_SSLIOP_Endpoint::ssl_component (void) const
 {

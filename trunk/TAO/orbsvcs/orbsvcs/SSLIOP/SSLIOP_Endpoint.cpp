@@ -19,7 +19,8 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP),
     object_addr_ (),
     next_ (0),
-    iiop_endpoint_ (iiop_endp)
+    iiop_endpoint_ (iiop_endp),
+    destroy_iiop_endpoint_ (0)
 {
   if (ssl_component != 0)
     {
@@ -72,6 +73,8 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
 
 TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint (void)
 {
+  if (this->destroy_iiop_endpoint_)
+    delete this->iiop_endpoint_;
 }
 
 int
@@ -141,8 +144,10 @@ TAO_SSLIOP_Endpoint::duplicate (void)
 
   ACE_NEW_RETURN (endpoint,
                   TAO_SSLIOP_Endpoint (&this->ssl_component_,
-                                       this->iiop_endpoint_),
+                                       0),
                   0);
+
+  endpoint->iiop_endpoint (this->iiop_endpoint_, 1);
 
   return endpoint;
 }
