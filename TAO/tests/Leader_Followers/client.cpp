@@ -254,14 +254,9 @@ main (int argc, char **argv)
       if (parse_args_result != 0)
         return parse_args_result;
 
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Get an object reference from the argument string.
-      object = orb->string_to_object (IOR,
-                                      ACE_TRY_ENV);
+      CORBA::Object_var object =
+        orb->string_to_object (IOR, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <server> reference.
