@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    encode.cpp
 //
@@ -16,7 +16,7 @@
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
 //     and Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if 0
@@ -31,7 +31,7 @@
 #if     defined (HAVE_WIDEC_H)
 #               include <widec.h>
 #else
-extern "C" 
+extern "C"
 {
   u_int wslen (const CORBA::WChar *);
   CORBA::WChar *wscpy (CORBA::WChar *, const CORBA::WChar *);
@@ -57,7 +57,7 @@ TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
   CORBA::Boolean continue_encoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;  // context is the CDR stream
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation 
+    CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation
 
   switch (tc->_kind)
     {
@@ -100,7 +100,7 @@ TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_encoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else 
+  else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       dmsg ("TAO_Marshal_Primitive::encode detected error");
@@ -121,16 +121,16 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
   CORBA::TypeCode_ptr elem_tc;
 
   // Value maintained by the Any.
-  void *value;   
+  void *value;
 
   CORBA::Boolean continue_encoding = CORBA::B_TRUE;
 
   // Context is the CDR stream.
-  CDR *stream = (CDR *) context;  
+  CDR *stream = (CDR *) context;
 
-  // Status of encode operation 
+  // Status of encode operation
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE; 
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   elem_tc = any->type ();
 
@@ -197,7 +197,7 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_encoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else 
+  else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       dmsg ("TAO_Marshal_Any::encode detected error");
@@ -223,7 +223,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
   if (continue_encoding == CORBA::B_TRUE)
     {
       // now encode the parameters, if any
-      switch (tc2->_kind) 
+      switch (tc2->_kind)
         {
           // Most TypeCodes have empty parameter lists
         default:
@@ -263,7 +263,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
     }
   if (continue_encoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else 
+  else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       dmsg ("TAO_Marshal_TypeCode::encode detected error");
@@ -284,7 +284,7 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
 
   CORBA::Principal_ptr p = *(CORBA::Principal_ptr *) data;
 
-  if (p != 0) 
+  if (p != 0)
     {
       continue_encoding = stream->put_long (p->id.length);
 
@@ -292,12 +292,12 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
 	   continue_encoding && i < p->id.length;
 	   i++)
         continue_encoding = stream->put_octet (p->id.buffer [i]);
-    } 
+    }
   else
     continue_encoding = stream->put_long (0);
   if (continue_encoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else 
+  else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       dmsg ("TAO_Marshal_Principal::encode detected error");
@@ -322,16 +322,16 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
   // marshal itself, that will be used.
   //
   // XXX this doesn't actually verify that the stuff got written
-  // OK to the "wire" ... 
+  // OK to the "wire" ...
   CORBA::Object_ptr obj = (CORBA::Object_ptr) data;
 
   // NIL objrefs ... marshal as empty type hint, no elements.
 
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     {
       continue_encoding =
         stream->put_ulong (1)   // strlen
-        && stream->put_char (0)         // NUL 
+        && stream->put_char (0)         // NUL
         && stream->put_ulong (0);       // no profiles
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
@@ -349,7 +349,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       IIOP_Object *objdata;
       IIOP::ProfileBody *profile;
 
-      if (obj->QueryInterface (IID_IIOP_Object, (void **) &objdata) != NOERROR) 
+      if (obj->QueryInterface (IID_IIOP_Object, (void **) &objdata) != NOERROR)
         {
           env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
           return CORBA::TypeCode::TRAVERSE_STOP;
@@ -422,8 +422,8 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
     {
       int member_count = tc->member_count (env);
 
-      for (int i = 0; 
-	   i < member_count && retval == CORBA::TypeCode::TRAVERSE_CONTINUE 
+      for (int i = 0;
+	   i < member_count && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
 	     && continue_encoding == CORBA::B_TRUE;
 	   i++)
 	{
@@ -488,24 +488,24 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
 			  break;
 			}
 		      data = (char *) data + size;
-		    } 
-		  else 
+		    }
+		  else
 		    return CORBA::TypeCode::TRAVERSE_STOP;
-		} 
-	      else 
+		}
+	      else
 		return CORBA::TypeCode::TRAVERSE_STOP;
-	    } 
-	  else 
+	    }
+	  else
 	    return CORBA::TypeCode::TRAVERSE_STOP;
 	}
-    } 
-  else 
+    }
+  else
       return CORBA::TypeCode::TRAVERSE_STOP;
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE 
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_encoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else 
+  else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       dmsg ("marshaling encode_struct detected error");
@@ -538,7 +538,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
       CORBA::Boolean discrim_matched = CORBA::B_FALSE;
 
       // encode the discriminator value
-      CORBA::TypeCode::traverse_status retval = 
+      CORBA::TypeCode::traverse_status retval =
 	stream->encode (discrim_tc, data, data2, env);
 
       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -547,7 +547,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
           if (env.exception () == 0)
             {
               discrim_val = data; // save the pointer to the discriminator
-				  // value 
+				  // value
               // move the pointer to point to the actual value
               data = (char *) data + discrim_size_with_pad;
               data2 = (char *) data2 + discrim_size_with_pad;
@@ -622,7 +622,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                   dmsg1 ("Union::encode - error getting member type:%d",i);
                                   return CORBA::TypeCode::TRAVERSE_STOP;
                                 }
-                              
+
                             }
                           else // error getting member label
                             {
@@ -640,7 +640,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
 			  dmsg ("Union::encode - failed. No match and no default case");
 			  return CORBA::TypeCode::TRAVERSE_STOP;
 			}
-                    } 
+                    }
                   else // error getting member count
                     {
                       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
@@ -693,7 +693,7 @@ TAO_Marshal_String::encode (CORBA::TypeCode_ptr tc,
   // errors. (OMG-IDL supports languages that don't use the C/C++
   // notion of null v. empty strings; nulls aren't part of the OMG-IDL
   // string model.)
-  if (str != 0) 
+  if (str != 0)
     {
       // Verify string satisfies bounds requirements.  We're not so
       // permissive as to send messages violating the interface spec
@@ -729,7 +729,7 @@ TAO_Marshal_String::encode (CORBA::TypeCode_ptr tc,
       else
 	return CORBA::TypeCode::TRAVERSE_STOP;
     }
-  else 
+  else
     {
       // empty string
       stream->put_ulong (1);
@@ -746,7 +746,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               void *context,
                               CORBA::Environment &env)
 {
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;  
+  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;
   CORBA::OctetSeq *seq = (CORBA::OctetSeq *) data;
   CORBA::TypeCode::traverse_status retval =
@@ -767,14 +767,14 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
         {
           // encode only if it is an unbounded sequence or if length is
           // less/equal to the bounds
-          if (bounds == 0 || len <= bounds) 
+          if (bounds == 0 || len <= bounds)
             {
               bounds = len;  // number of times you encode
               continue_encoding = stream->put_ulong (seq->length);
-              if (continue_encoding && seq->length != 0) 
+              if (continue_encoding && seq->length != 0)
                 {
                   // get element typecode
-                  tc2 = tc->content_type (env);  
+                  tc2 = tc->content_type (env);
                   if (env.exception () == 0)
                     {
                       size = tc2->size (env);
@@ -913,11 +913,11 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
             } // within bounds or unbounded
         } // no exception computing bounds
     } // length is > 0
-  else 
+  else
     {
       // length is 0, encode it
       continue_encoding = stream->put_ulong (len);
-      if (continue_encoding == CORBA::B_TRUE) 
+      if (continue_encoding == CORBA::B_TRUE)
         return CORBA::TypeCode::TRAVERSE_CONTINUE;
 
     }
@@ -935,7 +935,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                            void *context,
                            CORBA::Environment &env)
 {
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;  
+  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
@@ -948,7 +948,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
   if (env.exception () == 0)
     {
       // get element typecode.
-      CORBA::TypeCode_ptr tc2 = tc->content_type (env);  
+      CORBA::TypeCode_ptr tc2 = tc->content_type (env);
 
       if (env.exception () == 0)
         {
@@ -1103,14 +1103,14 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
   CORBA::Boolean continue_encoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;  // context is the CDR stream
   CORBA::TypeCode::traverse_status   retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation 
+    CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation
   char *value = (char *) data;
 
   tc2 = tc->content_type (env);
   if (env.exception () == 0)
     {
     // switch on the data type and handle the cases for primitives here for
-    // efficiency rather than calling 
+    // efficiency rather than calling
     switch (tc2->_kind)
       {
       case CORBA::tk_null:
@@ -1167,7 +1167,7 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_encoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else 
+  else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       dmsg ("TAO_Marshal_Alias::encode detected error");
@@ -1197,9 +1197,9 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
 
       int member_count = tc->member_count (env);
 
-      for (int i = 0; 
-	   i < member_count && retval == CORBA::TypeCode::TRAVERSE_CONTINUE 
-	     && continue_encoding == CORBA::B_TRUE; 
+      for (int i = 0;
+	   i < member_count && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+	     && continue_encoding == CORBA::B_TRUE;
 	   i++)
 	{
 	  param = tc->member_type (i, env);
@@ -1262,24 +1262,24 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
 			break;
 		      }
 		      data = (char *) data + size;
-		    } 
-		  else 
+		    }
+		  else
 		    return CORBA::TypeCode::TRAVERSE_STOP;
-		} 
-	      else 
+		}
+	      else
 		return CORBA::TypeCode::TRAVERSE_STOP;
-	    } 
-	  else 
+	    }
+	  else
 	    return CORBA::TypeCode::TRAVERSE_STOP;
 	}
-    } 
-  else 
+    }
+  else
     return CORBA::TypeCode::TRAVERSE_STOP;
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE 
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_encoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else 
+  else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       dmsg ("TAO_Marshal_Except detected error");
@@ -1305,7 +1305,7 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
   // errors. (OMG-IDL supports languages that don't use the
   // C/C++ notion of null v. empty strings; nulls aren't part of
   // the OMG-IDL string model.)
-  if (str != 0) 
+  if (str != 0)
     {
       // Verify string satisfies bounds requirements.  We're not so
       // permissive as to send messages violating the interface spec
@@ -1338,7 +1338,7 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
       else
 	return CORBA::TypeCode::TRAVERSE_STOP;
     }
-  else 
+  else
     {
       // empty string
       stream->put_ulong (1);
@@ -1346,4 +1346,3 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
 }
-
