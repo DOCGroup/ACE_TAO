@@ -29,9 +29,11 @@
 # include "tao/PortableServer/Object_Adapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+class TAO_ServantBase;
+
 namespace PortableServer
 {
-  class ServantBase;
+  typedef ::TAO_ServantBase ServantBase;
 }
 
 
@@ -52,7 +54,7 @@ namespace TAO
                     size_t nargs,
                     TAO::Argument * retval,
                     TAO_ServerRequest & server_request,
-                    PortableServer::ServantBase * servant,
+                    PortableServer::Servant servant,
                     void * servant_upcall);
 
     /// Perform pre-upcall operations.
@@ -61,7 +63,7 @@ namespace TAO
      * @c IN and @c INOUT argument demarshaling, and intermediate
      * interception point invocation.
      */
-    void pre_upcall (void);
+    bool pre_upcall (void);
 
     /// Perform post-upcall operations.
     /**
@@ -69,7 +71,7 @@ namespace TAO
      * @c INOUT and @c OUT argument marshaling, and ending
      * interception point invocation.
      */
-    void post_upcall (void);
+    bool post_upcall (void);
 
   private:
 
@@ -105,6 +107,10 @@ namespace TAO
      * We do this to avoid including "Object_Adapter.h".
      */
     void * const servant_upcall_;
+
+    /// Interceptor adapter object that encapsulates the server side
+    /// interception points.
+    TAO::ServerInterceptorAdapter interceptor_adapter_;
 
 #endif  /* TAO_HAS_INTECEPTORS == 1 */
 

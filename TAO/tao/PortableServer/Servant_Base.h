@@ -73,7 +73,7 @@ public:
   /// Get the correct vtable.
   virtual void *_downcast (const char *repository_id) = 0;
 
-  /// This is an auxiliar method for _this() and _narrow().
+  /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL);
 
   /**
@@ -97,6 +97,11 @@ public:
                      TAO_Collocated_Skeleton &skelfunc,
                      TAO::Collocation_Strategy st,
                      const unsigned int length = 0);
+
+
+  /// Get this interface's repository id (TAO specific).
+  virtual const char *_interface_repository_id (void) const = 0;
+
 protected:
 
   /// Default constructor, only derived classes can be created.
@@ -121,11 +126,10 @@ protected:
 
 
   /// Register a CORBA IDL operation name.
-  /*virtual int _bind (const char *opname,
-                     const TAO_Skeleton skel_ptr);
+  /*
+    virtual int _bind (const char *opname,
+                       const TAO_Skeleton skel_ptr);
   */
-  /// Get this interface's repository id (TAO specific).
-  virtual const char *_interface_repository_id (void) const = 0;
 
 protected:
   /// The operation table for this servant, it is initialized by the

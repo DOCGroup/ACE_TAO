@@ -2,8 +2,30 @@
 //
 // $Id$
 
+
+ACE_INLINE
+TAO::ServerRequestInfo::ServerRequestInfo (
+  TAO::Argument ** args,
+  size_t nargs,
+  TAO_ServerRequest & server_request,
+  TAO_Object_Adapter::Servant_Upcall * servant_upcall,
+  PortableServer::ServantBase * servant,
+  CORBA::TypeCode_ptr * exceptions,
+  size_t nexceptions)
+  : args_ (args)
+  , nargs_ (nargs)
+  , server_request_ (server_request)
+  , servant_upcall_ (servant_upcall)
+  , servant_ (servant)
+  , exceptions_ (exceptions)
+  , nexceptions_ (nexceptions)
+  , caught_exception_ (0)
+  , reply_status_ (-1)
+{
+}
+
 ACE_INLINE void
-TAO_ServerRequestInfo::exception (CORBA::Exception *exception)
+TAO::ServerRequestInfo::exception (CORBA::Exception * exception)
 {
   if (CORBA::SystemException::_downcast (exception) != 0)
     this->reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
@@ -16,13 +38,13 @@ TAO_ServerRequestInfo::exception (CORBA::Exception *exception)
 }
 
 ACE_INLINE void
-TAO_ServerRequestInfo::reply_status (PortableInterceptor::ReplyStatus s)
+TAO::ServerRequestInfo::reply_status (PortableInterceptor::ReplyStatus s)
 {
   this->reply_status_ = s;
 }
 
 ACE_INLINE void
-TAO_ServerRequestInfo::forward_reference (
+TAO::ServerRequestInfo::forward_reference (
   PortableInterceptor::ForwardRequest &exc)
 {
   // Note that we're converting the ForwardRequest exception in to a
@@ -35,7 +57,7 @@ TAO_ServerRequestInfo::forward_reference (
 }
 
 ACE_INLINE void
-TAO_ServerRequestInfo::forward_reference (CORBA::Object_ptr obj)
+TAO::ServerRequestInfo::forward_reference (CORBA::Object_ptr obj)
 {
   // We only get here if a servant manager threw a
   // PortableServer::ForwardRequest exception.
@@ -47,7 +69,7 @@ TAO_ServerRequestInfo::forward_reference (CORBA::Object_ptr obj)
 }
 
 ACE_INLINE TAO_ServerRequest &
-TAO_ServerRequestInfo::server_request (void)
+TAO::ServerRequestInfo::server_request (void)
 {
   return this->server_request_;
 }
