@@ -1,3 +1,18 @@
+Thu May 20 14:31:20 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests/RTCCM/DiffServ/descriptors/rtsvc.conf: 
+
+	  This file is no longer needed.
+	
+	* tests/RTCCM/DiffServ/descriptors/run_test.pl: 
+
+	  No need to specify rtsvc.conf file.
+
+	* tools/RTComponentServer/RTComponentServer.cpp (main): 
+
+	  No need to check that multiple priorities are supported.  Some
+	  servers can do with one priority.
+
 Thu May 20 13:40:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests/RTCCM/DiffServ/Sender/Sender.mpc: 

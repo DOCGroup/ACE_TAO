@@ -15,13 +15,11 @@ $ORBdebuglevel = 0;
 
 $daemon_1 = new PerlACE::Process ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon",
                                   "-ORBEndpoint iiop://localhost:20000 " .
-                                  "-n \"${CIAO_ROOT}/tools/RTComponentServer/RTComponentServer -ORBdebuglevel $ORBdebuglevel\" " .
-                                  "-c rtsvc.conf");
+                                  "-n \"${CIAO_ROOT}/tools/RTComponentServer/RTComponentServer -ORBdebuglevel $ORBdebuglevel\"");
 
 $daemon_2 = new PerlACE::Process ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon",
                                   "-ORBEndpoint iiop://localhost:12000 " .
-                                  "-n \"${CIAO_ROOT}/tools/RTComponentServer/RTComponentServer -ORBdebuglevel $ORBdebuglevel\" " .
-                                  "-c rtsvc.conf");
+                                  "-n \"${CIAO_ROOT}/tools/RTComponentServer/RTComponentServer -ORBdebuglevel $ORBdebuglevel\"");
 
 $assembly_manager_args = "-o assembly_manager.ior -c test.dat";
 $assembly_manager = new PerlACE::Process ("${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager", "$assembly_manager_args");
@@ -29,7 +27,7 @@ $assembly_manager = new PerlACE::Process ("${CIAO_ROOT}/tools/Assembly_Deployer/
 $assembly_deployer_args = "-k file://assembly_manager.ior -a remote.cad -o assembly";
 $assembly_deployer = new PerlACE::Process ("${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer", "$assembly_deployer_args");
 
-$controller = new PerlACE::Process ("../Controller/Controller", "-n 6 -p 15000 -ORBsvcconf rtsvc.conf");
+$controller = new PerlACE::Process ("../Controller/Controller", "-n 6 -p 15000");
 
 # Remove all ior files
 unlink "assembly_manager.ior";
