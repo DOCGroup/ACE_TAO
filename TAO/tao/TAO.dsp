@@ -2323,7 +2323,102 @@ SOURCE=.\RT_Current.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\rtcorbafwd.cpp
+SOURCE=.\RT_Mutex.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_ORB.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Policy_i.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAS.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAS_T.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3514,7 +3609,27 @@ SOURCE=.\RT_Current.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\rtcorbafwd.h
+SOURCE=.\RT_Mutex.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_ORB.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Policy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAS_T.h
 # End Source File
 # Begin Source File
 
@@ -3958,7 +4073,27 @@ SOURCE=.\RT_Current.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\rtcorbafwd.i
+SOURCE=.\RT_Mutex.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Policy_i.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBAS_T.i
 # End Source File
 # Begin Source File
 
