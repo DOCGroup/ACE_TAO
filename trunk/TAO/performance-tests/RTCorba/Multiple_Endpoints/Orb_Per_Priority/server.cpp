@@ -1,6 +1,6 @@
 // $Id$
 
-#include "../test_i.h"
+#include "test_i.h"
 #include "tao/rtcorbafwd.h"
 #include "tao/Priority_Mapping.h"
 #include "ace/Get_Opt.h"
