@@ -8,8 +8,7 @@
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
 
-#include <stdio.h>
-
+#include "ace/OS.h"
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
 #ifdef c_plusplus
@@ -20,8 +19,6 @@
 
 
 #ifdef __cplusplus
-
-#include <stdlib.h>
 
 /* Use prototypes in function declarations. */
 #define YY_USE_PROTOS
@@ -1424,11 +1421,6 @@ YY_BUFFER_STATE b;
 	}
 
 
-#ifndef YY_ALWAYS_INTERACTIVE
-#ifndef YY_NEVER_INTERACTIVE
-extern int isatty YY_PROTO(( int ));
-#endif
-#endif
 
 #ifdef YY_USE_PROTOS
 void yy_init_buffer( YY_BUFFER_STATE b, FILE *file )
@@ -1445,15 +1437,8 @@ FILE *file;
 	b->yy_input_file = file;
 	b->yy_fill_buffer = 1;
 
-#if YY_ALWAYS_INTERACTIVE
-	b->yy_is_interactive = 1;
-#else
-#if YY_NEVER_INTERACTIVE
-	b->yy_is_interactive = 0;
-#else
 	b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
-#endif
-#endif
+
 	}
 
 
