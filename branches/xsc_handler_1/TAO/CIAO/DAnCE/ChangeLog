@@ -1,3 +1,13 @@
+Mon Mar 03 01:45:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* examples/BasicSP/BMDisplay/BMDisplay.idl
+	* examples/BasicSP/descriptors/HUDisplay.cid
+	* examples/BasicSP/descriptors/NavDisplay.ccd
+
+	  Added a multiplex receptacle to the BMDisplay component. 
+	  This is a place holder to test "users multipe" feature. 
+	  Modified descriptors to reflect this change as well. 
+
 Tue Mar 01 01:26:03 2005  Gan Deng <dengg@dre.vanderbilt.edu>
 
 	* ciao/Deployment_Core.idl
