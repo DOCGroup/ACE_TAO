@@ -170,7 +170,7 @@ namespace CIAO
     TAO_SYNCH_MUTEX lock_;
 
     /// Keep a list of managed ComponentServer objects.
-    Object_Set<::Components::Deployment::ComponentServer, ::Components::Deployment::ComponentServer_var> cs_set_;
+    Object_Set<Components::Deployment::ComponentServer, Components::Deployment::ComponentServer_var> cs_set_;
   };
 }
 

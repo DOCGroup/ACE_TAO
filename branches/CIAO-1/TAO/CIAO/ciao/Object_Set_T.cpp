@@ -61,7 +61,7 @@ CIAO::Object_Set<T, T_var>::remove (T *objref)
   CORBA::ULong i = 0;
 
   for (; i < this->size_; ++i)
-    if (objref->_is_equivalent (this->buffer_[i])) // _is_equivalent could be unreliable?
+    if (objref->_is_equivalent (this->buffer_[i].in ())) // _is_equivalent could be unreliable?
       {
         --this->size_;
         if (i != this->size_)
@@ -115,7 +115,7 @@ CIAO::Object_Set<T, T_var>::object_in_set (T *objref)
   CORBA::ULong i = 0;
 
   for (; i < this->size_; ++i)
-    if (objref->_is_equivalent (this->buffer_[i])) // _is_equivalent could be unreliable?
+    if (objref->_is_equivalent (this->buffer_[i].in ())) // _is_equivalent could be unreliable?
       return -1;
 
   return 0;

@@ -131,7 +131,7 @@ protected:
     PortableServer::POA_var poa_;
 
     /// Internal container implementation.
-    Container *container_;
+    CIAO::Container *container_;
 
     /// Cached ConfigValues.
     Components::ConfigValues_var config_;
@@ -149,7 +149,7 @@ protected:
     TAO_SYNCH_MUTEX lock_;
 
     /// Keep a list of managed CCMHome.
-    Object_Set<::Components::CCMHome, ::Components::CCMHome_var> home_set_;
+    Object_Set<Components::CCMHome, Components::CCMHome_var> home_set_;
   };
 }
 

@@ -40,6 +40,8 @@ CIAO::AssemblyFactory_Impl::create_assembly (const char * assembly_loc
                    Components::Deployment::InvalidLocation,
                    Components::CreateFailure))
 {
+  ACE_UNUSED_ARG (assembly_loc);
+
   CIAO::Assembly_Impl *servant = 0;
   ACE_NEW_RETURN (servant,
                   CIAO::Assembly_Impl (this->orb_.in (),
@@ -64,7 +66,7 @@ CIAO::AssemblyFactory_Impl::create_assembly (const char * assembly_loc
   ACE_CHECK_RETURN (0);
 
   ::Components::Deployment::Assembly_var assembly =
-      ::Components::Deployment::Assembly::_narrow (objref
+      ::Components::Deployment::Assembly::_narrow (objref.in ()
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
