@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Synch_T.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_SYNCH_T_H)
@@ -86,7 +86,7 @@ public:
 private:
   ACE_LOCKING_MECHANISM *lock_;
   // The concrete locking mechanism that all the methods delegate to.
-  
+
   int delete_lock_;
   // This flag keep track of whether we are responsible for deleting
   // the lock
@@ -115,8 +115,8 @@ public:
   // Sets the <is_set_> status, returning the original value of
   // <is_set_>.
 
-  virtual int handle_signal (int signum, 
-			     siginfo_t * = 0, 
+  virtual int handle_signal (int signum,
+			     siginfo_t * = 0,
 			     ucontext_t * = 0);
   // Called when object is signaled by OS (either via UNIX signals or
   // when a Win32 object becomes signaled).
@@ -280,7 +280,7 @@ public:
 protected:
   TYPE *ts_get (void) const;
   // Actually implements the code that retrieves the object from
-  // thread-specific storage. 
+  // thread-specific storage.
 
 #if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   TYPE *type_;
@@ -340,12 +340,12 @@ public:
   int tryacquire (void) { return this->owner_ = this->lock_->tryacquire (); }
   // Conditionally acquire the lock (i.e., won't block).
 
-  int release (void) 
-    { 
-      if (this->owner_ != -1) 
+  int release (void)
+    {
+      if (this->owner_ != -1)
 	{
-	  this->owner_ = -1; 
-	  return this->lock_->release (); 
+	  this->owner_ = -1;
+	  return this->lock_->release ();
 	}
       else
 	return 0;
@@ -396,8 +396,8 @@ public:
   ACE_Write_Guard (ACE_LOCK &m): ACE_Guard<ACE_LOCK> (&m)
     { this->owner_ = this->acquire_write (); }
 
-  ACE_Write_Guard (ACE_LOCK &m, int block): ACE_Guard<ACE_LOCK> (&m) 
-    { 
+  ACE_Write_Guard (ACE_LOCK &m, int block): ACE_Guard<ACE_LOCK> (&m)
+    {
       this->owner_ = block ? this->acquire_write () : this->tryacquire_write ();
     }
   // Implicitly and automatically acquire (or try to acquire) a write
@@ -437,11 +437,11 @@ class ACE_Read_Guard : public ACE_Guard<ACE_LOCK>
 public:
   // = Initialization methods.
 
-  ACE_Read_Guard (ACE_LOCK& m): ACE_Guard<ACE_LOCK> (&m) 
+  ACE_Read_Guard (ACE_LOCK& m): ACE_Guard<ACE_LOCK> (&m)
     { this->owner_ = this->acquire_read (); }
 
-  ACE_Read_Guard (ACE_LOCK &m, int block): ACE_Guard<ACE_LOCK> (&m) 
-    { 
+  ACE_Read_Guard (ACE_LOCK &m, int block): ACE_Guard<ACE_LOCK> (&m)
+    {
       this->owner_ = block ? this->acquire_read () : this->tryacquire_read ();
     }
   // Implicitly and automatically acquire (or try to acquire) a read
@@ -634,12 +634,12 @@ class ACE_Condition
 {
 public:
   // = Initialiation and termination methods.
-  ACE_Condition (MUTEX &m, int type = USYNC_THREAD, 
+  ACE_Condition (MUTEX &m, int type = USYNC_THREAD,
 		 LPCTSTR name = 0, void *arg = 0);
   // Initialize the condition variable.
 
   ~ACE_Condition (void);
-  // Implicitly destroy the condition variable.     
+  // Implicitly destroy the condition variable.
 
   // = Lock accessors.
   int wait (const ACE_Time_Value *abstime);
@@ -667,7 +667,7 @@ public:
 
   // = Utility methods.
   int remove (void);
-  // Explicitly destroy the condition variable.     
+  // Explicitly destroy the condition variable.
 
   MUTEX &mutex (void);
   // Returns a reference to the underlying mutex_;
@@ -682,13 +682,13 @@ protected:
   ACE_cond_t cond_;
   // Condition variable.
 
-  MUTEX &mutex_; 
+  MUTEX &mutex_;
   // Reference to mutex lock.
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Condition<MUTEX> &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Condition (const ACE_Condition<MUTEX> &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Condition<MUTEX> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Condition (const ACE_Condition<MUTEX> &))
 };
 
 template <class MUTEX>
@@ -834,13 +834,13 @@ public:
 // inlined or the compiler will ignore the specializations.
 #if defined (ACE_WIN32)
 #undef ACE_INLINE
-#define ACE_INLINE 
+#define ACE_INLINE
 #include "ace/Atomic_Op.i"
 #undef ACE_INLINE
 #if defined (__ACE_INLINE__)
 #define ACE_INLINE inline
 #else
-#define ACE_INLINE 
+#define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 #endif /* ACE_WIN32 */
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

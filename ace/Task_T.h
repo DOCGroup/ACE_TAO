@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Task_T.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_TASK_T_H)
@@ -27,25 +27,25 @@ template <ACE_SYNCH_DECL> class ACE_Module;
 template <ACE_SYNCH_DECL>
 class ACE_Task : public ACE_Task_Base
   // = TITLE
-  //    Primary interface for application message processing, as well 
+  //    Primary interface for application message processing, as well
   //    as input and output message queueing.
   //
   // = DESCRIPTION
   //    This class serves as the basis for passive and active objects
-  //    in ACE.  
+  //    in ACE.
 {
 friend class ACE_Module<ACE_SYNCH_USE>;
 friend class ACE_Module_Type;
 public:
   // = Initialization/termination methods.
-  ACE_Task (ACE_Thread_Manager *thr_mgr = 0, 
+  ACE_Task (ACE_Thread_Manager *thr_mgr = 0,
 	    ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0);
   // Initialize a Task, supplying a thread manager and a message
   // queue.  If the user doesn't supply a ACE_Message_Queue pointer
   // then we'll allocate one dynamically.  Otherwise, we'll use the
   // one they give.
 
-  virtual ~ACE_Task (void);	
+  virtual ~ACE_Task (void);
   // Destructor.
 
   ACE_Message_Queue<ACE_SYNCH_USE> *msg_queue (void);
@@ -54,22 +54,22 @@ public:
   void msg_queue (ACE_Message_Queue<ACE_SYNCH_USE> *);
   // Sets the message queue associated with this task.
 
-public: // Should be protected: 
+public: // Should be protected:
   // = Message queue manipulation methods.
 
-  int putq (ACE_Message_Block *, ACE_Time_Value *tv = 0);    
+  int putq (ACE_Message_Block *, ACE_Time_Value *tv = 0);
   // Insert message into the message list.
 
   int getq (ACE_Message_Block *&mb, ACE_Time_Value *tv = 0);
   // Extract the first message from the list (blocking).
 
-  int ungetq (ACE_Message_Block *, ACE_Time_Value *tv = 0);	 
+  int ungetq (ACE_Message_Block *, ACE_Time_Value *tv = 0);
   // Return a message to the queue.
 
-  int can_put (ACE_Message_Block *); 
+  int can_put (ACE_Message_Block *);
   // Tests whether we can enqueue a message without blocking.
 
-  int reply (ACE_Message_Block *, ACE_Time_Value *tv = 0);	     
+  int reply (ACE_Message_Block *, ACE_Time_Value *tv = 0);
   // Turn the message around and send it back down the Stream.
 
   int put_next (ACE_Message_Block *msg, ACE_Time_Value *tv = 0);
@@ -93,7 +93,7 @@ public: // Should be protected:
   ACE_Module<ACE_SYNCH_USE> *module (void) const;
   // Return the Task's Module if there is one, else returns 0.
 
-  int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL); 
+  int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
   // Flush the queue.  Note that if this conflicts with the C++
   // iostream flush() function, just rewrite the iostream function as
   // ::flush().
@@ -103,13 +103,13 @@ public: // Should be protected:
   void water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds, size_t);
   // Manipulate watermarks.
 
-  ACE_Message_Queue<ACE_SYNCH_USE> *msg_queue_;	
+  ACE_Message_Queue<ACE_SYNCH_USE> *msg_queue_;
   // List of messages on the ACE_Task..
 
   int delete_msg_queue_;
   // 1 if should delete Message_Queue, 0 otherwise.
 
-  ACE_Module<ACE_SYNCH_USE> *mod_;		
+  ACE_Module<ACE_SYNCH_USE> *mod_;
   // Back-pointer to the enclosing module.
 
   ACE_Task<ACE_SYNCH_USE> *next_;
@@ -124,8 +124,8 @@ public: // Should be protected:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Task &operator= (const ACE_Task<ACE_SYNCH_USE> &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Task (const ACE_Task<ACE_SYNCH_USE> &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Task &operator= (const ACE_Task<ACE_SYNCH_USE> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Task (const ACE_Task<ACE_SYNCH_USE> &))
 };
 
 #if defined (__ACE_INLINE__)

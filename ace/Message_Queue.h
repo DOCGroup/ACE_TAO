@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Message_Queue.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_MESSAGE_QUEUE_H)
@@ -46,25 +46,25 @@ public:
   typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE> REVERSE_ITERATOR;
 
   // = Default high and low water marks.
-  enum 
+  enum
   {
-    DEFAULT_LWM = 0, 
+    DEFAULT_LWM = 0,
     // Default low watermark.
-    DEFAULT_HWM = 16 * 1024, 
+    DEFAULT_HWM = 16 * 1024,
     // Default high watermark (16 K).
-    WAS_ACTIVE   = 1, 
+    WAS_ACTIVE   = 1,
     // Message queue was active before activate() or deactivate().
-    WAS_INACTIVE = 2  
+    WAS_INACTIVE = 2
     // Message queue was inactive before activate() or deactivate().
   };
 
   // = Initialization and termination methods.
-  ACE_Message_Queue (size_t hwm = DEFAULT_HWM, 
-		     size_t lwm = DEFAULT_LWM, 
+  ACE_Message_Queue (size_t hwm = DEFAULT_HWM,
+		     size_t lwm = DEFAULT_LWM,
 		     ACE_Notification_Strategy * = 0);
 
   // Create a message queue with all the defaults.
-  virtual int open (size_t hwm = DEFAULT_HWM, 
+  virtual int open (size_t hwm = DEFAULT_HWM,
                     size_t lwm = DEFAULT_LWM,
                     ACE_Notification_Strategy * = 0);
   // Create a message queue with all the defaults.
@@ -84,13 +84,13 @@ public:
   // or if the time specified in timeout elapses, (in which case errno
   // = EWOULDBLOCK).
 
-  virtual int peek_dequeue_head (ACE_Message_Block *&first_item, 
+  virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
                                  ACE_Time_Value *tv = 0);
   // Retrieve the first <ACE_Message_Block> without removing it.
   // Returns -1 on failure, else the number of items still on the
   // queue.
 
-  virtual int enqueue_prio (ACE_Message_Block *new_item, 
+  virtual int enqueue_prio (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0);
   // Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
   // accordance with its <msg_priority> (0 is lowest priority).  FIFO
@@ -118,7 +118,7 @@ public:
   // queue.  Returns -1 on failure, else the number of items still on
   // the queue.
 
-  // = Check if queue is full/empty. 
+  // = Check if queue is full/empty.
   virtual int is_full (void);
   // True if queue is full, else false.
   virtual int is_empty (void);
@@ -130,7 +130,7 @@ public:
   virtual size_t message_count (void);
   // Number of total messages on the queue.
 
-  // = Flow control routines 
+  // = Flow control routines
   virtual size_t high_water_mark (void);
   // Get high watermark.
   virtual void high_water_mark (size_t hwm);
@@ -227,25 +227,25 @@ protected:
   virtual int signal_dequeue_waiters (void);
   // Inform any threads waiting to dequeue that they can procede.
 
-  ACE_Message_Block *head_;           
+  ACE_Message_Block *head_;
   // Pointer to head of ACE_Message_Block list.
 
-  ACE_Message_Block *tail_;           
+  ACE_Message_Block *tail_;
   // Pointer to tail of ACE_Message_Block list.
 
-  size_t low_water_mark_;  
+  size_t low_water_mark_;
   // Lowest number before unblocking occurs.
 
-  size_t high_water_mark_; 
+  size_t high_water_mark_;
   // Greatest number of bytes before blocking.
 
-  size_t cur_bytes_;       
+  size_t cur_bytes_;
   // Current number of bytes in the queue.
 
-  size_t cur_count_;       
+  size_t cur_count_;
   // Current number of messages in the queue.
 
-  int deactivated_; 
+  int deactivated_;
   // Indicates that the queue is inactive.
 
   ACE_Notification_Strategy *notification_strategy_;
@@ -278,8 +278,8 @@ protected:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue &operator= (const ACE_Message_Queue<ACE_SYNCH_USE> &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue &operator= (const ACE_Message_Queue<ACE_SYNCH_USE> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &))
 };
 
 template <ACE_SYNCH_DECL>
@@ -313,7 +313,7 @@ private:
   ACE_Message_Queue <ACE_SYNCH_USE> &queue_;
   // Message_Queue we are iterating over.
 
-  ACE_Message_Block *curr_;           
+  ACE_Message_Block *curr_;
   // Keeps track of how far we've advanced...
 };
 
@@ -348,7 +348,7 @@ private:
   ACE_Message_Queue <ACE_SYNCH_USE> &queue_;
   // Message_Queue we are iterating over.
 
-  ACE_Message_Block *curr_;           
+  ACE_Message_Block *curr_;
   // Keeps track of how far we've advanced...
 };
 

@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Task.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_TASK_H)
@@ -23,15 +23,15 @@
 class ACE_Export ACE_Task_Flags
   // = TITLE
   //    These flags are used within the ACE_Task.
-  // 
+  //
   // = DESCRIPTION
   //    These flags should be hidden within ACE_Task.  Unfortunately, the
   //    HP/UX C++ compiler can't grok this...  Fortunately, there's no
   //    code defined here, so we don't have to worry about multiple
-  //    definitions. 
+  //    definitions.
 {
 public:
-  enum 
+  enum
   {
     ACE_READER     = 01,  // Identifies a Task as being the "reader" in a Module.
     ACE_FLUSHDATA  = 02,  // Just flush data messages in the queue.
@@ -81,14 +81,14 @@ public:
 
   // = Immediate and deferred processing methods, respectively.
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
-  // Transfer msg into the queue to handle immediate processing. 
+  // Transfer msg into the queue to handle immediate processing.
 
   virtual int svc (void);
   // Run by a daemon thread to handle deferred processing.
 
   // = Active object activation method.
-  virtual int activate (long flags = THR_NEW_LWP, 
-			int n_threads = 1, 
+  virtual int activate (long flags = THR_NEW_LWP,
+			int n_threads = 1,
 			int force_active = 0,
 			long priority = ACE_DEFAULT_THREAD_PRIORITY,
 			int grp_id = -1,
@@ -102,7 +102,7 @@ public:
   // this case), and returns 0 if Task was not already an active
   // object and a thread is created successfully or thread is an
   // active object and <force_active> is true.
-  // 
+  //
   // The <{flags}> are a bitwise-OR of the following:
   // = BEGIN<INDENT>
   // THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
@@ -110,7 +110,7 @@ public:
   // THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
   // THR_SCHED_RR, THR_SCHED_DEFAULT
   // = END<INDENT>
-  // 
+  //
   // By default, or if <{priority}> is set to ACE_DEFAULT_THREAD_PRIORITY,
   // an "appropriate"
   // priority value for the given scheduling policy (specified in
@@ -150,7 +150,7 @@ public:
   int is_reader (void) const;
   // True if queue is a reader, else false.
 
-  int is_writer (void) const;	
+  int is_writer (void) const;
   // True if queue is a writer, else false.
 
   size_t thr_count (void) const;
@@ -180,7 +180,7 @@ public:
   ACE_Thread_Manager *thr_mgr_;
   // Multi-threading manager.
 
-  u_long flags_;		
+  u_long flags_;
   // ACE_Task flags.
 
   int grp_id_;
@@ -195,8 +195,8 @@ public:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Task_Base &operator= (const ACE_Task_Base &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Task_Base (const ACE_Task_Base &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Task_Base &operator= (const ACE_Task_Base &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Task_Base (const ACE_Task_Base &))
 };
 
 #if defined (__ACE_INLINE__)

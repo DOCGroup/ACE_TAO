@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Synch.h
 //
@@ -13,8 +13,8 @@
 //     Wrappers for various synchronization routines.
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_SYNCH_H)
@@ -107,7 +107,7 @@ public:
   int open (LPCTSTR filename, int flags, mode_t mode = 0);
   // Open the <filename> with <flags> and <mode> and set the result to
   // <handle_>.
-  
+
   ~ACE_File_Lock (void);
   // Remove a File lock by releasing it and closing down the <handle_>.
 
@@ -130,7 +130,7 @@ public:
   // Unlock a readers/writer lock.
 
   int acquire_write (short whence = 0, off_t start = 0, off_t len = 1);
-  // Acquire a write lock, but block if any readers or a 
+  // Acquire a write lock, but block if any readers or a
   // writer hold the lock.
 
   int tryacquire_write (short whence = 0, off_t start = 0, off_t len = 1);
@@ -171,8 +171,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_File_Lock &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_File_Lock (const ACE_File_Lock &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_File_Lock &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_File_Lock (const ACE_File_Lock &))
 };
 
 class ACE_Export ACE_Semaphore
@@ -182,13 +182,13 @@ class ACE_Export ACE_Semaphore
 public:
   // = Initialization and termination.
   ACE_Semaphore (u_int count = 1, // By default make this unlocked.
-		 int type = USYNC_THREAD, 
-		 LPCTSTR name = 0, 
+		 int type = USYNC_THREAD,
+		 LPCTSTR name = 0,
 		 void * = 0,
 		 int max = 0x7fffffff);
   // Initialize the semaphore, with initial value of "count".
 
-  ~ACE_Semaphore (void);       
+  ~ACE_Semaphore (void);
   // Implicitly destroy the semaphore.
 
   int remove (void);
@@ -213,7 +213,7 @@ public:
 
   int release (void);
   // Increment the semaphore by 1, potentially unblocking a waiting
-  // thread.  
+  // thread.
 
   int release (size_t release_count);
   // Increment the semaphore by <release_count>, potentially
@@ -257,8 +257,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Semaphore &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Semaphore (const ACE_Semaphore &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Semaphore &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Semaphore (const ACE_Semaphore &))
 };
 
 class ACE_Export ACE_Process_Semaphore
@@ -268,13 +268,13 @@ class ACE_Export ACE_Process_Semaphore
 {
 public:
   ACE_Process_Semaphore (u_int count = 1, // By default make this unlocked.
-			 LPCTSTR name = 0, 
-			 void * = 0, 
+			 LPCTSTR name = 0,
+			 void * = 0,
 			 int max = 0x7FFFFFFF);
   // Initialize the semaphore, with an initial value of <count> and a
   // maximum value of <max>.
 
-  ~ACE_Process_Semaphore (void);       
+  ~ACE_Process_Semaphore (void);
   // Implicitly destroy the semaphore.
 
   int remove (void);
@@ -346,7 +346,7 @@ class ACE_Export ACE_RW_Mutex
   //     parallel readers than writers...
 {
 public:
-  ACE_RW_Mutex (int type = USYNC_THREAD, 
+  ACE_RW_Mutex (int type = USYNC_THREAD,
 		LPCTSTR name = 0,
 		void *arg = 0);
   // Initialize a readers/writer lock.
@@ -361,7 +361,7 @@ public:
   // Acquire a read lock, but block if a writer hold the lock.
 
   int acquire_write (void);
-  // Acquire a write lock, but block if any readers or a 
+  // Acquire a write lock, but block if any readers or a
   // writer hold the lock.
 
   int tryacquire_read (void);
@@ -384,7 +384,7 @@ public:
   // "failed" because someone else already had the lock, <errno> is
   // set to <EBUSY>.
 
-  int release (void);  
+  int release (void);
   // Unlock a readers/writer lock.
 
   const ACE_rwlock_t &lock (void) const;
@@ -402,8 +402,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_RW_Mutex &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_RW_Mutex (const ACE_RW_Mutex &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_RW_Mutex &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_RW_Mutex (const ACE_RW_Mutex &))
 };
 
 class ACE_Export ACE_Mutex
@@ -412,7 +412,7 @@ class ACE_Export ACE_Mutex
   //     processes (depending on TYPE flag)).
 {
 public:
-  ACE_Mutex (int type = USYNC_THREAD, 
+  ACE_Mutex (int type = USYNC_THREAD,
 	     LPCTSTR name = 0,
 	     void *arg = 0);
   // Initialize the mutex.
@@ -431,7 +431,7 @@ public:
   // -1 on failure.  If we "failed" because someone else already had
   // the lock, <errno> is set to <EBUSY>.
 
-  int release (void);  
+  int release (void);
   // Release lock and unblock a thread at head of priority queue.
 
   int acquire_read (void);
@@ -473,8 +473,8 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Mutex &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Mutex (const ACE_Mutex &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Mutex &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Mutex (const ACE_Mutex &))
 };
 
 class ACE_Export ACE_Process_Mutex
@@ -483,7 +483,7 @@ class ACE_Export ACE_Process_Mutex
   //     processes).
 {
 public:
-  ACE_Process_Mutex (LPCTSTR name = 0, 
+  ACE_Process_Mutex (LPCTSTR name = 0,
 		     void *arg = 0);
   // Create a Process_Mutex, passing in the optional <name>.
 
@@ -500,7 +500,7 @@ public:
   // -1 on failure.  If we "failed" because someone else already had
   // the lock, <errno> is set to <EBUSY>.
 
-  int release (void);  
+  int release (void);
   // Release lock and unblock a thread at head of priority queue.
 
   int acquire_read (void);
@@ -559,7 +559,7 @@ class ACE_Null_Barrier
 {
 public:
   ACE_Null_Barrier (u_int,
-		    const char * = 0, 
+		    const char * = 0,
 		    void * = 0) {}
   // Initialize the barrier to synchronize <count> threads.
 
@@ -575,14 +575,14 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Barrier &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Null_Barrier (const ACE_Null_Barrier &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Barrier &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Null_Barrier (const ACE_Null_Barrier &))
 };
 
 class ACE_Export ACE_Null_Mutex
   // = TITLE
   //     Implement a do nothing <ACE_Mutex>, i.e., all the methods are
-  //     no ops. 
+  //     no ops.
 {
 public:
   ACE_Null_Mutex (LPCTSTR = 0) {}
@@ -611,7 +611,7 @@ class ACE_Export ACE_Null_Condition
   //     C++ compilers are *very* lame...
 {
 public:
-  ACE_Null_Condition (ACE_Null_Mutex &m, int = 0, 
+  ACE_Null_Condition (ACE_Null_Mutex &m, int = 0,
 			    LPCTSTR = 0, void * = 0): mutex_ (m) {}
   ~ACE_Null_Condition (void) {}
   int remove (void) { return 0; }
@@ -627,12 +627,12 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  ACE_Null_Mutex &mutex_; // Reference to mutex lock.  
+  ACE_Null_Mutex &mutex_; // Reference to mutex lock.
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Condition &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Null_Condition (const ACE_Null_Condition &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Condition &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Null_Condition (const ACE_Null_Condition &))
 };
 
 class ACE_Export ACE_Null_Mutex_Guard
@@ -657,8 +657,8 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Mutex_Guard &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Mutex_Guard &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &))
 };
 
 class ACE_TSS_Adapter
@@ -678,18 +678,18 @@ class ACE_TSS_Adapter
 public:
   ACE_TSS_Adapter (void *object, ACE_THR_DEST f);
   // Initialize the adapter.
-  
+
   void cleanup (void);
   // Perform the cleanup operation.
 
 //private:
 
-  void *ts_obj_;	  
+  void *ts_obj_;
   // The real TS object.
 
-  ACE_THR_DEST func_;     
+  ACE_THR_DEST func_;
   // The real cleanup routine for ts_obj;
-};		
+};
 
 class ACE_Export ACE_Event
   // = TITLE
@@ -702,16 +702,16 @@ class ACE_Export ACE_Event
 public:
   ACE_Event (int manual_reset = 0,
 	     int initial_state = 0,
-	     int type = USYNC_THREAD, 
+	     int type = USYNC_THREAD,
 	     LPCTSTR name = 0,
 	     void *arg = 0);
   // Constructor which will create event.
 
   ~ACE_Event (void);
-  // Implicitly destroy the event variable.     
+  // Implicitly destroy the event variable.
 
   int remove (void);
-  // Explicitly destroy the event variable.     
+  // Explicitly destroy the event variable.
 
   ACE_event_t handle (void) const;
   // Underlying handle to event.
@@ -725,7 +725,7 @@ public:
   // overwriting it.
 
   int wait (void);
-  // if MANUAL reset 
+  // if MANUAL reset
   //    sleep till the event becomes signaled
   //    event remains signaled after wait() completes.
   // else AUTO reset
@@ -734,7 +734,7 @@ public:
 
   int wait (const ACE_Time_Value *abstime);
   // Same as wait() above, but this one can be timed
-  // <abstime> is absolute time-of-day. 
+  // <abstime> is absolute time-of-day.
 
   int signal (void);
   // if MANUAL reset
@@ -742,7 +742,7 @@ public:
   //    set to signaled state
   // else AUTO reset
   //    if no thread is waiting, set to signaled state
-  //    if thread(s) are waiting, wake up one waiting thread and 
+  //    if thread(s) are waiting, wake up one waiting thread and
   //    reset event
 
   int pulse (void);
@@ -768,8 +768,8 @@ protected:
 
 private:
   // = Prevent copying.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Event (const ACE_Event& event));
-  ACE_UNIMPLEMENTED_FUNC (const ACE_Event &operator= (const ACE_Event &rhs));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Event (const ACE_Event& event))
+  ACE_UNIMPLEMENTED_FUNC (const ACE_Event &operator= (const ACE_Event &rhs))
 };
 
 class ACE_Export ACE_Manual_Event : public ACE_Event
@@ -783,7 +783,7 @@ class ACE_Export ACE_Manual_Event : public ACE_Event
 {
 public:
   ACE_Manual_Event (int initial_state = 0,
-		    int type = USYNC_THREAD, 
+		    int type = USYNC_THREAD,
 		    LPCTSTR name = 0,
 		    void *arg = 0);
   // constructor which will create manual event
@@ -800,13 +800,13 @@ class ACE_Export ACE_Auto_Event : public ACE_Event
   //     Auto Events.
   //
   // = DESCRIPTION
-  // 
+  //
   //     Specialization of Event mechanism which wakes up one waiting
   //     thread on signal()
 {
 public:
   ACE_Auto_Event (int initial_state = 0,
-		  int type = USYNC_THREAD, 
+		  int type = USYNC_THREAD,
 		  LPCTSTR name = 0,
 		  void *arg = 0);
   // constructor which will create auto event
@@ -819,7 +819,7 @@ public:
 };
 
 // ACE platform supports some form of threading.
-#if defined (ACE_HAS_THREADS) 
+#if defined (ACE_HAS_THREADS)
 
 class ACE_Export ACE_Thread_Mutex
   // = TITLE
@@ -848,14 +848,14 @@ public:
   // Explicitly destroy the mutex.
 
   int acquire (void);
-  // Acquire lock ownership (wait on priority queue if necessary). 
+  // Acquire lock ownership (wait on priority queue if necessary).
 
   int tryacquire (void);
   // Conditionally acquire lock (i.e., don't wait on queue).  Returns
   // -1 on failure.  If we "failed" because someone else already had
   // the lock, <errno> is set to <EBUSY>.
 
-  int release (void);  
+  int release (void);
   // Release lock and unblock a thread at head of priority queue.
 
   int acquire_read (void);
@@ -897,8 +897,8 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Thread_Mutex &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex (const ACE_Thread_Mutex &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Thread_Mutex &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex (const ACE_Thread_Mutex &))
 };
 
 class ACE_Export ACE_Thread_Mutex_Guard
@@ -951,8 +951,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Thread_Mutex_Guard &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex_Guard (const ACE_Thread_Mutex_Guard &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Thread_Mutex_Guard &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex_Guard (const ACE_Thread_Mutex_Guard &))
 };
 
 class ACE_Export ACE_Condition_Thread_Mutex
@@ -978,21 +978,21 @@ class ACE_Export ACE_Condition_Thread_Mutex
 {
 public:
   ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
-			      LPCTSTR name = 0, 
+			      LPCTSTR name = 0,
 			      void *arg = 0);
   // Initialize the condition variable.
 
   ~ACE_Condition_Thread_Mutex (void);
-  // Implicitly destroy the condition variable.     
+  // Implicitly destroy the condition variable.
 
   int remove (void);
-  // Explicitly destroy the condition variable.     
+  // Explicitly destroy the condition variable.
 
   int wait (const ACE_Time_Value *abstime);
   // Block on condition, or until absolute time-of-day has passed.  If
   // abstime == 0 use "blocking" <wait> semantics.  Else, if <abstime>
   // != 0 and the call times out before the condition is signaled
-  // <wait> returns -1 and sets errno to ETIME. 
+  // <wait> returns -1 and sets errno to ETIME.
 
   int wait (void);
   // Block on condition.
@@ -1024,13 +1024,13 @@ protected:
   ACE_cond_t cond_;
   // Condition variable.
 
-  ACE_Thread_Mutex &mutex_; 
+  ACE_Thread_Mutex &mutex_;
   // Reference to mutex lock.
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Condition_Thread_Mutex &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Condition_Thread_Mutex (const ACE_Condition_Thread_Mutex &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Condition_Thread_Mutex &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Condition_Thread_Mutex (const ACE_Condition_Thread_Mutex &))
 };
 
 class ACE_Export ACE_Recursive_Thread_Mutex
@@ -1043,7 +1043,7 @@ class ACE_Export ACE_Recursive_Thread_Mutex
   //     This class should be a specialization of the
   //     ACE_Recursive_Lock template class, but problems with some C++
   //     compilers preclude this.  This implementation is based
-  //     on an algorithm sketched by Dave Butenhof  <butenhof@zko.dec.com>. 
+  //     on an algorithm sketched by Dave Butenhof  <butenhof@zko.dec.com>.
   //     Naturally, I take the credit for any mistakes ;-)
 {
   // friend class ACE_Condition<class ACE_COND_MUTEX>;
@@ -1118,14 +1118,14 @@ protected:
   // These methods should *not* be public (they hold no locks...)
   void set_thread_id (ACE_thread_t t);
 
-  ACE_Thread_Mutex nesting_mutex_; 
+  ACE_Thread_Mutex nesting_mutex_;
   // Guards the state of the nesting level and thread id.
 
   ACE_Condition_Thread_Mutex lock_available_;
   // This is the condition variable that actually suspends other
   // waiting threads until the mutex is available.
 
-  int nesting_level_; 
+  int nesting_level_;
   // Current nesting level of the recursion.
 
   ACE_thread_t owner_id_;
@@ -1133,8 +1133,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Recursive_Thread_Mutex &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Recursive_Thread_Mutex &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &))
 };
 
 class ACE_Export ACE_RW_Thread_Mutex : public ACE_RW_Mutex
@@ -1160,7 +1160,7 @@ class ACE_Export ACE_Thread_Semaphore : public ACE_Semaphore
 public:
   ACE_Thread_Semaphore (u_int count = 1, // By default make this unlocked.
 			LPCTSTR name = 0,
-			void * = 0, 
+			void * = 0,
 			int max = 0x7FFFFFFF);
   // Initialize the semaphore, with an initial value of <count> and a
   // maximum value of <max>.
@@ -1172,8 +1172,8 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
-struct ACE_Export ACE_Sub_Barrier 
-{ 
+struct ACE_Export ACE_Sub_Barrier
+{
   // = Initialization.
   ACE_Sub_Barrier (u_int count,
 		   ACE_Thread_Mutex &lock,
@@ -1208,8 +1208,8 @@ class ACE_Export ACE_Barrier
   //     (Richard.Marejka@canada.sun.com).
 {
 public:
-  ACE_Barrier (u_int count, 
-	       LPCTSTR name = 0, 
+  ACE_Barrier (u_int count,
+	       LPCTSTR name = 0,
 	       void *arg = 0);
   // Initialize the barrier to synchronize <count> threads.
 
@@ -1233,7 +1233,7 @@ protected:
 
   int count_;
   // Total number of threads that can be waiting at any one time.
-  
+
   ACE_Sub_Barrier sub_barrier_1_;
   ACE_Sub_Barrier sub_barrier_2_;
   ACE_Sub_Barrier *sub_barrier_[2];
@@ -1246,8 +1246,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Barrier &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Barrier (const ACE_Barrier &));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Barrier &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Barrier (const ACE_Barrier &))
 };
 
 #if 0
@@ -1269,7 +1269,7 @@ public:
 #if 0
 class ACE_Export ACE_Process_Barrier : public ACE_Barrier
   // = TITLE
-  //     Implements "barrier synchronization" using ACE_Process_Mutexes! 
+  //     Implements "barrier synchronization" using ACE_Process_Mutexes!
   //
   // = DESCRIPTION
   //     This class is just a simple wrapper for ACE_Barrier that

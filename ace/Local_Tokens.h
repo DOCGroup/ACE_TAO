@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Local_Tokens
 //
@@ -33,7 +33,7 @@
 //   6. ACE_Mutex_Token : public ACE_Tokens
 //   12. ACE_RW_Token : public ACE_Tokens
 //   a. ACE_Token_Name
-//   
+//
 // ============================================================================
 
 #if !defined (ACE_LOCAL_MUTEX_H)
@@ -49,7 +49,7 @@ class ACE_Export ACE_TOKEN_CONST
 {
   // = TITLE
   //   Not a public interface.
-  //   
+  //
   // = DESCRIPTION
   //   Constant definitions and typdefs for Token library.  Mostly,
   //   this class is necessary to fight the compiler with order of
@@ -74,7 +74,7 @@ class ACE_Token_Proxy;
 class ACE_Export ACE_TPQ_Entry
   // = TITLE
   //   Not a public interface.
-  //   
+  //
   // = DESCRIPTION
   //   Token Proxy Queue entry.
   //   Used in the ACE_Token_Proxy_Queue
@@ -82,7 +82,7 @@ class ACE_Export ACE_TPQ_Entry
 friend class ACE_Token_Manager;
 public:
   typedef void (*PTVF) (void *);
- 
+
   ACE_TPQ_Entry (void);
   // Null constructor.
 
@@ -196,8 +196,8 @@ public:
 #endif /* ACE_NO_TSS_TOKENS */
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &));
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS_TPQ_Entry &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS_TPQ_Entry &))
   // Private: should not be used
 
   // = These are passed to the constructor of ACE_TPQ_Entry in
@@ -216,7 +216,7 @@ class ACE_Token_Proxy_Queue;
 class ACE_Export ACE_TPQ_Iterator
   // = TITLE
   //   Not a public interface.
-  //   
+  //
   // = DESCRIPTION
   //   Iterates through ACE_Token_Proxy_Queues.
 {
@@ -225,7 +225,7 @@ public:
   // Construction.
 
   int next (ACE_TPQ_Entry *&next_item);
-  // Pass back the <next_item>. 
+  // Pass back the <next_item>.
 
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
@@ -244,7 +244,7 @@ private:
 class ACE_Export ACE_Token_Proxy_Queue
   // = TITLE
   //   Not a public interface.
-  //   
+  //
   // = DESCRIPTION
   //   Token waiter list.
   //   This queue holds all the token proxies waiting for ownership of
@@ -297,7 +297,7 @@ protected:
 class ACE_Export ACE_Tokens
   // = TITLE
   //   Not a public interface.
-  //   
+  //
   // = DESCRIPTION
   //   Abstract representation of ACE tokens.
   //   Currently, I don't see a reason for providing an abstract
@@ -370,7 +370,7 @@ public:
   // Token name.
 
   // = Reference counting.  These are only called by the
-  // Token_Manager. 
+  // Token_Manager.
   void inc_reference (void);
   int dec_reference (void);
 
@@ -421,7 +421,7 @@ class ACE_Export ACE_Mutex_Token : public ACE_Tokens
   // = TITLE
   //    Not a public interface.
   //
-  // = DESCRIPTION 
+  // = DESCRIPTION
   //    Class that acquires, renews, and releases a process-local
   //    synchronization token.
   //    This class is a more general-purpose synchronization mechanism
@@ -508,7 +508,7 @@ class ACE_Export ACE_RW_Token : public ACE_Tokens
   // = TITLE
   //    Not a public interface.
   //
-  // = DESCRIPTION 
+  // = DESCRIPTION
   //    Class that acquires, renews, and releases a process-local
   //    synchronization token.
   //    This class is a more general-purpose synchronization mechanism
@@ -645,7 +645,7 @@ private:
 class ACE_Export ACE_Token_Proxy
   // = TITLE
   //   Abstract representation of ACE tokens.
-  //   
+  //
   // = DESCRIPTION
   //   Interface for all Tokens in ACE.  This class implements the
   //   synchronization needed for tokens (condition variables etc.)
@@ -747,7 +747,7 @@ public:
   virtual const char *client_id (void) const;
   // Get the client id of the proxy.  This is implemented as
   // thread-specific data.
-  
+
   virtual void client_id (const char *client_id);
   // Set the client_id for the calling thread.  I strongly recommend
   // that this not be used unless you really know what you're doing.
@@ -772,7 +772,7 @@ public:
 
   virtual const char *owner_id (void);
   // the client id of the current token holder
-  
+
   virtual ACE_Token_Proxy *clone (void) const = 0;
   // Return a dynamically allocated clone of the derived class.
 
@@ -799,7 +799,7 @@ protected:
   // Reference to the actual logical token.  Many ACE_Local_Mutex
   // proxies can reference the same ACE_Mutex_Token.
 
-  int handle_options (ACE_Synch_Options &options, 
+  int handle_options (ACE_Synch_Options &options,
 		      ACE_TOKEN_CONST::COND_VAR &cv);
   // Handles cond_var waits.
 
@@ -825,7 +825,7 @@ public:
 		       ACE_Synch_Options & /* options */ =
 		       ACE_Synch_Options::defaults) { return 0; }
   // Acquire.
-		       
+
   virtual int renew (int /* requeue_position */ = -1,
 		     ACE_Synch_Options & /* options */ =
 		     ACE_Synch_Options::defaults) { return 0; }
@@ -856,9 +856,9 @@ public:
 class ACE_Export ACE_Local_Mutex : public ACE_Token_Proxy
   // = TITLE
   //    Class that acquires, renews, and releases a synchronization
-  //    token local to the process. 
+  //    token local to the process.
   //
-  // = DESCRIPTION 
+  // = DESCRIPTION
   //    This class is a more general-purpose synchronization mechanism
   //    than SunOS 5.x mutexes.  For example, it implements "recursive
   //    mutex" semantics, where a thread that owns the token can
@@ -898,7 +898,7 @@ class ACE_Export ACE_Local_RLock : public ACE_Token_Proxy
 //    Class that acquires, renews, and releases a readers lock that
 //    is local to the process.
 //
-// = DESCRIPTION 
+// = DESCRIPTION
 //    This class implements the reader interface to canonical
 //    readers/writer locks.  Multiple readers can hold the lock
 //    simultaneously when no writers have the lock.  Alternatively,
@@ -949,7 +949,7 @@ class ACE_Export ACE_Local_WLock : public ACE_Token_Proxy
 //    Class that acquires, renews, and releases a writer lock that
 //    is local to the process.
 //
-// = DESCRIPTION 
+// = DESCRIPTION
 //    This class implements the writer interface to canonical
 //    readers/writer locks. Multiple readers can hold the lock
 //    simultaneously when no writers have the lock.  Alternatively,

@@ -6,14 +6,14 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    CORBA_Handler.h
 //
 // = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and 
+//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and
 //    Irfan Pyarali (irfan@wuerl.wustl.edu).
-// 
+//
 // ============================================================================
 
 #if !defined (_CORBA_HANDLER_H)
@@ -42,7 +42,7 @@ class ACE_Export ACE_CORBA_Handler : public ACE_Service_Object
 public:
   // = Activation and deactivation methods.
 
-  virtual int activate_service (const char *service_name, 
+  virtual int activate_service (const char *service_name,
                                 const char *marker_name = 0,
                                 const char *service_location = 0);
   // Activate and register <service_name> with the Orbix daemon.  If
@@ -50,10 +50,10 @@ public:
   // to register this service with orbixd.  This method also
   // increments the reference count of active services using the
   // ACE_ST_CORBA_Handler.
-                               
+
   virtual int deactivate_service (const char *service_name = 0,
                                   const char *marker_name = 0);
-  // Decrement the reference count and free up all the 
+  // Decrement the reference count and free up all the
   // resources if this is the last service to be using
   // the ACE_ST_CORBA_Handler...
 
@@ -70,11 +70,11 @@ protected:
   virtual ~ACE_CORBA_Handler (void);
   // Note virtual destructor...
 
-  virtual int register_service (const char *service_name, 
+  virtual int register_service (const char *service_name,
                                 const char *marker_name,
                                 const char *service_location);
-  // Register <service_name> by doing a "putit" to register 
-  // the <service_name> using the <marker_name> at <service_location> 
+  // Register <service_name> by doing a "putit" to register
+  // the <service_name> using the <marker_name> at <service_location>
   // with orbixd.
 
   virtual int remove_service (const char *service_name,
@@ -87,8 +87,8 @@ protected:
 
 private:
   // = Disallow assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (ACE_CORBA_Handler (const ACE_CORBA_Handler &rhs));
-  ACE_UNIMPLEMENTED_FUNC (const ACE_CORBA_Handler &operator= (const ACE_CORBA_Handler &rhs));
+  ACE_UNIMPLEMENTED_FUNC (ACE_CORBA_Handler (const ACE_CORBA_Handler &rhs))
+  ACE_UNIMPLEMENTED_FUNC (const ACE_CORBA_Handler &operator= (const ACE_CORBA_Handler &rhs))
 };
 
 class ACE_Export ACE_ST_CORBA_Handler : public ACE_CORBA_Handler
@@ -129,7 +129,7 @@ protected:
   void get_orbix_descriptors (void);
   // Preinitialize any descriptors that Orbix is using.  This is
   // called in instance ().
-  
+
   ACE_ST_CORBA_Handler (void);
   // Constructors (ensure Singleton...).
 
@@ -188,7 +188,7 @@ public:
 protected:
   static void *process_events (void *);
   // function executed by new thread
-  
+
   ACE_MT_CORBA_Handler (void);
   // Constructors (ensure Singleton...).
 
