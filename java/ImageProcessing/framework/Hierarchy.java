@@ -171,7 +171,8 @@ public class Hierarchy extends Canvas
 
     drawLevel(g, SPACE, SPACE);
 
-    if (d.width < scope_.width || d.height < scope_.height)
+    if (d.width < scope_.width || d.height < scope_.height ||
+	d.width > scope_.width || d.height > scope_.height)
 	resize(scope_.width, scope_.height);
   }
 
@@ -193,7 +194,7 @@ public class Hierarchy extends Canvas
     if (icon_ != null)
       {
 	entry_height = Math.max(string_height, icon_.iconSize().height);
-	entry_width += icon_.iconSize().width;
+	entry_width += icon_.iconSize().width + SPACE;
 	indent += icon_.iconSize().width/2;
 	if (! deadend_)
 	  drawShape(g, x, y + (entry_height - TRI_HEIGHT)/2, deadend_, collapsed_);
