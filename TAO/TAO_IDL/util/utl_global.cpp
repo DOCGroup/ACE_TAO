@@ -54,8 +54,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -548,9 +548,21 @@ IDL_GlobalData::be_get_server_hdr (String *idl_file_name)
 }
 
 const char *
+IDL_GlobalData::be_get_server_template_hdr (String *idl_file_name)
+{
+  return be_change_idl_file_extension (idl_file_name, "S_T.h");
+}
+
+const char *
 IDL_GlobalData::be_get_server_skeleton (String *idl_file_name)
 {
   return be_change_idl_file_extension (idl_file_name, "S.cpp");
+}
+
+const char *
+IDL_GlobalData::be_get_server_template_skeleton (String *idl_file_name)
+{
+  return be_change_idl_file_extension (idl_file_name, "S_T.cpp");
 }
 
 const char *
@@ -560,39 +572,63 @@ IDL_GlobalData::be_get_server_inline (String *idl_file_name)
 }
 
 const char *
+IDL_GlobalData::be_get_server_template_inline (String *idl_file_name)
+{
+  return be_change_idl_file_extension (idl_file_name, "S_T.i");
+}
+
+const char *
 IDL_GlobalData::be_get_client_hdr_fname ()
 {
   return be_get_client_hdr (idl_global->idl_src_file ());
 }
 
-const char * 
+const char *
 IDL_GlobalData::be_get_client_stub_fname ()
 {
   return be_get_client_stub (idl_global->idl_src_file ());
 }
 
-const char * 
+const char *
 IDL_GlobalData::be_get_client_inline_fname ()
 {
   return be_get_client_inline (idl_global->idl_src_file ());
 }
 
-const char * 
+const char *
 IDL_GlobalData::be_get_server_hdr_fname ()
 {
   return be_get_server_hdr (idl_global->idl_src_file ());
 }
 
-const char * 
+const char *
+IDL_GlobalData::be_get_server_template_hdr_fname ()
+{
+  return be_get_server_template_hdr (idl_global->idl_src_file ());
+}
+
+const char *
 IDL_GlobalData::be_get_server_skeleton_fname ()
 {
   return be_get_server_skeleton (idl_global->idl_src_file ());
 }
 
-const char * 
+const char *
+IDL_GlobalData::be_get_server_template_skeleton_fname ()
+{
+  return be_get_server_template_skeleton (idl_global->idl_src_file ());
+}
+
+const char *
 IDL_GlobalData::be_get_server_inline_fname ()
 {
   return be_get_server_inline (idl_global->idl_src_file ());
+}
+
+const char *
+IDL_GlobalData::be_get_server_template_inline_fname ()
+{
+  return be_get_server_template_inline (idl_global->idl_src_file ());
 }
 
 const char* IDL_GlobalData::export_macro (void) const
@@ -616,4 +652,3 @@ void IDL_GlobalData::export_include (const char *s)
 {
   this->export_include_ = ACE_OS::strdup (s);
 }
-

@@ -300,8 +300,11 @@ public:
   static const char  *be_get_client_stub_fname ();
   static const char  *be_get_client_inline_fname ();
   static const char  *be_get_server_hdr_fname ();
+  static const char  *be_get_server_template_hdr_fname ();
   static const char  *be_get_server_skeleton_fname ();
+  static const char  *be_get_server_template_skeleton_fname ();
   static const char  *be_get_server_inline_fname ();
+  static const char  *be_get_server_template_inline_fname ();
 
   // Helper functions: obtain the names of each generated file given
   // the IDL file name.
@@ -309,8 +312,11 @@ public:
   static const char *be_get_client_stub (String *idl_file_name);
   static const char *be_get_client_inline (String *idl_file_name);
   static const char *be_get_server_hdr (String *idl_file_name);
+  static const char *be_get_server_template_hdr (String *idl_file_name);
   static const char *be_get_server_skeleton (String *idl_file_name);
+  static const char *be_get_server_template_skeleton (String *idl_file_name);
   static const char *be_get_server_inline (String *idl_file_name);
+  static const char *be_get_server_template_inline (String *idl_file_name);
 
   virtual const char* export_macro (void) const;
   // returns the macro name for exporting classes in Win32 DLL.

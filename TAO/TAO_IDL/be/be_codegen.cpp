@@ -29,8 +29,11 @@ TAO_CodeGen::TAO_CodeGen (void)
     client_stubs_ (0),
     client_inline_ (0),
     server_header_ (0),
+    server_template_header_ (0),
     server_skeletons_ (0),
+    server_template_skeletons_ (0),
     server_inline_ (0),
+    server_template_inline_ (0),
     curr_os_ (0),
     visitor_factory_ (0)
 {
@@ -41,10 +44,13 @@ TAO_CodeGen::~TAO_CodeGen (void)
 {
   delete this->client_header_;
   delete this->server_header_;
+  delete this->server_template_header_;
   delete this->client_stubs_;
   delete this->server_skeletons_;
+  delete this->server_template_skeletons_;
   delete this->client_inline_;
   delete this->server_inline_;
+  delete this->server_template_inline_;
   this->curr_os_ = 0;
   delete this->visitor_factory_;
 }
@@ -324,6 +330,67 @@ TAO_CodeGen::server_header (void)
   return this->server_header_;
 }
 
+// set the server header stream
+int
+TAO_CodeGen::start_server_template_header (const char *fname)
+{
+  // retrieve the singleton instance to the outstream factory
+  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // retrieve a specialized instance
+  this->server_template_header_ = factory->make_outstream ();
+  if (!this->server_template_header_)
+    {
+      return -1;
+    }
+
+  if (this->server_template_header_->open (fname,
+                                           TAO_OutStream::TAO_SVR_TMPL_HDR)
+      == -1)
+    return -1;
+  else
+    {
+      // now generate the #if !defined clause
+      static char macro_name [NAMEBUFSIZE];
+
+      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+      const char *suffix = ACE_OS::strstr (fname, ".h");
+      if (suffix == 0)
+	return -1; // bad file name
+      else
+	{
+          ACE_OS::sprintf (macro_name, "_TAO_IDL_");
+          // convert letters in fname to upcase
+          for (int i=0; i < (suffix - fname); i++)
+            if (isalpha (fname [i]))
+              macro_name[i+9] = toupper (fname [i]);
+            else if (isdigit (fname [i]))
+              macro_name[i+9] = fname[i];
+            else
+              macro_name[i+9] = '_';
+
+          ACE_OS::strcat (macro_name, "_H_");
+
+          this->server_template_header_->print ("#if !defined (%s)\n",
+                                                macro_name);
+          this->server_template_header_->print ("#define %s\n\n", macro_name);
+
+	  *this->server_template_header_ << "#if defined(_MSC_VER)\n"
+                                         << "#pragma warning(disable:4250)\n"
+                                         << "#endif /* _MSC_VER */\n\n";
+
+          return 0;
+        }
+    }
+}
+
+// get the server header stream
+TAO_OutStream *
+TAO_CodeGen::server_template_header (void)
+{
+  return this->server_template_header_;
+}
+
 // set the server skeletons stream
 int
 TAO_CodeGen::start_server_skeletons (const char *fname)
@@ -363,6 +430,72 @@ TAO_CodeGen::server_skeletons (void)
   return this->server_skeletons_;
 }
 
+// set the server template skeleton stream
+int
+TAO_CodeGen::start_server_template_skeletons (const char *fname)
+{
+  // retrieve the singleton instance to the outstream factory
+  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // retrieve a specialized instance
+  this->server_template_skeletons_ = factory->make_outstream ();
+  if (!this->server_template_skeletons_)
+    {
+      return -1;
+    }
+
+  if (this->server_template_skeletons_->open (fname,
+                                           TAO_OutStream::TAO_SVR_TMPL_IMPL)
+      == -1)
+    return -1;
+  else
+    {
+      // now generate the #if !defined clause
+      static char macro_name [NAMEBUFSIZE];
+
+      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
+      const char *suffix = ACE_OS::strstr (fname, ".cpp");
+      if (suffix == 0)
+	return -1; // bad file name
+
+      ACE_OS::sprintf (macro_name, "_TAO_IDL_");
+      // convert letters in fname to upcase
+      for (int i=0; i < (suffix - fname); i++)
+        if (isalpha (fname [i]))
+          macro_name[i+9] = toupper (fname [i]);
+        else if (isdigit (fname [i]))
+          macro_name[i+9] = fname[i];
+        else
+          macro_name[i+9] = '_';
+
+      ACE_OS::strcat (macro_name, "_CPP_");
+
+      this->server_template_skeletons_->print ("#if !defined (%s)\n",
+                                               macro_name);
+      this->server_template_skeletons_->print ("#define %s\n\n", macro_name);
+
+      *this->server_template_skeletons_ << "#if defined(_MSC_VER)\n"
+                                        << "#pragma warning(disable:4250)\n"
+                                        << "#endif /* _MSC_VER */\n\n";
+
+      // generate the code that includes the inline file if not included in the
+  // header file
+      *this->server_template_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
+      *this->server_template_skeletons_ << "#include \"" <<
+        idl_global->be_get_server_template_inline_fname () << "\"\n";
+      *this->server_template_skeletons_ << "#endif /* !defined INLINE */\n\n";
+      return 0;
+
+    }
+}
+
+// get the server template skeletons stream
+TAO_OutStream *
+TAO_CodeGen::server_template_skeletons (void)
+{
+  return this->server_template_skeletons_;
+}
+
 // set the server inline stream
 int
 TAO_CodeGen::start_server_inline (const char *fname)
@@ -385,6 +518,30 @@ TAO_OutStream *
 TAO_CodeGen::server_inline (void)
 {
   return this->server_inline_;
+}
+
+// set the server template inline stream
+int
+TAO_CodeGen::start_server_template_inline (const char *fname)
+{
+  // retrieve the singleton instance to the outstream factory
+  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // retrieve a specialized instance
+  this->server_template_inline_ = factory->make_outstream ();
+  if (!this->server_template_inline_)
+    {
+      return -1;
+    }
+
+  return this->server_template_inline_->open (fname, TAO_OutStream::TAO_SVR_INL);
+}
+
+// get the server template inline stream
+TAO_OutStream *
+TAO_CodeGen::server_template_inline (void)
+{
+  return this->server_template_inline_;
 }
 
 // put the last #endif in the client and server headers
@@ -411,6 +568,10 @@ TAO_CodeGen::end_client_header (void)
 int
 TAO_CodeGen::end_server_header (void)
 {
+  // insert the template header
+  *this->server_header_ << "#include \"" <<
+    idl_global->be_get_server_template_hdr_fname () << "\"\n";
+
   // insert the code to include the inline file
   *this->server_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->server_header_ << "#include \"" <<
@@ -423,6 +584,46 @@ TAO_CodeGen::end_server_header (void)
 
   // code to put the last #endif
   *this->server_header_ << "\n#endif /* if !defined */\n";
+  return 0;
+}
+
+int
+TAO_CodeGen::end_server_template_header (void)
+{
+  // insert the code to include the inline file
+  *this->server_template_header_ << "\n#if defined (__ACE_INLINE__)\n";
+  *this->server_template_header_ << "#include \"" <<
+    idl_global->be_get_server_template_inline_fname () << "\"\n";
+  *this->server_template_header_ << "#endif /* defined INLINE */\n\n";
+
+  // insert the code to include the template source file
+  *this->server_template_header_
+    << "\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)\n";
+  *this->server_template_header_ << "#include \"" <<
+    idl_global->be_get_server_template_skeleton_fname () << "\"\n";
+  *this->server_template_header_ << "#endif /* defined REQUIRED SOURCE */\n\n";
+
+  // insert the code to include the template pragma
+  *this->server_template_header_
+    << "\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)\n";
+  *this->server_template_header_ << "#pragma implementation (" <<
+    idl_global->be_get_server_template_skeleton_fname () << ")\n";
+  *this->server_template_header_ << "#endif /* defined REQUIRED PRAGMA */\n\n";
+
+  *this->server_template_header_ << "#if defined(_MSC_VER)\n"
+                                 << "#pragma warning(default:4250)\n"
+                                 << "#endif /* _MSC_VER */\n";
+
+  // code to put the last #endif
+  *this->server_template_header_ << "\n#endif /* if !defined */\n";
+  return 0;
+}
+
+int
+TAO_CodeGen::end_server_template_skeletons (void)
+{
+  // code to put the last #endif
+  *this->server_template_skeletons_ << "\n#endif /* if !defined */\n";
   return 0;
 }
 
