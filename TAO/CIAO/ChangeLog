@@ -1,7 +1,72 @@
+Wed Jun  2 22:55:57 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Core/CCM_Base.idl:
+	* DnC/Core/CCM_BaseS.cpp:
+	* DnC/Core/CCM_BaseS.h:
+	* DnC/Core/CCM_Component.idl:
+	* DnC/Core/CCM_ComponentS.cpp:
+	* DnC/Core/CCM_ComponentS.h:
+	* DnC/Core/CCM_Container.idl:
+	* DnC/Core/CCM_ContainerS.cpp:
+	* DnC/Core/CCM_Container_Ex.idl:
+	* DnC/Core/CCM_Container_ExS.cpp:
+	* DnC/Core/CCM_Core.mpc:
+	* DnC/Core/CCM_Event.idl:
+	* DnC/Core/CCM_EventS.cpp:
+	* DnC/Core/CCM_EventS.h:
+	* DnC/Core/CCM_Transaction.idl:
+	* DnC/Core/CCM_TransactionS.cpp:
+	* DnC/Core/CIAO_Client_Export.h:
+	* DnC/Core/CIAO_Container_Export.h:
+	* DnC/Core/CIAO_Server_Export.h:
+	* DnC/Core/CIAO_Value.idl:
+	* DnC/Core/CIAO_ValueS.cpp:
+	* DnC/Core/CIAO_ValueS.h:
+	* DnC/Core/CIAO_common.h:
+	* DnC/Core/Client_init.cpp:
+	* DnC/Core/Client_init.h:
+	* DnC/Core/Components.idl:
+	* DnC/Core/Container_Base.cpp:
+	* DnC/Core/Container_Base.h:
+	* DnC/Core/Container_Base.inl:
+	* DnC/Core/Container_Base.pidl:
+	* DnC/Core/Cookies.cpp:
+	* DnC/Core/Cookies.h:
+	* DnC/Core/Cookies.inl:
+	* DnC/Core/CosPersistentState.idl:
+	* DnC/Core/CosPersistentStateS.cpp:
+	* DnC/Core/Deployment.idl:
+	* DnC/Core/DeploymentS.cpp:
+	* DnC/Core/Deployment_Core.idl:
+	* DnC/Core/Deployment_stub_export.h:
+	* DnC/Core/Deployment_svnt_export.h:
+	* DnC/Core/GNUmakefile:
+	* DnC/Core/GNUmakefile.CIAO_Client:
+	* DnC/Core/GNUmakefile.CIAO_Container:
+	* DnC/Core/GNUmakefile.CIAO_Server:
+	* DnC/Core/GNUmakefile.Deployment_stub:
+	* DnC/Core/GNUmakefile.Deployment_svnt:
+	* DnC/Core/NodeApp_CB_Impl.cpp:
+	* DnC/Core/NodeApp_CB_Impl.h:
+	* DnC/Core/NodeApplication_CallBack.idl:
+	* DnC/Core/NodeApplication_Impl.cpp:
+	* DnC/Core/NodeApplication_Impl.h:
+	* DnC/Core/NodeApplication_Impl.inl:
+	* DnC/Core/Object_Set_T.cpp:
+	* DnC/Core/Object_Set_T.h:
+	* DnC/Core/Object_Set_T.inl:
+	* DnC/Core/Server_init.cpp:
+	* DnC/Core/Server_init.h:
+	* DnC/Core/Version.h:
+	* DnC/Core/:
+
+	  Removed all these files to avoid the suite the change of the
+	  directory. Note: now DnC/Core is replaced by DnC/ciao.
+
 Wed Jun  2 21:54:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/CCM_Base.idl:
-        
+
           Fixed identifier of a member of PortDescription - changed
           'Name' to 'name', to conform to the CCM spec.
 
