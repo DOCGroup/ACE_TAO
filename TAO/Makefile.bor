@@ -1,46 +1,49 @@
 #
-# Makefile for building ACE and TAO 
+# Makefile for building	ACE and	TAO
 #
 
-!ifndef BUILD
-BUILD = typical
+!ifndef	BUILD
+BUILD =	typical
 !endif
 
-!if $(BUILD) == minimal
+!if $(BUILD) ==	minimal
 
 DIRS = \
 	..\ace \
+	..\ace\SSL \
 	..\apps\gperf\src \
 	tao \
-	TAO_IDL \
+	TAO_IDL	\
 	orbsvcs
 
 !elif $(BUILD) == typical
 
 DIRS = \
 	..\ace \
+	..\ace\SSL \
 	..\apps\gperf\src \
 	tao \
-	TAO_IDL \
-	orbsvcs \
+	TAO_IDL	\
+	orbsvcs	\
 	utils
 
 !elif $(BUILD) == all
 
 DIRS = \
 	..\ace \
-	..\apps \
+	..\ace\SSL \
+	..\apps	\
 	..\netsvcs \
 	..\tests \
 	tao \
-	TAO_IDL \
-	orbsvcs \
+	TAO_IDL	\
+	orbsvcs	\
 	examples \
 	tests \
 	utils
 
 !else
-!error Please set your BUILD variable to one of "minimal", "typical" or "all".
+!error Please set your BUILD variable to one of	"minimal", "typical" or	"all".
 !endif
-	
+
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
