@@ -102,6 +102,10 @@ TAO_CodeGen::upcase (const char *str)
 int
 TAO_CodeGen::start_client_header (const char *fname)
 {
+  // @@ We are making use of "included_idl_files" that is in the 
+  // idl_global. We need to make sure the validity of those files.
+  idl_global->validate_included_idl_files ();
+  
   // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
@@ -173,6 +177,10 @@ TAO_CodeGen::start_client_header (const char *fname)
           
           // Make a String out of it.
           String idl_name_str = idl_name;
+          
+          // Make sure this file was actually got included, not
+          // ignored by some #if defined compiler directive.
+          
           
           // Get the clnt header from the IDL file name.
           const char* client_hdr =
@@ -287,6 +295,10 @@ TAO_CodeGen::client_inline (void)
 int
 TAO_CodeGen::start_server_header (const char *fname)
 {
+  // @@ We are making use of "included_idl_files" that is in the 
+  // idl_global. We need to make sure the validity of those files.
+  idl_global->validate_included_idl_files ();
+  
   // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
