@@ -1,3 +1,16 @@
+Tue Oct 14 03:43:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp: Added this->
+	  qualification to instance variables in base class to fix
+	  compile warnings in HPUX build.
+
+	* Kokyu/Default_Dispatcher_Impl.cpp: 
+	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp:
+	* Kokyu/Dispatcher_Task.cpp:
+	* Kokyu/Dispatcher_Task.h:
+	* Kokyu/Kokyu.h:
+	* Kokyu/Kokyu_defs.i: Removed/added comments 
+
 Tue Oct 14 05:50:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Reactor_Notification_Queue_Test.cpp:
@@ -16,7 +29,7 @@ Tue Oct 14 05:27:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Mon Oct 13 15:25:41 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
-	  Added include path too the Kokyu_dsrt_schedulers directory.
+	  Added include path to the Kokyu_dsrt_schedulers directory.
 
 Mon Oct 13 08:51:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

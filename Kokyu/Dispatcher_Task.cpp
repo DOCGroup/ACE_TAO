@@ -12,6 +12,7 @@
 ACE_RCSID(Kokyu, Dispatcher_Task, "$Id$")
 
 namespace 
+//anonymous namespace - use this to avoid polluting the global namespace
 {
   const int ALLOC_POOL_CHUNKS = 200;
 }
