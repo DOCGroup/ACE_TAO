@@ -147,8 +147,6 @@ TAO_IORInfo::adapter_template (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  //CORBA::add_ref (adapter_template);
-
   return adapter_template;
 }
 
@@ -173,8 +171,6 @@ TAO_IORInfo::current_factory (ACE_ENV_SINGLE_ARG_DECL)
                                               CORBA::COMPLETED_NO),
                         0);
     }
-
-  //CORBA::add_ref (adapter_factory);
 
   return adapter_factory;
 }

@@ -58,12 +58,12 @@ public:
   virtual int activate (const char *server_id,
                         const char *orb_id,
                         PortableInterceptor::AdapterName *,
-                        TAO_POA *poa) = 0;
+                        TAO_POA *poa
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
-  virtual int activate (PortableInterceptor::ObjectReferenceFactory *current_factory,
-                        TAO_POA *poa) = 0;
-
-  virtual int destroy (void) = 0;
+  /// Set a different ort_factory to be used.
+  virtual int set_obj_ref_factory (PortableInterceptor::ObjectReferenceFactory *current_factory
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /// Set the underlying POA pointer.
   /**

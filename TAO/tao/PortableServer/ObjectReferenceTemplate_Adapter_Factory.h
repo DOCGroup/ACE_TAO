@@ -44,8 +44,12 @@ public:
   virtual ~TAO_ObjectReferenceTemplate_Adapter_Factory (void);
 
   virtual TAO_ObjectReferenceTemplate_Adapter * create (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  virtual void destroy (
+      TAO_ObjectReferenceTemplate_Adapter * adapter
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
