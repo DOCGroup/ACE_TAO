@@ -10,6 +10,7 @@
 #ifndef SENDER_EXEC_H
 #define SENDER_EXEC_H
 
+#include "SwapExecC.h"
 #include "SenderEC.h"
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"
@@ -21,6 +22,24 @@ namespace Sender_Impl
    *
    * Sender executor implementation class.
    */
+
+  class SENDER_EXEC_Export SenderSwap_exec_i :
+      public virtual CIAO::Swap_Exec,
+      public virtual TAO_Local_RefCounted_Object
+  {
+  public:
+    SenderSwap_exec_i ();
+
+    ~SenderSwap_exec_i ();
+
+    virtual ::Components::EnterpriseComponent_ptr 
+    incarnate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual ::Components::EnterpriseComponent_ptr 
+    etherealize (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  };
 
   class SENDER_EXEC_Export Sender_exec_i :
       public virtual Sender_Exec,

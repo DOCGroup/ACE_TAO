@@ -116,13 +116,35 @@ Sender_Impl::SenderHome_exec_i::~SenderHome_exec_i ()
 {
 }
 
+Sender_Impl::SenderSwap_exec_i::SenderSwap_exec_i ()
+{
+}
+
+Sender_Impl::SenderSwap_exec_i::~SenderSwap_exec_i ()
+{
+}
+
+::Components::EnterpriseComponent_ptr
+Sender_Impl::SenderSwap_exec_i::incarnate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return new Sender_Impl::Sender_exec_i;
+}
+
+::Components::EnterpriseComponent_ptr
+Sender_Impl::SenderSwap_exec_i::etherealize (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return new Sender_Impl::Sender_exec_i;
+}
+
 ::Components::EnterpriseComponent_ptr
 Sender_Impl::SenderHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "%P|%t) creating SenderHome \n")); 
-  return new Sender_Impl::Sender_exec_i;
+  return new Sender_Impl::SenderSwap_exec_i;
 }
 
 extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr

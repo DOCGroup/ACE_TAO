@@ -8,6 +8,28 @@
 #include "Receiver_exec.h"
 #include "CIAO_common.h"
 
+Receiver_Impl::ReceiverSwap_exec_i::ReceiverSwap_exec_i ()
+{
+}
+
+Receiver_Impl::ReceiverSwap_exec_i::~ReceiverSwap_exec_i ()
+{
+}
+
+::Components::EnterpriseComponent_ptr
+Receiver_Impl::ReceiverSwap_exec_i::incarnate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return new Receiver_Impl::Receiver_exec_i;
+}
+
+::Components::EnterpriseComponent_ptr
+Receiver_Impl::ReceiverSwap_exec_i::etherealize (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return new Receiver_Impl::Receiver_exec_i;
+}
+
 Receiver_Impl::Receiver_exec_i::Receiver_exec_i ()
 {
 }
@@ -121,7 +143,7 @@ Receiver_Impl::ReceiverHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
 {
   Components::EnterpriseComponent_ptr tmp;
   ACE_NEW_THROW_EX (tmp,
-                    Receiver_Impl::Receiver_exec_i,
+                    Receiver_Impl::ReceiverSwap_exec_i,
                     CORBA::NO_MEMORY ());
   return tmp;
 }

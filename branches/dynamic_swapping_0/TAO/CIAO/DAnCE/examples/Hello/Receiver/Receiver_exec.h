@@ -10,6 +10,7 @@
 #ifndef RECEIVER_EXEC_H
 #define RECEIVER_EXEC_H
 
+#include "SwapExecC.h"
 #include "ReceiverEC.h"
 #include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
@@ -22,6 +23,24 @@ namespace Receiver_Impl
    *
    * Receiver executor implementation class.
    */
+
+  class RECEIVER_EXEC_Export ReceiverSwap_exec_i :
+      public virtual CIAO::Swap_Exec,
+      public virtual TAO_Local_RefCounted_Object
+  {
+  public:
+    ReceiverSwap_exec_i ();
+
+    ~ReceiverSwap_exec_i ();
+
+    virtual ::Components::EnterpriseComponent_ptr
+    incarnate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual ::Components::EnterpriseComponent_ptr
+    etherealize (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  };
 
   class RECEIVER_EXEC_Export Receiver_exec_i :
           public virtual Receiver_Exec,
