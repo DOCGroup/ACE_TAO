@@ -5987,7 +5987,8 @@ public:
   static int event_destroy (ACE_event_t *event);
   static int event_wait (ACE_event_t *event);
   static int event_timedwait (ACE_event_t *event,
-                              ACE_Time_Value *timeout);
+                              ACE_Time_Value *timeout,
+                              int use_absolute_time = 1);
   static int event_signal (ACE_event_t *event);
   static int event_pulse (ACE_event_t *event);
   static int event_reset (ACE_event_t *event);

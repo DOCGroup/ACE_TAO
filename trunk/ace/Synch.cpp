@@ -306,10 +306,11 @@ ACE_Event::wait (void)
 }
 
 int
-ACE_Event::wait (const ACE_Time_Value *abstime)
+ACE_Event::wait (const ACE_Time_Value *abstime, int use_absolute_time)
 {
   return ACE_OS::event_timedwait (&this->handle_,
-                                  (ACE_Time_Value *) abstime);
+                                  (ACE_Time_Value *) abstime,
+                                  use_absolute_time);
 }
 
 int

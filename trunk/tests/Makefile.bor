@@ -64,6 +64,7 @@ NAMES = \
 	OS_Test \
 	Pipe_Test \
 	Proactor_Test \
+	Proactor_Timer_Test \
 	Priority_Buffer_Test \
 	Priority_Reactor_Test \
 	Priority_Task_Test \
