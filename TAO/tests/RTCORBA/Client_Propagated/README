@@ -32,7 +32,8 @@ client [-k server_ior]
 Expected output:
 ----------------
 Client executable produces no output (unless there are errors).
-Server should produces the following (if there are no errors):
+Server should produces the following if there are no errors (the
+priority numbers may differ from platform to platform):
 
 $server
 Activated as <IOR:010000000d00000049444c3a546573743a312e300000000001000000000000
@@ -47,5 +48,3 @@ Client priority: 1  Servant thread priority: 1
 Client priority: 2  Servant thread priority: 2
 Server ORB event loop finished
 Final priority of the servant thread = its initial priority
-
-

@@ -10,8 +10,6 @@ require ACEutils;
 use Cwd;
 
 $cwd = getcwd();
-$client_conf="$cwd$DIR_SEPARATOR" . "client.conf";
-$server_conf="$cwd$DIR_SEPARATOR" . "server.conf";
 $iorfile = "$cwd$DIR_SEPARATOR" . "test.ior";
 
 ACE::checkForTarget($cwd);
