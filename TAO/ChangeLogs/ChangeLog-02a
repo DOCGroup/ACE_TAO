@@ -1,3 +1,16 @@
+Tue Nov  7 11:19:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/TAO_Static.dsp
+        * tao/DynamicAny/TAO_DynamicAny_Static.dsp:
+        * tao/IORManipulation/TAO_IORManip.dsp:
+        * tao/IORManipulation/TAO_IORManip_Static.dsp:
+        * tao/IORTable/TAO_IORTable_Static.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
+
+          Fixed these projects to be consistent in their defines,
+          to make sure things like defining _DEBUG in a release
+          build doesn't happen.
+
 Tue Nov  7 12:24:48 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: 
