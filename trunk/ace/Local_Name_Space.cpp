@@ -10,6 +10,12 @@
 
 ACE_RCSID(ace, Local_Name_Space, "$Id$")
 
+ACE_NS_String::~ACE_NS_String (void)
+{
+  if (this->delete_rep_)
+    delete [] this->rep_;
+}
+
 ACE_USHORT16 *
 ACE_NS_String::fast_rep (void) const
 {
@@ -42,14 +48,16 @@ ACE_NS_String::char_rep (void) const
 
 ACE_NS_String::ACE_NS_String (void)
   : len_ (0),
-    rep_ (0)
+    rep_ (0),
+    delete_rep_ (0)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
 }
 
 ACE_NS_String::ACE_NS_String (const ACE_WString &s)
   : len_ ((s.length () + 1) * sizeof (ACE_USHORT16)),
-    rep_ ((ACE_USHORT16 *) s.fast_rep ())
+    rep_ (s.ushort_rep ()),
+    delete_rep_ (1)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
 }
@@ -108,7 +116,8 @@ ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst,
                               const ACE_USHORT16 *src,
                               size_t bytes)
   : len_ (bytes),
-    rep_ (dst)
+    rep_ (dst),
+    delete_rep_ (0)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
   ACE_OS::memcpy (this->rep_, src, bytes);

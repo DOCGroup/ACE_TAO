@@ -53,6 +53,9 @@ public:
   /// Converts an ACE_WString to an ACE_NS_String;
   ACE_NS_String (const ACE_WString &);
 
+  /// Destructor
+  ~ACE_NS_String (void);
+
   /// Converts an ACE_NS_String to fresh copy of an ACE_WString;
   operator ACE_WString () const;
 
@@ -83,6 +86,10 @@ private:
 
   /// This actually points into shared/persistent memory.
   ACE_USHORT16 *rep_;
+
+  /// Should rep_ be deleted when destructed (only used
+  /// for WString conversions)
+  int delete_rep_;
 };
 
 /**
