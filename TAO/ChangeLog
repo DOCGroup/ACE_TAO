@@ -4849,3 +4849,4 @@ Sat Oct 25 13:19:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAOACE.dsw: Added that EventService is dependent of BiDIR GIOP
           to make sure that BiDIR GIOP is build first.
+
