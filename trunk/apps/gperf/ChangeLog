@@ -1,3 +1,8 @@
+Tue Sep 15 18:14:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/test-6.exp (Usage): Fixed the usage so diff should no
+ 	  longer complain...  Thanks to David for reporting this.
+
 Tue Sep 15 21:54:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Makefile: filter timestamps from test output so that
