@@ -67,7 +67,7 @@ while ($#ARGV >= 0) {
     $dont_update = 1;
     shift;
   } elsif ($ARGV[0] eq "-dont_run") {
-    $dont_update = 1;
+    $dont_run = 1;
     shift;
   } elsif ($ARGV[0] eq "-pre_realclean") {
     $pre_realclean = 1;
