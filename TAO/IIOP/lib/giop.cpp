@@ -145,8 +145,9 @@ CORBA_Boolean
 GIOP::send_message(CDR& stream, ACE_SOCK_Stream& peer)
 {
   int h = peer.get_handle();
-  send_message(stream, h);
+  CORBA_Boolean r = send_message(stream, h);
   peer.set_handle(h);
+  return r;
 }
 
 CORBA_Boolean
@@ -1283,7 +1284,7 @@ GIOP::incoming_message (
 
 		    delete req.object_key.buffer;
 		    CORBA_string_free (req.operation);
-		    return;
+		    return retval;
 		}
 	}
 
