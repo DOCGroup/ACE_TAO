@@ -457,8 +457,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   if (this->allocator_->find (ACE_NAME_SERVER_MAP, ns_map) == 0)
     {
       this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
-                  this->name_space_map_, ns_map));
+      if (ACE::debug ())
+        ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+                    this->name_space_map_, ns_map));
     }
 
   // This is the hard part since we have to avoid potential race
@@ -472,8 +473,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
       if (this->allocator_->find (ACE_NAME_SERVER_MAP, ns_map) == 0)
         {
           this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
-          ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
-                      this->name_space_map_, ns_map));
+          if (ACE::debug ())
+            ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+                        this->name_space_map_, ns_map));
         }
       else
         {
@@ -489,8 +491,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
             ACE_ERROR_RETURN ((LM_ERROR, "create_manager\n"), -1);
         }
 
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
-                  this->name_space_map_, ns_map));
+      if (ACE::debug ())
+        ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+                    this->name_space_map_, ns_map));
     }
 
   return 0;
