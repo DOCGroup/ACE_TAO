@@ -1,3 +1,10 @@
+Mon Dec 22 03:08:22 1997    <nw1@DINGO>
+
+	* ace/OS.i: Modified ACE_OS::cond_* for WinCE.
+
+	* ace/config-win32-common.h:  Prevent ACE from using NT specific 
+	  API on Win CE.
+
 Sun Dec 21 16:19:40 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/OS.{h,i} (ACE_OS::sema_*): Added semaphore simulation code
