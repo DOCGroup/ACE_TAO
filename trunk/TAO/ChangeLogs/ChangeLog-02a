@@ -1,3 +1,10 @@
+Sat May 19 11:02:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed a problem
+	  while trying to check for availability of a connection. A call
+	  was made to cache the transport rather than to find the
+	  transport. Looks like "cut-and-paste"yopia :)
+
 Sat May 19 09:09:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/NULL_Connection_Purging_Strategy.h: Made some
