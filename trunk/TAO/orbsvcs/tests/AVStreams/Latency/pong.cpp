@@ -28,7 +28,7 @@ ACE_Throughput_Stats send_latency;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xo:s:r:t:b:");
+  ACE_Get_Opt get_opts (argc, argv, "xo:s:r:t:b:d");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -69,6 +69,9 @@ parse_args (int argc, char *argv[])
 
       case 'x':
         respond = 0;
+        break;
+      case 'd':
+        TAO_debug_level++;
         break;
 
       case '?':
@@ -185,8 +188,7 @@ int main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
-      ACE_Time_Value tv (120, 0);
-      orb->run (tv, ACE_TRY_ENV);
+      orb->run ();
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
@@ -199,8 +201,6 @@ int main (int argc, char *argv[])
 
       send_latency.dump_results ("Send", gsf);
 
-      // root_poa->destroy (1, 1, ACE_TRY_ENV);
-      // ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -297,8 +297,9 @@ Ping_Send::get_callback (const char *,
 }
 
 Ping_Send_Callback::Ping_Send_Callback (void)
+  :count_ (0)
 {
-  this->timeout_ = ACE_Time_Value (0, milliseconds * 1000);
+  this->timeout_ = ACE_Time_Value (2);
 
   this->frame_.size (message_size);
   this->frame_.wr_ptr (message_size);
@@ -314,7 +315,16 @@ Ping_Send_Callback::get_timeout (ACE_Time_Value *&tv,
 int
 Ping_Send_Callback::handle_timeout (void *)
 {
-  // ACE_DEBUG ((LM_DEBUG, "ping timeout\n"));
+
+  this->count_++;
+
+  ACE_DEBUG ((LM_DEBUG, "Ping timeout frame %d\n", this->count_));
+
+  if (this->count_ > 10)
+    {
+      TAO_AV_CORE::instance ()->orb ()->shutdown ();
+      return 0;
+    }
 
   ACE_hrtime_t stamp = ACE_OS::gethrtime ();
   ACE_OS::memcpy (this->frame_.rd_ptr (), &stamp, sizeof(stamp));
