@@ -198,6 +198,8 @@ Test_Big_Union::reset_parameters (void)
       }
       break;
     }
+  this->out_ = new Param_Test::Big_Union (this->in_);
+  this->ret_ = new Param_Test::Big_Union (this->in_);
   return 0;
 }
 
