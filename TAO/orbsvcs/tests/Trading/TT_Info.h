@@ -7,6 +7,8 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Read_Buffer.h"
 #include "orbsvcs/CosTradingC.h"
+#include "orbsvcs/CosTradingReposC.h"
+#include "orbsvcs/CosTradingDynamicC.h"
 
 class TT_Info
 {
