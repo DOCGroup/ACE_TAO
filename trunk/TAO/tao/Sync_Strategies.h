@@ -80,8 +80,9 @@ public:
 class TAO_Export TAO_Flush_Sync_Strategy : public TAO_None_Sync_Strategy
 {
 public:
-  int buffering_constraints_reached (TAO_Stub &stub,
-                                     TAO_Transport_Buffering_Queue &buffering_queue);
+  virtual int buffering_constraints_reached (TAO_Transport &transport,
+                                             TAO_Stub &stub,
+                                             TAO_Transport_Buffering_Queue &buffering_queue);
 };
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
