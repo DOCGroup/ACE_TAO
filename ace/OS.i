@@ -537,6 +537,17 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 #endif /* defined (ACE_PSOS) */
 }
 
+ACE_INLINE int
+ACE_OS::fsync (ACE_HANDLE handle)
+{
+  // ACE_TRACE ("ACE_OS::fsync");
+# if defined (ACE_LACKS_FSYNC)
+  ACE_UNUSED_ARG (handle);
+# else
+  ACE_OSCALL_RETURN (::fsync (handle), int, -1);
+# endif /* ACE_LACKS_FCNTL */
+}
+
 ACE_INLINE gid_t
 ACE_OS::getgid (void)
 {
