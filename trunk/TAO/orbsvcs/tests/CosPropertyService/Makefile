@@ -1,24 +1,51 @@
 #----------------------------------------------------------------------------
 #	$Id$
+#
+#	Top-level Makefile for the AVStreams demo of the TAO ORB
+#
 #----------------------------------------------------------------------------
+
+#---------------
+#   STL (start)
+#---------------
+
+include $(STL_ROOT)/config/local.cfg
+
+CC_INCLUDES += -I$(STD)
+CC_INCLUDES += -pta
+
+CPPFLAGS += \
+	-I$(TOOLKIT) \
+	$(CC_INCLUDES) \
+	$(CC_FLAGS) \
+	$(CC_DEFINES) \
+	$(CC_EH) \
+	$(CC_MT)
+
+ifndef exceptions
+CPPFLAGS += -DOS_NO_EXCEPTION_SPECIFIER
+else
+CPPFLAGS += -DOS_STL_ASSERT
+endif
+
+LDFLAGS += -L$(STL_ROOT)/lib
+
+#---------------
+#   STL (end)
+#---------------
 
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     =  -lorbsvcs -lTAO
+LDLIBS     = -lorbsvcs -lospace -lTAO -lrpcsvc
 
-PROG_SRCS =  main.cpp
-
-LSRC = $(PROG_SRCS)
-
-#AVStreams_SERVER_OBJS = server.o
-#AVStreams_CLIENT_OBJS = client.o
+AVStreams_SERVER_OBJS = server.o
+AVStreams_CLIENT_OBJS = client.o
 
 COSPROPERTY_OBJS = main.o
 
-#BIN = server client
-BIN = main
+BIN = server client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -41,20 +68,25 @@ DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
-#server:$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
-#$(LINK.cc) $(LDFAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+server:$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-#client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
-#$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-main: $(addprefix $(VDIR), $(COSPROPERTY_OBJS))	
-	$(LINK.cc) $(LDFAGS) -o $@ $^ $(VLDLIBS)  $(POSTLINK)
-
+client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf 
+	-/bin/rm -rf
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
+
+
+
+
+
 
