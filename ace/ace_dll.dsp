@@ -7,21 +7,21 @@
 CFG=ACE DLL - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "ace_dll.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "ace_dll.mak" CFG="ACE DLL - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "ACE DLL - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "ACE DLL - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "ACE DLL - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "ACE DLL - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -88,9 +88,9 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
 LINK32=link.exe
-# ADD BASE LINK32 advapi32.lib user32.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:I386 /out:"..\bin\aced.dll" /pdbtype:sept
+# ADD BASE LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:I386 /out:"..\bin\aced.dll" /pdbtype:sept
 # SUBTRACT BASE LINK32 /pdb:none
-# ADD LINK32 advapi32.lib user32.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\acemfcd.pdb" /debug /machine:I386 /out:"..\bin\acemfcd.dll"
+# ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\acemfcd.pdb" /debug /machine:I386 /out:"..\bin\acemfcd.dll"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
@@ -146,10 +146,10 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o".\ace.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 advapi32.lib user32.lib /nologo /version:5.2 /subsystem:windows /dll /pdb:".\aced.pdb" /debug /machine:I386 /out:"..\bin\aced.dll"
+# ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\aced.pdb" /debug /machine:I386 /out:"..\bin\aced.dll"
 # SUBTRACT LINK32 /pdb:none
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 

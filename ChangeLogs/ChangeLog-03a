@@ -1,8 +1,14 @@
+Fri Jan 25 15:36:40 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp: Removed /version flags from the project since
+	  they have been taken care of by ace.rc file.  Thanks to Ossama
+	  for pointing it out.
+
 Fri Jan 25 14:45:00 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
-	 
-	* bin/auto_run_tests.lst: 
+
+	* bin/auto_run_tests.lst:
 	  Added Two_Objects test to the list.
-	
+
 Fri Jan 25 14:40:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/common/Exception.cpp:
@@ -39,7 +45,7 @@ Fri Jan 25 12:01:14 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Jan 25 09:42:12 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace_dll.dsp:
+	* ace/ace_dll.dsp:
 
 	  Corrected inconsistency in the DLL minor version.  The correct
 	  minor version for the ACE 5.2 series is "2," not "1."
