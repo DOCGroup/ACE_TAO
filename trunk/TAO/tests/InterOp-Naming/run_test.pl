@@ -6,8 +6,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib '../../../bin';
-use ACEutils;
 use PerlACE::Run_Test;
+
+$TARGETHOSTNAME = "localhost";
 
 $file = PerlACE::LocalFile ("test.ior");
 $port = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
