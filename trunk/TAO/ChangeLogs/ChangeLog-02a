@@ -1,3 +1,9 @@
+Thu Jan 31 13:06:39 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* performance-tests/Latency/AMH/Single_Threaded/Makefile:
+	  Added a check so that this test is not made for minimum CORBA
+	  builds.
+
 Thu Jan 31 13:31:17 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
