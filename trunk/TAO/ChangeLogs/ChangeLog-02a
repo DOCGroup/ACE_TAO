@@ -1,3 +1,12 @@
+Mon Apr  2 13:12:32 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/RTCORBA:
+	  Added target directory for RTCORBA subsetting.
+	
+	* tao/RTCORBA/README:
+	  Status and plan for subsetting RTCORBA.  This file will be
+	  removed once the subsetting is completed.
+
 Mon Apr  2 13:07:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* examples/Logging/Logging_Service_i.cpp:
