@@ -245,7 +245,7 @@ ifneq (,$(findstring Time,$(TAO_ORBSVCS)))
 endif # Time
 
 ifneq (,$(findstring ImplRepo,$(TAO_ORBSVCS)))
-  IDL_SRCS += Ping ImplRepo
+  IDL_SRCS += ImplRepo
   TAO_ORBSVCS_SRCS +=
 endif # ImplRepo
 
@@ -302,7 +302,6 @@ $(foreach ext, $(IDL_EXT), LifeCycleService$(ext)): CosLifeCycle.idl
 $(foreach ext, $(IDL_EXT), CosLifeCycle$(ext)): CosNaming.idl
 $(foreach ext, $(IDL_EXT), AVStreams_Full$(ext)): AVStream.idl
 $(foreach ext, $(IDL_EXT), AVStreams$(ext)): CosPropertyService.idl
-$(foreach ext, $(IDL_EXT), ImplRepo$(ext)): Ping.idl
 #$(foreach ext, $(IDL_EXT), CosConcurrencyControl$(ext)): CosTransactions.idl
 
 .PRECIOUS: $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
@@ -5196,8 +5195,7 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  orbsvcs_export.h TimeBaseC.i TimeBaseS_T.h TimeBaseS_T.i \
  TimeBaseS_T.cpp TimeBaseS.i TimeServiceC.h TimeServiceC.i \
- TimeServiceS_T.h TimeServiceS_T.i TimeServiceS_T.cpp TimeServiceS.i
-.obj/PingS.o .obj/PingS.so .shobj/PingS.o .shobj/PingS.so: PingS.cpp PingS.h PingC.h \
+ TimeServiceS_T.h TimeServiceS_T.i TimeServiceS_T.cpp TimeServiceS.i \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -5449,8 +5447,7 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- orbsvcs_export.h PingC.i PingS_T.h PingS_T.i PingS_T.cpp PingS.i
-.obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h PingS.h PingC.h \
+ orbsvcs_export.h .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -5702,7 +5699,7 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- orbsvcs_export.h PingC.i PingS_T.h PingS_T.i PingS_T.cpp PingS.i \
+ orbsvcs_export.h  \
  ImplRepoC.h ImplRepoC.i ImplRepoS_T.h ImplRepoS_T.i ImplRepoS_T.cpp \
  ImplRepoS.i
 .obj/CosNamingS.o .obj/CosNamingS.so .shobj/CosNamingS.o .shobj/CosNamingS.so: CosNamingS.cpp CosNamingS.h CosNamingC.h \
@@ -10823,7 +10820,6 @@ ORBSVCS_COMPONENTS:
  TimeServiceS.h TimeBaseS.h TimeBaseS_T.h TimeBaseS_T.i \
  TimeBaseS_T.cpp TimeBaseS.i TimeServiceS_T.h TimeServiceS_T.i \
  TimeServiceS_T.cpp TimeServiceS.i
-.obj/PingC.o .obj/PingC.so .shobj/PingC.o .shobj/PingC.so: PingC.cpp PingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -11075,8 +11071,7 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- orbsvcs_export.h PingC.i PingS.h PingS_T.h PingS_T.i PingS_T.cpp \
- PingS.i
+ orbsvcs_export.h  \
 .obj/ImplRepoC.o .obj/ImplRepoC.so .shobj/ImplRepoC.o .shobj/ImplRepoC.so: ImplRepoC.cpp ImplRepoC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -11329,8 +11324,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- orbsvcs_export.h PingC.h PingC.i ImplRepoC.i ImplRepoS.h PingS.h \
- PingS_T.h PingS_T.i PingS_T.cpp PingS.i ImplRepoS_T.h ImplRepoS_T.i \
+ orbsvcs_export.h ImplRepoC.i ImplRepoS.h \
+ ImplRepoS_T.h ImplRepoS_T.i \
  ImplRepoS_T.cpp ImplRepoS.i
 .obj/CosNamingC.o .obj/CosNamingC.so .shobj/CosNamingC.o .shobj/CosNamingC.so: CosNamingC.cpp CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
