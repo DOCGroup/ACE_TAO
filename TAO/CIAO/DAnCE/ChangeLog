@@ -1,3 +1,10 @@
+Mon Mar  7 12:35:04 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * tests/NodeApplicationTest/NodeApp_test_client.cpp:
+
+          Fixed the test to generate different instance names
+          for the components that are created.
+
 Sun Mar  6 20:23:50 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * ciao/Swapping_Container.cpp:
