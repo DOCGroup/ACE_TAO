@@ -10,7 +10,7 @@ void
 HTTP_Request::init (const char *buffer, int buflen)
 {
   // Initialize these every time.
-  content_length_ = 0;
+  content_length_ = -1;
   filename_ = "";
   status_ = OK;
   type_ = NO_TYPE;
@@ -119,7 +119,7 @@ HTTP_Request::parse_PUT (char *lasts)
       token = ACE_OS::strtok_r (NULL, "\n\r:", &lasts);
     }
 
-  if (content_length_ == 0) 
+  if (content_length_ == -1) 
     {
       status_ = NO_CONTENT_LENGTH;
       return;

@@ -66,49 +66,67 @@ JAWS_VFS_Node::open (int flags)
 	case EACCES:
 	case EAGAIN:
 	  this->status_ = HTTP_Status_Code::STATUS_UNAUTHORIZED;
-	  ACE_ERROR ((LM_ERROR, "%p unauthorized error.\n", "JAWS_VFS_Node::open"));
+	  ACE_ERROR ((LM_ERROR,
+                      "%p unauthorized error.\n",
+                      "JAWS_VFS_Node::open"));
 	  break;
 	case EFAULT:
 	case ENOTDIR:
 	  this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
-	  ACE_ERROR ((LM_ERROR, "%p bad request.\n", "JAWS_VFS_Node::open"));
+	  ACE_ERROR ((LM_ERROR,
+                      "%p bad request.\n",
+                      "JAWS_VFS_Node::open"));
 	  break;
 	case ENOENT:
 #if !defined (ACE_WIN32)
 	case ENOLINK:
 #endif /* ACE_WIN32 */
 	  this->status_ = HTTP_Status_Code::STATUS_NOT_FOUND;
-	  ACE_ERROR ((LM_ERROR, "%p file not found error.\n", "JAWS_VFS_Node::open"));
+	  ACE_ERROR ((LM_ERROR,
+                      "%p file not found error.\n",
+                      "JAWS_VFS_Node::open"));
 	  break;
 	default:
 	  this->status_ = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
-	  ACE_ERROR ((LM_ERROR, "%p internal server error.\n", "JAWS_VFS_Node::open"));
+	  ACE_ERROR ((LM_ERROR,
+                      "%p internal server error.\n",
+                      "JAWS_VFS_Node::open"));
 	}
     }
   else if (ACE_OS::stat (this->path_, &this->stat_) == -1)
     {
       this->status_ = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
-      ACE_ERROR ((LM_ERROR, "%p stat failed.\n", "JAWS_VFS_Node::open"));
+      ACE_ERROR ((LM_ERROR,
+                  "%p stat failed.\n",
+                  "JAWS_VFS_Node::open"));
     }
   else 
     {
       if (this->stat_.st_mode & S_IFDIR) 
 	{
-	  if ((this->stat_.st_mode & (S_IXUSR|S_IXGRP|S_IXOTH)) == (S_IXUSR|S_IXGRP|S_IXOTH))
+	  if ((this->stat_.st_mode & (S_IXUSR|S_IXGRP|S_IXOTH))
+              == (S_IXUSR|S_IXGRP|S_IXOTH))
 	    {
 	      this->status_ = HTTP_Status_Code::STATUS_FORBIDDEN;
-	      ACE_ERROR ((LM_ERROR, "%p file is forbidden.\n", "JAWS_VFS_Node::open"));
+	      ACE_ERROR ((LM_ERROR,
+                          "%p file is forbidden.\n",
+                          "JAWS_VFS_Node::open"));
 	    }
 	  else
 	    {
 	      this->status_ = HTTP_Status_Code::STATUS_UNAUTHORIZED;
-	      ACE_ERROR ((LM_ERROR, "%p file access is unauthorized.\n", "JAWS_VFS_Node::open"));
+	      ACE_ERROR ((LM_ERROR,
+                          "%p file access is unauthorized.\n",
+                          "JAWS_VFS_Node::open"));
 	    }
 	}
-      else if ((this->stat_.st_mode & (S_IRUSR|S_IRGRP|S_IROTH)) != (S_IRUSR|S_IRGRP|S_IROTH))
+      else if ((this->stat_.st_mode & (S_IRUSR|S_IRGRP|S_IROTH))
+               != (S_IRUSR|S_IRGRP|S_IROTH))
 	{
 	  this->status_ = HTTP_Status_Code::STATUS_UNAUTHORIZED;
-	  ACE_ERROR ((LM_ERROR, "%p file access is unauthorized.\n", "JAWS_VFS_Node::open"));
+	  ACE_ERROR ((LM_ERROR,
+                      "%p file access is unauthorized.\n",
+                      "JAWS_VFS_Node::open"));
 	}
       else 
 	this->status_ = HTTP_Status_Code::STATUS_OK;
@@ -145,7 +163,9 @@ JAWS_VFS_Node::map_read (void)
       else
 	{
 	  this->status_ = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
-	  ACE_ERROR ((LM_ERROR, "%p memory mapping for read.\n", "JAWS_VFS_Node::map_write"));
+	  ACE_ERROR ((LM_ERROR,
+                      "%p memory mapping for read.\n",
+                      "JAWS_VFS_Node::map_write"));
 	  return -1;
 	}
     }
@@ -172,7 +192,9 @@ JAWS_VFS_Node::map_write (u_long size)
       else
 	{
 	  this->status_ = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
-	  ACE_ERROR ((LM_ERROR, "%p memory mapping for read.\n", "JAWS_VFS_Node::map_write"));
+	  ACE_ERROR ((LM_ERROR,
+                      "%p memory mapping for read.\n",
+                      "JAWS_VFS_Node::map_write"));
 	  return -1;
 	}
     }

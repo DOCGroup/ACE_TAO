@@ -7,14 +7,6 @@
 #include "JAWS/server/IO.h"
 #include "JAWS/server/HTTP_Server.h"
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class LOCK_SOCK_Acceptor<ACE_Thread_Mutex>;
-template class ACE_Task<ACE_NULL_SYNCH>;
-template class ACE_Thru_Task<ACE_NULL_SYNCH>;
-template class ACE_Message_Queue<ACE_NULL_SYNCH>;
-template class ACE_Module<ACE_NULL_SYNCH>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
 void
 HTTP_Server::parse_args (int argc, char *argv[])
 {
@@ -61,9 +53,6 @@ HTTP_Server::init (int argc, char *argv[])
 
   this->parse_args (argc, argv);
 
-  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
-  
   switch (this->strategy_) 
     {
     case 2:
@@ -92,6 +81,9 @@ HTTP_Server::fini (void)
 int
 HTTP_Server::synch_thread_pool (void)
 {
+  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
+  
   for (int i = 0; i < this->threads_; i++) 
     {
       Synch_Thread_Pool_Task *t;
@@ -143,6 +135,9 @@ int
 HTTP_Server::thread_per_request (void)
 {
   // thread per request
+  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
+  
   for (;;) 
     {
       ACE_SOCK_Stream stream;
@@ -256,3 +251,10 @@ ACE_STATIC_SVC_DEFINE (HTTP_Server, "HTTP_Server", ACE_SVC_OBJ_T,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ, 0)
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class LOCK_SOCK_Acceptor<ACE_Thread_Mutex>;
+template class ACE_Task<ACE_NULL_SYNCH>;
+template class ACE_Thru_Task<ACE_NULL_SYNCH>;
+template class ACE_Message_Queue<ACE_NULL_SYNCH>;
+template class ACE_Module<ACE_NULL_SYNCH>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
