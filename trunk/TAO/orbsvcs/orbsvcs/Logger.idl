@@ -82,11 +82,11 @@ interface Logger
     string<TAO_MAXLOGMSGLEN> msg_data; // The logging message.
   };
   
-  oneway void log (in Logger::Log_Record log_rec);
+  oneway void log (in Log_Record log_rec);
   // Transmit a Log_Record to the logging server.
 
-  void verbosity (Verbosity_Level level);
-  // Change the state of the <level> of verbosity.  This controls how
+  void verbosity (in Verbosity_Level verbosity_level);
+  // Change the state of the <verbosity_level>.  This controls how
   // much logging information is displayed by the server.
 };
 
