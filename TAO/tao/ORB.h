@@ -37,6 +37,11 @@
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
 
+// For the (W)String_var and (W)String_out iostream operators.
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+#include "ace/streams.h"
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+
 typedef enum
 {
   TAO_SERVICEID_NAMESERVICE,

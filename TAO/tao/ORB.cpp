@@ -2612,6 +2612,8 @@ CORBA_ORB::lookup_value_factory (const char *repository_id,
 // C++ iostream operators for (W)String_var and (W)String_out
 // *************************************************************
 
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
 ostream &
 operator<< (ostream &os, const CORBA::String_var &sv)
 {
@@ -2698,6 +2700,8 @@ operator>> (istream &is, CORBA::WString_out &wso)
   wso.ptr ()[i] = 0;
   return is;
 }
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
 // ****************************************************************
 
