@@ -4,6 +4,14 @@ Thu Nov  6 14:51:22 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 	a system library on NetBSD. Updated TAO_IDL/util/Makefile to be
 	compatible with this.
 
+Thu Nov 06 14:47:15 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/params.[hi]: inlined some functions in the class declaration
+          because g++ for VxWorks couldn't deal with them in the .i file.
+
+        * tao/tao_internals.*,orbobj.cpp: fixed replacement of orbinit_lock_
+          and service_lock_ with ACE_Static_Object_Lock::instance ().
+
 Thu Nov  6 10:38:47 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/tao_internals.i: Change lock used as monitor for service
@@ -14,7 +22,7 @@ Thu Nov  6 10:38:47 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	VxWorks.
 
 	* tao/orbobj.cpp (ORB_init): Changed lock used for the monitor
- 	here to be ACE_Static_Object_Lock::instance().  This pleases 
+ 	here to be ACE_Static_Object_Lock::instance().  This pleases
  	VxWorks (but makes me nauseous).
 
 	* tao/orb_core.cpp (init): Merged in changes for new Naming
@@ -31,7 +39,7 @@ Thu Nov  6 10:38:47 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Thu Nov  6 02:34:54 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* TAO_IDL/be/be_exception.cpp (gen_client_header): 
+	* TAO_IDL/be/be_exception.cpp (gen_client_header):
 	removed warning for unused variable.
 
 Thu Nov 06 02:17:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
@@ -105,14 +113,14 @@ Wed Nov  5 23:44:42 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Wed Nov  5 22:38:08 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* tests/Thruput_test/client.cpp (main): 
+	* tests/Thruput_test/client.cpp (main):
 	* tests/Thruput_test/server.cpp (main): Fixed missing declarations
  	and unused variables and labels.  Fixed uninitialized and unused
  	variables.
 
-	* tests/Thruput_test/ttcp_i.cpp (ttcp_sequence_i): 
+	* tests/Thruput_test/ttcp_i.cpp (ttcp_sequence_i):
 	* tests/Thruput_test/ttcp_i.h (class ttcp_sequence_i): Change to
- 	use POA.  
+ 	use POA.
 
 	* tests/Cubit/TAO/DII_Cubit/README (server): Changed comment on
  	how to start the server to indicate the use of "-d" to see the
@@ -120,7 +128,7 @@ Wed Nov  5 22:38:08 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (Cubit_Client): Reordered
  	member initializers to match declaration order
-	
+
 	* tests/Cubit/TAO/DII_Cubit/svr.cpp (main): Fixed comparison of
  	">=" on an unsigned variable to compare only ">".
 
