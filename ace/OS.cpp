@@ -1681,8 +1681,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   else
     {
       size_t _s = ACE_OS::sysconf (_SC_PTHREAD_STACK_MIN);
-      if (size < _s)
-        size = _s;
+      if (stacksize < _s)
+        stacksize = _s;
     }
 #     endif /*CHORUS */
 
@@ -3046,7 +3046,6 @@ ace_sysconf_dump (void)
               "PAGESIZE \t= \t%d\n"
               "PTHREAD_DESTRUCTOR_ITERATIONS \t= \t%d\n"
               "PTHREAD_KEYS_MAX \t= \t%d\n"
-              "PTHREAD_STACK_MAX \t= \t%d\n"
               "PTHREAD_STACK_MIN \t= \t%d\n"
               "PTHREAD_THREADS_MAX \t= \t%d\n"
               "SEM_VALUE_MAX \t= \t%d\n"
