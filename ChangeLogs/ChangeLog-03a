@@ -308,7 +308,7 @@ Tue Dec 31 21:21:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* bin/generate_topinfo_charts.sh:
 	* bin/topinfo_stats.sh: Scripts to track the memory usage and plot
 	  them. At present it works only for the simple test in
-	  $TAO_ROOT/performance-tests/Memory/Single_Threaded. 
+	  $TAO_ROOT/performance-tests/Memory/Single_Threaded.
 
 Tue Dec 31 17:57:19 2002  Steve Huston  <shuston@riverace.com>
 
