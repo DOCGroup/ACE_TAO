@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, messaging {
+project(*Server): taoserver, messaging {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): taoexe, messaging {
+project(*Client): taoclient, messaging {
   Source_Files {
     client.cpp
   }
