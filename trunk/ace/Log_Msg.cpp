@@ -1608,7 +1608,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
       // *Always* print a message to stderr if we're aborting.  We
       // don't use verbose, however, to avoid recursive aborts if
       // something is hosed.
-      log_record.print (ACE_Log_Msg::local_host_, 0);
+      log_record.print (ACE_Log_Msg::local_host_, 0, stderr);
 #if defined (ACE_HAS_WINCE)
       // @@ WINCE:  Is this what we want to do?
       while (1) ;
@@ -1703,13 +1703,8 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
                            ACE_Log_Msg::STDERR)
           && !suppress_stderr) // This is taken care of by our caller.
         log_record.print (ACE_Log_Msg::local_host_,
-                          ACE_Log_Msg::flags_
-#if defined (ACE_HAS_WINCE)
-                          );
-#else
-      , stderr);
-#endif /* ACE_HAS_WINCE */
-
+                          ACE_Log_Msg::flags_,
+                          stderr);
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM) ||
           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
