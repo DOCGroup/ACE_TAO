@@ -55,7 +55,7 @@ private:
   int valuetype_test (ACE_ENV_SINGLE_ARG_DECL);
   int eventtype_test (ACE_ENV_SINGLE_ARG_DECL);
 
-  int component_attr_test (
+  int component_attribute_test (
       CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &
       ACE_ENV_ARG_DECL
     );
@@ -63,9 +63,22 @@ private:
   int component_inheritance_test (CORBA::ComponentIR::ComponentDef_var &
                                   ACE_ENV_ARG_DECL);
 
+  int component_port_test (CORBA::ComponentIR::ComponentDef_var &
+                           ACE_ENV_ARG_DECL);
+
+  int provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &
+                     ACE_ENV_ARG_DECL);
+
+  int uses_test (CORBA::ComponentIR::UsesDescriptionSeq &
+                 ACE_ENV_ARG_DECL);
+
+  int event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &,
+                       CORBA::ULong
+                       ACE_ENV_ARG_DECL);
+
 private:
   CORBA::Boolean debug_;
-  // Flag to output results of IFR queries.
+  // Flag to output detailed error messages.
 
   CORBA::ORB_var orb_;
   // Storage of the ORB reference.

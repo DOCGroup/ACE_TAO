@@ -3257,7 +3257,7 @@ CORBA::TypeCode::_tao_decode (const CORBA::TypeCode *parent,
     CORBA::_tc_wchar,
 
     0,  // CORBA::_tc_wstring ... unbounded
-    0,  // CORBA::tk_fixed @@ boris: This is unsupported but I need next value
+    0,  // CORBA::tk_fixed
     0,  // CORBA::tk_value
     0,  // CORBA::tk_value_box:
     0,  // CORBA::tk_native:

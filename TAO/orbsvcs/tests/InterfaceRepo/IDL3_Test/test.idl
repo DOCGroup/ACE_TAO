@@ -14,14 +14,29 @@ module help
   component c_base {};
 };
 
+module help
+{
+  interface c_provides1 {};
+  interface c_uses1 {};
+  interface c_uses2 {};
+  eventtype c_emits1 {};
+  eventtype c_publishes1 {};
+  eventtype c_consumes1 {};
+};
+
 module mod
 {
   component test_component 
     : help::c_base supports help::c_supp1, help::c_supp2
   {
-    attribute long c_attr 
+    attribute long c_attr1 
       getraises (help::doh) 
       setraises (help::whups, help::doh);
+
+    provides help::c_provides1 test_provides1;
+
+    uses help::c_uses1 test_uses1;
+    uses multiple help::c_uses2 test_uses2;
   };
 };
 
