@@ -57,6 +57,7 @@ lex.yy.cpp.target:
             -e "/#include </d" \
             -e "s@ECHO@TAO_YY_ECHO@" \
             -e 's/\$$Hea''der.*\$$/$$I''d$$/' > lex.yy.cpp
+        patch < lex.yy.cpp.diff
 	echo timestamp > $@
 
 y.tab.cpp: idl.yy
@@ -92,4 +93,3 @@ EXTRA_DIST = idl.ll idl.yy keywords.dat y.tab.cpp.diff
 clean-local:
 	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
 	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
-

@@ -177,7 +177,7 @@ oneway		return IDL_ONEWAY;
 
     TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
     const TAO_IDL_CPP_Keyword_Entry *entry =
-            cpp_key_tbl.lookup (ace_yytext, 
+            cpp_key_tbl.lookup (ace_yytext,
                                 ACE_OS::strlen (ace_yytext));
     if (entry)
       {
@@ -393,7 +393,7 @@ idl_store_pragma(char *buf)
 	  ++tp; ++sp;
         }
     }
-  
+
   if (ACE_OS::strstr(buf + 8, "import") != 0) {
     idl_global->set_import(I_TRUE);
     return;
@@ -555,7 +555,7 @@ idl_escape_reader(
 	    str[i] = save;
 	    return out;
 	}
-	break;
+	ACE_NOTREACHED (break;)
       default:
 	// check for octal value
 	if (str[1] >= '0' && str[1] <= '7') {
@@ -571,6 +571,6 @@ idl_escape_reader(
 	} else {
 	  return str[1] - 'a';
 	}
-	break;
+	ACE_NOTREACHED  (break;)
     }
 }

@@ -1,0 +1,102 @@
+--- lex.yy.cpp	Sun May 16 19:42:18 1999
++++ lex.yy.cpp.new	Sun May 16 19:40:55 1999
+@@ -850,7 +850,7 @@
+ 
+ /* Code executed at the end of each rule. */
+ #ifndef TAO_YY_BREAK
+-#define TAO_YY_BREAK break;
++#define TAO_YY_BREAK ACE_NOTREACHED (break;)
+ #endif
+ 
+ #define TAO_YY_RULE_SETUP \
+@@ -1304,35 +1304,35 @@
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		  idl_store_pragma(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 60:
+ TAO_YY_RULE_SETUP
+ #line 244 "fe/idl.ll"
+ {
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 61:
+ TAO_YY_RULE_SETUP
+ #line 247 "fe/idl.ll"
+ {
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 62:
+ TAO_YY_RULE_SETUP
+ #line 250 "fe/idl.ll"
+ {
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 63:
+ TAO_YY_RULE_SETUP
+ #line 253 "fe/idl.ll"
+ {
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 	        }
+-	TAO_YY_BREAK
++	break;
+ case 64:
+ TAO_YY_RULE_SETUP
+ #line 256 "fe/idl.ll"
+@@ -1340,7 +1340,7 @@
+ 		  /* ignore cpp ident */
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 65:
+ TAO_YY_RULE_SETUP
+ #line 260 "fe/idl.ll"
+@@ -1348,7 +1348,7 @@
+ 		  /* ignore comments */
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 66:
+ TAO_YY_RULE_SETUP
+ #line 264 "fe/idl.ll"
+@@ -1366,19 +1366,19 @@
+ 		    }
+ 	          }
+ 	        }
+-	TAO_YY_BREAK
++	break;
+ case 67:
+ TAO_YY_RULE_SETUP
+ #line 278 "fe/idl.ll"
+ ;
+-	TAO_YY_BREAK
++	break;
+ case 68:
+ TAO_YY_RULE_SETUP
+ #line 279 "fe/idl.ll"
+ {
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 69:
+ TAO_YY_RULE_SETUP
+ #line 282 "fe/idl.ll"
+@@ -1388,7 +1388,7 @@
+ TAO_YY_RULE_SETUP
+ #line 284 "fe/idl.ll"
+ TAO_YY_ECHO;
+-	TAO_YY_BREAK
++	break;
+ case TAO_YY_STATE_EOF(INITIAL):
+ 	tao_yyterminate();
+ 
