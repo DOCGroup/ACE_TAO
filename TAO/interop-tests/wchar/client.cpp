@@ -20,7 +20,6 @@
 #include "interop_wcharC.h"
 #include "wchar_reference.h"
 
-#include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 
