@@ -214,12 +214,13 @@ ACE_Event_Channel::complete_proxy_connection (Proxy_Handler *proxy_handler)
   int option = proxy_handler->proxy_role () == 'S' ? SO_RCVBUF : SO_SNDBUF;
   int socket_queue_size = this->options ().socket_queue_size_;
 
-  if (proxy_handler->peer ().set_option (SOL_SOCKET, 
-					 option,
-					 &socket_queue_size,
-					 sizeof (int)) == -1)
-    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "set_option"));
-
+  if (socket_queue_size > 0)
+    if (proxy_handler->peer ().set_option (SOL_SOCKET, 
+					   option,
+					   &socket_queue_size,
+					   sizeof (int)) == -1)
+      ACE_ERROR ((LM_ERROR, "(%t) %p\n", "set_option"));
+  
   proxy_handler->thr_mgr (ACE_Service_Config::thr_mgr ());
 
   // Our state is now "established."
@@ -247,6 +248,10 @@ ACE_Event_Channel::complete_proxy_connection (Proxy_Handler *proxy_handler)
 int
 ACE_Event_Channel::reinitiate_proxy_connection (Proxy_Handler *proxy_handler)
 {
+  int result = this->proxy_map_.unbind (proxy_handler->id ());
+  if (result != 0)
+    ACE_ERROR ((LM_ERROR, "Could not remove proxy from map, potential trouble\n"));
+  
   // Skip over proxies with deactivated handles.
   if (proxy_handler->get_handle () != ACE_INVALID_HANDLE)
     {

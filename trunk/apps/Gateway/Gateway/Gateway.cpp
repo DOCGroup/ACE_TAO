@@ -1,13 +1,14 @@
 /* -*- C++ -*- */
 // $Id$
 
+#define ACE_BUILD_SVC_DLL
 #include "ace/Get_Opt.h"
 #include "Config_Files.h"
 #include "ace/Service_Config.h"
 #include "Event_Channel.h"
 #include "Gateway.h"
 
-class Gateway : public ACE_Service_Object
+class ACE_Svc_Export Gateway : public ACE_Service_Object
   // = TITLE
   //     Integrates the whole Gateway application.
   //
@@ -68,10 +69,6 @@ Gateway::handle_signal (int signum, siginfo_t *, ucontext_t *)
   if (signum > 0)
     ACE_DEBUG ((LM_DEBUG, "(%t) %S\n", signum));
 
-  if (ACE_Service_Config::reactor ()->remove_handler 
-      (ACE_STDIN, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "remove_handler"), -1);
-
   // Shut down the main event loop.
   ACE_Service_Config::end_reactor_event_loop ();
   return 0;
@@ -109,7 +106,7 @@ Gateway::parse_args (int argc, char *argv[])
 	  break;
 
 	case 'b': // Use blocking connection establishment.
-	  this->event_channel_.options ().blocking_semantics_ = 0;
+	  this->event_channel_.options ().blocking_semantics_ = 1;
 	  break;
 	case 'C': // Use a different proxy config filename.
 	  ACE_OS::strncpy (this->consumer_config_file_,
@@ -165,6 +162,10 @@ Gateway::parse_args (int argc, char *argv[])
 	  break;
 	}
     }
+  
+  // Nonblocking connects are currently broken 
+  this->event_channel_.options ().blocking_semantics_ = 1;
+
   return 0;
 }
 
@@ -181,9 +182,15 @@ Gateway::init (int argc, char *argv[])
   // Register ourselves to receive SIGINT and SIGQUIT so we can shut
   // down gracefully via signals.
   
+#if defined (ACE_WIN32)
+  if (ACE_Service_Config::reactor ()->register_handler 
+      (SIGINT, this) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
+#else
   if (ACE_Service_Config::reactor ()->register_handler 
       (sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
+#endif
 
   // Register this handler to receive events on stdin.  We use this to
   // shutdown the Gateway gracefully.
