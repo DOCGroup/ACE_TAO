@@ -11,13 +11,14 @@
 
 LDLIBS     =  -lTAO
 
-IDL_SRC	= CosNamingC.cpp CosNamingS.cpp
+IDL_SRC	= CosNamingC.cpp CosNamingS.cpp loggerC.cpp
+
 PROG_SRCS =	$(IDL_SRC) NS_CosNaming.cpp svr.cpp clnt.cpp
 
 LSRC = $(PROG_SRCS)
 
 COSNAMING_SVR_OBJS = CosNamingC.o CosNamingS.o svr.o CosNaming_i.o NS_CosNaming.o
-COSNAMING_CLT_OBJS = CosNamingC.o clnt.o 
+COSNAMING_CLT_OBJS = CosNamingC.o clnt.o loggerC.o
 
 BIN = svr clnt
 BUILD = $(BIN)
@@ -42,8 +43,9 @@ DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
-$(IDL_SRC): CosNaming.idl
+$(IDL_SRC): CosNaming.idl logger.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl CosNaming.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl logger.idl
 
 svr:	$(addprefix $(VDIR),$(COSNAMING_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)

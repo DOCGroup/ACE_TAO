@@ -86,7 +86,8 @@ NS_NamingContext::bind (const CosNaming::Name& n,
   if (len == 0) 
     {
       IT_env.clear ();
-      IT_env.exception (new CosNaming::NamingContext::INVALID_NAME);
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      //      IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::InvalidName);
       return;
     }
     /* @@ *///    throw CosNaming::NamingContext::InvalidName ();
@@ -111,7 +112,13 @@ NS_NamingContext::bind (const CosNaming::Name& n,
 
       // Try binding the name.
       if (context_.bind (name, entry) == -1)
-	; /**///	throw CosNaming::NamingContext::AlreadyBound ();
+	{
+	  IT_env.clear ();
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      //	  IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::AlreadyBound);
+	  return;
+	}
+        /**///	throw CosNaming::NamingContext::AlreadyBound ();
       // May need to add case dealing with -1. (Maybe throw cannot
       // proceed).
     }
@@ -127,19 +134,25 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
 
   // check for invalid name.
   if (len == 0)
-    ;/* @@ *///    throw CosNaming::NamingContext::InvalidName ();
+    {
+      IT_env.clear ();
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      //      IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::InvalidName);
+      return;
+    }
+    /* @@ *///    throw CosNaming::NamingContext::InvalidName ();
 
   // If we received compound name, resolve it to get the context in
   // which the rebinding should take place, then perform the rebinding
   // on target context.
   if (len > 1) 
-      {
-    CosNaming::NamingContext_var cont = get_context (n);
-    CosNaming::Name simple_name;
-    simple_name.length (1);
-    simple_name[0] = n[len - 1];
-    cont->rebind (simple_name, obj, IT_env);
-  }
+    {
+      CosNaming::NamingContext_var cont = get_context (n);
+      CosNaming::Name simple_name;
+      simple_name.length (1);
+      simple_name[0] = n[len - 1];
+      cont->rebind (simple_name, obj, IT_env);
+    }
   // If we received a simple name, we need to rebind it in this context.
   else 
     {
@@ -147,7 +160,7 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
       NS_ExtId name (n[0].id, n[0].kind);
       NS_IntId oldentry;
       NS_ExtId oldname;
-
+      
       // Try rebinding the name.
       if (context_.rebind (name, entry, oldname, oldentry) == -1)
 	;
@@ -165,7 +178,13 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
 
   // Check for invalid name.
   if (len == 0)
-    ;/* @@ *///    throw CosNaming::NamingContext::InvalidName ();
+    {
+      IT_env.clear ();
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      //      IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::InvalidName);
+      return;
+    }
+    /* @@ *///    throw CosNaming::NamingContext::InvalidName ();
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the binding on
@@ -188,7 +207,13 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
 
       // Try binding the name.
       if (context_.bind (name, entry) == 1)
-	; /* @@ *///	throw CosNaming::NamingContext::AlreadyBound ();
+	{
+	  IT_env.clear ();
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      //	  IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::AlreadyBound);
+	  return;
+	}
+	/* @@ *///	throw CosNaming::NamingContext::AlreadyBound ();
       // May need to add case dealing with -1.
     }
 }
@@ -203,7 +228,13 @@ NS_NamingContext::rebind_context (const CosNaming::Name &n,
 
   // Check for invalid name.
   if (len == 0)
-    ; /* @@ *///    throw CosNaming::NamingContext::InvalidName ();
+    {
+      IT_env.clear ();
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      //      IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::InvalidName);
+      return;
+    }
+    /* @@ *///    throw CosNaming::NamingContext::InvalidName ();
 
   // If we received compound name, resolve it to get the context in
   // which the rebinding should take place, then perform the rebinding
@@ -240,15 +271,27 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
   CORBA::ULong len = n.length ();
 
   // check for invalid name.
-  if (len == 0) {
-    ; /* @@ *////    throw CosNaming::NamingContext::InvalidName ();
-  }
+  if (len == 0)
+    {
+      IT_env.clear ();
+      //      IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::InvalidName);
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      return 0;
+    }
+  /* @@ *////    throw CosNaming::NamingContext::InvalidName ();
+  
   // resolve the first component of the name
   NS_ExtId name (n[0].id, n[0].kind);
   NS_IntId entry;
-  if (context_.find (name, entry) == -1) {
-    ; /* @@ *///    throw CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n);
-  }
+  if (context_.find (name, entry) == -1) 
+    {
+      IT_env.clear ();
+      //      IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::NotFound (CosNaming::NamingContext::not_object, n));
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      return 0;
+    }
+  /* @@ *///    throw CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n);
+  
   CORBA::Object_ptr item = entry.ref_;
 
   // if the name we have to resolve is a compound name
@@ -259,7 +302,13 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
       if (entry.type_ == CosNaming::ncontext)
 	cont = CosNaming::NamingContext::_narrow (item);
       else
-	; /* @@ *///	throw CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context, n);
+	{
+	  IT_env.clear ();
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      //	  IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::NotFound (CosNaming::NamingContext::not_context, n));
+	  return 0;
+	}
+      /* @@ *///	throw CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context, n);
       
       CosNaming::Name rest_of_name;
       rest_of_name.length (len - 1);
@@ -285,7 +334,13 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
 
   // check for invalid name.
   if (len == 0)
-    ; /* @@ *////    throw CosNaming::NamingContext::InvalidName ();
+    {
+      IT_env.clear ();
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      //      IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::InvalidName);
+      return;
+    }
+    /* @@ *////    throw CosNaming::NamingContext::InvalidName ();
 
   // If we received compound name, resolve it to get the context in
   // which the unbinding should take place, then perform the unbinding
@@ -305,7 +360,13 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
       NS_ExtId name (n[0].id, n[0].kind);
       // try unbinding the name.
       if (context_.unbind (name) == -1)
-	; /* @@ *///	throw CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n);
+	{
+	  IT_env.clear ();
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      //	  IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::NotFound (CosNaming::NamingContext::not_object, n));
+	  return;
+	}
+	/* @@ *///	throw CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n);
     }
 }
     
@@ -350,7 +411,13 @@ NS_NamingContext::destroy (CORBA::Environment &IT_env)
   ACE_UNUSED_ARG (IT_env); 
 
   if (context_.current_size () != 0)
-    ; /* @@ *///    throw CosNaming::NamingContext::NotEmpty ();
+    {
+      IT_env.clear ();
+      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+      //      IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::NotEmpty);
+      return;
+    }
+    /* @@ *///    throw CosNaming::NamingContext::NotEmpty ();
 
   // destroy context
   CORBA::release (tie_ref_);
