@@ -61,7 +61,7 @@ client:	$(addprefix $(VDIR),$(TTCP_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf ttcpC.* ttcpS.*
+	-/bin/rm -rf ttcpC.* ttcpS.* ttcpS_T.*
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 

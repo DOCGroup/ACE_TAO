@@ -53,7 +53,7 @@ clean:
 	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
-	-/bin/rm -rf testC.* testS.*
+	-/bin/rm -rf testC.* testS.* testS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
