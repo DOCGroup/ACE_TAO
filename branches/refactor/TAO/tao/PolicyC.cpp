@@ -577,7 +577,7 @@ TAO_NAMESPACE_END
 int CORBA::Policy::_tao_class_id = 0;
 
 CORBA::Policy_ptr
-tao_CORBA_Policy_duplicate (
+CORBA::tao_Policy_life::tao_duplicate (
     CORBA::Policy_ptr p
   )
 {
@@ -585,7 +585,7 @@ tao_CORBA_Policy_duplicate (
 }
 
 void
-tao_CORBA_Policy_release (
+CORBA::tao_Policy_life::tao_release (
     CORBA::Policy_ptr p
   )
 {
@@ -593,7 +593,7 @@ tao_CORBA_Policy_release (
 }
 
 CORBA::Policy_ptr
-tao_CORBA_Policy_nil (
+CORBA::tao_Policy_life::tao_nil (
     void
   )
 {
@@ -601,7 +601,7 @@ tao_CORBA_Policy_nil (
 }
 
 CORBA::Policy_ptr
-tao_CORBA_Policy_narrow (
+CORBA::tao_Policy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -610,7 +610,7 @@ tao_CORBA_Policy_narrow (
 }
 
 CORBA::Object *
-tao_CORBA_Policy_upcast (
+CORBA::tao_Policy_cast::tao_upcast (
     void *src
   )
 {
@@ -619,17 +619,7 @@ tao_CORBA_Policy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_CORBA_Policy_marshal (
-    CORBA::Policy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+#if 0
 
 // *************************************************************
 // CORBA::Policy_var
@@ -816,8 +806,7 @@ CORBA::Policy_out::operator-> (void)
   return this->ptr_;
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_cs.cpp:56
+#endif /* 0 */
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 

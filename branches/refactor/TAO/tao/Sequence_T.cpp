@@ -259,9 +259,11 @@ TAO_Bounded_Sequence<T, MAX>::_deallocate_buffer (void)
 // class TAO_Object_Manager
 // *************************************************************
 
-template <class T, class T_var> TAO_Object_Manager<T,T_var>&
-TAO_Object_Manager<T,T_var>::
-    operator= (const TAO_Object_Manager<T,T_var> &rhs)
+template <typename T, typename T_var, typename T_life> 
+TAO_Object_Manager<T,T_var,T_life> &
+TAO_Object_Manager<T,T_var,T_life>::operator= (
+    const TAO_Object_Manager<T,T_var,T_life> & rhs
+  )
 {
   if (this == &rhs)
     {
@@ -270,8 +272,8 @@ TAO_Object_Manager<T,T_var>::
 
   if (this->release_)
     {
-      T_var::tao_release (*this->ptr_);
-      *this->ptr_ = T_var::tao_duplicate (*rhs.ptr_);
+      T_life::tao_release (*this->ptr_);
+      *this->ptr_ = T_life::tao_duplicate (*rhs.ptr_);
     }
   else
     *this->ptr_ = *rhs.ptr_;
@@ -279,8 +281,9 @@ TAO_Object_Manager<T,T_var>::
   return *this;
 }
 
-template <class T, class T_var>TAO_Object_Manager<T,T_var> &
-TAO_Object_Manager<T,T_var>::operator=(T* p)
+template <typename T, typename T_var, typename T_life>
+TAO_Object_Manager<T,T_var,T_life> &
+TAO_Object_Manager<T,T_var,T_life>::operator= (T * p)
 {
   if (this->release_)
     {
@@ -288,7 +291,7 @@ TAO_Object_Manager<T,T_var>::operator=(T* p)
       // that of a var variable.  Therefore we will not duplicate the
       // user provided pointer before assigning it to the internal
       // variable.
-      T_var::tao_release (*this->ptr_);
+      T_life::tao_release (*this->ptr_);
       *this->ptr_ = p;
     }
   else
@@ -297,8 +300,9 @@ TAO_Object_Manager<T,T_var>::operator=(T* p)
   return *this;
 }
 
-template <class T, class T_var>TAO_Object_Manager<T,T_var> &
-TAO_Object_Manager<T,T_var>::operator=(const T_var &p)
+template <typename T, typename T_var, typename T_life>
+TAO_Object_Manager<T,T_var,T_life> &
+TAO_Object_Manager<T,T_var,T_life>::operator= (const T_var & p)
 {
   if (this->release_)
     {
@@ -306,8 +310,8 @@ TAO_Object_Manager<T,T_var>::operator=(const T_var &p)
       // that of a var variable.  Therefore we duplicate p's
       // pointer before assigning it to the internal
       // variable.
-      T_var::tao_release (*this->ptr_);
-      *this->ptr_ = T_var::tao_duplicate (p.in ());
+      T_life::tao_release (*this->ptr_);
+      *this->ptr_ = T_life::tao_duplicate (p.in ());
     }
   else
     {
@@ -317,19 +321,21 @@ TAO_Object_Manager<T,T_var>::operator=(const T_var &p)
   return *this;
 }
 
-template <class T, class T_var> T *&
-TAO_Object_Manager<T,T_var>::out (void)
+template <typename T, typename T_var, typename T_life> 
+T *&
+TAO_Object_Manager<T,T_var,T_life>::out (void)
 {
-  T_var::tao_release (*this->ptr_);
-  *this->ptr_ = T_var::tao_nil ();
+  T_life::tao_release (*this->ptr_);
+  *this->ptr_ = T_life::tao_nil ();
   return *this->ptr_;
 }
 
-template <class T, class T_var> T *
-TAO_Object_Manager<T,T_var>::_retn (void)
+template <typename T, typename T_var, typename T_life> 
+T *
+TAO_Object_Manager<T,T_var,T_life>::_retn (void)
 {
   T *temp = *this->ptr_;
-  *this->ptr_ = T_var::tao_nil ();
+  *this->ptr_ = T_life::tao_nil ();
   return temp;
 }
 
@@ -574,33 +580,37 @@ TAO_Abstract_Manager<T,T_var>::operator= (const T_var &p)
 // *************************************************************
 
 // constructor for unbounded seq
-template <class T, class T_var>
-TAO_Unbounded_Object_Sequence<T,T_var>::TAO_Unbounded_Object_Sequence (
-    CORBA::ULong maximum
-  )
+template <typename T, typename T_var, typename T_life, typename T_cast>
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::
+TAO_Unbounded_Object_Sequence (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (
-        maximum,
-         TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (maximum)
+         maximum,
+         TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::allocbuf (
+             maximum
+           )
        )
 {
 }
 
-template <class T, class T_var>
-TAO_Unbounded_Object_Sequence<T,T_var>::TAO_Unbounded_Object_Sequence (
-    const TAO_Unbounded_Object_Sequence<T,T_var> &rhs
+template <typename T, typename T_var, typename T_life, typename T_cast>
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::
+TAO_Unbounded_Object_Sequence (
+    const TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast> &rhs
   )
   : TAO_Unbounded_Base_Sequence (rhs)
 {
   if (rhs.buffer_ != 0)
     {
       T **tmp1 =
-        TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (this->maximum_);
+        TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::allocbuf (
+            this->maximum_
+          );
       T ** const tmp2 =
         ACE_reinterpret_cast (T ** ACE_CAST_CONST, rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
-          tmp1[i] = T_var::tao_duplicate (tmp2[i]);
+          tmp1[i] = T_life::tao_duplicate (tmp2[i]);
         }
 
       this->buffer_ = tmp1;
@@ -611,16 +621,18 @@ TAO_Unbounded_Object_Sequence<T,T_var>::TAO_Unbounded_Object_Sequence (
     }
 }
 
-template<class T, class T_var>
-TAO_Unbounded_Object_Sequence<T,T_var>::~TAO_Unbounded_Object_Sequence (void)
+template<typename T, typename T_var, typename T_life, typename T_cast>
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::
+~TAO_Unbounded_Object_Sequence (void)
 {
   this->_deallocate_buffer ();
 }
 
 // Assignment operator.
-template <class T, class T_var>TAO_Unbounded_Object_Sequence<T,T_var>&
-TAO_Unbounded_Object_Sequence<T,T_var>::
-operator= (const TAO_Unbounded_Object_Sequence<T,T_var> &rhs)
+template <typename T, typename T_var, typename T_life, typename T_cast>
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>&
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::
+operator= (const TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast> &rhs)
 {
   if (this == &rhs)
     {
@@ -634,15 +646,17 @@ operator= (const TAO_Unbounded_Object_Sequence<T,T_var> &rhs)
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
-          T_var::tao_release (tmp[i]);
-          tmp[i] = T_var::tao_nil ();
+          T_life::tao_release (tmp[i]);
+          tmp[i] = T_life::tao_nil ();
         }
 
       if (this->maximum_ < rhs.maximum_)
         {
-          TAO_Unbounded_Object_Sequence<T,T_var>::freebuf (tmp);
+          TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::freebuf (tmp);
           this->buffer_ =
-            TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (rhs.maximum_);
+            TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::allocbuf (
+                rhs.maximum_
+              );
         }
     }
   else
@@ -654,7 +668,9 @@ operator= (const TAO_Unbounded_Object_Sequence<T,T_var> &rhs)
       else
         {
           this->buffer_ =
-            TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (rhs.maximum_);
+            TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::allocbuf (
+                rhs.maximum_
+              );
         }
     }
 
@@ -665,14 +681,16 @@ operator= (const TAO_Unbounded_Object_Sequence<T,T_var> &rhs)
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
-      tmp1[i] = T_var::tao_duplicate (tmp2[i]);
+      tmp1[i] = T_life::tao_duplicate (tmp2[i]);
     }
 
   return *this;
 }
 
-template <class T, class T_var> T **
-TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (CORBA::ULong nelems)
+template <typename T, typename T_var, typename T_life, typename T_cast> T **
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::allocbuf (
+    CORBA::ULong nelems
+  )
 {
   T **buf = 0;
   ACE_NEW_RETURN (buf, 
@@ -681,14 +699,14 @@ TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (CORBA::ULong nelems)
 
   for (CORBA::ULong i = 0; i < nelems; i++)
     {
-      buf[i] = T_var::tao_nil ();
+      buf[i] = T_life::tao_nil ();
     }
 
   return buf;
 }
 
-template <class T, class T_var> void
-TAO_Unbounded_Object_Sequence<T,T_var>::freebuf (T **buffer)
+template <typename T, typename T_var, typename T_life, typename T_cast> void
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::freebuf (T* *buffer)
 {
   if (buffer == 0)
     {
@@ -710,10 +728,26 @@ TAO_Unbounded_Object_Sequence<T,T_var>::freebuf (T **buffer)
   delete [] buffer;
 }
 
-template<class T, class T_var> void
-TAO_Unbounded_Object_Sequence<T,T_var>::_allocate_buffer (CORBA::ULong length)
+template<typename T, typename T_var, typename T_life, typename T_cast> 
+void
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
 {
-  T **tmp = TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (length);
+  typedef TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast> THIS_SEQ_TYPE;
+  THIS_SEQ_TYPE *tmp = ACE_static_cast (THIS_SEQ_TYPE *,
+                                        _tao_void_pointer);
+  delete tmp;
+}
+
+template<typename T, typename T_var, typename T_life, typename T_cast> 
+void
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::_allocate_buffer (
+    CORBA::ULong length
+  )
+{
+  T **tmp = 
+    TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::allocbuf (length);
 
   if (this->buffer_ != 0)
     {
@@ -728,7 +762,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_allocate_buffer (CORBA::ULong length)
         // the old instances.
         if (!this->release_)
           {
-            tmp[i] = T_var::tao_duplicate (old[i]);
+            tmp[i] = T_life::tao_duplicate (old[i]);
           }
         else
           {
@@ -744,8 +778,11 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_allocate_buffer (CORBA::ULong length)
   this->buffer_ = tmp;
 }
 
-template<class T, class T_var> void
-TAO_Unbounded_Object_Sequence<T,T_var>::_deallocate_buffer (void)
+template<typename T, typename T_var, typename T_life, typename T_cast> 
+void
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::_deallocate_buffer (
+    void
+  )
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     {
@@ -757,70 +794,90 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_deallocate_buffer (void)
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      T_var::tao_release (tmp[i]);
-      tmp[i] = T_var::tao_nil ();
+      T_life::tao_release (tmp[i]);
+      tmp[i] = T_life::tao_nil ();
     }
 
-  TAO_Unbounded_Object_Sequence<T,T_var>::freebuf (tmp);
+  TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::freebuf (tmp);
   this->buffer_ = 0;
 }
 
-template<class T, class T_var> void
-TAO_Unbounded_Object_Sequence<T,T_var>::_shrink_buffer (CORBA::ULong nl,
-                                                        CORBA::ULong ol)
+template<typename T, typename T_var, typename T_life, typename T_cast> 
+void
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::_shrink_buffer (
+    CORBA::ULong nl,
+    CORBA::ULong ol
+  )
 {
-  T **tmp = ACE_static_cast (T**, this->buffer_);
+  T **tmp = ACE_static_cast (T **, 
+                             this->buffer_);
 
   for (CORBA::ULong i = nl; i < ol; ++i)
     {
-      T_var::tao_release (tmp[i]);
-      tmp[i] = T_var::tao_nil ();
+      T_life::tao_release (tmp[i]);
+      tmp[i] = T_life::tao_nil ();
     }
 }
 
-template <class T, class T_var> void
-TAO_Unbounded_Object_Sequence<T,T_var>::_downcast (void* target,
-                                                   CORBA::Object* src
-                                                   ACE_ENV_ARG_DECL)
+template <typename T, typename T_var, typename T_life, typename T_cast> 
+void
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::_downcast (
+    void * target,
+    CORBA::Object_ptr src
+    ACE_ENV_ARG_DECL
+  )
 {
-  T **tmp = ACE_static_cast (T**, 
+  T **tmp = ACE_static_cast (T **, 
                              target);
 
-  *tmp = T_var::tao_narrow (src 
-                            ACE_ENV_ARG_PARAMETER);
+  *tmp = T_cast::tao_narrow (src 
+                             ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 }
 
-template <class T, class T_var> CORBA::Object*
-TAO_Unbounded_Object_Sequence<T,T_var>::_upcast (void* src) const
+template <typename T, typename T_var, typename T_life, typename T_cast> 
+CORBA::Object_ptr
+TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::_upcast (
+    void * src
+  ) const
 {
-  return T_var::tao_upcast (src);
+  return T_cast::tao_upcast (src);
 }
 
 // *************************************************************
 // Operations for class TAO_Bounded_Object_Sequence
 // *************************************************************
 
-template <class T, class T_var, size_t MAX>
-TAO_Bounded_Object_Sequence<T, T_var,MAX>::TAO_Bounded_Object_Sequence (void)
+template <typename T, 
+          typename T_var, 
+          typename T_life, 
+          typename T_cast, 
+          size_t MAX>
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::
+TAO_Bounded_Object_Sequence (void)
   : TAO_Bounded_Base_Sequence (
         MAX,
-        TAO_Bounded_Object_Sequence<T, T_var,MAX>::allocbuf (MAX)
+        TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::allocbuf (MAX)
       )
 {
 }
 
-template <class T, class T_var, size_t MAX>
-TAO_Bounded_Object_Sequence<T, T_var,MAX>::TAO_Bounded_Object_Sequence (
-    const TAO_Bounded_Object_Sequence<T, T_var,MAX> &rhs
+template <typename T, 
+          typename T_var, 
+          typename T_life, 
+          typename T_cast, 
+          size_t MAX>
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::
+TAO_Bounded_Object_Sequence (
+    const TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX> &rhs
   )
   : TAO_Bounded_Base_Sequence (rhs)
 {
   if (rhs.buffer_ != 0)
     {
       T **tmp1 =
-        TAO_Bounded_Object_Sequence<T, T_var,MAX>::allocbuf (MAX);
+        TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::allocbuf (MAX);
 
       T ** const tmp2 =
         ACE_reinterpret_cast (T** ACE_CAST_CONST, 
@@ -828,7 +885,7 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::TAO_Bounded_Object_Sequence (
 
       for (CORBA::ULong i = 0; i < rhs.length_; i++)
         {
-          tmp1[i] = T_var::tao_duplicate (tmp2[i]);
+          tmp1[i] = T_life::tao_duplicate (tmp2[i]);
         }
 
       this->buffer_ = tmp1;
@@ -839,9 +896,14 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::TAO_Bounded_Object_Sequence (
     }
 }
 
-template <class T, class T_var, size_t MAX> TAO_Bounded_Object_Sequence<T, T_var,MAX>&
-TAO_Bounded_Object_Sequence<T, T_var,MAX>::operator= (
-    const TAO_Bounded_Object_Sequence<T,T_var, MAX> &rhs
+template <typename T, 
+          typename T_var, 
+          typename T_life, 
+          typename T_cast, 
+          size_t MAX>
+TAO_Bounded_Object_Sequence<T, T_var,T_life,T_cast,MAX> &
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::operator= (
+    const TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX> &rhs
   )
 {
   if (this == &rhs)
@@ -851,13 +913,13 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::operator= (
 
   if (this->release_)
     {
-      T **tmp = ACE_reinterpret_cast (T **, 
+      T* *tmp = ACE_reinterpret_cast (T* *, 
                                       this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
-          T_var::tao_release (tmp[i]);
-          tmp[i] = T_var::tao_nil ();
+          T_life::tao_release (tmp[i]);
+          tmp[i] = T_life::tao_nil ();
         }
       // No need to reallocate the buffer since it is always of size
       // MAX
@@ -871,70 +933,98 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::operator= (
       else
         {
           this->buffer_ =
-            TAO_Bounded_Object_Sequence<T,T_var,MAX>::allocbuf (rhs.maximum_);
+            TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::allocbuf (
+                rhs.maximum_
+              );
         }
     }
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
-  T **tmp1 = ACE_reinterpret_cast (T **, 
+  T* *tmp1 = ACE_reinterpret_cast (T* *, 
                                    this->buffer_);
-  T ** const tmp2 = ACE_reinterpret_cast (T ** ACE_CAST_CONST, 
+  T* * const tmp2 = ACE_reinterpret_cast (T* * ACE_CAST_CONST, 
                                           rhs.buffer_);
 
   for (CORBA::ULong i=0; i < rhs.length_; ++i)
     {
-      tmp1[i] = T_var::tao_duplicate (tmp2[i]);
+      tmp1[i] = T_life::tao_duplicate (tmp2[i]);
     }
 
   return *this;
 }
 
-template <class T, class T_var, size_t MAX> T **
-TAO_Bounded_Object_Sequence<T, T_var,MAX>::allocbuf (CORBA::ULong)
+template <typename T, 
+          typename T_var, 
+          typename T_life, 
+          typename T_cast, 
+          size_t MAX>
+T* *
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::allocbuf (
+    CORBA::ULong
+  )
 {
-  T **buf = 0;
+  T* *buf = 0;
   ACE_NEW_RETURN (buf, 
                   T*[MAX], 
                   0);
 
   for (CORBA::ULong i = 0; i < MAX; i++)
     {
-      buf[i] = T_var::tao_nil ();
+      buf[i] = T_life::tao_nil ();
     }
 
   return buf;
 }
 
-template <class T, class T_var, size_t MAX> void
-TAO_Bounded_Object_Sequence<T, T_var,MAX>::freebuf (T **buffer)
+template <typename T, 
+          typename T_var, 
+          typename T_life, 
+          typename T_cast, 
+          size_t MAX>
+void
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::freebuf (T* *buffer)
 {
   // How much do we deallocate? Easy! allocbuf() always creates MAX
   // elements and initialize them to T::_nil().  So we can be
   // complaint and call CORBA::release() on each one.
   for (CORBA::ULong i = 0; i < MAX; ++i)
     {
-      if (buffer[i] != T_var::tao_nil ())
+      if (buffer[i] != T_life::tao_nil ())
         {
-          T_var::tao_release (buffer[i]);
-          buffer[i] = T_var::tao_nil ();
+          T_life::tao_release (buffer[i]);
+          buffer[i] = T_life::tao_nil ();
         }
     }
 
   delete [] buffer;
 }
 
-template<class T, class T_var, size_t MAX> void
-TAO_Bounded_Object_Sequence<T, T_var,MAX>::_allocate_buffer (CORBA::ULong length)
+template<typename T, 
+          typename T_var, 
+          typename T_life, 
+          typename T_cast, 
+          size_t MAX>
+void
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::_allocate_buffer (
+    CORBA::ULong length
+  )
 {
   // For this class memory is never reallocated so the implementation
   // is *really* simple.
   this->buffer_ =
-    TAO_Bounded_Object_Sequence<T, T_var,MAX>::allocbuf (length);
+    TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::allocbuf (length);
 }
 
-template<class T, class T_var, size_t MAX> void
-TAO_Bounded_Object_Sequence<T,T_var,MAX>::_deallocate_buffer (void)
+template<typename T, 
+          typename T_var, 
+          typename T_life, 
+          typename T_cast, 
+          size_t MAX>
+void
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::_deallocate_buffer (
+    void
+  )
 {
   if (this->release_ == 0)
     {
@@ -943,41 +1033,60 @@ TAO_Bounded_Object_Sequence<T,T_var,MAX>::_deallocate_buffer (void)
 
   T **tmp = ACE_reinterpret_cast (T **, 
                                   this->buffer_);
-  TAO_Bounded_Object_Sequence<T,T_var,MAX>::freebuf (tmp);
+  TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::freebuf (tmp);
   this->buffer_ = 0;
 }
 
-template<class T, class T_var, size_t MAX> void
-TAO_Bounded_Object_Sequence<T,T_var, MAX>::_shrink_buffer (CORBA::ULong nl,
+template<typename T, 
+          typename T_var, 
+          typename T_life, 
+          typename T_cast, 
+          size_t MAX>
+void
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::_shrink_buffer (CORBA::ULong nl,
                                                            CORBA::ULong ol)
 {
-  T **tmp = ACE_reinterpret_cast (T **, this->buffer_);
+  T* *tmp = ACE_reinterpret_cast (T* *, this->buffer_);
 
   for (CORBA::ULong i = nl; i < ol; ++i)
     {
-      T_var::tao_release (tmp[i]);
-      tmp[i] = T_var::tao_nil ();
+      T_life::tao_release (tmp[i]);
+      tmp[i] = T_life::tao_nil ();
     }
 }
 
-template <class T, class T_var, size_t MAX> void
-TAO_Bounded_Object_Sequence<T, T_var,MAX>::_downcast (void* target,
-                                                      CORBA::Object* src
-                                                      ACE_ENV_ARG_DECL)
+template <typename T, 
+          typename T_var, 
+          typename T_life, 
+          typename T_cast, 
+          size_t MAX>
+void
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::_downcast (
+    void * target,
+    CORBA::Object_ptr src
+    ACE_ENV_ARG_DECL
+  )
 {
-  T **tmp = ACE_static_cast (T**, 
+  T* *tmp = ACE_static_cast (T* *, 
                              target);
 
-  *tmp = T_var::tao_narrow (src 
-                            ACE_ENV_ARG_PARAMETER);
+  *tmp = T_cast::tao_narrow (src 
+                             ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 }
 
-template <class T, class T_var, size_t MAX> CORBA::Object*
-TAO_Bounded_Object_Sequence<T, T_var,MAX>::_upcast (void* src) const
+template <typename T, 
+          typename T_var, 
+          typename T_life, 
+          typename T_cast, 
+          size_t MAX> 
+CORBA::Object_ptr
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::_upcast (
+    void * src
+  ) const
 {
-  return T_var::tao_upcast (src);
+  return T_cast::tao_upcast (src);
 }
 
 // *************************************************************

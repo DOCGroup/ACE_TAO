@@ -73,7 +73,27 @@ TAO_NAMESPACE  CORBA
   typedef DomainManager *DomainManager_ptr;
 
 #endif /* end #if !defined */
+  
+    struct tao_DomainManager_life;
+    typedef TAO_Objref_Var_T<DomainManager, tao_DomainManager_life> DomainManager_var;
+    typedef TAO_Objref_Out_T<DomainManager, tao_DomainManager_life> DomainManager_out;
 
+    struct tao_DomainManager_life
+    {
+      static DomainManager_ptr tao_duplicate (DomainManager_ptr);
+      static void tao_release (DomainManager_ptr);
+      static DomainManager_ptr tao_nil (void);
+    };
+
+    struct tao_DomainManager_cast
+    {
+      static DomainManager_ptr tao_narrow (CORBA::Object_ptr
+                                 ACE_ENV_ARG_DECL);
+      static CORBA::Object_ptr tao_upcast (void *);
+    };
+
+#if 0
+  
 #if !defined (_CORBA_DOMAINMANAGER___VAR_CH_)
 #define _CORBA_DOMAINMANAGER___VAR_CH_
   
@@ -145,6 +165,8 @@ TAO_NAMESPACE  CORBA
   };
 
 #endif /* end #if !defined */
+
+#endif /* 0 */
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
@@ -702,9 +724,8 @@ TAO_NAMESPACE  CORBA
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ConstructionPolicy;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:62
-
+#if 0
+  
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CH_)
@@ -780,8 +801,7 @@ TAO_NAMESPACE  CORBA
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<DomainManager,DomainManager_var>
-
+  TAO_Unbounded_Object_Sequence<DomainManager,DomainManager_var,tao_DomainManager_life,tao_DomainManager_cast>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
@@ -802,7 +822,15 @@ TAO_NAMESPACE  CORBA
   };
 
 #endif /* end #if !defined */
+  
+#endif /* 0 */
 
+  typedef TAO_Unbounded_Object_Sequence<DomainManager,
+                                        DomainManager_var,
+                                        tao_DomainManager_life,
+                                        tao_DomainManager_cast>
+    DomainManagerList;
+  
 #if !defined (_CORBA_DOMAINMANAGERLIST___VAR_CH_)
 #define _CORBA_DOMAINMANAGERLIST___VAR_CH_
   
@@ -833,7 +861,7 @@ TAO_NAMESPACE  CORBA
     // Variable-size base types only.
     operator DomainManagerList *&();
     
-    TAO_Object_Manager<DomainManager, DomainManager_var> operator[] (CORBA::ULong index);
+    TAO_Object_Manager<DomainManager,DomainManager_var,tao_DomainManager_life> operator[] (CORBA::ULong index);
     
     // in, inout, out, _retn 
     const DomainManagerList &in (void) const;
@@ -865,7 +893,7 @@ TAO_NAMESPACE  CORBA
     operator DomainManagerList *&();
     DomainManagerList *&ptr (void);
     DomainManagerList *operator-> (void);
-    TAO_Object_Manager<DomainManager, DomainManager_var> operator[] (CORBA::ULong index);
+    TAO_Object_Manager<DomainManager,DomainManager_var,tao_DomainManager_life> operator[] (CORBA::ULong index);
   
   private:
     DomainManagerList *&ptr_;

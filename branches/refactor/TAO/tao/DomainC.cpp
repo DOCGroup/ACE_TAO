@@ -51,7 +51,7 @@
 int CORBA::DomainManager::_tao_class_id = 0;
 
 CORBA::DomainManager_ptr
-tao_CORBA_DomainManager_duplicate (
+CORBA::tao_DomainManager_life::tao_duplicate (
     CORBA::DomainManager_ptr p
   )
 {
@@ -59,7 +59,7 @@ tao_CORBA_DomainManager_duplicate (
 }
 
 void
-tao_CORBA_DomainManager_release (
+CORBA::tao_DomainManager_life::tao_release (
     CORBA::DomainManager_ptr p
   )
 {
@@ -67,7 +67,7 @@ tao_CORBA_DomainManager_release (
 }
 
 CORBA::DomainManager_ptr
-tao_CORBA_DomainManager_nil (
+CORBA::tao_DomainManager_life::tao_nil (
     void
   )
 {
@@ -75,7 +75,7 @@ tao_CORBA_DomainManager_nil (
 }
 
 CORBA::DomainManager_ptr
-tao_CORBA_DomainManager_narrow (
+CORBA::tao_DomainManager_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -84,7 +84,7 @@ tao_CORBA_DomainManager_narrow (
 }
 
 CORBA::Object *
-tao_CORBA_DomainManager_upcast (
+CORBA::tao_DomainManager_cast::tao_upcast (
     void *src
   )
 {
@@ -93,17 +93,7 @@ tao_CORBA_DomainManager_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_CORBA_DomainManager_marshal (
-    CORBA::DomainManager_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+#if 0
 
 // *************************************************************
 // CORBA::DomainManager_var
@@ -290,8 +280,7 @@ CORBA::DomainManager_out::operator-> (void)
   return this->ptr_;
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_cs.cpp:56
+#endif /* 0 */
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
@@ -1952,11 +1941,7 @@ CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_upcast (void *sr
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
-#if !defined (_CORBA_DOMAINMANAGERLIST_CS_)
-#define _CORBA_DOMAINMANAGERLIST_CS_
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+#if 0
 
 // *************************************************************
 // CORBA::DomainManagerList
@@ -2015,7 +2000,7 @@ void CORBA::DomainManagerList::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-#endif /* end #if !defined */
+#endif /* 0 */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
