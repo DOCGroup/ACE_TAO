@@ -1,21 +1,21 @@
 $ID$
 
-This example runs a simple logging service using TAO. It generates SII
-stubs and skeletons using the TAO IDL compiler.  You can either run
-the client and server as seperate processes in the same, or different
-windows (or machines), or you may run the "runtests.pl" script which will start
-both executables.
+This example implements and tests runs a simple logging service using
+TAO.  You can either run the client and server as seperate processes
+in the same, or different windows (or machines), or you may run the
+"runtests.pl" script which will start both executables.
 
-By default, the client and server use the Naming Service. The
+By default, the client and server use the Naming Service.  The
 Logging_Service has its own NamingServer implementation, so it doesn't
 require you to start the NamingService before starting the client and
 server.
 
 Ignore the multicast timeout error. It is a result of probing for the
-nameservice and not finding it (and thus being forced to create its own).
+nameservice and not finding it (and thus being forced to create its
+own).
 
-If you encounter problems with the test, try increasing the sleeptime in
-the run_test.pl script. 
+If you encounter problems with the test, try increasing the sleeptime
+in the run_test.pl script.
 
 The client program will generate 4 logging messages which will be
 logged to the screen. The first message will be in the "verbose_lite"
