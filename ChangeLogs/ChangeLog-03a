@@ -1,3 +1,21 @@
+Tue Sep 12 11:34:03 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/High_Res_Timer.{h i}: Added a new function, gettimeofday_hr()
+          which returns the current time in a ACE_Time_Value using the
+          high-resolution time source. This is intended to be used as the
+          time retrieval function for the ACE timer queues. Be sure you
+          call ACE_High_Res_Timer::global_scale_factor() (or instantiate
+          a ACE_High_Res_Timer object) before using it to correctly
+          convert the timer count to a ACE_Time_Value.
+
+        * tests/Timer_Queue_Test.cpp: Added a test for using ACE_Timer_Heap
+          with high-resolution timer as the time source.
+
+        * tests/Reactor_Timer_Test.cpp: Added an option to run the test
+          using ACE_High_Res_Timer::gettimeofday_hr instead of the
+          ACE_OS::gettimeofday time retrieval. If any option is given to
+          the program it uses high-res, otherwise it uses ACE_OS::gettimeofday.
+
 Mon Sep 11 12:57:31 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Synch.{h i cpp} (ACE_Lock, ACE_Adaptive_Lock, ACE_File_Lock,
