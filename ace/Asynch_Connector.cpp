@@ -22,6 +22,8 @@ ACE_RCSID(ace, Asynch_Connector, "$Id$")
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 
+template <class HANDLER>
+const ACE_INET_Addr ACE_Asynch_Connector<HANDLER>::local_default = (u_short) 0;
 
 template <class HANDLER>
 ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector (void)
