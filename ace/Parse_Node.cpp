@@ -11,6 +11,7 @@
 #include "ace/Service_Types.h"
 #include "ace/Task.h"
 #include "ace/DLL.h"
+#include "ace/ACE.h"
 
 ACE_RCSID (ace,
            Parse_Node,

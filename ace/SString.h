@@ -27,6 +27,7 @@
 #endif /* ACE_DEFAULT_GROWSIZE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#include "ace/streams.h"
 ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_CString &);
 ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_WString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */

@@ -6,8 +6,12 @@
 #include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/os_include/net/os_if.h"
 
 # if defined (ACE_HAS_GETIFADDRS)

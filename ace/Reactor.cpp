@@ -27,6 +27,7 @@
 
 #include "ace/Static_Object_Lock.h"
 #include "ace/Framework_Component.h"
+#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Reactor.i"

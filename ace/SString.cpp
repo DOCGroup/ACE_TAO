@@ -6,6 +6,7 @@
 #endif /* !ACE_HAS_WINCE */
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 # include "ace/streams.h"

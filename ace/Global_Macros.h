@@ -712,6 +712,8 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 // ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
 // with ACE_ALLOCATOR* is that they call constructors also.
 
+#include "ace/OS_Errno.h"    /* Need errno and ENOMEM */
+
 # define ACE_ALLOCATOR_RETURN(POINTER,ALLOCATOR,RET_VAL) \
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \

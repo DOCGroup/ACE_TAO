@@ -6,6 +6,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/Singleton.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.i"
