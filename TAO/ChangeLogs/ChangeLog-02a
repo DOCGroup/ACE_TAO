@@ -1,10 +1,17 @@
+Thu Jan 17 09:49:23 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Fixed the UTL_ScopedName for the AMH_*ResponseHandler, finally
+	  we got the generated code to look like we want (and compiles
+	  too!)
+
 Thu Jan 17 10:28:54 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
         * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp.diff:
 
           Initialized two register char* variables in the generated
-          lex file. Evn though they are clearly initialized about
+          lex file. Even though they are clearly initialized about
           20 lines down and never skipped, Redhat Static seems to
           have a problem with it.
 
