@@ -16,7 +16,7 @@
 <P>
 <HR WIDTH="100%">
 
-<P>From here, I want to move on to the main program loop. In a way, we're
+<P>From here, we to move on to the main program loop. In a way, we're
 starting at the final product when we do this, but it is a very simple
 piece of code and a good place to start.
 
@@ -28,7 +28,7 @@ classes.
 Kirthika Parameswaran offers this abstract of Tutorial 1:
 <UL>
 <P>
-This is an simple logging server example.
+This is a simple logging server example.
 The Reactor is used to handle more than one client request using a
 single thread of execution instead of one thread per client. The Reactor
 reactes to events and demultiplexes the events to the appropriate
@@ -38,11 +38,11 @@ reactor runs in an infinte event loop handling all the incoming events.
 The Logging_Acceptor listens at a SERVER PORT address and passively
 waits for requests to arrive. The Acceptor is also an Event_Handler and
 is registered with the Reactor. This way it is simply yet another
-Event_Hanlder for the Reactor and hence no special processing is needed
+Event_Handler for the Reactor and hence no special processing is needed
 for it.
 <P>
 Once a connection request occurs, the Acceptor accepts it and
-connection is established. The reactor instance is passed to the
+a connection is established. The reactor instance is passed to the
 handler so that it can register with the Reactor. It does so with an
 ACE_Event_Handler::ACCEPT_MASK.
 <P>
@@ -57,6 +57,17 @@ or explicitly calling the remove_handler() methods.
 This server application builds and executes succesfully waiting for
 client requests to arrive.
 <P>
+</UL>
+FYI (from Doug):
+<UL>
+The ACCEPT_MASK is defined in the ACE_Event_Handler class.  It's used
+to inform the Reactor that you want to register an event handler to
+"accept" a connection passively.  Not surprisingly, the ACE_Acceptor
+component uses this.
+<P>
+The READ_MASK is also defined in the ACE_Event_Handler class.  It's
+used to inform the Reactor that you want to register an event handler
+to "read" data from an established connection.
 </UL>
 <HR WIDTH="100%">
 <PRE>/*
