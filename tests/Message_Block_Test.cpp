@@ -272,7 +272,10 @@ struct
   { &mem_allocator, ASYS_TEXT ("Cached Memory"), {0,0,0} }
 };
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  // The explicit instantiations are necessary with g++ 2.91.66
+  // with -frepo, because it misses some of them.
 template class ACE_Cached_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>;
 template class ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>;
 template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>;
