@@ -83,8 +83,11 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   this->cdr_buffer_allocator_.remove ();
 }
 
-TAO_Default_Reactor::TAO_Default_Reactor (void)
-  : ACE_Reactor (new TAO_REACTOR, 1)
+TAO_Default_Reactor::TAO_Default_Reactor (int nolock)
+  : ACE_Reactor ((nolock ?
+                  (ACE_Reactor_Impl*) new TAO_NULL_LOCK_REACTOR :
+                  (ACE_Reactor_Impl*) new TAO_REACTOR),
+                 1)
 {
 }
 
@@ -1077,7 +1080,8 @@ TAO_ORB_Core::get_next_follower (void)
 TAO_Resource_Factory::TAO_Resource_Factory (void)
   : resource_source_ (TAO_GLOBAL),
     poa_source_ (TAO_GLOBAL),
-    collocation_table_source_ (TAO_GLOBAL)
+    collocation_table_source_ (TAO_GLOBAL),
+    use_lock_freed_reactor_ (0)
 {
 }
 
@@ -1107,6 +1111,12 @@ int
 TAO_Resource_Factory::poa_source (void)
 {
   return poa_source_;
+}
+
+int
+TAO_Resource_Factory::use_lock_freed_reactor (void)
+{
+  return use_lock_freed_reactor_;
 }
 
 int
@@ -1165,6 +1175,19 @@ TAO_Resource_Factory::parse_args (int argc, char **argv)
               local_poa_source = TAO_GLOBAL;
             else if (ACE_OS::strcasecmp (name, "tss") == 0)
               local_poa_source = TAO_TSS;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBlockfreedreactor") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name, "yes") == 0)
+              use_lock_freed_reactor_ = 1;
+            else if (ACE_OS::strcasecmp (name, "no") == 0)
+              use_lock_freed_reactor_= 0;
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBcoltable") == 0)
@@ -1319,6 +1342,7 @@ TAO_Resource_Factory::get_global_collocation_table (void)
 }
 
 TAO_Resource_Factory::Pre_Allocated::Pre_Allocated (void)
+  : r_ (TAO_ORB_CORE::instance ()->resource_factory ()->use_lock_freed_reactor ())
 {
   // Make sure that the thread manager does not wait for threads
   this->tm_.wait_on_exit (0);
@@ -1394,6 +1418,10 @@ template class ACE_Node<ACE_SYNCH_CONDITION*>;
 template class ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>;
 template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
 
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
+template class ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
+template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
+#endif /* !ACE_MT_SAFE || ACE_MT_SAFE == 0 */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Env_Value<int>
@@ -1439,6 +1467,11 @@ template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
 #pragma instantiate ACE_Node<ACE_SYNCH_CONDITION*>
 #pragma instantiate ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>
+
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
+#   pragma instantiate ACE_Select_Reactor_Token_T<ACE_Noop_Token>
+#   pragma instantiate ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
+#endif /* !ACE_MT_SAFE || ACE_MT_SAFE == 0 */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_FACTORY_DEFINE (TAO, TAO_Resource_Factory)
