@@ -48,7 +48,7 @@ OBJFILES = obj\ACER.obj obj\ACE.obj obj\Activation_Queue.obj obj\Acceptor.obj ob
   obj\SOCK_Dgram.obj obj\SOCK_Dgram_Bcast.obj obj\SOCK_Dgram_Mcast.obj \
   obj\SOCK_IO.obj obj\SOCK_Stream.obj obj\SPIPE.obj obj\SPIPE_Acceptor.obj \
   obj\SPIPE_Addr.obj obj\SPIPE_Connector.obj obj\SPIPE_Stream.obj obj\SString.obj \
-  obj\Strategies.obj obj\Strategies_T.obj obj\Stream.obj obj\Stream_Modules.obj \
+  obj\Stats.obj obj\Strategies.obj obj\Strategies_T.obj obj\Stream.obj obj\Stream_Modules.obj \
   obj\SV_Message.obj obj\SV_Message_Queue.obj obj\SV_Semaphore_Complex.obj \
   obj\SV_Semaphore_Simple.obj obj\SV_Shared_Memory.obj obj\Svc_Conf_l.obj \
   obj\Svc_Conf_y.obj obj\Svc_Handler.obj obj\Synch.obj obj\Synch_Options.obj \
@@ -81,17 +81,17 @@ DEBUGLIBPATH = $(BCB)\lib\debug
 RELEASELIBPATH = $(BCB)\lib\release
 # ---------------------------------------------------------------------------
 CFLAG1 = -WD -O2 -Hc -w-par -w-inl -Ve -k- -vi -c -b- -Vx
-CFLAG2 = -D_RTLDLL -Ic:\gonzo\ace-4.5.2\ACE_wrappers;$(BCB)\include;$(BCB)\include\vcl \
+CFLAG2 = -D_RTLDLL -I..;$(BCB)\include;$(BCB)\include\vcl \
   -H=obj\ace.csm
 CFLAG3 = -w-rvl -Tkh30000
 PFLAGS = -D_RTLDLL -N2obj -N0obj \
-  -Uc:\gonzo\ace-4.5.2\ACE_wrappers\ace;$(BCB)\lib\obj;$(BCB)\lib;$(RELEASELIBPATH) \
-  -Ic:\gonzo\ace-4.5.2\ACE_wrappers;$(BCB)\include;$(BCB)\include\vcl -$L- -$D- \
+  -U..\ace;$(BCB)\lib\obj;$(BCB)\lib;$(RELEASELIBPATH) \
+  -I..;$(BCB)\include;$(BCB)\include\vcl -$L- -$D- \
   -v -JPHN -M
-RFLAGS = -D_RTLDLL -ic:\gonzo\ace-4.5.2\ACE_wrappers;$(BCB)\include;$(BCB)\include\vcl
-AFLAGS = /ic:\gonzo\ace-4.5.2\ACE_wrappers /i$(BCB)\include /i$(BCB)\include\vcl \
+RFLAGS = -D_RTLDLL -i..;$(BCB)\include;$(BCB)\include\vcl
+AFLAGS = /i.. /i$(BCB)\include /i$(BCB)\include\vcl \
   /d_RTLDLL /mx /w2 /zn
-LFLAGS = -Lc:\gonzo\ace-4.5.2\ACE_wrappers\ace;$(BCB)\lib\obj;$(BCB)\lib;$(RELEASELIBPATH) \
+LFLAGS = -L..\ace;$(BCB)\lib\obj;$(BCB)\lib;$(RELEASELIBPATH) \
   -aa -Tpd -x -Gn -Gi
 IFLAGS =
 # ---------------------------------------------------------------------------
@@ -130,11 +130,11 @@ Comments=
 
 [HistoryLists\hlIncludePath]
 Count=1
-Item0=c:\gonzo\ace-4.5.2\ACE_wrappers;$(BCB)\include;$(BCB)\include\vcl
+Item0=..;$(BCB)\include;$(BCB)\include\vcl
 
 [HistoryLists\hlLibraryPath]
 Count=1
-Item0=c:\gonzo\ace-4.5.2\ACE_wrappers\ace;$(BCB)\lib\obj;$(BCB)\lib
+Item0=..\ace;$(BCB)\lib\obj;$(BCB)\lib
 
 [HistoryLists\hlDebugSourcePath]
 Count=1

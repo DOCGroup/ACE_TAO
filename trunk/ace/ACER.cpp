@@ -132,6 +132,7 @@ USEUNIT("SPIPE_Addr.cpp");
 USEUNIT("SPIPE_Connector.cpp");
 USEUNIT("SPIPE_Stream.cpp");
 USEUNIT("SString.cpp");
+USEUNIT("Stats.cpp");
 USEUNIT("Strategies.cpp");
 USEUNIT("Strategies_T.cpp");
 USEUNIT("Stream.cpp");

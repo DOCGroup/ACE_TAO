@@ -5414,6 +5414,7 @@ private:
      else { new (POINTER) CONSTRUCTOR; } \
    } while (0)
 
+# define ACE_NOOP(x)
 # define ACE_DES_NOFREE (POINTER,CLASS) POINTER->CLASS::~CLASS ()
 # define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
    do { POINTER->CLASS::~CLASS (); DEALLOCATOR (POINTER); } while (0)

@@ -1,3 +1,93 @@
+Mon Jun 22 01:14:36 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* ace/ACE.bpg: 
+	* ace/ACED.bpr: 
+	* ace/ACER.bpr: 
+	Contained ^M characters.
+	I also made sure there were no absolute paths pointing to "gonzo"
+	directories...
+
+ 	* ace/ACED.cpp: 
+	* ace/ACER.cpp: 
+	Added Stats.cpp as a module in the right place.
+
+	* ace/OS.h: 
+	Added a ACE_NOOP macro to avoid compilation warnings when "if" is
+	used as a noop in certain macros.
+
+	* ace/Hash_Map_Manager.cpp: 
+	* ace/Map_Manager.cpp: 
+	Replaced the use of "if" as a noop with ACE_NOOP.
+
+	* ace/Signal.cpp: 
+	For some obscure reason, Borland needs a blank line between the
+	#if and the extern "C" void ace_sig_handler_dispatch()
+	definition. Don't ask...
+
+	* ace/Asynch_IO.h: 
+	Changed (again) inheritance for ACE_Asynch_Result from protected
+	to public.
+
+	* tests/Aio_Platform_Test.bpr: 
+	* tests/Atomic_Op_Test.bpr: 
+	* tests/Barrier_Test.bpr: 
+	* tests/Basic_Types_Test.bpr: 
+	* tests/Buffer_Stream_Test.bpr: 
+	* tests/Conn_Test.bpr: 
+	* tests/Enum_Interfaces_Test.bpr: 
+	* tests/Env_Value_Test.bpr: 
+	* tests/Future_Test.bpr: 
+	* tests/Handle_Set_Test.bpr: 
+	* tests/Hash_Map_Manager_Test.bpr: 
+	* tests/IOStream_Test.bpr: 
+	* tests/MM_Shared_Memory_Test.bpr: 
+	* tests/MT_Reactor_Timer_Test.bpr: 
+	* tests/MT_SOCK_Test.bpr: 
+	* tests/Map_Manager_Test.bpr: 
+	* tests/Mem_Map_Test.bpr: 
+	* tests/Message_Block_Test.bpr: 
+	* tests/Message_Queue_Notifications_Test.bpr: 
+	* tests/Message_Queue_Test.bpr: 
+	* tests/Naming_Test.bpr: 
+	* tests/Notify_Performance_Test.bpr: 
+	* tests/OrdMultiSet_Test.bpr: 
+	* tests/Pipe_Test.bpr: 
+	* tests/Priority_Buffer_Test.bpr: 
+	* tests/Priority_Reactor_Test.bpr: 
+	* tests/Priority_Task_Test.bpr: 
+	* tests/Process_Mutex_Test.bpr: 
+	* tests/Process_Strategy_Test.bpr: 
+	* tests/Reactor_Exceptions_Test.bpr: 
+	* tests/Reactor_Notify_Test.bpr: 
+	* tests/Reactor_Performance_Test.bpr: 
+	* tests/Reactor_Timer_Test.bpr: 
+	* tests/Reactors_Test.bpr: 
+	* tests/Reader_Writer_Test.bpr: 
+	* tests/Recursive_Mutex_Test.bpr: 
+	* tests/SOCK_Connector_Test.bpr: 
+	* tests/SOCK_Test.bpr: 
+	* tests/SPIPE_Test.bpr: 
+	* tests/SString_Test.bpr: 
+	* tests/SV_Shared_Memory_Test.bpr: 
+	* tests/Semaphore_Test.bpr: 
+	* tests/Service_Config_Test.bpr: 
+	* tests/Sigset_Ops_Test.bpr: 
+	* tests/Simple_Message_Block_Test.bpr: 
+	* tests/TSS_Test.bpr: 
+	* tests/Task_Test.bpr: 
+	* tests/Thread_Manager_Test.bpr: 
+	* tests/Thread_Mutex_Test.bpr: 
+	* tests/Thread_Pool_Test.bpr: 
+	* tests/Time_Service_Test.bpr: 
+	* tests/Time_Value_Test.bpr: 
+	* tests/Timer_Queue_Test.bpr: 
+	* tests/Tokens_Test.bpr: 
+	* tests/UPIPE_SAP_Test.bpr: 
+	* tests/tests.bpg: 
+	Contained ^M characters.
+	I also made sure there were no absolute paths pointing to "gonzo"
+	directories...
+	
 Mon Jun 22 01:33:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_SYNCH_{1,2}): These two macros were added back for
