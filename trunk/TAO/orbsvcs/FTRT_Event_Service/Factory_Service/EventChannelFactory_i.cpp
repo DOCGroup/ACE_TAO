@@ -34,7 +34,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   , FT::InvalidCriteria
   , FT::InvalidProperty
   , FT::CannotMeetCriteria
-  )) 
+  ))
 {
 
   ACE_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
@@ -48,11 +48,11 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 
   char *id=0, *prog=0;
   ACE_Read_Buffer read_buf(file);
-  ScopeGuard id_guard = MakeObjGuard(* ACE_Allocator::instance(), 
+  ScopeGuard id_guard = MakeObjGuard(* ACE_Allocator::instance(),
     &ACE_Allocator::free, id);
   ACE_UNUSED_ARG(id_guard);
 
-  ScopeGuard prog_guard = MakeObjGuard(* ACE_Allocator::instance(), 
+  ScopeGuard prog_guard = MakeObjGuard(* ACE_Allocator::instance(),
     &ACE_Allocator::free, prog);
   ACE_UNUSED_ARG(prog_guard);
 
@@ -74,7 +74,7 @@ void EventChannelFactory_i::delete_object (
   ACE_THROW_SPEC ((
   CORBA::SystemException
   , FT::ObjectNotFound
-  )) 
+  ))
 {
   ACE_TRACE("EventChannelFactory_i::delete_object");
   CORBA::ULong object_id;
@@ -91,14 +91,14 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   const FT::Criteria & the_criteria,
   FT::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
-  ACE_TRACE("EventChannelFactory_i::create_prcess");
+  ACE_TRACE("EventChannelFactory_i::create_process");
 
   CORBA::Object_ptr result = CORBA::Object::_nil();
 
   // fill the factory_creation_id
 
-  ACE_NEW_RETURN(factory_creation_id, 
-    FT::GenericFactory::FactoryCreationId, 
+  ACE_NEW_RETURN(factory_creation_id,
+    FT::GenericFactory::FactoryCreationId,
     CORBA::Object::_nil());
   *factory_creation_id <<= (CORBA::ULong) ++id;
 
@@ -167,7 +167,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   ACE_DEBUG((LM_DEBUG, "accepting connection from event channel\n"));
   if (acceptor.accept(stream, &client_addr, &timeout) != -1)
   {
-    ACE_DEBUG((LM_DEBUG, "Factory Connect established with %s:%d\n", 
+    ACE_DEBUG((LM_DEBUG, "Factory Connect established with %s:%d\n",
       client_addr.get_host_name(), client_addr.get_port_number() ));
 
     // receive the ior string from the created object
@@ -179,17 +179,17 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
       byteRead += n;
     }
 
-    if (strlen(ior)  ==0) 
+    if (strlen(ior)  ==0)
       return result;
 
 
-    CORBA::Object_var result = orb->string_to_object(ior 
+    CORBA::Object_var result = orb->string_to_object(ior
       ACE_ENV_ARG_PARAMETER);
 
     ACE_CHECK_RETURN(result);
 
     if (objects.bind(id, result) ==0){
-      return result._retn(); 
+      return result._retn();
     }
   }
   else {
