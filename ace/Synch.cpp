@@ -614,140 +614,84 @@ ACE_Thread_Mutex_Guard::dump (void) const
 
 ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
                                                         void *arg)
-#if !defined (ACE_WIN32)
-  : nesting_mutex_ (name, arg),
-    lock_available_ (nesting_mutex_, name, arg),
-    nesting_level_ (0),
-    owner_id_ (ACE_OS::NULL_thread),
-#else /* ACE_WIN32 */
-  : ACE_Thread_Mutex (name, arg),
-#endif /* ACE_WIN32 */
-    removed_ (0)
+  : removed_ (0)
 {
+  // ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
 #if defined (ACE_HAS_FSU_PTHREADS) && ! defined (ACE_WIN32)
-//      Initialize FSU pthreads package.
-//      If called more than once, pthread_init does nothing
-//      and so does no harm.
+  // Initialize FSU pthreads package.  If called more than once,
+  // pthread_init does nothing and so does no harm.
    pthread_init ();
 #endif  /*  ACE_HAS_FSU_PTHREADS && ! ACE_WIN32 */
-// ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
+   if (ACE_OS::recursive_mutex_init (&this->recursive_mutex_,
+                                     name,
+                                     arg) == -1)
+     ACE_ERROR ((LM_ERROR,
+                 ASYS_TEXT ("%p\n"),
+                 ASYS_TEXT ("recursive_mutex_init")));
 }
 
-#if !defined (ACE_WIN32)
 ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
 
-// The counter part of the following two functions for Win32
-// are located in file Synch.i
+// The counter part of the following two functions for Win32 are
+// located in file Synch.i
 ACE_thread_t
 ACE_Recursive_Thread_Mutex::get_thread_id (void)
 {
-// ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_thread_id");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->nesting_mutex_, ACE_OS::NULL_thread);
-  return this->owner_id_;
+  // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_thread_id");
+#if defined (ACE_WIN32)
+  // @@ The structure CriticalSection in Win32 doesn't hold the thread
+  // handle of the thread that owns the lock.  However it is still not
+  // clear at this point how to translate a thread handle to its
+  // corresponding thread id.
+  errno = ENOTSUP;
+  return ACE_OS::NULL_thread;
+#else
+  ACE_thread_t owner_id;
+  ACE_OS::mutex_lock (&this->recursive_mutex_.nesting_mutex_);
+  owner_id = this->recursive_mutex_.owner_id_;
+  ACE_OS::mutex_unlock (&this->recursive_mutex_.nesting_mutex_);
+  return owner_id;
+#endif /* ACE_WIN32 */
 }
 
 int
 ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 {
-// ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_nesting_level");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->nesting_mutex_, -1);
-  return this->nesting_level_;
+  // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_nesting_level");
+#if defined (ACE_HAS_WINCE)
+  errno = ENOTSUP;
+  return -1;                    // @@ Is this the right value to return?
+#elif defined (ACE_WIN32)
+  return this->recursive_mutex_.RecursionCount;
+#else
+  int nesting_level = 0;
+  ACE_OS::mutex_lock (&this->recursive_mutex_.nesting_mutex_);
+  nesting_level = this->recursive_mutex_.nesting_level_;
+  ACE_OS::mutex_unlock (&this->recursive_mutex_.nesting_mutex_);
+  return nesting_level;
+#endif /* !ACE_HAS_WINCE */
 }
 
-ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &rm)
-  : lock_available_ ((ACE_Thread_Mutex &) rm.nesting_mutex_)
+ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &)
 {
 }
 
 int
 ACE_Recursive_Thread_Mutex::acquire (void)
 {
-// ACE_TRACE ("ACE_Recursive_Thread_Mutex::acquire");
-  ACE_thread_t t_id = ACE_Thread::self ();
-
-  // Acquire the guard.
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->nesting_mutex_, -1);
-
-  // If there's no contention, just grab the lock immediately (since
-  // this is the common case we'll optimize for it).
-  if (this->nesting_level_ == 0)
-    this->set_thread_id (t_id);
-  // If we already own the lock, then increment the nesting level and
-  // return.
-  else if (ACE_OS::thr_equal (t_id, this->owner_id_) == 0)
-    {
-      // Wait until the nesting level has dropped to zero, at which
-      // point we can acquire the lock.
-      while (this->nesting_level_ > 0)
-        this->lock_available_.wait ();
-
-      // Note that at this point the nesting_mutex_ is held...
-      this->set_thread_id (t_id);
-    }
-
-  // At this point, we can safely increment the nesting_level_ no
-  // matter how we got here!
-  this->nesting_level_++;
-  return 0;
+  return ACE_OS::recursive_mutex_lock (&this->recursive_mutex_);
 }
 
 int
 ACE_Recursive_Thread_Mutex::release (void)
 {
-// ACE_TRACE ("ACE_Recursive_Thread_Mutex::release");
-#if !defined (ACE_NDEBUG)
-  ACE_thread_t t_id = ACE_Thread::self ();
-#endif /* ACE_NDEBUG */
-
-  // Automatically acquire mutex.
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->nesting_mutex_, -1);
-
-#if !defined (ACE_NDEBUG)
-  if (this->nesting_level_ == 0
-      || ACE_OS::thr_equal (t_id, this->owner_id_) == 0)
-    {
-      errno = EINVAL;
-      ACE_RETURN (-1);
-    }
-#endif /* ACE_NDEBUG */
-
-  this->nesting_level_--;
-  if (this->nesting_level_ == 0)
-    {
-      // This may not be strictly necessary, but it does put the mutex
-      // into a known state...
-      this->set_thread_id (ACE_OS::NULL_thread);
-
-      // Inform waiters that the lock is free.
-      this->lock_available_.signal ();
-    }
-  return 0;
+  return ACE_OS::recursive_mutex_unlock (&this->recursive_mutex_);
 }
 
 int
 ACE_Recursive_Thread_Mutex::tryacquire (void)
 {
-// ACE_TRACE ("ACE_Recursive_Thread_Mutex::tryacquire");
-  ACE_thread_t t_id = ACE_Thread::self ();
-
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->nesting_mutex_, -1);
-
-  // If there's no contention, just grab the lock immediately.
-  if (this->nesting_level_ == 0)
-    {
-      this->set_thread_id (t_id);
-      this->nesting_level_ = 1;
-    }
-  // If we already own the lock, then increment the nesting level and
-  // proceed.
-  else if (ACE_OS::thr_equal (t_id, this->owner_id_))
-    this->nesting_level_++;
-  else
-    {
-      errno = EBUSY;
-      ACE_RETURN (-1);
-    }
-  return 0;
+  return ACE_OS::recursive_mutex_trylock (&this->recursive_mutex_);
 }
 
 void
@@ -756,17 +700,8 @@ ACE_Recursive_Thread_Mutex::dump (void) const
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->lock_available_.dump ();
-  this->nesting_mutex_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("nesting_level_ = %d"), this->nesting_level_));
-#if !defined (ACE_HAS_PTHREADS)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nowner_id_ = %u"), this->owner_id_));
-#else
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
-#endif /* !ACE_HAS_DCETHREADS */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-#endif /* ! ACE_WIN32 */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Condition_Thread_Mutex)
 

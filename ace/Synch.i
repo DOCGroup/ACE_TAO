@@ -629,7 +629,6 @@ ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex (void)
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex");
 }
 
-#if !defined (ACE_WIN32)
 ACE_INLINE int
 ACE_Recursive_Thread_Mutex::remove (void)
 {
@@ -638,8 +637,7 @@ ACE_Recursive_Thread_Mutex::remove (void)
   if (this->removed_ == 0)
     {
       this->removed_ = 1;
-      this->nesting_mutex_.remove ();
-      result = this->lock_available_.remove ();
+      result = ACE_OS::recursive_mutex_destroy (&this->recursive_mutex_);
     }
   return result;
 }
@@ -648,59 +646,32 @@ ACE_INLINE void
 ACE_Recursive_Thread_Mutex::set_thread_id (ACE_thread_t t)
 {
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::set_thread_id");
-  this->owner_id_ = t;
+  this->recursive_mutex_.owner_id_ = t;
 }
 
 ACE_INLINE int
 ACE_Recursive_Thread_Mutex::acquire_read (void)
 {
-  return acquire ();
+  return this->acquire ();
 }
 
 ACE_INLINE int
 ACE_Recursive_Thread_Mutex::acquire_write (void)
 {
-  return acquire ();
+  return this->acquire ();
 }
 
 ACE_INLINE int
 ACE_Recursive_Thread_Mutex::tryacquire_read (void)
 {
-  return tryacquire ();
+  return this->tryacquire ();
 }
 
 ACE_INLINE int
 ACE_Recursive_Thread_Mutex::tryacquire_write (void)
 {
-  return tryacquire ();
+  return this->tryacquire ();
 }
-
-#else /* ACE_WIN32 */
-// The counter part of the following two functions for non-Win32 platforms
-// are located in file Synch.cpp
-ACE_INLINE ACE_thread_t
-ACE_Recursive_Thread_Mutex::get_thread_id (void)
-{
-  // @@ The structure CriticalSection in Win32 doesn't hold
-  // the thread handle of the thread that owns the lock.  However
-  // it is still not clear at this point how to translate a
-  // thread handle to its corresponding thread id.
-  errno = ENOTSUP;
-  return ACE_OS::NULL_thread;
-}
-
-ACE_INLINE int
-ACE_Recursive_Thread_Mutex::get_nesting_level (void)
-{
-#if defined (ACE_HAS_WINCE)
-  errno = ENOTSUP;
-  return -1;                    // @@ Is this the right value to return?
-#else
-  return this->lock_.RecursionCount;
-#endif /* ! ACE_HAS_WINCE */
-}
-
-#endif /* ACE_WIN32 */
 
 #endif /* ACE_HAS_THREADS */
 
@@ -708,8 +679,7 @@ ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 ACE_INLINE int
 ACE_Process_Mutex::remove (void)
 {
-  int retv = this->lock_.remove ();
-  return retv;
+  return this->lock_.remove ();
 }
 
 // Acquire lock ownership (wait on priority queue if necessary).
