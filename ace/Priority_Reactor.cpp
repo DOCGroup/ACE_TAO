@@ -32,23 +32,23 @@ void ACE_Priority_Reactor::init_bucket (void)
 	   TUPLE_ALLOCATOR (ACE_Select_Reactor::DEFAULT_SIZE));
 
   // The event handlers are assigned to a new As the Event
-  ACE_NEW (this->bucket, QUEUE*[npriorities]);
+  ACE_NEW (this->bucket_, QUEUE*[npriorities]);
   // This loops "ensures" exception safety.
   int i;
   for (i = 0; i < npriorities; ++i)
     {
-      this->bucket[i] = 0;
+      this->bucket_[i] = 0;
     }
   for (i = 0; i < npriorities; ++i)
     {
-      ACE_NEW (this->bucket[i], QUEUE (this->tuple_allocator_));
+      ACE_NEW (this->bucket_[i], QUEUE (this->tuple_allocator_));
     }
 }
 
 ACE_Priority_Reactor::ACE_Priority_Reactor (ACE_Sig_Handler *sh,
 					    ACE_Timer_Queue *tq)
   : ACE_Select_Reactor(sh, tq),
-    bucket (0),
+    bucket_ (0),
     tuple_allocator_ (0)
 {
   ACE_TRACE ("ACE_Priority_Reactor::ACE_Priority_Reactor");
@@ -60,7 +60,7 @@ ACE_Priority_Reactor::ACE_Priority_Reactor (size_t size,
 					    ACE_Sig_Handler *sh,
 					    ACE_Timer_Queue *tq)
   : ACE_Select_Reactor (size, rs, sh, tq),
-    bucket (0),
+    bucket_ (0),
     tuple_allocator_ (0)
 {
   ACE_TRACE ("ACE_Priority_Reactor::ACE_Priority_Reactor");
@@ -72,9 +72,9 @@ ACE_Priority_Reactor::~ACE_Priority_Reactor (void)
   ACE_TRACE ("ACE_Priority_Reactor::~ACE_Priority_Reactor");
   for (int i = 0; i < npriorities; ++i)
     {
-      delete this->bucket[i];
+      delete this->bucket_[i];
     }
-  delete[] this->bucket;
+  delete[] this->bucket_;
   delete tuple_allocator_;
 }
 
@@ -118,7 +118,7 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
 	  prio = ACE_Event_Handler::LO_PRIORITY;
 	}
 
-      bucket[prio]->enqueue_tail (et);
+      bucket_[prio]->enqueue_tail (et);
       // Update the priority ranges....
       if (min_priority > prio)
 	{
@@ -135,12 +135,12 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
   for (int i = max_priority; i >= min_priority; --i)
     {
       // Remove all the entries from the wrappers
-      while (!bucket[i]->is_empty ()
+      while (!bucket_[i]->is_empty ()
 	     && number_dispatched < number_of_active_handles
 	     && this->state_changed_ == 0)
 	{
 	  ACE_Event_Tuple et;
-	  bucket[i]->dequeue_head (et);
+	  bucket_[i]->dequeue_head (et);
           this->notify_handle (et.handle_,
                                mask,
                                ready_mask,
@@ -150,7 +150,7 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
         }
       // Even if we are aborting the loop due to this->state_changed
       // or another error we still want to cleanup the buckets.
-      bucket[i]->reset ();
+      bucket_[i]->reset ();
     }
 
   if (number_dispatched > 0 && this->state_changed_)
