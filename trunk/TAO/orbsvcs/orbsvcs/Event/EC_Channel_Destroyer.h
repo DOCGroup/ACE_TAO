@@ -10,7 +10,7 @@
 
 #include /**/ "event_export.h"
 #include "EC_Event_Channel_Base.h"
-#include "tao/Utils/Auto_Functor.h"
+#include "tao/Auto_Functor.h"
 
 /**
  * @struct TAO_EC_Channel_Destroyer_Functor

@@ -1,3 +1,11 @@
+Sun Dec  7 00:53:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTEvent:
+	* orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
+	* orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
+
+	  Effects of Auto_Functor directory change.
+
 Sun Dec  7 00:41:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Asynch_Reply_Dispatcher_Base.cpp:
