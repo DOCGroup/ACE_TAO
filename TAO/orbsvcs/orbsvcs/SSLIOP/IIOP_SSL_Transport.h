@@ -73,4 +73,5 @@ protected:
 };
 
 
+#include "ace/post.h"
 #endif /*TAO_IIOP_SSL_TRANSPORT_H*/
