@@ -1,3 +1,11 @@
+Mon Jul 26 12:22:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/sfp.idl:
+          Removed "typedef sequence<char> my_seq_char" from this file, it is
+          not used and caused problems with the vc71 build when linking the
+          AV library, because the TAO and AV library than both export an
+          ACE_Unbounded_Set<char>.
+
 Sun Jul 25 22:13:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Release:
