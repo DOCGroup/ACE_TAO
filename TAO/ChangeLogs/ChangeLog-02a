@@ -1,3 +1,9 @@
+Thu Mar  9 21:02:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp: 
+
+	  Fixed typo.
+
 Thu Mar  9 18:50:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Any.h:
