@@ -44,6 +44,10 @@ Tue Oct 13 07:28:38 1998  David L. Levine  <levine@cs.wustl.edu>
           to Ossama for motivating the above change to thr_cmp, which had
           been the only use of ACE_HAS_PTHREAD_EQUAL.
 
+        * ace/Log_Record.h,OS.h: changed C++-style comments to C-style
+          comments in preprocessor directives.  Thanks to
+          Fernando D. Mato Mira <matomira@acm.org> for reporting these.
+
 Tue Oct 13 00:19:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS.i (sema_destroy): I believe I've fixed the rats nest of
