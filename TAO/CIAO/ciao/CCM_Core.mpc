@@ -1,0 +1,47 @@
+project (CAIO_Client) : taolib_with_idl {
+  depends += IFR_Client
+  sharedname  = CIAO_Client
+  libs       += TAO TAO_IFR_Client
+  idlflags  += -Ge 1 -Sc -I../.. -Wb,stub_export_include=CIAO_Client_Export.h -Wb,skel_export_include=CIAO_Container_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+  dllflags    = CIAO_CLIENT_BUILD_DLL
+  include_dir = CIAO
+
+  IDL_Files {
+    CCM_Base.idl
+    CCM_Event.idl
+    CCM_Component.idl
+  }
+
+  Source_Files {
+    CCM_BaseC.cpp
+    CCM_EventC.cpp
+    CCM_ComponentC.cpp
+    CIAO_Component_i.cpp
+  }
+}
+
+project (CAIO_Container) : server {
+  depends += CIAO_Client Security
+  sharedname  = CIAO_Container
+  libs       += TAO TAO_IFR_Client TAO_Security
+  idlflags  +=  -Ge 1 -Sc -I../.. -I$../../orbsvcs/orbsvcs -Wb,export_include=CIAO_Container_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+  dllflags    = CIAO_CONTAINER_BUILD_DLL
+  include_dir = CIAO orbsvcs/orbsvcs
+
+  IDL_Files {
+    CCM_Transaction.idl
+    CosPersistentState.idl
+    CCM_Container.idl
+    CCM_Container_Ex.idl
+  }
+
+  Source_Files {
+    CCM_TransactionC.cpp
+    CosPersistentStateC.cpp
+    CCM_ContainerC.cpp
+    CCM_Container_ExC.cpp
+    CCM_BaseS.cpp
+    CCM_EventS.cpp
+    CCM_ComponentS.cpp
+  }
+}
