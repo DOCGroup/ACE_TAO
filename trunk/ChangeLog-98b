@@ -1,8 +1,8 @@
 Thu Oct  8 12:11:08 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/run_test: 
-	* examples/IPC_SAP/SOCK_SAP/summarize:
-		
+        * examples/IPC_SAP/SOCK_SAP/run_test:
+        * examples/IPC_SAP/SOCK_SAP/summarize:
+
         Added these scripts to run the test and summarize the
         results. These scripts are modelled similar to the
         $TAO_ROOT/performance-tests/Cubit/TAO/MT_Cubit scripts.
@@ -16,6 +16,10 @@ Thu Oct 08 08:23:09 1998  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Peter Nordlund <petern@nada.kth.se> for
           reporting that High_Res_Timer_Test failed on Irix without
           this fix.
+
+        * ace/Makefile (Svc_Conf_l.cpp): use Doug's flex to generate
+          this file, if running on a DOC group machine, instead of
+          using whatever flex is first on the users path.
 
 Wed Oct  7 23:47:29 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         * ace/Asynch_IO.cpp:
