@@ -21,25 +21,25 @@ ttcp_sequence_i::start_timer (CORBA::Environment &IT_env)
   ::prep_timer ();
 }
 
-void 
+void
 ttcp_sequence_i::stop_timer (CORBA::Environment &IT_env)
 {
   ACE_UNUSED_ARG (IT_env);
 
   (void) ::read_timer (stats, sizeof (stats));
-	::nbytes = this->nbytes_;
-	::PrintStats();
-	// reset
-	this->nbytes_ = 0;
-	numCalls = 0;
+        ::nbytes = this->nbytes_;
+        ::PrintStats();
+        // reset
+        this->nbytes_ = 0;
+        numCalls = 0;
 #if defined (USE_QUANTIFY)
     quantify_stop_recording_data();
     ACE_Service_Config::end_reactor_event_loop();
-    cerr << "*********** just before exiting " << endl;
+    ACE_OS::fprintf (stderr, "*********** just before exiting\n");
 #endif
-#if defined (USE_PURIFY)
+#if defined (ACE_HAS_PURIFY)
     ACE_Service_Config::end_reactor_event_loop();
-    cerr << "*********** just before exiting " << endl;
+    ACE_OS::fprintf (stderr, "*********** just before exiting\n");
 #endif
 }
 
@@ -91,15 +91,6 @@ ttcp_sequence_i::sendStructSeq(const ttcp_sequence::StructSeq& ttcp_seq, CORBA::
   this->nbytes_ += ttcp_seq.length()*sizeof(BinStruct) ;
 #ifdef DEBUG
   ACE_DEBUG ((LM_DEBUG,
-	      "Bytes received so far = %d\n", this->nbytes_));
+              "Bytes received so far = %d\n", this->nbytes_));
 #endif
 }
-
-
-
-
-
-
-
-
-
