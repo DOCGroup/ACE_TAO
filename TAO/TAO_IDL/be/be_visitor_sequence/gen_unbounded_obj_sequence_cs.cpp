@@ -93,7 +93,8 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor);
-  *os <<" **tmp = " << full_class_name << "::allocbuf (length);" << be_nl
+  *os <<" **tmp = 0;" << be_nl
+      << "tmp = " << full_class_name << "::allocbuf (length);" << be_nl
       << be_nl
       << "if (this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
