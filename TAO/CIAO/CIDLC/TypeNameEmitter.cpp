@@ -1030,111 +1030,111 @@ AceCheckReturnEmitter::traverse (Void&)
 void
 AceCheckReturnEmitter::traverse (Boolean&)
 {
-  os << "ACE_CHECK_RETURN (false);";
+  os << STRS[ACE_CR] << " (false);";
 }
 
 void
 AceCheckReturnEmitter::traverse (Octet&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (Char&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (Wchar&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (Short&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (UnsignedShort&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (Long&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (UnsignedLong&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (LongLong&)
 {
-  os << "ACE_CHECK_RETURN (ACE_CDR_LONGLONG_INITIALIZER);";
+  os << STRS[ACE_CR] << " (ACE_CDR_LONGLONG_INITIALIZER);";
 }
 
 void
 AceCheckReturnEmitter::traverse (UnsignedLongLong&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (Float&)
 {
-  os << "ACE_CHECK_RETURN (0.0f);";
+  os << STRS[ACE_CR] << " (0.0f);";
 }
 
 void
 AceCheckReturnEmitter::traverse (Double&)
 {
-  os << "ACE_CHECK_RETURN (0.0);";
+  os << STRS[ACE_CR] << " (0.0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (String&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (Wstring&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (Object&)
 {
-  os << "ACE_CHECK_RETURN (::CORBA::Object::_nil ());";
+  os << STRS[ACE_CR] << " (::CORBA::Object::_nil ());";
 }
 
 void
 AceCheckReturnEmitter::traverse (ValueBase&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (Any&)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (SemanticGraph::Enum& e)
 {
   os << e.scoped_name () << " retval;"
-     << "ACE_UNUSED_ARG (retval);"
-     << "ACE_CHECK_RETURN (retval);";
+     << STRS[ACE_UA] << " (retval);"
+     << STRS[ACE_CR] << " (retval);";
 }
 
 void
@@ -1146,13 +1146,13 @@ AceCheckReturnEmitter::traverse (SemanticGraph::Struct& s)
   
   if (var_size)
   {
-    os << "ACE_CHECK_RETURN (0);";
+    os << STRS[ACE_CR] << " (0);";
   }
   else
   {
     os << s.scoped_name () << " retval;"
-       << "ACE_UNUSED_ARG (retval);"
-       << "ACE_CHECK_RETURN (retval);";
+       << STRS[ACE_UA] << " (retval);"
+       << STRS[ACE_CR] << " (retval);";
   }
 }
 
@@ -1165,50 +1165,50 @@ AceCheckReturnEmitter::traverse (SemanticGraph::Union& u)
   
   if (var_size)
   {
-    os << "ACE_CHECK_RETURN (0);";
+    os << STRS[ACE_CR] << " (0);";
   }
   else
   {
     os << u.scoped_name () << " retval;"
-       << "ACE_UNUSED_ARG (retval);"
-       << "ACE_CHECK_RETURN (retval);";
+       << STRS[ACE_UA] << " (retval);"
+       << STRS[ACE_CR] << " (retval);";
   }
 }
 
 void
 AceCheckReturnEmitter::traverse (SemanticGraph::UnboundedSequence& s)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (SemanticGraph::Interface& i)
 {
-  os << "ACE_CHECK_RETURN (" << i.scoped_name () << "::_nil ());";
+  os << STRS[ACE_CR] << " (" << i.scoped_name () << "::_nil ());";
 }
 
 void
 AceCheckReturnEmitter::traverse (SemanticGraph::ValueType& v)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (SemanticGraph::EventType& e)
 {
-  os << "ACE_CHECK_RETURN (0);";
+  os << STRS[ACE_CR] << " (0);";
 }
 
 void
 AceCheckReturnEmitter::traverse (SemanticGraph::Component& c)
 {
-  os << "ACE_CHECK_RETURN (" << c.scoped_name () << "::_nil ());";
+  os << STRS[ACE_CR] << " (" << c.scoped_name () << "::_nil ());";
 }
 
 void
 AceCheckReturnEmitter::traverse (SemanticGraph::Home& h)
 {
-  os << "ACE_CHECK_RETURN (" << h.scoped_name () << "::_nil ());";
+  os << STRS[ACE_CR] << " (" << h.scoped_name () << "::_nil ());";
 }
 
 // ====================================================================

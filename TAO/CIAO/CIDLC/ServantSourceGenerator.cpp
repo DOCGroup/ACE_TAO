@@ -807,7 +807,7 @@ namespace
          << STRS[COMP_SC] << "::_narrow (" << endl
          << "this->ctx_.in ()" << endl
          << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl
+         << STRS[ACE_CR] << " (CORBA::Object::_nil ());" << endl
          << "if (! CORBA::is_nil (sc.in ()))" << endl
          << "{"
          << "return sc->get_CCM_object (" << endl
@@ -817,13 +817,13 @@ namespace
          << "::Components::EntityContext::_narrow (" << endl
          << "this->ctx_.in ()" << endl
          << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl
+         << STRS[ACE_CR] << " (CORBA::Object::_nil ());" << endl
          << "if (! CORBA::is_nil (ec.in ()))" << endl
          << "{"
          << "return ec->get_CCM_object (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}"
-         << "ACE_THROW_RETURN (CORBA::INTERNAL (), 0);" << endl
+         << STRS[ACE_TR] << " (CORBA::INTERNAL (), 0);" << endl
          << "}" << endl;
 
       // Close the CIAO_GLUE namespace.
@@ -919,7 +919,7 @@ namespace
            << "if (CORBA::is_nil (this->ciao_uses_"
            << u.name () << "_.in ()))" << endl
            << "{"
-           << "ACE_THROW_RETURN (" << endl
+           << STRS[ACE_TR] << " (" << endl
            << STRS[EXCP_NC] << " ()," << endl;
 
         Traversal::SingleUserData::belongs (u, belongs_);
@@ -975,7 +975,7 @@ namespace
         os << "::_narrow (" << endl
            << "entry.int_id_.in ()" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (0);" << endl;
+           << STRS[ACE_CR] << " (0);" << endl;
 
         os << "ACE_NEW_THROW_EX (" << endl
            << "retv[i].ck," << endl
@@ -1002,7 +1002,7 @@ namespace
            << "{"
            << "if (CORBA::is_nil (c))" << endl
            << "{"
-           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);" << endl
+           << STRS[ACE_TR] << " (" << STRS[EXCP_IC] << " (), 0);" << endl
            << "}";
 
         Traversal::MultiUserData::belongs (u, belongs_);
@@ -1017,7 +1017,7 @@ namespace
         os << "if (this->ciao_uses_" << u.name ()
            << "_.bind (conn.in (), key) == -1)" << endl
            << "{"
-           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);" << endl
+           << STRS[ACE_TR] << " (" << STRS[EXCP_IC] << " (), 0);" << endl
            << "}";
 
         os << "conn._retn ();" << endl;
@@ -1052,7 +1052,7 @@ namespace
         os << "if (ck == 0 || ! CIAO::Map_Key_Cookie::extract (ck, key))"
            << endl
            << "{"
-           << "ACE_THROW_RETURN (" << endl
+           << STRS[ACE_TR] << " (" << endl
            << STRS[EXCP_IC] << " ()," << endl;
 
         Traversal::MultiUserData::belongs (u, belongs_);
@@ -1063,7 +1063,7 @@ namespace
         os << "if (this->ciao_uses_" << u.name ()
            << "_.unbind (key, retv) != 0)" << endl
            << "{"
-           << "ACE_THROW_RETURN (" << endl
+           << STRS[ACE_TR] << " (" << endl
            << STRS[EXCP_IC] << " ()," << endl;
 
         Traversal::MultiUserData::belongs (u, belongs_);
@@ -1146,7 +1146,7 @@ namespace
            << "{"
            << "if (CORBA::is_nil (c))" << endl
            << "{"
-           << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << endl
+           << STRS[ACE_TR] << " (CORBA::BAD_PARAM (), 0);" << endl
            << "}";
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -1187,7 +1187,7 @@ namespace
            << "if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == false)"
            << endl
            << "{"
-           << "ACE_THROW_RETURN (" << endl
+           << STRS[ACE_TR] << " (" << endl
            << STRS[EXCP_IC] << " ()," << endl;
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -1197,7 +1197,7 @@ namespace
            << "if (this->ciao_publishes_" << p.name ()
            << "_map_.unbind (key, retv) != 0)" << endl
            << "{"
-           << "ACE_THROW_RETURN (" << endl
+           << STRS[ACE_TR] << " (" << endl
            << STRS[EXCP_IC] << " ()," << endl;
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -1273,7 +1273,7 @@ namespace
            << "if (CORBA::is_nil (this->ciao_emits_" << e.name ()
            << "_consumer_.in ()))" << endl
            << "{"
-           << "ACE_THROW_RETURN (" << endl
+           << STRS[ACE_TR] << " (" << endl
            << STRS[EXCP_NC] << " ()," << endl;
 
         Traversal::EmitterData::belongs (e, belongs_);
@@ -1314,7 +1314,7 @@ namespace
            << "_map_.current_size ();" << endl
            << "ACE_NEW_THROW_EX (" << endl
            << "tmp," << endl
-           << STRS[COMP_CD] << "(_ciao_size)," << endl
+           << STRS[COMP_CD] << " (_ciao_size)," << endl
            << "CORBA::NO_MEMORY ());" << endl
            << "retval = tmp;"
            << "retval->length (_ciao_size);" << endl
@@ -1350,10 +1350,10 @@ namespace
         os << "Consumer::_narrow (" << endl
            << "e.int_id_.in ()" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (0);" << endl
+           << STRS[ACE_CR] << " (0);" << endl
            << "if (CORBA::is_nil (c.in ()))"
            << "{"
-           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
+           << STRS[ACE_TR] << " (" << STRS[EXCP_IC] << " (), 0);"
            << "}"
            << "::Components::ConsumerDescription *cd = 0;"
            << "ACE_NEW_THROW_EX (" << endl
@@ -1486,12 +1486,16 @@ namespace
            << "{"
            << "if (publisher_name == 0)" << endl
            << "{"
-           << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);"
+           << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);"
            << "}"
            << STRS[COMP_CD] << " *tmp = 0;"
            << STRS[COMP_CD] << "_var retval;"
            << "CORBA::ULong _ciao_index = 0;"
-           << "CORBA::ULong _ciao_size = 0;" << endl;
+           << "CORBA::ULong _ciao_size = 0;"
+		   << STRS[ACE_UA] << " (tmp);"
+		   << STRS[ACE_UA] << " (retval);"
+		   << STRS[ACE_UA] << " (_ciao_index);"
+		   << STRS[ACE_UA] << " (_ciao_size);" << endl;
            
         // Generate IF block for each event sources.
         {
@@ -1510,7 +1514,7 @@ namespace
           component_emitter.traverse (t);
         }
 
-        os << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);"
+        os << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);"
            << "}";
       }
                  
@@ -1640,7 +1644,7 @@ namespace
         if (swapping)
         {
           os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-             << "ACE_CHECK_RETURN (0);" << endl;
+             << STRS[ACE_CR] << " (0);" << endl;
         }
         
         os << "return this->context_->subscribe_" << p.name ()
@@ -1664,7 +1668,7 @@ namespace
         if (swapping)
         {
           os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-             << "ACE_CHECK_RETURN (";
+             << STRS[ACE_CR] << " (";
 
           Traversal::PublisherData::belongs (p, belongs_);
 
@@ -1711,17 +1715,17 @@ namespace
         os << "::_narrow (" << endl
            << "connection" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (0);" << endl
+           << STRS[ACE_CR] << " (0);" << endl
            << "if (::CORBA::is_nil (_ciao_conn.in ()))" << endl
            << "{"
-           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
+           << STRS[ACE_TR] << " (" << STRS[EXCP_IC] << " (), 0);"
            << endl
            << "}"
            << "// Simplex connect." << endl
            << "this->connect_" << u.name () << " (" << endl
            << "_ciao_conn.in ()" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (0);" << endl
+           << STRS[ACE_CR] << " (0);" << endl
            << "return 0;" << endl
            << "}";
       }
@@ -1742,10 +1746,10 @@ namespace
         os << "::_narrow (" << endl
            << "connection" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (0);" << endl
+           << STRS[ACE_CR] << " (0);" << endl
            << "if (::CORBA::is_nil (_ciao_conn.in ()))" << endl
            << "{"
-           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
+           << STRS[ACE_TR] << " (" << STRS[EXCP_IC] << " (), 0);"
            << endl
            << "}"
            << "// Multiplex connect." << endl
@@ -1943,10 +1947,10 @@ namespace
         os << "Consumer::_narrow (" << endl
            << "subscribe" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (0);" << endl
+           << STRS[ACE_CR] << " (0);" << endl
            << "if (::CORBA::is_nil (_ciao_consumer.in ()))" << endl
            << "{"
-           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
+           << STRS[ACE_TR] << " (" << STRS[EXCP_IC] << " (), 0);"
            << endl
            << "}"
            << "return this->subscribe_" << p.name ()
@@ -2102,7 +2106,7 @@ namespace
         if (swapping)
         {
           os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-             << "ACE_CHECK_RETURN (";
+             << STRS[ACE_CR] << " (";
         
           Traversal::ProviderData::belongs (p, belongs_);
           
@@ -2122,7 +2126,7 @@ namespace
         os << "::CORBA::Object_var obj =" << endl
            << "this->provide_" << p.name () << "_i ("
            << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK_RETURN (";
+           << STRS[ACE_CR] << " (";
 
         Traversal::ProviderData::belongs (p, belongs_);
 
@@ -2143,7 +2147,7 @@ namespace
         os << "::_narrow (" << endl
            << "obj.in ()" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (";
+           << STRS[ACE_CR] << " (";
 
         Traversal::ProviderData::belongs (p, belongs_);
 
@@ -2238,7 +2242,7 @@ namespace
         os << "," << endl
            << "CIAO::Container::Facet_Consumer" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (";
+           << STRS[ACE_CR] << " (";
 
         Traversal::ProviderData::belongs (p, belongs_);
 
@@ -2420,7 +2424,7 @@ namespace
         os << "::Components::EventConsumerBase_var obj =" << endl
            << "this->get_consumer_" << c.name () << "_i (" << endl
            << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK_RETURN (";
+           << STRS[ACE_CR] << " (";
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
@@ -2440,7 +2444,7 @@ namespace
         os << "Consumer::_narrow (" << endl
            << "obj.in ()" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (";
+           << STRS[ACE_CR] << " (";
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
@@ -2534,7 +2538,7 @@ namespace
         os << "," << endl
            << "CIAO::Container::Facet_Consumer" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (";
+           << STRS[ACE_CR] << " (";
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
@@ -2544,7 +2548,7 @@ namespace
            << "::Components::EventConsumerBase::_narrow (" << endl
            << "obj.in ()" << endl
            << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (";
+           << STRS[ACE_CR] << " (";
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
@@ -2928,8 +2932,8 @@ namespace
       }
 
 
-      os << "ACE_UNUSED_ARG (descr_name);"
-         << "ACE_UNUSED_ARG (descr_value);" << endl;
+      os << STRS[ACE_UA] << " (descr_name);"
+         << STRS[ACE_UA] << " (descr_value);" << endl;
 
       os << "}"
          << "}";
@@ -3001,15 +3005,15 @@ namespace
       if (swapping)
       {
         os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK_RETURN (0);" << endl;
+           << STRS[ACE_CR] << " (0);" << endl;
       }
         
       os << "// If the component has no receptacles, this will be unused."
          << endl
-         << "ACE_UNUSED_ARG (connection);" << endl
+         << STRS[ACE_UA] << " (connection);" << endl
          << "if (name == 0)" << endl
          << "{"
-         << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
+         << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);" << endl
          << "}";
 
       // Generate IF block in connect operation for each receptacle.
@@ -3029,7 +3033,7 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
+      os << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);" << endl
          << "}";
 
       os << "CORBA::Object_ptr" << endl
@@ -3048,12 +3052,12 @@ namespace
       if (swapping)
       {
         os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl;
+           << STRS[ACE_CR] << " (CORBA::Object::_nil ());" << endl;
       }
         
       os << "if (name == 0)" << endl
          << "{"
-         << "ACE_THROW_RETURN (" << endl
+         << STRS[ACE_TR] << " (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << "::CORBA::Object::_nil ());" << endl
          << "}";
@@ -3075,10 +3079,10 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << "ACE_THROW_RETURN (" << endl
+      os << STRS[ACE_TR] << " (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << "::CORBA::Object::_nil ());" << endl
-         << "ACE_UNUSED_ARG (ck);" << endl
+         << STRS[ACE_UA] << " (ck);" << endl
          << "}";
 
       // Generate generic operations for receptacles.
@@ -3139,7 +3143,7 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << "ACE_UNUSED_ARG (consumer);"
+      os << STRS[ACE_UA] << " (consumer);"
          << "ACE_THROW ("
          << STRS[EXCP_IN] << " ());" << endl
          << "}";
@@ -3159,14 +3163,14 @@ namespace
       if (swapping)
       {
         os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK_RETURN (0);" << endl;
+           << STRS[ACE_CR] << " (0);" << endl;
       }
         
       os << "// Just in case there are no if blocks" << endl
-         << "ACE_UNUSED_ARG (subscribe);" << endl
+         << STRS[ACE_UA] << " (subscribe);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
-         << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);"
+         << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);"
          << endl
          << "}";
 
@@ -3187,7 +3191,7 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
+      os << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);" << endl
          << "}";
 
       os << STRS[COMP_ECB] << "_ptr" << endl
@@ -3205,15 +3209,15 @@ namespace
       if (swapping)
       {
         os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK_RETURN (" << STRS[COMP_ECB]
+           << STRS[ACE_CR] << " (" << STRS[COMP_ECB]
            << "::_nil ());" << endl;
       }
         
       os << "// Just in case there are no if blocks" << endl
-         << "ACE_UNUSED_ARG (ck);" << endl
+         << STRS[ACE_UA] << " (ck);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
-         << "ACE_THROW_RETURN (" << endl
+         << STRS[ACE_TR] << " (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << STRS[COMP_ECB] << "::_nil ());" << endl
          << "}";
@@ -3235,7 +3239,7 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << "ACE_THROW_RETURN (" << endl
+      os << STRS[ACE_TR] << " (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << STRS[COMP_ECB] << "::_nil ());" << endl
          << "}";
@@ -3269,12 +3273,12 @@ namespace
       if (swapping)
       {
         os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl;
+           << STRS[ACE_CR] << " (CORBA::Object::_nil ());" << endl;
       }
         
       os << "if (name == 0)" << endl
          << "{"
-         << "ACE_THROW_RETURN (" << endl
+         << STRS[ACE_TR] << " (" << endl
          << "::CORBA::BAD_PARAM ()," << endl
          << "::CORBA::Object::_nil ());" << endl
          << "}";
@@ -3585,7 +3589,7 @@ namespace
           operation_emitter.traverse (hf);
         }
 
-        os << "ACE_CHECK_RETURN (";
+        os << STRS[ACE_CR] << " (";
 
         Traversal::Home::manages (scope_, manages_);
 
@@ -3609,7 +3613,7 @@ namespace
            << "_ciao_ec.in ()" << endl
            << STRS[ENV_ARG] << ");" << endl;
 
-        os << "ACE_CHECK_RETURN (";
+        os << STRS[ACE_CR] << " (";
 
         Traversal::Home::manages (scope_, manages_);
 
@@ -3714,7 +3718,7 @@ namespace
       post (SemanticGraph::HomeFinder& hf)
       {
         os << "{"
-           << "ACE_THROW_RETURN (" << endl
+           << STRS[ACE_TR] << " (" << endl
            << "::CORBA::NO_IMPLEMENT ()," << endl;
 
         Traversal::HomeFinder::returns (hf, simple_returns_);
@@ -3996,7 +4000,7 @@ namespace
          << "::_narrow (" << endl
          << "p" << endl
          << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (0);" << endl
+         << STRS[ACE_CR] << " (0);" << endl
          << "if (::CORBA::is_nil (x.in ()))" << endl
          << "{"
          << "return 0;" << endl
