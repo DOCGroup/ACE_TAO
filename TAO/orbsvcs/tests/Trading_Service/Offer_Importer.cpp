@@ -2,10 +2,8 @@
 #include "Offer_Importer.h"
 #include "orbsvcs/Trader/Policy_Manager.h"
 
-TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
-					CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    lookup_ (lookup_if)
+TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if)
+  : lookup_ (lookup_if)
 {
 }
 
@@ -104,11 +102,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 {
   for (int length = offer_seq.length (), i = 0; i < length; i++)
     {
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-      TT_Info::dump_properties (offer_seq[i].properties, this->orb_.ptr ());
-#else
       TT_Info::dump_properties (offer_seq[i].properties);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
     }
 
@@ -131,11 +125,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 	      for (length = iter_offers->length (), i = 0; i < length; i++)
 		{
 		  CosTrading::PropertySeq& props = iter_offers[i].properties;
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-		  TT_Info::dump_properties (props, this->orb_.ptr ());
-#else 
 		  TT_Info::dump_properties (props);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 		  ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
 		}
 	      

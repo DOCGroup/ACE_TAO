@@ -33,12 +33,7 @@ main (int argc, char** argv)
       
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Importer tests.\n"));
-
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-      TAO_Offer_Importer offer_importer (lookup_if.in (), orb.ptr ());
-#else
       TAO_Offer_Importer offer_importer (lookup_if.in ());
-#endif
       
       offer_importer.perform_queries (TAO_TRY_ENV);
       TAO_CHECK_ENV;
