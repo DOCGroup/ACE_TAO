@@ -1,8 +1,15 @@
 Fri Mar 19 22:04:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/decode.cpp (decode): Carlos did some magic with the CDR
-	  streams and the message blocks.  Apparently, the data block was
-	  being shared but not the message block.
+	* tao/decode.cpp (decode): 
+	  When decoding an Any we need to create a Message_Block, use
+	  append() to copy the contents of the CDR stream and then store
+	  the message block into the any for later decoding (when we
+	  either use DynAny or we have enough static information).
+	  The manipulation of the Message_Block was incorrect: the data
+	  was copied using an OutputCDR stream, that copies the contents
+	  but acts on a duplicate of the Message_Block, thus, it does not
+	  update the wr_ptr() and rd_ptr().
+	  We corrected this problem and things are happy again.
 
 	* examples/POA/DSI/Database_i.h (class DatabaseImpl): Switched the
 	  memory allocator to be a local one rather than a persistent one.
