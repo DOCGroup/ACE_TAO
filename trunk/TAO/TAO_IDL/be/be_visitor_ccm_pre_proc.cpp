@@ -1932,9 +1932,14 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
     }
   else
     {
+      ACE_CString new_local (
+          node->base_home ()->local_name ()->get_string ()
+        );
+      new_local += "Explicit";
       UTL_ScopedName *parent_name =
         ACE_static_cast (UTL_ScopedName *,
                          node->base_home ()->name ()->copy ());
+      parent_name->last_component ()->replace_string (new_local.c_str ());
       ACE_NEW_RETURN (retval,
                       UTL_NameList (parent_name,
                                     0),
