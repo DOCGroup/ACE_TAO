@@ -113,7 +113,7 @@ public:
       ssize_t n;
 
       while ((n = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0)
-	this->peer ().send (buf, sizeof buf);
+	this->peer ().send (buf, n);
 
       this->peer ().close ();
       return 0;

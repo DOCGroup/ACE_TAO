@@ -4,7 +4,6 @@
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/Get_Opt.h"
-#include "ace/Time_Request_Reply.h"
 #include "TS_Clerk_Handler.h"
 
 ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor,

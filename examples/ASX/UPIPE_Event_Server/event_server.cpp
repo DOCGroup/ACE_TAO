@@ -1,7 +1,6 @@
 // Test the event server.
 // $Id$
 
-
 #include "ace/Stream.h"
 #include "ace/Service_Config.h"
 #include "Options.h"
@@ -71,7 +70,6 @@ consumer (void *)
   else
     cout << "consumer :we're connected" << endl;
 
-  int n;
   ACE_Message_Block *mb_p;
 
   int done = 0;
@@ -81,7 +79,7 @@ consumer (void *)
   par1= (time_t) currsec;
 
   while (done == 0 
-	 && ((n = c_stream.recv (mb_p)) != -1))
+	 && (c_stream.recv (mb_p) != -1))
     if (mb_p->length () > 1) 
       {
 	cnt++;

@@ -8,7 +8,7 @@
 
 #include "ace/Get_Opt.h"
 
-static const BUF_LEN = 256;
+static const int BUF_LEN = 256;
 
 // Name of the program.
 static char *program_name;

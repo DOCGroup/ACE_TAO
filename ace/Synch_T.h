@@ -260,8 +260,8 @@ protected:
   // "Destructor" that deletes internal TYPE * when thread exits.
 #endif /* defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) */
   // = Disallow copying...
-  void operator= (const ACE_TSS<TYPE> &) {}
-  ACE_TSS (const ACE_TSS<TYPE> &) {}
+  void operator= (const ACE_TSS<TYPE> &);
+  ACE_TSS (const ACE_TSS<TYPE> &);
 };
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
@@ -347,8 +347,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Guard<LOCK> &) {}
-  ACE_Guard (const ACE_Guard<LOCK> &) {}
+  void operator= (const ACE_Guard<LOCK> &);
+  ACE_Guard (const ACE_Guard<LOCK> &);
 };
 
 template <class LOCK>
@@ -479,8 +479,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_TSS_Guard<LOCK> &) {}
-  ACE_TSS_Guard (const ACE_TSS_Guard<LOCK> &) {}
+  void operator= (const ACE_TSS_Guard<LOCK> &);
+  ACE_TSS_Guard (const ACE_TSS_Guard<LOCK> &);
 };
 
 template <class LOCK>
@@ -605,7 +605,7 @@ private:
   // Reference to mutex lock.
 
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Condition<MUTEX> &) {}
+  void operator= (const ACE_Condition<MUTEX> &);
   ACE_Condition (const ACE_Condition<MUTEX> &c): mutex_ (c.mutex_) {}
 };
 template <class MUTEX>

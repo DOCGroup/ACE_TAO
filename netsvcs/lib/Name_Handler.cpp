@@ -2,7 +2,6 @@
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
-#include "ace/SString.h"
 #include "ace/Set.h"
 #include "ace/Get_Opt.h"
 #include "ace/Naming_Context.h"
