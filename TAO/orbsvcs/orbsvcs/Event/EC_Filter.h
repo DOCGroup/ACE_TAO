@@ -38,12 +38,13 @@
 #ifndef TAO_EC_FILTER_H
 #define TAO_EC_FILTER_H
 
-#include "ace/Containers.h"
-#include "orbsvcs/RtecEventCommC.h"
+#include "ace/RB_Tree.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "orbsvcs/RtecEventCommC.h"
 
 class TAO_EC_QOS_Info;
 
@@ -105,7 +106,13 @@ public:
   virtual CORBA::ULong max_event_size (void) const = 0;
   // Returns the maximum size of the events pushed by this filter.
 
-  typedef ACE_Array<RtecEventComm::EventHeader> Headers;
+  struct Header_Compare {
+    int operator () (const RtecEventComm::EventHeader& lhs,
+                     const RtecEventComm::EventHeader& rhs) const;
+  };
+
+  typedef ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> Headers;
+  // typedef ACE_Array<RtecEventComm::EventHeader> Headers;
 
   virtual void event_ids (Headers& headers) = 0;
   // Compute the disjunction of all the event types that could be of
@@ -159,103 +166,11 @@ public:
 
 // ****************************************************************
 
-class TAO_EC_Disjunction_Filter : public TAO_EC_Filter
-{
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
-  // = MEMORY MANAGMENT
-  //
-public:
-
-  // = The TAO_EC_Filter methods, please check the documentation in
-  // TAO_EC_Filter.
-  virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info,
-                      CORBA::Environment& env);
-  virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info,
-                             CORBA::Environment& env);
-  virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info,
-                     CORBA::Environment& env);
-  virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info,
-                            CORBA::Environment& env);
-  virtual void clear (void);
-  virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headers);
-};
-
-// ****************************************************************
-
-class TAO_EC_Conjunction_Filter : public TAO_EC_Filter
-{
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
-  // = MEMORY MANAGMENT
-  //
-public:
-
-  // = The TAO_EC_Filter methods, please check the documentation in
-  // TAO_EC_Filter.
-  virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info,
-                      CORBA::Environment& env);
-  virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info,
-                             CORBA::Environment& env);
-  virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info,
-                     CORBA::Environment& env);
-  virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info,
-                            CORBA::Environment& env);
-  virtual void clear (void);
-  virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headers);
-};
-
-// ****************************************************************
-
-class TAO_EC_Type_Filter : public TAO_EC_Filter
-{
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
-  // = MEMORY MANAGMENT
-  //
-public:
-
-  // = The TAO_EC_Filter methods, please check the documentation in
-  // TAO_EC_Filter.
-  virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info,
-                      CORBA::Environment& env);
-  virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info,
-                             CORBA::Environment& env);
-  virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info,
-                     CORBA::Environment& env);
-  virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info,
-                            CORBA::Environment& env);
-  virtual void clear (void);
-  virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headers);
-};
-
-// ****************************************************************
-
-// Add more types of filters like:
+// @@ Add more types of filters like:
 // - Events in a sequence.
 // - Events in a sequence with timeouts.
-// - Conjunction with timeout
+// - Conjunction with timeout [as opposed to disjunction of
+//     conjunction and a timeout]
 // - etc.
 
 // ****************************************************************

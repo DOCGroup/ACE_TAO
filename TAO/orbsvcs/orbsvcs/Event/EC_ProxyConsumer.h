@@ -54,8 +54,8 @@ class TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushCons
   // = MEMORY MANAGMENT
   //   It makes a copy of the SupplierQOS and the supplier object
   //   reference.
-  //   It assumes ownership of the SupplierFiltering, but requests
-  //   destruction through the Event Channel.
+  //   It uses bind/unbind to control the lifetime of the
+  //   SupplierFiltering object.
   //   The object commits suicide when disconnect_push_consumer() is
   //   called.
   //

@@ -86,6 +86,15 @@ public:
   // information, or that are shared between multiple
   // ProxyPushConsumers can ignore this message.
 
+  virtual void unbind (TAO_EC_ProxyPushConsumer* consumer) = 0;
+  // Wheneve a ProxyPushConsumer is about to be destroyed it calls
+  // this method to inform the FilteringStrategy that it should
+  // release any resources related to it.
+  // Filtering strategies that are bound to a particular ProxyConsumer 
+  // can use this opportunity to destroy themselves; filtering
+  // strategies that do not keep ProxyPushConsumer specific
+  // information can simply ignore the message.
+
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
 			  CORBA::Environment &env) = 0;
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
@@ -118,6 +127,7 @@ public:
 
   // = The TAO_EC_SupplierFiltering methods.
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
+  virtual void unbind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
 			  CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
