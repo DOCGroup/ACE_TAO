@@ -8,15 +8,16 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-BIN     = export_test import_test colocated_test
-
 MAKEFILE = Makefile
+
+BIN2 = export_test import_test colocated_test
+
 LIBNAME  = libTTest
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
+LIB2 = $(LIBNAME).a
+SHLIB2 = $(LIBNAME).$(SOEXT)
 
 ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
+  TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 IDL_FILES = TTestC \
@@ -37,6 +38,15 @@ LIBS    = -lorbsvcs -lTAO
 LDLIBS  = -lTTest -lorbsvcs -lTAO
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Trader,$(findstring Trader,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+  LIB = $(LIB2)
+  SHLIB = $(SHLIB2)
+endif # Trader
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -53,11 +63,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .PRECIOUS: TTestS.cpp TTestS.h TTestC.cpp TTestC.h
 
 clean:
-	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
+	-$(RM) *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
-	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) TTestS_T.*
+	-$(RM) $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) TTestS_T.*
 
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
