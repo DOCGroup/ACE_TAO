@@ -8,7 +8,8 @@
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================#ifndef OBJECTGROUPMANAGERHANDLER_H
+//=============================================================================
+#ifndef OBJECTGROUPMANAGERHANDLER_H
 #define OBJECTGROUPMANAGERHANDLER_H
 
 #include "orbsvcs/FTRT_GroupManagerS.h"
