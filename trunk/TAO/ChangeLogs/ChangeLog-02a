@@ -1,19 +1,26 @@
+Thu Dec 21 13:23:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Removed the file
+	  permission specifier when opening the temp file.  The should be
+	  taken care of by ACE_OS::open automatically and the old
+	  specifier no longer worked on NT.
+
 Wed Dec 20 09:34:20 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.h : 
-	* tao/CORBALOC_Parser.cpp : 
+	* tao/CORBALOC_Parser.h :
+	* tao/CORBALOC_Parser.cpp :
 
 	  Instead of declaring CORBA::ORB orb_ and TAO_MProfile mprofile_
 	  as private variables, declared them in the implementation and
 	  accrdingly changed the signatures of the methods using these
 	  variables. This way the MProfile will be cleaned automatically
 	  when it goes out of scope. Previosuly, the new mprofile was
-	  added to the already existing mprofile which was never cleaned 
+	  added to the already existing mprofile which was never cleaned
 	  causing a problem.
 
 	  Thanks to Russell Carter <rcarter@consys.com> for reporting this
 	  problem.
-	
+
 Tue Dec 19 19:31:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Strategies/strategies_export.h:
@@ -25,12 +32,12 @@ Tue Dec 19 19:31:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * tao/IORManipulation/TAO_IORManip_Static.dsp:
         * tao/Strategies/TAO_Strategies_Static.dsp:
 
-          Updated the static configurations' build options.          
+          Updated the static configurations' build options.
 
 Tue Dec 19 19:22:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/TAO_Static.dsp
-	   
+
 	  Added the new files.
 
 Tue Dec 19 17:58:00 2000  Jeff Parsons <parsons@cs.wustl.edu>
@@ -52,34 +59,34 @@ Tue Dec 19 14:21:12 2000  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
 
           Fixed bug in Container::contents() where an InterfaceDef
-          container would include attributes and operations in its 
+          container would include attributes and operations in its
           results only if the exclude_inherited flag was 0.
 
         * orbsvcs/IFR_Service/OperationDef_i.cpp:
 
-          Removed unnecessary temporary variable in 
+          Removed unnecessary temporary variable in
           OperationDef::params(), and made cosmetic changes.
 
 Tue Dec 19 11:47:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Protocols_Hooks.cpp : 
-	* tao/Protocols_Hooks.h : 
-	* tao/Default_Protocols_Hooks.cpp : 
-	* tao/Default_Protocols_Hooks.h : 
-	* tao/RT_Protocols_Hooks.cpp : 
+	* tao/Protocols_Hooks.cpp :
+	* tao/Protocols_Hooks.h :
+	* tao/Default_Protocols_Hooks.cpp :
+	* tao/Default_Protocols_Hooks.h :
+	* tao/RT_Protocols_Hooks.cpp :
 	* tao/RT_Protocols_Hooks.h :
-	
-	* tao/RT_Invocation_Endpoint_Selectors.i : 
-	* tao/Invocation_Endpoint_Selectors.i : 
 
-	* tao/Invocation.h : 
-	* tao/Invocation.i : 
+	* tao/RT_Invocation_Endpoint_Selectors.i :
+	* tao/Invocation_Endpoint_Selectors.i :
+
+	* tao/Invocation.h :
+	* tao/Invocation.i :
 
 	  Added TAO_HAS_RT_CORBA if-def guards.
-	  
+
 Tue Dec 19 12:16:32 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* utils/nslist/nslist.cpp (main): Added a fix to check if non-existent 
+	* utils/nslist/nslist.cpp (main): Added a fix to check if non-existent
 	  IOR is passed in.  Thanks to Jerry Jiang <javalist@21cn.com> for
  	  reporting this problem.
 
@@ -118,8 +125,8 @@ Mon Dec 18 23:17:58 2000  Ossama Othman  <ossama@uci.edu>
 
 Mon Dec 18 19:18:51 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Server_Protocol/server.cpp : 
-	  
+	* tests/RTCORBA/Server_Protocol/server.cpp :
+
 	  In check_default_server_protocol, changed the type of the
 	  variable server_protocol to CORBA::Policy * and later did the
 	  necessary narrows.
@@ -372,7 +379,7 @@ Mon Dec 18 19:48:52 2000  Jeff Parsons <parsons@cs.wustl.edu>
           behavior was to coerce the constant literal to an
           unsigned long, truncate the fractional part, if any, and
           let the C++ compiler output the error if the constant
-          value was 0. Thanks to Alexander Kogan <jk@kogan.nnov.ru> 
+          value was 0. Thanks to Alexander Kogan <jk@kogan.nnov.ru>
           for reporting this bug.
 
         * TAO_IDL/util/utl_err.cpp:
