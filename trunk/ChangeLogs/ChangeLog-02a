@@ -1,3 +1,9 @@
+Wed Feb 28 15:35:59 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * docs/build-setup.html:
+          Added html file outlining steps for adding a bugzilla
+          nightly build.
+
 Wed Feb 28 00:25:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/auto_run_tests.lst:
