@@ -290,23 +290,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -339,9 +324,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  InterfaceC.i \
- $(TAO_ROOT)/tao/RequestInfo_Util.h \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
- $(TAO_ROOT)/tao/PortableInterceptor.i
+ $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/IFR_Client_Adapter_Impl.o .obj/IFR_Client_Adapter_Impl.so .shobj/IFR_Client_Adapter_Impl.o .shobj/IFR_Client_Adapter_Impl.so: IFR_Client_Adapter_Impl.cpp \
  IFR_Client_Adapter_Impl.h \
@@ -587,23 +572,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \

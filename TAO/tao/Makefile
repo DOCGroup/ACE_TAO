@@ -309,7 +309,6 @@ ORB_CORE_FILES += \
   RT_Protocols_Hooks \
   Pool_Per_Endpoint \
   RTCORBAC \
-  RTCORBAS \
   RT_PolicyFactory \
   RT_ORBInitializer \
   Private_Connection_Descriptor
@@ -714,23 +713,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -991,23 +975,8 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h RTCORBAC.h ORB_Core.i Client_Strategy_Factory.h \
  TAO_Export.h Wait_Strategy.h Transport_Mux_Strategy.h Stub.h \
@@ -1271,23 +1240,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1626,23 +1580,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1898,23 +1837,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2164,23 +2088,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2828,23 +2737,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  ORB_Core.i \
@@ -3166,23 +3060,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  ORB_Core.i \
@@ -3456,23 +3335,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -3782,23 +3646,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  ORB_Core.i \
@@ -4188,23 +4037,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  ORB_Core.i \
@@ -4511,23 +4345,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  ORB_Core.i \
@@ -4856,23 +4675,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  ORB_Core.i \
@@ -5481,23 +5285,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -5743,23 +5532,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -5997,23 +5771,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -7152,23 +6911,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -7623,23 +7367,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -7985,23 +7714,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -8248,23 +7962,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -8543,23 +8242,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -8959,23 +8643,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -9373,23 +9042,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -10157,23 +9811,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -10440,23 +10079,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -10612,12 +10236,7 @@ realclean:
  Exception.i \
  Typecode.i \
  Any.i \
- TimeBaseC.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i
+ TimeBaseC.i
 
 .obj/Principal.o .obj/Principal.so .shobj/Principal.o .shobj/Principal.so: Principal.cpp \
  Principal.h \
@@ -11219,23 +10838,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -11673,23 +11277,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -12202,23 +11791,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -12702,23 +12276,8 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -12947,23 +12506,8 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -13213,23 +12757,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -13544,23 +13073,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -13836,23 +13350,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -14122,23 +13621,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -14335,8 +13819,9 @@ realclean:
  operation_details.i
 
 .obj/PortableInterceptor.o .obj/PortableInterceptor.so .shobj/PortableInterceptor.o .shobj/PortableInterceptor.so: PortableInterceptor.cpp \
- corbafwd.h \
+ PortableInterceptor.h \
  $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14431,7 +13916,6 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- PortableInterceptor.h \
  PortableInterceptorC.h \
  DynamicC.h \
  Any.h \
@@ -14717,23 +14201,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -15626,23 +15095,8 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h RTCORBAC.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -15958,23 +15412,8 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h RTCORBAC.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -16210,23 +15649,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -16675,23 +16099,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -17083,21 +16492,6 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  ORB_Core.i \
@@ -17517,23 +16911,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -17819,23 +17198,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -18101,23 +17465,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -18620,23 +17969,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -18897,23 +18231,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -19827,23 +19146,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -20111,23 +19415,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -20685,23 +19974,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -21093,23 +20367,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -21637,11 +20896,7 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  Priority_Mapping_Manager.i \
- TAOC.i TAOS.h \
- TAOS_T.h \
- TAOS_T.i \
- TAOS_T.cpp \
- TAOS.i
+ TAOC.i
 
 .obj/Object_Loader.o .obj/Object_Loader.so .shobj/Object_Loader.o .shobj/Object_Loader.so: Object_Loader.cpp Object_Loader.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -22304,23 +21559,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -22802,23 +22042,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -23461,23 +22686,8 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h RTCORBAC.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -23742,23 +22952,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -24150,23 +23345,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -24544,23 +23724,8 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h RTCORBAC.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -25342,23 +24507,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -26219,23 +25369,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -26639,23 +25774,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -27694,23 +26814,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -27961,23 +27066,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -28235,23 +27325,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -28512,23 +27587,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -29107,23 +28167,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -29439,12 +28484,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- RTCORBAS.h \
- IOPS.h \
- IOPC.h \
- TAO_Export.h \
- Any.h \
- CDR.h \
+ RTCORBAC.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -29514,7 +28554,11 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
+ IOPC.h \
+ Any.h \
+ CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  CDR.i \
@@ -29540,28 +28584,14 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp \
  IOPC.i \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseC.h \
- TimeBaseC.i \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAC.h \
  PolicyC.h \
  CurrentC.h \
  CurrentC.i \
  Encodable.h \
  PolicyC.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  LocalObject.h \
  LocalObject.i \
  RT_Current.i \
@@ -29707,12 +28737,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- RTCORBAS.h \
- IOPS.h \
- IOPC.h \
- TAO_Export.h \
- Any.h \
- CDR.h \
+ RTCORBAC.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -29782,7 +28807,11 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
+ IOPC.h \
+ Any.h \
+ CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  CDR.i \
@@ -29808,28 +28837,14 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp \
  IOPC.i \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseC.h \
- TimeBaseC.i \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAC.h \
  PolicyC.h \
  CurrentC.h \
  CurrentC.i \
  Encodable.h \
  PolicyC.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  LocalObject.h \
  LocalObject.i \
  RT_ORB.h \
@@ -29889,12 +28904,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- RTCORBAS.h \
- IOPS.h \
- IOPC.h \
- TAO_Export.h \
- Any.h \
- CDR.h \
+ RTCORBAC.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -29964,7 +28974,11 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
+ IOPC.h \
+ Any.h \
+ CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  CDR.i \
@@ -29990,28 +29004,14 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp \
  IOPC.i \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseC.h \
- TimeBaseC.i \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAC.h \
  PolicyC.h \
  CurrentC.h \
  CurrentC.i \
  Encodable.h \
  PolicyC.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  LocalObject.h \
  LocalObject.i \
  RT_Policy_i.i \
@@ -30141,12 +29141,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- RTCORBAS.h \
- IOPS.h \
- IOPC.h \
- TAO_Export.h \
- Any.h \
- CDR.h \
+ RTCORBAC.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -30216,7 +29211,11 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
+ IOPC.h \
+ Any.h \
+ CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  CDR.i \
@@ -30242,28 +29241,14 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp \
  IOPC.i \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseC.h \
- TimeBaseC.i \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAC.h \
  PolicyC.h \
  CurrentC.h \
  CurrentC.i \
  Encodable.h \
  PolicyC.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  LocalObject.h \
  LocalObject.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -30523,23 +29508,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -30769,23 +29739,8 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -31095,23 +30050,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  ORB_Core.i \
@@ -31256,233 +30196,7 @@ realclean:
  PolicyC.i \
  TimeBaseC.h Any.h \
  TimeBaseC.i \
- RTCORBAC.i TAOS.h \
- TAOS_T.h \
- TAOS_T.i \
- TAOS_T.cpp \
- TAOS.i \
- RequestInfo_Util.h \
- DynamicC.h \
- DynamicC.i
-
-.obj/RTCORBAS.o .obj/RTCORBAS.so .shobj/RTCORBAS.o .shobj/RTCORBAS.so: RTCORBAS.cpp \
- orbconf.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/svc_export.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Errno.h \
- $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
- $(ACE_ROOT)/ace/OS_String.inl \
- $(ACE_ROOT)/ace/OS_Memory.h \
- $(ACE_ROOT)/ace/OS_Memory.inl \
- $(ACE_ROOT)/ace/OS_TLI.h \
- $(ACE_ROOT)/ace/OS_TLI.inl \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RTCORBAS.h \
- orbconf.h IOPS.h IOPC.h TAO_Export.h Any.h \
- CDR.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Flag_Manip.h \
- $(ACE_ROOT)/ace/Flag_Manip.i \
- $(ACE_ROOT)/ace/Handle_Ops.h \
- $(ACE_ROOT)/ace/Handle_Ops.i \
- $(ACE_ROOT)/ace/Lib_Find.h \
- $(ACE_ROOT)/ace/Lib_Find.i \
- $(ACE_ROOT)/ace/Init_ACE.h \
- $(ACE_ROOT)/ace/Init_ACE.i \
- $(ACE_ROOT)/ace/Sock_Connect.h \
- $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc_Allocator.i \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- try_macros.h \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Environment.h \
- Environment.i \
- Object.h \
- Abstract_Servant_Base.h \
- Object_Proxy_Broker.h \
- Object_Proxy_Impl.h \
- Object.i \
- Typecode.h \
- Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Typecode.i \
- Any.i Object.h \
- Exception.h CDR.h Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence.h \
- Sequence_T.i \
- Sequence_T.cpp \
- IOPC.i IOPS_T.h IOPS_T.i IOPS_T.cpp IOPS.i TimeBaseS.h \
- TimeBaseC.h \
- Any.h \
- TimeBaseC.i \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAC.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Encodable.h \
- PolicyC.i \
- TimeBaseC.h RTCORBAC.i RTCORBAS_T.h RTCORBAS_T.i RTCORBAS_T.cpp \
- RTCORBAS.i \
- PortableServer/Object_Adapter.h \
- PortableServer/portableserver_export.h \
- PortableServer/Key_Adapters.h \
- PortableServer/PortableServerC.h \
- PortableServer/PortableServerC.i \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- PortableServer/Key_Adapters.i \
- PortableServer/poa_macros.h \
- PortableServer/RTPortableServerC.h \
- RTCORBAC.h \
- PortableServer/RTPortableServerC.i \
- PortableServer/Servant_Base.h \
- PortableServer/Servant_Base.i \
- PortableServer/Active_Object_Map.h \
- Server_Strategy_Factory.h \
- PortableServer/Active_Object_Map.i \
- Adapter.h \
- Adapter.i \
- LocalObject.h \
- LocalObject.i \
- PortableServer/Object_Adapter.i \
- PortableServer/Operation_Table.h \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- RequestInfo_Util.h \
- DynamicC.h \
- DynamicC.i
+ RTCORBAC.i
 
 .obj/RT_PolicyFactory.o .obj/RT_PolicyFactory.so .shobj/RT_PolicyFactory.o .shobj/RT_PolicyFactory.so: RT_PolicyFactory.cpp \
  RT_PolicyFactory.h \
@@ -31633,23 +30347,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i
 
 .obj/RT_ORBInitializer.o .obj/RT_ORBInitializer.so .shobj/RT_ORBInitializer.o .shobj/RT_ORBInitializer.so: RT_ORBInitializer.cpp \
@@ -31804,21 +30503,6 @@ realclean:
  RTCORBAC.h \
  RTCORBAC.i \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  RT_Protocols_Hooks.h \
  Protocols_Hooks.h \
@@ -32486,23 +31170,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -32757,23 +31426,8 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h RTCORBAC.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -33061,21 +31715,6 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -33368,23 +32007,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -34093,21 +32717,6 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -34482,23 +33091,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -35025,23 +33619,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -35283,23 +33862,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  RT_Policy_i.h \
- RTCORBAS.h \
- IOPS.h \
- IOPS_T.h \
- IOPS_T.i \
- IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
  RTCORBAC.h \
  RTCORBAC.i \
- RTCORBAS_T.h \
- RTCORBAS_T.i \
- RTCORBAS_T.cpp \
- RTCORBAS.i \
  RT_Policy_i.i \
  Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
