@@ -89,8 +89,7 @@ private:
  * or its pid cast to an <ACE_HANDLE> (on unix).
  * It is also possible to call the <Process_Manager::wait>
  * functions even though the <Process_Manager> is registered with
- * a <Reactor>.  I don't know what happens in this case, but it's
- * probably not *too* bad.
+ * a <Reactor>.
  * Note also that the wait functions are "sloppy" on Unix,
  * because there's no good way to wait for a subset of the
  * children of a process.  The wait functions may end up
@@ -98,10 +97,7 @@ private:
  * the <Process_Manager> whose <wait> you invoked.  It's best to
  * only use a single <Process_Manager>, and to create all
  * subprocesses by calling that <Process_Manager>'s <spawn>
- * method.  (I have some ideas for workarounds to improve this
- * situation, but I consider it fairly low priority because I
- * think the "single <Process_Manager>" pattern will be
- * sufficient in most cases.)
+ * method.  
  * Incidentally, when you register your <Process_Manager> with a
  * <Reactor> its notification pipe is used to help "reap" the
  * available exit statuses.  Therefore, you must not use a

@@ -347,7 +347,7 @@ public:
 
   /**
    * Copies <buf> into the Message_Block starting at the <wr_ptr>
-   * offset.  This call assumees that <buf> is NUL-terminated.  Return
+   * offset.  This call assumes that <buf> is NUL-terminated.  Return
    * 0 and increment <wr_ptr> by <ACE_OS::strlen (buf) + 1> if the
    * method succeeds.  Returns -1 if the size of the message is too
    * small, i.e., for this to work correct, <end> must be >= <wr_ptr>.
