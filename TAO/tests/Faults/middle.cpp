@@ -93,11 +93,16 @@ main (int argc, char *argv[])
                             1);
         }
 
-      Middle_i middle_impl (orb.in (),
-                            server.in ());
+      Middle_i *middle_impl = 0;
+      ACE_NEW_RETURN (middle_impl,
+                      Middle_i (orb.in (),
+                                server.in ()),
+                      -1);
+
+      PortableServer::ServantBase_var owner_transfer(middle_impl);
 
       Simple_Server_var middle =
-        middle_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        middle_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =

@@ -86,11 +86,16 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      PingObject_i server_impl (orb.in (),
-                          persistent_poa.in ());
+      PingObject_i *server_impl = 0;
+      ACE_NEW_RETURN (server_impl,
+		      PingObject_i (orb.in (),
+                                    persistent_poa.in ()),
+                      -1);
+
+      PortableServer::ServantBase_var owner_transfer(server_impl);
 
       PingObject_var server =
-        server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        server_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =

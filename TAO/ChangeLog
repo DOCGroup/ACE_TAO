@@ -1,3 +1,12 @@
+Tue May  6 17:52:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Faults/middle.cpp:
+	* tests/Faults/ping.cpp:
+	* tests/Faults/ping_i.h: 
+	* tests/Faults/test_i.h: Fixed servant memory management
+	  problems. 
+
+
 Tue May  6 15:52:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing (ACE_SHLIBS):
