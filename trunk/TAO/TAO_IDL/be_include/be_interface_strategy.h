@@ -36,7 +36,7 @@ public:
       AMI_INTERFACE,
       AMI_HANDLER,
       AMI_EXCEPTION_HOLDER,
-      AMH_INTERFACE
+      //      AMH_INTERFACE
   };
 
   be_interface_strategy (be_interface *node,
@@ -412,22 +412,6 @@ public:
 
 private:
   be_interface *handler_;
-};
-
-class be_interface_amh_strategy
-  : public be_interface_default_strategy
-{
-public:
-  be_interface_amh_strategy (be_interface *node);
-
-  virtual ~be_interface_amh_strategy ();
-
-  // overridden methods.
-  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
-                                            int is_extra_state = 0);
-
-  virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-
 };
 
 #endif  // if !defined

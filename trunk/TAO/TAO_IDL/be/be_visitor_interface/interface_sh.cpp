@@ -43,8 +43,22 @@ be_visitor_interface_sh::~be_visitor_interface_sh (void)
 int
 be_visitor_interface_sh::visit_interface (be_interface *node)
 {
-  if (node->srv_hdr_gen () || node->imported () || node->is_local ())
+  if (node->srv_hdr_gen () || node->imported ())
     return 0;
+
+  if (node->is_local ())
+    {
+      if (this->is_amh_rh_node (node))
+        {
+          // Create amh_rh_visitors
+          be_visitor_amh_rh_interface_sh amh_rh_intf (this->ctx_);
+          amh_rh_intf.visit_interface (node);
+        }
+      else
+        {
+          return 0;
+        }
+    }
 
   // if we are to generate AMH classes, do it now
   if (be_global->gen_amh_classes ())

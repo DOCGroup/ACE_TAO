@@ -961,39 +961,3 @@ be_interface_default_strategy::full_strategized_proxy_broker_name (void)
 
   return this->full_strategized_proxy_broker_name_;
 }
-
-
-// ****************************************************************
-// AMH Strategy
-
-be_interface_amh_strategy::be_interface_amh_strategy (be_interface *node)
-  : be_interface_default_strategy (node, AMH_INTERFACE)
-{
-}
-
-be_interface_amh_strategy::~be_interface_amh_strategy (void)
-{
-}
-
-
-TAO_CodeGen::CG_STATE
-be_interface_amh_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
-                                       int /*is_extra_state*/)
-{
-  switch (current_state)
-    {
-    case TAO_CodeGen::TAO_INTERFACE_SH:
-      return TAO_CodeGen::TAO_INTERFACE_AMH_SH;
-    case TAO_CodeGen::TAO_INTERFACE_SS:
-      return TAO_CodeGen::TAO_INTERFACE_AMH_SS;
-    default:
-      return current_state;
-    };
-}
-
-
-int
-be_interface_amh_strategy::has_extra_code_generation (TAO_CodeGen::CG_STATE)
-{
-  return 0;
-}
