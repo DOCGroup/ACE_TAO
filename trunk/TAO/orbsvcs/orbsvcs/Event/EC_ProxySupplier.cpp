@@ -317,9 +317,11 @@ TAO_EC_ProxyPushSupplier::can_match (
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Reverse_Lock<ACE_Lock>;
+template class ACE_Guard<ACE_Reverse_Lock<ACE_Lock> >;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Reverse_Lock<ACE_Lock>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_Lock> >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
