@@ -142,7 +142,8 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
       || this->qop_ != endpoint->qop ()
       || this->trust_.trust_in_target != t.trust_in_target
       || this->trust_.trust_in_client != t.trust_in_client
-      || !(*this->credentials_.in () == *endpoint->credentials ()))
+      || (!CORBA::is_nil (this->credentials_.in ())
+          && !(*this->credentials_.in () == *endpoint->credentials ())))
     return 0;
 
   return
@@ -177,5 +178,7 @@ TAO_SSLIOP_Endpoint::hash (void)
     + this->qop_
     + this->trust_.trust_in_target
     + this->trust_.trust_in_client
-    + this->credentials_->hash ();
+    + (CORBA::is_nil (this->credentials_.in ())
+       ? 0
+       : this->credentials_->hash ());
 }
