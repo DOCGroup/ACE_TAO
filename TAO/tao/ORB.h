@@ -548,7 +548,7 @@ protected:
 
 private:
 
-  CORBA_Object_ptr resolve_service (CORBA::String service_name,
+  CORBA_Object_ptr resolve_service (const char* service_name,
                                     ACE_Time_Value *timeout,
                                     CORBA::Environment& ACE_TRY_ENV);
   // Resolve the service name.

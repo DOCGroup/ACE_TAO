@@ -1,3 +1,9 @@
+Thu May 13 11:44:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	  Fixed const violation in resolve_initial_references()
+
 Thu May 13 09:55:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Makefile:
