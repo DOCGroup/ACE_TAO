@@ -26,13 +26,16 @@ static char *IOR = "file://ior";
 static CORBA::ULong iterations = 20;
 
 // Default number of bytes to buffer before flushing.
-static CORBA::Long message_bytes = 1024;
+static CORBA::Long message_bytes = -1;
 
 // Default number of invocations to buffer before flushing.
-static CORBA::Long message_count = iterations / 2;
+static CORBA::Long message_count = iterations / 4;
 
 // Default number of iterations before explicit flushing.
-static CORBA::Long flush_count = message_count / 2;
+static CORBA::Long flush_count = -1;
+
+// Time interval for implicit flushing (in milli seconds).
+static long timeout = -1;
 
 // Time interval between invocation (in milli seconds).
 static long interval = 1000;
@@ -44,7 +47,7 @@ static int shutdown_server = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:f:c:b:i:t:x");
+  ACE_Get_Opt get_opts (argc, argv, "k:f:c:b:i:z:t:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -70,8 +73,12 @@ parse_args (int argc, char **argv)
         iterations = ::atoi (get_opts.optarg);
         break;
 
-      case 't':
+      case 'z':
         interval = ::atoi (get_opts.optarg);
+        break;
+
+      case 't':
+        timeout = ::atoi (get_opts.optarg);
         break;
 
       case 'x':
@@ -87,8 +94,9 @@ parse_args (int argc, char **argv)
                            "-c message count "
                            "-b message bytes "
                            "-i iterations "
+                           "-z interval between calls "
+                           "-t implicit flush timeout "
                            "-x shutdown server "
-                           "-x interval between calls "
                            "\n",
                            argv [0]),
                           -1);
@@ -173,6 +181,14 @@ main (int argc, char **argv)
           buffering_constraint.message_bytes = message_bytes;
         }
 
+      // If valid <timeout>, set the implicit flushing to account for
+      // timeouts.
+      if (timeout != -1)
+        {
+          buffering_constraint.mode |= TAO::BUFFER_TIMEOUT;
+          buffering_constraint.timeout = timeout * 10000;
+        }
+
       // Setup the buffering constraint any.
       CORBA::Any buffering_constraint_any;
       buffering_constraint_any <<= buffering_constraint;
@@ -251,10 +267,6 @@ main (int argc, char **argv)
       // The default for now is none sync. We will use the flush policy later.
       //
 
-      // Interval between successive calls.
-      ACE_Time_Value sleep_interval (0,
-                                     interval * 1000);
-
       for (CORBA::ULong i = 1; i <= iterations; ++i)
         {
           // Explicit flushing (is specified).
@@ -269,7 +281,7 @@ main (int argc, char **argv)
 
               // Invoke the oneway method.
               ACE_DEBUG ((LM_DEBUG,
-                          "Iteration %d @ %T\n",
+                          "client: Iteration %d @ %T\n",
                           i));
               test_object->method (i,
                                    ACE_TRY_ENV);
@@ -284,7 +296,7 @@ main (int argc, char **argv)
           else
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Iteration %d @ %T\n",
+                          "client: Iteration %d @ %T\n",
                           i));
 
               // Invoke the oneway method.
@@ -293,7 +305,11 @@ main (int argc, char **argv)
               ACE_TRY_CHECK;
             }
 
-          ACE_OS::sleep (sleep_interval);
+          // Interval between successive calls.
+          ACE_Time_Value sleep_interval (0,
+                                         interval * 1000);
+
+          orb->run (sleep_interval);
         }
 
       // Shutdown server.

@@ -60,6 +60,7 @@ public:
   virtual void close_connection (void);
   virtual int idle (void);
   virtual ACE_HANDLE handle (void);
+  virtual ACE_Event_Handler *event_handler (void);
   virtual ssize_t send (TAO_Stub *stub,
                         const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);

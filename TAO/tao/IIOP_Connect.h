@@ -73,6 +73,10 @@ public:
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   // Called when a response from a twoway invocation is available.
 
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg = 0);
+  // Called when buffering timer expires.
+
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Perform appropriate closing.
