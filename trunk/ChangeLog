@@ -3,7 +3,7 @@ Mon Jan 12 01:35:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
  	* bin/msvc_auto_compile.pl:
 
           Fixed the path ane the name of a couple of dsp files in the CORE
-	  builds. 
+	  builds. This should fix two problems with static builds.
 
 Sat Jan 10 22:39:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
