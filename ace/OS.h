@@ -1210,15 +1210,13 @@ typedef unsigned int *ACE_RANDR_TYPE;
 struct msghdr {};
 #endif /* ACE_HAS_MSG */
 
+#if !defined (ACE_WIN32)
 #if defined (ACE_HAS_AIX_HIRES_TIMER)
 typedef long long hrtime_t;
 #elif !defined (ACE_HAS_HI_RES_TIMER)
-#if defined (ACE_WIN32)
-typedef ACE_QWORD hrtime_t;
-#else
 typedef long hrtime_t;
-#endif /* ACE_WIN32 */
 #endif /* ACE_HAS_HI_RES_TIMER */
+#endif /* !ACE_WIN32 */
 
 #if !defined (ACE_HAS_SIG_ATOMIC_T)
 typedef int sig_atomic_t;
@@ -1475,6 +1473,7 @@ typedef int mode_t;
 typedef int uid_t;
 typedef int gid_t;
 typedef char *caddr_t;
+typedef ACE_QWORD hrtime_t;
 struct rlimit { };
 struct t_call { };
 struct t_bind { };
