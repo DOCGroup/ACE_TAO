@@ -250,10 +250,10 @@ ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::clone (void) const
 template <class T, class IMPLEMENTATION, class ENTRY> ACE_INLINE int
 ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::compare (const ACE_Iterator_Impl<T> &rhs) const
 {
-  const ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &rhs
+  const ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &rhs_local
     = ACE_dynamic_cast_3_ref (const ACE_Map_Impl_Iterator_Adapter, T, IMPLEMENTATION, ENTRY, rhs);
 
-  return this->implementation_ == rhs.implementation_;
+  return this->implementation_ == rhs_local.implementation_;
 }
 
 template <class T, class IMPLEMENTATION, class ENTRY> ACE_INLINE T
