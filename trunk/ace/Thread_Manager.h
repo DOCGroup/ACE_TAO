@@ -417,7 +417,10 @@ protected:
   ACE_Thread_Descriptor *thr_table_;
   // Vector that describes thread state within the Thread_Manager.
 
+#if !defined (VXWORKS)
   ACE_Unbounded_Queue<ACE_Thread_Descriptor> terminated_thr_queue_;
+  // Collect terminated but not yet joined thread entries.
+#endif /* VXWORKS */
 
   size_t max_table_size_;
   // Maximum number of threads we can manage (should be dynamically
