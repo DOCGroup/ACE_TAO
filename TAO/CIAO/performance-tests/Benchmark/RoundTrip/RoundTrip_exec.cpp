@@ -1,6 +1,7 @@
 // $Id$
  
 #include "RoundTrip_exec.h"
+#include "CIAO_common.h"
 
 //-- ACE Scheduling Params
 #include "ace/Sched_Params.h"
@@ -57,7 +58,7 @@ MyImpl::RoundTrip_exec_i::makeCall (CORBA::Long data)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return data*data*data;
-  
+
 }
 
 // Operations from Components::SessionComponent
@@ -67,7 +68,8 @@ MyImpl::RoundTrip_exec_i::set_session_context (Components::SessionContext_ptr ct
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::set_session_context\n"));
   //cout << "MyImpl::RoundTrip_exec_i::set_session_context\n" << endl;
 
   this->context_ =
@@ -85,7 +87,8 @@ MyImpl::RoundTrip_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_activate\n"));
   //cout << "MyImpl::RoundTrip_exec_i::ccm_activate\n";
 
   // Starting method!
@@ -97,7 +100,8 @@ MyImpl::RoundTrip_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_passivate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_passivate\n"));
 }
 
 void
@@ -105,7 +109,8 @@ MyImpl::RoundTrip_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_remove\n"));
 }
 
 

@@ -32,8 +32,9 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *
   // Nitify others
   BasicSP::DataAvailable_var event = new OBV_BasicSP::DataAvailable;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "BMDevice, received a timeout from EC \n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "BMDevice, received a timeout from EC \n"));
 
   this->context_->push_data_available (event
                                        ACE_ENV_ARG_PARAMETER);
@@ -60,8 +61,8 @@ MyImpl::BMDevice_exec_i::set_session_context (Components::SessionContext_ptr ctx
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "MyImpl::BMDevice_exec_i::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::set_session_context\n"));
 
   this->context_ =
     BasicSP::CCM_BMDevice_Context::_narrow (ctx
@@ -85,7 +86,8 @@ MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::ccm_activate\n"));
   char *argv[1] = { "BMDevice_exec"};
 
   int argc = sizeof(argv)/sizeof(argv[0]);
@@ -111,7 +113,8 @@ MyImpl::BMDevice_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
 }
 
 void
@@ -119,7 +122,8 @@ MyImpl::BMDevice_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::ccm_remove\n"));
 }
 
 /// Default ctor.

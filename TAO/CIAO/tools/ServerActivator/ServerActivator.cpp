@@ -131,7 +131,7 @@ main (int argc, char *argv[])
                                spawn_wait_,
                                installation_ior_,
                                0,
-                               0
+                               0, 0
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

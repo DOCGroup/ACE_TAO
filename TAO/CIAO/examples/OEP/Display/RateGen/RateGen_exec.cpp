@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RateGen_exec.h"
+#include "CIAO_common.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 
@@ -34,7 +35,8 @@ MyImpl::Pulse_Handler::close ()
   this->done_ = 1;
   this->reactor ()->notify ();
 
-  ACE_DEBUG ((LM_DEBUG, "Waiting\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "Waiting\n"));
   return this->wait ();
 }
 
@@ -77,11 +79,12 @@ int
 MyImpl::Pulse_Handler::handle_close (ACE_HANDLE handle,
                                      ACE_Reactor_Mask close_mask)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
-              this,
-              handle,
-              close_mask));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
+                this,
+                handle,
+                close_mask));
 
   return 0;
 }
@@ -185,7 +188,8 @@ MyImpl::RateGen_exec_i::set_session_context (Components::SessionContext_ptr ctx
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::set_session_context\n"));
 
   this->context_ =
     HUDisplay::CCM_RateGen_Context::_narrow (ctx
@@ -210,7 +214,8 @@ MyImpl::RateGen_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::ccm_activate\n"));
 
   this->pulser_.open ();
 }
@@ -227,7 +232,8 @@ MyImpl::RateGen_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::ccm_passivate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::ccm_passivate\n"));
   this->pulser_.close ();
 }
 
@@ -236,7 +242,8 @@ MyImpl::RateGen_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::ccm_remove\n"));
 }
 
 void
@@ -244,8 +251,9 @@ MyImpl::RateGen_exec_i::pulse (void)
 {
   ACE_TRY_NEW_ENV
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Pushing HUDisplay::tick event!\n")));
+      if (CIAO::debug_level () > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Pushing HUDisplay::tick event!\n")));
 
       HUDisplay::tick_var ev = new OBV_HUDisplay::tick ();
 

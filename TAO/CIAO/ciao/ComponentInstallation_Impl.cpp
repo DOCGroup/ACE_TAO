@@ -50,8 +50,10 @@ CIAO::ComponentInstallation_Impl::init (const char *fname,
   ACE_Ini_ImpExp import (*config);
 
   if (import.import_config (fname) != 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
-
+    {
+      ACE_DEBUG ((LM_ERROR, "Unable to import from installation datafile: %s\n", fname));
+      ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
+    }
   this->installation_ = config.release ();
 
   return 0;

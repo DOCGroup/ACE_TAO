@@ -30,11 +30,14 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  ACE_DEBUG ((LM_DEBUG,
-              "BMClosedED - Doing computations \n"));
+  if (CIAO::debug_level () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "BMClosedED - Doing computations \n"));
 
-  ACE_DEBUG ((LM_DEBUG,
-              "BMClosedED - Doing data fetch \n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "BMClosedED - Doing data fetch \n"));
+    }
 
   // Refresh position
   BasicSP::ReadData_var dat
@@ -53,9 +56,10 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
     dat->get_data (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "BMClosedED - Display data is [%s] \n",
-               str.in ()));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "BMClosedED - Display data is [%s] \n",
+                str));
 
   if (ACE_OS::strcmp (str, "BM DEVICE DATA") == 0)
     {
@@ -87,7 +91,8 @@ MyImpl::BMClosedED_exec_i::set_session_context (Components::SessionContext_ptr c
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::set_session_context\n"));
 
   this->context_ =
     BasicSP::CCM_BMClosedED_Context::_narrow (ctx
@@ -112,7 +117,8 @@ MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_activate\n"));
 
   char *argv[1] = { "BMClosedED_exec"};
 
@@ -140,7 +146,8 @@ MyImpl::BMClosedED_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_passivate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_passivate\n"));
 }
 
 void
@@ -148,7 +155,8 @@ MyImpl::BMClosedED_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_remove\n"));
 }
 
 /// Default ctor.

@@ -2,7 +2,7 @@
 
 #include "Assembly_Visitors.h"
 #include "../XML_Helpers/XML_Utils.h"
-
+#include "ciao/CIAO_common.h"
 #include "ace/OS_NS_stdio.h"
 
 #if !defined (__ACE_INLINE__)
@@ -18,7 +18,8 @@ CIAO::Assembly_Builder_Visitor::visit_Container
 (CIAO::Assembly_Placement::Container *c
  ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "partitioning %s\n", c->id ()));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "partitioning %s\n", c->id ()));
 
   // This can only happen when we hit a partitioning (root) node.
   CIAO::Assembly_Placement::Container::ITERATOR iter (*c);
@@ -82,7 +83,8 @@ CIAO::Assembly_Builder_Visitor::visit_hostcollocation
 (CIAO::Assembly_Placement::hostcollocation *hc
  ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "hostcollocation %s\n", hc->id ()));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "hostcollocation %s\n", hc->id ()));
 
   CIAO::Assembly_Placement::Container::ITERATOR iter (*hc);
   CIAO::Assembly_Placement::Node *node = 0;
@@ -105,7 +107,9 @@ CIAO::Assembly_Builder_Visitor::visit_processcollocation
 (CIAO::Assembly_Placement::processcollocation *pc
  ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "processcollocation %s\n", pc->id ()));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "processcollocation %s\n", pc->id ()));
+
   Components::ConfigValues server_config;
 
   // Destination logical host id.
@@ -138,9 +142,10 @@ CIAO::Assembly_Builder_Visitor::visit_processcollocation
 
   if (rtcad != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Using RTCAD file: %s\n",
-                  rtcad));
+      if (CIAO::debug_level () > 10)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Using RTCAD file: %s\n",
+                    rtcad));
       CORBA::ULong len = server_config.length ();
       server_config.length (len+1);
 
@@ -164,7 +169,9 @@ CIAO::Assembly_Builder_Visitor::visit_processcollocation
     activator->create_component_server (server_config
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  ACE_DEBUG ((LM_DEBUG, "Done creating component server\n"));
+
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "Done creating component server\n"));
 
   this->context_.component_servers_.enqueue_tail (this->compserv_);
 
@@ -195,7 +202,8 @@ CIAO::Assembly_Builder_Visitor::visit_homeplacement
 (CIAO::Assembly_Placement::homeplacement *hp
  ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "homeplacement %s\n", hp->id ()));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "homeplacement %s\n", hp->id ()));
 
   // @@ Create and register home before creating components.
   ACE_CString csd_file;
@@ -302,7 +310,9 @@ CIAO::Assembly_Builder_Visitor::visit_componentinstantiation
  ACE_ENV_ARG_DECL)
 {
   // @@ instantiation and register component.
-  ACE_DEBUG ((LM_DEBUG, "ComponentInstantiation %s\n", ci->id ()));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "ComponentInstantiation %s\n", ci->id ()));
+
 
   Components::CCMObject_var comp
     = this->home_->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -311,9 +321,11 @@ CIAO::Assembly_Builder_Visitor::visit_componentinstantiation
   this->context_.instantiated_components_.bind (ci->id (),
                                                 comp);
 
+
   // Registering component.
   CIAO::Assembly_Placement::componentinstantiation::REGISTRATION_QUEUE::ITERATOR
     iter (ci->register_info_);
+
 
   while (!iter.done ())
     {
@@ -334,7 +346,8 @@ CIAO::Assembly_Builder_Visitor::get_current_componentserver (ACE_ENV_SINGLE_ARG_
 {
   if (CORBA::is_nil (this->compserv_.in ()))
     {
-      ACE_DEBUG ((LM_DEBUG, "Creating new ComponenetServer\n"));
+      if (CIAO::debug_level () > 10)
+        ACE_DEBUG ((LM_DEBUG, "Creating new ComponenetServer\n"));
 
       Components::Deployment::ServerActivator_var activator =
         this->deployment_config_.get_default_activator ();
@@ -393,13 +406,16 @@ CIAO::Assembly_Builder_Visitor::get_container (const char *rtpolicy
 
       this->rtpolicy_name_ = rtpolicy;
 
-      if (rtpolicy != 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Creating container with RTPolicySet %s\n",
-                    rtpolicy));
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Creating container with empty policy set\n"));
+      if (CIAO::debug_level () > 10)
+        {
+          if (rtpolicy != 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "Creating container with RTPolicySet %s\n",
+                        rtpolicy));
+          else
+            ACE_DEBUG ((LM_DEBUG,
+                        "Creating container with empty policy set\n"));
+        }
     }
 
   return Components::Deployment::Container::_duplicate
