@@ -6,7 +6,7 @@
 #include "ace/Recyclable.inl"
 #endif /* __ACE_INLINE __ */
 
-ACE_RCSID(ace, Strategies, "$Id$")
+ACE_RCSID(ace, Recyclable, "$Id$")
 
 
 ACE_Recyclable::ACE_Recyclable (ACE_Recyclable_State initial_state)
