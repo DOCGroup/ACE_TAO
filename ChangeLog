@@ -1,3 +1,10 @@
+Fri Jun 21 14:06:33 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Queue_Adapters.cpp (ACE_Thread_Timer_Queue_Adapter):
+          Changed ACE_GUARD_RETURN uses of command_mutex_ from
+          ACE_Recursive_Condition_Mutex to ACE_SYNCH_MUTEX to match
+          its definition.
+
 Fri Jun 21 06:21:33 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * ace/config-win32-borland.h:

@@ -287,7 +287,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::enqueue_command (ACE_Command_Base *cmd,
                                                      COMMAND_ENQUEUE_POSITION pos)
 {
   // Serialize access to the command queue.
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->command_mutex_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->command_mutex_, -1);
 
   if (pos == ACE_Thread_Timer_Queue_Adapter<TQ>::TAIL)
     return command_queue_.enqueue_tail (cmd);
@@ -302,7 +302,7 @@ template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::dispatch_commands (void)
 {
   // Serialize access to the command queue.
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->command_mutex_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->command_mutex_, -1);
 
   // loop through the enqueued commands
   ACE_Command_Base *cmd = 0;
