@@ -78,7 +78,8 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thre
     orb_core_ (0),
     tss_resources_ (0),
     refcount_ (1),
-    lite_flag_ (0)
+    lite_flag_ (0),
+    uiop_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -89,13 +90,16 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thre
 }
 
 TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                                        CORBA::Boolean flag)
+                                                                        CORBA::Boolean flag,
+                                                                        void *arg)
   : TAO_UIOP_Handler_Base (orb_core),
     transport_ (this, orb_core),
     orb_core_ (orb_core),
     tss_resources_ (orb_core->get_tss_resources ()),
     refcount_ (1),
-    lite_flag_ (flag)
+    lite_flag_ (flag),
+    uiop_properties_ (ACE_static_cast
+                      (TAO_UIOP_Handler_Base::UIOP_Properties *, arg))
 {
   if (lite_flag_)
     {
@@ -119,21 +123,19 @@ int
 TAO_UIOP_Server_Connection_Handler::open (void*)
 {
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
-  int sndbufsize =
-    this->orb_core_->orb_params ()->sock_sndbuf_size ();
-  int rcvbufsize =
-    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
 
   if (this->peer ().set_option (SOL_SOCKET,
                                 SO_SNDBUF,
-                                ACE_reinterpret_cast (void *, &sndbufsize),
-                                sizeof (sndbufsize)) == -1
+                                ACE_reinterpret_cast (void *,
+                                                      &uiop_properties_->send_buffer_size),
+                                sizeof (int)) == -1
       && errno != ENOTSUP)
     return -1;
   else if (this->peer ().set_option (SOL_SOCKET,
                                      SO_RCVBUF,
-                                     ACE_reinterpret_cast (void *, &rcvbufsize),
-                                     sizeof (rcvbufsize)) == -1
+                                     ACE_reinterpret_cast (void *,
+                                                           &uiop_properties_->recv_buffer_size),
+                                     sizeof (int)) == -1
            && errno != ENOTSUP)
     return -1;
 #endif /* !ACE_LACKS_SOCKET_BUFSIZ */

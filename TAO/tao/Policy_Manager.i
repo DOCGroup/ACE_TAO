@@ -40,6 +40,17 @@ TAO_Policy_Manager_Impl::TAO_Policy_Manager_Impl (void)
 #endif /* TAO_HAS_RT_CORBA == 1 */
 }
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+ACE_INLINE void
+TAO_Policy_Manager_Impl::server_protocol (TAO_ServerProtocolPolicy *server_protocol)
+{
+  CORBA::release (this->server_protocol_);
+  this->server_protocol_ = server_protocol;
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 // ****************************************************************
 
 ACE_INLINE
@@ -267,7 +278,7 @@ TAO_Policy_Current::get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
-  
+
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 

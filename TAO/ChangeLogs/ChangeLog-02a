@@ -1,3 +1,129 @@
+Sat Aug 26 13:06:23 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+          Collective changes below add support for
+	  RTCORBA::ServerProtocolPolicy to TAO.  Specifically:
+	  1) ORB default ServerProtocolPolicy is provided (contains all
+	  the protocols that were dynamically loaded).
+	  2) Only profiles of the protocols indicated by the
+	  ServerProtocolPolicy are placed in the IORs (in the order
+	  dictated by the policy)
+	  3) IIOP and UIOP protocol configuration is done through
+	  ServerProtocolPolicy.
+
+	* tao/Acceptor_Impl.cpp
+	* tao/Acceptor_Impl.h:
+
+	  Added additional argument "void *arg" to the creation strategy
+	  constructor.  This argument is later passed by the strategy to
+	  the Service Handler's constructor, and serves the purpose of
+	  transmit protocol-specific info to the handler (in this case
+	  protocol options).
+
+        * tao/Acceptor_Registry.cpp
+	* tao/Acceptor_Registry.h:
+
+	  - Changed <make_profile> to take additional parameter "TAO_POA
+	  *poa".
+	  - If RTCORBA is defined, what goes into the ior is determined by
+	  the ServerProtocolPolicy.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
+	* tao/POA.h
+
+	  Added a comment.
+
+	* tao/ORB.cpp
+	* tao/ORB.h
+	* tao/POA.cpp:
+	* tao/Servant_Base.cpp
+	* tao/ORB_Core.cpp
+	* tao/ORB_Core.h:
+
+	  - Added additional argument "TAO_POA *poa" to <key_to_object>
+	  and <create_stub_object> operations.
+	  - Added <set_default_policies> method for initializing ORB's
+	  default policies to TAO_ORB_Core.  Currently, the method
+	  initializes TAO's default ServerProtocolPolicy.
+
+	* tao/Policy_Manager.h
+	* tao/Policy_Manager.i:
+
+	  Added <server_protocol> setter for speedy setting of the
+	  corresponding member.
+
+	* tao/Protocol_Factory.cpp
+	* tao/Protocol_Factory.h
+	* tao/IIOP_Factory.cpp
+	* tao/IIOP_Lite_Factory.cpp
+	* tao/UIOP_Factory.cpp
+	* tao/UIOP_Lite_Factory.cpp
+	* tao/SHMIOP_Factory.cpp:
+
+	  - Added member <tag_>, its corresponding accessor <tag> and
+	  <tag> constructor argument to TAO_Protocol_Factory to allow
+	  access to factory's protocol profile tag.
+	  - Modified all concrete factories to initialize
+	  TAO_Protocol_Factory with appropriate tag value during base
+	  initialization.
+
+	* tao/RT_Policy_i.h
+	* tao/RT_Policy_i.i
+	* tao/RT_Policy_i.cpp:
+
+	  - TAO_SMEM_Properties now inherits from
+	  RTCORBA::SharedMemoryProtocolProperties rather than
+	  RTCORBA::ProtocolProperties.  Likewise,
+	  TAO_Unix_Domain_Properties now inherits from
+	  RTCORBA::UnixDomainProtocolProperties rather than
+	  RTCORBA::ProtocolProperties.
+	  - Changed the constructor of TAO_SMEM_Properties to not take any
+	  arguments until we use this class to configure SHMIOP and can
+	  provide reasonable defaults.
+
+	* tao/IIOP_Acceptor.cpp
+	* tao/IIOP_Acceptor.h:
+
+	  - Added member tcp_properties_ and method <init_tcp_properties>,
+	  which initializes the new member.  The acceptor now stores
+	  protocol properties to be used for all connections accepted by
+	  this Acceptor.
+	  - Pass the pointer to tcp_properties_ to the creation strategy
+	  constructor.
+
+	* tao/UIOP_Acceptor.cpp
+	* tao/UIOP_Acceptor.h:
+
+	  - Added member uiop_properties_ and method <init_uiop_properties>,
+	  which initializes the new member.  The acceptor now stores
+	  protocol properties to be used for all connections accepted by
+	  this Acceptor.
+	  - Pass the pointer to uiop_properties_ to the creation strategy
+	  constructor.
+
+	* tao/IIOP_Connect.cpp
+	* tao/IIOP_Connect.h
+	* tao/UIOP_Connect.cpp
+	* tao/UIOP_Connect.h:
+
+	  - Added struct TCP_Properties and struct UIOP_Properties to
+	  TAO_IIOP_Handler_Base and TAO_UIOP_Handler_Base respectively.
+	  - Modified server-side connection handler constructors for IIOP
+	  & UIOP to take additional argument "void *arg", cast to the
+	  appropriate properties struct pointer, and use those properties
+	  for configuration during <open>.
+
+	* tao/SHMIOP_Acceptor.cpp
+	* tao/SHMIOP_Connect.cpp
+	* tao/SHMIOP_Connect.h:
+
+	  TAO_SHMIOP_Server_Connection_Handler constructor is modified to
+	  take additional argument, which, unlike in UIOP/IIOP above, is
+	  currently unused becaue SHMIOP does not perform any protocol
+	  configuration.
+
 Sat Aug 26 13:01:31 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Server_Protocol/server.cpp:

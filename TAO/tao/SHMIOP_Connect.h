@@ -120,9 +120,12 @@ class TAO_Export TAO_SHMIOP_Server_Connection_Handler : public TAO_SHMIOP_Handle
 public:
   TAO_SHMIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
   TAO_SHMIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean flag);
-  ~TAO_SHMIOP_Server_Connection_Handler (void);
+                                        CORBA::Boolean flag,
+                                        void *);
   // Constructor.
+  // Last argument currently not used.
+
+  ~TAO_SHMIOP_Server_Connection_Handler (void);
 
   virtual int open (void *);
   // Called by the <Strategy_Acceptor> when the handler is completely

@@ -25,6 +25,7 @@
 #include "tao/RT_ORB.h"
 #include "tao/Priority_Mapping_Manager.h"
 #include "tao/RT_Current.h"
+#include "tao/RT_Policy_i.h"
 
 #include "ace/Object_Manager.h"
 #include "ace/Env_Value_T.h"
@@ -1242,6 +1243,15 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                       this,
                       this->orb_params ()->preconnects ());
 
+  // Set ORB-level policy defaults.
+  if (this->set_default_policies () != 0)
+    ACE_THROW_RETURN (CORBA::INITIALIZE (
+                        CORBA_SystemException::_tao_minor_code (
+                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      -1);
+
   // The ORB has been initialized, meaning that the ORB is no longer
   // in the shutdown state.
   this->has_shutdown_ = 0;
@@ -1616,6 +1626,7 @@ TAO_Stub *
 TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
                                   const char *type_id,
                                   CORBA::PolicyList *policy_list,
+                                  TAO_POA *poa,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   (void) this->open (ACE_TRY_ENV);
@@ -1628,13 +1639,10 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
 
   TAO_Stub *stub = 0;
 
-  size_t pfile_count =
-    this->acceptor_registry ()->endpoint_count ();
-
-  // First we create a profile list, well actually the empty container
-  TAO_MProfile mp (pfile_count);
-
-  if (this->acceptor_registry ()->make_mprofile (key, mp) == -1)
+  // Create a profile container and have Acceptor_Registry populate it
+  // with profiles as appropriate.
+  TAO_MProfile mp (0);
+  if (this->acceptor_registry ()->make_mprofile (key, mp, poa) == -1)
   {
     ACE_THROW_RETURN (CORBA::INTERNAL (
                         CORBA::SystemException::_tao_minor_code (
@@ -1903,6 +1911,73 @@ TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
     return -1;
 
   this->open_called_ = 1;
+
+  return 0;
+}
+
+int
+TAO_ORB_Core::set_default_policies (void)
+{
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // Set RTCORBA::ServerProtocolPolicy default to include all
+  // protocols that were loaded.
+
+  TAO_ProtocolFactorySet *pfs = this->protocol_factories ();
+
+  RTCORBA::ProtocolList protocols;
+  protocols.length (pfs->size ());
+
+  int i = 0;
+  for (TAO_ProtocolFactorySetItor factory = pfs->begin ();
+       factory != pfs->end ();
+       ++factory, ++i)
+    {
+      CORBA::ULong protocol_type = (*factory)->factory ()->tag ();
+      protocols[i].protocol_type = protocol_type;
+      protocols[i].orb_protocol_properties =
+        RTCORBA::ProtocolProperties::_nil ();
+
+      // @@ Later, we will likely migrate to using RTCORBA protocol
+      // policies for configuration of protocols in nonRT use cases.
+      // Then, the code below will change to each protocol factory
+      // being responsible for creation of its own default protocol
+      // properties.
+      switch (protocol_type)
+        {
+        case TAO_TAG_IIOP_PROFILE:
+          ACE_NEW_RETURN (protocols[i].transport_protocol_properties,
+                          TAO_TCP_Properties,
+                          -1);
+          break;
+
+        case TAO_TAG_UIOP_PROFILE:
+          ACE_NEW_RETURN (protocols[i].transport_protocol_properties,
+                          TAO_Unix_Domain_Properties,
+                          -1);
+          break;
+
+        case TAO_TAG_SHMEM_PROFILE:
+          ACE_NEW_RETURN (protocols[i].transport_protocol_properties,
+                          TAO_SMEM_Properties,
+                          -1);
+          break;
+
+        default:
+          protocols[i].transport_protocol_properties =
+            RTCORBA::ProtocolProperties::_nil ();
+          break;
+        }
+    }
+
+  TAO_ServerProtocolPolicy *server_protocol_policy = 0;
+  ACE_NEW_RETURN (server_protocol_policy,
+                  TAO_ServerProtocolPolicy (protocols),
+                  -1);
+  this->default_policies_->server_protocol (server_protocol_policy);
+  return 0;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   return 0;
 }

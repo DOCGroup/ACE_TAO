@@ -36,6 +36,7 @@
 class ACE_Addr;
 class ACE_Reactor;
 class TAO_ORB_Core;
+class TAO_POA;
 
 class TAO_Stub;
 class TAO_Profile;
@@ -76,8 +77,16 @@ public:
   // profiles that have been created.
 
   int make_mprofile (const TAO_ObjectKey& object_key,
-                     TAO_MProfile &mprofile);
+                     TAO_MProfile &mprofile,
+                     TAO_POA *poa);
   // Add profiles to the <mprofile> object for all open endpoints.
+  // <poa> parameter is passed because the POA may contain some
+  // information affecting how/which profiles get created.
+  // Currently, this information is the ServerProtocolPolicy in
+  // RTCORBA.
+  // @@ With forthcoming RTCORBA threadpool changes, this parameter
+  // may become unnecessary if each acceptor registry is associated
+  // with a poa.
 
   int is_collocated (const TAO_MProfile& mprofile);
   // Check if there is at least one profile in <mprofile> that

@@ -133,6 +133,12 @@ public:
   TAO_ServerProtocolPolicy *server_protocol (void) const;
   TAO_ClientProtocolPolicy *client_protocol (void) const;
 
+  // = Speedy policy setters.  Take ownership of the argument policy
+  // objects - no copying.
+
+  void server_protocol (TAO_ServerProtocolPolicy *server_protocol);
+
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 private:

@@ -291,6 +291,11 @@ public:
   virtual ~TAO_ServerProtocolPolicy (void);
   // Destructor.
 
+  RTCORBA::ProtocolList & protocols_rep (void);
+  // Accessor to the underlying protocols list of the policy (does not
+  // make a copy like the idl accessor <protocols> implementation
+  // below.)
+
   virtual RTCORBA::ProtocolList * protocols (CORBA::Environment
                                              &ACE_TRY_ENV =
                                              TAO_default_environment ())
@@ -475,7 +480,7 @@ private:
 //*************************************************************************
 
 class TAO_Export TAO_Unix_Domain_Properties :
-  public RTCORBA::ProtocolProperties,
+  public RTCORBA::UnixDomainProtocolProperties,
   public TAO_Local_RefCounted_Object
 {
   // = TITLE
@@ -526,7 +531,7 @@ private:
 //*************************************************************************
 
 class TAO_Export TAO_SMEM_Properties :
-  public RTCORBA::ProtocolProperties,
+  public RTCORBA::SharedMemoryProtocolProperties,
   public TAO_Local_RefCounted_Object
 {
   // = TITLE
@@ -537,9 +542,7 @@ class TAO_Export TAO_SMEM_Properties :
   //   properties.
   //
 public:
-  TAO_SMEM_Properties (CORBA::Long preallocate_buffer_size = 0,
-                       const char * mmap_filename = 0,
-                       const char * mmap_lockname = 0);
+  TAO_SMEM_Properties (void);
   // Constructor.
 
   virtual ~TAO_SMEM_Properties (void);

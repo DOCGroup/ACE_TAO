@@ -351,7 +351,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       // class name by the ACE_FACTORY_DECLARE macro.  The resulting
       // factory function "_make_PP_Protocol_Factory()" is what should
       // be used in the "dynamic" line in your svc.conf file.
-      // 
+      //
       // LIB is the base name of the shared library that implements
       // the protocol.  The directory containing your library must be
       // in your library search path, typically defined by the

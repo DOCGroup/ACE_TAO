@@ -1025,6 +1025,7 @@ TAO_Stub *
 CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                const char *type_id,
                                CORBA::PolicyList *policy_list,
+                               TAO_POA *poa,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   this->check_shutdown (ACE_TRY_ENV);
@@ -1033,6 +1034,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   return this->orb_core_->create_stub_object (key,
                                               type_id,
                                               policy_list,
+                                              poa,
                                               ACE_TRY_ENV);
 }
 
@@ -1044,6 +1046,7 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
                           CORBA::PolicyList *policy_list,
                           TAO_ServantBase *servant,
                           CORBA::Boolean collocated,
+                          TAO_POA *poa,
                           CORBA::Environment &ACE_TRY_ENV)
 {
   this->check_shutdown (ACE_TRY_ENV);
@@ -1052,6 +1055,7 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   TAO_Stub *data = this->create_stub_object (key,
                                              type_id,
                                              policy_list,
+                                             poa,
                                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 

@@ -457,12 +457,10 @@ TAO_Unix_Domain_Properties::recv_buffer_size (CORBA::Long recv_buffer_size,
 
 // ****************************************************************
 
-TAO_SMEM_Properties::TAO_SMEM_Properties (CORBA::Long preallocate_buffer_size,
-                                          const char * mmap_filename,
-                                          const char * mmap_lockname)
-  : preallocate_buffer_size_ (preallocate_buffer_size),
-    mmap_filename_ (mmap_filename),
-    mmap_lockname_ (mmap_lockname)
+TAO_SMEM_Properties::TAO_SMEM_Properties (void)
+  : preallocate_buffer_size_ (0),
+    mmap_filename_ (),
+    mmap_lockname_ ()
 {
 }
 
