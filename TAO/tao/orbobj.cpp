@@ -193,6 +193,7 @@ CORBA_ORB::create_list (CORBA::Long count,
 //
 // XXX it's server-side so should be OA-specific and not in this module
 
+#if 0
 CORBA::POA_ptr
 CORBA_ORB::POA_init (int &argc,
 		     char **argv,
@@ -237,6 +238,7 @@ CORBA_ORB::POA_init (int &argc,
 
   return rp;
 }
+#endif /* 0 */
 
 int
 CORBA_ORB::perform_work (ACE_Time_Value *tv)
@@ -293,33 +295,54 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_poa_current (void)
+CORBA_ORB::resolve_poa (void)
 {
-  // Return the pointer to this thread's POACurrent.
-  //
-  // Somehow we have to morph the TAO_POA_Current* into a
-  // CORBA_Object_ptr!
-  return TAO_ORB_Core_instance ()->poa_current ()->_this ();
+  CORBA::Environment env;
+
+  TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
+
+  // Need to do double-checked locking here to cover the case of
+  // multiple threads using a global resource policy.
+  if (poa == 0)
+    {
+      TAO_POA_Manager *manager = new TAO_POA_Manager;
+      TAO_POA_Policies default_policies;
+
+      // Construct a new POA
+      poa = new TAO_Strategy_POA ("RootPOA",
+                                  *manager,
+                                  default_policies,
+                                  0,
+                                  env);
+
+      if (env.exception () != 0)
+        return CORBA_Object::_nil ();
+
+      // set the poa in the orbcore instance
+      TAO_ORB_Core_instance ()->root_poa (poa);
+    }
+
+  PortableServer::POA_var result = poa->_this (env);
+  if (env.exception () != 0)
+    return CORBA_Object::_nil ();
+  else
+    return result._retn ();  
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_poa (void)
+CORBA_ORB::resolve_poa_current (void)
 {
-  // Need to do double-checked locking here to cover the case of
-  // multiple threads using a global resource policy.
-  if (TAO_ORB_Core_instance ()->root_poa() == 0)
-    {
-      // Construct a new POA
-      // Irfan fill this in properly
-      POA* newpoa = 0;
+  // Return the pointer to this thread's POACurrent.
 
-      // set the poa in the orbcore instance
-      TAO_ORB_Core_instance ()->root_poa (newpoa);
-    }
-  
-  //return TAO_ORB_Core_instance ()->root_poa();
-  return 0;
+  CORBA::Environment env;
+
+  PortableServer::Current_var result = TAO_ORB_Core_instance ()->poa_current ()->_this (env);
+  if (env.exception () != 0)
+    return CORBA_Object::_nil ();
+  else
+    return result._retn ();  
 }
+
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_name_service (void)

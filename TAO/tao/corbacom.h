@@ -58,9 +58,6 @@ class CORBA_Any_out;
 class CORBA_TypeCode;
 //typedef class CORBA_TypeCode *CORBA_TypeCode_ptr;
 
-class CORBA_POA;
-//typedef class CORBA_POA *CORBA_BOA_ptr;
-
 class CORBA_Exception;
 //typedef class CORBA_Exception *CORBA_Exception_ptr;
 
@@ -427,9 +424,6 @@ public:
   typedef CORBA_Any_out     Any_out;
   typedef Any               *Any_ptr;
 
-  typedef CORBA_POA POA;
-  typedef POA *POA_ptr;
-
   typedef CORBA_Environment Environment;
   typedef Environment *Environment_ptr;
 
@@ -444,6 +438,8 @@ public:
 
   typedef CORBA_Object Object;
   typedef CORBA_Object *Object_ptr;
+  typedef CORBA_Object_var Object_var;
+  typedef CORBA_Object_out Object_out;
 
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
@@ -523,7 +519,6 @@ public:
 #undef TAO_SYSTEM_EXCEPTION
 
   // = all the CORBA::is_nil methods
-  static Boolean is_nil (POA_ptr);
   static Boolean is_nil (Object_ptr);
   static Boolean is_nil (Environment_ptr);
   static Boolean is_nil (NamedValue_ptr);
@@ -536,7 +531,6 @@ public:
   static Boolean is_nil (ServerRequest_ptr req);
 
   // = all the CORBA release methods
-  static void release (POA_ptr);
   static void release (Object_ptr);
   static void release (Environment_ptr);
   static void release (NamedValue_ptr);
@@ -704,7 +698,6 @@ extern "C" TAO_Export const TAO_IID IID_IIOP_ServerRequest;
 extern "C" TAO_Export const TAO_IID IID_STUB_Object;
 extern "C" TAO_Export const TAO_IID IID_IIOP_Object;
 extern "C" TAO_Export const TAO_IID IID_IIOP_ORB;
-extern "C" TAO_Export const TAO_IID IID_POA;
 
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.

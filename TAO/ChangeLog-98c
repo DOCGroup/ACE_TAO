@@ -1,3 +1,37 @@
+Fri Jan 16 03:27:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao:
+	 
+	    BOA begone: CORBA::POA and all BOA related code has been
+ 	    removed from TAO.
+
+	    POA: Today the PortableServer and the POA were born in TAO.
+
+	* tao/connect (handle_request): Changed handle_request to accept
+ 	  the TAO_GIOP_RequestHeader parameter by reference rather than by
+ 	  value.
+
+	* tao/corba.h: Rearranged header to accommodate the new POA. 
+
+	* tao/corbacom.h (CORBA): Added typedefs for Object_var Object_out
+ 	  in the CORBA class.
+
+	* tao/current: Absorbed all the POACurrent code into the poa.*
+ 	  files.
+
+	* tao/iiopobj.cpp (operator==): Added comparison operator for
+ 	  TAO::ObjectKey.
+
+	* tao/orbobj.cpp (resolve_poa_current and resolve_poa): Made sure
+ 	  that we return the colocated class and not the implementation
+ 	  class.
+
+	* tao/orbobj.h (objref.): POA_init was deprecated.  Please use
+ 	  orb->resolve_initial_references ("RootPOA") instead.
+
+	* tao/objtable.cpp (find): Change the use of auto_ptr(s) to deal
+ 	  correctly with explicit constructors.
+
 Thu Jan 15 17:27:26 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orb_core.{h,i}: Added the poa_current() method and internal

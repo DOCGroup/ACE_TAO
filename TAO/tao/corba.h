@@ -88,31 +88,12 @@
 #include "tao/corbacom.h"
 #include "tao/objkeyC.h"
 
-class TAO_Export PortableServer
-{
-  // = TITLE
-  //   Portable Server (POA) name space.
-public:
-
-  typedef TAO_ServantBase ServantBase;
-  typedef ServantBase *Servant;
-
-  typedef TAO::ObjectKey ObjectId;
-  typedef TAO::ObjectKey_ptr ObjectId_ptr;
-  typedef TAO::ObjectKey_out ObjectId_out;
-  typedef TAO::ObjectKey_var ObjectId_var;
-};
-
 typedef TAO::ObjectKey TAO_opaque;
-
-extern TAO_Export int operator== (const PortableServer::ObjectId &l,
-				  const PortableServer::ObjectId &r);
 
 // individual CORBA classes
 #include "tao/sequence.h"
 #include "tao/sequence_T.h"
 #include "tao/any.h"
-#include "tao/poa.h"
 
 #include "tao/params.h"
 #include "tao/client_factory.h"
@@ -135,6 +116,14 @@ extern TAO_Export int operator== (const PortableServer::ObjectId &l,
 #include "tao/marshal.h"
 #include "tao/cdr.h"
 #include "tao/stub.h"
+
+#include "tao/poa.h"
+
+extern TAO_Export int operator== (const PortableServer::ObjectId &l,
+				  const PortableServer::ObjectId &r);
+
+extern TAO_Export int operator== (const TAO::ObjectKey &l,
+				  const TAO::ObjectKey &r);
 
 // TAO specific includes
 #include "tao/connect.h"
@@ -170,7 +159,6 @@ extern TAO_Export int operator== (const PortableServer::ObjectId &l,
 #include "tao/orbobj.i"
 #include "tao/marshal.i"
 #include "tao/cdr.i"
-#include "tao/poa.i"
 #include "tao/giop.i"
 #include "tao/iioporb.i"
 #include "tao/iiopobj.i"

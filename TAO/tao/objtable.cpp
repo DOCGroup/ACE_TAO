@@ -40,8 +40,8 @@ TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
 			     PortableServer::ObjectId_out id)
 {
   id.ptr () = 0;
-  auto_ptr<TAO_Object_Table_Iterator_Impl> end = this->end ();
-  for (auto_ptr<TAO_Object_Table_Iterator_Impl> i = this->begin ();
+  auto_ptr<TAO_Object_Table_Iterator_Impl> end (this->end ());
+  for (auto_ptr<TAO_Object_Table_Iterator_Impl> i (this->begin ());
        !i->done (end.get ());
        i->advance ())
     {

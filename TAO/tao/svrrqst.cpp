@@ -16,7 +16,7 @@ DEFINE_GUID (IID_CORBA_ServerRequest,
 
 IIOP_ServerRequest::IIOP_ServerRequest (CDR *msg,
                                         CORBA::ORB_ptr the_orb,
-                                        CORBA::POA_ptr the_poa)
+                                        TAO_POA *the_poa)
   : incoming_ (msg),
     params_ (0),
     retval_ (0),
@@ -219,7 +219,7 @@ IIOP_ServerRequest::orb (void)
   return orb_;
 }
 
-CORBA::POA_ptr
+TAO_POA *
 IIOP_ServerRequest::oa (void)
 {
   return poa_;
