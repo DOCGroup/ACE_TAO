@@ -14,38 +14,40 @@ Mon Mar 22 16:40:36 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	The first version of the InterOperable Naming Service is commited.
 
-	* tao/ORB.cpp: Changed the resolve_initial_references () to check 
-	  for the ORB params ORBInitRef and ORBDefaultInitRef.
+	* tao/ORB.cpp: Changed the resolve_initial_references () to check
+ 	  for the ORB params ORBInitRef and ORBDefaultInitRef.
 
 	  resolve_initial_references ():
 	  The references are resolved in the following order :
-	  1. ORBInitRef 2. DefaultInitRef 3. Multicast to service.
-	  The IORs can be specified in the iiopname or iioploc format. 
+ 	  1. ORBInitRef 2. DefaultInitRef 3. Multicast to service.  The
+ 	  IORs can be specified in the iiopname or iioploc format.
 
 	  multicast_query ():
-	  Sends out a multicast to locate a service (specified by a service
-	  name) and receives the response using TCP instead of UDP. The service
-	  name and port are sent in the data of the multicast.
+	  Sends out a multicast to locate a service (specified by a
+ 	  service name) and receives the response using TCP instead of
+ 	  UDP. The service name and port are sent in the data of the
+ 	  multicast.
  	
 	  multicast_to_service ():
-	  Calls multicast_query with a service name instead of a service ID. 
-	  Owns the memory read into in multicast_query ().
+	  Calls multicast_query with a service name instead of a service
+ 	  ID.  Owns the memory read into in multicast_query ().
 
-	  resolve_naming_service (), resolve_trading_service () :
-	  Call multicast_to_service () with a service name instead of a service ID.
+	  resolve_naming_service (), resolve_trading_service ():
+	  Call multicast_to_service () with a service name instead of a
+ 	  service ID.
 	
 	* tao/IIOP_ORB.h: Added the following APIs to the ORB to access the
 	  table of IORs TAO_IOR_LookupTable :
 	  _tao_add_to_IOR_table ()
 	  _tao_find_in_IOR_table ().
 
-	* tao/IIOP_ORB.cpp: Added the function
- 	  iioploc_string_to_object().  This function is called by the
- 	  string_to_object () for iioploc IORs.  It creates a multiple
- 	  profile stub object and then an object reference.  The
- 	  string_to_object () parses the incoming ior to detect an iioploc
- 	  IOR and then calls the iiooploc_ior_to_string (). Conversion for
- 	  the iiopname type IORs will be added soon.
+	* tao/IIOP_ORB.cpp: Added the function iioploc_string_to_object().
+  	  This function is called by the string_to_object () for iioploc
+ 	  IORs.  It creates a multiple profile stub object and then an
+ 	  object reference.  The string_to_object () parses the incoming
+ 	  ior to detect an iioploc IOR and then calls the
+ 	  iiooploc_ior_to_string (). Conversion for the iiopname type IORs
+ 	  will be added soon.
 
 	* tao/ORB_Core.cpp: Added the options -ORBInitRef and
  	  -ORBDefaultInitRef.  Added the orb parameters init_ref and
@@ -94,8 +96,9 @@ Mon Mar 22 16:40:36 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 	* orbsvcs/orbsvcs/IOR_LookupTable.cpp:
  	  Removed IOR_LookupTable, it is now in $TAO_ROOT/tao.
 
-	* tao/params.{cpp,h,i}: Added the params init_ref, ior_lookup_table and 
-	  default_init_ref to the orb core. Also added the GET/SET methods for these.
+	* tao/params.{cpp,h,i}: Added the params init_ref,
+ 	  ior_lookup_table and default_init_ref to the orb core. Also
+ 	  added the GET/SET methods for these.
 
 	* tao/orbconf.h: Added the protocol prefixes iiopname and iioploc.
 	
