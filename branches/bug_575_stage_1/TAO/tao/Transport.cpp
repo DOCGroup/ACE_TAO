@@ -1159,6 +1159,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_REPLY)
     {
+      cout << "Got reply " << endl;
       // @@Bala: Maybe the input_cdr can be constructed from the
       // message_block
       TAO_Pluggable_Reply_Params params (this->orb_core ());

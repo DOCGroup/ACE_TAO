@@ -84,6 +84,7 @@ PUB_HDRS = \
 PLUGGABLE_PROTOCOLS_FILES = \
   Pluggable \
   Transport \
+  Resume_Handle \
   Profile \
   Endpoint \
   Connector_Registry \

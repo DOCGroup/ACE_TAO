@@ -14,7 +14,7 @@
 #define TAO_INCOMING_MESSAGE_QUEUE_H
 #include "ace/pre.h"
 
-#include "corbafwd.h"
+#include "Pluggable_Messaging_Utils.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,7 +25,6 @@ class ACE_Data_Block;
 class TAO_ORB_Core;
 class TAO_Queued_Data;
 class TAO_Transport;
-enum TAO_Pluggable_Message_Type;
 
 /**
  * @class TAO_Incoming_Message_Queue
