@@ -77,6 +77,10 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   // here once that chunk is actually implemented.
   if (preconnections_)
     ACE_OS::free (preconnections_);
+
+  // Clean up memory pools
+  this->data_block_allocator_.remove ();
+  this->cdr_buffer_allocator_.remove ();
 }
 
 TAO_Default_Reactor::TAO_Default_Reactor (void)
