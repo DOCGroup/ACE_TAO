@@ -1,3 +1,9 @@
+Sun May  2 13:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task.cpp (svc_run):
+          Also MSVC8 needs to use the static cast instead of reinterpet
+          case.
+
 Sat May  1 22:23:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Makefile:
