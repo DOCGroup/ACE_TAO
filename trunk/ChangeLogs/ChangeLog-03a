@@ -1,3 +1,8 @@
+Sun Aug 26 08:28:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Timer_Queue_T.cpp: Fixed a warning from an unused variable
+	  reported by KCC compilers.
+
 Sun Aug 26 08:13:12 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Log_Record.{h,cpp}: Enhanced this implementation to (1)
