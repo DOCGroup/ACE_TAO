@@ -1,3 +1,9 @@
+Tue Feb 15 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.h:
+        * ace/OS_NS_string.h:
+          Doxygen improvements
+
 Tue Feb 15 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace_rmcast.doxygen:
