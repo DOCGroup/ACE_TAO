@@ -1,25 +1,32 @@
 # $Id$
 
-BIN = ECM_Supplier ECM_Consumer
-
 LDLIBS= -lorbsvcs -lTAO
 
 ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
+  TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
 
-IDL_HDR	= dataC dataS
-IDL_SRC	= dataC dataS
+IDL_HDR = dataC dataS
+IDL_SRC = dataC dataS
 
 ECM_Supplier_OBJS=$(addsuffix .o,$(IDL_SRC) ECM_Supplier ECM_Data)
 ECM_Consumer_OBJS=$(addsuffix .o,$(IDL_SRC) ECM_Consumer ECM_Data)
 
-SRC =   $(addsuffix .cpp, $(BIN)) \
-	$(addsuffix .cpp, $(IDL_SRC)) \
-	ECM_Data.cpp
+SRC =  $(addsuffix .cpp, $(BIN)) \
+        $(addsuffix .cpp, $(IDL_SRC)) \
+        ECM_Data.cpp
+
+BIN2 = ECM_Supplier ECM_Consumer
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Event
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -44,8 +51,7 @@ ECM_Consumer: $(addprefix $(VDIR),$(ECM_Consumer_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean:
-	$(RM) -f dataC.* dataS.* dataS_T.*
-	$(RM) -f $(BIN)
+	$(RM) dataC.* dataS.* dataS_T.*
 
 #----------------------------------------------------------------------------
 #       Dependencies
