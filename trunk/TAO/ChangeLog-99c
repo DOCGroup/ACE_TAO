@@ -1,13 +1,18 @@
+Tue Feb 02 09:22:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB.cpp (create_stub_object): removed unused local
+          "orb_core".
+
 Mon Feb 01 21:28:27 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.1 released.
 
 Mon Feb  1 16:33:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Profile.cpp: 
-	* tao/params.cpp: 
-	* utils/catior/catior.cpp: 
-	  Fixed some egcs warnings.
+        * tao/IIOP_Profile.cpp:
+        * tao/params.cpp:
+        * utils/catior/catior.cpp:
+          Fixed some egcs warnings.
 
 Mon Feb  1 15:33:59 1999  Fred Kuhns <fredk@cs.wuslt.edu>
 
@@ -28,8 +33,8 @@ Sun Jan 31 20:32:54 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         Added these two options to the tao_idl compiler.
         -in To generate #include statements with <>'s for the standard include
         files (e.g. tao/corba.h) indicating them as non-changing files.
-	Thanks to Andreas Geisler <andreas.geisler@erls.siemens.de> for
-	this suggestion.
+        Thanks to Andreas Geisler <andreas.geisler@erls.siemens.de> for
+        this suggestion.
 
         -ic To generate #include statements with ""s for changing standard
         include files (e.g. tao/corba.h).
