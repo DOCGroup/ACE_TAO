@@ -72,7 +72,7 @@ These are implementations of the Acceptor and Connector design patterns.
 In the case of connectionless protocols like UDP, calling accept and connect
 will result in the creation of handlers immediately.
 <p>The pluggable transport protocol implementation should inherit from
-the following abstract classes declared in <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/orbsvcs/orbsvcs/AV/Transport.h">&lt;orbsvcs/orbsvcs/AV/Transport.h>:</a>
+the following abstract classes declared in <a href="./Transport.h">&lt;orbsvcs/orbsvcs/AV/Transport.h>:</a>
 <p>/**
 <br>&nbsp;* @class TAO_AV_Acceptor
 <br>&nbsp;* @brief
@@ -134,7 +134,7 @@ The transport class provides a common interface for different protocols
 for performing operations like open, close, send and recv. The trasnport
 factory is an interface for creating acceptors and connectors.
 <p>The pluggable transport protocol implementation should inherit from
-the following abstract classes declared in&nbsp;<a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/orbsvcs/orbsvcs/AV/Transport.h">
+the following abstract classes declared in&nbsp;<a href="./Transport.h">
 &lt;orbsvcs/orbsvcs/AV/Transport.h>:</a><i></i>
 <p>/**
 <br>&nbsp;* @class TAO_AV_Transport
@@ -213,7 +213,7 @@ All the transport handlers derive from the&nbsp; TAO_AV_Flow_Handler which
 has methods to start and stop and provide flow specific functionality for
 timeout upcalls to the Callbacks.
 <p>The pluggable transport protocol implementation should inherit from
-the following abstract class declared in<a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/orbsvcs/orbsvcs/AV/Transport.h">
+the following abstract class declared in<a href="./Transport.h">
 &lt;orbsvcs/orbsvcs/AV/Transport.h>:</a>
 <p>/**
 <br>&nbsp;* @class TAO_AV_Flow_Handler
@@ -262,7 +262,7 @@ The Flow&nbsp;Protocol Components</h3>
 The&nbsp; flow protocol factory is an interface for creating flow protocol
 objects.
 <p>The pluggable flow protocol implementation should inherit from the following
-abstract class declared in <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/orbsvcs/orbsvcs/AV/Protocol_Factory.h">&lt;orbsvcs/orbsvcs/AV/Protocol_Factory>:</a>
+abstract class declared in <a href="./Protocol_Factory.h">&lt;orbsvcs/orbsvcs/AV/Protocol_Factory>:</a>
 <p>/**
 <br>&nbsp;* @class TAO_AV_Flow_Protocol_Factory
 <br>&nbsp;* @brief
@@ -292,7 +292,7 @@ This is a concrete implementation providing the flow protocol functionality.
 Applications use this interface to send frames and the Protocol_Object
 uses application specified&nbsp; Callback objects to deliver frames.
 <p>The pluggable flow protocol implementation should inherit from the following
-abstract class declared in <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/orbsvcs/orbsvcs/AV/Protocol_Factory.h">&lt;orbsvcs/orbsvcs/AV/Protocol_Factory>:</a>
+abstract class declared in <a href="./Protocol_Factory.h">&lt;orbsvcs/orbsvcs/AV/Protocol_Factory>:</a>
 <p>/**
 <br>&nbsp;* @class TAO_AV_Protocol_Object
 <br>&nbsp;* @brief
@@ -344,9 +344,8 @@ size_t len) = 0;
 <br>&nbsp; TAO_AV_Callback *callback_;
 <br>};
 <p>For an example of how all the above components are implemented refer
-to the implementation of the UDP transport <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/orbsvcs/orbsvcs/AV/UDP.h">&lt;orbsvcs/orbsvcs/AV/UDP.h>&nbsp;</a>
-and&nbsp;<a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/orbsvcs/orbsvcs/AV/UDP.cpp">
-&lt;orbsvcs/orbsvcs/AV/UDP.cpp></a>
+to the implementation of the UDP transport <a href="./UDP.h">&lt;orbsvcs/orbsvcs/AV/UDP.h>&nbsp;</a>
+and&nbsp;<a href="./UDP.cpp">&lt;orbsvcs/orbsvcs/AV/UDP.cpp></a>
 <p>
 <hr WIDTH="100%">
 <h3>
