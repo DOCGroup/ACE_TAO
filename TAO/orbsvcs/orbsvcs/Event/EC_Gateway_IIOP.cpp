@@ -451,25 +451,24 @@ TAO_EC_Gateway_IIOP::open_i (
 
   this->supplier_proxy_ =
     consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_DEBUG((LM_DEBUG, "ECG (%t) "));
-  printf("Gateway (consumer mode) (%p) ---> push_supplier (%p)\n",
-         this,
-         this->supplier_proxy_.in());
-
   ACE_CHECK;
+  ACE_DEBUG((LM_DEBUG, "ECG (%t) Gateway (consumer mode) (%@) ---> push_supplier (%@)\n",
+             this,
+             this->supplier_proxy_.in()));
 
   this->consumer_is_active_ = 1;
   RtecEventComm::PushConsumer_var consumer_ref =
     this->consumer_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Consumer - connect push consumer\n"));
+  ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway (consumer mode): connect push consumer\n"));
   // ACE_ConsumerQOS_Factory::debug (sub);
 
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
                                                 sub
                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+  ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway (consumer mode): push consumer connected\n"));
 }
 
 void
