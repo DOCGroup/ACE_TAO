@@ -103,8 +103,8 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
 }
 
 int
-operator< (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
-	   const SERVICE_TYPE_REPOS::IncarnationNumber &r)
+operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
+	   const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r)
 {
   if (l.high < r.high)
     return 1;
@@ -116,8 +116,8 @@ operator< (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
 
 
 int
-operator> (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
-	   const SERVICE_TYPE_REPOS::IncarnationNumber &r)
+operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
+	   const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r)
 {
   return (r < l);
 }

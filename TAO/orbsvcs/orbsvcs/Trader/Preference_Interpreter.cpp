@@ -15,9 +15,9 @@
 // ========================================================================
 
 #include "Preference_Interpreter.h"
-#include <values.h>
-#include <ctype.h>
 #include <stdio.h>
+
+const CORBA::Double TRADER_MAX_DOUBLE = 1.79769313486231570e+308;
 
 TAO_Preference_Interpreter::
 TAO_Preference_Interpreter(CosTradingRepos::ServiceTypeRepository::TypeStruct* ts,
@@ -86,7 +86,7 @@ order_offer (CosTrading::OfferId offer_id,
 	this->offers_.insert (return_value, make_pair (offer_id, offer));
       else
 	{
-	  TAO_Literal_Constraint end ((CORBA::Double) MAXDOUBLE);
+	  TAO_Literal_Constraint end ((CORBA::Double) TRADER_MAX_DOUBLE);
 	  this->offers_.insert (end, make_pair (offer_id, offer));      
 	}
     }

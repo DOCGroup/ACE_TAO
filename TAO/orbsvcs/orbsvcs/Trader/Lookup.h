@@ -146,10 +146,6 @@ public:
   
   static const char* NAME;
 
-  // Handy Typedefs
-  typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
-  typedef CosTradingRepos::ServiceTypeRepository::TypeStruct_var TYPE_STRUCT;
-  typedef CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq_var TYPE_NAME_SEQ;
   
 private:
 
@@ -189,7 +185,7 @@ private:
   // submitted to each phase. 
 
   void lookup_all_subtypes (const char* type,
-			    SERVICE_TYPE_REPOS::IncarnationNumber& inc_num,
+			    CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
 			    SERVICE_TYPE_MAP& service_type_map,
 			    CosTradingRepos::ServiceTypeRepository_ptr rep,
 			    TAO_Constraint_Interpreter& constr_inter,
