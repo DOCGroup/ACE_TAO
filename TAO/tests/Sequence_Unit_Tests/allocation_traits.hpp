@@ -117,6 +117,7 @@ struct bounded_reference_allocation_traits
   {
     value_type * buffer = base_allocation_traits::allocbuf(MAX);
     reference_traits::zero_range(buffer, buffer + MAX);
+    return buffer;
   }
 
   inline static void freebuf(value_type * buffer)

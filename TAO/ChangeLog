@@ -1,3 +1,10 @@
+Fri Sep 24 07:12:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/allocation_traits.hpp:
+	  Add missing return statement to allocbuf() for bounded strings
+	  of reference-like types.  Since this code is not used yet it is
+	  quite cool that gcc-3.2.3 was able to pick the problem.
+
 Fri Sep 24 10:18:24 2004    <ops@iki.fi>
 
         * orbsvcs/CosEvent_Service/CosEvent_Service.mpc:
