@@ -1,4 +1,5 @@
 // -*- c++ -*-
+// $Id$
 /* 
 Copyright (C) 1991 Peter Bersen
 

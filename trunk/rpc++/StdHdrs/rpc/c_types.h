@@ -1,5 +1,6 @@
 #ifndef _rpc_c_types_h_
 #define _rpc_c_types_h_
+/* $Id$ */
 
 #if defined(__cplusplus)
     /*

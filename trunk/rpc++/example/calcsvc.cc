@@ -1,4 +1,5 @@
 // -*- c++ -*-
+// $Id$
 static char _calcsvc_cc_[]
 = "calcsvc.cc,v 2.3 1992/06/15 19:13:13 mnl Exp";
 

@@ -1,4 +1,5 @@
 // -*- c++ -*-
+// $Id$
 #ifndef _CALCSERVICE_H_
 #define _CALCSERVICE_H_
 static char _calcsvc_h_[]

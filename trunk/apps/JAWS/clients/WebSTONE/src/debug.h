@@ -1,5 +1,6 @@
+/* $Id$ */
 /**************************************************************************
- $Header$
+ *                                                                        *
  *               Copyright (C) 1995 Silicon Graphics, Inc.                *
  *                                                                        *
  *  These coded instructions, statements, and computer programs were      *
