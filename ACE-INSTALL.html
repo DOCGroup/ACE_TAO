@@ -50,7 +50,7 @@ report process</a>.<p>
 <p></p><hr><p>
 </p><h3><a name="platforms">Platforms, C++ Compilers, and Support</a></h3>
 
-<p>ACE has been ported to a large number of platfroms using many different
+<p>ACE has been ported to a large number of platforms using many different
 compilers over the years.  The <a href="http://www.dre.vanderbilt.edu/">DOC group</a>, <a href="http://www.riverace.com/">Riverace</a>, <a href="http://www.theaceorb.com/">OCI</a>, <a href="http://www.theaceorb.nl/">Remedy IT</a>, and members of the ACE
 user community have all contributed ports to make ACE the successful
 and far-reaching toolkit it is today.  Any UNIX/POSIX/Windows
@@ -126,7 +126,8 @@ document</a>.</p><p>
         Linux on PPC; OpenMVS;
         Tandem; SCO; FreeBSD; NetBSD; OpenBSD;
         Chorus; OS/9; PharLap TNT Embedded ToolSuite 9.1;
-        QNX RTP and Neutrino 2.0; VxWorks; LynxOS; RTEMS
+        QNX RTP and Neutrino 2.0; VxWorks; LynxOS; RTEMS; Interix 
+        (Windows Services for Unix)
     </td>
   </tr><tr>
     <th>Not supported</th>
@@ -197,7 +198,9 @@ global.features</a> file.
       <a href="#mingw">GNU g++ with MinGW</a>,
       <a href="#cygwin">GNU g++ with Cygwin</a>
       <a href="#borland">Borland C++ 5.5, Borland C++ Builder 6.0
-      and Borland C++ BuilderX</a>, and IBM's VisualAge C++ compiler.
+      and Borland C++ BuilderX</a>, 
+      <a href="#interix">Interix (Windows Services for Unix)</a>, 
+      and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
       community to maintain these ports.  Therefore, please send email
       to the ACE mailing list if you run into problems. </p><p>
@@ -1742,8 +1745,47 @@ variable as explained </a><a href="#cygwinrunpath">above</a>.
 </p><p>
 You may want to check <tt>$ACE_ROOT/tests/README</tt> for the status
 of the various tests on Cygwin and the different Windows flavors.
+</p>
 
-</p><p></p><hr align="left" width="50%"><p>
+<p></P>
+<hr align=left width="50%">
+
+<p>
+<H4><a name="interix">Building and Installing ACE on Win32 with Interix</H4>
+<P>Interix comes with a BSD style make you need GNUmake. 
+</P>
+<P>Make builds easily under Interix or there is a pre-built 
+package at: </P>
+<P><A 
+href="http://www.interopsystems.com/tools/warehouse.htm">http://www.interopsystems.com/tools/warehouse.htm</A> </P>
+<P>If you are building for a machine without a network 
+card, you may want to check <A href="#win32nonic" ><FONT color=#0000ff>here</FONT></A> first. </P>
+<P>This port was built and tested under Interix 3.5. a.k.a. 
+<A href="http://www.microsoft.com/windows/sfu/">Windows 
+Services for UNIX 3.5.</A></P>
+<P>To build follow the <A href="#unix_traditional" >Traditional ACE/GNU Make 
+Configuration</A> instructions replacing the following include directives:</P>
+<P><TT>#include 
+"ace/config-win32-interix.h"</TT> </P>
+<P>for the config.h header </P>
+<P>and: </P>
+<P><TT>include 
+$(ACE_ROOT)/include/makeinclude/platform_win32_interix.GNU</TT></P>
+<P>for your platform_macros.GNU file.</P>
+<P>ACE should build fine with just '<TT>make</TT>', the only other option&nbsp;tried thus far is 
+'<TT>make static_libs_only=1</TT>' which also works. Any 
+other options may not work.</P>
+<P><b>ACE TESTS</B> </P>
+<p>The tests are located in <TT>$ACE_ROOT/tests</TT>. After building the library, you can 
+change to that directory and run make: </P><code></CODE>
+<P><TT>% cd $ACE_ROOT/tests </TT><BR><TT>% make </TT>
+<p>Once you build all the tests, you can run <code>run_test.pl</CODE> in the <code>tests</CODE> directory to try all the tests: </P>
+<P><TT>% run_test.pl </TT></P>
+<p>If you are using ACE as a shared library, you will need 
+to modify your LD_LIBRARY_PATH&nbsp;as explained in&nbsp;<A href="#unix_traditional" ><FONT color=#800080>Traditional ACE/GNU Make Configuration</FONT></A>. </P>
+<p></P>
+
+<p></p><hr align="left" width="50%"><p>
 </p><h4><a name="vxworks">Building and Installing ACE on VxWorks</a></h4>
 For the most part, you should be able to follow the instructions above
 to build ACE and applications that use it.  Start with the
