@@ -4283,7 +4283,7 @@ ACE_thread_key_t
 ACE_TSS_Emulation::next_key ()
 {
   return total_keys_ < ACE_TSS_THREAD_KEYS_MAX
-           ? ++total_keys_
+           ? total_keys_++
            : ACE_OS::NULL_key;
 }
 
