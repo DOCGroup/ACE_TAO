@@ -588,15 +588,16 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // point to the task name in the TCB in ACE_OS::thr_create ().
   if (t_id == 0)
     {
-      char *thr_id;
-      ACE_NEW_RETURN (thr_id,
-                      char[16],
+      ACE_NEW_RETURN (t_id,
+                      char*,
                       -1);
-      // Mark the thread ID to show that the ACE_Thread_Manager
-      // allocated it.
-      thr_id[0] = ACE_THR_ID_ALLOCATED;
-      thr_id[1] = '\0';
-      t_id = &thr_id;
+       ACE_NEW_RETURN (*t_id,
+                       char[16],
+                       -1);
+       // Mark the thread ID to show that the ACE_Thread_Manager
+       // allocated it.
+       (*t_id)[0] = ACE_THR_ID_ALLOCATED;
+       (*t_id)[1] = '\0';
     }
 #else  /* ! VXWORKS */
   ACE_thread_t thr_id;
