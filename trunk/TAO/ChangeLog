@@ -1,3 +1,9 @@
+Fri Aug 29 10:58:57 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+
+          Fixed '_ACE_CORBA_Environment_variable undeclared' error.
+
 Fri Aug 29 09:49:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Codec/client.cpp: Cosmetic fix. Removed the word "warning"
