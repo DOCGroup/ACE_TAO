@@ -9,7 +9,7 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-char *ior_file  = "test.ior";
+const char *ior_file  = "test.ior";
 int niterations = 100;
 
 int
