@@ -50,8 +50,8 @@ Fri Feb 07 05:08:51 1997    <irfan@cha-cha.cs.wustl.edu>
 	* ace/ReactorEx: Complete rewrite of ReactorEx. This was done to
  	  allow multiple threads of control to wait simultaneously in
  	  ::WaitForMultipleObjects(). This was difficult because the
- 	  handle set used ReactorEx->handle_events() is shared between all
- 	  threads. Care was necessary to make sure that changes to the
+ 	  handle set used in ReactorEx->handle_events() is shared between
+ 	  all threads. Care was necessary to make sure that changes to the
  	  handle set are serialized. This serialization was achieved by
  	  using multiple (auto and manual) events and mutexes.
 
@@ -60,7 +60,7 @@ Fri Feb 07 05:08:51 1997    <irfan@cha-cha.cs.wustl.edu>
  	  expire timers. Therefore the "owner" thread is the only one
  	  allowed to expire timers. Initially, the creator thread of
  	  ReactorEx becomes the "owner" thread. Ownership can later be
- 	  transferred between threads.
+ 	  transferred among threads.
 
 	  The Handler Repository also went through major changes as it now
  	  keeps track of <handle, event_handler> tuples to be added and
@@ -70,8 +70,8 @@ Fri Feb 07 05:08:51 1997    <irfan@cha-cha.cs.wustl.edu>
 	
 	  Two slots will be added to the <size> parameter in the
  	  constructor and open methods of ReactorEx which will store
- 	  handles used for internal management purposes. Therefore, users
- 	  can add upto MAXIMUM_WAIT_OBJECTS - 2 handles into ReactorEx.
+ 	  handles used for internal management. Therefore, users can add
+ 	  upto MAXIMUM_WAIT_OBJECTS - 2 handles into ReactorEx.
 
 	  Note that the interface to ReactorEx did not change in this
  	  process. Your existing code should work without changes.
