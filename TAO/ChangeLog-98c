@@ -1,3 +1,27 @@
+Wed Sep 30 00:26:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.h: 
+	* tao/ORB_Core.i: 
+	* tao/ORB_Core.cpp: 
+	* tao/CDR.h: 
+	* tao/CDR.cpp: 
+	* tao/Connect.cpp: 
+	* tao/Invocation.i: 
+	* tao/Invocation.cpp: 
+	  The resource factory can create either TSS or global allocators
+	  for the InputCDR stream, thus applications that don't need the
+	  CDR stream buffer to survive after the upcall, or release it in
+	  another thread (most CORBA compliant apps fall in this category)
+	  can benefit from this feature that reduces locks and
+	  fragmentation in the global heap.
+
+	* tao/default_client.h: 
+	  Fixed minor syntax error (comma at the end of an enum).
+
+	* orbsvcs/tests/EC_Custom_Marshal/svc.conf: 
+	* orbsvcs/tests/EC_Custom_Marshal/svc.conf: 
+	  Use a global allocator for the CDR stream.
+
 Tue Sep 29 21:57:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/TAO_Examples.dsw: Removed incorrect dependency.	

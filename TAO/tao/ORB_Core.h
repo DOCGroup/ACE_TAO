@@ -233,11 +233,20 @@ public:
   // returns randomly a follower from the leader-follower set
   // returns follower on success, else 0
 
-  ACE_Allocator *data_block_allocator (void);
+  ACE_Allocator *output_cdr_dblock_allocator (void);
   // This allocator is always TSS and has no locks. It is intended for
   // allocating the ACE_Data_Blocks used in *outgoing* CDR streams.
 
-  ACE_Allocator *cdr_buffer_allocator (void);
+  ACE_Allocator *output_cdr_buffer_allocator (void);
+  // This allocator is always TSS and has no locks. It is intended for
+  // allocating the buffers used in *outgoing* CDR streams.
+
+  ACE_Allocator *input_cdr_dblock_allocator (void);
+  // This allocator maybe TSS or global, may or may not have locks. It
+  // is intended for allocating the ACE_Data_Blocks used in *outgoing*
+  // CDR streams.
+
+  ACE_Allocator *input_cdr_buffer_allocator (void);
   // This allocator is always TSS and has no locks. It is intended for
   // allocating the buffers used in *outgoing* CDR streams.
 
@@ -358,11 +367,15 @@ private:
   typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> TSS_MALLOC;
   typedef ACE_Allocator_Adapter<TSS_MALLOC> TSS_ALLOCATOR;
 
-  TSS_ALLOCATOR data_block_allocator_;
-  // The Allocator for the ACE_Data_Blocks.
+  TSS_ALLOCATOR output_cdr_dblock_allocator_;
+  // The Allocator for the ACE_Data_Blocks used in the input CDRs.
 
-  TSS_ALLOCATOR cdr_buffer_allocator_;
-  // The Allocator for the CDR buffers.
+  TSS_ALLOCATOR output_cdr_buffer_allocator_;
+  // The Allocator for the input CDR buffers
+
+  ACE_Allocator *input_cdr_dblock_allocator_;
+  ACE_Allocator *input_cdr_buffer_allocator_;
+  // Cache the resource factory allocators.
 
   CORBA_Environment* default_environment_;
   // The default environment for the thread.
@@ -431,6 +444,9 @@ public:
   // Set the POA source specifier.
   virtual int poa_source (void);
   // Get the POA source specifier.
+
+  int cdr_allocator_source (void);
+  // Modify and get the source for the CDR allocators
 
   // = Resource Retrieval
   //
@@ -509,6 +525,11 @@ public:
   // be available to stubs and generated code.
 
   virtual int reactor_lock (void);
+  // Returns 0 if a reactor without locking was configured.
+
+  virtual ACE_Allocator* input_cdr_dblock_allocator (void);
+  virtual ACE_Allocator* input_cdr_buffer_allocator (void);
+  // Access the input CDR allocators.
 
   // @@ I suspect that putting these structs inside of this class is
   // going to break some compilers (e.g., HP/YUX) when you try to use
@@ -567,7 +588,7 @@ public:
     //   after obtaining information from the application such as
     //   arguments, etc.
   {
-    App_Allocated (void): orb_(0), poa_(0), alloc_(0) { };
+    App_Allocated (void);
     // Constructor necessary because we have pointers.  It's inlined
     // here rather than in the .i file because it's easier than trying
     // to re-order header files in corba.h to eliminate the "used
@@ -584,6 +605,10 @@ public:
 
     ACE_Allocator *alloc_;
     // Pointer to application-created ACE_Allocator.
+
+    ACE_Allocator *input_cdr_dblock_allocator_;
+    ACE_Allocator *input_cdr_buffer_allocator_;
+    // The allocators for the input CDR streams.
   };
 
 protected:
@@ -605,6 +630,12 @@ protected:
   int reactor_lock_;
   // Flag indicating wether we should provide a lock-freed reactor
   // or not.
+
+  int cdr_allocator_source_;
+  // The source for the CDR allocator. Even with a TSS resource
+  // factory the user may be interested in global allocators for the
+  // CDR streams, for instance to keep the buffers around after the
+  // upcall and/or pass them to another thread.
 
   // = Typedefs for the singleton types used to store our orb core
   // information.
