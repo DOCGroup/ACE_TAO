@@ -66,12 +66,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                 DOMNodeFilter::SHOW_TEXT);
       Deployment::DeploymentPlan plan;
       plan_handler.process_plan (plan);
-      Deployment::DnC_Dump::dump (plan);
+      //Deployment::DnC_Dump::dump (plan);
       Deployment::PackageConfiguration* pc;
       CIAO::RepositoryManager_Impl rep_impl;
       rep_impl.installPackage ("PC", package_url);
       pc = rep_impl.findPackageByName ("PC");
-      Deployment::DnC_Dump::dump (*pc);
+      //Deployment::DnC_Dump::dump (*pc);
 
       /**********************************************************
        Pass the parsed plan to the Execution Manager to start the
