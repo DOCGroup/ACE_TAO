@@ -1,3 +1,8 @@
+Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/compiler.html: Added documentation for the -u option in the
+	  IDL compiler
+	
 Fri Jun 18 21:00:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:

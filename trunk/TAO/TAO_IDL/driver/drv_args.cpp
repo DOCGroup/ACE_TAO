@@ -601,8 +601,11 @@ DRV_parse_args (long ac, char **av)
                 }
               else if (av[i][2] == 'e')
                 {
+                  int option = atoi (av[i+1]);
+                                    
                   // exception support
-                  idl_global->exception_support (1);
+                  idl_global->exception_support (!option);
+                  i++;
                 }
               else if (av[i][2] == 't')
                 {
