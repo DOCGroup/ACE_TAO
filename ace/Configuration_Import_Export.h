@@ -9,15 +9,15 @@
  * @author Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
  *         Chris Hafey <chris@stentorsoft.com>
  *
- * Classes defined in this file provide the ability to import and export 
- * ACE Configuration objects to/from disk files.  The base class 
- * ACE_Config_ImpExp_Base provides the common functionality and the derived 
+ * Classes defined in this file provide the ability to import and export
+ * ACE Configuration objects to/from disk files.  The base class
+ * ACE_Config_ImpExp_Base provides the common functionality and the derived
  * classes implement the import/export functionality for the specific format.
- * 
+ *
  * @todo
  *  - Add locking for thread safety.
  *  - Provide ability to read file in one format and write in another.
- *  - See todo's in each class 
+ *  - See todo's in each class
  */
 //=============================================================================
 
@@ -45,23 +45,23 @@
 class ACE_Export ACE_Config_ImpExp_Base
 {
 public:
-  /// ctor taking the ACE_Configuration to import/export to
+  /// Constructor taking the ACE_Configuration to import/export to
   ACE_Config_ImpExp_Base (ACE_Configuration& config);
-    
+
   /**
    * Destructor
    */
   virtual ~ACE_Config_ImpExp_Base (void);
 
    /**
-   * Imports the configuration database from filename.  
+   * Imports the configuration database from @a filename.
    * No existing data is removed.
    */
   virtual int import_config (const ACE_TCHAR* filename) = 0;
 
   /**
-   * This method exports the entire configuration database to <filename>.
-   * Once the file is opened this method calls 'export_section' passing 
+   * This method exports the entire configuration database to @a filename.
+   * Once the file is opened this method calls 'export_section' passing
    * the root section.
    */
   virtual int export_config (const ACE_TCHAR* filename) = 0;
@@ -77,7 +77,7 @@ private:
 /**
  * @class ACE_Registry_ImpExp
  *
- * @brief Configuration object that imports/exports data to a file formatted 
+ * @brief Configuration object that imports/exports data to a file formatted
  *        using the Win32 Registry file export format.  This format looks like
  *        [Section]
  *        "key"="String Data"
@@ -91,7 +91,7 @@ private:
  */
 class ACE_Export ACE_Registry_ImpExp : public ACE_Config_ImpExp_Base
 {
-public:   
+public:
   /// Construction
   ACE_Registry_ImpExp (ACE_Configuration&);
 
@@ -99,14 +99,14 @@ public:
   virtual ~ACE_Registry_ImpExp (void);
 
   /**
-   * Imports the configuration database from filename.  
+   * Imports the configuration database from filename.
    * No existing data is removed.
    */
   virtual int import_config (const ACE_TCHAR* filename);
 
   /**
-   * This method exports the entire configuration database to <filename>.
-   * Once the file is opened this method calls 'export_section' passing 
+   * This method exports the entire configuration database to @a filename.
+   * Once the file is opened this method calls export_section() passing
    * the root section.
    */
   virtual int export_config (const ACE_TCHAR* filename);
@@ -159,26 +159,26 @@ private:
 */
 class ACE_Export ACE_Ini_ImpExp  : public ACE_Config_ImpExp_Base
 {
-public:   
+public:
   /**
    * Construction
    */
   ACE_Ini_ImpExp (ACE_Configuration&);
-    
+
   /**
    * Destructor
    */
   virtual ~ACE_Ini_ImpExp (void);
 
   /**
-   * Imports the configuration database from filename.  
+   * Imports the configuration database from filename.
    * No existing data is removed.
    */
   virtual int import_config (const ACE_TCHAR* filename);
 
   /**
-   * This method exports the entire configuration database to <filename>.
-   * Once the file is opened this method calls 'export_section' passing 
+   * This method exports the entire configuration database to @a filename.
+   * Once the file is opened this method calls export_section() passing
    * the root section.
    */
   virtual int export_config (const ACE_TCHAR* filename);
@@ -186,17 +186,17 @@ public:
 private:
   /**
    * Method provided by derived classes in order to write one section
-   * to the file specified.  Called by export_config when exporting
+   * to the file specified.  Called by export_config() when exporting
    * the entire configuration object.
    */
   int export_section (const ACE_Configuration_Section_Key& section,
                       const ACE_TString& path,
                       FILE* out);
 
-  /** 
+  /**
    * Method to squish leading and trailing whitespaces in a string.
-   * Whitespace is defined as: spaces (' '), tabs ('\t') or cr/lf.
-   * Returns a pointer to the first non-whitespace character in the 
+   * Whitespace is defined as: spaces (' '), tabs ('\\t') or cr/lf.
+   * Returns a pointer to the first non-whitespace character in the
    * buffer provided, or a pointer to the terminating null if the string
    * is all whitespace. The terminating null is moved forward to the
    * first character past the last non-whitespace.

@@ -61,8 +61,8 @@ public:
 
   // = Passive connection acceptance method.
   /**
-   * Accept a new data transfer connection.  A <timeout> of 0 means
-   * block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
+   * Accept a new data transfer connection.  A @a timeout of 0 means
+   * block forever, a @a timeout of {0, 0} means poll.  @a restart == 1
    * means "restart if interrupted."
    */
   int accept (ACE_UPIPE_Stream &server_stream,
