@@ -15,7 +15,7 @@ public:
   virtual int svc (void);
 
 private:
-  int pipe_handles[2];
+  ACE_HANDLE pipe_handles[2];
 
   void reader (ACE_HANDLE handle);
 };
