@@ -1,3 +1,15 @@
+Tue Dec 14 14:10:00 UTC 2004  Simon Massey  <sma@prismtech.com>
+
+        * TAO/orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp
+        * TAO/orbsvcs/orbsvcs/Makefile.am
+        + TAO/orbsvcs/orbsvcs/IFRService/RecursDef_i.h
+        + TAO/orbsvcs/orbsvcs/IFRService/RecursDef_i.cpp
+        * TAO/orbsvcs/orbsvcs/IFRService/StructDef_i.cpp
+        * TAO/orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp
+
+          Fixed bugzilla 1997 - IFR_Service - Does not cater for
+                         embedded sequences of enclosing structs
+
 Mon Dec 13 18:08:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence.cpp:
