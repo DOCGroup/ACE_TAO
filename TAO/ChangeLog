@@ -1,3 +1,12 @@
+Mon Dec 22 20:31:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO/orbsvcs/orbsvcs/Makefile.av:
+          Modified this makefile to explicitly include wrapper_macros.GNU,
+          etc., so it can test for rapi and sctp and include additional
+          files in LSRC if either is defined.  Thanks to Craig Rodrigues
+          <crodrigu@bbn.com> for finding the problem and supplying the
+          patch.
+
 Mon Dec 22 14:07:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO-INSTALL.html:
@@ -28,9 +37,9 @@ Mon Dec 22 17:43:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * tao/Any_Dual_Impl_T.{h,cpp}:
           Added new protected method, value(const T &), and moved the
           ACE_NEW for value from the ctor to this method.  The ctor now
-          calls this method instead of doing the ACE_NEW it self which
+          calls this method instead of doing the ACE_NEW itself which
           allows us the ability to specialize a regular method instead of
-          a ctor since some compiler have trouble specializing ctor's that
+          a ctor since some compilers have trouble specializing ctor's that
           initialize base classes.
 
         * tao/Exception.cpp:
