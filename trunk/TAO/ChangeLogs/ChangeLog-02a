@@ -1,3 +1,9 @@
+Sat Jun 10 13:33:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	  Add missing 'class' in friend declaration. DU/CXX was unhappy
+	  about that.
+
 Sat Jun 10 11:23:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * rules.tao.GNU:
