@@ -39,6 +39,10 @@ project(CosTrading) : orbsvcslib, core {
   Resource_Files {
     CosTrading.rc
   }
+
+  Pkgconfig_Files {
+    TAO_CosTrading.pc.in
+  }
 }
 
 
@@ -82,6 +86,10 @@ project(CosTrading_Skel) : orbsvcslib, core, trading, portableserver {
     CosTradingReposS_T.cpp
     CosTradingDynamicS_T.cpp
   }
+
+  Pkgconfig_Files {
+    TAO_CosTrading_Skel.pc.in
+  }
 }
 
 
@@ -105,5 +113,9 @@ project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils
   }
 
   Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosTrading_Serv.pc.in
   }
 }
