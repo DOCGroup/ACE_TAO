@@ -10,13 +10,13 @@
 //    iosfwd.h
 //
 // = AUTHOR
-//    Irfan Pyarali 
+//    Irfan Pyarali
 //
 // = DESCRIPTION
 //    This file contains the portability ugliness for the Standard C++
 //    Library.  As implementations of the "standard" emerge, this file
 //    will need to be updated.
-//   
+//
 //    This files deals with forward declaration for the stream
 //    classes.  Remember that since the new Standard C++ Library code
 //    for streams uses templates, simple forward declaration will not
@@ -27,10 +27,7 @@
 #if !defined (ACE_IOSFWD_H)
 #define ACE_IOSFWD_H
 
-#if !defined (ACE_USER_CONFIG_H)
-#define ACE_USER_CONFIG_H
-#include "ace/config.h"
-#endif /* ACE_USER_CONFIG_H */
+#include "ace/inc_user_config.h"
 
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 

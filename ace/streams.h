@@ -10,13 +10,13 @@
 //    streams.h
 //
 // = AUTHOR
-//    Irfan Pyarali 
+//    Irfan Pyarali
 //
 // = DESCRIPTION
 //    This file contains the portability ugliness for the Standard C++
 //    Library.  As implementations of the "standard" emerge, this file
 //    will need to be updated.
-//   
+//
 //    This files deals with the streams includes.
 //
 // ============================================================================
@@ -24,10 +24,7 @@
 #if !defined (ACE_STREAMS_H)
 #define ACE_STREAMS_H
 
-#if !defined (ACE_USER_CONFIG_H)
-#define ACE_USER_CONFIG_H
-#include "ace/config.h"
-#endif /* ACE_USER_CONFIG_H */
+#include "ace/inc_user_config.h"
 
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
