@@ -520,10 +520,18 @@ ACE_OS::pipe (ACE_HANDLE fds[])
 ACE_INLINE int
 ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 {
-  ACE_UNUSED_ARG (seed);
-
   ACE_OS_TRACE ("ACE_OS::rand_r");
-  ACE_NOTSUP_RETURN (-1);
+
+  long k;
+  long s = (long)(seed);
+  if (s == 0)
+    s = 0x12345987;
+  k = s / 127773;
+  s = 16807 * (s - k * 127773) - 2836 * k;
+  if (s < 0)
+    s += 2147483647;
+  (seed) = (unsigned int)s;
+  return (int)(s & RAND_MAX);
 }
 
 ACE_INLINE pid_t
