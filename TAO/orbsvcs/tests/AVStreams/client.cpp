@@ -18,6 +18,45 @@
 
 #include "client.h"
 
+Video_Client_StreamEndPoint::Video_Client_StreamEndPoint ()
+{
+}
+
+void 
+Video_Client_StreamEndPoint::handle_stop (const AVStreams::flowSpec &the_spec,
+                                          CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) Video_Client_StreamEndPoint::handle_stop: called\n"));
+}
+
+void 
+Video_Client_StreamEndPoint::handle_start (const AVStreams::flowSpec &the_spec,  
+                                           CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) Video_Client_StreamEndPoint::handle_start: called\n"));
+}
+
+void 
+Video_Client_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,  
+                                             CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) Video_Client_StreamEndPoint::handle_destroy: called\n"));
+}
+
+CORBA::Boolean 
+Video_Client_StreamEndPoint::handle_connection_established (AVStreams::StreamEndPoint_ptr responder, 
+                                                            AVStreams::streamQoS &qos_spec, 
+                                                            const AVStreams::flowSpec &the_spec,  
+                                                            CORBA::Environment &env) 
+{
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) Video_Client_StreamEndPoint::handle_connection_established: called\n"));
+  return 1;
+}
+
 Client::Client (void)
 {
 }
@@ -38,7 +77,8 @@ Client::init (int argc,
   TAO_CHECK_ENV_RETURN (env, 1);
 
   // create the local mmdevice
-  TAO_MMDevice *mmdevice_impl = new TAO_MMDevice;
+  TAO_Client_MMDevice <Video_Client_StreamEndPoint> *mmdevice_impl = 
+    new TAO_Client_MMDevice <Video_Client_StreamEndPoint>;
     this->local_mmdevice_ = mmdevice_impl->_this (env);
   TAO_CHECK_ENV_RETURN (env, 1);
 
@@ -50,6 +90,7 @@ Client::init (int argc,
   // bind to a remote mmdevice, as supplied by argc argv
   this->bind_to_remote_mmdevice (argc, argv, env);
 
+  manager_.orb ()->open ();
   // create a local mmdevice for now..
   //  mmdevice_impl = new TAO_MMDevice;
   //  this->remote_mmdevice_ = mmdevice_impl->_this (env);
@@ -96,11 +137,20 @@ Client::run (CORBA::Environment &env)
       the_flows [i] = flow_list [i];
     }
 
+  // Bind the devices together
   this->stream_ctrl_->bind_devs (local_mmdevice_,
                                  remote_mmdevice_,
                                  the_qos.inout (),
                                  the_flows.in (),
                                  env);
+  
+  TAO_CHECK_ENV_RETURN (env, 1);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Devices bound successfully!\n"));
+  
+  // Start the flow of the stream
+  this->stream_ctrl_-> start (the_flows.in (),
+                              env);
+
   TAO_CHECK_ENV_RETURN (env, 1);
   return 0;
 }
