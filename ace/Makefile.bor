@@ -5,9 +5,14 @@
 
 NAME = ace
 
+!ifdef SSL_ROOT
 DIRS =  QoS \
         SSL \
 	RMCast
+!else
+DIRS =  QoS \
+	RMCast
+!endif
 
 OBJFILES = \
 	$(OBJDIR)\ACE.obj \
