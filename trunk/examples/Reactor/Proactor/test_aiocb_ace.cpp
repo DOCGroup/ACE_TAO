@@ -34,6 +34,7 @@
 
 #include "ace/OS.h"
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 
 class Test_Aio
 {
@@ -167,59 +168,57 @@ Test_Aio::do_aio (void)
   list_aiocb [1] = this->aiocb_read_;
 
   // Do suspend till all the aiocbs in the list are done.
-  int done = 0;
+  int to_finish = 2;
   int return_val = 0;
-  while (!done)
+  while (to_finish > 0)
     {
       return_val = aio_suspend (list_aiocb,
-                                2,
+                                to_finish,
                                 0);
       ACE_DEBUG ((LM_DEBUG,
                   "Result of <aio_suspend> : %d\n",
                   return_val));
 
-      // Analyze return and error values.
+      // Analyze return and error values.     
+      if (to_finish > 1)
+        {
+          if (aio_error (list_aiocb [1]) != EINPROGRESS)
+            {
+              if (aio_return (list_aiocb [1]) == -1)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "%p\n",
+                                   "aio_return, item 1"),
+                                  -1);
+              else
+                {
+                  // Successful. Remember we have one less thing to finish.
+                  --to_finish;
+                  list_aiocb [1] = 0;
+                }
+            }
+          else
+            ACE_DEBUG ((LM_DEBUG, 
+                        "aio_error says aio 1 is in progress\n"));
+        }
+
       if (aio_error (list_aiocb [0]) != EINPROGRESS)
         {
           if (aio_return (list_aiocb [0]) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p\n",
-                               "aio_return"),
+                               "aio_return, item 0"),
                               -1);
           else
             {
-              // Successful. Store the pointer somewhere and make the
-              // entry NULL in the list.
-              this->aiocb_write_ = list_aiocb [0];
-              list_aiocb [0] = 0;
+              // Successful. Store the pointer somewhere and bump the
+              // read entry up to the front, if it is still not done.
+              --to_finish;
+              list_aiocb [0] = this->aiocb_read_;
             }
         }
       else
         ACE_DEBUG ((LM_DEBUG, 
-                    "aio_error says aio is in progress\n"));
-      
-      if (aio_error (list_aiocb [1]) != EINPROGRESS)
-        {
-          if (aio_return (list_aiocb [1]) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n",
-                               "aio_return"),
-                              -1);
-          else
-            {
-              // Successful. Store the pointer somewhere and make the
-              // entry NULL in the list.
-              this->aiocb_read_ = list_aiocb [1];
-              list_aiocb [1] = 0;
-            }
-        }
-      else
-        ACE_DEBUG ((LM_DEBUG, 
-                    "aio_error says aio is in progress\n"));
-      
-      // Is it done?
-      if ((list_aiocb [0] == 0) && (list_aiocb [1] == 0))
-        done = 1;
+                    "aio_error says aio 0 is in progress\n"));
     }
 
   ACE_DEBUG ((LM_DEBUG, 
@@ -233,6 +232,10 @@ Test_Aio::do_aio (void)
 int
 main (int argc, char **argv)
 {
+
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   Test_Aio test_aio;
 
   if (test_aio.init () != 0)
