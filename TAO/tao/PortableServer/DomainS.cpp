@@ -595,7 +595,7 @@ POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_p
   // Generate the result on demand.
   CORBA::Boolean tk_void_any = 0;
   CORBA::Any *result_any =
-    TAO_RequestInfo_Util::make_any (0, ACE_TRY_ENV);
+    TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
   
   CORBA::Any_var safe_result_any = result_any;
