@@ -66,7 +66,7 @@ Sat Jul 28 23:03:24 2001  Ossama Othman  <ossama@uci.edu>
 
 	  No longer any need to redefine this macro to support scanning of
 	  Service Configurator directive strings.  The new lexer buffer
-	  stack implementation provides support creation of lexer buffers
+	  stack implementation provides support for lexer buffer scanning
 	  from a string instead of a pointer to "FILE."
 
 	  (ace_yydirective):
