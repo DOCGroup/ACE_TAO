@@ -290,10 +290,16 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // the _create_collocated_objref method
   *os << "void*" << be_nl
       << node->full_skel_name ()
-      << "::_create_collocated_objref (CORBA::ULong type, TAO_Stub *stub)" << be_nl
+      << "::_create_collocated_objref (const char* repository_id, "
+      << "CORBA::ULong type, TAO_Stub *stub)" << be_nl
       << "{" << be_idt_nl
-      << "return new " << node->full_coll_name ()
-      << " (this, stub);" << be_uidt_nl
+      << "if (!ACE_OS::strcmp (\"" << node->repoID ()
+      << "\", repository_id))" << be_idt_nl
+      << "return ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << node->name () << "_ptr," << be_nl
+      << "new " << node->full_coll_name () << " (this, stub)" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "return 0;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // generate the collocated class impl
