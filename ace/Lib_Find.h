@@ -11,7 +11,7 @@
 
 
 #ifndef ACE_LIB_FIND_H
-#define ACE_LIB_FINE_H
+#define ACE_LIB_FIND_H
 #include "ace/pre.h"
 
 #include "ace/OS.h"

@@ -123,8 +123,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler 
                                                               int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
-  return this->timer_queue_ != 0 &&
-    this->timer_queue_->cancel (handler, dont_call_handle_close);
+  if (this->timer_queue_ != 0)
+    return this->timer_queue_->cancel (handler, dont_call_handle_close);
+  else
+    return 0;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int

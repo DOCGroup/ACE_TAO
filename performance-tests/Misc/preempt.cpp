@@ -131,8 +131,8 @@ High_Priority_Task::open (void *)
       // Become an active object.
       if (this->activate (flags, 1, 0, this->priority_) == -1)
         {
-          ACE_DEBUG ((LM_ERROR, "(%P|%t) task activation failed, exiting!\n%a",
-                      -1));
+          ACE_DEBUG ((LM_ERROR, "(%P|%t) task activation failed, exiting!\n"));
+          ACE_OS::exit (1);
         }
 
       return 0;

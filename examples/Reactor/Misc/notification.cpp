@@ -351,10 +351,12 @@ main (int argc, char *argv[])
   ACE_LOG_MSG->open (argv[0]);
 
   if (argc < 4)
-    ACE_ERROR ((LM_ERROR, 
-		"usage: %s delay interval n_threads [iterations]%a\n",
-		argv[0],
-                1));
+    {
+      ACE_ERROR ((LM_ERROR, 
+                  "usage: %s delay interval n_threads [iterations]\n",
+                  argv[0]));
+      ACE_OS::exit (1);
+    }
 
   int delay = ACE_OS::atoi (argv[1]);
   int interval = ACE_OS::atoi (argv[2]);

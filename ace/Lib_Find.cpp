@@ -26,7 +26,12 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
 
   ACE_TCHAR tempcopy[MAXPATHLEN + 1];
   ACE_TCHAR searchpathname[MAXPATHLEN + 1];
-  ACE_TCHAR searchfilename[MAXPATHLEN + 2];
+#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+  ACE_TCHAR decorator[] = ACE_LD_DECORATOR_STR;
+  ACE_TCHAR searchfilename[MAXPATHLEN + sizeof(decorator) / sizeof (ACE_TCHAR)];
+#else
+  ACE_TCHAR searchfilename[MAXPATHLEN + 1];
+#endif /* ACE_WIN32 && ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
 
   // Create a copy of filename to work with.
   if (ACE_OS::strlen (filename) + 1
@@ -97,20 +102,18 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
       return -1;
     }
 
-#if defined (ACE_WIN32) && defined (_DEBUG) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
   size_t len_searchfilename = ACE_OS::strlen (searchfilename);
   if (! got_suffix)
-    {
-      searchfilename [len_searchfilename] = 'd';
-      searchfilename [len_searchfilename+1] = 0;
-    }
+    ACE_OS_String::strcpy (searchfilename + len_searchfilename,
+                           decorator);
 
   for (int tag = 1; tag >= 0; tag --)
     {
       if (tag == 0)
         searchfilename [len_searchfilename] = 0;
 
-#endif /* ACE_WIN32 && _DEBUG && !ACE_DISABLE_DEBUG_DLL_CHECK */
+#endif /* ACE_WIN32 && ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
       // Use absolute pathname if there is one.
       if (ACE_OS::strlen (searchpathname) > 0)
         {
@@ -313,15 +316,15 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
                 ACE_OS::free (ld_path_temp);
 #endif /* ACE_WIN32 */
               ACE_OS::free ((void *) ld_path);
-#if defined (ACE_WIN32) && defined (_DEBUG) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
               if (result == 0 || tag == 0)
-#endif /* ACE_WIN32 && _DEBUG && !ACE_DISABLE_DEBUG_DLL_CHECK */
+#endif /* ACE_WIN32 && ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
                 return result;
             }
         }
-#if defined (ACE_WIN32) && defined (_DEBUG) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
     }
-#endif /* ACE_WIN32 && _DEBUG && !ACE_DISABLE_DEBUG_DLL_CHECK */
+#endif /* ACE_WIN32 && ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
 
   errno = ENOENT;
   return -1;

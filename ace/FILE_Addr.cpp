@@ -73,7 +73,7 @@ ACE_FILE_Addr::set (const ACE_TCHAR *filename)
                             ACE_OS::strlen (filename) + 1);
   (void) ACE_OS::strncpy (this->filename_,
                           filename,
-                          sizeof this->filename_);
+                          sizeof this->filename_ / sizeof (ACE_TCHAR));
   return 0;
 }
 
