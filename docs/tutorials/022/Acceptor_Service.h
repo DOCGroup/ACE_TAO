@@ -16,6 +16,10 @@
    allow the clients to connect to us.  */
 #include "ace/SOCK_Acceptor.h"
 
+/* Pull in definition for ACE_Svc_Export.  On Win32 platforms
+   this macro is used to export symbols from libraries. */
+#include "ace/svc_export.h"
+
 /* The Client_Handler object we develop will be used to handle clients
    once they're connected.  The ACE_Acceptor<> template's first
    parameter requires such an object.  In some cases, you can get by
@@ -37,7 +41,11 @@
    ACE_Service_Object here. That is because, ACE_Acceptor derives from
    ACE_Service_Object and hence there is no need to specify it again. */
 
- /* TO Do: Describe what/why ACE_Svc_Export */
+/* ACE_Svc_Export is a macro which on Win32 platforms exports from the
+   generated library the symbols for the following class.  This allows
+   you to link to the library, and get the symbol definitions for the class.
+*/
+
 
 class ACE_Svc_Export Acceptor_Service : public ACE_Acceptor <Client_Handler, ACE_SOCK_ACCEPTOR>
 {
