@@ -14,7 +14,7 @@ endif # ! TAO_ROOT
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
-BIN_UNCHECKED = client server 
+BIN_UNCHECKED = client server
 
 SRC = $(addsuffix .cpp, $(BIN) test_i Client_Worker Server_Worker) $(IDL_SRC)
 
@@ -274,8 +274,8 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -462,8 +462,8 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -701,8 +701,8 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -948,8 +948,8 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1178,8 +1178,8 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1358,8 +1358,8 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1660,8 +1660,8 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
