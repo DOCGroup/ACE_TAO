@@ -1,133 +1,146 @@
+Mon Apr 14 06:56:12 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/mfc/client.mpc:
+        * examples/mfc/mfc.mwc:
+        * examples/mfc/server.mpc:
+        * orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.mpc:
+
+          Added mpc files for these projects.
+
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+          Fixed the library list for this mpc file.
+
 Mon Apr 14 11:52:30 2003  Dave Smith  <dts@prismtechnologies.com>
 
-	* orbsvcs/PSS/PSDL_Datastore.cpp:
-	  For HPUX11, replaced the call to the ACE_NEW_RETURN macro with
-	  its expansion, as the call seems to confuse the compiler 
+        * orbsvcs/PSS/PSDL_Datastore.cpp:
+          For HPUX11, replaced the call to the ACE_NEW_RETURN macro with
+          its expansion, as the call seems to confuse the compiler
 
 2003-04-14    <dts@axwell>
 
-	* orbsvcs/tests/Notify/RT_lib/RT_POA_Command.h
-	  Removed clash with symbol defined in
-	  /usr/include/machine/cpu.h on HPUX.
+        * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.h
+          Removed clash with symbol defined in
+          /usr/include/machine/cpu.h on HPUX.
 
 Sun Apr 13 13:25:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IIOP_Profile.h:
-	* tao/IIOP_Profile.i:
-	* tao/Profile.cpp:
-	* tao/Profile.h:
-	* tao/Profile.i:
-	* tao/Strategies/DIOP_Profile.h:
-	* tao/Strategies/DIOP_Profile.i:
-	* tao/Strategies/SHMIOP_Profile.h:
-	* tao/Strategies/SHMIOP_Profile.i:
-	* tao/Strategies/UIOP_Profile.h:
-	* tao/Strategies/UIOP_Profile.i:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.i: No idea why
-	  virtual functions, accessors for object_key (), were inlined,
-	  declared and defined in every protocol. Moved the accessor to
-	  the base class and non-virtualized them. 
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.i:
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/Profile.i:
+        * tao/Strategies/DIOP_Profile.h:
+        * tao/Strategies/DIOP_Profile.i:
+        * tao/Strategies/SHMIOP_Profile.h:
+        * tao/Strategies/SHMIOP_Profile.i:
+        * tao/Strategies/UIOP_Profile.h:
+        * tao/Strategies/UIOP_Profile.i:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.i: No idea why
+          virtual functions, accessors for object_key (), were inlined,
+          declared and defined in every protocol. Moved the accessor to
+          the base class and non-virtualized them.
 
 
 Sun Apr 13 08:07:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/IFRService/tmplinst.cpp: Fixed a compile error
-	  in explicit template instantiation builds.
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp: Fixed a compile error
+          in explicit template instantiation builds.
 
 Sun Apr 13 08:03:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Notify/Destroy/main.cpp: Fixed a warning in our
-	  daily builds.
+        * orbsvcs/tests/Notify/Destroy/main.cpp: Fixed a warning in our
+          daily builds.
 
 Sun Apr 13 07:59:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp: Missed a
-	  definition of a function.
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp: Missed a
+          definition of a function.
 
 Sat Apr 12 22:54:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1482_Regression/Makefile:
-	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile: Updated
-	  dependencies.
+        * tests/Bug_1482_Regression/Makefile:
+        * orbsvcs/tests/Security/SecurityLevel1/Makefile:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile: Updated
+          dependencies.
 
 Sat Apr 12 22:50:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/ORT/Makefile: Updated dependencies.
+        * orbsvcs/examples/ORT/Makefile: Updated dependencies.
 
 Sat Apr 12 22:42:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Profile.cpp:
-	* tao/Profile.h: 
-	* tao/IIOP_Profile.cpp:
-	* tao/IIOP_Profile.h:
-	* tao/Strategies/DIOP_Profile.cpp:
-	* tao/Strategies/DIOP_Profile.h:
-	* tao/Strategies/SHMIOP_Profile.cpp:
-	* tao/Strategies/SHMIOP_Profile.h:
-	* tao/Strategies/UIOP_Profile.cpp:
-	* tao/Strategies/UIOP_Profile.h:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h: Removed a bunch
-	  of duplicated code in encode (), decode (), parse_string ().
-	  New methods by name encode_profiles (), decode_profiles (),
-	  parse_string_i () have been added to do protocol specific
-	  stuff. 
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Profile.h:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.h:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h: Removed a bunch
+          of duplicated code in encode (), decode (), parse_string ().
+          New methods by name encode_profiles (), decode_profiles (),
+          parse_string_i () have been added to do protocol specific
+          stuff.
 
-	  Rearranged the documentation for the Profiles classes. We had
-	  the same documentation repeated, and that too inconsistently
-	  across all the profiles. Fixed them across the board. 
+          Rearranged the documentation for the Profiles classes. We had
+          the same documentation repeated, and that too inconsistently
+          across all the profiles. Fixed them across the board.
 
-	  Looks like we have atleast 2 other protocols based on
-	  TCP/IP. The next step is going to change the inheritance
-	  hierarchy so that they could share all their code.
+          Looks like we have atleast 2 other protocols based on
+          TCP/IP. The next step is going to change the inheritance
+          hierarchy so that they could share all their code.
 
 Sat Apr 12 22:33:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Notify/Test_Filter/Makefile:
-	* orbsvcs/tests/Notify/RT_lib/Makefile: Added guards for builds in
-	  which RTCORBA is turned off.
+        * orbsvcs/tests/Notify/Test_Filter/Makefile:
+        * orbsvcs/tests/Notify/RT_lib/Makefile: Added guards for builds in
+          which RTCORBA is turned off.
 
 Fri Apr 11 17:00:00 2003  Roy Pollock <rpollock@ghs.com>
 
-	* orbsvcs/orbsvcs/AV/global.h: INTEGRITY already has typedefs of
-	  UINT2 and UINT4, so protect the declarations with !defined(INTEGRITY)
+        * orbsvcs/orbsvcs/AV/global.h: INTEGRITY already has typedefs of
+          UINT2 and UINT4, so protect the declarations with !defined(INTEGRITY)
 
 Fri Apr 11 15:12:54 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IFR_Client/IFR_BaseS.h: Added this dummy header file so that
-	  it is easier to include "IFR_Base.idl" in other idl files.
+        * tao/IFR_Client/IFR_BaseS.h: Added this dummy header file so that
+          it is easier to include "IFR_Base.idl" in other idl files.
 
 Fri Apr 11 09:33:41 2003  Dave Smith  <dts@prismtechnologies.com>
 
-	* orbsvcs/test/Notify/lib/Application_Commnad.h
-	* orbsvcs/test/Notify/lib/Command_Factory_T.h
-	* orbsvcs/test/Notify/lib/ConsumerAdmin_Command.h
-	* orbsvcs/test/Notify/lib/EventChannel_Command.h
-	* orbsvcs/test/Notify/lib/Filter_Command.h
-	* orbsvcs/test/Notify/lib/Periodic_Consumer_Command.h
-	* orbsvcs/test/Notify/lib/Periodic_Supplier_Command.h
-	* orbsvcs/test/Notify/lib/SupplierAdmin_Command.h
-	  Removed clash with symbol defined in
-	  /usr/include/machine/cpu.h on HPUX.
+        * orbsvcs/test/Notify/lib/Application_Commnad.h
+        * orbsvcs/test/Notify/lib/Command_Factory_T.h
+        * orbsvcs/test/Notify/lib/ConsumerAdmin_Command.h
+        * orbsvcs/test/Notify/lib/EventChannel_Command.h
+        * orbsvcs/test/Notify/lib/Filter_Command.h
+        * orbsvcs/test/Notify/lib/Periodic_Consumer_Command.h
+        * orbsvcs/test/Notify/lib/Periodic_Supplier_Command.h
+        * orbsvcs/test/Notify/lib/SupplierAdmin_Command.h
+          Removed clash with symbol defined in
+          /usr/include/machine/cpu.h on HPUX.
 
 
 Thu Apr 10 07:06:07 2003 Pradeep Gore <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/RT_lib/Makefile:
-	* orbsvcs/tests/Notify/Test_Filter/Makefile:
-	  Added missing linkage to RTCORBA.
+        * orbsvcs/tests/Notify/RT_lib/Makefile:
+        * orbsvcs/tests/Notify/Test_Filter/Makefile:
+          Added missing linkage to RTCORBA.
 
-	* orbsvcs/tests/Notify/ThreadPool/supplier.conf:
-	  Corrected the names of the library loaded.
+        * orbsvcs/tests/Notify/ThreadPool/supplier.conf:
+          Corrected the names of the library loaded.
 
-	* orbsvcs/orbsvcs/.depend.Makefile.RT_Notification:
-	* orbsvcs/orbsvcs/Makefile.RT_Notification:
-	  Added missing Structured/RT_StructuredProxyPushSupplier.cpp
+        * orbsvcs/orbsvcs/.depend.Makefile.RT_Notification:
+        * orbsvcs/orbsvcs/Makefile.RT_Notification:
+          Added missing Structured/RT_StructuredProxyPushSupplier.cpp
 
-	* orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp
-	  Corrected ENV usage.
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp
+          Corrected ENV usage.
 
 Thu Apr 10 15:01:18 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -139,9 +152,9 @@ Thu Apr 10 15:01:18 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Thu Apr 10 01:39:23 2003 Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/Destroy/Makefile:
-	* orbsvcs/tests/Notify/Destroy/.depend.Makefile:
-	  Corrected the Makefile.
+        * orbsvcs/tests/Notify/Destroy/Makefile:
+        * orbsvcs/tests/Notify/Destroy/.depend.Makefile:
+          Corrected the Makefile.
 
 Thu Apr 10 10:39:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -155,49 +168,49 @@ Thu Apr 10 10:39:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Apr 10 10:30:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/default_client.cpp:
-	* tao/default_client.h:
-	* tao/Client_Strategy_Factory.cpp:
-	* tao/Client_Strategy_Factory.h: Added a new -ORB option,
-	  -ORBTransporMuxStrategyLock, and a accessor
-	  create_transport_mux_strategy_lock () that  returns the lock
-	  created by the strategy factory. The options and the accessor
-	  helps the user to use either a locked or a lock free transport
-	  muxed strategy. Please see the documentation in
-	  docs/Options.html for details on how to use this.
+        * tao/default_client.cpp:
+        * tao/default_client.h:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Client_Strategy_Factory.h: Added a new -ORB option,
+          -ORBTransporMuxStrategyLock, and a accessor
+          create_transport_mux_strategy_lock () that  returns the lock
+          created by the strategy factory. The options and the accessor
+          helps the user to use either a locked or a lock free transport
+          muxed strategy. Please see the documentation in
+          docs/Options.html for details on how to use this.
 
-	* tao/Transport_Mux_Strategy.cpp:
-	* tao/Transport_Mux_Strategy.h: Added a lock to the muxed strategy
-	  class. The lock will actually be created, and used by the
-	  concrete strategies. Looks like the all the concrete strategies
-	  may require some type of strategized locking. Hence this has
-	  been moved here with a purpose.
+        * tao/Transport_Mux_Strategy.cpp:
+        * tao/Transport_Mux_Strategy.h: Added a lock to the muxed strategy
+          class. The lock will actually be created, and used by the
+          concrete strategies. Looks like the all the concrete strategies
+          may require some type of strategized locking. Hence this has
+          been moved here with a purpose.
 
-	* tao/Muxed_TMS.cpp:
-	* tao/Muxed_TMS.h: Removed the hard coded recursive mutex, and used
-	  the strategized lock created by the client strategy factory
-	  instead.
+        * tao/Muxed_TMS.cpp:
+        * tao/Muxed_TMS.h: Removed the hard coded recursive mutex, and used
+          the strategized lock created by the client strategy factory
+          instead.
 
-	  This fixes BUG 1491 and thanks again to Carlos for motivating
-	  this change.
+          This fixes BUG 1491 and thanks again to Carlos for motivating
+          this change.
 
-	* docs/Options.html: Added documentation for the new options.
+        * docs/Options.html: Added documentation for the new options.
 
 Thu Apr 10 13:40:02 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/Event_Channel.{h,cpp}:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.{h,cpp}:
 
-	  Use ACE_Unbounded_Set_Ex instead of ACE_Unbounded_Set.
-	  This fixes bug 1465 for RTEC.
+          Use ACE_Unbounded_Set_Ex instead of ACE_Unbounded_Set.
+          This fixes bug 1465 for RTEC.
 
 Thu Apr 10 06:27:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/orbconf.h:
-	* tao/params.cpp: Added a compile time option to configure the
-	  DefaultInitRef. It was hardcoded to mcast://:::
+        * tao/orbconf.h:
+        * tao/params.cpp: Added a compile time option to configure the
+          DefaultInitRef. It was hardcoded to mcast://:::
 
-	  Thanks to Carlos O'Ryan for the patch. This shold fix BUG 1488.
+          Thanks to Carlos O'Ryan for the patch. This shold fix BUG 1488.
 
 Thu Apr 10 000:08:15 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -231,59 +244,59 @@ Wed Apr  9 22:50:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Apr  9 15:28:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Stub.h (object_key):
-	* tao/Stub.cpp: Added a new method object_key (). The methodology
-	  adopted by the skeletons in the collocated cases could lead to
-	  crashes if TAO_Stub::profile_in_use_ wasnt set. The method that
-	  has been added should get around that problem, by always
-	  returning a usable object key.
+        * tao/Stub.h (object_key):
+        * tao/Stub.cpp: Added a new method object_key (). The methodology
+          adopted by the skeletons in the collocated cases could lead to
+          crashes if TAO_Stub::profile_in_use_ wasnt set. The method that
+          has been added should get around that problem, by always
+          returning a usable object key.
 
-	* tao/Domain/DomainS.cpp:
-	* tao/PortableServer/ImR_LocatorS.cpp:
-	* tao/PortableServer/ImplRepoS.cpp:
-	* tao/PortableServer/PolicyS.cpp:
-	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
-	* tao/RTPortableServer/RT_Collocation_Resolver.cpp:
-	* orbsvcs/orbsvcs//IFRService/IFR_BaseS.cpp:
-	* orbsvcs/orbsvcs//IFRService/IFR_BasicS.cpp:
-	* orbsvcs/orbsvcs//IFRService/IFR_ComponentsS.cpp:
-	* orbsvcs/orbsvcs//IFRService/IFR_ExtendedS.cpp:
-	* orbsvcs/orbsvcs//IFRService/IFR_Service_Utils.cpp: Edited the
-	  collocated portion of the generated code to use the above method.
+        * tao/Domain/DomainS.cpp:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+        * orbsvcs/orbsvcs//IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs//IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs//IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs//IFRService/IFR_ExtendedS.cpp:
+        * orbsvcs/orbsvcs//IFRService/IFR_Service_Utils.cpp: Edited the
+          collocated portion of the generated code to use the above method.
 
-	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
-	  Use the above method in TAO_Stub to access the object_key.  This
-	  should fix [BUG 1483].
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+          Use the above method in TAO_Stub to access the object_key.  This
+          should fix [BUG 1483].
 
 Wed Apr 09 14:54:03 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/Destroy/main.cpp:
-	  Invokes the NotifyExt::EventChannelFactory::destroy method.
+        * orbsvcs/tests/Notify/Destroy/main.cpp:
+          Invokes the NotifyExt::EventChannelFactory::destroy method.
 
-	* orbsvcs/tests/Notify/Destroy/Destroy.mpc:
-	* orbsvcs/tests/Notify/Destroy/Makefile:
-	* orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp:
-	  Makefiles.
+        * orbsvcs/tests/Notify/Destroy/Destroy.mpc:
+        * orbsvcs/tests/Notify/Destroy/Makefile:
+        * orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp:
+          Makefiles.
 
-	* orbsvcs/tests/Notify/Makefile:
-	* orbsvcs/tests/Notify/Notify_Tests.dsw:
-	  Added the <Destroy> test.
+        * orbsvcs/tests/Notify/Makefile:
+        * orbsvcs/tests/Notify/Notify_Tests.dsw:
+          Added the <Destroy> test.
 
-	* orbsvcs/tests/Notify/lib/Makefile.bor:
-	  Move the Activation_ManagerC to the top of the Makefile to fix
-	  compile errors. Thanks to Johnny Willemsen
-	  <jwillemsen@remedy.nl> for this suggestion.
+        * orbsvcs/tests/Notify/lib/Makefile.bor:
+          Move the Activation_ManagerC to the top of the Makefile to fix
+          compile errors. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for this suggestion.
 
 
 Wed Apr  9 13:47:26 2003  Stuart Jones  <jones_s@ociweb.com>
 
-	* tao/Messaging/Messaging.cpp
+        * tao/Messaging/Messaging.cpp
 
-	  Added code to register exception pointer with ACE_Auto_Basic_Ptr
-	  when TAO is compiled with exceptions. When using AMI, a leak
-	  appeared if an exception was raised.  The exception was created
-	  on the heap, but the "raise" made a copy of this on the stack.
-	  See DOC bug# 1487.
+          Added code to register exception pointer with ACE_Auto_Basic_Ptr
+          when TAO is compiled with exceptions. When using AMI, a leak
+          appeared if an exception was raised.  The exception was created
+          on the heap, but the "raise" made a copy of this on the stack.
+          See DOC bug# 1487.
 
 Wed Apr  9 17:12:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -401,27 +414,27 @@ Wed Apr  9 17:12:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 09 17:54:59 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* tests/AMI_Buffering/admin.dsp:
-	* tests/OBV/Any/client.dsp: Couple of RTTI settings that got missed.
+        * tests/AMI_Buffering/admin.dsp:
+        * tests/OBV/Any/client.dsp: Couple of RTTI settings that got missed.
 
 Wed Apr  9 11:19:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1482_Regression/Client_Task.h:
-	* tests/Bug_1482_Regression/Client_Task.cpp: Minor memory
-	  management tweaks to prevent the test from dumping a core during
-	  exit.
+        * tests/Bug_1482_Regression/Client_Task.h:
+        * tests/Bug_1482_Regression/Client_Task.cpp: Minor memory
+          management tweaks to prevent the test from dumping a core during
+          exit.
 
 Wed Apr 09 16:41:18 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp: Fixed path to
-	  tao_idl in release configuration.
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp: Fixed path to
+          tao_idl in release configuration.
 
 Wed Apr  9 16:00:23 2003  Dave Smith  <dts@prismtechnologies.com>
 
-	* tao/Any_T.cpp:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * tao/Any_T.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
 
-	  Fixed compile problems with HPUX and Windows.
+          Fixed compile problems with HPUX and Windows.
 
 Wed Apr  9 09:40:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
