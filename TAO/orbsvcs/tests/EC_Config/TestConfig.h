@@ -35,7 +35,7 @@ typedef ACE_Weak_Bound_Ptr<Test_Config_Set,ACE_Null_Mutex> TCFG_SET_WPTR;
 // distinct values for each.
 typedef unsigned long Entity_Type_t;
 
-typedef long Period_t;
+typedef long Period_t; //in milliseconds
 
 enum Criticality_t {
 // Defines the criticality of the entity.

@@ -4,51 +4,92 @@
 #define ECCONFIG_C
 
 #include "ECConfig.h"
+#include "Consumer.h"
+#include "TimeoutConsumer.h"
 
 #include <sstream> //for ostringstream
 
 #include "ace/Array.h"
 #include "ace/Bound_Ptr.h"
+#include "ace/Thread_Manager.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
+#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/RtecEventCommC.h"
 
 namespace TestConfig {
 
 template <class SCHED_STRAT>
 ECConfig<SCHED_STRAT>::ECConfig (void)
-  : Test_Config (),
-    ec_impl(0),
-    sched_impl(0),
-    configured (0) //false
+  : Test_Config ()
+  , ec_impl(0)
+  , sched_impl(0)
+  , periods(0)
+  , importances(0)
+  , crits(0)
+  , test_done(new ACE_RW_Mutex())
+  , configured (0) //false
 {
 }
 
 template <class SCHED_STRAT>
 ECConfig<SCHED_STRAT>::~ECConfig (void)
 {
-  this->reset();
+  this->reset(ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  delete this->test_done;
 }
 
 template <class SCHED_STRAT> void
-ECConfig<SCHED_STRAT>::reset (void)
+ECConfig<SCHED_STRAT>::reset (ACE_ENV_SINGLE_ARG_DECL)
 {
   // We should do a lot of cleanup (disconnect from the EC,
   // deactivate all the objects with the POA, etc.).
 
+  this->disconnect_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER); //should release all read locks on this->test_done
+
+  this->disconnect_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  {
+    // Deactivate the EC
+    PortableServer::POA_var poa =
+      this->ec_impl->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+    PortableServer::ObjectId_var id =
+      poa->servant_to_id (this->ec_impl ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
+  }
+
+  {
+    // Deactivate the Scheduler
+    PortableServer::POA_var poa =
+      this->sched_impl->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+    PortableServer::ObjectId_var id =
+      poa->servant_to_id (this->sched_impl ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
+  }
+
   delete this->ec_impl;
+  this->ec_impl = 0;
 
   delete this->sched_impl;
+  this->sched_impl = 0;
 
-  for(size_t i=0; i<consumers.size(); ++i) {
-    delete this->consumers[i];
-  }
+  //TODO clear config_infos?
 
-  for(size_t i=0; i<suppliers.size(); ++i) {
-    delete this->suppliers[i];
-  }
+  //TODO clear RT_Infos from scheduler?
 
   configured = 0; //false
 }
@@ -56,7 +97,7 @@ ECConfig<SCHED_STRAT>::reset (void)
 template <class SCHED_STRAT> int
 ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
 {
-  if (configured) {
+  if (this->configured) {
     ACE_DEBUG((LM_DEBUG,ACE_TEXT("Resetting EC\n")));
     this->reset(); //delete memory used by previous configuration
   }
@@ -70,119 +111,67 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
 
       ////////////////// EC ready; do config ////////////////////
       size_t tsize = testconfigs->size();
-      supplier_cfgs.size(tsize);
-      consumer_cfgs.size(tsize);
-      testcfgs.size(tsize);
-      consumers.size(tsize);
-      suppliers.size(tsize);
+      this->testcfgs.size(tsize);
+      this->periods.size(tsize);
+      this->importances.size(tsize);
+      this->crits.size(tsize);
       for (size_t i=0; i<tsize; ++i)
         {
           //ACE_Weak_Bound_Ptr doesn't have operator*()! ??
           //test_config_t *curcfg = (*testconfigs)[i];
           test_config_t *curcfg = (*testconfigs.unsafe_get())[i];
-          testcfgs[i] = curcfg;
+          this->testcfgs[i] = curcfg;
 
-          RtecScheduler::Criticality_t criticality;
           switch (curcfg->criticality) {
             case VERY_LOW_CRITICALITY :
-              criticality = RtecScheduler::VERY_LOW_CRITICALITY;
+              this->crits[i] = RtecScheduler::VERY_LOW_CRITICALITY;
               break;
             case LOW_CRITICALITY :
-              criticality = RtecScheduler::LOW_CRITICALITY;
+              this->crits[i] = RtecScheduler::LOW_CRITICALITY;
               break;
             case MEDIUM_CRITICALITY :
-              criticality = RtecScheduler::MEDIUM_CRITICALITY;
+              this->crits[i] = RtecScheduler::MEDIUM_CRITICALITY;
               break;
             case HIGH_CRITICALITY :
-              criticality = RtecScheduler::HIGH_CRITICALITY;
+              this->crits[i] = RtecScheduler::HIGH_CRITICALITY;
               break;
             case VERY_HIGH_CRITICALITY :
-              criticality = RtecScheduler::VERY_HIGH_CRITICALITY;
+              this->crits[i] = RtecScheduler::VERY_HIGH_CRITICALITY;
               break;
           }
 
-          RtecScheduler::Importance_t importance;
           switch (curcfg->importance) {
             case VERY_LOW_IMPORTANCE :
-              importance = RtecScheduler::VERY_LOW_IMPORTANCE;
+              this->importances[i] = RtecScheduler::VERY_LOW_IMPORTANCE;
               break;
             case LOW_IMPORTANCE :
-              importance = RtecScheduler::LOW_IMPORTANCE;
+              this->importances[i] = RtecScheduler::LOW_IMPORTANCE;
               break;
             case MEDIUM_IMPORTANCE :
-              importance = RtecScheduler::MEDIUM_IMPORTANCE;
+              this->importances[i] = RtecScheduler::MEDIUM_IMPORTANCE;
               break;
             case HIGH_IMPORTANCE :
-              importance = RtecScheduler::HIGH_IMPORTANCE;
+              this->importances[i] = RtecScheduler::HIGH_IMPORTANCE;
               break;
             case VERY_HIGH_IMPORTANCE :
-              importance = RtecScheduler::VERY_HIGH_IMPORTANCE;
+              this->importances[i] = RtecScheduler::VERY_HIGH_IMPORTANCE;
               break;
           }
 
-          //create supplier RT_Info
-          std::ostringstream supp_entry_pt;
-          supp_entry_pt << "Supplier Event Class " << i; //unique RT_Info entry point
-          RtecScheduler::handle_t rt_info =
-            this->scheduler->create (supp_entry_pt.str().c_str() ACE_ENV_ARG_PARAMETER);
-          ACE_Time_Value tv (0, curcfg->period);
-          TimeBase::TimeT time;
-          ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-          this->scheduler->set (rt_info,
-                                criticality,
-                                time, time, time,
-                                time,
-                                importance,
-                                time,
-                                0,
-                                RtecScheduler::OPERATION
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (this->supplier_cfgs.set(rt_info,i) != 0) {
-            ACE_DEBUG((LM_DEBUG, "Could not set supplier RT_Info into config: %d of %d\n",
-                       i,consumer_cfgs.max_size()));
-            return 1;
-          }
-
-          //create consumer RT_Info
-          std::ostringstream cons_entry_pt;
-          cons_entry_pt << "Consumer Event Class " << i; //unique RT_Info entry point
-          rt_info =
-            this->scheduler->create (cons_entry_pt.str().c_str() ACE_ENV_ARG_PARAMETER);
-          tv.set (0, curcfg->period);
-          ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-          this->scheduler->set (rt_info,
-                                criticality,
-                                time, time, time,
-                                time,
-                                importance,
-                                time,
-                                0,
-                                RtecScheduler::OPERATION
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (this->consumer_cfgs.set(rt_info,i) != 0) {
-            ACE_DEBUG((LM_DEBUG, "Could not set consumer RT_Info into config: %d of %d\n",
-                       i,consumer_cfgs.max_size()));
-            return 1;
-          }
+          ACE_Time_Value tv;
+          tv.msec(curcfg->period);
+          ORBSVCS_Time::Time_Value_to_TimeT (this->periods[i], tv);
         }
 
-      this->connectConsumers();
-      this->connectSuppliers();
-
-      ACE_DEBUG ((LM_DEBUG, "Consumer RT_Infos:\n"));
-      print_RT_Infos (this->consumer_cfgs);
-      ACE_DEBUG ((LM_DEBUG, "\nSupplier RT_Infos:\n"));
-      print_RT_Infos (this->supplier_cfgs);
+      this->connect_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->connect_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ////////////////// Configured; compute schedule ///////////
       ACE_DEBUG ((LM_DEBUG, "Computing schedule\n"));
       RtecScheduler::RT_Info_Set_var infos;
       RtecScheduler::Config_Info_Set_var configs;
       RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
+      RtecScheduler::Dependency_Set_var deps;
 
       // Obtain the range of valid priorities in the current
       // platform, the scheduler hard-code this values in the
@@ -198,6 +187,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
       this->scheduler->compute_scheduling (min_os_priority,
                                            max_os_priority,
                                            infos.out (),
+                                           deps.out (),
                                            configs.out (),
                                            anomalies.out ()
                                            ACE_ENV_ARG_PARAMETER);
@@ -205,6 +195,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
 
       // Dump the schedule to a file..
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
+                                            deps.in(),
                                             configs.in (),
                                             anomalies.in (),
                                             "ecconfig.out");
@@ -237,51 +228,45 @@ ECConfig<SCHED_STRAT>::run (void)
 
   ACE_TRY
     {
-      RtecEventComm::EventSet event (1);
-      event.length (1);
+      ACE_Thread_Manager *inst = ACE_Thread_Manager::instance();
 
-      ACE_Array<int> evt_counts(this->testcfgs.size());
-      for(size_t i=0; i<this->testcfgs.size(); ++i)
+      // Spawn orb thread (which calls orb.run(), then terminates on return)
+      ACE_DEBUG((LM_DEBUG,"SPAWNING ORB thread\n"));
+      int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,&(this->orb));
+      //no need for getting tid?
+      if (ret == -1)
         {
-          //copy over total number of events per test_config_t to send
-          evt_counts[i] = this->testcfgs[i]->num_entities;
+          ACE_DEBUG ((LM_DEBUG, "ERROR: Couldn't spawn ORB->run() thread: %s\n",
+                      ACE_OS::strerror(errno)));
+          return 1;
         }
 
-      size_t num_done = 0; //total number of testcfgs which have no more events to push
-      while (num_done<this->testcfgs.size())
+      //      Block waiting for consumers to finish
+      //when can acquire write lock, all TimeoutConsumers are finished
+      ret = this->test_done->acquire_write();
+      if (ret == -1)
         {
-          //for each consumer, push an event
-          for(size_t i=0; i<this->testcfgs.size() && i<this->consumer_proxys.size(); ++i)
-            {
-              if (evt_counts[i]<=0)
-                {
-                  if (evt_counts[i]==0)
-                    {
-                      //just finished
-                      ++num_done;
-                      evt_counts[i]--; //indicate accounted for in num_done
-                    } //else already incr num_done for this one
-                  continue; //no more events of this to push
-                } //else...
-              test_config_t *tcfg = this->testcfgs[i];
-              ProxyList::TYPE curproxy = this->consumer_proxys[i];
-
-              event[0].header.type   = ACE_ES_EVENT_UNDEFINED+tcfg->type;
-              event[0].header.source = supplier_ids[i];
-              event[0].header.ttl    = 1;
-
-              curproxy->push (event ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              //event pushed, so decr corresponding evt_count
-              evt_counts[i]--;
-
-              // BT TODO sleep until next period expires
-              ACE_Time_Value rate (0, 10000);
-              ACE_OS::sleep (rate);
-
-          }
+          ACE_DEBUG((LM_DEBUG, "ERROR: could not acquire write lock for ECConfig: %s\n",
+                     ACE_OS::strerror(errno)));
+          return 1;
         }
+
+      //all TimeoutConsumers done, so stop EC and ORB
+      //Shutdown EC
+      this->reset();
+
+      // Shutdown ORB
+      this->orb->shutdown(1); //argument is TRUE
+
+      if (inst->wait() == -1) //wait for ORB thread to terminate
+        {
+          ACE_ERROR((LM_ERROR, "ERROR: Thread_Manager wait failed: %s\n",
+                     ACE_OS::strerror(errno)));
+          return 1;
+        }
+
+      ACE_DEBUG ((LM_DEBUG, "suppliers finished\n"));
+
     }
   ACE_CATCHANY
     {
@@ -293,170 +278,145 @@ ECConfig<SCHED_STRAT>::run (void)
   return 0; //successful run
 }
 
-template <class SCHED_STRAT> int
-ECConfig<SCHED_STRAT>::initEC()
+template <class SCHED_STRAT> void
+ECConfig<SCHED_STRAT>::initEC(ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_EC_Kokyu_Factory::init_svcs ();
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Initializing event channel\n")));
-  ACE_TRY
-    {
-      // ORB initialization boiler plate...
-      int argc = 0;
-      char** argv = 0;
-      this->orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+  ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Initializing event channel\n")));
 
-      ACE_DEBUG((LM_DEBUG,ACE_TEXT("Resolving initial references\n")));
+  // ORB initialization boiler plate...
+  int argc = 0;
+  char** argv = 0;
+  this->orb =
+    CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      this->poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      this->poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      // DO these need to remain in scope beyond this function?
+  ACE_DEBUG((LM_DEBUG,ACE_TEXT("Resolving initial references\n")));
 
-      ACE_DEBUG((LM_DEBUG,ACE_TEXT("Creating sched service\n")));
+  CORBA::Object_var object =
+    orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  this->poa =
+    PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  this->poa_manager =
+    poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  // DO these need to remain in scope beyond this function?
 
-      // Create a scheduling service
-      ACE_NEW_RETURN (this->sched_impl,SCHED_STRAT,1);
+  ACE_DEBUG((LM_DEBUG,ACE_TEXT("Creating sched service\n")));
 
-      this->scheduler = sched_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+  // Create a scheduling service
+  ACE_NEW (this->sched_impl,SCHED_STRAT);
 
-      // Create an event channel implementation...
-      TAO_EC_Event_Channel_Attributes attributes (poa.in (),
-                                                  poa.in ());
-      attributes.scheduler = scheduler.in (); // no need to dup
+  this->scheduler = sched_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
-      ACE_NEW_RETURN (this->ec_impl,TAO_EC_Event_Channel (attributes),1);
+  // Create an event channel implementation...
+  TAO_EC_Event_Channel_Attributes attributes (poa.in (),
+                                              poa.in ());
+  attributes.scheduler = scheduler.in (); // no need to dup
 
-      ACE_DEBUG((LM_DEBUG,ACE_TEXT("Created ec_impl\n")));
+  ACE_NEW (this->ec_impl,TAO_EC_Event_Channel (attributes));
 
-      this->event_channel =
-        this->ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ECConfig");
-      return 1;
-    }
-  ACE_ENDTRY;
+  ACE_DEBUG((LM_DEBUG,ACE_TEXT("Created ec_impl\n")));
 
-  return 0;
+  this->event_channel =
+    this->ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
-template <class SCHED_STRAT> int
-ECConfig<SCHED_STRAT>::connectConsumers()
+template <class SCHED_STRAT> void
+ECConfig<SCHED_STRAT>::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_TRY
+  RtecEventComm::EventSet event(1);
+  event.length(1);
+
+  ACE_DEBUG((LM_DEBUG,"TimeoutConsumers to connect: %d\n",this->testcfgs.size()));
+  this->suppliers.size(this->testcfgs.size());
+  for (size_t i=0; i<this->testcfgs.size(); ++i)
     {
-      // The canonical protocol to connect to the EC
-      RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        this->event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_NEW (this->suppliers[i], TimeoutConsumer ());
 
-      ACE_DEBUG ((LM_DEBUG, "connecting consumers\n"));
-      for (size_t i=0; i<this->consumer_cfgs.size() && i<this->testcfgs.size(); ++i)
-        {
-          ACE_NEW_RETURN(this->consumers[i],Consumer(i),1);
+      event[0].header.type   = ACE_ES_EVENT_UNDEFINED+this->testcfgs[i]->type;
+      event[0].header.source = i; //supplier_id
+      event[0].header.ttl    = 1;
 
-          RtecScheduler::handle_t hndl = this->consumer_cfgs[i];
-          test_config_t *tcfg = this->testcfgs[i];
+      std::ostringstream entry_prefix;
+      entry_prefix << "TimeoutConsumer " << i;
 
-          ACE_ConsumerQOS_Factory consumer_qos;
-          //consumer_qos.start_disjunction_group ();
-          // The types in the range [0,ACE_ES_EVENT_UNDEFINED) are
-          // reserved for the EC...
-          consumer_qos.insert_type (ACE_ES_EVENT_UNDEFINED+tcfg->type,
-                                    hndl);
-
-          RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy =
-            consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          RtecEventComm::PushConsumer_var consumerv =
-            consumers[i]->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          supplier_proxy->connect_push_consumer (consumerv.in (),
-                                                 consumer_qos.get_ConsumerQOS ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+      ACE_DEBUG((LM_DEBUG,"TimeoutConsumer.connect() for %s\n",entry_prefix.str().c_str()));
+      this->suppliers[i]->connect (this->test_done,
+                                   this->scheduler.in(),
+                                   entry_prefix.str().c_str(),
+                                   this->periods[i], //period
+                                   this->importances[i], //importance
+                                   this->crits[i], //criticality
+                                   i, //supplier_id
+                                   this->testcfgs[i]->num_entities, //to_send
+                                   event, //event set
+                                   this->event_channel.in()
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ECConfig");
-      return 1;
-    }
-  ACE_ENDTRY;
-
-  return 0; //successful run
 }
 
-template <class SCHED_STRAT> int
-ECConfig<SCHED_STRAT>::connectSuppliers()
+template <class SCHED_STRAT> void
+ECConfig<SCHED_STRAT>::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_TRY
+  ACE_DEBUG((LM_DEBUG,"Consumers to connect: %d\n",this->testcfgs.size()));
+  this->consumers.size(this->testcfgs.size());
+  for (size_t i=0; i<this->testcfgs.size(); ++i)
     {
-      // The canonical protocol to connect to the EC
-      RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_NEW (this->consumers[i], Consumer ());
 
-      ACE_DEBUG ((LM_DEBUG, "connecting suppliers\n"));
-      supplier_ids.size(supplier_cfgs.size());
-      consumer_proxys.size(supplier_cfgs.size());
-      for (size_t i=0; i<supplier_cfgs.size() && i<this->testcfgs.size(); ++i)
-        {
-          ACE_NEW_RETURN(this->suppliers[i],Supplier(),1);
+      std::ostringstream entry_prefix;
+      entry_prefix << "Consumer " << i;
 
-          RtecScheduler::handle_t hndl = this->supplier_cfgs[i];
-          test_config_t *tcfg = this->testcfgs[i];
-
-          RtecEventComm::EventSourceID supplier_id = i;
-          this->supplier_ids[i] = supplier_id;
-
-          ACE_SupplierQOS_Factory supplier_qos;
-          supplier_qos.insert (supplier_id,
-                               ACE_ES_EVENT_UNDEFINED+tcfg->type,
-                               hndl,
-                               1); // number of calls, but what does that mean?
-
-          consumer_proxys[i] =
-            supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          RtecEventComm::PushSupplier_var supplier =
-            suppliers[i]->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          //PROBLEM: Occasional segfault here:
-          consumer_proxys[i]->connect_push_supplier (supplier.in (),
-                                                     supplier_qos.get_SupplierQOS ()
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-
-      ACE_DEBUG ((LM_DEBUG, "suppliers connected\n"));
+      ACE_DEBUG((LM_DEBUG,"Consumer.connect() for %s\n",entry_prefix.str().c_str()));
+      //don't set the RT_Info values
+      this->consumers[i]->connect (this->scheduler.in(),
+                                   entry_prefix.str().c_str(),
+                                   i, //consumer id
+                                   ACE_ES_EVENT_UNDEFINED+this->testcfgs[i]->type, //type
+                                   /*
+                                   this->periods[i],
+                                   this->importances[i],
+                                   this->crits[i],
+                                   */
+                                   this->event_channel.in()
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
-  ACE_CATCHANY
+}
+
+template <class SCHED_STRAT> void
+ECConfig<SCHED_STRAT>::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+{
+  for (size_t i = 0; i < this->suppliers.size(); ++i)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ECConfig");
-      return 1;
-    }
-  ACE_ENDTRY;
+      this->suppliers[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
 
-  return 0;
+      delete this->suppliers[i];
+      this->suppliers[i] = 0;
+    }
+}
+
+template <class SCHED_STRAT> void
+ECConfig<SCHED_STRAT>::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
+{
+  for (size_t i = 0; i < this->consumers.size(); ++i)
+    {
+      this->consumers[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      delete this->consumers[i];
+      this->consumers[i] = 0;
+    }
 }
 
 template <class SCHED_STRAT> void
@@ -505,6 +465,32 @@ ECConfig<SCHED_STRAT>::print_RT_Infos (ACE_Array<RtecScheduler::handle_t> cfg_se
     }
   ACE_ENDTRY;
 
+}
+
+template <class SCHED_STRAT> ACE_THR_FUNC_RETURN
+ECConfig<SCHED_STRAT>::run_orb(void *data)
+{
+  //ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      ACE_DEBUG((LM_DEBUG, "ORB thread: Casting %x\n",data));
+
+      CORBA::ORB_var orb = *(ACE_reinterpret_cast(CORBA::ORB_var*,data));
+
+      ACE_DEBUG((LM_DEBUG, "ORB thread: Running orb\n"));
+
+      orb->run();
+      //this method returns when orb->shutdown() is called; then thread exits
+
+      ACE_DEBUG((LM_DEBUG, "ORB thread: Shutdown\n"));
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "ECConfig ORB thread");
+    }
+  ACE_ENDTRY;
+
+  return 0;
 }
 
 } /* namespace TestConfig */

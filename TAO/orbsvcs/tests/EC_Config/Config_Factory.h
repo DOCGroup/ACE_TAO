@@ -37,6 +37,10 @@ namespace ConfigFactory {
 class Config_Factory : ACE_Service_Object
 {
 public:
+  ///Constructor
+  Config_Factory (void) {}
+
+  ///Destructor
   virtual ~Config_Factory (void);
 
   /// Create and destroy the TestConfig module.
@@ -73,7 +77,7 @@ public:
   /// Constructor
   Default_Config_Factory (void);
 
-  /// destructor...
+  /// Destructor...
   virtual ~Default_Config_Factory (void);
 
   /// Helper function to register the default factory into the service
