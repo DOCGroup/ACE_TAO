@@ -107,9 +107,9 @@
   <implementation id="BasicSP-BMClosedED-mdd">
     <name>BasicSP-BMClosedED-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
+    <artifact>BasicSP-BMClosedED_exec</artifact>
+    <artifact>BasicSP-BMClosedED_stub</artifact>
     <artifact>BasicSP-BMClosedED_svnt</artifact>
-    <artifact>BasicSP-BMClosedED_stub</artifact>
-    <artifact>BasicSP-BMClosedED_stub</artifact>
     <!--
     <execParameter></execParameter>
     <deployRequirement></deployRequirement>
