@@ -143,11 +143,12 @@ $(LIB): $(OBJS)
 GENERATED_DIRTY    =<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%if(custom_type->input_file->output_files)%><%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%><%endif%><%endfor%><%endfor%>
 <%foreach(custom_types)%>
 <%if(custom_types->libpath)%>
-DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
-LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
-SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
-LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
-PATH              := $(PATH):<%custom_type->libpath%>
+# These may be needed, but some versions of make do not accept this syntax
+#DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
+#LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
+#SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
+#LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
+#PATH              := $(PATH):<%custom_type->libpath%>
 
 <%endif%>
 <%foreach(custom_type->input_files)%>
@@ -159,9 +160,11 @@ PATH              := $(PATH):<%custom_type->libpath%>
 <%endfor%>
 <%endfor%>
 .PRECIOUS: $(GENERATED_DIRTY)
-all: $(GENERATED_DIRTY)
+$(OBJS): $(GENERATED_DIRTY)
 
 <%endif%>
+generated: $(GENERATED_DIRTY)
+
 <%foreach(configurations)%>
 <%if(tempinc)%>
 all: $(TEMPINCDIR)

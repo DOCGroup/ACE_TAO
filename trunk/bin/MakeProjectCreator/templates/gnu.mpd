@@ -366,7 +366,8 @@ GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_o
 <%endfor%>
 ifneq ($(GENERATED_DIRTY),)
 .PRECIOUS: $(GENERATED_DIRTY)
-all: $(GENERATED_DIRTY)
+$(addprefix $(VDIR), $(OBJS)): $(GENERATED_DIRTY)
+$(VSHOBJS): $(GENERATED_DIRTY)
 endif
 
 <%endif%>
