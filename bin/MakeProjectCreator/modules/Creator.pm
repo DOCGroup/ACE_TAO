@@ -566,6 +566,9 @@ sub fill_type_name {
     $name =~ s/\*$/$post/;
     $name =~ s/\*/$mid/g;
 
+    ## Remove any trailing underscore
+    $name =~ s/_$//;
+
     ## If any one word is capitalized then capitalize each word
     if ($name =~ /[A-Z][0-9a-z_]+/) {
       ## Do the first word
