@@ -58,6 +58,8 @@ protected:
 private:
   TAO_Internal ();
   // Private CTOR prevents this class from being instantiated.
+
+ static int service_open_count_;
 };
 
 #if defined(__ACE_INLINE__)

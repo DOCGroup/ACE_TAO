@@ -11,8 +11,6 @@
 #include "tao/default_server.h"
 #include "tao/default_client.h"
 
-ACE_Thread_Mutex TAO_Internal::orbinit_lock_;
-ACE_Thread_Mutex TAO_Internal::service_lock_;
 int TAO_Internal::service_open_count_ = 0;
 
 int
