@@ -120,7 +120,7 @@ public:
 	case 'Q' :
 	case 'q' :
 	  return -1;
-	  break;
+	  ACE_NOTREACHED(break);
 	  default :
 	  cout << "unrecognized command" << endl;
 	}
