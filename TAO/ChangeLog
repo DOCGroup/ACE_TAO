@@ -1,3 +1,138 @@
+Wed Jul 16 00:33:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>		
+
+	* tao/TAO_Internal.cpp: 
+
+	  Called the RTScheduler_Loader::init () method to initialize
+	  RTScheduler framework.
+
+	* tao/RTScheduling/Current.cpp:
+
+	  Added new debug statements and ensured the other debug
+	  statements are printed when debug level > 0. 
+
+	  In delete_all_currents method initialized the
+	  tss->rtscheduler_current_impl_ to
+	  tss->rtscheduler_previous_current_impl_ to make sure that tss is
+	  restored to the state of the previous DT that was serviced by
+	  the same native thread.
+
+	* tao/RTScheduling/RTScheduling_Interceptor:	
+
+	  Added a check to ensure that the scheduler returns a non-null
+	  Guid when a DT request is received.
+
+	  Ensured that the debug statements are printed when debug level >
+	  0.
+
+Wed Jul 16 00:03:40 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>	
+
+	Tests for the Dynamic Scheduling framework
+
+	* tests/RTScheduling/Scheduler.h: 
+	* tests/RTScheduling/Scheduler.cpp: 	
+
+	  The scheduler used in the following tests. 
+	
+	VoidData
+	--------
+
+	* tests/RTScheduling/VoidData/test.pidl:
+	* tests/RTScheduling/VoidData/testC.h: 
+	* tests/RTScheduling/VoidData/testC.cpp: 	
+	* tests/RTScheduling/VoidData/testC.i: 		
+	* tests/RTScheduling/VoidData/test.h: 
+	* tests/RTScheduling/VoidData/test_client.cpp: 
+	* tests/RTScheduling/VoidData/README: 	
+	* tests/RTScheduling/VoidData/Makefile: 
+
+	  A simple test to test the passing of CORBA::VoidData to a
+	  method.
+
+	Current
+	-------
+	
+	* tests/RTScheduling/Current/test.cpp: 
+	* tests/RTScheduling/Current/Thread_Task.cpp: 
+	* tests/RTScheduling/Current/Thread_Task.h: 
+	* tests/RTScheduling/Current/Makefile: 
+	* tests/RTScheduling/Current/README: 
+
+	  This is a test of the various operations in the
+	  RTScheduling::Current Interface used to create and manage
+	  DTs. The following are the operations and cases tested:
+
+          1. Out of context end_scheduling_segment () invocation.
+          2. Out of context update_scheduling_segment () invocation.
+          3. Creation of DT's consisting of nested scheduling segments
+	     using begin_scheduling_segment() and end_scheduling_segment()
+	     operations.
+	  4. Retreiving DT Guid with Current::id () method.
+          5. Listing the names of the scheduling segments using
+             current_scheduling_segment_names ().
+
+	DT_Spawn
+	--------
+	
+	* tests/RTScheduling/DT_Spawn/Thread_Action.h: 
+	* tests/RTScheduling/DT_Spawn/test.cpp: 
+	* tests/RTScheduling/DT_Spawn/Makefile: 
+	* tests/RTScheduling/DT_Spawn/README: 
+	     
+ 	  This is a test for forking new DTs from existing DTs using
+	  Current::spawn (). A local DT is created with
+	  Current::begin_scheduling_segment() and
+	  Current::end_scheduling_segment (). A new DT is spawned within
+	  the context of the DT created. The Thread_Action::do () method
+	  is called when the spawned DT is activated. This method provides
+	  a point of entry for the spawned DT. This test also shows that
+	  the DT spawn should be made only within the context of another
+	  DT.
+
+
+	Thread_Cancel
+	-------------
+
+	* tests/RTScheduling/Thread_Cancel/test.cpp: 
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp: 
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.h: 
+	* tests/RTScheduling/Thread_Cancel/README: 
+	* tests/RTScheduling/Thread_Cancel/Makefile: 	
+	
+          This test illustrates the DT cancel mechanism when the DT's are
+	  local (ie. DT's do not span multiple nodes). A reference to each
+	  DT is stored. These references are then used to cancel the
+	  corresponding DT. When the DT is cancelled it throws the
+	  CORBA::THREAD_CANCELLED exception.
+
+	Scheduling_Interceptor
+  	----------------------
+	
+	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp: 
+	* tests/RTScheduling/Scheduling_Interceptor/test_server.cpp: 
+	* tests/RTScheduling/Scheduling_Interceptor/test.idl: 
+	* tests/RTScheduling/Scheduling_Interceptor/Makefile: 
+	* tests/RTScheduling/Scheduling_Interceptor/README: 
+
+	  This test creates a distributed DT ie. a DT that spans multiple
+	  hosts/processes. In this test they span two hosts/processes. The
+	  DT makes a one-way and a two-way invocations. In a one-way
+	  invocation a new DT is created to continue servicing the
+	  request. In the case of a two-way invocation the same DT
+	  executes on the second host/process.
+
+	  The DT information is propagated across hosts/processes via the
+	  service contexts.
+
+	  This test also illustrates the propagation of the
+	  CORBA::THREAD_CANCELLED exception to the point of origin of the
+	  DT when it is cancelled on a remote host/process it is currently
+	  executing in.
+
+	* tests/Makefile: 
+	* tests/RTScheduling/Makefile: 
+
+	  Corresponding Makefiles to compile all the RTScheduling tests.
+
 Tue Jul 15 16:12:56 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/run_test.pl:
