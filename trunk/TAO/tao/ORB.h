@@ -457,17 +457,16 @@ protected:
   // Implements the run routine
 
 private:
-  CORBA_Object_ptr resolve_commandline_ref (const char *& init_ref);
-  // Resolve the Initial reference according to the commandline
-  // option -ORBInitRef <ObjectID>:<IOR>
-
+  
   CORBA_Object_ptr resolve_service (CORBA::String service_name,
-				    ACE_Time_Value *timeout);
+				    ACE_Time_Value *timeout,
+                                    CORBA::Environment& ACE_TRY_ENV);
   // Resolve the service name.
-
-  CORBA_Object_ptr resolve_trading_service (ACE_Time_Value *timeout);
+  
+  CORBA_Object_ptr resolve_trading_service (ACE_Time_Value *timeout,
+                                            CORBA::Environment& ACE_TRY_ENV);
   // Resolve the trading object reference.
-
+  
   int multicast_query (char *buf,
 		       const char *service_name,
 		       u_short port,
@@ -475,17 +474,18 @@ private:
 
   // returns and IOR string, the client is responsible for freeing
   // memory!
-
+  
   CORBA_Object_ptr multicast_to_service (const char *service_name,
                                          u_short port,
-                                         ACE_Time_Value *timeout);
+                                         ACE_Time_Value *timeout,
+                                         CORBA::Environment& ACE_TRY_ENV);
   // Resolve the refernce of a service of type <name>.
-
+  
   CORBA::Object_ptr file_string_to_object (const char* filename,
                                            CORBA::Environment& env);
   // Read an IOR from a file and then parse it, returning the object
   // reference.
-
+  
   CORBA::Object_ptr iiop_string_to_object (const char* url,
                                            CORBA::Environment& env);
   // Read an IOR from a file and then parse it, returning the object
