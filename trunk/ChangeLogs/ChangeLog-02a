@@ -1,3 +1,10 @@
+Sat Apr 13 17:16:10 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.h:
+	* examples/ASX/CCM_App/CCM_App.cpp:
+		
+	  Added include of svc_export.h.
+
 Sat Apr 13 15:42:03 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/DLL_Test.{h,cpp}:

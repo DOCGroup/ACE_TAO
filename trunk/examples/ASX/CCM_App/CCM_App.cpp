@@ -5,6 +5,7 @@
 #include "ace/Stream.h"
 #include "ace/Task.h"
 #include "ace/Module.h"
+#include "ace/svc_export.h"
 
 ACE_RCSID(CCM_App, CCM_App, "$Id$")
 
