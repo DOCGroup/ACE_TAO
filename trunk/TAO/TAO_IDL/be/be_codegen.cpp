@@ -198,7 +198,7 @@ TAO_CodeGen::start_client_header (const char *fname)
     {
       *this->client_header_ << "\n";
     }
-    
+
   // We must include all the client headers corresponding to
   // IDL files included by the current IDL file.
   // We will use the included IDL file names as they appeared
@@ -1600,10 +1600,36 @@ TAO_CodeGen::gen_skel_src_includes (void)
       return;
     }
 
+  switch (be_global->lookup_strategy ())
+    {
+      case BE_GlobalData::TAO_DYNAMIC_HASH:
+        {
+          this->gen_standard_include (this->server_skeletons_,
+                                      "tao/PortableServer/Operation_Table_Dynamic_Hash.h");
+        }
+        break;
+      case BE_GlobalData::TAO_LINEAR_SEARCH:
+        {
+          this->gen_standard_include (this->server_skeletons_,
+                                      "tao/PortableServer/Operation_Table_Linear_Search.h");
+        }
+        break;
+      case BE_GlobalData::TAO_BINARY_SEARCH:
+        {
+          this->gen_standard_include (this->server_skeletons_,
+                                      "tao/PortableServer/Operation_Table_Binary_Search.h");
+        }
+        break;
+      case BE_GlobalData::TAO_PERFECT_HASH:
+        {
+          this->gen_standard_include (this->server_skeletons_,
+                                      "tao/PortableServer/Operation_Table_Perfect_Hash.h");
+        }
+        break;
+    }
+
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/ForwardRequestC.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/Operation_Table.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Upcall_Command.h");
   this->gen_standard_include (this->server_skeletons_,
