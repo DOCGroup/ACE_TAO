@@ -199,22 +199,6 @@ SOURCE=.\Base_Transport_Property.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_ORBInitializer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_Policy_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_PolicyFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Bind_Dispatcher_Guard.cpp
 # End Source File
 # Begin Source File
@@ -260,14 +244,6 @@ SOURCE=.\CodecFactory.cpp
 # Begin Source File
 
 SOURCE=.\CodecFactory_ORBInitializer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Cache_Manager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Descriptor_Interface.cpp
 # End Source File
 # Begin Source File
 
@@ -827,6 +803,14 @@ SOURCE=.\Transport.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport_Cache_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Descriptor_Interface.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport_Mux_Strategy.cpp
 # End Source File
 # Begin Source File
@@ -915,22 +899,6 @@ SOURCE=.\Base_Transport_Property.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_Policy_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_PolicyFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Bind_Dispatcher_Guard.h
 # End Source File
 # Begin Source File
@@ -980,14 +948,6 @@ SOURCE=.\CodecFactory.h
 # Begin Source File
 
 SOURCE=.\CodecFactory_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Cache_Manager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Descriptor_Interface.h
 # End Source File
 # Begin Source File
 
@@ -1635,6 +1595,14 @@ SOURCE=.\Transport.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport_Cache_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Descriptor_Interface.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport_Mux_Strategy.h
 # End Source File
 # Begin Source File
@@ -1715,14 +1683,6 @@ SOURCE=.\Base_Transport_Property.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_Policy_i.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
@@ -1744,14 +1704,6 @@ SOURCE=.\cdr.i
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Cache_Manager.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Descriptor_Interface.inl
 # End Source File
 # Begin Source File
 
@@ -2240,6 +2192,14 @@ SOURCE=.\TimeBaseS.i
 # Begin Source File
 
 SOURCE=.\TimeBaseS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Cache_Manager.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Descriptor_Interface.inl
 # End Source File
 # Begin Source File
 
