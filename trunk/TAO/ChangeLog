@@ -1,7 +1,11 @@
+Fri Jul 30 17:29:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* NEWS:  Added TAO 1.4.2 noteworthy items.
+
 Thu Jul 29 08:39:17 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_redef.cpp:
-        
+
           Fixed bug in handling forward declared eventtypes, which
           was causing bogus "illegal redefinition" errors.
 

@@ -1,3 +1,63 @@
+USER VISIBLE CHANGES BETWEEN TAO-1.4.1 and TAO-1.4.2
+====================================================
+
+. Overall
+  - Support for g++ 3.4.1.
+  - Support added for latest HP aCC compiler.
+  - Improved Doxygen documentation.
+  - Reduced header file dependencies, which should speedup compilation
+    and help minimize static footprint.
+
+. ORB
+  - Fixed memory leak in DII exception handling.
+  - Fixed insertion of label values when creating a union type code
+    with create_union_tc().
+  - Support for retrieving AMI and AMH reply handlers from a local
+    memory pool.
+  - Fixed location forwarding to collocated objects.
+
+. POA
+   It is now possible to pass user-defined policies unknown to the
+    POA with corresponding registered policy factories to the
+    POA::create_POA() method via its policy list parameter, as
+    required by the CORBA specification.
+
+. TAO_IDL
+  - Closed security hole on platforms that support mkstemp() function.
+  - Fixed potential buffer overrun problem.
+  - A number of scoped name bugs have been fixed, including some
+    workarounds for MSVC++ 6 scope resolution problems.
+  - Fixed mixing of *Implicit and *Explicit inheritance lines when the
+    there is a chain of inheritance in component homes.
+  - Improved error checking of component and home declarations.
+  - Code generation for valuetypes that support one or more abstract
+    interfaces.
+  - Added new "-GA" option that causes CORBA::Any operators and
+    TypeCode bodies to be generated in a separate "fooA.cpp" file.
+    Helps reduce footprint for applications that do not use Anys or
+    TypeCodes.
+  - Added required _downcast() method to generated value factories.
+  - Disabled generation of implementation class for abstract
+    interfaces.
+  - Removed support for reading an IDL file from stdin.  This feature
+    is legacy code used for debugging the IDL compiler in the early
+    days of its implementation, and is not useful in application
+    situations.
+  - Generated stub/skeleton inline files now end in ".inl" instead of
+    ".i".  The latter is generally used as the extension for
+    pre-processed C sources.
+  - Process multiple IDL files in a single execution by iteration
+    in a single process, rather than spawing a process for each
+    file as before.
+  - Added the remaining spec-defined sequences of predefined types
+    to the CORBA namespace in TAO.
+
+. Added CPU utilization load monitor to TAO's Cygnus load balancer.
+
+. Added basic CSIv2 support, which is the latest CORBA Security
+  architecture specification.  Advanced CSIv2 features will be
+  available in the next beta.
+
 USER VISIBLE CHANGES BETWEEN TAO-1.4 and TAO-1.4.1
 ==================================================
 
@@ -12,7 +72,7 @@ ORB
 
 . Moved the above ostream insertion operators into the
   CORBA namespace, so they cannot be accidentally hidden by an
-  application. 
+  application.
 
 . Moved the declaration of Any operators for some ORB
   types so that the corresponding definitions may
@@ -50,16 +110,16 @@ ORB
 
 . Fixed memory leaks in servers when the ORB is operating in a
   thread-per-connection  mode. This problem showed up when clients
-  keep connecting and disconnecting from the servers. 
+  keep connecting and disconnecting from the servers.
 
 . Fixed memory leaks in AMI clients that connect to a servers over
-  unreliable connections that keeps getting dropped. 
+  unreliable connections that keeps getting dropped.
 
-. Fixed a race connection in Any_Impl implementation. 
+. Fixed a race connection in Any_Impl implementation.
 
 . Fixed a byte order problem with DSI gateways
 
-. Added support for OVATION to work with this BFO of TAO. 
+. Added support for OVATION to work with this BFO of TAO.
 
 IDL COMPILER
 -------------
@@ -109,7 +169,7 @@ IDL COMPILER
 
 . Fixed code generation for bounded strings and wstrings
   when they appear anonymously (without a typedef) as operation
-  parameters. 
+  parameters.
 
 . Fixed code generation of flat names for AMI-related types.
 
@@ -165,10 +225,10 @@ IFR:
 
 . Added some method overrides to disambiguate multiple inheritance
   problems some compilers would have in classes added to support CORBA
-  3.0 extensions. 
+  3.0 extensions.
 
 . Fixed bugs in entering attributes of abstract and local interfaces,
-  and in querying for attributes of components. 
+  and in querying for attributes of components.
 
 . Added a "-m" option to IFR_Service to enable multicast discovery of
   the service.
@@ -183,14 +243,14 @@ NOTIFICATION SERVICE:
 . Corrected the implementation to add the caller's <subscribed_types>
   to the Admin Object's types. This solves the problem that if a
   proxy's connect_structured_push_consumer() is called *AFTER* the
-  proxy's subscription_change(), then the subscriptions do not work. 
+  proxy's subscription_change(), then the subscriptions do not work.
 
 . Added the -NoUpdates option to the Notification svc.conf
   options. If this option is specified, the
-  subscription_change/offer_change messages are NOT sent to proxy 
+  subscription_change/offer_change messages are NOT sent to proxy
   objects.  This option is useful to turn off entire updates for
   applications that do not reply on subscription_change/offer_change
-  messages. 
+  messages.
 
 
 USER VISIBLE CHANGES BETWEEN TAO-1.3.6 and TAO-1.4
@@ -210,7 +270,7 @@ IDL COMPILER:
 . Readded the generation of _unchecked_narrow () back into the stub
   code since it is required by the latest OMG CORBA specification.
 
-CORE ORB 
+CORE ORB
 -------
 
 . SCIOP endpoints are not created by default. They need explicit
@@ -218,7 +278,7 @@ CORE ORB
 
 . Fixed a bug that caused the ORB to dump a core when server side
   interceptors returns an exception and if the operartion parameters
-  contains a sequence an out parameter. 
+  contains a sequence an out parameter.
 
 . Fixed a bug that caused extraction of basic data types that are
   aliased from an Any.
@@ -234,7 +294,7 @@ CORE ORB
 
 . Added an option, -ORBDisableRTCollocation which allows users to
   disable the RT collocation technique used by TAO and fallback on the
-  default collocation technique used for the vanilla ORB. 
+  default collocation technique used for the vanilla ORB.
 
 . Prevent the TP_Reactor used within TAO from exiting when it receives
   a EINTR during select ().
@@ -243,18 +303,17 @@ ORB SERVICES
 ------------
 
 . Added new security variable so that libTAO_Security could be built
-  independently of libTAO_SSLIOP, and set the default to true. 
+  independently of libTAO_SSLIOP, and set the default to true.
 
 . An initial implementation of the FTCORBA spec has been added to
   TAO. This release features an intial cut of ReplicationManager,
-  FaultNotifier, and a FaultDetector. Please see 
+  FaultNotifier, and a FaultDetector. Please see
 
   $TAO_ROOT/orbsvcs/tests/FT_App/README
 
   for a simple example that uses the different FTCORBA features that
-  have been implemented in TAO. 
+  have been implemented in TAO.
 
 . Fixed a bug, in PG_ObjectGroupManager::remove_member () methods
   which caused the group entry to be available in the location_map
-  when a member of the object group is removed. 
-
+  when a member of the object group is removed.
