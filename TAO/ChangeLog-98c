@@ -1,3 +1,15 @@
+1998-05-15  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* orbsvcs/orbscvs/Concurrency/CC_Lock:
+	  Added some debugging statements
+	* orbsvcs/tests/Concurrency/CC_client.cpp
+	  orbsvcs/tests/Concurrency/CC_client.h
+	  orbsvcs/tests/Concurrency/CC_naming_service.cpp
+	  orbsvcs/tests/Concurrency/CC_naming_service.h
+	  orbsvcs/tests/Concurrency/CC_tests.cpp
+	  orbsvcs/tests/Concurrency/CC_tests.h:
+	  Added more tests and diagnostics
+
 Fri May 15 11:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile: re-enabled EC_Gateway build.  The
