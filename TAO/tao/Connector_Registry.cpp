@@ -7,7 +7,7 @@
 #include "tao/Endpoint.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
-#include "tao/Base_Connection_Property.h"
+#include "tao/Connection_Descriptor_Interface.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"
@@ -264,11 +264,12 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
 
 
 int
-TAO_Connector_Registry::connect (TAO_Endpoint *endpoint,
+TAO_Connector_Registry::connect (TAO_Connection_Descriptor_Interface *desc,
                                  TAO_Transport *&transport,
                                  ACE_Time_Value *max_wait_time,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
+  TAO_Endpoint *endpoint = desc->endpoint ();
   if (endpoint == 0)
     return -1;
 
@@ -279,10 +280,7 @@ TAO_Connector_Registry::connect (TAO_Endpoint *endpoint,
   if (connector == 0)
       return -1;
 
-  // Compose the Base connection property object
-  TAO_Base_Connection_Property conn_property (endpoint);
-
-  return connector->connect (&conn_property,
+  return connector->connect (desc,
                              transport,
                              max_wait_time,
                              ACE_TRY_ENV);

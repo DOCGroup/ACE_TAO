@@ -35,6 +35,7 @@ class ACE_Addr;
 class ACE_Reactor;
 class TAO_ORB_Core;
 
+class TAO_Connection_Descriptor_Interface;
 class TAO_Stub;
 class TAO_MProfile;
 class TAO_Resource_Factory;
@@ -75,7 +76,7 @@ public:
   // For this list of preconnections call the connector specific
   // preconnect method for each preconnection.
 
-  int connect (TAO_Endpoint *endpoint,
+  int connect (TAO_Connection_Descriptor_Interface *desc,
                TAO_Transport *&transport,
                ACE_Time_Value *max_wait_time,
                CORBA::Environment &ACE_TRY_ENV);

@@ -2361,6 +2361,25 @@ SOURCE=.\Priority_Mapping_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Private_Connection_Descriptor.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3796,6 +3815,10 @@ SOURCE=.\Priority_Mapping_Manager.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Private_Connection_Descriptor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile.h
 # End Source File
 # Begin Source File
@@ -4413,6 +4436,10 @@ SOURCE=.\Priority_Mapping.i
 # Begin Source File
 
 SOURCE=.\Priority_Mapping_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Private_Connection_Descriptor.inl
 # End Source File
 # Begin Source File
 

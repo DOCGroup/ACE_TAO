@@ -15,6 +15,8 @@
 #include "tao/Bind_Dispatcher_Guard.h"
 #include "tao/Endpoint.h"
 #include "tao/RT_Policy_i.h"
+#include "tao/Base_Connection_Property.h"
+#include "tao/Private_Connection_Descriptor.h"
 
 #include "tao/Messaging_Policy_i.h"
 #include "tao/GIOP_Utils.h"
@@ -232,8 +234,24 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 	  this->transport_->idle ();
 	}
 
+      // Create descriptor for the connection we need to find.
+      TAO_Connection_Descriptor_Interface *desc;
+      TAO_Base_Connection_Property default_desc (this->endpoint_);
+      desc = &default_desc;
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+      // RTCORBA::PrivateConnectionPolicy processing.
+      TAO_Private_Connection_Descriptor 
+        private_desc (this->endpoint_,
+                      ACE_reinterpret_cast (long, this->stub_));
+      if (this->endpoint_selection_state_.private_connection_)
+        desc = &private_desc;
+
+#endif /* TAO_HAS_RT_CORBA == 1	*/
+
       // Obtain	a connection.
-      int result = conn_reg->connect (this->endpoint_,
+      int result = conn_reg->connect (desc,
 				      this->transport_,
 				      this->max_wait_time_,
 				      ACE_TRY_ENV);
