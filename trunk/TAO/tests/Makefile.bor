@@ -31,7 +31,6 @@ DIRS = \
 	IORManipulation \
 	Leader_Followers \
         LongUpcalls \
-        LongWrites \
 	MProfile \
         MProfile_Forwarding \
 	MT_Client \
