@@ -1,3 +1,9 @@
+Mon Jul 28 18:29:38 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/RB_Tree.cpp:
+          Added ACE_UNUSED_ARG to dump_i and dump_node_i to silence a
+          warning when ACE_HAS_DUMP is not defined.
+
 Mon Jul 28 13:01:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/UUID.h:

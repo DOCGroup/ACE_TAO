@@ -828,6 +828,8 @@ dump_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *node) const
     {
       ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nNULL POINTER (BLACK)\n")));
     }
+#else /* !ACE_HAS_DUMP */
+  ACE_UNUSED_ARG (node);
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -845,6 +847,8 @@ dump_node_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> &node) const
                            ? "RED" : "BLACK";
 
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT (" color=[%s]\n"), color_str));
+#else /* !ACE_HAS_DUMP */
+  ACE_UNUSED_ARG (node);
 #endif /* ACE_HAS_DUMP */
 }
 
