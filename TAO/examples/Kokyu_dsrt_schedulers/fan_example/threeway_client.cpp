@@ -248,7 +248,7 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): main thread prio is %d\n", prio));
 
-  CPULoad::calibrate(10);
+  CPULoad::calibrate(5);
   Object_ID oid = ACE_OBJECT_COUNTER->increment();
 
 //print out the start time of the program.
