@@ -18,4 +18,4 @@ try_lock test intention_write;
 unlock test intention_write;
 create ls2;
 unlock ls2 write;
-exception IDL:CosConcurrencyControl/LockNotHeld:1.0;
+exception IDL:omg.org/CosConcurrencyControl/LockNotHeld:1.0;
