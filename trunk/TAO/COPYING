@@ -1,7 +1,7 @@
-Copyright and Licensing Information for ACE and TAO
+Copyright and Licensing Information for ACE(TM) and TAO(TM)
 
-[1]ACE and [2]TAO are copyrighted by [3]Douglas C. Schmidt and his
-[4]research group at [5]Washington University, Copyright (c)
+[1]ACE(TM) and [2]TAO(TM) are copyrighted by [3]Douglas C. Schmidt and
+his [4]research group at [5]Washington University, Copyright (c)
 1993-1999, all rights reserved.  Some portions of TAO are copyrighted
 by SunSoft (see the ./IIOP/lib/COPYING.sun file for more details).
 Likewise, TAO relies heavily on ACE, which is also copyrighted by
@@ -53,7 +53,16 @@ incorporation or modification of such submissions is entirely at the
 discretion of the moderators of the open source ACE and TAO projects
 or their designees.
 
-If you have any questions, please let [13]me know.
+The names ACE(TM), TAO(TM), and Washington University may not be used
+to endorse or promote products or services derived from this source
+without express written permission from Washington University.
+Further, products or services derived from this source may not be
+called ACE(TM) or TAO(TM), nor may the name Washington University
+appear in their names, without express written permission from
+Washington University.
+
+If you have any suggestions, additions, comments, or questions, please
+let [13]me know.
 
 [14]Douglas C. Schmidt
 _________________________________________________________________
