@@ -1,3 +1,10 @@
+Wed May  5 23:27:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_sys_stat.inl (fstat):
+
+	  Corrected static_cast<> typo in Win32 case.  Fixes Win32
+	  compile-time errors.
+
 Wed May  5 22:30:44 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Kokyu/tests/DSRT_MIF/MIF.cpp:
