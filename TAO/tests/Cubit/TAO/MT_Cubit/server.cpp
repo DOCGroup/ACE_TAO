@@ -27,7 +27,7 @@
 // static u_int num_of_objs = 2;
 // static u_int use_name_service = 1;
 // static u_int thread_per_rate = 0;
-// static u_int use_multiple_priority = 0; 
+// static u_int use_multiple_priority = 0;
 // static u_int run_utilization_test = 0;
 
 Globals::Globals (void)
@@ -62,8 +62,8 @@ Globals::parse_args (int argc,char **argv)
       switch (c)
       {
       case 'U':
-	run_utilization_test = 1;
-	break;
+        run_utilization_test = 1;
+        break;
       case 'm':
         use_multiple_priority = 1;
         break;
@@ -126,8 +126,8 @@ Cubit_Task::Cubit_Task (const char *args,
                         const char *orbname,
                         u_int num_of_objs,
                         ACE_Barrier *barrier,
-			Task_State *ts,
-			ACE_Thread_Manager *thr_mgr,
+                        Task_State *ts,
+                        ACE_Thread_Manager *thr_mgr,
                         u_int task_id)
   : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thr_mgr)),
     key_ ("Cubit"),
@@ -280,7 +280,7 @@ Cubit_Task::initialize_orb (void)
       // Do the argument parsing
 
       if (this->task_id_ == 0)
-        {      
+        {
           ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
           if (GLOBALS::instance ()->parse_args (argc,argv) < 0)
             return -1;
@@ -553,8 +553,8 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                               "internet",
                               1,
                               &start_barrier,
-			      ts,
-			      serv_thr_mgr,
+                              ts,
+                              serv_thr_mgr,
                               0), //task id 0.
                   -1);
 
@@ -675,13 +675,13 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                        GLOBALS::instance ()->hostname);
 
       ACE_NEW_RETURN (low_priority_task [i - 1],
-                      Cubit_Task (args, 
-				  "internet", 
-				  1, 
-				  &start_barrier, 
-				  ts,
-				  serv_thr_mgr,
-				  i),
+                      Cubit_Task (args,
+                                  "internet",
+                                  1,
+                                  &start_barrier,
+                                  ts,
+                                  serv_thr_mgr,
+                                  i),
                       -1);
 
       // Make the low priority task an active object.
@@ -764,11 +764,11 @@ Server::start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
 
   ACE_NEW_RETURN (util_task,
                   Util_Thread (ts,
-			       util_thr_mgr),
-		  0);
+                               util_thr_mgr),
+                  0);
 
   ACE_Sched_Priority priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-								ACE_SCOPE_THREAD);
+                                                                ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating Utilization Task with priority %d\n",
@@ -776,9 +776,9 @@ Server::start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
 
   // Make the high priority task an active object.
   if (util_task->activate (THR_BOUND | ACE_SCHED_FIFO,
-			   1,
-			   0,
-			   priority) == -1)
+                           1,
+                           0,
+                           priority) == -1)
     {
       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
                   "\tutil_task->activate failed"));
@@ -809,8 +809,8 @@ Server::start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
 //     switch (c)
 //       {
 //       case 'U':
-// 	run_utilization_test = 1;
-// 	break;
+//      run_utilization_test = 1;
+//      break;
 //       case 'm':
 //         use_multiple_priority = 1;
 //         break;
@@ -947,8 +947,8 @@ Server::start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
 //                               "internet",
 //                               1,
 //                               &start_barrier,
-// 			      ts,
-// 			      serv_thr_mgr,
+//                            ts,
+//                            serv_thr_mgr,
 //                               0), //task id 0.
 //                   -1);
 
@@ -1062,13 +1062,13 @@ Server::start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
 //                        hostname);
 
 //       ACE_NEW_RETURN (low_priority_task [i - 1],
-//                       Cubit_Task (args, 
-// 				  "internet", 
-// 				  1, 
-// 				  &start_barrier, 
-// 				  ts,
-// 				  serv_thr_mgr,
-// 				  i),
+//                       Cubit_Task (args,
+//                                "internet",
+//                                1,
+//                                &start_barrier,
+//                                ts,
+//                                serv_thr_mgr,
+//                                i),
 //                       -1);
 
 //       // Make the low priority task an active object.
@@ -1150,11 +1150,11 @@ Server::start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
 
 //   ACE_NEW_RETURN (util_task,
 //                   Util_Thread (ts,
-// 			       util_thr_mgr),
-// 		  0);
+//                             util_thr_mgr),
+//                0);
 
 //   ACE_Sched_Priority priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-// 								ACE_SCOPE_THREAD);
+//                                                              ACE_SCOPE_THREAD);
 
 //   ACE_DEBUG ((LM_DEBUG,
 //               "Creating Utilization Task with priority %d\n",
@@ -1162,9 +1162,9 @@ Server::start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
 
 //   // Make the high priority task an active object.
 //   if (util_task->activate (THR_BOUND | ACE_SCHED_FIFO,
-// 			   1,
-// 			   0,
-// 			   priority) == -1)
+//                         1,
+//                         0,
+//                         priority) == -1)
 //     {
 //       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
 //                   "\tutil_task->activate failed"));
@@ -1247,9 +1247,9 @@ main (int argc, char *argv[])
   if (GLOBALS::instance ()->run_utilization_test == 1)
     {
       if ((util_task = server.start_utilization (&util_thr_mgr, &ts)) == 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Error creating the utilization thread!\n"),
-			  1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Error creating the utilization thread!\n"),
+                          1);
 
       //
       // Time the utilization thread' "computation" to get %IdleCPU at the end of the test.
@@ -1272,13 +1272,13 @@ main (int argc, char *argv[])
       timer_.start ();
       // execute computation.
       for (int k=0; k < 10000; k++)
-	util_task->computation ();
+        util_task->computation ();
       timer_.stop ();
       timer_.elapsed_time (delta_t);
       // Store the time in milli-seconds.
-      util_task_duration = ((double)delta_t.sec () * 
-			    ACE_ONE_SECOND_IN_USECS + 
-			    (double)delta_t.usec ())  / 10000;
+      util_task_duration = ((double)delta_t.sec () *
+                            ACE_ONE_SECOND_IN_USECS +
+                            (double)delta_t.usec ())  / 10000;
 #endif /* !CHORUS */
     }
 
@@ -1304,46 +1304,46 @@ main (int argc, char *argv[])
   if (GLOBALS::instance ()->run_utilization_test == 1)
     {
       util_task->done_ = 1;
-    
+
       // This will wait for the utilization thread to finish.
       util_thr_mgr.wait ();
-    
+
       ts.timer_.elapsed_time (total_elapsed);
 
       total_util_task_duration = util_task_duration * util_task->get_number_of_computations ();
-    
-      total_latency = (total_elapsed.sec () * 
-		       ACE_ONE_SECOND_IN_USECS + 
-		       (double)total_elapsed.usec ());
-			      
+
+      total_latency = (total_elapsed.sec () *
+                       ACE_ONE_SECOND_IN_USECS +
+                       (double)total_elapsed.usec ());
+
       total_latency_servants = total_latency - total_util_task_duration;
-    
-      ACE_DEBUG ((LM_DEBUG, 
-		  "-------------------------- Stats -------------------------------\n"));
 
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) UTILIZATION task performed \t%u computations\n"
-		  "(%t) SERVANT task serviced \t\t%u CORBA calls\n"
-		  "\t Ratio of computations to CORBA calls is %u.%u:1\n\n",
-		  util_task->get_number_of_computations (),
-		  ts.loop_count_,
-		  util_task->get_number_of_computations () / ts.loop_count_,
-		  (util_task->get_number_of_computations () % ts.loop_count_) * 100 / ts.loop_count_
-		  ));
+                  "-------------------------- Stats -------------------------------\n"));
 
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) Each computation had a duration of %f msecs\n"
-		  "(%t) Total elapsed time of test is %f msecs\n",
-		  util_task_duration / 1000,
-		  total_latency / 1000));    
+                  "(%t) UTILIZATION task performed \t%u computations\n"
+                  "(%t) SERVANT task serviced \t\t%u CORBA calls\n"
+                  "\t Ratio of computations to CORBA calls is %u.%u:1\n\n",
+                  util_task->get_number_of_computations (),
+                  ts.loop_count_,
+                  util_task->get_number_of_computations () / ts.loop_count_,
+                  (util_task->get_number_of_computations () % ts.loop_count_) * 100 / ts.loop_count_
+                  ));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) Each computation had a duration of %f msecs\n"
+                  "(%t) Total elapsed time of test is %f msecs\n",
+                  util_task_duration / 1000,
+                  total_latency / 1000));
 
       // Calc and print the CPU percentage. I add 0.5 to round to the
       // nearest integer before casting it to int.
-      ACE_DEBUG ((LM_DEBUG, 
-		  "\t%% ORB Servant CPU utilization: %d %%\n"
-		  "\t%% Idle time: %d %%\n",
-		  (int) (total_latency_servants * 100 / total_latency + 0.5),
-		  (int) (total_util_task_duration * 100 / total_latency + 0.5) ));    
+      ACE_DEBUG ((LM_DEBUG,
+                  "\t%% ORB Servant CPU utilization: %d %%\n"
+                  "\t%% Idle time: %d %%\n",
+                  (int) (total_latency_servants * 100 / total_latency + 0.5),
+                  (int) (total_util_task_duration * 100 / total_latency + 0.5) ));
     }
 
 #if defined (NO_ACE_QUANTIFY)
@@ -1356,3 +1356,9 @@ main (int argc, char *argv[])
 #endif /* ACE_HAS_THREADS */
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<Globals,ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<Globals,ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
