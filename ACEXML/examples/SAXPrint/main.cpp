@@ -157,11 +157,48 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
     ACEXML_TRY_CHECK;
   }
-  ACEXML_CATCH (ACEXML_SAXException, ex)
+  ACEXML_CATCH (ACEXML_Exception, ex)
     {
       ex.print();
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
+      return 1;
     }
   ACEXML_ENDTRY;
+//   ACEXML_TRY_EX (SECOND)
+//   {
+//     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+//     ACEXML_TRY_CHECK_EX (SECOND);
+//   }
+//   ACEXML_CATCH (ACEXML_SAXException, ex)
+//     {
+//       ex.print();
+//       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
+//       return 1;
+//     }
+//   ACEXML_ENDTRY;
+//   ACEXML_TRY_EX (THIRD)
+//   {
+//     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+//     ACEXML_TRY_CHECK_EX (THIRD);
+//   }
+//   ACEXML_CATCH (ACEXML_SAXException, ex)
+//     {
+//       ex.print();
+//       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
+//       return 1;
+//     }
+//   ACEXML_ENDTRY;
+//   ACEXML_TRY_EX (FOURTH)
+//   {
+//     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+//     ACEXML_TRY_CHECK_EX (FOURTH);
+//   }
+//   ACEXML_CATCH (ACEXML_SAXException, ex)
+//     {
+//       ex.print();
+//       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
+//       return 1;
+//     }
+//   ACEXML_ENDTRY;
   return 0;
 }

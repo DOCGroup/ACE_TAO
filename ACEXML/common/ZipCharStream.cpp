@@ -50,6 +50,8 @@ ACEXML_ZipCharStream::determine_encoding (void)
     return -1;
   else
     {
+      if (this->encoding_)
+        delete [] this->encoding_;
       this->encoding_ = ACE::strnew (temp);
   //     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
 //                   this->encoding_));
@@ -75,6 +77,7 @@ ACEXML_ZipCharStream::rewind()
   if (this->infile_ == 0)
     return;
   zzip_rewind (this->infile_);
+  this->determine_encoding();
 }
 
 int

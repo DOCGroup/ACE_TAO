@@ -57,13 +57,15 @@ ACEXML_FileCharStream::determine_encoding (void)
     return -1;
 
   // Rewind the stream
-  this->rewind();
+  ACE_OS::rewind (this->infile_);
 
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
   if (!temp)
     return -1;
   else
     {
+      if (this->encoding_)
+        delete [] this->encoding_;
       this->encoding_ = ACE::strnew (temp);
 //       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
 //                   this->encoding_));
@@ -92,6 +94,7 @@ ACEXML_FileCharStream::rewind()
   if (this->infile_ == 0)
     return;
   ACE_OS::rewind (this->infile_);
+  this->determine_encoding();
 }
 
 int

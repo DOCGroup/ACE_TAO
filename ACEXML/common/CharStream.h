@@ -65,6 +65,11 @@ public:
    */
   virtual int peek (void) = 0;
 
+  /**
+   *  Resets the pointer to the beginning of the stream.
+   */
+  virtual void rewind (void) = 0;
+
   /*
    * Get the character encoding for a byte stream or URI.
    */

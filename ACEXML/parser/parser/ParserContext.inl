@@ -55,6 +55,18 @@ ACEXML_Parser_Context::getLocator (void)
 }
 
 ACEXML_INLINE void
+ACEXML_Parser_Context::setInputSource (ACEXML_InputSource* ip)
+{
+  this->instream_ = ip;
+}
+
+ACEXML_INLINE void
+ACEXML_Parser_Context::setLocator (ACEXML_LocatorImpl* locator)
+{
+  this->locator_ = locator;
+}
+
+ACEXML_INLINE void
 ACEXML_Parser_Context::reset (void)
 {
   this->instream_ = 0;
