@@ -3,6 +3,7 @@
 # $Id$
 #
 #----------------------------------------------------------------------------
+
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
@@ -14,7 +15,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:CosEvent
 
-ACE_SHLIBS = -lTAO_Svc_Utils -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -53,7 +54,7 @@ CPP_SRCS += \
         CosEvent/CEC_Pulling_Strategy \
         CosEvent/CEC_Reactive_Pulling_Strategy \
         CosEvent/CEC_Default_Factory \
-	CosEvent/CEC_Event_Loader
+        CosEvent/CEC_Event_Loader
 endif # ACE_HAS_GNUG_PRE_2_8
 
 IDL_SRC = \
