@@ -1,3 +1,14 @@
+Thu Mar 23 21:49:36 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/RTEvent.dsp: Somehow the debugging information
+          generation was turned off. Turned it back on, so once again
+          RTEvent can be stepped into with the debugger.  
+
+        * orbsvcs/orbsvcs/DSLogAdmin.dsp: (removed)
+        * orbsvcs/orbsvcs/DsLogAdmin.dsp: (added)
+        * orbsvcs/orbsvcs/orbsvcs.dsw: 
+          Fixed the capitalization of DsLogAdmin.
+
 Thu Mar 23 21:11:31 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Basic/Makefile:
