@@ -93,7 +93,6 @@ TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl: !ST !NO_MESSAGI
 TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl: !ST !NO_MESSAGING
 TAO/orbsvcs/tests/Notify/Structured_Filter/run_test.pl: !ST !NO_MESSAGING
 TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl: !ST !NO_MESSAGING
-TAO/orbsvcs/tests/Notify/Lanes/run_test.pl: !ST !MINIMUM !STATIC
 TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/examples/Notify/Lanes/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/examples/Notify/ThreadPool/run_test.pl: !ST !MINIMUM
