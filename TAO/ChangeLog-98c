@@ -1,3 +1,8 @@
+Tue Nov  4 21:12:48 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/except.h: Removed print_exception().  It seems unnecessary
+	and pollutes the global namespace.
+
 Tue Nov  4 16:58:12 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* {tests/Cubit/TAO/DII_Cubit,tests/Cubit/TAO/IDL_Cubit,
