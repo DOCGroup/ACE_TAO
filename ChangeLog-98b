@@ -1,3 +1,10 @@
+Tue Jun 23 16:41:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch.{h,cpp} (class ACE_Adaptive_Lock): Added the new Lock
+	  class which allows its subclass to determine the actual locking
+	  mechanism it uses at run time.  Notice that all subclasses must
+	  provide their own contructor/destructor implementation.
+
 Tue Jun 23 06:40:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Map_Manager/test_hash_map_manager.cpp (main):

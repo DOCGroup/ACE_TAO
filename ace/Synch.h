@@ -103,6 +103,8 @@ class ACE_Adaptive_Lock : public ACE_Lock
   //    lock.  Users must overwrite the constructor to initialize <lock_>.
 public:
   virtual ~ACE_Adaptive_Lock (void) = 0;
+  // You must also overwrite the destructor function to match with
+  // how you construct the underneath <lock_>.
 
   // = Lock/unlock operations.
 
