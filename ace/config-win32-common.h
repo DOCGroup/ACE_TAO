@@ -33,7 +33,9 @@
 
 // Only MSVC 5.0 definitions
 #if (_MSC_VER >= 1100 || __BORLANDC__ >= 0x500)
-#define ACE_HAS_SIG_ATOMIC_T
+  #if !defined (ACE_HAS_WINCE)
+    #define ACE_HAS_SIG_ATOMIC_T
+  #endif /* ACE_HAS_WINCE */
 #define ACE_HAS_TYPENAME_KEYWORD
 #endif /* _MSC_VER >= 1100 || __BORLANDC__ >= 0x500 */
 
@@ -79,8 +81,10 @@
 // Platform supports the /proc file system.
 //define ACE_HAS_PROC_FS
 
+#if !defined (ACE_HAS_WINCE)
 // Platform supports the rusage struct.
 #define ACE_HAS_GETRUSAGE
+#endif /* ! ACE_HAS_WINCE */
 
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
@@ -316,7 +320,7 @@
 
 #if !defined (_INC_WINDOWS)     /* Already include windows.h ? */
         // Must define strict before including windows.h !
-        #if defined (ACE_HAS_STRICT) && (ACE_HAS_STRICT != 0)
+        #if defined (ACE_HAS_STRICT) && (ACE_HAS_STRICT != 0) && !defined (STRICT)
                 #define STRICT 1
         #endif /* ACE_HAS_STRICT */
 
