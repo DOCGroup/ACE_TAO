@@ -28,6 +28,8 @@
 #include "ciao/NodeApp_CB_Impl.h"
 #include "ImplementationInfo.h"
 #include "ciao/CIAO_common.h"
+#include "ace/SString.h"
+
 
 namespace CIAO
 {
