@@ -11,6 +11,14 @@ CORBA::release (CORBA::ORB_ptr obj)
     obj->Release ();
 }
 
+ACE_INLINE ULONG __stdcall
+CORBA_ORB::AddRef (void)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
+
+  return refcount_++;
+}
+
 ACE_INLINE CORBA::ORB_ptr
 CORBA_ORB::_duplicate (CORBA::ORB_ptr obj)
 {
@@ -31,14 +39,6 @@ ACE_INLINE CORBA::Boolean
 CORBA::is_nil (CORBA::ORB_ptr obj)
 {
   return (CORBA::Boolean) (obj == 0);
-}
-
-ACE_INLINE ULONG __stdcall
-CORBA_ORB::AddRef (void)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
-
-  return refcount_++;
 }
 
 ACE_INLINE CORBA::Boolean

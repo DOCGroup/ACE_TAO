@@ -1,3 +1,47 @@
+Wed Nov 19 00:15:33 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Updated status of the naming
+ 	service to working implementation.
+
+	* orbsvcs/lib/CosNamingS.cpp:
+	* orbsvcs/lib/CosNamingS.i:
+	* orbsvcs/lib/CosNamingS.h:
+	* orbsvcs/lib/CosNamingC.cpp:
+	* orbsvcs/lib/CosNamingC.i:	
+	* orbsvcs/lib/CosNamingC.h: Removed these files from the
+ 	repository, since the IDL compiler generates these correctly.
+
+	* orbsvcs/bin/Naming_Service/CosNaming_i.cpp (list): Remove
+ 	warning for unused variable.
+
+	* orbsvcs/bin/Naming_Service/svr.h: Constructor of event handler
+ 	for multicast doesn't need reply port anymore.
+	
+	* orbsvcs/bin/Naming_Service/svr.cpp (handle_input): Now receives
+ 	the port number in the multicast request.  Suggested by Doug
+ 	Schmidt.
+
+	* tao/orbobj.cpp (resolve_name_service): changed return value
+ 	variable to be signed.  Added code to send the port number in the
+ 	multicast resolution mechanism as a CORBA::Short.
+
+	* orbsvcs/bin/Naming_Service/NS_CosNaming.cpp (NS_ExtId):
+ 	Reordered initializers in the constructor.
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (run): Added a loop around
+ 	all cube calls and added calls/sec stats for them.
+
+	* tao/corba.h: Changed order of inclusion of marshal.i, due to
+ 	warnings of the declaration of the inline function
+ 	make_marshal_object().
+
+	* tao/orbobj.i: reorder the declaration of inline
+ 	CORBA_OBJ::Add_Ref(), to remove a warning.
+
+	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (main): 
+	removed return statement that was causing a warning.
+
 Wed Nov 19 04:22:48 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.34, released Wed Nov 19 04:22:48 1997.

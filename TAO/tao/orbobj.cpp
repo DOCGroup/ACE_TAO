@@ -382,7 +382,7 @@ CORBA_ORB::resolve_name_service (void)
 
       ACE_INET_Addr remote_addr;
       // This starts out initialized to all zeros!
-      ACE_INET_Addr multicast_addr (TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
+      ACE_INET_Addr multicast_addr (port,
                                     ACE_DEFAULT_MULTICAST_ADDR);
 
       // Subscribe to multicast address.
@@ -390,31 +390,56 @@ CORBA_ORB::resolve_name_service (void)
 	return CORBA_Object::_nil ();
 
       // Prepare connection for the reply.
-      ACE_INET_Addr response_addr (TAO_DEFAULT_NAME_SERVER_REPLY_PORT);
-      ACE_SOCK_Dgram response (response_addr);
+      ACE_INET_Addr response_addr;
+      ACE_SOCK_Dgram response;
+      
+      if (response.open (ACE_Addr::sap_any) == -1)
+	{
+	  ACE_ERROR ((LM_ERROR, "open failed.\n"));
+	  return CORBA_Object::_nil ();
+	}
+
+
+      // @@ check rturn code
+      if (response.get_local_addr (response_addr) == -1)
+	{
+	  ACE_ERROR ((LM_ERROR, "get_local_addr failed.\n"));
+	  return CORBA_Object::_nil ();	  
+	}
+
+      CORBA::Short reply_port = response_addr.get_port_number ();
+
+      ssize_t n_bytes;
 
       // Send multicast of one byte, enough to wake up server.
-      if (multicast.send ("", 1) == -1)
+      if ((n_bytes = multicast.send ((char *) &reply_port, sizeof reply_port)) == -1)
 	return CORBA_Object::_nil ();
+
+      ACE_DEBUG ((LM_DEBUG, 
+		  "Sent multicast.  Reply port is %u.  # of bytes sent is %d.\n", 
+		  reply_port, 
+		  n_bytes));
 
       char buf[BUFSIZ];
       // Wait for response until TAO_DEFAULT_NAME_SERVER_TIMEOUT.
       ACE_Time_Value timeout (TAO_DEFAULT_NAME_SERVER_TIMEOUT);
 
-      ssize_t n_bytes = response.recv (buf,
-                                       BUFSIZ,
-                                       remote_addr,
-                                       0,
-                                       &timeout);
+      n_bytes = response.recv (buf,
+			       BUFSIZ,
+			       remote_addr,
+			       0,
+			       &timeout);
 
-      // close endopoint for response.
-      u_int retval = response.close ();
-      
+      // close endpoint for response.
+      int retval = response.close ();
+
       if ((n_bytes == -1) || (retval == -1))
         return CORBA_Object::_nil ();
 
       // null terminate message
       buf[n_bytes] = 0;
+
+      ACE_DEBUG ((LM_DEBUG, "Naming service resolved to ior: '%s'\n", buf));
 
       // convert ior to an object reference
       CORBA::Environment env;
