@@ -95,6 +95,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\SSLIOP\ssl_endpoints.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
@@ -104,6 +108,10 @@ SOURCE=.\SSLIOP\SSLIOP_Connect.cpp
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Connector.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Endpoint.cpp
 # End Source File
 # Begin Source File
 
@@ -131,6 +139,10 @@ SOURCE=.\SSLIOPS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\SSLIOP\ssl_endpoints.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Acceptor.h
 # End Source File
 # Begin Source File
@@ -140,6 +152,10 @@ SOURCE=.\SSLIOP\SSLIOP_Connect.h
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Connector.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Endpoint.h
 # End Source File
 # Begin Source File
 
@@ -260,11 +276,19 @@ BuildCmds= \
 # PROP Default_Filter ".i"
 # Begin Source File
 
+SOURCE=.\SSLIOP\ssl_endpoints.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Acceptor.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Connect.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Endpoint.i
 # End Source File
 # Begin Source File
 
