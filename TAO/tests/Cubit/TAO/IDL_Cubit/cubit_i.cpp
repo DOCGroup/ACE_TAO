@@ -53,19 +53,17 @@ Cubit_Factory_i::~Cubit_Factory_i (void)
 Cubit_ptr
 Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
 {
-  Cubit_ptr cubit = Cubit::_nil ();
-  char *obj_str;
-
   for (size_t i = 0; i < this->numobjs_; i++)
     {
-      obj_str = this->my_cubit_[i]->_get_name (env);
+      const char *obj_str = this->my_cubit_[i]->_get_name (env);
       ACE_DEBUG ((LM_DEBUG, "obj_str = %s\n", obj_str));
 
       // Keys matched.
       if (!ACE_OS::strcmp (obj_str, key))
-        cubit = Cubit::_duplicate (this->my_cubit_ [i]);
+        return Cubit::_duplicate (this->my_cubit_ [i]);
     }
-  return cubit;
+
+  return Cubit::_nil ();
 }
 
 // Constructor
