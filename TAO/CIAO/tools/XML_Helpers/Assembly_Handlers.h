@@ -154,7 +154,6 @@ namespace CIAO
   class Partitioning_Handler : public CIAO::XMLHelpers::Cascadable_DocHandler
   {
   public:
-    // @@ Do we need PH_States?
     enum PH_States
       {
         START,
@@ -166,6 +165,14 @@ namespace CIAO
       {
         IDLE,
         DESTINATION
+      };
+
+    /// Types of <extension tags>
+    enum EXT_Types
+      {
+        CAT_FILE_NAME,
+        RTPOLICYSET_NAME,
+        INVALID_EXT
       };
 
     /// Constructor.
@@ -211,6 +218,12 @@ namespace CIAO
       ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   protected:
+    /// Examine the "extension" attributes and return the type of the
+    /// extension if it's something we know how to handle.
+    EXT_Types get_extension_info (ACEXML_Attributes *atts
+                                  ACEXML_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException)) ;
+
     long element_count_;
 
     Assembly_Spec *context_;
@@ -230,7 +243,11 @@ namespace CIAO
     // State of this partitioning handler.
     PH_States state_;
 
+    /// Holding the PCDATA.
     ACE_CString characters_;
+
+    /// Trace the type of extension element we are dealing with.
+    EXT_Types ext_type_;
 
     /// Temporary holder when building registration information
     Assembly_Placement::componentinstantiation::Register_Info comp_register_info_;
