@@ -74,8 +74,7 @@ public:
   /// Get the next data block that has a size less than or equal
   /// to max_length.  Return the length of the block returned.
   size_t next_block (size_t max_length,
-                     void *&block,
-                     size_t &block_len);
+                     iovec &block);
 
 private:
   enum State
@@ -88,7 +87,7 @@ private:
   int iovcnt_;
 
   // Point internal to a message block, if we have to split one up.
-  void *iov_ptr_;
+  char *iov_ptr_;
   int iov_index_;
 
   // Length used in a split message block.
@@ -111,8 +110,7 @@ ACE_Message_Block_Data_Iterator::ACE_Message_Block_Data_Iterator (iovec *iov, in
 
 size_t
 ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
-                                             void *&block,
-                                             size_t &block_len)
+                                             iovec &block)
 {
   if (this->state_ == INTER_BLOCK)
     {
@@ -127,8 +125,8 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
       if (current_iov_len <= max_length)
         {
           // Return the full data portion.
-          block_len = current_iov_len;
-          block = this->iov_[this->iov_index_].iov_base;
+          block.iov_len = current_iov_len;
+          block.iov_base = this->iov_[this->iov_index_].iov_base;
 
           // Go to the next block.
           this->iov_index_++;
@@ -139,14 +137,14 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
         {
           // Let the caller use the first part of this
           // message block.
-          block_len = max_length;
-          block = this->iov_[this->iov_index_].iov_base;
+          block.iov_len = max_length;
+          block.iov_base = this->iov_[this->iov_index_].iov_base;
 
           // Break up the block.
           this->iov_len_left_ = current_iov_len - max_length;
           this->iov_ptr_ =
-            ACE_reinterpret_cast (void *,
-                                  ACE_reinterpret_cast (char *, block)
+            ACE_reinterpret_cast (char *,
+                                  ACE_reinterpret_cast (char *, block.iov_base)
                                   + max_length);
           this->state_ = INTRA_BLOCK;
 
@@ -159,8 +157,8 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
       if (this->iov_len_left_ <= max_length)
         {
           // Return everything that's left in the block.
-          block_len = this->iov_len_left_;
-          block = this->iov_ptr_;
+          block.iov_len = this->iov_len_left_;
+          block.iov_base = this->iov_ptr_;
 
           // Go to the next block.
           this->iov_index_++;
@@ -173,14 +171,11 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
       else
         {
           // Split a little more off the block.
-          block_len = this->iov_len_left_;
-          block = this->iov_ptr_;
+          block.iov_len = this->iov_len_left_;
+          block.iov_base = this->iov_ptr_;
 
           this->iov_len_left_ -= max_length;
-          this->iov_ptr_ =
-            ACE_reinterpret_cast (void *,
-                                  ACE_reinterpret_cast (char *, this->iov_ptr_)
-                                  + max_length);
+          this->iov_ptr_ += max_length;
           return max_length;
         }
     }
@@ -216,8 +211,7 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
 
   // Go through all of the message blocks.
   while (mb_iter.next_block (MIOP_MAX_DGRAM_SIZE - current_fragment->length,
-                             current_fragment->iov[current_fragment->iovcnt].iov_base,
-                             current_fragment->iov[current_fragment->iovcnt].iov_len))
+                             current_fragment->iov[current_fragment->iovcnt]))
     {
       // Increment the length and iovcnt.
       current_fragment->length += current_fragment->iov[current_fragment->iovcnt].iov_len;
