@@ -23,6 +23,9 @@
 #include "be_visitor_ami_pre_proc.h"
 
 
+ACE_RCSID(be, be_visitor_ami_pre_proc, "$Id$")
+
+
 be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
@@ -172,7 +175,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
               if (((AST_Operation *)op)->exceptions ())
                 {
                   UTL_ExceptList *exceptions = (UTL_ExceptList *)((AST_Operation *)op)->exceptions ()->copy ();
-                  op_vt->add_exceptions (exceptions);
+                  op_vt->add_exceptions_x (exceptions);
                 }
 
               // After having generated the operation we insert it into the
