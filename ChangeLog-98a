@@ -1,3 +1,19 @@
+Fri Dec 26 12:03:05 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-osf1-4.0.h: added support for DCE threads, and merged in
+          config-osf1-4.0-g++.h.  Thanks to Frederic Andres
+          <andres@rd.nacsis.ac.jp> for the DCE threads support #defines.
+
+        * ace/OS.i (cond_timedwait): wrapped first arg to ACE_OSCALL in
+          parens because it confused cxx.
+
+        * ace/OS.cpp (thr_create): added || ACE_HAS_DCETHREADS to
+          #ifndef ACE_LACKS_SETSCHED, so that priority is set with DCETHREADS.
+
+        * System_V_IPC/SV_Message_Queues/{,T}MQ_Server.cpp: renamed variable
+          msgque because it conflicted with a symbol in the DEC cxx
+          w/DCE threads headers.
+
 Fri Dec 26 06:44:25 1997    <nw1@JIG>
 
 	* ace/OS.h (ACE_OS::ace_flock_t): Added a new field "lockname_" to
