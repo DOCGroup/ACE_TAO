@@ -355,7 +355,13 @@ Ping_Send_Callback::handle_end_stream (void)
 
 // @@ TODO
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
+template class TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A, TAO_VDev, AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A, TAO_VDev, AV_Null_MediaCtrl>;
+template class TAO_FDev<TAO_FlowProducer, Pong_Recv>;
+template class TAO_FDev<Ping_Send, TAO_FlowConsumer>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A, TAO_VDev, AV_Null_MediaCtrl>;
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndpoint_A, TAO_VDev, AV_Null_MediaCtrl>;
+#pragma instantiate TAO_FDev<TAO_FlowProducer, Ping_Recv>;
+#pragma instantiate TAO_FDev<Pong_Send, TAO_FlowConsumer>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
