@@ -1531,6 +1531,26 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
   return CORBA::B_TRUE;
 }
 
+TAO_GIOP_ReplyStatusType 
+TAO_GIOP::convert_CORBA_to_GIOP_exception (CORBA::ExceptionType corba_type)
+{
+  switch (corba_type)
+    {
+    case CORBA::NO_EXCEPTION:
+      return TAO_GIOP_NO_EXCEPTION;
+      
+    case CORBA::SYSTEM_EXCEPTION:
+      return TAO_GIOP_SYSTEM_EXCEPTION;
+      
+    case CORBA::USER_EXCEPTION:
+      return TAO_GIOP_USER_EXCEPTION;
+
+    default:
+      // Don't know what to do here??
+      return TAO_GIOP_SYSTEM_EXCEPTION;
+    }
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>;
 template class TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>;

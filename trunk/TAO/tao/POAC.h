@@ -196,7 +196,7 @@ public:
 #if !defined (_PORTABLESERVER_FORWARDREQUEST_CH_)
 #define _PORTABLESERVER_FORWARDREQUEST_CH_
 
-  class TAO_Export ForwardRequest : public CORBA::UserException
+  class TAO_Export ForwardRequest : public CORBA_SystemException
   {
   public:
     ForwardRequest (void); // default ctor
@@ -1053,7 +1053,7 @@ class POAManager;
 #if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_
 
-    class TAO_Export AdapterInactive : public CORBA::UserException
+    class TAO_Export AdapterInactive : public CORBA_SystemException
     {
     public:
       AdapterInactive (void); // default ctor
@@ -1582,7 +1582,7 @@ class POA;
 #if !defined (_PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_)
 #define _PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_
 
-    class TAO_Export AdapterAlreadyExists : public CORBA::UserException
+    class TAO_Export AdapterAlreadyExists : public CORBA_SystemException
     {
     public:
       AdapterAlreadyExists (void); // default ctor
@@ -1614,7 +1614,7 @@ static CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
 #if !defined (_PORTABLESERVER_POA_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POA_ADAPTERINACTIVE_CH_
 
-    class TAO_Export AdapterInactive : public CORBA::UserException
+    class TAO_Export AdapterInactive : public CORBA_SystemException
     {
     public:
       AdapterInactive (void); // default ctor
@@ -1646,7 +1646,7 @@ static CORBA::TypeCode_ptr _tc_AdapterInactive;
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_
 
-    class TAO_Export AdapterNonExistent : public CORBA::UserException
+    class TAO_Export AdapterNonExistent : public CORBA_SystemException
     {
     public:
       AdapterNonExistent (void); // default ctor
@@ -1678,7 +1678,7 @@ static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
 #if !defined (_PORTABLESERVER_POA_INVALIDPOLICY_CH_)
 #define _PORTABLESERVER_POA_INVALIDPOLICY_CH_
 
-    class TAO_Export InvalidPolicy : public CORBA::UserException
+    class TAO_Export InvalidPolicy : public CORBA_SystemException
     {
     public:
       InvalidPolicy (void); // default ctor
@@ -1714,7 +1714,7 @@ static CORBA::TypeCode_ptr _tc_InvalidPolicy;
 #if !defined (_PORTABLESERVER_POA_NOSERVANT_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT_CH_
 
-    class TAO_Export NoServant : public CORBA::UserException
+    class TAO_Export NoServant : public CORBA_SystemException
     {
     public:
       NoServant (void); // default ctor
@@ -1746,7 +1746,7 @@ static CORBA::TypeCode_ptr _tc_NoServant;
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_
 
-    class TAO_Export ObjectAlreadyActive : public CORBA::UserException
+    class TAO_Export ObjectAlreadyActive : public CORBA_SystemException
     {
     public:
       ObjectAlreadyActive (void); // default ctor
@@ -1778,7 +1778,7 @@ static CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
 #if !defined (_PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_
 
-    class TAO_Export ObjectNotActive : public CORBA::UserException
+    class TAO_Export ObjectNotActive : public CORBA_SystemException
     {
     public:
       ObjectNotActive (void); // default ctor
@@ -1810,7 +1810,7 @@ static CORBA::TypeCode_ptr _tc_ObjectNotActive;
 #if !defined (_PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_
 
-    class TAO_Export ServantAlreadyActive : public CORBA::UserException
+    class TAO_Export ServantAlreadyActive : public CORBA_SystemException
     {
     public:
       ServantAlreadyActive (void); // default ctor
@@ -1842,7 +1842,7 @@ static CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
 #if !defined (_PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_
 
-    class TAO_Export ServantNotActive : public CORBA::UserException
+    class TAO_Export ServantNotActive : public CORBA_SystemException
     {
     public:
       ServantNotActive (void); // default ctor
@@ -1874,7 +1874,7 @@ static CORBA::TypeCode_ptr _tc_ServantNotActive;
 #if !defined (_PORTABLESERVER_POA_WRONGADAPTER_CH_)
 #define _PORTABLESERVER_POA_WRONGADAPTER_CH_
 
-    class TAO_Export WrongAdapter : public CORBA::UserException
+    class TAO_Export WrongAdapter : public CORBA_SystemException
     {
     public:
       WrongAdapter (void); // default ctor
@@ -1906,7 +1906,7 @@ static CORBA::TypeCode_ptr _tc_WrongAdapter;
 #if !defined (_PORTABLESERVER_POA_WRONGPOLICY_CH_)
 #define _PORTABLESERVER_POA_WRONGPOLICY_CH_
 
-    class TAO_Export WrongPolicy : public CORBA::UserException
+    class TAO_Export WrongPolicy : public CORBA_SystemException
     {
     public:
       WrongPolicy (void); // default ctor
@@ -2065,7 +2065,7 @@ class Current;
 #if !defined (_PORTABLESERVER_CURRENT_NOCONTEXT_CH_)
 #define _PORTABLESERVER_CURRENT_NOCONTEXT_CH_
 
-    class TAO_Export NoContext : public CORBA::UserException
+    class TAO_Export NoContext : public CORBA_SystemException
     {
     public:
       NoContext (void); // default ctor
@@ -2111,7 +2111,6 @@ static CORBA::TypeCode_ptr _tc_NoContext;
   static PortableServer::ObjectId *wstring_to_ObjectId (const CORBA::WChar *id);
 
 };
-
 
 #if defined (__ACE_INLINE__)
 #include "POAC.i"

@@ -33,6 +33,7 @@ class TAO_Export CORBA_Exception
   //   Repositories.  Think of it as a "globally scoped" name
   //   distinguishing each exception.
 public:
+
   CORBA_Exception (const CORBA_Exception &src);
   // copy constructor
 
@@ -278,15 +279,9 @@ public:
 
   enum
   {
-    NUM_SYS_EXCEPTIONS = 26,
-    // Number of exceptions (make sure to update correctly).
-
     TC_BUFLEN = 160
     // Preallocated tc buffer.
   };
-
-  static CORBA::TypeCode_ptr sys_exceptions [NUM_SYS_EXCEPTIONS];
-  // an array of system exception typecodes
 
   static CORBA::ExceptionList *system_exceptions;
   // list of system exceptions
