@@ -74,15 +74,17 @@ main (int argc, char *[], char* envp[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Env_Value<int>;
-template class ACE_Env_Value<double>;
-template class ACE_Env_Value<unsigned long>;
-template class ACE_Env_Value<short>;
-template class ACE_Env_Value<char*>;
+  template class ACE_Env_Value<char*>;
+  template class ACE_Env_Value<double>;
+  template class ACE_Env_Value<int>;
+  template class ACE_Env_Value<long>;
+  template class ACE_Env_Value<short>;
+  template class ACE_Env_Value<unsigned long>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate  ACE_Env_Value<int>
-#pragma instantiate  ACE_Env_Value<double>
-#pragma instantiate  ACE_Env_Value<unsigned long>
-#pragma instantiate  ACE_Env_Value<short>
-#pragma instantiate  ACE_Env_Value<char*>
+# pragma instantiate  ACE_Env_Value<char*>
+# pragma instantiate  ACE_Env_Value<double>
+# pragma instantiate  ACE_Env_Value<int>
+# pragma instantiate  ACE_Env_Value<long>
+# pragma instantiate  ACE_Env_Value<short>
+# pragma instantiate  ACE_Env_Value<unsigned long>
 #endif
