@@ -91,12 +91,6 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                         -1);
     }
 
-  if (bt->node_type () == AST_Decl::NT_typedef)
-    {
-      be_typedef *btd = be_typedef::narrow_from_decl (bt);
-      bt = btd->primitive_base_type ();
-    }
-
   // Generate the return type mapping (same as in the header file)
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
@@ -111,6 +105,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                          "codegen for return type failed\n"),
                         -1);
     }
+
   delete visitor;
 
   // Generate the operation name
@@ -121,6 +116,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
   visitor = tao_cg->make_visitor (&ctx);
+
   if ((!visitor) || (node->accept (visitor) == -1))
     {
       delete visitor;
@@ -130,6 +126,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
+
   delete visitor;
 
   *os << "{" << be_idt_nl;
@@ -140,27 +137,31 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       *os << be_nl << be_nl;
     }
 
+  // For what follows, the return type node nust be unaliased.
+  if (bt->node_type () == AST_Decl::NT_typedef)
+    {
+      be_typedef *btd = be_typedef::narrow_from_decl (bt);
+      bt = btd->primitive_base_type ();
+    }
+
   AST_Decl::NodeType bnt = bt->base_node_type ();
   be_predefined_type *bpt = 0;
   AST_PredefinedType::PredefinedType pdt = AST_PredefinedType::PT_void;
 
-  if (!this->void_return_type (bt))
+  if (bnt == AST_Decl::NT_pre_defined)
     {
-      if (bnt == AST_Decl::NT_pre_defined)
-        {
-          bpt = be_predefined_type::narrow_from_decl (bt);
-          pdt = bpt->pt ();
+      bpt = be_predefined_type::narrow_from_decl (bt);
+      pdt = bpt->pt ();
 
-          if (pdt == AST_PredefinedType::PT_longlong)
-            {
-              *os << "CORBA::LongLong _tao_retval = "
-                  << "ACE_CDR_LONGLONG_INITIALIZER;" << be_nl << be_nl;
-            }
-          else if (pdt == AST_PredefinedType::PT_longdouble)
-            {
-              *os << "CORBA::LongDouble _tao_retval = "
-                  << "ACE_CDR_LONG_DOUBLE_INITIALIZER;" << be_nl << be_nl;
-            }
+      if (pdt == AST_PredefinedType::PT_longlong)
+        {
+          *os << "CORBA::LongLong _tao_retval = "
+              << "ACE_CDR_LONGLONG_INITIALIZER;" << be_nl << be_nl;
+        }
+      else if (pdt == AST_PredefinedType::PT_longdouble)
+        {
+          *os << "CORBA::LongDouble _tao_retval = "
+              << "ACE_CDR_LONG_DOUBLE_INITIALIZER;" << be_nl << be_nl;
         }
     }
 
@@ -248,18 +249,23 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                                 -1);
 
             }
-	  *os << "," << be_nl;
+
+	        *os << "," << be_nl;
           be_decl *decl = be_decl::narrow_from_decl (d);
 
-	  *os << decl->local_name();
-	  si->next ();
-	}
+	        *os << decl->local_name();
+	        si->next ();
+	      }
     }
+
   if (!be_global->exception_support ())
-    *os << "," << be_nl << "ACE_TRY_ENV";
+    {
+      *os << "," << be_nl << "ACE_TRY_ENV";
+    }
+
   *os << be_uidt_nl << ");" << be_uidt << be_uidt_nl << "}\n\n";
 
-return 0;
+  return 0;
 }
 
 int
