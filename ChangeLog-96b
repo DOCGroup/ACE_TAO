@@ -1,3 +1,6 @@
+Tue Nov 26 11:27:33 1996  David L. Levine  <levine@cs.wustl.edu>
+	* tests/SPIPE_Test.cpp:  added VXWORKS support
+
 Tue Nov 26 00:36:16 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Singleton.h: Modified the use of the ACE_NEW_RETURN macro so
