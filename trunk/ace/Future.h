@@ -145,6 +145,9 @@ private:
 
   // = Encapsulate reference count and object lifetime of instances.
 
+  // These methods must go after the others to work around a bug with
+  // Borland's C++ Builder...
+
   static ACE_Future_Rep<T> *create (void);
   // Create a ACE_Future_Rep<T> and initialize the reference count.
 
