@@ -10,8 +10,8 @@
 //
 // = DESCRIPTION
 //      This is a simple test to illustrate the priority mechanism of
-//      ACE Message_Queues. The producer uses an ASX Message_Queue to
-//      enqueue a bunch of messages with different priorities which
+//      <ACE_Message_Queue>s. The producer uses an <ACE_Message_Queue>
+//      to enqueue a bunch of messages with different priorities which
 //      are then dequeued by the consumer.
 //
 // = AUTHOR
@@ -47,16 +47,19 @@ static const long max_queue = LONG_MAX;
 static void *
 consumer (void *args)
 {
-  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH> *) args;
+  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
+    ACE_reinterpret_cast (ACE_Message_Queue<ACE_MT_SYNCH> *,
+                          args);
 
   u_long cur_priority = 27;
-  ACE_UNUSED_ARG (cur_priority); // To suppress ghs warning about unused
-                                 // local variable "cur_priority".
+  ACE_UNUSED_ARG (cur_priority); 
+  // To suppress ghs warning about unused local variable
+  // "cur_priority".
 
   int local_count = 0;
 
-  // Keep looping, reading a message out of the queue, until we
-  // get a message with a length == 0, which signals us to quit.
+  // Keep looping, reading a message out of the queue, until we get a
+  // message with a length == 0, which signals us to quit.
   for (char c = 'z'; ; c--)
     {
       ACE_Message_Block *mb = 0;
@@ -69,11 +72,15 @@ consumer (void *args)
       local_count++;
 
       int length = mb->length ();
-      ACE_ASSERT (mb->msg_priority () < cur_priority);
-      cur_priority = mb->msg_priority ();
 
       if (length > 0)
-        ACE_ASSERT (c == *mb->rd_ptr ());
+        {
+          // This isn't a "shutdown" message, so process it
+          // "normally."
+          ACE_ASSERT (c == *mb->rd_ptr ());
+          ACE_ASSERT (mb->msg_priority () < cur_priority);
+          cur_priority = mb->msg_priority ();
+        }
 
       // Free up the buffer memory and the Message_Block. Note that
       // the destructor of Message Block will delete the the actual
@@ -81,8 +88,10 @@ consumer (void *args)
       mb->release ();
 
       if (length == 0)
+        // This was a "shutdown" message, so break out of the loop.
         break;
     }
+
   ACE_ASSERT (local_count == count);
   return 0;
 }
@@ -96,7 +105,9 @@ consumer (void *args)
 static void *
 producer (void *args)
 {
-  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH> *) args;
+  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = 
+    ACE_reinterpret_cast (ACE_Message_Queue<ACE_MT_SYNCH> *,
+                          args);
 
   ACE_Message_Block *mb;
 
@@ -117,14 +128,21 @@ producer (void *args)
 
       // Enqueue in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"), ASYS_TEXT ("put_next")), 0);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("(%t) %p\n"),
+                           ASYS_TEXT ("put_next")),
+                          0);
     }
 
   // Now send a 0-sized shutdown message to the other thread
-  ACE_NEW_RETURN (mb, ACE_Message_Block ((size_t) 0), 0);
+  ACE_NEW_RETURN (mb,
+                  ACE_Message_Block ((size_t) 0),
+                  0);
 
   if (msg_queue->enqueue_tail (mb) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"), ASYS_TEXT ("put_next")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("(%t) %p\n"),
+                ASYS_TEXT ("put_next")));
 
   count++;
 
@@ -149,10 +167,14 @@ main (int, ASYS_TCHAR *[])
   // Message queue.
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue (max_queue);
 
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (producer),
-                                             (void *) &msg_queue,
-                                             THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("spawn")), 1);
+  if (ACE_Thread_Manager::instance ()->spawn 
+      (ACE_THR_FUNC (producer),
+       (void *) &msg_queue,
+       THR_NEW_LWP | THR_DETACHED) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("spawn")),
+                      1);
 
   // Wait for producer and consumer threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
