@@ -1,3 +1,13 @@
+Wed Dec 13 18:33:19 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * html/README:
+          Add README file explaining why the directory is empty and why
+          the index.html URLs don't work unless you download or generate
+          the Doxygen files.
+
+        * html/index.html:
+          Add entry for the smart proxies library.
+
 Wed Dec 13 18:27:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * THANKS:
