@@ -1,3 +1,25 @@
+Wed Sep 10 17:49:10 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        Added files:
+        
+        * tests/OBV/Supports/Supports_Test.mpc:
+        * tests/OBV/Supports/client.cpp:
+        * tests/OBV/Supports/server.cpp:
+
+        Removed files:
+
+        * tests/OBV/Supports/Makefile:
+        * tests/OBV/Supports/Makefile.bor:
+        * tests/OBV/Supports/Client.dsp:
+        * tests/OBV/Supports/Server.dsp:
+        * tests/OBV/Supports/Supports_Test.dsw:
+        * tests/OBV/Supports/Supports_Test.ncb:
+        * tests/OBV/Supports/Client/client.cpp:
+        * tests/OBV/Supports/Server/Server.cpp:
+
+          Removed project files and make files. Added a MPC file that will
+          eliminate include errors. Moved all files to same directory.
+
 Wed Sep 10 16:03:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTScheduling/RTScheduler_Manager.h:
@@ -138,6 +160,7 @@ Sun Sep  7 13:59:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Fixed typo and added #include of OperationDef_i.h.
 
+>>>>>>> 1.2515
 Sun Sep  7 09:50:38 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:

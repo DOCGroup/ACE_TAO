@@ -1,6 +1,6 @@
 // $Id$
 
-#include "..\Supports_Test_impl.h"
+#include "Supports_Test_impl.h"
 
 const char * ior = "file://test.ior";
 int num_trials = 1;
