@@ -628,7 +628,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::get_first (void)
   return this->wheel_[this->earliest_pos_]->get_next ();
 }
 
-
 /**
  * Takes an ACE_Timer_Node and inserts it into the correct position in
  * the correct list.  Also makes sure to update the earliest time.
@@ -646,7 +645,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::reschedule (
                % this->wheel_size_;
 
   // See if we need to update the earliest time
-  if (this->earliest_time () == ACE_Time_Value::zero
+  if (this->is_empty ()
       || expired->get_timer_value () < this->earliest_time ())
     this->earliest_pos_ = pos;
 

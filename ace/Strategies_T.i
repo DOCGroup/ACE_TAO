@@ -61,7 +61,6 @@ ACE_Creation_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr)
   return 0;
 }
 
-
 template <class SVC_HANDLER> ASYS_INLINE
 ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy (ACE_Thread_Manager *thr_mgr)
 {
@@ -191,13 +190,6 @@ ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy (void)
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy");
 }
 
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ASYS_INLINE int
-ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
-  (const ACE_PEER_ACCEPTOR_ADDR &local_addr, int restart)
-{
-  return this->acceptor_.open (local_addr, restart);
-}
-
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ASYS_INLINE
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy (ACE_Reactor *reactor)
   : reactor_ (reactor)
@@ -209,14 +201,14 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ASYS_INLINE ACE_HANDLE
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::get_handle (void) const
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::get_handle");
-  return this->acceptor_.get_handle ();
+  return this->peer_acceptor_.get_handle ();
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ASYS_INLINE ACE_PEER_ACCEPTOR &
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor (void) const
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor");
-  return (ACE_PEER_ACCEPTOR &) this->acceptor_;
+  return (ACE_PEER_ACCEPTOR &) this->peer_acceptor_;
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ASYS_INLINE
@@ -225,8 +217,7 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy (voi
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy");
 
   // Close the underlying acceptor.
-  this->acceptor_.close ();
-
+  this->peer_acceptor_.close ();
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> ASYS_INLINE ACE_PEER_CONNECTOR &

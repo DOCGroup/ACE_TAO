@@ -400,9 +400,8 @@ public:
   static HKEY resolve_key (HKEY hKey,
                            const ACE_TCHAR* path,
                            int create = 1);
-
-    virtual int operator==(const ACE_Configuration_Win32Registry& rhs) const{return true;}
-    virtual int operator!=(const ACE_Configuration_Win32Registry& rhs) const{return true;}
+  virtual int operator== (const ACE_Configuration_Win32Registry &rhs) const;
+  virtual int operator!= (const ACE_Configuration_Win32Registry &rhs) const;
 
 protected:
 

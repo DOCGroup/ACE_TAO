@@ -49,19 +49,27 @@ ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
 endif
 
-CC      = gcc -m$(TCPU)
-CXX     = g++ -m$(TCPU)
+CC      = gcc
+CXX     = g++
+
+MODEL_FLAGS += -m$(TCPU)
 
 # Never use -pipe with 95/98. On NT/2000, not sure if it helps.
 CFLAGS  += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
-    CC      += -mthreads
-    CXX     += -mthreads
+        MODEL_FLAGS += -mthreads
 endif # threads
+
+CFLAGS += $(MODEL_FLAGS)
+
+# Never use -pipe with 95/98. On NT/2000, not sure if it helps.
+CFLAGS  += -W -Wall -Wpointer-arith
 
 ifeq ($(IMPLICIT_TEMPLATES_FLAG),)
   IMPLICIT_TEMPLATES_FLAG=-fno-implicit-templates
 endif
+
+EXEEXT = .exe
 
 CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG)
 DCFLAGS += -g
@@ -75,18 +83,26 @@ endif
 LIBS    += -lwsock32
 endif
 
-VSHDIR = .obj/
-
 OCFLAGS += -O3
-PIC        =
+PIC        = -DACE_OS_HAS_DLL=1
 AR         = ar
 ARFLAGS    = rsuv
 RANLIB     = ranlib
 SOEXT      = dll
-SOFLAGS    = $(CPPFLAGS)
+SOFLAGS    = $(MODEL_FLAGS) $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-# The sed below is a workaround to a bug in ld.
-SHLIBBUILD = dlltool --export-all --output-def $@.def --dllname $@ $(VSHOBJS1) && mv $@.def $@.def.old && sed 's/;.*$$//g' < $@.def.old > $@.def && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a -shared -o $@ $(LDFLAGS) $@.def $(VSHOBJS1) $(LIBS) && $(RM) $@.def.old $@.def
+
+# The sed below is to strip comments on the .def file,
+# to workaround to a bug in ld.
+SHLIBBUILD = \
+  $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def; \
+  dlltool --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
+    $(VSHOBJS1) \
+  && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
+  && sed 's/;.*$$//g' < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
+  && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
+    -shared -o $@ $(LDFLAGS) $(VSHDIR)/$@.def \
+    $(VSHOBJS1) $(ACE_SHLIBS) $(LIBS)
 
 ifeq ($(exceptions),1)
 SHLIBBUILD += \

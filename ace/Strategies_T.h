@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_STRATEGIES_T_H
 #define ACE_STRATEGIES_T_H
@@ -456,9 +455,10 @@ public:
                        int restart = 0,
                        ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-  /// Initialize the <peer_acceptor_> with <local_addr>.
+  /// Initialize the <peer_acceptor_> with <local_addr>, indicating
+  /// whether to <reuse_addr> if it's already in use.
   virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                    int restart = 0);
+                    int reuse_addr = 0);
 
   /// Return the underlying ACE_HANDLE of the <peer_acceptor_>.
   virtual ACE_HANDLE get_handle (void) const;
@@ -481,10 +481,16 @@ public:
 
 protected:
   /// Factory that establishes connections passively.
-  ACE_PEER_ACCEPTOR acceptor_;
+  ACE_PEER_ACCEPTOR peer_acceptor_;
 
   /// Pointer to the reactor used by the Acceptor.
   ACE_Reactor *reactor_;
+
+  /// Needed to reopen the socket if <accept> fails.
+  int reuse_addr_;
+
+  /// Needed to reopen the socket if <accept> fails.
+  ACE_PEER_ACCEPTOR_ADDR peer_acceptor_addr_;
 };
 
 /**
