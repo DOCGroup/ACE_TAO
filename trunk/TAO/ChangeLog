@@ -1,3 +1,22 @@
+Sat Nov  1 14:58:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Sync_Strategies.cpp:
+	* tao/TAO_Singleton.h:
+	* tao/Transport.h:
+	* tao/RTCORBA/RT_Mutex.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+	* orbsvcs/orbsvcs/Event/GPlot_File.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+	* orbsvcs/orbsvcs/IFRService/Options.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	  
+	  #included a bunch of OS_NS_sys_* files to get the right methods
+	  that are used from the ACE_OS namespace.
+
 Sat Nov  1 12:13:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Security/MechanismPolicy.cpp:
