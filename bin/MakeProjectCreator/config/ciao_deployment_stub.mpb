@@ -3,7 +3,7 @@
 
 project : taolib_with_idl {
   after += Deployment_stub
-  libs  += CIAO_Deployment_stub
+  libs  += CIAO_Deployment_stub CIAO_DnC_Client
   includes += $(CIAO_ROOT)/DAnCE
   idlflags += -I$(CIAO_ROOT)/DAnCE -Sc
 }
