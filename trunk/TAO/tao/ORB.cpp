@@ -604,7 +604,7 @@ CORBA_ORB::multicast_query (char *&buf,
   ACE_SOCK_Dgram dgram;
 
   ssize_t result = 0;
-  
+
   // Bind listener to any port and then find out what the port was.
   if (acceptor.open (ACE_Addr::sap_any) == -1
       || acceptor.get_local_addr (my_addr) == -1)
@@ -618,7 +618,7 @@ CORBA_ORB::multicast_query (char *&buf,
     {
       ACE_INET_Addr multicast_addr (port,
                                     ACE_DEFAULT_MULTICAST_ADDR);
-      // Set the address if multicast_discovery_endpoint option 
+      // Set the address if multicast_discovery_endpoint option
       // is specified for the Naming Service.
       ACE_CString mde (this->orb_core_->orb_params ()
                        ->mcast_discovery_endpoint ());
@@ -635,7 +635,7 @@ CORBA_ORB::multicast_query (char *&buf,
             acceptor.close ();
             return -1;
           }
-      
+
       // Open the datagram.
       if (dgram.open (ACE_Addr::sap_any) == -1)
         {
@@ -811,7 +811,7 @@ CORBA_ORB::multicast_to_service (const char *service_name,
     {
       // Convert IOR to an object reference.
       return_value =
-        this->string_to_object ((CORBA::String) ior,
+        this->string_to_object (ior,
                                 ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA_Object::_nil ());
     }
@@ -1572,7 +1572,7 @@ CORBA::ORB_init (int &argc,
 // ****************************************************************
 
 // Objref stringification.
-CORBA::String
+char *
 CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
                              CORBA::Environment &ACE_TRY_ENV)
 {

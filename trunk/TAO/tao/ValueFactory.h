@@ -78,7 +78,7 @@ private:
 // valuetype via tao_repository_id () of the specialized factory.
 // It forgets the pre-registered factory (if any) and the reference
 // to the newly created one. (A new reference could be obtained with
-// orb->lookup_value_factory (CORBA::String repo_id) .)
+// orb->lookup_value_factory (char * repo_id) .)
 
 #define TAO_OBV_REGISTER_FACTORY(FACTORY) \
   { CORBA_ValueFactory_ptr factory = new FACTORY; \

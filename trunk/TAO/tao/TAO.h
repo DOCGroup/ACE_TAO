@@ -89,9 +89,9 @@ public:
   //  service incoming requests while waiting for a result of CORBA
   //  call on a server.  Returns -1 on failure.
 
-  CORBA::String activate (PortableServer::Servant servant,
-                          CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ());
+  char* activate (PortableServer::Servant servant,
+                  CORBA_Environment &ACE_TRY_ENV =
+                      TAO_default_environment ());
   // Activate <servant>, using the POA <activate_object> call.  Users
   // can call this method multiple times to activate multiple objects.
   // Returns 0 on failure.
@@ -101,10 +101,10 @@ public:
                        TAO_default_environment ());
   // Deactivate object in RootPOA.
 
-  CORBA::String activate_under_child_poa (const char *servant_name,
-                                          PortableServer::Servant servant,
-                                          CORBA_Environment &ACE_TRY_ENV =
-                                              TAO_default_environment ());
+  char * activate_under_child_poa (const char *servant_name,
+                                   PortableServer::Servant servant,
+                                   CORBA_Environment &ACE_TRY_ENV =
+                                       TAO_default_environment ());
   // Precondition: init_child_poa has been called.  Activate <servant>
   // using the POA <activate_object_with_id> created from the string
   // servant_name. Users should call this to activate objects under

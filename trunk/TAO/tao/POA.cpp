@@ -2401,11 +2401,11 @@ TAO_POA::wstring_to_ObjectId (const CORBA::WChar *string)
   return id;
 }
 
-CORBA::String
+char *
 TAO_POA::ObjectId_to_string (const PortableServer::ObjectId &id)
 {
   // Create space
-  CORBA::String string = CORBA::string_alloc (id.length ());
+  char * string = CORBA::string_alloc (id.length ());
 
   // Copy the data
   ACE_OS::memcpy (string, id.get_buffer (), id.length ());
@@ -2434,7 +2434,7 @@ TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
 }
 
 void
-TAO_POA::encode_sequence_to_string (CORBA::String &str,
+TAO_POA::encode_sequence_to_string (char * &str,
                                     const TAO_Unbounded_Sequence<CORBA::Octet> &seq)
 {
   // We must allocate a buffer which is (gag) 3 times the length

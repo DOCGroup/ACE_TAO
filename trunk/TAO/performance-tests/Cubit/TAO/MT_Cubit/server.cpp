@@ -127,7 +127,7 @@ Server::write_iors (void)
 
   // By this time the num of objs should be set properly.
   ACE_NEW_RETURN (this->cubits_,
-                  CORBA::String [GLOBALS::instance ()->num_of_objs],
+                  char* [GLOBALS::instance ()->num_of_objs],
                   -1);
 
   this->cubits_[0] = ACE_OS::strdup (this->high_priority_task_->get_servant_ior (0));

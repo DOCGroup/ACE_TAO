@@ -99,7 +99,7 @@ private:
   char **argv_;
   // Arguments for the ORB.
 
-  CORBA::String *cubits_;
+  char * *cubits_;
   // Array to hold pointers to the Cubit objects.
 
   Cubit_Task *high_priority_task_;
@@ -143,10 +143,3 @@ private:
 };
 
 #endif /* SERVER_H */
-
-
-
-
-
-
-

@@ -656,7 +656,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 
   const char prefix[] = "IDL:omg.org/CORBA/";
   const char suffix[] = ":1.0";
-  CORBA::String full_id =
+  char * full_id =
     CORBA::string_alloc (sizeof prefix
                          + ACE_OS::strlen (name)
                          + sizeof suffix);

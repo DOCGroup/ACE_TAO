@@ -207,7 +207,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   int old_style_endpoint = 0;
 
   ACE_NEW_THROW_EX (this->svc_config_argv_,
-                    CORBA::String[argc + 1],
+                    char *[argc + 1],
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (-1);
 
@@ -476,7 +476,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
         {
           // Specify mcast address:port for the Naming Service Multicast
           // Discovery Protocol.
-          
+
           mde = current_arg;
           arg_shifter.consume_arg ();
         }

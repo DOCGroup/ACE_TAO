@@ -4,17 +4,17 @@
 // ============================================================================
 //
 // = LIBRARY
-//	TAO/tests/Cubit/TAO/DII_Cubit
+//      TAO/tests/Cubit/TAO/DII_Cubit
 //
 // = FILENAME
-//	client.cpp
+//      client.cpp
 //
 // = DESCRIPTION
 //      This class implements a simple CORBA client of the Cubit
 //      interface using DII functionality.
 //
 // = AUTHOR
-//	Jeff Parsons <parsons@cs.wustl.edu>
+//      Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -39,7 +39,7 @@ const int SMALL_LONG_SEQ_LENGTH = 4;
 const int LARGE_LONG_SEQ_LENGTH = 1024;
 const int NUMBER_OF_TESTS = 10;
 
-class DII_Cubit_Client 
+class DII_Cubit_Client
 {
   // = TITLE
   //    Defines a class that encapsulates behaviour of a Cubit client
@@ -216,15 +216,14 @@ DII_Cubit_Client::init (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Get a Cubit object with a DII request on the Cubit factory.
-      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit", 
+      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit",
                                                                ACE_TRY_ENV));
 
       ACE_TRY_CHECK;
 
       // make_cubit takes a char* arg that it doesn't use, but we must
       // still include it in the request.
-      CORBA::String dummy = ACE_const_cast (char *,
-                                            "");
+      const char * dummy = "";
 
       mc_req->add_in_arg () <<= dummy;
 
@@ -269,10 +268,10 @@ DII_Cubit_Client::parse_args (void)
       case 'd':   // debug flag
         TAO_debug_level++;
         break;
-      case 'n':	  // loop count
+      case 'n':   // loop count
         this->loop_count_ = ACE_OS::atoi (opts.optarg);
         break;
-      case 'i':	  // Get the IOR from the command line.
+      case 'i':   // Get the IOR from the command line.
         this->factory_IOR_ = opts.optarg;
         break;
       case 'f':   // Read the IOR from the file.
@@ -406,7 +405,7 @@ DII_Cubit_Client::cube_short_dii (void)
 
       req->return_value () >>= ret_short;
 
-      if (ret_short != arg_short * arg_short * arg_short) 
+      if (ret_short != arg_short * arg_short * arg_short)
         {
           ACE_ERROR ((LM_ERROR,
                       "cube_short_dii -- bad results\n"));
@@ -451,7 +450,7 @@ DII_Cubit_Client::cube_long_dii (void)
 
       req->return_value () >>= ret_long;
 
-      if (ret_long != arg_long * arg_long * arg_long) 
+      if (ret_long != arg_long * arg_long * arg_long)
         {
           ACE_ERROR ((LM_ERROR,
                       "cube_long_dii -- bad results\n"));
@@ -499,7 +498,7 @@ DII_Cubit_Client::cube_octet_dii (void)
       CORBA::Any::to_octet to_ret_octet (ret_octet);
       req->return_value () >>= to_ret_octet;
 
-      if (ret_octet != arg_octet * arg_octet * arg_octet) 
+      if (ret_octet != arg_octet * arg_octet * arg_octet)
         {
           ACE_ERROR ((LM_ERROR,
                       "cube_octet_dii -- bad results\n"));
@@ -519,7 +518,7 @@ DII_Cubit_Client::cube_octet_dii (void)
 
 void
 DII_Cubit_Client::cube_union_dii (void)
-{ 
+{
   ACE_TRY_NEW_ENV
     {
       // Create the request ...
@@ -552,15 +551,15 @@ DII_Cubit_Client::cube_union_dii (void)
       Cubit::oneof* ret_ptr;
       req->return_value () >>= ret_ptr;
 
-      if (ret_ptr->cm ().l != arg_union.cm ().l * arg_union.cm ().l * arg_union.cm ().l 
-          || ret_ptr->cm ().s != arg_union.cm ().s * arg_union.cm ().s * arg_union.cm ().s 
-          || ret_ptr->cm ().o != arg_union.cm ().o * arg_union.cm ().o * arg_union.cm ().o) 
+      if (ret_ptr->cm ().l != arg_union.cm ().l * arg_union.cm ().l * arg_union.cm ().l
+          || ret_ptr->cm ().s != arg_union.cm ().s * arg_union.cm ().s * arg_union.cm ().s
+          || ret_ptr->cm ().o != arg_union.cm ().o * arg_union.cm ().o * arg_union.cm ().o)
         {
           ACE_ERROR ((LM_ERROR,
                       "cube_union_dii -- bad results\n"));
 
           this->error_count_++;
-        } 
+        }
     }
   ACE_CATCHANY
     {
@@ -604,9 +603,9 @@ DII_Cubit_Client::cube_struct_dii (void)
 
       req->return_value () >>= ret_struct_ptr;
 
-      if (ret_struct_ptr->l != arg_struct.l * arg_struct.l * arg_struct.l 
-          || ret_struct_ptr->s != arg_struct.s * arg_struct.s * arg_struct.s 
-          || ret_struct_ptr->o != arg_struct.o * arg_struct.o * arg_struct.o) 
+      if (ret_struct_ptr->l != arg_struct.l * arg_struct.l * arg_struct.l
+          || ret_struct_ptr->s != arg_struct.s * arg_struct.s * arg_struct.s
+          || ret_struct_ptr->o != arg_struct.o * arg_struct.o * arg_struct.o)
         {
           ACE_ERROR ((LM_ERROR,
                       "cube_struct_dii -- bad results\n"));
@@ -639,7 +638,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
       // Return value holder is set to a different length to test resizing.
       Cubit::octet_seq arg_octet_seq (length), *ret_octet_seq_ptr;
       arg_octet_seq.length (length);
-      arg_octet_seq[0] = 4;  
+      arg_octet_seq[0] = 4;
 
       // Add octet sequence to the request arg list
 
@@ -658,7 +657,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
       req->return_value () >>= ret_octet_seq_ptr;
 
       // Check for correct length.
-      if (ret_octet_seq_ptr->length () != arg_octet_seq.length ()) 
+      if (ret_octet_seq_ptr->length () != arg_octet_seq.length ())
         {
           ACE_ERROR ((LM_ERROR,
                       "cube_octet_seq_dii -- bad length\n"));
@@ -667,7 +666,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
         }
 
       // Check for correct value(s).
-      if ((*ret_octet_seq_ptr)[0] != arg_octet_seq[0] * arg_octet_seq[0] * arg_octet_seq[0]) 
+      if ((*ret_octet_seq_ptr)[0] != arg_octet_seq[0] * arg_octet_seq[0] * arg_octet_seq[0])
         {
           ACE_ERROR ((LM_ERROR,
                       "cube_octet_seq_dii -- bad results\n"));
@@ -706,7 +705,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
 
       // Add the long_seq to the request arg list.
       req->add_in_arg () <<= arg_long_seq;
-  
+
       req->set_return_type (Cubit::_tc_long_seq);
 
       // Invoke, check for an exception and verify the result.
@@ -720,7 +719,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
       req->return_value () >>= ret_long_seq_ptr;
 
       // Check for correct length.
-      if (ret_long_seq_ptr->length () != arg_long_seq.length ()) 
+      if (ret_long_seq_ptr->length () != arg_long_seq.length ())
         {
           ACE_ERROR ((LM_ERROR,
                       "cube_long_seq_dii -- bad length\n"));
@@ -729,7 +728,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
         }
 
       // Check for correct value(s).
-      if ((*ret_long_seq_ptr)[0] != arg_long_seq[0] * arg_long_seq[0] * arg_long_seq[0]) 
+      if ((*ret_long_seq_ptr)[0] != arg_long_seq[0] * arg_long_seq[0] * arg_long_seq[0])
         {
           ACE_ERROR ((LM_ERROR,
                       "cube_long_seq_dii -- bad results\n"));
@@ -811,7 +810,7 @@ DII_Cubit_Client::run (void)
 
       dii_timer.elapsed_time (dii_elapsed_time);
 
-      this->print_stats (this->stats_messages_[j], 
+      this->print_stats (this->stats_messages_[j],
                          dii_elapsed_time);
     }
 

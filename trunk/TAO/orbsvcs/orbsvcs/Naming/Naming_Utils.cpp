@@ -247,7 +247,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
   return 0;
 }
 
-CORBA::String
+char*
 TAO_Naming_Server::naming_service_ior (void)
 {
   return CORBA::string_dup (this->naming_service_ior_.in ());

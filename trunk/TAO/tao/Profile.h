@@ -69,7 +69,7 @@ public:
   // Initialize this object using the given input string.
   // Supports URL stylr of object references
 
-  virtual CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual char* to_string (CORBA::Environment &ACE_TRY_ENV) = 0;
   // Return a string representation for this profile.  client must
   // deallocate memory.
 
@@ -154,7 +154,7 @@ public:
   // = The TAO_Profile methods look above
   virtual int parse_string (const char *string,
                             CORBA::Environment &ACE_TRY_ENV);
-  virtual CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV);
+  virtual char* to_string (CORBA::Environment &ACE_TRY_ENV);
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual const TAO_ObjectKey &object_key (void) const;

@@ -34,7 +34,8 @@ public:
   CORBA::Float          m_float1,     m_float2;
   CORBA::Double         m_double1,    m_double2;
   CORBA::ULongLong      m_ulonglong1, m_ulonglong2;
-  CORBA::String         m_string1,    m_string2;
+  char *                m_string1;
+  char *                m_string2;
   CORBA::TypeCode_ptr   m_typecode1,  m_typecode2;
   CORBA::WChar          m_wchar1,     m_wchar2;
   CORBA::Any            m_any1,       m_any2;

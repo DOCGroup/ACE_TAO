@@ -337,7 +337,7 @@ POA_CORBA::Policy::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA::Policy *retval = CORBA::Policy::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_Policy (this, 
+                  POA_CORBA::_tao_collocated_Policy (this,
                                                      stub),
                   CORBA::Policy::_nil ());
 
@@ -396,7 +396,7 @@ POA_CORBA::PolicyManager::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA::PolicyManager *retval = CORBA::PolicyManager::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_PolicyManager (this, 
+                  POA_CORBA::_tao_collocated_PolicyManager (this,
                                                             stub),
                   CORBA::PolicyManager::_nil ());
 
@@ -514,7 +514,7 @@ POA_CORBA::PolicyCurrent::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA::PolicyCurrent *retval = CORBA::PolicyCurrent::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_PolicyCurrent (this, 
+                  POA_CORBA::_tao_collocated_PolicyCurrent (this,
                                                             stub),
                   CORBA::PolicyCurrent::_nil ());
 

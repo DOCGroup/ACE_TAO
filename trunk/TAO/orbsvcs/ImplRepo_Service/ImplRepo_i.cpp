@@ -479,7 +479,7 @@ ImplRepo_i::run (CORBA::Environment& env)
   return 0;
 }
 
-CORBA::String
+char*
 ImplRepo_i::get_forward_host (const char *server)
 {
   ACE_TString host, server_object_ior;

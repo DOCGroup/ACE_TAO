@@ -386,7 +386,7 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  CORBA::String the_name (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  char * the_name (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   PortableServer::POA_ptr the_parent (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
@@ -454,7 +454,7 @@ public:
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // Utility functions for the other
-  static void encode_sequence_to_string (CORBA::String &str,
+  static void encode_sequence_to_string (char * &str,
                                          const TAO_Unbounded_Sequence<CORBA::Octet> &seq);
   static void decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
                                          const char *str);

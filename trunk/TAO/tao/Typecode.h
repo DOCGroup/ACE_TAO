@@ -470,8 +470,8 @@ public:
   CORBA::Boolean tc_discrim_pad_size_known_;
 
   // = These data members store the precomputed values
-  CORBA::String  tc_id_;
-  CORBA::String  tc_name_;
+  char *  tc_id_;
+  char *  tc_name_;
   CORBA::ULong   tc_member_count_;
   CORBA::TypeCode_ptr *tc_member_type_list_;
   char **tc_member_name_list_;

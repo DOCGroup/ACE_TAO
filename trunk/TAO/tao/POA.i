@@ -483,7 +483,7 @@ TAO_POA::name (void) const
   return this->name_;
 }
 
-ACE_INLINE CORBA::String
+ACE_INLINE char *
 TAO_POA::the_name (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);

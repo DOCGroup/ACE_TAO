@@ -698,8 +698,6 @@ TAO_NAMESPACE CORBA
   typedef ACE_CDR::Char Char;
   typedef Char &Char_out;
 
-  typedef Char *String;
-
   // = String memory management.
   TAO_NAMESPACE_INLINE_FUNCTION Char* string_alloc (ULong len);
   TAO_NAMESPACE_STORAGE_CLASS Char* string_dup (const Char *);
