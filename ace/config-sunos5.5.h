@@ -13,6 +13,9 @@
 
 #define ACE_LACKS_STDINT_H
 
+// SunOS 5.5 does not provide getloadavg()
+#define ACE_LACKS_GETLOADAVG
+
 // Before we do anything, we should include <sys/feature_tests.h> to
 // ensure that things are set up properly.
 #include <sys/feature_tests.h>
