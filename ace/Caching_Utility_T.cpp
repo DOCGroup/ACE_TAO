@@ -54,8 +54,10 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
-
+  size_t entries_to_remove 
+    = ACE_MAX (1, ACE_static_cast(size_t, 
+                                  ACE_static_cast(double, purge_percent) 
+                                  / 100 * current_map_size));
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
 
@@ -152,7 +154,10 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
+  size_t entries_to_remove 
+    = ACE_MAX (1, ACE_static_cast(ssize_t, 
+                                  ACE_static_cast(double, purge_percent) 
+                                  / 100 * current_map_size));
 
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
@@ -268,7 +273,10 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove = size_t ((double (purge_percent) / 100 * available_entries) + 0.5);
+  size_t entries_to_remove 
+    = ACE_MAX (1, ACE_static_cast(ssize_t, 
+                                  ACE_static_cast(double, purge_percent) 
+                                  / 100 * current_map_size));
 
   if (entries_to_remove >= available_entries  || 
       entries_to_remove == 0)
@@ -389,7 +397,10 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove = (purge_percent / 100 * current_map_size) + 0.5;
+  size_t entries_to_remove 
+    = ACE_MAX (1, ACE_static_cast(ssize_t, 
+                                  ACE_static_cast(double, purge_percent) 
+                                  / 100 * current_map_size));
 
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
