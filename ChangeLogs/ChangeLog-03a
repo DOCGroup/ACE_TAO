@@ -1,3 +1,8 @@
+Thu Oct 17 10:26:59 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/C++NPv2/display_logfile.cpp (ACE_MT_SYNCH>): Fixed a
+	  uninitialized member usage warning.
+
 Thu Oct 17 00:26:13 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc_T.i (release): Instead of releasing the memory_pool_
