@@ -1,3 +1,9 @@
+Tue Mar  2 17:36:29 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEventComm.idl:
+	* orbsvcs/orbsvcs/CosEventChannelAdmin.idl:
+	  added a comment header to describe the idl file contents.
+
 Tue Mar  2 11:41:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * examples/Simulator/DOVEBrowser/DoubleVisComp.java: Added flexible
