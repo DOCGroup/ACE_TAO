@@ -1,0 +1,16 @@
+project: strategies, messaging {
+  Source_Files {
+    simple_test_i.cpp
+    server.cpp
+  }
+}
+
+project(client): strategies, messaging {
+  exename = client
+
+  Source_Files {
+    simple_testC.cpp
+    client.cpp
+  }
+}
+

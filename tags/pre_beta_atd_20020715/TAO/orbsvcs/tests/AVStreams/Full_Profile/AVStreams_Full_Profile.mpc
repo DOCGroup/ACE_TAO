@@ -1,0 +1,16 @@
+project(server): orbsvcsexe, avstreamsexe {
+  exename  = server
+
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(ftp): orbsvcsexe, avstreamsexe {
+  exename  = ftp
+
+  Source_Files {
+    ftp.cpp
+  }
+}
+

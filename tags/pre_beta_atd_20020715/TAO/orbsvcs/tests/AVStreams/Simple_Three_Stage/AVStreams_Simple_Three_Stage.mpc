@@ -1,0 +1,24 @@
+project(sender): orbsvcsexe, avstreamsexe {
+  exename  = sender
+
+  Source_Files {
+    sender.cpp
+  }
+}
+
+project(distributer): orbsvcsexe, avstreamsexe {
+  exename  = distributer
+
+  Source_Files {
+    distributer.cpp
+  }
+}
+
+project(receiver): orbsvcsexe, avstreamsexe {
+  exename  = receiver
+
+  Source_Files {
+    receiver.cpp
+  }
+}
+

@@ -1,0 +1,190 @@
+/**
+ * @file IOR.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the TAO_IOP namespace.
+ *
+ * This file was used to generate the code in IORC.{h,i,cpp}.
+ *
+ * To regenerate the code use:
+ *
+ * tao_idl \
+ *        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3 \
+ *          -Wb,export_macro=TAO_IORManip_Export \
+ *          -Wb,export_include="ior_manip_export.h" \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *   IOR.idl
+ *
+ */
+
+#ifndef TAO_IOR_PIDL
+#define TAO_IOR_PIDL
+
+module TAO_IOP
+{
+  /**
+   * @exception EmptyProfileList
+   *
+   * @brief @@ Bala, please describe this exception
+   */
+  exception EmptyProfileList {};
+
+  /**
+   * @exception NotFound
+   *
+   * @brief @@ Bala, please describe this exception
+   */
+  exception NotFound {};
+
+  /**
+   * @exception Duplicate
+   *
+   * @brief @@ Bala, please describe this exception
+   */
+  exception Duplicate {};
+
+  /**
+   * @exception Invalid_IOR
+   *
+   * @brief @@ Bala, please describe this exception
+   */
+  exception Invalid_IOR {};
+
+  /**
+   * @exception MultiProfileList
+   *
+   * @brief @@ Bala, please describe this exception
+   */
+  exception MultiProfileList {};
+
+  /**
+   * @interface TAO_IOR_Property
+   *
+   * Allows setting properties  by the different services in the
+   * IOR. The implementations of this interface would reside in the
+   * services. This interface essentially performs a role of a
+   * callback object.
+   *
+   * @todo This interface seems redundant in the face of the
+   * PortableInterceptor::IORInterceptor and the
+   * ObjectReferenceTemplate.  If that is the case we should deprecate
+   * it and remove it.
+   */
+  local interface TAO_IOR_Property
+  {
+      boolean set_property (in Object ior)
+        raises (Invalid_IOR);
+      // Operation that would set the required properties in the <ior>
+      // as needed by the service.
+
+      boolean set_primary (in Object ior1,
+                           in Object ior2)
+        raises (Duplicate, NotFound);
+      // Sets the profile ior1, in the profile ior2 to be a
+      // primary.
+
+      Object get_primary (in Object ior)
+        raises (NotFound);
+      // Returns the ior  of the primary from <ior> if it has been
+      // set. Else returns a NotFound exception
+
+      boolean is_primary_set (in Object ior);
+      // Returns a true or false depending on whether a primary member
+      // has been set in <ior>
+  };
+
+  /**
+   * @interface TAO_IOR_Manipulation
+   *
+   * @brief Allows applications to manipulate object references.
+   *
+   * Manipulating Object References.  While this interface does not
+   * assume the use of CORBA complient IOPs, the IOP termonology is
+   * used throughout.
+   * Object references (Object) are used since they encapsulate the
+   * notion of object references and IORs.
+   * Note, an IOR contains one or more profiles and a profile can be
+   * considered to represent the location or route to a specific instance
+   * of an object.
+   * A profile may also contain supplimentary information useful for
+   * differrent services such as security.
+   * All Object references may have multiple profiles
+   */
+  local interface TAO_IOR_Manipulation
+  {
+      typedef sequence <Object> IORList;
+
+      Object merge_iors (in IORList iors)
+        raises (EmptyProfileList,Duplicate,Invalid_IOR);
+      // Create a new object reference by merging the profiles lists in the
+      // supplied list of one or more object references.
+
+      Object add_profiles (in Object ior1,
+                           in Object ior2)
+        raises (EmptyProfileList, Duplicate, Invalid_IOR);
+      // copy the profile list from "ior2" to "ior1".
+      // Note on ordering, while the current implementation will place
+      // the profiles from ior2 (which are not already in ior1) on the
+      // end of the profile list in ior1, there is no guarantee this ordering
+      // will be maintained.  For example, string_to_object or object_to_string
+      // may reorder the profile lists.  So, if it is important to use one
+      // profile before another then policies should be used along with tagged
+      // components/tagged profiles.
+
+      Object remove_profiles (in Object ior1,
+                              in Object ior2)
+        raises (Invalid_IOR, EmptyProfileList, NotFound);
+      // Any profile in ior1 which matches at least one profile in ior2
+      // will be removed.  Returns a new object reference
+
+
+      boolean set_property (in TAO_IOR_Property prop,
+                            in Object ior)
+        raises (Invalid_IOR, Duplicate);
+      // Allows setting of properties as defined by the <prop> object
+      // in the <ior> list
+
+      // @@ Primary is specific to FT.. But let us have these
+      // @@ operations around. Further, as we pass the property object
+      // @@ around the implementation will not be tied with the FT
+      // @@ service. Any service can use their own ways of defining a
+      // @@ primary. For example FT service uses IOP::TAG_FT_PRIMARY
+      // @@ to identify a primary and some other service could use
+      // @@ something else. But the actual implementation of the
+      // @@ property object would take care of that.
+      boolean set_primary (in TAO_IOR_Property prop,
+                           in Object ior1,
+                           in Object ior2)
+        raises (Invalid_IOR, Duplicate, MultiProfileList, NotFound);
+      // Sets the profile ior1, in the profile ior2 to be a
+      // primary. If ior1 is a multi-profile IOR then the operation
+      // raises the MultiProfileList exception. If ior1 is not found
+      // in ior2, it raises an Invalid_IOR exception. If ior2 has a
+      // primary already defined then it raises a Duplicate
+      // exception.
+
+      Object get_primary (in TAO_IOR_Property prop,
+                          in Object ior)
+        raises (NotFound);
+      // Returns the ior  of the primary from <ior> if it has been
+      // set. Else returns a NotFound exception
+
+      boolean is_primary_set (in TAO_IOR_Property prop,
+                              in Object ior);
+      // Returns a true or false depending on whether a primary member
+      // has been set in <ior>
+
+      unsigned long is_in_ior(in Object ior1, in Object ior2)
+        raises (NotFound);
+      // returns number of profiles which are in both ior1 and ior2.
+
+      unsigned long get_profile_count (in Object ior)
+        raises (EmptyProfileList);
+      // This will return the number of profiles contained in the
+      // corresponding object reference for this object.
+  };
+};
+
+#endif /* TAO_IOR_PIDL */

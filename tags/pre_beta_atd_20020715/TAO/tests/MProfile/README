@@ -1,0 +1,29 @@
+This program tests fundamentals of TAO's ORB fault tolerance by
+merging multiple profiles in a single object reference.
+
+Run the application as follows.
+
+$ server -o (file_name1) -ORBEndpoint iiop://localhost:10007
+$ server -o (file_name2) -ORBEndpoint iiop://localhost:10008
+$ client -k file://file_name1 -m file://file_name2
+(When a message "Kill primray " appears on screen, kill the server
+exhibiting the IOR in file with name "file_name1". )
+
+Test purpose:
+
+This is a test to see whether we generate exceptions as per the
+spec. When we loose connection with a connected server, the ORB would
+throw a COMM_FAILURE exception. This is platform dependent.  One
+wouldn't see this on NT. The reason for this is the way TCP has been
+been implemented on NT & Solaris. I am not going in to the details for
+this behaviour. TRANSIENT exceptions are thrown when the ORB has
+tried all the object references it has and is not able to establish
+connection with any of them (TRANSIENT exceptions are also thrown for
+few other cases, but here the test is for the case that has been
+mentioned above).
+
+Comments:
+========
+
+- The run exhibits different behaviours on SUN and NT
+

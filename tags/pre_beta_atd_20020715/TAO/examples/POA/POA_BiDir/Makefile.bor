@@ -1,0 +1,24 @@
+#
+# Makefile for building the POA_BiDir example
+#
+
+NAME = POA_BiDir
+
+OBJFILES = \
+        $(OBJDIR)\POA_BiDir.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_BIDIRGIOP_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_BIDIRGIOP_LIB)
+
+CPPDIR = .;..
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

@@ -1,0 +1,46 @@
+configurations        = Release Debug
+platform_longs        = "WCE ARM" "WCE x86" 
+default_configuration = Debug
+default_platform_long = "WCE ARM"
+type_is_binary        = 1
+type_is_dynamic       = 1
+common_defines        = UNICODE _UNICODE
+pch_defines           = ACE_USING_PCH
+ssl_libs              = libeay32 ssleay32
+
+WCE x86 {
+  type_code   = 0x8302
+  cpu_id      = D6518FF3-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = IX86
+  cpu_defines = _i386_ _X86_ x86
+}
+
+WCE ARM {
+  type_code   = 0x8502
+  cpu_id      = D6518FFC-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = ARM
+  cpp         = clarm.exe
+  cpu_defines = ARM _ARM_
+}
+
+Release {
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /Zi /Ob2
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = Release
+  intermediate_dir      = Release
+}
+
+Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /Fr /YX
+  intermediate_dir      = Debug
+  lib_modifier          = d
+  pdb                   = 1
+}
+

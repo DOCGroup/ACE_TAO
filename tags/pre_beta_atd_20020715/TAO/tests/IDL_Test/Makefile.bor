@@ -1,0 +1,158 @@
+#
+# Makefile for building the IDL test
+#
+
+NAME = main
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -I..\.. -Ge 1
+
+OBJFILES = \
+	$(OBJDIR)\anonymousC.obj \
+	$(OBJDIR)\anonymousS.obj \
+	$(OBJDIR)\arrayC.obj \
+	$(OBJDIR)\arrayS.obj \
+	$(OBJDIR)\constantsC.obj \
+	$(OBJDIR)\constantsS.obj \
+	$(OBJDIR)\enum_in_structC.obj \
+	$(OBJDIR)\enum_in_structS.obj \
+	$(OBJDIR)\fullC.obj \
+	$(OBJDIR)\fullS.obj \
+	$(OBJDIR)\fwdC.obj \
+	$(OBJDIR)\fwdS.obj \
+	$(OBJDIR)\generic_objectC.obj \
+	$(OBJDIR)\generic_objectS.obj \
+	$(OBJDIR)\gperfC.obj \
+	$(OBJDIR)\gperfS.obj \
+	$(OBJDIR)\includedC.obj \
+	$(OBJDIR)\includedS.obj \
+	$(OBJDIR)\includingC.obj \
+	$(OBJDIR)\includingS.obj \
+	$(OBJDIR)\interfaceC.obj \
+	$(OBJDIR)\interfaceS.obj \
+	$(OBJDIR)\keywordsC.obj \
+	$(OBJDIR)\keywordsS.obj \
+        $(OBJDIR)\paramsC.obj \
+        $(OBJDIR)\paramsS.obj \
+	$(OBJDIR)\pragmaC.obj \
+	$(OBJDIR)\pragmaS.obj \
+	$(OBJDIR)\reopen_include1C.obj \
+	$(OBJDIR)\reopen_include1S.obj \
+	$(OBJDIR)\reopen_include2C.obj \
+	$(OBJDIR)\reopen_include2S.obj \
+	$(OBJDIR)\reopened_modulesC.obj \
+	$(OBJDIR)\reopened_modulesS.obj \
+	$(OBJDIR)\sequenceC.obj \
+	$(OBJDIR)\sequenceS.obj \
+	$(OBJDIR)\typedefC.obj \
+	$(OBJDIR)\typedefS.obj \
+	$(OBJDIR)\unionC.obj \
+	$(OBJDIR)\unionS.obj \
+	$(OBJDIR)\nested_scopeC.obj \
+	$(OBJDIR)\nested_scopeS.obj \
+	$(OBJDIR)\main.obj \
+	$(OBJDIR)\namespace_check.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\anonymous.idl \
+        $(IDLDIR)\array.idl \
+        $(IDLDIR)\constants.idl \
+        $(IDLDIR)\enum_in_struct.idl \
+        $(IDLDIR)\full.idl \
+        $(IDLDIR)\fwd.idl \
+        $(IDLDIR)\generic_object.idl \
+        $(IDLDIR)\gperf.idl \
+        $(IDLDIR)\included.idl \
+        $(IDLDIR)\including.idl \
+        $(IDLDIR)\interface.idl \
+        $(IDLDIR)\keywords.idl \
+        $(IDLDIR)\params.idl \
+        $(IDLDIR)\pragma.idl \
+        $(IDLDIR)\sequence.idl \
+        $(IDLDIR)\typedef.idl \
+        $(IDLDIR)\union.idl \
+        $(IDLDIR)\nested_scope.idl \
+        $(IDLDIR)\reopened_modules.idl \
+        $(IDLDIR)\reopen_include1.idl \
+        $(IDLDIR)\reopen_include2.idl
+
+IDLDIR = .
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\anonymousC.cpp $(IDLDIR)\anonymousS.cpp: $(IDLDIR)\anonymous.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\arrayC.cpp $(IDLDIR)\arrayS.cpp: $(IDLDIR)\array.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\constantsC.cpp $(IDLDIR)\constantsS.cpp: $(IDLDIR)\constants.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\enum_in_structC.cpp $(IDLDIR)\enum_in_structS.cpp: $(IDLDIR)\enum_in_struct.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\fullC.cpp $(IDLDIR)\fullS.cpp: $(IDLDIR)\full.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\fwdC.cpp $(IDLDIR)\fwdS.cpp: $(IDLDIR)\fwd.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\generic_objectC.cpp $(IDLDIR)\generic_objectS.cpp: $(IDLDIR)\generic_object.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\gperfC.cpp $(IDLDIR)\gperfS.cpp: $(IDLDIR)\gperf.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\includedC.cpp $(IDLDIR)\includedS.cpp: $(IDLDIR)\included.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\includingC.cpp $(IDLDIR)\includingS.cpp: $(IDLDIR)\including.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\interfaceC.cpp $(IDLDIR)\interfaceS.cpp: $(IDLDIR)\interface.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\keywordsC.cpp $(IDLDIR)\keywordsS.cpp: $(IDLDIR)\keywords.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\paramsC.cpp $(IDLDIR)\paramsS.cpp: $(IDLDIR)\params.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\pragmaC.cpp $(IDLDIR)\pragmaS.cpp: $(IDLDIR)\pragma.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\sequenceC.cpp $(IDLDIR)\sequenceS.cpp: $(IDLDIR)\sequence.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\typedefC.cpp $(IDLDIR)\typedefS.cpp: $(IDLDIR)\typedef.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\unionC.cpp $(IDLDIR)\unionS.cpp: $(IDLDIR)\union.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\nested_scopeC.cpp $(IDLDIR)\nested_scopeS.cpp: $(IDLDIR)\nested_scope.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\reopened_modulesC.cpp $(IDLDIR)\reopened_modulesS.cpp: $(IDLDIR)\reopened_modules.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\reopen_include1C.cpp $(IDLDIR)\reopen_include1S.cpp: $(IDLDIR)\reopen_include1.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\reopen_include2C.cpp $(IDLDIR)\reopen_include2S.cpp: $(IDLDIR)\reopen_include2.idl
+	$(TAO_IDL) $**

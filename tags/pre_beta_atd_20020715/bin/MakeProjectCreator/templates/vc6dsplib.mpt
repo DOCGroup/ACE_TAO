@@ -1,0 +1,31 @@
+type_description      = "Static Library"
+type_code             = 0x0104
+configurations        = "Static Release" "Static Debug"
+default_configuration = "Static Debug"
+common_defines        = WIN32 _WINDOWS
+type_is_static        = 1
+need_libflags         = 1
+pch_defines           = ACE_USING_PCH
+
+Static Release {
+  use_debug_libraries   = 0
+  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = Static_Release
+  intermediate_dir      = Static_Release
+  lib_modifier          = s
+  debug_switch          =
+}
+
+Static Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /Gy /MDd
+  defines               = _DEBUG
+  compile_flags_removed = /Fr /YX
+  output_dir            = Static_Debug
+  intermediate_dir      = Static_Debug
+  lib_modifier          = sd
+  pdb                   = 1
+}
+

@@ -1,0 +1,20 @@
+project(sender): orbsvcsexe, avstreamsexe {
+  depends += QoS
+  libs    += ACE_QoS
+  exename  = sender
+
+  Source_Files {
+    sender.cpp
+  }
+}
+
+project(receiver): orbsvcsexe, avstreamsexe {
+  depends += QoS
+  libs    += ACE_QoS
+  exename  = receiver
+
+  Source_Files {
+    receiver.cpp
+  }
+}
+

@@ -1,0 +1,9 @@
+#
+# Makefile for building the TAO Miop obsvcs tests
+# $Id$
+#
+
+DIRS = \
+        McastHello
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

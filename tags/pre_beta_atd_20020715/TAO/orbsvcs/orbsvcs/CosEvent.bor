@@ -1,0 +1,89 @@
+#
+# Makefile for building the TAO CosEvent library
+#
+
+NAME = TAO_CosEvent
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+	-I..\.. -Ge 1 -Wb,export_macro=TAO_Event_Export \
+	-Wb,export_include=CosEvent/event_export.h -Wb,pre_include=ace/pre.h \
+	-Wb,post_include=ace/post.h
+
+IDLFILES = \
+	$(IDLDIR)\CosEventChannelAdmin.idl \
+	$(IDLDIR)\CosEventComm.idl
+
+OBJFILES = \
+	$(OBJDIR)\CEC_ConsumerAdmin.obj \
+	$(OBJDIR)\CEC_ConsumerControl.obj \
+	$(OBJDIR)\CEC_Default_Factory.obj \
+	$(OBJDIR)\CEC_Dispatching.obj \
+	$(OBJDIR)\CEC_Dispatching_Task.obj \
+	$(OBJDIR)\CEC_EventChannel.obj \
+	$(OBJDIR)\CEC_Event_Loader.obj \
+	$(OBJDIR)\CEC_Factory.obj \
+	$(OBJDIR)\CEC_MT_Dispatching.obj \
+	$(OBJDIR)\CEC_ProxyPullConsumer.obj \
+	$(OBJDIR)\CEC_ProxyPullSupplier.obj \
+	$(OBJDIR)\CEC_ProxyPushConsumer.obj \
+	$(OBJDIR)\CEC_ProxyPushSupplier.obj \
+	$(OBJDIR)\CEC_Pulling_Strategy.obj \
+	$(OBJDIR)\CEC_Reactive_ConsumerControl.obj \
+	$(OBJDIR)\CEC_Reactive_Pulling_Strategy.obj \
+	$(OBJDIR)\CEC_Reactive_SupplierControl.obj \
+	$(OBJDIR)\CEC_SupplierAdmin.obj \
+	$(OBJDIR)\CEC_SupplierControl.obj \
+#	$(OBJDIR)\ConsumerAdmin_i.obj \
+#	$(OBJDIR)\CosEvent_Utilities.obj \
+	$(OBJDIR)\CosEventChannelAdminC.obj \
+	$(OBJDIR)\CosEventChannelAdminS.obj \
+	$(OBJDIR)\CosEventCommC.obj \
+	$(OBJDIR)\CosEventCommS.obj \
+#	$(OBJDIR)\EventChannel_i.obj \
+#	$(OBJDIR)\ProxyPushConsumer_i.obj \
+#	$(OBJDIR)\ProxyPushSupplier_i.obj \
+#	$(OBJDIR)\SupplierAdmin_i.obj
+
+RESOURCE = $(OBJDIR)\CosEvent.res
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+        $(TAO_MESSAGING_CFLAGS) \
+	$(TAO_EVENT_CFLAGS) \
+	-DTAO_EVENT_BUILD_DLL
+
+CPPDIR = .;CosEvent
+
+IDLDIR = .
+
+INCDIR_NAME = orbsvcs\CosEvent
+INCLUDES = CosEvent\*.h CosEvent\*.i
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+        $(TAO_NAMING_LIB) \
+        $(TAO_MESSAGING_LIB)
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+$(IDLDIR)\CosEventChannelAdminC.cpp $(IDLDIR)\CosEventChannelAdminS.cpp: $(IDLDIR)\CosEventChannelAdmin.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\CosEventCommC.cpp $(IDLDIR)\CosEventCommS.cpp: $(IDLDIR)\CosEventComm.idl
+	$(TAO_IDL) $**
