@@ -20,6 +20,7 @@
 #include "be_valuetype_fwd.h"
 #include "be_component_fwd.h"
 #include "be_component.h"
+#include "be_home.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_operation.h"
@@ -887,3 +888,10 @@ be_visitor_arg_traits::visit_component_fwd (be_component_fwd *node)
 {
   return this->visit_interface_fwd (node);
 }
+
+int
+be_visitor_arg_traits::visit_home (be_home *node)
+{
+  return this->visit_interface (node);
+}
+
