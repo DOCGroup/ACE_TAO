@@ -58,7 +58,7 @@ show_chunk (CosNaming::NamingContext_ptr nc,
           CORBA::Object_var obj = nc->resolve (Name);
 
           CosNaming::NamingContext_var xc =
-            CosNaming::NamingContext::_narrow (obj);
+            CosNaming::NamingContext::_narrow (obj.in ());
           list_context (xc, level + 1);
         }
       // Mark this node as a reference
@@ -110,7 +110,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var root_nc =
-        CosNaming::NamingContext::_narrow (obj);
+        CosNaming::NamingContext::_narrow (obj.in ());
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
@@ -118,7 +118,7 @@ main (int argc, char *argv[])
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (obj))
+      if (CORBA::is_nil (obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Naming Service not found"),
                           -1);
@@ -127,7 +127,7 @@ main (int argc, char *argv[])
                   "Naming Service: <%s> ---------\n",
                   str.in ()));
 
-      list_context (root_nc, 1);
+      list_context (root_nc.in (), 1);
     }
   ACE_CATCHANY
     {

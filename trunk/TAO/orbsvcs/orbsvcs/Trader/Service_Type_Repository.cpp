@@ -211,7 +211,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
        itr++)
     {
       Type_Info* type_info = (*itr).int_id_;
-      const char* type_name = (const char*) (*itr).ext_id_;
+      const char* type_name = (*itr).ext_id_.in ();
 
       if (all
           || num < type_info->type_struct_.incarnation)

@@ -67,7 +67,7 @@ char *
 Account_i::name (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::string_dup (name_);
+  return CORBA::string_dup (this->name_.in ());
 }
 
 void
@@ -75,5 +75,5 @@ Account_i::name (const char *name,
 		 CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  name_ = CORBA::string_dup (name);
+  this->name_ = CORBA::string_dup (name);
 }

@@ -251,7 +251,7 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids (void)
        ! type_iter.done ();
        type_iter++)
     {
-      const char* type_name = (*type_iter).ext_id_;
+      const char* type_name = (*type_iter).ext_id_.in ();
       Offer_Map_Entry* offer_map_entry = (*type_iter).int_id_;
 
       ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map_entry->lock_, 0);

@@ -305,7 +305,7 @@ Event_List_Iterator::init (Event_List *list)
 CORBA::Boolean
 Event_List_Iterator::next (Event_var &next)
 {
-  if (current_)
+  if (this->current_.in ())
     {
       Event *e = current_->get_event ();
       CORBA::add_ref (e);
@@ -321,7 +321,7 @@ Event_List_Iterator::next (Event_var &next)
 Event *
 Event_List_Iterator::next ()
 {
-  if (current_)
+  if (this->current_.in ())
     {
       return current_->get_event ();
     }
@@ -331,7 +331,7 @@ Event_List_Iterator::next ()
 void
 Event_List_Iterator::advance ()
 {
-  if (current_)
+  if (this->current_.in ())
     {
       Event_List_Link *tmp = current_->get_next_link ();
       CORBA::add_ref (tmp);

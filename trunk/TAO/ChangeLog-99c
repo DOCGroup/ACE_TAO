@@ -1,3 +1,25 @@
+Wed Aug 11 10:04:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Event_Comm/Consumer_Handler.cpp:
+	* examples/OBV/Typed_Events/Event_Types_impl.cpp:
+	* examples/POA/Default_Servant/File_i.cpp:
+	* examples/Quoter/server.cpp:
+	* examples/Simple/bank/AccountManager_i.cpp:
+	* examples/Simple/bank/Account_i.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	* orbsvcs/tests/Event/Basic/BCast.cpp:
+	* orbsvcs/tests/Event/Basic/BCast.h:
+	* performance-tests/Thruput/TAO/utils.cpp:
+	* utils/nslist/nslist.cpp:
+	  Fixed several warnings under gcc-2.95
+
 Wed Aug 11 09:18:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  The following changes are used to surface the ServiceContextList

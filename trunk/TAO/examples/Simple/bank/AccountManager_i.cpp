@@ -108,7 +108,7 @@ AccountManager_i::close (Bank::Account_ptr account,
 
       ACE_TRY_CHECK;
 
-      if (hash_map_.unbind ((const char *) name) == -1)
+      if (hash_map_.unbind (name.in ()) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG((LM_DEBUG,

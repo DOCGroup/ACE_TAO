@@ -171,7 +171,7 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
   // object binding.
   size_t id_len = ACE_OS::strlen (id) + 1;
   size_t kind_len = ACE_OS::strlen (kind) + 1;
-  size_t ref_len = ACE_OS::strlen (ref) + 1;
+  size_t ref_len = ACE_OS::strlen (ref.in ()) + 1;
   size_t total_len = id_len + kind_len + ref_len;
   char *ptr = (char *) this->allocator_->malloc (total_len);
 
@@ -407,7 +407,7 @@ TAO_Persistent_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
   // Generate a POA id for the new context.
   char poa_id[BUFSIZ];
   ACE_OS::sprintf (poa_id,
-                   "%s_%ld",
+                   "%s_%d",
                    this->poa_id_.c_str (),
                    (*this->counter_)++);
 
@@ -520,7 +520,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
       // Register with the POA.
       char poa_id[BUFSIZ];
       ACE_OS::sprintf (poa_id,
-                       "%s_%ld",
+                       "%s_%d",
                        this->poa_id_.c_str (),
                        this->counter_++);
       PortableServer::ObjectId_var id =
