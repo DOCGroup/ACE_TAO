@@ -99,15 +99,19 @@ SOURCE=.\Client_Task.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\test_i.cpp
+SOURCE=.\Receiver_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\testC.cpp
+SOURCE=.\ReceiverC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\testS.cpp
+SOURCE=.\ReceiverS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SenderC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -119,7 +123,19 @@ SOURCE=.\Client_Task.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\testC.h
+SOURCE=.\Receiver_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ReceiverC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ReceiverS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SenderC.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -131,18 +147,18 @@ SOURCE=.\testC.h
 # PROP Default_Filter "idl"
 # Begin Source File
 
-SOURCE=.\test.idl
+SOURCE=.\Receiver.idl
 
 !IF  "$(CFG)" == "BiDir Client - Win32 Release"
 
-# PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
+!ELSEIF  "$(CFG)" == "BiDir Client - Win32 Debug"
+
 # Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\test.idl
-InputName=test
+InputPath=.\Receiver.idl
+InputName=Receiver
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -172,16 +188,23 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sender.idl
+
+!IF  "$(CFG)" == "BiDir Client - Win32 Release"
+
 !ELSEIF  "$(CFG)" == "BiDir Client - Win32 Debug"
 
-# PROP Ignore_Default_Tool 1
-USERDEP__TEST_="$(ACE_ROOT)\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\test.idl
-InputName=test
+InputPath=.\Sender.idl
+InputName=Sender
 
 BuildCmds= \
-	$(ACE_ROOT)\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -215,9 +238,5 @@ BuildCmds= \
 
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\README
-# End Source File
 # End Target
 # End Project

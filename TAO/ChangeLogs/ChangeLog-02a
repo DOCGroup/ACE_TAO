@@ -1,3 +1,9 @@
+Thu Apr  4 14:20:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MT_BiDir/MT_BiDir.dsw:
+	* tests/MT_BiDir/client.dsp:
+	* tests/MT_BiDir/server.dsp: Files for Win32 compilation. 
+
 Thu Apr  4 13:25:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Options.html: Added documentation for the new -ORB option. 

@@ -91,23 +91,27 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\ReceiverC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sender_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SenderC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SenderS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Server_Task.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\test_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\testC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\testS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -115,19 +119,23 @@ SOURCE=.\testS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\ReceiverC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sender_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SenderC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SenderS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Server_Task.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\test_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\testC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\testS.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -139,88 +147,11 @@ SOURCE=.\testS.h
 # PROP Default_Filter "idl"
 # Begin Source File
 
-SOURCE=.\test.idl
+SOURCE=.\Receiver.idl
+# End Source File
+# Begin Source File
 
-!IF  "$(CFG)" == "BiDir Server - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\test.idl
-InputName=test
-
-BuildCmds= \
-	..\..\..\bin\release\tao_idl -Ge 1 $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "BiDir Server - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__TEST_="$(ACE_ROOT)\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\test.idl
-InputName=test
-
-BuildCmds= \
-	$(ACE_ROOT)\bin\tao_idl -Ge 1 $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
+SOURCE=.\Sender.idl
 # End Source File
 # End Group
 # End Target
