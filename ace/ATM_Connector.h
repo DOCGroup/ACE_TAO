@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_ATM_CONNECTOR_H
-#include "ace/pre.h"
 #define ACE_ATM_CONNECTOR_H
+#include "ace/pre.h"
 
 #include "ace/ATM_Stream.h"
 #include "ace/ATM_Params.h"

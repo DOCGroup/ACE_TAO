@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef ACE_OS_H
-#include "ace/pre.h"
 # define ACE_OS_H
+#include "ace/pre.h"
 
 // This file should be a link to the platform/compiler-specific
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).

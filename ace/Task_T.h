@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_TASK_T_H
-#include "ace/pre.h"
 #define ACE_TASK_T_H
+#include "ace/pre.h"
 
 #include "ace/Message_Queue.h"
 

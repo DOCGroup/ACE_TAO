@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SHARED_MALLOC_MM_H
-#include "ace/pre.h"
 #define ACE_SHARED_MALLOC_MM_H
+#include "ace/pre.h"
 
 #include "ace/Shared_Memory.h"
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_LOG_PRIORITY_H
-#include "ace/pre.h"
 #define ACE_LOG_PRIORITY_H
+#include "ace/pre.h"
 
 enum ACE_Log_Priority
 {

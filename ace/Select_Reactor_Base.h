@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SELECT_REACTOR_BASE_H
-#include "ace/pre.h"
 #define ACE_SELECT_REACTOR_BASE_H
+#include "ace/pre.h"
 
 #include "ace/Signal.h"
 

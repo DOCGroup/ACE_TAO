@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef ACE_LOCAL_NAME_SPACE_H
-#include "ace/pre.h"
 #define ACE_LOCAL_NAME_SPACE_H
+#include "ace/pre.h"
 
 #include "ace/SString.h"
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_MEM_STREAM_H
-#include "ace/pre.h"
 #define ACE_MEM_STREAM_H
+#include "ace/pre.h"
 
 #include "ace/MEM_IO.h"
 

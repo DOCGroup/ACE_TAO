@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_CONTAINERS_H
-#include "ace/pre.h"
 #define ACE_CONTAINERS_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 #include "ace/Malloc_Base.h"

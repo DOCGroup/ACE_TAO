@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef ACE_ATM_ADDR_H
-#include "ace/pre.h"
 #define ACE_ATM_ADDR_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 #include "ace/Addr.h"

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_ACTIVE_MAP_MANAGER_T_H
-#include "ace/pre.h"
 #define ACE_ACTIVE_MAP_MANAGER_T_H
+#include "ace/pre.h"
 
 #include "ace/Map_Manager.h"
 #include "ace/Active_Map_Manager.h"

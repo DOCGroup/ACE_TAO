@@ -1,8 +1,8 @@
 // $Id$
 
 #ifndef SVC_CONF_TOKENS_H
-#include "ace/pre.h"
 #define SVC_CONF_TOKENS_H
+#include "ace/pre.h"
 
 #define ACE_DYNAMIC 257
 #define ACE_STATIC 258

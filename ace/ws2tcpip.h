@@ -16,8 +16,8 @@
 */
 
 #ifndef _WS2TCPIP_H_
-#include "ace/pre.h"
 #define _WS2TCPIP_H_
+#include "ace/pre.h"
 
 /* Structure to keep interface specific information */
 

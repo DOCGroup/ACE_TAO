@@ -7,8 +7,8 @@
 // platforms using GNU C++ but without the POSIX (pthread) threads package
 
 #ifndef ACE_CONFIG_FREEBSD_H
-#include "ace/pre.h"
 #define ACE_CONFIG_FREEBSD_H
+#include "ace/pre.h"
 
 #include <osreldate.h>
 // Make sure we source in the OS version.

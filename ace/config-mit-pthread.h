@@ -1,8 +1,8 @@
 // $Id$
 
 #ifndef ACE_CONFIG_MIT_PTHREAD_H
-#include "ace/pre.h"
 #define ACE_CONFIG_MIT_PTHREAD_H
+#include "ace/pre.h"
 
 // Platform uses int for select() rather than fd_set.
 #if !defined(ACE_HAS_SELECT_H)

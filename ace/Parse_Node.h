@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_PARSE_NODE_H
-#include "ace/pre.h"
 #define ACE_PARSE_NODE_H
+#include "ace/pre.h"
 
 #include "ace/Service_Types.h"
 

@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef ACE_LOCAL_SOCK_DGRAM_H
-#include "ace/pre.h"
 #define ACE_LOCAL_SOCK_DGRAM_H
+#include "ace/pre.h"
 
 #include "ace/SOCK_Dgram.h"
 

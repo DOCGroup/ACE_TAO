@@ -15,8 +15,8 @@
 // ===========================================================================
 
 #ifndef ACE_QOS_SESSION_H
-#include "ace/pre.h"
 #define ACE_QOS_SESSION_H
+#include "ace/pre.h"
 
 #include "ace/INET_Addr.h"
 

@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef ACE_BASED_POINTER_REPOSITORY_H
-#include "ace/pre.h"
 #define ACE_BASED_POINTER_REPOSITORY_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"                  // Need ACE_Export
 

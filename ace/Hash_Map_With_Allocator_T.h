@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_HASH_MAP_WITH_ALLOCATOR_T_H
-#include "ace/pre.h"
 #define ACE_HASH_MAP_WITH_ALLOCATOR_T_H
+#include "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
 

@@ -5,8 +5,8 @@
 // config.h directly.
 
 #ifndef ACE_INC_USER_CONFIG_H
-#include "ace/pre.h"
 #define ACE_INC_USER_CONFIG_H
+#include "ace/pre.h"
 
 #include "ace/config.h"
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_DATE_TIME_H
-#include "ace/pre.h"
 #define ACE_DATE_TIME_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_REACTOR_IMPL_H
-#include "ace/pre.h"
 #define ACE_REACTOR_IMPL_H
+#include "ace/pre.h"
 
 // Timer Queue is a complicated template class. A simple forward
 // declaration will not work

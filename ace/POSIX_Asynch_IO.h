@@ -25,8 +25,8 @@
 // ============================================================================
 
 #ifndef ACE_POSIX_ASYNCH_IO_H
-#include "ace/pre.h"
 #define ACE_POSIX_ASYNCH_IO_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

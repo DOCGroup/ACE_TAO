@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef ACE_TLI_ACCEPTOR_H
-#include "ace/pre.h"
 #define ACE_TLI_ACCEPTOR_H
+#include "ace/pre.h"
 
 #include "ace/TLI.h"
 

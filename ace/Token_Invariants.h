@@ -20,8 +20,8 @@
 // ============================================================================
 
 #ifndef ACE_TOKEN_INVARIANTS_H
-#include "ace/pre.h"
 #define ACE_TOKEN_INVARIANTS_H
+#include "ace/pre.h"
 
 #include "ace/Synch.h"
 

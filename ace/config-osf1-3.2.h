@@ -5,8 +5,8 @@
 // platforms with the DEC 5.1 C++ compiler.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #define ACE_LACKS_SETSCHED
 #define ACE_LACKS_RWLOCK_T

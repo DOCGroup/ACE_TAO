@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SOCK_IO_H
-#include "ace/pre.h"
 #define ACE_SOCK_IO_H
+#include "ace/pre.h"
 
 #include "ace/SOCK.h"
 

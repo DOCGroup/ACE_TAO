@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef ACE_TIMER_QUEUE_T_H
-#include "ace/pre.h"
 #define ACE_TIMER_QUEUE_T_H
+#include "ace/pre.h"
 
 #include "ace/Free_List.h"
 

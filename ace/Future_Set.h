@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_FUTURE_SET_H
-#include "ace/pre.h"
 #define ACE_FUTURE_SET_H
+#include "ace/pre.h"
 
 #include /**/ "ace/Thread.h"
 #include /**/ "ace/Message_Queue.h"

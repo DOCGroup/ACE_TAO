@@ -5,8 +5,8 @@
 // for SunOS4 platforms using the Lucid 3.2 compiler.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID

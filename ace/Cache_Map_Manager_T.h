@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef CACHE_MAP_MANAGER_T_H
-#include "ace/pre.h"
 #define CACHE_MAP_MANAGER_T_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

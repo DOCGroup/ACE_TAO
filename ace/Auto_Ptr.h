@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef ACE_AUTO_PTR_H
-#include "ace/pre.h"
 #define ACE_AUTO_PTR_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SSTRING_H
-#include "ace/pre.h"
 #define ACE_SSTRING_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

@@ -20,8 +20,8 @@
 // ============================================================================
 
 #ifndef ACE_METHOD_OBJECT_H
-#include "ace/pre.h"
 #define ACE_METHOD_OBJECT_H
+#include "ace/pre.h"
 
 #include "ace/Method_Request.h"
 

@@ -21,8 +21,8 @@
 // ============================================================================
 
 #ifndef ACE_FLREACTOR_H
-#include "ace/pre.h"
 #define ACE_FLREACTOR_H
+#include "ace/pre.h"
 
 #include "ace/Select_Reactor.h"
 

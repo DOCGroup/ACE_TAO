@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_INET_ADDR_H
-#include "ace/pre.h"
 #define ACE_INET_ADDR_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

@@ -6,8 +6,8 @@
 // Orbix 2.x CORBA IDL compiler.
 
 #ifndef ACE_CONFIG_ORBIX_H
-#include "ace/pre.h"
 #define ACE_CONFIG_ORBIX_H
+#include "ace/pre.h"
 
 // Pick up correct platform definition file based on compiler's predefined
 // macros.

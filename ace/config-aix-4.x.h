@@ -6,8 +6,8 @@
 // g++/egcs.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #if defined (__xlC__) || (__IBMCPP__)
    // AIX xlC, IBM C/C++, and Visual Age C++ compilers

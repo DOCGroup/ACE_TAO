@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef ACE_FUTURE_H
-#include "ace/pre.h"
 #define ACE_FUTURE_H
+#include "ace/pre.h"
 
 #include /**/ "ace/Containers.h"
 #include /**/ "ace/Synch.h"
