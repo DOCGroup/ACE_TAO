@@ -614,7 +614,7 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_float;
       return ev;
     case AST_Expression::EV_bool:
-      ev->u.fval = (ev->u.bval == I_TRUE) ? 1.0 : 0.0;
+      ev->u.fval = (float) ((ev->u.bval == I_TRUE) ? 1.0 : 0.0);
       ev->et = AST_Expression::EV_float;
       return ev;
     case AST_Expression::EV_float:
