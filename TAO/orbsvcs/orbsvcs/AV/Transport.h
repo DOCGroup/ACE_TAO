@@ -24,6 +24,7 @@
 #include "ace/SOCK_Dgram.h"
 #include "orbsvcs/AV/AV_export.h"
 #include "FlowSpec_Entry.h"
+#include "AV_Core.h"
 
 // Forward declarations.
 class TAO_AV_Core;
@@ -106,12 +107,14 @@ public:
   /// Constructor.
   TAO_AV_Flow_Handler (void);
 
+  virtual ~TAO_AV_Flow_Handler (void);
   /// Start/stop the flow handler.
   virtual int start (TAO_FlowSpec_Entry::Role role);
   virtual int stop  (TAO_FlowSpec_Entry::Role role);
 
   /// Schedule timer. Uses the get_timeout method on the callback.
   virtual int schedule_timer (void);
+  virtual int cancel_timer (void);
 
   /// get the transport.
   TAO_AV_Transport *transport (void);
@@ -124,7 +127,7 @@ public:
   void callback (TAO_AV_Callback *callback);
 
   /// Handle timeout. called from reactor.
-  int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
+  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
 
   /// set the remote address.
   virtual int set_remote_address (ACE_Addr *address);
@@ -212,12 +215,14 @@ public:
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry,
-                    TAO_AV_Flow_Protocol_Factory *factory) = 0;
+                    TAO_AV_Flow_Protocol_Factory *factory,
+                    TAO_AV_Core::Flow_Component flow_comp) = 0;
 
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
                             TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry,
-                            TAO_AV_Flow_Protocol_Factory *factory) = 0;
+                            TAO_AV_Flow_Protocol_Factory *factory,
+                            TAO_AV_Core::Flow_Component flow_comp) = 0;
 
   const char *flowname ();
   virtual int close (void) = 0;
@@ -243,7 +248,8 @@ public:
                     TAO_AV_Flow_Protocol_Factory *factory) = 0;
 
   virtual int connect (TAO_FlowSpec_Entry *entry,
-                       TAO_AV_Transport *&transport) = 0;
+                       TAO_AV_Transport *&transport,
+                       TAO_AV_Core::Flow_Component flow_component) = 0;
 
   virtual int close (void) = 0;
 protected:

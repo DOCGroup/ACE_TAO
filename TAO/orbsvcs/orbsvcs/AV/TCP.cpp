@@ -400,8 +400,11 @@ TAO_AV_TCP_Connector::open (TAO_Base_StreamEndPoint *endpoint,
 
 int
 TAO_AV_TCP_Connector::connect (TAO_FlowSpec_Entry *entry,
-                               TAO_AV_Transport *&transport)
+                               TAO_AV_Transport *&transport,
+                               TAO_AV_Core::Flow_Component flow_comp)
 {
+  ACE_UNUSED_ARG (flow_comp);
+
   this->entry_ = entry;
   this->flowname_ = entry->flowname ();
   ACE_Addr *remote_addr = entry->address ();
@@ -410,7 +413,7 @@ TAO_AV_TCP_Connector::connect (TAO_FlowSpec_Entry *entry,
   int result = this->connector_.connector_connect (handler,
                                                    *inet_addr);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_connector::open failed\n"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_connector::connect failed\n"),-1);
   entry->handler (handler);
   transport = handler->transport ();
   return 0;
@@ -499,8 +502,11 @@ int
 TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                            TAO_AV_Core *av_core,
                            TAO_FlowSpec_Entry *entry,
-                           TAO_AV_Flow_Protocol_Factory *factory)
+                           TAO_AV_Flow_Protocol_Factory *factory,
+                           TAO_AV_Core::Flow_Component flow_comp)
 {
+  ACE_UNUSED_ARG (flow_comp);
+
   this->flow_protocol_factory_ = factory;
 
   if (TAO_debug_level > 0)
@@ -546,8 +552,11 @@ int
 TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
                                    TAO_AV_Core *av_core,
                                    TAO_FlowSpec_Entry *entry,
-                                   TAO_AV_Flow_Protocol_Factory *factory)
+                                   TAO_AV_Flow_Protocol_Factory *factory,
+                                   TAO_AV_Core::Flow_Component flow_comp)
 {
+  ACE_UNUSED_ARG (flow_comp);
+
   this->flow_protocol_factory_ = factory;
   this->av_core_ = av_core;
   this->endpoint_ = endpoint;
@@ -713,4 +722,3 @@ ACE_STATIC_SVC_DEFINE (TAO_AV_TCP_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_TCP_Factory)
-

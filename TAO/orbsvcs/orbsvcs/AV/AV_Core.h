@@ -27,7 +27,9 @@ class TAO_AV_Acceptor;
 class TAO_AV_Connector;
 class TAO_FlowSpec_Entry;
 class TAO_AV_Transport_Item;
+class TAO_AV_Transport_Factory;
 class TAO_AV_Flow_Protocol_Item;
+class TAO_AV_Flow_Protocol_Factory;
 
 typedef ACE_Unbounded_Set <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSet;
 typedef ACE_Unbounded_Set_Iterator <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSetItor;
@@ -41,7 +43,7 @@ typedef ACE_Unbounded_Set_Iterator<TAO_AV_Flow_Protocol_Item*> TAO_AV_Flow_Proto
 
 /**
  * @class TAO_AV_Core
- * @brief This class encapsulates access to the TAO AV Core's resources 
+ * @brief This class encapsulates access to the TAO AV Core's resources
  *        and its state.
  */
 class TAO_AV_Export TAO_AV_Core
@@ -65,6 +67,13 @@ public:
     TAO_AV_RTP_UDP_MCAST = 10,
     TAO_AV_SFP_UDP_MCAST = 11,
     TAO_AV_QOS_UDP       = 12
+  };
+
+  enum Flow_Component
+  {
+    TAO_AV_DATA = 1,
+    TAO_AV_CONTROL = 2,
+    TAO_AV_BOTH = 3
   };
 
   /// Default constructor.
@@ -102,6 +111,8 @@ public:
 
   // = Get the protocol factories
   /// = Set/get the <ACE_Reactor>.
+  TAO_AV_Flow_Protocol_Factory *get_flow_protocol_factory(const char *flow_protocol);
+  TAO_AV_Transport_Factory *get_transport_factory(const char *transport_protocol);
   TAO_AV_Flow_ProtocolFactorySet *flow_protocol_factories (void);
   TAO_AV_TransportFactorySet *transport_factories (void);
   void reactor (ACE_Reactor *r);

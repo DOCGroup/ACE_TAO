@@ -32,6 +32,13 @@ TAO_FlowSpec_Entry::parse_flow_protocol_string (const char *flow_string)
       // do some flow protocol processing.
       this->flow_protocol_ = flow_string;
     }
+  if (ACE_OS::strncasecmp (flow_string,"rtp",3) == 0)
+    {
+      // TODO: this makes it work but should probably change
+//      this->use_flow_protocol_ = 1;
+
+      this->flow_protocol_ = flow_string;
+    }
   return 0;
 }
 
@@ -85,6 +92,27 @@ TAO_FlowSpec_Entry::address (void)
 }
 
 ACE_INLINE
+void
+TAO_FlowSpec_Entry::address (ACE_Addr *addr)
+{
+  this->address_ = addr;
+}
+
+ACE_INLINE
+ACE_Addr *
+TAO_FlowSpec_Entry::control_address (void)
+{
+  return this->control_address_;
+}
+
+ACE_INLINE
+void
+TAO_FlowSpec_Entry::control_address (ACE_Addr *addr)
+{
+  this->control_address_ = addr;
+}
+
+ACE_INLINE
 const char *
 TAO_FlowSpec_Entry::address_str (void) const
 {
@@ -132,10 +160,25 @@ TAO_FlowSpec_Entry::set_local_addr (ACE_Addr *local_addr)
 }
 
 ACE_INLINE
+int
+TAO_FlowSpec_Entry::set_local_control_addr (ACE_Addr *local_addr)
+{
+  this->local_control_addr_ = local_addr;
+  return 0;
+}
+
+ACE_INLINE
 ACE_Addr*
 TAO_FlowSpec_Entry::get_local_addr (void)
 {
   return this->local_addr_;
+}
+
+ACE_INLINE
+ACE_Addr*
+TAO_FlowSpec_Entry::get_local_control_addr (void)
+{
+  return this->local_control_addr_;
 }
 
 ACE_INLINE
@@ -153,6 +196,20 @@ TAO_FlowSpec_Entry::transport (TAO_AV_Transport *transport)
 }
 
 ACE_INLINE
+TAO_AV_Transport*
+TAO_FlowSpec_Entry::control_transport (void)
+{
+  return this->control_transport_;
+}
+
+ACE_INLINE
+void
+TAO_FlowSpec_Entry::control_transport (TAO_AV_Transport *control_transport)
+{
+  this->control_transport_ = control_transport;
+}
+
+ACE_INLINE
 TAO_AV_Flow_Handler *
 TAO_FlowSpec_Entry::handler (void)
 {
@@ -160,10 +217,18 @@ TAO_FlowSpec_Entry::handler (void)
 }
 
 ACE_INLINE
+TAO_AV_Flow_Handler *
+TAO_FlowSpec_Entry::control_handler (void)
+{
+  return this->control_handler_;
+}
+
+ACE_INLINE
 void
 TAO_FlowSpec_Entry::handler (TAO_AV_Flow_Handler *handler)
 {
   this->handler_ = handler;
+
 //   // Now remove the handler from the reactor if the handler is for a producer.
 //   switch (this->role ())
 //     {
@@ -180,6 +245,13 @@ TAO_FlowSpec_Entry::handler (TAO_AV_Flow_Handler *handler)
 }
 
 ACE_INLINE
+void
+TAO_FlowSpec_Entry::control_handler (TAO_AV_Flow_Handler *handler)
+{
+  this->control_handler_ = handler;
+}
+
+ACE_INLINE
 TAO_AV_Protocol_Object*
 TAO_FlowSpec_Entry::protocol_object (void)
 {
@@ -191,6 +263,20 @@ void
 TAO_FlowSpec_Entry::protocol_object (TAO_AV_Protocol_Object *object)
 {
   this->protocol_object_ = object;
+}
+
+ACE_INLINE
+TAO_AV_Protocol_Object*
+TAO_FlowSpec_Entry::control_protocol_object (void)
+{
+  return this->control_protocol_object_;
+}
+
+ACE_INLINE
+void
+TAO_FlowSpec_Entry::control_protocol_object (TAO_AV_Protocol_Object *object)
+{
+  this->control_protocol_object_ = object;
 }
 
 ACE_INLINE

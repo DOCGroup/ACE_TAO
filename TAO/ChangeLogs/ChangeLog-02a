@@ -1,3 +1,88 @@
+Wed Nov 13 14:14:24 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+	Fixes provided by Rob Ruff <rruff@scires.com>:  
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.i:
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
+	* orbsvcs/orbsvcs/AV/AV_Core.h:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:
+	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+	* orbsvcs/orbsvcs/AV/QoS_UDP.h:
+	* orbsvcs/orbsvcs/AV/TCP.cpp:
+	* orbsvcs/orbsvcs/AV/TCP.h:
+	* orbsvcs/orbsvcs/AV/Transport.cpp:
+	* orbsvcs/orbsvcs/AV/Transport.h:
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
+	* orbsvcs/orbsvcs/AV/UDP.h:
+	  The previous implementation used separate flow specifications for the
+	  data and control portions of the same stream.  This meant that RTP
+	  could not be used with the light profile of the AV service (since it
+	  only allows one flow between stream endpoints). The code was modified
+	  to allow data and control information to be passed as part of the
+	  same flow.
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	  Added/renamed several properties defined in the CORBA AV spec.
+	  Implemented the TAO_StreamCtrl::unbind operation.
+	  Fixed several memory leaks.
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
+	  Added code to clean up transport/flow factories (fix memory leak).
+	  Added get_transport_factory(const char *transport_protocol).
+	  Added get_flow_protocol_factory(const char *flow_protocol).
+	* orbsvcs/orbsvcs/AV/AV_Core.h:
+	  Added get_transport_factory(const char *transport_protocol).
+	  Added get_flow_protocol_factory(const char *flow_protocol).
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+	  Added a remove_ref call to activate_mediactrl.
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+	  Changed the flow specification to better conform to the AV Service
+	  spec.
+	* orbsvcs/orbsvcs/AV/MCast.cpp:
+	  TAO_AV_UDP_MCast_Flow_Handler::handle_input now returns the value
+	  returned by protocol_object->handle_input rather than 0.
+	* orbsvcs/orbsvcs/AV/MCast.h:
+	  Made the TAO_AV_UDP_MCast_Flow_Handler destructor virtual.
+	* orbsvcs/orbsvcs/AV/RTCP.cpp:
+	* orbsvcs/orbsvcs/AV/RTCP.h:
+	  Added full RFC compliant RTCP control protocol implementation.
+	  Modified the ssrc allocation operation to use the MD5 algorithm to
+	  more reliably choose a unique id.
+	* orbsvcs/orbsvcs/AV/RTCP_Channel.h: (added)
+	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp: (added)
+	  These files contain two classes, one used to represent incoming RTP
+	  streams and one to represent outgoing streams.  They keep track of
+	  transmission/reception statistics.
+	* orbsvcs/orbsvcs/AV/RTCP_Packet.h: (added)
+	* orbsvcs/orbsvcs/AV/RTCP_Packet.cpp: (added)
+	  These files contain classes to represent each of the control packet
+	  message types.
+	* orbsvcs/orbsvcs/AV/RTP.cpp:
+	* orbsvcs/orbsvcs/AV/RTP.h:
+	  Made several changes to support the RTCP implementation.
+	  Added a class to represent an RTP packet.
+	* orbsvcs/orbsvcs/AV/Transport.cpp:
+	  Modified code to use the get_xxx_factory routines added to AV_Core
+	  rather than doing the search in this file.
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
+	  When the protocol is RTP/UDP, an even/odd port pair will be reserved
+	  as is called out in the RTP RFC.
+	  The class TAO_AV_UDP_Connection_Setup was added to replace duplicated
+	  code used for both the TAO_AV_UDP_Acceptor and TAO_AV_UDP_Connector.
+	* orbsvcs/orbsvcs/AV/global.h: (added)
+	* orbsvcs/orbsvcs/AV/md5.h: (added)
+	* orbsvcs/orbsvcs/AV/md5c.c: (added)
+	  Used by the operation to allocate ssrc's in RTCP.cpp to help guarantee
+	  a unique id.
+	* orbsvcs/orbsvcs/AV/source.cpp: (removed)
+	* orbsvcs/orbsvcs/AV/source.h: (removed)
+	* orbsvcs/orbsvcs/AV/source.i: (removed)
+	  The functionality contained in these files is now implemented in the
+	  RTCP*.* files.
+	* orbsvcs/orbsvcs/Makefile.av: (updated)
+	* orbsvcs/orbsvcs/AV.bor: (updated)
+
 Tue Nov 13 08:58:13 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp
