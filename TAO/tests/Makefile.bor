@@ -48,6 +48,7 @@ DIRS = \
         Object_Loader \
 	OctetSeq \
 	Oneway_Buffering \
+        Oneways_Invoking_Twoways \
 	ORB_destroy \
 	ORB_init \
 	Param_Test \
