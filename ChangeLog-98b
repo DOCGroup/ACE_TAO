@@ -1,16 +1,23 @@
+Mon Nov 09 21:31:56 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Env_Value_Test (main): prepended "./" to name of
+          file to spawn.  With the last round of changes to
+          ace/Process.cpp, that's necessary on g++/Solaris86
+          without ACE_HAS_NONSTATIC_OBJECT_MANAGER.
+
 Mon Nov  9 02:52:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Signal.cpp: handle_close() wasn't being called when
- 	  handle_signal() returns -1.  It is now...  Thanks to Vincentini
- 	  Emanuele <arena.sci.univr.it> for reporting this.
+        * ace/Signal.cpp: handle_close() wasn't being called when
+          handle_signal() returns -1.  It is now...  Thanks to Vincentini
+          Emanuele <arena.sci.univr.it> for reporting this.
 
-	* ace/Event_Handler.h (ACE_Event_Handler): Added a SIGNAL_MASK so
- 	  that we can pass this to handle_close() when handle_signal()
- 	  returns -1.
+        * ace/Event_Handler.h (ACE_Event_Handler): Added a SIGNAL_MASK so
+          that we can pass this to handle_close() when handle_signal()
+          returns -1.
 
-	* README: Fixed a typo where ACE-install.html was misspelled as
- 	  ACE-Install.  Thanks to Michael Thomas
- 	  <Michael.Thomas@Australia.Boeing.com> for reporting this.
+        * README: Fixed a typo where ACE-install.html was misspelled as
+          ACE-Install.  Thanks to Michael Thomas
+          <Michael.Thomas@Australia.Boeing.com> for reporting this.
 
 Sun Nov 08 22:00:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -731,10 +738,10 @@ Fri Oct 23 21:11:03 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 Fri Oct 23 20:39:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* Paul Christopher Gill was born Friday October 23, 1998, at
-          20:39 CDT, weighing 6 lbs. 7 oz., at 19 3/4 inches in length.  
-          A true hacker in the making, Paul decided to work through the 
-	  evening even though it was a Friday night. ;-)
+        * Paul Christopher Gill was born Friday October 23, 1998, at
+          20:39 CDT, weighing 6 lbs. 7 oz., at 19 3/4 inches in length.
+          A true hacker in the making, Paul decided to work through the
+          evening even though it was a Friday night. ;-)
 
 Fri Oct 23 11:37:38 1998  Steve Huston  <shuston@riverace.com>
 
