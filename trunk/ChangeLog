@@ -1,3 +1,11 @@
+Fri May 18 20:58:59 2001  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added TAO's security tests to the list of tests to run in the
+	  nightly builds.  They will only be run on platforms that support
+	  the "SSL" build configuration.
+
 Fri May 18 14:39:31 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Removed ACE_LACKS_SETSCHED for AIX 4.3.
