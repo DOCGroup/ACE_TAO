@@ -643,7 +643,7 @@ Thu Dec 20 11:34:51 2001  Steve Huston  <shuston@riverace.com>
                the ACE_SSL_SOCK_Acceptor::accept() method is used, and it
                correctly drives ACE::accept.
 
-        * ace/SSL/SSL_Connecto_Handler.(cpp h):
+        * ace/SSL/SSL_Connector_Handler.(cpp h):
         * ace/SSL/SSL_Accept_Handler.(cpp h): These are no longer needed.
           since all of the accept handshaking activity is paced by
           ACE::accept, not a reactor.
