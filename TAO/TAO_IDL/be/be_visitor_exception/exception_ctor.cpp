@@ -166,9 +166,10 @@ int be_visitor_exception_ctor::visit_interface (be_interface *node)
     bt = node;
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << "const " << bt->nested_type_name (this->ctx_->scope (), "_ptr ");
+    *os << "const " << bt->nested_type_name (this->ctx_->scope ());
   else
-    *os << "const " << bt->name () << "_ptr ";
+    *os << "const " << bt->name ();
+  *os << "_ptr ";
   return 0;
 }
 
@@ -184,9 +185,10 @@ int be_visitor_exception_ctor::visit_interface_fwd (be_interface_fwd *node)
     bt = node;
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << "const " << bt->nested_type_name (this->ctx_->scope (), "_ptr ");
+    *os << "const " << bt->nested_type_name (this->ctx_->scope ());
   else
-    *os << "const " << bt->name () << "_ptr ";
+    *os << "const " << bt->name ();
+  *os << "_ptr ";
   return 0;
 }
 
@@ -214,9 +216,10 @@ int be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
   else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
     {
       if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-        *os << "const " << bt->nested_type_name (this->ctx_->scope (), "_ptr ");
+        *os << "const " << bt->nested_type_name (this->ctx_->scope ());
       else
-        *os << "const " << bt->name () << "_ptr ";
+        *os << "const " << bt->name ();
+      *os << "_ptr ";
     } // end else if
   else // simple predefined types
     {

@@ -637,10 +637,10 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
   // set method
   *os << pre_op() << "void " << ub->local_name () << " (const "
       << bt->nested_type_name (bu) << " &)"
-      << post_op() << "    // set" << be_nl;
+      << post_op() << "    // set" << be_nl
     // read-only
-  *os << pre_op() << "const " << bt->nested_type_name (bu) << " &";
-  *os << ub->local_name  () << " (void) const"
+      << pre_op() << "const " << bt->nested_type_name (bu) << " &"
+      << ub->local_name  () << " (void) const"
       << post_op() << "     // get method (read only)" << be_nl
     // read/write
       << pre_op() << bt->nested_type_name (bu) << " &" << ub->local_name ()
@@ -735,14 +735,14 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
   // set method
   *os << pre_op() << "void " << ub->local_name () << " (const "
       << bt->nested_type_name (bu) << " &)"
-      << post_op() << "    // set" << be_nl;
+      << post_op() << "    // set" << be_nl
     // read-only
-  *os << pre_op() << "const " << bt->nested_type_name (bu) << " &"
+      << pre_op() << "const " << bt->nested_type_name (bu) << " &"
       << ub->local_name  () << " (void) const"
       << post_op() << "     // get method (read only)"
-      << be_nl;
+      << be_nl
     // read/write
-  *os << pre_op() << bt->nested_type_name (bu) << " &" << ub->local_name ()
+      << pre_op() << bt->nested_type_name (bu) << " &" << ub->local_name ()
       << " (void)" << post_op() << "     // get method (read/write only)\n\n";
 
   return 0;

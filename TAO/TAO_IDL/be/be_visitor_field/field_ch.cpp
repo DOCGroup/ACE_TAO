@@ -259,7 +259,8 @@ be_visitor_field_ch::visit_valuetype (be_valuetype *node)
 
   // if not a typedef and we are defined in the use scope, we must be defined
   os->indent ();
-  *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+  *os <<  bt->nested_type_name (this->ctx_->scope (), "")
+      << "_var";
   return 0;
 }
 
@@ -279,7 +280,8 @@ be_visitor_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   // if not a typedef and we are defined in the use scope, we must be defined
   os->indent ();
-  *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+  *os << bt->nested_type_name (this->ctx_->scope (), "")
+      << "_var";
   return 0;
 }
 

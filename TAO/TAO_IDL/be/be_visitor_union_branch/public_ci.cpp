@@ -390,7 +390,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
           << "_ = new TAO_Object_Field_T<"
           << bt->nested_type_name (bu, "") << ",";
       // Must use another statement, nested_type_name has side effects...
-      *os << bt->nested_type_name (bu, "_var") 
+      *os << bt->nested_type_name (bu, "") << "_var"
           << "> (" << bt->name ()
           << "::_duplicate (val));" << be_uidt_nl;
     }
