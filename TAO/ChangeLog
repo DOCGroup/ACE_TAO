@@ -1,3 +1,8 @@
+Wed Dec  3 16:15:46 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/FtRtEvent/PushConsumer.cpp:
+          Added include of ace/OS_NS_sys_time.h to get ACE_OS::gettimeofday()
+
 Wed Dec  3 16:01:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1636_Regression/test.mpc:
