@@ -53,7 +53,9 @@ public:
     WRITE_MASK  = 0x4,
     EXCEPT_MASK = 0x2,
 #endif /* ACE_USE_POLL */
-    RWE_MASK    = READ_MASK | WRITE_MASK | EXCEPT_MASK,
+    ACCEPT_MASK = 0x8,
+    ALL_MASK    = READ_MASK | WRITE_MASK | EXCEPT_MASK | ACCEPT_MASK,
+    RWE_MASK    = ALL_MASK,
     DONT_CALL   = 0x100
   };
 

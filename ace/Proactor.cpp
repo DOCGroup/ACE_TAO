@@ -103,19 +103,22 @@ ACE_Overlapped_IO::dispatch (u_long bytes_transferred)
     // Move the file pointer forward.
     file_->lseek (bytes_transferred, SEEK_CUR);
 
-  if (this->mask_ == ACE_Event_Handler::WRITE_MASK)
+  switch (this->mask_)
     {
+    case ACE_Event_Handler::WRITE_MASK :
       // Update the message length to reflect what was sent.
       this->message_->rd_ptr (bytes_transferred);
       return handler_->handle_output_complete (this->message_,
 					       bytes_transferred);
-    }
-  else // this->mask_ == ACE_Event_Handler::READ_MASK
-    {
+
+    case ACE_Event_Handler::READ_MASK :
       // Update the message length to reflect what was received.
       this->message_->wr_ptr (bytes_transferred);
       return this->handler_->handle_input_complete (this->message_, 
 						    bytes_transferred);
+
+    default:
+      return -1;
     }
 }
 
@@ -126,28 +129,30 @@ int
 ACE_Overlapped_IO::initiate (u_long &bytes_transferred)
 {
 #if defined (ACE_WIN32)
-  if (this->mask_ == ACE_Event_Handler::WRITE_MASK)
+  switch (this->mask_)
     {
+    case ACE_Event_Handler::WRITE_MASK :
       // Try to write.
       return ::WriteFile (this->handler_->get_handle (),
 			  this->message_->rd_ptr (),
 			  this->message_->length (),
 			  &bytes_transferred,
 			  this);
-    }
-  else
-    {
+
+    case ACE_Event_Handler::READ_MASK :
       // READ_MASK is set, so try to read.
       return ::ReadFile (this->handler_->get_handle (),
 			 this->message_->wr_ptr (),
 			 this->message_->size (),
 			 &bytes_transferred,
 			 this);
+    default:
+      return -1;
     }
 #else
   bytes_transferred = bytes_transferred;
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
+#endif
 }
 
 ACE_Overlapped_IO::operator ACE_OVERLAPPED * (void)
@@ -190,7 +195,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads, ACE_Timer_Queue *tq)
 		    "%p CreateIoCompletionPort failed errno = %d.\n",
 		    "ACE_Proactor::initiate", error));
     }
-#endif /* ACE_WIN32 */
+#endif
 }
 
 ACE_Proactor::~ACE_Proactor (void)
@@ -435,6 +440,19 @@ ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
 #endif /* ACE_WIN32 */
 }     
 
+int
+ACE_Proactor::cancel_io (ACE_Event_Handler *handler)
+{
+#if defined (ACE_WIN32) && defined (ACE_HAS_CANCEL_IO)
+  return ::CancelIO (handler->get_handle ()) ? -1 : 0;
+#else
+  return 0;
+#endif /* ACE_WIN32 */
+}
+
+// ************************************************************
+// ************************************************************
+			
 ACE_Overlapped_File::ACE_Overlapped_File (const ACE_Overlapped_File &file)
   : offset_ (file.offset ()),
     file_size_ (0),

@@ -42,7 +42,8 @@ public:
   ACE_ReactorEx_Token (ACE_ReactorEx &r);
 
   virtual void sleep_hook (void);
-  // Called just before the ACE_Event_Handler goes to sleep.
+  // Called just before the thread that's trying to do the work goes
+  // to sleep.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -220,6 +221,10 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
+  virtual int remove_handler (int index,
+			      ACE_Reactor_Mask mask);
+  // Helper function for removing handlers.
+
   int dispatch (size_t index);
   // Dispatches any active handles from handles_[<index>] to
   // handles_[active_handles_] using <WaitForMultipleObjects> to poll
