@@ -127,6 +127,10 @@ SOURCE=.\SSLIOP\SSLIOP_Connector.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_Credentials.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Current.cpp
 # End Source File
 # Begin Source File
@@ -151,7 +155,19 @@ SOURCE=.\SSLIOP\SSLIOP_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_PrincipalAuthenticator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Profile.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_ReceivedCredentials.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_TargetCredentials.cpp
 # End Source File
 # Begin Source File
 
@@ -160,6 +176,10 @@ SOURCE=.\SSLIOP\SSLIOP_Transport.cpp
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Util.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_X509.cpp
 # End Source File
 # Begin Source File
 
@@ -203,6 +223,10 @@ SOURCE=.\SSLIOP\SSLIOP_Connector.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_Credentials.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Current.h
 # End Source File
 # Begin Source File
@@ -231,7 +255,19 @@ SOURCE=.\SSLIOP\SSLIOP_ORBInitializer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_PrincipalAuthenticator.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Profile.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_ReceivedCredentials.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_TargetCredentials.h
 # End Source File
 # Begin Source File
 
@@ -240,6 +276,10 @@ SOURCE=.\SSLIOP\SSLIOP_Transport.h
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Util.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_X509.h
 # End Source File
 # Begin Source File
 
@@ -369,6 +409,10 @@ SOURCE=.\SSLIOP\SSLIOP_Endpoint.i
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Profile.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_X509.inl
 # End Source File
 # Begin Source File
 

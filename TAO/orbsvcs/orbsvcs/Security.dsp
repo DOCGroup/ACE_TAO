@@ -99,6 +99,18 @@ SOURCE=.\Security\EstablishTrustPolicy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Security\InvocationCredentialsPolicy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\MechanismPolicy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\PrincipalAuthenticator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Security\QOPPolicy.cpp
 # End Source File
 # Begin Source File
@@ -133,6 +145,10 @@ SOURCE=.\SecurityLevel2C.cpp
 
 SOURCE=.\SecurityLevel2S.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\Security\SecurityManager.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -140,6 +156,22 @@ SOURCE=.\SecurityLevel2S.cpp
 # Begin Source File
 
 SOURCE=.\Security\EstablishTrustPolicy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\InvocationCredentialsPolicy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\MechanismPolicy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\PrincipalAuthenticator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\PrincipalAuthenticator_Impl.h
 # End Source File
 # Begin Source File
 
@@ -188,6 +220,10 @@ SOURCE=.\SecurityLevel2S.h
 # Begin Source File
 
 SOURCE=.\SecurityLevel2S_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\SecurityManager.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

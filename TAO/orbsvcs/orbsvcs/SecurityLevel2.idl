@@ -76,11 +76,10 @@ module SecurityLevel2 {
     attribute Security::AssociationOptions
       invocation_options_required;
 
-    boolean get_security_feature(
+    boolean get_security_feature (
       in Security::CommunicationDirection direction,
       in Security::SecurityFeature feature
     );
-
 
     boolean set_attributes (
       in Security::AttributeList   requested_attributes,
@@ -88,16 +87,13 @@ module SecurityLevel2 {
     );
 
     Security::AttributeList get_attributes (
-      in   Security::AttributeTypeList        attributes
+      in Security::AttributeTypeList attributes
     );
 
-    boolean is_valid (
-      out  Security::UtcT                     expiry_time
-    );
+    boolean is_valid (out Security::UtcT expiry_time);
 
-    boolean refresh (
-      in any                                    refresh_data
-    );
+    boolean refresh (in any refresh_data);
+
   };
 
   typedef sequence <Credentials>  CredentialsList;
@@ -129,7 +125,7 @@ module SecurityLevel2 {
   };
 
   // RequiredRights Interface
-  interface RequiredRights{
+  interface RequiredRights {
 
     void get_required_rights(
       in   Object                             obj,
