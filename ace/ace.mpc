@@ -416,6 +416,7 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       Svc_Handler.cpp
       Synch_T.cpp
       Task_T.cpp
+      Task_Ex_T.cpp
       Template_Instantiations.cpp
       Test_and_Set.cpp
       Timeprobe_T.cpp

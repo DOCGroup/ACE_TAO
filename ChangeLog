@@ -1,3 +1,17 @@
+Sat Nov 22 22:03:34 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
+
+	* ace/ace.mpc: 
+
+	Added Task_Ex_T file
+
+Sat Nov 22 22:00:15 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
+
+	* ace/Task_Ex_T.h:
+	* ace/Task_Ex_T.i: 	
+	* ace/Task_Ex_T.cpp: 
+
+	Added support for ACE_Task with Use define Message template parameter
+
 Sat Nov 22 21:07:09 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* ace/OS_NS_Thread.h : 
