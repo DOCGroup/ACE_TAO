@@ -23,6 +23,16 @@ typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
 
 // ****************************************************************
 
+CORBA_Environment&
+CORBA::default_environment ()
+{
+  // @@ This is a slight violation of layering, we should use
+  //    TAO_ORB_Core_instance(), but that breaks during startup.
+  return *TAO_ORB_CORE_TSS_RESOURCES::instance ()->default_environment_;
+}
+
+// ****************************************************************
+
 TAO_ORB_Core::TAO_ORB_Core (void)
   : thr_mgr_ (0),
     connector_registry_ (0),

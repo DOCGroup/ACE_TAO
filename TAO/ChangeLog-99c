@@ -1,3 +1,11 @@
+Thu Apr 15 16:35:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	* tao/Environment.cpp:
+	  Fixed initialization problem, to query the default environment
+	  we don't need the ORB_Core, only its TSS resources, this allow
+	  us to use CORBA_init() without the environment argument.
+
 Thu Apr 15 15:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader_Utils.h:
