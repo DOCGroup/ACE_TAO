@@ -20,7 +20,11 @@ int
 ACE_LSOCK_Acceptor::get_local_addr (ACE_Addr &a) const
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::get_local_addr");
-  a = this->local_addr_;
+
+  ACE_UNIX_Addr& target = ACE_dynamic_cast (ACE_UNIX_Addr &, a);
+
+  target = this->local_addr_;
+
   return 0;
 }
 
