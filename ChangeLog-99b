@@ -1,65 +1,71 @@
+Sat Mar 20 09:06:10 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Map_Manager_Test.cpp: changed index () to slot_index ()
+          and generation () to slot_generation (), to correspond to
+          Active_Map_Manager interface change.
+
 Sat Mar 20 02:03:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acinclude.m4:
-	
+        * acinclude.m4:
+
           Split acinclude.m4 into several M4 macro files and moved those
-	  files into the new `m4' subdirectory, includind acinclude.m4.
-	
-	* m4/acinclude.m4:
-	* m4/compiler.m4:
-	* m4/subsets.m4:
-	* m4/threads.m4:
-	
-	  Added these M4 files.
+          files into the new `m4' subdirectory, includind acinclude.m4.
 
-	* bin/autogen:
-	
-	  Script to regenerate auto{conf,make} and libtool related files.
-	  Additional functionality may be added to this script in the
-	  future.
+        * m4/acinclude.m4:
+        * m4/compiler.m4:
+        * m4/subsets.m4:
+        * m4/threads.m4:
 
-	* Makefile.am:
-	* ace/Makefile.am:
-	* apps/gperf/src/Makefile.am:
-	* apps/gperf/tests/Makefile.am:
-	* apps/gperf/Makefile.am:
-	* apps/Makefile.am:
-	* netsvcs/clients/Logger/Makefile.am:
-	* netsvcs/clients/Naming/Client/Makefile.am:
-	* netsvcs/clients/Naming/Dump_Restore/Makefile.am:
-	* netsvcs/clients/Naming/Makefile.am:
-	* netsvcs/clients/Tokens/collection/Makefile.am:
-	* netsvcs/clients/Tokens/deadlock/Makefile.am:
-	* netsvcs/clients/Tokens/invariant/Makefile.am:
-	* netsvcs/clients/Tokens/manual/Makefile.am:
-	* netsvcs/clients/Tokens/mutex/Makefile.am:
-	* netsvcs/clients/Tokens/rw_lock/Makefile.am:
-	* netsvcs/clients/Tokens/Makefile.am:
-	* netsvcs/clients/Makefile.am:
-	* netsvcs/lib/Makefile.am:
-	* netsvcs/servers/Makefile.am:
-	* netsvcs/Makefile.am:
-	* man/man3/Makefile.am:   ( NOT ADDED YET )
-	* man/Makefile.am:        ( NOT ADDED YET )
-	* tests/log/Makefile.am:
-	* tests/Makefile.am:
+          Added these M4 files.
 
-	Added Automake makefile templates for ACE.
+        * bin/autogen:
 
-	* configure.in:
-	* m4/subsets.m4:
-	* ace/Makefile.am:
-	
-	Added support for David's ACE subsetting work.
+          Script to regenerate auto{conf,make} and libtool related files.
+          Additional functionality may be added to this script in the
+          future.
+
+        * Makefile.am:
+        * ace/Makefile.am:
+        * apps/gperf/src/Makefile.am:
+        * apps/gperf/tests/Makefile.am:
+        * apps/gperf/Makefile.am:
+        * apps/Makefile.am:
+        * netsvcs/clients/Logger/Makefile.am:
+        * netsvcs/clients/Naming/Client/Makefile.am:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.am:
+        * netsvcs/clients/Naming/Makefile.am:
+        * netsvcs/clients/Tokens/collection/Makefile.am:
+        * netsvcs/clients/Tokens/deadlock/Makefile.am:
+        * netsvcs/clients/Tokens/invariant/Makefile.am:
+        * netsvcs/clients/Tokens/manual/Makefile.am:
+        * netsvcs/clients/Tokens/mutex/Makefile.am:
+        * netsvcs/clients/Tokens/rw_lock/Makefile.am:
+        * netsvcs/clients/Tokens/Makefile.am:
+        * netsvcs/clients/Makefile.am:
+        * netsvcs/lib/Makefile.am:
+        * netsvcs/servers/Makefile.am:
+        * netsvcs/Makefile.am:
+        * man/man3/Makefile.am:   ( NOT ADDED YET )
+        * man/Makefile.am:        ( NOT ADDED YET )
+        * tests/log/Makefile.am:
+        * tests/Makefile.am:
+
+        Added Automake makefile templates for ACE.
+
+        * configure.in:
+        * m4/subsets.m4:
+        * ace/Makefile.am:
+
+        Added support for David's ACE subsetting work.
 
 Fri Mar 19 23:36:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Active_Map_Manager.h (ACE_Active_Map_Manager_Key): Changed
-	  method index() to slot_index() and generation() to
-	  slot_generation().  This is cause the broken and evil
-	  OpenEdition platform/compiler defines a macro called index().
-	  Also, changed the type of <index_> and <generation_> from u_long
-	  to ACE_UINT32 to get consistent size across platforms.
+        * ace/Active_Map_Manager.h (ACE_Active_Map_Manager_Key): Changed
+          method index() to slot_index() and generation() to
+          slot_generation().  This is cause the broken and evil
+          OpenEdition platform/compiler defines a macro called index().
+          Also, changed the type of <index_> and <generation_> from u_long
+          to ACE_UINT32 to get consistent size across platforms.
 
 Fri Mar 19 22:50:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
