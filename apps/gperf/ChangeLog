@@ -1,3 +1,8 @@
+Sat Oct  3 13:47:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* src/Key_List.cpp (output_binary_search_function): Added a new
+	line after binary search code.
+
 Sat Oct  3 10:11:15 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.cpp (parse_args): Changed the option for binary
