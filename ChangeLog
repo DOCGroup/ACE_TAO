@@ -1,3 +1,10 @@
+Tue Nov 14 19:19:16 2000  Steve Huston  <shuston@riverace.com>
+
+        * examples/Reactor/Proactor/simple_test_proactor.cpp: Don't log
+          the read/written file using ACE_DEBUG - it will usually overflow
+          the ACE_Log_Record max message length and do bad things.
+          Thanks to John Buckman <john@lyris.com> for reporting this.
+
 Tue Nov 14 18:43:51 2000  Steve Huston  <shuston@riverace.com>
 
         * examples/Reactor/Proactor/test_proactor3.cpp: Replace use of
