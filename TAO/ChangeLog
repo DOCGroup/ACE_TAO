@@ -2,10 +2,15 @@ Fri Oct 15 10:53:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_be_visitor_arg_traits.cpp:
         * TAO_IDL/be_include/be_visitor_arg_traits.h:
-        
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/arg_tmplinst.cpp:
+        * TAO_IDL/be_include/be_visitor_tmplinst/arg_tmplinst.h:
+             
           Added visit_home() method which delegates to the
           visit_interface() method. The TAO::Arg_Traits<>
           specialization was not getting done for home operations.
+          Also added generation of corresponding explicit template
+          instantiation.
 
 Fri Oct 15 07:51:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
