@@ -190,8 +190,9 @@ CIAO::Assembly_Connection::IF_Resolver_Info::traderquery (void) const
 ACE_INLINE
 CIAO::Assembly_Connection::_CII::_CII (void)
   : type_ (CIAO::Assembly_Connection::INVALID_CONN),
-    component_ (0),
-    interface_ (0)
+    src_comp_ (0),
+    //dest_comp_ (0),
+    dest_iface_ (0)
 {
 }
 

@@ -23,7 +23,6 @@
 #include "CIAO_ValueC.h"
 #include "ace/Active_Map_Manager.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "CIAO_Events.h"
 
 namespace CIAO
 {

@@ -681,6 +681,23 @@ namespace CIAO_GLUE_BasicSP
 
   // Operations for CCMObject interface.
 
+  void
+  BMDisplay_Servant::component_UUID (
+  const char * new_component_UUID
+  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    this->component_UUID_ = new_component_UUID;
+  }
+
+  CIAO::CONNECTION_ID
+  BMDisplay_Servant::component_UUID (
+  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    return CORBA::string_dup (this->component_UUID_.c_str ());
+  }
+
   CORBA::IRObject_ptr
   BMDisplay_Servant::get_component_def (
   ACE_ENV_SINGLE_ARG_DECL)

@@ -24,7 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CCM_DeploymentS.h"
+//#include "CCM_DeploymentS.h"
+#include "CIAO_ServersS.h"
 #include "Object_Set_T.h"
 
 namespace CIAO

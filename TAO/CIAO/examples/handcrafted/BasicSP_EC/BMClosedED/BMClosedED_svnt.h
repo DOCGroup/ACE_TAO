@@ -187,9 +187,11 @@ namespace CIAO_GLUE_BasicSP
     ::BasicSP::ReadData_var
     ciao_uses_datain_;
 
+    /*
     ACE_Active_Map_Manager<
     ::BasicSP::DataAvailableConsumer_var>
     ciao_publishes_out_avail_map_;
+    */
 
     ::Components::CCMHome_var
     home_;
@@ -202,11 +204,6 @@ namespace CIAO_GLUE_BasicSP
 
     ::BasicSP::BMClosedED_var
     component_;
-
-    ::Components::Cookie * push_out_avail_cookie_;
-
-    ::Components::Cookie * out_avail_service_cookie_;
-
   };
 
   class BMCLOSEDED_SVNT_Export BMClosedED_Servant
@@ -474,6 +471,17 @@ namespace CIAO_GLUE_BasicSP
 
     // Operations for CCMObject interface.
 
+    virtual void
+    component_UUID (
+    const char * new_component_UUID
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CIAO::CONNECTION_ID
+    component_UUID (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
     virtual CORBA::IRObject_ptr
     get_component_def (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -543,6 +551,8 @@ namespace CIAO_GLUE_BasicSP
 
     ::BasicSP::DataAvailableConsumer_var
     consumes_in_avail_;
+
+    ACE_CString component_UUID_;
 
   };
 

@@ -152,8 +152,7 @@ namespace CIAO
      * Connection establishment helper functions
      */
     /// @{
-    void make_connection (Assembly_Connection::Connect_Info *info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void make_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
     CORBA::Object_ptr
     resolve_interface (Assembly_Connection::IF_Resolver_Info *info
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -190,6 +189,8 @@ namespace CIAO
     Assembly_Spec *assembly_spec_;
 
     Assembly_Context assembly_context_;
+
+    ACE_Unbounded_Set<ACE_CString> connected_publishers_;
   };
 }
 

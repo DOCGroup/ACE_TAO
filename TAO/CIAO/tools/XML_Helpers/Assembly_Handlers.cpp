@@ -751,7 +751,7 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
         {
           if (this->resolver_ == 0)
             ACEXML_THROW (ACEXML_SAXException ("No valide IF resolver available"));
-          this->info_.component_ = this->resolver_;
+          this->info_.src_comp_ = this->resolver_;
           this->resolver_ = 0;
           this->state_ = SOURCE;
         }
@@ -761,7 +761,7 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
           if (this->resolver_ == 0)
             ACEXML_THROW (ACEXML_SAXException
                           ("No valide nested IF resolver available"));
-          this->info_.component_ = this->resolver_;
+          this->info_.src_comp_ = this->resolver_;
           this->resolver_ = 0;
         }
       else if (ACE_OS::strcmp (qName, "connectevent") == 0)
@@ -779,7 +779,7 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
         {
           if (this->resolver_ == 0)
             ACEXML_THROW (ACEXML_SAXException ("No valide IF resolver available"));
-          this->info_.interface_ = this->resolver_;
+          this->info_.dest_iface_ = this->resolver_;
           this->resolver_ = 0;
         }
       else if (ACE_OS::strcmp (qName, "consumesport") == 0)
@@ -796,7 +796,7 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
                                 nested),
                                ACEXML_SAXException ("No memory left"));
           ACEXML_CHECK;
-          this->info_.interface_ = this->resolver_;
+          this->info_.dest_iface_ = this->resolver_;
           this->resolver_ = 0;
           this->state_ = START;
         }
@@ -819,7 +819,7 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
                                 nested),
                                ACEXML_SAXException ("No memory left"));
           ACEXML_CHECK;
-          this->info_.interface_ = this->resolver_;
+          this->info_.dest_iface_ = this->resolver_;
           this->resolver_ = 0;
         }
       else if (ACE_OS::strcmp (qName, "connectinterface") == 0 ||
@@ -985,8 +985,9 @@ CIAO::Connections_Handler::reset_info (ACEXML_Attributes *atts
   // @@ Potential memory leaks below.  Need to ensure the allocated
   // memory is free when the Assembly_Spec is destroyed.
 
-  this->info_.component_ = 0;
-  this->info_.interface_ = 0;
+  this->info_.src_comp_ = 0;
+  //this->info_.dest_comp_ = 0;
+  this->info_.dest_iface_ = 0;
 
   for (size_t i = 0; i < atts->getLength (); ++i)
     {

@@ -3,19 +3,18 @@
 /**
  * @file CIAO_Events.idl
  *
- * @author George Edwards
+ * @author George Edwards <g.edwards@vanderbilt.edu>
  *
  * @brief Interfaces for configuring CIAO's event mechanism.
  */
 
 #include "CCM_Event.idl"
-#include "RtecEventChannelAdmin.idl"
-#include "CosNotifyChannelAdmin.idl"
 
-module CIAO_Events
+module CIAO
 {
-  /// A component's UUID.
-  typedef long CONNECTION_ID;
+
+  /// A component's UUID + port name.
+  typedef string CONNECTION_ID;
 
   enum EventServiceType
   {
@@ -24,6 +23,47 @@ module CIAO_Events
     RTEC,
     NOTIFY,
     RTNOTIFY
+  };
+
+  interface Consumer_Config
+  {
+
+    attribute CONNECTION_ID supplier_id;
+
+    attribute CONNECTION_ID consumer_id;
+
+    attribute Components::EventConsumerBase consumer;
+
+    readonly attribute EventServiceType service_type;
+
+  };
+
+  interface Supplier_Config
+  {
+    
+    attribute CONNECTION_ID supplier_id;
+    
+    readonly attribute EventServiceType service_type;
+
+  };
+
+  interface ContainerEventService
+  {
+
+    Supplier_Config create_supplier_config (in EventServiceType type);
+
+    Consumer_Config create_consumer_config (in EventServiceType type);
+    
+    void connect_event_supplier (in Supplier_Config supplier_config);
+    
+    void disconnect_event_supplier (in CONNECTION_ID connection_id);
+    
+    void connect_event_consumer (in Consumer_Config consumer_config);
+    
+    void disconnect_event_consumer (in CONNECTION_ID connection_id);
+    
+    void push_event (in Components::EventBase ev,
+                     in CONNECTION_ID connection_id);
   };
 
   /// An object for setting consumer QoS requirements. This will be expanded to
@@ -66,6 +106,7 @@ module CIAO_Events
   // time.
   //
   //
+  /*
   interface Consumer_Config
     {
     // @@ George, when you have time, could you please document the
@@ -132,5 +173,6 @@ module CIAO_Events
 
     CosNotification::QoSProperties get_notify_qos ();
   };
+  */
 
 };

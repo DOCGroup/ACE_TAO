@@ -1,8 +1,8 @@
 // $Id$
 
 #include "Container_Base.h"
-#include "Cookies.h"
 #include "ace/DLL.h"
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Container_Base.inl"
@@ -11,8 +11,7 @@
 ////////////////////////////////////////////////////////////////
 
 CIAO::Container::Container (CORBA::ORB_ptr o) :
-  orb_ (CORBA::ORB::_duplicate (o)),
-  events_manager_ (o)
+  orb_ (CORBA::ORB::_duplicate (o))
 {
 }
 
@@ -32,141 +31,175 @@ CIAO::Container::_ciao_the_ORB ()
   return this->orb_.in ();
 }
 
-/// Events_Manager creates the appropriate servant for Consumer_Config.
-CIAO_Events::Consumer_Config_ptr CIAO::Container::_ciao_create_event_consumer_config (
-        const char * service_type
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException))
+// Creates the appropriate servant for Consumer_Config object.
+CIAO::Consumer_Config_ptr
+CIAO::Container::create_consumer_config (
+    CIAO::EventServiceType type
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException))
 {
-  // @@ George Why did the exception specification dropped in these places. ?
-  return this->events_manager_.create_consumer_config (service_type);
+  CIAO::Consumer_Config_ptr consumer_config =
+    this->event_service_factory_->create_consumer_config (type
+                                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  return consumer_config;
 }
 
-/// Events_Manager creates the appropriate servant for Supplier_Config
-// @@ George, Should these pointers be exposed to the glue code at all? I
-//don't see a reason why it should be done.
-CIAO_Events::Supplier_Config_ptr
-CIAO::Container::_ciao_create_event_supplier_config (
-        const char * service_type
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException))
+// Creates the appropriate servant for Supplier_Config object.
+CIAO::Supplier_Config_ptr
+CIAO::Container::create_supplier_config (
+    CIAO::EventServiceType type
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException))
 {
-  return this->events_manager_.create_supplier_config (service_type);
+  CIAO::Supplier_Config_ptr supplier_config =
+    this->event_service_factory_->create_supplier_config (type
+                                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  return supplier_config;
 }
 
 
-/// Connect up an event sink.
-void CIAO::Container::_ciao_connect_event_consumer (
-    CIAO_Events::Consumer_Config_ptr consumer_config
+// Connect up an event sink.
+void
+CIAO::Container::connect_event_consumer (
+    CIAO::Consumer_Config_ptr consumer_config
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
 
-  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_connect_event_consumer\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::connect_event_consumer\n"));
 
   // Look up the supplier's event service implementation.
-  CIAO_Events::EventServiceBase * event_service = 0;
-  if (this->event_service_map_.find (consumer_config->get_supplier_id (), event_service) != 0)
-    {
-      ACE_THROW (
-      ::Components::InvalidConnection ());
-    }
+  CIAO::EventServiceBase * event_service = 0;
 
-  /// Connect to the supplier's event service implementation
-  CIAO_Events::EventServiceInfo service_info =
-    event_service->connect_event_consumer (consumer_config ACE_ENV_ARG_PARAMETER);
+  ACE_CString supplier_id =
+    consumer_config->supplier_id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  /// Save the consumer's disconnect info in a map.
-  this->event_info_map_.bind (consumer_config->get_consumer_id (),
-                              service_info);
+  if (this->event_service_map_.find (supplier_id.c_str (), event_service) != 0)
+    {
+      ACE_THROW (
+      Components::InvalidConnection ());
+    }
+
+  // Connect to the supplier's event service implementation
+  event_service->connect_event_consumer (consumer_config ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Save a pointer to the event service implementation in a map.
+  ACE_CString consumer_id =
+    consumer_config->consumer_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->event_service_map_.bind (consumer_id.c_str (),
+                                 event_service);
+
 }
 
-/// Connect up an event source.
-void CIAO::Container::_ciao_connect_event_supplier (
-    CIAO_Events::Supplier_Config_ptr supplier_config
+// Connect up an event source.
+void
+CIAO::Container::connect_event_supplier (
+    CIAO::Supplier_Config_ptr supplier_config
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
 
-  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_connect_event_supplier\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::connect_event_supplier\n"));
 
-  /// Use Events_Manager factory method to create the appropriate implementation of
-  /// EventServiceBase
-  CIAO_Events::EventServiceBase * event_service =
-    this->events_manager_.create_supplier (supplier_config);
+  // Use factory to create the appropriate implementation of EventServiceBase
+  CIAO::EventServiceType type =
+    supplier_config->service_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
-  /// Connect the supplier
+  CIAO::EventServiceBase * event_service =
+    this->event_service_factory_->create (type
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Connect the supplier
   event_service->connect_event_supplier (supplier_config ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  /// Save a pointer to the event service implementation in a map.
-  this->event_service_map_.bind (supplier_config->get_supplier_id (),
+  // Save a pointer to the event service implementation in a map.
+  ACE_CString supplier_id =
+    supplier_config->supplier_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->event_service_map_.bind (supplier_id.c_str (),
                                  event_service);
 }
 
-void CIAO::Container::_ciao_disconnect_event_consumer
-      (CIAO_Events::CONNECTION_ID connection_id
-       ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::InvalidConnection))
+void
+CIAO::Container::disconnect_event_consumer (
+    const char * connection_id
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    Components::InvalidName,
+    Components::InvalidConnection))
 {
-  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_disconnect_event_consumer\n"));
 
-  CIAO_Events::EventServiceInfo service_info;
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::disconnect_event_consumer\n"));
 
-  if (this->event_info_map_.unbind (connection_id, service_info) != 0)
-    {
-      ACE_THROW (
-      ::Components::InvalidConnection ());
-    }
-
-  service_info.service->disconnect_event_consumer (service_info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-}
-
-void CIAO::Container::_ciao_disconnect_event_supplier
-      (CIAO_Events::CONNECTION_ID connection_id
-       ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::InvalidConnection))
-{
-  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_disconnect_event_supplier\n"));
-
-  CIAO_Events::EventServiceBase * event_service;
+  CIAO::EventServiceBase * event_service;
 
   if (this->event_service_map_.unbind (connection_id, event_service) != 0)
     {
       ACE_THROW (
-      ::Components::InvalidConnection ());
+      Components::InvalidConnection ());
+    }
+
+  event_service->disconnect_event_consumer (connection_id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+}
+
+void
+CIAO::Container::disconnect_event_supplier (
+    const char * connection_id
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    Components::InvalidName,
+    Components::InvalidConnection))
+{
+
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::disconnect_event_supplier\n"));
+
+  CIAO::EventServiceBase * event_service;
+
+  if (this->event_service_map_.unbind (connection_id, event_service) != 0)
+    {
+      ACE_THROW (
+      Components::InvalidConnection ());
     }
 
   event_service->disconnect_event_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
 }
 
-void CIAO::Container::_ciao_push_event (Components::EventBase *ev,
-                                        CIAO_Events::CONNECTION_ID connection_id
-                                        ACE_ENV_ARG_DECL)
-                                      ACE_THROW_SPEC ((
-                                        CORBA::SystemException))
+void
+CIAO::Container::push_event (
+    Components::EventBase * ev,
+    const char * connection_id
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException))
 {
 
-  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_push_event\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::push_event\n"));
 
-  /// Pushing an event requires a map lookup.
-  CIAO_Events::EventServiceBase * event_service;
+  CIAO::EventServiceBase * event_service;
   if (this->event_service_map_.find (connection_id, event_service) != 0)
     {
       ACE_THROW (
-      ::Components::InvalidConnection ());
+      Components::InvalidConnection ());
     }
 
   event_service->push_event (ev ACE_ENV_ARG_PARAMETER);
@@ -187,6 +220,7 @@ CIAO::Session_Container::Session_Container (CORBA::ORB_ptr o)
 
 CIAO::Session_Container::~Session_Container ()
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Session_Container::~Session_Container\n"));
 }
 
 int
@@ -243,6 +277,12 @@ CIAO::Session_Container::init (const char *name,
 
    poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
    ACE_CHECK_RETURN (-1);
+
+   this->event_service_factory_ =
+     ACE_Dynamic_Service<EventService_Factory>::instance
+       ("CIAO_EventService_Factory");
+
+   this->event_service_factory_->init (this->orb_.in (), root_poa.in ());
 
    return 0;
 }

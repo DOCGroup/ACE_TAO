@@ -5,6 +5,7 @@
 #include "Cookies.h"
 #include "../XML_Helpers/Assembly_Spec.h"
 #include "../XML_Helpers/XML_Utils.h"
+#include "CIAO_EventsS.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Assembly_Impl.inl"
@@ -208,22 +209,11 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
     }
   // Setting connections
 
-  CIAO::Assembly_Spec::CONNECTION_QUEUE::ITERATOR
-    conn_iter (this->assembly_spec_->connections_);
-
-  while (!conn_iter.done ())
-    {
-      CIAO::Assembly_Connection::Connect_Info *connection;
-      conn_iter.next (connection);
-
-      this->make_connection (connection
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      conn_iter.advance ();
-    }
+  this->make_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   this->state_ = ::Components::Deployment::INSERVICE;
+
+  ACE_DEBUG ((LM_DEBUG, "All connections established.\n"));
 }
 
 void
@@ -286,76 +276,160 @@ CIAO::Assembly_Impl::get_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-CIAO::Assembly_Impl::make_connection (CIAO::Assembly_Connection::Connect_Info *info
-                                      ACE_ENV_ARG_DECL)
+CIAO::Assembly_Impl::make_connections (ACE_ENV_SINGLE_ARG_DECL)
 {
-  switch (info->type_)
+
+  CIAO::Assembly_Spec::CONNECTION_QUEUE::ITERATOR
+    conn_iter (this->assembly_spec_->connections_);
+
+  while (!conn_iter.done ())
     {
-    case CIAO::Assembly_Connection::INTERFACE:
-      {
-        CORBA::Object_var source
-          = this->resolve_interface (info->interface_
-                                     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+      CIAO::Assembly_Connection::Connect_Info *connection;
+      conn_iter.next (connection);
 
-        Components::CCMObject_var comp
-          = this->resolve_component (info->component_
-                                     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+      switch (connection->type_)
+        {
+        case CIAO::Assembly_Connection::INTERFACE:
+          {
+            CORBA::Object_var source
+              = this->resolve_interface (connection->dest_iface_
+                                         ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
 
-        comp->connect (info->name_.c_str (),
-                       source.in ()
-                       ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+            Components::CCMObject_var comp
+              = this->resolve_component (connection->src_comp_
+                                         ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
 
-        // @@ Register the connection?  How?
-      }
-      break;
+            comp->connect (connection->name_.c_str (),
+                           source.in ()
+                           ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
 
-    case CIAO::Assembly_Connection::EMITTER_CONSUMER:
-      {
-        Components::EventConsumerBase_var source
-          = this->resolve_consumer (info->interface_
+            // @@ Register the connection?  How?
+          }
+          break;
+
+        case CIAO::Assembly_Connection::EMITTER_CONSUMER:
+          {
+            Components::EventConsumerBase_var source
+              = this->resolve_consumer (connection->dest_iface_
+                                        ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+
+            Components::CCMObject_var comp
+              = this->resolve_component (connection->src_comp_
+                                         ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+
+            comp->connect_consumer (connection->name_.c_str (),
+                                    source.in ()
                                     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+            ACE_CHECK;
+          }
+          break;
 
-        Components::CCMObject_var comp
-          = this->resolve_component (info->component_
-                                     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        case CIAO::Assembly_Connection::PUBLISHER_CONSUMER:
+          {
+            Components::CCMObject_var sink
+              = this->resolve_component (connection->dest_iface_->nested_resolver ()
+                                         ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
 
-        comp->connect_consumer (info->name_.c_str (),
-                                source.in ()
-                                ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-      break;
+            if (CORBA::is_nil (sink))
+              ACE_DEBUG ((LM_DEBUG, "Nil sink\n"));
 
-    case CIAO::Assembly_Connection::PUBLISHER_CONSUMER:
-      {
-        Components::EventConsumerBase_var source
-          = this->resolve_consumer (info->interface_
-                                    ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+            Components::EventConsumerBase_var consumer
+              = this->resolve_consumer (connection->dest_iface_
+                                        ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
 
-        Components::CCMObject_var comp
-          = this->resolve_component (info->component_
-                                     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+            if (CORBA::is_nil (consumer))
+              ACE_DEBUG ((LM_DEBUG, "Nil consumer\n"));
 
-        comp->subscribe (info->name_.c_str (),
-                         source.in ()
-                         ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-      break;
+            Components::CCMObject_var source
+              = this->resolve_component (connection->src_comp_
+                                         ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
 
-    case CIAO::Assembly_Connection::HOME:
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
+            if (CORBA::is_nil (source))
+              ACE_DEBUG ((LM_DEBUG, "Nil source\n"));
 
-    default:
-      ACE_THROW (CORBA::INTERNAL ());
+            Components::Deployment::Container_var container;
+            this->assembly_context_.containers_.find (connection->src_comp_->resolver_info (),
+                                                      container
+                                                      ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+
+            CIAO::ContainerEventService_var event_service =
+              container->get_event_service (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_CHECK;
+
+            if (CORBA::is_nil (event_service))
+              ACE_DEBUG ((LM_DEBUG, "Nil event_service\n"));
+
+            CIAO::EventServiceType type = CIAO::RTEC;
+            ACE_CString sid = source->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+            ACE_CHECK;
+
+            sid += "_";
+            sid += connection->name_.c_str ();
+            sid += "_publisher";
+
+            ACE_CString cid = sink->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+            ACE_CHECK;
+
+            cid += "_";
+            cid += connection->name_.c_str ();
+            cid += "_consumer";
+
+            ACE_DEBUG ((LM_DEBUG, "Publisher: %s\n", sid.c_str ()));
+            ACE_DEBUG ((LM_DEBUG, "Subscriber: %s\n", cid.c_str ()));
+
+            if (this->connected_publishers_.find (sid) == -1)
+              {
+                CIAO::Supplier_Config_var supplier_config =
+                  event_service->create_supplier_config (type ACE_ENV_ARG_PARAMETER);
+                ACE_CHECK;
+            
+                supplier_config->supplier_id (sid.c_str () ACE_ENV_ARG_PARAMETER);
+                ACE_CHECK;
+
+                event_service->connect_event_supplier (supplier_config.in () ACE_ENV_ARG_PARAMETER);
+                ACE_CHECK;
+
+                this->connected_publishers_.insert (sid);
+              }
+
+            CIAO::Consumer_Config_var consumer_config =
+              event_service->create_consumer_config (type ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+
+            consumer_config->supplier_id (sid.c_str () ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+            consumer_config->consumer_id (cid.c_str () ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+            consumer_config->consumer (Components::EventConsumerBase::_duplicate (consumer.in ())
+                                       ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+
+
+            event_service->connect_event_consumer (consumer_config.in () ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+
+          }
+          break;
+
+        case CIAO::Assembly_Connection::HOME:
+          ACE_THROW (CORBA::NO_IMPLEMENT ());
+
+        default:
+          ACE_THROW (CORBA::INTERNAL ());
+        }
+
+      conn_iter.advance ();
     }
+
 }
 
 CORBA::Object_ptr

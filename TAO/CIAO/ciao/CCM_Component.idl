@@ -19,6 +19,9 @@
 
 module Components
 {
+
+  typedef string UUID;
+
   abstract valuetype PrimaryKeyBase {};
 
   interface CCMObject; //forward reference
@@ -97,6 +100,7 @@ module Components
     void remove()
       raises (RemoveFailure);
     ComponentPortDescription get_all_ports ();
+    attribute UUID component_UUID;
   };
 
   // @@ Enumeration and DefaultEnumeration are only for EJB to CCM

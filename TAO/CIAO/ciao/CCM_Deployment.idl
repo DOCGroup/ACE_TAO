@@ -17,6 +17,7 @@
 #define CCM_DEPLOYMENT_IDL
 
 #include "CCM_Component.idl"
+#include "CIAO_Events.idl"
 
 // *************** Packaging and Deployment ***************
 
@@ -26,7 +27,7 @@ module Components
 
   module Deployment
   {
-    typedef string UUID;
+
     typedef string Location;
 
     enum AssemblyState
@@ -148,7 +149,7 @@ module Components
       void remove ()
         raises (RemoveFailure);
 
-      
+      CIAO::ContainerEventService get_event_service ();
 
     };
 

@@ -27,45 +27,12 @@ namespace CIAO_GLUE_BasicSP
   ::Components::CCMHome_ptr home,
   ::CIAO::Session_Container *c,
   EC_Servant *sv)
-  : home_ (::Components::CCMHome::_duplicate (home)),
+  :
+  home_ (::Components::CCMHome::_duplicate (home)),
   container_ (c),
-  servant_ (sv),
-  push_timeout_cookie_ (0)
+  servant_ (sv)
   {
   }
-
-  /*
-  // START new event code
-  void EC_Context::create_event_channel (void)
-  {
-
-  	// Get a reference to the ORB.
-    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
-    if (CORBA::is_nil (orb.in ()))
-      ACE_ERROR ((LM_ERROR, "Nil ORB\n"));
-
-    // Get a reference to the POA
-    CORBA::Object_var poa_object =
-      orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    if (CORBA::is_nil (root_poa.in ()))
-      ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-
-    // Get a reference to the event channel
-    if (CORBA::is_nil (this->ciao_event_channel_.in ()))
-      {
-        TAO_EC_Event_Channel_Attributes attributes (root_poa.in (), root_poa.in ());
-        TAO_EC_Event_Channel * ec_servant;
-        ACE_NEW (ec_servant, TAO_EC_Event_Channel (attributes));
-        ec_servant->activate ();
-        this->ciao_event_channel_ = ec_servant->_this ();
-      }
-  }
-  // END new event code
-  */
 
   EC_Context::~EC_Context (void)
   {
@@ -177,24 +144,16 @@ namespace CIAO_GLUE_BasicSP
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    this->container_->_ciao_push_event (ev,
-                                        0101
-                                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    
-    /*
-    // START new event code
-    RtecEventComm::EventSet events (1);
-    events.length (1);
-    events[0].header.source = ACE_ES_EVENT_SOURCE_ANY + 1;
-    events[0].header.type = ACE_ES_EVENT_UNDEFINED + 1;
-    events[0].data.any_value <<= ev;
-    ciao_proxy_timeout_consumer_->push (events ACE_ENV_ARG_PARAMETER);
-	  ACE_CHECK;
-    // END new event code
-    */
 
-    // START old event code
+    ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+    my_uuid += "_timeout_publisher";
+
+    this->container_->push_event (ev,
+                                  my_uuid.c_str ()
+                                  ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
     /*
     ACE_Active_Map_Manager<::BasicSP::TimeOutConsumer_var>::iterator end =
     this->ciao_publishes_timeout_map_.end ();
@@ -217,7 +176,6 @@ namespace CIAO_GLUE_BasicSP
       ACE_CHECK;
     }
     */
-    // END old event code
   }
 
   ::Components::Cookie *
@@ -228,74 +186,41 @@ namespace CIAO_GLUE_BasicSP
   ::CORBA::SystemException,
   ::Components::ExceededConnectionLimit))
   {
-    CIAO_Events::Supplier_Config_var supplier_config =
-      this->container_->_ciao_create_event_supplier_config ("DIRECT" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    supplier_config->set_supplier_id (0101 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
-    CIAO_Events::Consumer_Config_var consumer_config =
-      this->container_->_ciao_create_event_consumer_config ("DIRECT" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    consumer_config->start_disjunction_group (1 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    consumer_config->insert_supplier_id (0101 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    consumer_config->set_consumer_id (0102 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    consumer_config->set_consumer (c ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    this->container_->_ciao_connect_event_supplier (supplier_config.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    this->container_->_ciao_connect_event_consumer (consumer_config.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    // This method is not used.
 
     return 0;
 
-    /*
-    // START new event code
-    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
+    /*CIAO::EventServiceType type = CIAO::RTEC;
 
-    // Establish supplier's connection to event channel if not done yet
-    if (CORBA::is_nil (this->ciao_proxy_timeout_consumer_.in ()))
-      {
-        RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-          this->ciao_event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
-        this->ciao_proxy_timeout_consumer_ =
-          supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+    CIAO::Supplier_Config_var supplier_config =
+      this->container_->create_supplier_config (type ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    supplier_config->supplier_id (0101 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
 
-        // Create and register supplier servant
-        timeout_Supplier_impl * supplier_servant;
-        ACE_NEW_RETURN (supplier_servant,
-                        timeout_Supplier_impl (orb.in ()),
-                        0);
-        RtecEventComm::PushSupplier_var supplier =
-          supplier_servant->_this ();
+    CIAO::Consumer_Config_var consumer_config =
+      this->container_->create_consumer_config (type ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
 
-        // Set QoS properties and connect
-        ACE_SupplierQOS_Factory qos;
-        qos.insert (ACE_ES_EVENT_SOURCE_ANY + 1,
-                    ACE_ES_EVENT_UNDEFINED + 1,
-                    0,
-                    1);
-        this->ciao_proxy_timeout_consumer_->connect_push_supplier (supplier.in (),
-                                                               qos.get_SupplierQOS ());
-      } // End if (ciao_proxy_timeout_consumer_ is nil)
+    //CIAO::RTEvent_Consumer_Config_var rt_config =
+    //  CIAO::RTEvent_Consumer_Config::_narrow (consumer_config.in ());
 
-    // Establish consumer's connection to event channel
-    if (CORBA::is_nil (c))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
-    }
+    //rt_config->start_disjunction_group (1 ACE_ENV_ARG_PARAMETER);
+    //ACE_CHECK;
+    consumer_config->supplier_id (0101 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->consumer_id (0102 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->consumer (c ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
 
-    return this->subscribe_timeout_consumer (c);
-    // END new event code
+    this->container_->connect_event_supplier (supplier_config.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    this->container_->connect_event_consumer (consumer_config.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
     */
 
-    // START old event code
     /*
     if (CORBA::is_nil (c))
     {
@@ -312,52 +237,9 @@ namespace CIAO_GLUE_BasicSP
 
     ::Components::Cookie_var retv = new ::CIAO::Map_Key_Cookie (key);
     return retv._retn ();
+
     */
-    // END old event code
   }
-
-  /*::Components::Cookie *
-  EC_Context::subscribe_timeout_consumer (
-  ::BasicSP::TimeOutConsumer_ptr c)
-  {
-
-    return 0;
-
-    
-    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
-
-    ::BasicSP::TimeOutConsumer_var sub =
-        ::BasicSP::TimeOutConsumer::_duplicate (c);
-
-    RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-      this->ciao_event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-    RtecEventChannelAdmin::ProxyPushSupplier_var ciao_proxy_timeout_supplier =
-      consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-
-    // Create and register consumer servant
-    timeout_Consumer_impl * consumer_servant;
-    ACE_NEW_RETURN (consumer_servant, timeout_Consumer_impl (orb.in (), sub.in ()), 0);
-    RtecEventComm::PushConsumer_var consumer = consumer_servant->_this ();
-
-    // Set QoS properties and connect
-    ACE_ConsumerQOS_Factory qos;
-    qos.start_disjunction_group (1);
-    qos.insert_type (ACE_ES_EVENT_UNDEFINED + 1,
-                     0);
-    ciao_proxy_timeout_supplier->connect_push_consumer (consumer.in (),
-                                                        qos.get_ConsumerQOS ());
-
-    sub._retn ();
-
-    ::Components::Cookie * return_cookie;
-    ACE_NEW_RETURN (return_cookie,
-                    ::CIAO::Object_Reference_Cookie (consumer.in ()),
-                    0);
-    return return_cookie;
-    
-  }*/
 
   ::BasicSP::TimeOutConsumer_ptr
   EC_Context::unsubscribe_timeout (
@@ -368,41 +250,14 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidConnection))
   {
 
-    this->container_->_ciao_disconnect_event_consumer (0102 ACE_ENV_ARG_PARAMETER);
+    // This method must be changed to make the consumer connection id
+    // available to pass in as a parameter. Using '0' as a placeholder.
+
+    this->container_->disconnect_event_consumer (0 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     return ::BasicSP::TimeOutConsumer::_nil ();
 
-    /*
-    // START new event code
-    CORBA::Object_var obj = CORBA::Object::_nil ();
-    ::BasicSP::TimeOutConsumer_var return_consumer;
-
-    if (ck == 0 || ::CIAO::Object_Reference_Cookie::extract (ck, obj.out ()) == -1)
-      {
-        ACE_THROW_RETURN (
-        ::Components::InvalidConnection (),
-        ::BasicSP::TimeOutConsumer::_nil ());
-      }
-
-    RtecEventComm::PushConsumer_var push_consumer =
-      ::RtecEventComm::PushConsumer::_narrow (obj.in ());
-
-    if (CORBA::is_nil (push_consumer.in ()))
-      {
-        ACE_THROW_RETURN (
-        ::Components::InvalidConnection (),
-        ::BasicSP::TimeOutConsumer::_nil ());
-      }
-
-    push_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-
-    return ::BasicSP::TimeOutConsumer::_nil ();
-    // END new event code
-    */
-
-    // START old event code
     /*
     ::BasicSP::TimeOutConsumer_var retv;
     ACE_Active_Map_Manager_Key key;
@@ -423,7 +278,6 @@ namespace CIAO_GLUE_BasicSP
 
     return retv._retn ();
     */
-    // END old event code
   }
 
 
@@ -459,6 +313,8 @@ namespace CIAO_GLUE_BasicSP
 
   EC_Servant::~EC_Servant (void)
   {
+    ACE_DEBUG ((LM_DEBUG, "EC_Servant::~EC_Servant\n"));
+
     ACE_TRY_NEW_ENV
     {
       ::Components::SessionComponent_var scom =
@@ -489,8 +345,8 @@ namespace CIAO_GLUE_BasicSP
   ::Components::ExceededConnectionLimit))
   {
     return this->context_->subscribe_timeout (
-      c
-      ACE_ENV_ARG_PARAMETER);
+    c
+    ACE_ENV_ARG_PARAMETER);
   }
 
   ::BasicSP::TimeOutConsumer_ptr
@@ -502,8 +358,8 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidConnection))
   {
     return this->context_->unsubscribe_timeout (
-      ck
-      ACE_ENV_ARG_PARAMETER);
+    ck
+    ACE_ENV_ARG_PARAMETER);
   }
 
   ::CORBA::Long
@@ -515,7 +371,7 @@ namespace CIAO_GLUE_BasicSP
     ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 
-  void
+  void 
   EC_Servant::hertz (
   ::CORBA::Long val
   ACE_ENV_ARG_DECL)
@@ -700,7 +556,6 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidConnection,
   ::Components::ExceededConnectionLimit))
   {
-
     if (publisher_name == 0)
     {
       ACE_THROW_RETURN (::Components::InvalidName (), 0);
@@ -737,7 +592,6 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidName,
   ::Components::InvalidConnection))
   {
-
     if (publisher_name == 0)
     {
       ACE_THROW_RETURN (
@@ -841,6 +695,23 @@ namespace CIAO_GLUE_BasicSP
   }
 
   // Operations for CCMObject interface.
+
+  void
+  EC_Servant::component_UUID (
+  const char * new_component_UUID
+  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    this->component_UUID_ = new_component_UUID;
+  }
+
+  CIAO::CONNECTION_ID
+  EC_Servant::component_UUID (
+  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    return CORBA::string_dup (this->component_UUID_.c_str ());
+  }
 
   CORBA::IRObject_ptr
   EC_Servant::get_component_def (
@@ -1219,6 +1090,9 @@ namespace CIAO_GLUE_BasicSP
     }
   }
 
+  // Supported operations.
+
+
 }
 
 extern "C" EC_SVNT_Export ::PortableServer::Servant
@@ -1248,3 +1122,4 @@ ACE_ENV_ARG_DECL)
   x.in (),
   c);
 }
+

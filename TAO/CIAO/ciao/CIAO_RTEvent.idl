@@ -1,0 +1,48 @@
+// $Id$
+
+/**
+ * @file CIAO_RTEvent.idl
+ *
+ * @author George Edwards
+ *
+ * @brief Interfaces for configuring CIAO's RT event channel.
+ */
+
+#include "CIAO_Events.idl"
+#include "orbsvcs/RtecEventChannelAdmin.idl"
+
+module CIAO
+{
+
+  interface RTEvent_Consumer_Config :
+    Consumer_Config
+  {
+
+    void start_conjunction_group (in long size);
+
+    void start_disjunction_group (in long size);
+
+    void insert_source (in CONNECTION_ID source_id);
+
+    //void start_logical_and_group (in long size);
+
+    //void start_negation ();
+
+    //void insert_bitmasked_value (in long source_mask,
+    //                             in long type_mask,
+    //                             in long source_value,
+    //                             in long type_value);
+
+    readonly attribute RtecEventChannelAdmin::ConsumerQOS rt_event_qos;
+
+  };
+
+  interface RTEvent_Supplier_Config :
+    Supplier_Config
+  {
+
+    readonly attribute RtecEventChannelAdmin::SupplierQOS rt_event_qos;
+
+  };
+
+};

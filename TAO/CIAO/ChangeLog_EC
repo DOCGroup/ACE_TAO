@@ -1,3 +1,103 @@
+Sat Oct 18 14:19:56 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        Added files:
+        * CIAO_CosNotify.cpp
+        * CIAO_CosNotify.h
+        * CIAO_CosNotify.idl 
+        * CIAO_DirectEvent.cpp
+        * CIAO_DirectEvent.h
+        * CIAO_DirectEvent.idl 
+        * CIAO_EventServiceBase.h
+        * CIAO_EventService_Factory.cpp 
+        * CIAO_EventService_Factory.h
+        * CIAO_EventService_Factory_impl.cpp 
+        * CIAO_EventService_Factory_impl.h
+        * CIAO_Events_Export.h 
+        * CIAO_RTEvent.cpp CIAO_RTEvent.h CIAO_RTEvent.idl
+
+          Added event service factory to dynamically create event service
+          objects, provided via ACE dynamic service. Changed UUID to string
+          to match Assembly_Deployer tool. Moved consumer state information
+          into the event service objects.
+
+        Modified files:
+        * CCM_Component.idl
+        * CCM_Core.mpc
+        * CCM_Deployment.idl 
+        * CIAO_Events.idl
+        * ComponentInstallation_Impl.h 
+        * ComponentServer_Impl.h
+        * Container_Base.cpp
+        * Container_Base.h 
+        * Container_Base.inl
+        * Container_Impl.h
+        * Container_Impl.inl 
+        * Cookies.h
+
+          Changed container to dynamically link event service libraries. Added new
+          CIAO_Events project. Added method to CIAO::Container that provides an object
+          reference to the events interface. Removed map of EventServiceInfo structs from
+          CIAO::Container. Added a UUID attribute to CCM_Object.
+
+        * Assembly_Deployer/Assembly_Impl.cpp 
+        * Assembly_Deployer/Assembly_Impl.h 
+        * Assembly_Deployer/Assembly_Visitors.cpp 
+        * Assembly_Deployer/Assembly_Visitors.h 
+        * XML_Helpers/Assembly_Handlers.cpp
+        * XML_Helpers/Assembly_Spec.h 
+        * XML_Helpers/Assembly_Spec.inl
+
+          Moved glue code that establishes events connections into the Deployer.
+          Added a map of container references to CIAO::Assembly_Context.
+
+        * handcrafted/BasicSP_EC/BMClosedED/BMClosedEDE.idl 
+        * handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp 
+        * handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h 
+        * handcrafted/BasicSP_EC/BMDevice/BMDeviceE.idl 
+        * handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.cpp 
+        * handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h 
+        * handcrafted/BasicSP_EC/BMDisplay/BMDisplayE.idl 
+        * handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.cpp 
+        * handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.h 
+        * handcrafted/BasicSP_EC/EC/ECE.idl 
+        * handcrafted/BasicSP_EC/EC/EC_svnt.cpp 
+        * handcrafted/BasicSP_EC/EC/EC_svnt.h 
+
+          Added a UUID attribute to CCM_Object. Moved glue code that establishes
+          events connections into the Deployer. Changed push_event to use the
+          component UUID with port name appended.
+
+        Removed files:
+        * CIAO_Events.cpp
+        * CIAO_Events.h
+
+          Broke these files apart into one file per service.
+
+Sat Oct  4 18:28:23 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        Added files:
+
+        * ciao/CIAO_CosNotify.idl
+        * ciao/CIAO_DirectEvent.idl
+        * ciao/CIAO_RTEvent.idl
+
+        Modified files:
+
+        * ciao/CCM_Core.mpc
+        * ciao/CIAO_Events.cpp
+        * ciao/CIAO_Events.h 
+        * ciao/CIAO_Events.idl
+        * ciao/ComponentInstallation_Impl.h 
+        * ciao/ComponentServer_Impl.h
+        * ciao/Container_Base.cpp 
+        * ciao/Container_Base.h
+        * ciao/Container_Impl.h ciao/Cookies.h 
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp
+
+          Made design changes according to Bala's suggestions.
+
 Thu Oct  2 12:19:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * ciao/CIAO_Events.cpp:

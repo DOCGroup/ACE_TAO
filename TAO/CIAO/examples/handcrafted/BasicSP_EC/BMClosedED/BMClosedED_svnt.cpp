@@ -86,9 +86,7 @@ namespace CIAO_GLUE_BasicSP
   BMClosedED_Servant *sv)
   : home_ (::Components::CCMHome::_duplicate (home)),
   container_ (c),
-  servant_ (sv),
-  push_out_avail_cookie_ (0),
-  out_avail_service_cookie_ (0)
+  servant_ (sv)
   {
   }
 
@@ -251,9 +249,14 @@ namespace CIAO_GLUE_BasicSP
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    this->container_->_ciao_push_event (ev,
-                                        0301
-                                        ACE_ENV_ARG_PARAMETER);
+
+    ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+    my_uuid += "_data_available_publisher";
+
+    this->container_->push_event (ev,
+                                  my_uuid.c_str ()
+                                  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     /*
@@ -288,35 +291,10 @@ namespace CIAO_GLUE_BasicSP
   ::CORBA::SystemException,
   ::Components::ExceededConnectionLimit))
   {
-    CIAO_Events::Supplier_Config_var supplier_config =
-      this->container_->_ciao_create_event_supplier_config ("RTEC" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    supplier_config->set_supplier_id (0301 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    CIAO_Events::Consumer_Config_var consumer_config =
-      this->container_->_ciao_create_event_consumer_config ("RTEC" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    consumer_config->start_conjunction_group (2 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    consumer_config->insert_supplier_id (0201 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    consumer_config->insert_supplier_id (0301 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    consumer_config->set_consumer_id (0302 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    consumer_config->set_consumer (c ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    this->container_->_ciao_connect_event_supplier (supplier_config.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    this->container_->_ciao_connect_event_consumer (consumer_config.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     return 0;
 
     /*
-
     if (CORBA::is_nil (c))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
@@ -343,9 +321,6 @@ namespace CIAO_GLUE_BasicSP
   ::CORBA::SystemException,
   ::Components::InvalidConnection))
   {
-
-    this->container_->_ciao_disconnect_event_consumer (0302 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
 
     return ::BasicSP::DataAvailableConsumer::_nil ();
 
@@ -963,6 +938,23 @@ namespace CIAO_GLUE_BasicSP
   }
 
   // Operations for CCMObject interface.
+
+  void
+  BMClosedED_Servant::component_UUID (
+  const char * new_component_UUID
+  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    this->component_UUID_ = new_component_UUID;
+  }
+
+  CIAO::CONNECTION_ID
+  BMClosedED_Servant::component_UUID (
+  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    return CORBA::string_dup (this->component_UUID_.c_str ());
+  }
 
   CORBA::IRObject_ptr
   BMClosedED_Servant::get_component_def (

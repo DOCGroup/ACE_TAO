@@ -1,0 +1,28 @@
+// $Id$
+
+/**
+ * @file CIAO_DirectEvent.idl
+ *
+ * @author George Edwards
+ *
+ * @brief Interfaces for configuring CIAO's direct event service.
+ */
+
+#include "CIAO_Events.idl"
+
+module CIAO
+{
+
+  interface Direct_Consumer_Config :
+    Consumer_Config
+  {
+
+  };
+
+  interface Direct_Supplier_Config :
+    Supplier_Config
+  {
+
+  };
+
+};

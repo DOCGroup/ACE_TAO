@@ -51,6 +51,13 @@ namespace CIAO
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> COMP_MAP;
     COMP_MAP instantiated_components_;
+    
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    Components::Deployment::Container_var,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> CONTAINER_MAP;
+    CONTAINER_MAP containers_;
 
     typedef ACE_Unbounded_Queue<Components::Deployment::ComponentServer_var> SERVER_QUEUE;
     SERVER_QUEUE component_servers_;
@@ -139,6 +146,9 @@ namespace CIAO
 
     /// Deployment Configuration Info.
     Deployment_Configuration &deployment_config_;
+
+    ACE_CString uuid_;
+
   };
 }
 
