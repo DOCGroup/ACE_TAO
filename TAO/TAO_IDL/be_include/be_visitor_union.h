@@ -197,4 +197,54 @@ public:
 
 };
 
+class be_visitor_union_any_op_ch : public be_visitor_union
+{
+  //
+  // = TITLE
+  //   be_visitor_union_any_op_ch
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for union that generates the Any operator
+  //   declarations
+  //
+
+public:
+  be_visitor_union_any_op_ch (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_union_any_op_ch (void);
+  // destructor
+
+  virtual int visit_union (be_union *node);
+  // visit union
+
+  virtual int visit_union_branch (be_union_branch *node);
+  // visit union_branch
+};
+
+class be_visitor_union_any_op_cs : public be_visitor_union
+{
+  //
+  // = TITLE
+  //   be_visitor_union_any_op_cs
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for union that generates the Any operator
+  //   implementations
+  //
+
+public:
+  be_visitor_union_any_op_cs (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_union_any_op_cs (void);
+  // destructor
+
+  virtual int visit_union (be_union *node);
+  // visit union
+
+  virtual int visit_union_branch (be_union_branch *node);
+  // visit union_branch
+};
+
 #endif // TAO_BE_VISITOR_UNION_H

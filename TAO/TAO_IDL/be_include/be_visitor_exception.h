@@ -228,4 +228,54 @@ public:
 
 };
 
+class be_visitor_exception_any_op_ch : public be_visitor_scope
+{
+  //
+  // = TITLE
+  //   be_visitor_exception_any_op_ch
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for exception that generates the Any operator
+  //   declarations
+  //
+
+public:
+  be_visitor_exception_any_op_ch (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_exception_any_op_ch (void);
+  // destructor
+
+  virtual int visit_exception (be_exception *node);
+  // visit exception
+
+  virtual int visit_field (be_field *node);
+  // visit field
+};
+
+class be_visitor_exception_any_op_cs : public be_visitor_scope
+{
+  //
+  // = TITLE
+  //   be_visitor_exception_any_op_cs
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for exception that generates the Any operator
+  //   implementations
+  //
+
+public:
+  be_visitor_exception_any_op_cs (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_exception_any_op_cs (void);
+  // destructor
+
+  virtual int visit_exception (be_exception *node);
+  // visit exception
+
+  virtual int visit_field (be_field *node);
+  // visit field
+};
+
 #endif // TAO_BE_VISITOR_EXCEPTION_H

@@ -74,6 +74,9 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_root_si (new_ctx);
     case TAO_CodeGen::TAO_ROOT_SS:
       return new be_visitor_root_ss (new_ctx);
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      return new be_visitor_root_any_op (new_ctx);
 
     case TAO_CodeGen::TAO_MODULE_CH:
       return new be_visitor_module_ch (new_ctx);
@@ -84,6 +87,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
       return new be_visitor_module (new_ctx);
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      return new be_visitor_module_any_op (new_ctx);
+
 
     case TAO_CodeGen::TAO_INTERFACE_CH:
       return new be_visitor_interface_ch (new_ctx);
@@ -101,6 +108,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_collocated_sh (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
       return new be_visitor_interface_collocated_ss (new_ctx);
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+      return new be_visitor_interface_any_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
+      return new be_visitor_interface_any_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_FWD_CH:
       return new be_visitor_interface_fwd_ch (new_ctx);
@@ -113,6 +124,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_structure_cs (new_ctx);
     case TAO_CodeGen::TAO_STRUCT_CI:
       return new be_visitor_structure_ci (new_ctx);
+    case TAO_CodeGen::TAO_STRUCT_ANY_OP_CH:
+      return new be_visitor_structure_any_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_STRUCT_ANY_OP_CS:
+      return new be_visitor_structure_any_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_CONSTANT_CH:
       return new be_visitor_constant_ch (new_ctx);
@@ -123,6 +138,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_enum_ch (new_ctx);
     case TAO_CodeGen::TAO_ENUM_CS:
       return new be_visitor_enum_cs (new_ctx);
+    case TAO_CodeGen::TAO_ENUM_ANY_OP_CH:
+      return new be_visitor_enum_any_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_ENUM_ANY_OP_CS:
+      return new be_visitor_enum_any_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_FIELD_CH:
       return new be_visitor_field_ch (new_ctx);
@@ -148,12 +167,15 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_UNION_PRIVATE_CH:
       return new be_visitor_union_branch_private_ch (new_ctx);
     case TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CH:
-
       return new be_visitor_union_discriminant_ch (new_ctx);
     case TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CI:
       return new be_visitor_union_discriminant_ci (new_ctx);
     case TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CS:
       return new be_visitor_union_discriminant_cs (new_ctx);
+    case TAO_CodeGen::TAO_UNION_ANY_OP_CH:
+      return new be_visitor_union_any_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_UNION_ANY_OP_CS:
+      return new be_visitor_union_any_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_SEQUENCE_CH:
       return new be_visitor_sequence_ch (new_ctx);
@@ -172,6 +194,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CI:
     case TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CS:
       return new be_visitor_sequence_buffer_type (new_ctx);
+    case TAO_CodeGen::TAO_SEQUENCE_ANY_OP_CH:
+      return new be_visitor_sequence_any_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_SEQUENCE_ANY_OP_CS:
+      return new be_visitor_sequence_any_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_TYPEDEF_CH:
       return new be_visitor_typedef_ch (new_ctx);
@@ -179,6 +205,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_typedef_cs (new_ctx);
     case TAO_CodeGen::TAO_TYPEDEF_CI:
       return new be_visitor_typedef_ci (new_ctx);
+    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH:
+      return new be_visitor_typedef_any_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
+      return new be_visitor_typedef_any_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_CH:
       return new be_visitor_operation_ch (new_ctx);
@@ -275,6 +305,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_exception_ctor (new_ctx);
     case TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS:
       return new be_visitor_exception_ctor_assign (new_ctx);
+    case TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CH:
+      return new be_visitor_exception_any_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CS:
+      return new be_visitor_exception_any_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
     case TAO_CodeGen::TAO_ARGUMENT_CH:

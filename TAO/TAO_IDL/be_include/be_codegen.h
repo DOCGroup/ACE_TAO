@@ -117,6 +117,8 @@ public:
     TAO_ARRAY_DEFN_SH,
     TAO_ARRAY_DEFN_SI,
     TAO_ARRAY_DEFN_SS,
+    TAO_ARRAY_ANY_OP_CH,
+    TAO_ARRAY_ANY_OP_CS,
 
     // emitting code for rest of the array decl
     TAO_ARRAY_OTHER_CH,
@@ -138,6 +140,8 @@ public:
     TAO_ENUM_SH,                             // XXXASG rm? all 3
     TAO_ENUM_SI,
     TAO_ENUM_SS,
+    TAO_ENUM_ANY_OP_CH,
+    TAO_ENUM_ANY_OP_CS,
 
     // emitting code for exceptions
     TAO_EXCEPTION_CH,
@@ -149,6 +153,8 @@ public:
     TAO_EXCEPTION_SH,
     TAO_EXCEPTION_SI,
     TAO_EXCEPTION_SS,
+    TAO_EXCEPTION_ANY_OP_CH,
+    TAO_EXCEPTION_ANY_OP_CS,
 
     // emitting fields i.e., struct members
     TAO_FIELD_CH,
@@ -164,6 +170,8 @@ public:
     TAO_INTERFACE_SS,
     TAO_INTERFACE_COLLOCATED_SH,
     TAO_INTERFACE_COLLOCATED_SS,
+    TAO_INTERFACE_ANY_OP_CH,
+    TAO_INTERFACE_ANY_OP_CS,
 
     // emitting code for the interface forward declaration
     TAO_INTERFACE_FWD_CH,
@@ -176,6 +184,8 @@ public:
     TAO_MODULE_SH,
     TAO_MODULE_SI,
     TAO_MODULE_SS,
+    TAO_MODULE_ANY_OP_CH,
+    TAO_MODULE_ANY_OP_CS,
 
     // emitting code for an operation.
     TAO_OPERATION_CH,                       // in client header
@@ -238,11 +248,15 @@ public:
     TAO_ROOT_SH,
     TAO_ROOT_SI,
     TAO_ROOT_SS,
+    TAO_ROOT_ANY_OP_CH,
+    TAO_ROOT_ANY_OP_CS,
 
     // emitting sequences
     TAO_SEQUENCE_CH,
     TAO_SEQUENCE_CI,
     TAO_SEQUENCE_CS,
+    TAO_SEQUENCE_ANY_OP_CH,
+    TAO_SEQUENCE_ANY_OP_CS,
 
     // emitting code for sequence base type
     TAO_SEQUENCE_BASE_CH,
@@ -282,6 +296,8 @@ public:
     TAO_STRUCT_CH,
     TAO_STRUCT_CI,
     TAO_STRUCT_CS,
+    TAO_STRUCT_ANY_OP_CH,
+    TAO_STRUCT_ANY_OP_CS,
 
     // emitting code for typedefs
     TAO_TYPEDEF_CH,
@@ -290,11 +306,15 @@ public:
     TAO_TYPEDEF_SH,
     TAO_TYPEDEF_SI,
     TAO_TYPEDEF_SS,
+    TAO_TYPEDEF_ANY_OP_CH,
+    TAO_TYPEDEF_ANY_OP_CS,
 
     // emitting code for unions
     TAO_UNION_CH,
     TAO_UNION_CI,
     TAO_UNION_CS,
+    TAO_UNION_ANY_OP_CH,
+    TAO_UNION_ANY_OP_CS,
 
     // emitting code for the discriminant
     TAO_UNION_DISCTYPEDEFN_CH,
@@ -336,45 +356,48 @@ public:
   // Factory that makes the right visitor based on the contex. This
   // delegates the task to its factory data member
 
-  be_state *make_state (void);
-  // factory method returning appropriate subclass of the be_state object
-  // based on the current code generation state
-
   int gen_cplusplus_mapping (void);
   // generate the C++ mapping for CORBA IDL
 
-  int client_header (const char *fname);
+  int start_client_header (const char *fname);
   // set the client header stream
+
+  int start_client_inline (const char *fname);
+  // set the client inline stream
+
+  int start_client_stubs (const char *fname);
+  // set the client stub stream
+
+  int start_server_header (const char *fname);
+  // set the server header stream
+
+  int start_server_inline (const char *fname);
+  // set the server inline stream
+
+  int start_server_skeletons (const char *fname);
+  // set the server skeletons stream
+
+  int end_client_header (void);
+  // generate code at the end such as the <<= and >>= operators alongwith the
+  // ending #endif statement
+
+  int end_server_header (void);
+  // put a last #endif in the server header
 
   TAO_OutStream *client_header (void);
   // get the client header stream
 
-  int client_stubs (const char *fname);
-  // set the client stub stream
-
   TAO_OutStream *client_stubs (void);
   // get the client stubs stream
-
-  int client_inline (const char *fname);
-  // set the client inline stream
 
   TAO_OutStream *client_inline (void);
   // get the client inline stream
 
-  int server_header (const char *fname);
-  // set the server header stream
-
   TAO_OutStream *server_header (void);
   // get the server header stream
 
-  int server_skeletons (const char *fname);
-  // set the server skeletons stream
-
   TAO_OutStream *server_skeletons (void);
   // get the server skeletons stream
-
-  int server_inline (const char *fname);
-  // set the server inline stream
 
   TAO_OutStream *server_inline (void);
   // get the server inline stream
@@ -387,24 +410,6 @@ public:
 
   void visitor_factory (TAO_Visitor_Factory *);
   // set the visitor factory  object
-
-  int end_client_header (void);
-  // put a last #endif in the client header
-
-  int end_server_header (void);
-  // put a last #endif in the server header
-
-  void push (CG_STATE s);
-  // set the code generation state
-
-  void pop (void);
-  // out of the current state
-
-  void reset (void);
-  // reset the stack to 1
-
-  CG_STATE state (void);
-  // return the current state
 
   void node (be_decl *n);
   // pass info
@@ -437,20 +442,12 @@ private:
   TAO_OutStream *curr_os_;
   // currently used out stream
 
-  CG_STATE *state_;
-  // code generation state stack
-
-  int top_;
-  // top of state stack
-
-  int size_;
-  // size of allocated stack
-
   be_decl *node_;
   // save current node in this
 
   TAO_Visitor_Factory *visitor_factory_;
   // visitor factory object
+
 };
 
 typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;

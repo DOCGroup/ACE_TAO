@@ -108,16 +108,6 @@ FILES = tao_idl \
 	be/be_sunsoft \
 	be/be_decl \
 	be/be_scope \
-	be/be_state \
-	be/be_state_array \
-	be/be_state_argument \
-	be/be_state_attribute \
-	be/be_state_exception \
-	be/be_state_operation \
-	be/be_state_sequence \
-	be/be_state_structure \
-	be/be_state_typedef \
-	be/be_state_union \
 	be/be_visitor \
 	be/be_visitor_args \
 	be/be_visitor_attribute \

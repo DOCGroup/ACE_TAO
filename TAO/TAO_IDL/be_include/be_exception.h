@@ -21,24 +21,6 @@ public:
 
   // =code generation
 
-  virtual int gen_client_header (void);
-  // generate client header
-
-  virtual int gen_client_inline (void);
-  // generate client inline
-
-  virtual int gen_client_stubs (void);
-  // generate client stubs
-
-  virtual int gen_server_header (void);
-  // generate server header
-
-  virtual int gen_server_inline (void);
-  // generate server inline
-
-  virtual int gen_server_skeletons (void);
-  // generate server skeletons
-
   virtual int gen_typecode (void);
   // generate the typecode
 

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_attribute.h
 //
@@ -14,9 +14,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_ATTRIBUTE_H)
@@ -36,24 +36,6 @@ public:
 
   be_attribute (idl_bool ro, AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p);
   // constructor
-
-  virtual int gen_client_header (void);
-  // generate client header for the attribute
-
-  virtual int gen_client_stubs (void);
-  // generate client side stubs for the attribute
-
-  virtual int gen_server_header (void);
-  // generate server header for the attribute
-
-  virtual int gen_server_skeletons (void);
-  // generate server skeletons for the attribute
-
-  virtual int gen_client_inline (void);
-  // Generates the client-side inline for the attribute
-
-  virtual int gen_server_inline (void);
-  // Generates the server-side inlines for the attribute
 
   // Visiting
   virtual int accept (be_visitor *visitor);

@@ -73,6 +73,21 @@ be_visitor_context::~be_visitor_context (void)
 //= helpers
 
 void
+be_visitor_context::reset (void)
+{
+  this->state_ = TAO_CodeGen::TAO_INITIAL;
+  this->os_ = 0;
+  this->scope_ = 0;
+  this->node_ = 0;
+  this->alias_ = 0;
+  this->tdef_ = 0;
+  this->attr_ = 0;
+  this->exception_ = 0;
+  this->comma_ = 0;
+
+}
+
+void
 be_visitor_context::stream (TAO_OutStream *os)
 {
   this->os_ = os;
