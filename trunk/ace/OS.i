@@ -377,6 +377,15 @@ ACE_Time_Value::usec (long usec)
   this->tv_.tv_usec = usec;
 }
 
+// Initializes the ACE_Time_Value object from another ACE_Time_Value
+
+ACE_INLINE
+ACE_Time_Value::ACE_Time_Value (const ACE_Time_Value &tv)
+  : tv_ (tv.tv_)
+{
+  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
+}
+
 ACE_INLINE ACE_Time_Value &
 ACE_Time_Value::operator *= (double d)
 {
@@ -459,15 +468,6 @@ ACE_Time_Value::ACE_Time_Value (const timespec_t &tv)
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
-}
-
-// Initializes the ACE_Time_Value object from another ACE_Time_Value
-
-ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (const ACE_Time_Value &tv)
-  : tv_ (tv.tv_)
-{
-  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
 }
 
 // True if tv1 < tv2.
