@@ -1,3 +1,9 @@
+Tue Jan 25 21:05:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Reactor_Registration_Test.cpp:
+
+	Revoked earlier change because it's erroneous:-(
+
 Tue Jan 25 19:41:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
