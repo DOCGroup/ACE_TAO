@@ -35,9 +35,7 @@ suppress umr _lwp_in_syscall; _thrp_suspend
 #### These look like benign UMRs in the threads library.
 ####
 suppress umr __sigprocmask; _thrp_exit; _t_cancel; _thr_exit_common
-suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age; thr_yield
-suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age; _lwp_start
-suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age; _qswtch
+suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age
 
 ####
 #### With Solaris 2.5.1, time (and other) functions apparently hold
@@ -155,5 +153,9 @@ suppress mlk malloc; __0OnWuI; operator new(unsigned int); ACE_TSS<*>::make_TSS_
 ####
 suppress miu malloc; _atfork_append; _t0init; _init
 suppress miu malloc; _atfork_append; _ld_concurrency; _t0init; _init
+
+suppress umr *; get_info_by_class; sched_getparam
+suppress umr *; *; get_info_by_class; sched_getparam
+suppress umr get_local_info; order_haddrlist; _get_hostserv_inetnetdir_byname; gethostbyname_r
 
 #### EOF
