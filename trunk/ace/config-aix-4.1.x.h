@@ -18,7 +18,6 @@
 #endif /* msg_accrightslen */
 
 // Compiling for AIX.
-
 #define AIX
 #define _BSD 44
 
@@ -32,6 +31,7 @@
 #define ACE_HAS_TID_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_H_ERRNO
+#define ACE_LACKS_SETSCHED
 #define ACE_LACKS_TCP_H
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_THREAD_STACK_ADDR
@@ -48,10 +48,8 @@
 #define ACE_HAS_TIUSER_H
 #define ACE_TEMPLATES_REQUIRE_PRAGMA
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define ACE_HAS_THREAD_SELF
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CHARPTR_DL
-#define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_SVR4_TIME
 #define ACE_HAS_THREADS
@@ -59,7 +57,6 @@
 #define ACE_HAS_UTIME
 #define ACE_HAS_SELECT_H
 
-// Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
 
 // This environment requires this thing
