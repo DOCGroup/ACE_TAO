@@ -45,7 +45,6 @@ TAO_GIOP_Message_Acceptors::
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("TAO (%P|%t) Illegal message received by server\n"))); 
       return this->send_error (transport);
-      break;
     }
 
   return 0;
