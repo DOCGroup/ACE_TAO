@@ -20,6 +20,9 @@ Tue Feb 10 09:34:27 1998  David L. Levine  <levine@cs.wustl.edu>
         * Timer_Queue_Adapters.{h,i} (activate): added stack and stack_size
           parameters to match declaration in ACE_Task_Base.
 
+        * include/platform_linux{,_lxpthread}.GNU: removed
+          -fno-strict-prototypes from CFLAGS because it is no longer needed.
+
 Mon Feb 09 18:10:37 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * ace/Containers.{cpp,h} : made next () a const member function in
