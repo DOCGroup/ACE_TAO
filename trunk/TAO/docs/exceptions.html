@@ -12,7 +12,7 @@ TAO can be use on platforms with/without native exception support.
 However, there are certain guidelines that need to be followed in
 order for it to work on both platforms.
 
-<h3>basics</h3>
+<h3>Basics</h3>
 
 Refer to <code>$TAO_ROOT/tao/try_macros.h</code> for detail
 definition of macros discussed here.
@@ -20,7 +20,13 @@ definition of macros discussed here.
 <ul>
   <li>Use <code>TAO_THROW</code>, <code>TAO_THROW_ENV</code>,
       <code>TAO_THROW_RETURN</code>, <code>TAO_THROW_ENV_RETURN</code>
-      to throw exceptions.<p>
+      to throw exceptions.  <code>TAO_THROW</code> and
+      <code>TAO_THROW_RETURN</code> assume that the name of the
+      <code>CORBA_Environment</code> variable used to pass back the
+      exception is called <code>_env</code>.  Use
+      <code>TAO_THROW_ENV</code> and <code>TAO_THROW_ENV_RETURN</code>
+      to pass back thru the <code>CORBA_Environment</code> variable
+      specified.<p>
 
   <li>Use <code>TAO_TRY</code>, <code>TAO_CHECK_ENV</code>,
       <code>TAO_CATCH</code>, <code>TAO_CATCHALL</code>, and
@@ -52,7 +58,14 @@ definition of macros discussed here.
       these programs move to platforms that support native exceptions,
       they stop working.<p>
 
-  <li><code>TAO_TRY</code> declares a label.  To avoid defining the
+  <li><code>TAO_TRY</code> defines a new
+      <code>CORBA_Environment</code> called TAO_TRY_ENV and use it to
+      pass down the functions it guards against.  If you want to reuse
+      the <code>CORBA_Environment</code> that's alreday defined in the
+      scope <code>TAO_TRY</code> resides, you can use
+      <code>TAO_TRY_VAR</code> to achieve that.<p>
+
+  <li><code>TAO_TRY</code> also declares a label.  To avoid defining the
       same label multiple times within a function, use
       <code>TAO_TRY_EX</code>, <code>TAO_CHECK_ENV_EX</code> with
       different labels for different try blocks instead.  For
