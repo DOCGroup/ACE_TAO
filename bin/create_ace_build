@@ -1,11 +1,14 @@
-#! /bin/sh -- # perl
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
 # $Id$
 #
 # Creates an ACE build tree in directory "build/<build name>" below the current
-# directory, which must be a ACE "top level" directory (such as $WRAPPER_ROOT).
-# The build tree directory structure mirrors that of the ACE top level
-# directory structure, except that instead of containing any plain files,
-# it contains only symlinks to the files in the ACE top level structure.
+# directory, which must be an ACE "top level" directory (such as
+# $WRAPPER_ROOT).  The build tree directory structure mirrors that of the ACE
+# top level directory structure, except that instead of containing any plain
+# files, it contains only symlinks to the files in the ACE top level structure.
 #
 # This program has a similar purpose to "clone", but in addition to
 # only creating symlinks (clone creates hard links, by default), this
@@ -26,12 +29,9 @@
 # If the <build name> starts with "build/", that part will be removed
 # from it.
 #
-# The first line above and the following one let this script run without
-# specifying the full path to perl, as long as it is in the user's PATH.
+# The first three lines above let this script run without specifying the
+# full path to perl, as long as it is in the user's PATH.
 # Taken from perlrun man page.
-
-eval 'exec perl -S $0 ${1+"$@"}'
-    if 0;
 
 $usage = "usage: $0 -? | [-d <directory mode>] [-v] <build name>\n";
 $directory_mode = 042755;   #### fine on Suns, but maybe not all Unix platforms
@@ -73,13 +73,13 @@ $build = "build/$build";
     die "$0:  must be in an ACE top level (WRAPPER_ROOT) directory!\n";
 
 ####
-#### create build directories, if needed.
+#### Create build directories, if needed.
 ####
 -d 'build'  ||  mkdir 'build', $directory_mode;
 -d "$build"  ||  mkdir "$build", $directory_mode;
 
 ####
-#### get all ACE plain file and directory names
+#### Get all ACE plain file and directory names.
 ####
 @files = ( `/usr/bin/find . -name CVS -prune -o -name build -prune -o \\\
     -name '.*obj' -prune -o -name Templates.DB -prune -o \\\
@@ -89,7 +89,7 @@ $build = "build/$build";
     -print` );
 
 ####
-#### create directories and symlinks to files
+#### Create directories and symlinks to files.
 ####
 foreach $file ( @files ) {
     chop $file;          #### remove trailing newline (from find command above)
@@ -113,7 +113,7 @@ foreach $file ( @files ) {
 }
 
 ####
-#### create symlink to ChangeLog symlink
+#### If this is for an ACE top-level directory, create ChangeLog symlink.
 ####
 unless ( -e "$build/ChangeLog" ) {
     symlink '../../ChangeLog', "$build/ChangeLog"  ||
@@ -121,7 +121,7 @@ unless ( -e "$build/ChangeLog" ) {
 }
 
 ####
-#### done: print message
+#### Done: print message.
 ####
 print "\nCompleted creation of $build/.\n";
 
