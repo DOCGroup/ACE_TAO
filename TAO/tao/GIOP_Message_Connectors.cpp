@@ -9,6 +9,7 @@
 #include "tao/operation_details.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/target_specification.h"
+#include "tao/GIOPC.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -126,14 +127,25 @@ TAO_GIOP_Message_Connectors::validate_version (TAO_GIOP_Message_State *state)
   return 0;
 }
 
+
 int
-TAO_GIOP_Message_Connectors::
-process_client_message (TAO_Transport * /*transport*/,
-                        TAO_ORB_Core * /*orb_core*/,
-                        TAO_InputCDR & /*input*/,
-                        CORBA::Octet /*message_type*/)
+TAO_GIOP_Message_Connectors::process_client_message (TAO_Transport * /*transport*/, 
+                                                     TAO_ORB_Core * /*orb_core*/,
+                                                     TAO_InputCDR & /*input*/,
+                                                     CORBA::Octet /*message_type*/)
 {
    ACE_NOTSUP_RETURN (-1);
+}
+
+
+CORBA::Boolean
+TAO_GIOP_Message_Connectors::write_reply_header (TAO_OutputCDR & /*cdr*/,
+                                                 TAO_Pluggable_Reply_Params & /*params*/,
+                                                 CORBA::Environment &
+                                                 /*ACE_TRY_ENV*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+   ACE_NOTSUP_RETURN (0);
 }
 
 
@@ -327,4 +339,200 @@ TAO_GIOP_Message_Connector_11:: minor_version (void)
 {
   // Any harm in hardcoding??
   return (CORBA::Octet) 1;
+}
+
+///////////////////////////////////////////////////////////////////
+// Methods for TAO_GIOP_Message_Connector_12
+//////////////////////////////////////////////////////////////////
+
+CORBA::Boolean
+TAO_GIOP_Message_Connector_12::
+  write_request_header (const TAO_Operation_Details &opdetails,
+                        TAO_Target_Specification &spec,
+                        TAO_OutputCDR &msg)
+{
+  // First the request id
+  msg << opdetails.request_id ();
+
+  const CORBA::Octet response_flags = opdetails.response_flags ();
+  
+  // Here are the Octet values for different policies
+  // '00000000' for SYNC_WITH_TRANSPORT & SYNC_NONE
+  // '00000001' for SYNC_WITH_SERVER
+  // '00000011' for SYNC_WITH_TARGET
+  // '00000011' for regular two ways, but if they are invoked via a
+  // DII with INV_NO_RESPONSE flag set then we need to send '00000001'
+  //
+  // We have not implemented the policy INV_NO_RESPONSE for DII.
+  if (response_flags == 131)
+    msg << CORBA::Any::from_octet (3);
+  // Second the response flags
+  // Sync scope - ignored by server if request is not oneway.
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
+           response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
+           response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
+           response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
+    // No response required.
+    msg << CORBA::Any::from_octet (0);
+
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
+    // Return before dispatching servant.
+    msg << CORBA::Any::from_octet (1);
+
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
+    // Return after dispatching servant.
+    msg << CORBA::Any::from_octet (3);
+
+  else
+    // Until more flags are defined by the OMG.
+    return 0;
+
+  if (this->marshall_target_spec (spec,
+                                  msg) == 0)
+    return 0;
+  
+  // Write the operation name
+  msg.write_string (opdetails.opname_len (), 
+                    opdetails.opname ());
+  
+  // Write the service context list
+  msg << opdetails.service_info ();
+
+  // We need to align the pointer
+  if (msg.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
+    return 0;
+
+  return 1;
+}
+
+
+CORBA::Boolean
+TAO_GIOP_Message_Connector_12::
+  write_locate_request_header (CORBA::ULong request_id,
+                               TAO_Target_Specification &spec,
+                               TAO_OutputCDR &msg)
+{
+  // Write the request id
+  msg << request_id;
+  
+  // Write the target address
+  if (this->marshall_target_spec (spec,
+                                  msg) == 0)
+    return 0;
+
+  // We need to align the pointer
+  if (msg.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
+    return 0;
+
+  // Return success
+  return 1;
+}
+
+CORBA::Octet
+TAO_GIOP_Message_Connector_12:: major_version (void)
+{
+  // Any harm in hardcoding??
+  return (CORBA::Octet) 1;
+}
+
+CORBA::Octet
+TAO_GIOP_Message_Connector_12:: minor_version (void)
+{
+  // Any harm in hardcoding??
+  return (CORBA::Octet) 2;
+}
+
+
+CORBA::Boolean
+TAO_GIOP_Message_Connector_12::
+  marshall_target_spec (TAO_Target_Specification &spec,
+                        TAO_OutputCDR &msg)
+{
+  switch (spec.specifier ())
+    {
+    case TAO_Target_Specification::Key_Addr:
+      {
+        // As this is a union send in the discriminant first
+        msg << GIOP::KeyAddr;
+        
+        // Get the object key
+        const TAO_ObjectKey *key = spec.object_key ();
+        if (key)
+          {
+            // Marshall in the object key
+            msg << *key;
+          }
+        else
+          {
+            if (TAO_debug_level)
+              ACE_DEBUG ((LM_DEBUG,
+                          ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+            return 0;
+          }
+        break;
+      }
+    case TAO_Target_Specification::Profile_Addr:
+      {
+        // As this is a union send in the discriminant first
+        msg << GIOP::ProfileAddr;
+        
+        // Get the profile
+        const IOP::TaggedProfile *pfile = spec.profile ();
+        
+        if (pfile)
+          {
+            // Marshall in the object key
+            msg << *pfile;
+          }
+        else
+          {
+            if (TAO_debug_level)
+              ACE_DEBUG ((LM_DEBUG,
+                          ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+            return 0;
+          }
+        break;
+      }
+    case TAO_Target_Specification::Reference_Addr:
+      {
+        // As this is a union send in the discriminant first
+        msg << GIOP::ReferenceAddr;
+        
+        // Get the IOR
+        IOP::IOR *ior;
+        CORBA::ULong index = spec.iop_ior (ior);
+        
+        if (ior)
+          {
+            // This is a struct IORAddressingInfo. So, marshall each
+            // member of the struct one after another in the order
+            // defined. 
+            msg << index;
+            msg << *ior;
+          }
+        else
+          {
+            if (TAO_debug_level)
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+            return 0;
+          }
+        break;
+      }
+    default:
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+      return 0;
+    }
+    
+  return 1;
+}
+
+int
+TAO_GIOP_Message_Connector_12::
+parse_reply (TAO_Message_State_Factory & /*mesg_state*/,
+             TAO_Pluggable_Reply_Params & /*params*/)
+{
+  return 0;
 }

@@ -50,6 +50,25 @@ TAO_GIOP_Message_Acceptors::
   return 0;
 }
 
+CORBA::Boolean
+TAO_GIOP_Message_Acceptors::write_reply_header (TAO_OutputCDR &output,
+                                                TAO_Pluggable_Reply_Params &params,
+                                                CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Write the GIOP header first
+  this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
+                               output);
+
+  // Write the reply header
+  this->accept_state_->write_reply_header (output,
+                                           params,
+                                           ACE_TRY_ENV);
+  
+  return 0;
+}
+
+
 int
 TAO_GIOP_Message_Acceptors::
   process_client_request (TAO_Transport *transport,
@@ -157,12 +176,17 @@ TAO_GIOP_Message_Acceptors::
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   ACE_CATCH (PortableServer::ForwardRequest, forward_request)
     {
+      TAO_Pluggable_Reply_Params reply_params;
+      reply_params.request_id_ = request_id;
+      reply_params.reply_status_ = TAO_GIOP_LOCATION_FORWARD;
+      reply_params.svc_ctx_.length (0);
+      reply_params.service_context_notowned (&reply_params.svc_ctx_);
+      reply_params.params_ = 0;
+
       // Make the GIOP header and Reply header
-      this->make_reply (request_id,
-                        this->output_);
-
-      this->output_.write_ulong (TAO_GIOP_LOCATION_FORWARD);
-
+      this->write_reply_header (this->output_,
+                                reply_params);
+      
       CORBA::Object_ptr object_ptr =
         forward_request.forward_reference.in();
 
@@ -489,9 +513,14 @@ TAO_GIOP_Message_Acceptors::
                         orb_core->to_iso8859 (),
                         orb_core->to_unicode ());
 
-  // Make the GIOP & reply header. They are version specific.
-  this->make_reply (request_id,
-                    output);
+  TAO_Pluggable_Reply_Params reply_params;
+  reply_params.request_id_ = request_id;
+  reply_params.svc_ctx_.length (0);
+  reply_params.service_context_notowned (&reply_params.svc_ctx_);
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+  reply_params.params_ = 0;
+#endif /*TAO_HAS_MINIMUM_CORBA*/
 
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
@@ -509,9 +538,14 @@ TAO_GIOP_Message_Acceptors::
         extype = CORBA::SYSTEM_EXCEPTION;
 
       // write the reply_status
-      output.write_ulong
-        (TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype));
+      reply_params.reply_status_ = 
+        TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype);
 
+
+      // Make the GIOP & reply header. They are version specific.
+      this->write_reply_header (output,
+                                reply_params);
+      
       // @@ Any way to implement this without interpretive
       //    marshaling???
       x->_tao_encode (output, ACE_TRY_ENV);

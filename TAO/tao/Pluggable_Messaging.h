@@ -23,6 +23,10 @@
 
 #include "tao/Pluggable_Messaging_Utils.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class TAO_Message_State_Factory;
 class TAO_Target_Specification;
 class TAO_Pluggable_Reply_Params;
@@ -110,6 +114,17 @@ public:
   // Start writing the header of a message type stream <msg>. This is
   // influenced by GIOP, which has the protocol header, followed by
   // the message specific header with the message at the end.
+
+  virtual CORBA::Boolean
+  write_reply_header (TAO_OutputCDR &cdr,
+                      TAO_Pluggable_Reply_Params &params,
+                      CORBA::Environment &ACE_TRY_ENV =
+                      TAO_default_environment ())
+     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  // Write the reply header
+  // The reply header is a part of any messaging protocol. The
+  // messaging protocol implementation would implement the way the
+  // reply header is written. 
 
   // @@ Bala: What if the protocol only has message headers and not
   //    'protocol headers'?

@@ -34,26 +34,6 @@ TAO_GIOP_Message_Acceptors::
 }
 
 
-ACE_INLINE CORBA::Boolean
-TAO_GIOP_Message_Acceptors::
-  make_reply (CORBA::ULong request_id,
-              TAO_OutputCDR &output)
-{
-  // Write the GIOP header first
-  this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
-                               output);
-
-  // Write the reply header
-  this->accept_state_->write_reply_header (output,
-                                           request_id);
-
-  return 0;
-
-}
-
-
-
-
 ACE_INLINE void
 TAO_GIOP_Message_Acceptors::
 set_state (CORBA::Octet def_major,

@@ -38,7 +38,6 @@
 
 
 
-
 // Forward Decls
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;

@@ -235,7 +235,7 @@ private:
 
   CORBA::ULong request_id_;
   // Unique identifier for a request
-
+  
   TAO_ObjectKey object_key_;
   // The object key of the destination object.
 

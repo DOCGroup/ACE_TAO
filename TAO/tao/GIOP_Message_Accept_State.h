@@ -20,6 +20,9 @@
 
 #include "tao/GIOP_Message_Headers.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // @@ Bala: do we want to have separate classes for the server side
 //    and client side?  IMHO not, with bi-directional connections the
@@ -45,6 +48,7 @@
 class TAO_GIOP_ServerRequest;
 class TAO_OutputCDR;
 class TAO_GIOP_Locate_Status_Msg;
+class TAO_Pluggable_Reply_Params;
 
 class TAO_GIOP_Message_Accept_State
 {
@@ -61,9 +65,13 @@ public:
   virtual int parse_request_header (TAO_GIOP_ServerRequest &) = 0;
   // Parse the Request Header from the incoming stream. This will do a
   // version specific parsing of the incoming Request header
-
-  virtual CORBA::Boolean write_reply_header (TAO_OutputCDR &output,
-                                             CORBA::ULong request_id) = 0;
+  
+  virtual CORBA::Boolean 
+  write_reply_header (TAO_OutputCDR &output,
+                      TAO_Pluggable_Reply_Params &reply,
+                      CORBA::Environment &ACE_TRY_ENV =
+                      TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Write the reply header in to <output>
 
   virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &) = 0;
@@ -80,7 +88,12 @@ public:
   virtual CORBA::Octet minor_version (void) = 0;
   // Our versions
 
- private:
+protected:
+  CORBA::Boolean marshal_svc_ctx (TAO_OutputCDR &output,
+                                  TAO_Pluggable_Reply_Params &reply);
+  
+  void marshal_reply_status (TAO_OutputCDR &output,
+                             TAO_Pluggable_Reply_Params &reply);
 };
 
 
@@ -114,7 +127,10 @@ public:
 
 
   virtual CORBA::Boolean  write_reply_header (TAO_OutputCDR &output,
-                                              CORBA::ULong request_id);
+                                              TAO_Pluggable_Reply_Params &reply,
+                                              CORBA::Environment &ACE_TRY_ENV =
+                                              TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Write the version specific reply header in to <output>
 
   virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &);
@@ -132,7 +148,9 @@ public:
   // Our versions
 };
 
-/*****************************************************************/
+
+/*****************************************************************/ 
+
 class TAO_GIOP_Message_Accept_State_11: public TAO_GIOP_Message_Accept_State_10
 {
   // = TITLE
@@ -141,6 +159,50 @@ class TAO_GIOP_Message_Accept_State_11: public TAO_GIOP_Message_Accept_State_10
 public:
   virtual CORBA::Octet minor_version (void);
 };
+
+
+
+/********************************************************************/ 
+class TAO_GIOP_Message_Accept_State_12 : public TAO_GIOP_Message_Accept_State
+{
+  // = TITLE
+  //   TAO_GIOP_Message_Accept_State_12
+  // = DESCRIPTION
+  //   
+  
+public:
+  virtual int parse_request_header (TAO_GIOP_ServerRequest &);
+  // Parse the Request Header from the incoming stream. This will do a
+  // version specific parsing of the incoming Request header
+
+
+  virtual CORBA::Boolean  
+  write_reply_header (TAO_OutputCDR &output,
+                      TAO_Pluggable_Reply_Params &reply_params,
+                      CORBA::Environment &ACE_TRY_ENV =
+                      TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Write the version specific reply header in to <output>
+  
+  virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &);
+  // Parse the Loacte Request Header from the incoming stream. This will do a
+  // version specific parsing of the incoming Request header
+  
+  virtual CORBA::Boolean 
+  write_locate_reply_mesg (TAO_OutputCDR &output,
+                           CORBA::ULong request_id,
+                           TAO_GIOP_Locate_Status_Msg &status);
+  // Writes the locate reply message in to <output>
+  
+  virtual CORBA::Octet major_version (void);
+  virtual CORBA::Octet minor_version (void);
+  // Our versions
+  
+private:
+  CORBA::Boolean unmarshall_target_addr (TAO_GIOP_ServerRequest &request,
+                                         TAO_InputCDR &input);
+};
+
 
 /*****************************************************************/
 

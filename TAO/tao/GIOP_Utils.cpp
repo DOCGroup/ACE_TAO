@@ -79,7 +79,7 @@ TAO_GIOP_Utils::read_buffer (TAO_Transport *transport,
 }
 
 
-TAO_GIOP_Reply_Status_Type
+TAO_Pluggable_Message_Exception_Type
 TAO_GIOP_Utils::
   convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type)
 {
@@ -87,16 +87,16 @@ TAO_GIOP_Utils::
   switch (corba_type)
     {
     case CORBA::NO_EXCEPTION:
-      return TAO_GIOP_NO_EXCEPTION;
+      return TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
 
     case CORBA::SYSTEM_EXCEPTION:
-      return TAO_GIOP_SYSTEM_EXCEPTION;
+      return TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION;
 
     case CORBA::USER_EXCEPTION:
-      return TAO_GIOP_USER_EXCEPTION;
+      return TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION;
 
     default:
       // Don't know what to do here??
-      return TAO_GIOP_SYSTEM_EXCEPTION;
+      return TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION;
     }
 }

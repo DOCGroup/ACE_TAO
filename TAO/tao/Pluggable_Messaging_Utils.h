@@ -57,6 +57,24 @@ public:
   // @@ Carlos: I agree. Please see above.
   CORBA::ULong reply_status_;
   // The reply status
+
+  IOP::ServiceContextList &service_context_notowned (void);
+  void service_context_notowned (IOP::ServiceContextList *svc);
+  // Get and Set methods for the service context list that we dont
+  // own. This is useful for cases  where the application objects own
+  // a service context list and would like to pass on their contents
+  // without a copy.
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+  CORBA::NVList_ptr params_;
+  // NV params.
+  // @@ This is GIOPism. But we need to figure a way to get around
+  // this. Till then. It would be used only for DSI gateways
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+private:
+  IOP::ServiceContextList *service_context_;
+  // The service context list that we don't own. 
 };
 
 // @@ Bala: this is a GIOPism too, there is no such thing as locate
