@@ -87,22 +87,37 @@ int be_visitor_exception_ctor_assign::visit_field (be_field *node)
   return 0;
 }
 
-int be_visitor_exception_ctor_assign::visit_array (be_array *)
+int be_visitor_exception_ctor_assign::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_decl *bd = this->ctx_->node ();
 
   os->indent ();
-  if (this->ctx_->exception ()) // special ctor
+
+  if (ACE_OS::strcmp (bd->flatname (), node->flatname ()))
     {
-      *os << "this->" << bd->local_name () << " = _tao_" << bd->local_name ()
-          << ";\n";
+      // We are typedef'd.
+      *os << node->name ();
     }
   else
     {
-      *os << "this->" << bd->local_name () << " = _tao_excp." << bd->local_name ()
-          << ";\n";
+      // We are anonymous.
+      *os << "_" << bd->local_name ();
     }
+
+  if (this->ctx_->exception ())
+    {
+      // Constructor from member args.
+      *os << "_copy (this->" << bd->local_name ()
+          << ", _tao_" << bd->local_name () << ");\n";
+    }
+  else
+    {
+      // Copy constructor and assignment operator.
+      *os << "_copy (this->" << bd->local_name ()
+          << ", _tao_excp." << bd->local_name () << ");\n";
+    }
+
   return 0;
 }
 

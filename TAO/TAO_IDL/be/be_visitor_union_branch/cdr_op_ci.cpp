@@ -140,9 +140,8 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
       return 0;
 
     case TAO_CodeGen::TAO_CDR_SCOPE:
-      // proceed further
+      // This is done in cdr_op_cs.cpp  and hacked into *.i.
       break;
-
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
