@@ -36,11 +36,6 @@
 	faster.
       </LI>
 
-      <LI>The IDL compiler gets confused with paths in NT, this may be
-	due to my changes to report errors correctly (coryan).
-	<BR>[STATUS] Creating a Win32 workspace to try it.
-      </LI>
-
       <LI>Object references inside structures or sequences are not
 	decoded properly, the problem starts because the interpreter
 	expects a CORBA::Object_ptr, but the real type is a T_var;
@@ -395,6 +390,12 @@
     </CENTER>
 
     <UL>
+      <LI>The IDL compiler gets confused with paths in NT, this may be
+	due to my changes to report errors correctly (coryan).
+	<BR>[STATUS] Creating a Win32 workspace to try it.
+	<BR>[DONE]
+      </LI>
+
       <LI>The current implementation of octet sequences based on
 	message blocks has a few problems, it cannot marshall
 	chains of message blocks properly.
