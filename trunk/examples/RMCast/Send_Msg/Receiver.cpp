@@ -3,7 +3,7 @@
 // cvs-id    : $Id$
 
 #include "ace/OS_NS_string.h"
-#include "protocols/ace/RMCast/Socket.h"
+#include "ace/RMCast/Socket.h"
 
 #include "Protocol.h"
 
