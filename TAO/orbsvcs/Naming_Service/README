@@ -3,9 +3,9 @@
 README:
 ======
         This directory consists of the files implementing the TAO
-NamingService.
+Naming Service.
 
-        The TAO NamingService makes use of IP Multicast to process
+        The TAO Naming Service makes use of IP Multicast to process
 requests to the Naming Service.
 
 To Run:
