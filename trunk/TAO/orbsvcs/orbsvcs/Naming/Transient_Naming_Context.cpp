@@ -235,8 +235,13 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
   // some failures and throw an exception.
   ACE_Auto_Basic_Ptr<HASH_MAP::ITERATOR> temp (hash_iter);
 
+  // Silliness below is required because of broken old g++!!!  E.g.,
+  // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
+  typedef ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>::ITERATOR ITER_DEF;
+  typedef ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>::ENTRY ENTRY_DEF;
+
   // Typedef to the type of BindingIterator servant for ease of use.
-  typedef TAO_Bindings_Iterator<HASH_MAP::ITERATOR, HASH_MAP::ENTRY>
+  typedef TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF>
     ITER_SERVANT;
 
   // A pointer to BindingIterator servant.
@@ -254,7 +259,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
   // Use the hash map iterator to populate <bl> with bindings.
   bl->length (n);
 
-  HASH_MAP::ENTRY *hash_entry;
+  ENTRY_DEF *hash_entry;
 
   for (CORBA::ULong i = 0; i < n; i++)
     {
