@@ -1,3 +1,9 @@
+Mon Jul  5 14:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Removed ACE_LACKS_SYS_MSG_H and added ACE_HAS_TIMEZONE_GETTIMEOFDAY
+          to fix compile errors with Cygwin
+
 Sun Jul  4 20:30:56 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/OS_NS_Thread.cpp: There was some weirdness in the
@@ -24,7 +30,7 @@ Fri Jul  2 10:42:00 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 	  Rick Ohnemus <rick.ohnemus@systemware.com> for this fix, which
  	  closes bugid 1866.
 
-	* ACE-INSTALL.html (HREF): Fixed a typo.  Thanks to 
+	* ACE-INSTALL.html (HREF): Fixed a typo.  Thanks to
 	  Rick Ohnemus <rick.ohnemus@systemware.com> for this fix, which
  	  closes bugid 1867.
 
