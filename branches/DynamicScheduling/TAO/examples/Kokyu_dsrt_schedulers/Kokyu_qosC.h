@@ -15,6 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -33,8 +39,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "RTSchedulerC.h"
-#include "RTCORBAC.h"
+#include "tao/RTScheduling/RTScheduler.h"
+#include "tao/RTCORBA/RTCORBAC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -64,47 +70,52 @@
 
 TAO_NAMESPACE  Kokyu
 {
+  
+  // TAO_IDL - Generated from
+  // be/be_visitor_sequence/sequence_ch.cpp:100
 
 #if !defined (_KOKYU_GUIDTYPE_CH_)
 #define _KOKYU_GUIDTYPE_CH_
   
-  // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:371
-  
   class GuidType;
-  class GuidType_var;
   
-  // *************************************************************
-  // Kokyu::GuidType
-  // *************************************************************
+  typedef
+    TAO_FixedSeq_Var_T<
+        GuidType,
+        CORBA::Octet
+      >
+    GuidType_var;
   
-  class  GuidType : public 
+  typedef
+    TAO_Seq_Out_T<
+        GuidType,
+        GuidType_var,
+        CORBA::Octet
+      >
+    GuidType_out;
   
-  // TAO_IDL - Generated from 
-  // be/be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  class  GuidType
+    : public
+        TAO_Unbounded_Sequence<
+            CORBA::Octet
+          >
   {
   public:
     GuidType (void);
     GuidType (CORBA::ULong max);
     GuidType (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        CORBA::Octet *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        CORBA::Octet* buffer, 
         CORBA::Boolean release = 0
       );
     GuidType (const GuidType &);
     ~GuidType (void);
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
     
     typedef GuidType_var _var_type;
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     GuidType (
         CORBA::ULong length,
@@ -115,83 +126,6 @@ TAO_NAMESPACE  Kokyu
   };
 
 #endif /* end #if !defined */
-
-#if !defined (_KOKYU_GUIDTYPE___VAR_CH_)
-#define _KOKYU_GUIDTYPE___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:549
-  
-  // *************************************************************
-  // class Kokyu::GuidType_var
-  // *************************************************************
-  
-  class  GuidType_var
-  {
-  public:
-    GuidType_var (void);
-    GuidType_var (GuidType *);
-    GuidType_var (const GuidType_var &);
-    
-    // Fixed-size base types only.
-    GuidType_var (const GuidType &);
-    
-    ~GuidType_var (void);
-    
-    GuidType_var &operator= (GuidType *);
-    GuidType_var &operator= (const GuidType_var &);
-    
-    // Fixed-size base types only.
-    GuidType_var &operator= (const GuidType &);
-    
-    GuidType *operator-> (void);
-    const GuidType *operator-> (void) const;
-    
-    operator const GuidType &() const;
-    operator GuidType &();
-    operator GuidType &() const;
-    CORBA::Octet & operator[] (CORBA::ULong index);
-    const CORBA::Octet & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
-    const GuidType &in (void) const;
-    GuidType &inout (void);
-    GuidType *&out (void);
-    GuidType *_retn (void);
-    GuidType *ptr (void) const;
-  
-  private:
-    GuidType *ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_KOKYU_GUIDTYPE___OUT_CH_)
-#define _KOKYU_GUIDTYPE___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:753
-  
-  class  GuidType_out
-  {
-  public:
-    GuidType_out (GuidType *&);
-    GuidType_out (GuidType_var &);
-    GuidType_out (const GuidType_out &);
-    GuidType_out &operator= (const GuidType_out &);
-    GuidType_out &operator= (GuidType *);
-    operator GuidType *&();
-    GuidType *&ptr (void);
-    GuidType *operator-> (void);
-    CORBA::Octet & operator[] (CORBA::ULong index);
-  
-  private:
-    GuidType *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const GuidType_var &);
-  };
-
-#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
   // be/be_visitor_typecode/typecode_decl.cpp:44
@@ -199,9 +133,25 @@ TAO_NAMESPACE  Kokyu
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_GuidType;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_structure/structure_ch.cpp:49
+  // be/be_type.cpp:254
   
-  class Svc_Ctxt_DSRT_QoS_var;
+  struct Svc_Ctxt_DSRT_QoS;
+  
+  typedef
+    TAO_Var_Var_T<
+        Svc_Ctxt_DSRT_QoS
+      >
+    Svc_Ctxt_DSRT_QoS_var;
+  
+  typedef
+    TAO_Out_T<
+        Svc_Ctxt_DSRT_QoS,
+        Svc_Ctxt_DSRT_QoS_var
+      >
+    Svc_Ctxt_DSRT_QoS_out;
+  
+  // TAO_IDL - Generated from
+  // be/be_visitor_structure/structure_ch.cpp:52
   
   struct  Svc_Ctxt_DSRT_QoS
   {
@@ -214,61 +164,6 @@ TAO_NAMESPACE  Kokyu
     RTCORBA::Priority desired_priority;
     TimeBase::TimeT deadline;
     TimeBase::TimeT estimated_initial_execution_time;
-  };
-  
-  // TAO_IDL - Generated from
-  // be/be_structure.cpp:71
-  
-  class  Svc_Ctxt_DSRT_QoS_var
-  {
-  public:
-    Svc_Ctxt_DSRT_QoS_var (void);
-    Svc_Ctxt_DSRT_QoS_var (Svc_Ctxt_DSRT_QoS *);
-    Svc_Ctxt_DSRT_QoS_var (const Svc_Ctxt_DSRT_QoS_var &);
-    ~Svc_Ctxt_DSRT_QoS_var (void);
-    
-    Svc_Ctxt_DSRT_QoS_var &operator= (Svc_Ctxt_DSRT_QoS *);
-    Svc_Ctxt_DSRT_QoS_var &operator= (const Svc_Ctxt_DSRT_QoS_var &);
-    Svc_Ctxt_DSRT_QoS *operator-> (void);
-    const Svc_Ctxt_DSRT_QoS *operator-> (void) const;
-    
-    operator const Svc_Ctxt_DSRT_QoS &() const;
-    operator Svc_Ctxt_DSRT_QoS &();
-    operator Svc_Ctxt_DSRT_QoS &() const;
-    
-    // Variable-size types only.
-    operator Svc_Ctxt_DSRT_QoS *&();
-    
-    // in, inout, out, _retn 
-    const Svc_Ctxt_DSRT_QoS &in (void) const;
-    Svc_Ctxt_DSRT_QoS &inout (void);
-    Svc_Ctxt_DSRT_QoS *&out (void);
-    Svc_Ctxt_DSRT_QoS *_retn (void);
-    Svc_Ctxt_DSRT_QoS *ptr (void) const;
-  
-  private:
-    Svc_Ctxt_DSRT_QoS *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // be/be_structure.cpp:445
-  
-  class  Svc_Ctxt_DSRT_QoS_out
-  {
-  public:
-    Svc_Ctxt_DSRT_QoS_out (Svc_Ctxt_DSRT_QoS *&);
-    Svc_Ctxt_DSRT_QoS_out (Svc_Ctxt_DSRT_QoS_var &);
-    Svc_Ctxt_DSRT_QoS_out (const Svc_Ctxt_DSRT_QoS_out &);
-    Svc_Ctxt_DSRT_QoS_out &operator= (const Svc_Ctxt_DSRT_QoS_out &);
-    Svc_Ctxt_DSRT_QoS_out &operator= (Svc_Ctxt_DSRT_QoS *);
-    operator Svc_Ctxt_DSRT_QoS *&();
-    Svc_Ctxt_DSRT_QoS *&ptr (void);
-    Svc_Ctxt_DSRT_QoS *operator-> (void);
-    
-  private:
-    Svc_Ctxt_DSRT_QoS *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const Svc_Ctxt_DSRT_QoS_var &);
   };
   
   // TAO_IDL - Generated from
@@ -304,7 +199,7 @@ TAO_NAMESPACE_CLOSE // module Kokyu
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ch.cpp:57
+// be/be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_Kokyu_GuidType_H_
 #define _TAO_CDR_OP_Kokyu_GuidType_H_
@@ -321,7 +216,7 @@ TAO_NAMESPACE_CLOSE // module Kokyu
 #endif /* _TAO_CDR_OP_Kokyu_GuidType_H_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ch.cpp:54
+// be/be_visitor_structure/cdr_op_ch.cpp:53
 
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Kokyu::Svc_Ctxt_DSRT_QoS &);
  CORBA::Boolean operator>> (TAO_InputCDR &, Kokyu::Svc_Ctxt_DSRT_QoS &);
@@ -332,7 +227,7 @@ TAO_NAMESPACE_CLOSE // module Kokyu
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1004
+// be/be_codegen.cpp:1059
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_qosC.i"

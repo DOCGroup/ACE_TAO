@@ -15,12 +15,18 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:318
+// be/be_codegen.cpp:351
 
 
 #include "Kokyu_qosC.h"
@@ -34,6 +40,7 @@
 #include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
@@ -42,68 +49,103 @@
 #include "Kokyu_qosC.i"
 #endif /* !defined INLINE */
 
+// TAO_IDL - Generated from 
+// be/be_visitor_sequence/sequence_cs.cpp:72
+
 #if !defined (_KOKYU_GUIDTYPE_CS_)
 #define _KOKYU_GUIDTYPE_CS_
-
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// Kokyu::GuidType
-// *************************************************************
 
 Kokyu::GuidType::GuidType (void)
 {}
 
-Kokyu::GuidType::GuidType (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
+Kokyu::GuidType::GuidType (
+    CORBA::ULong max
+  )
+  : TAO_Unbounded_Sequence<
+        CORBA::Octet
+      >
+    (max)
 {}
 
 Kokyu::GuidType::GuidType (
     CORBA::ULong max,
     CORBA::ULong length,
-    CORBA::Octet *buffer,
+    CORBA::Octet * buffer,
     CORBA::Boolean release
   )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
+  : TAO_Unbounded_Sequence<
+        CORBA::Octet
+      >
+    (max, length, buffer, release)
 {}
 
-Kokyu::GuidType::GuidType (const GuidType &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
+Kokyu::GuidType::GuidType (
+    const GuidType &seq
+  )
+  : TAO_Unbounded_Sequence<
+        CORBA::Octet
+      >
+    (seq)
 {}
 
-Kokyu::GuidType::~GuidType (void) // dtor
+Kokyu::GuidType::~GuidType (void)
 {}
 
-void Kokyu::GuidType::_tao_any_destructor (void *_tao_void_pointer)
+void Kokyu::GuidType::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
 {
-  GuidType *tmp = ACE_static_cast (GuidType*, _tao_void_pointer);
+  GuidType * tmp =
+    ACE_static_cast (
+        GuidType *,
+        _tao_void_pointer
+      );
   delete tmp;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_FixedSeq_Var_T<
+      Kokyu::GuidType,
+      CORBA::Octet
+    >;
+
+template class
+  TAO_Seq_Var_Base_T<
+      Kokyu::GuidType,
+      CORBA::Octet
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      Kokyu::GuidType,
+      Kokyu::GuidType_var,
+      CORBA::Octet
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_FixedSeq_Var_T< \
+      GuidType, \
+      CORBA::Octet \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Var_Base_T< \
+      GuidType, \
+      CORBA::Octet \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      GuidType, \
+      GuidType_var, \
+      CORBA::Octet \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* end #if !defined */
 
@@ -122,11 +164,11 @@ static const CORBA::Long _oc_Kokyu_GuidType[] =
   ACE_NTOHL (0x69645479), 
   ACE_NTOHL (0x70653a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Kokyu/GuidType:1.0
-  9,
+    9,
   ACE_NTOHL (0x47756964), 
   ACE_NTOHL (0x54797065), 
   ACE_NTOHL (0x0),  // name = GuidType
-  CORBA::tk_sequence, // typecode kind
+    CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_octet,
@@ -169,17 +211,17 @@ static const CORBA::Long _oc_Kokyu_Svc_Ctxt_DSRT_QoS[] =
   ACE_NTOHL (0x5352545f), 
   ACE_NTOHL (0x516f533a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Kokyu/Svc_Ctxt_DSRT_QoS:1.0
-  18,
+    18,
   ACE_NTOHL (0x5376635f), 
   ACE_NTOHL (0x43747874), 
   ACE_NTOHL (0x5f445352), 
   ACE_NTOHL (0x545f516f), 
   ACE_NTOHL (0x53000000),  // name = Svc_Ctxt_DSRT_QoS
   6, // member count
-  5,
+    5,
   ACE_NTOHL (0x67756964), 
   ACE_NTOHL (0x0),  // name = guid
-  CORBA::tk_alias, // typecode kind for typedefs
+    CORBA::tk_alias, // typecode kind for typedefs
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
@@ -191,11 +233,11 @@ static const CORBA::Long _oc_Kokyu_Svc_Ctxt_DSRT_QoS[] =
     ACE_NTOHL (0x69645479), 
     ACE_NTOHL (0x70653a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Kokyu/GuidType:1.0
-    9,
+        9,
     ACE_NTOHL (0x47756964), 
     ACE_NTOHL (0x54797065), 
     ACE_NTOHL (0x0),  // name = GuidType
-    CORBA::tk_sequence, // typecode kind
+        CORBA::tk_sequence, // typecode kind
     12, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       CORBA::tk_octet,
@@ -207,13 +249,13 @@ static const CORBA::Long _oc_Kokyu_Svc_Ctxt_DSRT_QoS[] =
   ACE_NTOHL (0x696d706f), 
   ACE_NTOHL (0x7274616e), 
   ACE_NTOHL (0x63650000),  // name = importance
-  CORBA::tk_long,
+    CORBA::tk_long,
 
   12,
   ACE_NTOHL (0x63726974), 
   ACE_NTOHL (0x6963616c), 
   ACE_NTOHL (0x69747900),  // name = criticality
-  CORBA::tk_long,
+    CORBA::tk_long,
 
   17,
   ACE_NTOHL (0x64657369), 
@@ -221,7 +263,7 @@ static const CORBA::Long _oc_Kokyu_Svc_Ctxt_DSRT_QoS[] =
   ACE_NTOHL (0x7072696f), 
   ACE_NTOHL (0x72697479), 
   ACE_NTOHL (0x0),  // name = desired_priority
-  CORBA::tk_alias, // typecode kind for typedefs
+    CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     33,
@@ -234,18 +276,18 @@ static const CORBA::Long _oc_Kokyu_Svc_Ctxt_DSRT_QoS[] =
     ACE_NTOHL (0x72697479), 
     ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
-    9,
+        9,
     ACE_NTOHL (0x5072696f), 
     ACE_NTOHL (0x72697479), 
     ACE_NTOHL (0x0),  // name = Priority
-    CORBA::tk_short,
+        CORBA::tk_short,
 
 
   9,
   ACE_NTOHL (0x64656164), 
   ACE_NTOHL (0x6c696e65), 
   ACE_NTOHL (0x0),  // name = deadline
-  CORBA::tk_alias, // typecode kind for typedefs
+    CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
@@ -257,10 +299,10 @@ static const CORBA::Long _oc_Kokyu_Svc_Ctxt_DSRT_QoS[] =
     ACE_NTOHL (0x2f54696d), 
     ACE_NTOHL (0x65543a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
-    6,
+        6,
     ACE_NTOHL (0x54696d65), 
     ACE_NTOHL (0x54000000),  // name = TimeT
-    CORBA::tk_ulonglong,
+        CORBA::tk_ulonglong,
 
 
   33,
@@ -273,8 +315,24 @@ static const CORBA::Long _oc_Kokyu_Svc_Ctxt_DSRT_QoS[] =
   ACE_NTOHL (0x696f6e5f), 
   ACE_NTOHL (0x74696d65), 
   ACE_NTOHL (0x0),  // name = estimated_initial_execution_time
-  0xffffffff, // indirection
-  0xffffff94, // negative offset (-108)
+    CORBA::tk_alias, // typecode kind for typedefs
+  56, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    31,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x42617365), 
+    ACE_NTOHL (0x2f54696d), 
+    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
+        6,
+    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54000000),  // name = TimeT
+        CORBA::tk_ulonglong,
+
+
 };
 
 static CORBA::TypeCode _tc_TAO_tc_Kokyu_Svc_Ctxt_DSRT_QoS (
@@ -295,13 +353,52 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:67
+// be/be_visitor_structure/structure_cs.cpp:66
 
 void Kokyu::Svc_Ctxt_DSRT_QoS::_tao_any_destructor (void *_tao_void_pointer)
 {
   Svc_Ctxt_DSRT_QoS *tmp = ACE_static_cast (Svc_Ctxt_DSRT_QoS*, _tao_void_pointer);
   delete tmp;
 }
+
+// TAO_IDL - Generated from
+// be/be_type.cpp:297
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_Var_Var_T<
+      Kokyu::Svc_Ctxt_DSRT_QoS
+    >;
+
+template class TAO_Var_Base_T<
+    Kokyu::Svc_Ctxt_DSRT_QoS
+  >;
+
+template class
+  TAO_Out_T<
+      Kokyu::Svc_Ctxt_DSRT_QoS,
+      Kokyu::Svc_Ctxt_DSRT_QoS_var
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_Var_Var_T< \
+      Kokyu::Svc_Ctxt_DSRT_QoS \
+    >
+
+#pragma instantiate TAO_Var_Base_T<
+    Kokyu::Svc_Ctxt_DSRT_QoS
+  >
+
+# pragma instantiate \
+  TAO_Out_T< \
+      Kokyu::Svc_Ctxt_DSRT_QoS, \
+      Kokyu::Svc_Ctxt_DSRT_QoS_var \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from 
 // be/be_visitor_sequence/any_op_cs.cpp:54
@@ -312,16 +409,12 @@ void operator<<= (
     const Kokyu::GuidType &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          Kokyu::_tc_GuidType,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<Kokyu::GuidType>::insert_copy (
+      _tao_any,
+      Kokyu::GuidType::_tao_any_destructor,
+      Kokyu::_tc_GuidType,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -330,19 +423,12 @@ void operator<<= (
     Kokyu::GuidType *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          Kokyu::_tc_GuidType,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          Kokyu::GuidType::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<Kokyu::GuidType>::insert (
+      _tao_any,
+      Kokyu::GuidType::_tao_any_destructor,
+      Kokyu::_tc_GuidType,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -351,8 +437,8 @@ CORBA::Boolean operator>>= (
     Kokyu::GuidType *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast(
-      const Kokyu::GuidType*&,
+  return _tao_any >>= ACE_const_cast (
+      const Kokyu::GuidType *&,
       _tao_elem
     );
 }
@@ -363,72 +449,21 @@ CORBA::Boolean operator>>= (
     const Kokyu::GuidType *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean result =
-      type->equivalent (
-          Kokyu::_tc_GuidType
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (!result)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast(
-            const Kokyu::GuidType*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        Kokyu::GuidType *tmp = 0;
-        ACE_NEW_RETURN (
-            tmp,
-            Kokyu::GuidType,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                Kokyu::_tc_GuidType,
-                1,
-                ACE_static_cast (void *, tmp),
-                Kokyu::GuidType::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<Kokyu::GuidType>::extract (
+        _tao_any,
+        Kokyu::GuidType::_tao_any_destructor,
+        Kokyu::_tc_GuidType,
+        _tao_elem
+      );
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<Kokyu::GuidType>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<Kokyu::GuidType>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from 
 // be/be_visitor_structure/any_op_cs.cpp:54
@@ -439,16 +474,12 @@ void operator<<= (
     const Kokyu::Svc_Ctxt_DSRT_QoS &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          Kokyu::_tc_Svc_Ctxt_DSRT_QoS,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<Kokyu::Svc_Ctxt_DSRT_QoS>::insert_copy (
+      _tao_any,
+      Kokyu::Svc_Ctxt_DSRT_QoS::_tao_any_destructor,
+      Kokyu::_tc_Svc_Ctxt_DSRT_QoS,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -457,19 +488,12 @@ void operator<<= (
     Kokyu::Svc_Ctxt_DSRT_QoS *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          Kokyu::_tc_Svc_Ctxt_DSRT_QoS,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          Kokyu::Svc_Ctxt_DSRT_QoS::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<Kokyu::Svc_Ctxt_DSRT_QoS>::insert (
+      _tao_any,
+      Kokyu::Svc_Ctxt_DSRT_QoS::_tao_any_destructor,
+      Kokyu::_tc_Svc_Ctxt_DSRT_QoS,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -490,75 +514,27 @@ CORBA::Boolean operator>>= (
     const Kokyu::Svc_Ctxt_DSRT_QoS *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean result =
-      type->equivalent (
-          Kokyu::_tc_Svc_Ctxt_DSRT_QoS
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (result == 0)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast (
-            const Kokyu::Svc_Ctxt_DSRT_QoS*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        Kokyu::Svc_Ctxt_DSRT_QoS *tmp;
-        ACE_NEW_RETURN (
-            tmp,
-            Kokyu::Svc_Ctxt_DSRT_QoS,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                Kokyu::_tc_Svc_Ctxt_DSRT_QoS,
-                1,
-                ACE_static_cast (void *, tmp),
-                Kokyu::Svc_Ctxt_DSRT_QoS::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<Kokyu::Svc_Ctxt_DSRT_QoS>::extract (
+        _tao_any,
+        Kokyu::Svc_Ctxt_DSRT_QoS::_tao_any_destructor,
+        Kokyu::_tc_Svc_Ctxt_DSRT_QoS,
+        _tao_elem
+      );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<Kokyu::Svc_Ctxt_DSRT_QoS>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<Kokyu::Svc_Ctxt_DSRT_QoS>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:103
+// be/be_visitor_sequence/cdr_op_cs.cpp:105
+
+#if !defined _TAO_CDR_OP_Kokyu_GuidType_CPP_
+#define _TAO_CDR_OP_Kokyu_GuidType_CPP_
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -640,8 +616,11 @@ CORBA::Boolean operator>> (
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+    
     }
   
   return 0;
 }
+
+#endif /* _TAO_CDR_OP_Kokyu_GuidType_CPP_ */
 
