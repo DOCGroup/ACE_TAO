@@ -103,6 +103,24 @@ be_visitor_arg_tmplinst::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_arg_tmplinst::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_arg_tmplinst::visit_component_fwd (be_component_fwd *node)
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_arg_tmplinst::visit_home (be_home *node)
+{
+  return this->visit_interface (node);
+}
+
+int
 be_visitor_arg_tmplinst::visit_valuetype (be_valuetype *node)
 {
   if (this->this_mode_and_dir_generated (node))
