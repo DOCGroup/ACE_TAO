@@ -23,7 +23,7 @@ NOTES: The IDL_Cubit server used to run a Naming Service so the client
 server:
 -------
 
-% server [-ORBhost <serverhost>] [-ORBport <portnum>]
+% server [-ORBendpoint <endpoint>]
          [-d] [-o <ior_output_file>]
 
 Options:
@@ -36,7 +36,7 @@ Options:
 When the server is started and you have used the -d flag, you should
 see as the first line of output something that looks like the follow:
 
-        iiop:1.0//swarm:10015/Persistent/886013035/850128/RootPOA/RootPOA_is_BAD/factory
+        iiop://1.0@swarm:10015/Persistent/886013035/850128/RootPOA/RootPOA_is_BAD/factory
         (-ORBobjrefstyle url)
 or
         IOR:000000000000001649444c3a43756269745...
@@ -105,15 +105,15 @@ Sample Run, Using files to communicate IOR:
 
 1. Start the server.
 
-% server -ORBport 20000 -ORBobjrefstyle url -o theior
+% server -ORBendpoint iiop://tango:20000 -ORBobjrefstyle url -o theior
 
         IDL_Cubit:SERVER
 
-The IOR is: <iiop:1.0//tango:20000/Persistent/887665222/647179/RootPOA/RootPOA_is_BAD/factory\00\00>
+The IOR is: <iiop://1.0@tango:20000/Persistent/887665222/647179/RootPOA/RootPOA_is_BAD/factory\00\00>
 
 2. Start the client.
 
-%client -ORBport 19998 -f theior
+%client -f theior
 
          IDL_Cubit: client
 
@@ -129,10 +129,10 @@ Sample Run, passing the IOR on the command line, on VxWorks:
     -> spa main, "-ORBobjrefstyle", "url"
             IDL_Cubit: server
 
-    The IOR is: <iiop:1.0//samba:1028/U/child_poa/factory>
+    The IOR is: <iiop://1.0@samba:1028/U/child_poa/factory>
 
     -> ld < client
-    -> spa main, "-k", "iiop:1.0//samba:1028/U/child_poa/factory"
+    -> spa main, "-k", "iiop://1.0@samba:1028/U/child_poa/factory"
     Enter <number> to select, anything else to stop: 2
 
 The IOR provided to the client is the IOR that the server printed out.
