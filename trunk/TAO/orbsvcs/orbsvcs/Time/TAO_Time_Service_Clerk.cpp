@@ -11,7 +11,6 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
   : server_ (servers),
     helper_ (this)
 {
-
   // Schedule the helper to be invoked by the reactor
   // periodically.
 
@@ -121,7 +120,8 @@ TAO_Time_Service_Clerk::get_time (void)
   // elapsed since last updation was done.
   CORBA::ULongLong time;
 
-  time = (CORBA::ULongLong) ACE_OS::gettimeofday ().sec ()
+  time = (CORBA::ULongLong) (ACE_OS::gettimeofday ().sec () * 10000000
+                             + ACE_OS::gettimeofday ().usec () * 10)
     - this->update_timestamp_ + this->time_;
 
   return time;
