@@ -174,7 +174,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   << be_nl << be_nl;
 
   *os << full_skel_name << " *_tao_impl =" << be_idt_nl
-      << "reinterpret_cast<" << full_skel_name
+      << "static_cast<" << full_skel_name
       << " *> (_tao_servant);" << be_uidt_nl << be_nl;
 
   *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
@@ -234,7 +234,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << full_skel_name << " *_tao_impl =" << be_idt_nl
-      << "reinterpret_cast<" << full_skel_name
+      << "static_cast<" << full_skel_name
       << " *> (_tao_servant);" << be_uidt_nl << be_nl;
 
   *os << "CORBA::Boolean _tao_retval =" << be_idt_nl
@@ -286,7 +286,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_THROW (CORBA::INTF_REPOS ());" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
   *os << full_skel_name << " *_tao_impl =" << be_idt_nl
-      << "reinterpret_cast<" << full_skel_name
+      << "static_cast<" << full_skel_name
       << " *> (_tao_servant);" << be_uidt_nl << be_nl;
 
   *os << "CORBA::InterfaceDef_ptr _tao_retval = " << be_idt_nl
@@ -323,7 +323,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << full_skel_name << " *_tao_impl =" << be_idt_nl
-      << "reinterpret_cast<" << full_skel_name
+      << "static_cast<" << full_skel_name
       << " *> (_tao_object_reference);" << be_uidt_nl << be_nl;
 
   *os << "CORBA::Object_var _tao_retval =" << be_idt_nl
