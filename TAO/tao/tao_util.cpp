@@ -125,6 +125,8 @@ TAO_ORB_Manager::run (CORBA::Environment &env)
                            CORBA::B_TRUE,
                            env);
   TAO_CHECK_ENV_RETURN (env, 1);
+
+  return 0;
 }
 
 CORBA::ORB_var
@@ -132,4 +134,3 @@ TAO_ORB_Manager::orb (void)
 {
   return this->orb_;
 }
-
