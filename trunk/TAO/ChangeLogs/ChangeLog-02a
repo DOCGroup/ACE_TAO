@@ -13,7 +13,7 @@ Mon Aug 14 12:32:22 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* orbsvcs/Naming_Service/Naming_Service.h: 
 	* orbsvcs/Naming_Service/Naming_Service.cpp: 
 	  Corrected some misplaced braces.
-	  
+
 Mon Aug 14 10:44:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ChangeLog: 
