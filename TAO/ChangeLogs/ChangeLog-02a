@@ -1,10 +1,19 @@
+Mon Jun  5 15:08:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * utils/nslist/nsadd.cpp:
+          Fixed warnings under gcc 2.95.2
+
+        * orbsvcs/ImplRepo_Service/Makefile:
+          The Implementation Repository was not compiling in several
+          configurations that offer no problems for it.
+
 Mon Jun  5 14:27:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* utils/nslist/Makefile: 
-	* utils/nslist/nsadd.cpp:
-	* utils/nslist/nsdel.cpp:
-	  New programs to add and remove IORs from the Naming
-	  Service.
+        * utils/nslist/Makefile:
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nsdel.cpp:
+          New programs to add and remove IORs from the Naming
+          Service.
 
 Mon Jun 05 11:53:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
