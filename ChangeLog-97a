@@ -1,3 +1,16 @@
+Fri May  9 00:00:21 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* apps/JAWS/server/HTTP_Request.{h,cpp}: Added a uritopath
+	  translation method, so that CGI location can be computed as it
+	  is searched.  Added methods to access the parsed headers.
+
+	* apps/JAWS/server/HTTP_Response.{h,cpp}: Flushed out the
+	  implementation of cgi_response () method.  If all goes well, it
+	  should be able to execute a CGI program.  I don't set the IO
+	  handles to point at the socket handle yet.
+
+	* apps/JAWS/server/README: Updated description of JAWS behavior.
+
 Thu May  8 20:55:30 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Module.cpp: Changed the implementation of the close_i()
