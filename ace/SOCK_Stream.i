@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// SOCK_Stream.i
-
 #include "ace/SOCK_Stream.h"
 
 ASYS_INLINE
@@ -111,7 +109,7 @@ ACE_SOCK_Stream::send_n (const void *buf,
 }
 
 ASYS_INLINE ssize_t
-ACE_SOCK_Stream::sendv_n (iovec iov[],
+ACE_SOCK_Stream::sendv_n (const iovec iov[],
                           size_t n,
                           const ACE_Time_Value *timeout) const
 {
