@@ -1,3 +1,17 @@
+Sat Sep 18 12:00:28 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Block.h: Changed all the ACE_Message_Block constructors
+	  so that the priority parameter defaults to
+ 	  ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY, rather than 0.  Thanks to
+ 	  Detlef Becker for this suggestion.
+
+	* ace/OS.h: Added a new macro called
+ 	  ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY, which defaults to 0 but
+ 	  which can be overridden in a config.h file to a different value
+ 	  so it's possible to transparently choose default priorities that
+ 	  are > 0.  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
+ 	  for this suggestion.
+
 Fri Sep 17 19:49:15 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Hash_Map_Manager_Test.cpp: Repositioned template
