@@ -11,6 +11,7 @@ project : orbsvcslib, core, naming, iormanip, portablegroup, messaging, ami {
   avoids      += minimum_corba
 
   IDL_Files {
+    idlflags += -GC
     CosLoadBalancing.idl
     LB_ORT.idl
   }

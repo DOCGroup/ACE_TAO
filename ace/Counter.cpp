@@ -29,6 +29,7 @@ ACE_Object_Counter::increment(void)
   Object_ID oid;
   oid.id = m_counter++;
   oid.tid = ACE_OS::thr_self();
+  oid.pid = ACE_OS::getpid();
   return oid;
 }
 
