@@ -468,6 +468,8 @@ be_array::gen_var_impl (void)
   *ci << fname << "::out (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
+  *ci << this->name () << "_free (this->ptr_);" << be_nl;
+  *ci << "this->ptr_ = (" << this->name () << "_slice *)0;" << be_nl;
   *ci << "return this->ptr_;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -477,7 +479,9 @@ be_array::gen_var_impl (void)
   *ci << fname << "::_retn (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
+  *ci << this->name () << "_slice *tmp = this->ptr_;" << be_nl;
+  *ci << "this->ptr_ = (" << this->name () << "_slice *)0;" << be_nl;
+  *ci << "return tmp;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
