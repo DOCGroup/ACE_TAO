@@ -134,6 +134,7 @@ TAO_Synch_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *t
 }
 
 // *********************************************************************
+
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
 #if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
@@ -158,8 +159,6 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                                              IOP::ServiceContextList &reply_ctx,
                                              TAO_GIOP_Message_State *message_state)
 {
-  // this->reply_received_ = 1;
-
   this->reply_status_ = reply_status;
   this->version_ = version;
   this->message_state_ = message_state;
@@ -200,12 +199,11 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
       break;
     }
 
-  CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       // Call the Reply Handler's skeleton.
-      reply_handler_skel_ (message_state_->cdr,
-                           reply_handler_,
+      reply_handler_skel_ (this->message_state_->cdr,
+                           this->reply_handler_,
                            reply_error,
                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -227,6 +225,95 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
 
 TAO_GIOP_Message_State *
 TAO_Asynch_Reply_Dispatcher::message_state (void)
+{
+  return this->message_state_;
+}
+
+// *********************************************************************
+
+// Constructor.
+TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
+    const CORBA::Request_ptr req
+  )
+    : req_ (req)
+{
+}
+
+// Destructor.
+TAO_DII_Deferred_Reply_Dispatcher::~TAO_DII_Deferred_Reply_Dispatcher (void)
+{
+}
+
+// Dispatch the reply.
+int
+TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
+    CORBA::ULong reply_status,
+    const TAO_GIOP_Version &version,
+    IOP::ServiceContextList &reply_ctx,
+    TAO_GIOP_Message_State *message_state
+  )
+{
+  this->reply_status_ = reply_status;
+  this->version_ = version;
+  this->message_state_ = message_state;
+
+  // Steal the buffer, that way we don't do any unnecesary copies of
+  // this data.
+  CORBA::ULong max = reply_ctx.maximum ();
+  CORBA::ULong len = reply_ctx.length ();
+  IOP::ServiceContext* context_list = reply_ctx.get_buffer (1);
+  this->reply_service_info_.replace (max, len, context_list, 1);
+
+
+  if (TAO_debug_level >= 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n"));
+    }
+
+  CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
+  switch (reply_status)
+    {
+    case TAO_GIOP_NO_EXCEPTION:
+      reply_error = TAO_AMI_REPLY_OK;
+      break;
+    case TAO_GIOP_USER_EXCEPTION:
+      reply_error = TAO_AMI_REPLY_USER_EXCEPTION;
+      break;
+    case TAO_GIOP_SYSTEM_EXCEPTION:
+      reply_error = TAO_AMI_REPLY_SYSTEM_EXCEPTION;
+      break;
+    case TAO_GIOP_LOCATION_FORWARD:
+    default: 
+      reply_error = TAO_AMI_REPLY_NOT_OK;
+      break;
+    }
+
+  ACE_TRY_NEW_ENV
+    {
+      // Call the Request back and send the reply data.
+      this->req_->handle_response (this->message_state_->cdr,
+                                   reply_error,
+                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level >= 4)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "Exception during reply handler");
+    }
+  ACE_ENDTRY;
+
+  // This was dynamically allocated. Now the job is done. Commit
+  // suicide here.
+  delete this;
+
+  return 1;
+}
+
+TAO_GIOP_Message_State *
+TAO_DII_Deferred_Reply_Dispatcher::message_state (void)
 {
   return this->message_state_;
 }

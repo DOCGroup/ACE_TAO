@@ -16,6 +16,7 @@
 #include "tao/GIOP.h"
 #include "tao/NVList.h"
 #include "tao/Invocation.h"
+#include "tao/Asynch_Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/debug.h"
@@ -195,7 +196,10 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 CORBA::ULong
 TAO_Stub::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
+                    guard, 
+                    this->refcount_lock_, 
+                    0);
 
   return this->refcount_++;
 }
@@ -204,7 +208,11 @@ CORBA::ULong
 TAO_Stub::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
+                      mon, 
+                      this->refcount_lock_, 
+                      0);
+
     this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;
@@ -279,8 +287,8 @@ private:
 
 void
 TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
-                             const TAO_Call_Data *info,
-                             void** args)
+                          const TAO_Call_Data *info,
+                          void** args)
 
 {
   ACE_FUNCTION_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_START);
@@ -315,6 +323,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
     {
       TAO_GIOP_Twoway_Invocation call (this, info->opname,
                                        this->orb_core_);
+
       ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
       // We may need to loop through here more than once if we're
@@ -356,7 +365,8 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, 
+                                       CORBA::COMPLETED_MAYBE));
 
           // The only case left is status == TAO_INVOKE_OK, exit the
           // loop.  We cannot retry because at this point we either
@@ -438,6 +448,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
                   // assert (value_size == tc->size());
                   ACE_NEW (*(void **)ptr,
                            CORBA::Octet [pdp->value_size]);
+
                   (void) call.inp_stream ().decode (pdp->tc,
                                                     *(void**)ptr,
                                                     0,
@@ -451,6 +462,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
     {
       TAO_GIOP_Oneway_Invocation call (this, info->opname,
                                        this->orb_core_);
+
       ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
       for (;;)
@@ -458,13 +470,18 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          call.prepare_header (0, ACE_TRY_ENV);
+          call.prepare_header (0, 
+                               ACE_TRY_ENV);
           ACE_CHECK;
 
-          this->put_params (ACE_TRY_ENV, info, call, args);
+          this->put_params (ACE_TRY_ENV, 
+                            info, 
+                            call, 
+                            args);
           ACE_CHECK;
 
           ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
+
           int status = call.invoke (ACE_TRY_ENV);
           ACE_CHECK;
 
@@ -475,7 +492,8 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, 
+                                       CORBA::COMPLETED_MAYBE));
 
           break;
         }
@@ -508,14 +526,23 @@ TAO_Stub::put_params (CORBA::Environment &ACE_TRY_ENV,
 
       if (pdp->mode == PARAM_IN)
         {
-          (void) cdr.encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
+          (void) cdr.encode (pdp->tc, 
+                             ptr, 
+                             0, 
+                             ACE_TRY_ENV);
         }
       else if (pdp->mode == PARAM_INOUT)
         {
           if (pdp->value_size == 0)
-            (void) cdr.encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
+            (void) cdr.encode (pdp->tc, 
+                               ptr, 
+                               0, 
+                               ACE_TRY_ENV);
           else
-            (void) cdr.encode (pdp->tc, *(void**)ptr, 0, ACE_TRY_ENV);
+            (void) cdr.encode (pdp->tc, 
+                               *(void**)ptr, 
+                               0, 
+                               ACE_TRY_ENV);
         }
       ACE_CHECK;
     }
@@ -543,7 +570,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
   // be forwarded.  No standard way now to know.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
-      TAO_GIOP_Locate_Request_Invocation call (this, this->orb_core_);
+      TAO_GIOP_Locate_Request_Invocation call (this, 
+                                               this->orb_core_);
 
       // Simply let these exceptions propagate up
       // (if any of them occurs.)
@@ -558,7 +586,9 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
   if (is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, opname, this->orb_core_);
+      TAO_GIOP_Twoway_Invocation call (this, 
+                                       opname, 
+                                       this->orb_core_);
 
       // Loop as needed for forwarding; see above.
 
@@ -567,15 +597,19 @@ TAO_Stub::do_dynamic_call (const char *opname,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          call.prepare_header (1, ACE_TRY_ENV);
+          call.prepare_header (1, 
+                               ACE_TRY_ENV);
           ACE_CHECK;
 
-          this->put_params (call, args, ACE_TRY_ENV);
+          this->put_params (call, 
+                            args, 
+                            ACE_TRY_ENV);
           ACE_CHECK;
 
           // Make the call ... blocking for the response.
           int status =
-            call.invoke (exceptions, ACE_TRY_ENV);
+            call.invoke (exceptions, 
+                         ACE_TRY_ENV);
           ACE_CHECK;
 
           if (status == TAO_INVOKE_RESTART)
@@ -585,7 +619,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, 
+                                       CORBA::COMPLETED_MAYBE));
 
           // The only case left is status == TAO_INVOKE_OK, exit the
           // loop.  We cannot retry because at this point we either
@@ -615,17 +650,22 @@ TAO_Stub::do_dynamic_call (const char *opname,
     }
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, opname, this->orb_core_);
+      TAO_GIOP_Oneway_Invocation call (this, 
+                                       opname,
+                                       this->orb_core_);
 
       for (;;)
         {
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          call.prepare_header (0, ACE_TRY_ENV);
+          call.prepare_header (0, 
+                               ACE_TRY_ENV);
           ACE_CHECK;
 
-          this->put_params (call, args, ACE_TRY_ENV);
+          this->put_params (call, 
+                            args, 
+                            ACE_TRY_ENV);
           ACE_CHECK;
 
           int status = call.invoke (ACE_TRY_ENV);
@@ -645,6 +685,81 @@ TAO_Stub::do_dynamic_call (const char *opname,
         }
     }
 }
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+#if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
+
+void
+TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
+                            CORBA::Environment &ACE_TRY_ENV)
+{
+
+  TAO_Synchronous_Cancellation_Required NOT_USED;
+
+  // Do a locate_request if necessary/wanted.
+  // Suspect that you will be forwarded, so be proactive!
+  // strategy for reducing overhead when you think a request will
+  // be forwarded.  No standard way now to know.
+  if (this->use_locate_request_ && this->first_locate_request_)
+    {
+      TAO_GIOP_Locate_Request_Invocation call (this, 
+                                               this->orb_core_);
+
+      // Simply let these exceptions propagate up
+      // (if any of them occurs.)
+      call.start (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      call.invoke (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->first_locate_request_ = 0;
+    }
+
+  TAO_GIOP_DII_Deferred_Invocation call (this, 
+                                         this->orb_core_,
+                                         req);
+
+  // Loop as needed for forwarding; see above.
+
+  for (;;)
+    {
+      call.start (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      call.prepare_header (1, 
+                           ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->put_params (call, 
+                        req->arguments (), 
+                        ACE_TRY_ENV);
+      ACE_CHECK;
+
+      // Make the call without blocking.
+      CORBA::ULong status = call.invoke (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (status == TAO_INVOKE_RESTART)
+        continue;
+
+      if (status != TAO_INVOKE_OK)
+        ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, 
+                                   CORBA::COMPLETED_MAYBE));
+
+      // The only case left is status == TAO_INVOKE_OK, exit the
+      // loop.  We cannot retry because at this point we either
+      // got a reply or something with an status of
+      // COMPLETED_MAYBE, thus we cannot reissue the request if we
+      // are to satisfy the "at most once" semantics.
+      break;
+    }
+}
+
+#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 void
 TAO_Stub::put_params (TAO_GIOP_Invocation &call,
@@ -674,13 +789,13 @@ TAO_Stub::get_policy (
   if (this->policies_ == 0)
     return CORBA::Policy::_nil ();
 
-  return this->policies_->get_policy (type, ACE_TRY_ENV);
+  return this->policies_->get_policy (type, 
+                                      ACE_TRY_ENV);
 }
 
 CORBA::Policy_ptr
-TAO_Stub::get_client_policy (
-    CORBA::PolicyType type,
-    CORBA::Environment &ACE_TRY_ENV)
+TAO_Stub::get_client_policy (CORBA::PolicyType type,
+                             CORBA::Environment &ACE_TRY_ENV)
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -688,14 +803,16 @@ TAO_Stub::get_client_policy (
   CORBA::Policy_var result;
   if (this->policies_ != 0)
     {
-      result = this->policies_->get_policy (type, ACE_TRY_ENV);
+      result = this->policies_->get_policy (type, 
+                                            ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
   if (CORBA::is_nil (result.in ()))
     {
       TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
-      result = policy_current.get_policy (type, ACE_TRY_ENV);
+      result = policy_current.get_policy (type, 
+                                          ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
@@ -708,14 +825,16 @@ TAO_Stub::get_client_policy (
         this->orb_core_->policy_manager ();
       if (policy_manager != 0)
         {
-          result = policy_manager->get_policy (type, ACE_TRY_ENV);
+          result = policy_manager->get_policy (type, 
+                                               ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::Policy::_nil ());
         }
     }
 
   if (CORBA::is_nil (result.in ()))
     {
-      result = this->orb_core_->get_default_policy (type, ACE_TRY_ENV);
+      result = this->orb_core_->get_default_policy (type, 
+                                                    ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
@@ -840,14 +959,14 @@ TAO_Stub::set_policy_overrides (
 }
 
 CORBA::PolicyList *
-TAO_Stub::get_policy_overrides (
-    const CORBA::PolicyTypeSeq & types,
-    CORBA::Environment &ACE_TRY_ENV)
+TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types,
+                                CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->policies_ == 0)
     return 0;
 
-  return this->policies_->get_policy_overrides (types, ACE_TRY_ENV);
+  return this->policies_->get_policy_overrides (types, 
+                                           ACE_TRY_ENV);
 }
 
 CORBA::Boolean
