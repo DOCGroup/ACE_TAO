@@ -1,3 +1,9 @@
+Tue Apr  8 16:38:00 2003  Dave Smith  <dts@prismtechnologies.com>
+
+	* tao/Any_T.cpp:
+
+	Fixed compile errors in tests/IDL_Test for HPUX build.
+
 Tue Apr 08 10:39:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/AMI_Buffering/client.dsp:
