@@ -106,19 +106,29 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
     {
       if (persistence_location != 0)
         {
-          TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> *index =
+          // 1.  Please do not change to ACE_NEW_RETURN, 2.  This
+          // needs to be cleaned up (currently a memory leak) when
+          // TAO_Naming_Server dies.
+          TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> *context_index =
             new TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> (orb,
                                                                                      poa);
-          if (index->open (persistence_location) == -1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "index->open failed"));
 
-          if (index->init () == -1)
+          if (context_index == 0)
+            {
+              errno = ENOMEM;
+              return -1;
+            }
+
+          if (context_index->open (persistence_location) == -1)
             ACE_DEBUG ((LM_DEBUG,
-                        "index->init failed"));
+                        "context_index->open failed"));
+
+          if (context_index->init () == -1)
+            ACE_DEBUG ((LM_DEBUG,
+                        "context_index->init failed"));
 
           // Set the ior and objref to the root naming context.
-          this->naming_service_ior_= index->root_ior ();
+          this->naming_service_ior_= context_index->root_ior ();
 
           CORBA::Object_var obj =
             orb->string_to_object (this->naming_service_ior_.in (),
