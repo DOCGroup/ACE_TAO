@@ -97,7 +97,11 @@ be_visitor_interface_ami_handler_stub_ch::visit_interface (be_interface *node)
           << "TAO_default_environment ()"
           << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl
-          << "static " << node->local_name () << "_ptr " << "_nil (void);\n\n";
+          << "static " << node->local_name ()
+          << "_ptr _nil (void)" << be_nl
+          << "{" << be_idt_nl
+          << "return (" << node->local_name () << "_ptr)0;" << be_uidt_nl
+          << "}\n\n";
 
       // Visit the scope to generate the stubs for the call back
       // methods.   
