@@ -107,9 +107,13 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "}" << be_nl
       << "if (any.any_owns_data ())" << be_nl
       << "{" << be_idt_nl
-      << "value = ACE_static_cast(" << be_idt << be_idt_nl
-      << node->name () << "*," << be_nl
+      << "const " << node->name () << " *const_holder = "
+      << "ACE_static_cast (" << be_idt << be_idt_nl
+      << "const " << node->name () << "*," << be_nl
       << "any.value ());" << be_uidt << be_uidt_nl
+      << "value = ACE_const_cast (" << be_idt << be_idt_nl
+      << node->name () << "*," << be_nl
+      << "const_holder);" << be_uidt << be_uidt_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl  // else any does not own the data
