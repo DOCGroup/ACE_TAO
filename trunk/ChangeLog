@@ -1,3 +1,7 @@
+Fri Jan 17 12:34:51 2003  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Updated platform and compiler information.
+
 Thu Jan 16 19:06:19 2003  Stephen Torri <storri@cse.wustl.edu>
 
         * ace/OS.cpp:
