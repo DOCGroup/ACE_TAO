@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="Param_Test Server" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 5.00
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -17,13 +17,12 @@ CFG=Param_Test Server - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Param_Test Server - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Param_Test Server - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Param_Test Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Param_Test Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -94,11 +93,11 @@ SOURCE=.\param_test_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Param_TestC.cpp
+SOURCE=.\param_testCli.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Param_TestS.cpp
+SOURCE=.\param_testSer.cpp
 # End Source File
 # Begin Source File
 
@@ -146,13 +145,14 @@ SOURCE=.\param_test.idl
 
 !IF  "$(CFG)" == "Param_Test Server - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__PARAM="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -184,13 +184,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Param_Test Server - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__PARAM="..\..\tao_idl\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\tao_idl\tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
