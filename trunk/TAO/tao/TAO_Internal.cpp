@@ -300,6 +300,11 @@ TAO_Internal::open_services_i (int &argc,
       if (rt_loader != 0)
           rt_loader->init (0, 0);
 
+      ACE_Service_Object *rtscheduler_loader =
+        ACE_Dynamic_Service<ACE_Service_Object>::instance ("RTScheduler_Loader");
+      if (rtscheduler_loader != 0)
+	rtscheduler_loader->init (0, 0);
+      
       // @@ What the heck do these things do and do we need to avoid
       // calling them if we're not invoking the svc.conf file?
       if (TAO_Internal::resource_factory_args_ != 0)
