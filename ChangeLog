@@ -1,3 +1,10 @@
+Tue Dec  9 16:33:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+          Removed ACELIB from LIBS since both LIBS and ACELIB is added to
+          VLDLIBS in wrapper_macros.GNU.  Otherwise -lACE appears twice in
+          the link command.
+
 Tue Dec  9 15:51:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:

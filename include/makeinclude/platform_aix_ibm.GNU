@@ -136,7 +136,7 @@ else
 ACELIB      = -lACEns
 endif
 
-LIBS	    += $(ACELIB) -ltli_r -ldl
+LIBS	    += -ltli_r -ldl
 
 SONAME	    =
 SOVERSION   =
