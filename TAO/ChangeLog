@@ -1,3 +1,13 @@
+Thu Oct 30 22:57:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/ORT/Makefile: 
+
+	  Added misisng libraries.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+
+	  Added a forward declaration.
+
 Thu Oct 30 22:09:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_traits.cpp:
