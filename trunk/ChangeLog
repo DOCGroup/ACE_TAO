@@ -1,3 +1,11 @@
+Tue Apr 25 11:35:07 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Local_Name_Space.cpp:
+
+          The hash function was using the wrong length of the USHORT16 
+          string representation.  The len_ actually is the length in bytes,
+          not characters.
+
 Tue Apr 25 08:57:59 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ASNMP/tests/test_config.h:
