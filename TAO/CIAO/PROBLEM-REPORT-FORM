@@ -54,7 +54,7 @@ Subject: [area]: [synopsis]
             On Unix systems, did you run make realclean first?
         EXECUTION?
         OTHER (please specify)?
-[Please indicate whether ACE/TAO, your application, or both are affected.]
+[Please indicate whether ACE/TAO/CIAO, your application, or both are affected.]
 
     SYNOPSIS:
 [Brief description of the problem]
