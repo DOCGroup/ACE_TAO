@@ -8,6 +8,10 @@ Sat Mar 07 08:29:51 1998  David L. Levine  <levine@cs.wustl.edu>
           there shouldn't be any affect on those platforms.  Others may
           have to define MATHLIB in their platform_macros.GNU.
 
+        * tests/Cubit/TAO/MT_Cubit/client.cpp (do_priority_inversion_test):
+          changed variables low_client and high_client to low_priority_client
+          and high_priority_client.  Replaced use of cerr with ACE_DEBUG.
+
 Fri Mar  6 17:56:25 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
         * Aloha: I bid fond farewall to Team TAO for now.  Thanks for the
