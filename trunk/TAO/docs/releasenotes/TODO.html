@@ -207,12 +207,6 @@ class Foo {
 	be created on creation of the first servant of that type.
       </LI>
       
-      <LI>Are nested upcalls in different concurrency models, like
-	thread-per-connection working?
-	<BR>[STATUS] Irfan reports that this works correctly with
-	<CODE>thread-per-connection</PRE>
-      </LI>
-
       <LI>Add an option to the IDL-compiler (e.g. -rp) meaning
 	"generate relative include paths".
       </LI>
@@ -491,11 +485,12 @@ class Foo {
       </LI>
 
       <LI>The IDL compiler should support
-	<PRE>#include <orb.idl></PRE> properly.  IMHO it should not
-	add any <PRE>#include</PRE> to the generated code and the
+	<CODE>#include "orb.idl"</CODE> properly.
+	IMHO it should not
+	add any <CODE>#include</CODE> to the generated code and the
 	<CODE>orb.idl</CODE> file should contain all the declarations,
-	except for the pseudo objects that are better supported by the
-	compiler itself.
+	except for the pseudo objects that are should be hardcoded
+	into the compiler.
       </LI>
     </OL>
 
@@ -504,6 +499,16 @@ class Foo {
     </CENTER>
 
     <UL>
+      <LI>Are nested upcalls in different concurrency models, like
+	thread-per-connection working?
+	<BR>[STATUS] Irfan reports that this works correctly with
+	<CODE>thread-per-connection</CODE>
+	<BR>[DONE] The <CODE>NestedUpcall/Reactor</CODE> test is
+	giving the same results with either
+	<CODE>thread-per-connection</CODE> or <CODE>reactive</CODE>
+	strategies.
+      </LI>
+
       <LI>Normalize the compiled marshalling interface: the IDL
 	compiler is going to generate a different interface than the
 	code I showed in the EC_Custom_Marshal example; we need to
