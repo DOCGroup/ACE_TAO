@@ -15,8 +15,8 @@
 
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
+#include /**/"ace/pre.h"
 
-#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -171,7 +171,7 @@ namespace CORBA
 
     /// Constructor from a repository id.
     UserException (const char *repository_id,
-                         const char *local_name);
+                   const char *local_name);
 
     virtual int _is_a (const char *interface_id) const;
 
@@ -225,6 +225,7 @@ namespace CORBA
     /// Narrow to a SystemException.
     static SystemException *_downcast (CORBA::Exception *exception);
 
+
     // = TAO-specific extension.
 
     /// Helper for the _downcast operation.
@@ -233,6 +234,9 @@ namespace CORBA
     /// Print the system exception @c ex to output determined by @c f.
     /// This function is not CORBA compliant.
     void _tao_print_system_exception (FILE *f = stdout) const;
+
+    /// Create an exception from the available exception
+    virtual CORBA::Exception *_tao_duplicate (void) const;
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
@@ -287,11 +291,11 @@ namespace CORBA
     name (CORBA::ULong code, \
           CORBA::CompletionStatus completed); \
     static name * _downcast (CORBA::Exception* exception); \
-    virtual int _is_a (const char* type_id) const; \
     virtual void _raise (void); \
     virtual CORBA::TypeCode_ptr _type (void) const; \
     static void _tao_any_destructor (void*); \
     virtual CORBA::Exception *_tao_duplicate (void) const; \
+    static CORBA::SystemException *_tao_create (void); \
   }; \
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::name &); \
 TAO_Export void operator<<= (CORBA::Any &, CORBA::name *); \
@@ -389,7 +393,6 @@ public:
       ACE_ENV_ARG_DECL
     );
 
-
   /**
    * This global allocator is used to initialize system exception
    * typecodes.  Since at the time, the ORB is mostly still not
@@ -422,6 +425,5 @@ public:
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
-
+#include /**/"ace/post.h"
 #endif /* TAO_EXCEPTION_H */
