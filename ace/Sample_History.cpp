@@ -30,7 +30,7 @@ ACE_Sample_History::dump_samples (const ACE_TCHAR *msg,
     {
       ACE_UINT64 x = this->samples_[i] / scale_factor;
       ACE_UINT32 val = ACE_CU64_TO_CU32 (x);
-      ACE_DEBUG ((LM_DEBUG, "%s: %d %u\n", msg, i, val));
+      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("%s: %d %u\n"), msg, i, val));
     }
 }
 
