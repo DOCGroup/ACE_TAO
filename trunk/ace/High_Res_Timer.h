@@ -33,6 +33,13 @@ class ACE_Export ACE_High_Res_Timer
   //     added.  It returns 1 if high-resolution time (ACE_OS::gethrtime ())
   //     is supported on the platform, and 0 if not.
   //
+  //     The optional scale factor is required for platforms that have
+  //     high-resolution timers that return units other than nanoseconds,
+  //     such as clock ticks.  The member functions that return or print
+  //     times use this scale factor.  They divide the "time" that they
+  //     get from ACE_OS::gethrtime () by it to obtain the time in nanoseconds.
+  //     Its units are 1/second, possibly ticks/second.
+  //
   //     NOTE:  the elapsed time calculations in the print methods use
   //     ACE_hrtime_t values.  If ACE_hrtime_t is not a 64-bit type
   //     (ACE_HAS_LONGLONG_T), then those calculations are more susceptible
@@ -44,7 +51,7 @@ public:
   static int supported ();
   // Returns 1 if high-resolution time is supported on the platform, 0 if not.
 
-  ACE_High_Res_Timer (void);
+  ACE_High_Res_Timer (u_long scale_factor = 0);
   // Initialize the timer.
 
   void reset (void);
@@ -106,6 +113,8 @@ private:
 
   ACE_hrtime_t start_incr_;
   // Start time of incremental timing.
+
+  u_long scale_factor_;
 };
 
 #if defined (__ACE_INLINE__)
