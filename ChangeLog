@@ -1,3 +1,42 @@
+Wed Dec 22 08:00:33 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ftclientorb.mpb:
+        * bin/MakeProjectCreator/config/ftserverorb.mpb:
+
+          These both require interceptors to function properly.
+
+        * bin/tao_other_tests.lst:
+
+          Added !STATIC to the following:
+
+            TAO/performance-tests/Protocols/run_test.pl
+            TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.rt.conf
+
+          Added !MINIMUM to the following:
+
+            TAO/orbsvcs/tests/Bug_1393_Regression/run_test.pl
+            TAO/orbsvcs/tests/Bug_1395_Regression/run_test.pl
+            TAO/orbsvcs/tests/Bug_1436_Regression/run_test.pl
+            TAO/orbsvcs/tests/Bug_1437_Regression/run_test.pl
+
+          Added !DISABLE_INTERCEPTORS to the following:
+
+            TAO/orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/run_test.pl
+            TAO/orbsvcs/tests/FaultTolerance/IOGR/run_test.pl
+            TAO/orbsvcs/tests/FaultTolerance/IOGRManipulation/run_test.pl
+
+          Added !NO_MESSAGING to the following:
+
+            TAO/orbsvcs/tests/Log/Basic_Log_Test/run_test.pl
+            TAO/orbsvcs/tests/BiDir_CORBALOC/run_test.pl
+            TAO/orbsvcs/tests/Bug_1395_Regression/run_test.pl
+            TAO/orbsvcs/tests/Bug_1437_Regression/run_test.pl
+
+        * tests/Multicast_Test.cpp:
+
+          If the wait() for the consumer thread fails, we need to forcably
+          shutdown that thread so that it does not reference deleted memory.
+
 Tue Dec 21 12:17:50 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/PerlACE/Process_Win32.pm:

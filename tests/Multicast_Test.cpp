@@ -901,6 +901,12 @@ run_main (int argc, ACE_TCHAR *argv[])
                                 ? &wait_time : 0;
       if (ACE_Thread_Manager::instance ()->wait (ptime) == -1)
         {
+          // We will no longer wait for this thread, so we must
+          // force it to exit otherwise the thread will be referencing
+          // deleted memory.
+          finished = 1;
+          reactor->end_reactor_event_loop ();
+
           if (errno == ETIME)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
