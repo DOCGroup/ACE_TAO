@@ -1060,7 +1060,9 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_destroy (cv), ace_result_), int, -1);
 #elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
-#if defined (VXWORKS)
+#if defined (ACE_HAS_WTHREADS)
+  ACE_OS::event_destroy (&cv->waiters_done_);
+#elif defined (VXWORKS)
   ACE_OS::sema_destroy (&cv->waiters_done_);
 #endif /* VXWORKS */
   return ACE_OS::sema_destroy (&cv->sema_);
