@@ -16,7 +16,6 @@
 #ifndef PACE_MQUEUE_H_WIN32
 #define PACE_MQUEUE_H_WIN32
 
-#include <mqueue.h>
 #include "pace/signal.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
@@ -25,12 +24,18 @@ extern "C" {
 
 #ifndef PACE_MQD_T
 #define PACE_MQD_T
-typedef mqd_t pace_mqd_t;
+  /* Temporary fix until we emulate these funcs.
+     typedef mqd_t pace_mqd_t;
+   */
+  typedef int pace_mqd_t;
 #endif /* PACE_MQD_T */
 
 #ifndef PACE_MQ_ATTR
 #define PACE_MQ_ATTR
-typedef struct mq_attr pace_mq_attr;
+  /* Temporary fix until we emulate these funcs.
+     typedef struct mq_attr pace_mq_attr
+   */
+  typedef struct { int a_; } pace_mq_attr;00
 #endif /* PACE_MQ_ATTR */
 
 #if defined (PACE_HAS_CPLUSPLUS)

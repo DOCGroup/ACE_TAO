@@ -1,3 +1,16 @@
+Mon Jul 17 15:57:43 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/mqueue.h:
+	* pace/win32/mqueue.h:
+	
+	  Fixed types to compile for win32.
+	  Code was NOT emulated so types are dummy types and
+	  PACE_ERRNO_NO_SUPPORT_RETURN (-1) was applied when applicable.
+
+	* docs/PACE_POSIX_support.txt:
+
+	  Updated.
+
 Mon Jul 17 14:56:31 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/mman.inl:
