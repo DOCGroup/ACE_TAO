@@ -719,7 +719,11 @@ ACE_Name_Handler::~ACE_Name_Handler (void)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Concurrency_Strategy<ACE_Name_Handler>;
+template class ACE_Creation_Strategy<ACE_Name_Handler>;
 template class ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler>;
 template class ACE_Scheduling_Strategy<ACE_Name_Handler>;
+template class ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
