@@ -125,6 +125,10 @@ Client_i::withdraw (CORBA::Float withdrawl_amount)
     }
   TAO_CATCHANY
     {
+      // @@ Please check to make sure that you aren't incurring a
+      // memory leak here...  For instance, can you use
+      // Bank::Account::Overdraft_var instead of
+      // Bank::Account::Overdraft *?
       Bank::Account::Overdraft *except =
 	Bank::Account::Overdraft::_narrow
 	(TAO_TRY_ENV.exception ());
@@ -149,39 +153,17 @@ Client_i::open (const char *name,
 CORBA::Float
 Client_i::balance (CORBA::Environment &env)
 {
-  return server_->balance(env);
+  return server_->balance (env);
 }
 
-// Call the remote methods on the Account and AccountManager interface.
+// Call the remote methods on the Account and AccountManager
+// interface.
 
 CORBA::Float
 Client_i::check_accounts (void)
 {
-  // Make the RMI.
-
-  // @@ Vishal, I suggest you provide a command-line option to set the
-  // initial balance.  Then, you can change this conveniently.
-  // CORBA::Float initial_balance = 200.00;
-
-  // @@ Vishal, please use naming convention like account_holder
-  // rather than accountHolder.
-  // char *account_holder;
-
-  //initial_balance = this->server_->balance (this->env_);
-
-  // @@ Please update this code with the TAO_TRY, TAO_CATCH,
-  // etc. exception macros.  Please see
-  // $TAO_ROOT/tests/Param_Test/except.cpp for more information.
-
   TAO_TRY
     {
-      // @@ Vishal, I recommend that you break up this function into
-      // several smaller methods, e.g., each checking a different part
-      // of the interface, etc.
-      // this->server_ = this->accountmanager_server_->open ("Vishal",
-      // initial_balance,
-      //						  this->env_);
-
       this->server_ = open ("Vishal",
 			    initial_balance_,
 			    this->env_);
@@ -234,13 +216,7 @@ Client_i::check_accounts (void)
 
       // Make sure we get back the same object reference!
 
-      // @@ See what needs to be done to check if the two ORs are the
-      // same.
       ACE_ASSERT (server2->_is_equivalent (server_.in (), TAO_TRY_ENV));
-
-      TAO_CHECK_ENV;
-
-      //ACE_ASSERT (server->_is_equivqlent (server2.in (), TAO_TRY_ENV));
 
       TAO_CHECK_ENV;
 
@@ -295,10 +271,10 @@ Client_i::obtain_initial_references (void)
     {
       // Initialize the naming services.
       if (my_name_client_.init (orb_.in (), argc_, argv_) != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-			 " (%P|%t) Unable to initialize "
-			 "the TAO_Naming_Client. \n"),
-			-1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
 
       CosNaming::Name account_manager_name (1);
       account_manager_name.length (1);
