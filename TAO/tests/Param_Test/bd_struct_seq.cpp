@@ -92,62 +92,65 @@ Test_Bounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
 
 int
 Test_Bounded_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
-					CORBA::NVList_ptr retval,
-					CORBA::Environment &env)
+                                        CORBA::NVList_ptr retval,
+                                        CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_Bounded_StructSeq, (void *) &this->in_, 0);
-  CORBA::Any inout_arg (Param_Test::_tc_Bounded_StructSeq, &this->inout_.inout (), 0);
-  CORBA::Any out_arg (Param_Test::_tc_Bounded_StructSeq, this->out_.out (), 0);
+  CORBA::Any in_arg (Param_Test::_tc_Bounded_StructSeq, 
+                     (void *) &this->in_,
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (Param_Test::_tc_Bounded_StructSeq,
+                        &this->inout_.inout (),
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (Param_Test::_tc_Bounded_StructSeq,
+                      &this->dii_out_,
+                      CORBA::B_FALSE);
 
   // add parameters
   param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
   param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
   param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
 
-  // add return value
+  // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Bounded_StructSeq,
-                                            this->ret_._retn (),
+                                            &this->dii_ret_,
                                             CORBA::B_FALSE, // does not own
                                             env);
   return 0;
 }
 
 CORBA::Boolean
-Test_Bounded_Struct_Sequence::check_validity (void)
+Test_Bounded_Struct_Sequence::check_validity_engine 
+                (const Param_Test::Bounded_StructSeq &the_in,
+                 const Param_Test::Bounded_StructSeq &the_inout,
+                 const Param_Test::Bounded_StructSeq &the_out,
+                 const Param_Test::Bounded_StructSeq &the_ret)
 {
-  if (this->compare (this->in_, this->inout_.in ()) &&
-      this->compare (this->in_, this->out_.in ()) &&
-      this->compare (this->in_, this->ret_.in ()))
+  if (this->compare (the_in, the_inout) &&
+      this->compare (the_in, the_out) &&
+      this->compare (the_in, the_ret))
     return 1;
   else
     return 0;
 }
 
 CORBA::Boolean
+Test_Bounded_Struct_Sequence::check_validity (void)
+{
+  return this->check_validity_engine (this->in_,
+                                      this->inout_.in (),
+                                      this->out_.in (),
+                                      this->ret_.in ());
+}
+
+CORBA::Boolean
 Test_Bounded_Struct_Sequence::check_validity (CORBA::Request_ptr req)
 {
-  CORBA::Environment env;
-#if 0
-  this->inout_ = 
-    new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *)
-                                       req->arguments ()->item (1, env)->value ()->value ());
-  this->out_ = 
-    new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *) 
-                                       req->arguments ()->item (2, env)->value ()->value ());
-  this->ret_ = 
-    new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *)
-                                       req->result ()->value ()->value ());
-#endif
-
-  Param_Test::Bounded_StructSeq_ptr out_holder, ret_holder;
-
-  *req->arguments ()->item (2, env)->value () >>= out_holder;
-  *req->result ()->value () >>= ret_holder;
-
-  this->out_ = out_holder;
-  this->ret_ = ret_holder;
-
-  return this->check_validity ();
+  return this->check_validity_engine (this->in_,
+                                      this->inout_.in (),
+                                      this->dii_out_,
+                                      this->dii_ret_);
 }
 
 void
