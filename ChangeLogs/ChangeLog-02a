@@ -1,3 +1,16 @@
+Thu Jun 28 13:05:12 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/CDR_Stream.{h,i,cpp}:
+
+          Update to_(w)string and from_(w)string to conform to the 
+          latest C++ mapping (00-01-02). Extra constructors have
+          been added, taking a const (w)string, and the val_
+          member of from_(w)string has been made const. The constructor
+          taking a non-const (w)string for to_(w)string has been
+          deprecated, and will be removed from the spec at some point.
+          Thanks to Andy Alvarez <andy_alvarez@baxter.com> for pointing
+          this out.
+
 Thu Jun 28 07:08:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp: Added a sanity check. The check involves
