@@ -1,14 +1,26 @@
+Sat Apr 29 11:49:19 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Param_Test/anyop.dsp:
+          Updated dependencies.
+
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_collocated_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+          Cosmetic fixes.
+
 Sat Apr 29 12:53:26 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile.am:
-	* tao/Makefile.bor: Added new files  
-	* tao/Invocation.cpp: Made some fixes to the changes that I made
-	  yesterday.
+        * tao/Makefile.am:
+        * tao/Makefile.bor: Added new files
+        * tao/Invocation.cpp: Made some fixes to the changes that I made
+          yesterday.
 
 Sat Apr 29 03:10:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp (gen_skel_helper): Changed some
-	  "env" to "ACE_TRY_ENV".
+        * TAO_IDL/be/be_interface.cpp (gen_skel_helper): Changed some
+          "env" to "ACE_TRY_ENV".
 
 Fri Apr 28 21:49:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -32,11 +44,11 @@ Fri Apr 28 21:32:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Apr 28 23:29:03 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	  Updated RT CORBA section, Naming section and fixed incorrect
-	  link (thanks to Steve Vranyes for pointing it out).
-	* docs/INS.html:
-	  Fixed link.
+        * docs/releasenotes/index.html:
+          Updated RT CORBA section, Naming section and fixed incorrect
+          link (thanks to Steve Vranyes for pointing it out).
+        * docs/INS.html:
+          Fixed link.
 
 Fri Apr 28 20:56:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -150,92 +162,92 @@ Fri Apr 28 20:09:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Invocation.cpp (create_ior_info):
-	* tao/Invocation.h: Added support for GIOP 1.2 exceptions. GIOP
-	  1.2 raises two new exceptions for the Request and
-	  LocateRequest. Added support to handle these exceptions. To add
-	  support, I had to add a new method called create_ior_info ()
-	  which would create IOP::IOR information only once, if an
-	  exception is received from the server side seeking that
-	  information.
+        * tao/Invocation.cpp (create_ior_info):
+        * tao/Invocation.h: Added support for GIOP 1.2 exceptions. GIOP
+          1.2 raises two new exceptions for the Request and
+          LocateRequest. Added support to handle these exceptions. To add
+          support, I had to add a new method called create_ior_info ()
+          which would create IOP::IOR information only once, if an
+          exception is received from the server side seeking that
+          information.
 
-	* tao/Acceptor_Registry.cpp:
-	* tao/Acceptor_Registry.h: Added a new method, that would return
-	  the right acceptor by taking a tag value. This is similar to the
-	  method in Connector_Registry.{h,cpp}.
+        * tao/Acceptor_Registry.cpp:
+        * tao/Acceptor_Registry.h: Added a new method, that would return
+          the right acceptor by taking a tag value. This is similar to the
+          method in Connector_Registry.{h,cpp}.
 
-	* tao/Pluggable_Messaging_Utils.h:
-	* tao/operation_details.h:
-	* tao/operation_details.i:
-	* tao/target_specification.h:
-	* tao/target_specification.i:
-	* tao/GIOP_Utils.h:
-	* tao/GIOP_Message_Accept_State.cpp:
-	* tao/GIOP_Message_Accept_State.h:
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Connectors.cpp:
-	* tao/GIOP_Message_Connectors.h:
-	* tao/GIOP_Message_Headers.h:
-	* tao/GIOP_Message_Headers.i:
-	* tao/GIOP_Message_Lite.cpp: Added support for GIOP 1.2
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/operation_details.h:
+        * tao/operation_details.i:
+        * tao/target_specification.h:
+        * tao/target_specification.i:
+        * tao/GIOP_Utils.h:
+        * tao/GIOP_Message_Accept_State.cpp:
+        * tao/GIOP_Message_Accept_State.h:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Connectors.cpp:
+        * tao/GIOP_Message_Connectors.h:
+        * tao/GIOP_Message_Headers.h:
+        * tao/GIOP_Message_Headers.i:
+        * tao/GIOP_Message_Lite.cpp: Added support for GIOP 1.2
 
-	* tao/GIOP_Server_Request.cpp:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.i: Removed some of the GIOP 1.2 specific
-	  data from here and moved it to a new file
-	  TaggedProfile.{h,cpp,i} which would do the related processing of
-	  the data to extract ObjectKey. As TAO servers, as on date do not
-	  use any data other than ObjectKey, we need to do the processing
-	  to extract ObjectKey from IOP::IOR and IOP::TaggedProfile.
+        * tao/GIOP_Server_Request.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.i: Removed some of the GIOP 1.2 specific
+          data from here and moved it to a new file
+          TaggedProfile.{h,cpp,i} which would do the related processing of
+          the data to extract ObjectKey. As TAO servers, as on date do not
+          use any data other than ObjectKey, we need to do the processing
+          to extract ObjectKey from IOP::IOR and IOP::TaggedProfile.
 
-	* tao/Pluggable.h: Added a virtual function that would extract an
-	  ObjectKey from an IOP::TaggedProfile.
+        * tao/Pluggable.h: Added a virtual function that would extract an
+          ObjectKey from an IOP::TaggedProfile.
 
-	* tao/IIOP_Acceptor.cpp:
-	* tao/IIOP_Acceptor.h:
-	* tao/SHMIOP_Acceptor.cpp:
-	* tao/SHMIOP_Acceptor.h:
-	* tao/UIOP_Acceptor.cpp:
-	* tao/UIOP_Acceptor.h: Concrete implementations for the above.
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Acceptor.h:
+        * tao/SHMIOP_Acceptor.cpp:
+        * tao/SHMIOP_Acceptor.h:
+        * tao/UIOP_Acceptor.cpp:
+        * tao/UIOP_Acceptor.h: Concrete implementations for the above.
 
-	* tao/Profile.cpp:
-	* tao/Profile.h: Added a virtual function that would create a
-	  IOP::TaggedProfile info from the profile info that is being
-	  stored. This is necessary as different protocol implementations
-	  could encapsulate different types of info in its profile which
-	  is a part of the server exhibited IOR.
+        * tao/Profile.cpp:
+        * tao/Profile.h: Added a virtual function that would create a
+          IOP::TaggedProfile info from the profile info that is being
+          stored. This is necessary as different protocol implementations
+          could encapsulate different types of info in its profile which
+          is a part of the server exhibited IOR.
 
-	* tao/IIOP_Profile.cpp:
-	* tao/IIOP_Profile.h:
-	* tao/IIOP_Profile.i:
-	* tao/UIOP_Profile.cpp:
-	* tao/UIOP_Profile.h:
-	* tao/SHMIOP_Profile.cpp:
-	* tao/SHMIOP_Profile.h: Concrete implementations for the above.
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.i:
+        * tao/UIOP_Profile.cpp:
+        * tao/UIOP_Profile.h:
+        * tao/SHMIOP_Profile.cpp:
+        * tao/SHMIOP_Profile.h: Concrete implementations for the above.
 
-	* tao/Stub.cpp:
-	* tao/Stub.h:
-	* tao/Stub.i: Added a method to store and retrieve information
-	  about the GIOP 1.2 specific exception thrown. If we have
-	  received a LOC_NEEDS_ADDRESSING, we need to change the
-	  addressing mode and restart the request. This is something
-	  similar to LOCATION_FORWARD, but here we store only a flag to
-	  indicate what addressing mode to use so that subsequent
-	  invocations would use the right addressing mode.
+        * tao/Stub.cpp:
+        * tao/Stub.h:
+        * tao/Stub.i: Added a method to store and retrieve information
+          about the GIOP 1.2 specific exception thrown. If we have
+          received a LOC_NEEDS_ADDRESSING, we need to change the
+          addressing mode and restart the request. This is something
+          similar to LOCATION_FORWARD, but here we store only a flag to
+          indicate what addressing mode to use so that subsequent
+          invocations would use the right addressing mode.
 
-	* tao/MProfile.h:
-	* tao/MProfile.i: Added a method get_current_handle () that would
-	  allow acces for const objects.
+        * tao/MProfile.h:
+        * tao/MProfile.i: Added a method get_current_handle () that would
+          allow acces for const objects.
 
-	* tao/Tagged_Profile.cpp:
-	* tao/Tagged_Profile.h:
-	* tao/Tagged_Profile.i: New files that would do GIOP 1.2 specific
-	  data processing for the server side.
+        * tao/Tagged_Profile.cpp:
+        * tao/Tagged_Profile.h:
+        * tao/Tagged_Profile.i: New files that would do GIOP 1.2 specific
+          data processing for the server side.
 
-	* tao/Makefile: Added the above file in the Makefile.
+        * tao/Makefile: Added the above file in the Makefile.
 
-	* tao/orbconf.h: Turned on support for GIOP 1.2. Now would be
-	  ideal time. Any bugs that arises can be fixed I am gone on vacation.
+        * tao/orbconf.h: Turned on support for GIOP 1.2. Now would be
+          ideal time. Any bugs that arises can be fixed I am gone on vacation.
 
 Fri Apr 28 19:57:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -117,14 +117,13 @@ SOURCE=.\param_test.idl
 
 !IF  "$(CFG)" == "Param_Test Anyop - Win32 Release"
 
-# PROP Ignore_Default_Tool 1
 USERDEP__PARAM="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I..\..\tao\ -Ge 1 -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -156,14 +155,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Param_Test Anyop - Win32 Debug"
 
-# PROP Ignore_Default_Tool 1
 USERDEP__PARAM="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
+	..\..\..\bin\tao_idl -I..\..\tao\ -Ge 1 -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp -si Ser.i -st Ser_T.i $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
