@@ -66,7 +66,7 @@ to Graham for providing the OSE tools!<p>
 
     <li>Avoid use of floating point types (float and double) and operations
         unless absolutely necessary.  Not all ACE platforms support them.
-        Therefore, whereever they are used, ACE_LACKS_FLOATING_POINT
+        Therefore, wherever they are used, ACE_LACKS_FLOATING_POINT
         conditional code must be also be used.<p>
   </ul>
 
@@ -320,8 +320,18 @@ to Graham for providing the OSE tools!<p>
         return ACE_static_cast(size_t, this-&gt;count_) &gt; that-&gt;size_;
         </pre><p>
 
-        Not the with ANSI casts, reinterpret_cast can not be used
-        to cast away constness.  That must be done with const_cast.<p>
+        The general usage guidelines for the four styles of casts are:<p>
+        <ul>
+          <li><strong>ACE_const_cast</strong>: use to cast away
+            constness, or volatile-ness.<p>
+          <li><strong>ACE_static_cast</strong>: use to cast between
+            compatible types, such as downcasting a pointer or narrowing
+            an integer.<p>
+          <li><strong>ACE_reinterpret_cast</strong>: use only when
+            ACE_static_cast is not suitable.<p>
+          <li><strong>ACE_dynamic_cast</strong>: avoid, unless you really
+            want to type check at run-time.<p>
+        </ul>
 
     <li>In general, if instances of a class should not be copied,
         then a private copy constructor and assignment operator should
@@ -361,7 +371,7 @@ to Graham for providing the OSE tools!<p>
     <li>Define strings as <strong><code>ASYS_TCHAR</code></strong> if
         they need to be passed into system API.  It expands to
         <code>wchar_t</code> only when
-        <code>ACE_HAS_MOSTLY_UNICODE_APIS</code> is deined.<p>
+        <code>ACE_HAS_MOSTLY_UNICODE_APIS</code> is defined.<p>
 
     <li>Use <strong><code>ASYS_TEXT</code></strong> and
         <strong><code>ASYS_WIDE_STRING</code></strong> for format
@@ -504,7 +514,7 @@ to Graham for providing the OSE tools!<p>
 
 <hr>
 <!-- hhmts start -->
-Last modified: Tue Jun 30 09:26:57 CDT 1998
+Last modified: Tue Jul 21 14:10:59 CDT 1998
 <!-- hhmts end -->
 
 </body>
