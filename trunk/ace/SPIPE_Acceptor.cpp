@@ -13,12 +13,14 @@ int
 ACE_SPIPE_Acceptor::remove (void)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::remove");
-  int result = this->close ();
 #if defined (ACE_HAS_STREAM_PIPES)
+  int result = this->close ();
+
   // Remove the underlying file.
   return ACE_OS::unlink (this->local_addr_.get_path_name ()) == -1 
     || result == -1 ? -1 : 0;
 #else
+  this->close ();
   return 0;
 #endif
 }
