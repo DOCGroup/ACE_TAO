@@ -1,3 +1,14 @@
+Wed Sep 15 21:25:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Fixed cleanup of root scope between IDL files when 
+          multiple IDL files are passed on the command line.
+          The cleanup needs to remove all declarations and
+          references except those for the predefined types,
+          and there was an off-by-one error.
+
 Tue Sep 14 17:12:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
