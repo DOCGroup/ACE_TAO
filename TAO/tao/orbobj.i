@@ -22,7 +22,8 @@ CORBA_ORB::~CORBA_ORB (void)
   if (! server_factory_from_service_config_)
     delete server_factory_;
 
-  assert (refcount_ == 0);
+  // This assertion isn't valid because our ORB is a singleton
+  // assert (refcount_ == 0);
 }
 
 // CORBA dup/release build on top of COM's (why not).

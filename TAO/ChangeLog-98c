@@ -1,7 +1,8 @@
 Thu Aug 28 14:04:44 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tests/Cubit/TAO/clnt.cpp (main): Added release of the orb
- 	pointer.
+	* tao/orbobj.i (CORBA_ORB): Removed assertion that was incorrect
+ 	b/c our ORB object is a singleton and not dynamically allocated,
+ 	thus the refcount can only reach zero at the end of its life.
 
 	* tao/typecode.cpp (TC_Private_State): Relocated the delete of
  	tc_discriminator_type_ to be after the deletion of the label list.

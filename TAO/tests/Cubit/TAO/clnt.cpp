@@ -496,7 +496,6 @@ main (int argc, char *argv[])
     }
     
   CORBA::release (objref);
-  CORBA::release (orb_ptr);
     
   return (error_count == 0) ? 0 : 1;
 }
