@@ -12,9 +12,9 @@ ACE_ROOT=$1
 DEST=$2
 DATE=`date +%Y/%m/%d-%H:%M`
 
-COMMON_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool"
+COMMON_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool AMH_Single_Threaded"
 
-SEQUENCE_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool"
+SEQUENCE_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool AMH_Single_Threaded"
 
 SEQ_TEST_TYPE="octet long short char double longlong"
 
@@ -140,6 +140,7 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     replot 'Default.txt' using 1:2 title 'Single_Threaded (Defaults)' w l
     replot 'Thread_Per_Connection.txt' using 1:2 title 'Thread_Per_Connection' w l
     replot 'Thread_Pool.txt' using 1:2 title 'Thread_Pool' w l
+    replot 'AMH_Single_Threaded.txt' using 1:2 title 'AMH' w l
     replot 'TCP.txt' using 1:2 title 'TCP/IP' w l
     set output "All.png"
     replot
@@ -161,6 +162,7 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     replot 'Default.txt' using 1:2 title 'Single_Threaded (Defaults)' w l
     replot 'Thread_Per_Connection.txt' using 1:2 title 'Thread_Per_Connection' w l
     replot 'Thread_Pool.txt' using 1:2 title 'Thread_Pool' w l
+    replot 'AMH_Single_Threaded.txt' using 1:2 title 'AMH' w l
     set output "CORBA.png"
     replot
     exit
