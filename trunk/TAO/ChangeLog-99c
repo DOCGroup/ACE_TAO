@@ -1,19 +1,24 @@
+Wed Jan 13 09:50:16 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp: removed ACE_Equal_To<ACE_CString>
+          explicit instantiation because it's in tao/POA.cpp.
+
 Tue Jan 12 20:10:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/GIOP.cpp (send_request): Changed to use sendv_n to do vector
-	  write.
+        * tao/GIOP.cpp (send_request): Changed to use sendv_n to do vector
+          write.
 
 Tue Jan 12 19:13:07 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
-	  fixed a seg fault that happened on program exit if <parse_args>
-	  failed. Now, <init_ORB> is called before anything else.
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+          fixed a seg fault that happened on program exit if <parse_args>
+          failed. Now, <init_ORB> is called before anything else.
 
 Tue Jan 12 18:04:33 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao/Sequence_T.i: Fixed a memory leak in bounded sequences.
-  	  Thanks to Patrice Bensoussan <pbensoussan@amadeus.net> for
- 	  helping us track this down.
+          Thanks to Patrice Bensoussan <pbensoussan@amadeus.net> for
+          helping us track this down.
 
 Tue Jan 12 13:09:06 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -68,8 +73,8 @@ Mon Jan 11 16:36:08 1999  Jeff Parsons <jp4@cs.wustl.edu>
 Mon Jan 11 13:15:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tao/GIOP.cpp: Changed the implementation to use the new send_n()
- 	  method on SOCK_Stream.  This enabled me to be able to remove the
- 	  adhoc use of writev_n() in this file.
+          method on SOCK_Stream.  This enabled me to be able to remove the
+          adhoc use of writev_n() in this file.
 
 Mon Jan 11 12:37:23 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
