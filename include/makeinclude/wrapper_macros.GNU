@@ -764,6 +764,16 @@ endif
 # If not explicitly is set that we don't have rwho, assume we have it.
 rwho ?= 1
 
+# If not explicitly is set that we don't have stlport, assume we 
+# don't have it.
+stlport ?= 0
+ifeq ($(stlport),1)
+  CPPFLAGS += -DACE_HAS_STLPORT $(PLATFORM_STLPORT_CPPFLAGS)
+  LDFLAGS  += $(PLATFORM_STLPORT_LDFLAGS)
+  LIBS     += $(PLATFORM_STLPORT_LIBS)
+endif
+
+
 # If not explicitly is set that we have wfmo, assume we don't have it.
 ifndef wfmo
   wfmo = 0
