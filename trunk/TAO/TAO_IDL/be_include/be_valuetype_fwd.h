@@ -26,6 +26,8 @@
 
 #ifdef IDL_HAS_VALUETYPE
 
+#include "be_interface_fwd.h"
+
 /*
  * BE_InterfaceFwd
  */

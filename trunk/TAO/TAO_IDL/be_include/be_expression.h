@@ -22,6 +22,10 @@
 #ifndef BE_EXPRESSION_H
 #define BE_EXPRESSION_H
 
+#include "ast_expression.h"
+
+class be_visitor;
+
 /*
  * BE_Expression
  */

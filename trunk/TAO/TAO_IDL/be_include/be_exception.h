@@ -3,6 +3,13 @@
 #ifndef BE_EXCEPTION_H
 #define BE_EXCEPTION_H
 
+#include "be_scope.h"
+#include "be_type.h"
+#include "ast_exception.h"
+
+class UTL_StrList;
+class be_visitor;
+
 /*
  * BE_Exception
  */

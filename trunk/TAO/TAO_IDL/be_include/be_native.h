@@ -21,6 +21,12 @@
 #ifndef BE_NATIVE_H
 #define BE_NATIVE_H
 
+#include "be_type.h"
+#include "ast_native.h"
+
+class UTL_StrList;
+class be_visitor;
+
 // Representation of "native" IDL type added by the POA spec
 
 class be_native : public virtual AST_Native, public virtual be_type

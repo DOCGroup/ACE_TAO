@@ -23,6 +23,10 @@
 #ifndef TAO_BE_INTERFACE_H
 #define TAO_BE_INTERFACE_H
 
+#include "be_scope.h"
+#include "be_type.h"
+#include "ast_interface.h"
+
 class TAO_OutStream;
 
 /*

@@ -22,6 +22,14 @@
 #ifndef BE_UNION_BRANCH_H
 #define BE_UNION_BRANCH_H
 
+#include "be_decl.h"
+#include "ast_union_branch.h"
+
+class UTL_LabelList;
+class UTL_Type;
+class UTL_StrList;
+class be_visitor;
+
 /*
  * BE_UnionBranch
  */

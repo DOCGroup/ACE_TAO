@@ -21,6 +21,11 @@
 #ifndef TAO_BE_FACTORY_H
 #define TAO_BE_FACTORY_H
 
+#include "ace/Singleton.h"
+#include "ace/Synch.h"
+
+class TAO_OutStream;
+
 class TAO_OutStream_Factory
 {
   // =TITLE

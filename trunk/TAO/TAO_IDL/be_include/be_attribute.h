@@ -22,6 +22,13 @@
 #ifndef BE_ATTRIBUTE_H
 #define BE_ATTRIBUTE_H
 
+#include "be_decl.h"
+#include "ast_attribute.h"
+
+class AST_Type;
+class UTL_StrList;
+class be_visitor;
+
 /*
  * BE_Attribute
  */

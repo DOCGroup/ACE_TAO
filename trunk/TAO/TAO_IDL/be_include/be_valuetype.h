@@ -20,6 +20,8 @@
 
 #ifdef IDL_HAS_VALUETYPE
 
+#include "be_interface.h"
+
 class TAO_OutStream;
 
 /*
