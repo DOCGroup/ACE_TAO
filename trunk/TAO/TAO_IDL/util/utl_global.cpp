@@ -117,7 +117,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     obv_support_ (I_TRUE),
     case_diff_error_ (I_TRUE),
     nest_orb_ (I_FALSE),
-    idl_flags_ ("")
+    idl_flags_ (""),
+    preserve_cpp_keywords_ (I_TRUE)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -1162,4 +1163,26 @@ IDL_GlobalData::stripped_preproc_include (const char *name)
       return (char *)name;
     }
 }
+
+/**
+ Whether we should not mung idl element names that are  
+ C++ keywords e.g. delete, operator etc. with _cxx_ prefix. 
+ Should be true when being used by the IFR Service 
+ */ 
+idl_bool  
+IDL_GlobalData::preserve_cpp_keywords (void) 
+{ 
+  return preserve_cpp_keywords_; 
+} 
+ 
+/** 
+ Set whether we should not mung idl element names that are C++  
+ keywords e.g. delete, operator etc. with _cxx_ prefix. 
+ Is unset by the tao_idl compiler. 
+ */ 
+void  
+IDL_GlobalData::preserve_cpp_keywords (idl_bool val) 
+{ 
+  preserve_cpp_keywords_ = val; 
+} 
 

@@ -364,6 +364,13 @@ TAO_IMR_Op_Add::parse (int argc, ACE_TCHAR **argv)
   ACE_Get_Opt get_opts (argc, argv, "hc:w:a:e:l:");
 
   this->server_name_ = argv[0];
+  if (ACE_OS_String::strlen(this->server_name_.c_str()) < 1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Server name <%s> must be at least one character long!\n",
+                       this->server_name_.c_str()),-1);
+  }
+    
   int c;
 
   while ((c = get_opts ()) != -1)

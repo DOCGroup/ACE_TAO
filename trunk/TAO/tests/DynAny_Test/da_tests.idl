@@ -6,13 +6,13 @@
 
 module DynAnyTests
 {
-  struct enclosed_struct 
+  struct enclosed_struct
   {
     float f;
     short s;
   };
 
-  struct test_struct 
+  struct test_struct
   {
     char c;
     long l;
@@ -24,7 +24,7 @@ module DynAnyTests
   const unsigned long DIM = 2;
   typedef long test_array [DIM];
 
-  enum test_enum 
+  enum test_enum
   {
     TE_ZEROTH,
     TE_FIRST,
@@ -41,4 +41,12 @@ module DynAnyTests
     case TE_THIRD: string str;
     case TE_ZEROTH: octet o;
   };
+
+  typedef test_struct test_struct_alias;
+  typedef test_union test_union_alias;
+
+  union test_implicit_def switch (boolean) {
+    case TRUE :
+       test_enum tenum;
+  } ;
 };

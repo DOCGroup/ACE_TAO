@@ -200,6 +200,63 @@ Test_DynStruct::run_test (void)
         }
 
       ACE_DEBUG ((LM_DEBUG,
+                 "testing: constructor(TypeCode alias)/from_any/to_any\n"));
+
+
+      const DynAnyTests::test_struct* ts_out2 = 0;
+      CORBA_Any_var out_any2 ;
+      DynamicAny::DynStruct_var ftc2;
+
+      ACE_TRY
+      {
+         DynamicAny::DynAny_var ftc2_base = dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_struct_alias
+                                                                   ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        ftc2 = DynamicAny::DynStruct::_narrow (ftc2_base.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        if (CORBA::is_nil (ftc2.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DynStruct::_narrow() returned nil\n"),
+                            -1);
+        }
+
+        ts.c = data.m_char1;
+        ts.l = data.m_long1;
+        ts.es.f = data.m_float1;
+        ts.es.s = data.m_short1;
+        CORBA_Any in_any3;
+        in_any3 <<= ts;
+        ftc2->from_any (in_any3
+                        ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        out_any2 = ftc2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        if ((out_any2.in () >>= ts_out2) != 1) // problem
+        {
+           ts_out2 = 0;
+        }
+     }
+     ACE_CATCH (CORBA::TypeCode::BadKind, ex)
+     {
+     }
+     ACE_ENDTRY;
+
+      if (ts_out2 != 0 && ts_out2->es.s == data.m_short1)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
+      else
+        {
+          ++this->error_count_;
+        }
+
+
+      ACE_DEBUG ((LM_DEBUG,
                  "testing: current_member_name/current_member_kind\n"));
 
       ftc1->seek (2
@@ -218,6 +275,34 @@ Test_DynStruct::run_test (void)
       ACE_TRY_CHECK;
 
       if (tk != CORBA::tk_struct)
+        {
+          ++this->error_count_;
+        }
+
+      if (this->error_count_ == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: current_member_name/current_member_kind with alias\n"));
+      ftc2->seek (2
+                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      DynamicAny::FieldName_var fn2 =
+        ftc2->current_member_name (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (ACE_OS::strcmp (fn2.in (), "es"))
+        {
+          ++this->error_count_;
+        }
+
+      CORBA::TCKind tk2 = ftc2->current_member_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (tk2 != CORBA::tk_struct)
         {
           ++this->error_count_;
         }

@@ -192,6 +192,7 @@ DRV_init (void)
   idl_global->set_include_file_names (0);
   idl_global->set_n_include_file_names (0);
   idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+  idl_global->preserve_cpp_keywords(I_FALSE);
 
   // Put an empty prefix on the stack for the global scope.
   idl_global->pragma_prefixes ().push (ACE::strnew (""));

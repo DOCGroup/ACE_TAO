@@ -34,7 +34,7 @@ private:
   void find_interface_def (ACE_ENV_SINGLE_ARG_DECL);
   // Query the object reference to get its InterfaceDef in the IFR.
 
-  void lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL);
+  int lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL);
   // Look up the InterfaceDef by name in the IFR.
 
   void get_operation_def (ACE_ENV_SINGLE_ARG_DECL);
@@ -80,4 +80,3 @@ private:
 };
 
 #endif /* IFR_DII_CLIENT_H */
-

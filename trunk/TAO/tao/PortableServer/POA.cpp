@@ -318,8 +318,20 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     {
       int temp = this->use_imr_;
       this->use_imr_ = 0;
-      this->imr_notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY
+      {
+        this->imr_notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+      ACE_CATCHANY
+      {
+        this->poa_manager_.remove_poa (this);
+        this->object_adapter ().unbind_poa (this,
+                                            this->folded_name_,
+                                            this->system_name_);
+        ACE_RE_THROW;
+      }
+      ACE_ENDTRY;
       this->use_imr_ = temp;
     }
 

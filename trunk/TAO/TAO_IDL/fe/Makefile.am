@@ -59,6 +59,7 @@ lex.yy.cpp.target:
             -e "s@#include <unistd\.h>@#include \"ace/OS.h\"@" \
             -e "/#include </d" \
             -e "s@ECHO@TAO_YY_ECHO@" \
+            -e "/^#line /d" \
             -e 's/\$$Hea''der.*\$$/$$I''d$$/' > lex.yy.cpp
 	patch < lex.yy.cpp.diff
 	echo timestamp > $@

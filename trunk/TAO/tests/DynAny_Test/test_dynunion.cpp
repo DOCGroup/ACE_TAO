@@ -146,6 +146,58 @@ Test_DynUnion::run_test (void)
         }
 
       ACE_DEBUG ((LM_DEBUG,
+                 "testing: constructor(TypeCode alias)/from_any/to_any\n"));
+
+      CORBA_Any_var out_any2 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::TypeCode_var s_out3;
+
+      ACE_TRY
+      {
+        DynamicAny::DynAny_var ftc2_base = dynany_factory->create_dyn_any_from_type_code
+          (DynAnyTests::_tc_test_union_alias ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        DynamicAny::DynUnion_var ftc2 =
+        DynamicAny::DynUnion::_narrow (ftc2_base.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        if (CORBA::is_nil (ftc2.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DynUnion::_narrow() returned nil\n"),
+                            -1);
+        }
+
+        ftc2->from_any (out_any2.in ()
+                        ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        ftc2->seek (1
+                    ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        s_out3 = ftc2->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+      }
+      ACE_CATCH (CORBA::TypeCode::BadKind, ex)
+      {
+        // Failed to create
+      }
+      ACE_ENDTRY;
+
+      if ( ! CORBA::is_nil (s_out3.in ()) &&
+           s_out3.in ()->equal (data.m_typecode1))
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
+      else
+        {
+          ++this->error_count_;
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
                  "testing:discriminator/discriminator_kind\n"));
 
       DynamicAny::DynAny_var dp2 = ftc1->get_discriminator (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -225,6 +277,22 @@ Test_DynUnion::run_test (void)
       ACE_TRY_CHECK;
       ftc1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: create_dyn_any with _default()\n"));
+      DynAnyTests::test_implicit_def test_implicit_def_union;
+      CORBA::Any any_union;
+
+      test_implicit_def_union._default();
+      ACE_TRY_CHECK;
+      any_union <<= test_implicit_def_union;
+      ACE_TRY_CHECK;
+
+      DynamicAny::DynAny_var da_union =
+        dynany_factory->create_dyn_any(any_union);
+      ACE_TRY_CHECK;
+
+      // if we get here the create_dyn_any worked.
     }
   ACE_CATCHANY
     {
