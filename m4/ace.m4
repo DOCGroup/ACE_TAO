@@ -249,7 +249,67 @@ dnl line, then "no_x" is set to "yes."
      AC_MSG_WARN([existing gperf may be overwritten during installation])
    fi
   ])
-AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_with_gperf = Xyes])
+ AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_with_gperf = Xyes])
+
+ AC_ARG_WITH([rmcast],
+  AC_HELP_STRING([--with-rmcast],[compile the ACE_RMCast library [[yes]]]),
+  [
+   case "${withval}" in
+    yes)
+      ace_user_with_rmcast=yes
+      ;;
+    no)
+      ace_user_with_rmcast=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${withval} for --with-rmcast])
+      ;;
+   esac
+  ],
+  [
+   ace_user_with_rmcast=yes
+  ])
+ AM_CONDITIONAL([BUILD_RMCAST], [test X$ace_user_with_rmcast = Xyes])
+
+ AC_ARG_WITH([qos],
+  AC_HELP_STRING([--with-qos],[compile the ACE_QoS library [[no]]]),
+  [
+   case "${withval}" in
+    yes)
+      ace_user_with_qos=yes
+      ;;
+    no)
+      ace_user_with_qos=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${withval} for --with-qos])
+      ;;
+   esac
+  ],
+  [
+   ace_user_with_qos=no
+  ])
+ AM_CONDITIONAL([BUILD_QOS], [test X$ace_user_with_qos = Xyes])
+
+ AC_ARG_WITH([ssl],
+  AC_HELP_STRING([--with-ssl],[compile the ACE_SSL library [[no]]]),
+  [
+   case "${withval}" in
+    yes)
+      ace_user_with_ssl=yes
+      ;;
+    no)
+      ace_user_with_ssl=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${withval} for --with-ssl])
+      ;;
+   esac
+  ],
+  [
+   ace_user_with_ssl=no
+  ])
+ AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
 
 #AC_ARG_WITH([tao],
 # AC_HELP_STRING([--with-tao],[build TAO (the ACE ORB) [[yes]]]),
