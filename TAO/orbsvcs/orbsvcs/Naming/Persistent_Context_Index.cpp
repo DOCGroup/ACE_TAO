@@ -184,6 +184,7 @@ TAO_Persistent_Context_Index::init (void)
 
       // Everything went successfully.
       status = 0;
+      temp2.release ();
     }
 
   else
