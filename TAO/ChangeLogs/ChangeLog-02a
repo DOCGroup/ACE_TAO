@@ -1,3 +1,46 @@
+Tue Apr 24 18:35:31 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Removed unnecessary 'extern' from the declaration of the
+          global hooks for defined interfaces, and uninlined the
+          implementation of those hooks. Egcs, for one, can't 
+          handle an inline function that isn't declared in the
+          same file. The other compilers probably disable inlining
+          in such a case anyway.
+
+        * tao/IFR_Client/IFR_Base.pidl:
+
+          Fixed typos in comments.
+
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BaseC.i:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_BasicC.i:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.i:
+        * tao/IFR_Client/diffs/IFR_BaseC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_BaseC.h.diff:
+        * tao/IFR_Client/diffs/IFR_BaseC.i.diff:
+        * tao/IFR_Client/diffs/IFR_BasicC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_BasicC.h.diff:
+        * tao/IFR_Client/diffs/IFR_BasicC.i.diff:
+        * tao/IFR_Client/diffs/IFR_ComponentsC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_ComponentsC.h.diff:
+        * tao/IFR_Client/diffs/IFR_ComponentsC.i.diff:
+        * tao/IFR_Client/diffs/IFR_ExtendedC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_ExtendedC.h.diff:
+        * tao/IFR_Client/diffs/IFR_ExtendedC.i.diff:
+
+          Regenerated hand-crafted files and .diff files for
+          IFR_Client.
+
 Tue Apr 24 16:31:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Big_Oneways/Session.h:
