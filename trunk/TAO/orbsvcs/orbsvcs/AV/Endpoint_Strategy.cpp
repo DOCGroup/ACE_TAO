@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "Endpoint_Strategy.h"
 
 ACE_RCSID(AV, Endpoint_Strategy, "$Id$")
 

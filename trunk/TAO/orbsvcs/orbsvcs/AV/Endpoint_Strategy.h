@@ -19,7 +19,7 @@
 #ifndef TAO_AV_ENDPOINT_STRATEGY_H
 #define TAO_AV_ENDPOINT_STRATEGY_H
 
-#include "orbsvcs/AV/AVStreams_i.h"
+#include "AVStreams_i.h"
 #include "tao/TAO.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
