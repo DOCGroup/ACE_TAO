@@ -236,7 +236,8 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                                      const ASYS_TCHAR *net_if,
                                      int protocol_family,
                                      int protocol,
-                                     int reuse_addr)
+                                     int reuse_addr,
+									 ACE_Protocol_Info *protocolinfo)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe_ifs");
 #if defined (ACE_WIN32)
@@ -277,7 +278,8 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                                reuse_addr,
                                ASYS_TEXT ("0.0.0.0"),
                                protocol_family,
-                               protocol) == 0)
+                               protocol,
+							   protocolinfo) == 0)
             ++nr_subscribed;
         }
       else
@@ -295,7 +297,8 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                                  reuse_addr,
                                  ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
                                  protocol_family,
-                                 protocol) == 0)
+                                 protocol,
+								 protocolinfo) == 0)
               ++nr_subscribed;
           }
 
@@ -315,6 +318,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   ACE_UNUSED_ARG (protocol_family);
   ACE_UNUSED_ARG (protocol);
   ACE_UNUSED_ARG (reuse_addr);
+  ACE_UNUSED_ARG (protocolinfo);
 #endif /* ACE_WIN32 */
   // Otherwise, do it like everyone else...
 
@@ -395,7 +399,8 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                                     net_if,
                                     protocol_family,
                                     protocol,
-                                    reuse_addr);
+                                    reuse_addr,
+									protocolinfo);
   // Check for the "short-circuit" return value of 1 (for NT).
   if (result != 0)
     return result;
@@ -407,7 +412,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
       
       sockaddr_in mult_addr;
       
-      mult_addr.sin_family = protocol_family;
+      mult_addr.sin_family = protocolinfo->iAddressFamily;
       mult_addr.sin_port = ACE_HTONS (mcast_addr.get_port_number ());
       mult_addr.sin_addr = this->mcast_request_if_.imr_multiaddr;
       
