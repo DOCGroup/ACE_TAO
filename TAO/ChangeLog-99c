@@ -14,7 +14,8 @@ Sat Sep 18 17:57:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/encode.cpp:
 	  There was a missing set of parentheses for TAO_Marshal_Struct
 	  that I left out of a fix sent in to the alignment code for
-	  Borland C Builder.
+	  Borland C Builder. Thanks to Christopher Kohlhoff 
+	  <chris@kohlhoff.com> for pointing this out.
 
 Sat Sep 18 16:25:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 
