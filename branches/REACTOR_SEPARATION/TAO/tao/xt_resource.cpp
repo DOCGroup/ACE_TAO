@@ -8,6 +8,9 @@
 
 ACE_RCSID(tao, xt_resource, "$Id$")
 
+ACE_XtReactor *
+TAO_XtResource_Factory::impl_ = 0;
+
 XtAppContext
 TAO_XtResource_Factory::context_ = 0;
 
@@ -17,10 +20,13 @@ TAO_XtResource_Factory::allocate_reactor_impl (void) const
   if (TAO_XtResource_Factory::context_ == 0)
     return 0;
 
-  ACE_Reactor_Impl *impl = 0;
+  if ( !impl_ )
+  {
+    ACE_NEW_RETURN (impl_, ACE_XtReactor (TAO_XtResource_Factory::context_), 0);
+    ACE_DEBUG ((LM_DEBUG, "ACE_FlReactor created.\n"));
+  }
 
-  ACE_NEW_RETURN (impl, ACE_XtReactor (TAO_XtResource_Factory::context_), 0);
-  return impl;
+  return impl_;
 }
 
 void

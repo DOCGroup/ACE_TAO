@@ -23,6 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/XtReactor.h"
+//forwards
+class ACE_XtReactor;
 
 // ****************************************************************
 
@@ -31,10 +33,7 @@
  *
  * @brief TAO's default resource factory
  *
- * Using a <{resource source specifier}> as a discriminator, the
- * factory can return resource instances which are, e.g., global,
- * stored in thread-specific storage, stored in shared memory,
- * etc.
+ * This factory is intended for creating XtReactor for ORB.
  */
 class TAO_XtReactor_Export TAO_XtResource_Factory : public TAO_Default_Resource_Factory
 {
@@ -52,6 +51,7 @@ protected:
 
 private:
   static XtAppContext context_;
+  static ACE_XtReactor *impl_;
 };
 
 #if defined (__ACE_INLINE__)

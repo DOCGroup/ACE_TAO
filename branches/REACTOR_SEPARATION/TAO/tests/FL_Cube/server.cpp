@@ -2,6 +2,7 @@
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
+#include "tao/fl_resource_loader.h"
 
 ACE_RCSID(FL_Cube, server, "$Id$")
 
@@ -39,7 +40,10 @@ int
 main (int argc, char *argv[])
 {
   Fl_Window window(300, 300);
-
+  ACE_DEBUG ((LM_DEBUG, "before TAO_FlResource_Loader::TAO_FlResource_Loader ()\n"));
+  
+  TAO_FlResource_Loader fl_loader;
+  ACE_DEBUG ((LM_DEBUG, "after TAO_FlResource_Loader::TAO_FlResource_Loader ()\n"));
   Simple_Window sw (10, 10,
                     window.w () - 20, window.h () - 20);
   window.resizable (&sw);

@@ -5,16 +5,21 @@
 # include "tk_resource.i"
 #endif /* ! __ACE_INLINE__ */
 #include "ace/TkReactor.h"
+ACE_TkReactor *
+TAO_TkResource_Factory::impl_ = 0 ;
 
 ACE_Reactor_Impl *
 TAO_TkResource_Factory::allocate_reactor_impl (void) const
 {
-  ACE_Reactor_Impl *impl = 0;
+  if ( !impl_ )
+  {
+    ACE_NEW_RETURN(impl_,
+                   ACE_TkReactor (),
+                   0);
+    ACE_DEBUG ((LM_DEBUG, "ACE_TkReactor created.\n"));
+  }
 
-  ACE_NEW_RETURN(impl,
-                 ACE_TkReactor (),
-                 0);
-  return impl;
+  return impl_;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_TkResource_Factory,

@@ -29,10 +29,7 @@
  *
  * @brief TAO's default resource factory
  *
- * Using a <{resource source specifier}> as a discriminator, the
- * factory can return resource instances which are, e.g., global,
- * stored in thread-specific storage, stored in shared memory,
- * etc.
+ * This factory is intended for creating QtReactor for ORB.
  */
 class TAO_QtReactor_Export TAO_QtResource_Factory : public TAO_Default_Resource_Factory
 {

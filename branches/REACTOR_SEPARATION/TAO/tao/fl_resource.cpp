@@ -6,15 +6,20 @@
 #endif /* ! __ACE_INLINE__ */
 #include "ace/FlReactor.h"
 
+ACE_FlReactor *TAO_FlResource_Factory::impl_ = 0;
+
 ACE_Reactor_Impl *
 TAO_FlResource_Factory::allocate_reactor_impl (void) const
 {
-  ACE_Reactor_Impl *impl = 0;
+  if ( !impl_ )
+  {
+    ACE_NEW_RETURN(impl_,
+                   ACE_FlReactor (),
+                   0);
+    ACE_DEBUG ((LM_DEBUG, "ACE_FlReactor created.\n"));
+  }
 
-  ACE_NEW_RETURN(impl,
-                 ACE_FlReactor (),
-                 0);
-  return impl;
+  return impl_;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_FlResource_Factory,
