@@ -1,3 +1,10 @@
+Tue Aug  1 08:28:40 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * rules.tao.GNU
+
+          Removed references to the true executable (This didn't seem to work
+          under NT) from rules.tao.GNU.
+
 Tue Aug 01 03:11:25 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/ORB_destroy: New test for funky poa and orb destruction.
