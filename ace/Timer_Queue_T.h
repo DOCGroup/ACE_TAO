@@ -313,8 +313,8 @@ private:
   // Adjusts for timer skew in various clocks.
 
   // = Don't allow these operations for now.
-  ACE_Timer_Queue_T (const ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> &);
-  void operator= (const ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> &);
+  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Queue_T (const ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> &))
 };
 
 template <class ACE_LOCK>
