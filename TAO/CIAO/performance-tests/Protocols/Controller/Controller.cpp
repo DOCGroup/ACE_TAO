@@ -14,7 +14,6 @@ static int shutdown_receiver = 0;
 static CORBA::ULong iterations = 5;
 static CORBA::ULong invocation_rate = 5;
 static int count_missed_end_deadlines = 0;
-static ACE_UINT32 gsf = 0;
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
 static CORBA::ULong message_size = 0;
