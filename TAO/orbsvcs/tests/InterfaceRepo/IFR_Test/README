@@ -37,6 +37,8 @@ of a persistent Interface Repository.
 
 To run this test, either use the Perl script run_test.pl, or
 
+
+
 (Windows)
 start the Interface Repository by typing 
 
@@ -44,7 +46,7 @@ start the Interface Repository by typing
 
 in the IFR's home directory (TAO/orbsvcs/IFR_Service), then (in this directory)
 
- IFR_Test -ORBInitRef InterfaceRepository=file://../../../IFR_Service/if_repo.ior
+ IFR_Test
 
 (Unix)
 in this directory, type 
@@ -53,10 +55,26 @@ in this directory, type
 
 then
 
- ./IFR_Test -ORBInitRef InterfaceRepository=file://if_repo.ior
+ ./IFR_Test
 
-Add any of the options below to the IFR_Test command. Both the Perl script 
-and the test executable have the same command line options. They are:
+
+
+If for some reason IP multicast is not available or enabled on your platform, 
+then add
+
+ -ORBInitRef InterfaceRepository=file://if_repo.ior
+
+to the client's command line. If the IFR_Service has been started with the
+command line option -o <filename> (see the README file in the IFR_Service
+directory), then instead add
+
+ -ORBInitRef InterfaceRepository=file://<filename>
+
+to the client's command line.
+
+You may add any of the options below to the IFR_Test command line. Both the
+Perl script and the test executable have the same command line options. 
+They are:
 
 	-d	Outputs the results of queries along with a string
 		explaining the sequence of calls and/or accesses
