@@ -50,8 +50,9 @@ DIRS = \
         NestedUpcall \
         Object_Loader \
         Objref_Sequence_Test \
-	OctetSeq \
-	Oneway_Buffering \
+        OBV \
+        OctetSeq \
+        Oneway_Buffering \
         Oneways_Invoking_Twoways \
 	ORB_destroy \
 	ORB_init \
