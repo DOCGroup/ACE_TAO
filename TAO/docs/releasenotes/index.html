@@ -1353,7 +1353,7 @@ multiple consumers and producers exchange events in this configuration.</li>
 </ul>
 <h3>
 Known bugs:</h3>
-<ul> 
+<ul>
 <li>
 CosEC_Multiple: <tt>($TAO_ROOT/orbsvcs/tests/CosEC_Multiple)</tt>:
 Once the tests are done, the control doesn't return to the shell,
@@ -1362,7 +1362,7 @@ you have to say CTRL-C to get back to the prompt.
 </ul>
 
 <hr WIDTH="100%">
-<h3><a NAME="log"></a>CORBA Telecom Log Service </h3> 
+<h3><a NAME="log"></a>CORBA Telecom Log Service </h3>
 
 <h4> Last updated: Sat Feb 19 16:58:42 CDT 2000 </h4>
 Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Pathayapura</a>
@@ -1389,7 +1389,7 @@ Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Path
       a simple use of the Log Service.
       <br>
       A thorough test <tt>$TAO_ROOT/orbsvcs/examples/Log/test/client</tt> tests
-      most of the features of the logging service. 
+      most of the features of the logging service.
   </li>
   <li>
       The Query Language supported at present is "TCL".
@@ -1443,92 +1443,152 @@ Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Path
 <hr WIDTH="100%">
 <h3><a NAME="notify"></a>CORBA Notification Service </h3>
 
-<h4> Last updated: Fri Feb 4 00:19:08 CST 2000</h4>
+<h4> Last updated: Fri Mar 24 21:12:06 CST 2000</h4>
 Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
-<p>Work is in progress to implement the CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf">
-Notification Service </a>.
-The current implementation consists of the following (see the associated README's for more
-information):
+<p>
+Work is in progress to implement the CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf"> Notification Service </a>.
+The implementation released in TAO 1.1 consists of the following
+(see the associated README's for more information):
 <ul>
 	<li>
-	The implementation of the interfaces in the Notification Service spec is in
-	<tt>$TAO_ROOT/orbsvcs/orbsvcs/Notify</tt>.
+            The implementation of the interfaces in the Notification Service
+            spec is in <tt>$TAO_ROOT/orbsvcs/orbsvcs/Notify</tt>.
 	</li>
 
 	<li>
-	The service executable is implemented in <tt>$TAO_ROOT/orbsvcs/Notify</tt>.
+            The service executable is implemented in
+            <tt>$TAO_ROOT/orbsvcs/Notify_Service</tt>.
+        </li>
+
+        <li>
+            The example in <tt>$TAO_ROOT/orbsvcs/examples/Notify/Filter</tt>
+            shows a basic example of using filters.
 	</li>
 
-	<li>
-	The example in <tt>$TAO_ROOT/orbsvcs/examples/Notify/Filter</tt> shows a basic example
-	of using the Notification Service.
-	</li>
+        <li>
+            The example in <tt>$TAO_ROOT/orbsvcs/examples/Notify/Subscribe
+            </tt> shows a basic example of how to use subscriptions.
+        </li>
 </ul>
 
 <h3> Features supported thus far:</h3>
-
+The Notification Service supports all the interfaces defined in the spec
+*except* Qos Properties, Pull interfaces and Typed Event style communication.
+<br>
+Please note the following:
 <ul>
   <li>
-   Creating Event Channels. However, the Channel Factory does not assign ids as yet.
+      All features implemented so far are *code* complete and we are
+      currently testing them.
   </li>
 
   <li>
-  Creating ConsumerAdmins and Supplier Admins.
+      All Proxy objects support the <tt>Subscribe</tt> and <tt>Publish</tt>
+      interface methods and will inform connected clients about
+      <tt>subscription_change</tt> and <tt>offer_change</tt>.
   </li>
 
   <li>
-  Creating ProxyConsumers and ProxySuppliers for "Any" events and Structured events.
+      Assignment of ID's: All object factories assign ID's to objects created.
+      The ID's are recycled when the objects are destroyed.
   </li>
 
   <li>
-   Helper classes TAO_Notify_StructuredPushConsumer and TAO_Notify_StructuredPushSupplier
-   to write consumers and suppliers for Structured Events.
+      For now, the SequenceProxyPushSupplier does not <tt>push</tt> to
+      consumers.
+      This will be done once we support the <tt>Maximum Batch Size</tt> QoS
+      property.
   </li>
 
   <li>
-   Support for Filters.The EventChannel's default Filter Factory can be used to create
-   filters. Note that for now we support "TCL" grammer from the Trading Service.
+      There are helper classes TAO_Notify_StructuredPushConsumer,
+      TAO_Notify_StructuredPushSupplier and TAO_Notify_PushConsumer,
+      TAO_Notify_PushSupplier to write client consumers and suppliers.
+  </li>
+
+  <li>
+      The EventChannel's default Filter Factory can be used to create filters.
+      For now we support the "TCL" grammer from the Trading Service.
+  </li>
+
+  <li>
+      This implementation is backward compatible with the <a href="#ec">
+      CORBA Event Service</a>.
+  </li>
+
+  <li>
+      A runnning theme in this project is to isolate the patterns identified
+      in the implementation of the <a href="ec.html"> RTEC </a> and reuse them.
+      We hope to come up with a collection of C++ template classes that
+      capture these patterns so that they might be used in other similar
+      event communication senarios.
   </li>
 </ul>
 
-<h3> Project Schedule </h3>
+<h3> Project Schedule </h3
+The TODO list runs like this:
 <ul>
-	<li>
-	Finish the remainder of the implementation of the Notification Service for the
-	TAO 1.1 release.This will include all administrative methods in all interfaces,
-	suspend/resume connections, Mapping Filters, Notify Publish,Subscribe interfaces.
-	This implementation will be backward compatible with the <a href="#ec">CORBA Event
-	Service</a>.
-	</li>
 
-	<li>
-	Address concurrency issues in the service - isolate the patterns identified in the
-	implementation of the <a href="ec.html"> RTEC </a> and reuse them. We hope to come up
-	with a collection of C++ template classes that capture these patterns so that they might
-	be used in other similar event communication senarios.
-	</li>
+  <li>
+      Implement the QoS properties, especially the <tt>Reliability</tt>
+      QoS property that requires persistent events.
+  </li>
 
-	<li>
-	Come up with a rigorous test suite for this service to measure its performance.
-	</li>
+  <li>
+      Concurrency:
+      <ul>
+        <li>
+            Make the service thread safe.
+        </li>
 
-	<li>
-	Implement the parser engine for the <tt>Extended TCL</tt> grammer.
-	</li>
+        <li> Add MT dispatching of events to consumers - The EventChannel
+            will deliver the event in another thread, different from the thread
+            that evaluated (checking subscriptions and filters) it.
+        </li>
 
-	<li>
-	Implement the QoS features, especially the <i>Reliability</i> QoS property that requires
-	persistent events.
-	</li>
+        <li> Add MT evaluation of events - Events delivered to the
+            ProxySuppliers will be evaluated in another thread, different
+            from the delivering thread.
+        </li>
+      </ul>
+  </li>
 
-	<li>
-	Implement event communication via reliable multicast.
-	</li>
+  <li>
+      Filters:
+      <ul>
+        <li>
+            Implement the parser engine for the <tt>Extended TCL</tt> grammer.
+        </li>
+
+        <li>
+            Add a "filter cache" to cache the expression tree for frequently
+            used constraint expressions.
+        </li>
+
+        <li>
+            Implement CosNotifyFilter::MappingFilter.
+        </li>
+
+      </ul>
+  </li>
+
+  <li>
+      Use the Service Configurator to supply options to the Notify Service.
+  </li>
+
+  <li>
+      Come up with a rigorous test suite for this service to measure its
+      performance.
+  </li>
+
+  <li>
+      If possible, implement Pull interfaces.
+  </li>
+
+  <li>
+      If possible, implement event communication via reliable multicast.
+  </li>
 </ul>
-
-Note that we do not plan to support the following, anytime in the near future - Pull style and Typed
-event style communication.
-<P><HR><P>
 
 <!--#include virtual="ec.html" -->
 <p>
