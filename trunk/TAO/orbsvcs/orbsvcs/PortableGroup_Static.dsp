@@ -265,10 +265,6 @@ SOURCE=.\miopC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\miopS.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\PortableGroup\PG_Location_Equal_To.inl
 # End Source File
 # Begin Source File
@@ -294,10 +290,6 @@ SOURCE=.\miopC.h
 # Begin Source File
 
 SOURCE=.\PortableGroup\miopconf.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\miopS.h
 # End Source File
 # Begin Source File
 
@@ -442,10 +434,6 @@ SOURCE=.\PortableGroup\UIPMC_Wait_Never.h
 # Begin Source File
 
 SOURCE=.\miopC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\miopS.cpp
 # End Source File
 # Begin Source File
 
