@@ -1,3 +1,10 @@
+Mon Mar 24 13:07:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_T.cpp:
+
+          Added ace/CORBA_macros.h to the list of included files, for
+          the benfit of BCB.
+
 Sun Mar 23 12:30:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Services.cpp:

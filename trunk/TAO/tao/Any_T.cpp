@@ -6,6 +6,7 @@
 #include "tao/Any_T.h"
 #include "tao/Marshal.h"
 #include "tao/debug.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any_T.inl"
