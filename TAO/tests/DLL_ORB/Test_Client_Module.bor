@@ -2,23 +2,25 @@
 # Makefile for building the test_client_module
 #
 
-NAME = test_client_module
+NAME = Test_Client_Module
 
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 
 OBJFILES = \
-        $(OBJDIR)\testC.obj
+	$(OBJDIR)\testC.obj \
+	$(OBJDIR)\Test_Client_Module.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
-	$(TAO_CFLAGS)
+	$(TAO_CFLAGS) \
+	-DTEST_CLIENT_MODULE_BUILD_DLL=1
 
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB)
 
 IDLFILES = \
-        $(IDLDIR)\test.idl
+	$(IDLDIR)\test.idl
 
 CPPDIR = .
 
