@@ -8824,6 +8824,13 @@ ACE_OS::atoi (const wchar_t *s)
 }
 
 ACE_INLINE wchar_t *
+ACE_OS::strpbrk (wchar_t *s, const wchar_t *t)
+{
+  // ACE_TRACE ("ACE_OS::wcspbrk");
+  return ::wcspbrk (s, t);
+}
+
+ACE_INLINE const wchar_t *
 ACE_OS::strpbrk (const wchar_t *s, const wchar_t *t)
 {
   // ACE_TRACE ("ACE_OS::wcspbrk");
