@@ -3755,7 +3755,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Informing IMR that we are running at: %s\n", curr_addr.in ()));
 
-  imr_admin->server_is_running (this->the_name (),
+  imr_admin->server_is_running (this->name ().c_str (),
                                curr_addr.in (),
                                svr,
                                ACE_TRY_ENV);
