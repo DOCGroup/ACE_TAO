@@ -1,9 +1,9 @@
 // $Id$
 
 #include "Strategy_Scheduler.h"
-#if defined (quantify)
-  #include <quantify.h>
-#endif /* quantify */
+#if defined (ACE_HAS_QUANTIFY)
+# include <quantify.h>
+#endif /* ACE_HAS_QUANTIFY */
 
 ACE_RCSID(Sched, DynSched_Test, "$Id$")
 
@@ -178,13 +178,13 @@ run_schedule (ACE_Scheduler_Strategy &strategy,
     return -1;
   }
 
-#if defined (quantify)
+#if defined (ACE_HAS_QUANTIFY)
   quantify_start_recording_data ();
-#endif /* quantify */
+#endif /* ACE_HAS_QUANTIFY */
   ACE_DynScheduler::status_t status = scheduler.schedule ();
-#if defined (quantify)
+#if defined (ACE_HAS_QUANTIFY)
   quantify_stop_recording_data ();
-#endif /* quantify */
+#endif /* ACE_HAS_QUANTIFY */
 
   switch (status)
   {
