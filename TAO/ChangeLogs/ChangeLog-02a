@@ -7,23 +7,25 @@ Tue Sep  4 11:06:55 2001  Chad Elliott <elliott_c@ociweb.com>
         * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
 
           Added includes for ESF templates.  Fix for GHS on VxWorks.
+          Thanks, Priyanka <pgontla@ece.uci.edu>, for figuring this one
+          out.
 
 Tue Sep  4 09:19:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.av: Updated dependencies again to fix a
-	  compilation error.
+        * orbsvcs/orbsvcs/Makefile.av: Updated dependencies again to fix a
+          compilation error.
 
 Tue Sep  4 07:53:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* */Makefile: Updated dependencies. We wantde this done before
-	  1.2. I dont think we should be having anymore big changes to
-	  regenerate this again.
+        * */Makefile: Updated dependencies. We wantde this done before
+          1.2. I dont think we should be having anymore big changes to
+          regenerate this again.
 
 Tue Sep  4 07:22:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
-	  Changed the typename declaration to class. The usage of typename
-	  chokes SunCC42. 
+        * orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
+          Changed the typename declaration to class. The usage of typename
+          chokes SunCC42.
 
 Mon Sep  3 18:52:03 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -35,37 +37,37 @@ Mon Sep  3 18:52:03 2001  Craig Rodrigues  <crodrigu@bbn.com>
         * orbsvcs/tests/AVStreams/Multicast/ftp.h:
         * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
           Use service configurator to select reactor type.  Fix some typos.
-         
+
         * orbsvcs/tests/AVStreams/Multicast/components_svc.conf: (Added)
 
 Fri Aug 31 19:28:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Faults/server.cpp:
-	* tests/Faults/test_i.h: The servant implementation inherits from
-	  the PortableServer::RefCountServantBase. Changes were also done
-	  in the server.cpp file to create the servant on the heap. Thanks
-	  to Chris Kohlhoff for pointing this out.
+        * tests/Faults/server.cpp:
+        * tests/Faults/test_i.h: The servant implementation inherits from
+          the PortableServer::RefCountServantBase. Changes were also done
+          in the server.cpp file to create the servant on the heap. Thanks
+          to Chris Kohlhoff for pointing this out.
 
 Fri Aug 31 18:58:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/File_IO/client.cpp: Fixed a warning.
+        * tests/File_IO/client.cpp: Fixed a warning.
 
 Fri Aug 31 18:53:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/IIOP_Connection_Handler.cpp:
         * tao/Strategies/UIOP_Connection_Handler.cpp:
         * tao/Strategies/SHMIOP_Connection_Handler.cpp: Reverted the
-	  change "Tue Aug 28 16:56:07 2001  Balachandran Natarajan
-	  <bala@cs.wustl.edu>". Put the sockets back in blocking mode for
-	  a RW connection handler. We had severe fall in performance. This
-	  should get that back. We need to come up with a better way to
-	  handle the problem for which the fix was put in.
+          change "Tue Aug 28 16:56:07 2001  Balachandran Natarajan
+          <bala@cs.wustl.edu>". Put the sockets back in blocking mode for
+          a RW connection handler. We had severe fall in performance. This
+          should get that back. We need to come up with a better way to
+          handle the problem for which the fix was put in.
 
 Fri Aug 31 16:32:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.h:
-	  Changed the typename declaration to class. The usage of typename
-	  chokes SunCC42. 
+        * orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.h:
+          Changed the typename declaration to class. The usage of typename
+          chokes SunCC42.
 
 Fri Aug 31 08:31:09 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -83,12 +85,12 @@ Fri Aug 31 07:52:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Thu Aug 30 15:25:13 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/DLL_ORB/client.cpp (main):
-	* tests/DLL_ORB/server.cpp (main):
+        * tests/DLL_ORB/client.cpp (main):
+        * tests/DLL_ORB/server.cpp (main):
 
-	  Reverted the change that pre-loaded the default resource factory
-	  before the ORB.  Chris Kohlhoff's slick fix for the Server
-	  Configurator obviates the need to this sort of pre-loading.
+          Reverted the change that pre-loaded the default resource factory
+          before the ORB.  Chris Kohlhoff's slick fix for the Server
+          Configurator obviates the need to this sort of pre-loading.
 
 Thu Aug 30 07:59:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
