@@ -19,7 +19,7 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
   //           global_scale_factor
   ACE_hrtime_t tmp = tv.sec ();
   tmp *= ((ACE_UINT32) ACE_ONE_SECOND_IN_USECS * global_scale_factor_);
-  tv.usec ((long) (hrt - tmp) / global_scale_factor_);
+  tv.usec ((long) ((hrt - tmp) / global_scale_factor_));
 }
 
 
