@@ -1,3 +1,20 @@
+Fri Mar  5 12:14:56 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/mfc.mpb:
+
+          Set the ACE_HAS_MFC to 1 instead of just defining it.
+
+        * bin/MakeProjectCreator/config/notifytest.mpb:
+        * bin/MakeProjectCreator/config/rtnotify.mpb:
+
+          Switched these projects to use notification instead of notify.
+          The notify base project only inherited from notification and
+          provided nothing else.
+
+        * bin/MakeProjectCreator/config/notify.mpb:
+
+          Removed this file.
+
 Fri Mar  5 10:56:35 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
