@@ -413,7 +413,7 @@ public:
 
   int spawn (ACE_THR_FUNC func,
              void *args = 0,
-             long flags = THR_NEW_LWP,
+             long flags = THR_NEW_LWP | THR_JOINABLE,
              ACE_thread_t * = 0,
              ACE_hthread_t *t_handle = 0,
              long priority = ACE_DEFAULT_THREAD_PRIORITY,
@@ -427,7 +427,7 @@ public:
   int spawn_n (size_t n,
                ACE_THR_FUNC func,
                void *args = 0,
-               long flags = THR_NEW_LWP,
+               long flags = THR_NEW_LWP | THR_JOINABLE,
                long priority = ACE_DEFAULT_THREAD_PRIORITY,
                int grp_id = -1,
                ACE_Task_Base *task = 0,
@@ -752,7 +752,7 @@ protected:
   // Set the cancellation flag for the thread described in <tda>.
 
   int register_as_terminated (ACE_Thread_Descriptor *td);
-  // Register a thread as terminated and put it into the <terminated_thr_list_>. 
+  // Register a thread as terminated and put it into the <terminated_thr_list_>.
 
   ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;
   // Keeping a list of thread descriptors within the thread manager.

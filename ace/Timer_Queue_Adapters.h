@@ -123,7 +123,7 @@ public:
   ACE_thread_t thr_id (void);
   // Return the thread id of our active object.
 
-  virtual int activate (long flags = THR_NEW_LWP,
+  virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE,
                         int n_threads = 1,
                         int force_active = 0,
                         long priority = ACE_DEFAULT_THREAD_PRIORITY,
