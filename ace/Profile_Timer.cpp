@@ -28,28 +28,28 @@ ACE_Profile_Timer::ACE_Profile_Timer (void)
   ACE_OS::memset (&this->begin_usage_, 0, sizeof this->begin_usage_);
   ACE_OS::memset (&this->last_usage_, 0, sizeof this->last_usage_);
 
-#if defined (ACE_HAS_PRUSAGE_T)
+#  if defined (ACE_HAS_PRUSAGE_T)
   ACE_OS::memset (&this->last_usage_, 0, sizeof this->last_usage_);
   char buf[20];
   ACE_OS::sprintf (buf, "/proc/%d", ACE_OS::getpid ());
 
   if ((this->proc_handle_ = ACE_OS::open (buf, O_RDONLY, 0)) == -1)
     ACE_OS::perror (buf);
-#elif defined (ACE_HAS_GETRUSAGE)
+#  elif defined (ACE_HAS_GETRUSAGE)
   ACE_OS::memset (&this->begin_time_, 0, sizeof this->begin_time_);
   ACE_OS::memset (&this->end_time_, 0, sizeof this->end_time_);
   ACE_OS::memset (&this->last_time_, 0, sizeof this->last_time_);
-#endif /* ACE_HAS_PRUSAGE_T */
+#  endif /* ACE_HAS_PRUSAGE_T */
 }
 
 // Terminate the interval timer.
 ACE_Profile_Timer::~ACE_Profile_Timer (void)
 {
   ACE_TRACE ("ACE_Profile_Timer::~ACE_Profile_Timer");
-#if defined (ACE_HAS_PRUSAGE_T)
+#  if defined (ACE_HAS_PRUSAGE_T)
   if (ACE_OS::close (this->proc_handle_) == -1)
     ACE_OS::perror ("ACE_Profile_Timer::~ACE_Profile_Timer");
-#endif /* ACE_HAS_PRUSAGE_T */
+#  endif /* ACE_HAS_PRUSAGE_T */
 }
 
 // Return the resource utilization.
@@ -61,7 +61,7 @@ ACE_Profile_Timer::get_rusage (ACE_Profile_Timer::Rusage &usage)
   usage = this->end_usage_;
 }
 
-#if defined (ACE_HAS_PRUSAGE_T)
+#  if defined (ACE_HAS_PRUSAGE_T)
 
 // Compute the amount of resource utilization since the start time.
 
@@ -127,14 +127,14 @@ ACE_Profile_Timer::subtract (timespec_t &tdiff, timespec_t &t1, timespec_t &t0)
     }
 }
 
-#elif defined (ACE_HAS_GETRUSAGE)
+#  elif defined (ACE_HAS_GETRUSAGE)
 // Compute the amount of resource utilization since the start time.
 
 void
 ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
 {
   ACE_TRACE ("ACE_Profile_Timer::elapsed_rusage");
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_LIMITED_RUSAGE_T)
+#    if !defined (ACE_WIN32) && !defined (ACE_HAS_LIMITED_RUSAGE_T)
   // integral shared memory size
   usage.ru_ixrss = this->end_usage_.ru_ixrss - this->last_usage_.ru_ixrss;
   // integral unshared data "
@@ -166,9 +166,9 @@ ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
   usage.ru_nivcsw = this->end_usage_.ru_nivcsw - this->last_usage_.ru_nivcsw;
   this->subtract (usage.ru_utime, this->end_usage_.ru_utime, this->last_usage_.ru_utime);
   this->subtract (usage.ru_stime, this->end_usage_.ru_stime, this->last_usage_.ru_stime);
-#else
+#    else
   ACE_UNUSED_ARG(usage);
-#endif /* ACE_WIN32 */
+#    endif /* ACE_WIN32 */
 }
 
 void
@@ -176,7 +176,7 @@ ACE_Profile_Timer::compute_times (ACE_Elapsed_Time &et)
 {
   ACE_TRACE ("ACE_Profile_Timer::compute_times");
 
-#if defined (ACE_WIN32)
+#    if defined (ACE_WIN32)
   ACE_Time_Value atv = this->end_time_ - this->begin_time_;
   et.real_time = atv.sec () + ((double) atv.usec ()) / ACE_ONE_SECOND_IN_USECS;
 
@@ -188,7 +188,7 @@ ACE_Profile_Timer::compute_times (ACE_Elapsed_Time &et)
   atv = ACE_Time_Value (this->end_usage_.ru_stime)
         - ACE_Time_Value (this->begin_usage_.ru_stime);
   et.system_time = atv.sec () + ((double) atv.usec ()) / ACE_ONE_SECOND_IN_USECS;
-#else
+#    else
   timeval td;
 
   this->subtract (td, this->end_time_, this->begin_time_);
@@ -199,7 +199,7 @@ ACE_Profile_Timer::compute_times (ACE_Elapsed_Time &et)
 
   this->subtract (td, this->end_usage_.ru_stime,  this->begin_usage_.ru_stime);
   et.system_time = td.tv_sec + ((double) td.tv_usec) / ACE_ONE_SECOND_IN_USECS;
-#endif /* ACE_WIN32 */
+#    endif /* ACE_WIN32 */
 }
 
 // Determine the difference between T1 and T2.
@@ -220,7 +220,7 @@ ACE_Profile_Timer::subtract (timeval &tdiff, timeval &t1, timeval &t0)
     }
 }
 
-#endif /* ACE_HAS_PRUSAGE_T */
+#  endif /* ACE_HAS_PRUSAGE_T */
 
 // Compute the amount of time that has elapsed between start and stop.
 
@@ -232,7 +232,97 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
   return 0;
 }
 
-#else
+#elif defined (ACE_WIN32) /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */
+
+void
+ACE_Profile_Timer::dump (void) const
+{
+  ACE_TRACE ("ACE_Profile_Timer::dump");
+  timer_.dump ();
+}
+
+// Initialize interval timer.
+ACE_Profile_Timer::ACE_Profile_Timer (void)
+  : timer_ ()
+{
+  ACE_TRACE ("ACE_Profile_Timer::ACE_Profile_Timer");
+#  if defined (ACE_HAS_GETRUSAGE)
+
+  ACE_OS::memset (&this->end_usage_, 0, sizeof this->end_usage_);
+  ACE_OS::memset (&this->begin_usage_, 0, sizeof this->begin_usage_);
+  ACE_OS::memset (&this->last_usage_, 0, sizeof this->last_usage_);
+
+  ACE_OS::memset (&this->begin_time_, 0, sizeof this->begin_time_);
+  ACE_OS::memset (&this->end_time_, 0, sizeof this->end_time_);
+  ACE_OS::memset (&this->last_time_, 0, sizeof this->last_time_);
+#endif /* ACE_HAS_GETRUSAGE */
+}
+
+int
+ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
+{
+  ACE_TRACE ("ACE_Profile_Timer::elapsed_time");
+
+  ACE_hrtime_t delta_t; // nanoseconds
+  timer_.elapsed_time (delta_t);
+
+  et.real_time = (__int64) delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
+
+  et.user_time = 0;
+  et.system_time = 0;
+
+  return 0;
+}
+
+// Return the resource utilization.
+
+void
+ACE_Profile_Timer::get_rusage (ACE_Profile_Timer::Rusage &usage)
+{
+  ACE_TRACE ("ACE_Profile_Timer::get_rusage");
+#  if defined (ACE_HAS_GETRUSAGE)
+  usage = this->end_usage_;
+#  else /* ACE_HAS_GETRUSAGE */
+  usage = 0;
+#  endif /* ACE_HAS_GETRUSAGE */
+}
+
+// Compute the amount of resource utilization since the start time.
+
+void
+ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
+{
+  ACE_TRACE ("ACE_Profile_Timer::elapsed_rusage");
+
+#  if defined (ACE_HAS_GETRUSAGE)
+  usage.ru_utime = this->end_usage_.ru_utime - this->begin_usage_.ru_utime;
+  usage.ru_stime = this->end_usage_.ru_stime - this->begin_usage_.ru_stime;
+#  else /* ACE_HAS_GETRUSAGE */
+  usage = 0;
+#  endif /* ACE_HAS_GETRUSAGE */
+}
+
+#  if defined (ACE_HAS_GETRUSAGE)
+// Determine the difference between T1 and T2.
+
+void
+ACE_Profile_Timer::subtract (timeval &tdiff, timeval &t1, timeval &t0)
+{
+  ACE_TRACE ("ACE_Profile_Timer::subtract");
+  tdiff.tv_sec  = t1.tv_sec - t0.tv_sec;
+  tdiff.tv_usec = t1.tv_usec - t0.tv_usec;
+
+  // Normalize the time.
+
+  while (tdiff.tv_usec < 0)
+    {
+      tdiff.tv_sec--;
+      tdiff.tv_usec += ACE_ONE_SECOND_IN_USECS;
+    }
+}
+#  endif /* ACE_HAS_GETRUSAGE */
+
+#else /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */
 
 void
 ACE_Profile_Timer::dump (void) const
@@ -252,23 +342,19 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
 {
   ACE_TRACE ("ACE_Profile_Timer::elapsed_time");
 
-#if defined (ACE_LACKS_FLOATING_POINT)
+#  if defined (ACE_LACKS_FLOATING_POINT)
   ACE_Time_Value delta_t; /* elapsed time will be in microseconds */
   timer_.elapsed_time (delta_t);
 
   // Store the time in usecs.
   et.real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
                  delta_t.usec ();
-#else  /* ! ACE_LACKS_FLOATING_POINT */
+#  else  /* ! ACE_LACKS_FLOATING_POINT */
   ACE_hrtime_t delta_t; /* nanoseconds */
   timer_.elapsed_time (delta_t);
 
-# if defined (ACE_WIN32)
-  et.real_time = (__int64) delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
-# else
   et.real_time = delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
-# endif /* ACE_WIN32 */
-#endif /* ! ACE_LACKS_FLOATING_POINT */
+#  endif /* ! ACE_LACKS_FLOATING_POINT */
 
   et.user_time = 0;
   et.system_time = 0;
