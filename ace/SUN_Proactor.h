@@ -30,7 +30,7 @@ class ACE_Export ACE_SUN_Proactor : public ACE_POSIX_AIOCB_Proactor
   //     for SunOS 5.6, 5.7, etc.
   //
   // = DESCRIPTION
-  //     This proactor, based on ACE_POSIX_AIOCB_Proactor,
+  //     This proactor, based on <ACE_POSIX_AIOCB_Proactor>,
   //     works with Sun native interface for aio calls.
   //     POSIX_API          Native SUN_API
   //     aio_read           aioread
@@ -39,14 +39,14 @@ class ACE_Export ACE_SUN_Proactor : public ACE_POSIX_AIOCB_Proactor
   //     aio_error          aio_result_t.errno
   //     aio_return         aio_result_t.return
   //   
-  //     On Solaris, the Sun aio*() native implementation is more
-  //     reliable and efficient than POSIX aio_*() implementation.
+  //     On Solaris, the Sun <aio*()> native implementation is more
+  //     reliable and efficient than POSIX <aio_*()> implementation.
   //     There is a problem of lost RT signals with POSIX, if we start
   //     more than SIGQUEUEMAX asynchronous operations at the same
   //     time.
   //
-  //     The Sun aiocb it is not standard aiocb, instead, it has the
-  //     following structure:
+  //     The Sun <aiocb> it is not the standard POSX <aiocb>, instead,
+  //     it has the following structure:
   // 
   //     typedef struct aiocb
   //     {
@@ -108,4 +108,4 @@ protected:
 
 #endif /* ACE_HAS_AIO_CALLS && sun */
 #endif /* ACE_SUN_PROACTOR_H*/
-//======================================================================
+
