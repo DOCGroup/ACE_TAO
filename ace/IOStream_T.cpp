@@ -4,6 +4,18 @@
 #if !defined (ACE_IOSTREAM_T_C)
 #define ACE_IOSTREAM_T_C
 
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION) && defined (__GNUC__)
+# if ! defined (ACE_IOSTREAM_T_H)
+    // _Only_ define this when compiling this .cpp file standalone, not
+    // when instantiating templates.  Its purpose is to provide something
+    // for global constructors and destructors to be tied to.  Without it,
+    // they would be tied to the file(name).  With Cygnus g++ 2.7.2/VxWorks,
+    // that name is used directly in variable names in the munched ctor/dtor
+    // file.  That name contains a ".", so it's not a legal C variable name.
+    int ACE_IOStream_T_global_of_builtin_type_to_avoid_munch_problems = 0;
+# endif /* ! ACE_IOSTREAM_T_H */
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION && defined (__GNUC__) */
+
 #define ACE_BUILD_DLL
 #include "ace/IOStream_T.h"
 
@@ -175,5 +187,5 @@ operator<< (STREAM &stream,
 }
 
 #endif /* ACE_HAS_STRING_CLASS */
-#endif /* ACE_IOSTREAM_T_C */
 
+#endif /* ACE_IOSTREAM_T_C */
