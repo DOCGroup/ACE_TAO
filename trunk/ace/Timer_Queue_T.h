@@ -25,6 +25,23 @@
 #include "ace/Test_and_Set.h"
 
 /**
+ * @class ACE_Timer_Node_Dispatch_Info_T
+ *
+ * @brief Maintains generated dispatch information for Timer nodes.
+ *
+ */
+template <class TYPE>
+class ACE_Timer_Node_Dispatch_Info_T
+{
+public:
+  // The type of object held in the queue
+  TYPE type_;
+
+  /// Asynchronous completion token associated with the timer.
+  const void *act_;
+};
+
+/**
  * @class ACE_Timer_Node_T
  *
  * @brief Maintains the state associated with a Timer entry.
@@ -38,6 +55,9 @@ public:
 
   /// Dtor.
   ~ACE_Timer_Node_T (void);
+
+  /// Useful typedef ..
+  typedef ACE_Timer_Node_Dispatch_Info_T <TYPE> DISPATCH_INFO;
 
   /// singly linked list
   void set (const TYPE &type,
@@ -99,6 +119,14 @@ public:
 
   /// set the timer_id.
   void set_timer_id (long timer_id);
+
+  /// Get the dispatch info. The dispatch information is got
+  /// through <info>. This form helps us in preventing allocation and
+  /// deleting data along the criticl path.
+  /// @@TODO: We may want to have a copying version too, so that our
+  /// interface will be complete..
+  void get_dispatch_info (DISPATCH_INFO &info);
+
 
   /// Dump the state of an TYPE.
   void dump (void) const;
@@ -259,6 +287,14 @@ public:
   virtual int expire (const ACE_Time_Value &current_time);
 
   /**
+   * Get the dispatch information for a timer whose value is <= <cur_time>.
+   * This does not account for <timer_skew>. Returns 1 if there is a
+   * node whose value <= <cur_time> else returns a 0.
+   */
+  int dispatch_info (const ACE_Time_Value &current_time,
+                     ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
+
+  /**
    * Run the <functor> for all timers whose values are <=
    * <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.  Returns
    * the number of timers canceled.
@@ -315,13 +351,14 @@ public:
   /// after it is returned by a method like <remove_first>.
   virtual void return_node (ACE_Timer_Node_T<TYPE> *);
 
-protected:
+
   /// This method will call the <functor> with the <type>, <act> and
   /// <time>
   /* virtual */ void upcall (TYPE &type,
                        const void *act,
                        const ACE_Time_Value &cur_time);
 
+protected:
   /// Reschedule an "interval" <ACE_Timer_Node>.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *) = 0;
 
@@ -330,6 +367,10 @@ protected:
 
   /// Factory method that frees a previously allocated node.
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
+
+  /// Non-locking version of dispatch_info ()
+  int dispatch_info_i (const ACE_Time_Value &current_time,
+                       ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
   /// Synchronization variable for <ACE_Timer_Queue>.
   /// NOTE: the right name would be lock_, but HP/C++ will choke on that!

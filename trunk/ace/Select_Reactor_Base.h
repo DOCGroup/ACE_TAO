@@ -144,6 +144,15 @@ public:
   virtual int dispatch_notifications (int &number_of_active_handles,
                                       ACE_Handle_Set &rd_mask);
 
+  /// Returns the ACE_HANDLE of the notify pipe on which the reactor
+  /// is listening for notifications so that other threads can unblock
+  /// the Select_Reactor
+  virtual ACE_HANDLE notify_handle (void);
+
+  /// Handle one of the notify call on the <handle>. This could be
+  /// because of a thread trying to unblock the <Reactor_Impl>
+  virtual int dispatch_notify (ACE_HANDLE handle);
+
   /// Called back by the <ACE_Select_Reactor> when a thread wants to
   /// unblock us.
   virtual int handle_input (ACE_HANDLE handle);
