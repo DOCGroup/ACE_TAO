@@ -1,14 +1,19 @@
 Fri Jun 25 13:02:33 1999  Steve Huston  <shuston@riverace.com>
 
+        * examples/Connection/non_blocking/CPP-connector.h:
+        * examples/Connection/non_blocking/CPP-acceptor.h:
+          Added #pragma implementation, for AIX IBM C++.
+
         * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
         * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
           Split the Options class to a new file, CPP-inclient.h,
           to make IBM C++ (xlC) like it.
 
-        * examples/IPC_SAP/SOCK_SAP/Makefile: On AIX w/ IBM C++, delete the
-          tempinc directory before compiling each new program. Keeps the
-          template instantiations from one program from conflicting with
-          the others.
+        * examples/IPC_SAP/SOCK_SAP/Makefile:
+        * examples/Connection/non_blocking/Makefile:
+          On AIX w/ IBM C++, delete the tempinc directory before compiling
+          each new program. Keeps the template instantiations from one
+          program from conflicting with the others.
 
 Fri Jun 25 12:40:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
