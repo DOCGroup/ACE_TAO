@@ -58,11 +58,6 @@
 #WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?wchar
 #STATUS = http://tao.doc.wustl.edu/bugzilla/wchar/status.txt
 
-[RedHat_Static]
-LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_Static/
-WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?maglor_Static
-STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_Static/status.txt
-
 # Temporarily disabled
 #[Tru64_4.0f_CXX_63]
 #LIST   = http://spe121.mro-x.dec.com/~buildlog/auto_compile_logs/spe121.mro-x.dec.com_Tru64_CXX/
