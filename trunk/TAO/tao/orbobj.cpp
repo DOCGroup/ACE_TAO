@@ -364,7 +364,7 @@ CORBA_ORB::resolve_name_service (void)
     // @@ Someone please double-check this ;-)
     return CORBA_Object::_duplicate (this->name_service_);
 
-  const char *name_service_ior =
+  char *name_service_ior =
     TAO_ORB_Core_instance ()->orb_params ()->name_service_ior ();
 
   // Second, check to see if the user has give us a parameter on
