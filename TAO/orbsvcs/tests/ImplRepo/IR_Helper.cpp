@@ -14,7 +14,7 @@ class ServerObject_i: public POA_ImplementationRepository::ServerObject
   //    registered server.
 {
 public:
-  ServerObject_i (int debug = 0) : debug_ (debug) {}
+  ServerObject_i (CORBA::ORB_ptr orb, int debug = 0) : orb_ (orb), debug_ (debug) {}
 
   virtual void ping (CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ())
     {
@@ -26,8 +26,12 @@ public:
     {
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG, "ServerObject_i::Shutdown\n"));
+ 
+      this->orb_->shutdown ();
     }
 private:
+  CORBA::ORB_var orb_;
+
   int debug_;
 };
 
@@ -37,7 +41,7 @@ IR_Helper::IR_Helper (char *server_name,
                       int debug)
   : name_ (ACE::strnew (server_name)),
     ir_addr_ (0),
-    server_object_ (new ServerObject_i (debug)),
+    server_object_ (new ServerObject_i (orb, debug)),
     implrepo_ (0),
     poa_ (poa),
     orb_ (orb),

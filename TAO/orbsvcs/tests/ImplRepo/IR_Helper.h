@@ -65,8 +65,8 @@ private:
   // Object pointer to <server_object>
   
   ImplementationRepository::Administration *implrepo_;
-  PortableServer::POA_var poa_;
   CORBA::ORB_var orb_;
+  PortableServer::POA_var poa_;
   int debug_; 
 };
 
