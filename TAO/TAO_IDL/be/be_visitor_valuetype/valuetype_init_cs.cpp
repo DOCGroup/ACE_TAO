@@ -82,19 +82,32 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
                    node->local_name ());
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // ctor
-  *os << fname << "::" << lname << " (void)" << be_nl
-      << "{" << be_nl << "}\n";
+  *os << be_nl << be_nl
+      << fname << "::" << lname << " (void)" << be_nl
+      << "{" << be_nl << "}";
 
   // dtor
-  *os << be_nl
+  *os << be_nl << be_nl
       << fname << "::~" << lname << " (void)" << be_nl
-      << "{" << be_nl << "}\n";
+      << "{" << be_nl << "}";
 
-  //tao_repository_id
-  *os << be_nl
+  // The _downcast method.
+  *os << be_nl << be_nl
+      << node->name () << "_init *" << be_nl << node->name ()
+      << "_init::_downcast (CORBA::ValueFactoryBase *v)" << be_nl
+      << "{" << be_idt_nl
+      << "if (v == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "return dynamic_cast< ::" << node->name () << "_init * > (v);" << be_uidt_nl
+      << "}";
+
+  // tao_repository_id
+  *os << be_nl << be_nl
       << "const char* " << be_nl
       << fname << "::tao_repository_id (void)" << be_nl
       << "{" << be_idt_nl
