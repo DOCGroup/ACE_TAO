@@ -1,0 +1,32 @@
+# $Id$
+
+This directory contains the following tests for the CDR stream class;
+
+        . basic_types
+
+          Simply encodes a lot of CORBA::Octets, CORBA::Short and
+          CORBA::Long into a CDR stream and then decodes them;
+          verifying that the same results are obtained. 
+
+        . growth
+        
+          Helps measure how the growth strategy affects the
+          performance of CDR streams.
+
+        . tc
+        
+          TAO implements TypeCodes using a CDR buffer (this was
+          inherited from the Sun IIOP engine), this test verifies that
+          some of the basic TypeCodes actually are able to interpret
+          their CDR buffers.
+
+	. allocator
+
+	  Measure the performance and predictability of TSS vs. global
+	  allocators.
+
+	. alignment
+
+	  A test for a very subtle alignment problem on the octet
+	  sequence optimizations.  Does not happen now, but this is
+	  the regression test.

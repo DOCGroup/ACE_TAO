@@ -1,0 +1,12 @@
+//  -*- MPC -*-
+// $Id$
+
+workspace {
+  ace.mpc
+  ace_flreactor.mpc
+  ace_qtreactor.mpc
+  ace_tkreactor.mpc
+  ace_xtreactor.mpc
+  QoS
+  SSL
+}

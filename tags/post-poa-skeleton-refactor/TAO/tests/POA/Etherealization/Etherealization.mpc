@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project(POA*): taoserver, minimum_corba {
+  exename = Etherealization
+}

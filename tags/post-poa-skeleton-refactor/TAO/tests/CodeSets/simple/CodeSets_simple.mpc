@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project(*client) : taoclient, portableserver {
+  source_files {
+    client.cpp
+  }
+}
+
+project(*server) : taoserver {
+  source_files {
+    server.cpp
+  }
+}

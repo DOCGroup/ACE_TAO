@@ -1,0 +1,246 @@
+/**
+ * @file CosEventChannelAdmin.idl
+ *
+ * @brief Define the CosEventChannelAdmin module
+ *
+ * $Id$
+ *
+ * Described in CORBAservices: Common Object Services Specification,
+ * chapter 4.
+ *
+ * CosEventChannelAdmin Module, page 4-15 includes the following
+ * interfaces: ProxyPushConsumer, ProxyPullSupplier,
+ * ProxyPullConsumer, ProxyPushSupplier, ConsumerAdmin, SupplierAdmin,
+ * EventChannel
+ *
+ * The Event Service IDL can be downloaded from
+ * ftp://www.omg.org/pub/docs/formal/97-11-02.idl
+ *
+ * The complete specification is available from:
+ * http://www.omg.org/technology/documents/formal/event_service.htm
+ *
+ * @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+#ifndef TAO_EVENTCHANNELADMIN_IDL
+#define TAO_EVENTCHANNELADMIN_IDL
+
+#include "CosEventComm.idl"
+
+#pragma prefix "omg.org"
+
+/**
+ * @namespace CosEventChannelAdmin
+ *
+ * @brief Define the interfaces implemented by providers of the CORBA
+ * Event Service.
+ */
+module CosEventChannelAdmin
+{
+  /**
+   * @exception AlreadyConnected
+   *
+   * @brief Exception raised if the user tries to connect to an
+   * already connected proxy
+   */
+  exception AlreadyConnected {};
+
+  /**
+   * @exception TypeError
+   *
+   * @brief Exception raised in Typed Event Services if there is a
+   * mismatch between the proxy and its peer (supplier or consumer.)
+   */
+  exception TypeError {};
+
+  /**
+   * @interface ProxyPushConsumer
+   *
+   * @brief Interface used by push-style suppliers.
+   *
+   * The application can use the methods derived from
+   * CosEventComm::PushConsumer to disconnect from the Event Service
+   * and push events.
+   */
+  interface ProxyPushConsumer : CosEventComm::PushConsumer
+  {
+    /// Connect a push-style supplier to the Event Service
+    /**
+     * Before pushing events into its Proxy the application must call
+     * the following operation.
+     *
+     * @param push_supplier Callback interface, invoked by the Event
+     *        Service if it is destroyed while the push-style supplier
+     *        is still connected. If the argument is nil the callback
+     *        is not invoked.
+     * @throws AlreadyConnected if the operation is called a second
+     *   time.
+     */
+    void connect_push_supplier (in CosEventComm::PushSupplier push_supplier)
+      raises (AlreadyConnected);
+  };
+
+  /**
+   * @interface ProxyPushSupplier
+   *
+   * @brief Interface used by push-style consumers
+   *
+   * Push-style consumers used this interface to connect and
+   * disconnect from the Event Service.
+   *
+   * The disconnect_push_supplier() operation, derived from the
+   * CosEventEventComm::PushSupplier interface, is used to disconnect
+   * the ProxyPushSupplier and reclaim all resources attached to it
+   * from the Event Service.
+   */
+  interface ProxyPushSupplier : CosEventComm::PushSupplier
+  {
+    /// Connect a push-style consumer to the Event Service.
+    /**
+     * The following operation must be invoked before the Event
+     * Service can deliver any events to the consumer.
+     *
+     * @param push_consumer The consumer, must be non-nil.
+     * @throws CORBA::BAD_PARAM if the consumer argument is nil.
+     * @throws AlreadyConnected if the operation is called a second
+     *   time.
+     * @throws TypeError In Typed Event Services if the consumer does
+     *   not match the expected type.
+     */
+    void connect_push_consumer (in CosEventComm::PushConsumer push_consumer)
+      raises (AlreadyConnected, TypeError);
+  };
+
+  /**
+   * @interface ProxyPullSupplier
+   *
+   * @brief Interface used by pull-style consumers.
+   *
+   * Pull-style suppliers use this interface to connect and disconnect
+   * from the Event Service.
+   *
+   * The disconnect_pull_supplier() operation, derived from
+   * CosEventComm::PullSupplier, is used by the application to
+   * disconnect from the Event Service.
+   * The application can use the pull() and try_pull() operations to
+   * pull data from the Event Service.
+   */
+  interface ProxyPullSupplier : CosEventComm::PullSupplier
+  {
+    /// Connect a pull consumer to the Event Service.
+    /**
+     * Applications cannot pull events before this operation is
+     * invoked.
+     *
+     * @param pull_consumer Callback interface used to inform the
+     *   the application when the Event Service is destroyed.  The
+     *   argument can be nil.
+     * @throws AlreadyConnected if the operation is called a second
+     *   time.
+     */
+    void connect_pull_consumer (in CosEventComm::PullConsumer pull_consumer)
+      raises (AlreadyConnected);
+  };
+
+  /**
+   * @interface ProxyPullConsumer
+   *
+   * @brief Interface used by pull-style suppliers.
+   *
+   * Pull-style consumers use this interface to connect, disconnect
+   * and pull events from the Event Service.
+   *
+   * The disconnect_pull_consumer() operation, derived from
+   * CosEventEventComm::PullConsumer, is used to disconnect from the
+   * Event Service.
+   */
+  interface ProxyPullConsumer : CosEventComm::PullConsumer
+  {
+    /// Connect a pull supplier to the Event Service.
+    /**
+     * The Event Service will not start pulling events until this
+     * operation is invoked.
+     *
+     * @param pull_supplier Callback interface used to (1) inform the
+     *   application when the Event Service is destroyed, and (2) pull
+     *   events from the application.  The argument cannot be nil.
+     * @throws CORBA::BAD_PARAM if the pull_supplier argument is nil.
+     * @throws AlreadyConnected if the operation is called a second
+     *   time.
+     * @throws TypeError In Typed Event Services if the consumer does
+     *   not match the expected type.
+     */
+      void connect_pull_supplier (in CosEventComm::PullSupplier pull_supplier)
+        raises (AlreadyConnected, TypeError);
+    };
+
+  /**
+   * @interface ConsumerAdmin
+   *
+   * @brief Abstract Factory used to create proxies for pull-style and
+   * push-style consumers.
+   */
+  interface ConsumerAdmin
+  {
+    /// Create a new ProxyPushSupplier object.
+    ProxyPushSupplier obtain_push_supplier ();
+
+    /// Create a new ProxyPullSupplier object.
+    ProxyPullSupplier obtain_pull_supplier ();
+  };
+
+  /**
+   * @interface SupplierAdmin
+   *
+   * @brief Abstract Factory used to create proxies for pull-style and
+   * push-style suppliers.
+   */
+  interface SupplierAdmin
+  {
+    /// Create a new ProxyPushConsumer object.
+    ProxyPushConsumer obtain_push_consumer ();
+
+    /// Create a new ProxyPullConsumer object.
+    ProxyPullConsumer obtain_pull_consumer ();
+  };
+
+  /**
+   * @interface EventChannel
+   *
+   * @brief Main interface for the Event Service.
+   */
+  interface EventChannel
+  {
+    /// Obtain a ConsumerAdmin interface for this EventChannel
+    /**
+     * Normally a single EventChannel provides a single ConsumerAdmin,
+     * but advanced ECs, for example, those based in the
+     * CosNotification service, can provide multiple ConsumerAdmin
+     * interfaces.
+     */
+    ConsumerAdmin for_consumers ();
+
+    /// Obtain a SupplierAdmin interface for this EventChannel
+    /**
+     * Normally a single EventChannel provides a single SupplierAdmin,
+     * but advanced ECs, for example, those based in the
+     * CosNotification service, can provide multiple SupplierAdmin
+     * interfaces.
+     */
+    SupplierAdmin for_suppliers ();
+
+    /// Destroy the EventChannel
+    /**
+     * Calling this operation destroys the EventChannel, its
+     * ConsumerAdmin and SupplierAdmin interfaces as well as the
+     * proxies obtained from those.
+     * Any consumers or suppliers still connected are notified of the
+     * destruction.  In some cases, the process running the
+     * EventChannel is terminated too.
+     */
+    void destroy ();
+  };
+};
+
+#pragma prefix ""
+
+#endif /* TAO_EVENTCHANNELADMIN_IDL */

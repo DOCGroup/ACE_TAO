@@ -1,0 +1,58 @@
+# $Id$
+
+Linux notes
+===========
+
+Under Linux kernel 2.4, the following DSCP values
+could not be set with the setsockopt call
+unless you run as root:
+
+EF, CS5, CS6, CS7
+
+Also, under Linux 2.4.2 kernel, if I could successfully
+set the 2 bits reserved for ECN in the Diffserv Field to 
+0x00 or 0x02.  However, the setsockopt call would
+fail if it was set to 0x01 or 0x03.
+
+According to the Linux Diffserv mailing list:
+http://diffserv.sourceforge.net
+http://www.geocrawler.com/archives/3/11111/2001/10/0/6761099/
+
+===========================================================================
+On Fri, Oct 05, 2001 at 08:18:06AM +0300, Pekka Savola wrote:
+> On Tue, 2 Oct 2001, Craig Rodrigues wrote:
+> > Can someone shed some light as to why I got this
+> > error under Linux?  Is it configuration problem,
+> > or is there some sort of policy decision in the kernel that
+> > requires the process to be run as root when setting
+> > those DSCP values?
+>
+> A part of DSCP field was previously Precedence.
+>
+> Linux has required that in order to use 'Critical' or higher Precedence,
+> one must have CAP_NET_ADMIN capability, in most cases, root.
+>
+> I'm not one to say whether this restriction should be removed.  Perhaps.
+>
+> --
+> Pekka Savola                 "Tell me of difficulties surmounted,
+> Netcore Oy                   not those you stumble over and fall"
+> Systems. Networks. Security.  -- Robert Jordan: A Crown of Swords
+>
+===========================================================================
+
+FreeBSD notes 
+=============
+Under FreeBSD 4.3, I encountered no problems
+setting DSCP or ECN values, and I could set all
+these values without being root.
+However, FreeBSD seems to be more fussy about the size of the parameter
+you pass into the setsockopt call.  Make sure you get the
+size right, and cast it properly, ie. don't cast a short, or some
+other size.
+
+
+Solaris notes
+=============
+No problems setting DSCP or ECN values.
+

@@ -1,0 +1,16 @@
+// -*- MPC -*-
+// $Id$
+
+project(*client) : taoclient, exceptions {
+  requires += corba_messaging
+  source_files {
+    timeC.cpp
+    client.cpp
+  }
+}
+
+project(*server) : taoserver, exceptions {
+  source_files {
+    server.cpp
+  }
+}

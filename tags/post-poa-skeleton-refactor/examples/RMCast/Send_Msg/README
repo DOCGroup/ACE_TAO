@@ -1,0 +1,18 @@
+In this example SENDER sends a number (defined in Protocol.h, 10000
+by default) of messages  to the multicast group. Each message has
+an application-level sequence number. RECEIVER tries to receive them
+and checks for damaged, lost, and reordered messages. Since reliable
+multicast is used there should be no damaged or reordered messages.
+There could be some number of lost messages at the beginning,
+howevere (standard race condition).
+
+To run the example start a one or more RECEIVERS, e.g.,
+
+$ ./receiver 224.1.0.1:10000
+
+Then start one SENDER:
+
+$ ./sender 224.1.0.1:10000
+
+--
+Boris Kolpackov <boris@kolpackov.net>
