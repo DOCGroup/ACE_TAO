@@ -91,7 +91,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
 
       ACE_OS::strcpy (if_address.ifr_name, net_if);
 
-      if (ACE_OS::ioctl (this->get_handle (), SIOCGIFADDR, &if_address) < 0)
+      if (ACE_OS::ioctl (this->get_handle (), SIOCGIFADDR, &if_address) == -1)
 	return -1;
 
       struct sockaddr_in *socket_address;
@@ -100,9 +100,9 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
     }
   else
 #else
-	ACE_UNUSED_ARG(net_if);
+    ACE_UNUSED_ARG (net_if);
 #endif /* ACE_WIN32 */
-    multicast_address_.imr_interface.s_addr = INADDR_ANY;
+  multicast_address_.imr_interface.s_addr = INADDR_ANY;
 
   multicast_address_.imr_multiaddr.s_addr = htonl (mcast_addr.get_ip_address ());
   // multicast_address_.imr_multiaddr.s_addr = mcast_addr.get_ip_address ();
