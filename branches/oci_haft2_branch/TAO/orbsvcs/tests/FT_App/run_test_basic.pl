@@ -8,8 +8,32 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../../bin';
 use PerlACE::Run_Test;
 
-my($debug) = 1;
+########################
+#command line options
+#set defaults:
+my($verbose) = 0;         # 1: report perl actions before executing them
+my($debug_builds) = 0;    # 0: use exes from Release directories
 
+foreach $i (@ARGV) {
+  if ($i eq "--debug_build")
+  {
+    $debug_builds = 1;
+  }
+  elsif ($i eq "-v")
+  {
+    $verbose += 1;
+  }
+}
+
+my($build_directory) = "/Release";
+if ( $debug_builds ) {
+  $build_directory = "";
+}
+
+if ( $verbose > 1) {
+  print "verbose: $verbose\n";
+  print "debug_builds: $debug_builds -> $build_directory\n";
+}
 
 my($factory1_ior) = PerlACE::LocalFile ("factory1.ior");
 my($factory2_ior) = PerlACE::LocalFile ("factory2.ior");
@@ -24,15 +48,14 @@ unlink $replica2_ior;
 unlink $data_file;
 my($status) = 0;
 
-my($SV1) = new PerlACE::Process ("release/ft_replica", "-o $factory1_ior -t $replica1_ior -q -f none");
-my($SV2) = new PerlACE::Process ("release/ft_replica", "-o $factory2_ior -t $replica2_ior -q -f none");
-my($CL) = new PerlACE::Process ("release/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
-#my($CL) = new PerlACE::Process ("release/ft_client", "-f file://$replica1_iogr -c testscript");
+my($SV1) = new PerlACE::Process ("./$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -q -f none");
+my($SV2) = new PerlACE::Process ("./$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -q -f none");
+my($CL) = new PerlACE::Process ("./$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
 
-print "\nTest: Starting replica 1 " . $SV1->CommandLine . "\n" if ($debug);
+print "\nTest: Starting replica 1 " . $SV1->CommandLine . "\n" if ($verbose);
 $SV1->Spawn ();
 
-print "waiting for replica 1's IOR\n" if ($debug);
+print "waiting for replica 1's IOR\n" if ($verbose);
 
 if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
     print STDERR "TEST ERROR: cannot find replica 1 file <$replica1_ior>\n";
@@ -40,10 +63,10 @@ if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTest: Starting replica 2 " . $SV2->CommandLine . "\n" if ($debug);
+print "\nTest: Starting replica 2 " . $SV2->CommandLine . "\n" if ($verbose);
 $SV2->Spawn ();
 
-print "waiting for replica 2's IOR\n" if ($debug);
+print "waiting for replica 2's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
     print STDERR "TEST ERROR: cannot find replica 2 file <$replica2_ior>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
@@ -51,7 +74,7 @@ if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTest: Starting client " . $CL->CommandLine . "\n" if ($debug);
+print "\nTest: Starting client " . $CL->CommandLine . "\n" if ($verbose);
 
 $client = $CL->SpawnWaitKill (60);
 
@@ -60,10 +83,10 @@ if ($client != 0) {
     $status = 1;
 }
 
-print "wait for server 1.\n" if ($debug);
+print "wait for server 1.\n" if ($verbose);
 $server = $SV1->WaitKill (60);
 
-print "wait for server 2.\n" if ($debug);
+print "wait for server 2.\n" if ($verbose);
 $server = $SV2->WaitKill (60);
 
 if ($server != 0) {
@@ -72,7 +95,7 @@ if ($server != 0) {
 }
 
 if ($status == 0) {
-print "Clean up scratch files\n" if ($debug);
+print "Clean up scratch files\n" if ($verbose);
 
 unlink $factory1_ior;
 unlink $factory2_ior;
