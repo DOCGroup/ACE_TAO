@@ -1,3 +1,9 @@
+Sun Apr  6 14:16:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.i (nanosleep): If the nanosleep() system call isn't
+ 	  supported by the OS platform we'll just use ACE_OS::sleep(const
+ 	  ACE_Time_Value &) instead.
+
 Sun Apr 06 13:54:56 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Svc_Conf_l.cpp, Makefile: added #define ACE_BUILD_DLL.
