@@ -1,3 +1,17 @@
+Thu Apr 02 15:49:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/tests/Cubit/TAO/MT_Cubit/client.dsp:
+	* tao/tests/Cubit/TAO/MT_Cubit/server.dsp: Updated project file.
+
+	* tao/ORB_Core.{h,i,cpp} (create_and_set_root_poa): Added this
+	  private method to create and set the root poa of the calling
+	  ORB_Core. 
+	  (root_poa): Make sure this function will always return a valid
+	  poa pointer (thru the use of create_and_set_root_poa above.)
+
+	* tao/ORB.cpp (resolve_poa): Moved the creation of poa into
+	  ORB_Core.
+
 Wed Apr  1 23:39:04 1998  Sergio Flores  <sergio@flamenco.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
@@ -30,6 +44,12 @@ Wed Apr  1 11:07:53 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* orbsvcs/tests/Simulator/DOVEBrowser, DOVEMIB and Event Supplier
 	  are running under NT properly.
+
+Wed Apr 01 09:44:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init,fini): Removed calls to
+ 	  ACE_OS::socket_init and ACE_OS::socket_fini because they are
+ 	  taken care of by ACE already.
 
 Wed Apr  1 09:46:53 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
