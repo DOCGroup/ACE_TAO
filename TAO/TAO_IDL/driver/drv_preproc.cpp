@@ -75,6 +75,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "drv_link.h"
 
 #include "ace/Process_Manager.h"
+#include "ace/SString.h"
 #include "ace/Env_Value_T.h"
 
 ACE_RCSID(driver, drv_preproc, "$Id$")
@@ -338,7 +339,8 @@ DRV_pre_proc(const char *myfile)
       idl_global->set_read_from_stdin(I_FALSE);
       idl_global->set_filename(myfile);
       idl_global->set_main_filename(myfile);
-      idl_global->set_stripped_filename(DRV_stripped_name(myfile));
+      ACE_Auto_String_Free tmp (ACE_OS::strdup (myfile));
+      idl_global->set_stripped_filename(tmp.get ());
       idl_global->set_real_filename(tmp_ifile);
     }
 
