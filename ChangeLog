@@ -1,3 +1,11 @@
+Fri Aug  2 13:10:05 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/examples/SAXPrint/main.cpp (ACE_TMAIN):
+        * ACEXML/common/InputSource.cpp:
+
+          Reverted the previous check-in with respect to the delete
+          statement. Memory is getting leaked somewhere down in ACE.
+
 Fri Aug  2 12:31:34 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/ContentHandler.h:
