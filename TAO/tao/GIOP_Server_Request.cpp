@@ -303,7 +303,9 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
     reply_params.params_ = this->params_;
 #endif /*TAO_HAS_MINIMUM_CORBA */
 
-  // Pass in the service context
+  // Pass in the service context list.  We are sending back what we
+  // received in the Request.  (RTCORBA relies on it.  Check before
+  // modifying...) marina
   reply_params.service_context_notowned (&this->service_info_);
 
   // Forward exception only.
@@ -385,10 +387,14 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
   reply_params.params_ = 0;
 #endif /*TAO_HAS_MINIMUM_CORBA*/
 
+  // Change this to pass back the same thing we received, as well as
+  // leave a comment why this is important!
   reply_params.svc_ctx_.length (0);
 
-  // Pass in the service context
-  reply_params.service_context_notowned (& reply_params.svc_ctx_);
+  // Pass in the service context list.  We are sending back what we
+  // received in the Request.  (RTCORBA relies on it.  Check before
+  // modifying...) marina
+  reply_params.service_context_notowned (&this->service_info_);
 
   reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
 
