@@ -17,7 +17,7 @@
 #define ACE_INIT_ACE_H
 #include "ace/pre.h"
 
-#include "OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -58,7 +58,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "Init_ACE.i"
+#include "ace/OS/Init_ACE.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

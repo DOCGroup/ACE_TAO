@@ -1,74 +1,63 @@
+# $Id$
+
 #----------------------------------------------------------------------------
-#       $Id$
-#
-#       Makefile for the entire ACE release
+#       Makefile for the libACE_Other
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-#LIBACE   = libACE
-#LIB      = $(LIBACE).a
-#SHLIB    = $(LIBACE).$(SOEXT)
+LIB_NAME   = libACE_Other
+LIB      = $(LIB_NAME).a
+SHLIB    = $(LIB_NAME).$(SOEXT)
 
-SUBDIRS= \
-  ATM \
-  Connection \
-  Demux \
-  IPC \
-  Logging \
-  Memory \
-  OS \
-  Other \
-  QoS \
-  RMCast \
-  SSL \
-  Streams \
-  Svcconf \
-  Threads \
-  Timer \
-  Token \
-  Utils 
 
-all:
-	@for subdir in $(SUBDIRS) ; do \
-		if test -d $$subdir ; \
-		then \
-			echo "Making all in $$subdir"; \
-			( cd $$subdir && $(MAKE) all ) || exit 1 ;\
-		fi ; \
-	done
-
-clean:
-	@for subdir in $(SUBDIRS) ; do \
-		if test -d $$subdir ; \
-		then \
-			echo "Making clean in $$subdir"; \
-			( cd $$subdir && $(MAKE) clean ) || exit 1 ;\
-		fi ; \
-	done
-	$(RM) -rf *.so *.a
-
+FILES = \
+	Local_Name_Space\
+	Local_Name_Space_T\
+	Msg_WFMO_Reactor\
+	Name_Proxy\
+	Name_Request_Reply\
+	Name_Space\
+	Naming_Context\
+	Registry_Name_Space\
+	Remote_Name_Space\
+	TP_Reactor\
+	XtReactor
+	
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+####
+#### ACE_COMPONENTS support.
+####
+
+LSRC  = $(addsuffix .cpp,$(FILES))
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-#### Disable installs in this ($(ACE_ROOT)/ace) directory, because this
-#### is the (default) destination of installs anyways.  This line prevents
-#### creation of a link from the ACE library to itself when the build of
-#### the ACE library fails.
-INSTALL =
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+INSTALL =
+
+clean:
+	$(RM) -f $(LIB_NAME).a $(LIB_NAME).so
 
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
+
+
 
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+
+
