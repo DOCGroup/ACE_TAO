@@ -1,5 +1,5 @@
 --- orig/MessagingC.cpp	Tue Apr  3 22:01:25 2001
-+++ patched/MessagingC.cpp	Tue Apr  3 22:11:52 2001
++++ patched/MessagingC.cpp	Thu Apr  5 09:06:52 2001
 @@ -21,6 +21,8 @@
  
  #include "MessagingC.h"
@@ -192,7 +192,16 @@
  void operator<<= (CORBA::Any &_tao_any, const Messaging::PriorityRange &_tao_elem) // copying
  {
    TAO_OutputCDR stream;
-@@ -2825,6 +2891,9 @@
+@@ -2763,6 +2829,8 @@
+   return 0;
+ }
+ 
++#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
++
+ void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr _tao_elem)
+ {
+   TAO_OutputCDR stream;
+@@ -2825,6 +2893,9 @@
  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
  
  
@@ -202,8 +211,8 @@
  #if !defined _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
  #define _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
  
-@@ -2934,4 +3003,3 @@
-   }
+@@ -2935,3 +3006,4 @@
    return 0; // error
  }
--
+ 
++#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
