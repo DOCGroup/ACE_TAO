@@ -38,7 +38,7 @@ TAO_ObjectReferenceTemplate::orb_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 PortableInterceptor::AdapterName *
-TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::AdapterName *adapter_name = 0;
@@ -46,7 +46,7 @@ TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   if (this->adapter_name_ != 0)
     {
       ACE_NEW_THROW_EX (adapter_name,
-                        PortableInterceptor::AdapterName (* (this->adapter_name_)),
+                        PortableInterceptor::AdapterName (*(this->adapter_name_)),
                         CORBA::NO_MEMORY (
                            CORBA_SystemException::_tao_minor_code (
                               TAO_DEFAULT_MINOR_CODE,
@@ -63,7 +63,7 @@ TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_CHECK_RETURN (0);
 
       ACE_NEW_THROW_EX (adapter_name,
-                        PortableInterceptor::AdapterName (* (this->adapter_name_)),
+                        PortableInterceptor::AdapterName (*(this->adapter_name_)),
                         CORBA::NO_MEMORY (
                            CORBA_SystemException::_tao_minor_code (
                               TAO_DEFAULT_MINOR_CODE,

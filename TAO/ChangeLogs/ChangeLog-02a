@@ -1,3 +1,30 @@
+Fri Feb  8 18:27:13 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/POAManager.h:
+
+	  Removed the static AdapterManagerId.  It wasn't needed, and it
+	  wasn't accessed/modified in an atomic way.
+
+	* tao/PortableServer/POAManager.i (generate_manager_id):
+
+	  New method used for generating the AdapterManagerId in an atomic
+	  way.
+
+	* tao/PortableServer/POAManager.cpp (TAO_POA_Manager):
+
+	  Removed broken code that incremented a static AdapterManagerId
+	  counter in a non-thread-safe way.  Call the new
+	  generate_manager_id() method to generate an ID in an atomic
+	  way.  Fixes a race condition.
+
+	* tao/PortableServer/POA.i (get_manager_id): 
+	* tao/PortableServer/POA.cpp (set_obj_ref_factory): 
+	* tao/PortableServer/POAManager.cpp
+	  (activate_i, discard_requests_i): 
+	* tao/PortableServer/ObjectReferenceTemplate.cpp (adapter_name):
+
+	  Fixed syntax errors related to emulated exceptions.
+
 Fri Feb  8 17:40:42 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (get_protocols_hooks):

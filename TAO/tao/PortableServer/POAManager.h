@@ -130,6 +130,15 @@ protected:
 
   int register_poa (TAO_POA *poa);
 
+  /// Generate an AdapterManagerId for this POAManager.
+  /**
+   * @return A value that uniquely identifies the POAManager within a
+   *         given process.
+   */
+  PortableInterceptor::AdapterManagerId generate_manager_id (void) const;
+
+protected:
+
   PortableServer::POAManager::State state_;
 
   ACE_Lock &lock_;
@@ -142,7 +151,6 @@ protected:
 
   PortableInterceptor::AdapterManagerId poa_manager_id_;
 
-  static PortableInterceptor::AdapterManagerId global_id_;
 };
 
 #if defined (__ACE_INLINE__)

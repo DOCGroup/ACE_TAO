@@ -387,10 +387,10 @@ TAO_POA::the_POAManager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 ACE_INLINE PortableInterceptor::AdapterManagerId
-TAO_POA::get_manager_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_POA::get_manager_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->poa_manager_.get_manager_id ();
+  return this->poa_manager_.get_manager_id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ACE_INLINE PortableInterceptor::AdapterName *
