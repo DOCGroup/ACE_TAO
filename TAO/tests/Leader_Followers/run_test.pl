@@ -35,7 +35,7 @@ sub run_clients
 
   print STDERR "\nSelect Reactor\n\n";
 
-  run_client ("-e 0");
+  run_client ("-ORBsvcconf single_threaded_event_loop.conf -e 0");
 
   print STDERR "\nTP Reactor\n\n";
 
@@ -45,15 +45,15 @@ sub run_clients
 
   print STDERR "\nSingle-threaded client running event loop for 3 seconds\n\n";
 
-  run_client ("-e 1 -t 3000");
+  run_client ("-ORBsvcconf single_threaded_event_loop.conf -e 1 -t 3000");
 
   print STDERR "\nSingle-threaded client running event loop for 10 seconds\n\n";
 
-  run_client ("-e 1 -t 10000");
+  run_client ("-ORBsvcconf single_threaded_event_loop.conf -e 1 -t 10000");
 
   print STDERR "\nSingle-threaded client running event loop for 20 seconds\n\n";
 
-  run_client ("-e 1 -t 20000");
+  run_client ("-ORBsvcconf single_threaded_event_loop.conf -e 1 -t 20000");
 
   print STDERR "\n\n*** Single-threaded client event loop: TP Reactor ***\n\n\n";
 

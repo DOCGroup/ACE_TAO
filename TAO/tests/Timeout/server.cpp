@@ -29,6 +29,7 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
+
   // Indicates sucessful parsing of the command line
   return 0;
 }
@@ -51,7 +52,7 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
-
+      
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -65,7 +66,7 @@ main (int argc, char *argv[])
       Simple_Server_var server =
         server_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       CORBA::String_var ior =
 	orb->object_to_string (server.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -75,7 +76,7 @@ main (int argc, char *argv[])
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
 	{
-	  FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      	  FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
 	  if (output_file == 0)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "Cannot open output file for writing IOR: %s",

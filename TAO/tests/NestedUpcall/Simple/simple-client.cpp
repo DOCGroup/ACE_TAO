@@ -55,6 +55,8 @@ Client_Task::svc (void)
                             call_count,
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      return 0;
     }
   ACE_CATCHANY
     {
