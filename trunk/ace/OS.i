@@ -6856,7 +6856,7 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
 #else
-  return ((*s & ~(1 << (signum-1))) != 0) ;
+  return ((*s & (1 << (signum-1))) != 0) ;
 #endif /* !ACE_LACKS_SIGSET */
 }
 
