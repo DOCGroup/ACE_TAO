@@ -371,6 +371,9 @@ public:
   CORBA_ExceptionList_ptr _duplicate (void);
   // Increase the reference count.
 
+  static CORBA_ExceptionList_ptr _duplicate (CORBA_ExceptionList *);
+  // Increase the reference count in the spec defined manner.
+
   void _destroy (void);
 
   static CORBA_ExceptionList_ptr _nil (void);
@@ -390,6 +393,10 @@ public:
                CORBA_Environment &ACE_TRY_ENV =
                TAO_default_environment ());
   // Remove the typecode at slot i. Raises the "Bounds" exception.
+
+  void  _incr_refcnt (void);
+  void  _decr_refcnt (void);
+  // Increment and decrement ref counts
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ExceptionList_ptr _ptr_type;
