@@ -10,7 +10,7 @@ const char *ior = "file://test.ior";
 int nthreads = 5;
 int niterations = 5;
 int debug = 0;
-
+int number_of_replies = 0;
 
 int
 parse_args (int argc, char *argv[])
@@ -91,6 +91,8 @@ public:
                       result, 
                       out_l));
         }
+
+      number_of_replies--;
     };
  
   ~Handler (void) {};
@@ -156,12 +158,28 @@ main (int argc, char *argv[])
 
       // Main thread collects replies. It needs to collect 
       // <nthreads*niterations> replies.
-      size_t number_of_replies = nthreads * niterations;
+      number_of_replies = nthreads * niterations;
+
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
+                      number_of_replies));
+        }
       
-      while (orb->work_pending () && number_of_replies--)
+      // ORB loop.
+      while (orb->work_pending () && number_of_replies > 0)
         {
           orb->perform_work ();
         }
+
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
+                      (nthreads*niterations) - number_of_replies));
+        }
+
 
       client.thr_mgr ()->wait ();
 
