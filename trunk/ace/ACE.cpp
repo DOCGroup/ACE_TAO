@@ -2239,8 +2239,11 @@ ACE::send_n (ACE_HANDLE handle,
        bytes_written < len;
        bytes_written += n)
     {
-      n = ACE::send (handle, (char *) buf + bytes_written,
-                     len - bytes_written, flags, timeout);
+      n = ACE::send (handle,
+                     (char *) buf + bytes_written,
+                     len - bytes_written,
+                     flags,
+                     timeout);
       if (n == -1)
         if (errno == EWOULDBLOCK)
           n = 0; // Keep trying to send.
