@@ -409,7 +409,7 @@ CORBA_ORB::resolve_poa_current (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_policy_manager (CORBA::Environment& ACE_TRY_ENV)
+CORBA_ORB::resolve_policy_manager (CORBA::Environment &ACE_TRY_ENV)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Policy_Manager *policy_manager =
@@ -419,17 +419,19 @@ CORBA_ORB::resolve_policy_manager (CORBA::Environment& ACE_TRY_ENV)
 
   return policy_manager->_this (ACE_TRY_ENV);
 #else
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA_Object::_nil ();
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_policy_current (CORBA::Environment& ACE_TRY_ENV)
+CORBA_ORB::resolve_policy_current (CORBA::Environment &ACE_TRY_ENV)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
   return policy_current._this (ACE_TRY_ENV);
 #else
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA_Object::_nil ();
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
