@@ -61,6 +61,9 @@ typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_SS
 int
 TAO_SSLIOP_Connector::make_caching_strategy (void)
 {
+  if (this->TAO_IIOP_Connector::make_caching_strategy () == -1)
+    return -1;
+
   TAO_Resource_Factory *resource_factory =
     this->orb_core_->resource_factory ();
 
@@ -351,12 +354,8 @@ TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (void)
 int
 TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
-  this->orb_core_ = orb_core;
-
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-  if (this->make_caching_strategy () == -1)
+  if (this->TAO_IIOP_Connector::open (orb_core) == -1)
     return -1;
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
   TAO_SSLIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
 
@@ -444,8 +443,8 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
                              TAO_Transport *&transport,
                              ACE_Time_Value *max_wait_time)
 {
-  // @@ Use the policies to decide if SSL is the right protocol... 
-  int using_ssl = 0;
+  // @@ Use the policies to decide if SSL is the right protocol...
+  int using_ssl = 1;
   if (!using_ssl)
     return this->TAO_IIOP_Connector::connect (pfile,
 					      transport,
@@ -512,7 +511,7 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
   transport = result->transport ();
   return 0;
 }
-  
+
 TAO_Profile *
 TAO_SSLIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
