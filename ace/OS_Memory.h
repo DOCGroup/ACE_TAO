@@ -1,20 +1,17 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   ace
-//
-// = FILENAME
-//   OS_Memory.h
-//
-// = AUTHOR
-//   (Originally in OS.h)
-//   Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. M|ller
-//   <stophph@diku.dk>, and a cast of thousands...
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   OS_Memory.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Jesper S. M|ller<stophph@diku.dk>
+ *  @author and a cast of thousands...
+ */
+//=============================================================================
+
 
 #ifndef ACE_OS_MEMORY_H
 #define ACE_OS_MEMORY_H
@@ -100,12 +97,14 @@ typedef void *ACE_MALLOC_T;
 #  endif /* ACE_HAS_OLD_MALLOC */
 #endif /* ACE_HAS_PACE */
 
+/**
+ * @class ACE_OS_Memory
+ *
+ * @brief This class is a wrapper for memory operations, like
+ * malloc, memcpy, etc.
+ *
+ */
 class ACE_OS_Export ACE_OS_Memory
-  // = TITLE
-  //     This class is a wrapper for memory operations, like
-  //     malloc, memcpy, etc.
-  //
-  // = DESCRIPTION
 {
 public:
   // = A set of wrappers for memory managment.

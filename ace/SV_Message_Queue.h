@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    SV_Message_Queue.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SV_Message_Queue.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SV_MESSAGE_QUEUE_H
 #define ACE_SV_MESSAGE_QUEUE_H
@@ -26,11 +23,14 @@
 
 #include "ace/SV_Message.h"
 
+/**
+ * @class ACE_SV_Message_Queue
+ *
+ * @brief Defines the header file for the C++ wrapper for System V IPC
+ * message queues.
+ */
 class ACE_Export ACE_SV_Message_Queue
 {
-  // = TITLE
-  //     Defines the header file for the C++ wrapper for System V IPC
-  //     message queues.
 public:
   // = Useful symbolic constants.
   enum
@@ -41,6 +41,7 @@ public:
   };
 
   // = Initialization and termination methods.
+   /// Open a message queue using the <external_id>.
   ACE_SV_Message_Queue (void);
   ACE_SV_Message_Queue (key_t external_id,
                         int create = ACE_SV_Message_Queue::ACE_OPEN,
@@ -48,16 +49,15 @@ public:
   int open (key_t external_id,
             int create = ACE_SV_Message_Queue::ACE_OPEN,
             int perms = ACE_DEFAULT_FILE_PERMS);
-   // Open a message queue using the <external_id>.
 
   ~ACE_SV_Message_Queue (void);
 
+  /// Close down this instance of the message queue without removing it
+  /// from the system.
   int close (void);
-  // Close down this instance of the message queue without removing it
-  // from the system.
 
+  /// Close down and remove the message queue from the system.
   int remove (void);
-  // Close down and remove the message queue from the system.
 
 
   // = Message transfer methods.
@@ -70,22 +70,22 @@ public:
             int length,
             int mflags = 0);
 
+  /// Access the underlying control operations.
   int control (int option, void *arg = 0);
-  // Access the underlying control operations.
 
   // = Get/set the underly internal id.
   int get_id (void) const;
   void set_id (int);
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// Returned from the underlying <msgget> system call.
   int internal_id_;
-  // Returned from the underlying <msgget> system call.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -1,45 +1,32 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Timeprobe.h
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// = ADDITIONAL COMMENTS
-//
-//    If users want to use time probes, the ACE_COMPILE_TIMEPROBES
-//    flag must be defined when compiling ACE.  This can be achieved
-//    by doing one of the following:
-//
-//    . Use make probe = 1, if you are using the make utility.
-//
-//    . Define ACE_COMPILE_TIMEPROBES in config.h
-//
-//    . Define ACE_COMPILE_TIMEPROBES in the VC project file.
-//
-//    . Other regular methods will also work.
-//
-//    It is not necessary to define ACE_COMPILE_TIMEPROBES when using
-//    time probes, you simply need ACE_ENABLE_TIMEPROBES.  You can use
-//    the ACE_TIMEPROBE_* macros to program the time probes, and use
-//    the ACE_ENABLE_TIMEPROBE to enable the time probes.  If you
-//    define ACE_ENABLE_TIMEPROBE in your code, but forget to compile
-//    ACE with ACE_COMPILE_TIMEPROBES, you will end up with linker
-//    errors.
-//
-//    Remember that ACE_COMPILE_TIMEPROBES means that the ACE library
-//    will contain code for time probes.  This is only useful when
-//    compiling ACE. ACE_ENABLE_TIMEPROBES means that the
-//    ACE_TIMEPROBE_* macros should spring to life.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Timeprobe.h
+ *
+ *  $Id$
+ *
+ *  @author Irfan Pyarali
+ *
+ * If users want to use time probes the ACE_COMPILE_TIMEPROBES flag
+ * must be defined when compiling ACE.  This can be achieved by doing
+ * one of the following: . Use make probe = 1 if you are using the
+ * make utility. . Define ACE_COMPILE_TIMEPROBES in config.h . Define
+ * ACE_COMPILE_TIMEPROBES in the VC project file. . Other regular
+ * methods will also work. It is not necessary to define
+ * ACE_COMPILE_TIMEPROBES when using time probes you simply need
+ * ACE_ENABLE_TIMEPROBES.  You can use the ACE_TIMEPROBE_* macros to
+ * program the time probes and use the ACE_ENABLE_TIMEPROBE to enable
+ * the time probes.  If you define ACE_ENABLE_TIMEPROBE in your code
+ * but forget to compile ACE with ACE_COMPILE_TIMEPROBES you will end
+ * up with linker errors. Remember that ACE_COMPILE_TIMEPROBES means
+ * that the ACE library will contain code for time probes.  This is
+ * only useful when compiling ACE. ACE_ENABLE_TIMEPROBES means that
+ * the ACE_TIMEPROBE_* macros should spring to life.
+ *
+ */
+//=============================================================================
+
 
 #ifndef ACE_TIMEPROBE_H
 #define ACE_TIMEPROBE_H
@@ -59,51 +46,57 @@
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
+/**
+ * @class ACE_Event_Descriptions
+ *
+ * @brief Event Descriptions.
+ */
 class ACE_Export ACE_Event_Descriptions
 {
-  // = TITLE
-  // Event Descriptions.
 public:
+  /// Event descriptions
   const char **descriptions_;
-  // Event descriptions
 
+  /// Minimum id of this description set
   u_long minimum_id_;
-  // Minimum id of this description set
 
+  /// Comparison
   int operator== (const ACE_Event_Descriptions &rhs) const;
-  // Comparison
 };
 
+/**
+ * @class ACE_timeprobe_t
+ *
+ * @brief Time probe record.
+ */
 class ACE_Export ACE_timeprobe_t
 {
-  // = TITLE
-  //   Time probe record.
 public:
-  // = Events are record as strings or numbers.
+  /// Events are record as strings or numbers.
   union event
   {
     u_long event_number_;
     const char *event_description_;
   };
 
-  // = Type of event.
+  /// Type of event.
   enum event_type
   {
     NUMBER,
     STRING
   };
 
+  /// Event.
   event event_;
-  // Event.
 
+  /// Type of event.
   event_type event_type_;
-  // Type of event.
 
+  /// Timestamp.
   ACE_hrtime_t time_;
-  // Timestamp.
 
+  /// Id of thread posting the time probe.
   ACE_thread_t thread_;
-  // Id of thread posting the time probe.
 };
 
 #if defined (__ACE_INLINE__)

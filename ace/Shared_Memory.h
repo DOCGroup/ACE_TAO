@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Shared_Memory.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Shared_Memory.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SHARED_MEMORY_H
 #define ACE_SHARED_MEMORY_H
@@ -25,17 +22,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_Shared_Memory
+ *
+ * @brief This base class adapts both System V shared memory and "BSD"
+ * mmap to a common API.
+ *
+ * This is a very simple-minded wrapper, i.e., it really is only
+ * useful for allocating large contiguous chunks of shared
+ * memory.  For a much more sophisticated version, please check
+ * out the <ACE_Malloc> class.
+ */
 class ACE_Export ACE_Shared_Memory
 {
-  // = TITLE
-  //     This base class adapts both System V shared memory and "BSD"
-  //     mmap to a common API.
-  //
-  // = DESCRIPTION
-  //     This is a very simple-minded wrapper, i.e., it really is only
-  //     useful for allocating large contiguous chunks of shared
-  //     memory.  For a much more sophisticated version, please check
-  //     out the <ACE_Malloc> class.
 public:
   virtual ~ACE_Shared_Memory (void);
 
@@ -47,5 +46,6 @@ public:
   virtual int get_segment_size (void) const = 0;
   virtual ACE_HANDLE get_id (void) const = 0;
 };
+
 #include "ace/post.h"
 #endif /* ACE_SHARED_MEMORY_H */

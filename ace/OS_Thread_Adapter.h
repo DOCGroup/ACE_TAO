@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Thread_Adapter.h
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Adapter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan <coryan@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_OS_THREAD_ADAPTER_H
 #define ACE_OS_THREAD_ADAPTER_H
@@ -25,21 +22,23 @@
 
 #include "ace/OS_Export.h"
 
+/**
+ * @class ACE_OS_Thread_Adapter
+ *
+ * @brief Converts a C++ function into a function <ace_thread_adapter>
+ * function that can be called from a thread creation routine
+ * (e.g., <pthread_create> or <_beginthreadex>) that expects an
+ * extern "C" entry point.  This class also makes it possible to
+ * transparently provide hooks to register a thread with an
+ * <ACE_Thread_Manager>.
+ *
+ * This class is used in <ACE_OS::thr_create>.  In general, the
+ * thread that creates an object of this class is different from
+ * the thread that calls <invoke> on this object.  Therefore,
+ * the <invoke> method is responsible for deleting itself.
+ */
 class ACE_OS_Export ACE_OS_Thread_Adapter : public ACE_Base_Thread_Adapter
 {
-  // = TITLE
-  //     Converts a C++ function into a function <ace_thread_adapter>
-  //     function that can be called from a thread creation routine
-  //     (e.g., <pthread_create> or <_beginthreadex>) that expects an
-  //     extern "C" entry point.  This class also makes it possible to
-  //     transparently provide hooks to register a thread with an
-  //     <ACE_Thread_Manager>.
-  //
-  // = DESCRIPTION
-  //     This class is used in <ACE_OS::thr_create>.  In general, the
-  //     thread that creates an object of this class is different from
-  //     the thread that calls <invoke> on this object.  Therefore,
-  //     the <invoke> method is responsible for deleting itself.
 public:
   ACE_OS_Thread_Adapter (ACE_THR_FUNC user_func,
                          void *arg,
@@ -48,22 +47,24 @@ public:
                          , ACE_SEH_EXCEPT_HANDLER selector = 0
                          , ACE_SEH_EXCEPT_HANDLER handler = 0
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+  /// Constructor.
                          );
-  // Constructor.
 
+  /**
+   * Execute the <user_func_> with the <arg>.  This function deletes
+   * <this>, thereby rendering the object useless after the call
+   * returns.
+   */
   virtual void *invoke (void);
-  // Execute the <user_func_> with the <arg>.  This function deletes
-  // <this>, thereby rendering the object useless after the call
-  // returns.
 
 private:
+  /// Ensure that this object must be allocated on the heap.
   ~ACE_OS_Thread_Adapter (void);
-  // Ensure that this object must be allocated on the heap.
 
 private:
+  /// Friend declaration to avoid compiler warning:  only defines a private
+  /// destructor and has no friends.
   friend class ACE_Thread_Adapter_Has_Private_Destructor;
-  // Friend declaration to avoid compiler warning:  only defines a private
-  // destructor and has no friends.
 };
 
 # if defined (ACE_HAS_INLINED_OSCALLS)

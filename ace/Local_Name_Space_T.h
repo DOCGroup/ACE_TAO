@@ -1,20 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ACE
-//
-// = FILENAME
-//    Local_Name_Space_T.h
-//
-// = AUTHOR
-//    Prashant Jain (pjain@cs.wustl.edu), Irfan Pyarali
-//    (irfan@wuerl.wustl.edu), and Douglas C. Schmidt
-//    (schmidt@cs.wustl.edu).
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Local_Name_Space_T.h
+ *
+ *  $Id$
+ *
+ *  @author Prashant Jain (pjain@cs.wustl.edu)
+ *  @author Irfan Pyarali (irfan@wuerl.wustl.edu)
+ *  @author and Douglas C. Schmidt (schmidt@cs.wustl.edu).
+ */
+//=============================================================================
+
 
 #ifndef ACE_LOCAL_NAME_SPACE_T_H
 #define ACE_LOCAL_NAME_SPACE_T_H
@@ -47,23 +44,25 @@ typedef ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_ITE
 typedef ACE_Map_Entry <ACE_NS_String, ACE_NS_Internal> MAP_ENTRY;
 #endif /* 0 */
 
+/**
+ * @class ACE_Name_Space_Map
+ *
+ * @brief This class serves as a Proxy that ensures our process always
+ * has the appropriate allocator in place for every operation
+ * that accesses or updates the Map Manager.
+ *
+ * We need this class because otherwise the ALLOCATOR
+ * pointer will be stored in the Map_Manager that resides within
+ * shared memory.  Naturally, this will cause horrible problems
+ * since only the first process to set that pointer will be
+ * guaranteed the address of the ALLOCATOR is meaningful!
+ */
 template <class ALLOCATOR>
 class ACE_Name_Space_Map : public MAP_MANAGER
 {
-  // = TITLE
-  //     This class serves as a Proxy that ensures our process always
-  //     has the appropriate allocator in place for every operation
-  //     that accesses or updates the Map Manager.
-  //
-  // = DESCRIPTION
-  //     We need this class because otherwise the ALLOCATOR
-  //     pointer will be stored in the Map_Manager that resides within
-  //     shared memory.  Naturally, this will cause horrible problems
-  //     since only the first process to set that pointer will be
-  //     guaranteed the address of the ALLOCATOR is meaningful!
 public:
+  /// Constructor.
   ACE_Name_Space_Map (ALLOCATOR *alloc);
-  // Constructor.
 
   // = The following methods are Proxies to the underlying methods
   // provided by <ACE_Hash_Map_Manager>.  When they are called, they
@@ -90,114 +89,128 @@ public:
   int close (ALLOCATOR *alloc);
 };
 
+/**
+ * @class ACE_Local_Name_Space
+ *
+ * @brief Maintaining accesses Local Name Server Database.  Allows to
+ * add NameBindings, change them, remove them and resolve
+ * NameBindings.
+ *
+ * Manages a Naming Service for a local name space which
+ * includes bindings for node_local and host_local naming
+ * contexts.  All strings are stored in wide character format.
+ * A Name Binding consists of a name (that's the key), a value
+ * string and an optional type string (no wide chars).
+ */
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Local_Name_Space : public ACE_Name_Space
 {
-  // = TITLE
-  //     Maintaining accesses Local Name Server Database.  Allows to
-  //     add NameBindings, change them, remove them and resolve
-  //     NameBindings.
-  //
-  // = DESCRIPTION
-  //     Manages a Naming Service for a local name space which
-  //     includes bindings for node_local and host_local naming
-  //     contexts.  All strings are stored in wide character format.
-  //     A Name Binding consists of a name (that's the key), a value
-  //     string and an optional type string (no wide chars).
 public:
   // = Initialization and termination methods.
+  /// "Do-nothing" constructor.
   ACE_Local_Name_Space (void);
-  // "Do-nothing" constructor.
 
+  /**
+   * Specifies the scope of this namespace, opens and memory-maps the
+   * associated file (if accessible) or contacts the dedicated name
+   * server process for NET_LOCAL namespace.
+   */
   ACE_Local_Name_Space (ACE_Naming_Context::Context_Scope_Type scope_in,
                         ACE_Name_Options *name_options);
-  // Specifies the scope of this namespace, opens and memory-maps the
-  // associated file (if accessible) or contacts the dedicated name
-  // server process for NET_LOCAL namespace.
 
+  /**
+   * Specifies the scope of this namespace, opens and memory-maps the
+   * associated file (if accessible) or contacts the dedicated name
+   * server process for NET_LOCAL namespace.
+   */
   int open (ACE_Naming_Context::Context_Scope_Type scope_in);
-  // Specifies the scope of this namespace, opens and memory-maps the
-  // associated file (if accessible) or contacts the dedicated name
-  // server process for NET_LOCAL namespace.
 
+  /// destructor, do some cleanup :TBD: last dtor should "compress"
+  /// file
   ~ACE_Local_Name_Space (void);
-  // destructor, do some cleanup :TBD: last dtor should "compress"
-  // file
 
+  /// Bind a new name to a naming context (Wide character strings).
   virtual int bind (const ACE_WString &name,
                     const ACE_WString &value,
                     const char *type = "");
-  // Bind a new name to a naming context (Wide character strings).
 
+  /**
+   * Overwrite the value or type of an existing name in a
+   * ACE_Local_Name_Space or bind a new name to the context, if it
+   * didn't exist yet. (Wide charcter strings interface).
+   */
   virtual int rebind (const ACE_WString &name,
                       const ACE_WString &value,
                       const char *type = "");
-  // Overwrite the value or type of an existing name in a
-  // ACE_Local_Name_Space or bind a new name to the context, if it
-  // didn't exist yet. (Wide charcter strings interface).
 
+  /// Delete a name from a ACE_Local_Name_Space (Wide charcter strings
+  /// Interface).
   virtual int unbind (const ACE_WString &name);
   virtual int unbind_i (const ACE_WString &name);
-  // Delete a name from a ACE_Local_Name_Space (Wide charcter strings
-  // Interface).
 
+  /// Get value and type of a given name binding (Wide chars).  The
+  /// caller is responsible for deleting <type>!
   virtual int resolve (const ACE_WString &name,
                        ACE_WString &value,
                        char *&type);
   virtual int resolve_i (const ACE_WString &name,
                          ACE_WString &value,
                          char *&type);
-  // Get value and type of a given name binding (Wide chars).  The
-  // caller is responsible for deleting <type>!
 
+  /// Get a set of names matching a specified pattern (wchars). Matching
+  /// means the names must begin with the pattern string.
   virtual int list_names (ACE_WSTRING_SET &set,
                           const ACE_WString &pattern);
   virtual int list_names_i (ACE_WSTRING_SET &set,
                           const ACE_WString &pattern);
-  // Get a set of names matching a specified pattern (wchars). Matching
-  // means the names must begin with the pattern string.
 
+  /// Get a set of values matching a specified pattern (wchars). Matching
+  /// means the values must begin with the pattern string.
   virtual int list_values (ACE_WSTRING_SET &set,
                            const ACE_WString &pattern);
   virtual int list_values_i (ACE_WSTRING_SET &set,
                              const ACE_WString &pattern);
-  // Get a set of values matching a specified pattern (wchars). Matching
-  // means the values must begin with the pattern string.
 
+  /// Get a set of types matching a specified pattern (wchars). Matching
+  /// means the types must begin with the pattern string.
   virtual int list_types (ACE_WSTRING_SET &set,
                           const ACE_WString &pattern);
   virtual int list_types_i (ACE_WSTRING_SET &set,
                             const ACE_WString &pattern);
-  // Get a set of types matching a specified pattern (wchars). Matching
-  // means the types must begin with the pattern string.
 
+  /**
+   * Get a set of names matching a specified pattern (wchars). Matching
+   * means the names must begin with the pattern string. Returns the
+   * complete binding associated each pattern match.
+   */
   virtual int list_name_entries (ACE_BINDING_SET &set,
                                  const ACE_WString &pattern);
   virtual int list_name_entries_i (ACE_BINDING_SET &set,
                                    const ACE_WString &pattern);
-  // Get a set of names matching a specified pattern (wchars). Matching
-  // means the names must begin with the pattern string. Returns the
-  // complete binding associated each pattern match.
 
+  /**
+   * Get a set of values matching a specified pattern (wchars). Matching
+   * means the values must begin with the pattern string. Returns the
+   * complete binding associated each pattern match.
+   */
   virtual int list_value_entries (ACE_BINDING_SET &set,
                                   const ACE_WString &pattern);
   virtual int list_value_entries_i (ACE_BINDING_SET &set,
                                     const ACE_WString &pattern);
-  // Get a set of values matching a specified pattern (wchars). Matching
-  // means the values must begin with the pattern string. Returns the
-  // complete binding associated each pattern match.
 
+  /**
+   * Get a set of types matching a specified pattern (wchars). Matching
+   * means the types must begin with the pattern string. Returns the
+   * complete binding associated each pattern match.
+   */
   virtual int list_type_entries (ACE_BINDING_SET &set,
                                  const ACE_WString &pattern);
   virtual int list_type_entries_i (ACE_BINDING_SET &set,
                                    const ACE_WString &pattern);
-  // Get a set of types matching a specified pattern (wchars). Matching
-  // means the types must begin with the pattern string. Returns the
-  // complete binding associated each pattern match.
 
+  /// Dump the state of the object
   virtual void dump (void) const;
   virtual void dump_i (void) const;
-  // Dump the state of the object
 
   // = I just know this is going to cause problems on some platform...
   typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, ACE_LOCK> > 
@@ -205,41 +218,41 @@ public:
 
 private:
 #if defined (ACE_WIN32)
+  /// Remap the backing store
   int remap (EXCEPTION_POINTERS *ep);
-  // Remap the backing store
 #endif /* ACE_WIN32 */
 
+  /// Factor out code from <bind> and <rebind>.
   int shared_bind (const ACE_WString &name,
                    const ACE_WString &value,
                    const char *type, int rebind);
   int shared_bind_i (const ACE_WString &name,
                      const ACE_WString &value,
                      const char *type, int rebind);
-  // Factor out code from <bind> and <rebind>.
 
+  /// Allocate the appropriate type of map manager that stores the
+  /// key/value binding.
   int create_manager (void);
   int create_manager_i (void);
-  // Allocate the appropriate type of map manager that stores the
-  // key/value binding.
 
+  /// Pointer to the allocator
   ALLOCATOR *allocator_;
-  // Pointer to the allocator
 
+  /// Pointer to the allocated map manager.
   ACE_Name_Space_Map <ALLOCATOR> *name_space_map_;
-  // Pointer to the allocated map manager.
 
+  /// Scope of this naming context (e.g., PROC_LOCAL, NODE_LOCAL, or
+  /// NET_LOCAL).
   ACE_Naming_Context::Context_Scope_Type ns_scope_;
-  // Scope of this naming context (e.g., PROC_LOCAL, NODE_LOCAL, or
-  // NET_LOCAL).
 
+  /// Keep track of the options such as database name etc
   ACE_Name_Options *name_options_;
-  // Keep track of the options such as database name etc
 
+  /// Name of the file used as the backing store.
   ACE_TCHAR context_file_[MAXPATHLEN + MAXNAMELEN];
-  // Name of the file used as the backing store.
 
+  /// Synchronization variable.
   ACE_LOCK *lock_;
-  // Synchronization variable.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

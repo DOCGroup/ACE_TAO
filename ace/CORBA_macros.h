@@ -1,24 +1,19 @@
 // $Id$
 
 // ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    CORBA_macros.h
-//
-// = DESCRIPTION
-//   Writing code that is portable between platforms with or without
-//   native C++ exceptions is hard.  The following macros offer some
-//   help on this task, mostly oriented to making the ORB code and the
-//   IDL generated code portable.
-//
-// = AUTHOR
-//    Nanbor Wang <nanbor@cs.wustl.edu>
-//        Based on the original <tao/try_macros.h> implementation by
-//        Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
-//        Carlos O'Ryan  <coryan@cs.wustl.edu>, et al.
+/**
+ * @file CORBA_macros.h
+ *
+ *   Writing code that is portable between platforms with or without
+ *   native C++ exceptions is hard.  The following macros offer some
+ *   help on this task, mostly oriented to making the ORB code and the
+ *   IDL generated code portable.
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Based on the original <tao/try_macros.h> implementation by
+ *  @author Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+ *  @author Carlos O'Ryan  <coryan@cs.wustl.edu>, et al.
+ */
 // ============================================================================
 
 // Macros for handling CORBA exceptions.

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    XTI_ATM_Mcast.h
-//
-// = AUTHOR
-//    Joe Hoffert
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    XTI_ATM_Mcast.h
+ *
+ *  $Id$
+ *
+ *  @author Joe Hoffert
+ */
+//=============================================================================
+
 
 #ifndef ACE_XTI_ATM_MCAST_H
 #define ACE_XTI_ATM_MCAST_H
@@ -27,16 +24,34 @@
 
 #if defined (ACE_HAS_XTI_ATM)
 
-class ACE_Export ACE_XTI_ATM_Mcast : public ACE_TLI_Connector 
+/**
+ * @class ACE_XTI_ATM_Mcast
+ *
+ * @brief Defines an active connection factory for the ACE_TLI C++
+ * wrappers to support XTI/ATM multicast.
+ */
+class ACE_Export ACE_XTI_ATM_Mcast : public ACE_TLI_Connector
 {
-  // = TITLE
-  //     Defines an active connection factory for the ACE_TLI C++
-  //     wrappers to support XTI/ATM multicast.
 public:
   // = Initialization methods.
+  /// Default constructor.
   ACE_XTI_ATM_Mcast (void);
-  // Default constructor.
 
+  /**
+   * Actively connect and produce a <new_stream> if things go well.
+   * The <remote_sap> is the address that we are trying to connect
+   * with.  The <timeout> is the amount of time to wait to connect.
+   * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
+   * the connection is done using non-blocking mode.  In this case, if
+   * the connection can't be made immediately the value of -1 is
+   * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
+   * this is the amount of time to wait before timing out.  If the
+   * time expires before the connection is made <errno == ETIME>.  The
+   * <local_sap> is the value of local address to bind to.  If it's
+   * the default value of <ACE_Addr::sap_any> then the user is letting
+   * the OS do the binding.  If <reuse_addr> == 1 then the
+   * <local_addr> is reused, even if it hasn't been cleanedup yet.
+   */
   ACE_XTI_ATM_Mcast (ACE_TLI_Stream &new_stream,
                      const ACE_Addr &remote_sap,
                      ACE_Time_Value *timeout = 0,
@@ -49,20 +64,22 @@ public:
                      int rw_flag = 1,
                      struct netbuf *udata = 0,
                      struct netbuf *opt = 0);
-  // Actively connect and produce a <new_stream> if things go well.
-  // The <remote_sap> is the address that we are trying to connect
-  // with.  The <timeout> is the amount of time to wait to connect.
-  // If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
-  // the connection is done using non-blocking mode.  In this case, if
-  // the connection can't be made immediately the value of -1 is
-  // returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-  // this is the amount of time to wait before timing out.  If the
-  // time expires before the connection is made <errno == ETIME>.  The
-  // <local_sap> is the value of local address to bind to.  If it's
-  // the default value of <ACE_Addr::sap_any> then the user is letting
-  // the OS do the binding.  If <reuse_addr> == 1 then the
-  // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
+  /**
+   * Actively connect and produce a <new_stream> if things go well.
+   * The <remote_sap> is the address that we are trying to connect
+   * with.  The <timeout> is the amount of time to wait to connect.
+   * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
+   * the connection is done using non-blocking mode.  In this case, if
+   * the connection can't be made immediately the value of -1 is
+   * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
+   * this is the amount of time to wait before timing out.  If the
+   * time expires before the connection is made <errno == ETIME>.  The
+   * <local_sap> is the value of local address to bind to.  If it's
+   * the default value of <ACE_Addr::sap_any> then the user is letting
+   * the OS do the binding.  If <reuse_addr> == 1 then the
+   * <local_addr> is reused, even if it hasn't been cleanedup yet.
+   */
   int connect (ACE_TLI_Stream &new_stream,
                const ACE_Addr &remote_sap,
                ACE_Time_Value *timeout = 0,
@@ -75,43 +92,32 @@ public:
                int rw_flag = 1,
                struct netbuf *udata = 0,
                struct netbuf *opt = 0);
-  // Actively connect and produce a <new_stream> if things go well.
-  // The <remote_sap> is the address that we are trying to connect
-  // with.  The <timeout> is the amount of time to wait to connect.
-  // If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
-  // the connection is done using non-blocking mode.  In this case, if
-  // the connection can't be made immediately the value of -1 is
-  // returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-  // this is the amount of time to wait before timing out.  If the
-  // time expires before the connection is made <errno == ETIME>.  The
-  // <local_sap> is the value of local address to bind to.  If it's
-  // the default value of <ACE_Addr::sap_any> then the user is letting
-  // the OS do the binding.  If <reuse_addr> == 1 then the
-  // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
+  /**
+   * Actively add a leaf to the currently connected stream (i.e.,
+   * multicast). The <remote_sap> is the address of the leaf that we
+   * are trying to add. The <timeout> is the amount of time to wait to
+   * connect. If it's 0 then we block indefinitely.  If *timeout ==
+   * {0, 0} then the connection is done using non-blocking mode.  In
+   * this case, if the connection can't be made immediately the value
+   * of -1 is returned with <errno == EWOULDBLOCK>.  If *timeout >
+   * {0, 0} then this is the amount of time to wait before timing out.
+   * If the time expires before the connection is made <errno == ETIME>.
+   */
   int add_leaf (ACE_TLI_Stream &current_stream,
                 const ACE_Addr &remote_sap,
                 ACE_INT32 leaf_id,
                 ACE_Time_Value *timeout = 0);
-  // Actively add a leaf to the currently connected stream (i.e.,
-  // multicast). The <remote_sap> is the address of the leaf that we
-  // are trying to add. The <timeout> is the amount of time to wait to
-  // connect. If it's 0 then we block indefinitely.  If *timeout ==
-  // {0, 0} then the connection is done using non-blocking mode.  In
-  // this case, if the connection can't be made immediately the value
-  // of -1 is returned with <errno == EWOULDBLOCK>.  If *timeout >
-  // {0, 0} then this is the amount of time to wait before timing out.
-  // If the time expires before the connection is made <errno == ETIME>.
 
   // = Meta-type info
   typedef ACE_ATM_Addr PEER_ADDR;
   typedef ACE_TLI_Stream PEER_STREAM;
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 };
 
 #if defined (__ACE_INLINE__)

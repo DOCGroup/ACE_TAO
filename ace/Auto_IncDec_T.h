@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-//============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Auto_IncDec_T.h
-//
-// = AUTHOR
-//    Edan Ayal <EdanA@cti2.com>
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file    Auto_IncDec_T.h
+ *
+ *  $Id$
+ *
+ *  @author Edan Ayal <EdanA@cti2.com>
+ */
+//=============================================================================
+
 
 #ifndef ACE_AUTO_INCDEC_T_H
 #define ACE_AUTO_INCDEC_T_H
@@ -24,33 +21,35 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_Auto_IncDec
+ *
+ * @brief This class automatically increments and decrements a
+ * parameterized counter.
+ *
+ * This data structure is meant to be used within a method,
+ * function, or scope.  The actual parameter given for the
+ * <ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> template parameter
+ * must provide at least opertaors ++ and --.
+ */
 template <class ACE_SAFELY_INCREMENTABLE_DECREMENTABLE>
 class ACE_Auto_IncDec
 {
-  // = TITLE
-  //     This class automatically increments and decrements a
-  //     parameterized counter.
-  //
-  // = DESCRIPTION
-  //     This data structure is meant to be used within a method,
-  //     function, or scope.  The actual parameter given for the
-  //     <ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> template parameter
-  //     must provide at least opertaors ++ and --.
 public:
   // = Initialization and termination methods.
+  /// Implicitly increment the counter.
   ACE_Auto_IncDec (ACE_SAFELY_INCREMENTABLE_DECREMENTABLE &counter);
-  // Implicitly increment the counter.
 
+  /// Implicitly decrement the counter.
   ~ACE_Auto_IncDec (void);
-  // Implicitly decrement the counter.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
 protected:
+  /// Reference to the <ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> counter
+  /// we're incrementing/decrementing.
   ACE_SAFELY_INCREMENTABLE_DECREMENTABLE &counter_;
-  // Reference to the <ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> counter
-  // we're incrementing/decrementing.
 
 private:
   // = Prevent assignment and initialization.

@@ -1,18 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Log_Msg_Callback.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Log_Msg_Callback.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_LOG_MSG_CALLBACK_H
 #define ACE_LOG_MSG_CALLBACK_H
@@ -26,8 +23,10 @@
 
 class ACE_Log_Record;
 
-/// An interface class used to get logging callbacks.
 /**
+ * @class ACE_Log_Msg_Callback
+ *
+ * @brief An interface class used to get logging callbacks.
  *
  *     Users who are interested in getting the logging messages
  *     directly, can subclass this interface and override the log()
@@ -47,13 +46,10 @@ class ACE_Log_Record;
  *     callback object per Log_Msg object.  Moreover,
  *     <ACE_Log_Msg_Callbacks> are not inherited when a new thread
  *     is spawned, so you'll need to reset these in each new thread.
+ *
  */
 class ACE_Export ACE_Log_Msg_Callback
 {
-  // = TITLE
-  //     
-  //
-  // = DESCRIPTION
 public:
   /// No-op virtual destructor.
   virtual ~ACE_Log_Msg_Callback (void);

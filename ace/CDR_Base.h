@@ -1,31 +1,29 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ====================================================================
-//
-// = LIBRARY
-//   ACE
-//
-// = FILENAME
-//   CDR_Base.h
-//
-// = DESCRIPTION
-//   ACE Common Data Representation (CDR) basic types.
-//
-//   The current implementation assumes that the host has 1-byte,
-//   2-byte and 4-byte integral types, and that it has single
-//   precision and double precision IEEE floats.
-//   Those assumptions are pretty good these days, with Crays being
-//   the only known exception.
-//
-// = AUTHORS
-//   Aniruddha Gokhale <gokhale@cs.wustl.edu> and Carlos O'Ryan
-//   <coryan@cs.wustl.edu> for the original implementation in TAO.
-//   ACE version by Jeff Parsons <parsons@cs.wustl.edu>
-//   and Istvan Buki <istvan.buki@euronet.be>.
-//
-// =====================================================================
+//=============================================================================
+/**
+ *  @file   CDR_Base.h
+ *
+ *  $Id$
+ *
+ * ACE Common Data Representation (CDR) basic types.
+ *
+ * The current implementation assumes that the host has 1-byte,
+ * 2-byte and 4-byte integral types, and that it has single
+ * precision and double precision IEEE floats.
+ * Those assumptions are pretty good these days, with Crays being
+ * the only known exception.
+ *
+ *
+ *  @author TAO version by
+ *  @author Aniruddha Gokhale <gokhale@cs.wustl.edu>
+ *  @author Carlos O'Ryan<coryan@cs.wustl.edu>
+ *  @author ACE version by
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ *  @author Istvan Buki <istvan.buki@euronet.be>
+ */
+//=============================================================================
+
 
 #ifndef ACE_CDR_BASE_H
 #define ACE_CDR_BASE_H
@@ -41,12 +39,14 @@
 #include "ace/Basic_Types.h"
 #include "ace/Message_Block.h"
 
+/**
+ * @class ACE_CDR
+ *
+ * @brief Keep constants and some routines common to both Output and
+ * Input CDR streams.
+ */
 class ACE_Export ACE_CDR
 {
-  // = TITLE
-  //   Keep constants and some routines common to both Output and
-  //   Input CDR streams.
-  //
 public:
   // = Constants defined by the CDR protocol.
   // By defining as many of these constants as possible as enums we
@@ -69,30 +69,38 @@ public:
     SHORT_ALIGN = 2,
     LONG_ALIGN = 4,
     LONGLONG_ALIGN = 8,
+    /// @note the CORBA LongDouble alignment requirements do not
+    /// match its size...
     LONGDOUBLE_ALIGN = 8,
-    // Note how the CORBA LongDouble alignment requirements do not
-    // match its size...
 
+    /// Maximal CDR 1.1 alignment: "quad precision" FP (i.e. "CDR::Long
+    /// double", size as above).
     MAX_ALIGNMENT = 8,
-    // Maximal CDR 1.1 alignment: "quad precision" FP (i.e. "CDR::Long
-    // double", size as above).
 
+    /// The default buffer size.
+    /**
+     * @todo We want to add options to control this
+     *   default value, so this constant should be read as the default
+     *   default value ;-)
+     */
     DEFAULT_BUFSIZE = ACE_DEFAULT_CDR_BUFSIZE,
-    // The default buffer size.
-    // @@ TODO We want to add options to control this
-    // default value, so this constant should be read as the default
-    // default value ;-)
 
+    /// The buffer size grows exponentially until it reaches this size;
+    /// afterwards it grows linearly using the next constant
     EXP_GROWTH_MAX = ACE_DEFAULT_CDR_EXP_GROWTH_MAX,
-    // The buffer size grows exponentially until it reaches this size;
-    // afterwards it grows linearly using the next constant
 
+    /// Once exponential growth is ruled out the buffer size increases
+    /// in chunks of this size, note that this constants have the same
+    /// value right now, but it does not need to be so.
     LINEAR_GROWTH_CHUNK = ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK
-    // Once exponential growth is ruled out the buffer size increases
-    // in chunks of this size, note that this constants have the same
-    // value right now, but it does not need to be so.
   };
 
+  /**
+   * Do byte swapping for each basic IDL type size.  There exist only
+   * routines to put byte, halfword (2 bytes), word (4 bytes),
+   * doubleword (8 bytes) and quadword (16 byte); because those are
+   * the IDL basic type sizes.
+   */
   static void swap_2 (const char *orig, char *target);
   static void swap_4 (const char *orig, char *target);
   static void swap_8 (const char *orig, char *target);
@@ -109,39 +117,39 @@ public:
   static void swap_16_array (const char *orig,
                              char *target,
                              size_t length);
-  // Do byte swapping for each basic IDL type size.  There exist only
-  // routines to put byte, halfword (2 bytes), word (4 bytes),
-  // doubleword (8 bytes) and quadword (16 byte); because those are
-  // the IDL basic type sizes.
 
+  /// Align the message block to ACE_CDR::MAX_ALIGNMENT,
+  /// set by the CORBA spec at 8 bytes.
   static void mb_align (ACE_Message_Block *mb);
-  // Align the message block to ACE_CDR::MAX_ALIGNMENT,
-  // set by the CORBA spec at 8 bytes.
 
+  /**
+   * Compute the size of the smallest buffer that can contain at least
+   * <minsize> bytes.
+   * To understand how a "best fit" is computed look at the
+   * algorithm in the code.
+   * Basically the buffers grow exponentially, up to a certain point,
+   * then the buffer size grows linearly.
+   * The advantage of this algorithm is that is rapidly grows to a
+   * large value, but does not explode at the end.
+   */
   static size_t first_size (size_t minsize);
-  // Compute the size of the smallest buffer that can contain at least
-  // <minsize> bytes.
-  // To understand how a "best fit" is computed look at the
-  // algorithm in the code.
-  // Basically the buffers grow exponentially, up to a certain point,
-  // then the buffer size grows linearly.
-  // The advantage of this algorithm is that is rapidly grows to a
-  // large value, but does not explode at the end.
 
+  /// Compute not the smallest, but the second smallest buffer that
+  /// will fir <minsize> bytes.
   static size_t next_size (size_t minsize);
-  // Compute not the smallest, but the second smallest buffer that
-  // will fir <minsize> bytes.
 
+  /**
+   * Increase the capacity of mb to contain at least <minsize> bytes.
+   * If <minsize> is zero the size is increased by an amount at least
+   * large enough to contain any of the basic IDL types.  Return -1 on
+   * failure, 0 on success.
+   */
   static int grow (ACE_Message_Block *mb, size_t minsize);
-  // Increase the capacity of mb to contain at least <minsize> bytes.
-  // If <minsize> is zero the size is increased by an amount at least
-  // large enough to contain any of the basic IDL types.  Return -1 on
-  // failure, 0 on success.
 
+  /// Copy a message block chain into a single message block,
+  /// preserving the alignment of the original stream.
   static void consolidate (ACE_Message_Block *dst,
                           const ACE_Message_Block *src);
-  // Copy a message block chain into a single message block,
-  // preserving the alignment of the original stream.
 
   static size_t total_length (const ACE_Message_Block *begin,
                               const ACE_Message_Block *end);

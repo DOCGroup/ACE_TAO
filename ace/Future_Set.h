@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Future_Set.h
-//
-// = AUTHOR (S)
-//    John Tucker <jtucker@infoglide.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Future_Set.h
+ *
+ *  $Id$
+ *
+ *  @author John Tucker <jtucker@infoglide.com>
+ */
+//=============================================================================
+
 
 #ifndef ACE_FUTURE_SET_H
 #define ACE_FUTURE_SET_H
@@ -29,50 +26,57 @@
 
 #if defined (ACE_HAS_THREADS)
 
+/**
+ * @class ACE_Future_Set
+ *
+ * @brief This class implements a mechanism which allows the values of
+ * a collections of <ACE_Future> objects to be accessed by
+ * reader threads as they become available.
+ */
 template <class T>
 class ACE_Future_Set : public ACE_Future_Observer<T>
 {
-  // = TITLE
-  //     This class implements a mechanism which allows the values of
-  //     a collections of <ACE_Future> objects to be accessed by
-  //     reader threads as they become available.
 public:
   // = Initialization and termination methods.
 
+  /// Constructor.
   ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = 0);
-  // Constructor.
 
+  /// Destructor.
   ~ACE_Future_Set (void);
-  // Destructor.
 
+  /// Return 1 if their are no <ACE_Future> objects left on its queue and
+  /// 0 otherwise
   int is_empty (void) const;
-  // Return 1 if their are no <ACE_Future> objects left on its queue and
-  // 0 otherwise
 
+  /**
+   * Enqueus the given <ACE_Future> into this objects queue when it is
+   * readable.
+   *
+   * Returns 0 if the future is successfully inserted, 1 if the
+   * future is already inserted, and -1 if failures occur.
+   */
   int insert (ACE_Future<T> &future);
-  // Enqueus the given <ACE_Future> into this objects queue when it is
-  // readable.
-  //
-  // Returns 0 if the future is successfully inserted, 1 if the
-  // future is already inserted, and -1 if failures occur.
 
+  /**
+   * Wait up to <tv> time to get the <value>.  Note that <tv> must be
+   * specified in absolute time rather than relative time.); get the
+   * next <ACE_Future> that is readable.  If <tv> = 0, the will block
+   * forever.
+   *
+   * If a readable future becomes available, then the input result
+   * will be assigned with it and 1 will will be returned.  If the set
+   * is empty, then 0 is returned.
+   */
   int next_readable (ACE_Future<T> &result,
                      ACE_Time_Value *tv = 0);
-  // Wait up to <tv> time to get the <value>.  Note that <tv> must be
-  // specified in absolute time rather than relative time.); get the
-  // next <ACE_Future> that is readable.  If <tv> = 0, the will block
-  // forever.
-  //
-  // If a readable future becomes available, then the input result
-  // will be assigned with it and 1 will will be returned.  If the set
-  // is empty, then 0 is returned.
 
+  /// Called by the <ACE_Future> subject in which we are subscribed to
+  /// when its value is written to.
   virtual void update (const ACE_Future<T> &future);
-  // Called by the <ACE_Future> subject in which we are subscribed to
-  // when its value is written to.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 private:
   // = Disallow these operations.
@@ -95,16 +99,16 @@ private:
                                   FUTURE_REP_COMPARE,
 			          ACE_Null_Mutex> FUTURE_HASH_MAP;
 
+  /// Map of <ACE_Futures>, subjects, which have not been written to by
+  /// client's writer thread.
   FUTURE_HASH_MAP future_map_;
-  // Map of <ACE_Futures>, subjects, which have not been written to by
-  // client's writer thread.
 
+  /// Message queue for notifying the reader thread of <ACE_Futures> which
+  /// have been written to by client's writer thread.
   ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_;
-  // Message queue for notifying the reader thread of <ACE_Futures> which
-  // have been written to by client's writer thread.
 
+  /// Keeps track of whether we need to delete the message queue.
   int delete_queue_;
-  // Keeps track of whether we need to delete the message queue.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

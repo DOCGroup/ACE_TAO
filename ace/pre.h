@@ -1,22 +1,20 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    pre.h
-//
-// = AUTHOR
-//    Christopher Kohlhoff <chris@kohlhoff.com>
-//
-// = DESCRIPTION
-//    This file save the original alignment rules and changes the alignment
-//    boundary to ACE's default.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    pre.h
+ *
+ *  $Id$
+ *
+ *  @author Christopher Kohlhoff <chris@kohlhoff.com>
+ *
+ *  This file save the original alignment rules and changes the alignment
+ *  boundary to ACE's default.
+ *
+ *
+ */
+//=============================================================================
+
 
 // No header guard
 #if defined (_MSC_VER)

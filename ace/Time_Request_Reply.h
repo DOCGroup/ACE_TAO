@@ -1,23 +1,20 @@
 /* -*- C++ -*- */
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    ACE
-//
-// = FILENAME
-//    ACE_Time_Request_Reply.h
-//
-// = DESCRIPTION
-//     Define the format used to exchange messages between the
-//     ACE_Time_Server and clerks.
-//
-// = AUTHOR
-//     Prashant Jain
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ACE_Time_Request_Reply.h
+ *
+ *  $Id$
+ *
+ *   Define the format used to exchange messages between the
+ *   ACE_Time_Server and clerks.
+ *
+ *
+ *  @author  Prashant Jain
+ */
+//=============================================================================
+
 
 #ifndef ACE_TIME_REQUEST_REPLY_H
 #define ACE_TIME_REQUEST_REPLY_H
@@ -31,35 +28,37 @@
 
 #include "ace/SString.h"
 
+/**
+ * @class ACE_Time_Request
+ *
+ * @brief Message format for delivering requests to the ACE_Time Server.
+ *
+ * This class is implemented to minimize data copying.
+ * In particular, all marshaling is done in situ...
+ */
 class ACE_Export ACE_Time_Request
 {
-  // = TITLE
-  //   Message format for delivering requests to the ACE_Time Server.
-  //
-  // = DESCRIPTION
-  //   This class is implemented to minimize data copying.
-  //   In particular, all marshaling is done in situ...
 public:
   enum Constants
   {
-    // Request message types.
+    /// Request message types.
     TIME_UPDATE = 01,
 
-    // Class-specific constant values.
+    /// Class-specific constant values.
     MAX_TIME_LEN = MAXPATHLEN + 1
   };
 
+  /// Default constructor.
   ACE_Time_Request (void);
-  // Default constructor.
 
+  /// Create a <ACE_Time_Request> message.
   ACE_Time_Request (ACE_INT32 msg_type, // Type of request.
                     const ACE_UINT32 time,
                     ACE_Time_Value *timeout = 0); // Max time waiting for request.
-  // Create a <ACE_Time_Request> message.
 
+  /// Initialize length_ in order to ensure correct byte ordering
+  /// before a request is sent.
   void init (void);
-  // Initialize length_ in order to ensure correct byte ordering
-  // before a request is sent.
 
   // Get the fixed size of message
   ssize_t size (void) const;
@@ -80,14 +79,14 @@ public:
   ACE_Time_Value timeout (void) const;
   void timeout (const ACE_Time_Value timeout);
 
+  /// Encode the message before transmission.
   int encode (void *&);
-  // Encode the message before transmission.
 
+  /// Decode message after reception.
   int decode (void);
-  // Decode message after reception.
 
+  /// Print out the values of the message for debugging purposes.
   void dump (void) const;
-  // Print out the values of the message for debugging purposes.
 
 private:
   // = The 5 fields in the <Transfer> struct are transmitted to the server.
@@ -113,11 +112,11 @@ private:
     // The data portion contains <time_>
   };
 
+  /// Transfer buffer.
   Transfer transfer_;
-  // Transfer buffer.
 
+  /// Time
   ACE_UINT32 time_;
-  // Time
 };
 
 

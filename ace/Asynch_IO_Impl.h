@@ -1,29 +1,23 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//
-//    ace
-//
-// = FILENAME
-//
-//    Asynch_IO_Impl.h
-//
-// = DESCRIPTION
-//
-//    This class contains asbtract base classes for all the concrete
-//    implementation classes for the various asynchronous operations
-//    that are used with the Praoctor.
-//
-// = AUTHOR
-//
-//    Irfan Pyarali (irfan@cs.wustl.edu),
-//    Tim Harrison (harrison@cs.wustl.edu) and
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Asynch_IO_Impl.h
+ *
+ *  $Id$
+ *
+ *
+ *  This class contains asbtract base classes for all the concrete
+ *  implementation classes for the various asynchronous operations
+ *  that are used with the Praoctor.
+ *
+ *
+ *  @author Irfan Pyarali (irfan@cs.wustl.edu)
+ *  @author Tim Harrison (harrison@cs.wustl.edu)
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_ASYNCH_IO_IMPL_H
 #define ACE_ASYNCH_IO_IMPL_H
@@ -42,223 +36,236 @@
 // Forward declaration.
 class ACE_Proactor_Impl;
 
+/**
+ * @class ACE_Asynch_Result_Impl
+ *
+ * @brief Abstract base class for the all the classes that provide
+ * concrete implementations for ACE_Asynch_Result.
+ *
+ */
 class ACE_Export ACE_Asynch_Result_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for the all the classes that provide
-  //     concrete implementations for ACE_Asynch_Result.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Result_Impl (void);
 
+  /// Number of bytes transferred by the operation.
   virtual u_long bytes_transferred (void) const = 0;
-  // Number of bytes transferred by the operation.
 
+  /// ACT associated with the operation.
   virtual const void *act (void) const = 0;
-  // ACT associated with the operation.
 
+  /// Did the operation succeed?
   virtual int success (void) const = 0;
-  // Did the operation succeed?
 
+  /// This ACT is not the same as the ACT associated with the
+  /// asynchronous operation.
   virtual const void *completion_key (void) const = 0;
-  // This ACT is not the same as the ACT associated with the
-  // asynchronous operation.
 
+  /// Error value if the operation fail.
   virtual u_long error (void) const = 0;
-  // Error value if the operation fail.
 
+  /// Event associated with the OVERLAPPED structure.
   virtual ACE_HANDLE event (void) const = 0;
-  // Event associated with the OVERLAPPED structure.
 
+  /// This really make sense only when doing file I/O.
   virtual u_long offset (void) const = 0;
   virtual u_long offset_high (void) const = 0;
-  // This really make sense only when doing file I/O.
 
+  /// Priority of the operation.
   virtual int priority (void) const = 0;
-  // Priority of the operation.
 
+  /**
+   * POSIX4 real-time signal number to be used for the
+   * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
+   * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+   * on non-POSIX4 systems and returns 0.
+   */
   virtual int signal_number (void) const = 0;
-  // POSIX4 real-time signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
-  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
-  // on non-POSIX4 systems and returns 0.
 
   // protected:
   //
   // These two should really be protected.  But sometimes it
   // simplifies code to be able to "fake" a result.  Use carefully.
+  /// This is called when the asynchronous operation completes.
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error = 0) = 0;
-  // This is called when the asynchronous operation completes.
 
+  /// Post <this> to the Proactor's completion port.
   virtual int post_completion (ACE_Proactor_Impl *proactor) = 0;
-  // Post <this> to the Proactor's completion port.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Result_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Operation_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Operation.
+ */
 class ACE_Export ACE_Asynch_Operation_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Operation.
 public:
   virtual ~ACE_Asynch_Operation_Impl (void);
 
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
   virtual int open (ACE_Handler &handler,
                     ACE_HANDLE handle,
                     const void *completion_key,
                     ACE_Proactor *proactor) = 0;
-  // Initializes the factory with information which will be used with
-  // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-  // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
 
+  /**
+   * This cancels all pending accepts operations that were issued by
+   * the calling thread.  The function does not cancel asynchronous
+   * operations issued by other threads.
+   */
   virtual int cancel (void) = 0;
-  // This cancels all pending accepts operations that were issued by
-  // the calling thread.  The function does not cancel asynchronous
-  // operations issued by other threads.
 
   // = Access methods.
 
+  /// Return the underlying proactor.
   virtual ACE_Proactor* proactor (void) const = 0;
-  // Return the underlying proactor.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Operation_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Read_Stream_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Read_Stream
+ *
+ */
 class ACE_Export ACE_Asynch_Read_Stream_Impl : public virtual ACE_Asynch_Operation_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Read_Stream
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Read_Stream_Impl (void);
 
+  /// This starts off an asynchronous read. Upto <bytes_to_read> will
+  /// be read and stored in the <message_block>.
   virtual int read (ACE_Message_Block &message_block,
                     u_long bytes_to_read,
                     const void *act,
                     int priority,
                     int signal_number) = 0;
-  // This starts off an asynchronous read. Upto <bytes_to_read> will
-  // be read and stored in the <message_block>.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Read_Stream_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Read_Stream_Result_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Read_Stream::Result class.
+ *
+ */
 class ACE_Export ACE_Asynch_Read_Stream_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Read_Stream::Result class.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Read_Stream_Result_Impl (void);
 
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous read.
   virtual u_long bytes_to_read (void) const = 0;
-  // The number of bytes which were requested at the start of the
-  // asynchronous read.
 
+  /// Message block which contains the read data.
   virtual ACE_Message_Block &message_block (void) const = 0;
-  // Message block which contains the read data.
 
+  /// I/O handle used for reading.
   virtual ACE_HANDLE handle (void) const = 0;
-  // I/O handle used for reading.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Read_Stream_Result_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Write_Stream_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Write_Stream class.
+ *
+ */
 class ACE_Export ACE_Asynch_Write_Stream_Impl : public virtual ACE_Asynch_Operation_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Write_Stream class.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Write_Stream_Impl (void);
 
+  /// This starts off an asynchronous write.  Upto <bytes_to_write>
+  /// will be written from the <message_block>.
   virtual int write (ACE_Message_Block &message_block,
                      u_long bytes_to_write,
                      const void *act,
                      int priority,
                      int signal_number) = 0;
-  // This starts off an asynchronous write.  Upto <bytes_to_write>
-  // will be written from the <message_block>.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Write_Stream_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Write_Stream_Result_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Write_Stream::Result.
+ *
+ */
 class ACE_Export ACE_Asynch_Write_Stream_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Write_Stream::Result.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Write_Stream_Result_Impl (void);
 
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous write.
   virtual u_long bytes_to_write (void) const = 0;
-  // The number of bytes which were requested at the start of the
-  // asynchronous write.
 
+  /// Message block that contains the data to be written.
   virtual ACE_Message_Block &message_block (void) const = 0;
-  // Message block that contains the data to be written.
 
+  /// I/O handle used for writing.
   virtual ACE_HANDLE handle (void) const = 0;
-  // I/O handle used for writing.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Write_Stream_Result_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Read_File_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Read_File::Result.
+ *
+ */
 class ACE_Export ACE_Asynch_Read_File_Impl : public virtual ACE_Asynch_Read_Stream_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Read_File::Result.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Read_File_Impl (void);
 
+  /**
+   * This starts off an asynchronous read.  Upto <bytes_to_read> will
+   * be read and stored in the <message_block>.  The read will start
+   * at <offset> from the beginning of the file.
+   */
   virtual int read (ACE_Message_Block &message_block,
                     u_long bytes_to_read,
                     u_long offset,
@@ -266,57 +273,60 @@ public:
                     const void *act,
                     int priority,
                     int signal_number) = 0;
-  // This starts off an asynchronous read.  Upto <bytes_to_read> will
-  // be read and stored in the <message_block>.  The read will start
-  // at <offset> from the beginning of the file.
 
   // We don;t need to redefine the following function again because it
   // has already been defined in ACE_Asynch_Read_Stream_Impl.  But we
   // still need it here to supress a overwriting pure virtual function
   // warning in KAI compiler.
+  /// This starts off an asynchronous read. Upto <bytes_to_read> will
+  /// be read and stored in the <message_block>.
   virtual int read (ACE_Message_Block &message_block,
                     u_long bytes_to_read,
                     const void *act,
                     int priority,
                     int signal_number) = 0;
-  // This starts off an asynchronous read. Upto <bytes_to_read> will
-  // be read and stored in the <message_block>.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Read_File_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Read_File_Result_Impl
+ *
+ * @brief This is the abstract base class for all the concrete
+ * implementation classes for ACE_Asynch_Read_File::Result.
+ *
+ */
 class ACE_Export ACE_Asynch_Read_File_Result_Impl : public virtual ACE_Asynch_Read_Stream_Result_Impl
 {
-  // = TITLE
-  //     This is the abstract base class for all the concrete
-  //     implementation classes for ACE_Asynch_Read_File::Result.
-  //
-  // = DESCRIPTION
-  //
 public:
+  /// Destructor.
   virtual ~ACE_Asynch_Read_File_Result_Impl (void);
-  // Destructor.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Read_File_Result_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Write_File_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Write_File.
+ *
+ */
 class ACE_Export ACE_Asynch_Write_File_Impl : public virtual ACE_Asynch_Write_Stream_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Write_File.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Write_File_Impl (void);
 
+  /**
+   * This starts off an asynchronous write.  Upto <bytes_to_write>
+   * will be write and stored in the <message_block>.  The write will
+   * start at <offset> from the beginning of the file.
+   */
   virtual int write (ACE_Message_Block &message_block,
                      u_long bytes_to_write,
                      u_long offset,
@@ -324,123 +334,123 @@ public:
                      const void *act,
                      int priority,
                     int signal_number) = 0;
-  // This starts off an asynchronous write.  Upto <bytes_to_write>
-  // will be write and stored in the <message_block>.  The write will
-  // start at <offset> from the beginning of the file.
 
   // We don;t need to redefine the following function again because it
   // has already been defined in ACE_Asynch_Write_Stream_Impl.  But we
   // still need it here to supress a overwriting pure virtual function
   // warning in KAI compiler.
+  /// This starts off an asynchronous write.  Upto <bytes_to_write>
+  /// will be written from the <message_block>.
   virtual int write (ACE_Message_Block &message_block,
                      u_long bytes_to_write,
                      const void *act,
                      int priority,
                      int signal_number) = 0;
-  // This starts off an asynchronous write.  Upto <bytes_to_write>
-  // will be written from the <message_block>.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Write_File_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Write_File_Result_Impl
+ *
+ * @brief This is the abstract base class for all the concrete
+ * implementation classes that provide different implementations
+ * for the ACE_Asynch_Write_File::Result.
+ *
+ */
 class ACE_Export ACE_Asynch_Write_File_Result_Impl : public virtual ACE_Asynch_Write_Stream_Result_Impl
 {
-  // = TITLE
-  //
-  //     This is the abstract base class for all the concrete
-  //     implementation classes that provide different implementations
-  //     for the ACE_Asynch_Write_File::Result.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Write_File_Result_Impl (void);
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Write_File_Result_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Accept_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Accept.
+ *
+ */
 class ACE_Export ACE_Asynch_Accept_Impl : public virtual ACE_Asynch_Operation_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Accept.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Accept_Impl (void);
 
+  /**
+   * This starts off an asynchronous accept.  The asynchronous accept
+   * call also allows any initial data to be returned to the
+   * <handler>.  Upto <bytes_to_read> will be read and stored in the
+   * <message_block>.  The <accept_handle> will be used for the
+   * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
+   * handle will be created.
+   *
+   * <message_block> must be specified. This is because the address of
+   * the new connection is placed at the end of this buffer.
+   */
   virtual int accept (ACE_Message_Block &message_block,
                       u_long bytes_to_read,
                       ACE_HANDLE accept_handle,
                       const void *act,
                       int priority,
                     int signal_number) = 0;
-  // This starts off an asynchronous accept.  The asynchronous accept
-  // call also allows any initial data to be returned to the
-  // <handler>.  Upto <bytes_to_read> will be read and stored in the
-  // <message_block>.  The <accept_handle> will be used for the
-  // <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
-  // handle will be created.
-  //
-  // <message_block> must be specified. This is because the address of
-  // the new connection is placed at the end of this buffer.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Accept_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Accept_Result_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Accept.
+ *
+ */
 class ACE_Export ACE_Asynch_Accept_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Accept.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Accept_Result_Impl (void);
 
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous accept.
   virtual u_long bytes_to_read (void) const = 0;
-  // The number of bytes which were requested at the start of the
-  // asynchronous accept.
 
+  /// Message block which contains the read data.
   virtual ACE_Message_Block &message_block (void) const = 0;
-  // Message block which contains the read data.
 
+  /// I/O handle used for accepting new connections.
   virtual ACE_HANDLE listen_handle (void) const = 0;
-  // I/O handle used for accepting new connections.
 
+  /// I/O handle for the new connection.
   virtual ACE_HANDLE accept_handle (void) const = 0;
-  // I/O handle for the new connection.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Accept_Result_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Transmit_File_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Transmit_File.
+ *
+ */
 class ACE_Asynch_Transmit_File_Impl : public virtual ACE_Asynch_Operation_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Transmit_File.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Transmit_File_Impl (void);
 
+  /// This starts off an asynchronous transmit file.
   virtual int transmit_file (ACE_HANDLE file,
                              ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
                              u_long bytes_to_write,
@@ -451,49 +461,48 @@ public:
                              const void *act,
                              int priority,
                              int signal_number) = 0;
-  // This starts off an asynchronous transmit file.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Transmit_File_Impl (void);
-  // Do-nothing constructor.
 };
 
+/**
+ * @class ACE_Asynch_Transmit_File_Result_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Transmit_File::Result.
+ *
+ */
 class ACE_Export ACE_Asynch_Transmit_File_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
-  // = TITLE
-  //
-  //     Abstract base class for all the concrete implementation
-  //     classes that provide different implementations for the
-  //     ACE_Asynch_Transmit_File::Result.
-  //
-  // = DESCRIPTION
-  //
 public:
   virtual ~ACE_Asynch_Transmit_File_Result_Impl (void);
 
+  /// Socket used for transmitting the file.
   virtual ACE_HANDLE socket (void) const = 0;
-  // Socket used for transmitting the file.
 
+  /// File from which the data is read.
   virtual ACE_HANDLE file (void) const = 0;
-  // File from which the data is read.
 
+  /// Header and trailer data associated with this transmit file.
   virtual ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer (void) const = 0;
-  // Header and trailer data associated with this transmit file.
 
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous transmit file.
   virtual u_long bytes_to_write (void) const = 0;
-  // The number of bytes which were requested at the start of the
-  // asynchronous transmit file.
 
+  /// Number of bytes per send requested at the start of the transmit
+  /// file.
   virtual u_long bytes_per_send (void) const = 0;
-  // Number of bytes per send requested at the start of the transmit
-  // file.
 
+  /// Flags which were passed into transmit file.
   virtual u_long flags (void) const = 0;
-  // Flags which were passed into transmit file.
 
 protected:
+  /// Do-nothing constructor.
   ACE_Asynch_Transmit_File_Result_Impl (void);
-  // Do-nothing constructor.
 };
 
 #if defined (__ACE_INLINE__)

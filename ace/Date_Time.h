@@ -1,20 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    ACE_Date_Time.h
-//
-// = AUTHOR
-//    Tim Harrison (harrison@cs.wustl.edu) (and he's darn proud of
-//      this ;-))
-//      Well he shouldn't be, no const accessors, tsck, tsck, tsck ;-)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ACE_Date_Time.h
+ *
+ *  $Id$
+ *
+ *  @author Tim Harrison (harrison@cs.wustl.edu) (and he's darn proud
+ of this ;-))
+
+ * Well he shouldn't be no const accessors tsck tsck tsck ;-)
+ */
+//=============================================================================
+
 
 #ifndef ACE_DATE_TIME_H
 #define ACE_DATE_TIME_H
@@ -26,12 +24,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_Date_Time
+ *
+ * @brief System independent representation of date and time.
+ */
 class ACE_Export ACE_Date_Time
 {
-  // = TITLE
-  //     System independent representation of date and time.
 public:
   // constructor with init values, no check for validy
+  /// Set/get portions of ACE_Date_Time, no check for validity.
   ACE_Date_Time (long day = 0,
                  long month = 0,
                  long year = 0,
@@ -39,49 +41,48 @@ public:
                  long minute = 0,
                  long second = 0,
                  long microsec = 0);
-  // Set/get portions of ACE_Date_Time, no check for validity.
 
+  /// Get day.
   long day (void) const;
-  // Get day.
 
+  /// Set day.
   void day (long day);
-  // Set day.
 
+  /// Get month.
   long month (void) const;
-  // Get month.
 
+  /// Set month.
   void month (long month);
-  // Set month.
 
+  /// Get year.
   long year (void) const;
-  // Get year.
 
+  /// Set year.
   void year (long year);
-  // Set year.
 
+  /// Get hour.
   long hour (void) const;
-  // Get hour.
 
+  /// Set hour.
   void hour (long hour);
-  // Set hour.
 
+  /// Get minute.
   long minute (void) const;
-  // Get minute.
 
+  /// Set minute.
   void minute (long minute);
-  // Set minute.
 
+  /// Get second.
   long second (void) const;
-  // Get second.
 
+  /// Set second.
   void second (long second);
-  // Set second.
 
+  /// Get microsec.
   long microsec (void) const;
-  // Get microsec.
 
+  /// Set microsec.
   void microsec (long microsec);
-  // Set microsec.
 
 private:
   long day_;

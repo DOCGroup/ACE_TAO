@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Select_Reactor.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Select_Reactor.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SELECT_REACTOR_H
 #define ACE_SELECT_REACTOR_H
@@ -37,15 +34,18 @@ typedef ACE_Select_Reactor_Token_T<ACE_Noop_Token> ACE_Select_Reactor_Token;
 
 typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
 ACE_TEMPLATE_SPECIALIZATION
+
+/**
+ * @class ACE_Guard< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
+ *
+ * @brief Template specialization of <ACE_Guard> for the
+ * <ACE_Null_Mutex>.
+ *
+ * This specialization is useful since it helps to speedup
+ * performance of the "Null_Mutex" considerably.
+ */
 class ACE_Export ACE_Guard< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 {
-  // = TITLE
-  //     Template specialization of <ACE_Guard> for the
-  //     <ACE_Null_Mutex>.
-  //
-  // = DESCRIPTION
-  //     This specialization is useful since it helps to speedup
-  //     performance of the "Null_Mutex" considerably.
 public:
   // = Initialization and termination methods.
   ACE_Guard (ACE_Select_Reactor_Token_T<ACE_Noop_Token> &) {}

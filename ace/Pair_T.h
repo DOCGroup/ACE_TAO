@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Pair_T.h
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Pair_T.h
+ *
+ *  $Id$
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_PAIR_T_H
 #define ACE_PAIR_T_H
@@ -24,14 +21,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_Pair
+ *
+ * @brief Defines a pair.
+ *
+ * Similar to the STL pair.
+ */
 template <class T1, class T2>
 class ACE_Pair
 {
-  // = TITLE
-  //     Defines a pair.
-  //
-  // = DESCRIPTION
-  //     Similar to the STL pair.
 public:
 
   // = Traits.
@@ -39,22 +38,22 @@ public:
   typedef T2 second_type;
 
   // = Initialization and termination methods.
+  /// Constructor.
   ACE_Pair (const T1 &t1,
             const T2 &t2);
-  // Constructor.
 
+  /// Default constructor.
   ACE_Pair (void);
-  // Default constructor.
 
+  /// Get/Set first.
   T1 &first (void);
   const T1 &first (void) const;
   void first (const T1 &t1);
-  // Get/Set first.
 
+  /// Access second.
   T2 &second (void);
   const T2 &second (void) const;
   void second (const T2 &t2);
-  // Access second.
 
 protected:
 
@@ -62,15 +61,17 @@ protected:
   T2 second_;
 };
 
+/**
+ * @class ACE_Reference_Pair
+ *
+ * @brief Defines a pair that only hold references.
+ *
+ * Similar to the STL pair (but restricted to holding references
+ * and not copies).
+ */
 template <class T1, class T2>
 class ACE_Reference_Pair
 {
-  // = TITLE
-  //     Defines a pair that only hold references.
-  //
-  // = DESCRIPTION
-  //     Similar to the STL pair (but restricted to holding references
-  //     and not copies).
 public:
 
   // = Traits.
@@ -78,15 +79,15 @@ public:
   typedef T2 second_type;
 
   // = Initialization and termination methods.
+  /// Constructor.
   ACE_Reference_Pair (T1 &t1,
                       T2 &t2);
-  // Constructor.
 
+  /// Access first.
   T1 &first (void) const;
-  // Access first.
 
+  /// Access second.
   T2 &second (void) const;
-  // Access second.
 
 protected:
 

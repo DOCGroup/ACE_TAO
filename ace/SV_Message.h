@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    SV_Message.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SV_Message.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SV_MESSAGE_H
 #define ACE_SV_MESSAGE_H
@@ -24,10 +21,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class ACE_SV_Message
+ *
+ * @brief Defines the header file for the C++ wrapper for message queues.
+ */
 class ACE_Export ACE_SV_Message
 {
-  // = TITLE
-  //     Defines the header file for the C++ wrapper for message queues. */
 public:
   // = Initialization and termination methods.
   ACE_SV_Message (long type = 0);
@@ -37,15 +37,15 @@ public:
   long type (void) const;
   void type (long);
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
 protected:
+  /// Type of the message.
   long type_;
-  // Type of the message.
 };
 
 #if defined (__ACE_INLINE__)

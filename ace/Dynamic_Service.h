@@ -1,18 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Dynamic_Service.h
-//
-// = AUTHOR
-//    Prashant Jain, Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Dynamic_Service.h
+ *
+ *  $Id$
+ *
+ *  @author Prashant Jain
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_DYNAMIC_SERVICE_H
 #define ACE_DYNAMIC_SERVICE_H
@@ -20,22 +18,24 @@
 
 #include "ace/OS.h"
 
+/**
+ * @class ACE_Dynamic_Service
+ *
+ * @brief Provides a general interface to retrieve arbitrary objects
+ * from the ACE service repository.
+ *
+ * Uses "name" for lookup in the ACE service repository. Obtains
+ * the object and returns it as the appropriate type.
+ */
 template <class SERVICE>
 class ACE_Dynamic_Service
 {
-  // = TITLE
-  //     Provides a general interface to retrieve arbitrary objects
-  //     from the ACE service repository.
-  //
-  // = DESCRIPTION
-  //     Uses "name" for lookup in the ACE service repository. Obtains
-  //     the object and returns it as the appropriate type.
 public:
+  /// Return instance using <name> to search the Service_Repository.
   static SERVICE *instance (const ACE_TCHAR *name);
-  // Return instance using <name> to search the Service_Repository.
 
+  /// Dump the current state of the object.
   void dump (void) const;
-  // Dump the current state of the object.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    SOCK_CODgram.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SOCK_CODgram.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_SOCK_CODGRAM_H
 #define ACE_SOCK_CODGRAM_H
@@ -26,15 +23,18 @@
 
 #include "ace/Addr.h"
 
+/**
+ * @class ACE_SOCK_CODgram
+ *
+ * @brief Defines the member functions for the ACE_SOCK connected
+ * datagram abstraction.
+ */
 class ACE_Export ACE_SOCK_CODgram : public ACE_SOCK_IO
 {
-  // = TITLE
-  //     Defines the member functions for the ACE_SOCK connected
-  //     datagram abstraction.
 public:
   // = Initialization methods.
+  /// Default constructor.
   ACE_SOCK_CODgram (void);
-  // Default constructor.
 
   ACE_SOCK_CODgram (const ACE_Addr &remote_sap,
                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
@@ -42,23 +42,23 @@ public:
                     int protocol = 0,
                     int reuse_addr = 0);
 
+  /// Default dtor.
   ~ACE_SOCK_CODgram (void);
-  // Default dtor.
 
   // Initiate a connected dgram.
 
+  /// Initiate a connected dgram.
   int open (const ACE_Addr &remote_sap,
             const ACE_Addr &local_sap = ACE_Addr::sap_any,
             int protocol_family = PF_INET,
             int protocol = 0,
             int reuse_addr = 0);
-  // Initiate a connected dgram.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    LSOCK_Dgram.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    LSOCK_Dgram.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_LOCAL_SOCK_DGRAM_H
 #define ACE_LOCAL_SOCK_DGRAM_H
@@ -29,36 +26,39 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
+/**
+ * @class ACE_LSOCK_Dgram
+ *
+ * @brief Create a Local ACE_SOCK datagram.
+ */
 class ACE_Export ACE_LSOCK_Dgram : public ACE_SOCK_Dgram, public ACE_LSOCK
 {
-  // = TITLE
-  //     Create a Local ACE_SOCK datagram.
 public:
   // = Initialization methods.
+  /// Default constructor.
   ACE_LSOCK_Dgram (void);
-  // Default constructor.
 
+  /// Initiate a local dgram.
   ACE_LSOCK_Dgram (const ACE_Addr &local,
                    int protocol_family = PF_UNIX,
                    int protocol = 0);
-  // Initiate a local dgram.
 
+  /// Initiate a local dgram.
   int open (const ACE_Addr &local,
             int protocol_family = PF_UNIX,
             int protocol = 0);
-  // Initiate a local dgram.
 
+  /// Get handle.
   ACE_HANDLE get_handle (void) const;
-  // Get handle.
 
+  /// Set handle.
   void set_handle (ACE_HANDLE);
-  // Set handle.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Sample_History.h
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Sample_History.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan <coryan@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_SAMPLE_HISTORY_H
 #define ACE_SAMPLE_HISTORY_H
@@ -53,7 +50,7 @@ public:
   /// Dump all the samples
   /**
    * Prints out all the samples, using @param msg as a prefix for each
-   * message.  
+   * message.
    */
   void dump_samples (const ACE_TCHAR *msg,
                      ACE_UINT32 scale_factor) const;
