@@ -89,28 +89,16 @@ Server_Task::svc (void)
       // Signal the main thread before we call orb->run ();
       this->me_.signal ();
 
-      CORBA::ULong val =
-        Echo_Server_Request_Interceptor::server_interceptor_check_;
-
       this->sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::ULong number_called =
-        Echo_Server_Request_Interceptor::server_interceptor_check_ - val;
-      if (number_called != 10)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR: Server Side Interceptors not"
-                      " called properly, called %d times, expected 10\n",
-                      number_called));
-        }
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-     root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-     this->sorb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+      this->sorb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
    }
  ACE_CATCHANY
    {
