@@ -23,6 +23,7 @@
 #define _ASYNC_TIMER_QUEUE_TEST_H_
 
 #include "ace/Signal.h"
+#include "ace/svc_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -94,7 +95,7 @@ private:
   // The adapter is instantiated by an <ACE_Timer_Heap>.
 };
 
-class Async_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>
+class ACE_Svc_Export Async_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>
 {
   // = TITLE
   //    Async_Timer_Queue_Test_Driver
