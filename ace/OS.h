@@ -2066,11 +2066,11 @@ public:
 #  define THR_CANCEL_ENABLE       0
 #  define THR_CANCEL_DEFERRED     0
 #  define THR_CANCEL_ASYNCHRONOUS 0
-#  define THR_DETACHED    0       /* ?? ignore in most places */
-#  define THR_BOUND       0       /* ?? ignore in most places */
-#  define THR_NEW_LWP     0       /* ?? ignore in most places */
-#  define THR_DAEMON      0       /* ?? ignore in most places */
-#  define THR_JOINABLE    0       /* ?? ignore in most places */
+#  define THR_DETACHED    0x02000000 /* ?? ignore in most places */
+#  define THR_BOUND       0          /* ?? ignore in most places */
+#  define THR_NEW_LWP     0          /* ?? ignore in most places */
+#  define THR_DAEMON      0          /* ?? ignore in most places */
+#  define THR_JOINABLE    0          /* ?? ignore in most places */
 #  define THR_SUSPENDED   CREATE_SUSPENDED
 #  define THR_USE_AFX             0x01000000
 #  define THR_SCHED_FIFO          0
