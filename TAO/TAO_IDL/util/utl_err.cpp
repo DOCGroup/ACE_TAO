@@ -250,6 +250,8 @@ exprtype_to_string (AST_Expression::ExprType t)
   case AST_Expression::EV_ulonglong:
   case AST_Expression::EV_longdouble:
   case AST_Expression::EV_wstring:
+  case AST_Expression::EV_any:
+  case AST_Expression::EV_object:
     return 0;
   }
   return 0;
