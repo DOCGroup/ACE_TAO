@@ -259,7 +259,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire_write_upgrade (void)
 
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock,
-                                                           ACE_ACQUIRE_METHOD acquire_method)
+                                                           ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::ACE_ACQUIRE_METHOD acquire_method)
   : lock_ (lock),
     acquire_method_ (acquire_method)
 {
