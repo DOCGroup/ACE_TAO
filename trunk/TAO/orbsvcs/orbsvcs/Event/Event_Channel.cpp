@@ -17,6 +17,8 @@
 
 #include "tao/Timeprobe.h"
 
+#if defined (ACE_ENABLE_TIMEPROBES)
+
 static const char *TAO_Event_Channel_Timeprobe_Description[] = 
 { 
   "Preemption_Priority - priority requested",
@@ -72,6 +74,8 @@ enum
   TAO_EVENT_CHANNEL_ENTER_ACE_ES_SUBSCRIPTION_MODULE_PUSH,
   TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE
 };
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Event_Channel_Timeprobe_Description, 

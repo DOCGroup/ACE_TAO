@@ -241,7 +241,7 @@ typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX> ACE_TIMEPROBE
 #  define ACE_TIMEPROBE_RESET
 #  define ACE_TIMEPROBE(id)
 #  define ACE_TIMEPROBE_PRINT
-#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) static const char **ace_timeprobe_##descriptions##_dummy = descriptions
+#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id)
 #  define ACE_FUNCTION_TIMEPROBE(X)
 
 #endif /* ACE_ENABLE_TIMEPROBES */

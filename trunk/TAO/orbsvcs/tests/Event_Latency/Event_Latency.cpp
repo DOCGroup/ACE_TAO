@@ -18,6 +18,8 @@
 
 #include "tao/Timeprobe.h"
 
+#if defined (ACE_ENABLE_TIMEPROBES)
+
 static const char *Event_Latency_Timeprobe_Description[] = 
 { 
   "push event to consumer",
@@ -33,6 +35,8 @@ enum
   EVENT_LATENCY_SUPPLIER_STARTS_PUSHING_EVENT,
   EVENT_LATENCY_SUPPLIER_ENDS_PUSHING_EVENT
 };
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Event_Latency_Timeprobe_Description, 

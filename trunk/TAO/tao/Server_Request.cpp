@@ -11,6 +11,8 @@
 # include "tao/Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
 
+#if defined (ACE_ENABLE_TIMEPROBES)
+
 static const char *TAO_Server_Request_Timeprobe_Description[] = 
 { 
   "Server_Request::Server_Request - start",
@@ -22,6 +24,8 @@ enum
   TAO_SERVER_REQUEST_START = 400,
   TAO_SERVER_REQUEST_END
 };
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description, 

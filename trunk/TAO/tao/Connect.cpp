@@ -7,6 +7,8 @@
 # include "tao/Connect.i"
 #endif /* ! __ACE_INLINE__ */
 
+#if defined (ACE_ENABLE_TIMEPROBES)
+
 static const char *TAO_Connect_Timeprobe_Description[] = 
 { 
   "Server_Connection_Handler::send_response - start",
@@ -30,6 +32,8 @@ enum
   TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
   TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END
 };
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description, 

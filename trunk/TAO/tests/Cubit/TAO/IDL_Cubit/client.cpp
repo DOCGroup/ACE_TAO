@@ -8,6 +8,8 @@
 
 #include "tao/Timeprobe.h"
 
+#if defined (ACE_ENABLE_TIMEPROBES)
+
 static const char *Cubit_Client_Timeprobe_Description[] = 
 { 
   "Cubit_Client::cube_octet - start",
@@ -55,6 +57,8 @@ enum
   CUBIT_CLIENT_CUBE_RAW_START,
   CUBIT_CLIENT_CUBE_RAW_END
 };
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description, 

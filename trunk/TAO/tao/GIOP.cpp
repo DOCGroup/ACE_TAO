@@ -49,6 +49,8 @@
 # include "tao/GIOP.i"
 #endif /* ! __ACE_INLINE__ */
 
+#if defined (ACE_ENABLE_TIMEPROBES)
+
 static const char *TAO_GIOP_Timeprobe_Description[] = 
 { 
   "GIOP::send_request - start",
@@ -78,6 +80,8 @@ enum
   TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START,
   TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_END
 };
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_GIOP_Timeprobe_Description, 
