@@ -50,6 +50,25 @@ Basic_Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL)
       this->sequence_num_++;
 }
 
+void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
+                       const FTRT::State& state
+                       ACE_ENV_ARG_DECL) 
+{
+  bool finished = true;
+  do {
+    ACE_TRY {
+      successor->set_update(state ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+    ACE_CATCH(CORBA::COMM_FAILURE, ex) {
+      if (ex.minor() == 6)   finished = false;
+      else  
+        ACE_RE_THROW;
+    }
+    ACE_ENDTRY;
+    ACE_CHECK;
+  } while(!finished);
+}
 
 void
 Basic_Replication_Strategy::replicate_request(
@@ -80,20 +99,7 @@ Basic_Replication_Strategy::replicate_request(
     ACE_CHECK;
 
     if (transaction_depth > 1) {
-      bool finished = true;
-      do {
-        ACE_TRY_EX(SET_UPDATE) {
-          successor->set_update(state ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX(SET_UPDATE);
-        }
-        ACE_CATCH(CORBA::COMM_FAILURE, ex) {
-          if (ex.minor() == 6)   finished = false;
-          else  
-            ACE_TRY_THROW_EX(ex, SET_UPDATE);
-        }
-        ACE_ENDTRY;
-        ACE_CHECK;
-      } while(!finished);
+      twoway_set_update(successor, state ACE_ENV_ARG_PARAMETER);
     }
     else {
       ACE_TRY_EX(ONEWAY_SET_UPDATE) {
