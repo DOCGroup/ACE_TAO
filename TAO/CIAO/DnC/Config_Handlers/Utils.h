@@ -4,9 +4,9 @@
  *
  *  $Id$
  *
+ *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  *  @author Tao Lu <lu@dre.vanderbilt.edu>,
  *  @author Boris <boris@dre.vanderbilt.edu>
- *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  *
  */
 //=====================================================================
@@ -22,11 +22,14 @@
 #include "XercesString.h"
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/dom/DOM.hpp>
+#include <xercesc/util/XMLURL.hpp>
 
+using xercesc::XMLURL;
 using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMText;
 using xercesc::XMLString;
+using xercesc::DOMDocument;
 using Config_Handler::XStr;
 
 namespace CIAO {
@@ -76,6 +79,14 @@ namespace CIAO {
 
       static CORBA::Octet parse_octet (DOMNodeIterator * iter);
       // Parse octect type
+
+      static DOMDocument * create_document (const char * url);
+      // Create a document from the URL
+
+      static DOMNodeIterator * parse_href_tag (XMLURL xml_url, 
+                                               DOMDocument * doc);
+      // Process the <href = "URL"> and return an iterator to the 
+      // new document
     };
   }
 
