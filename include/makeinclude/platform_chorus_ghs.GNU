@@ -46,9 +46,7 @@ CCFLAGS += $(CFLAGS) --mkctors --multibyte_chars --no_rtti --wchar_t_keyword \
 DCFLAGS += -g -G
 DLD     = $(CXX)
 LD      = $(CXX)
-LDFLAGS = --no_auto_instantiation \
-          -u __main -u __premain -u _abort -r \
-          $(MVME_DIR)/lib/CC/ioassign.o $(MVME_DIR)/lib/CC/iostream.o \
+LDFLAGS = --no_auto_instantiation -u __main -u __premain -u _abort -r \
           $(COOL_DIR)/lib/libOrb.a  \
           $(MVME_DIR)/lib/CC/libC.a \
           $(GHS_DIR)/ch68/libedgnoe.a \
@@ -64,7 +62,7 @@ else
   CRTH = $(MVME_DIR)/lib/crt/crth_d.s.o
 endif # debug
 
-POSTLINK = ; $(CC) -groot=$(MVME_DIR)/ -alttools=$(GHS_DIR) -68040 \
+POSTLINK = ; $(CC) -groot=$(MVME_DIR)/ -alttools=$(GHS_DIR)/gnuch68 -68040 \
            -nostartfiles -nostdlib -e __start -o $@.final \
            $(CRTH) $(MVME_DIR)/lib/crt/crt0.o \
            $(MVME_DIR)/lib/crt/crti.o $@ \
