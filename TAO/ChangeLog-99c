@@ -1,3 +1,26 @@
+Sun Jun  6 14:07:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/DynAny_Test/data.h:
+	* TAO/tests/DynAny_Test/data.cpp:
+	* TAO/tests/DynAny_Test/driver.h:
+	* TAO/tests/DynAny_Test/test_dynany.h:
+	* TAO/tests/DynAny_Test/test_dynany.cpp:
+	* TAO/tests/DynAny_Test/test_dynarray.h:
+	* TAO/tests/DynAny_Test/test_dynarray.cpp:
+	* TAO/tests/DynAny_Test/test_dynenum.h:
+	* TAO/tests/DynAny_Test/test_dynenum.cpp:
+	* TAO/tests/DynAny_Test/test_dynsequence.h:
+	* TAO/tests/DynAny_Test/test_dynsequence.cpp:
+	* TAO/tests/DynAny_Test/test_dynstruct.h:
+	* TAO/tests/DynAny_Test/test_dynstruct.cpp:
+	* TAO/tests/DynAny_Test/test_dynunion.h:
+	* TAO/tests/DynAny_Test/test_dynunion.cpp:
+	* TAO/tests/DynAny_Test/test_wrapper.h:
+	* TAO/tests/DynAny_Test/test_wrapper.cpp:
+	  Made CORBA::ORB_var the first private member (declared and
+	  initialized) of any class where it appears, and also other
+	  cosmetic changes.
+
 Sun Jun  6 14:04:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Acceptor_Impl.h:
