@@ -63,7 +63,7 @@ public:
   CORBA::Object_ptr _this (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Returns a CORBA::Object_ptr for the target object.
 
-  virtual CORBA_InterfaceDef_ptr _get_interface (
+  virtual CORBA::InterfaceDef_ptr _get_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
   // Query the Interface Repository for the interface definition.

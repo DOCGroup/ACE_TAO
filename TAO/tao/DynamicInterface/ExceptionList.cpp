@@ -1,8 +1,8 @@
-// $Id$
-
 #include "ExceptionList.h"
 
-ACE_RCSID(DynamicInterface, ExceptionList, "$Id$")
+ACE_RCSID (DynamicInterface,
+           ExceptionList,
+           "$Id$")
 
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
@@ -11,8 +11,9 @@ ACE_RCSID(DynamicInterface, ExceptionList, "$Id$")
 # include "ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
 
-CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,
-                                          CORBA::TypeCode_ptr *tc_list)
+
+CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
+                                     CORBA::TypeCode_ptr *tc_list)
   : ref_count_ (1)
 {
   for (CORBA::ULong i = 0; i < len; ++i)
@@ -21,7 +22,7 @@ CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,
     }
 }
 
-CORBA_ExceptionList::~CORBA_ExceptionList (void)
+CORBA::ExceptionList::~ExceptionList (void)
 {
   for (CORBA::ULong i = 0; i < this->count (); ++i)
     {
@@ -37,20 +38,20 @@ CORBA_ExceptionList::~CORBA_ExceptionList (void)
 }
 
 void
-CORBA_ExceptionList::add (CORBA::TypeCode_ptr tc)
+CORBA::ExceptionList::add (CORBA::TypeCode_ptr tc)
 {
   this->tc_list_.enqueue_tail (CORBA::TypeCode::_duplicate (tc));
 }
 
 void
-CORBA_ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
+CORBA::ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
 {
   this->tc_list_.enqueue_tail (tc);
 }
 
 CORBA::TypeCode_ptr
-CORBA_ExceptionList::item (CORBA::ULong slot
-                           ACE_ENV_ARG_DECL)
+CORBA::ExceptionList::item (CORBA::ULong slot
+                            ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_ptr *tc = 0;
 
@@ -66,33 +67,33 @@ CORBA_ExceptionList::item (CORBA::ULong slot
 }
 
 void
-CORBA_ExceptionList::remove (CORBA::ULong
-                             ACE_ENV_ARG_DECL)
+CORBA::ExceptionList::remove (CORBA::ULong
+                              ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-CORBA_ExceptionList_ptr
-CORBA_ExceptionList::_duplicate (void)
+CORBA::ExceptionList_ptr
+CORBA::ExceptionList::_duplicate (void)
 {
   this->_incr_refcnt ();
   return this;
 }
 
 void
-CORBA_ExceptionList::_destroy (void)
+CORBA::ExceptionList::_destroy (void)
 {
   this->_decr_refcnt ();
 }
 
 void
-CORBA_ExceptionList::_incr_refcnt (void)
+CORBA::ExceptionList::_incr_refcnt (void)
 {
   this->ref_count_++;
 }
 
 void
-CORBA_ExceptionList::_decr_refcnt (void)
+CORBA::ExceptionList::_decr_refcnt (void)
 {
   this->ref_count_--;
 
