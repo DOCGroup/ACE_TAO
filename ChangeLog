@@ -1,7 +1,7 @@
 Tue Oct  2 09:45:39 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/libDLL_Test.icc:
-        * tests/libService_Config_Test.icc: Add link(exportAll) to the link
+        * tests/libService_Config_DLL.icc: Add link(exportAll) to the link
           options to export the entrypoints needed for the tests.
 
 Mon Oct  1 20:04:14 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
