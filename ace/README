@@ -558,6 +558,9 @@ ACE_HAS_TEMPLATE_TYPEDEFS               Compiler implements templates
                                         class.
 ACE_HAS_TERM_IOCTLS                     Platform has terminal ioctl
                                         flags like TCGETS and TCSETS.
+ACE_HAS_LAZY_MAP_MANAGER                ACE supports lazy Map Managers
+                                        that allow deletion of entries
+                                        during active iteration.
 ACE_HAS_THREADS                         Platform supports threads
 ACE_HAS_THREAD_SAFE_ACCEPT              Platform allows multiple
                                         threads to call accept() on

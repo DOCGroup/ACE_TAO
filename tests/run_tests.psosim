@@ -142,6 +142,8 @@ run Map_Manager_Test                    # uses Map Manager and Hash Map Manager 
 
 run Hash_Map_Manager_Test               # uses Hash Map Manager + Forward and Reverse Map Iterators.
 
+run Lazy_Map_Manager_Test               # uses Lazy Map Manager + Forward and Reverse Map Iterators.
+
 run Hash_Map_Bucket_Iterator_Test       # uses Hash Map Bucket iterator.
 
 run Cache_Map_Manager_Test              # uses Cache Map Manager and Hash Cache Map Manager + Forward and Reverse Map Iterators.

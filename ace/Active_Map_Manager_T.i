@@ -61,6 +61,9 @@ ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
   size_t slot_generation = key.slot_generation ();
 
   if (slot_index > this->total_size_ ||
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+      this->search_structure_[slot_index].free_ ||
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
       this->search_structure_[slot_index].ext_id_.slot_generation () != slot_generation ||
       this->search_structure_[slot_index].ext_id_.slot_index () == this->free_list_id ())
     {
@@ -167,8 +170,22 @@ ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key,
     {
       size_t slot_index = key.slot_index ();
 
-      // Move from occupied list to free list
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+      //
+      // In the case of lazy map managers, the movement of free slots
+      // from the occupied list to the free list is delayed until we
+      // run out of free slots in the free list.
+      //
+
+      this->search_structure_[slot_index].free_ = 1;
+
+#else
+
+      // Move from occupied list to free list.
       this->move_from_occupied_list_to_free_list (slot_index);
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
       // Reset the slot_index.  This will tell us that this entry is free.
       this->search_structure_[slot_index].ext_id_.slot_index (this->free_list_id ());

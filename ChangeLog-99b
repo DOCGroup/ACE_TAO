@@ -1,3 +1,38 @@
+Tue Sep 07 19:55:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Map_Manager.h (ACE_Map_Manager): The old map manager (the
+	  one before the changes made to support the active map manager)
+	  used to allow deletion of entries from the map during iteration
+	  (note that this feature was accidental since typically changes
+	  to container invalidates the iterators).  The new design did not
+	  support this "feature".  However, some users had come to depend
+	  on this feature.
+
+	  The solution was to delay the movement of freed slots from the
+	  occupied list to the free list until we run out of free slots in
+	  the free list when binding new entries into the map.  However,
+	  this change requires additional state in each entry that keeps
+	  track of whether this entry has been freed.  Also, the time
+	  required for binding new entries is less predictable since the
+	  bind may require moving of freed slots from the occupied list to
+	  the free list because of the initial lazy unbind.
+
+	  Changes were also required to the Active_Map_Manager since it
+	  directly depends on the internals of the Map_Manager.
+
+	  Since this lazy feature is not required in the majority of cases
+	  and results in increased memory consumption, this feature is
+	  only support if ACE_HAS_LAZY_MAP_MANAGER is defined.
+
+	  A new test Lazy_Map_Manager_Test.cpp was added to check the new
+	  changes.
+
+	  Thanks for Dr. Schmidt for helping with this solution and to
+	  Murphy Ivan <Ivan.Murphy@med.siemens.de> for pointing out this
+	  problem.
+
+	  Bug fixed: id 228.
+
 Tue Sep  7 15:19:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Log_Msg_Test.cpp (test_ostream): NUL-terminated the buffer
