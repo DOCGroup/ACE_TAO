@@ -735,9 +735,9 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 #if TAO_HAS_INTERCEPTORS == 1
   TAO::ServerRequestInterceptor_Adapter sri_adapter (request);
 
-  TAO::ServerRequestInfo ri (0,
+  TAO::ServerRequestInfo ri (request,
                              0,
-                             request,
+                             0,
                              0,
                              0,
                              0,

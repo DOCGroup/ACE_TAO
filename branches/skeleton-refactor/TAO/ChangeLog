@@ -1,4 +1,4 @@
-Fri Oct 22 04:34:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Thu Nov 11 20:41:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
@@ -232,6 +232,36 @@ Fri Oct 22 04:34:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  never used.
 
 	  Improved Doxygen documentation.
+
+	* tao/Policy.pidl:
+	* tao/PortableServer/ImR_Locator.pidl:
+	* tao/PortableServer/ImplRepo.pidl:
+
+	  Updated command used to generate stubs and skeletons.
+
+	* tao/PortableServer/ImR_LocatorC.cpp:
+	* tao/PortableServer/ImR_LocatorC.h:
+	* tao/PortableServer/ImR_LocatorC.inl:
+	* tao/PortableServer/ImR_LocatorS.cpp:
+	* tao/PortableServer/ImR_LocatorS.h:
+	* tao/PortableServer/ImR_LocatorS.inl:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/ImplRepoC.inl:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/ImplRepoS.h:
+	* tao/PortableServer/ImplRepoS.inl:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/PolicyS.h:
+	* tao/PortableServer/PolicyS.inl:
+
+	  Regenerated these stubs and skeletons to pull in new skeleton
+	  refactoring changes.
+
+	* tao/PortableServer/Object_Adapter.cpp (dispatch):
+
+	  Updated to use new TAO::ServerRequestInfo and
+	  TAO::ServerRequestInterceptor_Adapter constructor signatures.
 
 	* tao/PortableServer/Servant_Base.h (TAO_ServantBase):
 

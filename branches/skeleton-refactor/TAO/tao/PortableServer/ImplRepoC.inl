@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___CI_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___CI_
@@ -63,7 +63,7 @@ ImplementationRepository::ServerObject::ServerObject (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_
@@ -99,7 +99,7 @@ ImplementationRepository::Administration::Administration (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___CI_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___CI_
@@ -133,4 +133,3 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
 }
 
 #endif /* end #if !defined */
-

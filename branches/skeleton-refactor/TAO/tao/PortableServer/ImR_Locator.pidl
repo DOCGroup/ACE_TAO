@@ -10,7 +10,7 @@
  *
  * The command used to generate code from this file is:
  *
- * tao_idl.exe -Gp -Gd -Ge 1 -Sc -GT -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImR_Locator.pidl
+ * tao_idl -Gp -Gd -Ge 1 -Sc -GT -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImR_Locator.pidl
  *
  * After generation is complete you must remove unneeded explicit instantiations
  * from ImR_LocatorC.cpp to avoid duplicate symbols on some platforms.
