@@ -1,106 +1,112 @@
+Tue Jul 28 09:52:08 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Thread_Manager.cpp (exit): only declare local close_handle
+          if ACE_USE_ONE_SHOT_AT_THREAD_EXIT.  (ACE_Thread_Descriptor):
+          reordered initializers to match declaration order.
+
 Mon Jul 27 16:31:27 1998    Arturo Montes  <mitosys@colomsat.net.co>
 
-	* ace/Thread_Manager.{h,i,cpp}:
-	* ace/Log_Msg.cpp: The Thread_Manager::at_exit method now provides a
-	  list of at_exit functions to be invoked to at thread termination
- 	  code. If you want to maintain previous compatibility use
- 	  ACE_USE_ONE_SHOT_AT_THREAD_EXIT. The new code maintaing
- 	  compatibility with the old code, ACE_Task::svc_run has not been
- 	  altered.
+        * ace/Thread_Manager.{h,i,cpp}:
+        * ace/Log_Msg.cpp: The Thread_Manager::at_exit method now provides a
+          list of at_exit functions to be invoked to at thread termination
+          code. If you want to maintain previous compatibility use
+          ACE_USE_ONE_SHOT_AT_THREAD_EXIT. The new code maintaing
+          compatibility with the old code, ACE_Task::svc_run has not been
+          altered.
 
-	  We resolve a problem with ACE_TSS_cleanup, some platform using
-	  Thread_Manager could be experimenting memory corruption because
-	  of ACE_TSS_cleanup was being invoked before Thread_Manager exit
-	  code. Now, if ACE_TSS_cleanup is called before of Thread_Manager
-	  exit code, ACE_TSS_cleanup delegate ACE_Log_Msg delete instance
-	  to Thread_Descriptor. 
+          We resolve a problem with ACE_TSS_cleanup, some platform using
+          Thread_Manager could be experimenting memory corruption because
+          of ACE_TSS_cleanup was being invoked before Thread_Manager exit
+          code. Now, if ACE_TSS_cleanup is called before of Thread_Manager
+          exit code, ACE_TSS_cleanup delegate ACE_Log_Msg delete instance
+          to Thread_Descriptor.
 
-	  Really, at_exit code is implemented in ACE_Thread_Descriptor, I
-	  strongly recommend use at_exit code from Thread_Descriptor,
-	  however in ACE_Thread_Manager we provide at_exit hook. 
+          Really, at_exit code is implemented in ACE_Thread_Descriptor, I
+          strongly recommend use at_exit code from Thread_Descriptor,
+          however in ACE_Thread_Manager we provide at_exit hook.
 
-	  Use of at_exit(void* object,ACE_CLEANUP_FUNC cleanup_hook,void*
- 	  param) is deprecated. We maitain it for compatibility and it
- 	  will be forever, however if you want implement new at_exit hook,
- 	  look into Thread_Manager.h and specialize ACE_At_Thread_Exit
- 	  class for your needs.
+          Use of at_exit(void* object,ACE_CLEANUP_FUNC cleanup_hook,void*
+          param) is deprecated. We maitain it for compatibility and it
+          will be forever, however if you want implement new at_exit hook,
+          look into Thread_Manager.h and specialize ACE_At_Thread_Exit
+          class for your needs.
 
-	  If you want to allocate an ACE_At_Thread_Exit hook in stack, you
-	  can do it. The at_exit code use at_exit overloading to take care
-	  of this. Equally dynamic creation of at_exit hook is supported
-	  too. 
+          If you want to allocate an ACE_At_Thread_Exit hook in stack, you
+          can do it. The at_exit code use at_exit overloading to take care
+          of this. Equally dynamic creation of at_exit hook is supported
+          too.
 
 Mon Jul 27 14:25:15 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* tests/Dynamic_Priority_Test.cpp: Changed C-Style casts to 
-	  ACE_static_casts, documented argument structure members
+        * tests/Dynamic_Priority_Test.cpp: Changed C-Style casts to
+          ACE_static_casts, documented argument structure members
 
 Mon Jul 27 12:23:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Select_Reactor.cpp (open): Changed a erroneous comparison
-	  to 
+        * ace/Select_Reactor.cpp (open): Changed a erroneous comparison
+          to
 
-	  if (size > (size_t) ACE::max_handles ())
-	    return ACE::set_handle_limit (size);
+          if (size > (size_t) ACE::max_handles ())
+            return ACE::set_handle_limit (size);
 
-	  Thanks to Avi Nash <anash@RedBrick.COM> for reporting this.
+          Thanks to Avi Nash <anash@RedBrick.COM> for reporting this.
 
 Sat Jul 25 20:26:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/SPIPE_Acceptor.(h cpp): Modified Win32 part to start the
-	  ConnectNamedPipe at open() time, in overlapped mode.  Now also
-	  processes the timeout in accept(), if specified.
+        * ace/SPIPE_Acceptor.(h cpp): Modified Win32 part to start the
+          ConnectNamedPipe at open() time, in overlapped mode.  Now also
+          processes the timeout in accept(), if specified.
 
 Sat Jul 25 16:18:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Malloc_T.i (addr): 
-	  Sun/CC does not like a reinterpret cast here, but only when T is
-	  a char[20]. Use a couple of static casts and added a comment.
+        * ace/Malloc_T.i (addr):
+          Sun/CC does not like a reinterpret cast here, but only when T is
+          a char[20]. Use a couple of static casts and added a comment.
 
 Sat Jul 25 11:34:25 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Typed_SV_Message_Queue.i (send): Fixed this call to use a
- 	  const cast AND a reinterpret cast.  Thanks to David Levine for
- 	  reporting this.
+        * ace/Typed_SV_Message_Queue.i (send): Fixed this call to use a
+          const cast AND a reinterpret cast.  Thanks to David Levine for
+          reporting this.
 
 Fri Jul 24 23:14:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Threads/thread_specific.cpp (cleanup): Added an
- 	  ACE_reinterpret_cast().  Thanks to John Mulhern
- 	  <9107@mn3.lawson.lawson.com> for this.
+        * examples/Threads/thread_specific.cpp (cleanup): Added an
+          ACE_reinterpret_cast().  Thanks to John Mulhern
+          <9107@mn3.lawson.lawson.com> for this.
 
-	* ace/Typed_SV_Message_Queue.i: Added some necessary
- 	  ACE_reinterpret_cast()s.  Thanks to John Mulhern
- 	  <9107@mn3.lawson.lawson.com> for this.
+        * ace/Typed_SV_Message_Queue.i: Added some necessary
+          ACE_reinterpret_cast()s.  Thanks to John Mulhern
+          <9107@mn3.lawson.lawson.com> for this.
 
-	* ace/Malloc_T.i (addr): Changed (T *) cast to
- 	  ACE_reinterpret_cast().  Thanks to John Mulhern
- 	  <9107@mn3.lawson.lawson.com> for this.
+        * ace/Malloc_T.i (addr): Changed (T *) cast to
+          ACE_reinterpret_cast().  Thanks to John Mulhern
+          <9107@mn3.lawson.lawson.com> for this.
 
-	* ace/SOCK_Dgram_Bcast.cpp: Added an ACE_reinterpret_cast() macro
- 	  to make the HP/UX 11 C++ compiler happy.  Thanks to John Mulhern
- 	  <9107@mn3.lawson.lawson.com> for this.
+        * ace/SOCK_Dgram_Bcast.cpp: Added an ACE_reinterpret_cast() macro
+          to make the HP/UX 11 C++ compiler happy.  Thanks to John Mulhern
+          <9107@mn3.lawson.lawson.com> for this.
 
-	* ace/config-hpux11.h: Added ACE_HAS_BROKEN_XTI_MACROS and
-	  ACE_HAS_SIGISMEMBER_BUG.
+        * ace/config-hpux11.h: Added ACE_HAS_BROKEN_XTI_MACROS and
+          ACE_HAS_SIGISMEMBER_BUG.
 
-	* ace/OS.i (sigismember): Sigismember works correctly in most
- 	  respects but the Sigset_Ops_Test tests the sigismember function
- 	  with an out-of-range signal number expecting it to fail with a
- 	  minus one result.  On HPUX 11.0 it doesn't fail; it correctly
- 	  reports that the signal is not in the sigset.  This happens
- 	  because HP, bless their hearts, thought that it should only
- 	  return out of range when the signal value was greater than the
- 	  capacity of the sigset; if ACE_NSIG is forced to 257 then the
- 	  test works as expected.  But the real maximum signal is 45.
-  	  Added a fix for this courtesy of John Mulhern
- 	  <9107@mn3.lawson.lawson.com>.
+        * ace/OS.i (sigismember): Sigismember works correctly in most
+          respects but the Sigset_Ops_Test tests the sigismember function
+          with an out-of-range signal number expecting it to fail with a
+          minus one result.  On HPUX 11.0 it doesn't fail; it correctly
+          reports that the signal is not in the sigset.  This happens
+          because HP, bless their hearts, thought that it should only
+          return out of range when the signal value was greater than the
+          capacity of the sigset; if ACE_NSIG is forced to 257 then the
+          test works as expected.  But the real maximum signal is 45.
+          Added a fix for this courtesy of John Mulhern
+          <9107@mn3.lawson.lawson.com>.
 
-	* ace/OS.h: Added a workaround for broken XTI header files on
- 	  HP/UX.  Thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
- 	  reporting this.
+        * ace/OS.h: Added a workaround for broken XTI header files on
+          HP/UX.  Thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
+          reporting this.
 
-	* tests/Dynamic_Priority_Test.cpp: Reformatted this just a bit.
+        * tests/Dynamic_Priority_Test.cpp: Reformatted this just a bit.
 
 Fri Jul 24 21:42:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
