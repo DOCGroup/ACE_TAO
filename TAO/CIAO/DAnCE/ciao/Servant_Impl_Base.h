@@ -42,6 +42,7 @@ namespace CIAO
    * Servant_Impl.
    */
   class CIAO_SERVER_Export Servant_Impl_Base
+    : public virtual POA_Components::CCMObject
   {
   public:
     Servant_Impl_Base (Session_Container * c);
