@@ -550,6 +550,10 @@ ACE_OS::uname (ACE_utsname *name)
           else if (sinfo.wProcessorLevel == 20)
             ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("620"));
           break;
+        case PROCESSOR_ARCHITECTURE_IA64:
+          ACE_OS_String::strcpy (processor, ACE_LIB_TEXT ("Itanium"));
+          ACE_OS::sprintf (subtype, ACE_LIB_TEXT ("%d"), sinfo.wProcessorLevel);
+          break;
         case PROCESSOR_ARCHITECTURE_UNKNOWN:
         default:
           // @@ We could provide WinCE specific info here.  But let's

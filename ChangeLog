@@ -1,3 +1,8 @@
+Wed Jul 24 13:42:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.cpp (uname): Added case for PROCESSOR_ARCHITECTURE_IA64
+          when decoding processor type.
+
 Wed Jul 24 10:58:22 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Acceptor.cpp (ACE_Acceptor::handle_input): When calling select(),
