@@ -3,6 +3,7 @@
 #
 
 DIRS = \
+        Abstract_Interface \
         AMH_Exceptions \
         AMH_Oneway \
         AMI \
