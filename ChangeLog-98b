@@ -1,3 +1,9 @@
+1998-10-31  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
+
+	* ace/Select_Reactor_T.cpp (dispatch): Added signal_occurred at
+	  the right return to indicate that a handle_signal () has been
+	  dispatched. 
+
 Fri Oct 30 20:31:27 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tests/Semaphore_Test.cpp: Cleaned up the #if's to make it easier
