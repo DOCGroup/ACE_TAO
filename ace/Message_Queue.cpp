@@ -505,6 +505,8 @@ ACE_Message_Queue<ACE_SYNCH_2>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T>
       mon.acquire ();
     }
 #else
+  ACE_UNUSED_ARG (mon);
+
   // Wait while the queue is full.
 
   while (this->is_full_i ())
@@ -539,6 +541,8 @@ ACE_Message_Queue<ACE_SYNCH_2>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T
       mon.acquire ();
     }
 #else
+  ACE_UNUSED_ARG (mon);
+
   // Wait while the queue is empty.
 
   while (this->is_empty_i ())
