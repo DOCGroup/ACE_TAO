@@ -1,3 +1,20 @@
+Tue Jul 18 14:43:08 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/termios.h:
+	* pace/posix/termios.inl:
+
+	  PACE_HANDLE substituted in for file descriptors.
+
+	* pace/win32/termios.h:
+	* pace/win32/termios.inl:
+
+	  Eliminated support for most funcs. Return -1 and set ernno
+	  to ENOTSUP.
+
+	* docs/PACE_POSIX_support.txt:
+
+	  Updated.
+
 Tue Jul 18 14:15:11 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/stdio.inl:

@@ -72,7 +72,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.2.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE int pace_tcdrain (int fildes);
+  PACE_INLINE int pace_tcdrain (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -81,7 +81,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.2.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE int pace_tcflow (int fildes, int action);
+  PACE_INLINE int pace_tcflow (PACE_HANDLE fildes, int action);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -90,7 +90,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.2.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE int pace_tcflush (int fildes, int queue_selector);
+  PACE_INLINE int pace_tcflush (PACE_HANDLE fildes, int queue_selector);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -99,7 +99,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.1.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE int pace_tcgetattr (int fildes, pace_termios * termios_p);
+  PACE_INLINE int pace_tcgetattr (PACE_HANDLE fildes, pace_termios * termios_p);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -108,7 +108,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.2.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE int pace_tcsendbreak (int fildes, int duration);
+  PACE_INLINE int pace_tcsendbreak (PACE_HANDLE fildes, int duration);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -117,7 +117,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.1.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE int pace_tcsetattr (int fildes,
+  PACE_INLINE int pace_tcsetattr (PACE_HANDLE fildes,
                                   int optional_actions,
                                   const pace_termios * termios_p);
 #endif /* PACE_HAS_POSIX_DS_UOF */
