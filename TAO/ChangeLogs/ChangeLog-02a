@@ -1,3 +1,7 @@
+Thu May  2 00:28:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/miopconf.h: Fixed fuzz errors. 
+
 Thu May  2 00:26:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Connection_Timeout/client.bor: Fixed the orland makefile
