@@ -20,6 +20,9 @@ Thu Feb 19 11:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/SOCK_Connector_Test.cpp: use ACE_DEFAULT_SERVER_HOST on
           LynxOS, and removed #include of sys/utsname.h because it's in OS.h.
 
+        * include/makeinclude/platform_lynxos.GNU: added LYNXOS so that
+          other Makefiles can easily know if where building for LynxOS.
+
 Thu Feb 19 10:41:05 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SOCK.cpp (open): It appears that we don't need to do
