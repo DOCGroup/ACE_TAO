@@ -1,3 +1,8 @@
+Tue Jun 20 15:03:07 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Content_Server/AMI_Observer: Fixed some more style
+	  issues.
+
 Tue Jun 20 10:44:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:

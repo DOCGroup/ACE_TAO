@@ -38,12 +38,11 @@ class Push_Iterator_Handler
     public virtual PortableServer::RefCountServantBase
 {
 public:
-
   Push_Iterator_Handler (void);
   // Constructor that creates a content iterator corresponding to the
   // name of the file being retrieved from the web server.
 
-  void run (int * request_count,
+  void run (int *request_count,
             const char *pathname,
             Web_Server::Iterator_Factory_ptr factory,
             CORBA::Environment &ACE_TRY_ENV)
@@ -60,23 +59,23 @@ private:
   // Destructor  (private to ensure that Iterator_Handler is allocated
   // on the heap).
 
-  virtual void register_callback (
-      const Web_Server::Metadata_Type & metadata,
-      CORBA::Environment &ACE_TRY_ENV)
+  virtual void register_callback
+  (const Web_Server::Metadata_Type &metadata,
+   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // AMI callback that is invoked when a response from the
   // corresponding server method is received.
 
-  virtual void register_callback_excep (
-      Web_Server::AMI_Iterator_FactoryExceptionHolder *,
-      CORBA::Environment &)
+  virtual void register_callback_excep 
+  (Web_Server::AMI_Iterator_FactoryExceptionHolder *,
+   CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
   void deactivate (CORBA::Environment &ACE_TRY_ENV);
   // Deactivate this handler.
 
 private:
-  Callback_i * callback_servant_;
+  Callback_i *callback_servant_;
   // The servant that accepts data pushed from the content server.
 
   Web_Server::Callback_var callback_;

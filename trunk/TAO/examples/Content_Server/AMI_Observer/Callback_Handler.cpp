@@ -9,7 +9,7 @@
 
 ACE_RCSID(AMI_Observer, Callback_Handler, "$Id$")
 
-Callback_Handler::Callback_Handler (const char * pathname,
+Callback_Handler::Callback_Handler (const char *pathname,
                                     Web_Server::Callback_ptr client_callback)
   : file_ (pathname),
     file_io_ (),
@@ -40,12 +40,11 @@ Callback_Handler::next_chunk (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Allocate a buffer for the file being read.
-  CORBA::Octet * buf =
+  CORBA::Octet *buf =
     Web_Server::Chunk_Type::allocbuf (BUFSIZ);
 
   ssize_t bytes_read = this->file_io_.recv (buf,
                                             BUFSIZ);
-
   if (bytes_read == -1)
     {
       Web_Server::Chunk_Type::freebuf (buf);
@@ -83,9 +82,9 @@ Callback_Handler::next_chunk (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-Callback_Handler::next_chunk_excep (
-    Web_Server::AMI_CallbackExceptionHolder *excep_holder,
-    CORBA::Environment &)
+Callback_Handler::next_chunk_excep 
+  (Web_Server::AMI_CallbackExceptionHolder *excep_holder,
+   CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->last_chunk_ = 1;
@@ -121,9 +120,9 @@ Callback_Handler::run (CORBA::Environment &ACE_TRY_ENV)
   this->ami_handler_ = this->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
 
-  // Begin the asynchronous invocation.
-  // Note that the AMI "sendc_next_chunk()" call is done within the
-  // following call, since data must first be read into the Chunk.
+  // Begin the asynchronous invocation.  Note that the AMI
+  // "sendc_next_chunk()" call is done within the following call,
+  // since data must first be read into the Chunk.
   this->next_chunk (ACE_TRY_ENV);
   ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
 
@@ -144,12 +143,9 @@ Callback_Handler::open_file (CORBA::Environment &ACE_TRY_ENV)
                          ACE_Addr::sap_any,
                          0,
                          O_RDONLY) == -1)
-    {
-      ACE_THROW (Web_Server::Error_Result (404));
-      // HTTP 1.1 "Not Found"
-    }
+    // HTTP 1.1 "Not Found"
+    ACE_THROW (Web_Server::Error_Result (404));
 }
-
 
 void
 Callback_Handler::deactivate (CORBA::Environment &ACE_TRY_ENV)

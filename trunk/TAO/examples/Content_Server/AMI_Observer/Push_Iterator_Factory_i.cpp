@@ -9,10 +9,10 @@
 ACE_RCSID(AMI_Observer, Push_Iterator_Factory_i, "$Id$")
 
 Web_Server::Metadata_Type *
-Push_Iterator_Factory_i::register_callback (
-    const char *pathname,
-    Web_Server::Callback_ptr client_callback,
-    CORBA::Environment &ACE_TRY_ENV)
+Push_Iterator_Factory_i::register_callback 
+  (const char *pathname,
+   Web_Server::Callback_ptr client_callback,
+   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
 {
   if (CORBA::is_nil (client_callback))  // @@ Will it ever be nil?
@@ -32,7 +32,7 @@ Push_Iterator_Factory_i::register_callback (
 
   // Send the file to the client asynchronously.  This allows the
   // server to service multiple file requests from clients.
-  Callback_Handler * handler = 0;
+  Callback_Handler *handler = 0;
   ACE_NEW_THROW_EX (handler,
                     Callback_Handler (pathname,
                                       client_callback),
@@ -49,37 +49,29 @@ Push_Iterator_Factory_i::register_callback (
   if (fd == ACE_INVALID_HANDLE
       || ACE_OS::fstat (fd,
                         &file_status) == -1)
-    {
-      ACE_THROW_RETURN(Web_Server::Error_Result (500),
-                       0);
-      // HTTP 1.1 "Internal Server Error"
-    }
-
-  Web_Server::Metadata_Type_var metadata = new Web_Server::Metadata_Type;
+    // HTTP 1.1 "Internal Server Error".
+    ACE_THROW_RETURN (Web_Server::Error_Result (500),
+                      0);
+  Web_Server::Metadata_Type_var metadata =
+    new Web_Server::Metadata_Type;
 
   if (this->modification_date (&file_status,
                                metadata.inout ()) != 0)
-    {
-      ACE_THROW_RETURN (Web_Server::Error_Result (500),
-                        0);
-      // HTTP 1.1 "Internal Server Error
-    }
-
+    // HTTP 1.1 "Internal Server Error.
+    ACE_THROW_RETURN (Web_Server::Error_Result (500),
+                      0);
   if (this->content_type (pathname,
                           metadata.inout ()) != 0)
-    {
-      ACE_THROW_RETURN (Web_Server::Error_Result (500),
-                        0);
-      // HTTP 1.1 "Internal Server Error
-    }
-
+    // HTTP 1.1 "Internal Server Error.
+    ACE_THROW_RETURN (Web_Server::Error_Result (500),
+                      0);
   return metadata._retn ();
 }
 
 int
-Push_Iterator_Factory_i::modification_date (
-  struct stat * file_status,
-  Web_Server::Metadata_Type & metadata)
+Push_Iterator_Factory_i::modification_date 
+  (struct stat *file_status,
+   Web_Server::Metadata_Type & metadata)
 {
   // Get the modification time from the file status structure/
   struct tm *t_gmt = gmtime (&(file_status->st_mtime));
@@ -101,8 +93,8 @@ Push_Iterator_Factory_i::modification_date (
 }
 
 int
-Push_Iterator_Factory_i::content_type (const char * filename,
-                                       Web_Server::Metadata_Type & metadata)
+Push_Iterator_Factory_i::content_type (const char *filename,
+                                       Web_Server::Metadata_Type &metadata)
 {
   if (filename == 0)
     return -1;
@@ -133,47 +125,31 @@ Push_Iterator_Factory_i::content_type (const char * filename,
 
   if (ACE_OS::strcasecmp (extension, "htm") == 0
       || ACE_OS::strcasecmp (extension, "html") == 0)
-    {
-      metadata.content_type = CORBA::string_dup ("text/html");
-    }
+    metadata.content_type = CORBA::string_dup ("text/html");
   else if (ACE_OS::strcasecmp (extension,
                                "txt") == 0)
-    {
-      metadata.content_type = CORBA::string_dup ("text/plain");
-    }
+    metadata.content_type = CORBA::string_dup ("text/plain");
   else if (ACE_OS::strcasecmp (extension,
                                "ps") == 0)
-    {
-      metadata.content_type =
-        CORBA::string_dup ("application/postscript");
-    }
+    metadata.content_type =
+      CORBA::string_dup ("application/postscript");
   else if (ACE_OS::strcasecmp (extension,
                                "pdf") == 0)
-    {
-      metadata.content_type = CORBA::string_dup ("application/pdf");
-    }
+    metadata.content_type = CORBA::string_dup ("application/pdf");
   else if (ACE_OS::strcasecmp (extension,
                                "jpeg") == 0
            || ACE_OS::strcasecmp (extension,
                                   "jpg") == 0)
-    {
-      metadata.content_type = CORBA::string_dup ("image/jpeg");
-    }
+    metadata.content_type = CORBA::string_dup ("image/jpeg");
   else if (ACE_OS::strcasecmp (extension,
                                "tiff") == 0)
-    {
-      metadata.content_type = CORBA::string_dup ("image/tiff");
-    }
+    metadata.content_type = CORBA::string_dup ("image/tiff");
   else if (ACE_OS::strcasecmp (extension,
                                "gif") == 0)
-    {
-      metadata.content_type = CORBA::string_dup ("image/gif");
-    }
+    metadata.content_type = CORBA::string_dup ("image/gif");
   else if (ACE_OS::strcasecmp (extension,
                                "png") == 0)
-    {
-      metadata.content_type = CORBA::string_dup ("image/png");
-    }
+    metadata.content_type = CORBA::string_dup ("image/png");
   else
     {
       metadata.content_type = CORBA::string_dup ("text/html");

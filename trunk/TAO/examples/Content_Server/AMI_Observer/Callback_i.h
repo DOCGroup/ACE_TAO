@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -37,18 +36,17 @@ class Callback_i :
   public virtual PortableServer::RefCountServantBase
 {
 public:
-
-  Callback_i (int * request_count);
+  Callback_i (int *request_count);
   // Constructor
 
-  virtual void next_chunk (const Web_Server::Chunk_Type & chunk,
+  virtual void next_chunk (const Web_Server::Chunk_Type &chunk,
                            CORBA::Boolean last_chunk,
                            CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation returns the next <chunk> of the file starting at
   // <offset>.  If there are no more bindings, false is returned.
 
-  void metadata (const Web_Server::Metadata_Type & metadata);
+  void metadata (const Web_Server::Metadata_Type &metadata);
   // Set metadata associated with received data.
 
 private:
@@ -64,7 +62,7 @@ private:
   // Returns one if the entire content was received, and zero
   // otherwise.
 
-  int get_viewer (char * viewer, size_t length);
+  int get_viewer (char *viewer, size_t length);
   // Get the name of the viewer associated with the file being
   // retrieved.
 
@@ -99,7 +97,7 @@ private:
   // Lock used to prevent race conditions when checking to see if
   // metadata or entire content has been received.
 
-  int * request_count_;
+  int *request_count_;
   // Pointer to external status monitoring variable. The contents (not
   // the pointer itself) of the <pending_data> parameter will be
   // decremented when file retrieval has completed.
