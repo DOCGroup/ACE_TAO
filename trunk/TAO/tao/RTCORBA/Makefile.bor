@@ -2,7 +2,11 @@
 # Makefile for building the TAO RTCorba library
 #
 
+!ifndef MINIMUM_CORBA
 NAME = TAO_RTCORBA
+!else
+!undef NAME
+!endif
 
 OBJFILES = \
 	$(OBJDIR)\Continuous_Priority_Mapping.obj \

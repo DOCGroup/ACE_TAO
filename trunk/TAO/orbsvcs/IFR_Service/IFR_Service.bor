@@ -2,7 +2,11 @@
 # Makefile for building	the IFR	Service	executable
 #
 
+!ifndef MINIMUM_CORBA
 NAME = IFR_Service
+!else
+!undef NAME
+!endif
 
 OBJFILES = \
 	$(OBJDIR)\AbstractInterfaceDef_i.obj \

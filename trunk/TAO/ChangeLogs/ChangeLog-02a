@@ -1,3 +1,19 @@
+Mon Oct 15 22:41:17 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/RTCORBA/Makefile.bor:
+        * tao/RTPortableServer/Makefile.bor:
+        * orbsvcs/orbsvcs/FaultTolerance.bor:
+        * orbsvcs/orbsvcs/LoadBalancing.bor:
+        * orbsvcs/IFR_Service/IFR_Service.bor:
+        * orbsvcs/IFR_Service/TAO_IFR_BE_DLL.bor:
+        * orbsvcs/IFR_Service/tao_ifr.bor:
+        * orbsvcs/ImplRepo_Service/ImplRepo.bor:
+        * orbsvcs/ImplRepo_Service/tao_imr.bor:
+        * orbsvcs/LoadBalancer/Makefile.bor:
+          Added some Borland makefile support for minimum CORBA, enabled
+          by setting an environment variable MINIMUM_CORBA to 1. Thanks to
+          Adrian Mercieca <adrian@anvilmalta.com> for motivating this.
+
 Fri Oct 12 00:42:42 2001  Craig Rodriguse  <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 

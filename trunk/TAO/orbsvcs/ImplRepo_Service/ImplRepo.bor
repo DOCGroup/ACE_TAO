@@ -2,7 +2,11 @@
 # Makefile for building the ImplRepo_Service executable
 #
 
+!ifndef MINIMUM_CORBA
 NAME = ImplRepo_Service
+!else
+!undef NAME
+!endif
 
 OBJFILES = \
 	$(OBJDIR)\Adapter_Activator.obj \
