@@ -1,3 +1,22 @@
+Fri Jul 03 02:03:23 1998  Carlos O'Ryan  <coryan@JIG>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Data.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Data.cpp: 
+	* orbsvcs/tests/EC_Throughput/data.idl: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	  Added an example on how to send C++ data across the wire.
+
+	* orbsvcs/orbsvcs.dsw: 
+	* orbsvcs/tests/EC_Throughput/EC_Throughput.dsw: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp: 
+	  Added MSVC++ project files for the new test.
+
+	* tao/CDR.h: 
+	  Fixed typo in a extraction operator for InputCDR and strings, it
+	  was declared as operator>>.
+
 Fri Jul  3 00:39:03 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.{h,cpp}:

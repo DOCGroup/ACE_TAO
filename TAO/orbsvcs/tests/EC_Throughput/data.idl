@@ -2,7 +2,7 @@
 // $Id$
 //
 
-module ECT_Data
+module ECT_IDLData
 {
   // Some simple data types to show how the Events can carry its
   // payload in the octet sequence.

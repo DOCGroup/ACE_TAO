@@ -624,7 +624,7 @@ extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
 					    CORBA::Char &x);
 extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
 					    CORBA::WChar &x);
-extern TAO_Export TAO_InputCDR& operator<< (TAO_InputCDR& cdr,
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
 					    CORBA::Char*& x);
 #endif /* __ACE_INLINE */
 

@@ -18,6 +18,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ECT_Consumer"=.\tests\EC_Throughput\ECT_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ECT_Supplier"=.\tests\EC_Throughput\ECT_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "EC_Multiple"=.\tests\EC_Multiple\EC_Multiple.dsp - Package Owner=<4>
 
 Package=<5>
