@@ -1,22 +1,19 @@
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Message_Queue_Test_Ex.h
-//
-// = DESCRIPTION
-//    Define class needed for generating templates. IBM C++ requires this to
-//    be in its own file for auto template instantiation.
-//
-// = AUTHORS
-//    Michael Vitlo <mvitalo@sprynet.com>, copied the code from:
-//    Irfan Pyarali <irfan@cs.wustl.edu> and David L. Levine <levine@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ * @file Message_Queue_Test_Ex.h
+ *
+ * $Id$
+ *
+ * Define class needed for generating templates. IBM C++ requires this
+ * to be in its own file for auto template instantiation.
+ *
+ * @author Michael Vitlo <mvitalo@sprynet.com>
+ * @author Irfan Pyarali <irfan@cs.wustl.edu>
+ * @author David L. Levine <levine@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef ACE_TESTS_MESSAGE_QUEUE_TEST_EX_H
 #define ACE_TESTS_MESSAGE_QUEUE_TEST_EX_H
