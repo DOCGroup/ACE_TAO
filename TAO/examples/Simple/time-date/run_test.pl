@@ -9,7 +9,7 @@ use lib "../../../../bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("timedate.ior");
+$iorfile = "ior";
 $conf = PerlACE::LocalFile ("client.conf");
 
 # Remove the file before starting the test.
