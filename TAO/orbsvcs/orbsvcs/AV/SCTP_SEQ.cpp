@@ -503,11 +503,18 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
       local_ip_addr [i] = ip_addr.get_ip_address ();
     }  
 
-  local_addr.set (addr->get_port_number (),
-		  addr->get_ip_address (),
-		  1,
-		  local_ip_addr,
-		  entry->num_peer_sec_addrs ());
+  if (entry->num_peer_sec_addrs () != 0)
+    local_addr.set (addr->get_port_number (),
+		    addr->get_ip_address (),
+		    1,
+		    local_ip_addr,
+		    entry->num_peer_sec_addrs ());
+  else 
+    local_addr.set (addr->get_port_number (),
+		    addr->get_ip_address (),
+		    1,
+		    0,
+		    entry->num_peer_sec_addrs ());
 
   int result = this->connector_.connector_connect (handler,
 						   remote_multi_addr,
@@ -524,7 +531,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
 		  "Local Addrs\n"));
       char buf [BUFSIZ];
       size_t size = BUFSIZ;
-      ACE_INET_Addr *peer_addrs;
+      ACE_INET_Addr *peer_addrs = 0;
       ACE_NEW_RETURN (peer_addrs,ACE_INET_Addr [size], -1);
       handler->peer ().get_local_addrs (peer_addrs, size);
       for (unsigned int i=0; i < size;i++)
@@ -551,7 +558,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
 		      buf,
 		      size));
 	}
-      delete peer_addrs;
+      //delete peer_addrs;
     }
 
   return 0;
@@ -699,6 +706,82 @@ TAO_AV_Transport *
 TAO_AV_SCTP_SEQ_Flow_Handler::transport (void)
 {
   return this->transport_;
+}
+
+int
+TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
+{
+  if( TAO_debug_level > 0 )
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%N,%l) TAO_AV_SCTP_SEQ_Flow_Handler::change_qos\n"));
+    }
+
+  unsigned int i=0;
+
+  int ret = 0;
+  CORBA::Long dscp = 0;
+  CORBA::Long ecn = 0;
+  int dscp_flag=0;
+  for(i=0; i < qos.QoSParams.length(); i++)
+    {
+
+      if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
+        {
+          qos.QoSParams[i].property_value >>= dscp;
+	  ACE_DEBUG ((LM_DEBUG,
+		      "DSCP %d\n",
+		      dscp));
+          dscp_flag=1;
+          // DSCP value can only be 6 bits wide
+          if(!((dscp >= 0) && (dscp <= 63)))
+            {
+              dscp_flag = 0;
+              ACE_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
+              return -1;
+            }
+        }
+
+      if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "ECN") == 0)
+        {
+          qos.QoSParams[i].property_value >>= ecn;
+          // ECN value can only occupy bits 6 and 7 of the
+          // IP Diffserv byte
+          if(!((ecn >= 0) && (ecn <= 3)))
+            {
+              ACE_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
+              ecn = 0;
+            }
+
+        }
+    }
+  // Set the Diffserv byte only if we specified
+  // the Diffserv Codepoint (DSCP) or ECN via QoSParams
+  // passed into this method
+  if(dscp_flag || ecn)
+    {
+      int tos;
+      tos = (int)(dscp << 2);
+      if(ecn)
+	{
+	  tos |= ecn;
+	}
+      ret = this->peer ().set_option(IPPROTO_IP, IP_TOS, (int *)&tos , (int)sizeof(tos));
+
+      if(TAO_debug_level > 0)
+	{
+	  ACE_DEBUG((LM_DEBUG, "(%N,%l) set tos: ret: %d %d\n", tos, ret));
+	}
+    }
+
+  if(TAO_debug_level > 0)
+    {
+      if(ret < 0 )
+	{
+	  ACE_DEBUG((LM_DEBUG, "(%N,%l) errno: %p\n"));
+	}
+    }
+  return ret;
 }
 
 int
