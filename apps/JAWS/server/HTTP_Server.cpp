@@ -275,7 +275,7 @@ Thread_Per_Request_Task::open (void *args)
   if (args != 0)
     grp_id = (int *) args;
 
-#if 0
+#if defined (ACE_WIN32)
   if (*grp_id == -1)
     status = *grp_id = this->activate (THR_DETACHED | THR_NEW_LWP);
   else
@@ -311,7 +311,7 @@ Thread_Per_Request_Task::DEBUG_TPR (void *task)
   Thread_Per_Request_Task *tpr_task = (Thread_Per_Request_Task *) task;
   tpr_task->svc ();
   tpr_task->close (0);
-  ::thr_exit (0);
+  // ::thr_exit (0);
   return 0;
 }
 
