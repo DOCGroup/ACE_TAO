@@ -1,4 +1,4 @@
-# Filename: VCAUTO.MAK
+# Dir: netsvcs/
 #   Top level makefile for MSVC.
 #   $Id$
 

@@ -1,3 +1,4 @@
+# Dir: netsvcs/lib/
 
 MAK_LIST = netsvcs
 
