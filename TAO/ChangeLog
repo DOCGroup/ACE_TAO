@@ -1,3 +1,9 @@
+Tue Dec  2 13:43:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/RtEC/IIOPGateway/Consumer.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp:
+          Added include of ace/OS_NS_string.h to get ACE_OS::strcmp
+
 Tue Dec  2 07:18:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Object_KeyC.cpp (encode_string_to_sequence):
