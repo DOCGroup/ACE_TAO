@@ -22,10 +22,6 @@ SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i Stopwatch_display Control time
 CLIENT_OBJS = client.o Control.o testC.o
 SERVER_OBJS = server.o test_i.o Stopwatch_display.o timer.o $(addsuffix .o, $(IDLFILES))
 
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
-
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets

@@ -24,9 +24,6 @@ SIMPLE_CLIENT_OBJS = simple-client.o $(addsuffix .o, $(IDLFILES))
 ORB_CREATION_OBJS = orb_creation.o $(addsuffix .o, $(IDLFILES))
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
 
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets

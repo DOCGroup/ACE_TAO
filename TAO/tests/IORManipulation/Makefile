@@ -23,8 +23,6 @@ SRC = $(PROG_SRCS)
 SIMPLE_CLT_OBJS = IORTest.o
 SIMPLE_SVR_OBJS = 
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = IORTest
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,

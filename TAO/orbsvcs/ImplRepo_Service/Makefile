@@ -34,8 +34,6 @@ TAO_IR_OBJS = \
 	tao_ir.o \
 	tao_ir_i.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = ImplRepo_Service \
 	tao_ir
 

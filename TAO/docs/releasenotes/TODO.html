@@ -28,38 +28,6 @@
     </P>
 
     <OL>
-      <LI><P>The ORB should support server side and client side
-	  interceptors
-	  <BR>[ASSIGNED TO:] Nanbor
-	</P>
-      </LI>
-      
-      <LI><P>Implement an Implementation Repository for TAO.
-	  <BR>[ASSIGNED TO:] Darrell.
-	</P>
-      </LI>
-
-      <LI><P>Implement a nice example of the COS Event Channel,
-          showing how it can provide filtering when combined with the
-          real-time Event Channel.
-          <BR>[ASSIGNED TO:] Pradeep
-        </P>
-      </LI>
-
-      <LI><P><B>EC:</B> Complete the implementation of the new EC,
-	  specially generate the strategies and changes required to
-	  support hard real-time behavior.
-	</P>
-	<P>The new EC does not update the dependencies in
-	  the scheduling service. We should be able to strategize this 
-	  by the appropiate use of a <CODE>Filter_Builder</CODE> and
-	  decorators for the regular filters.
-          <BR>[ASSIGNED TO:] Carlos
-	  <BR>[STATUS] All the pieces are in place, but I have to
-	  continue debugging it.
-        </P>
-      </LI>
-
       <LI><P>Implement the Interoperable Naming Service spec,
 	  specially the new standard features to bootstrap the initial 
 	  object references in the ORB.
@@ -97,15 +65,6 @@
           <BR>[ASSIGNED TO:] Carlos
 	  <BR>[STATUS] The path on the client side seems clean
 	  now. The server side is still under revision.
-	</P>
-      </LI>
-
-      <LI><P>Add support for timeouts and protocol attributes to the
-	  ORB.
-          <BR>[ASSIGNED TO:] Carlos
-	  <BR>[STATUS] Support for the Policy objects is present, but
-	  we haven't implemented any of the Policy objects and, of
-	  course, we don't use them.
 	</P>
       </LI>
 
@@ -260,25 +219,6 @@
 
     <H4>New features and Bug fixes</H4>
     <OL>
-      <LI><P><B>EC:</B>The <CODE>Priority_Dispatching</CODE> strategy
-	  is incomplete.
-	  <BR>[STATUS] The latest round of changes completed the
-	  implementation, but more testing is required before dropping 
-	  this task
-        </P>
-      </LI>
-      <LI><P><B>EC:</B>Implement a dispatching strategy that uses the
-	  current thread priority or ID to dispatch the event.  This
-	  will let us use multiple queues at different priorities but
-	  without any scheduling service.
-        </P>
-      </LI>
-      <LI><P><B>EC:</B>Implement a null filter for consumers that
-	  correctly matches the events, this can be used to do all the 
-	  filtering on the suppliers for applications that do not
-	  require correlation.
-        </P>
-      </LI>
       <LI><P><B>EC:</B>Several tests must be added to the event
 	  channel testsuite, for example:
 	  <UL>
@@ -318,23 +258,6 @@
 	  receives a <CODE>connected</CODE> call for each supplier,
 	  event though one would be enough.
         </P>
-      </LI>
-
-      <LI><P><B>EC:</B> We need some strategy in the EC to periodically 
-	  flush out misbehaving suppliers and consumers. Examples of
-	  misbehavior include: suppliers flooding the EC;
-	  consumers or suppliers that are destroyed, but were not
-	  disconnected;
-	  consumers that are not accepting events (risking a
-	  dead-lock);
-	  etc.
-        </P>
-      </LI>
-
-      <LI><P><B>IDL Compiler:</B> Support for the <CODE>version</CODE> 
-	  pragma, this also requires some changes in the
-	  <CODE>_is_a()</CODE> implementation.
-	</P>
       </LI>
 
       <LI><P><B>ORB: </B> Stress test the ORB in the presence of
@@ -378,14 +301,6 @@
 	  events from the Gateway publication and subscription list.
 	  <BR>[STATUS] The task is a second order optimization and has 
 	  very low priority.
-	</P>
-      </LI>
-
-      <LI><P><B>ORB: </B> Use the IIOP 1.1 profile info to pass QoS
-	  info and use it to preserve end-to-end QoS.
-	  <BR>[STATUS] The tagged component for encoding QoS
-	  information was created, but the server does not create it,
-	  neither does the client use that information.
 	</P>
       </LI>
 
@@ -554,16 +469,6 @@
       <LI><P>Can <CODE>_duplicate()</CODE> raise an exception?
 	  If so the mapping that we generate is not correct for
 	  platforms without native C++ exceptions.
-	</P>
-      </LI>
-
-      <LI><P><B>ORB:</B>
-	  By default TAO disables Nagle's algorithm, this should be
-	  an optional feature, otherwise TAO will perform poorly over
-	  WANs.
-	  <BR>[STATUS] An alternative: this could be fixed as part of
-	  the real-time spec that introduces transport specific
-	  policies.
 	</P>
       </LI>
 
@@ -809,6 +714,17 @@ encapsulation format.
       <H3>Completed Tasks</H3>
 
     <OL> 
+      <LI><P>Add support for timeouts and protocol attributes to the
+	  ORB.
+          <BR>[ASSIGNED TO:] Carlos
+	  <BR>[STATUS] Support for the Policy objects is present, but
+	  we haven't implemented any of the Policy objects and, of
+	  course, we don't use them.
+	  <BR>[DONE] Protocol attributes is deferred until the
+	  real-time spec is implemented.
+	</P>
+      </LI>
+
       <LI><P>The current implementation of collocation is optimal for
 	  hard-real-time 
 	  applications, but in some cases it may be desirable to follow

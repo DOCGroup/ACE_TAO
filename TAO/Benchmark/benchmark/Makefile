@@ -21,9 +21,6 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 
 LDLIBS = -lACE
 LIBS = -lACE
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
-BUILD	= $(VSHLIB) $(VLIB)
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO

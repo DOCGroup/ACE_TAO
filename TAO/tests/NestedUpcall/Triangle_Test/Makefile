@@ -32,9 +32,6 @@ NESTEDUPCALLS_INITIATOR_OBJS = Triangle_TestS.o Triangle_TestC.o initiator.o \
 
 
 BIN = server_A server_B initiator
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

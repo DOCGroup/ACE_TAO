@@ -19,8 +19,6 @@ BIN2	= nslist
 
 SRC	= nslist.cpp
 
-BUILD	= $(VBIN)
-
 TAO_IDLFLAGS += -Ge 1
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.

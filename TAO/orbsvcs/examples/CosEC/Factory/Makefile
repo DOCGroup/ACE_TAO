@@ -36,8 +36,6 @@ CLIENT_OBJS = \
         CosEventChannelFactoryC.o \
 	CosEventChannelFactoryS.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = factory \
 	factoryclient
 

@@ -25,8 +25,6 @@ TEST_OBJECT_OBJS = test_objectC.o \
                    test_objectS.o \
                    client.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = client
 
 TAO_IDLFLAGS += -Ge 1

@@ -28,8 +28,6 @@ SIMPLE_SVR_OBJS = Server_i.o \
 SIMPLE_CRK_OBJS = Clerk_i.o \
         Time_Service_Clerk.o \
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = Time_Service_Server \
        Time_Service_Clerk
 

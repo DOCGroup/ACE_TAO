@@ -17,7 +17,6 @@ LSRC = $(PROG_SRCS)
 MIB_OBJS = DOVEMIB.o NavWeapC.o Node.o PrintVisitor.o AnyAnalyser.o
 
 LDLIBS = -lorbsvcs -lTAO
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2 = DOVEMIB
 

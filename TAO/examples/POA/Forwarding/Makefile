@@ -24,9 +24,7 @@ SVR_OBJS = FooC.o FooS.o server.o MyFooServant.o Servant_Locator.o
 CLT_OBJS = FooC.o FooS.o client.o
 
 BIN = server client
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
+
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #	Include macros and targets

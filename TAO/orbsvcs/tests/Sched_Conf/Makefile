@@ -7,7 +7,6 @@ SCHEDULE_OBJS = $(SCHEDULE_SRCS:.cpp=.o)
 DUMP_OBJS = $(DUMP_SRCS:.cpp=.o)
 
 LDLIBS  = -lorbsvcs -lTAO
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2 = Sched_Conf
 

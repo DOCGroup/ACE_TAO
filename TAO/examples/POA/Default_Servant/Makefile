@@ -23,9 +23,7 @@ FILE_SVR_OBJS = FileC.o FileS.o server.o File_i.o
 FILE_CLT_OBJS = FileC.o FileS.o client.o
 
 BIN = server client
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
+
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #	Include macros and targets
