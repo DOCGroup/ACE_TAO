@@ -669,18 +669,18 @@ Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
   dispatch_id_ = next_id_++;
 }
 
-int
+bool
 Dispatch_Entry::operator < (const Dispatch_Entry &d) const
 {
   // for positioning in the ordered dispatch multiset
 
   // lowest arrival time first
   if (this->arrival_ != d.arrival_)
-    return this->arrival_ < d.arrival_ ? 1 : 0;
+    return this->arrival_ < d.arrival_ ? true : false;
 
   // highest priority second
   if (this->priority_ != d.priority_)
-    return this->priority_ > d.priority_ ? 1 : 0;
+    return this->priority_ > d.priority_ ? true : false;
 
   // lowest laxity (highest dynamic sub-priority) third Just use low
   // 32 bits of worst_case_execution_time.  This will have to change
@@ -695,11 +695,11 @@ Dispatch_Entry::operator < (const Dispatch_Entry &d) const
   that_laxity -= d.task_entry ().rt_info ()->worst_case_execution_time;
 
   if (this_laxity != that_laxity)
-    return (this_laxity < that_laxity) ? 1 : 0;
+    return (this_laxity < that_laxity) ? true : false;
 
   // finally, by higher importance
   return (task_entry ().rt_info ()->importance >
-          d.task_entry ().rt_info ()->importance) ? 1 : 0;
+          d.task_entry ().rt_info ()->importance) ? true : false;
 }
 
 // ctor

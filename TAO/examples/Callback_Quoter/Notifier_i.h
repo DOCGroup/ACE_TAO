@@ -91,7 +91,7 @@ public:
     // = TITLE
     //   Saves the Consumer_var and the threshold stock value.
   public:
-    int operator== (const Consumer_Data &rhs);
+    bool operator== (const Consumer_Data &rhs);
     // Comparison operator.
 
     Callback_Quoter::Consumer_var consumer_;
