@@ -30,6 +30,7 @@
 //      ACE_SIZEOF_LONG_DOUBLE
 //
 //    Wrappers for built-in types of specific sizes:
+//      ACE_USHORT16 /* For backward compatibility.  Use ACE_UINT16 instead. */
 //      ACE_INT16
 //      ACE_UINT16
 //      ACE_INT32
@@ -163,6 +164,8 @@
 #else
 # error Have to add to the ACE_UINT16 type setting
 #endif
+
+typedef ACE_UINT16 ACE_USHORT16;
 
 #if ACE_SIZEOF_INT == 4
   typedef int ACE_INT32;
