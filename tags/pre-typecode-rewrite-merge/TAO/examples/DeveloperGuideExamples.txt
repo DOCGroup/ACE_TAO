@@ -1,0 +1,14 @@
+$Id$
+
+The OCI TAO Developer's Guide contains source code for many examples.
+These examples were developed independently by OCI and are tightly
+integrated with the discussion of various topics in the TAO
+Developer's Guide.  These examples are now part of the regular ACE+TAO
+source code distribution available from OCI.
+
+The source code for these examples is located in
+ACE_wrappers/TAO/DevGuideExamples/.
+
+For more information on OCI's Distribution of TAO and the TAO
+Developer's Guide, visit <http://www.theaceorb.com/>.
+

@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file RateGenEI.idl
+ *
+ * Definition of the RateGen (a rate generator) component implementation.
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+
+#ifndef RATEGENEI_IDL
+#define RATEGENEI_IDL
+
+#include "RateGenE.idl"
+
+module HUDisplay
+{
+  /**
+   * @interface RateGen_Exec
+   *
+   * The actually RateGen executor need to support
+   * Components::SessionComponent interface.  Therefore, we need to
+   * define the component executor interface explicitly here.
+   */
+  local interface RateGen_Exec : CCM_RateGen, Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* RATEGENEI_IDL */

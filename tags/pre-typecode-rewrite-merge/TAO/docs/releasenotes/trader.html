@@ -1,0 +1,1064 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<title>TAO Trading Service Documentation</title>
+</head>
+
+<body text="#000000" link="#0000FF" vlink="#CC0000" bgcolor="#FFFFFF">
+ <!-- $Id$ -->
+<hr>
+
+<h1 align="center">TAO Trading Service Documentation</h1>
+
+<hr>
+
+<p>The TAO transient Trading Service implements the COS TradingObject Service
+specification, and&nbsp; conforms to the Linked Trader conformance criteria. This document
+details how to use the TAO Trading Service from the following perspectives: 
+
+<ul>
+  <li>as an importer bootstrapping to the Trading Service;</li>
+  <li>as a service offer exporter;</li>
+  <li>as an administrator;</li>
+  <li>as an out-of-the-box server process; </li>
+  <li>as a collocated object. </li>
+</ul>
+
+<p>In addition, it covers running the Trading Service tests and discusses known bugs and
+workarounds.</p>
+
+<p>This document assumes you are familiar with Trading Service concepts, such as
+&quot;importer,&quot; &quot;exporter&quot;, &quot;service type&quot;, &quot;service
+offer,&quot; and &quot;dynamic property&quot;, as well as the roles of each of the Trading
+Service's interfaces --- <tt>Lookup</tt>, <tt>Register</tt>, <tt>Admin</tt>, and <tt>Link</tt>
+(the TAO implementation doesn't currently support <tt>Proxy</tt>). I recommend reading the
+first two sections of the <a href="ftp://www.omg.org/pub/docs/formal/97-12-23.pdf">Trading
+Service specification</a>. This document has the following layout: 
+
+<ol>
+  <li><a href="#TheClientRole">The Client Role</a> <ul>
+      <li><a href="#BootstrappingtotheTradingService">Bootstrapping to the Trading Service</a> </li>
+      <li><a href="#The ImporterRolePerformingaQuery">The Importer Role --- Performing a Query</a><ul>
+          <li><a href="#Constraints">Constraints</a></li>
+          <li><a href="#Preferences">Preferences</a></li>
+          <li><a href="#Policies">Policies</a></li>
+          <li><a href="#FilteringProperties">Filtering Properties</a> </li>
+          <li><a href="#OfferIterators">Offer Iterators</a></li>
+          <li><a href="#PropertyEvaluation">Property Evaluation</a></li>
+        </ul>
+      </li>
+      <li><a href="#TheExporterRole">The Exporter Role --- Registering a Service Type and Offer</a>
+        <ul>
+          <li><a href="#TheServiceTypeRepository">The Service Type Repository</a> </li>
+          <li><a href="#ExportingWithdrawingandModifying">Exporting, Withdrawing, and Modifying
+            Service Offers</a> </li>
+          <li><a href="#ImplementingDynamicProperties">Implementing Dynamic Properties</a></li>
+        </ul>
+      </li>
+      <li><a href="#TheAdministratorRole">The Administrator Role --- Tweaking Policies and
+        Adjusting Links</a></li>
+    </ul>
+  </li>
+  <li><a href="#TheServerRole">The Server Role</a><ul>
+      <li><a href="#TheTAOTradingServiceApplication">The TAO <tt>Trading_Service</tt> Application</a></li>
+      <li><a href="#ColocatingtheTradingServiceinaTAOApplication">Colocating the Trading Service
+        in a TAO Application</a></li>
+    </ul>
+  </li>
+  <li><a href="#RunningtheTradingServiceTests">Running the Trading Service Tests</a></li>
+  <li><a href="#KnownBugsandWorkarounds">Known Bugs and Workarounds</a></li>
+  <li><a href="#FutureWork">Future Work</a></li>
+</ol>
+
+<hr>
+
+<h1><a name="TheClientRole">The Client Role</a></h1>
+
+<p align="left">There are three categories of operations that a client can perform on a
+Trading Service instance: exporting a service offer to the Trading Service, importing a
+list of Service Offers whose properties satisfy a constraint expression, and attending to
+administrative duties --- tweaking policies or adjusting links. The first order of
+business, of course, is obtaining a reference to a Trading Service instance, assuming that
+instance is not colocated with the client. </p>
+
+<h2 align="left"><a name="BootstrappingtotheTradingService">Bootstrapping to the Trading
+Service</a></h2>
+
+<p align="left">Like with the Naming Service, the ORB will obtain a reference to a Trading
+Service instance's <tt>Lookup</tt> interface when a client invokes the <tt>CORBA::ORB::resolve_initial_references</tt>
+method and passes to it the <tt>ObjectID</tt> &quot;<tt>TradingService</tt>&quot;. The
+following TAO code bootstraps to the Trading Service:</p>
+
+<table border="1" width="100%" cellpadding="6">
+  <tr>
+    <td width="100%"><pre>ACE_TRY
+{
+  TAO_ORB_Manager orb_manager;
+  orb_manager.init (argc, argv, ACE_TRY_ENV);
+  ACE_CHECK_ENV;
+  CORBA::ORB_var orb = orb_manager.orb ();
+  CORBA::Object_var trading_obj =
+    orb-&gt;resolve_initial_references ("TradingService");
+  CosTrading::Lookup_var lookup_if =
+    CosTrading::Lookup::_narrow (trading_obj.in (), ACE_TRY_ENV);
+  ACE_CHECK_ENV;
+}
+ACE_CATCHANY
+{
+  ACE_TRY_ENV.print_exception (&quot;Failed to bootstrap to a trader&quot;);
+}
+ACE_ENDTRY;</pre>
+    </td>
+  </tr>
+</table>
+
+<p>The first time <tt>resolve_initial_references</tt> is called, the ORB uses a multicast
+protocol to locate an existing trader. The ORB emits a multicast packet containing a field
+identifying the desired service --- Naming or Trading --- and the port number that the
+client is listening on for the response (the IP address can be inferred from the packet).
+When the trader receives the packet and finds that the id contained within matches its
+own, it opens a socket to the client on the designated port, and sends its IOR, which the
+ORB converts to an object reference that it caches. </p>
+
+<p>If the trader IOR is known ahead of time, the string can be passed to the client in the
+environment variable <tt>TradingService</tt>, or by the command line option <tt>-ORBtradingserviceior
+&lt;IOR&gt;</tt>. Likewise, if the multicast port is known ahead of time and differs from
+the default port, the port number can be passed to the client in the environment variable <tt>TradingServicePort</tt>,
+or by the command line option <tt>-ORBtradingserviceport &lt;PORTNUM&gt;</tt>. &nbsp; </p>
+
+<h2><a name="The ImporterRolePerformingaQuery">The Importer Role --- Performing a Query</a></h2>
+
+<p>Once the importer has obtained a reference to a trader's <tt>Lookup</tt> interface, it
+next needs to fire up a query. The query method takes nine parameters (aside from the <tt>CORBA::Environment</tt>):</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="39%"><tt>const CosTrading::ServiceTypeName</tt></td>
+    <td width="61%">The Trading Service will search Offers belonging to this subtype. If the <tt>exact_type_match</tt>
+    policy wasn't explicitly set to false, then offers belonging to subtypes of this type will
+    also be searched. </td>
+  </tr>
+  <tr>
+    <td width="39%"><tt>const CosTrading::Constraint</tt></td>
+    <td width="61%">An expression in the OMG standard constraint language, where each property
+    name is a property defined in the Service Type description of the type being searched.</td>
+  </tr>
+  <tr>
+    <td width="39%"><tt>const CosTrading::Lookup::Preference</tt></td>
+    <td width="61%">An expression in the OMG standard constraint language dictating how offers
+    in the <tt>returned_offers</tt> sequence should be ordered.</td>
+  </tr>
+  <tr>
+    <td width="39%"><tt>const CosTrading::PolicySeq</tt></td>
+    <td width="61%">Policies governing the breadth of search and the type of permissible
+    offers. A policy is a name/value pair --- a string and an <tt>Any</tt> --- that affect the
+    search algorithm. </td>
+  </tr>
+  <tr>
+    <td width="39%"><tt>const CosTrading::Lookup::SpecifiedProps</tt></td>
+    <td width="61%">A union specifying which properties should be returned in each offer. If
+    the descriminator is <tt>CosTrading::Lookup::some</tt>, the union&nbsp; contains the list
+    of designated property names. Other options are <tt>all</tt>or <tt>none</tt>. </td>
+  </tr>
+  <tr>
+    <td width="39%"><tt>CORBA::ULong how_many</tt></td>
+    <td width="61%">The number of offers that should be placed in the returned sequence.</td>
+  </tr>
+  <tr>
+    <td width="39%"><tt>CosTrading::OfferSeq_out</tt></td>
+    <td width="61%">A list of ordered offers whose properties meet the constraints.</td>
+  </tr>
+  <tr>
+    <td width="39%"><tt>CosTrading::OfferIterator_out</tt></td>
+    <td width="61%">Iterator over returned offers in excess of how_many --- unordered.</td>
+  </tr>
+  <tr>
+    <td width="39%"><tt>CosTrading::PolicyNameSeq_out</tt></td>
+    <td width="61%">A sequence of policy names for policies that limited the search.</td>
+  </tr>
+</table>
+
+<h3><a name="Constraints">Constraints</a></h3>
+
+<p>A constraint is a string in the OMG standard constraint language (the BNF can be found
+at the end of the specification). The trader iterates over applicable offers, and for each
+offer determines if its properties meet the constraints, replacing property names in the
+string with their values and computing the result. If the constraint evaluates to true,
+the offer is placed in the pool of matched offers. If the constraint string is
+syntactically invalid, contains property names not found in the service type description
+for the listed service type, or has operators with mismatched operand types, the query
+method will throw an <tt>InvalidConstraint</tt> exception. </p>
+
+<p>Operands can be of two types: property names or literals. A property name is an
+unquoted string of alphanumeric characters and underscores that begins with a letter. The
+service type describes the type of a property. A literal is an signed or unsigned integer,
+floating point number --- scientific notation acceptable ---, single-quoted string, or
+boolean --- written TRUE or FALSE. </p>
+
+<p>The constraint language supports the following operations:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="25%">Arithmetic (+, -, *, /)</td>
+    <td width="34%"><tt>Disk_Space*1000 - Amount_Used/10</tt></td>
+    <td width="41%">Accepts two numeric operands.</td>
+  </tr>
+  <tr>
+    <td width="25%">Inequality (&lt;,&gt;,&lt;=,&gt;=)</td>
+    <td width="34%"><tt>Amount_Used &lt; Disk_Space</tt></td>
+    <td width="41%">Accepts two numeric or two string operands.</td>
+  </tr>
+  <tr>
+    <td width="25%">Equality (==, !=)</td>
+    <td width="34%"><tt>Amount_Used == Disk_Space</tt></td>
+    <td width="41%">Accepts two numeric, two string, or two boolean operands.</td>
+  </tr>
+  <tr>
+    <td width="25%">Substring (~)</td>
+    <td width="34%"><tt>'.wustl.edu' ~ Domain_Name</tt></td>
+    <td width="41%">Accept two string operands. Returns true if the right string contains the
+    left.</td>
+  </tr>
+  <tr>
+    <td width="25%">Sequence inclusion (in)</td>
+    <td width="34%"><tt>'sbw1' in User_Queue</tt></td>
+    <td width="41%">Accepts an operand of a primitive CORBA type on the left, and a sequence
+    of the same type on the right. Returns true when the sequence contains the value in the
+    left operand, false otherwise.</td>
+  </tr>
+  <tr>
+    <td width="25%">Property existence (exist)</td>
+    <td width="34%"><tt>exist User_Queue</tt></td>
+    <td width="41%">Accepts a property name. Returns true if the property is defined in the
+    offer.</td>
+  </tr>
+</table>
+
+<h3><a name="Preferences">Preferences</a></h3>
+
+<p>A preference is a constraint language string that determines the order of offers in the
+returned offer sequence. There are five types of preferences:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="18%"><tt>min</tt> &lt;expression&gt;</td>
+    <td width="82%">Offers are ordered by ascending expression value. The expression must
+    return a number.</td>
+  </tr>
+  <tr>
+    <td width="18%"><tt>max</tt> &lt;expression&gt; </td>
+    <td width="82%">Offers are ordered by descending expression value. The expression must
+    return a number. </td>
+  </tr>
+  <tr>
+    <td width="18%"><tt>with</tt> &lt;expression&gt;</td>
+    <td width="82%">Offers are partitioned into two parts: those offers for which the
+    expression returns true are placed in the front, the rest in the back. The expression must
+    return a boolean value.</td>
+  </tr>
+  <tr>
+    <td width="18%"><tt>random</tt></td>
+    <td width="82%">Offers in the sequence are shuffled.</td>
+  </tr>
+  <tr>
+    <td width="18%"><tt>first</tt></td>
+    <td width="82%">Offers are placed in the sequence in the order they're evaluated.</td>
+  </tr>
+</table>
+
+<h3><a name="Policies">Policies</a></h3>
+
+<p>The following import policies are descibed in the specification and supported by the
+TAO Trading Service:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="22%"><tt>exact_type_match</tt></td>
+    <td width="18%"><tt>CORBA::Boolean</tt></td>
+    <td width="60%">True --- Search only considers offers belonging to&nbsp; the given type.<br>
+    False --- Search considers offers belonging to the given type or any of its subtypes.</td>
+  </tr>
+  <tr>
+    <td width="22%"><tt>search_card</tt></td>
+    <td width="18%"><tt>CORBA::ULong</tt></td>
+    <td width="60%">Search ceases after <tt>search_card</tt> number of offers have been
+    evaluated.</td>
+  </tr>
+  <tr>
+    <td width="22%"><tt>match_card</tt></td>
+    <td width="18%"><tt>CORBA::ULong</tt></td>
+    <td width="60%">Search ceases after <tt>search_card</tt> number of offers have been
+    matched.</td>
+  </tr>
+  <tr>
+    <td width="22%"><tt>return_card</tt></td>
+    <td width="18%"><tt>CORBA::ULong</tt></td>
+    <td width="60%">Query returns at most <tt>return_card</tt> number of offers.</td>
+  </tr>
+  <tr>
+    <td width="22%"><tt>support_dynamic_properties</tt></td>
+    <td width="18%"><tt>CORBA::Boolean</tt></td>
+    <td width="60%">Search considers offers with dynamic properties.</td>
+  </tr>
+  <tr>
+    <td width="22%"><tt>support_modifiable_properties</tt></td>
+    <td width="18%"><tt>CORBA::Boolean</tt></td>
+    <td width="60%">Search considers offers with not readonly properties.</td>
+  </tr>
+  <tr>
+    <td width="22%"><tt>starting_trader</tt></td>
+    <td width="18%"><tt>CosTrading::TraderName</tt></td>
+    <td width="60%">Query is forwarded across all links in the policy, and search begins at
+    the final trader.</td>
+  </tr>
+  <tr>
+    <td width="22%"><tt>hop_count</tt></td>
+    <td width="18%"><tt>CORBA::ULong</tt></td>
+    <td width="60%">Maximum depth a query should be propagated in the trader federation.</td>
+  </tr>
+  <tr>
+    <td width="22%"><tt>link_follow_rule</tt></td>
+    <td width="18%"><tt>CosTrading::FollowOption</tt></td>
+    <td width="60%">Query propagates to other traders if the <tt>link_follow_rule</tt> permits
+    it.</td>
+  </tr>
+</table>
+
+<p>The TAO Trading Service comes with a handy utility --- <tt>TAO_Policy_Manager</tt> ---
+for creating a policy sequence to pass to the query method that won't incur any
+exceptions. &nbsp; Use the <tt>TAO_Policy_Manager</tt> in the following way:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>TAO_Policy_Manager policies;
+policies.exact_type_match (CORBA::B_FALSE);
+policies.search_card (16*NUM_OFFERS);
+policies.match_card (16*NUM_OFFERS);
+policies.return_card (16*NUM_OFFERS);
+policies.link_follow_rule (CosTrading::local_only);
+const CosTrading::PolicySeq&amp; policy_seq = policies.policy_seq ();</pre>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="FilteringProperties">Filtering Properties</a></h3>
+
+<p>If the client wants only a subset of the properties defined for a service type returned
+in matching offers, it can specify those property names in the <tt>desired_properties</tt>
+parameter of the query method. Pass the <tt>prop_names</tt> method of <tt>CosTrading::Lookup::SpecifiedProperties</tt>
+a <tt>CosTrading::PropNameSeq</tt>:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>char* props[] = {&quot;Name&quot;, &quot;Description&quot;, &quot;Location&quot;, &quot;Host_Name&quot; };
+CosTrading::Lookup::SpecifiedProps desired_props;      
+CosTrading::PropertyNameSeq prop_name_seq (4, 4, props, CORBA::B_FALSE);
+desired_props.prop_names (prop_name_seq);</pre>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="OfferIterators">Offer Iterators</a></h3>
+
+<p>Those offers returned from the query in excess of <tt>how_many</tt> are placed in an
+offer iterator for deferred retrieval. The <tt>CosTrading::OfferIterator::next_n</tt>
+method will allocate a sequence and fill it with either n offers, or if it has fewer than <tt>n</tt>
+offers, the remaining offers. The <tt>next_n</tt> method returns true if the iterator
+contains more offers, and false if it's been depleted. After finishing with the iterator,
+invoke its <tt>destroy</tt> method to release any server-side resources.</p>
+
+<p>The following code is an example of obtaining offers from a <tt>CosTrading::OfferIterator</tt>:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>CORBA::Boolean any_left = CORBA::B_FALSE;
+CORBA::Environment _env;</pre>
+    <pre>do
+  {
+    CosTrading::OfferSeq_ptr iter_offers_ptr;
+    CosTrading::OfferSeq_out iter_offers_out (iter_offers_ptr);
+
+    any_left = offer_iterator-&gt;next_n (length,
+                        	       iter_offers_out,
+                                       _env);
+    ACE_CHECK_ENV_RETURN (_env, 0);
+
+    CosTrading::OfferSeq_var iter_offers (iter_offers_ptr);
+    // Process offers...
+
+  } while (any_left);</pre>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="PropertyEvaluation">Property Evaluation</a></h3>
+
+<p>After the client completes a query that used dynamic properties, to review the property
+values of the returned offers, it has to distinguish between <tt>Anys</tt> containing
+static properties and <tt>Anys</tt> containing dynamic property structures. The <tt>TAO_Property_Evaluator</tt>
+class is a handy utility to obtain property values that hides how it evalutes properties
+for the client --- by simple <tt>Any</tt> value extraction for static properties, or by
+calling back to a dynamic property interface. The <tt>TAO_Property_Evaluator</tt> caches
+the value of a dynamic property, and frees the allocated <tt>Anys</tt> during its
+destruction. </p>
+
+<p>The following code demonstrates how to use the <tt>TAO_Property_Evaluator</tt> to dump
+the properties of an offer to the screen. </p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>TAO_Property_Evaluator prop_eval (prop_seq);
+for (int length = prop_seq.length (), k = 0; k &lt; length; k++)
+  {
+    ACE_DEBUG ((LM_DEBUG, &quot;%-15s: &quot;, prop_seq[k].name.in ()));
+    ACE_TRY
+      {
+        CORBA::Boolean is_dynamic = prop_eval.is_dynamic_property (k);
+        ACE_CHECK_ENV;
+
+	value = prop_eval.property_value(k, env);
+    	ACE_CHECK_ENV;
+	
+	if (value != 0)
+	  CORBA::Any::dump (*value);
+      }
+    ACE_CATCHANY
+      {
+        ACE_DEBUG ((LM_DEBUG, &quot;Error retrieving property value.\n&quot;));
+      }
+    ACE_ENDTRY;
+  }</pre>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="TheExporterRole">The Exporter Role --- Registering a Service Type and Offer</a></h2>
+
+<p>Before an exporting client can register a new service offer with the Trading Service,
+it needs to ensure first that its service type is present in the service type repository
+of the target trader. The most efficient way to do this is to first invoke the <tt>export</tt>
+method on the <tt>Register</tt> interface, and if it raises an <tt>UnknownServiceType</tt>
+exception, obtain a reference to the Repository, add the Service Type, and attempt the <tt>export</tt>
+a second time. Here's the boilerplate code:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>CORBA::Object_var trading_obj = 
+  orb_ptr-&gt;resolve_initial_references (&quot;TradingService&quot;);
+CosTrading::Lookup_var lookup_if = 
+  CosTrading::Lookup::_narrow (trading_obj.in (), _env);
+ACE_CHECK_ENV_RETURN (_env, -1);
+CosTrading::Register_var register_if = lookup_if-&gt;register_if (_env);
+ACE_CHECK_ENV_RETURN (_env, -1);
+CosTrading::TypeRepository_ptr obj = this-&gt;trader_-&gt;type_repos (_env);
+CosTradingRepos::ServiceTypeRepository_var str =
+  CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
+ACE_CHECK_ENV_RETURN (_env, -1);
+
+ACE_TRY
+  {
+    // Attempt to export the offer.
+    offer_id = 
+      register_id-&gt;export (object_ref, type, props, ACE_TRY_ENV);
+    ACE_CHECK_ENV;
+  }
+ACE_CATCH (CosTrading::UnknownServiceType, excp)    
+  {      
+    // If the ServiceTypeName wasn't found, we'll have to add the
+    // type to the Service Type repository ourselves.
+    str-&gt;add_type (type,
+		   object_ref-&gt;_interface_repository_id (),
+		   prop_struct_seq,
+		   super_type_name_seq,
+		   _env);
+    ACE_CHECK_ENV_RETURN (_env, 0);
+
+    // Now we'll try again to register the offer.
+    offer_id = reg-&gt;export (object_ref, type, this-&gt;tprops_, _env);
+    ACE_CHECK_ENV_RETURN (_env, 0);
+
+    ACE_TRY_ENV.clear ();
+  }
+ACE_CATCHANY
+  {
+    // Sigh, all our efforts were for naught.
+    ACE_RETHROW_RETURN (0);
+  }  
+ACE_ENDTRY;</pre>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="TheServiceTypeRepository">The Service Type Repository</a></h3>
+
+<p>Creating a service type description is simply a matter of filling in two sequences: a <tt>CosTradingRepos::ServiceTypeRepository::PropStructSeq</tt>
+and a <tt>CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq</tt>. When filling in
+the <tt>value_type</tt> field, remember to up the reference count of the <tt>TypeCode</tt>,
+since otherwise the <tt>TypeCode_var</tt> will sieze control of the memory and free it.
+Here's a code excerpt taken from <tt>export_test</tt> showing how to build the first
+couple elements of such sequences:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>this-&gt;type_structs_[TT_Info::PLOTTER].props.length (2);
+this-&gt;type_structs_[TT_Info::PLOTTER].super_types.length (1);
+this-&gt;type_structs_[TT_Info::PLOTTER].super_types[0] =
+TT_Info::INTERFACE_NAMES[TT_Info::REMOTE_IO]; 
+this-&gt;type_structs_[TT_Info::PLOTTER].props[0].name =
+TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_NUM_COLORS];
+this-&gt;type_structs_[TT_Info::PLOTTER].props[0].value_type =
+CORBA::TypeCode::_duplicate (CORBA::_tc_long);
+this-&gt;type_structs_[TT_Info::PLOTTER].props[0].mode =
+CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
+this-&gt;type_structs_[TT_Info::PLOTTER].props[1].name =
+TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_AUTO_LOADING];
+this-&gt;type_structs_[TT_Info::PLOTTER].props[1].value_type =
+CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
+this-&gt;type_structs_[TT_Info::PLOTTER].props[1].mode =
+CosTradingRepos::ServiceTypeRepository::PROP_READONLY;</pre>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="ExportingWithdrawingandModifying">Exporting, Withdrawing, and Modifying
+Service Offers</a></h3>
+
+<p>Like with adding a Service Type, exporting an offer is just filling in the sequences.
+For offers, of course, property values are passed, so this involves employing the <tt>Any</tt>
+insertion operators. Here's a code exerpt from <tt>export_test</tt>:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>CosTrading::PropertySeq prop_seq (2);
+prop_seq[0].name = 
+  TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_NUM_COLORS];
+prop_seq[0].value &lt;&lt;= ACE_static_cast (CORBA::Long, 256);
+prop_seq[1].name = 
+  TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_AUTO_LOADING];
+prop_seq[1].value &lt;&lt;= CORBA::Any::from_boolean (CORBA::B_TRUE);</pre>
+    </td>
+  </tr>
+</table>
+
+<p>The <tt>export_test</tt> returns a <tt>CosTrading::OfferId</tt> string, which is
+required to perform the <tt>withdraw</tt> and <tt>modify</tt> operations on the exported
+offer. <tt>withdraw</tt> requires that you simply pass the <tt>OfferId</tt> of the offer
+to be withdrawn, while <tt>modify</tt> takes two additional sequences: a <tt>CosTrading::PropertyNameSeq</tt>
+of property names to be removed from the offer, and a <tt>CosTrading::PropertySeq</tt> of
+offers to be added or changed in the offer. </p>
+
+<h3><a name="ImplementingDynamicProperties">Implementing Dynamic Properties</a></h3>
+
+<p>To export an offer with a dynamic property: 
+
+<ul>
+  <li>inherit from the <tt>TAO_Dynamic_Property</tt> class and implement its <tt>DP_Eval</tt>
+    method; </li>
+  <li>create a <tt>CosTradingDynamic::DynamicProperty</tt> structure using the <tt>TAO_Dynamic_Property::construct_dynamic_prop</tt>
+    method; </li>
+  <li>insert the <tt>CosTradingDynamic::DynamicProperty</tt> in the value field of the
+    property. </li>
+</ul>
+
+<p>The following code, taken from the <tt>export_test</tt> example, illustrates this:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>// Step 1: Write the Dynamic Property callback handler.
+class Simple_DP : public TAO_Dynamic_Property
+{
+public: 
+
+  virtual CORBA::Any* evalDP (const char* name,
+                              CORBA::TypeCode_ptr returned_type,
+                              const CORBA::Any&amp; extra_info,	      
+			      CORBA::Environment&amp; _env)
+    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
+};
+
+CORBA::Any*
+Simple_DP::evalDP (const char* name,
+                   CORBA::TypeCode_ptr returned_type,
+                   const CORBA::Any&amp; extra_info,
+                   CORBA::Environment&amp; _env)
+  ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
+{
+  CORBA::Any* return_value = 0;
+  ACE_NEW_RETURN (return_value, CORBA::Any, 0);
+
+  (*return_value) &lt;&lt;= ACE_static_cast (CORBA::ULong, ACE_OS::rand ());
+  return return_value;
+}</pre>
+    <pre>// Step 2: Create the Dynamic Property
+Simple_DP dp;
+CORBA::Any extra_info;
+CosTrading::PropertySeq prop_seq (1);
+CosTrading::DynamicProp* dp_struct = 
+  dp.construct_dynamic_prop (&quot;prop_name&quot;,
+                             CORBA::_tc_ulong, 
+			     extra_info);</pre>
+    <pre>// Step 3: Turn over the dynamic property to the propery value Any.
+CORBA::Environment env;
+prop_seq[0].name = &quot;prop_name&quot;;
+prop_seq[0].value.replace (CosTrading::_tc_DynamicProp, 
+                           dp_struct, 
+                           CORBA::B_TRUE, 
+                           env);
+ACE_CHECK_ENV_RETURN (env, -1);</pre>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="TheAdministratorRole">The Administrator Role --- Tweaking Policies and
+Adjusting Links</a></h2>
+
+<p>The trader can be configured remotely through two interfaces: the <tt>Admin</tt>
+interface, for tweaking global policies, enabling and disabling interfaces, and dumping
+the trader contents; and the <tt>Link</tt> interface, for attaching to and detaching from
+other traders. </p>
+
+<p>Adjusting policies is straightforward. Here's an example of setting the <tt>max_search_card</tt>
+policy:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>// lookup_if returned from resolve_initial_references.
+CosTrading::Admin_var admin_if = 
+  lookup_if-&gt;admin_if (ACE_TRY_ENV);
+ACE_CHECK_ENV;</pre>
+    <pre>admin_if-&gt;set_max_match_card (200);</pre>
+    </td>
+  </tr>
+</table>
+
+<p>Here's an example of using the list_offers method on the Admin interface to remove all
+offers from the Trader:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>ACE_TRY
+{
+CosTrading::OfferIdIterator_ptr offer_id_iter;
+CosTrading::OfferIdSeq_ptr offer_id_seq;
+
+// lookup_if returned from resolve_initial_references.
+CosTrading::Admin_var admin_if = 
+  lookup_if-&gt;admin_if (ACE_TRY_ENV);
+ACE_CHECK_ENV;
+
+CosTrading::Register_var register_if = 
+  lookup_if-&gt;register_if (ACE_TRY_ENV);
+ACE_CHECK_ENV;
+
+admin_if-&gt;list_offers (10,
+                       CosTrading::OfferIdSeq_out (offer_id_seq),
+                       CosTrading::OfferIdIterator_out (offer_id_iter),
+                       ACE_TRY_ENV);
+ACE_CHECK_ENV;
+
+if (offer_id_seq != 0)
+ {
+   CosTrading::OfferIdSeq_var offer_id_seq_var (offer_id_seq);
+   for (CORBA::ULong i = 0; i &lt; offer_id_seq_var.length (); i++)
+     {
+       register_if-&gt;withdraw (offer_id_seq_var[i], ACE_TRY_ENV);
+       ACE_CHECK_ENV;
+     }
+ }
+
+if (offer_id_iter != CosTrading::OfferIdIterator::_nil ())
+ {
+   CORBA::Boolean any_left = CORBA::B_FALSE;
+   CosTrading::OfferIdSeq_ptr id_seq = 0;
+   CosTrading::OfferIdIterator_var offer_id_iter_var (offer_id_iter); 
+    
+   do
+     {
+       any_left = 
+         offer_id_iter-&gt;next_n (length,
+                                CosTrading::OfferIdSeq_out (id_seq),
+                                ACE_TRY_ENV);
+       ACE_CHECK_ENV;
+
+       CORBA::ULong offers = id_seq-&gt;length ();
+       for (CORBA::ULong i = 0; i &lt; offers; i++)
+        {
+          register_if-&gt;withdraw (id_seq[i], ACE_TRY_ENV);
+          ACE_CHECK_ENV;
+        }
+
+       delete id_seq;
+     }
+   while (any_left);
+
+   offer_id_iter-&gt;destroy (ACE_TRY_ENV);
+   ACE_CHECK_ENV;
+ }
+}
+ACE_CATCHANY
+{
+  // Handle Errors.
+}
+ACE_ENDTRY;</pre>
+    </td>
+  </tr>
+</table>
+
+<p>Here's an example a trader linking itself to another trader (<tt>this-&gt;trader_</tt>
+is a colocated trader --- see the next section for more information): </p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>ACE_TRY
+ {
+   CosTrading::Link_var link_if =  lookup_if-&gt;link_if (ACE_TRY_ENV);
+   ACE_CHECK_ENV;
+
+   TAO_Trading_Components_Impl&amp; trd_comp =
+     this-&gt;trader_-&gt;trading_components ();
+   CosTrading::Lookup_ptr our_lookup = trd_comp.lookup_if ();
+   CosTrading::Link_ptr our_link = trd_comp.link_if ();
+
+   link_if-&gt;add_link (this-&gt;name_.in (),
+                      our_lookup,
+                      CosTrading::always,
+                      CosTrading::always,
+                      ACE_TRY_ENV);
+   ACE_CHECK_ENV;
+
+   our_link-&gt;add_link (&quot;Bootstrap_Trader&quot;,
+                       lookup_if.in (),
+                       CosTrading::always,
+                       CosTrading::always,
+                       ACE_TRY_ENV);
+ }
+ACE_CATCHANY
+{
+  // Handle Errors.
+}
+ACE_ENDTRY;</pre>
+    </td>
+  </tr>
+</table>
+
+<hr>
+
+<h1><a name="TheServerRole">The Server Role</a></h1>
+
+<p>The TAO Trading Service comes with an out-of-the-box executable suitable for common
+use. However, it can also easily be colocated with any other TAO server to add Trading
+Service functionality to that server.</p>
+
+<h2><a name="TheTAOTradingServiceApplication">The TAO Trading Service Application</a></h2>
+
+<p>This out-of-the-box server takes a number of command line arguments:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="26%"><tt>-TSthreadsafe</tt></td>
+    <td width="74%">The Trader will use reader/writer locks to protect the offer database and
+    link collection, and normal thread mutexes for the rest of the shared state --- global
+    policies, support attributes, and interface accessors. (default is not thread safe; Null
+    Mutexes are used)</td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSconformance</tt></td>
+    <td width="74%">Determines which conformance category the Trading Service will meet:<br>
+    <table border="0" width="100%" cellpadding="3">
+      <tr>
+        <td width="18%"><ul>
+          <li><em>query</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">Instantiates the <tt>Lookup</tt> interface only</td>
+      </tr>
+      <tr>
+        <td width="18%"><ul>
+          <li><em>simple</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">Instantiates the <tt>Lookup</tt> and <tt>Register</tt>
+        interfaces</td>
+      </tr>
+      <tr>
+        <td width="18%"><ul>
+          <li><em>standalone</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">Instantiates the <tt>Lookup</tt>, <tt>Register</tt>,
+        and <tt>Admin</tt> interfaces</td>
+      </tr>
+      <tr>
+        <td width="18%"><ul>
+          <li><em>linked</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">Instantiates the <tt>Lookup</tt>, <tt>Register</tt>,
+        <tt>Admin</tt>, and <tt>Link</tt> interfaces (default)</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSsupports_dynamic_properties</tt></td>
+    <td width="74%"><table border="0" width="100%" cellpadding="3">
+      <tr>
+        <td width="18%"><ul>
+          <li><em>true</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">Will consider offers with dynamic properties in
+        queries unless explicitly disabled by a policy passed to the query method. (default)</td>
+      </tr>
+      <tr>
+        <td width="18%"><ul>
+          <li><em>false</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">Will not consider offers with dynamic properties
+        in queries, unless explicitly enabled by a policy passed to the query method.</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSsupports_modifiable_properties</tt></td>
+    <td width="74%"><table border="0" width="100%" cellpadding="3">
+      <tr>
+        <td width="18%"><ul>
+          <li><em>true</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">Will consider offers with not explicitly
+        modifable properties in queries unless explicitly disabled by a policy passed to the query
+        method. Enables the <tt>modify</tt> method on the <tt>Register</tt> interface. (default)</td>
+      </tr>
+      <tr>
+        <td width="18%"><ul>
+          <li><em>false</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">Will not consider dynamic properties in queries,
+        unless explicitly overridden by a query policy. Diables <tt>modify</tt> method on the <tt>Register</tt>
+        interface.</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSdef_search_card</tt></td>
+    <td width="74%">Search cardinality if none is specified as a query policy. (default is
+    200)</td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSmax_search_card</tt></td>
+    <td width="74%">Upper limit on the search cardinality for a query. (default is 500)</td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSdef_match_card</tt></td>
+    <td width="74%">Match cardinality if none is specified as a query policy. (default is 200)</td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSmax_match_card</tt></td>
+    <td width="74%">Upper limit on the match cardinality for a query. (default is 500)</td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSdef_return_card</tt></td>
+    <td width="74%">Return cardinality if none is specified as a query policy. (default is
+    200)</td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSmax_return_card</tt></td>
+    <td width="74%">Upper limit on the return cardinality for a query. (default is 500)</td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSdef_hop_count</tt></td>
+    <td width="74%">The depths a federated query may go if no query policy is specified.
+    (default 5)</td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSmax_hop_count</tt></td>
+    <td width="74%">The maximum number of links a federated query can travel after it passes
+    through this trader. (default is 10) </td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSdef_follow_policy</tt></td>
+    <td width="74%"><table border="0" width="100%" cellpadding="3">
+      <tr>
+        <td width="18%"><ul>
+          <li><em>always</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">The trader will always pass a query onto the
+        next available linked trader.</td>
+      </tr>
+      <tr>
+        <td width="18%"><ul>
+          <li><em>if_no_local</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">The trader will pass a query onto the next
+        trader only if the local search produced no results. (default)</td>
+      </tr>
+      <tr>
+        <td width="18%"><ul>
+          <li><em>local_only</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">The trader will never pass on a query.</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSmax_follow_policy</tt></td>
+    <td width="74%"><table border="0" width="100%" cellpadding="3">
+      <tr>
+        <td width="18%"><ul>
+          <li><em>always</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">The trader doesn't limit the importer to the
+        local offer space. (default)</td>
+      </tr>
+      <tr>
+        <td width="18%"><ul>
+          <li><em>if_no_local</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">The trader refuses to pass on queries of the
+        local search matched offers.</td>
+      </tr>
+      <tr>
+        <td width="18%"><ul>
+          <li><em>local_only</em></li>
+        </ul>
+        </td>
+        <td width="82%" valign="top" align="left">The trader will never allow federated queries.</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-ORBtradingserviceport</tt></td>
+    <td width="74%">Port on which to listen for multicast bootstrap requests.</td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-ORBtradingserviceport</tt></td>
+    <td width="74%">Port on which to listen for multicast bootstrap requests.</td>
+  </tr>
+  <tr>
+    <td width="26%"><tt>-TSdumpior</tt></td>
+    <td width="74%">Dumps the trader's IOR to a file (default is stdout).</td>
+  </tr>
+</table>
+
+<p>By default the trader will listen for multicast <tt>resolve_initial_references</tt>
+requests, and respond with the IOR of its <tt>Lookup</tt> inteface. For the purposes of
+testing federated queries, when passed the <tt>-TSfederate</tt> method, instead of
+becoming a bootstrappable server, the <tt>Trading_Service</tt> application will bootstrap
+itself to a multicast trader, link itself to that trader and every other trader accessible
+through that trader. This protocol will have all traders on the multicast network form a
+complete graph. </p>
+
+<h2><a name="ColocatingtheTradingServiceinaTAOApplication">Colocating the Trading Service
+in a TAO Application</a></h2>
+
+<p>Colocating the Trading Service in a TAO application amounts to constructing a <tt>TAO_TRADER</tt>
+object using the <tt>TAO_Trader_Factory::construct_trader</tt> call. The <tt>argc</tt> and
+<tt>argv</tt> parameters to <tt>construct_trader</tt> contain the configuration parameters
+described in the previous section. The trader is also configurable programatically through
+its attribute classes. The follow code exerpt demonstrates this. </p>
+
+<p>In addition the application will need to create a service type repository
+implementation --- TAO's being the <tt>TAO_Service_Type_Repository</tt> --- and configure
+the trader with it. The service type repository is separate from the trader in this way to
+allow, for example, multiple traders to share the same service type repository. The
+following code exerpt also demontrates configuring the repository:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="100%"><pre>TAO_TRADER* trader = TAO_Trader_Factory::create_trader (argc, argv);
+TAO_Support_Attributes_Impl&amp; sup_attr = trader-&gt;support_attributes ();
+TAO_Import_Attributes_Impl&amp; imp_attr = trader-&gt;trading_components ();
+
+// Configure the trader with a service type repository.
+CORBA::Environment _env;
+TAO_Service_Type_Repository type_repos* type_repos = 0;
+ACE_NEW (type_repos, TAO_Service_Type_Repository); 
+sup_attr.type_repos (type_repos-&gt;_this (_env));
+ACE_CHECK_ENV_RETURN (_env, -1);</pre>
+    <pre>// Configure other policies, overriding the command line arguments.
+imp_attr.search_card (20);
+sup_attr.supports_dynamic_properties (CORBA::B_FALSE);</pre>
+    </td>
+  </tr>
+</table>
+
+<p>The trader interfaces register themselves with the default POA during the Trading
+Service's construction. All that remains is to activate the POA and enter the ORB event
+loop. </p>
+
+<hr>
+
+<h1><a name="RunningtheTradingServiceTests">Running the Trading Service Tests</a></h1>
+
+<p>There are two executables that test the Trading Service funtionality --- one to test
+the exporter role, and the other, the importer role. To run the tests simply launch the <tt>Trading_Service</tt>
+application, then run the <tt>export_test</tt> executable found in the <tt>orbsvcs/tests/Trading</tt>
+directory. When the <tt>export_test</tt> ceases to output data and enters the event loop,
+run the <tt>import_test</tt> found in the same directory. </p>
+
+<p>Also of importance: the <tt>-TSdumpior filename </tt> argument to the trader dumps
+its IOR to the file. You can then paste the contents on the command line to 
+the tests with <tt>-ORBtradingserviceior IOR</tt>, or into the environment variable
+<tt>TradingServiceIOR</tt>.</p> 
+
+<p>The expected output of the tests can be found in the README file in the
+tests directory.</p>
+
+<p>To test federated queries, run at least three copies of the <tt>Trading_Service</tt>
+application, each using the <tt>-TSfederate</tt> flag. The traders will form a complete
+graph, with each link follow policy set to <tt>CosTrading::always</tt>. When run with the <tt>-f</tt>
+flag, the <tt>export_test</tt> will add the service types and export offers to each of the
+traders in the federation. When run with the <tt>-f</tt> flag, the <tt>import_test </tt>will
+perform a directed query to a trader two links distant from the trader boostrapped to, in
+addition to performing federated queries.&nbsp;&nbsp; </p>
+
+<p>By default the tests dump the contents of service types and offers to the screen so the
+tester can validate the results. To run the tests in quiet mode, where the results of the
+describe and query methods are concealed, use the <tt>-q</tt> flag.</p>
+
+<hr>
+
+<h1><a name="KnownBugsandWorkarounds">Known Bugs and Workarounds</a></h1>
+
+    <p>At this point there are no known problems with TAO that affect the
+      Trading service.</p>
+
+<hr>
+
+<h1><a name="FutureWork">Future Work</a></h1>
+
+<ul>
+  <li><strong>Persistence</strong> --- Have the Trading Service offer database and service
+    type repository survive the lifetime of a single Trading Service process. This would be
+    accomplished by either taking advantage of the ability to serialize IDL types --- using
+    CDR streams --- or through memory-mapped files, <em>a la </em>the ACE Naming Service.</li>
+</ul>
+
+<ul>
+  <li><strong>The <tt>Proxy</tt> Interface </strong>--- Should we ever feel so motivated, we
+    might implement the <tt>Proxy</tt> interface.&nbsp; </li>
+</ul>
+
+<hr>
+
+<address>
+  <a href="mailto:sbw1@cs.wustl.edu">Seth Benjamin Widoff</a> 
+</address>
+<!-- Created: Mon Jun 29 12:26:36 CDT 1998 -->
+<!-- hhmts start -->
+</body>
+</html>

@@ -1,0 +1,46 @@
+This README describes the LKSCTP implementation of SCTP for Linux.
+
+June 2003 - 1.0
+
+Overview
+--------
+
+The LKSCTP project is the Linux Kernel implementation of SCTP.  As of this 
+writing it has been incorporated into the Linux 2.6 test series of
+kernels.   
+
+LKSCTP adheres to the IETF's SCTP Sockets Draft API.  Please refer to that 
+document for API specifics.  
+
+You MUST use Linux 2.6-test4 or later.  Earlier versions have a different
+api.   
+
+Building ACE/TAO with LKSCTP support
+--------------------------------
+
+        - compile kernel with SCTP support
+                + if compiled as a module, be sure to load it.  
+
+        - download LKSCTP userspace functions library from 
+          http://lksctp.sourceforge.net/
+
+        - install userspace library (libsctp.a) into /usr/local/lib
+
+        - install header file (sctp.h) into /usr/local/include/sctp.h
+
+        - make ACE/TAO with "sctp=lksctp"
+
+Caveats
+---------------------------------
+
+        - Both services interfaces (SOCK_STREAM and SOCK_SEQPACKET) will
+          preserve message boundaries.  
+
+Resources
+---------------------------------
+  
+        - LKSCTP Homepage: http://lksctp.sourceforge.net/
+                - Latest Patches
+                - Userspace Library
+                - Mailing Lists
+--

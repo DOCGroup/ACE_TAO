@@ -1,0 +1,20 @@
+// -*- MPC -*-
+// $Id$
+
+project(*server): namingexe, iortable, utils {
+  Source_Files {
+    Time_i.cpp
+    server.cpp
+    ../Simple_util.cpp
+  }
+}
+
+project(*client): namingexe, iortable, utils {
+  exename = client
+
+  Source_Files {
+    client.cpp
+    ../Simple_util.cpp
+    Time_Client_i.cpp
+  }
+}
