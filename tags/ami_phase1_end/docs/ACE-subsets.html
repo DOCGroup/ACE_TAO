@@ -1,0 +1,823 @@
+<!-- $Id$ -->
+
+<html>
+  <head>
+    <title>ACE Subsets</title>
+    <link rev=made href="mailto:ace-users@cs.wustl.edu">
+  </head>
+
+<body text = "#000000"
+      link="#000fff"
+      vlink="#ff0f0f"
+      bgcolor="#ffffff">
+
+<hr><p>
+<font size=+2><strong>Contents</strong></font>
+<ol>
+  <li><a href="#Motivation">Motivation for Splitting ACE into Multiple
+    Libraries</a>
+  <li><a href="#Configuration Management">Configuration Management</a>
+  <li><a href="#Classes">Classes in Each ACE Library Subset</a>
+  <li><a href="#Status">Current ACE Subsetting Status</a>
+  <li><a href="#ACE Library Size Breakdown">ACE Library Size Breakdown</a>
+  <li><a href="#Building ACE Subsets">Building ACE Subsets</a>
+  <li><a href="#ACE_OS Adaptation Layer">ACE_OS Adaptation Layer</a>
+  <li><a href="#minimumTAO">Minimum TAO</a>
+</ol><p>
+
+
+<hr><p>
+<h3><a name="Motivation">Motivation for Splitting ACE into Multiple
+  Libraries</a></h3>
+
+This document describes how we are splitting ACE into multiple
+libraries, each of which will contain a smaller subset of the overall
+ACE functionality.  The primary motivations for subsetting ACE are:
+
+<UL>
+<LI><EM>Principle of parsimony</EM> -- <EM>i.e.</EM>, developers
+  should incur time/space overhead for components they use, rather
+  than for all the components in the ACE framework. <P>
+
+<LI><EM>Simplify the learning curve</EM> -- <EM>i.e.</EM>, developers
+  only need to learn how to program components that they actually
+  use. <P>
+</UL>
+
+The main design goals of our approach are as follows: <P>
+
+<OL>
+<LI>Support the original libACE as before.  Thus, for users who
+want to use the existing ACE library as is, there will be
+no changes, i.e., just link with <CODE>libACE</CODE> as usual. <P>
+
+<LI>Allow ACE (and TAO) programmers to use smaller subsets of the
+entire <CODE>libACE</CODE> library.  These subsets will include the
+following libraries: <P>
+
+<DL>
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_OS</CODE> -- This library contains the OS adaptation
+layer and its supporting classes.  All other ACE libraries will depend
+on <CODE>libACE_OS</CODE> and it will depend on <EM>no</EM> other ACE
+libraries. <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Utils</CODE> -- This library contains the various ACE
+container classes and other miscellaneous classes, such as Singleton,
+auto_ptr, timers, etc.  This library will depend only on
+<CODE>libACE_OS</CODE>.<P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Logging</CODE> -- This library contains the various ACE
+logging and tracing classes.  This library will depend only on
+<CODE>libACE_OS</CODE>. <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Threads</CODE> -- This library contains the ACE
+thread/process management and synchronization classes.  This library
+will depend only on <CODE>libACE_OS</CODE>. <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Demux</CODE> -- This library contains the ACE Reactor and
+Proactor classes.  This library will depend on <CODE>libACE_OS</CODE>
+and <CODE>libACE_Thread</CODE>. <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Connection</CODE> -- This library contains the ACE
+Connection components, i.e., Acceptor, Connector, and Svc_Handler.
+This library will depend on <CODE>libACE_OS</CODE>,
+<CODE>libACE_Thread</CODE>, and <CODE>libACE_Demux</CODE>.  <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Sockets</CODE> -- This library contains the ACE C++
+wrappers for sockets.  This library will depend on
+<CODE>libACE_OS</CODE>. <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_IPC</CODE> -- This library contains all the ACE C++
+wrappers for the other types of IPC and FILE I/O other than sockets.
+This library will depend on <CODE>libACE_OS</CODE> and
+<CODE>libACE_Sockets</CODE>.  <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Svcconf</CODE> -- This library contains the ACE C++
+wrappers for the Service Configurator.  This library will depend on
+<CODE>libACE_OS</CODE>, <CODE>libACE_Demux</CODE>,
+<CODE>libACE_Thread</CODE>, and <CODE>libACE_Sockets</CODE>.  <P>
+
+<DT> <img alt="o" src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Streams</CODE> -- This library contains the ACE Streams
+classes.  This library will depend on <CODE>libACE_OS</CODE>,
+<CODE>libACE_Demux</CODE>, and <CODE>libACE_Thread</CODE>.  <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Memory</CODE> -- This library contains the ACE C++
+wrappers for shared memory and memory-mapped files.  This library will
+depend on <CODE>libACE_OS</CODE>.<P>
+
+</DL>
+</OL>
+
+In addition, we will create <CODE>libACE_TAO</CODE>, which contains
+just the core set of components in ACE that are required to support
+TAO.  This library is targeted at embedded systems developers who want
+to minimize the footprint of ACE+TAO.  We are also planning to support
+the OMG's <A
+HREF="http://www.omg.org/cgi-bin/doc?orbos/98-08-04.pdf">Minimum
+CORBA</A> specification as part of a separate effort.  Preliminary
+results of prototypes for Minimum CORBA we've integrate to TAO have
+been very promising, yielding a 40% reduction in ORB footprint. <P>
+
+Note that the ACE library subsets described above are intended as a
+guideline, <EM>not</EM> a complete specification.  The actual
+partitioning of files in the final ACE library subsets may differ
+somewhat to improve footprint and simplify common use-cases. <P>
+
+<hr><p>
+<h3><a name="Configuration Management">Configuration Management</a></h3>
+
+Configuration management for the ACE library subsets described above
+will be organized as follows:
+
+<OL>
+<LI>A single source tree with a single "version" for the source
+    tree.<P>
+
+<LI>Releases of libACE and its "subsets" will be atomic, <EM>i.e.</EM>,
+    all or nothing.<P>
+</OL>
+
+
+<hr><p>
+<h3><a name="Classes">Classes in Each ACE Library Subset</a></h3>
+
+Below, we describe the classes in each ACE library subset.
+
+<H4>libACE_OS</H4>
+
+This library contains the OS adaptation layer and its supporting
+classes.  The classes in this library should not depend on any other
+ACE library subsets.  All of the other libraries will depend on this
+library.  The following classes are included in this library.
+
+<PRE><CODE>
+config.h
+Basic_Types
+OS
+Sched_Params
+</code></pre>
+
+<H4>libACE_Utils</H4>
+
+This library contains the following ACE container classes and other
+miscellaneous classes.
+
+<PRE><CODE>
+ACE 
+Active_Map_Manager 
+Arg_Shifter 
+ARGV 
+Containers 
+Dirent 
+Dynamic 
+Filecache 
+Functor 
+Get_Opt 
+Hash_Map_Manager 
+High_Res_Timer 
+Method_Request 
+Object_Manager 
+Profile_Timer 
+Registry 
+SString 
+Stats 
+System_Time 
+Time_Request_Reply 
+Timeprobe 
+Timer_Hash 
+Timer_Heap 
+Timer_List 
+Timer_Queue 
+Timer_Wheel
+LOGGING_FILES = 
+Dump 
+Log_Msg 
+Log_Record 
+Trace
+</code></pre>
+
+<H4>libACE_Logging</H4>
+
+This library contains the various ACE logging and tracing classes.
+
+<PRE><CODE>
+Dump 
+Log_Msg 
+Log_Record 
+Trace
+</code></pre>
+
+<H4>libACE_Threads</H4>
+
+This library contains the ACE thread/process management and
+synchronization classes.
+
+<PRE><CODE>
+Activation_Queue 
+Process 
+Process_Manager 
+Synch 
+Synch_Options 
+Thread 
+Thread_Manager 
+Token
+</code></pre>
+
+<H4>libACE_Demux</H4>
+
+This library contains the ACE Reactor and its associated classes,
+including the ACE Connection components.
+
+<PRE><CODE>
+Event_Handler 
+Handle_Set 
+POSIX_Proactor 
+Priority_Reactor 
+Proactor 
+Reactor 
+Select_Reactor 
+Select_Reactor_Base 
+WFMO_Reactor
+</code></pre>
+
+<H4>libACE_Connection</H4>
+
+This library contains the ACE Connection components, i.e., Acceptor,
+Connector, and Svc_Handler.
+
+<PRE><CODE>
+Asynch_IO 
+Asynch_IO_Impl 
+POSIX_Asynch_IO 
+Strategies
+</code></pre>
+
+<H4>libACE_Sockets</H4>
+
+This library contains the ACE C++ wrappers for sockets.
+
+<PRE><CODE>
+IPC_SAP 
+LSOCK 
+LSOCK_Acceptor 
+LSOCK_CODgram 
+LSOCK_Connector 
+LSOCK_Dgram 
+LSOCK_Stream 
+SOCK 
+SOCK_Acceptor 
+SOCK_CODgram 
+SOCK_Connector 
+SOCK_Dgram 
+SOCK_Dgram_Bcast 
+SOCK_Dgram_Mcast 
+SOCK_IO 
+SOCK_Stream
+</code></pre>
+
+<H4>libACE_IPC</H4>
+
+This library contains all the ACE C++ wrappers for the other types of
+IPC and FILE I/O other than sockets.  This library will depend on the
+<CODE>libACE_Socket</CODE> library.
+
+<PRE><CODE>
+Addr 
+DEV 
+DEV_Addr 
+DEV_Connector 
+DEV_IO 
+FIFO 
+FIFO_Recv 
+FIFO_Recv_Msg 
+FIFO_Send 
+FIFO_Send_Msg 
+FILE_Addr 
+FILE 
+FILE_Connector 
+FILE_IO 
+INET_Addr 
+IO_SAP 
+IOStream 
+Pipe 
+Signal 
+SPIPE_Addr 
+SPIPE 
+SPIPE_Acceptor 
+SPIPE_Connector 
+SPIPE_Stream 
+SV_Message 
+SV_Message_Queue 
+SV_Semaphore_Complex 
+SV_Semaphore_Simple 
+SV_Shared_Memory 
+TLI 
+TLI_Acceptor 
+TLI_Connector 
+TLI_Stream 
+TTY_IO 
+UNIX_Addr 
+UPIPE_Acceptor 
+UPIPE_Connector 
+UPIPE_Stream
+</code></pre>
+
+<H4>libACE_Svcconf</H4>
+
+This library contains the ACE C++ wrappers for the Service
+Configurator component.
+
+<PRE><CODE>
+DLL 
+Parse_Node 
+Service_Config 
+Service_Manager 
+Service_Object 
+Service_Repository 
+Service_Types 
+Shared_Object 
+Svc_Conf_l 
+Svc_Conf_y
+</code></pre>
+
+<H4>libACE_Streams</H4>
+
+This library contains the ACE Streams classes.
+
+<PRE><CODE>
+CDR_Stream 
+Message_Block 
+Message_Queue 
+Task
+</code></pre>
+
+<H4>libACE_Memory</H4>
+
+This library contains the ACE C++ wrappers for shared memory and
+memory-mapped files.
+
+<PRE><CODE>
+Malloc 
+Mem_Map 
+Memory_Pool 
+Obstack 
+Read_Buffer 
+Shared_Memory 
+Shared_Memory_MM 
+Shared_Memory_SV
+</code></pre>
+
+<H4>libACE_Token</H4>
+
+This componenty contains the ACE C++ wrappers for Token classes.
+
+<pre><code>
+Local_Tokens 
+Remote_Tokens 
+Token_Collection 
+Token_Invariants 
+Token_Manager 
+Token_Request_Reply
+</code></pre>
+
+<H4>libACE_Other</H4>
+
+This component contains miscellaneous ACE C++ wrappers.
+
+<pre><code>
+CORBA_Handler 
+CORBA_Ref 
+Local_Name_Space 
+Msg_WFMO_Reactor 
+Name_Proxy 
+Name_Request_Reply 
+Name_Space 
+Naming_Context 
+Registry_Name_Space 
+Remote_Name_Space 
+TP_Reactor 
+XtReactor
+</code></pre>
+
+<hr><p>
+<h3><a name="Status">Current ACE Subsetting Status</a></h3>
+
+The following are the remaining major subsetting issues: <P>
+
+  <ul>
+    <li>Remove remaining dependencies on higher layers from ACE_OS.
+      (These can be seen by searching for ACE_HAS_MINIMAL_ACE_OS
+       in OS.cpp, and by looking at the conditional #includes
+       near the top of OS.cpp.)
+    <ul>
+      <li>ACE_Thread_Manager
+      <li>ACE_Array
+      <li>ACE_TSS: move all ACE_TSS support into separate .h,.i,cpp files
+    </ul><p>
+
+    <li>Log_Msg cleanup:  We have a good start on this, but it needs work
+      to finish.  It might be easiest to make an abstract
+      base class, then have ACE_Log_Msg derive from it.  That way
+      we could remove the exposure of all the #includes in Log_Msg.cpp
+      to applications that don't need it.<p>
+
+    <li>Higher layer interdependencies:  we haven't been paying much
+      attention to this.  We need to figure out what's there, and
+      if/how to deal with the interdependencies.<p>
+
+    <li>Remove use of multiple inheritance:  its only used in a few
+      places, in one of the SOCK classes and service config.<p>
+  </ul><P>
+
+Please let us know if you're able to contribute to this effort.<p>
+
+
+<hr><p>
+<h3><a name="ACE Library Size Breakdown">ACE Library Size Breakdown</a></h3>
+
+Here is an example size breakdown, by ACE library component.  It is
+for ACE 4.6.25, statically built with these <a
+href="../ACE-INSTALL.html#flags">make flags</a>:
+
+<pre><code>
+    debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0
+</code></pre><p>
+
+To build an ACE static library, if shared libraries are the default, use
+<code>make static_libs_only=1</code>.<p>
+
+<center><table cellpadding=4 border=4>
+  <tr>
+    <th>Platform
+    <th>Component
+    <th>Total
+    <th>For TAO<br>subset
+    <th>OS
+    <th>Utils
+    <th>Logging
+    <th>Threads
+    <th>Demux
+    <th>Con-<br>nection
+    <th>Sockets
+    <th>IPC
+    <th>Svcconf
+    <th>Streams
+    <th>Memory
+    <th>Token
+    <th>Other
+  <tr>
+    <th rowspan=2>Linux (RedHat 5.2)<br>egcs 1.0.3
+    <th>Size, bytes
+    <td align=center>527445
+    <td align=center>395541
+    <td align=center>10645
+    <td align=center>111542
+    <td align=center>13783
+    <td align=center>54239
+    <td align=center>33880
+    <td align=center>650
+    <td align=center>12565
+    <td align=center>32391
+    <td align=center>91919
+    <td align=center>16773
+    <td align=center>17154
+    <td align=center>69346
+    <td align=center>62558
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>75
+    <td align=center>2
+    <td align=center>21
+    <td align=center>3
+    <td align=center>10
+    <td align=center>6
+    <td align=center>0
+    <td align=center>2
+    <td align=center>6
+    <td align=center>17
+    <td align=center>3
+    <td align=center>3
+    <td align=center>13
+    <td align=center>12
+
+  <tr>
+    <th rowspan=2>LynxOS 3.0.0<br>g++ 2.7-97r1
+    <th>Size, bytes
+    <td align=center>547004
+    <td align=center>429944
+    <td align=center>17056
+    <td align=center>100712
+    <td align=center>11104
+    <td align=center>44548
+    <td align=center>45780
+    <td align=center>52888
+    <td align=center>11468
+    <td align=center>29184
+    <td align=center>84236
+    <td align=center>15664
+    <td align=center>17304
+    <td align=center>62312
+    <td align=center>54748
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>78
+    <td align=center>3
+    <td align=center>18
+    <td align=center>2
+    <td align=center>8
+    <td align=center>8
+    <td align=center>10
+    <td align=center>2
+    <td align=center>5
+    <td align=center>15
+    <td align=center>3
+    <td align=center>3
+    <td align=center>11
+    <td align=center>10
+
+  <tr>
+    <th rowspan=2>SunOS5.7<br>egcs 1.1.1
+    <th>Size, bytes
+    <td align=center>587059
+    <td align=center>446609
+    <td align=center>21651
+    <td align=center>116410
+    <td align=center>14005
+    <td align=center>58063
+    <td align=center>39620
+    <td align=center>770
+    <td align=center>13719
+    <td align=center>40362
+    <td align=center>101543
+    <td align=center>19611
+    <td align=center>20855
+    <td align=center>75806
+    <td align=center>64644
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>76
+    <td align=center>4
+    <td align=center>20
+    <td align=center>2
+    <td align=center>10
+    <td align=center>7
+    <td align=center>0
+    <td align=center>2
+    <td align=center>7
+    <td align=center>17
+    <td align=center>3
+    <td align=center>4
+    <td align=center>13
+    <td align=center>11
+
+  <tr>
+    <th rowspan=2>SunOS 5.5.1<br>GreenHills 1.8.9
+    <th>Size, bytes
+    <td align=center>677237
+    <td align=center>527133
+    <td align=center>15232
+    <td align=center>147857
+    <td align=center>18336
+    <td align=center>64732
+    <td align=center>49220
+    <td align=center>976
+    <td align=center>19084
+    <td align=center>56662
+    <td align=center>109686
+    <td align=center>19652
+    <td align=center>25696
+    <td align=center>78792
+    <td align=center>71312
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>77
+    <td align=center>2
+    <td align=center>22
+    <td align=center>3
+    <td align=center>10
+    <td align=center>7
+    <td align=center>0
+    <td align=center>3
+    <td align=center>8
+    <td align=center>16
+    <td align=center>3
+    <td align=center>4
+    <td align=center>12
+    <td align=center>11
+
+  <tr>
+    <th rowspan=2>SunOS 5.7<br>Sun C++ 4.2
+    <th>Size, bytes
+    <td align=center>512538
+    <td align=center>344815
+    <td align=center>13433
+    <td align=center>63314
+    <td align=center>15570
+    <td align=center>61947
+    <td align=center>58158
+    <td align=center>864
+    <td align=center>16609
+    <td align=center>71484
+    <td align=center>50155
+    <td align=center>17747
+    <td align=center>22279
+    <td align=center>70771
+    <td align=center>96952
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>67
+    <td align=center>3
+    <td align=center>12
+    <td align=center>3
+    <td align=center>12
+    <td align=center>11
+    <td align=center>0
+    <td align=center>3
+    <td align=center>14
+    <td align=center>10
+    <td align=center>3
+    <td align=center>4
+    <td align=center>14
+    <td align=center>19
+
+  <tr>
+    <th rowspan=2>VxWorks 5.3.1<br>GreenHills 1.8.8
+    <th>Size, bytes
+    <td align=center>669176
+    <td align=center>519284
+    <td align=center>26248
+    <td align=center>143632
+    <td align=center>16860
+    <td align=center>60468
+    <td align=center>49964
+    <td align=center>868
+    <td align=center>18660
+    <td align=center>42512
+    <td align=center>120384
+    <td align=center>21444
+    <td align=center>19252
+    <td align=center>79112
+    <td align=center>70780
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>77
+    <td align=center>4
+    <td align=center>21
+    <td align=center>3
+    <td align=center>9
+    <td align=center>7
+    <td align=center>0
+    <td align=center>3
+    <td align=center>6
+    <td align=center>18
+    <td align=center>3
+    <td align=center>3
+    <td align=center>12
+    <td align=center>11
+
+  <tr>
+    <th rowspan=2>VxWorks 5.3.1<br>g++ cygnus-<br>2.7.2-960126<br>
+      (with implicit templates)
+    <th>Size, bytes
+    <td align=center>999608
+    <td align=center>742832
+    <td align=center>21232
+    <td align=center>164948
+    <td align=center>14752
+    <td align=center>66728
+    <td align=center>138008
+    <td align=center>9788
+    <td align=center>13116
+    <td align=center>108128
+    <td align=center>146528
+    <td align=center>39552
+    <td align=center>20052
+    <td align=center>108140
+    <td align=center>148636
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>74
+    <td align=center>2
+    <td align=center>17
+    <td align=center>1
+    <td align=center>7
+    <td align=center>14
+    <td align=center>1
+    <td align=center>1
+    <td align=center>11
+    <td align=center>15
+    <td align=center>4
+    <td align=center>2
+    <td align=center>11
+    <td align=center>15
+</table></center><p>
+
+
+<hr><p>
+<h3><a name="Building ACE Subsets">Building ACE Subsets</a></h3>
+
+By default, the ACE library contains all of the components that ACE
+currently supports.  To reduce build time and library size, you can
+exclude unused components.  To do that, define an
+<code>ACE_COMPONENTS</code> variable using one of these approaches:<p>
+
+<ol>
+  <li>In your <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>
+    file, <em>e.g.</em>, add:
+    <pre><code>ACE_COMPONENTS = OS</code></pre>or<p>
+
+  <li>On the make command line, <em>e.g.</em>,
+    <pre><code>make ACE_COMPONENTS=OS</code></pre>or<p>
+
+  <li>Set (and export) the <code>ACE_COMPONENTS</code> environment variable
+    to contain the components that you want to build.<p>
+</ol><p>
+
+Please see <code><a href="../ace/Makefile">../ace/Makefile</a></code>
+for the default contents of <code>ACE_COMPONENTS</code>.<p>
+
+A special value of <code>ACE_COMPONENTS</code> can be used to
+build an ACE library that supports
+<a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>.  The
+special value is <code>FOR_TAO</code>.  So, for example, you can
+add this to your
+<code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>
+to restrict ACE support to just that which is needed for TAO:
+<pre><code>
+ACE_COMPONENTS = FOR_TAO
+</code></pre><p>
+
+Please note the current limitations:<p>
+
+<ol>
+  <li>We currently don't check for interdependencies between components.
+    For example, if you build any component beside <code>OS</code>, you
+    must explicitly include <code>OS</code> in your
+    <code>ACE_COMPONENTS</code>.<p>
+
+  <li>We currently don't check this macro in other ACE or TAO Makefiles, or
+    in their tests. We'll add those checks as time allows.</li>
+</ol>
+
+
+<hr><p>
+<h3><a name="ACE_OS Adaptation Layer">ACE_OS Adaptation Layer</a></h3>
+
+The lowest-level component, <code>OS</code>, is also called the
+<em>ACE_OS adaption layer</em>.  It provides the ACE interface to
+the underlying operating system, but little else.  It can be used
+standalone.<p>
+
+To create the ACE_OS adaptation layer, build your <code>libACE</code>
+with <code>ACE_COMPONENTS</code> set to <code>OS</code>.  In addition,
+add <code>#include "ace/config-minimal.h"</code> to your
+<code>ACE_wrappers/ace/config.h</code> file.<p>
+
+When using the ACE_OS adaptation layer, you'll be limited to the
+the <code>ACE_OS</code> member functions, ACE's
+<a href="../ace/Basic_Types.h">Basic_Types</a> and
+<a href="../ace/Sched_Params.h">Sched_Params</a>, and macros defined in
+<a href="../ace/OS.h"><code>ace/OS.h</code></a>.  See ACE's
+<a href="../tests/Basic_Types_Test.cpp">Basic_Types_Test.cpp</a>
+for an example of usage.<p>
+
+<HR><P>
+
+<a name="minimumTAO">
+<!--#include virtual="/~schmidt/ACE_wrappers/TAO/docs/minimumTAO.html" -->
+</a>
+
+Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>
+home page.
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
+</BODY>
+</HTML>

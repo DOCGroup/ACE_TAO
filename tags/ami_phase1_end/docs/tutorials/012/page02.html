@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 012</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 012</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Passing classes through ACE_Message_Queue</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+We normally start by looking at main() and work our way out from
+there.  This time, I want to start by showing you the ACE_Message_Block
+derivative but before that, I have to introduce you to the Work object 
+and it's baseclass Unit_Of_Work
+<P>
+<HR WIDTH="100%">
+<PRE>
+
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>WORK_H</font>
+<font color=blue>#define</font> <font color=purple>WORK_H</font>
+
+<font color=blue>#include</font> "<A HREF="../../../ace/Message_Block.h">ace/Message_Block.h</A>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+<font color=blue># pragma</font> <font color=purple>once</font>
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
+<font color=red>/*
+  We'll start by defining a basic unit of work that can be put into
+  the message queue.  The threads in the pool will expect to find one
+  of these in each message block and will invoke a method or two.
+*/</font>
+class Unit_Of_Work
+{
+public:
+    Unit_Of_Work (void)
+        {
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Unit_Of_Work ctor 0x%x\n</font>", (void *) this));
+        }
+    virtual ~ Unit_Of_Work (void)
+        {
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Unit_Of_Work dtor 0x%x\n</font>", (void *) this));
+        }
+
+    void who_am_i (void)
+        {
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Unit_Of_Work instance 0x%x\n</font>", (void *) this));
+        }
+
+    virtual void what_am_i (void)
+        {
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) I am a Unit_Of_Work object\n</font>"));
+        }
+
+};
+
+<font color=red>/*
+  Now, we specialize the Unit_Of_Work object to do something
+  different.  By overriding the virtual methods, we can do whatever
+  "<font color=green>real work</font>" is needed but the thread pool doesn't have to know the specifics.
+*/</font>
+class Work : public Unit_Of_Work
+{
+public:
+    Work (void)
+            : message_ (-1)
+        {
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Work ctor 0x%x\n</font>", (void *) this));
+        }
+
+    Work (int message)
+            : message_ (message)
+        {
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Work ctor 0x%x for message %d\n</font>", (void *) this, message_));
+        }
+    virtual ~ Work (void)
+        {
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Work dtor 0x%x\n</font>", (void *) this));
+        }
+
+    void what_am_i (void)
+        {
+            ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) I am a Work object for message %d\n</font>", message_));
+        }
+
+protected:
+    int message_;
+
+};
+
+<font color=blue>#endif</font>
+</PRE>
+<HR WIDTH="100%">
+<P>
+This is basically the same as the <i>DataBase</i> in the previous
+tutorial but I've changed the name to be more generic.  The feeling is 
+that a <i>Data</i> object would be a C struct but an <i>Work</i>
+object would be a class with methods.
+<P>
+Now that you know what we'll be putting into the queue, lets go to the 
+next page where I specialize the ACE_Message_Block.
+<P>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>
