@@ -26,7 +26,13 @@ int Dispatcher::shutdown ()
 
 void Dispatcher::implementation (Dispatcher_Impl* impl)
 {
-  dispatcher_impl_.reset (impl);
+  auto_ptr<Dispatcher_Impl> tmp_impl (impl);
+  dispatcher_impl_ = tmp_impl;
+
+  //I couldn't use reset because MSVC++ auto_ptr does not have reset method.
+  //So in configurations where the auto_ptr maps to the std::auto_ptr instead
+  //of ACE auto_ptr, this would be a problem.
+  //dispatcher_impl_.reset (impl);
 }
 
 
@@ -71,11 +77,13 @@ DSRT_Dispatcher*
 Dispatcher_Factory::
 create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
 {
+  ACE_UNUSED_ARG ((config_info));
+
   DSRT_Dispatcher_Impl* tmp;
 
   DSRT_Dispatcher_Impl::init_svcs ();
 
-  ACE_Service_Config::open ("Kokyu", ACE_DEFAULT_LOGGER_KEY, 0);  
+  ACE_Service_Config::open ("Kokyu", ACE_DEFAULT_LOGGER_KEY, 0);
 
   tmp =
     ACE_Dynamic_Service<DSRT_Dispatcher_Impl>::instance ("DSRT_Dispatcher_Impl");

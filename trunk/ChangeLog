@@ -1,3 +1,59 @@
+Tue Apr 22 12:28:03 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* TAO/orbsvcs/orbsvcs/RTKokyuEvent.dsp:
+	* TAO/orbsvcs/orbsvcs/RTKokyuEvent.dsw:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.h:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.i:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Factory.cpp:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Factory.h:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Factory.i:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.cpp:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.h:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.i:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.h:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.i:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Scheduling.cpp:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Scheduling.h:
+	* TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Scheduling.i:
+	* TAO/orbsvcs/orbsvcs/Event/rtkokyu_event_export.h:
+	* TAO/orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
+
+	  Added files to integrate the new Event Channel with Kokyu
+	  dispatching.  Bryan Thrall (thrall@cs.wustl.edu) already
+	  committed these files. Just adding the changelog entries now.
+	
+	* TAO/orbsvcs/examples/RtEC/Kokyu/Consumer.cpp:
+	* TAO/orbsvcs/examples/RtEC/Kokyu/Consumer.h:
+	* TAO/orbsvcs/examples/RtEC/Kokyu/EC_Schedule_Service.dsp:
+	* TAO/orbsvcs/examples/RtEC/Kokyu/Makefile:
+	* TAO/orbsvcs/examples/RtEC/Kokyu/README:
+	* TAO/orbsvcs/examples/RtEC/Kokyu/Schedule.dsw:
+	* TAO/orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+	* TAO/orbsvcs/examples/RtEC/Kokyu/Supplier.cpp:
+	* TAO/orbsvcs/examples/RtEC/Kokyu/Supplier.h:
+	* TAO/orbsvcs/examples/RtEC/Kokyu/svc.conf:
+	* TAO/orbsvcs/examples/RtEC/Kokyu/svc.conf.xml:
+
+	  Added example to test new Event Channel with Kokyu dispatching.
+	  Bryan Thrall (thrall@cs.wustl.edu) already committed these
+	  files. Just adding the changelog entries now.
+	
+	* Kokyu/Kokyu.cpp:
+	* Kokyu/Default_Dispatcher_Impl.cpp
+
+	  Fixed errors in MSVC++ builds. When ACE_HAS_STANDARD_CPP_LIBRARY
+	  is defined auto_ptr maps to the std::auto_ptr and std::auto_ptr
+	  in MSVC++ 6.0 does not have a reset method. Thanks to Simon
+	  McQueen for pointing this out.
+
+	* TAO/orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+	* TAO/orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+	  
+	  Fixed warnings regarding unused args. Thanks to Simon McQueen
+	  for pointing this out.
+	
 Tue Apr 22 12:47:48 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/Get_Opt.cpp (ctor): Add ACE_LIB_TEXT to naked string literal.
