@@ -2336,7 +2336,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_STREAMBUF_SIZE 1024
 #endif /* BUFSIZ */
 
-#if defined (ACE_LACKS_UTSNAME_T)
+#if defined (ACE_HAS_WINCE)
 #define _SYS_NMLN 257
 struct utsname
 {
@@ -2345,6 +2345,16 @@ struct utsname
   TCHAR release[_SYS_NMLN];
   TCHAR version[_SYS_NMLN];
   TCHAR machine[_SYS_NMLN];
+};
+#elif defined (ACE_LACKS_UTSNAME_T)
+#define _SYS_NMLN 257
+struct utsname
+{
+  char sysname[_SYS_NMLN];
+  char nodename[_SYS_NMLN];
+  char release[_SYS_NMLN];
+  char version[_SYS_NMLN];
+  char machine[_SYS_NMLN];
 };
 #else
 #include /**/ <sys/utsname.h>
