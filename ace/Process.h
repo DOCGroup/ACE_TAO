@@ -168,9 +168,16 @@ public:
   /// Current working directory.  Returns "" if nothing has been set.
   ACE_TCHAR *working_directory (void);
 
-  /// Buffer of command-line options.  Returns exactly what was passed
-  /// to this->command_line. If @arg max_len is not 0, receives the
-  /// maximum length of the command line buffer.
+  /// Buffer of command-line options.  Returns a pointer to a buffer that
+  /// contains the list of command line options.  Prior to a call to
+  /// command_line_argv(), this is a single string of space separated
+  /// arguments independent of which form of command_line() was used to
+  /// create it.  After a call to command_line_argv(), this is a list of
+  /// strings each terminated by '\0'.  [Note: spawn() will call
+  /// command_line_argv().]  The total length of all these strings is the
+  /// same as the single string in the prior case and can be obtained by
+  /// providing max_len. @arg max_len, if non-zero, provides a location
+  /// into which the total length of the command line buffer is returned.
   ACE_TCHAR *command_line_buf (int *max_len = 0);
 
   /**
