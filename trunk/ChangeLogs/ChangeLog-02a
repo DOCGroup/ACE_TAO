@@ -1,9 +1,18 @@
+Thu Dec 13 16:53:00 2001  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added TAO/orbsvcs/tests/Security/Callback test to the list of
+	  tests to run in our automated regression test suite.
+
 Thu Dec 13 18:11:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	ace/OS.h:  Move QoS data structures to OS_QoS.h.  Forward declare QoS data structures now
-	           contained in OS_QoS.h and OS_QoS.cpp.
+	ace/OS.h:  Move QoS data structures to OS_QoS.h.  Forward declare
+	QoS data structures now contained in OS_QoS.h and OS_QoS.cpp.
+
 	ace/OS.i:  
-	ace/OS.cpp:  Move QoS enabled socket API functions from OS.i to OS.cpp.
+	ace/OS.cpp:  Move QoS enabled socket API functions from OS.i to
+	OS.cpp.
 
 	ace/OS_QoS.h (added):  
 	ace/OS_QoS.cpp (added):  OS specific QoS data structures go here.
@@ -13,7 +22,8 @@ Thu Dec 13 18:11:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 	ace/SOCK_Connector.cpp: 
 	ace/QoS/QoS_Session.h: Add #include "ace/OS_QoS.h".
 
-	ace/QoS/QoS_Session_Impl.cpp: Add u_long casts to eliminate compiler warnings.
+	ace/QoS/QoS_Session_Impl.cpp: Add u_long casts to eliminate
+	compiler warnings.
 
 	ace/Makefile: Add rule for OS_QoS.
 	ace/Makefile.bor: Same.
