@@ -568,10 +568,11 @@ Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
 
   CORBA::Object_var ec_ptr =
     naming_context->resolve (channel_name, _env);
-  if (_env.exception () != 0 || CORBA::is_nil (ec_ptr))
+  if (_env.exception () != 0 || CORBA::is_nil (ec_ptr.in ()))
     return RtecEventChannelAdmin::EventChannel::_nil ();
 
-  return RtecEventChannelAdmin::EventChannel::_narrow (ec_ptr, _env);
+  return RtecEventChannelAdmin::EventChannel::_narrow (ec_ptr.in (),
+						       _env);
 }
 
 void
@@ -882,7 +883,7 @@ void
 Test_ECG::push_consumer (void *consumer_cookie,
                          ACE_hrtime_t arrival,
                          const RtecEventComm::EventSet &events,
-                         CORBA::Environment & _env)
+                         CORBA::Environment &)
 {
   int ID =
     (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
@@ -1571,7 +1572,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
 }
 
 void
-Test_Consumer::disconnect_push_consumer (CORBA::Environment &_env)
+Test_Consumer::disconnect_push_consumer (CORBA::Environment &)
 {
 }
 
