@@ -10,9 +10,9 @@ ACE_RCSID(Callback_Quoter, Supplier, "$Id$")
 
 Supplier::Supplier (void)
   : ior_ (0),
-    loop_count_ (10),
+    use_naming_service_ (1),
     notifier_ (),
-    use_naming_service_ (1)
+    loop_count_ (10)
 {
 }
 
@@ -67,7 +67,7 @@ Supplier::parse_args (void)
     switch (c)
       {
       case 'd':  // debug flag
-	TAO_debug_level++; //****
+        TAO_debug_level++; //****
         break;
 
       case 'n':  // loop count
@@ -88,8 +88,8 @@ Supplier::parse_args (void)
         break;
 
       case 's': // don't use the naming service
-	this->use_naming_service_ = 0;
-	break;
+        this->use_naming_service_ = 0;
+        break;
 
       case '?':
       default:
@@ -100,7 +100,7 @@ Supplier::parse_args (void)
                            " [-f ior-file]"
                            " [-k ior]"
                            " [-x]"
-			   " [-s]"
+                           " [-s]"
                            "\n",
                            this->argv_ [0]),
                           -1);
@@ -114,7 +114,7 @@ Supplier::parse_args (void)
 
 int
 Supplier::send_market_status (const char *stock_name,
-				       long value)
+                                       long value)
 {
   TAO_TRY
     {
@@ -128,8 +128,8 @@ Supplier::send_market_status (const char *stock_name,
   TAO_CATCHANY
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "Exception raised!\n"),
-			-1);
+                         "Exception raised!\n"),
+                        -1);
     }
   TAO_ENDTRY;
   return 0;
@@ -156,7 +156,7 @@ Supplier::run (void)
       // Make a call to the method which will send the current market
       // status.
       if (this->send_market_status (stock_name, value) < 0)
-	break;
+        break;
     }
 
   return 0;
@@ -169,17 +169,17 @@ Supplier::via_naming_service (void)
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
       CosNaming::Name notifier_ref_name (1);
       notifier_ref_name.length (1);
       notifier_ref_name[0].id = CORBA::string_dup ("Notifier");
 
       CORBA::Object_var notifier_obj =
-	this->naming_services_client_->resolve (notifier_ref_name,
-						TAO_TRY_ENV);
+        this->naming_services_client_->resolve (notifier_ref_name,
+                                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // The CORBA::Object_var object is downcast to Notifier_var using
