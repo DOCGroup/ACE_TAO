@@ -475,7 +475,7 @@ client (void *arg)
   ACE_SOCK_Connector connector;
 
   char buf[BUFSIZ];
-  char *command;
+  const char *command;
   size_t command_len;
   size_t i;
 

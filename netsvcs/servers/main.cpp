@@ -39,14 +39,15 @@ main (int argc, char *argv[])
                           1);
       else // Use static linking.
 	{
-	  char *l_argv[3];
-
           // Calling ACE_SVC_INVOKE to create a new Service_Object.
           // Stash the newly created Service_Object into an
           // ACE_Service_Object_Ptr which is an <auto_ptr> specialized
           // for ACE_Service_Object.
 
-          l_argv[0] = "-p " ACE_DEFAULT_NAME_SERVER_PORT_STR;
+	  char *l_argv[3];
+          char name_port[] = "-p " ACE_DEFAULT_NAME_SERVER_PORT_STR;
+
+          l_argv[0] = name_port;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_1 = ACE_SVC_INVOKE (ACE_Name_Acceptor);
 
@@ -56,7 +57,8 @@ main (int argc, char *argv[])
                         "Name Service",
                         1));
 
-	  l_argv[0] = "-p " ACE_DEFAULT_TIME_SERVER_PORT_STR;
+          char time_port[] = "-p " ACE_DEFAULT_TIME_SERVER_PORT_STR;
+	  l_argv[0] = time_port;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_2 = ACE_SVC_INVOKE (ACE_TS_Server_Acceptor);
 
@@ -65,15 +67,20 @@ main (int argc, char *argv[])
                         "%p\n%a",
                         "TS Server Acceptor", 1));
 
+          char clerk_port[] = "-p 10011";
 	  l_argv[0] = argv[0];
-	  l_argv[1] = "-p 10011";
+	  l_argv[1] = clerk_port;
 	  l_argv[2] = 0;
 	  ACE_Service_Object_Ptr sp_3 = ACE_SVC_INVOKE (ACE_TS_Clerk_Processor);
 
 	  if (sp_3->init (2, l_argv) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n%a", "TS Clerk Processor", 1));
+	    ACE_ERROR ((LM_ERROR,
+                        "%p\n%a",
+                        "TS Clerk Processor",
+                        1));
 
-	  l_argv[0] = "-p " ACE_DEFAULT_TOKEN_SERVER_PORT_STR;
+          char token_port[] = "-p " ACE_DEFAULT_TOKEN_SERVER_PORT_STR;
+	  l_argv[0] = token_port;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_4 = ACE_SVC_INVOKE (ACE_Token_Acceptor);
 
@@ -83,7 +90,8 @@ main (int argc, char *argv[])
                         "Token Service",
                         1));
 
-	  l_argv[0] = "-p " ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR;
+          char thr_logging_port[] = "-p " ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR;
+	  l_argv[0] = thr_logging_port;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_5 = ACE_SVC_INVOKE (ACE_Thr_Server_Logging_Acceptor);
 
@@ -93,7 +101,8 @@ main (int argc, char *argv[])
                         "Threaded Logging Server",
                         1));
 
-	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
+          char logging_port[] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
+	  l_argv[0] = logging_port;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_6 = ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor);
 
@@ -102,7 +111,7 @@ main (int argc, char *argv[])
                         "%p\n%a",
                         "Logging Server", 1));
 
-	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
+	  l_argv[0] = logging_port;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_7 = ACE_SVC_INVOKE (ACE_Client_Logging_Acceptor);
 

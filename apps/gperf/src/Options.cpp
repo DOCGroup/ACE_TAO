@@ -36,7 +36,7 @@ ACE_RCSID(src, Options, "$Id$")
 Options option;
 
 // Current program version.
-extern char *version_string;
+extern const char *version_string;
 
 // Size to jump on a collision.
 static const int DEFAULT_JUMP_VALUE = 5;

@@ -31,7 +31,7 @@ ACE_RCSID(collection, collection, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-static char *server_host = ACE_DEFAULT_SERVER_HOST;
+static const char *server_host = ACE_DEFAULT_SERVER_HOST;
 static int server_port = ACE_DEFAULT_SERVER_PORT;
 // unused:  static int threads = 2;
 static int iterations = 50;

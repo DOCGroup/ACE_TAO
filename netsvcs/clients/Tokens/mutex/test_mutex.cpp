@@ -28,7 +28,7 @@ ACE_RCSID(mutex, test_mutex, "$Id$")
 
 static ACE_Token_Proxy *mutex;
 static int remote_mutexes = 0;
-static char *server_host = ACE_DEFAULT_SERVER_HOST;
+static const char *server_host = ACE_DEFAULT_SERVER_HOST;
 static int server_port = ACE_DEFAULT_SERVER_PORT;
 static int iterations = 100;
 static int spawn_count = 2;
