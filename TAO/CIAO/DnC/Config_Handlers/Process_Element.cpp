@@ -82,4 +82,40 @@ process_ref(DOMNode*& node,
     }
 }
 
+/*
+ *  Process function for references
+ */
+
+bool
+process_reference_seq (DOMNode* node,
+                      XStr& node_name, const char* name,
+                      CORBA::ULongSeq& seq,
+                      int& index,
+                      IDREF_MAP& idref_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+      process_refs (node, seq, index, idref_map);
+
+  return result;
+}
+
+// Process reference
+bool
+process_reference (DOMNode* node,
+                   XStr& node_name, const char* name,
+                   CORBA::ULong& ref,
+                   int& index,
+                   IDREF_MAP& idref_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+  
+  if (result == true)
+    process_ref (node, ref, index, idref_map);
+
+  return result;
+}
+
+
 END_DEPLOYMENT_NAMESPACE
