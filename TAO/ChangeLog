@@ -1,3 +1,8 @@
+Sun Apr 13 07:59:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp: Missed a
+	  definition of a function.
+
 Sat Apr 12 22:54:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/Makefile:
