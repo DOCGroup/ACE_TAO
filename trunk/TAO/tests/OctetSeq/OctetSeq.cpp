@@ -29,9 +29,12 @@ ACE_RCSID(OctetSeq, OctetSeq, "$Id$")
 
 static int
 test_write_octet (TAO_OutputCDR &cdr,
-                  char* buf, size_t bufsize)
+                  char* /* buf */,
+                  size_t bufsize)
 {
-  Test::OctetSeq os (bufsize, bufsize, (CORBA::Octet*)buf);
+  ACE_Message_Block mb (/* buf, */ bufsize);
+  mb.wr_ptr (bufsize);
+  Test::OctetSeq os (bufsize, &mb);
 
   if ((cdr << os) == 0)
     return -1;
@@ -106,8 +109,8 @@ run (char* buf, size_t bufsize,
             return -1;
           writing.stop_incr ();
 
-          reading.start_incr ();
           TAO_InputCDR input (output);
+          reading.start_incr ();
           if (reader (input, buf, x) != 0)
             return -1;
           reading.stop_incr ();
@@ -163,9 +166,9 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       int n = 64;
-      int lo = 64;
-      int hi = 128000;
-      int s = 4;
+      int lo = 128;
+      int hi = 65536;
+      int s = 32;
 
       int quiet = 0;
 
