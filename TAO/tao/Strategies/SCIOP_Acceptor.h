@@ -115,7 +115,7 @@ protected:
    * virtual to allow a derived class implementation to be invoked
    * instead.
    */
-  virtual int open_i (const ACE_INET_Addr &addr,
+  virtual int open_i (const ACE_Multihomed_INET_Addr &addr,
                       ACE_Reactor *reactor);
 
   /**
@@ -126,6 +126,13 @@ protected:
    * no explicit hostname is provided in the specified endpoint.
    */
   int probe_interfaces (TAO_ORB_Core *orb_core);
+
+  /**
+   * Split the string into hostnames separated by the plus character
+   * ('+').
+   */
+  int parse_multiple_hostnames (const char *hostnames,
+                                ACE_Array<ACE_CString> &hostnames_out);
 
   /**
    * Parse protocol specific options.
