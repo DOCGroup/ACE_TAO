@@ -1,3 +1,9 @@
+Mon Dec 06 10:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Undef ACE_LACKS_SIGSET, MinGW has sigset but this define is set
+          from config-win32-common.h
+
 Mon Dec 06 10:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-interix.h:
