@@ -43,6 +43,10 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
       mb.crunch ();
       return 0;
     }
+  else if (mb.length () < mb.size ())
+    {
+      return 0;
+    }
   else if (mb.length () == mb.size ())
     {
       // This is one of those cases that should rarely ever happen.
@@ -53,6 +57,12 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
       // connection needs to be closed and the client has to
       // reinitiate the connection.
 
+      info->status (JAWS_Header_Info::TOO_LONG);
+      return 1;
+    }
+  else if (mb.length () > mb.size ())
+    {
+      ACE_DEBUG ((LM_DEBUG, "JAWS_Parse_Headers: buffer overrun!!\n"));
       info->status (JAWS_Header_Info::TOO_LONG);
       return 1;
     }
