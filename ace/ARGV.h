@@ -104,7 +104,7 @@ private:
   int string_to_argv (void);
   // Converts buf_ into the ASYS_TCHAR *argv[] format.
 
-  int argv_to_string (ASYS_TCHAR **argv, char *&buf);
+  int argv_to_string (ASYS_TCHAR **argv, ASYS_TCHAR *&buf);
   // Returns the string created from argv in buf and 
   // returns the number of arguments.
 
