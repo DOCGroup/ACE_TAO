@@ -1,3 +1,12 @@
+Fri Dec 03 12:14:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.i (init_malloc_header_ptr): Applied ACE_UNUSED_ARG
+	  when we are not using position independent pointers.
+
+	* ace/Malloc_T.cpp (shared_malloc): Split the structural exception
+	  try block into two to avoid warnings from the OSF compiler.
+	  Thanks to David for reporting this.
+
 Thu Dec  2 22:42:53 1999  James Hu <jxh@entera.com>
 
         * ace/TP_Reactor.cpp:
@@ -7,7 +16,7 @@ Thu Dec  2 22:42:53 1999  James Hu <jxh@entera.com>
 
 Thu Dec  2 22:41:53 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* ace/OS.i: 
+	* ace/OS.i:
 	  Added the bug fix to the SIO_GET_QOS call in ACE::ioctl () for
 	  RC2 release. This involved removing explicit buffer allocation
 	  for the provider specific buffer and just allocating one
