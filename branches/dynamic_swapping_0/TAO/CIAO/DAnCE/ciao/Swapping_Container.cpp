@@ -26,6 +26,12 @@ namespace CIAO
   {
   }
 
+  PortableServer::POA_ptr
+  Swapping_Container::the_home_servant_POA (void) const
+  {
+    return this->home_servant_poa_.in ();
+  }
+
   int
   Swapping_Container::init (const char *name,
                             const CORBA::PolicyList *more_policies
@@ -59,10 +65,27 @@ namespace CIAO
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
+    ACE_DEBUG ((LM_DEBUG, "create servant POA\n"));
+
     this->create_servant_POA (name,
                               more_policies,
                               root_poa.in ()
                               ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+
+    ACE_DEBUG ((LM_DEBUG, "created servant POA\n"));
+
+    ACE_DEBUG ((LM_DEBUG, "create home servant POA\n"));
+
+    this->create_home_servant_POA ("home servant POA",
+                                   more_policies,
+                                   root_poa.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    ACE_DEBUG ((LM_DEBUG, "created home servant POA\n"));
+
+    this->create_connections_POA (root_poa.in ()
+                           ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
     PortableServer::POAManager_var poa_manager =
@@ -82,6 +105,80 @@ namespace CIAO
      ACE_ENV_ARG_DECL)
   {
     this->dsa_->update_servant_map (oid, servant);
+  }
+
+  void
+  Swapping_Container::create_home_servant_POA (const char *name,
+                                          const CORBA::PolicyList *p,
+                                          PortableServer::POA_ptr root
+                                          ACE_ENV_ARG_DECL)
+  {
+    CORBA::PolicyList policies (0);
+
+    if (p != 0)
+      policies = *p;
+
+    PortableServer::POAManager_var poa_manager =
+      root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "about to create home servant POA\n"));
+
+    this->home_servant_poa_ =
+      root->create_POA (name,
+                        poa_manager.in (),
+                        policies
+                        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    ACE_DEBUG ((LM_DEBUG, "created home servant POA\n"));
+  }
+
+  void
+  Swapping_Container::create_connections_POA (
+      PortableServer::POA_ptr root
+      ACE_ENV_ARG_DECL)
+  {
+    PortableServer::POAManager_var poa_manager =
+      root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    TAO::Utils::PolicyList_Destroyer policies (3);
+    policies.length (3);
+
+    policies[0] =
+      root->create_id_assignment_policy (PortableServer::USER_ID
+                                         ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    policies[1] =
+      root->create_request_processing_policy
+        (PortableServer::USE_SERVANT_MANAGER
+         ACE_ENV_ARG_PARAMETER);
+
+    ACE_CHECK;
+
+    // Servant Retention Policy
+    policies[2] =
+      root->create_servant_retention_policy (PortableServer::RETAIN
+                                             ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    this->facet_cons_poa_ =
+      root->create_POA ("facet_consumer_poa",
+                        poa_manager.in (),
+                        policies
+                        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    ACE_NEW_THROW_EX (this->sa_,
+                      Servant_Activator (this->orb_.in ()),
+                      CORBA::NO_MEMORY ());
+
+    this->facet_cons_poa_->set_servant_manager (
+        this->sa_
+        ACE_ENV_ARG_PARAMETER);
+
+    ACE_CHECK;
   }
 
   void
@@ -137,5 +234,37 @@ namespace CIAO
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
+  }
+
+  CORBA::Object_ptr
+  Swapping_Container::install_servant (PortableServer::Servant p,
+                                      Container::OA_Type t
+                                      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ACE_DEBUG ((LM_DEBUG, "i am inside install servant \n"));
+    PortableServer::POA_ptr tmp = 0;
+
+    if (t == Container::Component)
+    {
+      tmp = this->home_servant_poa_.in ();
+      ACE_DEBUG ((LM_DEBUG, "i am inside identifying the home servant POA \n"));
+    }
+    else
+      tmp = this->facet_cons_poa_.in ();
+
+    PortableServer::ObjectId_var oid
+      = tmp->activate_object (p
+                              ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+    ACE_DEBUG ((LM_DEBUG, "activate object \n"));
+    
+    CORBA::Object_var objref
+      = tmp->id_to_reference (oid.in ()
+                              ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+    ACE_DEBUG ((LM_DEBUG, "create ref \n"));
+
+    return objref._retn ();
   }
 }

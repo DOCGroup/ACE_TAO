@@ -26,6 +26,7 @@
 #include "ciao/Deployment_CoreC.h"
 #include "ciao/Dynamic_Component_Activator.h"
 #include "ciao/CIAO_Server_Export.h"
+#include "ciao/Servant_Activator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,13 +50,20 @@ namespace CIAO
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CORBA::Object_ptr get_objref (PortableServer::Servant p
+    virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
+                                               Container::OA_Type t
+                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void update_servant_map (PortableServer::ObjectId &oid,
                              Dynamic_Component_Servant_Base* servant
                              ACE_ENV_ARG_DECL);
+
+    PortableServer::POA_ptr the_home_servant_POA (void) const;
 
   private:
 
@@ -64,6 +72,14 @@ namespace CIAO
                              const CORBA::PolicyList *p,
                              PortableServer::POA_ptr root
                              ACE_ENV_ARG_DECL);
+
+    void create_home_servant_POA (const char *name,
+                           const CORBA::PolicyList *p,
+                           PortableServer::POA_ptr root
+                           ACE_ENV_ARG_DECL);
+
+    void create_connections_POA (PortableServer::POA_ptr root
+                                 ACE_ENV_ARG_DECL);
   protected:
     long number_;
 
