@@ -11,7 +11,7 @@
 
 ACE_RCSID(ace, Framework_Component, "$Id$")
 
-ACE_Framework_Component:: ~ACE_Framework_Component (void)
+ACE_Framework_Component::~ACE_Framework_Component (void)
 {
   ACE_TRACE ("ACE_Framework_Component::~ACE_Framework_Component");
 }
