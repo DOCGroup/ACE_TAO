@@ -93,10 +93,11 @@
 #endif	/* minor */
 
 // For Win16, near/far pointers reflect same/other segment addressing.
+// Of course, ACE doesn't support Win16, so why bother?
 
-#if defined (unix) || defined (_WIN32) || defined (VXWORKS)
-#	define	_FAR
-#endif /* defined (unix) || defined (_WIN32) || defined (VXWORKS) */
+// For now, we simply set the default to empty definition and let
+// places that it fails bubble up.
+#define _FAR
 
 // Assume DOS/Windows if "configure" didn't get run.
 
