@@ -77,7 +77,7 @@ private:
   FILE *ior_output_file_;
   // File where the IOR of the Clerk object is stored.
 
-  int init_naming_service (CORBA::Environment &env);
+  int init_naming_service (void);
   // Initialises the name server and registers the <TimeService> Clerk
   // object with it.
 

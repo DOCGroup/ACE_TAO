@@ -309,8 +309,10 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
 // Initialise the Naming Service.
 
 int
-Clerk_i::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
+Clerk_i::init_naming_service (void)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   ACE_TRY
     {
       // Initialize the POA.
@@ -531,7 +533,7 @@ Clerk_i::init (int argc,
                       "IOR file not specified. Using the Naming Service instead\n"));
 
           // Initialize the Naming Service.
-          if (this->init_naming_service (ACE_TRY_ENV) !=0 )
+          if (this->init_naming_service () !=0 )
             return -1;
 
           // Get a reference to the Server Naming context and the

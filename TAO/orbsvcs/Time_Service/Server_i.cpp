@@ -328,10 +328,12 @@ Server_i::init (int argc,
 int
 Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
+  int retval = this->orb_manager_.run (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
                       -1);
-  ACE_CHECK_RETURN (0);
   return 0;
 }
