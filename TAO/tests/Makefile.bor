@@ -27,6 +27,7 @@ DIRS = \
 	Param_Test \
         POA \
 	Policies \
+        Portable_Interceptors \
 	RTCORBA \
 	Timed_Buffered_Oneways \
 	Timeout
