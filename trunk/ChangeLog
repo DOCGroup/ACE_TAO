@@ -26,15 +26,23 @@ Wed Apr 14 17:28:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Wed Apr 14 23:03:20 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/DLL_Manager.cpp: Additional validation in
-	DLL_Handle::symbol.
-	* ace/Mem_Map.cpp: QNX NTO cannot mmap regular files, but can map
-	shared memory. Mem_Map was modified for QNX NTO the same it was done for
-	CHORUS, namely ::open and ::unlink was replaced by resp. ::shm_open
-	and ::shm_unlink in QNX NTO section. This is only a partial bugfix, as
-	one it prevents mapping ordinary files.
-	* tests/Mem_Map_Test.cpp: ::open in QNX NTO  sections was replaced by
-	Mem_Map::open to ensure ::shm_open is invoked.
+	* ace/DLL_Manager.cpp:
+
+	  Additional validation in DLL_Handle::symbol.
+
+	* ace/Mem_Map.cpp:
+
+	  QNX NTO cannot mmap regular files, but can map shared
+	  memory.  Mem_Map was modified for QNX NTO the same it was done
+	  for CHORUS, namely ::open and ::unlink was replaced by
+	  resp. ::shm_open and ::shm_unlink in QNX NTO section. This is
+	  only a partial bugfix, as one it prevents mapping ordinary
+	  files.
+
+	* tests/Mem_Map_Test.cpp:
+
+	  ::open in QNX NTO  sections was replaced by Mem_Map::open to
+	  ensure ::shm_open is invoked.
 
 Wed Apr 14 17:17:22 2004  Steve Huston  <shuston@riverace.com>
 
