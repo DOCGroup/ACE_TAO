@@ -317,7 +317,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
 
           ACE_THROW (CORBA::INV_OBJREF
                      (CORBA::SystemException::_tao_minor_code
-                      (TAO_DEFAULT_MINOR_CODE, EINVAL),
+                      (TAO::VMCID, EINVAL),
                       CORBA::COMPLETED_NO));
         }
       else
