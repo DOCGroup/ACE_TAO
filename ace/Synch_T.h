@@ -318,7 +318,10 @@ public:
   // = Initialization and termination methods.
   ACE_Guard (ACE_LOCK &l, int block = 1): lock_ (&l)
     {
-      this->owner_ = block ? this->acquire () : this->tryacquire ();
+      if (block)
+        this->acquire ();
+      else
+        this->tryacquire ();
     }
   // Implicitly and automatically acquire (or try to acquire) the
   // lock.
