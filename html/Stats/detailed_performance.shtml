@@ -166,6 +166,21 @@
 	    <A HREF="data/Thread_Pool.txt">[Download]</A>
 	  </TD>
 	</TR>
+	<TR>
+	  <TD>AMH_Single_Threaded</TD>
+	    <TD><A HREF="images/AMH_Single_Threaded.png">
+		<IMG ALT="AMH" SRC="images/thumbnails/AMH_Single_Threaded.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_AMH_Single_Threaded.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/AMH_Single_Threaded.txt">[Download]</A>
+	  </TD>
+	</TR>
 	</TBODY>
       </TABLE>
     </DIV>
