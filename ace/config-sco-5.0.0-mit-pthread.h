@@ -1,26 +1,14 @@
-/* -*- C++ -*- */
-// $Id$
-
 // The following configuration file is designed to work for SCO UNIX
-// version 4.2 without threads.
+// version 5.0 with MIT pthreads.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-#if ! defined (__ACE_INLINE__)
-#define __ACE_INLINE__
-#endif /* ! __ACE_INLINE__ */
-
 // Compiling for SCO.
 #if !defined (SCO)
 #define SCO
+#define	_SVID3
 #endif /* SCO */
-
-#define __ACE_INLINE__
-
-#if defined (__ACE_INLINE__)
-#define ACE_HAS_INLINED_OSCALLS
-#endif /* __ACE_INLINE__ */
 
 #if defined (SCO) && !defined (MAXPATHLEN)
 #define MAXPATHLEN 1023
@@ -30,29 +18,27 @@
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
-#define ACE_LACKS_UNIX_DOMAIN_SOCKETS
-#define ACE_LACKS_SYSCALL
-#define ACE_LACKS_STRRECVFD
-#define ACE_LACKS_MMAP
-#define ACE_LACKS_SOCKETPAIR
-#define ACE_HAS_SEMUN
-#define ACE_LACKS_MSYNC
-#define ACE_LACKS_MADVISE
-#define ACE_NEEDS_WRITEV
-#define ACE_NEEDS_READV
-#define ACE_NEEDS_FTRUNCATE
+//#define ACE_LACKS_SYSCALL
+//#define ACE_LACKS_STRRECVFD
+//#define ACE_NEEDS_FTRUNCATE
 #define ACE_LACKS_RLIMIT
-#define ACE_LACKS_RECVMSG
-#define ACE_LACKS_SENDMSG
+#define ACE_LACKS_MADVISE
+
+#define ACE_HAS_REENTRANT_FUNCTIONS
 
 // Compiler doesn't support static data member templates.
 //#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
+#define	ACE_HAS_SVR4_DYNAMIC_LINKING
+#define ACE_HAS_AUTOMATIC_INIT_FINI
+
+// Platform supports Term Ioctls
+#define ACE_HAS_TERM_IOCTLS
 
 // Platform supports recvmsg and sendmsg.
-//#define ACE_HAS_MSG
+#define ACE_HAS_MSG
 
 // Compiler/platform contains the <sys/syscall.h> file.
 //#define ACE_HAS_SYSCALL_H
@@ -71,7 +57,7 @@
 //#define ACE_LACKS_T_ERRNO
 
 // Compiler/platform supports poll().
-#define ACE_HAS_POLL
+// #define ACE_HAS_POLL
 
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
@@ -98,10 +84,16 @@
 //#define ACE_HAS_GETRUSAGE
 
 // Platform uses int for select() rather than fd_set.
-#define ACE_SELECT_USES_INT
+#define ACE_HAS_SELECT_H
 
 // Platform has prototypes for ACE_TLI.
-//#define ACE_HAS_TLI_PROTOTYPES
+#define ACE_HAS_TLI
+#define	ACE_HAS_SVR4_TLI
+#define ACE_HAS_TLI_PROTOTYPES
+#define	ACE_HAS_TIMOD_H
+#define	ACE_HAS_TIUSER_H
+#define	ACE_LACKS_T_ERRNO
+
 // Platform has the XLI version of ACE_TLI.
 // #define ACE_HAS_XLI
 
@@ -111,5 +103,39 @@
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
+
+#define ACE_HAS_SIGINFO_T
+#define	ACE_HAS_UCONTEXT_T
+
+#define	ACE_NEEDS_SYSTIME_H
+#define ACE_HAS_INLINED_OSCALLS
+
+#define	ACE_HAS_STRBUF_T
+#define	ACE_HAS_STREAMS
+//#define	ACE_HAS_STREAM_PIPES
+
+// Threads
+#define	ACE_HAS_THREADS
+#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#define	ACE_HAS_PTHREADS
+#define	ACE_MT_SAFE
+#define	ACE_HAS_PTHREAD_T
+#define	ACE_HAS_SIGWAIT
+//#define	ACE_HAS_ONEARG_SIGWAIT
+//#define	ACE_HAS_PTHREAD_YIELD_VOID_PTR
+//#define	ACE_HAS_YIELD_VOID_PTR
+//#define	ACE_HAS_PTHREAD_ATTR_INIT
+//#define	ACE_HAS_PTHREAD_ATTR_DESTROY
+//#define	ACE_HAS_PTHREAD_DSTATE_PTR
+//#define	ACE_HAS_PTHREAD_EQUAL
+//#define	ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
+#define ACE_LACKS_THREAD_PROCESS_SCOPING
+//#define ACE_LACKS_THREAD_STACK_ADDR
+//#define ACE_LACKS_KEYDELETE
+#define ACE_LACKS_CONDATTR_PSHARED
+
+#define	ACE_HAS_POSIX_TIME
+
+#include <pthread.h>
 
 #endif /* ACE_CONFIG_H */
