@@ -62,10 +62,10 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   static ACE_UINT32 diff_usec (ACE_UINT64 before, ACE_UINT64 after);
 
   /// Set the base time value.
-  void base_time (ACE_hrtime_t time);
+  void base_time (ACE_UINT64 time);
 
   /// Set the end time value.
-  void end_time (ACE_hrtime_t time);
+  void end_time (ACE_UINT64 time);
 
   /// Record a sample
   int sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time);
