@@ -123,7 +123,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
       _tao_call.start (ACE_TRY_ENV);
       ACE_CHECK_RETURN (_tao_retval);
 
-      CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+      CORBA::Short flag = 131;
 
       _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                                ACE_TRY_ENV);
@@ -297,7 +297,7 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
           _tao_call.start (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+          CORBA::Short flag = 131;
 
           _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                                     ACE_TRY_ENV);
@@ -439,7 +439,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
       _tao_call.start (ACE_TRY_ENV);
       ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);

@@ -351,7 +351,7 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -514,7 +514,7 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -677,7 +677,7 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -839,7 +839,7 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1004,7 +1004,7 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1167,7 +1167,7 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1330,7 +1330,7 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -3654,7 +3654,7 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
