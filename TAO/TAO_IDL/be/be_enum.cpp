@@ -34,6 +34,7 @@ be_enum::be_enum (UTL_ScopedName *n, UTL_StrList *p)
     UTL_Scope (AST_Decl::NT_enum),
     member_count_ (-1)
 {
+#if 0
   // computes the repoID
   compute_repoID ();
 
@@ -45,6 +46,7 @@ be_enum::be_enum (UTL_ScopedName *n, UTL_StrList *p)
 
   // compute the flattened fully scoped name
   compute_flatname ();
+#endif
 }
 
 // compute total number of members
@@ -260,7 +262,7 @@ be_enum::gen_encapsulation (void)
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
-  
+
   cs = cg->outstream ();
   cs->indent (); // start from whatever indentation level we were at
 
@@ -312,7 +314,7 @@ be_enum::tc_encap_len (void)
   if (this->encap_len_ == -1) // not computed yet
     {
       long slen;
- 
+
       // Macro to avoid "warning: unused parameter" type warning.
       ACE_UNUSED_ARG (slen);
 

@@ -81,12 +81,15 @@ be_type::compute_tc_name (void)
 UTL_ScopedName *
 be_type::tc_name (void)
 {
+  if (!this->tc_name_)
+    compute_tc_name ();
+
   return this->tc_name_;
 }
 
 // return the type name using the ACE_NESTING macro
 char *
-be_type::nested_type_name (be_decl *d)
+be_type::nested_type_name (be_decl *d, char *suffix)
 {
   // some compilers do not like generating a fully scoped name for a type that
   // was defined in the same enclosing scope in which it was defined. For such,
@@ -106,6 +109,7 @@ be_type::nested_type_name (be_decl *d)
   // t : This is our enclosing scope (if one exists)
   //
 
+  ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
   if (this->is_nested ()) // if we are nested
     {
 	  // get our enclosing scope
@@ -121,11 +125,14 @@ be_type::nested_type_name (be_decl *d)
 		  if (!ACE_OS::strcmp (t->fullname (), d->fullname ()))
 			{
 			  // we are the same, generate the ACE_NESTED_CLASS macro
-			  ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
 			  ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
 			  ACE_OS::strcat (macro, t->fullname ());
 			  ACE_OS::strcat (macro, ",");
 			  ACE_OS::strcat (macro, this->local_name ()->get_string ());
+              if (suffix)
+                {
+                  ACE_OS::strcat (macro, suffix);
+                }
 			  ACE_OS::strcat (macro, ")");
 			  return macro;
 			}
@@ -135,7 +142,12 @@ be_type::nested_type_name (be_decl *d)
 
   // not nested OR not defined in the same scope as "d" or its
   // ancestors
-  return (char *) this->fullname ();
+  ACE_OS::sprintf (macro, "%s", this->fullname ());
+  if (suffix)
+    {
+      ACE_OS::strcat (macro, suffix);
+    }
+  return macro;
 }
 
 // Narrowing

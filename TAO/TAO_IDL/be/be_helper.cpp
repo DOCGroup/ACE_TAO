@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_helper.cpp
 //
@@ -11,9 +11,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -26,7 +26,7 @@ static const char copyright [] =
 // University Computer Science's Distributed Object Computing Group.\n\
 //\n\
 // Information on TAO is available at\n\
-//                 http://www.cs.wustl.edu/~schmidt/TAO.html\n"; 
+//                 http://www.cs.wustl.edu/~schmidt/TAO.html\n";
 
 TAO_NL::TAO_NL (void)
 {
@@ -135,8 +135,56 @@ TAO_OutStream::indent (void)
   return 0;
 }
 
+// macro generation
+int
+TAO_OutStream::gen_ifdef_macro (const char *flatname, const char *suffix)
+{
+  static char macro [NAMEBUFSIZE];
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (macro, "_%s_", cg->upcase (flatname));
+  if (suffix)
+    {
+      ACE_OS::sprintf (macro, "%s_%s_", macro, cg->upcase (suffix));
+    }
+
+  // append a suffix representing the stream type
+  switch (this->st_)
+    {
+    case TAO_OutStream::TAO_CLI_HDR:
+      ACE_OS::strcat (macro, "CH_");
+      break;
+    case TAO_OutStream::TAO_CLI_INL:
+      ACE_OS::strcat (macro, "CI_");
+      break;
+    case TAO_OutStream::TAO_CLI_IMPL:
+      ACE_OS::strcat (macro, "CS_");
+      break;
+    case TAO_OutStream::TAO_SVR_HDR:
+      ACE_OS::strcat (macro, "SH_");
+      break;
+    case TAO_OutStream::TAO_SVR_INL:
+      ACE_OS::strcat (macro, "SI_");
+      break;
+    case TAO_OutStream::TAO_SVR_IMPL:
+      ACE_OS::strcat (macro, "SS_");
+      break;
+    }
+  *this << "\n#if !defined (" << macro << ")\n";
+  *this << "#define " << macro << "\n\n";
+  return 0;
+}
+
+int
+TAO_OutStream::gen_endif (void)
+{
+  *this << "\n#endif // end #if !defined\n\n";
+  return 0;
+}
+
 // printf style variable argument print
-int 
+int
 TAO_OutStream::print (const char *format, ...)
 {
   int result = 0;
@@ -192,4 +240,3 @@ TAO_OutStream::operator<< (AST_Expression *expr)
 {
   return this->print (expr);
 }
-

@@ -56,6 +56,7 @@ be_array::be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims)
       this->set_name (myname);
     }
 
+#if 0
   // computes the repoID
   compute_repoID ();
 
@@ -67,7 +68,7 @@ be_array::be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims)
 
   // compute the flattened fully scoped name
   compute_flatname ();
-
+#endif
 }
 
 // Code generation
