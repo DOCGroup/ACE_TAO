@@ -174,6 +174,54 @@ extern int t_errno;
 # define ENOTSUP ENOSYS  /* Operation not supported. */
 #endif /* !ENOTSUP */
 
+#if !defined (ESUCCESS)
+#  define ESUCCESS 0
+#endif /* !ESUCCESS */
+
+#if !defined (EIDRM)
+#  define EIDRM 0
+#endif /* !EIDRM */
+
+#if !defined (ENFILE)
+#  define ENFILE EMFILE /* No more socket descriptors are available. */
+#endif /* !ENFILE */
+
+#if !defined (ECOMM)
+   // Not the same, but ECONNABORTED is provided on NT.
+#  define ECOMM ECONNABORTED
+#endif /* ECOMM */
+
+#if !defined (WNOHANG)
+#  define WNOHANG 0100
+#endif /* !WNOHANG */
+
+#if !defined (EDEADLK)
+#  define EDEADLK 1000 /* Some large number.... */
+#endif /* !EDEADLK */
+
+#if !defined (ENXIO)     /* Needed in SOCK_Dgram_Mcast */
+#   define ENXIO  6
+#endif /* ENXIO */
+
+#if !defined (PIPE_BUF)
+#  define PIPE_BUF 5120
+#endif /* PIPE_BUF */
+
+#define LOCALNAME 0
+#define REMOTENAME 1
+
+#if !defined (ETIMEDOUT) && defined (ETIME)
+#  define ETIMEDOUT ETIME
+#endif /* ETIMEDOUT */
+
+#if !defined (ETIME) && defined (ETIMEDOUT)
+#  define ETIME ETIMEDOUT
+#endif /* ETIMED */
+
+#if !defined (EBUSY)
+#  define EBUSY ETIME
+#endif /* EBUSY */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
