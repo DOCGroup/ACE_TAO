@@ -487,12 +487,12 @@ public:
   //                                     argument is not modified.
 
   /**
-   * Create a new thread, which executes <func>.
+   * Create a new thread, which executes <func> with argument <arg>.
    * Returns: on success a unique group id that can be used to control
    * other threads added to the same group.  On failure, returns -1.
    */
   int spawn (ACE_THR_FUNC func,
-             void *args = 0,
+             void *arg = 0,
              long flags = THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
              ACE_thread_t * = 0,
              ACE_hthread_t *t_handle = 0,
@@ -532,7 +532,7 @@ public:
    */
   int spawn_n (size_t n,
                ACE_THR_FUNC func,
-               void *args = 0,
+               void *arg = 0,
                long flags = THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
                long priority = ACE_DEFAULT_THREAD_PRIORITY,
                int grp_id = -1,
@@ -573,7 +573,7 @@ public:
   int spawn_n (ACE_thread_t thread_ids[],
                size_t n,
                ACE_THR_FUNC func,
-               void *args,
+               void *arg,
                long flags,
                long priority = ACE_DEFAULT_THREAD_PRIORITY,
                int grp_id = -1,
@@ -944,7 +944,7 @@ protected:
 
   /// Create a new thread (must be called with locks held).
   virtual int spawn_i (ACE_THR_FUNC func,
-                       void *args,
+                       void *arg,
                        long flags,
                        ACE_thread_t * = 0,
                        ACE_hthread_t *t_handle = 0,
