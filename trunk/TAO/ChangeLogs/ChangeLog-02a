@@ -32,6 +32,7 @@ Mon Jan 14 13:41:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
         * orbsvcs/orbsvcs/Makefile.CosNotification:
         * orbsvcs/orbsvcs/Makefile.ETCL:
+        * TAOACE_Static.dsw:
 
           Changes to ETCL and Notification Service files to complete
           the implementation of the ETCL library and to make the
@@ -39,6 +40,14 @@ Mon Jan 14 13:41:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
           instead of using the Trading Service's Trader Constraint
           Language, as it did previously.
 
+        * orbsvcs/tests/Notify/Notify_Tests.dsw:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+
+          Changes to Notification Service test coce submitted by
+          Chad Elliott <elliott_c@ociweb.com>.
+        
 Mon Jan 14 13:09:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
