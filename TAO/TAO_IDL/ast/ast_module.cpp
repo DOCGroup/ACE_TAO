@@ -260,11 +260,6 @@ AST_Module *AST_Module::fe_add_module (AST_Module *t)
       this->add_to_referenced (t, 
                                I_FALSE, 
                                t->local_name ());
-
-      // Can't redefine a module immediately inside its own scope.
-      t->add_to_referenced (t, 
-                            I_FALSE, 
-                            t->local_name ());
     }
 
   return t;
