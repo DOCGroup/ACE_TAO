@@ -3,6 +3,7 @@
 #ifndef BMDEVICE_CIDL
 #define BMDEVICE_CIDL
 
+#include "../BasicSP.idl"
 #include "BMDevice.idl"
 
 composition session BMDevice_Impl
