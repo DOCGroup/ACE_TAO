@@ -522,9 +522,23 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
       char *function_name = ACE_const_cast (char *,
                                             this->function_name_);
 
-      func = (void *(*)(ACE_Service_Object_Exterminator *))
-          ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
-                       ASYS_WIDE_STRING (function_name));
+      // According to the new ANSI C++ specification, casting a void*
+      // pointer to a function pointer is not allowed.  However,
+      // casting a void* pointer to an integer type that is large
+      // enough to hold the pointer value is legal.  I (Nanbor) chose
+      // to cast the return value to long since it should be large
+      // enough to hold the void* pointer's value on most platforms.
+      // I am not sure if casting a long value to a function pointer
+      // is legal or not (can't find a good explanation in spec) but
+      // SunC++, egcs, and KAI compilers, all of which are pretty
+      // close to (or, at least claim to conform with) the standard
+      // did not complain about this as an illegal pointer conversion.
+      long temp_ptr =
+        ACE_reinterpret_cast(long,
+                             ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
+                                            ASYS_WIDE_STRING (function_name)));
+      func = ACE_reinterpret_cast(void *(*)(ACE_Service_Object_Exterminator *),
+                                  temp_ptr);
 
       if (func == 0)
         {
