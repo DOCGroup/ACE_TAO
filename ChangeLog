@@ -1,3 +1,10 @@
+Fri Feb  1 21:08:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Framework_Component_Test.icc:
+        * tests/Vector_Test.icc: New Visual Age C++ test configurations.
+
+        * tests/tests.icp: Add new test configurations to the project.
+
 Fri Jan  1 19:33:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Vector.(h i cpp): Removed 'const' from the 2nd template

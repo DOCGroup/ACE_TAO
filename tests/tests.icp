@@ -114,6 +114,10 @@ subproject FlReactor_Test icc "FlReactor_Test.icc", ics "FlReactor_Test.ics"
 {
 }
 
+subproject Framework_Component_Test icc "Framework_Component_Test.icc", ics "Framework_Component_Test.ics"
+{
+}
+
 subproject Future_Set_Test icc "Future_Set_Test.icc", ics "Future_Set_Test.ics"
 {
 }
@@ -422,6 +426,10 @@ subproject Upgradable_RW_Test icc "Upgradable_RW_Test.icc", ics "Upgradable_RW_T
 {
 }
 
+subproject Vector_Test icc "Vector_Test.icc", ics "Vector_Test.ics"
+{
+}
+
 subproject XtReactor_Test icc "XtReactor_Test.icc", ics "XtReactor_Test.ics"
 {
 }
@@ -454,6 +462,7 @@ use Dynamic_Priority_Test
 use Enum_Interfaces_Test
 use Env_Value_Test
 use FlReactor_Test
+use Framework_Component_Test
 use Future_Set_Test
 use Future_Test
 use Handle_Set_Test
@@ -525,4 +534,6 @@ use TkReactor_Test
 use Tokens_Test
 use UPIPE_SAP_Test
 use Upgradable_RW_Test
+use Vector_Test
+use XtReactor_Test
 }
