@@ -1,15 +1,20 @@
+Mon Aug 20 13:14:00 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Fixed chdir commands for the auto_compile scripts.
+
 Mon Aug 20 14:33:31 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Message_Queue_T.cpp: If we timeout in the semaphore implementation
-	  of the message queue in wait_not_full_cond() or
- 	  wait_not_empty_cond() make sure to decrement the "waiters" count
- 	  accordingly!  Thanks to Patrick Rabau <Patrick.Rabau@htc.com>
- 	  for noticing this in the C++NPv1 book version!
+        * ace/Message_Queue_T.cpp: If we timeout in the semaphore implementation
+          of the message queue in wait_not_full_cond() or
+          wait_not_empty_cond() make sure to decrement the "waiters" count
+          accordingly!  Thanks to Patrick Rabau <Patrick.Rabau@htc.com>
+          for noticing this in the C++NPv1 book version!
 
 Mon Aug 20 07:01:31 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Synch_T.i (release): If owner_ == -1 then return
-	  -1.  Thanks to Don Hinton <dhinton@swan.fr> for suggesting this.
+        * ace/Synch_T.i (release): If owner_ == -1 then return
+          -1.  Thanks to Don Hinton <dhinton@swan.fr> for suggesting this.
 
 Mon Aug 20 13:18:51 2001  Steve Huston  <shuston@riverace.com>
 
