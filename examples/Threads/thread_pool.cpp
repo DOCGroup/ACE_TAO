@@ -186,7 +186,7 @@ main (int argc, char *argv[])
 	      argc, n_threads));
 
   // Create the worker tasks.
-  Thread_Pool thread_pool (ACE_Service_Config::thr_mgr (), 
+  Thread_Pool thread_pool (ACE_Thread_Manager::instance (), 
 			   n_threads);
 
   // Create work for the worker tasks to process in their own threads.
@@ -195,7 +195,7 @@ main (int argc, char *argv[])
   // Wait for all the threads to reach their exit point.
 
   ACE_DEBUG ((LM_DEBUG, "(%t) waiting with thread manager...\n"));
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG, "(%t) destroying worker tasks and exiting...\n"));
   return 0;

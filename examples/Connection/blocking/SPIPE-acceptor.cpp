@@ -43,12 +43,12 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       this->ar_.read (this->mb_, this->mb_.size ());
     }
   else
-    ACE_Service_Config::end_proactor_event_loop ();
+    ACE_Proactor::end_event_loop();
 }
 
 IPC_Server::IPC_Server (void)
   : n_threads_ (1),
-    done_handler_ (ACE_Sig_Handler_Ex (ACE_Service_Config::end_proactor_event_loop))
+    done_handler_ (ACE_Sig_Handler_Ex (ACE_Proactor::end_event_loop))
 {
   ACE_OS::strcpy (rendezvous_, __TEXT ("acepipe"));
 }
@@ -70,7 +70,7 @@ IPC_Server::init (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
 
   // Register to receive shutdowns.
-  else if (ACE_Service_Config::reactor ()->register_handler
+  else if (ACE_Reactor::instance()->register_handler
       (SIGINT, &this->done_handler_) == -1)
     return -1;
   else
@@ -104,7 +104,7 @@ IPC_Server::parse_args (int argc, char *argv[])
 	  ACE_DEBUG ((LM_DEBUG, "%s == %d.\n", 
 		      get_opt.optarg,
 		      n_threads_));
-	  ACE_Service_Config::proactor (2*n_threads_);
+	  ACE_Proactor::instance(2*n_threads_);
 	  // This is a lame way to tell the proactor how many threads
 	  // we'll be using.
 	  break;
@@ -123,10 +123,10 @@ IPC_Server::parse_args (int argc, char *argv[])
 static void *
 run_reactor_event_loop (void *)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_DEBUG ((LM_DEBUG, "(%t) worker thread starting\n"));
 
-  ACE_Service_Config::run_proactor_event_loop ();
+  ACE_Proactor::run_event_loop();
   return 0;
 }
 
@@ -134,7 +134,7 @@ int
 IPC_Server::svc (void)
 {
   // Performs the iterative server activities.
-  while (ACE_Service_Config::reactor_event_loop_done () == 0)
+  while (ACE_Reactor::event_loop_done() == 0)
     {
       Svc_Handler sh;
       
@@ -150,14 +150,14 @@ IPC_Server::svc (void)
 	  // Run single-threaded.
 	  if (n_threads_ <= 1)
 	    run_reactor_event_loop (0);
-	  else if (ACE_Service_Config::thr_mgr ()->spawn_n (n_threads_,
+	  else if (ACE_Thread_Manager::instance ()->spawn_n (n_threads_,
 							    run_reactor_event_loop,
 							    0, THR_NEW_LWP)
 		   == -1)
 	    {
 	      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
-	      ACE_Service_Config::thr_mgr ()->wait ();
+		  ACE_Thread_Manager::instance ()->wait ();
 	    }
 
 	  ACE_DEBUG ((LM_DEBUG, "(%t) main thread exiting.\n"));

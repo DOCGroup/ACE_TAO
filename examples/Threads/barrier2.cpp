@@ -245,14 +245,14 @@ main (int argc, char *argv[])
 
   
   Worker_Task<BARRIER_TYPE> *worker_task = 
-    new Worker_Task<BARRIER_TYPE> (ACE_Service_Config::thr_mgr (), 
+	  new Worker_Task<BARRIER_TYPE> (ACE_Thread_Manager::instance (), 
 				   /*n_threads*/ 0,0); 
   
   worker_task->Producer ();
 
   // Wait for all the threads to reach their exit point.
   ACE_DEBUG ((LM_DEBUG,"(%t) waiting with thread manager ...\n"));
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
   ACE_DEBUG ((LM_DEBUG,"(%t) delete worker task ...\n"));
 
   delete worker_task;

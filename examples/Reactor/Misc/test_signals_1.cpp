@@ -27,7 +27,7 @@ public:
     count--;
 
     if (count == 0)
-      ACE_Service_Config::end_reactor_event_loop ();
+      ACE_Reactor::end_event_loop();
 
     return 0;
   }
@@ -73,7 +73,7 @@ main (int, char *argv[])
   ACE_DEBUG ((LM_DEBUG, 
 	      "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
 
-  int result = my_config.run_reactor_event_loop ();
+  int result = ACE_Reactor::run_event_loop();
 
   ACE_DEBUG ((LM_DEBUG, "result = %d\n", result));
 

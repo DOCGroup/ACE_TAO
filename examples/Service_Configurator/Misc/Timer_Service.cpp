@@ -46,7 +46,7 @@ Timer_Service::init (int argc, char *argv[])
 
   // Register the timer to go off in 1 second, and then to go off
   // every <interval> seconds.
-  if (ACE_Service_Config::reactor ()->schedule_timer 
+  if (ACE_Reactor::instance()->schedule_timer 
       (this, 0, ACE_Time_Value (1), ACE_Time_Value (interval)) == -1)
     return -1;
   else
@@ -78,7 +78,7 @@ Timer_Service::handle_close (ACE_HANDLE,
 {
   ACE_DEBUG ((LM_DEBUG, "closing down the timer test\n"));
 
-  ACE_Service_Config::end_reactor_event_loop ();
+  ACE_Reactor::end_event_loop();
   return 0;
 }
 

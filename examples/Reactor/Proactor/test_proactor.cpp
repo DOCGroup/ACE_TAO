@@ -544,7 +544,7 @@ main (int argc, char *argv[])
 
   while (!error && !done)
     // dispatch events
-    error = ACE_Service_Config::proactor ()->handle_events ();
+    error = ACE_Proactor::instance()->handle_events ();
   
   return 0;
 }

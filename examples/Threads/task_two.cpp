@@ -121,7 +121,7 @@ main (int argc, char *argv[])
 		  i, (int) max_count, (int) wait_count));
 
       // Wait for all the tasks to exit.
-      ACE_Service_Config::thr_mgr ()->wait ();
+	  ACE_Thread_Manager::instance ()->wait ();
 
       // Delete the existing tasks.
       for (int k = 0; k < n_threads; k++)

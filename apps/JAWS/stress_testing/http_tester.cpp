@@ -8,7 +8,7 @@ Stats *Client_Parameters::stats;
 
 
 static void *client_thread(void *data) {
-	ACE_Thread_Control tc(ACE_Thread_Manager::instance());
+	ACE_Thread_Control tc(ACE_Thread_Manager::instance ());
   Client_Parameters *cp = (Client_Parameters *) data;
   float latency = 0, throughput;
   URL *u = cp->url;
@@ -100,7 +100,7 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
     // cerr << "The URL being requested is " << cp->url->get_filename() << endl;
     
 	
-    (ACE_Thread_Manager::instance())->spawn(client_thread, (void *) cp);
+    (ACE_Thread_Manager::instance ())->spawn(client_thread, (void *) cp);
     timer.stop();
     ACE_Profile_Timer::ACE_Elapsed_Time et;
     timer.elapsed_time(et);
@@ -108,7 +108,7 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
   }
   
   // Join the other threads..
-  (ACE_Thread_Manager::instance())->wait();
+  (ACE_Thread_Manager::instance ())->wait();
   // Now output the data for this test
   cout << id;
   Client_Parameters::stats->output();

@@ -157,7 +157,7 @@ int main (int argc, char *argv[])
   ACE_Thread_Manager thr_mgr;
 
   Client peer_connector (&thr_mgr);
-  Server peer_acceptor (&thr_mgr, ACE_Service_Config::reactor ());
+  Server peer_acceptor (&thr_mgr, ACE_Reactor::instance());
 
   // Establish the connection between Acceptor and Connector.
 

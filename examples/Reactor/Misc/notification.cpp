@@ -97,16 +97,16 @@ Thread_Handler::Thread_Handler (int delay,
   this->id_ = 0;
 
   if (ACE::register_stdin_handler (this,
-				   ACE_Service_Config::reactor (),
-				   ACE_Service_Config::thr_mgr ()) == -1)
+				   ACE_Reactor::instance(),
+				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
 
 #if !defined(CHORUS)
-  else if (ACE_Service_Config::reactor ()->register_handler (sig_set, this) == -1)
+  else if (ACE_Reactor::instance()->register_handler (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "register_handler"));
 #endif
 
-  else if (ACE_Service_Config::reactor ()->schedule_timer 
+  else if (ACE_Reactor::instance()->schedule_timer 
       (this, 0, Thread_Handler::delay_, Thread_Handler::interval_) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "schedule_timer"));
    
@@ -137,11 +137,11 @@ Thread_Handler::notify (ACE_Time_Value *timeout)
   // Just do something to test the ACE_Reactor's multi-thread
   // capabilities...
 
-  if (ACE_Service_Config::reactor ()->notify 
+  if (ACE_Reactor::instance()->notify 
       (this, ACE_Event_Handler::EXCEPT_MASK, timeout) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
 		       "notification::notify:exception"), -1);
-  else if (ACE_Service_Config::reactor ()->notify 
+  else if (ACE_Reactor::instance()->notify 
 	   (this, ACE_Event_Handler::WRITE_MASK, timeout) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
 		       "notification::notify:write"), -1);
@@ -166,7 +166,7 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
       {
 	  // would like to put this in handle_timeout(), but chorus
 	  // clock_gettime() does not seem to work in my version!
-	  ACE_Service_Config::end_reactor_event_loop();
+	  ACE_Reactor::end_event_loop();
       }
       else
       {
@@ -206,7 +206,7 @@ Thread_Handler::svc (void)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "notify"));
     }
 
-  ACE_Service_Config::reactor()->remove_handler(this, ALL_EVENTS_MASK);
+  ACE_Reactor::instance()->remove_handler(this, ALL_EVENTS_MASK);
   ACE_DEBUG ((LM_DEBUG, "(%t) exiting svc\n"));
   return 0;
 }
@@ -226,7 +226,7 @@ Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 		  "(%t) ******************** shutting down %n on signal %S\n", 
 		  signum));
       this->shutdown_ = 1;
-      ACE_Service_Config::end_reactor_event_loop ();
+      ACE_Reactor::end_event_loop();
     }
   return 0;
 }
@@ -289,7 +289,7 @@ main (int argc, char *argv[])
 
   Thread_Handler thr_handler (delay, interval, n_threads);
 
-  ACE_Service_Config::run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop();
   ACE_DEBUG ((LM_DEBUG, "exiting from main%a\n", 1));
   return 0;
 }

@@ -56,7 +56,7 @@ Pseudo_Barrier::wait (void)
 static void *
 worker (void *arg)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   Pseudo_Barrier &barrier = *(Pseudo_Barrier *) arg;
   
   // work
@@ -81,7 +81,7 @@ main (int argc, char **argv)
 {
   int n_threads = argc == 2 ? atoi (argv[1]) : 5;
 
-  ACE_Thread_Manager &tm = *ACE_Service_Config::thr_mgr ();
+  ACE_Thread_Manager &tm = *ACE_Thread_Manager::instance ();
   
   // synch object shared by all threads
   Pseudo_Barrier barrier (n_threads);

@@ -242,7 +242,7 @@ main (int, char *argv[])
 
   // Barrier synchronization: wait for the threads to exit, then exit
   // ourselves.
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
   return 0;
 }
 #else

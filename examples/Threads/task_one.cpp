@@ -79,12 +79,12 @@ main (int argc, char *argv[])
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
-  Barrier_Task barrier_task (ACE_Service_Config::thr_mgr (), 
+  Barrier_Task barrier_task (ACE_Thread_Manager::instance (), 
 			     n_threads, 
 			     n_iterations);
 
   // Wait for all the threads to reach their exit point.
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG, "(%t) done\n"));
   return 0;
