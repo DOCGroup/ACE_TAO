@@ -1,10 +1,13 @@
 #include "ace/Log_Msg.h"
 #include "serverC.h"
 #include "client_i.h"
+#include "ace/SString.h"
 
 ACE_RCSID (Callback,
            client,
            "$Id$")
+
+const char *cert_file = "cacert.pem";
 
 int
 main (int argc, char *argv[])
@@ -12,6 +15,10 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      ACE_TString env ("SSL_CERT_FILE=");
+      env += cert_file;
+      ACE_OS::putenv (env.c_str ());
+
       //
       // Initialize the ORB
       //
