@@ -52,6 +52,8 @@ ACE::out_of_handles (int error)
 #elif defined (sun)
       // On sun, we need to check for ENOSR also.
       error == ENOSR ||
+      // Without threads check for ENOTSUP
+      error == ENOTSUP ||
 #elif defined (__FreeBSD__)
       // On FreeBSD we need to check for EOPNOTSUPP (LinuxThreads) or
       // ENOSYS (libc_r threads) also.
