@@ -9,11 +9,11 @@ threads = 1
 
 # I(kitty) don't know anything about this compiler. Making it explicit.
 #
-templates = "explicit"
+templates = explicit
 
 # Turn on the proper flags for explicit template instantiation.
 #
-ifeq ("$(templates)","explicit")
+ifeq ($(templates),explicit)
   ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
     TEMPLATES_FLAG=-tnone
   endif

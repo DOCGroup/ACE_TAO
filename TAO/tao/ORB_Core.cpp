@@ -2949,4 +2949,7 @@ template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 #pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
 
+#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (VXWORKS))
+template TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX> * TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>::singleton_;
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -81,7 +81,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Timeout is <%u>\n"),
+                      ACE_TEXT ("TAO (%P|%t) - Timeout is <%u>\n"),
                       time_value.msec ()));
         }
     }

@@ -10,34 +10,46 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$iorfile  = PerlACE::LocalFile ("ec.ior");
+$ns_ior   = PerlACE::LocalFile ("ns.ior");
 $conffile = PerlACE::LocalFile ("ec" . "$PerlACE::svcconf_ext");
 
-unlink $iorfile;
+unlink $ns_ior;
+
+$NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
+                           "-o $ns_ior ");
 
 $T = new PerlACE::Process ("Service",
-                           "-ORBsvcconf $conffile -o $iorfile");
+                           "-ORBInitRef NameService=file://$ns_ior "
+                           . "-ORBsvcconf $conffile");
 
 $C = new PerlACE::Process ("Consumer",
-                           "file://$iorfile");
+                           "-ORBInitRef NameService=file://$ns_ior ");
 
 $S = new PerlACE::Process ("Supplier",
-                           "file://$iorfile");
+                           "-ORBInitRef NameService=file://$ns_ior ");
 
 
 
-$T->Spawn ();
+print STDOUT "Starting name server\n";
+$NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $T->Kill (); 
+if (PerlACE::waitforfile_timed ($ns_ior, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_ior>\n";
+    $NS->Kill (); 
     exit 1;
 }
 
+print STDOUT "Starting event server\n";
+$T->Spawn ();
+
+sleep 2;
+
+print STDOUT "Starting consumer\n";
 $C->Spawn ();
 
-sleep 5;
+sleep 1;
 
+print STDOUT "Starting supplier\n";
 $supplier = $S->SpawnWaitKill (120);
 
 if ($supplier != 0) {
@@ -59,6 +71,13 @@ if ($service != 0) {
     $status = 1;
 }
 
-unlink $iorfile;
+$nserver = $NS->TerminateWaitKill (5);
+
+if ($nserver != 0) {
+    print STDERR "ERROR: name server returned $nserver\n";
+    $status = 1;
+}
+
+unlink $ns_ior;
 
 exit $status;

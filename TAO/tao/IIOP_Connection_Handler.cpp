@@ -136,8 +136,8 @@ TAO_IIOP_Connection_Handler::open (void*)
         return -1;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("TAO (%P|%t) IIOP connection to peer ")
-                  ACE_LIB_TEXT ("<%s> on %d\n"),
+                  ACE_LIB_TEXT ("TAO (%P|%t) - Connection_Handler::open, IIOP ")
+                  ACE_LIB_TEXT ("connection to peer <%s> on %d\n"),
                   client, this->peer ().get_handle ()));
     }
 
@@ -164,8 +164,8 @@ TAO_IIOP_Connection_Handler::activate (long flags,
 {
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_LIB_TEXT ("TAO (%P|%t) IIOP_Connection_Handler::activate %d ")
-                 ACE_LIB_TEXT ("threads, flags = %d\n"),
+                 ACE_LIB_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::")
+                 ACE_LIB_TEXT ("activate %d threads, flags = %d\n"),
                  n_threads,
                  flags,
                  THR_BOUND));

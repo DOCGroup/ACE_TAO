@@ -370,6 +370,9 @@ ACE_HAS_LIMITED_RUSAGE_T                The rusage_t structure has
                                         only two fields.
 ACE_HAS_LIMITED_SELECT                  The select is unable to deal with
                                         large file descriptors.
+ACE_HAS_LOG_MSG_NT_EVENT_LOG            Platform supports Windows NT event
+                                        log so we can create an
+                                        ACE_Log_Msg_Backend to log to it.
 ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as
                                         a long constant.
 ACE_HAS_MALLOC_STATS                    Enabled malloc statistics
@@ -439,7 +442,7 @@ ACE_HAS_POSIX_NONBLOCK                  Platform supports POSIX
                                         O_NONBLOCK semantics
 ACE_HAS_POSIX_REALTIME_SIGNALS          Platform supports POSIX RT signals.
                                         Corresponds to _POSIX_REALTIME_SIGNALS
-                                        constant in <unistd.h>. 
+                                        constant in <unistd.h>.
 ACE_HAS_POSIX_SEM                       Platform supports POSIX
                                         real-time semaphores (e.g.,
                                         VxWorks and Solaris).  Corresponds
@@ -807,8 +810,8 @@ ACE_LACKS_PARAM_H                       Platform lacks <sys/param.h>
 ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filtering
                                         of multicast dgrams at the socket level.
                                         If == 1, ACE_SOCK_Dgram_Mcast will bind
-                                        the first joined multicast group to the 
-                                        socket, and all future joins on that 
+                                        the first joined multicast group to the
+                                        socket, and all future joins on that
                                         socket will fail with an error.
 ACE_LACKS_POSIX_PROTOTYPES              Platform lacks POSIX
                                         prototypes for certain System

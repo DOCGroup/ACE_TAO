@@ -3,6 +3,7 @@
 #include "Consumer.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/CosNamingC.h"
 
 ACE_RCSID(EC_Examples, Consumer, "$Id$")
 
@@ -36,13 +37,6 @@ Consumer::run (int argc, char* argv[])
       // the run() method.
       this->orb_ = orb.in ();
 
-      if (argc <= 1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Usage: Consumer <event_channel_ior>\n"));
-          return 1;
-        }
-
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -55,15 +49,30 @@ Consumer::run (int argc, char* argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Obtain the event channel, we could use a naming service, a
-      // command line argument or resolve_initial_references(), but
-      // this is simpler...
-      object =
-        orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
+      // Obtain the event channel from the naming service
+      CORBA::Object_var naming_obj =
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get the Naming Service.\n"),
+                          1);
+
+      CosNaming::NamingContext_var naming_context =
+        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup ("EventService");
+
+      CORBA::Object_var ec_obj =
+        naming_context->resolve (name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        RtecEventChannelAdmin::EventChannel::_narrow (object.in ()
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

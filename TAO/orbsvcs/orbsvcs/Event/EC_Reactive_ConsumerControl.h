@@ -68,6 +68,7 @@ public:
   /// Constructor.  It does not assume ownership of the <event_channel>
   /// parameter.
   TAO_EC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
+                                   const ACE_Time_Value &timeout,
                                    TAO_EC_Event_Channel *event_channel,
                                    CORBA::ORB_ptr orb);
 
@@ -95,6 +96,9 @@ private:
 private:
   /// The polling rate
   ACE_Time_Value rate_;
+
+  /// The polling timeout
+  ACE_Time_Value timeout_;
 
   /// The Adapter for the reactor events
   TAO_EC_ConsumerControl_Adapter adapter_;

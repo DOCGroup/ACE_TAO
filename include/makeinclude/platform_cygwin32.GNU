@@ -26,4 +26,9 @@ endif
 SONAME=
 SOVERSION=
 
+# Disable auto-import warnings. The Cygwin linker has a problem with imports
+# See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
+# for the details why to do this.
+LDFLAGS += -Wl,--enable-auto-import
+
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU

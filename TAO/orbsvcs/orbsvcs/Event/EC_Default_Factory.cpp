@@ -409,6 +409,32 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECConsumerControlTimeout")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              unsigned long timeout_ = ACE_OS::strtoul(opt, 0, 10);
+              this->consumer_control_timeout_.usec(timeout_);
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECSupplierControlTimeout")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              unsigned long timeout_ = ACE_OS::strtoul(opt, 0, 10);
+              this->supplier_control_timeout_.usec(timeout_);
+              arg_shifter.consume_arg ();
+            }
+        }
+
       else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECPushSupplierSet")) == 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -876,7 +902,7 @@ TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel* ec)
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
       ACE_Time_Value rate (0, this->consumer_control_period_);
-      return new TAO_EC_Reactive_ConsumerControl (rate, ec, orb.in ());
+      return new TAO_EC_Reactive_ConsumerControl (rate, consumer_control_timeout_, ec, orb.in ());
     }
   return 0;
 }
@@ -900,7 +926,7 @@ TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel* ec)
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
       ACE_Time_Value rate (0, this->supplier_control_period_);
-      return new TAO_EC_Reactive_SupplierControl (rate, ec, orb.in ());
+      return new TAO_EC_Reactive_SupplierControl (rate, supplier_control_timeout_, ec, orb.in ());
     }
   return 0;
 }

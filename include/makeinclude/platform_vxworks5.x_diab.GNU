@@ -113,7 +113,7 @@ endif
 ifeq ($(SHARED_LIBS),1)
   ACELIB = -L./
   #### There's no difference between non-shared and shared object code.
-  VSHDIR = .obj/
+  VSHDIR = $(VDIR)
 endif # shared_libs
 
 ifeq ($(static_libs),1)

@@ -1,3 +1,117 @@
+Wed Apr  9 17:12:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        List of changed gathered the last weeks by me and Mark Drijver
+        <mdrijver@remedy.nl>.
+
+        * Makefile.bor:
+          Removed nightlybuild because it is not needed anymore. Added
+          orbsvcs/examples to the list of directories to build with a full
+          build.
+
+        * orbsvcs/examples/Makefile.bor:
+        * orbsvcs/examples/RtEC/Makefile.bor:
+        * orbsvcs/examples/RtEC/Simple/EC_Simple_Consumer.bor:
+        * orbsvcs/examples/RtEC/Simple/EC_Simple_Service.bor:
+        * orbsvcs/examples/RtEC/Simple/EC_Simple_Supplier.bor:
+        * orbsvcs/examples/RtEC/Simple/Makefile.bor:
+        * orbsvcs/examples/Security/Makefile.bor:
+        * orbsvcs/examples/Security/Send_File/Makefile.bor:
+        * orbsvcs/examples/Security/Send_File/client.bor:
+        * orbsvcs/examples/Security/Send_File/server.bor:
+          Added these new BCB makefiles to build these examples with BCB.
+
+        * orbsvcs/examples/RtEC/Simple/Consumer.cpp:
+        * orbsvcs/examples/RtEC/Simple/Service.cpp:
+        * orbsvcs/examples/RtEC/Simple/Supplier.cpp:
+        * orbsvcs/examples/RtEC/Simple/run_test.pl:
+        * orbsvcs/examples/RtEC/Simple/README:
+          Extended this example so that the Naming Service is used to locate
+          the Event Service. This makes it a lot easier to use this test
+          because we don't have to copy the IOR of the Event Service to the
+          commandline options of the consumer and supplier.
+
+        * docs/cec_options.html:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+          When CECConsumerControl or CECSupplierControl is set to reactive the
+          consumer/supplier was called and when the call took more than 10ms
+          the consumer/supplier was assumed to be died. These 10ms was
+          hardcoded and couldn't be configured. This is a problem on a WAN
+          where just the method call can take 100ms. The CosEvent is extended
+          with CECConsumerControlTimeout and CECSupplierControlTimeout with
+          which this timeout can be specified.
+
+        * docs/ec_options.html:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+          When ECConsumerControl or ECSupplierControl is set to reactive the
+          consumer/supplier was called and when the call took more than 10ms
+          the consumer/supplier was assumed to be died. These 10ms was
+          hardcoded and couldn't be configured. This is a problem on a WAN
+          where just the method call can take 100ms. The RTEvent is extended
+          with ECConsumerControlTimeout and ECSupplierControlTimeout with
+          which this timeout can be specified.
+
+        * orbsvcs/tests/Makefile.bor:
+          Added Bug_1393_Regression to the list of directories to build.
+
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+          Only build this test when the Notify and Naming service are build.
+
+        * tao/Connection_Handler.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/Invocation.cpp:
+        * tao/Transport.cpp:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+          Improved debugging lines to make the logs more readable, some lines
+          where incompletely printed.
+
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Table.cpp:
+        * tao/ValueFactory_Map.cpp:
+          For VxWorks, AIX and HPUX explicit instantiate static template
+          member. Fixes problems when using implicit template instantiations.
+
+        * tao/Server_Strategy_Factory.h:
+          Converted documentation to doxygen style.
+
+        * tao/RTCORBA/RT_Mutex.h:
+        * tao/RTCORBA/RT_ORBInitializer.h:
+        * tao/RTCORBA/RT_Protocols_Hooks.h:
+        * tao/RTCORBA/RT_Stub.h:
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h:
+        * tao/RTCORBA/Thread_Pool.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+          Improved doxygen documentation.
+
+        * tests/CodeSets/libs/IBM1047_ISO8859/Makefile:
+        * tests/DLL_ORB/Makefile.Test_Client_Module:
+        * tests/DLL_ORB/Makefile.Test_Server_Module:
+          Set correct BUILD_DLL defines for Cygwin/MingW/Kylix.
+
+        * tests/TestUtils/TestCombinedThreads.h:
+          Don't forward declare ACE_CString but include correct file. Fixes a
+          VxWorks error.
+
 Wed Apr 09 17:54:59 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* tests/AMI_Buffering/admin.dsp:
@@ -8,7 +122,7 @@ Wed Apr  9 11:19:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Bug_1482_Regression/Client_Task.h:
 	* tests/Bug_1482_Regression/Client_Task.cpp: Minor memory
 	  management tweaks to prevent the test from dumping a core during
-	  exit. 
+	  exit.
 
 Wed Apr 09 16:41:18 2003  Simon McQueen  <sm@prismtechnologies.com>
 

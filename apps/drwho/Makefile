@@ -77,15 +77,28 @@ ifeq (1,$(VXWORKS))
    # drwho will not build on vxworks
  all clean realclean:
 	@echo drwho will not build on vxworks
- 
 else # VXWORKS
+
   ifeq (1,$(CHORUS))
      # since protocols/rwhod.h is not available under Chorus
      # drwho will not build on chorus
    all clean realclean:
 	@echo drwho will not build on chorus
-
   else # CHORUS
+
+    ifeq (1,$(mingw32))
+       # since protocols/rwhod.h is not available under mingw32
+       # drwho will not build on mingw32
+     all clean realclean:
+	@echo drwho will not build on mingw32
+    else # mingw32
+
+      ifeq (1,$(cygwin32))
+         # since protocols/rwhod.h is not available under cygwin32
+         # drwho will not build on cygwin32
+       all clean realclean:
+         @echo drwho will not build on cygwin32
+      else # cygwin32
 
 include		$(ACE_ROOT)/include/makeinclude/macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -102,9 +115,12 @@ drwho-client: $(addprefix $(VDIR),$(CLIENT-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
 
 drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OBJ))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+
+      endif #cygwin32
+    endif #mingw32
   endif #Chorus
 endif #VxWorks
- 
+
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------

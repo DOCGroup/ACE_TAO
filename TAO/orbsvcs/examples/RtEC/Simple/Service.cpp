@@ -3,6 +3,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Get_Opt.h"
+#include "orbsvcs/CosNamingC.h"
 
 ACE_RCSID(EC_Examples, Service, "$Id$")
 
@@ -23,14 +24,7 @@ main (int argc, char* argv[])
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Usage: Service [-o IOR_file_name]\n"));
-          return 1;
-        }
-
-      CORBA::Object_var object =
+	  CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var poa =
@@ -42,7 +36,21 @@ main (int argc, char* argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_EC_Event_Channel_Attributes attributes (poa.in (),
+	  // Obtain the naming service
+      CORBA::Object_var naming_obj =
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get the Naming Service.\n"),
+                          1);
+
+      CosNaming::NamingContext_var naming_context =
+        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+	  TAO_EC_Event_Channel_Attributes attributes (poa.in (),
                                                   poa.in ());
 
       TAO_EC_Event_Channel ec_impl (attributes);
@@ -53,12 +61,21 @@ main (int argc, char* argv[])
         ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      // Create a name.
+      CosNaming::Name name;
+      name.length (1);
+      name[0].id = CORBA::string_dup ("EventService");
+      name[0].kind = CORBA::string_dup ("");
+
+      // Register with the name server
+      naming_context->bind (name, event_channel.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Example code: How to write ior to file
       CORBA::String_var ior =
         orb->object_to_string (event_channel.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
-
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
         {
