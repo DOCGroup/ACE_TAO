@@ -1,3 +1,9 @@
+Wed Apr 04 07:47:48 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * etc/ace_qos.doxygen:
+        * bin/generate_doxygen.pl:
+          Generate doxygen documentation for ACE QoS API
+
 Tue Apr 03 19:55:26 2001  Steve Huston  <shuston@riverace.com>
 
         * bin/auto_compile: Added a -make_type option - the argument to
