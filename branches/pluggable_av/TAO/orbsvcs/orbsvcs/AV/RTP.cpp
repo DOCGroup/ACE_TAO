@@ -55,7 +55,7 @@ TAO_AV_RTP::handle_input (ACE_Message_Block *&data,
     }
   TAO_AV_RTP::rtphdr header;
   header = *rh;
-  data->rd_ptr (sizeof (rtphdr));
+  //  data->rd_ptr (sizeof (rtphdr));
   ACE_NEW_RETURN (frame_info,
                   TAO_AV_frame_info,
                   -1);
@@ -89,36 +89,43 @@ TAO_AV_RTP::write_header (rtphdr &header,
 }
 
 // TAO_AV_RTP_Object
+           
 int
 TAO_AV_RTP_Object::handle_input (void)
 {
-  ACE_Message_Block *data = 0;
   TAO_AV_frame_info *frame_info = 0;
 
   // Handles the incoming RTP packet input.
 
-  size_t bufsiz = 2*this->transport_->mtu ();
-  ACE_NEW_RETURN (data,
-                  ACE_Message_Block (bufsiz),
-                  -1);
-  int n = this->transport_->recv (data->rd_ptr (),bufsiz);
+//   size_t bufsiz = 2*this->transport_->mtu ();
+//   ACE_NEW_RETURN (data,
+//                   ACE_Message_Block (bufsiz),
+//                   -1);
+  int n = this->transport_->recv (this->data_->rd_ptr (),this->data_->size ());
   if (n == 0)
     ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
   if (n < 0)
     ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
-  data->wr_ptr (n);
+  char *wr_ptr = this->data_->rd_ptr ()+n;
+  this->data_->wr_ptr (wr_ptr);
   ACE_Addr *addr = this->transport_->get_peer_addr ();
 
-  int result = TAO_AV_RTP::handle_input (data,
+  int result = TAO_AV_RTP::handle_input (this->data_,
                                          frame_info);
   if (result < 0)
     return 0;
-  result = this->callback_->receive_frame (data,
+  result = this->control_object_->handle_control_input (this->data_,
+                                                        *addr);
+  if (result < 0)
+    return 0;
+
+  char *rd_ptr = this->data_->rd_ptr ()+sizeof (rtphdr);
+  this->data_->rd_ptr (rd_ptr);
+  result = this->callback_->receive_frame (this->data_,
                                            frame_info,
                                            *addr);
-
-  this->control_object_->handle_control_input (data->duplicate (),
-                                               *addr);
+  rd_ptr = this->data_->rd_ptr ()-sizeof (rtphdr);
+  this->data_->rd_ptr (rd_ptr);
   return 0;
 }
 
@@ -206,9 +213,14 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
 TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport),
-   sequence_num_ (0)
+   sequence_num_ (0),
+   control_object_ (0),
+   data_ (0)
 {
   this->sequence_num_ = ACE_OS::rand ();
+  // Allocate a static message block.
+  ACE_NEW (data_,
+           ACE_Message_Block (2*transport->mtu ()));
 }
 
 TAO_AV_RTP_Object::~TAO_AV_RTP_Object (void)

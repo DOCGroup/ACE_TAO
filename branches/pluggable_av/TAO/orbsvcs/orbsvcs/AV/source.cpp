@@ -320,7 +320,7 @@ TAO_AV_SourceManager::demux (ACE_UINT32 srcid, ACE_UINT32 addr, ACE_UINT16 seq)
     s->cs (seq);
     //   @@@Naga:We should take care of this using a policy for the
     // number of packets to be validated before we accept a source.
-    //    return  (0);
+    return  (0);
   } else {
     /*
      * check for a srcid conflict or loop:

@@ -625,7 +625,8 @@ TAO_AV_RTCP_Object::handle_input (void)
   if (n < 0)
     ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
   data->wr_ptr (n);
-  this->callback_->receive_control_frame (data);
+  ACE_Addr *peer_addr = this->transport_->get_peer_addr ();
+  this->callback_->receive_control_frame (data,*peer_addr);
   return 0;
 }
 
@@ -684,8 +685,8 @@ int
 TAO_AV_RTCP_Object::handle_control_input (ACE_Message_Block *frame,
                                           const ACE_Addr &peer_address)
 {
-  frame->rd_ptr ((size_t)0);
-  // Since the rd_ptr would have been moved ahead.
+//   frame->rd_ptr ((size_t)0);
+//   // Since the rd_ptr would have been moved ahead.
   return this->callback_->receive_frame (frame,
                                          0,
                                          peer_address);
@@ -803,11 +804,17 @@ TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
                                      TAO_AV_frame_info *,
                                      const ACE_Addr &peer_address)
 {
-  TAO_AV_RTP::rtphdr *rh = (TAO_AV_RTP::rtphdr *)frame->rd_ptr ();
-  frame->rd_ptr (sizeof (TAO_AV_RTP::rtphdr));
-  this->demux (rh,
-               frame,
-               peer_address);
+  char *buf = frame->rd_ptr ();
+  TAO_AV_RTP::rtphdr *rh = (TAO_AV_RTP::rtphdr *)buf;
+  char *rd_ptr = frame->rd_ptr ()+sizeof (TAO_AV_RTP::rtphdr);
+  frame->rd_ptr (rd_ptr);
+  int result = this->demux (rh,
+                            frame,
+                            peer_address);
+  if (result < 0)
+    return result;
+  rd_ptr = frame->rd_ptr ()-sizeof (TAO_AV_RTP::rtphdr);
+  frame->rd_ptr (rd_ptr);
   return 0;
 }
 

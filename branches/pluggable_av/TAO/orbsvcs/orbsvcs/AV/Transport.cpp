@@ -523,6 +523,29 @@ TAO_AV_Core::init_flow_protocol_factories (void)
       rtcp_item->factory (rtcp_flow_factory);
 
       this->flow_protocol_factories_.insert (rtcp_item);
+
+      TAO_AV_Flow_Protocol_Factory *sfp_flow_factory = 0;
+      TAO_AV_Flow_Protocol_Item *sfp_item = 0;
+
+      sfp_flow_factory = 
+        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance ("SFP_Flow_Factory");
+      if (sfp_flow_factory == 0)
+        {
+          if (TAO_debug_level)
+            ACE_ERROR ((LM_WARNING,
+                        "(%P|%t) WARNING - No %s found in Service Repository."
+                        "  Using default instance.\n",
+                        "SFP Flow Factory"));
+
+          ACE_NEW_RETURN (sfp_flow_factory,
+                          TAO_AV_SFP_Factory,
+                          -1);
+        }
+
+      ACE_NEW_RETURN (sfp_item, TAO_AV_Flow_Protocol_Item ("SFP_Flow_Factory"), -1);
+      sfp_item->factory (sfp_flow_factory);
+
+      this->flow_protocol_factories_.insert (sfp_item);
     }
   return 0;
 }
