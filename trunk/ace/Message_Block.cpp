@@ -16,7 +16,9 @@ ACE_Message_Block::data_block (ACE_Data_Block *db)
 {
   ACE_TRACE ("ACE_Data_Block::data_block");
   if (this->data_block_ != 0)
-    this->data_block_->release ();
+    // This call passes a 0 into release since we don't want to delete
+    // <this> at this point.
+    this->data_block_->release (0);
 
   this->data_block_ = db;
 
@@ -184,9 +186,6 @@ ACE_Message_Block::~ACE_Message_Block (void)
 {
   ACE_TRACE ("ACE_Message_Block::~ACE_Message_Block");
 
-  if (this->data_block ())
-    this->data_block ()->release ();
-
   // Free up all the continuation messages.
   if (this->cont_)
     {
@@ -196,6 +195,10 @@ ACE_Message_Block::~ACE_Message_Block (void)
 
   this->prev_ = 0;
   this->next_ = 0;
+
+  // This must come last since it may delete <this>.
+  if (this->data_block ())
+    this->data_block ()->release (this);
 }
 
 ACE_Data_Block::ACE_Data_Block (void)
@@ -412,48 +415,46 @@ ACE_Message_Block::init_i (size_t size,
 }
 
 ACE_Data_Block *
-ACE_Data_Block::release (void)
+ACE_Data_Block::release_i (ACE_Message_Block *mb)
 {
   ACE_TRACE ("ACE_Data_Block::release");
 
-  ACE_Data_Block *result;
+  ACE_ASSERT (this->reference_count_ >= 0);
+
+  ACE_Data_Block *result = 0;
+
+  this->reference_count_--;
+
+  if (this->reference_count_ == 0)
+    {
+      delete this;
+      // We need to delete <mb> here since the lock will be held
+      // correctly at this point, which protects against race
+      // conditions in multi-threaded programs.  Note that if <mb> is
+      // 0 there's no harm in deleting it.
+      delete mb;
+    }
+  else // if (this->reference_count_ > 0)
+    result = this;
+
+  return result;
+}
+
+ACE_Data_Block *
+ACE_Data_Block::release (ACE_Message_Block *mb)
+{
+  ACE_TRACE ("ACE_Data_Block::release");
 
   // If there's a locking strategy then we need to acquire the lock
   // before decrementing the count.
   if (this->locking_strategy_)
     {
-      this->locking_strategy_->acquire ();
+      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->locking_strategy_, 0);
 
-      ACE_ASSERT (this->reference_count_ > 0);
-
-      this->reference_count_--;
-
-      if (this->reference_count_ == 0)
-	result = 0;
-      else // if (this->reference_count_ > 0)
-	result = this;
-
-      this->locking_strategy_->release ();
+      return this->release_i (mb);
     }
   else
-    {
-      ACE_ASSERT (this->reference_count_ >= 0);
-
-      this->reference_count_--;
-
-      if (this->reference_count_ == 0)
-	result = 0;
-      else // if (this->reference_count_ > 0)
-	result = this;
-    }
-
-  // We must delete this outside the scope of the locking_strategy_
-  // since otherwise we'd be trying to "release" through a deleted
-  // pointer!
-  if (result == 0)
-    delete this;
-
-  return result; 
+    return this->release_i (mb);
 }
 
 ACE_Message_Block *
@@ -461,16 +462,12 @@ ACE_Message_Block::release (void)
 {
   ACE_TRACE ("ACE_Message_Block::release");
 
-  ACE_Message_Block *result = 0;
-
-  this->data_block_ = this->data_block ()->release ();
+  this->data_block_ = this->data_block ()->release (this);
 
   if (this->data_block_ == 0)
-    delete this;
+    return 0;
   else
-    result = this;
-
-  return result;
+    return this;
 }
 
 /* static */ ACE_Message_Block *
@@ -494,9 +491,8 @@ ACE_Data_Block::duplicate (void)
   if (this->locking_strategy_)
     {
       // We need to acquire the lock before incrementing the count.
-      this->locking_strategy_->acquire ();
+      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->locking_strategy_, 0);
       this->reference_count_++;
-      this->locking_strategy_->release ();
     }
   else
     this->reference_count_++;

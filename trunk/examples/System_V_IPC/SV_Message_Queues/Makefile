@@ -68,8 +68,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Synch_T.i \
  $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/Thread.i \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Containers.h \
+ $(WRAPPER_ROOT)/ace/Containers.i \
  $(WRAPPER_ROOT)/ace/Signal.i \
  $(WRAPPER_ROOT)/ace/SV_Message_Queue.h \
  $(WRAPPER_ROOT)/ace/SV_Message.h \
@@ -118,8 +118,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Synch_T.i \
  $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/Thread.i \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Containers.h \
+ $(WRAPPER_ROOT)/ace/Containers.i \
  $(WRAPPER_ROOT)/ace/Signal.i \
  $(WRAPPER_ROOT)/ace/Typed_SV_Message_Queue.h \
  $(WRAPPER_ROOT)/ace/SV_Message_Queue.h \

@@ -71,8 +71,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Malloc_T.i \
  $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Containers.h \
+ $(WRAPPER_ROOT)/ace/Containers.i \
  $(WRAPPER_ROOT)/ace/Signal.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/Mem_Map.i \
@@ -107,8 +107,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Malloc_T.i \
  $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Containers.h \
+ $(WRAPPER_ROOT)/ace/Containers.i \
  $(WRAPPER_ROOT)/ace/Signal.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/Mem_Map.i \
