@@ -1,18 +1,18 @@
 Sun Jun 27 11:54:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
-	  Fixed misuse of ACE_TRY_ENV, thanks to Doug and David for
-	  pointing it out.
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+          Fixed misuse of ACE_TRY_ENV, thanks to Doug and David for
+          pointing it out.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	  Fixed type mismatch, it wasn't obvious except on NT, thanks to
-	  Marina for reporting this one.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Fixed type mismatch, it wasn't obvious except on NT, thanks to
+          Marina for reporting this one.
 
 Sun Jun 27 09:17:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/DynAny_i.cpp: added explicit template instantiations.
-          Thanks to Alex for reporting that they're necessary with
-          Sun C++ 5.0.  LynxOS' g++ also needs them.
+          Thanks to Alex for reporting that they're necessary without
+          __ACE_INLINE__.
 
 Sat Jun 26 19:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
