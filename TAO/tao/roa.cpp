@@ -68,7 +68,7 @@ ROA::ROA (CORBA::ORB_ptr owning_orb,
   TAO_Server_Strategy_Factory *f = orb_->server_factory ();
   TAO_ORB_Core* p = TAO_ORB_CORE::instance ();
   
-  this->objtable_ = f->object_lookup_strategy ();
+  this->objtable_ = f->create_object_table ();
 
   if (this->objtable_ != 0)
     p->root_poa (this);
