@@ -130,15 +130,14 @@ public:
   int wait (pid_t pid,
             int *stat_loc,
             int options);
-  // Reap the result of a single process by calling <ACE_OS::waitpid>,
-  // therefore, this method is not portable to Win32.  If the child is
-  // successfully reaped, <remove> is called automatically.  Note that
-  // this method can be portably called within an asynchronous signal
-  // handler only if the platform allows signal handlers to
-  // <acquire>/<release> threads.  This method works portably on
-  // platforms that support <ACE_OS::sigwait> -- in general, it's
-  // better to use <ACE_OS::sigwait> to wait for signals synchronously
-  // rather than asynchronously anyhow.
+  // Reap the result of a single process by calling <ACE_OS::wait>.
+  // If the child is successfully reaped, <remove> is called
+  // automatically.  Note that this method can be portably called
+  // within an asynchronous signal handler only if the platform allows
+  // signal handlers to <acquire>/<release> threads.  This method
+  // works portably on platforms that support <ACE_OS::sigwait> -- in
+  // general, it's better to use <ACE_OS::sigwait> to wait for signals
+  // synchronously rather than asynchronously anyhow.
 
   int reap (pid_t pid = -1,
             int *stat_loc = 0,

@@ -1,5 +1,8 @@
 Sat Aug 21 12:36:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Process_Manager.cpp: Use the new ACE_OS::wait() method, 
+	  which is portable to Win32, rather than ACE_OS::waitpid().
+
 	* tests/Process_Manager_Test.cpp: Completed the first major 
 	  enhancement to the test that exercises the new
  	  ACE_Process_Manager features.  This test builds and runs cleanly
