@@ -277,7 +277,9 @@
 # define ACE_MT_SAFE 1
 #endif
 
-#if (CPU == PENTIUM) || (CPU == PENTIUM2) || (CPU == PENTIUM3) || (CPU == PENTIUM4)
+// Needed include to get all VxWorks CPU types
+#include "types/vxCpu.h"
+#if (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
 // If running an Intel Pentium the
 // ACE_OS::gethrtime () can use the RDTSC instruction.
 # define ACE_HAS_PENTIUM
