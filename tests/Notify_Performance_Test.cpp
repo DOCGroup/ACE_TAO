@@ -85,8 +85,6 @@ client (void *arg)
   return 0;
 }
 
-#endif /* ACE_HAS_THREADS */
-
 // Sets up the correct reactor (based on platform and options)
 void
 create_reactor (void)
@@ -140,8 +138,6 @@ int
 main (int argc, char *argv[])
 {
   ACE_START_TEST ("Notify_Performance_Test");
-
-#if defined (ACE_HAS_THREADS) 
 
   ACE_Get_Opt getopt (argc, argv, "swdc:l:", 1);
   for (int c; (c = getopt ()) != -1; )
@@ -207,10 +203,6 @@ main (int argc, char *argv[])
   // Wait for all worker to get done.
   ACE_Thread_Manager::instance ()->wait ();
 
-#else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-#endif /* ACE_HAS_THREADS */
-
   ACE_END_TEST;
   return 0;
 }
@@ -228,3 +220,18 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor_Impl>
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, long>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+int
+main (int, char *[])
+{
+  ACE_START_TEST ("Notify_Performance_Test");
+
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+
+  ACE_END_TEST;
+  return 0;
+}
+#endif /* ACE_HAS_THREADS */
+
+
