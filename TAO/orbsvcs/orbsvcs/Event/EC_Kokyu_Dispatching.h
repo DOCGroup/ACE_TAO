@@ -31,7 +31,7 @@
 
 #include "Kokyu/Kokyu.h"
 
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 
 /**
  * @class TAO_EC_Kokyu_Dispatching
@@ -54,7 +54,7 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Dispatching : public TAO_EC_Dispatchi
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel* ec);
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base* ec);
 
   // = The EC_Dispatching methods.
   virtual void activate (void);

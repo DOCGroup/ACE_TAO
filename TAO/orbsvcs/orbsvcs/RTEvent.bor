@@ -27,7 +27,9 @@ OBJFILES = \
 	$(OBJDIR)\EC_Default_Factory.obj \
 	$(OBJDIR)\EC_Disjunction_Filter.obj \
 	$(OBJDIR)\EC_Dispatching.obj \
+   $(OBJDIR)\EC_Reactive_Dispatching.obj \
 	$(OBJDIR)\EC_Dispatching_Task.obj \
+   $(OBJDIR)\EC_Event_Channel_Base.obj \
 	$(OBJDIR)\EC_Event_Channel.obj \
 	$(OBJDIR)\EC_Factory.obj \
 	$(OBJDIR)\EC_Filter.obj \
@@ -35,6 +37,7 @@ OBJFILES = \
 	$(OBJDIR)\EC_Group_Scheduling.obj \
 	$(OBJDIR)\EC_Gateway.obj \
 	$(OBJDIR)\EC_Gateway_UDP.obj \
+   $(OBJDIR)\ECG_UDP_Out_Endpoint.obj \
 	$(OBJDIR)\ECG_Mcast_EH.obj \
 	$(OBJDIR)\ECG_UDP_Sender.obj \
 	$(OBJDIR)\EC_Masked_Type_Filter.obj \
@@ -45,6 +48,8 @@ OBJFILES = \
 	$(OBJDIR)\EC_ObserverStrategy.obj \
 	$(OBJDIR)\EC_Per_Supplier_Filter.obj \
 	$(OBJDIR)\EC_Prefix_Filter_Builder.obj \
+   $(OBJDIR)\EC_Default_ProxyConsumer.obj \
+   $(OBJDIR)\EC_Default_ProxySupplier.obj \
 	$(OBJDIR)\EC_ProxyConsumer.obj \
 	$(OBJDIR)\EC_ProxySupplier.obj \
 	$(OBJDIR)\EC_QOS_Info.obj \

@@ -38,7 +38,7 @@ TAO_EC_Basic_ObserverStrategy::Header_Compare::
 
 ACE_INLINE
 TAO_EC_Basic_ObserverStrategy::
-      TAO_EC_Basic_ObserverStrategy (TAO_EC_Event_Channel* ec,
+      TAO_EC_Basic_ObserverStrategy (TAO_EC_Event_Channel_Base* ec,
                                      ACE_Lock* lock)
   :  event_channel_ (ec),
      lock_ (lock),

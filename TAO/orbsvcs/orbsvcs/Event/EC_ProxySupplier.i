@@ -1,5 +1,45 @@
 // $Id$
 
+ACE_INLINE void
+TAO_EC_ProxyPushSupplier::suspend_connection_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->suspended_ = 1;
+}
+
+ACE_INLINE void
+TAO_EC_ProxyPushSupplier::suspend_connection_locked (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_GUARD_THROW_EX (
+            ACE_Lock, ace_mon, *this->lock_,
+            CORBA::INTERNAL ());
+  // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
+  this->suspend_connection_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+ACE_INLINE void
+TAO_EC_ProxyPushSupplier::resume_connection_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->suspended_ = 0;
+}
+
+ACE_INLINE void
+TAO_EC_ProxyPushSupplier::resume_connection_locked (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_GUARD_THROW_EX (
+            ACE_Lock, ace_mon, *this->lock_,
+            CORBA::INTERNAL ());
+  // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
+  this->resume_connection_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
 ACE_INLINE CORBA::Boolean
 TAO_EC_ProxyPushSupplier::is_connected_i (void) const
 {

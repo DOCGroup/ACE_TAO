@@ -10,6 +10,7 @@
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
 #include "orbsvcs/Event/ECG_Mcast_EH.h"
 #include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 

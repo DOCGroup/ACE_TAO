@@ -18,20 +18,19 @@
 
 class ACE_Command_Base;
 
+/**
+ * @class TAO_EC_Timer_Module
+ *
+ * @brief The timer managment module.
+ *
+ * The Event Channel can use several strategies to dispatch timers,
+ * for instance, it can use the ORB reactor or a pool of reactors running at
+ * different priorities or a pool of Thread_Timer_Queue_Adapters running at
+ * different priorities also. This class is the abstract base class to
+ * abstract this strategies.
+ */
 class TAO_RTOLDEvent_Export TAO_EC_Timer_Module
 {
-  // = TITLE
-  //   The timer managment module.
-  //
-  // = DESCRIPTION
-  //   The Event Channel can use several strategies to dispatch
-  //   timers, for instance, it can use the ORB reactor or a pool of
-  //   reactors running at different priorities or a pool of
-  //   Thread_Timer_Queue_Adapters running at different priorities
-  //   also.
-  //   This class is the abstract base class to abstract this
-  //   strategies.
-  //
 public:
   virtual ~TAO_EC_Timer_Module (void);
   // The dtor

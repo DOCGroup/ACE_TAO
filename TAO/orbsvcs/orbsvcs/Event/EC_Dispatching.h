@@ -41,7 +41,7 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_RTEvent_Export TAO_EC_Dispatching
 {
 public:
-  /// destructor...
+  /// Destructor...
   virtual ~TAO_EC_Dispatching (void);
 
   /// Initialize all the data structures, activate any internal threads,
@@ -56,8 +56,8 @@ public:
   virtual void shutdown (void) = 0;
 
   /**
-   * The consumer represented by <proxy> should receive <event>.
-   * It can use the information in <qos_info> to determine the event
+   * The consumer represented by @a proxy should receive @a event.
+   * It can use the information in @a qos_info   to determine the event
    * priority (among other things).
    */
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
@@ -70,38 +70,6 @@ public:
                             RtecEventComm::EventSet &event,
                             TAO_EC_QOS_Info &qos_info
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
-};
-
-// ****************************************************************
-
-/**
- * @class TAO_EC_Reactive_Dispatching
- *
- * @brief Dispatch using the caller thread.
- *
- * The events are dispatched in FIFO ordering, using the invoking
- * thread to push the event to the consumer.
- */
-class TAO_RTEvent_Export TAO_EC_Reactive_Dispatching : public TAO_EC_Dispatching
-{
-public:
-  /// The scheduler is used to find the range of priorities and similar
-  /// info.
-  TAO_EC_Reactive_Dispatching (void);
-
-  // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
-  virtual void push (TAO_EC_ProxyPushSupplier *proxy,
-                     RtecEventComm::PushConsumer_ptr consumer,
-                     const RtecEventComm::EventSet &event,
-                     TAO_EC_QOS_Info &qos_info
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  virtual void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
-                            RtecEventComm::PushConsumer_ptr consumer,
-                            RtecEventComm::EventSet &event,
-                            TAO_EC_QOS_Info &qos_info
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 };
 
 #if defined (__ACE_INLINE__)

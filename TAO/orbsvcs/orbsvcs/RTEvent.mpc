@@ -25,16 +25,20 @@ project(RTEvent) : orbsvcslib, core {
       RtecUDPAdminC.cpp
       RtecUDPAdminS.cpp
       Event/EC_Event_Channel.cpp
+      Event/EC_Event_Channel_Base.cpp
       Event/EC_ConsumerAdmin.cpp
       Event/EC_SupplierAdmin.cpp
       Event/EC_ProxyConsumer.cpp
       Event/EC_ProxySupplier.cpp
+      Event/EC_Default_ProxyConsumer.cpp
+      Event/EC_Default_ProxySupplier.cpp
       Event/EC_Supplier_Filter.cpp
       Event/EC_Supplier_Filter_Builder.cpp
       Event/EC_Trivial_Supplier_Filter.cpp
       Event/EC_Filter.cpp
       Event/EC_Filter_Builder.cpp
       Event/EC_Dispatching.cpp
+      Event/EC_Reactive_Dispatching.cpp
       Event/EC_Factory.cpp
       Event/EC_QOS_Info.cpp
       Event/EC_Null_Factory.cpp
@@ -65,6 +69,7 @@ project(RTEvent) : orbsvcslib, core {
       Event/EC_And_Filter.cpp
       Event_Utilities.cpp
       Event/EC_Gateway.cpp
+      Event/EC_UDP_Out_Endpoint.cpp
       Event/EC_Gateway_UDP.cpp
       Event/ECG_Mcast_EH.cpp
       Event/ECG_UDP_Sender.cpp

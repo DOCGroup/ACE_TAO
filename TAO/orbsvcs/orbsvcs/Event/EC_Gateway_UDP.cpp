@@ -1,6 +1,7 @@
 // $Id$
 
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "orbsvcs/Event/ECG_UDP_Protocol.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
@@ -13,45 +14,6 @@
 ACE_RCSID (Event, EC_Gateway_UDP, "$Id$")
 
 // ****************************************************************
-
-TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint (void)
-{
-  delete[] this->ifs_;
-  this->ifs_ = 0;
-}
-
-CORBA::Boolean
-TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
-{
-  if (this->port_number_ == 0)
-    {
-      // Cache the port number...
-      ACE_INET_Addr local_addr;
-      if (this->dgram ().get_local_addr (local_addr) == -1)
-        return 0;
-      this->port_number_ = local_addr.get_port_number ();
-    }
-
-  // Most of the time the port number is enough to determine if the
-  // message is remote, only when the local port number and the remote
-  // port number match we have to look at the local ip addresses.
-  if (from.get_port_number () != this->port_number_)
-    return 0;
-
-  if (this->ifs_ == 0)
-    {
-      ACE::get_ip_interfaces (this->if_count_, this->ifs_);
-    }
-
-  for (ACE_INET_Addr* i = this->ifs_;
-       i != this->ifs_ + this->if_count_;
-       ++i)
-    {
-      if ((*i).get_ip_address () == from.get_ip_address ())
-        return 1;
-    }
-  return 0;
-}
 
 
 // ****************************************************************
@@ -636,8 +598,6 @@ TAO_ECG_UDP_EH::get_handle (void) const
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>;
-template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, CORBA::ULong>;
 template class ACE_Hash_Map_Manager<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Manager_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Entry<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*>;
@@ -649,8 +609,6 @@ template class ACE_Hash_Map_Iterator_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_R
 template class ACE_Hash_Map_Reverse_Iterator<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
-#pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, CORBA::ULong>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*>
@@ -661,5 +619,4 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_ECG_UDP_Request_Index, TAO_E
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

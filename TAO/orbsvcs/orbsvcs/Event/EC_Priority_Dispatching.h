@@ -28,7 +28,7 @@
 #include "ace/Thread_Manager.h"
 
 class TAO_EC_Dispatching_Task;
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 
 /**
  * @class TAO_EC_Priority_Dispatching
@@ -51,7 +51,7 @@ class TAO_RTSchedEvent_Export TAO_EC_Priority_Dispatching : public TAO_EC_Dispat
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel* ec);
+  TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base* ec);
 
   // = The EC_Dispatching methods.
   virtual void activate (void);

@@ -36,11 +36,13 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
   PROXY* proxy;
   this->event_channel_->create_proxy (proxy);
 
-  PortableServer::ServantBase_var holder = proxy;
+  TAO_ESF_RefCountedRef<PROXY> holder (proxy);
 
-  ACE_TYPENAME PROXY::_var_type result =
-    proxy->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TYPENAME PROXY::_ptr_type r;
+  proxy->activate (r ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (INTERFACE::_nil ());
+
+  ACE_TYPENAME PROXY::_var_type result = r;
 
   this->collection_->connected (proxy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (INTERFACE::_nil ());

@@ -1,8 +1,198 @@
+Sat Jun  7 08:49:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        This checkin merges a first set of changes from Carlos O'Ryan into the
+        RTEC code. This are mostly restructering changes so that Carlos could
+        develop his ReliableEvent service. Also a small number of fixes and
+        extensions are included. There will be a second set of changes with
+        all ECG changes.
+
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+          Converted comments to doxygen style
+
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+          Updated makefiles for all changes below.
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+          Added TAO_ESF_RefCountedRef<T> class, which calls
+          T::_decr_refcnt () on its contained pointer in its destructor.
+
+          Modified TAO_ESF_Proxy_Admin<CHANNEL, PROXY, INTERFACE>::obtain ()
+          to use TAO_ESF_RefCountedRef<PROXY> instead of the
+          PortableServer::ServantBase_var to relieve the requirement that
+          PROXY derives from PortableServer::ServantBase.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+          Updated because of change in TAO_ESF_Proxy_Admin
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.i:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+          Moved TAO_ECG_UDP_Out_Endpoint to a separate file.
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.i:
+          Changed TAO_EC_Event_Channel to TAO_EC_Event_Channel_Base and
+          created a new derived class TAO_EC_Event_Channel. All code in the
+          RTEC has been modified to use TAO_EC_Event_Channel_Base.
+
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.h:
+          Removed typedef Word
+
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.i:
+          Changed TAO_EC_Event_Channel to TAO_EC_Event_Channel_Base. Moved
+          constructor from i to cpp file.
+
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.h
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.i:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.i
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.h
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.i
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h
+        * orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.h
+        * orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.h
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h
+        * orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Sched_Factory.h
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.i
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.cpp
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.h
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.i
+          Changed TAO_EC_Event_Channel to TAO_EC_Event_Channel_Base.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+          Changed TAO_EC_Event_Channel to TAO_EC_Event_Channel_Base and make
+          a helper function to printout messages about unsupported option
+          values and used this in this class to reduce code duplication.
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+          Added include ECG_UDP_Out_Endpoint.h
+
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+          Doxygen comment update.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+          Don't derive from POA_RtecEventChannelAdmin::ProxyPushConsumer and
+          don't implement the methods from that interface.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
+          Don't derive from POA_RtecEventChannelAdmin::ProxyPushSupplier and
+          don't implement the methods from that interface.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.i:
+          New class that implements POA_RtecEventChannelAdmin::ProxyPushConsumer
+          and is derived from EC_ProxyConsumer.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.i:
+          New class that implements
+          POA_RtecEventChannelAdmin::ProxyPushSupplier and is derived from
+          EC_ProxyConsumer.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Dispatching.i:
+          Moved TAO_EC_Reactive_Dispatching to a separate file.
+
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.h:
+          Don't forward declare TAO_EC_Event_Channel
+
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
+          Changed TAO_EC_Event_Channel to TAO_EC_Event_Channel_Base and create
+          a TAO_EC_Default_ProxyConsumer/Supplier instead of a
+          TAO_EC_ProxyConsumer/Supplier
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.i:
+          Code refactored to removed duplicated code
+
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+          Don't include ace/Containers.h
+
+        * orbsvcs/orbsvcs/Event/Makefile.am:
+          Updated
+
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+          Removed not needed include
+
+        * orbsvcs/orbsvcs/Event/Timer_Module.h:
+          Doxygen update
+
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+          Added missing includes because classes are now in new files
+
+        * orbsvcs/tests/Event/Basic/exhaustive_test.pl:
+          Fixed error in this perl script
+
 Wed Jun  4 13:44:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp: Fixed compilation
 	  errors on VxWorks. Thanks to Rob Andzik for providing the
-	  patches. 
+	  patches.
 
 Wed Jun  4 12:40:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

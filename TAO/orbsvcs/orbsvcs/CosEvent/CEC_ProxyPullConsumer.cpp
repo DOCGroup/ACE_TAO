@@ -31,8 +31,10 @@ TAO_CEC_ProxyPullConsumer::~TAO_CEC_ProxyPullConsumer (void)
   this->event_channel_->destroy_consumer_lock (this->lock_);
 }
 
-CosEventChannelAdmin::ProxyPullConsumer_ptr
-TAO_CEC_ProxyPullConsumer::activate (ACE_ENV_SINGLE_ARG_DECL)
+void
+TAO_CEC_ProxyPullConsumer::activate (
+    CosEventChannelAdmin::ProxyPullConsumer_ptr &activated_proxy
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPullConsumer_var result;
@@ -43,10 +45,10 @@ TAO_CEC_ProxyPullConsumer::activate (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_CATCHANY
     {
-      return CosEventChannelAdmin::ProxyPullConsumer::_nil ();
+      result = CosEventChannelAdmin::ProxyPullConsumer::_nil ();
     }
   ACE_ENDTRY;
-  return result._retn ();
+  activated_proxy = result._retn ();
 }
 
 void
