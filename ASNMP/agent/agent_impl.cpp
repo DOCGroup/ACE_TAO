@@ -1,10 +1,11 @@
 // $Id$
 
 // implement a prototype SNMP Agent using ASNMP and ACE
- 
+
 #include <ace/Reactor.h>
 #include <ace/SOCK_Dgram.h>
 #include <ace/INET_Addr.h>
+#include <ace/Signal.h>
 
 #include "agent_impl.h"
 
@@ -23,7 +24,7 @@ agent_impl::~agent_impl()
 {
    ACE_TRACE("agent_impl::~agent_impl");
 }
- 
+
 // callback : have received a Pdu from the target host with given read comm str
 // this is really simplistic, but gives the general idea
 int agent_impl::handle_get( Pdu &pdu, UdpTarget &target)
@@ -39,13 +40,13 @@ int agent_impl::handle_get( Pdu &pdu, UdpTarget &target)
      return 0;
   }
 
-  // 2. iterate over each varbind in the pdu, filling providing responses 
+  // 2. iterate over each varbind in the pdu, filling providing responses
   int fdone = 0;
   for (int i = 0; (i < pdu.get_vb_count()) && !fdone; i++) {
     Vb vb;
     pdu.get_vb(vb, i);
     if (get_response(vb)) {	// set a value for the oid if we can else
-      set_error_status(&pdu, SNMP_ERROR_NO_SUCH_NAME); // these ought to be member 
+      set_error_status(&pdu, SNMP_ERROR_NO_SUCH_NAME); // these ought to be member
       set_error_index(&pdu, i);	// functions but are not yet...
       fdone++;			// trigger flag to exit loop early
     }
@@ -64,7 +65,7 @@ int agent_impl::get_response(Vb& vb)
   // these objects represent the MIB II system group per RFC 1213
    static Oid sysDescr("1.3.6.1.2.1.1.1.0"),
    sysObjectID("1.3.6.1.2.1.1.2.0"), sysUpTime("1.3.6.1.2.1.1.3.0"),
-   sysContact("1.3.6.1.2.1.1.4.0"), sysName("1.3.6.1.2.1.1.5.0"), 
+   sysContact("1.3.6.1.2.1.1.4.0"), sysName("1.3.6.1.2.1.1.5.0"),
    sysLocation("1.3.6.1.2.1.1.6.0"), sysServices("1.3.6.1.2.1.1.7.0");
 
   Oid oid;
@@ -79,7 +80,7 @@ int agent_impl::get_response(Vb& vb)
     // assign a unique subtree to identify this agent
     Oid id("1.3.6.1.4.1.2533.9.1");
     vb.set_value(id);
-  }     
+  }
   else if (oid == sysUpTime) {
     ACE_Time_Value tv;
     agent_clock_.elapsed_time (tv);
@@ -151,7 +152,7 @@ int agent_impl::process_requests()
       reactor.handle_events ();
       ACE_DEBUG ((LM_DEBUG, "return from handle events\n"));
     }
-  
+
   ACE_DEBUG ((LM_DEBUG, "return from handle events - normal shut down\n"));
   return 0;
 }
