@@ -1131,13 +1131,6 @@ project(SOCK_Dgram_Bcast_Test) : acetest {
   }
 }
 
-project(SOCK_SEQPACK_SCTP_Test) : scetest {
-  exename = SOCK_SEQPACK_SCTP_Test
-  Source_Files {
-  	SOCK_SEQPACK_SCTP_Test.cpp
-  }
-}
-
 project(QtReactor Test) : acetest, ace_qt, qt_moc {
   exename   = QtReactor_Test
   requires += qt
