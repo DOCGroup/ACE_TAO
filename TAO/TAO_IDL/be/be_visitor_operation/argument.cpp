@@ -155,6 +155,12 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INVOKE_CS);
       break;
+    case TAO_CodeGen::TAO_AMI_OPERATION_ARG_INVOKE_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_ARGUMENT_INVOKE_CS);
+      break;
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_INVOKE_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_INVOKE_CS);
+      break;
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_INVOKE_CS);
       break;
@@ -182,9 +188,9 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_MARSHAL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_MARSHAL_SS);
       break;
-    case TAO_CodeGen::TAO_OPERATION_ARG_AMI:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI);
-      break;
+      //    case TAO_CodeGen::TAO_OPERATION_ARG_AMI:
+      //    ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI);
+      //    break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,

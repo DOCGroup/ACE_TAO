@@ -65,7 +65,7 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
   //         mapping. For these we grab a visitor that generates the
   //         parameter listing.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST);
+  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
     {
@@ -87,11 +87,25 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
     }
   delete visitor;
 
+  // Generating the skeleton method.
+
+  // Skeleton not necessary for collocated class.
+  if (this->ctx_->state () == TAO_CodeGen::TAO_COLLOCATED_AMI_HANDLER_OPERATION_CH)
+    {
+      return 0;
+      /* NOT REACHED */
+    }
+
   // Generate the corresponding static skeleton method for this
   // operation only if there was no "native" type.
   if (!node->has_native ())
     {
+      // Next line.
+      *os << be_nl;
+      
+      // Indent.
       os->indent ();
+      
       *os << "static void ";
       // Check if we are an attribute node in disguise
       if (this->ctx_->attribute ())
@@ -103,15 +117,38 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
             *os << "_get_";
         }
       *os << node->local_name () <<
-        "_skel (" << be_idt << be_idt_nl
-          << "CORBA::ServerRequest &_tao_req, " << be_nl
-          << "void *_tao_obj, " << be_nl
-          << "void *_tao_context, " << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-	  << "TAO_default_environment ()"
-	  << be_uidt << be_uidt_nl
-	  << ");" << be_uidt << "\n\n";
-    }
+        "_skel (" << be_idt << be_idt_nl;
+      
+      // Different skeletons for the AMI Handler class and the servant
+      // class.  
+      switch (this->ctx_->state ())
+        {
+        case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_OPERATION_CH:
+          *os << "CORBA::ServerRequest &_tao_req, " << be_nl
+              << "void *_tao_obj, " << be_nl
+              << "void *_tao_context, " << be_nl
+              << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+              << "TAO_default_environment ()"
+              << be_uidt << be_uidt_nl
+              << ");" << be_uidt << "\n\n"; 
+          break;
+       
+        case TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CH:
+          *os << "TAO_InputCDR &_tao_reply_cdr, " << be_nl
+              << "Messaging::ReplyHandler_ptr _tao_reply_handler, " << be_nl
+              << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+              << "TAO_default_environment ()"
+              << be_uidt << be_uidt_nl
+              << ");" << be_uidt << "\n\n";
+          break;
 
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_ami_handler_operation_ch::"
+                             "visit_operation - "
+                             "Unknown state\n"),
+                            -1);
+        }
+    }
   return 0;
 }

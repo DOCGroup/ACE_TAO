@@ -413,8 +413,20 @@ be_visitor_interface::visit_operation (be_operation *node)
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
       
-    case TAO_CodeGen::TAO_AMI_HANDLER_CH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH);
+    case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CH:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_OPERATION_CH);
+      break;
+
+    case TAO_CodeGen::TAO_AMI_HANDLER_STUB_CH:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CH);
+      break;
+
+    case TAO_CodeGen::TAO_AMI_HANDLER_STUB_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CS);
+      break;
+
+    case TAO_CodeGen::TAO_COLLOCATED_AMI_HANDLER_CH:
+      ctx.state (TAO_CodeGen::TAO_COLLOCATED_AMI_HANDLER_OPERATION_CH);
       break;
 
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
@@ -430,8 +442,8 @@ be_visitor_interface::visit_operation (be_operation *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_interface::"
                            "visit_operation - "
-                           "Bad context state\n"
-                           ), -1);
+                           "Bad context state\n"),
+                          -1);
       }
     }
 
@@ -467,8 +479,8 @@ be_visitor_interface::visit_operation (be_operation *node)
       return 0;
     }
   
-  // Generate AMI stub for this operation, if you are doing client 
-  // side header.
+  // Generate AMI <sendc_> method, for this operation, if you are
+  // doing client header.
 
   switch (this->ctx_->state ())
     {

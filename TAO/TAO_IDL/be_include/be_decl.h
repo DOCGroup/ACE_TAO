@@ -67,11 +67,18 @@ public:
   // return the stringified full name
 
   const char *flatname (void);
-  // return the flattened full scoped name
+  // return the flattened full scoped name.
 
-
+  char* compute_flatname (const char *prefix, const char *suffix);
+  // Both the arguments should be non-null!!!. Applies prefix and
+  // suffix to the local name and makes a flat name.
+  
   const char *repoID (void);
-  // retrieve the repository ID
+  // retrieve the repository ID.
+
+  char *compute_repoID (const char *prefix, const char *suffix);
+  // Apply the prefix and suffix to the local name and compute the
+  // repoID.  Both the parameters should be non-null. 
 
   const char* prefix (void);
   // retrive the repository ID prefix

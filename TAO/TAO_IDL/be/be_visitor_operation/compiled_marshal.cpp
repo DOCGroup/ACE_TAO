@@ -69,6 +69,7 @@ visit_operation (be_operation *node)
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
       os->indent ();
+      
       *os << "(_tao_out << ";
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)

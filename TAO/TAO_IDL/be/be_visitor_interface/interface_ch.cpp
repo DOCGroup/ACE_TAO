@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -138,7 +138,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // now generate the class definition
       os->indent ();
       *os << "class " << idl_global->export_macro ()
-	        << " " << node->local_name ();
+                << " " << node->local_name ();
 
       if (node->n_inherits () > 0)  // node interface inherits from other
                                     // interfaces
@@ -193,19 +193,19 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "static " << node->local_name () << "_ptr " << "_duplicate ("
           << node->local_name () << "_ptr obj);" << be_nl
           << "static " << node->local_name () << "_ptr "
-	        << "_narrow (" << be_idt << be_idt_nl
+                << "_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
-	        << "CORBA::Environment &env = " << be_idt_nl
-	        << "TAO_default_environment ()"
-	        << be_uidt << be_uidt_nl
-	        << ");" << be_uidt_nl
+                << "CORBA::Environment &env = " << be_idt_nl
+                << "TAO_default_environment ()"
+                << be_uidt << be_uidt_nl
+                << ");" << be_uidt_nl
           << "static " << node->local_name () << "_ptr "
-	        << "_unchecked_narrow (" << be_idt << be_idt_nl
+                << "_unchecked_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
-	        << "CORBA::Environment &env = " << be_idt_nl
-	        << "TAO_default_environment ()"
-	        << be_uidt << be_uidt_nl
-	        << ");" << be_uidt_nl
+                << "CORBA::Environment &env = " << be_idt_nl
+                << "TAO_default_environment ()"
+                << be_uidt << be_uidt_nl
+                << ");" << be_uidt_nl
           << "static " << node->local_name () << "_ptr " << "_nil (void);\n\n";
 
       // generate code for the interface definition by traversing thru the
@@ -234,10 +234,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << "protected:" << be_idt_nl
           << node->local_name () << " (void);" << be_nl
           << node->local_name ()
-	        << " (TAO_Stub *objref, " << be_idt << be_idt_nl
+                << " (TAO_Stub *objref, " << be_idt << be_idt_nl
           << "TAO_ServantBase *_tao_servant = 0, " << be_nl
           << "CORBA::Boolean _tao_collocated = 0" << be_uidt_nl
-	        << ");" << be_uidt_nl
+                << ");" << be_uidt_nl
           << "virtual ~" << node->local_name () << " (void);" << be_uidt_nl;
 
       // private copy constructor and assignment operator. These are not
@@ -268,6 +268,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                              ), -1);
         }
       
+      // AMI
+
       // Generate code for the AMI Reply Handler. 
       if (idl_global->ami_call_back () == I_TRUE)
         {
@@ -302,13 +304,13 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
             }
           delete visitor;
           
-          //  = Generate the Skeleton code.
+          //  = Generate the Servant Skeleton code.
 
           // Set the context.
           ctx = *this->ctx_;
           
           // Set the state.
-          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_CH);
+          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CH);
           
           // Create the visitor.
           visitor = tao_cg->make_visitor (&ctx);

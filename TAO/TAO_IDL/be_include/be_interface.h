@@ -100,7 +100,15 @@ public:
   // retrieve the fully qualified collocated class name
 
   const char *local_coll_name (void) const;
-  // retrieve the fully qualified collocated class name
+  // retrieve the fully qualified collocated class name.
+
+  int compute_coll_names (const char *local_name,
+                          char *&coll_local_name,
+                          char *&coll_full_name); 
+    // Generate collocated local and full names for the arbitrary local
+  // name under the scope of this interface. Usefull to generate AMI
+  // Handlers. 
+
 
   virtual int traverse_inheritance_graph (tao_code_emitter gen,
                                           TAO_OutStream *os);

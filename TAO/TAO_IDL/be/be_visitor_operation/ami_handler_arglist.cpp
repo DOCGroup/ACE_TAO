@@ -127,8 +127,50 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
   
   *os << " (" << be_idt << be_idt << "\n";
 
-  // All we do is hand over code generation to our scope. 
-  if (this->visit_scope (node) == -1)
+  // First argument is a the return value of the operation.
+  
+  // Indent.
+  os->indent ();
+
+  // Get the return type.
+  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_ami_handler_arglist::"
+                         "visit_operation - "
+                         "Bad return type\n"),
+                        -1);
+    }
+  
+  // Grab the visitor.
+  
+  be_visitor_context ctx = *this->ctx_;
+
+  // Set the state.
+  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RESULT_ARG);
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
+  // Pass the visitor.
+  int result_printed = bt->accept (visitor);
+  if (result_printed == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_ami_handler_arglist::"
+                         "visit_operation - "
+                         "Bad return type\n"),
+                        -1);
+    }
+  
+  if (result_printed)
+    *os << ", " << be_nl;
+
+  // Rest of the arguments.
+
+  // All we do is hand over code generation to our scope.
+  int args_printed = this->visit_scope (node);
+  if (args_printed == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ami_handler_arglist::"
@@ -136,29 +178,47 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
                          "codegen for scope failed\n"),
                         -1);
     }
+  
+  // Generate the CORBA::Environment parameter for the alternative
+  // mapping.  
+  if (!idl_global->exception_support ())
+    {
+      // If the operation node has parameters, then we need to insert
+      // a comma.
+      // @@ Fix this.
+      // if (result_printed || args_printed)
+      //  *os << "," << be_nl;
+      
+      os->indent ();
 
-  // No exception argument.
-
-  // Arglist is over.
+      switch (this->ctx_->state ())
+        {
+        case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
+          // Last argument - is always CORBA::Environment
+          *os << "CORBA::Environment &ACE_TRY_ENV";
+          *os << " = " << be_idt_nl
+              << "TAO_default_environment ()"
+              << be_uidt;
+          break;
+        case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS:
+          // Last argument - is always CORBA::Environment. 
+          *os << "CORBA::Environment &ACE_TRY_ENV";
+          break;
+        }
+    }
   *os << be_uidt_nl << ")" << be_uidt;
 
-  // @@ No THROW SPECs. You cannot do anything if the call back guy
-  //    throws an exception. But I am not too sure about
-  //    this. (Alex). 
+  // Now generate the throw specs.
+  *os << be_idt_nl << "ACE_THROW_SPEC ((CORBA::SystemException))";
+
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST:
-      // Each method is pure virtual in the header.
-      *os << " = 0;\n\n";
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
+      *os << ";\n\n";
       break;
     default:
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_handler_arglist::"
-                         "visit_operation - "
-                         "Bad operation\n"),
-                        -1);
+      *os << "\n";
     }
-
   return 0;
 }
 
@@ -203,8 +263,11 @@ be_visitor_operation_ami_handler_arglist::visit_argument (be_argument *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI_HANDLER_ARGLIST);
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CH);
+      break;
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CS);
       break;
     default:
       {

@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 ACE_RCSID(be, be_type, "$Id$")
 
@@ -94,13 +94,70 @@ be_type::compute_tc_name (void)
                                                                  (namebuf), 1,
                                                                  0, I_FALSE), NULL));
     }
+
   return;
+}
+
+UTL_ScopedName *
+be_type::compute_tc_name (const char *prefix, const char *suffix)
+{
+  // Both prefix and suffix has to be valid. Else return. 
+  if (prefix == 0 || suffix == 0)
+    return 0;
+    
+  static char namebuf [NAMEBUFSIZE];
+  UTL_ScopedName *n;
+
+  UTL_ScopedName *result = NULL;
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  n = this->name ();
+  while (n->tail () != NULL)
+    {
+      if (!result)
+        {
+          // does not exist
+          result = new UTL_ScopedName (n->head (), NULL);
+        }
+      else
+        {
+          result->nconc (new UTL_ScopedName (n->head (), NULL));
+        }
+      n = (UTL_ScopedName *)n->tail ();
+    }
+
+  ACE_OS::sprintf (namebuf,
+                   "_tc_%s%s%s",
+                   prefix,
+                   n->last_component ()->get_string (),
+                   suffix);
+  
+  if (!result)
+    {
+      // does not exist
+      result = new UTL_ScopedName (new Identifier (ACE_OS::strdup
+                                                           (namebuf), 1, 0, I_FALSE), NULL);
+    }
+  else
+    {
+      result->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
+                                                                 (namebuf), 1,
+                                                                 0, I_FALSE), NULL));
+    }
+
+  return result;
 }
 
 // retrieve typecode name
 UTL_ScopedName *
-be_type::tc_name (void)
+be_type::tc_name (const char *prefix, const char *suffix)
 {
+  if (prefix != 0 && suffix != 0)
+    {
+      // Just compute and return the name.
+      return compute_tc_name (prefix, suffix);
+    }
+
+  // Compute and init the member.
   if (!this->tc_name_)
     compute_tc_name ();
 
