@@ -153,6 +153,13 @@ namespace TAO
       const PortableGroup::Location & location,
       int & object_is_primary);
 
+    /// remove a failed member from a group
+    int remove_failed_member (
+      PortableGroup::ObjectGroup_ptr iogr,
+      TAO::FT_FaultEventDescriptor & fault_event_desc,
+      PortableGroup::ObjectGroup_out new_iogr);
+
+
     // Choose a new primary member for the ObjectGroup.
     // Sets <new_iogr> and returns 0 on success.
     // Returns -1 on failure.
@@ -161,6 +168,7 @@ namespace TAO
       TAO::FT_FaultEventDescriptor & fault_event_desc,
       PortableGroup::ObjectGroup_out new_iogr);
 
+#if 0 // this is handled by the remove_member method
     // While the number of members in the object group is less than
     // the MinimumNumberMembers property, add new members.
     // Sets <new_iogr> and returns 0 on success.
@@ -169,7 +177,7 @@ namespace TAO
       PortableGroup::ObjectGroup_ptr iogr,
       TAO::FT_FaultEventDescriptor & fault_event_desc,
       PortableGroup::ObjectGroup_out new_iogr);
-
+#endif
 
     ///////////////
     // Data Members

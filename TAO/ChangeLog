@@ -1,3 +1,37 @@
+Thu Dec  4 16:46:15 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+          Nursemaid the notification thru the system until it triggers a
+          recovery.  Remove questionable assumptions that were causing the
+          analysis to fail.
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+          Initialize default property values -- including adding
+          new methods to make it possible.
+
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_conf.h:
+          Set defaults.  Add comments to complain about unnecessary limits
+          (I'm afraid to remove the limits -- who knows what code depends
+           on them).
+
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.h:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+          Add preliminary support for infrastructure-managed groups (needs work!).
+
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+          Always build the server first so the IDL gets compiled.
+
+        * orbsvcs/tests/FT_App/run_test_rmnotifier.pl:
+          doc change.
+
+
 Thu Dec  4 10:20:34 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:

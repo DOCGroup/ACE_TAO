@@ -50,6 +50,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
 
   // So, the event header's event_type.domain_name must be "FT_CORBA"
   // and the event header's event_type.type_name must be "ObjectCrashFault".
+  // @@ why make string dups just to do a strcmp?
   CORBA::String_var domain_name = CORBA::string_dup (
     event.header.fixed_header.event_type.domain_name);
   CORBA::String_var type_name = CORBA::string_dup (

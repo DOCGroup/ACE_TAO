@@ -116,6 +116,15 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
+     * set or replace a single property
+     */
+    void set_property (
+      const char * name,
+      const PortableGroup::Value & value
+      ACE_ENV_ARG_DECL);
+
+
+    /**
      * Export the properties to a PortableGroup::Properties
      *
      * This method is intended to be used to implement the PropertyManager::get_*_properties
@@ -157,6 +166,7 @@ namespace TAO
      */
     PG_Property_Set * defaults_;
   };
+
 
 #ifdef PG_PS_UNIT_TEST
 

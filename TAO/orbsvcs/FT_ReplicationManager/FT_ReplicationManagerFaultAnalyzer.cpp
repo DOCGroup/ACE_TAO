@@ -11,7 +11,7 @@
  */
 //=============================================================================
 
-#include "orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h"
+#include "FT_ReplicationManagerFaultAnalyzer.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/FT_NotifierC.h"
 #include "orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h"
@@ -527,7 +527,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     result = -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (-1);  //@@ is this necessary?
 
   if (result == 0)
   {
@@ -536,6 +536,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     result = this->get_membership_style (properties.in(), membership_style);
     if (result != 0)
     {
+      //@@ it seems a shame to fail here.  We should at least remove the failed replica from the group.
       ACE_ERROR_RETURN ((LM_ERROR,
         ACE_TEXT (
           "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
@@ -563,6 +564,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     result = this->get_replication_style (properties.in(), replication_style);
     if (result != 0)
     {
+      //@@ it seems a shame to fail here.  We should at least remove the failed replica from the group.
       ACE_ERROR_RETURN ((LM_ERROR,
         ACE_TEXT (
           "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
@@ -591,13 +593,17 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       properties.in(), minimum_number_members);
     if (result != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Could not extract MinimumNumberMembers from properties on "
-          "ObjectGroup with id <%Q>.\n"),
-        fault_event_desc.object_group_id),
-        -1);
+      // This is not a fatal error.  It may be App Controlled.
+      result = 0;
+      if (TAO_debug_level > 3)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
+            "Could not extract MinimumNumberMembers from properties on "
+            "ObjectGroup with id <%Q>.\n"),
+          fault_event_desc.object_group_id));
+      }
     }
     else
     {
@@ -619,13 +625,17 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       properties.in(), initial_number_members);
     if (result != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Could not extract InitialNumberMembers from properties on "
-          "ObjectGroup with id <%Q>.\n"),
-        fault_event_desc.object_group_id),
-        -1);
+      // This is not a fatal error.  It may be App Controlled.
+      result = 0;
+      if (TAO_debug_level > 3)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
+            "Could not extract InitialNumberMembers from properties on "
+            "ObjectGroup with id <%Q>.\n"),
+          fault_event_desc.object_group_id));
+      }
     }
     else
     {
@@ -647,13 +657,17 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       fault_event_desc.factories.out());
     if (result != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Could not extract Factories from properties on "
-          "ObjectGroup with id <%Q>.\n"),
-        fault_event_desc.object_group_id),
-        -1);
+      // This is not a fatal error.  It may be App Controlled.
+      result = 0;
+      if (TAO_debug_level > 3)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
+            "Could not extract Factories from properties on "
+            "ObjectGroup with id <%Q>.\n"),
+          fault_event_desc.object_group_id));
+       }
     }
     else
     {
@@ -698,31 +712,44 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
   // If the MembershipStyle is FT::MEMB_INF_CTRL (infrastructure
   // controlled) and the primary has faulted, establish a new primary.
   // We get back a new object group.
-  PortableGroup::ObjectGroup_var new_object_group;
   if ((result == 0) &&
-      (fault_event_desc.membership_style == FT::MEMB_INF_CTRL) &&
-      (fault_event_desc.object_is_primary == 1))
+      (fault_event_desc.membership_style == FT::MEMB_INF_CTRL))
   {
-    if (TAO_debug_level > 6)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Setting new primary for "
-          "ObjectGroup with id <%Q>.\n"),
-          fault_event_desc.object_group_id
-      ));
-    }
-    result = this->set_new_primary (
-      the_object_group.in(),
-      fault_event_desc,
-      new_object_group.out());
+
+    PortableGroup::ObjectGroup_var new_object_group;
+    result = this->remove_failed_member (
+        the_object_group.in(),
+        fault_event_desc,
+        new_object_group.out());
     if (result == 0)
     {
       the_object_group = new_object_group;
     }
+
+    if (fault_event_desc.object_is_primary == 1)
+    {
+      if (TAO_debug_level > 6)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT (
+            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
+            "Setting new primary for "
+            "ObjectGroup with id <%Q>.\n"),
+            fault_event_desc.object_group_id
+        ));
+      }
+      result = this->set_new_primary (
+        the_object_group.in(),
+        fault_event_desc,
+        new_object_group.out());
+      if (result == 0)
+      {
+        the_object_group = new_object_group;
+      }
+    }
   }
 
+#if 0 // According to the FT CORBA specification, this will be handled by the ObjectGroupManager::remove_member method
   // If the MembershipStyle is FT::MEMB_INF_CTRL (infrastructure
   // controlled) and the number of remaining members is less than
   // the MinimumNumberMembers property, add new members.
@@ -746,14 +773,11 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       new_object_group.out());
     the_object_group = new_object_group;
   }
-
+#endif
   return result;
 }
 
-// Choose a new primary member for the ObjectGroup.
-// Sets <new_iogr> and returns 0 on success.
-// Returns -1 on failure.
-int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
+int TAO::FT_ReplicationManagerFaultAnalyzer::remove_failed_member (
   PortableGroup::ObjectGroup_ptr iogr,
   TAO::FT_FaultEventDescriptor & fault_event_desc,
   PortableGroup::ObjectGroup_out new_iogr)
@@ -770,11 +794,37 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
         fault_event_desc.location.in()
         ACE_ENV_ARG_DECL);
     ACE_TRY_CHECK;
+    new_iogr = temp_iogr._retn ();
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (
+      ACE_ANY_EXCEPTION,
+      "TAO::FT_ReplicationManagerFaultAnalyzer::remove_failed_member: ");
+    result = -1;
+  }
+  ACE_ENDTRY;
+  return result;
+}
 
+
+// Choose a new primary member for the ObjectGroup.
+// Sets <new_iogr> and returns 0 on success.
+// Returns -1 on failure.
+int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
+  PortableGroup::ObjectGroup_ptr iogr,
+  TAO::FT_FaultEventDescriptor & fault_event_desc,
+  PortableGroup::ObjectGroup_out new_iogr)
+{
+  int result = 0;
+  new_iogr = PortableGroup::ObjectGroup::_nil ();
+
+  ACE_TRY_NEW_ENV
+  {
     // Get the locations of the remaining members of the object group.
     PortableGroup::Locations_var locations =
       this->replication_manager_->locations_of_members (
-        temp_iogr.in()
+        iogr
         ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
@@ -782,7 +832,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
     if (locations->length() >= 1)
     {
       new_iogr = this->replication_manager_->set_primary_member (
-        temp_iogr.in(),
+        iogr,
         (*locations)[0]
         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -809,6 +859,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
   return result;
 }
 
+#if 0 // this is handled by the remove_member method
 // While the number of members in the object group is less than
 // the MinimumNumberMembers property, add new members.
 // Sets <new_iogr> and returns 0 on success.
@@ -915,6 +966,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
 
   return result;
 }
+#endif // 0
 
 // Handle a location failure.
 int TAO::FT_ReplicationManagerFaultAnalyzer::location_failure (
