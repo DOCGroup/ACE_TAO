@@ -11,14 +11,14 @@
 INFO	= README \
 	  VERSION
 
-DIRS	= TAO_IDL \
-	  tao \
+DIRS	= tao \
+	  TAO_IDL \
 	  tests
 
 
 CLONE	= Makefile \
-	  TAO_IDL \
 	  tao \
+	  TAO_IDL \
 	  tests \
 
 #----------------------------------------------------------------------------
