@@ -268,28 +268,18 @@ Known bugs/unimplemented constructs:
 Generation of Managed types must somehow be moved to the ORB Core</LI>
 
 <LI>
-We need support for ``TIEs'' (i.e., the object form of the Adapter pattern).</LI>
-
-<LI>
-TypeCode generation for multidimensional arrays and indirected typecodes
-is still a problem.</LI>
+TypeCode generation for multidimensional arrays, indirected typecodes,
+and recursive types is still a problem.</LI>
 
 <LI>
 Unions with default cases yet to be handled</LI>
 
 <LI>
-Deal with names in the IDL definition that are C++ keywords.</LI>
-
-<LI>
 IDL is case-insensitive. However, it looks like our front-end is case-sensitive.
 Thanks to Anil Gopinath (anil@ittc.ukans.edu) for pointing this out.</LI>
 
-<LI>
-tao_idl generates code for a *.idl file only inside the directory where
-the *.idl resides. However, it may be required to generate code elsewhere
-i.e., in the directory where the compiler was invoked. Thanks to Tom Richards
-(tomr@MCMEnterprise.com) for this suggestion.</LI>
 </UL>
+
 Future work:
 <UL>
 <LI>
@@ -298,21 +288,12 @@ the ACE directory. Having them here can cause problems when working with
 multiple versions of TAO and a single version of ACE.</LI>
 
 <LI>
-Improve IDL compiler to generate compiled form of stubs/skeletons.</LI>
-
-<LI>
 Fix bugs in the SunSoft IDL front-end we've uncovered. These primarily
 include support for Unions.</LI>
 
 <LI>
-Add command line options to TAO IDL. These options will decide what strategy
-to use for operation name demultiplexing. Another option may decide whether
-to use the interpretive IIOP engine or generate compiled stubs/skeletons.</LI>
-
-<LI>
 Use <A HREF="http://www.cs.utah.edu/projects/flux/flick/">Flick</A> (from
 the University of Utah) to generate compiled stubs.</LI>
-
 
 <P>Goal is to measure the code size of the interpretive stubs generated
 by TAO IDL compiler <I>vs</I> code size of compiled stubs. Then compare
