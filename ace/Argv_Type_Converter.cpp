@@ -9,6 +9,7 @@ ACE_RCSID (ace,
            "$Id$")
 
 #include "ace/OS_String.h"
+#include "ace/OS_Errno.h"
 
 #if defined (ACE_USES_WCHAR)
 ACE_Argv_Type_Converter::ACE_Argv_Type_Converter(int& argc, wchar_t** argv)
@@ -114,8 +115,8 @@ ACE_Argv_Type_Converter::align_char_with_wchar (void)
   while (wchar_argv_index < this->saved_argc_)
     {
       // if n'th entries of both argv lists are different
-      if (ACE_OS::strcmp(this->char_argv_[wchar_argv_index],
-                         ACE_TEXT_ALWAYS_CHAR (match_argv)) != 0)
+      if (ACE_OS_String::strcmp(this->char_argv_[wchar_argv_index],
+                                ACE_TEXT_ALWAYS_CHAR (match_argv)) != 0)
         {
           // loop through the wchar argv list entries that are after
           // wchar_argv_index
