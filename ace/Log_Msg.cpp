@@ -1088,9 +1088,13 @@ ACE_Log_Msg::thr_desc (void) const
 }
 
 void
-ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td)
+ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td,
+		       ACE_Thread_Manager *thr_mgr)
 {
   this->thr_desc_ = td;
+
+  if (thr_mgr != 0)
+    thr_mgr->acquire_release ();
 }
 
 // Enable the tracing facility on a per-thread basis.
