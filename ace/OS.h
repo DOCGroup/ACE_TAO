@@ -200,9 +200,9 @@
 #endif /* ACE_DEFAULT_DIR_PERMS */
 
 // Default size of the ACE Reactor.
-#if !defined (ACE_DEFAULT_REACTOR_SIZE)
-#define ACE_DEFAULT_REACTOR_SIZE FD_SETSIZE
-#endif /* ACE_DEFAULT_REACTOR_SIZE */
+#if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
+#define ACE_DEFAULT_SELECT_REACTOR_SIZE FD_SETSIZE
+#endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
 
 // Default size of the ACE Map_Manager.
 #if !defined (ACE_DEFAULT_MAP_SIZE)

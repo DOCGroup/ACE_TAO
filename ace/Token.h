@@ -97,6 +97,18 @@ public:
   // Relinquish the token.  If there are any waiters then the next one
   // in line gets it.
 
+  int acquire_read (void);
+  // Just calls <acquire>.
+
+  int acquire_write (void);
+  // Just calls <acquire>.
+
+  int tryacquire_read (void);
+  // Just calls <tryacquire>.
+
+  int tryacquire_write (void);
+  // Just calls <tryacquire>.
+
   // = Accessor methods.
 
   int waiters (void);

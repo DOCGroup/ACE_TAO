@@ -5,18 +5,40 @@
 
 #include "ace/Thread.h"
 
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE 
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock)
+  : lock_ (&lock),
+    delete_lock_ (0)
+{  
+}
+
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE 
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
+  : lock_ (0),
+    delete_lock_ (1)
+{  
+  ACE_NEW (this->lock_, ACE_LOCKING_MECHANISM);
+}
+
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE 
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::~ACE_Lock_Adapter (void)
+{  
+  if (this->delete_lock_)
+    delete this->lock_;
+}
+
 // Explicitly destroy the lock.
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::remove (void)
 {
-  return this->lock_.remove ();
+  return this->lock_->remove ();
 }
 
 // Block the thread until the lock is acquired.
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire (void)
 {
-  return this->lock_.acquire ();
+  return this->lock_->acquire ();
 }
 
 // Conditionally acquire the lock (i.e., won't block).
@@ -24,7 +46,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire (void)
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire (void)
 {
-  return this->lock_.tryacquire ();
+  return this->lock_->tryacquire ();
 }
 
 // Release the lock.
@@ -32,7 +54,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire (void)
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::release (void)
 {
-  return this->lock_.release ();
+  return this->lock_->release ();
 }
 
 // Block until the thread acquires a read lock.  If the locking
@@ -42,7 +64,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::release (void)
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire_read (void)
 {
-  return this->lock_.acquire_read ();
+  return this->lock_->acquire_read ();
 }
 
 // Block until the thread acquires a write lock.  If the locking
@@ -52,7 +74,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire_read (void)
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire_write (void)
 {
-  return this->lock_.acquire_write ();
+  return this->lock_->acquire_write ();
 }
 
 // Conditionally acquire a read lock.  If the locking mechanism
@@ -61,7 +83,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire_write (void)
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire_read (void)
 {
-  return this->lock_.tryacquire_read ();
+  return this->lock_->tryacquire_read ();
 }
 
 // Conditionally acquire a write lock.  If the locking mechanism
@@ -70,7 +92,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire_read (void)
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire_write (void)
 {
-  return this->lock_.tryacquire_write ();
+  return this->lock_->tryacquire_write ();
 }
 
 #if defined (ACE_HAS_THREADS)

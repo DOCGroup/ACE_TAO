@@ -39,6 +39,19 @@ class ACE_Lock_Adapter : public ACE_Lock
 public:
   typedef ACE_LOCKING_MECHANISM ACE_LOCK;
 
+  // = Initialization/Finalization methods.
+
+  ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock);
+  // Constructor. All locking requests will be forwarded to <lock>.
+
+  ACE_Lock_Adapter (void);
+  // Constructor. Since no lock is provided by the user, one will be
+  // created internally.
+
+  virtual ~ACE_Lock_Adapter (void);
+  // Destructor. If <lock_> was not passed in by the user, it will be
+  // deleted.
+
   // = Lock accessors.
   virtual int acquire (void);
   // Block the thread until the lock is acquired.
@@ -71,8 +84,12 @@ public:
   // Explicitly destroy the lock.
 
 private:
-  ACE_LOCKING_MECHANISM lock_;
+  ACE_LOCKING_MECHANISM *lock_;
   // The concrete locking mechanism that all the methods delegate to.
+  
+  int delete_lock_;
+  // This flag keep track of whether we are responsible for deleting
+  // the lock
 };
 
 template <class ACE_LOCK, class TYPE>

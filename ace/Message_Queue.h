@@ -163,10 +163,10 @@ public:
   // <enqueue_tail>, and <enqueue_prio> when a new item is inserted
   // into the queue.  Subclasses can override this method to perform
   // specific notification strategies (e.g., signaling events for a
-  // <ReactorEx>, notifying a <Reactor>, etc.).  In a multi-threaded
-  // application with concurrent consumers, there is no guarantee that
-  // the queue will be still be non-empty by the time the notification
-  // occurs.
+  // <WFMO_Reactor>, notifying a <Reactor>, etc.).  In a
+  // multi-threaded application with concurrent consumers, there is no
+  // guarantee that the queue will be still be non-empty by the time
+  // the notification occurs.
 
   // = Get/set the notification strategy for the <Message_Queue>
   ACE_Notification_Strategy *notification_strategy (void);

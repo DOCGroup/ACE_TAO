@@ -720,6 +720,28 @@ public:
 		      ACE_Synch_Options::defaults);
   // Calls remove on the token.
 
+  virtual int acquire_read (int notify = 0,
+			    void (*sleep_hook)(void *) = 0,
+			    ACE_Synch_Options &options =
+			    ACE_Synch_Options::defaults);
+  // Since the locking mechanism doesn't support read locks then this
+  // just calls <acquire>.
+
+  virtual int acquire_write (int notify = 0,
+			     void (*sleep_hook)(void *) = 0,
+			     ACE_Synch_Options &options =
+			     ACE_Synch_Options::defaults);
+  // Since the locking mechanism doesn't support write locks then this
+  // just calls <acquire>.
+
+  virtual int tryacquire_read (void (*sleep_hook)(void *) = 0);
+  // Since the locking mechanism doesn't support read locks then this
+  // just calls <tryacquire>.
+
+  virtual int tryacquire_write (void (*sleep_hook)(void *) = 0);
+  // Since the locking mechanism doesn't support write locks then this
+  // just calls <tryacquire>.
+
   // = Utility methods.
 
   virtual const char *client_id (void) const;

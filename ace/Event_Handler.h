@@ -22,8 +22,6 @@
 // Forward declaration.
 class ACE_Message_Block;
 class ACE_Reactor;
-class ACE_ReactorEx;
-class ACE_Proactor;
 
 typedef u_long ACE_Reactor_Mask;
 
@@ -113,12 +111,6 @@ public:
   virtual void reactor (ACE_Reactor *reactor);
   virtual ACE_Reactor *reactor (void) const;
 
-  virtual void reactorEx (ACE_ReactorEx *reactorex);
-  virtual ACE_ReactorEx *reactorEx (void) const;
-
-  virtual void proactor (ACE_Proactor *proactor);
-  virtual ACE_Proactor *proactor (void) const;
-
 protected:
   ACE_Event_Handler (void);
   // Force ACE_Event_Handler to be an abstract base class.
@@ -128,8 +120,6 @@ protected:
 
   // = Pointers to the various event demultiplexors.  
   ACE_Reactor *reactor_;
-  ACE_ReactorEx *reactorex_;
-  ACE_Proactor *proactor_;
 };
 
 struct ACE_Export ACE_Notification_Buffer
