@@ -1,3 +1,8 @@
+Wed Dec 19 21:54:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-10.x-hpc++.h: Added ACE_HAS_NEW_NOTHROW when
+          exceptions are enabled.
+
 Wed Dec 19 11:10:35 2001  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp: Use the ACE_BIT_ENABLED macro
