@@ -1,3 +1,17 @@
+Fri Aug  9 11:57:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/LF_Event_Binder.cpp:
+	* tao/LF_Event_Binder.inl: Again moved the destructor from the
+	  inline file to the cpp file. Repeat of this fix "Fri Aug  2
+	  00:29:43 2002  Balachandran Natarajan
+	  <bala@cs.wustl.edu>". Yes, some compilers are buggy. But they
+	  look like buggy code and it takes a lot of time to track
+	  them. This one took me a atleast 8 hours to get to the
+	  problem. 
+
+	  This should fix somerandom core dumps with MT_Timeout test which
+	  uses this feature heavily.
+
 Thu Aug  8 23:12:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Reverted this change "Thu Aug  8
