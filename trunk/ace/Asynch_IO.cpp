@@ -198,7 +198,7 @@ ACE_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr)
       else
         return 0;
     }
-  
+
   // Non-zero ptr. Find a free slot and store.
 
   // Make sure again.
@@ -215,7 +215,7 @@ ACE_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr)
        ai++)
     if (this->proactor_->aiocb_list_[ai] == 0)
       break;
-  
+
   // Sanity check.
   if (ai == this->proactor_->aiocb_list_max_size_)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -249,13 +249,13 @@ ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
   // Create the Asynch_Result.
   Result *result = 0;
   ACE_NEW_RETURN (result,
-		  Result (*this->handler_,
-			  this->handle_,
-			  message_block,
-			  bytes_to_read,
-			  act,
-			  this->proactor_->get_handle ()),
-		  -1);
+                  Result (*this->handler_,
+                          this->handle_,
+                          message_block,
+                          bytes_to_read,
+                          act,
+                          this->proactor_->get_handle ()),
+                  -1);
 
   ssize_t return_val = this->shared_read (result);
   if (return_val == -1)
@@ -267,9 +267,9 @@ int
 ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
 {
 #if defined (ACE_HAS_AIO_CALLS)
-  // Act according to the completion strategy that is set in the 
+  // Act according to the completion strategy that is set in the
   // proactor.
-  
+
   // Using RT Signals to notify the completion.
   if (this->proactor ()->posix_completion_strategy () ==
       ACE_Proactor::RT_SIGNALS)
@@ -296,11 +296,11 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
   else
     {
       // AIO_CONTROL_BLOCKS strategy.
-      
+
       // Make a new AIOCB and issue aio_read, if queueing is possible
       // store this with the Proactor, so that that can be used for
       // <aio_return> and <aio_error>.
-      
+
       // Allocate aiocb block.
       aiocb *aiocb_ptr = 0;
       ACE_NEW_RETURN (aiocb_ptr,
@@ -312,11 +312,11 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
         {
           // Clean up the memory allocated.
           delete aiocb_ptr;
-          
+
           // @@ Set errno to EAGAIN so that applications will know this as
           // a queueing failure and try again this aio_read it they want.
           errno = EAGAIN;
-          
+
           return -1;
         }
 
@@ -457,13 +457,13 @@ ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
 {
   Result *result = 0;
   ACE_NEW_RETURN (result,
-		  Result (*this->handler_,
-			  this->handle_,
-			  message_block,
-			  bytes_to_write,
-			  act,
-			  this->proactor_->get_handle ()),
-		  -1);
+                  Result (*this->handler_,
+                          this->handle_,
+                          message_block,
+                          bytes_to_write,
+                          act,
+                          this->proactor_->get_handle ()),
+                  -1);
 
   ssize_t return_val = this->shared_write (result);
   if (return_val == -1)
@@ -475,9 +475,9 @@ int
 ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
 {
 #if defined (ACE_HAS_AIO_CALLS)
-  // Act according to the completion strategy that is set in the 
+  // Act according to the completion strategy that is set in the
   // proactor.
-  if (this->proactor ()->posix_completion_strategy () == 
+  if (this->proactor ()->posix_completion_strategy () ==
       ACE_Proactor::RT_SIGNALS)
     {
       // Setup AIOCB.
@@ -491,7 +491,7 @@ ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
       result->aiocb_ptr ()->aio_sigevent.sigev_signo = ACE_SIG_AIO;
       result->aiocb_ptr ()->aio_sigevent.sigev_value.sival_ptr =
         (void *) result;
-      
+
       // Fire off the aio write.
       if (aio_write (result->aiocb_ptr ()) == -1)
         // Queueing failed.
@@ -499,14 +499,14 @@ ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
                            "%p:Asynch_Write_Stream: aio_write queueing failed\n"),
                           -1);
     }
-  else 
+  else
     {
       // AIO_CONTROL_BLOCKS strategy.
-      
+
       // Make a new AIOCB and issue aio_write, if queueing is possible
       // store this with the Proactor, so that that can be used for
       // <aio_return> and <aio_error>.
-      
+
       // Allocate aiocb block.
       aiocb *aiocb_ptr = 0;
       ACE_NEW_RETURN  (aiocb_ptr,
@@ -548,23 +548,23 @@ ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
 
           // Clean up the memory allocated.
           delete aiocb_ptr;
-          
+
           return -1;
         }
-      
+
       // Success. Store the aiocb_ptr with Proactor.
       if (this->register_aio_with_proactor (aiocb_ptr) == -1)
         {
           // Clean up the memory allocated.
           delete aiocb_ptr;
-          
+
           return -1;
         }
     }
-  
+
   // Aio successfully issued.
   return 0;
-  
+
 #else /* ACE_HAS_AIO_CALLS */
   u_long bytes_written;
 
@@ -776,10 +776,10 @@ class ACE_Export ACE_Asynch_Accept_Handler : public ACE_Event_Handler
 {
   // = TITLE
   //     For the POSIX implementation, this class takes care of doing
-  //     Asynch_Accept. 
-  // 
+  //     Asynch_Accept.
+  //
   // = DESCRIPTION
-  //      
+  //
 public:
   ACE_Asynch_Accept_Handler (ACE_Reactor* reactor = 0,
                              ACE_Proactor* proactor = 0);
@@ -787,39 +787,39 @@ public:
   // the handlers. Give also the proactor used here, so that the
   // handler can send information through the notification pipe of the
   // proactor, in case AIO_CONTROL_BLOCKS strategy is used.
-  
+
   ~ACE_Asynch_Accept_Handler (void);
   // Destructor.
-  
+
   int register_accept_call (ACE_Asynch_Accept::Result* result);
-  // Register this <accept> call with the local handler. 
-  
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE); 
+  // Register this <accept> call with the local handler.
+
+  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   // Called when accept event comes up on the <listen_handle>.
 
 private:
   ACE_Asynch_Accept::Result* deregister_accept_call (void);
   // Undo the things done when registering.
-  
+
   ACE_Unbounded_Queue<ACE_Asynch_Accept::Result*> result_queue_;
   // Queue of Result pointers that correspond to all the <accept>'s
-  // pending. 
-  
+  // pending.
+
   ACE_Reactor* reactor_;
   // Reactor used by the Asynch_Accept. We need this here to enable
   // and disable the <handle> now and then, depending on whether any
-  // <accept> is pending or no. 
+  // <accept> is pending or no.
 
   ACE_Thread_Mutex lock_;
   // The lock to protect the  result queue which is shared. The queue
   // is updated by main thread in the register function call and
   // through the auxillary thread  in the deregister fun. So let us
-  // mutex it. 
+  // mutex it.
 
   ACE_Asynch_Accept_Handler (void);
   // Default constructor shouldn't be called. Without a reactor, this
-  // class wont make sense. 
-  
+  // class wont make sense.
+
   ACE_Proactor* proactor_;
   // Proactor used by the Asynch_Accept class.
 };
@@ -833,7 +833,7 @@ ACE_Asynch_Accept_Handler::ACE_Asynch_Accept_Handler (ACE_Reactor* reactor,
     this->reactor_ = ACE_Reactor::instance ();
   if (this->proactor_ == 0)
     this->proactor_ = ACE_Proactor::instance ();
-}  
+}
 
 ACE_Asynch_Accept_Handler::~ACE_Asynch_Accept_Handler (void)
 {
@@ -848,30 +848,30 @@ ACE_Asynch_Accept_Handler::register_accept_call (ACE_Asynch_Accept::Result* resu
   // thru the auxillary thread  in the deregister fun. So let us mutex
   // it.
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
-  
+
   // Insert this result to the queue.
   int insert_result = this->result_queue_.enqueue_tail (result);
   if (insert_result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:ACE_Asynch_Accept_Handler::register_accept_call failed\n"),
-                      -1); 
-  
+                      -1);
+
   // If this is the only item, then it means there the set was empty
   // before. So enable the <handle> in the reactor.
   if (this->result_queue_.size () == 1)
     this->reactor_->resume_handlers ();
-  
+
   return 0;
 }
 
-ACE_Asynch_Accept::Result* 
+ACE_Asynch_Accept::Result*
 ACE_Asynch_Accept_Handler::deregister_accept_call (void)
 {
   // The queue is updated by main thread in the register function call and
   // thru the auxillary thread  in the deregister fun. So let us mutex
   // it.
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0);
-  
+
   // Get the first item (result ptr) from the Queue.
   ACE_Asynch_Accept::Result* result = 0;
   int return_dequeue = this->result_queue_.dequeue_head (result);
@@ -880,9 +880,9 @@ ACE_Asynch_Accept_Handler::deregister_accept_call (void)
   // Sanity check.
   if (result == 0)
     return 0;
-  
+
   // Disable the <handle> in the reactor if no <accept>'s are
-  // pending. 
+  // pending.
   if (this->result_queue_.size () == 0)
     this->reactor_->suspend_handlers ();
 
@@ -895,14 +895,14 @@ ACE_Asynch_Accept_Handler::handle_input (ACE_HANDLE fd)
 {
   // An <accept> has been sensed on the <listen_handle>. We should be
   // able to just go ahead and do the <accept> now on this <fd>. This
-  // should be the same as the <listen_handle>. 
+  // should be the same as the <listen_handle>.
 
   // @@ Debugging.
   ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Accept_Handler::handle_input called\n"));
-  
-  // Deregister this info pertaining to this <accept> call. 
+
+  // Deregister this info pertaining to this <accept> call.
   ACE_Asynch_Accept::Result* result = this->deregister_accept_call ();
-  
+
   // @@ Debugging.
   ACE_DEBUG ((LM_DEBUG,
               "(%t):ACE_Asynch_Accept_Handler::handle_input : fd = [%d], Result->listen_handle = [%d]\n",
@@ -912,17 +912,17 @@ ACE_Asynch_Accept_Handler::handle_input (ACE_HANDLE fd)
   // There is not going to be any data read. So we can use the
   // <message_block> itself to take the <remote_address> as well as
   // the size of that address.
-  
+
   // We will have atleast 2 * (sizeof (sockaddr_in) + sizeof (sockaddr)).
   size_t buffer_size = sizeof (sockaddr_in) + sizeof (sockaddr);
-  
+
   // Parameters for the <accept> call.
   int *address_size = (int *)result->message_block ().wr_ptr ();
   *address_size = buffer_size;
-  
+
   // Increment the wr_ptr.
   result->message_block ().wr_ptr (sizeof (int));
-  
+
   // Issue <accept> now.
   // @@ We shouldnt block here since we have already done poll/select
   // thru reactor. But are we sure?
@@ -934,20 +934,20 @@ ACE_Asynch_Accept_Handler::handle_input (ACE_HANDLE fd)
                        "Error:(%P | %t):%p:\n",
                        "<accept> system call failed"),
                       -1);
-  
+
   // Accept has completed.
 
   // Update the <wr_ptr> for the <message block>.
   result->message_block ().wr_ptr (*address_size);
-  
+
   // @@ Just debugging.
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:Address_size = [%d], New_handle = [%d]\n",
-              *address_size, new_handle)); 
-  
+              *address_size, new_handle));
+
   // Store the new handle.
   result->accept_handle_ = new_handle;
- 
+
   // Notify the mail process about this completion
   // Signal the main process about this completion or send the result
   // pointer thru the notify pipe depending on what is Completion
@@ -960,50 +960,50 @@ ACE_Asynch_Accept_Handler::handle_input (ACE_HANDLE fd)
         // @@ Debugging.
         ACE_DEBUG ((LM_DEBUG,
                     "ACE_Asynch_Accept_Handler::handle_input: RT_SIGNALS\n"));
-        
+
         // Get this process id.
         pid_t pid = ACE_OS::getpid ();
         if (pid == (pid_t) -1)
-          ACE_ERROR_RETURN ((LM_ERROR, 
+          ACE_ERROR_RETURN ((LM_ERROR,
                              "Error:(%P | %t):%p:",
                            "<getpid> failed\n"),
                           -1);
-      
+
       // Set the signal information.
       sigval value;
       value.sival_ptr = (void *) result;
-      
+
       // Queue the signal.
       if (sigqueue (pid, ACE_SIG_AIO, value) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, 
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "Error:(%P | %t):%p:",
                            "<sigqueue> failed\n"),
                           -1);
       }
       break;
-      
+
     case ACE_Proactor::AIO_CONTROL_BLOCKS:
       // @@ Debugging.
       ACE_DEBUG ((LM_DEBUG,
                   "ACE_Asynch_Accept_Handler::handle_input: AIO_CONTROL_BLOCKS\n"));
-      
+
       // Send the Result through the notification pipe.
       if (this->proactor_->notify_asynch_accept (result) == -1)
         return -1;
       break;
-      
+
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%N:%l:Unknow POSIX_COMPLETION_STRATEGY\n"),
                         -1);
     }
-      
+
   return 0;
-}  
+}
 #endif /* ACE_HAS_AIO_CALLS */
 
 #if defined (ACE_HAS_AIO_CALLS)
-// We need accept handlers here. 
+// We need accept handlers here.
 ACE_Asynch_Accept::ACE_Asynch_Accept (void)
   : accept_handler_ (0)
 {
@@ -1023,37 +1023,37 @@ ACE_Asynch_Accept::open(ACE_Handler &handler,
                          ACE_Proactor *proactor)
 {
   ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Accept::open called\n"));
-  
-  // Common things to register for any Asynch Operation. We need to 
+
+  // Common things to register for any Asynch Operation. We need to
   // call the base class' <open>  method.
-  int result_open = this->ACE_Asynch_Operation::open (handler, 
+  int result_open = this->ACE_Asynch_Operation::open (handler,
                                                       handle,
                                                       completion_key,
                                                       proactor);
   if (result_open < 0)
     return result_open;
- 
+
   // Init the Asynch_Accept_Handler now. Only now it can be inited,
-  // because it needs to keep Proactor also with it. 
+  // because it needs to keep Proactor also with it.
   ACE_NEW_RETURN (this->accept_handler_,
                   ACE_Asynch_Accept_Handler (&this->reactor_,
                                              this->proactor_),
                   -1);
-  
+
   // Register the handle with the reactor.
   this->reactor_.register_handler (this->handle_,
                                    this->accept_handler_,
                                    ACE_Event_Handler::ACCEPT_MASK);
-  
+
   // Suspend the <handle> now. Enable only when the <accept> is issued
   // by the application.
   this->reactor_.suspend_handlers ();
-  
+
   // Spawn the thread. It is the only thread we are going to have. It
   // will do the <handle_events> on the reactor.
   ACE_Thread_Manager::instance ()->spawn (ACE_Asynch_Accept::thread_function,
                                           (void *)&this->reactor_);
-  
+
   return 0;
 }
 #endif /* ACE_HAS_AIO_CALLS */
@@ -1065,14 +1065,14 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
                            const void *act)
 {
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (defined (ACE_HAS_AIO_CALLS))
- 
-  // @@ Debugging. 
+
+  // @@ Debugging.
   ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Accept::accept called\n"));
-  
+
   // Common code for both WIN and POSIX.
-  
+
   // Sanity check: make sure that enough space has been allocated by
-  // the caller. 
+  // the caller.
   size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
   size_t space_in_use = message_block.wr_ptr () - message_block.base ();
   size_t total_size = message_block.size ();
@@ -1083,7 +1083,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 
 #if !defined (ACE_HAS_AIO_CALLS)
   // WIN Specific.
-  
+
   int close_accept_handle = 0;
   // If the <accept_handle> is invalid, we will create a new socket.
   if (accept_handle == ACE_INVALID_HANDLE)
@@ -1115,16 +1115,16 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 
 #if defined (ACE_HAS_AIO_CALLS)
   // Code specific to the POSIX Implementation.
-  
-  // Register this <accept> call with the local handler. 
+
+  // Register this <accept> call with the local handler.
   this->accept_handler_->register_accept_call (result);
-  
+
   return 0;
 #else /* Not ACE_HAS_AIO_CALLS */
   // Code specific to WIN platforms.
-  
+
   u_long bytes_read;
-  
+
   // Initiate the accept.
   int initiate_result = ::AcceptEx ((SOCKET) result->listen_handle (),
                                     (SOCKET) result->accept_handle (),
@@ -1171,16 +1171,16 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 void*
 ACE_Asynch_Accept::thread_function (void* arg_reactor)
 {
-  ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Accept::thread_function called\n")); 
- 
+  ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Accept::thread_function called\n"));
+
   // Retrieve the reactor pointer from the argument.
   ACE_Reactor* reactor = (ACE_Reactor *) arg_reactor;
   if (reactor == 0)
     reactor = ACE_Reactor::instance ();
-  
-  // For this reactor, this thread is the owner. 
+
+  // For this reactor, this thread is the owner.
   reactor->owner (ACE_OS::thr_self ());
-  
+
   // Handle events.
   int result = 0;
   while (result != -1)
@@ -1190,7 +1190,7 @@ ACE_Asynch_Accept::thread_function (void* arg_reactor)
                   "ACE_Asynch_Accept::Thread_Function : handle_events : result = [%d]\n",
                   result));
     }
-  
+
   ACE_DEBUG ((LM_DEBUG, "Exiting ACE_Asynch_Accept::thread_function \n"));
   return 0;
 }
@@ -1276,7 +1276,7 @@ public:
   // to write....)  and the the <proactor> pointer tells this class
   // the <proactor> that is being used by the
   // Asynch_Transmit_Operation and the application.
-  
+
   virtual ~ACE_Asynch_Transmit_Handler (void);
   // Destructor.
 
@@ -1301,7 +1301,7 @@ private:
   ACE_Proactor *proactor_;
   // The Proactor that is being used by the application handler and
   // so the Asynch_Transmit_File.
-  
+
   ACE_Asynch_Read_File rf_;
   // To read from the file to be transmitted.
 
@@ -1331,7 +1331,7 @@ private:
 
   size_t bytes_transferred_;
   // Number of bytes transferred on the stream.
-  
+
   size_t transmit_file_done_;
   // Flag to indicate that the transmitting is over.
 };
@@ -1384,7 +1384,7 @@ ACE_Asynch_Transmit_Handler::transmit (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Asynch_Transmit_Handler:write_stream open failed\n"),
                       -1);
-  
+
   // Transmit the header.
   if (this->ws_.write (*this->result_->header_and_trailer ()->header (),
                        this->result_->header_and_trailer ()->header_bytes (),
@@ -1392,19 +1392,19 @@ ACE_Asynch_Transmit_Handler::transmit (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Asynch_Transmit_Handler:transmitting header:write_stream failed\n"),
                       -1);
-  
+
   // @@ We need to finish the transmitting, before returning to the
   // user code. Otherwise <transmit> may not be atmoic. User's other
   // <read> or <write> on the same socket might damage the order of
-  // the current file transmission. 
+  // the current file transmission.
   int error = 0;
   while (!error && !this->transmit_file_done_)
     error = this->proactor_->handle_events ();
-  
+
   if (!error && this->transmit_file_done_)
-    // No error, transmission done. 
+    // No error, transmission done.
     return 0;
-  else 
+  else
     return -1;
 }
 
@@ -1419,7 +1419,7 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
     {
       ACE_ERROR ((LM_ERROR,
                   "Asynch_Transmit_File failed.\n"));
-      
+
       ACE_SEH_TRY
         {
           this->result_->complete (this->bytes_transferred_,
@@ -1433,16 +1433,16 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
           delete this;
         }
     }
-  
+
   // Write stream successful.
-  
+
   // Partial write to socket.
   int unsent_data = result.bytes_to_write () - result.bytes_transferred ();
   if (unsent_data != 0)
     {
       // Reset pointers.
       result.message_block ().rd_ptr (result.bytes_transferred ());
-      
+
       // Duplicate the message block and retry remaining data
       if (this->ws_.write (*result.message_block ().duplicate (),
                            unsent_data,
@@ -1485,7 +1485,7 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
           delete this;
         }
       break;
-      
+
     case HEADER_ACT:
     case DATA_ACT:
       // If header/data was sent, initiate the file data transmission.
@@ -1494,7 +1494,7 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
         ACE_ERROR ((LM_ERROR,
                     "Error:Asynch_Transmit_Handler:read_file couldnt be initiated\n"));
       break;
-      
+
     default:
       // @@ Handle this error.
       ACE_ERROR ((LM_ERROR,
@@ -1508,7 +1508,7 @@ ACE_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File::Resul
   // Failure.
   if (result.success () == 0)
     {
-      // 
+      //
       ACE_SEH_TRY
         {
           this->result_->complete (this->bytes_transferred_,
@@ -1526,7 +1526,7 @@ ACE_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File::Resul
   // Read successful.
   if (result.bytes_transferred () == 0)
     return;
-  
+
   // Increment offset and write data to network.
   this->file_offset_ += result.bytes_transferred ();
   if (this->ws_.write (result.message_block (),
@@ -1612,35 +1612,35 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   Result *result = 0;
 
   ACE_NEW_RETURN (result,
-		  Result (*this->handler_,
-			  this->handle_,
-			  file,
-			  header_and_trailer,
-			  bytes_to_write,
-			  offset,
-			  offset_high,
-			  bytes_per_send,
-			  flags,
-			  act,
-			  this->proactor_->get_handle ()),
-		  -1);
+                  Result (*this->handler_,
+                          this->handle_,
+                          file,
+                          header_and_trailer,
+                          bytes_to_write,
+                          offset,
+                          offset_high,
+                          bytes_per_send,
+                          flags,
+                          act,
+                          this->proactor_->get_handle ()),
+                  -1);
 
   // Make the auxillary handler and initiate transmit.
   ACE_Asynch_Transmit_Handler *transmit_handler = 0;
 
   ACE_NEW_RETURN (transmit_handler,
                   ::ACE_Asynch_Transmit_Handler (result,
-                                                 this->proactor_), 
+                                                 this->proactor_),
                   -1);
 
   ssize_t return_val = transmit_handler->transmit ();
-  
+
   if (return_val == -1)
     // This deletes the <result> in it too.
     delete transmit_handler;
-  
+
   return 0;
-    
+
 #elif (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -1872,27 +1872,27 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
 
       // If header is valid, set the fields
       if (this->header_ != 0)
-	{
-	  this->transmit_buffers_.Head = this->header_->rd_ptr ();
-	  this->transmit_buffers_.HeadLength = this->header_bytes_;
-	}
+        {
+          this->transmit_buffers_.Head = this->header_->rd_ptr ();
+          this->transmit_buffers_.HeadLength = this->header_bytes_;
+        }
       else
-	{
-	  this->transmit_buffers_.Head = 0;
-	  this->transmit_buffers_.HeadLength = 0;
-	}
+        {
+          this->transmit_buffers_.Head = 0;
+          this->transmit_buffers_.HeadLength = 0;
+        }
 
       // If trailer is valid, set the fields
       if (this->trailer_ != 0)
-	{
-	  this->transmit_buffers_.Tail = this->trailer_->rd_ptr ();
-	  this->transmit_buffers_.TailLength = this->trailer_bytes_;
-	}
+        {
+          this->transmit_buffers_.Tail = this->trailer_->rd_ptr ();
+          this->transmit_buffers_.TailLength = this->trailer_bytes_;
+        }
       else
-	{
-	  this->transmit_buffers_.Tail = 0;
-	  this->transmit_buffers_.TailLength = 0;
-	}
+        {
+          this->transmit_buffers_.Tail = 0;
+          this->transmit_buffers_.TailLength = 0;
+        }
 
       // Return the transmit buffers
       return &this->transmit_buffers_;
