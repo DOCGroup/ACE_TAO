@@ -2,6 +2,10 @@
 # $Id$
 #
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
 LSRC = Logging_Service.cpp
 
 LOG_OBJS=$(LSRC:.cpp=.o)
@@ -9,6 +13,14 @@ LOG_OBJS=$(LSRC:.cpp=.o)
 LDLIBS = -lTAO_DsLogAdmin -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 
 BIN2 = Logging_Service
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
@@ -21,22 +33,11 @@ ifeq (Log,$(findstring Log,$(TAO_ORBSVCS)))
   endif # Naming
 endif # Log
 
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
-TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 

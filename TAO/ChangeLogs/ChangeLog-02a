@@ -1,38 +1,47 @@
+Thu Apr 20 16:36:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Logging_Service/Makefile:
+        * orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/tests/AVStreams/benchmark/Makefile:
+        * performance-tests/Latency/Makefile:
+          More makefiles that were out of date or did not work correctly
+          with non-default configurations.
+
 Thu Apr 20 15:42:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/ORB.cpp:
-	  Changes suggested by Carlos to prevent actual and
-	  possible memory leaks.
+        * tao/ORB.cpp:
+          Changes suggested by Carlos to prevent actual and
+          possible memory leaks.
 
 Thu Apr 20 13:50:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
-	  New field typecode_factory_, along with accessors
-	  initialization, and release code.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          New field typecode_factory_, along with accessors
+          initialization, and release code.
 
-	* ORB.cpp:
-	  Modified case for resolve_initial_references ("TypeCodeFactory")
-	  to use the above field, and to fill it if it is null.
+        * ORB.cpp:
+          Modified case for resolve_initial_references ("TypeCodeFactory")
+          to use the above field, and to fill it if it is null.
 
 Thu Apr 20 12:08:10 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp: Fixed a
-	  compiler error in SGI.
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp: Fixed a
+          compiler error in SGI.
 
 Thu Apr 20 09:31:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/MProfile_Forwarding/test_i.h:
-	* tests/MProfile_Forwarding/test_i.cpp:
-	  Add missing throw specs.
+        * tests/MProfile_Forwarding/test_i.h:
+        * tests/MProfile_Forwarding/test_i.cpp:
+          Add missing throw specs.
 
-	* performance-tests/POA/Demux/demux_test_i.h:
-	* performance-tests/POA/Demux/demux_test_i.cpp:
-	  Add missing throw specs.
+        * performance-tests/POA/Demux/demux_test_i.h:
+        * performance-tests/POA/Demux/demux_test_i.cpp:
+          Add missing throw specs.
 
-	* tests/Explicit_Event_Loop/server.cpp:
-	  Remove unreachable statement.
+        * tests/Explicit_Event_Loop/server.cpp:
+          Remove unreachable statement.
 
 Wed Apr 19 20:16:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
