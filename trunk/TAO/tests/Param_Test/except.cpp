@@ -26,7 +26,8 @@ ACE_RCSID(Param_Test, except, "$Id$")
 // ************************************************************************
 
 Test_Exception::Test_Exception (void)
-  : opname_ (CORBA::string_dup ("test_exception"))
+  : opname_ (CORBA::string_dup ("test_exception")),
+    iterations_ (0)
 {
 }
 
@@ -63,10 +64,10 @@ Test_Exception::dii_req_invoke (CORBA::Request *req,
                       "expected user exception"
                       " (%s,%d)\n", reason, ex.input));
         }
-      this->inout_ = this->in_ * 2;
-      this->out_ = this->in_ * 3;
-      this->ret_ = this->in_ * 4;
-      
+      this->inout_ = this->in_ * 3;
+      this->out_ = this->in_ * 4;
+      this->ret_ = this->in_ * 5;
+
       // Why should we use clear ?????
       //TAO_TRY_ENV.clear ();
 
@@ -79,10 +80,10 @@ Test_Exception::dii_req_invoke (CORBA::Request *req,
           ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - "
                                "expected system exception\n");
         }
-      this->inout_ = this->in_ * 2;
-      this->out_ = this->in_ * 3;
-      this->ret_ = this->in_ * 4;
-      
+      this->inout_ = this->in_ * 4;
+      this->out_ = this->in_ * 5;
+      this->ret_ = this->in_ * 6;
+
       // TAO_TRY_ENV.clear ();
 
       return;
@@ -141,9 +142,9 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
                       "expected user exception"
                       " (%s,%d)\n", reason, ex.input));
         }
-      this->inout_ = this->in_ * 2;
-      this->out_ = this->in_ * 3;
-      this->ret_ = this->in_ * 4;
+      this->inout_ = this->in_ * 3;
+      this->out_ = this->in_ * 4;
+      this->ret_ = this->in_ * 5;
       return -1;
     }
   ACE_CATCH (CORBA::UNKNOWN, ex)
@@ -152,9 +153,9 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
         {
           ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - expected system exception\n");
         }
-      this->inout_ = this->in_ * 2;
-      this->out_ = this->in_ * 3;
-      this->ret_ = this->in_ * 4;
+      this->inout_ = this->in_ * 4;
+      this->out_ = this->in_ * 5;
+      this->ret_ = this->in_ * 6;
       return -1;
     }
   ACE_CATCH (Param_Test::BadBoy, ex)
@@ -214,9 +215,10 @@ Test_Exception::add_args (CORBA::NVList_ptr param_list,
 CORBA::Boolean
 Test_Exception::check_validity (void)
 {
-  if (this->inout_ == this->in_ * 2 &&
-      this->out_ == this->in_ * 3 &&
-      this->ret_ == this->in_ * 4)
+  CORBA::ULong n = (this->iterations_++) % 3;
+  if (this->inout_ == this->in_ * (n + 2) &&
+      this->out_ == this->in_ * (n + 3) &&
+      this->ret_ == this->in_ * (n + 4))
     return 1;
   return 0;
 }
