@@ -5,12 +5,13 @@
 interface Video_Control
 {
 
+  typedef sequence <char> my_seq_char;
   const long VIDEO_PATTERN_SIZE = 100;
   struct INITvideoPara
   {
     long sn;
     long version;
-    sequence <char> videofile;
+    my_seq_char videofile;
   };
 
   struct INITvideoReply
@@ -33,7 +34,7 @@ interface Video_Control
     long sizeGop;
     long averageFrameSize;
     long firstGopFrames;
-    sequence <char> pattern;
+    my_seq_char pattern;
   };
 
   /* CmdPOSITION, CmdPOSITIONrelease: followed by following parameter */
@@ -73,7 +74,7 @@ interface Video_Control
     long frameRateLimit1000;
     long VStimeAdvance;
     long sendPatternGops;
-    sequence <char> sendPattern;
+    my_seq_char sendPattern;
   };
 
   /* CmdSPEED: parameter */
@@ -84,7 +85,7 @@ interface Video_Control
     long framesPerSecond;
     long frameRateLimit1000;
     long sendPatternGops;
-    sequence <char> sendPattern;
+    my_seq_char sendPattern;
   };
 
 
@@ -101,7 +102,7 @@ interface Video_Control
   boolean speed (in SPEEDpara para);
   boolean stop (in long cmdsn);
 
-  unsigned short set_peer (in string peer);
+  boolean set_peer (inout string peer);
   // Initializes the server to communicate to the <peer>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it

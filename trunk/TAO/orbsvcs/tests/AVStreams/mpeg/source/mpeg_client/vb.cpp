@@ -409,12 +409,11 @@ void VBprocess(int initSocket, int normalSocket)
     msghd.msgOffset = ntohl(msghd.msgOffset);
     msghd.msgSize = ntohl(msghd.msgSize);
 #endif
+    
     /*
     fprintf(stderr, "VB PEEK1 a msg sn-%d, size-%d, pkt-%d, pktsize-%d\n",
 	    msghd.msgsn, msghd.msgSize, msghd.packetsn, msghd.packetSize);
-    */
-
-    
+    */  
   start_new_packet:
 
     
@@ -429,15 +428,16 @@ void VBprocess(int initSocket, int normalSocket)
 #endif
     if (msghd.msgsn <= msgsn)  /* outdated msg */
     {
-      /*
+    
       fprintf(stderr, "VB discard outdated msgsn %d, pktsn %d when expecting first\n",
 	      msghd.msgsn, msghd.packetsn);
-      */
+    
       skip_message(dataSocket, &msghd);
       continue;
     }
     else if (msghd.msgOffset != 0)  /* not first msg of a packet */
     {
+    
       /*
       Fprintf(stderr, "VB discard non-first msg msgsn %d, pktsn %d\n",
 	      msghd.msgsn, msghd.packetsn);
@@ -475,7 +475,8 @@ void VBprocess(int initSocket, int normalSocket)
 	/*
 	Fprintf(stderr, "VB not enough space 1, drop msg.sn %d pktsn %d\n",
 		msghd.msgsn, msghd.packetsn);
-	*/
+        */
+                
         skip_message(dataSocket, &msghd);
 	continue;
       }
@@ -493,14 +494,15 @@ void VBprocess(int initSocket, int normalSocket)
       /*
       Fprintf(stderr, "VB not enough space 1, drop msg.sn %d pktsn %d\n",
 	      msghd.msgsn, msghd.packetsn);
+
       */
       skip_message(dataSocket, &msghd);
       continue;
     }
     leave_cs(sid);
-    /*
-    fprintf(stderr, "VB allocated a buffer for comming packet.\n");
-    */
+
+    //    fprintf(stderr, "VB allocated a buffer for comming packet.\n");
+
     psize = msghd.packetSize;
     poffset = 0;
     packet = (VideoPacket *)((char*)msg + sizeof(msghd));
@@ -533,18 +535,18 @@ void VBprocess(int initSocket, int normalSocket)
       if (len != sizeof(msghd)+msghd.msgSize)
         /* some of msg contents not successfully received, abandon current packet */
       {
-	/*
+        /*
 	fprintf(stderr, "VB got corrupted msg, len=%d, supposed len=%d\n",
 		len, sizeof(msghd)+msghd.msgSize);
-	 */
+        */
         break;
       }
       poffset += msghd.msgSize;
       psize -= msghd.msgSize;
       ptr += msghd.msgSize;
-      /*
-      fprintf(stderr, "VB packet remain size %d\n", psize);
-      */
+
+      //      fprintf(stderr, "VB packet remain size %d\n", psize);
+
       if (psize == 0)
       {
 	/* finished receiving the current packet */
@@ -972,6 +974,7 @@ void VBprocess(int initSocket, int normalSocket)
 	  memcpy((char *)&msghd, tmp_buf, sizeof(msghd));
 	}
 	if (exit_tag) exit_on_kill();
+        //        ACE_DEBUG ((LM_DEBUG, "(%P|%t) vb: Got a packet of length = %d\n", len));
 	if (len <= 0)
 	{
 	  if (errno == EWOULDBLOCK || errno == EAGAIN) {

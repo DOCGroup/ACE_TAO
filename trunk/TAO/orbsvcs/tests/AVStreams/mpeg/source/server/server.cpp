@@ -72,7 +72,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         */
 
         ACE_Process_Options video_process_options;
-        video_process_options.command_line ("./vs -ORBport 0");
+        video_process_options.command_line ("./vs -ORBport 0 -ORBobjrefstyle url");
         // ORBport of 0 makes the video server pick a port for itself
         
         ACE_Process video_process;
@@ -517,7 +517,7 @@ Video_Server_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
 
   CosNaming::Name video_vdev_name;
   video_vdev_name.length (1);
-  video_vdev_name [0].id = CORBA::string_dup ("video_vdev");
+  video_vdev_name [0].id = CORBA::string_dup ("Video_VDev");
   CORBA::Object_var video_vdev_obj =
     this->naming_context_->resolve (video_vdev_name,
                              env);
@@ -531,13 +531,13 @@ Video_Server_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
   CosNaming::Name video_streamendpoint_name;
 
   video_streamendpoint_name.length (1);
-  video_streamendpoint_name [0].id = CORBA::string_dup ("video_streamendpoint");
+  video_streamendpoint_name [0].id = CORBA::string_dup ("Video_StreamEndPoint");
   CORBA::Object_var video_streamendpoint_obj =
     this->naming_context_->resolve (video_streamendpoint_name,
                              env);
   TAO_CHECK_ENV_RETURN (env,0);
 
-  AVStreams::StreamEndPoint_B_var streamendpoint_ptr =
+  AVStreams::StreamEndPoint_B_ptr streamendpoint_ptr =
     AVStreams::StreamEndPoint_B::_narrow (video_streamendpoint_obj.in (),
                                           env);
   TAO_CHECK_ENV_RETURN (env,0);
@@ -662,7 +662,7 @@ AV_Server::init (int argc,
                   -1);
 
   // create the video server mmdevice with the naming service pointer.
-  this->orb_manager_.activate_under_child_poa ("Video_MMDevice",
+  this->orb_manager_.activate_under_child_poa ("Video_Server_MMDevice",
                                                this->video_mmdevice_,
                                                env);
   TAO_CHECK_ENV_RETURN (env,-1);
@@ -781,3 +781,6 @@ main (int argc, char **argv)
   
   return 0;
 }
+
+
+

@@ -39,6 +39,71 @@
 #include "mpeg_shared/Audio_ControlC.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 
+class Video_Client_StreamEndPoint
+  :public virtual TAO_Client_StreamEndPoint
+{
+public:
+  virtual int handle_open (void);
+  // called when streamendpoint is instantiated
+
+  virtual int handle_close (void);
+  // called when streamendpoint is being destructed
+
+  virtual CORBA::Boolean handle_preconnect (AVStreams::flowSpec &the_spec);
+  // called before connecting
+
+  virtual CORBA::Boolean handle_postconnect (AVStreams::flowSpec &the_spec);
+  // called after connecting
+  
+  virtual int handle_start (const AVStreams::flowSpec &the_spec,  
+                             CORBA::Environment &env) ;
+
+  virtual int handle_stop (const AVStreams::flowSpec &the_spec,
+                            CORBA::Environment &env) ;
+  
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
+                               CORBA::Environment &env);
+  
+  virtual ACE_HANDLE get_handle (void);
+  // gets the underlying socket descriptor from the SOCK_Dgram
+
+private:
+  ACE_SOCK_Dgram dgram_;
+  // The datagram used for streaming.
+
+};
+
+class Video_Client_MMDevice 
+  :public virtual TAO_MMDevice
+{
+public:
+  Video_Client_MMDevice (TAO_ORB_Manager *orb_manager);
+  // Constructor taking pointer to an ORB Manager
+
+  AVStreams::VDev_ptr vdev (void);
+  // Return the virtual device pointer
+
+  Video_Client_StreamEndPoint *streamendpoint (void);
+  // Return the streamendpoint pointer
+  
+  virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
+                                                     AVStreams::VDev_out the_vdev, 
+                                                     AVStreams::streamQoS &the_qos, 
+                                                     CORBA::Boolean_out met_qos, 
+                                                     char *&named_vdev, 
+                                                     const AVStreams::flowSpec &the_spec,  
+                                                     CORBA::Environment &env);
+  // Called by StreamCtrl to create a "A" type streamandpoint and vdev
+private:
+  TAO_ORB_Manager *orb_manager_;
+  // Pointer to the  ORB Manager
+
+  Video_Client_StreamEndPoint video_streamendpoint_;
+  // The client side of the video stream.
+  TAO_VDev video_vdev_;
+  // Video virtual device
+};
+
 class Command_Handler 
   : public virtual ACE_Event_Handler
 {
@@ -57,8 +122,14 @@ public:
   ~Command_Handler (void);
   // Destructor
 
-  int init (void);
+  int init (int argc,char **argv);
   // initialize the ORB
+
+  int run (void);
+  // Run the ORB event loop
+  int get_video_control (void);
+  // Gets the video control reference thru the property service from
+  // the video server virtual device
 
   int resolve_video_reference (void);
   // Resolve the video control reference.
@@ -143,14 +214,20 @@ private:
   ACE_HANDLE command_handle_;
   // The fd for the UNIX command socket
 
-  TAO_ORB_Manager *orb_manager_;
+  TAO_ORB_Manager orb_manager_;
   // the ORB manager
 
   Video_Control_var video_control_;
   // Video Control CORBA object
 
-  AVStreams::MMDevice_var video_mmdevice_;
-  // The video multimedia device
+  AVStreams::MMDevice_var video_server_mmdevice_;
+  // The video server multimedia device
+
+  Video_Client_MMDevice video_client_mmdevice_;
+  // The video client multimedia device
+
+  TAO_StreamCtrl video_streamctrl_;
+  // Video stream controller 
 
   Audio_Control_var audio_control_;
   // audio control corba object
@@ -210,39 +287,6 @@ private:
 
   Command_Handler *command_handler_;
   // We need the command handler to call close ()
-
-};
-
-class Video_Client_StreamEndPoint
-  :public virtual TAO_Client_StreamEndPoint
-{
-public:
-  virtual CORBA::Boolean handle_preconnect (void);
-  // called before connecting
-
-  virtual CORBA::Boolean handle_postconnect (void);
-  // called after connecting
-
-//   CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder, 
-//                           AVStreams::streamQoS &qos_spec, 
-//                           const AVStreams::flowSpec &the_spec,  
-//                           CORBA::Environment &env);
-private:
-  ACE_SOCK_Dgram dgram_;
-};
-
-class Video_Client_MMDevice 
-  :public virtual TAO_MMDevice
-{
-public:
-  virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
-                                                     AVStreams::VDev_out the_vdev, 
-                                                     AVStreams::streamQoS &the_qos, 
-                                                     CORBA::Boolean_out met_qos, 
-                                                     char *&named_vdev, 
-                                                     const AVStreams::flowSpec &the_spec,  
-                                                     CORBA::Environment &env);
-  // Called by StreamCtrl to create a "A" type streamandpoint and vdev
 
 };
 
