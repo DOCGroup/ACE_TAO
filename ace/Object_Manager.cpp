@@ -302,7 +302,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
                               -1);
 
               // Copy the old array to the new array.
-              for (u_int i = 0; i < tmp->size(); ++i)
+              for (u_int i = 0; i < tmp->size (); ++i)
                 (*ACE_Object_Manager_singleton_thread_locks)[i] = (*tmp) [i];
 
               // Insert the new lock at the end of the array.
@@ -424,7 +424,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
                               -1);
 
               // Copy the old array to the new array.
-              for (u_int i = 0; i < tmp->size(); ++i)
+              for (u_int i = 0; i < tmp->size (); ++i)
                 (*ACE_Object_Manager_singleton_rw_locks)[i] = (*tmp) [i];
 
               // Insert the new lock at the end of the array.
