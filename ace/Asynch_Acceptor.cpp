@@ -345,8 +345,8 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
                 "ACE_Asynch_Acceptor::<getpeername> failed"));
 
   // Set the addresses.
-  local_address.set_addr  (&local_addr,  local_size);
-  remote_address.set_addr (&remote_addr, remote_size);
+  local_address.set  (&local_addr,  local_size);
+  remote_address.set (&remote_addr, remote_size);
 
   // @@ Just debugging.
   char local_address_buf  [BUFSIZ];
@@ -389,10 +389,10 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
                           &remote_addr,
                           &remote_size);
 
-  local_address.set_addr (ACE_reinterpret_cast (sockaddr_in *,
+  local_address.set (ACE_reinterpret_cast (sockaddr_in *,
                                                 local_addr),
                           local_size);
-  remote_address.set_addr (ACE_reinterpret_cast (sockaddr_in *,
+  remote_address.set (ACE_reinterpret_cast (sockaddr_in *,
                                                  remote_addr),
                            remote_size);
 #else
