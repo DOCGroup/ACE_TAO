@@ -129,7 +129,7 @@ pace_win32_emulation_creat (const char * path, pace_mode_t mode)
 
   if (PACE_BIT_ENABLED (mode, _O_APPEND))
     {
-      if (h != PACE_WIN32_INVALID_HANDLE)
+      if (h != PACE_INVALID_HANDLE)
         {
           SetFilePointer (h, 0, 0, FILE_END);
         }
@@ -139,7 +139,7 @@ pace_win32_emulation_creat (const char * path, pace_mode_t mode)
        */
     }
   
-  if (h == PACE_WIN32_INVALID_HANDLE)
+  if (h == PACE_INVALID_HANDLE)
     {
       /* Where is this in ACE?
          ACE_FAIL_RETURN (h);
