@@ -267,6 +267,7 @@ run_test (void)
   }
 
   allocator.dump ();
+  return 0;
 }
 
 int
