@@ -1,3 +1,11 @@
+Mon May 17 22:15:11 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* docs/index.html:
+	* docs/EnvVars.html:
+
+	  Left over files from RTCIAO-tests branch merge. Thanks to
+	  Nanbor for pointing this out.
+
 Mon May 17 21:07:25 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tools/static_configurator/Static_Assembly_Visitors.h:
