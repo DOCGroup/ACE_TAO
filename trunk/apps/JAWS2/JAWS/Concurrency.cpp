@@ -166,7 +166,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           // We need a way to destroy all the handlers created by the
           // Asynch_Acceptor.  Figure this out later.
           handler = waiter->wait_for_completion (waiter_index);
-          if (handler == 0) 
+          if (handler == 0)
             {
               JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, bad proactor");
               // Proactor failed

@@ -107,7 +107,7 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
                              unsigned int initial_data_length,
                              unsigned int entire_length)
 {
-  ACE_Filecache_Handle handle (filename, 
+  ACE_Filecache_Handle handle (filename,
                                (int) entire_length);
 
   int result = handle.error ();
