@@ -23,6 +23,7 @@ CFLAGS = \
         $(TAO_ETCL_CFLAGS) \
         $(TAO_NOTIFY_CFLAGS) \
         $(TAO_NOTIFYTESTS_CFLAGS) \
+        $(TAO_DYNAMICANY_CFLAGS) \
         $(TAO_MESSAGING_CFLAGS)
 
 CPPDIR = .
@@ -38,6 +39,7 @@ LIBFILES = \
         $(TAO_ETCL_LIB) \
         $(TAO_NOTIFY_LIB) \
         $(TAO_NOTIFYTESTS_LIB) \
+        $(TAO_DYNAMICANY_LIB) \
         $(TAO_MESSAGING_LIB)
 
 IDLFILES = \

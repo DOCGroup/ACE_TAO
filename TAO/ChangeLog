@@ -1,3 +1,32 @@
+Sun Jul 6 16:48:12 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Basic/Makefile.bor:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.bor:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.bor:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.bor:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.bor:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.bor:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.bor:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.bor:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.bor:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.bor:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.bor:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.bor:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.bor:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.bor:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.bor:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.bor:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.bor:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.bor:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.bor:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Filter_Consumer.bor:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Filter_Supplier.bor:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.bor:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.bor:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.bor:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.bor:
+          Added missing libraries to fix link errors in the BCB6 Static Release build.
+
 Sun Jul 6 13:08:57 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/Makefile.tao_ifr:
