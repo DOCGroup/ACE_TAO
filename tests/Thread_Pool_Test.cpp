@@ -73,7 +73,7 @@ Thread_Pool::close (u_long)
 
 Thread_Pool::Thread_Pool (int n_threads) 
 {
-  // Create worker threads.
+  // Create a pool of worker threads.
   if (this->activate (THR_NEW_LWP, n_threads) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 }

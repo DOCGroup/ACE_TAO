@@ -1,7 +1,58 @@
+Sun Jan 12 16:59:52 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Timer_List.cpp (schedule): Cleanup the code so that (1)
+ 	  timer_id never == -1 (in order to distinguish it from error
+ 	  return values and (2) so that we avoid an unnecessary check for
+ 	  operator new failure.
+
+	* ace/OS.h: Added a new #define called ACE_DEFAULT_MAX_TIMERS,
+ 	  which specifies the maximum number of ACE_Event_Handlers
+ 	  supported by ACE_Timer_Heap.
+
+	* ace/Proactor.cpp (ACE_Proactor): Updated the allocation of
+ 	  ACE_Timer_Queue so that it really points to an ACE_Timer_List by
+ 	  default.  Naturally, this can be overridden by users.
+
+	* ace/ReactorEx.cpp (open): Updated the allocation of
+ 	  ACE_Timer_Queue so that it really points to an ACE_Timer_List by
+ 	  default.  Naturally, this can be overridden by users.
+
+	* ace/Reactor.cpp (open): Updated the allocation of
+ 	  ACE_Timer_Queue so that it really points to an ACE_Timer_List by
+ 	  default.  Naturally, this can be overridden by users.
+
+	* ace: Added two new classes called ACE_Timer_List and
+ 	  ACE_Timer_Heap, which derive from ACE_Timer_Queue.
+  	  ACE_Timer_List is essentially the old behavior of
+ 	  ACE_Timer_Queue, i.e., it uses an implementation of a linked
+ 	  list of ACE_Timer_Nodes.  ACE_Timer_Heap, on the other hand,
+ 	  uses a heap-based callout queue, which is more appropriate for
+ 	  certain real-time applications.
+
+	* ace/Timer_Queue: Revised the ACE_Timer_Queue implementation so
+ 	  that it's now an abstract base class with most of the
+ 	  implementation details pushed into the ACE_Timer_List and
+ 	  ACE_Timer_Heap subclasses.
+
+	* ace/Timer_Queue.h: Made all the ACE_Timer_Queue methods public
+ 	  so that we can override them in a subclass (e.g., the new
+ 	  ACE_Timer_Heap).
+
+	* examples/Logger/Acceptor-server/server_loggerd.cpp: Fixed this
+ 	  example application so that it only uses a single Reactor (the
+ 	  REACTOR::instance()) rather than two Reactors.  Thanks to Sandro
+ 	  Doro <alex@aureus.sublink.org> for reporting this.
+
+	* netsvcs/lib/Logging_Strategy.cpp: Fixed the #include of
+ 	  fstream.h and iostream.h to use the '<' '>' notation rather than
+ 	  the '"' and '"' notation.  This avoids problems with running
+ 	  "make depend".  Thanks to Rino Simioni <sir@necsy.it> for
+ 	  reporting this fix.
+
 Sun Jan 12 18:20:49 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/ACE.cpp (round_to_pagesize): fixed typo in reference to
-	  ACE::pagesize_
+	  ACE::pagesize_.
 
 	* ace/ACE.cpp: initialize ACE::pagesize_ to 0.
 
