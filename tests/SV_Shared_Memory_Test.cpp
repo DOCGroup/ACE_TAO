@@ -95,7 +95,7 @@ child (char *shm)
 #endif /* ACE_HAS_SYSV_IPC */
 
 int
-main (int, char *argv[])
+main (int, char * /* argv */[])
 {
   ACE_START_TEST ("SV_Shared_Memory_Test");
 
@@ -108,9 +108,13 @@ main (int, char *argv[])
       ACE_ERROR_RETURN ((LM_ERROR, "(%P) fork failed\n"), -1);
       /* NOTREACHED */
     case 0:
-      // Child.
-      ACE_LOG_MSG->sync ("SV_Shared_Memory_Test.cpp");
-      return child (shm);
+      {
+        // Child.
+        ACE_LOG_MSG->sync ("SV_Shared_Memory_Test.cpp");
+        int retval = child (shm);
+        ACE_END_TEST;
+        return retval;
+      }
     default:
       return parent (shm);
     }
@@ -118,7 +122,6 @@ main (int, char *argv[])
   ACE_ERROR ((LM_ERROR, 
 	      "SYSV IPC is not supported on this platform\n"));
 #endif /* ACE_HAS_SYSV_IPC */
-  ACE_END_TEST;
   return 0;
 }
 
