@@ -55,7 +55,7 @@ public:
   /// returns the pointer
   virtual  TAO_Transport_Descriptor_Interface *duplicate (void);
 
-  /// Try to determine if this object is same as the <other_prop>.
+  /// Try to determine if this object is same as the @a other_prop.
   virtual CORBA::Boolean is_equivalent (
       const TAO_Transport_Descriptor_Interface *other_prop);
 
