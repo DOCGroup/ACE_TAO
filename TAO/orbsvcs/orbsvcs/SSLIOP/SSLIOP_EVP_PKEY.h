@@ -23,8 +23,8 @@
 
 #include "SSLIOP_OpenSSL_st_T.h"
 
-#include <openssl/crypto.h>
 #include <openssl/evp.h>
+#include <openssl/crypto.h>
 
 
 namespace TAO
@@ -38,6 +38,22 @@ namespace TAO
       /// OpenSSL lock ID for use in OpenSSL CRYPTO_add() reference
       /// count manipulation function.
       enum { LOCK_ID = CRYPTO_LOCK_EVP_PKEY };
+
+      /// Increase the reference count on the given OpenSSL structure.
+      /**
+       * @note This used to be in a function template but MSVC++ 6
+       *       can't handle function templates correctly so reproduce
+       *       the code in each specialization.  *sigh*
+       */
+      static ::EVP_PKEY * _duplicate (::EVP_PKEY * st)
+      {
+	if (st != 0)
+	  CRYPTO_add (&(st->references),
+		      1,
+		      LOCK_ID);
+
+	return st;
+      }
 
       /// Perform deep copy of the given OpenSSL structure.
       static ::EVP_PKEY * copy (::EVP_PKEY const & key);

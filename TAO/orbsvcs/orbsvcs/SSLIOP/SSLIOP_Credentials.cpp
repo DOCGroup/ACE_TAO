@@ -14,8 +14,8 @@ ACE_RCSID (SSLIOP,
 
 
 TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
-  : x509_ (TAO::SSLIOP::_duplicate (cert)),
-    evp_ (TAO::SSLIOP::_duplicate (evp)),
+  : x509_ (TAO::SSLIOP::OpenSSL_traits< ::X509 >::_duplicate (cert)),
+    evp_ (TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::_duplicate (evp)),
     id_ (),
     creds_usage_ (SecurityLevel3::CU_Indefinite),
     expiry_time_ (),
