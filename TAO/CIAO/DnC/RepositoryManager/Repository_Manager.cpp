@@ -7,6 +7,9 @@
 
 const char * exec_ior = "file://exec_mgr.ior";
 
+class Null_Dom_Document { };
+// exception thrown when we have a null dom document.
+
 static void
 usage (const ACE_TCHAR* program)
 {
@@ -66,6 +69,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DOMBuilder* parser = CIAO::Config_Handler::Utils::
                            create_parser ();
       DOMDocument* dup_doc = parser->parseURI (plan_url);
+
+      if (dup_doc == NULL)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Null DOM Document obtained, \
+                      May be the URL is wrong!!\n"));
+          throw Null_Dom_Document ();
+        }
       auto_ptr<DOMBuilder> cleanup_parser (parser);
       CIAO::Config_Handler::Plan_Handler plan_handler (dup_doc,
                                                   DOMNodeFilter::SHOW_ELEMENT |
@@ -157,13 +167,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_PRINT_EXCEPTION (ex, "Caught CORBA Exception: ");
 	while (true);
-      return 1;
+      return -1;
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Caught unknown exception\n"));
 	while (true);
-      return 1;
+      return -1;
     }
 
   return 0;
