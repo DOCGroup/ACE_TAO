@@ -1,3 +1,15 @@
+Wed Jun  4 19:42:33 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/g++_metrics.sh:
+          Use /usr/bin/time to get better metrics and output the time in
+          one step.  Also include %x, the return value from g++ so that
+          users can tell whether not to use the time, since it will always
+          be output even for failures.
+
+        * bin/generate_compile_stats.sh:
+          Added ability to gather footprint metrics for static_libs_only
+          builds.  Also, cleaned up the code a bit and added lots of comments.
+
 Wed Jun  4 13:47:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* THANKS: Added Jason Cohen to the hall of fame.
