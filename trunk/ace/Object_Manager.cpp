@@ -165,11 +165,10 @@ ACE_Object_Manager::shutting_down (void)
 }
 
 // Initialize an ACE_Object_Manager.  There can be instances of this object
-// other than The Instance.  This can happen if (on Win32) the ACE DLL
-// causes one to be created, or if a user creates one for some reason.
-// Only The Instance sets up the static preallocated objects and the (static)
-// ACE_Service_Config signal handler.  All objects, though, set up their
-// per-object information and managed objects.
+// other than The Instance.  This can happen if a user creates one for some
+// reason.  All objects set up their per-object information and managed
+// objects, but only The Instance sets up the static preallocated objects and
+// the (static) ACE_Service_Config signal handler.
 int
 ACE_Object_Manager::init (void)
 {

@@ -6300,10 +6300,9 @@ ACE_OS_Object_Manager::init (void)
 }
 
 // Clean up an ACE_OS_Object_Manager.  There can be instances of this object
-// other than The Instance.  This can happen if (on Win32) the ACE DLL
-// causes one to be created, or if a user creates one for some reason.
-// Only The Instance cleans up the static preallocated objects.  All objects
-// clean up their per-object information and managed objects.
+// other than The Instance.  This can happen if a user creates one for some
+// reason.  All objects clean up their per-object information and managed
+// objects, but only The Instance cleans up the static preallocated objects.
 int
 ACE_OS_Object_Manager::fini (void)
 {
