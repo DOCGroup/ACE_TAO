@@ -1,5 +1,9 @@
 Thu Oct 16 02:07:54 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* tests/Priority_Reactor_Test.cpp: Added a "max_retries" flag to
+ 	  keep the test from hanging forever...  Thanks to Stephen Coy
+ 	  <stevec@magna.com.au> for motivating this.
+
 	* tests/Priority_Reactor_Test.h: Changed 
 	
 	  class Read_Handler : public ACE_Svc_Handler<<ACE_SOCK_Stream, ACE_INET_Addr, ACE_SYNCH>

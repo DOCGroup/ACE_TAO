@@ -48,6 +48,10 @@ static int opt_nloops = 200;
 // option.
 static int opt_priority_reactor = 1;
 
+// Maximum number of retries to connect, it can be changed using the
+// -m option.
+static int max_retries = 5;
+
 typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR> 
 	CONNECTOR;
 typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> 
@@ -66,22 +70,27 @@ int
 Read_Handler::open (void *)
 {
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Read_Handler::open, "
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "(%P|%t) Read_Handler::open, "
                        "cannot set non blocking mode"), -1);
 
   if (reactor ()->register_handler (this, READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Read_Handler::open, "
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "(%P|%t) Read_Handler::open, "
                        "cannot register handler"), -1);
 
   // A number larger than the actual number of priorities, so some
   // clients are misbehaved, hence pusnished.
   const int max_priority = 15;
 
-  priority (ACE_Event_Handler::LO_PRIORITY + started_ % max_priority);
+  this->priority (ACE_Event_Handler::LO_PRIORITY + started_ % max_priority);
   started_++;
-  ACE_DEBUG((LM_DEBUG, "(%P|%t) created svc_handler for handle %d "
-	     "with priority %d\n", get_handle (), priority ()));
 
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%P|%t) created svc_handler for handle %d "
+	      "with priority %d\n",
+	      get_handle (),
+	      priority ()));
   return 0;
 }
 
@@ -89,12 +98,13 @@ int
 Read_Handler::handle_input (ACE_HANDLE h)
 {
   // ACE_DEBUG((LM_DEBUG,
-  // "(%P|%t) Read_Handler::handle_input(%d)\n", h));
+  // "(%P|%t) Read_Handler::handle_input (%d)\n", h));
   ACE_UNUSED_ARG (h);
 
   char buf[BUFSIZ];
 
-  ssize_t result = this->peer ().recv (buf, sizeof(buf));
+  ssize_t result = this->peer ().recv (buf, sizeof (buf));
+
   if (result <= 0)
     {
       if (result < 0 && errno == EWOULDBLOCK)
@@ -104,6 +114,7 @@ Read_Handler::handle_input (ACE_HANDLE h)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) %p\n",
                     "Read_Handler::handle_input"));
       waiting_--;
+
       if (waiting_ == 0)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
@@ -134,21 +145,23 @@ Write_Handler::svc (void)
   // Send several short messages, doing pauses between each message.
   // The number of messages can be controlled from the command line.
   ACE_Time_Value pause (0, 1000);
+
   for (int i = 0; i < opt_nloops; ++i)
     {
       if (this->peer ().send_n (ACE_ALPHABET,
-				sizeof(ACE_ALPHABET) - 1) == -1)
+				sizeof (ACE_ALPHABET) - 1) == -1)
 	  ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
       ACE_OS::sleep (pause);
     }
+
   return 0;
 }
 
 // Execute the client tests.
-void * 
+static void * 
 client (void *arg)
 {
-  ACE_INET_Addr *connection_addr = (ACE_INET_Addr*)arg;
+  ACE_INET_Addr *connection_addr = (ACE_INET_Addr *) arg;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) running client\n"));
   CONNECTOR connector;
 
@@ -157,28 +170,40 @@ client (void *arg)
   // Do exponential backoff connections
   ACE_Synch_Options options = ACE_Synch_Options::synch;
 
-  ACE_Time_Value msec(0,1000); // start with one msec timeouts.
+  // Start with one msec timeouts.
+  ACE_Time_Value msec (0, 1000); 
   options.timeout (msec);
 
-  while (connector.connect (writer,
-			    *connection_addr,
-			    options) == -1)
+  // Try up to <max_retries> to connect to the server.
+  for (int i = 0; i < max_retries; i++)
     {
-      // Double the timeout...
-      ACE_Time_Value tmp = options.timeout ();
-      tmp += options.timeout ();
-      options.timeout (tmp);
-      writer = 0;
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) still trying to connect\n"));
+      if (connector.connect (writer,
+			     *connection_addr,
+			     options) == -1)
+	{
+	  // Double the timeout...
+	  ACE_Time_Value tmp = options.timeout ();
+	  tmp += options.timeout ();
+	  options.timeout (tmp);
+	  writer = 0;
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) still trying to connect\n"));
+	}
+      else
+	{
+	  // Let the new Svc_Handler to its job...
+	  writer->svc ();
+
+	  // Close the connection...
+	  writer->destroy ();
+
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) finishing client\n"));
+	  return 0;
+	}
     }
 
-  // Let the new Svc_Handler to its jobs....
-  writer->svc ();
-
-  // Close the connection...
-  writer->destroy ();
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) finishing client\n"));
+  ACE_ERROR ((LM_ERROR, 
+	      "(%P|%t) failed to connect after %d retries\n",
+	      max_retries));
   return 0;
 }
 
@@ -187,7 +212,8 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST ("Priority_Reactor_Test");
 
-  ACE_Get_Opt getopt (argc, argv, "dc:l:", 1);
+  ACE_Get_Opt getopt (argc, argv, "dc:l:m:", 1);
+
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
@@ -199,6 +225,9 @@ main (int argc, char *argv[])
 	break;
       case 'l':
 	opt_nloops = atoi (getopt.optarg);
+	break;
+      case 'm':
+	max_retries = atoi (getopt.optarg);
 	break;
       }
 
@@ -230,7 +259,8 @@ main (int argc, char *argv[])
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "open"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting server at port %d\n",
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%P|%t) starting server at port %d\n",
 	      server_addr.get_port_number ()));
 
   ACE_INET_Addr connection_addr (server_addr.get_port_number (),
