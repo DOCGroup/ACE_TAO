@@ -84,7 +84,7 @@ public:
   class Simple_Queue
   {
   public:
-    Simple_Queue (void);
+    ACE_INLINE_FOR_GNUC Simple_Queue (void);
     Simple_Queue (MQ_Struct *mq);
 
     int init (MQ_Struct *mq, ACE_MEM_SAP::MALLOC_TYPE *malloc);
