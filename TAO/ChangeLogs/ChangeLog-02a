@@ -1,3 +1,12 @@
+Tue Feb 19 17:57:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/CORBA_String.cpp:
+
+          Fixed istream extraction operators to CORBA::String_var
+          and CORBA::String out. Thanks to Patrick J Lardieri 
+          <plardier@atl.lmco.com> for reporting the problem and to
+          Carlos for suggesting the fix.
+
 Tue Feb 19 09:11:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV.bor:
