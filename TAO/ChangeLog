@@ -1,3 +1,9 @@
+Sun Nov  9 08:03:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/MProfile/client.cpp:
+
+	  Fixed a unused variable warning.
+
 Sun Nov  9 07:53:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Messaging/Messaging_No_ImplC.h:
