@@ -1,3 +1,13 @@
+Thu Jul 24 11:35:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_Dual_Impl_T.h:
+        * tao/Any_Dual_Impl_T.cpp:
+
+          Fixed a bug in the extraction of exceptions. Thanks to 
+          Arturo Montes <mitosys@colomsat.net.co> for reporting the
+          problem in the DII version of Param_Test::test_exception's
+          mishandling of CORBA::UnknownUserException.
+
 Thu Jul 24 11:36:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosTrading.idl: Thanks to Sebastien Lalonde
