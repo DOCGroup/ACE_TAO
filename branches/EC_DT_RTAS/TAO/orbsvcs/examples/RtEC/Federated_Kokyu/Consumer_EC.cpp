@@ -94,9 +94,9 @@ main (int argc, char* argv[])
       ACE_Time_Value tv(6,0);
       Consumer consumer_impl2_2(tv);
       tv.set(12,0);
-      //Consumer consumer_impl3(tv);
+      Consumer consumer_impl3(tv);
       RtecEventChannelAdmin::ProxyPushSupplier_var  proxy_supplier2_2;
-      //RtecEventChannelAdmin::ProxyPushSupplier_var  proxy_supplier3;
+      RtecEventChannelAdmin::ProxyPushSupplier_var  proxy_supplier3;
 
       //consumer's rate will get propagated from the supplier.
       //so no need to specify a period here. Specifying
@@ -120,13 +120,13 @@ main (int argc, char* argv[])
       RtecScheduler::handle_t consumer2_2_rt_info =
         kokyu_ec.register_consumer("consumer2_2",
                                    info,
-                                   ACE_ES_EVENT_UNDEFINED + 2,
+                                   ACE_ES_EVENT_UNDEFINED+2,
                                    consumer2_2.in(),
                                    proxy_supplier2_2.out()
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_UNUSED_ARG(consumer2_2_rt_info);
-      /*
+
       info.criticality = RtecScheduler::VERY_HIGH_CRITICALITY;
       info.importance = RtecScheduler::VERY_HIGH_IMPORTANCE;
 
@@ -137,17 +137,17 @@ main (int argc, char* argv[])
       RtecScheduler::handle_t consumer3_rt_info =
         kokyu_ec.register_consumer("consumer3",
                                    info,
-                                   ACE_ES_EVENT_UNDEFINED + 3,
+                                   ACE_ES_EVENT_UNDEFINED+3,
                                    consumer3.in(),
                                    proxy_supplier3.out()
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_UNUSED_ARG(consumer3_rt_info);
-      */
+
       // *************************************************************
       // Create Supplier, intialize its RT_Info structures, and
       // connnect to the event channel....
-      /*
+
       Supplier supplier_impl3(4);
       Timeout_Consumer timeout_consumer_impl3(&supplier_impl3);
 
@@ -205,7 +205,7 @@ main (int argc, char* argv[])
                                RtecBase::TWO_WAY_CALL
                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      */
+
       // ****************************************************************
       RtEventChannelAdmin::RtSchedEventChannel_var kokyu_ec_ior =
         kokyu_ec._this(ACE_ENV_SINGLE_ARG_PARAMETER);
