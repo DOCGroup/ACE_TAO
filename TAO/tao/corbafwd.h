@@ -697,7 +697,7 @@ TAO_NAMESPACE CORBA
 
   typedef ACE_CDR::WChar WChar;
   typedef WChar &WChar_out;
-  // Out type for WChar.
+  typedef WChar *WString;
 
   // = String memory management routines.
   TAO_NAMESPACE_INLINE_FUNCTION WChar* wstring_alloc (ULong len);
