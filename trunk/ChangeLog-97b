@@ -37,6 +37,9 @@ Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/SPIPE_Test (client): increased sleep time to 10 sec,
 	  because a long delay is needed with Purify.
 
+	* tests/UPIPE_Test (connector): added 5 second sleep to give
+	  acceptor a chance to start up.
+
 	* include/makeinclude/wrapper_macros.GNU: added -max_threads=100 to
 	  Quantify options.
 
