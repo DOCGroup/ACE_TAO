@@ -1,3 +1,26 @@
+Wed Feb 26 10:03:10 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.h (ORB):
+
+	  Removed TAO_ORB_Core friend declaration.  It caused some
+	  compilers assume that the TAO_ORB_Core forward declaration
+	  actually resided in the CORBA namespace, which conflicted with
+	  the global TAO_ORB_Core class.
+
+	  (_tao_make_ORB):
+	* tao/ORB.cpp (_tao_make_ORB):
+
+	  New static factory method that creates an ORB.  The idea is to
+	  prevent "new CORBA::ORB()" from being performed by the user
+	  since only CORBA::ORB_init() is meant to create ORBs.  It is now
+	  needed since the CORBA::ORB class no longer has any friends.
+
+	* tao/ORB_Core.cpp (init):
+
+	  Replaced call to "new CORBA::ORB()" with
+	  CORBA::ORB::_tao_make_ORB(), i.e. the new static factory method
+	  described above is used.
+
 Wed Feb 26 09:16:38 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/RTOLDEvent.mpc:
