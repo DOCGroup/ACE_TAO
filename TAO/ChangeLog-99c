@@ -1,3 +1,16 @@
+Mon Jun 21 22:19:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Basic/BCast.h:
+	* orbsvcs/tests/Event/Basic/BCast.cpp:
+	  Added a new test for the broadcast based event channel, thanks
+	  to Tom Ziomek <tomz@cc.comm.mot.com> for motivating this
+	  case.
+
+	* orbsvcs/tests/Event/lib/Supplier.cpp:
+	  Changed exception handling to keep sending events even if one of 
+	  them raises an exceptions.
+
 Mon Jun 21 20:47:46 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO/orbsvcs/tests/Simple_Naming/makefile:
