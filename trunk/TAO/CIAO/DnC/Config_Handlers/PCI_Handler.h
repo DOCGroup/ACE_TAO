@@ -23,6 +23,7 @@
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include "XercesString.h"
+#include "Basic_Handler.h"
 
 using Config_Handler::XStr;
 using xercesc::XMLUni;
@@ -43,60 +44,39 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO 
+BEGIN_DEPLOYMENT_NAMESPACE
+
+/**
+ * @class PCI_Handler
+ *
+ * @brief Handler class for <PackagedComponentImplementation> type 
+ *
+ * This class is within the Component Data Model subpackage of the
+ * Deployment & Configuration package.
+ *
+ * This class defines handler methods to parse the aforementioned type
+ * in the description files. The corresponding CORBA IDL type for this
+ * element is returned.
+ */
+
+class PCI_Handler: public Basic_Handler
 {
-  namespace Config_Handler
-  {
+public:
 
-    /**
-     * @class PCI_Handler
-     *
-     * @brief Handler class for <PackagedComponentImplementation> type 
-     *
-     * This class is within the Component Data Model subpackage of the
-     * Deployment & Configuration package.
-     *
-     * This class defines handler methods to parse the aforementioned type
-     * in the description files. The corresponding CORBA IDL type for this
-     * element is returned.
-     */
+  /// constructor
+  PCI_Handler (DOMDocument* doc, unsigned long filter_)
+    : Basic_Handler (doc, filter_) { }
 
-    class PCI_Handler
-    {
-    public:
+  /// constructor
+  PCI_Handler (DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (iter, release) { }
 
-      /// constructor
-      PCI_Handler (DOMDocument* doc, unsigned long filter_);
+  /// Process the package configuration
+  void process_PackagedComponentImplementation (::Deployment::PackagedComponentImplementation &pci);
 
-      /// constructor
-      PCI_Handler (DOMNodeIterator* iter, bool release = false);
+};
 
-      /// destructor
-      ~PCI_Handler();
-
-      /// Process the package configuration
-      void process_PackagedComponentImplementation (::Deployment::PackagedComponentImplementation &pci);
-
-      /// Process the label attribute
-      void process_name (const XMLCh* name, ::Deployment::PackagedComponentImplementation &pci);
-
-    private:
-
-      DOMDocument* doc_;
-
-      DOMNode* root_;
-
-      unsigned long filter_;
-
-      DOMNodeIterator* iter_;
-
-      bool release_;
-
-    };
-
-  }
-
-}
+END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 

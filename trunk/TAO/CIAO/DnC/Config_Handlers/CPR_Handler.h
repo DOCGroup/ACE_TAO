@@ -23,6 +23,8 @@
 #include <xercesc/dom/DOM.hpp>
 #include "XercesString.h"
 
+#include "Basic_Handler.h"
+
 using Config_Handler::XStr;
 using xercesc::XMLUni;
 using xercesc::XMLString;
@@ -42,63 +44,48 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO 
+BEGIN_DEPLOYMENT_NAMESPACE
+
+/**
+ * @class CPR_Handler
+ *
+ * @brief Handler class for <ComponentPackageReference> type 
+ *
+ * This class is within the Execution Data Model subpackage of the
+ * Deployment & Configuration package.
+ *
+ * This class defines handler methods to parse the aforementioned type
+ * in the descriptor files. The corresponding CORBA IDL type for this
+ * element is returned.
+ */
+
+class Config_Handler_Export CPR_Handler: public Basic_Handler
 {
-  namespace Config_Handler
-  {
-    /**
-     * @class CPR_Handler
-     *
-     * @brief Handler class for <ComponentPackageReference> type 
-     *
-     * This class is within the Execution Data Model subpackage of the
-     * Deployment & Configuration package.
-     *
-     * This class defines handler methods to parse the aforementioned type
-     * in the descriptor files. The corresponding CORBA IDL type for this
-     * element is returned.
-     */
+public:
 
-    class Config_Handler_Export CPR_Handler
-    {
-    public:
+  /// constructor
+  CPR_Handler (DOMDocument* doc, unsigned long filter_)
+    : Basic_Handler (doc, filter_) { }
 
-      /// constructor
-      CPR_Handler (DOMDocument* doc, unsigned long filter_);
+  /// constructor
+  CPR_Handler (DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (iter, release) { }
 
-      /// constructor
-      CPR_Handler (DOMNodeIterator* iter, bool release = false);
+  /// Process the component package reference
+  void process_ComponentPackageReference (::Deployment::ComponentPackageReference &cpr);
 
-      /// destructor
-      ~CPR_Handler(void);
+  /// Process the UUID attribute
+  void process_requiredUUID (const XMLCh* UUID, ::Deployment::ComponentPackageReference &cpr);
 
-      /// Process the component package reference
-      void process_ComponentPackageReference (::Deployment::ComponentPackageReference &cpr);
+  /// Process the requirement name attribute
+  void process_requiredName (const XMLCh* name, ::Deployment::ComponentPackageReference &cpr);
 
-      /// Process the UUID attribute
-      void process_requiredUUID (const XMLCh* UUID, ::Deployment::ComponentPackageReference &cpr);
+  /// Process the required type attribute
+  void process_requiredType (const XMLCh* type, ::Deployment::ComponentPackageReference &cpr);
 
-      /// Process the requirement name attribute
-      void process_requiredName (const XMLCh* name, ::Deployment::ComponentPackageReference &cpr);
-
-      /// Process the required type attribute
-      void process_requiredType (const XMLCh* type, ::Deployment::ComponentPackageReference &cpr);
-
-    private:
-
-      DOMDocument* doc_;
-
-      DOMNode* root_;
-
-      unsigned long filter_;
-
-      DOMNodeIterator* iter_;
-
-      bool release_;
-
-    };
-  };
 };
+
+END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 
