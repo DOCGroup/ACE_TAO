@@ -27,6 +27,11 @@ class TAO_Export TAO_ORB_Manager
   // = TITLE
   //     Helper class for simple ORB/POA initialization and
   //     registering servants with the POA.
+  //
+  // = DESCRIPTION
+  //     This class is a TAO extension that makes it easier to write
+  //     CORBA applications.  It's just a wrapper and doesn't do
+  //     anything special within the ORB itself.
 public:
   // = Initialization and termination methods.
   TAO_ORB_Manager (CORBA::ORB_ptr orb = 0,
