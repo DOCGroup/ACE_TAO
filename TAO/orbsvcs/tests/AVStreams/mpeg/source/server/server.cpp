@@ -37,6 +37,8 @@ AV_Svc_Handler::open (void *)
   // Lets use threads at a later point. The current scheme works fine
   // with fork..  this will activate a thread this->activate
   // (THR_BOUND);
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) AV_Svc_Handler::open called\n"));
   switch (ACE_OS::fork ("child"))
     {
     case -1:
