@@ -38,7 +38,7 @@ main (int argc, char ** argv)
 
       // Using naming server.
       TAO_Naming_Client my_name_client;
-      if (my_name_client.init (m.orb (), argc, argv) < 0)
+      if (my_name_client.init (m.orb ()) < 0)
         return 1;
 
       ACE_DEBUG ((LM_DEBUG, "Name init done\n"));
