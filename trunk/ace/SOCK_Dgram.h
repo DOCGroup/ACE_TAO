@@ -110,14 +110,14 @@ public:
   /// Send an <iovec> of size <n> to the datagram socket (uses
   /// <sendmsg(3)>).
   ssize_t send (const iovec iov[],
-                size_t n,
+                int n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
 
   /// Recv an <iovec> of size <n> to the datagram socket (uses
   /// <recvmsg(3)>).
   ssize_t recv (iovec iov[],
-                size_t n,
+                int n,
                 ACE_Addr &addr,
                 int flags = 0) const;
 
@@ -152,7 +152,7 @@ public:
                 const ACE_Time_Value *timeout) const;
 
   /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
-  /// I/O (uses <WSASentTo>).  Returns 0 on success.
+  /// I/O (uses <WSASendTo>).  Returns 0 on success.
   ssize_t send (const iovec buffers[],
                 int buffer_count,
                 size_t &number_of_bytes_sent,
@@ -171,7 +171,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Send an <n> byte <buf> to the datagram socket (uses <WSASentTo>).
+  /// Send an <n> byte <buf> to the datagram socket (uses <WSASendTo>).
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,

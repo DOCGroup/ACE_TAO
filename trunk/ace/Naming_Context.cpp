@@ -49,7 +49,7 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
     return -1;
   else
     ACE_OS_String::strsncpy (*strp, buf, length);
-  return ACE_OS_String::strlen (buf);
+  return ACE_static_cast (int, ACE_OS_String::strlen (buf));
 }
 
 int

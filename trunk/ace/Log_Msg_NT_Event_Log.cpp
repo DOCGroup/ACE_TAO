@@ -31,7 +31,8 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
                                    msg_file,
                                    MAXPATHLEN))
     return -1;
-  int msg_file_length = ACE_OS::strlen (msg_file);
+  DWORD msg_file_length = ACE_static_cast (DWORD,
+                                           ACE_OS_String::strlen (msg_file));
 
   // If a logger_key has been supplied then we use that as the event
   // source name, otherwise we default to the program name.
@@ -42,7 +43,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
   ACE_TCHAR reg_key [MAXPATHLEN];
   ACE_OS::strcpy (reg_key,
                   ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
-  int reg_key_length = ACE_OS::strlen(reg_key);
+  size_t reg_key_length = ACE_OS::strlen(reg_key);
   ACE_OS::strncat (reg_key,
                    event_source_name,
                    MAXPATHLEN - reg_key_length);

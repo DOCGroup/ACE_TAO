@@ -28,7 +28,7 @@ ACE_Msg_WFMO_Reactor::~ACE_Msg_WFMO_Reactor (void)
 {
 }
 
-int
+DWORD
 ACE_Msg_WFMO_Reactor::wait_for_multiple_events (int timeout,
                                                 int alertable)
 {
@@ -78,7 +78,7 @@ ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
 }
 
 DWORD
-ACE_Msg_WFMO_Reactor::poll_remaining_handles (size_t slot)
+ACE_Msg_WFMO_Reactor::poll_remaining_handles (DWORD slot)
 {
   return ::MsgWaitForMultipleObjects (this->handler_rep_.max_handlep1 () - slot,
                                       this->handler_rep_.handles () + slot,

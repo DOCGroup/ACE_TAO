@@ -188,18 +188,19 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
         {
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
           ACE_TCHAR *file_component = 0;
-          DWORD pathlen = ACE_TEXT_SearchPath(0,
-                                              searchfilename,
-                                              dll_suffix,
-                                              maxpathnamelen,
-                                              pathname,
-                                              &file_component);
-          if(pathlen >= maxpathnamelen)
+          DWORD pathlen = ACE_TEXT_SearchPath (0,
+                                               searchfilename,
+                                               dll_suffix,
+                                               ACE_static_cast (DWORD,
+                                                               maxpathnamelen),
+                                               pathname,
+                                               &file_component);
+          if (pathlen >= maxpathnamelen)
           {
               errno = ENOMEM;
               return -1;
           }
-          else if(pathlen > 0)
+          else if (pathlen > 0)
               return 0;
 #else
           ACE_TCHAR *ld_path =
@@ -413,7 +414,8 @@ ACE_Lib_Find::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 {
   int result;
 #if defined (ACE_WIN32)
-  result = ACE_TEXT_GetTempPath (buffer_len, buffer);
+  result = ACE_TEXT_GetTempPath (ACE_static_cast (DWORD, buffer_len),
+                                 buffer);
 
   // Make sure to return -1 if there is an error
   if (result == 0 && ::GetLastError () != ERROR_SUCCESS

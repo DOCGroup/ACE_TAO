@@ -739,7 +739,7 @@ protected:
    * space.  To do this, we compute the new <file_offset> of the
    * backing store and commit the memory.
    */
-  int map (int &firstTime, int appendBytes = 0);
+  int map (int &firstTime, size_t appendBytes = 0);
 
   /// Release the mapping.
   int unmap (void);
@@ -772,13 +772,13 @@ private:
       size_t max_size_;
 
       /// Size of mapped shared memory segment
-      int mapped_size_;
+      size_t mapped_size_;
 
       /// Offset to mapped but not yet acquired address space
-      int free_offset_;
+      ptrdiff_t free_offset_;
 
       /// Size of mapped but not yet acquired address space
-      int free_size_;
+      size_t free_size_;
     };
 
     Shared_Control_Block sh_;

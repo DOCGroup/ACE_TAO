@@ -7,7 +7,7 @@ ASYS_INLINE ssize_t
 ACE_FIFO_Send_Msg::send (const void *buf, size_t len)
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::send");
-  ACE_Str_Buf send_msg ((char *) buf, len);
+  ACE_Str_Buf send_msg ((char *) buf, ACE_static_cast (int, len));
 
   return this->send (send_msg);
 }

@@ -42,7 +42,7 @@ ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                         int used_with_reactor_event_loop)
   : completion_port_ (0),
     // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE !!!
-    number_of_threads_ (number_of_threads),
+    number_of_threads_ (ACE_static_cast (DWORD, number_of_threads)),
     used_with_reactor_event_loop_ (used_with_reactor_event_loop)
 {
   // Create the completion port.
@@ -670,12 +670,15 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
   // to the ::PostQueuedCompletionStatus()
   //   error will be extracted later in handle_events()
 
-  size_t bytes_transferred = 0;
+  DWORD bytes_transferred = 0;
   const void * completion_key = 0 ;
 
   if ( result != 0 )
     {
-      bytes_transferred = result->bytes_transferred ();
+      // This cast is ok since the original API calls restricted the transfer
+      // counts to DWORD range.
+      bytes_transferred = ACE_static_cast (DWORD,
+                                           result->bytes_transferred ());
       completion_key = result->completion_key();
     }
 #if defined (ACE_WIN64)
@@ -738,13 +741,13 @@ ACE_WIN32_Proactor::close_dispatch_threads (int)
 size_t
 ACE_WIN32_Proactor::number_of_threads (void) const
 {
-  return this->number_of_threads_;
+  return ACE_static_cast (size_t, this->number_of_threads_);
 }
 
 void
 ACE_WIN32_Proactor::number_of_threads (size_t threads)
 {
-  this->number_of_threads_ = threads;
+  this->number_of_threads_ = ACE_static_cast (DWORD, threads);
 }
 
 ACE_WIN32_Asynch_Timer::ACE_WIN32_Asynch_Timer (ACE_Handler &handler,

@@ -76,7 +76,7 @@ const  int MAX_RECEIVERS = 1000;
 static int duplex = 0;
 
 // number threads in the Proactor thread pool
-static size_t threads = 1;
+static int threads = 1;
 
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
@@ -380,7 +380,7 @@ protected:
 
 private:
   int initiate_read_stream (void);
-  int initiate_write_stream (ACE_Message_Block &mb, int nbytes);
+  int initiate_write_stream (ACE_Message_Block &mb, size_t nbytes);
   void cancel ();
 
   Acceptor *acceptor_;
@@ -645,7 +645,7 @@ Receiver::initiate_read_stream (void)
 }
 
 int
-Receiver::initiate_write_stream (ACE_Message_Block &mb, int nbytes)
+Receiver::initiate_write_stream (ACE_Message_Block &mb, size_t nbytes)
 {
   if (this->flg_cancel_ != 0 || this->handle_ == ACE_INVALID_HANDLE)
     {
@@ -653,7 +653,7 @@ Receiver::initiate_write_stream (ACE_Message_Block &mb, int nbytes)
       return -1;
     }
 
-  if (nbytes <= 0)
+  if (nbytes == 0)
     {
       mb.release ();
       ACE_ERROR_RETURN((LM_ERROR,

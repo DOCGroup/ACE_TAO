@@ -282,7 +282,7 @@ ACE_Message_Queue_Vx::peek_dequeue_head (ACE_Message_Block *&,
 
 #if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 
-ACE_Message_Queue_NT::ACE_Message_Queue_NT (size_t max_threads)
+ACE_Message_Queue_NT::ACE_Message_Queue_NT (DWORD max_threads)
   : max_cthrs_ (max_threads),
     cur_thrs_ (0),
     cur_bytes_ (0),
@@ -295,7 +295,7 @@ ACE_Message_Queue_NT::ACE_Message_Queue_NT (size_t max_threads)
 }
 
 int
-ACE_Message_Queue_NT::open (size_t max_threads)
+ACE_Message_Queue_NT::open (DWORD max_threads)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::open");
   this->max_cthrs_ = max_threads;
@@ -340,7 +340,7 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
 #endif /* ACE_WIN64 */
       state_to_post = ACE_Message_Queue_Base::ACTIVATED;
       if (::PostQueuedCompletionStatus (this->completion_port_,
-                                        msize,
+                                        ACE_static_cast (DWORD, msize),
                                         state_to_post,
                                         ACE_reinterpret_cast (LPOVERLAPPED, new_item)))
         {
@@ -420,8 +420,8 @@ ACE_Message_Queue_NT::deactivate (void)
 
       // Get the number of shutdown messages necessary to wake up all
       // waiting threads.
-      size_t cntr =
-        this->cur_thrs_ - ACE_static_cast (size_t, this->cur_count_);
+      DWORD cntr =
+        this->cur_thrs_ - ACE_static_cast (DWORD, this->cur_count_);
       while (cntr-- > 0)
         ::PostQueuedCompletionStatus (this->completion_port_,
                                       0,
@@ -455,8 +455,8 @@ ACE_Message_Queue_NT::pulse (void)
       // Get the number of shutdown messages necessary to wake up all
       // waiting threads.
 
-      size_t cntr =
-        this->cur_thrs_ - ACE_static_cast (size_t, this->cur_count_);
+      DWORD cntr =
+        this->cur_thrs_ - ACE_static_cast (DWORD, this->cur_count_);
       while (cntr-- > 0)
         ::PostQueuedCompletionStatus (this->completion_port_,
                                       0,

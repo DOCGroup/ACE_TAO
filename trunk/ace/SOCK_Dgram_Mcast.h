@@ -100,7 +100,7 @@ public:
 
   /// Send <n> <iovecs>.
   ssize_t send (const iovec iov[],
-                size_t n,
+                int n,
                 int flags = 0) const;
 
   // = Options.
@@ -164,7 +164,7 @@ private:
                 const ACE_Addr &addr,
                 int flags = 0) const;
   ssize_t send (const iovec iov[],
-                size_t n,
+                int n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
 

@@ -266,6 +266,12 @@ private:
   /// Iterator used to expire timers.
   HASH_ITERATOR *iterator_;
 
+#if defined (ACE_WIN64)
+  // Part of a hack... see comments in schedule().
+  // This is, essentially, the upper 32 bits of a 64-bit pointer on Win64.
+  ptrdiff_t pointer_base_;
+#endif
+
   // = Don't allow these operations for now.
   ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))

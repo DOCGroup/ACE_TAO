@@ -5,7 +5,7 @@
 
 #include "ace/SV_Shared_Memory.h"
 
-ACE_INLINE int
+ACE_INLINE size_t
 ACE_SV_Shared_Memory::round_up (size_t len)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::round_up");
@@ -69,7 +69,7 @@ ACE_SV_Shared_Memory::control (int cmd, void *buf)
 
 // The overall size of the segment. 
 
-ACE_INLINE int
+ACE_INLINE size_t
 ACE_SV_Shared_Memory::get_segment_size (void) const
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::get_segment_size");

@@ -345,7 +345,7 @@ ACE_WFMO_Reactor_Handler_Repository::current_info (void) const
     return this->current_info_ + 1;
 }
 
-ACE_INLINE size_t
+ACE_INLINE DWORD
 ACE_WFMO_Reactor_Handler_Repository::max_handlep1 (void) const
 {
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
@@ -898,7 +898,7 @@ ACE_WFMO_Reactor::change_owner (void)
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor::safe_dispatch (int wait_status)
+ACE_WFMO_Reactor::safe_dispatch (DWORD wait_status)
 {
   int result = -1;
   ACE_SEH_TRY

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/ACE.h"
+#include "ace/Basic_Types.h"
 #include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
@@ -1080,7 +1081,7 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
   for (int i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
-      iovp[i].iov_len = va_arg (argp, size_t);
+      iovp[i].iov_len = va_arg (argp, int);
     }
 
   ssize_t result = ACE_OS::recvv (handle, iovp, total_tuples);
@@ -1286,13 +1287,22 @@ ACE::recv_n (ACE_HANDLE handle,
         {
           size_t current_message_block_length =
             current_message_block->length ();
+          char *this_rd_ptr = current_message_block->rd_ptr ();
 
           // Check if this block has any space for incoming data.
-          if (current_message_block_length > 0)
+          while (current_message_block_length > 0)
             {
+              u_long this_chunk_length;
+              if (current_message_block_length > ULONG_MAX)
+                this_chunk_length = ULONG_MAX;
+              else
+                this_chunk_length =
+                  ACE_static_cast (u_long, current_message_block_length);
               // Collect the data in the iovec.
-              iov[iovcnt].iov_base = current_message_block->rd_ptr ();
-              iov[iovcnt].iov_len  = current_message_block_length;
+              iov[iovcnt].iov_base = this_rd_ptr;
+              iov[iovcnt].iov_len  = this_chunk_length;
+              current_message_block_length -= this_chunk_length;
+              this_rd_ptr += this_chunk_length;
 
               // Increment iovec counter.
               iovcnt++;
@@ -1880,7 +1890,7 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
   for (int i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
-      iovp[i].iov_len = va_arg (argp, size_t);
+      iovp[i].iov_len = va_arg (argp, int);
     }
 
   ssize_t result = ACE_OS::sendv (handle, iovp, total_tuples);
@@ -2089,13 +2099,22 @@ ACE::write_n (ACE_HANDLE handle,
         {
           size_t current_message_block_length =
             current_message_block->length ();
+          char *this_block_ptr = current_message_block->rd_ptr ();
 
           // Check if this block has any data to be sent.
-          if (current_message_block_length > 0)
+          while (current_message_block_length > 0)
             {
+              u_long this_chunk_length;
+              if (current_message_block_length > ULONG_MAX)
+                this_chunk_length = ULONG_MAX;
+              else
+                this_chunk_length =
+                  ACE_static_cast (u_long, current_message_block_length);
               // Collect the data in the iovec.
-              iov[iovcnt].iov_base = current_message_block->rd_ptr ();
-              iov[iovcnt].iov_len  = current_message_block_length;
+              iov[iovcnt].iov_base = this_block_ptr;
+              iov[iovcnt].iov_len  = this_chunk_length;
+              current_message_block_length -= this_chunk_length;
+              this_block_ptr += this_chunk_length;
 
               // Increment iovec counter.
               iovcnt++;
@@ -2173,6 +2192,7 @@ ACE::send_n (ACE_HANDLE handle,
     {
       // Our current message block chain.
       const ACE_Message_Block *current_message_block = message_block;
+      char *this_block_ptr = current_message_block->rd_ptr ();
 
       while (current_message_block != 0)
         {
@@ -2180,11 +2200,19 @@ ACE::send_n (ACE_HANDLE handle,
             current_message_block->length ();
 
           // Check if this block has any data to be sent.
-          if (current_message_block_length > 0)
+          while (current_message_block_length > 0)
             {
+              u_long this_chunk_length;
+              if (current_message_block_length > ULONG_MAX)
+                this_chunk_length = ULONG_MAX;
+              else
+                this_chunk_length =
+                  ACE_static_cast (u_long, current_message_block_length);
               // Collect the data in the iovec.
-              iov[iovcnt].iov_base = current_message_block->rd_ptr ();
-              iov[iovcnt].iov_len  = current_message_block_length;
+              iov[iovcnt].iov_base = this_block_ptr;
+              iov[iovcnt].iov_len  = this_chunk_length;
+              current_message_block_length -= this_chunk_length;
+              this_block_ptr += this_chunk_length;
 
               // Increment iovec counter.
               iovcnt++;

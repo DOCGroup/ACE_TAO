@@ -268,7 +268,7 @@ public:
   virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 const void* data,
-                                u_int length) = 0;
+                                size_t length) = 0;
 
   /// Gets a string-typed value.
   /**
@@ -315,7 +315,7 @@ public:
   virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 void*& data,
-                                u_int& length) = 0;
+                                size_t& length) = 0;
 
   /**
    * Retrieves the type of a named configuration value.
@@ -488,7 +488,7 @@ public:
   virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 const void* data,
-                                u_int length);
+                                size_t length);
 
   virtual int get_string_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
@@ -501,7 +501,7 @@ public:
   virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 void*& data,
-                                u_int& length);
+                                size_t& length);
 
   virtual int find_value(const ACE_Configuration_Section_Key& key,
                          const ACE_TCHAR* name,
@@ -643,8 +643,6 @@ public:
 
   /**
    * Points to the string value or binary data or IS the integer
-   * (XXX need to change this since sizeof (u_int) is
-   * not the same accross different platforms)
    * Length is only used when type_ == BINARY
    */
   ACE_Configuration::VALUETYPE  type_;
@@ -811,7 +809,7 @@ public:
   virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 const void* data,
-                                u_int length);
+                                size_t length);
 
   virtual int get_string_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
@@ -824,7 +822,7 @@ public:
   virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 void* &data,
-                                u_int &length);
+                                size_t &length);
 
   virtual int find_value(const ACE_Configuration_Section_Key& key,
                          const ACE_TCHAR* name,

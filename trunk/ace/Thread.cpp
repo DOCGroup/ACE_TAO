@@ -11,7 +11,7 @@ ACE_RCSID(ace, Thread, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-int
+size_t
 ACE_Thread::spawn_n (size_t n, 
 		     ACE_THR_FUNC func, 
 		     void *arg, 
@@ -41,7 +41,7 @@ ACE_Thread::spawn_n (size_t n,
   return i;
 }
 
-int
+size_t
 ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
 		     size_t n, 
 		     ACE_THR_FUNC func, 

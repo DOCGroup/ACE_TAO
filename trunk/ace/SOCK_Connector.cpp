@@ -78,7 +78,7 @@ ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
     {
       sockaddr *laddr = ACE_reinterpret_cast (sockaddr *,
                                               local_sap.get_addr ());
-      size_t size = local_sap.get_size ();
+      int size = local_sap.get_size ();
 
       if (ACE_OS::bind (new_stream.get_handle (),
                         laddr,

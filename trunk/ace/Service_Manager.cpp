@@ -77,7 +77,7 @@ ACE_Service_Manager::info (ACE_TCHAR **strp, size_t length) const
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+  return ACE_static_cast (int, ACE_OS_String::strlen (buf));
 }
 
 int
@@ -168,7 +168,7 @@ ACE_Service_Manager::list_services (void)
        sri.next (sr) != 0;
        sri.advance ())
     {
-      int len = ACE_OS::strlen (sr->name ()) + 11;
+      size_t len = ACE_OS_String::strlen (sr->name ()) + 11;
       ACE_TCHAR buf[BUFSIZ];
       ACE_TCHAR *p = buf + len;
 

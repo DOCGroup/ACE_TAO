@@ -50,7 +50,7 @@ static int n_iterations = 10;
 static size_t n_workers = 10;
 
 // Amount to release the semaphore.
-static size_t n_release_count = 3;
+static u_int n_release_count = 3;
 
 #if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
 // Number of timeouts.

@@ -100,17 +100,17 @@ public:
    * As this operation read the address of the data off the socket
    * using ACE::recv, <timeout> only applies to ACE::recv.
    */
-  virtual int recv_buf (ACE_MEM_SAP_Node *&buf,
-                        int flags,
-                        const ACE_Time_Value *timeout) = 0;
+  virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
+                            int flags,
+                            const ACE_Time_Value *timeout) = 0;
 
   /**
    * Wait to to <timeout> amount of time to send <buf>.  If <send>
    * times out a -1 is returned with <errno == ETIME>.  If it succeeds
    * the number of bytes sent is returned.  */
-  virtual int send_buf (ACE_MEM_SAP_Node *buf,
-                        int flags,
-                        const ACE_Time_Value *timeout) = 0;
+  virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
+                            int flags,
+                            const ACE_Time_Value *timeout) = 0;
 
   /// request a buffer of size <size>.  Return 0 if the <shm_malloc_> is
   /// not initialized.

@@ -98,7 +98,7 @@ test (ACE_Configuration *config,
     return -9;
 
   u_char *data_out = 0;
-  u_int length = 0;
+  size_t length = 0;
 
   if (config->get_binary_value (testsection,
                                 ACE_TEXT ("binvalue"),
@@ -915,7 +915,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                       else if (originalType == ACE_Configuration::BINARY)
                         {
                           void* binary_data;
-                          u_int binary_length;
+                          size_t binary_length;
 
                           if (original.get_binary_value (originalSection,
                                                           valueName.c_str (),

@@ -161,10 +161,11 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
     {
 #if !defined (CHORUS)
       // Remember than write increases the size by one.
-      size_t null_byte_position;
+      off_t null_byte_position;
       if (requested_file_length > 0)
         // This will make the file size <requested_file_length>
-        null_byte_position = requested_file_length - 1;
+        null_byte_position =
+          ACE_static_cast (off_t, requested_file_length - 1);
       else
         // This will make the file size 1
         null_byte_position = 0;

@@ -1662,6 +1662,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Asynch_IO.obj"
 	-@erase "$(INTDIR)\Asynch_IO_Impl.obj"
 	-@erase "$(INTDIR)\Asynch_Pseudo_Task.obj"
+	-@erase "$(INTDIR)\Atomic_Op.obj"
 	-@erase "$(INTDIR)\ATM_Acceptor.obj"
 	-@erase "$(INTDIR)\ATM_Addr.obj"
 	-@erase "$(INTDIR)\ATM_Connector.obj"
@@ -1894,7 +1895,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MDd /W3 /wd4267 /Wp64 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MDd /W3 /Wp64 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -1948,6 +1949,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\Asynch_IO.obj" \
 	"$(INTDIR)\Asynch_IO_Impl.obj" \
 	"$(INTDIR)\Asynch_Pseudo_Task.obj" \
+	"$(INTDIR)\Atomic_Op.obj" \
 	"$(INTDIR)\ATM_Acceptor.obj" \
 	"$(INTDIR)\ATM_Addr.obj" \
 	"$(INTDIR)\ATM_Connector.obj" \
@@ -2241,6 +2243,11 @@ SOURCE=.\Asynch_IO_Impl.cpp
 SOURCE=.\Asynch_Pseudo_Task.cpp
 
 "$(INTDIR)\Asynch_Pseudo_Task.obj" : $(SOURCE) "$(INTDIR)" ".\Framework_Component_T.cpp"
+
+
+SOURCE=.\Atomic_Op.cpp
+
+"$(INTDIR)\Atomic_Op.obj" : $(SOURCE) "$(INTDIR)" ".\Atomic_Op.cpp"
 
 
 SOURCE=.\ATM_Acceptor.cpp
@@ -3346,30 +3353,6 @@ SOURCE=.\XtReactor.cpp
 SOURCE=.\Acceptor.cpp
 SOURCE=.\Active_Map_Manager_T.cpp
 SOURCE=.\Asynch_Acceptor.cpp
-SOURCE=.\Atomic_Op.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win64 MFC Release"
-
-
-"$(INTDIR)\Atomic_Op.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win64 MFC Debug"
-
-
-"$(INTDIR)\Atomic_Op.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win64 Release"
-
-
-"$(INTDIR)\Atomic_Op.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win64 Debug"
-
-!ENDIF 
-
 SOURCE=.\Auto_Ptr.cpp
 SOURCE=.\Based_Pointer_T.cpp
 SOURCE=.\Cache_Map_Manager_T.cpp

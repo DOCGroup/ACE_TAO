@@ -921,8 +921,8 @@ ACE_recursive_mutex_state::restore (ACE_recursive_thread_mutex_t &m)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES) && defined (ACE_WIN32)
   // On Windows NT && 2000 the recurisive mutex is a CriticalSection.
-  m.RecursionCount = this->recursion_count_;
-  m.LockCount = this->lock_count_;
+  m.RecursionCount = ACE_static_cast (LONG, this->recursion_count_);
+  m.LockCount = ACE_static_cast (LONG, this->lock_count_);
   m.OwningThread = this->owning_thread_;
   m.LockSemaphore = this->lock_semaphore_;
   return 0;

@@ -303,7 +303,7 @@ ACE_Semaphore::release (void)
 }
 
 ACE_INLINE int
-ACE_Semaphore::release (size_t release_count)
+ACE_Semaphore::release (u_int release_count)
 {
 // ACE_TRACE ("ACE_Semaphore::release");
   return ACE_OS::sema_post (&this->semaphore_, release_count);

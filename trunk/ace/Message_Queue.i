@@ -187,7 +187,7 @@ ACE_Message_Queue_NT::message_length (size_t new_value)
   this->cur_length_ = new_value;
 }
 
-ACE_INLINE size_t
+ACE_INLINE DWORD
 ACE_Message_Queue_NT::max_threads (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::max_threads");
