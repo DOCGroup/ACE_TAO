@@ -1,3 +1,9 @@
+Fri Oct  2 20:02:42 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	  IDL compiler will now generate correct code for
+	  a constant char that is an escape sequence. 
+
 Fri Oct 02 16:49:59 1998  David L. Levine  <levine@cs.wustl.edu>
 
          * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp},
