@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, valuetype {
+project(*Server): taoserver, valuetype {
   requires += interceptors
   idlflags += -DCORBA3 -I$(TAO_ROOT)
 
@@ -13,7 +13,7 @@ project(*Server): taoexe, portableserver, valuetype {
   }
 }
 
-project(*Client): taoexe, valuetype {
+project(*Client): taoclient, valuetype {
   requires += interceptors
   idlflags += -DCORBA3 -I$(TAO_ROOT)
 
