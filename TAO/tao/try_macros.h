@@ -49,11 +49,11 @@
 
 // @@ @@ @@ This conditional compilation is meant to be catch abnormal
 //          exceptions so the debugger can catch the exception for us.
-#if !defined (ACE_NDEBUG)
+#if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
 #define TAO_CATCHANY TAO_CATCH (TAO_DONT_CATCH, ex)
 #else
 #define TAO_CATCHANY } catch (...) {
-#endif /* ACE_NDEBUG */
+#endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
 
 #define TAO_ENDTRY }} while (0)
 
