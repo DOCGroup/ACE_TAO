@@ -235,29 +235,6 @@ ACE_SSL_Context::set_mode (int mode)
       return -1;
     }
 
-  if (this->certificate_.type () != -1
-      && ::SSL_CTX_use_certificate_file (this->context_,
-                                         this->certificate_.file_name (),
-                                         this->certificate_.type ()) <= 0)
-    {
-      // ERR_print_errors_fp (stderr);
-      return -1;
-    }
-  if (this->private_key_.type () != -1
-      && SSL_CTX_use_PrivateKey_file (this->context_,
-                                      this->private_key_.file_name (),
-                                      this->private_key_.type ()) <= 0)
-    {
-      // ERR_print_errors_fp (stderr);
-      return -1;
-    }
-
-  if (!::SSL_CTX_check_private_key (this->context_))
-    {
-      // ACE_ERROR ((LM_ERROR, "Mismatch in key/certificate\n"));
-      return -1;
-    }
-
   return 0;
 }
 
@@ -274,16 +251,16 @@ ACE_SSL_Context::private_key (const char *file_name,
   if (this->private_key_.type () != -1)
     return 0;
 
+  this->check_context ();
+
   this->private_key_ = ACE_SSL_Data_File (file_name, type);
 
-  if (this->context_ == 0)
-    return 0;
-
-  int status =
-    ::SSL_CTX_use_PrivateKey_file (this->context_,
-                                   this->private_key_.file_name (),
-                                   this->private_key_.type ());
-  return status;
+  if (::SSL_CTX_use_PrivateKey_file (this->context_,
+                                     this->private_key_.file_name (),
+                                     this->private_key_.type ()) <= 0)
+    return -1;
+  else
+    return this->verify_private_key ();
 }
 
 int
@@ -291,7 +268,7 @@ ACE_SSL_Context::verify_private_key (void)
 {
   this->check_context ();
 
-  return ::SSL_CTX_check_private_key (this->context_);
+  return (::SSL_CTX_check_private_key (this->context_) <=0 ? -1 : 0);
 }
 
 int
@@ -303,14 +280,14 @@ ACE_SSL_Context::certificate (const char *file_name,
 
   this->certificate_ = ACE_SSL_Data_File (file_name, type);
 
-  if (this->context_ == 0)
-    return 0;
+  this->check_context ();
 
-  int status =
-    ::SSL_CTX_use_certificate_file (this->context_,
-                                    this->certificate_.file_name (),
-                                    this->certificate_.type ());
-  return status;
+  if (::SSL_CTX_use_certificate_file (this->context_,
+                                      this->certificate_.file_name (),
+                                      this->certificate_.type ()) <= 0)
+    return -1;
+  else
+    return 0;
 }
 
 int
