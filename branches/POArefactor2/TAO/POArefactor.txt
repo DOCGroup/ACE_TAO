@@ -1,3 +1,9 @@
+Tue Oct 12 07:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp,i}:
+          Removed the single threaded lock functionality, this is handled now
+          by the Single Thread_Strategy
+
 Mon Oct 11 15:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/DomainC.{h,cpp,inl}:
