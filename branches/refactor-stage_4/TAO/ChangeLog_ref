@@ -1,3 +1,55 @@
+Sun Jul 20 13:00:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Abstract_Servant_Base.h: #include'd corbafwd.h to get the
+	  definition of TAO_default_environment ().
+	
+	* tao/BoundsC.h: #include'd CDR.h to get the CDR operators for
+	  basic types. 
+
+	* tao/CORBA_String.h: #include'd Basic_Types.h and
+	  TAO_Export.h. Forward declared TAO_String_Manager and
+	  TAO_WString_Manager. 
+	
+	* tao/CORBA_String.cpp:
+	* tao/CORBA_String.inl: Moved constructors that used
+	  String_Manager and WString_Manager from the inlined file to the
+	  cpp file to get it compilig without errors with g++.
+
+	* tao/Collocated_Invocation.cpp:
+	* tao/ClientRequestInfo_i.cpp: Fixed unused variable warnings in
+	  the methiod sync_scope ().
+
+	* tao/Dynamic_Adapter.h:
+	* tao/Collocation_Resolver.h:
+	* tao/Default_Collocation_Resolver.h: Forward declared class
+	  Environment. 
+	
+	* tao/Exception.h: Forward declared class Environment and added an
+	  undef for "minor". The undef is available in orbconf.h. Since
+	  Exception.h doesnt include orbconf.h directly or indirectly,
+	  this is required. 
+
+	* tao/Invocation_Base.cpp: 
+	* tao/Invocation_Adapter.cpp: Fixed compile errors from wrong
+	  usage of ACE_ENV macros. 
+	
+
+	* tao/Makefile.tao: Added new files for compilation.
+	
+	* tao/Managed_Types.h: #include'd CORBA_String.h
+
+	* tao/ORB_Core.cpp: Fixed warnings due to incorrect casting. 
+	
+	* tao/Synch_Invocation.cpp: Fixed unused variable warnings.
+
+	* tao/TypeCodeFactory_Adapter.h:
+	* tao/Typecode.h: #include'd corbafwd.h to get
+	  TAO_default_environment (). 
+
+	* tao/operation_details.cpp: Fixed warnings that arose due to
+	  comparison operator between a signed and unsigned integer. 
+
+	
 Sun Jul 20 10:13:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp: Changed the inclusion from

@@ -25,6 +25,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
+#include "ace/CORBA_macros.h"
 
 namespace CORBA
 {
@@ -53,6 +54,8 @@ namespace CORBA
   typedef ServerRequest *ServerRequest_ptr;
 
   typedef ULong Flags;
+
+  class Environment;
 };
 
 class TAO_GIOP_Twoway_Invocation;

@@ -23,6 +23,7 @@
 
 #include "tao/Exception.h"
 #include "tao/OBV_Constants.h"
+#include "tao/corbafwd.h"
 
 namespace CORBA
 {

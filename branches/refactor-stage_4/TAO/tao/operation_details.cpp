@@ -45,7 +45,7 @@ TAO_Operation_Details::corba_exception (const char *id
 bool
 TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
 {
-  for (int i = 0; i != this->num_args_; ++i)
+  for (CORBA::ULong i = 0; i != this->num_args_; ++i)
     {
       if (!((*this->args_[i]).marshal (cdr)))
         return false;
@@ -57,7 +57,7 @@ TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
 bool
 TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
 {
-  for (int i = 0; i != this->num_args_; ++i)
+  for (CORBA::ULong i = 0; i != this->num_args_; ++i)
     {
       if (!((*this->args_[i]).demarshal (cdr)))
         return false;
@@ -71,7 +71,7 @@ TAO_Operation_Details::parameter_list (Dynamic::ParameterList &list)
 {
   list.length (this->num_args_);
 
-   for (int i = 0; i != this->num_args_; ++i)
+   for (CORBA::ULong i = 0; i != this->num_args_; ++i)
      (*this->args_[i]).interceptor_param (list[i]);
 
    return true;
@@ -79,7 +79,7 @@ TAO_Operation_Details::parameter_list (Dynamic::ParameterList &list)
 
 
 bool
-TAO_Operation_Details::exception_list (Dynamic::ExceptionList &list)
+TAO_Operation_Details::exception_list (Dynamic::ExceptionList &)
 {
   /*if (this->ex_count_)
     {

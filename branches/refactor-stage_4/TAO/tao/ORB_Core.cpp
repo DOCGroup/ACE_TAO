@@ -2950,7 +2950,7 @@ TAO_ORB_Core::collocation_strategy_new (CORBA::Object_ptr object
       int collocated =
         orb_core->collocation_resolver ().is_collocated (object
                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);
 
       if (collocated)
         {

@@ -69,7 +69,7 @@ namespace TAO
       {
         this->invoke_collocated (stub,
                                  op_details
-                                 ACE_ENV_ARG_DECL);
+                                 ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
         return;
@@ -77,7 +77,7 @@ namespace TAO
 
     this->invoke_remote (stub,
                          op_details
-                         ACE_ENV_ARG_DECL);
+                         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
