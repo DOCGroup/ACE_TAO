@@ -46,7 +46,7 @@ resolve_init (CORBA::ORB_ptr orb,
     return ref._retn();
 }
 
-#ifdef _TAO_IDL_COSNAMINGC_H_
+#ifdef TAO_Naming_Export
 template<class T>
 typename T::_ptr_type
 resolve (CosNaming::NamingContext_ptr context,
