@@ -459,6 +459,10 @@ SOURCE=.\Object_Proxy_Impl.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Ref_Table.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ObjectIDList.h
 # End Source File
 # Begin Source File
@@ -1688,6 +1692,10 @@ SOURCE=.\Object_Proxy_Broker.cpp
 # Begin Source File
 
 SOURCE=.\Object_Proxy_Impl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Ref_Table.cpp
 # End Source File
 # Begin Source File
 
