@@ -1,0 +1,7 @@
+workspace {
+  ace
+  apps/gperf/src
+  tests
+  TAO/TAO_IDL
+  TAO/tao
+}
