@@ -226,6 +226,10 @@ svc_initializer
     {
       $$ = new ACE_Function_Node ($1, $3);
     }
+  | ACE_COLON ACE_IDENT ACE_LPAREN ACE_RPAREN
+    {
+      $$ = new ACE_Static_Function_Node ($2);
+    }
   ;
 
 type

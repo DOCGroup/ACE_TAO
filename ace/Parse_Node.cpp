@@ -539,6 +539,77 @@ ACE_Dummy_Node::~ACE_Dummy_Node (void)
   delete (ACE_Parse_Node *) this->mods_;
 }
 
+ACE_ALLOC_HOOK_DEFINE(ACE_Static_Function_Node)
+
+void
+ACE_Static_Function_Node::dump (void) const
+{
+  ACE_TRACE ("ACE_Static_Function_Node::dump");
+}
+
+ACE_Static_Function_Node::ACE_Static_Function_Node (const char *func_name)
+  : function_name_ (func_name)
+{
+  ACE_TRACE ("ACE_Static_Function_Node::ACE_Static_Function_Node");
+  this->must_delete_ = 1;
+}
+
+const void *
+ACE_Static_Function_Node::symbol (void)
+{
+  ACE_TRACE ("ACE_Static_Function_Node::symbol");
+
+  const void *(*func) (void) = 0;
+  this->symbol_ = 0;
+
+  // Locate the factory function <function_name> in the statically
+  // linked svcs.
+
+  ACE_Static_Svc_Descriptor **ssdp = 0;
+  ACE_STATIC_SVCS &svcs = *ACE_Service_Config::static_svcs ();
+
+  for (ACE_STATIC_SVCS_ITERATOR iter (svcs);
+       iter.next (ssdp) != 0;
+       iter.advance ())
+    {
+      ACE_Static_Svc_Descriptor *ssd = *ssdp;
+      if (ACE_OS::strcmp (ssd->name_, this->function_name_) == 0)
+	func = (const void *(*)(void)) ssd->alloc_;
+    }
+	  
+  if (func == 0)
+    {
+      ace_yyerrno++;
+
+      if (this->symbol_ == 0)
+	{
+	  ace_yyerrno++;
+
+	  ACE_ERROR ((LM_ERROR,
+		      "no static service registered for function %s\n
+",
+		      this->function_name_));
+	}
+    }
+
+  // Invoke the factory function and record it's return value.
+  this->symbol_ = (*func) ();
+
+  if (this->symbol_ == 0)
+    {
+      ace_yyerrno++;
+      ACE_ERROR_RETURN ((LM_ERROR,
+			 "%p\n", this->function_name_), 0);
+    }
+
+  return this->symbol_;
+}
+
+ACE_Static_Function_Node::~ACE_Static_Function_Node (void)
+{
+  ACE_TRACE ("ACE_Static_Function_Node::~ACE_Static_Function_Node");
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

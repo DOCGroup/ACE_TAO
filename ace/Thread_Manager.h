@@ -47,8 +47,9 @@ public:
   ACE_Thread_State state (void);
   // Current state of the thread.
 
-  ACE_Task_Base *task_;
-  // Pointer to an ACE_Task;
+  ACE_Task_Base *task (void);
+  // Return the pointer to an <ACE_Task_Base> or NULL if there's no
+  // <ACE_Task_Base> associated with this thread.;
 
   void dump (void) const;
   // Dump the state of an object.
@@ -89,6 +90,9 @@ private:
   // If a thread is *not* created detached then if someone calls
   // <ACE_Thread_Manager::wait>, we need to join with that thread (and
   // close down the handle).
+
+  ACE_Task_Base *task_;
+  // Pointer to an <ACE_Task_Base> or NULL if there's no <ACE_Task_Base>;
 };
 
 // Forward declaration.
@@ -211,6 +215,11 @@ public:
   // necessary (because a thread can always just call
   // <ACE_Thread::thr_self>).  However, we put it here to be complete.
 
+  ACE_Task_Base *task (void);
+  // Returns a pointer to the current <ACE_Task_Base> we're executing
+  // in if this thread is indeed running in an <ACE_Task_Base>, else
+  // return 0.
+
   // = Suspend methods, which isn't supported on POSIX pthreads (will not block).
   int suspend_all (void);
   // Suspend all threads 
@@ -254,9 +263,9 @@ public:
   int get_grp (ACE_thread_t, int &grp_id);
 
   // = The following methods are new methods which resemble current
-  // methods in ACE_Thread Manager. For example, the new apply_task()
-  // method resembles the old apply_thr() method, and suspend_task()
-  // resembles suspend_thr().
+  // methods in <ACE_Thread Manager>. For example, the <apply_task>
+  // method resembles the <apply_thr> method, and <suspend_task>
+  // resembles <suspend_thr>.
   
   // = Operations on ACE_Tasks.
   int wait_task (ACE_Task_Base *task);
@@ -276,10 +285,10 @@ public:
   // functionality.
 
   int num_tasks_in_group (int grp_id);
-  // Returns the number of <ACE_Task> in a group.
+  // Returns the number of <ACE_Task_Base> in a group.
 
   int num_threads_in_task (ACE_Task_Base *task);
-  // Returns the number of threads in an <ACE_Task>.
+  // Returns the number of threads in an <ACE_Task_Base>.
 
   int task_list (int grp_id, 
 		 ACE_Task_Base *task_list[],
@@ -291,14 +300,14 @@ public:
 		   ACE_thread_t thread_list[],
 		   size_t n);
   // Returns in <thread_list> a list of up to <h> thread ids in an
-  // <ACE_Task>.  The caller must allocate the memory for
+  // <ACE_Task_Base>.  The caller must allocate the memory for
   // <thread_list>.
 
   int hthread_list (ACE_Task_Base *task, 
 		    ACE_hthread_t hthread_list[],
 		    size_t n);
   // Returns in <hthread_list> a list of up to <n> thread handles in
-  // an <ACE_Task>.  The caller must allocate memory for
+  // an <ACE_Task_Base>.  The caller must allocate memory for
   // <hthread_list>.
 
   // = Set/get group ids for a particular task.

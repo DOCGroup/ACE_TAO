@@ -10,7 +10,6 @@
 #include "ace/Task.i"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
   : thr_count_ (0),
     thr_mgr_ (thr_man),

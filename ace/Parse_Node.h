@@ -248,6 +248,27 @@ private:
   const ACE_Parse_Node *mods_;
 };
 
+class ACE_Export ACE_Static_Function_Node : public ACE_Location_Node
+  // = TITLE
+  //     Keeps track of the symbol name for a function that is not
+  //     linked in from a DLL, but is statically linked with the
+  //     application. 
+{
+public:
+  ACE_Static_Function_Node (const char *func_name);
+  virtual const void *symbol (void);
+  virtual ~ACE_Static_Function_Node (void);
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  const char *function_name_;
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Parse_Node.i"
 #endif /* __ACE_INLINE__ */
