@@ -205,7 +205,7 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Print the strings , which should be firstFoo and secondFoo.
+  // Print the ior's
 
   cout << first_foo_ior.in () << endl;
   cout << second_foo_ior.in () << endl;
