@@ -515,12 +515,10 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
         this->transport ()->wait_strategy ()->is_registered (0);
       }
 
-
+    this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
   }
 
   ACE_ASSERT (this->transport () != 0);
-
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
 
   // Signal the transport that we will no longer have
   // a reference to it.  This will eventually call
