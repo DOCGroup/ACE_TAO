@@ -160,7 +160,7 @@ public class ServiceRepository
    */
   public int suspend (String name)
   {
-    ServiceRecord rec = this.find(name, false);
+    ServiceRecord rec = this.find(name, true);
 
     if (rec == null)
       return -1;
