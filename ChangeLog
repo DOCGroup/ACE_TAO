@@ -1,3 +1,12 @@
+Tue Aug  3 13:04:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Svc_Handler.h:
+	* ace/Svc_Handler.cpp:
+	  Add throw() exception specifier to no-throw version of class
+	  local operator new.  In addition to squelching warnings from
+	  gcc, this tells the compiler to check the return value before
+	  constructing the object.
+
 Tue Aug  3 08:55:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Condition_Recursive_Thread_Mutex.cpp:
