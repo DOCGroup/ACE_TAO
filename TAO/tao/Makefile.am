@@ -828,7 +828,6 @@ nobase_include_HEADERS += \
   TAO_Singleton_Manager.inl \
   Tagged_Components.i \
   Tagged_Profile.i \
-  Thread_Lane_Resources_Manager.i \
   TimeBaseC.inl \
   TimeBaseS.inl \
   TimeBaseS_T.inl \
