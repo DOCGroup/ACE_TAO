@@ -1,3 +1,8 @@
+Sun Mar 30 21:44:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* performance-tests/Memory/IOR_Size/server.conf: Added the lazy
+	  strategy to the conf file.
+
 Sun Mar 30 15:25:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu> 
 
 	* docs/tutorials/Quoter/Simple/Persistent/server.dsp: Added RTTI to
