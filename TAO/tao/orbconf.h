@@ -66,7 +66,7 @@
 /* The number of bytes in a long double.  */
 #if defined(linux)
 #  define SIZEOF_LONG_DOUBLE 12
-#elif defined(_WIN32) || defined(VXWORKS)
+#elif defined(_WIN32) || defined(VXWORKS) || defined (M_UNIX)
 #  define SIZEOF_LONG_DOUBLE 8
 #else
 #  define SIZEOF_LONG_DOUBLE 16
