@@ -100,10 +100,11 @@ Dispatch_Queue_Item::Dispatch_Queue_Item (
         ACE_Allocator* mb_allocator)
  : ACE_Message_Block (data_block,
                       flags,
-                      mb_allocator,
-                      cmd->getID_ptr()),
-   command_ (cmd), qos_info_ (qos_info)
+                      mb_allocator),
+   command_ (cmd),
+   qos_info_ (qos_info)
 {
+   this->set_ID (cmd->getID()),
    this->init_i (qos_info);
 }
 
@@ -112,9 +113,11 @@ Dispatch_Queue_Item::Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,
         ACE_Allocator* mb_allocator)
- : ACE_Message_Block (mb_allocator, cmd->getID_ptr()),
-   command_ (cmd), qos_info_ (qos_info)
+ : ACE_Message_Block (mb_allocator),
+   command_ (cmd),
+   qos_info_ (qos_info)
 {
+   this->set_ID (cmd->getID()),
    this->init_i (qos_info);
 }
 

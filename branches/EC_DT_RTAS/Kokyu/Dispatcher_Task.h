@@ -15,6 +15,7 @@
 #include /**/ "ace/pre.h"
 #include "ace/Task.h"
 #include "ace/Lock_Adapter_T.h"
+#include "ace/Counter.h"
 
 #if defined (KOKYU_HAS_RELEASE_GUARD)
 #include "ace/Map.h"
@@ -42,7 +43,7 @@ public:
   Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,
-        ACE_Allocator* mb_allocator =0);
+        ACE_Allocator* mb_allocator = 0);
 
   Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
@@ -52,6 +53,8 @@ public:
         ACE_Allocator* mb_allocator =0);
 
   Dispatch_Command* command ();
+
+  void set_ID (ACE_Object_Counter::object_id oid);
 
   //Any reason why this shouldn't be visible?
   const QoSDescriptor& qos_info() const;
