@@ -115,9 +115,11 @@ namespace TAO
         // that.
         dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
 
-        // Irrespective of whatever the muxed strategy is, just
-        // release the transport for other threads. This is AMI dude.
-        (void)  this->resolver_.transport_released ();
+        // NOTE: Not sure how things are handles with exclusive muxed
+        // strategy.
+        if (this->resolver_.transport ()->idle_after_send ())
+          (void) this->resolver_.transport_released ();
+
       }
     ACE_CATCHANY
       {

@@ -73,11 +73,13 @@ namespace TAO
                                     TAO_Operation_Details &op
                                     ACE_ENV_ARG_DECL);
     **/
-    virtual void invoke_remote (TAO_Stub *,
-                                TAO_Operation_Details &op
-                                ACE_ENV_ARG_DECL);
 
-  private:
+    virtual Invocation_Status invoke_twoway (
+        TAO_Operation_Details &op,
+        CORBA::Object *&effective_target,
+        Profile_Transport_Resolver &r,
+        ACE_Time_Value *&max_wait_time
+        ACE_ENV_ARG_DECL);
 
   private:
     TAO_Asynch_Reply_Dispatcher *rd_;

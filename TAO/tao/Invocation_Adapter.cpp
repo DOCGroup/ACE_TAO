@@ -127,13 +127,15 @@ namespace TAO
                                       ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
 
-            if (status == TAO_INVOKE_RESTART)
+            if (status == TAO_INVOKE_RESTART &&
+                coll_inv.is_forwarded ())
               {
-                effective_target = coll_inv.steal_forwarded_reference ();
+                effective_target =
+                  coll_inv.steal_forwarded_reference ();
 
-                this->object_forwarded (effective_target,
-                                        stub
-                                        ACE_ENV_ARG_PARAMETER);
+                (void) this->object_forwarded (effective_target,
+                                               stub
+                                               ACE_ENV_ARG_PARAMETER);
                 ACE_CHECK;
               }
           }
@@ -289,7 +291,8 @@ namespace TAO
                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-    if (status == TAO_INVOKE_RESTART)
+    if (status == TAO_INVOKE_RESTART &&
+        synch.is_forwarded ())
       {
         effective_target = synch.steal_forwarded_reference ();
 
@@ -331,7 +334,8 @@ namespace TAO
                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-    if (s == TAO_INVOKE_RESTART)
+    if (s == TAO_INVOKE_RESTART &&
+        synch.is_forwarded ())
       {
         effective_target = synch.steal_forwarded_reference ();
 

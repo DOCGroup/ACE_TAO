@@ -42,7 +42,7 @@ namespace TAO
    * @NOTE: Reliable oneways are not handled properly including use of
    *  interceptors.
    */
-  class TAO_Export Collocated_Invocation : protected Invocation_Base
+  class TAO_Export Collocated_Invocation : public Invocation_Base
   {
   public:
     Collocated_Invocation (CORBA::Object_ptr et,

@@ -62,8 +62,6 @@ namespace TAO
   class TAO_Export Invocation_Base
   {
   public:
-    friend class Invocation_Adapter;
-
     virtual ~Invocation_Base (void);
 
     //@{
