@@ -1,27 +1,34 @@
+Mon Aug 30 14:27:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cached_Accept_Conn_Test.cpp,Cached_Conn_Test.cpp,
+          Map_Manager.cpp:
+          use the explicit template instantiations even with
+          ACE_HAS_GNU_REPO.  g++ 2.91.66 misses some of them with -frepo.
+
 Mon Aug 30 12:53:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Local_Tokens.h: Added a comment explaining that these locking
-	  classes aren't intended as general-purpose synchronization
- 	  mechanisms.  Thanks to Brian Wright <bwright@paladyne.com>
+        * ace/Local_Tokens.h: Added a comment explaining that these locking
+          classes aren't intended as general-purpose synchronization
+          mechanisms.  Thanks to Brian Wright <bwright@paladyne.com>
 
-	* examples/Misc/test_trace.cpp (main): Added a call to
-	  ACE_OS::atexit() to make sure we test this someplace.
+        * examples/Misc/test_trace.cpp (main): Added a call to
+          ACE_OS::atexit() to make sure we test this someplace.
 
 Mon Aug 30 12:11:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Strategies.i:
-	  Once a Recyclable object reaches the ACE_RECYCLABLE_CLOSED state 
-	  its state cannot change. This eliminates a nasty race condition
-	  where one thread detects that the connection is closed (and sets
-	  the state accordingly), but another thread changes the state to
-	  IDLE, based on old information.
-	  Thanks to Mark L Boriack <mboriack@std.saic.com> for reporting
-	  this problem and helping us debug it.
+        * ace/Strategies.i:
+          Once a Recyclable object reaches the ACE_RECYCLABLE_CLOSED state
+          its state cannot change. This eliminates a nasty race condition
+          where one thread detects that the connection is closed (and sets
+          the state accordingly), but another thread changes the state to
+          IDLE, based on old information.
+          Thanks to Mark L Boriack <mboriack@std.saic.com> for reporting
+          this problem and helping us debug it.
 
 Mon Aug 30 10:43:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-common.h:
-	  Added ACE_HAS_SIGSUSPEND and ACE_HAS_TIMEDWAIT
+        * ace/config-irix6.x-common.h:
+          Added ACE_HAS_SIGSUSPEND and ACE_HAS_TIMEDWAIT
 
 Sun Aug 29 18:27:38 1999  Ossama Othman  <othman@cs.wustl.edu>
 
