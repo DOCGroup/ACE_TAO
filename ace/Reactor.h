@@ -424,6 +424,8 @@ public:
   // via the notify queue before breaking out of its
   // <ACE_Message_Queue::dequeue> loop.
 
+  // = Assorted helper methods.
+  
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
                        ACE_Event_Handler **event_handler = 0);
@@ -464,6 +466,12 @@ public:
   virtual int requeue_position (void);
   // Get position of the owner thread.
 
+  virtual int restart (void);
+  // Get the existing restart value.
+  
+  virtual int restart (int r);
+  // Set a new value for restart and return the original value.
+
   // = Low-level wait_set mask manipulation methods.
 
   virtual int mask_ops (ACE_Event_Handler *event_handler,
@@ -496,7 +504,7 @@ public:
   virtual int current_info (ACE_HANDLE handle,
                             size_t &msg_size);
   // Returns 0, if the size of the current message has been put in
-  // <size> Returns -1, if not.  ACE_HANDLE allows the reactor to
+  // <size> returns -1, if not.  ACE_HANDLE allows the reactor to
   // check if the caller is valid.  Used for CLASSIX Reactor
   // implementation.
 

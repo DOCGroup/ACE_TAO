@@ -65,7 +65,8 @@ class ACE_Export ACE_Event_Tuple
   //     to do so.
 public:
   ACE_Event_Tuple (void);
-  ACE_Event_Tuple (ACE_Event_Handler* eh, ACE_HANDLE h);
+  ACE_Event_Tuple (ACE_Event_Handler *eh,
+                   ACE_HANDLE h);
   ~ACE_Event_Tuple (void);
 
   int operator== (const ACE_Event_Tuple &rhs) const;
@@ -313,7 +314,7 @@ class ACE_Export ACE_Select_Reactor_Impl : public ACE_Reactor_Impl
   // = TITLE
   //     This class simply defines how Select_Reactor's basic interface
   //     functions should look like and provides a common base class for
-  //     Select_Reactor using various locking mechanism.
+  //     <Select_Reactor> using various locking mechanism.
 public:
   enum
   {
@@ -322,7 +323,8 @@ public:
   };
 
   ACE_Select_Reactor_Impl (void);
-
+  // Constructor.
+  
   friend class ACE_Select_Reactor_Notify;
   friend class ACE_Select_Reactor_Handler_Repository;
 

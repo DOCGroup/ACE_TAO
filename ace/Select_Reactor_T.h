@@ -425,6 +425,12 @@ public:
   // dispatch the <ACE_Event_Handlers> that are passed in via the
   // notify pipe before breaking out of its <recv> loop.
 
+  virtual int restart (void);
+  // Get the existing restart value.
+  
+  virtual int restart (int r);
+  // Set a new value for restart and return the original value.
+
   virtual void requeue_position (int);
   // Set position that the main ACE_Select_Reactor thread is requeued in the
   // list of waiters during a <notify> callback.

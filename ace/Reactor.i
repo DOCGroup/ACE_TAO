@@ -514,6 +514,18 @@ ACE_Reactor::owner (ACE_thread_t *owner)
   return this->implementation ()->owner (owner);
 }
 
+ACE_INLINE int
+ACE_Reactor::restart (void)
+{
+  return this->implementation ()->restart ();
+}
+
+ACE_INLINE int
+ACE_Reactor::restart (int r)
+{
+  return this->implementation ()->restart (r);
+}
+
 ACE_INLINE void
 ACE_Reactor::requeue_position (int position)
 {
