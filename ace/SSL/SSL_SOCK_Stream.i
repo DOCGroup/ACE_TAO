@@ -3,7 +3,6 @@
 
 // SOCK_Stream.i
 
-#include "SOCK_Stream.h"
 #if defined (ACE_HAS_SSL)
 
 ASYS_INLINE

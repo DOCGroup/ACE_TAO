@@ -26,8 +26,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SSL_SOCK_Acceptor.h"
+#include "SSL_SOCK_Acceptor.h"
 #include "SSLIOP_Connect.h"
+#include "SSLIOPC.h"
 
 // TAO SSLIOP_Acceptor concrete call definition
 
@@ -46,10 +47,10 @@ public:
   ~TAO_SSLIOP_Acceptor (void);
   // Destructor.
 
-  typedef ACE_Strategy_Acceptor<TAO_SSLIIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> TAO_SSLIOP_BASE_ACCEPTOR;
+  typedef ACE_Strategy_Acceptor<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> TAO_SSLIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_SSLIOP_Server_Connection_Handler> TAO_SSLIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_SSLIOP_Server_Connection_Handler> TAO_SSLIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_SSLIOP_ACCEPT_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> TAO_SSLIOP_ACCEPT_STRATEGY;
 
   // = The TAO_Acceptor methods, check the documentation in
   //   Pluggable.h for details.
@@ -75,8 +76,6 @@ private:
   // Parse protocol specific options.
 
 private:
-  TAO_IIOP_Acceptor iiop_acceptor_;
-
   TAO_SSLIOP_BASE_ACCEPTOR ssl_acceptor_;
   // the concrete acceptor, as a pointer to it's base class.
 
@@ -85,19 +84,8 @@ private:
   TAO_SSLIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
 
-  ACE_INET_Addr ssl_address_;
-  // Cache the information about the endpoint serviced by this
-  // acceptor.
-  // @@ TODO there may in fact be multiple hostnames for this
-  //    endpoint. For example it the IP address is INADDR_ANY
-  //    (0.0.0.0) then there will be possibly a different hostname for
-  //    each interface.
-
-  TAO_GIOP_Version version_;
-  // The GIOP version for this endpoint
-
-  TAO_ORB_Core *orb_core_;
-  // ORB Core.
+  SSLIOP::SSL ssl_component_;
+  // The SSL component
 };
 
 #if defined(__ACE_INLINE__)

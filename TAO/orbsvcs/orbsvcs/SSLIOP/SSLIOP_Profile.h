@@ -26,6 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "SSLIOPC.h"
+
 class TAO_SSLIOP_Client_Connection_Handler;
 
 // TAO SSLIOP_Profile concrete Profile definitions

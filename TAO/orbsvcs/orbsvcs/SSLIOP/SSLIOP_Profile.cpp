@@ -94,7 +94,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
 
   IOP::TaggedComponent component;
   component.tag = IOP::TAG_SSL_SEC_TRANS;
-  if (this->tagged_compoents ().get_component (component) == 0)
+  if (this->tagged_components ().get_component (component) == 0)
     {
       this->ssl_component_.port = 0;
       return 1;
@@ -107,19 +107,19 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
           component.component_data.length ());
       CORBA::Boolean byte_order;
       if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        return;
+        return -1;
       cdr.reset_byte_order (ACE_static_cast(int,byte_order));
 
       cdr >> this->ssl_component_;
     }
 
-  return 0;
+  return 1;
 }
 
 CORBA::Boolean
 TAO_SSLIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 {
-  if (this->IIOP_Profile::is_equivalent (other_profile) == 0)
+  if (this->TAO_IIOP_Profile::is_equivalent (other_profile) == 0)
     return 0;
 
   const TAO_SSLIOP_Profile *op =
