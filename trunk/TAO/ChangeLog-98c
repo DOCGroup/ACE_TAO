@@ -1,3 +1,7 @@
+Mon Nov 10 00:09:24 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.27, released Mon Nov 10 00:09:24 1997.
+
 Sun Nov 09 23:43:04 1997    <irfan@TWOSTEP>
 
 	* tao/corba.h: Reordered the inclusion of poa.i, giop.i,
