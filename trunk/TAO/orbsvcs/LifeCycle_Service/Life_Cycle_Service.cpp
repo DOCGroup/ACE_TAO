@@ -119,7 +119,7 @@ Life_Cycle_Service_Server::init (int argc,
 
       CosNaming::Name life_Cycle_Service_Name (1);
       life_Cycle_Service_Name.length (1);
-      life_Cycle_Service_Name[0].id = CORBA::string_dup ("LifeCyle_Service");
+      life_Cycle_Service_Name[0].id = CORBA::string_dup ("Life_Cycle_Service");
 
       namingContext_var_->bind (life_Cycle_Service_Name,
 			       this->life_Cycle_Service_Impl_ptr_->_this(TAO_TRY_ENV),

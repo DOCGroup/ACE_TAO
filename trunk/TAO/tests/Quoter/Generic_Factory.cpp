@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "tao/corba.h"
+#include "orbsvcs/LifeCycleServiceC.h"
 #include "Generic_Factory.h"
 
 static const char usage [] = "[-? |\n[-O[RBport] ORB port number]]";
@@ -77,9 +78,7 @@ Quoter_Generic_Factory_Server::init (int argc,
                                  env);
 
   // Failure while activating the Quoter Factory Finder object
-  // @@ TODO Is this the right way to check this? Shouldn't env
-  // contain an exception?
-  if (str.in () == 0)
+  if (env.exception () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init: Failure while activating the Quoter Generic Factory Impl.\n"),
@@ -153,38 +152,36 @@ Quoter_Generic_Factory_Server::init (int argc,
       // the Generic Factory should try to register itself to the closest
       // Life Cycle Service is order to be called.
 
-      /* for now as long as the trading service is not ported to NT we skip this
+      /* for now as long as the trading service is not ported to NT we skip this */
 
       // get the Quoter_Life_Cycle_Service
-      CosNaming::Name quoter_Life_Cycle_Service_Name (1);
-      quoter_Life_Cycle_Service_Name.length (1);
-      quoter_Life_Cycle_Service_Name[0].id = CORBA::string_dup ("Quoter_Life_Cycle_Service");
+      CosNaming::Name life_Cycle_Service_Name (1);
+      life_Cycle_Service_Name.length (1);
+      life_Cycle_Service_Name[0].id = CORBA::string_dup ("Life_Cycle_Service");
 
-      CORBA::Object_var quoter_Life_Cycle_Service_Obj_var =
-        quoterNamingContext_var_->resolve (quoter_Life_Cycle_Service_Name,
+      CORBA::Object_var life_Cycle_Service_Obj_var =
+        namingContext_var->resolve (life_Cycle_Service_Name,
                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      Stock::Quoter_Life_Cycle_Service_var  quoter_Life_Cycle_Service_var =
-        Stock::Quoter_Life_Cycle_Service::_narrow (quoter_Life_Cycle_Service_Obj_var.in (),
+      LifeCycleService::Life_Cycle_Service_var  life_Cycle_Service_var =
+        LifeCycleService::Life_Cycle_Service::_narrow (life_Cycle_Service_Obj_var.in (),
                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Have a proper reference to the Quoter Life Cycle Service.\n"));
+      ACE_DEBUG ((LM_DEBUG, "Have a proper reference to Life Cycle Service.\n"));
 
       CORBA::Object_var object_var = this->quoter_Generic_Factory_Impl_ptr_->_this(TAO_TRY_ENV);
 
-      quoter_Life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
-                                                      "Bryan 503",               // location
-                                                      "Generic Factory",         // description
-                                                      object_var,
-                                                      TAO_TRY_ENV);
+      life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
+						"Bryan 503",               // location
+						"Generic Factory",         // description
+						object_var,
+						TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
-                  "Registered the Quoter GenericFactory to the Quoter Life Cycle Service.\n"));
-
-                  */
+                  "Registered the Quoter GenericFactory to the Life Cycle Service.\n"));
+            
     }
   TAO_CATCHANY
     {

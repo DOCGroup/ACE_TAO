@@ -81,11 +81,24 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
 {
   TAO_TRY
     {
-      // The name of the Quoter Factory
-      CosLifeCycle::Key factoryKey (1);  // max = 1
-      factoryKey.length(1);
-      factoryKey[0].id = CORBA::string_dup ("Quoter_Factory");
-
+      // The name of the Generic Factory
+      CosLifeCycle::Key factoryKey (2);  // max = 2
+      
+      // future enhancement
+      /* if (this->useLifeCycleService_ == 1)
+	{
+	  // use the LifeCycle Service
+	  factoryKey.length(1);
+	  factoryKey[0].id = CORBA::string_dup ("Life_Cycle_Service");
+	}
+      else*/
+	{
+	  // use a Generic Factory
+	  factoryKey.length(2);
+	  factoryKey[0].id = CORBA::string_dup ("IDL_Quoter");
+	  factoryKey[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
+	}
+      
       // Find an appropriate factory over there.
       CosLifeCycle::Factories_ptr factories_ptr =
         there->find_factories (factoryKey, _env_there);
