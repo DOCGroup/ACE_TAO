@@ -1,3 +1,10 @@
+Thu Mar 09 18:06:52 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: Added ACE_HAS_SIGTIMEDWAIT and the
+          ACE_PI_CONTROL_BLOCK_ALIGN_LONGS that Nanbor did for
+          config-hpux-10.x.h Wed Mar 8. There is still an assert failure
+          in Malloc_Test, so something is wrong there.
+
 Thu Mar 09 17:47:41 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Added ACE_HAS_SIGTIMEDWAIT.
