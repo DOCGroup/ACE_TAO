@@ -1,3 +1,12 @@
+Thu Oct 10 07:27:19 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Svc_Utils.dsp:
+
+	  Fixed typo in TAO_IDL "pre_include" directive in the DLL Release
+	  configuration custom build step for TimeBase.idl.  "pre_include"
+	  was spelled "pre_incluxde".  Fixes "more pops than pushes"
+	  #pragma warnings in Win32 DLL Release builds.
+	
 Wed Oct  9 13:30:54 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
