@@ -7,7 +7,7 @@
 //    ACE_wrappers/examples/QOS
 //
 // = FILENAME
-//    QOS_Event_Handler.h
+//    Sender_QoS_Event_Handler.h
 //
 // = AUTHOR
 //    Vishal Kachroo <vishal@cs.wustl.edu>
@@ -21,23 +21,27 @@
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast_QoS.h"
+#include "ace/QoS_Session.h"
 
-#define MY_DEFPORT 5001
-#define DEFAULT_MULTICASTGROUP "234.5.6.7"
+//#define MY_DEFPORT 5001
+//#define DEFAULT_MULTICASTGROUP "234.5.6.7"
 
-ACE_RCSID(QOS_Event_Handler, QOS_Event_Handler, "$Id$")
+ACE_RCSID(Sender_QoS_Event_Handler, Sender_QoS_Event_Handler, "$Id$")
 
-class ACE_QOS_Event_Handler : public ACE_Event_Handler
+class Sender_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
   // = Initialization and Termination methods.
-  ACE_QOS_Event_Handler (void);
+  Sender_QoS_Event_Handler (void);
   // Constructor.
 
-  ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast);
+  Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS 
+                                                      &dgram_mcast_qos,
+                                                      ACE_QoS_Session *qos_session
+                                                      );
   // Constructor.
-
-  ~ACE_QOS_Event_Handler (void);
+  
+  ~Sender_QoS_Event_Handler (void);
   // Destructor. 
 
   virtual ACE_HANDLE get_handle (void) const;
@@ -45,13 +49,13 @@ public:
   // that we are using.
 
   virtual int handle_qos (ACE_HANDLE fd);
-  // Handles a QOS event. Right now, just 
+  // Handles a QoS event. Right now, just 
   // prints a message.
 
 private:
 
-  ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_;
- 
+  ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_qos_;
+  ACE_QoS_Session *qos_session_;
 };
 
 #endif  /* SENDER_QOS_EVENT_HANDLER_H */
