@@ -363,6 +363,8 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
     }
 
   TAO_ENDTRY;
+  ACE_DEBUG ((LM_DEBUG,
+	      "All functions work properly \n"));
   return 0;
 }
 
