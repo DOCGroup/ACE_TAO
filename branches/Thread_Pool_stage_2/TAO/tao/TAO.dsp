@@ -259,6 +259,10 @@ SOURCE=.\CodecFactory_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocation_Resolver.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connection_Handler.cpp
 # End Source File
 # Begin Source File
@@ -300,6 +304,10 @@ SOURCE=.\debug.cpp
 # Begin Source File
 
 SOURCE=.\default_client.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Collocation_Resolver.cpp
 # End Source File
 # Begin Source File
 
@@ -896,7 +904,7 @@ SOURCE=.\WrongTransactionC.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
+# PROP Default_Filter "h;hpp;hxx;hm;fi;fd"
 # Begin Source File
 
 SOURCE=.\Abstract_Servant_Base.h
@@ -979,10 +987,6 @@ SOURCE=.\Cleanup_Func_Registry.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Cleanup_Func_Registry.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
@@ -1000,6 +1004,10 @@ SOURCE=.\CodecFactory.h
 # Begin Source File
 
 SOURCE=.\CodecFactory_ORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocation_Resolver.h
 # End Source File
 # Begin Source File
 
@@ -1048,6 +1056,10 @@ SOURCE=.\debug.h
 # Begin Source File
 
 SOURCE=.\default_client.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Collocation_Resolver.h
 # End Source File
 # Begin Source File
 
@@ -1235,10 +1247,6 @@ SOURCE=.\Incoming_Message_Queue.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Incoming_Message_Queue.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Interceptor_List.h
 # End Source File
 # Begin Source File
@@ -1283,15 +1291,7 @@ SOURCE=.\LF_Event.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Event.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\LF_Event_Binder.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Binder.inl
 # End Source File
 # Begin Source File
 
@@ -1299,15 +1299,7 @@ SOURCE=.\LF_Event_Loop_Thread_Helper.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Event_Loop_Thread_Helper.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\LF_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower.inl
 # End Source File
 # Begin Source File
 
@@ -1315,15 +1307,7 @@ SOURCE=.\LF_Follower_Auto_Adder.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Follower_Auto_Adder.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\LF_Follower_Auto_Ptr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.inl
 # End Source File
 # Begin Source File
 
@@ -1331,15 +1315,7 @@ SOURCE=.\LF_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Strategy.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\LF_Strategy_Complete.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.inl
 # End Source File
 # Begin Source File
 
@@ -1519,10 +1495,6 @@ SOURCE=.\Queued_Message.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Queued_Message.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Reactive_Flushing_Strategy.h
 # End Source File
 # Begin Source File
@@ -1548,10 +1520,6 @@ SOURCE=.\Resource_Factory.h
 # Begin Source File
 
 SOURCE=.\Resume_Handle.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Resume_Handle.inl
 # End Source File
 # Begin Source File
 
@@ -1659,10 +1627,6 @@ SOURCE=.\Transport.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Transport_Cache_Manager.h
 # End Source File
 # Begin Source File
@@ -1728,7 +1692,7 @@ SOURCE=.\WrongTransactionC.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter "i;inl"
 # Begin Source File
 
 SOURCE=.\Acceptor_Filter.i
@@ -1779,7 +1743,15 @@ SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cleanup_Func_Registry.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\ClientInterceptorAdapter.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocation_Resolver.i
 # End Source File
 # Begin Source File
 
@@ -1816,6 +1788,10 @@ SOURCE=.\CurrentC.i
 # Begin Source File
 
 SOURCE=.\default_client.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Collocation_Resolver.i
 # End Source File
 # Begin Source File
 
@@ -1951,6 +1927,10 @@ SOURCE=.\IIOPC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Incoming_Message_Queue.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Interceptor_List.inl
 # End Source File
 # Begin Source File
@@ -1972,6 +1952,38 @@ SOURCE=.\IOR_Parser.i
 # Begin Source File
 
 SOURCE=.\Leader_Follower.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Binder.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Loop_Thread_Helper.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Adder.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.inl
 # End Source File
 # Begin Source File
 
@@ -2099,7 +2111,15 @@ SOURCE=.\Profile.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Queued_Message.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reply_Dispatcher.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Resume_Handle.inl
 # End Source File
 # Begin Source File
 
@@ -2168,6 +2188,10 @@ SOURCE=.\Thread_Lane_Resources_Manager.i
 # Begin Source File
 
 SOURCE=.\TimeBaseC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport.inl
 # End Source File
 # Begin Source File
 

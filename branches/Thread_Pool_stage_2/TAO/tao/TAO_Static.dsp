@@ -259,6 +259,10 @@ SOURCE=.\Default_Thread_Lane_Resources_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Collocation_Resolver.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DLL_ORB.cpp
 # End Source File
 # Begin Source File
@@ -759,6 +763,10 @@ SOURCE=.\Thread_Lane_Resources_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocation_Resolver.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.cpp
 # End Source File
 # Begin Source File
@@ -1004,6 +1012,10 @@ SOURCE=.\Default_Stub_Factory.h
 # Begin Source File
 
 SOURCE=.\Default_Thread_Lane_Resources_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Collocation_Resolver.h
 # End Source File
 # Begin Source File
 
@@ -1579,6 +1591,10 @@ SOURCE=.\Thread_Lane_Resources_Manager.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocation_Resolver.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.h
 # End Source File
 # Begin Source File
@@ -1764,6 +1780,10 @@ SOURCE=.\default_server.i
 # Begin Source File
 
 SOURCE=.\Default_Thread_Lane_Resources_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Collocation_Resolver.i
 # End Source File
 # Begin Source File
 
@@ -2096,6 +2116,10 @@ SOURCE=.\Thread_Lane_Resources.i
 # Begin Source File
 
 SOURCE=.\Thread_Lane_Resources_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocation_Resolver.i
 # End Source File
 # Begin Source File
 

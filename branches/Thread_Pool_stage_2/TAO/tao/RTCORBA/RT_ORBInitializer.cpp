@@ -52,19 +52,19 @@ TAO_RT_ORBInitializer::pre_init (
   // Register all of the RT related services.
   //
 
-  // Set the name of the Protocol_Hooks to be the RT_Protocols_Hooks.
+  // Set the name of the Protocol_Hooks to be RT_Protocols_Hooks.
   TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Protocols_Hooks);
 
-  // Set the name of the stub factory to be the RT_Stub_Factory.
+  // Set the name of the stub factory to be RT_Stub_Factory.
   TAO_ORB_Core::set_stub_factory ("RT_Stub_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Stub_Factory);
 
-  // Set the name of the stub factory to be the RT_Stub_Factory.
+  // Set the name of the stub factory to be RT_Stub_Factory.
   TAO_ORB_Core::set_endpoint_selector_factory ("RT_Endpoint_Selector_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_RT_Endpoint_Selector_Factory);
 
-  // Set the name of the thread lane resources manager to be the RT_Thread_Lane_Resources_Manager.
+  // Set the name of the thread lane resources manager to be RT_Thread_Lane_Resources_Manager.
   TAO_ORB_Core::set_thread_lane_resources_manager_factory ("RT_Thread_Lane_Resources_Manager_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Thread_Lane_Resources_Manager_Factory);
 

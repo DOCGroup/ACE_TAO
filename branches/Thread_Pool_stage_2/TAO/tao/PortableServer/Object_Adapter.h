@@ -622,6 +622,7 @@ public:
   public:
 
     friend class TAO_POA;
+    friend class TAO_RT_Collocation_Resolver;
 
     // @@ PPOA: Servant_Upcall (TAO_Object_Adapter &object_adapter);
     Servant_Upcall (TAO_ORB_Core *orb_core);
@@ -635,6 +636,10 @@ public:
                             CORBA::Object_out forward_to,
                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
     // Locate POA and servant.
+
+    TAO_POA *lookup_POA (const TAO_ObjectKey &key,
+                         CORBA::Environment &ACE_TRY_ENV);
+    // Locate POA.
 
     TAO_POA &poa (void) const;
     // POA accessor.

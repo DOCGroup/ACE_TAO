@@ -73,6 +73,7 @@ class TAO_BiDir_Adapter;
 class TAO_Flushing_Strategy;
 
 class TAO_Thread_Lane_Resources_Manager;
+class TAO_Collocation_Resolver;
 class TAO_Thread_Lane_Resources;
 class TAO_Stub_Factory;
 class TAO_Endpoint_Selector_Factory;
@@ -353,6 +354,9 @@ public:
   /// Returns a pointer to the Thread Lane Resources Manager.
   TAO_Thread_Lane_Resources_Manager &thread_lane_resources_manager (void);
 
+  /// Returns a pointer to the Collocation Resolver.
+  TAO_Collocation_Resolver &collocation_resolver (void);
+
   /// Returns a pointer to the Stub factory.
   TAO_Stub_Factory *stub_factory (void);
 
@@ -363,6 +367,9 @@ public:
 
   /// Sets the value of TAO_ORB_Core::thread_lane_resources_manager_factory_name_
   static void set_thread_lane_resources_manager_factory (const char *thread_lane_resources_manager_factory_name);
+
+  /// Sets the value of TAO_ORB_Core::collocation_resolver_name_
+  static void set_collocation_resolver (const char *collocation_resolver_name);
 
   /// Sets the value of TAO_ORB_Core::stub_factory_name_
   static void set_stub_factory (const char *stub_factory_name);
@@ -924,6 +931,8 @@ protected:
 
   TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager_;
 
+  TAO_Collocation_Resolver *collocation_resolver_;
+
   TAO_Stub_Factory *stub_factory_;
 
   /// Pointer to the list of protocol loaded into this ORB instance.
@@ -1006,6 +1015,12 @@ protected:
   // to set the value to be
   // "RT_Thread_Lane_Resources_Manager_Factory".
   static const char *thread_lane_resources_manager_factory_name_;
+
+  // Name of the collocation resolver that needs to be instantiated.
+  // The default value is "Default_Collocation_Resolver". If
+  // TAO_RTCORBA is linked, the set_collocation_resolver will be
+  // called to set the value to be "RT_Collocation_Resolver".
+  static const char *collocation_resolver_name_;
 
   // Name of the stub factory that needs to be instantiated.
   // The default value is "Default_Stub_Factory". If TAO_RTCORBA is

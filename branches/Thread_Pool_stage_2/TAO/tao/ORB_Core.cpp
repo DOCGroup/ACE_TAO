@@ -27,9 +27,8 @@
 
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
-#include "Default_Stub_Factory.h"
-#include "Default_Endpoint_Selector_Factory.h"
-#include "Default_Protocols_Hooks.h"
+#include "tao/Collocation_Resolver.h"
+#include "tao/Stub_Factory.h"
 
 #include "IORInfo.h"
 
@@ -73,6 +72,8 @@ const char * TAO_ORB_Core::endpoint_selector_factory_name_ =
   "Default_Endpoint_Selector_Factory";
 const char * TAO_ORB_Core::thread_lane_resources_manager_factory_name_ =
   "Default_Thread_Lane_Resources_Manager_Factory";
+const char * TAO_ORB_Core::collocation_resolver_name_ =
+  "Default_Collocation_Resolver";
 const char * TAO_ORB_Core::stub_factory_name_ =
   "Default_Stub_Factory";
 const char * TAO_ORB_Core::resource_factory_name_ =
@@ -95,6 +96,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     lock_ (),
     connector_registry_ (0),
     thread_lane_resources_manager_ (0),
+    collocation_resolver_ (0),
     stub_factory_ (0),
     protocol_factories_ (0),
     implrepo_service_ (CORBA::Object::_nil ()),
@@ -1138,6 +1140,13 @@ TAO_ORB_Core::set_thread_lane_resources_manager_factory (const char *thread_lane
 }
 
 void
+TAO_ORB_Core::set_collocation_resolver (const char *collocation_resolver_name)
+{
+  TAO_ORB_Core::collocation_resolver_name_ =
+    collocation_resolver_name;
+}
+
+void
 TAO_ORB_Core::set_stub_factory (const char *stub_factory_name)
 {
   TAO_ORB_Core::stub_factory_name_ = stub_factory_name;
@@ -1216,6 +1225,21 @@ TAO_ORB_Core::thread_lane_resources_manager (void)
     factory->create_thread_lane_resources_manager (*this);
 
   return *this->thread_lane_resources_manager_;
+}
+
+TAO_Collocation_Resolver &
+TAO_ORB_Core::collocation_resolver (void)
+{
+  // Check if there is a cached reference.
+  if (this->collocation_resolver_ != 0)
+    return *this->collocation_resolver_;
+
+  // If not, lookup it up.
+  this->collocation_resolver_ =
+    ACE_Dynamic_Service<TAO_Collocation_Resolver>::instance
+    (TAO_ORB_Core::collocation_resolver_name_);
+
+  return *this->collocation_resolver_;
 }
 
 TAO_Stub_Factory *
@@ -2813,7 +2837,7 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
   TAO_Stub *stub = object->_stubobj ();
   if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
       stub->servant_orb_var ()->orb_core () != 0 &&
-      object->_is_collocated () == 1)
+      stub->servant_orb_var ()->orb_core ()->collocation_resolver ().is_collocated (object))
     {
       switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
         {
