@@ -769,6 +769,9 @@ public:
   T *next (void) const;
   // Delegates to ACE_Double_Linked_List_Iterator.
 
+  int remove (void);
+  // Removes the current item (i.e., this->next()) from the list.
+
   void dump (void) const;
   // Delegates to ACE_Double_Linked_List_Iterator.
 
