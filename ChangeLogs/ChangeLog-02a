@@ -1,3 +1,8 @@
+Wed Jun 13 11:08:26 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Thread_Pool_Test.cpp: Casted message block pointers to
+	  ACE_TCHAR* to compile with UNICODE on.
+
 Wed Jun 13 10:22:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Svc_Conf_l.cpp: Need to read the sizeof (ACE_TCHAR) of bytes
