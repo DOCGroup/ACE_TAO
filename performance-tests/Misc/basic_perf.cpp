@@ -37,6 +37,7 @@ inline
 void
 inline_func ()
 {
+  DO_SOMETHING
 }
 
 
@@ -169,7 +170,9 @@ Empty_Iteration_Test::run (void)
   this->start_timing ();
 
   for (u_int i = 0; i < iterations; ++i)
-    continue;
+    {
+      DO_SOMETHING
+    }
 
   this->stop_timing ();
 }
