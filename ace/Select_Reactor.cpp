@@ -105,11 +105,20 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
     ACE_SELECT_REACTOR_EVENT_HANDLER (this, h) = 0;
 #endif /* ACE_WIN32 */
   
+  // Check to see if the user is asking for too much and fail in this
+  // case.
+  if (size > FD_SETSIZE)
+    {
+      errno = ERANGE;
+      return -1;
+    }
+#if defined (RLIMIT_NOFILE)
   // Increase the number of handles if <size> is greater than the
   // current limit.
-  if (size > ACE::max_handles ())
+  if (size < ACE::max_handles ())
     return ACE::set_handle_limit (size);
   else
+#endif /* RLIMIT_NOFILE */
     return 0;
 }
 
