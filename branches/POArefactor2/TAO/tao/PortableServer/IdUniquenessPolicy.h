@@ -68,7 +68,7 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::PolicyError));
 
     private:
-      IdUniquenessPolicyValue *value_;
+      ::PortableServer::IdUniquenessPolicyValue value_;
     };
   }
 }

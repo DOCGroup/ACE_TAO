@@ -28,9 +28,6 @@
 #include "IdAssignmentStrategySystem.h"
 #include "IdAssignmentStrategyUser.h"
 
-#include "IdUniquenessPolicyValueMultiple.h"
-#include "IdUniquenessPolicyValueUnique.h"
-
 #include "IdUniquenessStrategyMultiple.h"
 #include "IdUniquenessStrategyUnique.h"
 
@@ -152,14 +149,6 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_IdAssignmentStrategyUser
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyValueMultiple
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyValueUnique
     );
 
   ACE_Service_Config::process_directive (

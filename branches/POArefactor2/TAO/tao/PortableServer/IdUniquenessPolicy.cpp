@@ -1,11 +1,7 @@
 #include "IdUniquenessPolicy.h"
-#include "IdUniquenessPolicyValue.h"
+#include "PortableServer.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
-
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 ACE_RCSID (PortableServer,
            IdUniquenessPolicy,
@@ -15,8 +11,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdUniquenessPolicy::IdUniquenessPolicy () :
-      value_ (0)
+    IdUniquenessPolicy::IdUniquenessPolicy ()
     {
     }
 
@@ -36,42 +31,7 @@ namespace TAO
     IdUniquenessPolicy::init (
       ::PortableServer::IdUniquenessPolicyValue value)
     {
-      switch (value)
-        {
-        case ::PortableServer::UNIQUE_ID :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("IdUniquenessPolicyValueUnique");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic IdUniquenessPolicyValueUnique Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyValueUnique()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("IdUniquenessPolicyValueUnique");
-              }
-            break;
-          }
-        case ::PortableServer::MULTIPLE_ID :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("IdUniquenessPolicyValueMultiple");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic IdUniquenessPolicyValueMultiple Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyValueMultiple()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("IdUniquenessPolicyValueMultiple");
-              }
-
-            break;
-          }
-        }
+      value_ = value;
     }
 
     CORBA::Policy_ptr
@@ -84,7 +44,7 @@ namespace TAO
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-      (void) copy->init (this->value_->policy_type ());
+      (void) copy->init (this->value_);
 
       return copy;
     }
@@ -99,7 +59,7 @@ namespace TAO
     IdUniquenessPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      return value_->policy_type ();
+      return value_;
     }
 
     CORBA::PolicyType
