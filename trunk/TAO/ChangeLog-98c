@@ -1,3 +1,7 @@
+Fri Jun 12 9:00:00 1998  Michael Kircher <mk1@cs.wustl.edu>
+
+        * tao/Connect.cpp: Removed my own bug, using a var as a ptr.
+
 Thu Jun 11 21:30:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 
 	* tests/POA/Forwarding/{client, server}.cpp: cleaned up the code.
