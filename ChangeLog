@@ -1,3 +1,8 @@
+Mon Feb 21 07:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RMCast/Send_Msg/Send_Msg.mpc:
+          Both examples require exceptions
+
 Sun Feb 20 19:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/rmcast.mpb:
