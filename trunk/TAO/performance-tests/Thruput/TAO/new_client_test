@@ -1,6 +1,14 @@
-#!/pkg/gnu/bin/perl
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
 #
 #new_client_test <filename to store results in> [FILEPERMISSION (default is 755)] [OBJ_REF]
+#
+# The first three lines above let this script run without specifying the
+# full path to perl, as long as it is in the user's PATH.
+# Taken from perlrun man page.
 
 $TEST_NAME = shift (@ARGV);
 $TEST_RES_BASE_DIR = "./results/REMOTE/";
@@ -23,23 +31,23 @@ if (! (-d $TEST_DIR)) {
 
 # shorts
 system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT s $OBJ_REF");
-sleep 5;		      
-# longs		      
+sleep 5;
+# longs
 system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT l $OBJ_REF");
-sleep 5;		      
-# octets	      
+sleep 5;
+# octets
 system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT o $OBJ_REF");
-sleep 5;		      
-# doubles	      
+sleep 5;
+# doubles
 system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT d $OBJ_REF");
-sleep 5;		      
-# chars		      
+sleep 5;
+# chars
 system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT c $OBJ_REF");
-sleep 5;	      
-# structures	      
+sleep 5;
+# structures
 system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT S $OBJ_REF");
-sleep 5;		      
-#Composite Structs   
+sleep 5;
+#Composite Structs
 system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT C $OBJ_REF");
 sleep 5;
 
