@@ -1784,6 +1784,9 @@ struct stat
 # endif /* ! ACE_HAS_EXCEPTIONS */
 #endif /*ACE_HAS_NO_THROW_SPEC*/
 
+#if !defined (ACE_LACKS_UNISTD_H)
+#  include /**/ <unistd.h>
+#endif /* ACE_LACKS_UNISTD_H */
 
 #if defined (ACE_HAS_PRIOCNTL)
   // Need to #include thread.h before #defining THR_BOUND, etc.,
@@ -1842,8 +1845,8 @@ struct stat
 // programs to have their own ACE-wide "default".
 
 // PROCESS-level values
-// MM-Graz: added unixware 7.1
-#     if !defined(_UNICOS) && !defined(UNIXWARE_7_1)
+#     if defined (_POSIX_PRIORITY_SCHEDULING) && \
+         !defined(_UNICOS) && !defined(UNIXWARE_7_1)
 #       define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
 #       define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
 #       define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
@@ -1853,8 +1856,8 @@ struct stat
 #       define ACE_PROC_PRI_RR_MIN    0
 #       define ACE_PROC_PRI_OTHER_MIN 0
 #     endif
-// MM-Graz: added unixware 7.1
-#     if !defined(UNIXWARE_7_1)
+
+#     if defined (_POSIX_PRIORITY_SCHEDULING) && !defined(UNIXWARE_7_1)
 #       define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
 #       define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
 #       define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
@@ -3561,10 +3564,6 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #       include /**/ <sys/termios.h>
 #     endif /* ! __QNX__ */
 #   endif /* ACE_HAS_TERM_IOCTLS */
-
-#   if !defined (ACE_LACKS_UNISTD_H)
-#     include /**/ <unistd.h>
-#   endif /* ACE_LACKS_UNISTD_H */
 
 #   if defined (ACE_HAS_AIO_CALLS)
 #     include /**/ <aio.h>

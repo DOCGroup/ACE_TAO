@@ -415,17 +415,15 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
   if (i == -1)
     // set "process not found" error
     return -1;
-  else
-    {
-      ACE_Process_Descriptor &proc_desc = this->process_table_[i];
 
-      if (proc_desc.exit_notify_ != 0)
-        proc_desc.exit_notify_->handle_close
-          (ACE_INVALID_HANDLE,
-           0);
-      proc_desc.exit_notify_ = eh;
-      return 0;
-    }
+  ACE_Process_Descriptor &proc_desc = this->process_table_[i];
+
+  if (proc_desc.exit_notify_ != 0)
+    proc_desc.exit_notify_->handle_close
+      (ACE_INVALID_HANDLE,
+       0);
+  proc_desc.exit_notify_ = eh;
+  return 0;
 }
 
 int
@@ -473,17 +471,15 @@ ACE_Process_Manager::spawn (ACE_Process *process,
   if (pid == ACE_INVALID_PID
       || pid == 0)
     return pid;
-  else
-    {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
-                                ace_mon, this->lock_, -1));
 
-      if (this->append_proc (process) == -1)
-        // bad news: spawned, but not registered in table.
-        return ACE_INVALID_PID;
-      else
-        return pid;
-    }
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
+                            ace_mon, this->lock_, -1));
+
+  if (this->append_proc (process) == -1)
+    // bad news: spawned, but not registered in table.
+    return ACE_INVALID_PID;
+
+  return pid;
 }
 
 // Create N new processs.
@@ -582,9 +578,9 @@ ACE_Process_Manager::remove (pid_t pid)
 
   if (i != -1)
     return this->remove_proc (i);
-  else
-    // set "process not found" error
-    return -1;
+
+  // set "process not found" error
+  return -1;
 }
 
 // Remove a process from the pool.  Must be called with locks held.

@@ -738,8 +738,8 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
   if (this->spawn_i (func, args, flags, t_id, t_handle,
                      priority, grp_id, stack, stack_size) == -1)
     return -1;
-  else
-    return grp_id;
+
+  return grp_id;
 }
 
 // Create N new threads running FUNC.
@@ -923,8 +923,8 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
                         0,
                         flags) == -1)
     return -1;
-  else
-    return grp_id;
+
+  return grp_id;
 }
 
 // Run the registered hooks when the thread exits.
@@ -1228,8 +1228,8 @@ ACE_Thread_Manager::check_state (ACE_UINT32 state,
     }
   if (enable)
     return ACE_BIT_ENABLED (thr_state, state);
-  else
-    return ACE_BIT_DISABLED (thr_state, state);
+
+  return ACE_BIT_DISABLED (thr_state, state);
 }
 
 // Test if a single thread is suspended.

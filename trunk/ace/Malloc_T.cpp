@@ -568,12 +568,10 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::trybind (const char *name,
   if (node == 0)
     // Didn't find it, so insert it.
     return this->shared_bind (name, pointer);
-  else
-    {
-      // Found it, so return a copy of the current entry.
-      pointer = (char *) node->pointer_;
-      return 1;
-    }
+
+  // Found it, so return a copy of the current entry.
+  pointer = (char *) node->pointer_;
+  return 1;
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
@@ -588,11 +586,10 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::bind (const char *name,
     // If we're not allowing duplicates, then if the name is already
     // present, return 1.
     return 1;
-  else
-    // If we get this far, either we're allowing duplicates or we didn't
-    // find the name yet.
 
-    return this->shared_bind (name, pointer);
+  // If we get this far, either we're allowing duplicates or we didn't
+  // find the name yet.
+  return this->shared_bind (name, pointer);
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
@@ -607,11 +604,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (const char *name,
 
   if (node == 0)
     return -1;
-  else
-    {
-      pointer = (char *) node->pointer_;
-      return 0;
-    }
+
+  pointer = (char *) node->pointer_;
+  return 0;
 }
 
 // Returns a count of the number of available chunks that can hold
