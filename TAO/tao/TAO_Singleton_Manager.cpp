@@ -122,7 +122,7 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
       ACE_OS::sigfillset (this->default_mask_);
 
       if (register_with_object_manager == 1
-          && ACE_Object_Manager::instance ()->at_exit (
+          && ACE_Object_Manager::at_exit (
                this,
                (ACE_CLEANUP_FUNC) TAO_Singleton_Manager_cleanup_destroyer,
                0) != 0)
