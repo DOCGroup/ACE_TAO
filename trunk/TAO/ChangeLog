@@ -175,7 +175,6 @@ Tue Oct  7 18:29:25 2003  Irfan Pyarali  <irfan@oomworks.com>
           - bin/MakeProjectCreator/config/rtscheduling_client.mpb
           - bin/MakeProjectCreator/config/rtscheduling_server.mpb
 
->>>>>>> 1.2591
 Fri Oct 03 22:42:24 2003  Chris Cleeland  <cleeland@ociweb.com>
 
         * TAO version 1.3.4 released.
