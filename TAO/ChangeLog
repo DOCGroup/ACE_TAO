@@ -1,3 +1,12 @@
+Wed Dec 24 20:06:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
+	* orbsvcs/orbsvcs/FT_ClientORB.dsp:
+	* orbsvcs/orbsvcs/FT_ServerORB.dsp:
+
+	  All of them needed Messaging libraries in both debug and release
+	  builds. 
+
 Wed Dec 24 19:41:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile:
