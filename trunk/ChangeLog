@@ -1,3 +1,8 @@
+Mon Mar  4 07:36:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Token_Strategy_Test.cpp:
+          Fixed MSVC6 unicode build errors.
+
 Sun Mar  3 15:56:23 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tests/Token_Strategy_Test.cpp:
