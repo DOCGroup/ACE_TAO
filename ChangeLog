@@ -1,3 +1,57 @@
+Thu Apr 10 15:35:00 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        * ace/Makefile.ace ace/OS.h ace/SOCK_Connector.cpp:
+        * ace/SOCK_Connector.h ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/ace_dll.dsp ace/RMCast/Makefile:
+        * performance-tests/Makefile tests/Makefile:
+        * tests/run_test.lst tests/run_tests.bat:
+        * tests/RMCast/Makefile bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Above files modified.
+          
+        * ace/Multihomed_INET_Addr.cpp ace/Multihomed_INET_Addr.h:
+        * ace/Multihomed_INET_Addr.i ace/SOCK_SEQPACK_Acceptor.cpp:
+        * ace/SOCK_SEQPACK_Acceptor.i ace/SOCK_SEQPACK_Association.cpp:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SOCK_SEQPACK_Association.i:
+        * ace/SOCK_SEQPACK_Connector.cpp ace/SOCK_SEQPACK_Connector.h:
+        * ace/SOCK_SEQPACK_Connector.i performance-tests/SCTP/Makefile:
+        * performance-tests/SCTP/Options_Manager.cpp:
+        * performance-tests/SCTP/Options_Manager.h:
+        * performance-tests/SCTP/README:
+        * performance-tests/SCTP/README.SCTP:
+        * performance-tests/SCTP/README.SCTP_PERF_TEST:
+        * performance-tests/SCTP/README.SCTP_in_ACE:
+        * performance-tests/SCTP/SCTP.dsw:
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.dsp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.dsp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.dsp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.dsp:
+        * performance-tests/SCTP/THANKS:
+        * performance-tests/SCTP/hist.cpp:
+        * performance-tests/SCTP/hist.h:
+        * performance-tests/SCTP/run_spectrum.config:
+        * performance-tests/SCTP/run_spectrum.pl:
+        * performance-tests/SCTP/sample-spectrum.png:
+        * tests/Multihomed_INET_Addr_Test.cpp:
+        * tests/Multihomed_INET_Addr_Test.dsp:
+        * tests/SOCK_SEQPACK_Association_Test.cpp:
+        * tests/SOCK_SEQPACK_Association_Test.dsp:
+
+          Above files added.
+
+	  Jason Cohen <jcohen@atl.lmco.com>:
+          First SCTP checkin for ACE.  The major contrib of this
+          checkin include the SOCK_SEQPACK classes, Multihomed_INET_Addr,
+          SCTP performance tests, and READMEs.
+
 Thu Apr 10 09:41:13 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
