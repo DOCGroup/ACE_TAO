@@ -71,7 +71,7 @@ public:
   // Broadcast the datagram to every interface.  Returns the average
   // number of bytes sent.
 
-  ssize_t send (const ACE_IO_Vector_Base iov[], 
+  ssize_t send (const iovec iov[], 
                 size_t n, 
                 u_short portnum, 
                 int flags = 0) const;
@@ -85,7 +85,7 @@ public:
   // Broadcast an N byte datagram to ADDR (note that addr must be
   // preassigned to the broadcast address of the subnet...).
 
-  ssize_t send (const ACE_IO_Vector_Base iov[], 
+  ssize_t send (const iovec iov[], 
                 size_t n, 
                 const ACE_Addr &addr, 
                 int flags = 0) const;

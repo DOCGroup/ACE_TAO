@@ -681,33 +681,6 @@ protected:
 template <class T> class ACE_DLList;
 template <class T> class ACE_DLList_Iterator;
 
-class ACE_DLList_Node
-{
-  // = TITLE
-  //     Base implementation of element in a DL list.  Needed for
-  //     ACE_Double_Linked_List.
-
-  friend class ACE_Double_Linked_List<ACE_DLList_Node>;
-  friend class ACE_Double_Linked_List_Iterator<ACE_DLList_Node>;
-
-public:
-  ACE_DLList_Node (void *&i,
-                   ACE_DLList_Node *n = 0,
-                   ACE_DLList_Node *p = 0);
-  ~ACE_DLList_Node (void);
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-  void *item_;
-
-  ACE_DLList_Node *next_;
-  ACE_DLList_Node *prev_;
-
-protected:
-  ACE_DLList_Node (void);
-};
-
 typedef ACE_Double_Linked_List<ACE_DLList_Node>
         ACE_DLList_Base;
 typedef ACE_Double_Linked_List_Iterator<ACE_DLList_Node>

@@ -59,7 +59,7 @@ public:
   // Receive an <n> byte <buf> from the datagram socket (uses
   // recvfrom(3)).
 
-  ssize_t recv (ACE_IO_Vector_Base *io_vec, 
+  ssize_t recv (iovec *io_vec, 
 		ACE_Addr &addr, 
 		int flags = 0) const;
   // Allows a client to read from a socket without having to provide a
@@ -69,14 +69,14 @@ public:
   // deleting the member in the <iov_base> field of <io_vec> using the
   // ``delete []'' syntax.
 
-  ssize_t send (const ACE_IO_Vector_Base iov[], 
+  ssize_t send (const iovec iov[], 
                 size_t n, 
                 const ACE_Addr &addr, 
                 int flags = 0) const;
   // Send an <iovec> of size <n> to the datagram socket (uses
   // sendmsg(3)).
 
-  ssize_t recv (ACE_IO_Vector_Base iov[], 
+  ssize_t recv (iovec iov[], 
                 size_t n, 
                 ACE_Addr &addr, 
                 int flags = 0) const;    
