@@ -727,6 +727,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
 #else
     {
       delete ostream_;
+      ostream_ = 0;
     }
 #endif
 }
@@ -879,6 +880,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  *   'P': format the current process id
  *   'p': format the appropriate errno message from sys_errlist, e.g., as done by <perror>
  *   'Q': print out the uint64 number
+ *   'q': print out the int64 number
  *   '@': print a void* pointer (in hexadecimal)
  *   'r': call the function pointed to by the corresponding argument
  *   'R': print return status
@@ -1932,6 +1934,27 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif /* ! ACE_LACKS_LONGLONG_T */
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
+
+                case 'q':
+ #if defined (ACE_LACKS_LONGLONG_T)
+                   // No implementation available yet, no ACE_INT64 emulation
+                   // available yet
+ #else  /* ! ACE_LACKS_LONGLONG_T */
+                   {
+                     const ACE_TCHAR *fmt = ACE_INT64_FORMAT_SPECIFIER;
+                     ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                     if (can_check)
+                       this_len = ACE_OS::snprintf (bp, bspace,
+                                                    format,
+                                                    va_arg (argp, ACE_INT64));
+                     else
+                       this_len = ACE_OS::sprintf (bp,
+                                                   format,
+                                                   va_arg (argp, ACE_INT64));
+                   }
+ #endif /* ! ACE_LACKS_LONGLONG_T */
+                   ACE_UPDATE_COUNT (bspace, this_len);
+                   break;
 
                 case '@':
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("p"));
