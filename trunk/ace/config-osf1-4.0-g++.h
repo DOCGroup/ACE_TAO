@@ -22,7 +22,6 @@
 // Must specialize templates due to G++'s lame parameterized type
 // support...
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
-#define ACE_LACKS_SIGNED_CHAR
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 
 #define ACE_HAS_STRING_CLASS
