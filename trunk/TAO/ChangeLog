@@ -1,3 +1,8 @@
+Tue Mar 16 08:04:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/NT_Notify_Service.cpp:
+          Fixed compile problem in MinGW build.
+
 Sun Mar 14 20:49:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TAO.dsp:
@@ -28,8 +33,8 @@ Sun Mar 14 10:19:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  DnC spec implementation too. We should be having more of this
 	  (for other basic types) once x.4.1 goes off. Till then to
 	  satisfy the shorter term goal, checking the generated code into
-	  the repository.  
-	
+	  the repository.
+
  	* tao/Makefile.bor:
 	* tao/Makefile.tao:
 	* tao/tao.mpc:
@@ -41,7 +46,7 @@ Fri Mar 12 17:24:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc:
 
 	  Added dummy_label to the MPC  to get the stuff compiling for
-	  now. 
+	  now.
 
 Fri Mar 12 14:04:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
