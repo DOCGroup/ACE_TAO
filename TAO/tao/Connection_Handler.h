@@ -60,12 +60,17 @@ public:
   /// Set the underlying transport object
   void transport (TAO_Transport* transport);
 
+# if 0
+  /// NOTE: NO longer used
   /// Did the process of non-blocking connection initialization
   /// complete?
   int is_connect_complete (void) const;
 
   /// Was the non-blocking connection initialization successful?
   int is_connect_successful (void) const;
+#endif /*if 0*/
+  /// Is the state final?
+  int is_finalized (void);
 
   /// Increment and decrement the refcount. The object is deleted when
   /// the refcount reaches zero.
