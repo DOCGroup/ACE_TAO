@@ -1,3 +1,9 @@
+Sat Aug 22 11:01:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Simple/Makefile: 
+	  Added a Makefile so making everything from the top-level would
+	  work.
+
 Sat Aug 22 02:30:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp (read_ior): Use the
