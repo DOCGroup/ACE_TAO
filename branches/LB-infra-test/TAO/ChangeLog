@@ -1,0 +1,2948 @@
+Thu Jul 03 13:20:16 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/lib/Makefile.bor:
+	  
+	  Added TAO_DYNAMICANY to the EXTERNAL_LIBS to fix Borland static
+	  build problems.
+
+	* orbsvcs/tests/Notify/lib/Makefile:
+	* orbsvcs/tests/Notify/RT_lib/Makefile:
+	  
+	  Added BUILD_DLL option to CPPFLAGS. These are needed
+	  for the cygwin/mingw compiler to export the symbols from the DLL.
+
+	  Many thanks to Johnny Willemsen  <jwillemsen@remedy.nl> for all
+	  of the above.
+
+
+Thu Jul 03 17:03:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/lib/Makefile:
+          Set correct BUILD_DLL define when building shared libs. This fixes
+          link errors in the Cygwin/MinGW and Kylix builds.
+
+Thu Jul 03 16:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp (init_endpoint):
+          Changed the way endpoint is allocated from the heap to resolve BCB
+          warning about a temporary used.
+
+Thu Jul 03 11:47:44 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/examples/Notify/Lanes/Makefile:
+
+	  Added missing linkage to CosNotification.
+	  Thanks to Michael Rice <MichaelARice@knology.net> for reporting
+	  this.
+
+Thu Jul  3 02:34:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Any_Array_Impl_T.cpp:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Special_Basic_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.cpp:
+        * tao/default_server.cpp:
+          Rolled back Wed Jul  2 22:17:15 UTC 2003  Don Hinton
+          <dhinton@dresystems.com>.  As Bala pointed out, Any's require
+          dynamic_cast and RTTI to work properly.  The warnings on Windows
+          should be fixed by enabling RTTI, which will be the next change.
+
+Wed Jul 02 22:10:59 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.h:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.h:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
+
+	  Fixed the build warnings of derived class method "hides virtual
+	  function" in the base class, on SunCC and BCB compiler.
+	  All the <connect> methods in the derived classes have been
+	  changed to <_connect> and all calls to these methods have also
+	  been renamed.
+
+	* orbsvcs/examples/Notify/Consumer_Client.cpp:
+ 	* orbsvcs/examples/Notify/Consumer_Client.h:
+	* orbsvcs/examples/Notify/Supplier_Client.cpp:
+	* orbsvcs/examples/Notify/Supplier_Client.h:
+
+	  For the same reason as above, the <init> method has been
+	  renamed to <initialize>.
+
+	* orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+
+	  Initialized the member pointer <barrier_> in the constructor.
+	  The pointer is "delete"ed in the destructor. If it is left
+	  uninitialized, we will get an exception when the
+	  Activation_Manager is destroyed without calling the
+	  <activate_suppliers> method (where <barrier_> is initialized).
+
+	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp:
+
+	  Corrected a comment on line 141.
+
+	* orbsvcs/tests/Notify/lib/Driver.cpp:
+
+	  Added a wait for the <worker_> thread manager before exit.
+	  This is required to make sure we do not exit the main thread
+	  before the spawned threads in the <worker_> task have finished.
+
+	* orbsvcs/examples/Notify/Lanes.dsp:
+ 	  This file was checked in by mistake. It is not required so I
+	  have removed it.
+
+Thu Jul  3 00:59:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Any_Array_Impl_T.cpp:
+          Changed one instance of ACE_dynamic_cast to
+          ACE_dynamic_cast_2_ptr that I erroneous changed to
+          ACE_dynamic_cast below.
+
+Wed Jul  2 22:17:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Any_Array_Impl_T.cpp:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Special_Basic_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.cpp:
+        * tao/default_server.cpp:
+          Changed raw usage of the C++ cast operators to use the
+          ACE_* variety, e.g., ACE_dynamic_cast instead of
+          dynamic_cast.  This clears up warnings on Windows when
+          RTTI is not turned on.
+
+Wed Jul 02 14:57:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * examples/AMH/Sink_Server/Sink_Server.mpc
+        * examples/RTCORBA/Activity/Activity.cpp
+        * examples/RTCORBA/Activity/Activity.mpc
+        * examples/RTCORBA/Activity/main.cpp
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc
+        * orbsvcs/examples/Notify/Lanes/Lanes.mpc
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.cpp
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.h
+        * orbsvcs/tests/Event/Mcast/Simple/Simple.mpc
+        * orbsvcs/tests/Security/MT_IIOP_SSL/MT_SSLIOP.mpc
+        * performance-tests/Latency/AMH/Single_Threaded/Single_Threaded.mpc
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/Single_Threaded.mpc
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc
+        * performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc
+        * tests/IDL_Test/IDL_Test.mpc
+        * tests/OBV/Any/OBV_Any.mpc
+        * tests/OBV/Factory/OBV_Factory.mpc
+        * tests/OBV/Forward/OBV_Forward.mpc
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc
+        * tests/Param_Test/Param_Test.mpc
+
+          Fixed broken mpc files.
+          Updated Activity example by splitting it into a separate library. The
+        example was exporting symbols from an exe. There may be another way
+        to solve this, but I had to guess at what was originally intended.
+          Removed extra MT_IIOP_SSL mpc file.
+          Updated Pluggable_Flow_Protocol test to not use covariant return, since
+        this isn't supported on VC6, and wasn't necessary in this case.
+
+Wed Jul 2 15:37:36 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/TAO_RTScheduler.dsp:
+
+	  Added the /GR option to TAO_RTScheduler.dsp to fix warnings due
+	  to run time type identifcation problem.
+
+
+Wed Jul 2 00:23:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/Distributable_Thread.cpp:
+	* tao/RTScheduling/Request_Interceptor.cpp:
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/Current.cpp:
+
+	  Fixed compile errors and warnings in Red Hat 7.1 Explicit
+	  Template and RH73 GCC32 NoInterceptorsNoExceptions builds. Used
+	  ACE_ENV_ARG_DECL_NOT_USED instead of ACE_ENV_ARG_DECL in
+	  methods, in the corresponding .cpp files, that did not use the
+	  env argument, to fix unused parameter errors and warnings.
+
+Tue Jul 1 00:27:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/Current.cpp:
+
+	  Fixed compile errors in Debian SingleThreaded and RH73 GCC32
+	  NoInterceptorsNoExceptions. The error was caused due to the
+	  missing env argument parameter in the
+	  TAO_RTScheduler_Current::lookup (...) method. This prevented the
+	  RTScheduler Initializer from creating an instance of the current
+	  object.
+
+Mon Jun 30 16:31:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/Request_Interceptor.h:
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/Current.cpp:
+
+	  Fixed compile errors and warnings in Debian SingleThreaded build
+	  caused by the usage of ACE_Thread_Mutex. This was replaced with
+	  TAO_SYNCH_MUTEX.
+
+Mon Jun 30 16:02:55 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/Distributable_Thread.h:
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/Current.cpp:
+	* tao/RTScheduling/Request_Interceptor.cpp:
+	* tao/RTScheduling/Request_Interceptor.h:
+	* tao/RTScheduling/RTScheduler_Initializer.cpp:
+
+	  Fixed compile errors and warnings in Red Hat 7.1 Explicit
+	  Template build caused by missing return statements in functions
+	  returning non-void. Also moved the creation of an instance of
+	  TAO_RT_Current from TAO_RTSceduler_Current constructor to a
+	  method init.
+
+Mon Jun 30 12:19:22 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* performance-tests/Sequence_Latency/Thread_Pool/Client_Task.cpp
+	* performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.cpp
+
+	  Tried to modify the code to get rid of the compiling warning messages for the
+	  build named "RH71_Explicit_Templates".
+
+Mon Jun 30 11:44:34 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* performance-tests/Sequence_Latency/AMH/Single_Threaded/Roundtrip.cpp
+
+	  Fixed the code to get rid of the gcc compiling warning about unused
+	  parameters in function definitions.
+
+Mon Jun 30 11:52:22 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/examples/Notify/Lanes/Consumer.cpp:
+	* orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+	* orbsvcs/examples/Notify/Lanes/ORB_Objects.cpp:
+	* orbsvcs/examples/Notify/Lanes/ORB_Run_Task.cpp:
+	* orbsvcs/examples/Notify/Lanes/Supplier.cpp:
+	* orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+
+	  Removed references to .inl files.
+
+Mon Jun 30 09:33:31 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/Deferred/client.bor
+
+          Added this missing BCB makefile client.bor.
+
+Sun Jun 29 02:09:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+
+	  Added explicit template instantiation for hash map of endpoint
+	  addresses. This should fix the compile problem on sun solaris.
+
+Sun Jun 29 00:26:56 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/corbafwd.h:
+	* tao/Exeception.h:
+	* tao/Exeception.cpp:
+
+	  Added THREAD_CANCELLED to CORBA system exception. The exception
+	  is thrown when a Distributable Thread is cancelled. This should
+	  fix compile problems.
+
+	* TAOACE.dsw:
+	* tao/TAO.dsw:
+	* tao/RTScheduling/TAO_RTScheduler.dsp:
+	* tao/RTScheduling/TAO_RTScheduler.rc:
+
+	  Added project and workspace files to build RTScheduler library on
+	  windows.
+
+Fri Jun 27 12:12:09 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+
+	  Finally fixed the explicit instantiation for activate<>.  As it
+	  turns out, the problem is that the build on which this was
+	  failing had exceptions turned off, which required the
+	  ACE_ENV_ARG_DECL at the end of the arg list.  Other explicit
+	  instantiation builds didn't trip the problem because they had
+	  exceptions turned on.
+
+Thu Jun 26 22:34:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	The following checkins correspond to the implementation of Dynamic
+	Scheduling in TAO. This implementation is based on OMG's
+	RTCORBA 2.0 specification.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+
+	  Added member variables rtscheduler_current_impl_ and
+	  rtscheduler_previous_current_impl_ to TSS to store the
+	  thread specific implementation of RTScheduling::Current.
+
+	* tao/RTScheduling/RTScheduler.pidl:
+	* tao/RTScheduling/RTSchedulerC.cpp:
+	* tao/RTScheduling/RTSchedulerC.h:
+	* tao/RTScheduling/RTSchedulerC.i:
+
+	  The psuedo IDL file and corresponding stubs/skeletons defining
+	  the various interfaces constituting the dynamic scheduling
+	  framework as defined by the RTCORBA 2.0 specification.
+
+	* tao/RTScheduling/Current.cpp:
+	* tao/RTScheduling/Current.h:
+
+	  Contains implementation of the RTScheduling::Current
+	  interface. The operations of the Current interface facilitate
+	  creation, termination and updation of scheduling segments and
+	  Distributable Threads (DTs).
+
+	* tao/RTScheduling/Distributable_Thread.cpp:
+	* tao/RTScheduling/Distributable_Thread.h:
+
+	  Implements the RTScheduling::DistributableThread interface. This
+	  interface is used to cancel the corresponding DT.
+
+	* tao/RTScheduling/Request_Interceptor.cpp:
+	* tao/RTScheduling/Request_Interceptor.h:
+
+	  Provide interception points when sending/receiving requests so
+	  the ORB can interact with the scheduler. This helps the
+	  scheduler make scheduling decisions at these scheduling points
+	  where the DTs are entering or leaving the host.
+
+	* tao/RTScheduling/RTScheduler_Manager.cpp:
+	* tao/RTScheduling/RTScheduler_Manager.h:
+	* tao/RTScheduling/RTScheduler_Manager.i:
+
+	  Manages addition/removal of schedulers implementing specific
+	  scheduling disciplines. The scheduler manager facilitates
+	  changing schedulers at run-time.
+
+	* tao/RTScheduling/RTScheduler_Initializer.cpp:
+	* tao/RTScheduling/RTScheduler_Initializer.h:
+
+	  Registers the "RTScheduler_Current" and "RTScheduler_Manager" in
+	  the object table when the ORB is initialized. They can be
+	  queried with the corresponding names using
+	  resolve_initial_references. It also registers the Client and
+	  Server interceptors defined in Request_Interceptor.{h,cpp}.
+
+	* tao/RTScheduling/RTScheduler_Loader.cpp:
+	* tao/RTScheduling/RTScheduler_Loader.h:
+
+	  Registers the orb initializer, RTScheduler_Initializer.
+
+	* tao/RTScheduling/RTScheduler.cpp:
+	* tao/RTScheduling/RTScheduler.h:
+
+	  Bootstraps the dynamic scheduling framework by loading in the
+	  RTScheduler_Loader. The header file 'MUST' be included in the
+	  application that wants to use the RTScheduler library.
+
+	* tao/RTScheduling/ThreadAction.h
+
+	  Defines the RTScheduling::Thread_Action interface that is used
+	  as an entry point when spawning new DTs.
+
+	* tao/RTScheduling/Makefile
+	* tao/Makefile.dirs
+
+	  Corresponding Makefiles to compile RTScheduler library.
+
+Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * TAOACE.mwc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTKokyuEvent.mpc:
+        * orbsvcs/orbsvcs/RTOLDEvent.mpc:
+        * orbsvcs/orbsvcs/RTSchedEvent.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+
+          Fixes for mpc generated builds.
+
+
+Thu Jun 26 16:08:03 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO/tests/OBV/Supports/Supports_Test_impl.cpp:
+        * TAO/tests/OBV/Supports/Supports_Test_impl.h:
+        * TAO/tests/OBV/Supports/Client/client.cpp:
+
+        Enhanced valuetype test by including more complex valuetypes and
+        adding more parameter passing scenarios.
+
+Thu Jun 26 14:30:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Objref_VarOut_T.h:
+
+	  Added 'typedef T _obj_type;' to the _var class for interfaces. This
+	  allows access to T's static methods and typedefs from template code
+	  using the corresponding _var.
+
+Thu Jun 26 14:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp (visit_interface):
+
+	  To the generation of the typedefs added in
+
+	  Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+	  added a global "::" prefix to the scoped name. This eliminates
+	  confusion when a module name reappears at a more deeply nested
+	  level.
+
+Thu Jun 26 17:35:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.i:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+          Removed busy_hwm and max_write_delay attributes. These can be set in
+          the ESF framework. The ones in the EC aren't used anymore when the
+          ESF framework was introduced. This fixes bugzilla entry [530].
+
+Wed Jun 25 17:54:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/examples/Notify/Lanes/Lanes.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+        * orbsvcs/tests/Event/Mcast/Complex/Complex.mpc:
+        * orbsvcs/tests/Event/Mcast/Simple/Simple.mpc:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Two_Way.mpc:
+        * orbsvcs/tests/Notify/RT_lib/RT_Notify_lib.mpc:
+        * performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.mpc:
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc:
+        * performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+        * tao/IORInterceptor/IORInterceptor.mpc:
+
+          More mpc file cleanups to push stuff up to base projects.
+
+Wed Jun 25 17:06:18 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/README:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/README:
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.cpp:
+
+	  Replaced misspelling word "colocated" with correctly spelled
+	  "collocated" throughout these files.  I did not change actual
+	  file or directory names due to potential problems with CVS.
+
+	  The COLOCATED option in TAO_NS_EventChannel_Command::init is
+	  grandfathered in at the moment, but it also prints out a
+	  warning that you're using a deprecated misspelled option.
+
+Wed Jun 25 17:02:03 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO/tests/OBV/Supports/Client.dsp
+        * TAO/tests/OBV/Supports/Makefile
+        * TAO/tests/OBV/Supports/Makefile.bor
+        * TAO/tests/OBV/Supports/README
+        * TAO/tests/OBV/Supports/Server.dsp
+        * TAO/tests/OBV/Supports/Supports_Test.dsw
+        * TAO/tests/OBV/Supports/Supports_Test.idl
+        * TAO/tests/OBV/Supports/Supports_Test_impl.cpp
+        * TAO/tests/OBV/Supports/Supports_Test_impl.h
+        * TAO/tests/OBV/Supports/Client/client.cpp
+        * TAO/tests/OBV/Supports/Client/client.bor
+        * TAO/tests/OBV/Supports/Server/server.cpp
+        * TAO/tests/OBV/Supports/Server/server.bor
+        * TAO/tests/OBV/Supports/Server/svc.conf
+
+        Added new test for valuetypes.
+
+Wed Jun 25 17:00:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+	* tao/IORInterceptor/IORInterceptor.mpc:
+	* tao/ObjRefTemplate/ObjRefTemplate.mpc:
+	* tao/PortableServer/PortableServer.mpc:
+	* tao/RTCORBA/Multi_Priority_Mapping.h:
+	* tao/Valuetype/Valuetype.mpc:
+
+	  Fixes for various mpc generation problems.
+	  Incorrect export macro used in the rtcorba header.
+
+Wed Jun 25 16:05:50 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/ImplRepo_Service/ImR_Activator.dsp: Changed incorrect
+	  path to TAO Strategies library in the release build.  Thanks to
+	  Bruce MacDonald <brucemac@netcomuk.co.uk> for submitting the bug
+	  report and the fix.
+
+Wed Jun 25 16:00:02 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+
+          Fixed bug in argument list generation for valutypes supporting
+          interfaces.
+
+Wed Jun 25 13:52:13 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/DSI/Makefile
+
+          Fixed the dependency relation error.
+
+        * performance-tests/Sequence_Latency/Deferred/client.cpp
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.h
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.cpp
+        * performance-tests/Sequence_Latency/Thread_Pool/Client_Task.h
+        * performance-tests/Sequence_Latency/Thread_Pool/Client_Task.cpp
+        * performance-tests/Sequence_Latency/Thread_Pool/client.cpp
+
+	  Fixed the bugs in the code.
+	  Those buys caused errors when dealing with non-native C++ exception handling
+          mechanism.
+
+Wed June 25 14:46:19 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.h:
+	  Added load_ep () method to read an address file (if available)
+	  to get the sender and receiver endpoints for each flow that is
+	  set up. The address file has entries in the format:
+	  Flowname/Sender_Host:Port/Reciever_Host:Port. If the address
+	  file or endpoints are not specified then the connection manager
+	  uses INADDR_ANY for the endpoints.
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.h:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.h:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.h:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
+	  Added additional parameter -a <address_file> to the command line
+	  arguments to specify the endpoint address file from which to
+	  load the flow endpoint addresses. Also, made a call to the
+	  Connection_Manager::load_ep () method that reads the address
+	  file and stores the endpoint addresses for each speficied flow
+	  in a hash map.
+
+Wed Jun 25 12:38:11 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/tao.mpc:
+
+          Updated the file list for this project.
+
+Wed Jun 25 12:14:39 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/ETCL.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
+
+          Removed precompiled header related information.
+
+Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * TAOACE.mwc:
+        * TAO_IDL/tao_idl.mpc:
+        * examples/examples.mwc:
+        * examples/AMH/Sink_Server/Sink_Server.mpc:
+        * examples/AMI/FL_Callback/FL_Callback.mpc:
+        * examples/Callback_Quoter/Callback_Quoter.mpc:
+        * examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
+        * examples/Event_Comm/Event_Comm.mpc:
+        * examples/Load_Balancing/Load_Balancing.mpc:
+        * examples/Load_Balancing_persistent/Load_Balancing_persistent.mpc:
+        * examples/Logging/Logging.mpc:
+        * examples/OBV/Typed_Events/Typed_Events.mpc:
+        * examples/Persistent_Grid/Persistent_Grid.mpc:
+        * examples/PluggableUDP/tests/Basic/Basic.mpc:
+        * examples/PluggableUDP/tests/Performance/Performance.mpc:
+        * examples/PluggableUDP/tests/SimplePerformance/SimplePerformance.mpc:
+        * examples/Quoter/Quoter.mpc:
+        * examples/RTCORBA/Activity/Activity.mpc:
+        * examples/Simple/bank/bank.mpc:
+        * examples/Simple/chat/chat.mpc:
+        * examples/Simple/echo/echo.mpc:
+        * examples/Simple/grid/grid.mpc:
+        * examples/Simple/time/time.mpc:
+        * examples/Simple/time-date/time_date.mpc:
+        * examples/TypeCode_Creation/TypeCode_Creation.mpc:
+        * examples/ior_corbaloc/ior_corbaloc.mpc:
+        * examples/mfc/client.mpc:
+        * examples/mfc/server.mpc:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.mpc:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.mpc:
+        * orbsvcs/Event_Service/Event_Service.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+        * orbsvcs/LoadBalancer/LoadBalancer.mpc:
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.mpc:
+        * orbsvcs/Time_Service/Time_Service.mpc:
+        * orbsvcs/Trading_Service/Trading_Service.mpc:
+        * orbsvcs/examples/examples.mwc:
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/ETCL.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTOLDEvent.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/RTSchedEvent.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * orbsvcs/performance-tests/perf.mwc:
+        * orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.mpc:
+        * orbsvcs/tests/tests.mwc:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/AVStreams_Asynch_Three_Stage.mpc:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/AVStreams_Bidirectional_Flows.mpc:
+        * orbsvcs/tests/AVStreams/Component_Switching/AVStreams_Component_Switching.mpc:
+        * orbsvcs/tests/AVStreams/Full_Profile/AVStreams_Full_Profile.mpc:
+        * orbsvcs/tests/AVStreams/Latency/AVStreams_Latency.mpc:
+        * orbsvcs/tests/AVStreams/Modify_QoS/AVStreams_Modify_QoS.mpc:
+        * orbsvcs/tests/AVStreams/Multicast/AVStreams_Multicast.mpc:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/AVStreams_Multicast_Full_Profile.mpc:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/AVStreams_Multiple_Flows.mpc:
+        * orbsvcs/tests/AVStreams/Pluggable/AVStreams_Pluggable.mpc:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/AVStream_Pluggable_Flow_Protocol.mpc:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/AVStreams_Simple_Three_Stage.mpc:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/AVStreams_Simple_Two_Stage.mpc:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/AVStreams_Simple_Two_Stage_With_QoS.mpc:
+        * orbsvcs/tests/Bug_1393_Regression/Bug_1393_Regression.mpc:
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+        * orbsvcs/tests/Concurrency/Concurrency.mpc:
+        * orbsvcs/tests/CosEvent/Basic/CosEvent_Basic.mpc:
+        * orbsvcs/tests/CosEvent/Basic/basiceventtestexe.mpb:
+        * orbsvcs/tests/CosEvent/lib/CosEvent_lib.mpc:
+        * orbsvcs/tests/EC_Custom_Marshal/EC_Custom_Marshal.mpc:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.mpc:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.mpc:
+        * orbsvcs/tests/EC_Throughput/EC_Throughput.mpc:
+        * orbsvcs/tests/Event/Basic/Event_Basic.mpc:
+        * orbsvcs/tests/Event/Basic/rteventtestexe.mpb:
+        * orbsvcs/tests/Event/Mcast/Common/ECMcastTests_lib.mpc:
+        * orbsvcs/tests/Event/Mcast/Complex/Complex.mpc:
+        * orbsvcs/tests/Event/Mcast/Simple/Simple.mpc:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Two_Way.mpc:
+        * orbsvcs/tests/Event/Performance/Event_Performance.mpc:
+        * orbsvcs/tests/Event/Performance/eventperftestexe.mpb:
+        * orbsvcs/tests/Event/lib/Event_lib.mpc:
+        * orbsvcs/tests/FaultTolerance/IOGR/FaultTolerance_IOGR.mpc:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/FaultTolerance_IOGRManipulation.mpc:
+        * orbsvcs/tests/IOR_MCast/IOR_MCast.mpc:
+        * orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+        * orbsvcs/tests/ImplRepo/NameService/ImplRepo_NameService.mpc:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/InterfaceRepo_Application_Test.mpc:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/InterfaceRepo_IFR_Test.mpc:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/InterfaceRepo_Persistence_Test.mpc:
+        * orbsvcs/tests/Interoperable_Naming/Interoperable_Naming.mpc:
+        * orbsvcs/tests/Miop/McastHello/McastHello.mpc:
+        * orbsvcs/tests/Notify/Basic/Basic.mpc:
+        * orbsvcs/tests/Notify/Blocking/Blocking.mpc:
+        * orbsvcs/tests/Notify/Destroy/Destroy.mpc:
+        * orbsvcs/tests/Notify/Discarding/Discarding.mpc:
+        * orbsvcs/tests/Notify/MT_Dispatching/MT_Dispatching.mpc:
+        * orbsvcs/tests/Notify/Ordering/Ordering.mpc:
+        * orbsvcs/tests/Notify/RT_lib/RT_Notify_lib.mpc:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Multi_ETCL_Filter.mpc:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Multi_Filter.mpc:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter.mpc:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter.mpc:
+        * orbsvcs/tests/Notify/Test_Filter/Test_Filter.mpc:
+        * orbsvcs/tests/Notify/lib/Notify_lib.mpc:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Filter.mpc:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.mpc:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.mpc:
+        * orbsvcs/tests/Property/Property.mpc:
+        * orbsvcs/tests/Redundant_Naming/Redundant_Naming.mpc:
+        * orbsvcs/tests/Sched/Sched.mpc:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.mpc:
+        * orbsvcs/tests/Security/Big_Request/Big_Request.mpc:
+        * orbsvcs/tests/Security/Callback/Callback.mpc:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/MT_IIOP_SSL.mpc:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/MT_SSLIOP.mpc:
+        * orbsvcs/tests/Security/MT_SSLIOP/MT_SSLIOP.mpc:
+        * orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc:
+        * orbsvcs/tests/Security/SecurityLevel1/SecurityLevel1.mpc:
+        * orbsvcs/tests/Simple_Naming/Simple_Naming.mpc:
+        * orbsvcs/tests/Time/Time.mpc:
+        * orbsvcs/tests/Trading/Trading.mpc:
+        * orbsvcs/tests/ior_corbaname/ior_corbaname.mpc:
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.mpc:
+        * performance-tests/perf.mwc:
+        * performance-tests/Callback/Callback.mpc:
+        * performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.mpc:
+        * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
+        * performance-tests/Latency/AMH/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Latency/AMI/AMI.mpc:
+        * performance-tests/Latency/DII/DII.mpc:
+        * performance-tests/Latency/DSI/DSI.mpc:
+        * performance-tests/Latency/Deferred/Deferred.mpc:
+        * performance-tests/Latency/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Latency/Thread_Per_Connection/Thread_Per_Connection.mpc:
+        * performance-tests/Latency/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/Memory/Single_Threaded/Memory_Growth.mpc:
+        * performance-tests/POA/Create_Reference/Create_Reference.mpc:
+        * performance-tests/POA/Demux/Demux.mpc:
+        * performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
+        * performance-tests/POA/Object_Creation_And_Registration/Object_Creation_And_Registration.mpc:
+        * performance-tests/Pluggable/Pluggable.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Common.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.mpc:
+        * performance-tests/RTCorba/Oneways/Reliable/Reliable.mpc:
+        * performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/AMI/ami.mpc:
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc:
+        * performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+        * performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Connection.mpc:
+        * performance-tests/Sequence_Latency/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/Throughput/Throughput.mpc:
+        * tao/tao.mpc:
+        * tao/BiDir_GIOP/BiDir_GIOP.mpc:
+        * tao/Domain/Domain.mpc:
+        * tao/DynamicAny/DynamicAny.mpc:
+        * tao/DynamicInterface/DynamicInterface.mpc:
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tao/IORInterceptor/IORInterceptor.mpc:
+        * tao/IORManipulation/IORManipulation.mpc:
+        * tao/IORTable/IORTable.mpc:
+        * tao/Messaging/Messaging.mpc:
+        * tao/ObjRefTemplate/ObjRefTemplate.mpc:
+        * tao/PortableServer/PortableServer.mpc:
+        * tao/RTCORBA/RTCORBA.mpc:
+        * tao/RTPortableServer/RTPortableServer.mpc:
+        * tao/SmartProxies/SmartProxies.mpc:
+        * tao/Strategies/Strategies.mpc:
+        * tao/TypeCodeFactory/TypeCodeFactory.mpc:
+        * tao/Valuetype/Valuetype.mpc:
+        * tests/tests.mwc:
+        * tests/AMI/AMI.mpc:
+        * tests/AMI_Buffering/AMI_Buffering.mpc:
+        * tests/AMI_Timeouts/AMI_Timeouts.mpc:
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDirectional_NestedUpcall.mpc:
+        * tests/Big_Oneways/Big_Oneways.mpc:
+        * tests/Big_Reply/Big_Reply.mpc:
+        * tests/Big_Request_Muxing/Big_Request_Muxing.mpc:
+        * tests/Big_Twoways/Big_Twoways.mpc:
+        * tests/Blocking_Sync_None/Blocking_Sync_None.mpc:
+        * tests/CDR/CDR.mpc:
+        * tests/Cache_Growth_Test/Cache_Growth_Test.mpc:
+        * tests/Client_Leaks/Client_Leaks.mpc:
+        * tests/Codec/Codec.mpc:
+        * tests/Collocation/Collocation.mpc:
+        * tests/Connect_Strategy_Test/Connect_Strategy_Test.mpc:
+        * tests/Connection_Purging/Connection_Purging.mpc:
+        * tests/Connection_Timeout/Connection_Timeout.mpc:
+        * tests/Crash_On_Write/Crash_On_Write.mpc:
+        * tests/Crashed_Callback/Crashed_Callback.mpc:
+        * tests/DLL_ORB/DLL_ORB.mpc:
+        * tests/DSI_Gateway/DSI_Gateway.mpc:
+        * tests/DynAny_Test/DynAny_Test.mpc:
+        * tests/Explicit_Event_Loop/Explicit_Event_Loop.mpc:
+        * tests/Exposed_Policies/Exposed_Policies.mpc:
+        * tests/Faults/Faults.mpc:
+        * tests/File_IO/File_IO.mpc:
+        * tests/Forwarding/Forwarding.mpc:
+        * tests/Hello/Hello.mpc:
+        * tests/IDL_Test/IDL_Test.mpc:
+        * tests/IORManipulation/IORManipulation.mpc:
+        * tests/InterOp-Naming/InterOp-Naming.mpc:
+        * tests/Leader_Followers/Leader_Followers.mpc:
+        * tests/LongUpcalls/LongUpcalls.mpc:
+        * tests/MProfile/MProfile.mpc:
+        * tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
+        * tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
+        * tests/MT_BiDir/MT_BiDir.mpc:
+        * tests/MT_Client/MT_Client.mpc:
+        * tests/MT_Server/MT_Server.mpc:
+        * tests/MT_Timeout/MT_Timeout.mpc:
+        * tests/Multiple/Multiple.mpc:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+        * tests/Muxed_GIOP_Versions/Muxed_GIOP_Versions.mpc:
+        * tests/Muxing/Muxing.mpc:
+        * tests/Native_Exceptions/Native_Exceptions.mpc:
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc:
+        * tests/NestedUpcall/Simple/Simple.mpc:
+        * tests/NestedUpcall/Triangle_Test/Triangle_Test.mpc:
+        * tests/Nested_Event_Loop/Nested_Event_Loop.mpc:
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+        * tests/No_Server_MT_Connect_Test/No_Server_Connect_Test.mpc:
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Factory/OBV_Factory.mpc:
+        * tests/OBV/Forward/OBV_Forward.mpc:
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+        * tests/ORB_destroy/ORB_destroy.mpc:
+        * tests/ORB_init/ORB_init.mpc:
+        * tests/ORB_init/Portspan/ORB_Init_Portspan.mpc:
+        * tests/ORB_shutdown/Foo_Bar.mpc:
+        * tests/ORT/ORT.mpc:
+        * tests/Object_Loader/Object_Loader.mpc:
+        * tests/Objref_Sequence_Test/Objref_Sequence_Test.mpc:
+        * tests/OctetSeq/OctetSeq.mpc:
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+        * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.mpc:
+        * tests/POA/Current/Current.mpc:
+        * tests/POA/Default_Servant/Default_Servant.mpc:
+        * tests/POA/Etherealization/Etherealization.mpc:
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+        * tests/POA/Identity/Identity.mpc:
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:
+        * tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.mpc:
+        * tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.mpc:
+        * tests/POA/Object_Reactivation/Object_Reactivation.mpc:
+        * tests/POA/POA_Destruction/POA_Destruction.mpc:
+        * tests/POA/Policies/Policies.mpc:
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.mpc:
+        * tests/POA/wait_for_completion/wait_for_completion.mpc:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/Policies/Policies.mpc:
+        * tests/Portable_Interceptors/Benchmark/Portable_Interceptors_Benchmark.mpc:
+        * tests/Portable_Interceptors/Dynamic/Portable_Interceptors_Dynamic.mpc:
+        * tests/Portable_Interceptors/ForwardRequest/Portable_Interceptors_ForwardRequest.mpc:
+        * tests/Portable_Interceptors/IORInterceptor/Portable_Interceptors_IORInterceptor.mpc:
+        * tests/Portable_Interceptors/PICurrent/Portable_Interceptors_PICurrent.mpc:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Portable_Interceptors_Request_Interceptor_Flow.mpc:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Portable_Interceptors_Service_Context_Manipulation.mpc:
+        * tests/Queued_Message_Test/Queued_Message_Test.mpc:
+        * tests/RTCORBA/Banded_Connections/RTCORBA_Banded_Connections.mpc:
+        * tests/RTCORBA/Client_Propagated/RTCORBA_Client_Propagated.mpc:
+        * tests/RTCORBA/Client_Protocol/RTCORBA_Client_Protocol.mpc:
+        * tests/RTCORBA/Collocation/RTCORBA_Collocation.mpc:
+        * tests/RTCORBA/Destroy_Thread_Pool/RTCORBA_Destroy_Thread_Pool.mpc:
+        * tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
+        * tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Protocol_Priority.mpc:
+        * tests/RTCORBA/ORB_init/RTCORBA_ORB_init.mpc:
+        * tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+        * tests/RTCORBA/Policies/Policies.mpc:
+        * tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
+        * tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
+        * tests/RTCORBA/RTMutex/RTCORBA_RTMutex.mpc:
+        * tests/RTCORBA/Server_Declared/RTCORBA_Server_Declared.mpc:
+        * tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
+        * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+        * tests/Reliable_Oneways/Reliable_Oneways.mpc:
+        * tests/Server_Leaks/Server_Leaks.mpc:
+        * tests/Single_Read/Single_Read.mpc:
+        * tests/Smart_Proxies/Smart_Proxies.mpc:
+        * tests/Stack_Recursion/Stack_Recursion.mpc:
+        * tests/Strategies/Strategies.mpc:
+        * tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.mpc:
+        * tests/Timeout/Timeout.mpc:
+        * tests/Two_Objects/Two_Objects.mpc:
+        * tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
+        * utils/utils.mwc:
+        * utils/catior/catior.mpc:
+
+          Added and updated mpc files to use the latest
+        features and make use of base projects.
+
+Wed Jun 25 09:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/TAO_Static.dsp:
+	* tao/IORInterceptor/TAO_IORInterceptor_Static.dsp: Added missing
+	  files into the project. Thanks to Tommy Andreasen
+	  <Tommy.Andreasen@Radiometer.dk> for providing the patches. 
+
+Tue Jun 25 11:26:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/sciop_endpoints.i:
+          Fixed incorrect export macro.
+
+Tue Jun 25 11:00:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+          Fixed typo that caused error in some builds.
+
+Tue Jun 24 18:40:08 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
+          uncommented code that should have been enabled.
+
+        * orbsvcs/tests/Notify/Basic/run_test.pl:
+          Added build option for RT Notification.
+
+	* orbsvcs/tests/Notify/Basic/notify.rt.conf:
+	  Configuration file for RT Notification.
+
+Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: Check if the peer address is
+	  set for B endpoint when initializing forward flows. If set use
+	  that address to create acceptors. This case happens when no
+	  address is specified for the A endpoint.
+
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Changed the flow spec entry from
+	  "Flowname\Direction\Format\Flow_Prtocol\Sender_Address" to
+	  "Flowname\Direction\Format\Flow_Prtocol\Sender_Address\Receiver_Address".
+	  The additional Receiver_Address field allows the user to specify
+	  the receiver address that will be used to receive the
+	  data. This addition helps to solve the problem arising on a
+	  multi-homed host where the acceptor was by default accepting on
+	  all interfaces. This was not acceptable in some cases. Hence,
+	  by specifying the sender and receiver addresses explicitly only
+	  the required interfaces on a multi-homed host are used.
+
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:Made changes to create sockets on the
+          specified local and remote addresses to send and receive data
+          correspondingly.
+
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp: The source host and port in the
+          TSpec for setting the RSVP sending_qos were not set
+          correctly. This was fixed.
+
+          Thanks to Craig Rodrigues <crodrigu@bbn.com> for bringing this
+          problem to our notice.
+
+Tue Jun 24 11:54:29 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp  (bind_new_context):
+
+          Fixed compile errors where there was a return with no value.
+          This only caused problems on a few platforms for some reason.
+
+Tue Jun 24 11:34:53 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+        Simple example to show how to use RTCORBA Lanes with RT Notification.
+
+        * orbsvcs/examples/Notify/Lanes/Consumer.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer.h:
+
+          Structured Consumer implementation.
+
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.h:
+
+          Client program.
+
+        * orbsvcs/examples/Notify/Lanes/ORB_Objects.cpp:
+        * orbsvcs/examples/Notify/Lanes/ORB_Objects.h:
+
+          Holder for common ORB objects.
+
+        * orbsvcs/examples/Notify/Lanes/ORB_Run_Task.cpp:
+        * orbsvcs/examples/Notify/Lanes/ORB_Run_Task.h:
+
+          Task to run ORB::run method.
+
+        * orbsvcs/examples/Notify/Lanes/Supplier.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier.h:
+
+          Structured Supplier implementation.
+
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.h:
+
+          Supplier Client.
+
+        * orbsvcs/examples/Notify/Lanes/client.conf:
+        * orbsvcs/examples/Notify/Lanes/notify.conf:
+        * orbsvcs/examples/Notify/Lanes/run_test.pl:
+        * orbsvcs/examples/Notify/Lanes/Lanes.dsp:
+        * orbsvcs/examples/Notify/Lanes/Supplier.dsp:
+        * orbsvcs/examples/Notify/Lanes/Consumer.dsp:
+        * orbsvcs/examples/Notify/Lanes/Lanes.mpc:
+        * orbsvcs/examples/Notify/Lanes/Makefile:
+
+	  Configuration files, run script and project files.
+
+        * orbsvcs/examples/Notify/Lanes/README:
+
+          README for this example.
+
+        * orbsvcs/examples/Notify/Notify_Examples.dsw:
+
+          Updated to include Lanes example.
+
+Tue Jun 24 03:49:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp: Added patches supplied by
+          Rob Andzik to get it compiling on VxWORKS.
+
+Mon Jun 23 22:28:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp: Removed the
+          usage of TAO_Event_CRC. Used ACE::crc32 () instead. Thanks to
+          Carlos for pointing it out.
+
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor: Removed CRC.{h,cpp} from the
+          library.
+
+Mon Jun 23 19:35:58 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/ObjRefTemplate/ObjRefTemplate.mpc: Changed parent project
+          named "valuetype_only" to "valuetype".  There doesn't seem to be
+          a base project called "valuetype_only".
+
+Mon Jun 23 20:18:31 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+        More fixes for compile warnings and errors:
+
+        * orbsvcs/tests/Notify/lib/PushConsumer.h:
+        * orbsvcs/tests/Notify/lib/PushSupplier.h:
+        * orbsvcs/tests/Notify/lib/SequencePushConsumer.h:
+        * orbsvcs/tests/Notify/lib/SequencePushSupplier.h:
+        * orbsvcs/tests/Notify/lib/StructuredPushConsumer.h:
+        * orbsvcs/tests/Notify/lib/StructuredPushSupplier.h:
+
+          Added missing export directive to class declaration.
+
+        * orbsvcs/tests/Notify/lib/Supplier_T.cpp:
+        * orbsvcs/tests/Notify/lib/Consumer_T.cpp:
+
+          Added missing ACE_TYPENAME.
+
+        * orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.h:
+        * orbsvcs/tests/Notify/lib/Task_Stats.inl:
+
+          Changed all parameter types to ACE_UINT64.
+
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp
+
+          Specify the correct scope for call to <activate> method.
+
+Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Array_VarOut_T.h:
+        * tao/Objref_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/Seq_Var_T.h:
+        * tao/VarOut_T.h:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+
+          Added typedefs of the return types of the .in(), .inout(),
+          .out() and ._retn() operations for _vars. Also added
+          typedefs of the stub type, stub _ptr type and stub _var type
+          to the code generation for the corresponding skeleton class
+          for interfaces. This closes [BUGID:1083]. Thanks to
+          Andrew Sutton <ansutton@sep.com>, Holger Krekel <krekel@merlinux.de>
+          and Jody Hagins <jody@atdesk.com> for their suggestions.
+
+Mon Jun 23 16:53:58 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+
+          Removed '<>' from explicit instantiation for template function
+          to try to placate the Redhat 7.1 explicit instantiation build.
+
+Mon Jun 23 12:37:48 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+          Avoid an infinite loop during 'autostart'.  Once a server list
+          is found to be of zero length, then we leave the while loop.  This
+          would also happen if a 'list' command was issued and there were
+          more than 10 servers registered with the ImR.
+
+Mon Jun 23 12:38:54 2003  Rich Seibel <seibel_r@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+          Bugzilla bug #1499 fix applied.
+
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNaming.bor:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosNaming_Static.dsp:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable.inl:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+          Inserted the redundant name service code.  Plus, bug 1499
+          fix applied to Storable_Naming_Context.cpp.
+
+        * orbsvcs/tests/Redundant_Naming:
+        * orbsvcs/tests/Redundant_Naming/README:
+        * orbsvcs/tests/Redundant_Naming/Makefile:
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+        * orbsvcs/tests/Redundant_Naming/test_object.idl:
+        * orbsvcs/tests/Redundant_Naming/run_test.pl:
+        * orbsvcs/tests/Redundant_Naming/Redundant_Naming.mpc:
+        * orbsvcs/tests/Redundant_Naming/Redundant_Naming.dsw:
+        * orbsvcs/tests/Redundant_Naming/client.dsp:
+        * orbsvcs/tests/Redundant_Naming/makefile.bor:
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/Makefile.am:
+        * orbsvcs/tests/Makefile.bor:
+        * orbsvcs/tests/tests.dsw:
+          added test for redundant name service
+
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+          Moved the flat file persistence test to a separate run test
+          so that it could be disabled on MIN CORBA.  The Redundant
+          Naming Service is build on the same code base as Flat File
+          and uses a Servant Activator which is not available in
+          minimum CORBA.
+
+Sun Jun 22 13:58:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.cpp:
+          Added include of ace/OS.h.
+
+Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Cleanup_Func_Registry.h:
+          Due to subsetting in ACE, added include of OS.h.
+
+        * tao/Notify_Handler.h:
+          Due to subsetting in ACE, added include of Global_Macros.h.
+
+Sat Jun 21 22:29:16 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+        * orbsvcs/tests/Notify/lib/Makefile.bor:
+          Corrected bad syntax.
+
+Sat Jun 21 11:22:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h: Changed the constructor to
+          set buffer sizes for the dgram sockets created.
+
+          Thanks to J. Russell Noseworthy and Keith Snively for providing
+          the patches.
+
+Sat Jun 21 19:54:47 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.h:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_POA.h:
+          Adjusted location of #ifdef so that it's after orbconf.h
+          which is where ACE_HAS_CORBA_MESSAGING gets set if you user
+          doesn't specify it explicitly.
+
+Sat Jun 21 09:34:14 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp (TAO_BidirectionalPolicy):
+
+          Corrected base class initialization order in base member
+          initialization list to match class inheritance order.  Fixes a
+          warning.
+
+Sat Jun 21 14:53:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Removed not needed explicit template instantiations
+
+Fri Jun 20 17:45:46 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/AMI/run_test.pl
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/run_test.pl
+        * performance-tests/Sequence_Latency/DII/run_test.pl
+        * performance-tests/Sequence_Latency/DSI/run_test.pl
+        * performance-tests/Sequence_Latency/Deferred/run_test.pl
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/run_test.pl
+        * performance-tests/Sequence_Latency/Thread_Pool/run_test.pl
+
+          Fixed the perl running command line format in order to facilitate
+          automatic performance statistics analysis.
+
+Fri Jun 20 16:42:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Fixed more typos. Thanks to Danta Cannarozzi <djc2@cse.wustl.edu>
+          for reporting the problem.
+
+Fri Jun 20 15:42:14 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/Deferred/run_test.pl
+
+          Added this missing file into the directory.
+
+Fri Jun 20 14:48:56 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+
+          Added missing explicit instantiations that were causing build
+          problems on impaired platforms.  Some of the explicit
+          instantiations probably ought to be handled in generated code or
+          other places, but that's a bigger issue to bite off.
+
+Fri Jun 20 12:56:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+
+          Fixed case error in spelling of included file. Thanks to Diego
+          Sevilla Ruiz <dsevilla@ditec.um.es> for reporting the mistake.
+
+Fri Jun 20 10:08:25 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/AMI/Makefile
+        * performance-tests/Sequence_Latency/AMI/Makefile.bor
+
+          Deleted the old "makefile" and "makefile.bor", which have
+          wrong lower case file name causing the build error.
+          Simply changed the file names and fixed the problem.
+
+Fri Jun 20 10:10:07 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/QtTests/QtTests.mpc:
+
+          Added a project for the QtTests.  This will only get built if the
+          qt feature is enabled.
+
+Fri Jun 20 14:50:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/RTCORBA/RTCORBA.h:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+        * tao/RTCORBA/RT_ORB_Loader.h:
+          Adjusted location of ifdef so that it's after orbconf.h
+          which is where ACE_HAS_CORBA_MESSAGING gets set if you user
+          doesn't specify it explicitly.
+
+Fri Jun 20 11:26:14 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.cpp:
+          The validate_connection can only be done when corba messaging
+          is available.
+
+Fri Jun 20 11:04:58 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+          Fixed compile problem in emulated exception case
+
+Fri Jun 20 09:13:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.{h,i}:
+          Changed template type name to T and make sure that declaration
+          and implementation use the same.
+
+Fri Jun 20 07:40:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+          Added missing include
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway.h:
+          Updated documentation
+
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+          Added missing explicit template instantiations
+
+Fri Jun 20 04:22:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/RTCORBA/Continuous_Priority_Mapping.cpp:
+        * tao/RTCORBA/Continuous_Priority_Mapping.h:
+        * tao/RTCORBA/Direct_Priority_Mapping.cpp:
+        * tao/RTCORBA/Direct_Priority_Mapping.h:
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.cpp:
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.h:
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:
+        * tao/RTCORBA/Linear_Priority_Mapping.h:
+        * tao/RTCORBA/Network_Priority_Mapping.cpp:
+        * tao/RTCORBA/Network_Priority_Mapping.h:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.cpp:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+        * tao/RTCORBA/Priority_Mapping.cpp:
+        * tao/RTCORBA/Priority_Mapping.h:
+        * tao/RTCORBA/Priority_Mapping_Manager.cpp:
+        * tao/RTCORBA/Priority_Mapping_Manager.h:
+        * tao/RTCORBA/Private_Transport_Descriptor.cpp:
+        * tao/RTCORBA/Private_Transport_Descriptor.h:
+        * tao/RTCORBA/RTCORBA.cpp:
+        * tao/RTCORBA/RTCORBA.h:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RT_Current.cpp:
+        * tao/RTCORBA/RT_Current.h:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+        * tao/RTCORBA/RT_Endpoint_Utils.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h:
+        * tao/RTCORBA/RT_Mutex.cpp:
+        * tao/RTCORBA/RT_Mutex.h:
+        * tao/RTCORBA/RT_ORB.cpp:
+        * tao/RTCORBA/RT_ORB.h:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.h:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_ORB_Loader.h:
+        * tao/RTCORBA/RT_PolicyFactory.cpp:
+        * tao/RTCORBA/RT_PolicyFactory.h:
+        * tao/RTCORBA/RT_Policy_i.cpp:
+        * tao/RTCORBA/RT_Policy_i.h:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.h:
+        * tao/RTCORBA/RT_Stub.cpp:
+        * tao/RTCORBA/RT_Stub.h:
+        * tao/RTCORBA/RT_Stub_Factory.cpp:
+        * tao/RTCORBA/RT_Stub_Factory.h:
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/RTCORBA/Thread_Pool.h:
+        * tao/RTPortableServer/RTPortableServer.cpp:
+        * tao/RTPortableServer/RTPortableServer.h:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RT_Acceptor_Filters.cpp:
+        * tao/RTPortableServer/RT_Acceptor_Filters.h:
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+        * tao/RTPortableServer/RT_Collocation_Resolver.h:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.h:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_POA.h:
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+        * tao/RTPortableServer/RT_Policy_Validator.h:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.h:
+          #Ifdef'd out all the code if TAO_HAS_CORBA_MESSAGING = 0, since
+          RTCORBA depends on messaging.
+
+Thu Jun 19 20:45:06 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+        * orbsvcs/tests/Notify/lib/Peer_T.cpp:
+        * orbsvcs/tests/Notify/lib/Supplier_T.cpp:
+        * orbsvcs/tests/Notify/lib/Consumer_T.cpp:
+
+          Added ACE_TYPENAME to stop compiler warnings.
+
+Thu Jun 19 18:29:28 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/run_test.pl
+
+          Fixed some wrong output information.
+
+Thu Jun 19 17:32:38 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/DSI/client.cpp
+
+          Removed an unused dummy variable in the source code.
+
+Thu Jun 19 16:05:09 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/DII/Makefile
+        * performance-tests/Sequence_Latency/DSI/Makefile
+
+          Added the missing dependency relation to the old makefiles.
+
+Thu Jun 19 14:08:22 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+        * orbsvcs/orbsvcs/.depend.Makefile.RT_Notification:
+        * orbsvcs/tests/Notify/RT_lib/.depend.Makefile:
+        * orbsvcs/tests/Notify/Test_Filter/.depend.Makefile:
+        * orbsvcs/tests/Notify/lib/.depend.Makefile:
+
+          Updated dependencies.
+
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+
+          Use <proxy_id_> instead of <supplier_proxy_id_> and
+          <consumer_proxy_id_>.
+          Use <proxy_> instead of <supplier_proxy_> and
+          <consumer_proxy_>.
+          This is required due to changes to implementation of Test
+          Supplier and Consumers.
+
+Thu Jun 19 11:54:31 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/Makefile:
+        * performance-tests/Sequence_Latency/Makefile.bor:
+
+          New make file for the recently newly added sequence
+          latency test examples.
+
+Thu Jun 19 11:54:29 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+          Fixed more argument related bugs.
+
+Thu Jun 19 16:58:00 UTC 2003 Stephen Torri <storri@cse.wustl.edu>
+
+        * orbsvcs/tests/Metrics/Makefile:
+        * orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.cpp:
+        * orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.h:
+        * orbsvcs/tests/Metrics/Remote_Metrics_Logger.cpp:
+        * orbsvcs/tests/Metrics/Remote_Metrics_Logger.h:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.cpp:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.h:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.i:
+        * orbsvcs/tests/Metrics/Makefile:
+        * tao/orbconf.h:
+
+          Added tests for libTAO_Metrics.
+
+        * orbsvcs/orbsvcs/Metrics/metrics_export.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Logger.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.i:
+        * orbsvcs/orbsvcs/Metrics:
+        * orbsvcs/orbsvcs/Metrics.idl:
+        * orbsvcs/orbsvcs/Makefile.Metrics:
+        * orbsvcs/orbsvcs/Makefile:
+
+          Adding new TAO Metrics ORB service.
+          - TAO_Metrics_Frame_Manager_Data is a class makes use of
+            the <ACE_Time_Value> class to store period and
+            endpoint data for a given time frame. This is used
+            by the TAO_Metrics_Frame_Manager to make use of the
+            <ACE_Metrics_Cache> class to implement a cache for local use.
+
+          - TAO_Metrics_Timeprobe is a class that makes use of the
+            <ACE_Metrics_Timeprobe> class to implement a timeprobe for
+            use in a local metrics cache.
+
+          - TAO_Metrics_LocalCache is a class that makes use of the
+            <ACE_Metrics_Cache> class to implement a cache for local use
+            for storing metrics data.
+
+          - TAO_Metrics_ReportingCache is a class that use of the
+            <TAO_Metrics_LocalCache> as its a cache for local use,
+            and adds reporting to the logger <TAO_Metrics_Logger>.
+
+          - TAO_Metrics_Logger is a class that allows a client to
+            log monitored QoS. Clients will pass their information
+            to the TAO_Metrics_Logger in a series of TAO_Metrics_Logger_Data
+            elements.
+
+          - TAO_Metrics_UpcallMonitor is a class that allows clients to
+            monitor QoS, collected by the rest of the metrics framework.
+
+          - TAO_Metrics_ReportingUpcallMonitor is a class implemenets
+            a reporting extension for a Metrics QoS Monitor.
+
+          - TAO_Utils is a collection of metrics utility functions.
+
+
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * tao/RTCORBA/Multi_Priority_Mapping.h:
+        * tao/RTCORBA/Multi_Priority_Mapping.i:
+
+        - TAO_Multi_Priority_Mapping is an implementation of
+          Priority_Mapping interface for communication between
+          different platforms. This implementation uses a custom
+          mapping between the range of priorities for a given
+          scheduling class (ACE_SCHED_OTHER, ACE_SCHED_FIFO,
+          ACE_SCHED_RR) and the valid range of CORBA priorities
+          (0...32767)
+
+Thu Jun 19 16:01:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/index.html:
+          Updated link to doxygen documentation.
+
+Thu Jun 19 15:34:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.cpp:
+          Added missing explicit template instantiations
+
+Thu Jun 19 15:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.cpp:
+          Added missing explicit template instantiations
+
+Thu Jun 19 14:56:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+          Fixed small typos
+
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+          Fixed problem with emulated exception compile.
+
+Thu Jun 19 09:55:55 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/AMI/*:
+
+          New test for the sequence of different data types. This
+          is based on performance-tests/Latency/AMI/*, but uses
+          different data types.
+
+Thu Jun 19 14:56:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+          Added missing explicit template instantiations
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+          Documentation update
+
+Thu Jun 19 06:12:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+          Updated doxygen documentation
+
+Wed Jun 18 23:29:20 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests_Static.dsp:
+        * orbsvcs/orbsvcs/CosNotification.bor:
+
+          Updated
+
+Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+        * orbsvcs/orbsvcs/Notify_Service/Notify_Service.cpp:
+          Activate worker thread at lowest avialable priority.
+
+        * orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
+
+          Cosmetic changes.
+
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.inl:
+
+          Inlined <push> method
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+
+          Changed default initialization of ThreadPoolParams structure.
+
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+
+          - "const"ified various public methods.
+          - Added helper classes for the TAO_NS_Event_var
+
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.h:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.inl:
+
+          Changed signature of <match> method, moved this method to the
+          .inl file.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request.inl:
+
+          - Added <TAO_NS_Method_Request_No_Copy> class that does not copy the
+          event that it holds.
+          - Moved the <init> method to the .inl file
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.inl:
+
+          Moved the <Method_Request_Event> to its own separate file.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
+
+          Helper templatized logic for dispatching. This is required to
+          support different types of event implementations (Event_var and Event*)
+          and proxy implementations (ProxySupplier_Guard and ProxySupplier).
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.inl:
+
+          There are 3 different approaches to memory management during
+          event dispatching:
+          <TAO_NS_Method_Request_Dispatch> - This class increments the
+          reference count on the event copy and on the ProxySupplier.
+
+          <TAO_NS_Method_Request_Dispatch_No_Copy> - The event is not
+          copied and the refcount on the ProxySupplier is not incremented.
+
+         <TAO_NS_Method_Request_Dispatch_T> - The refcount on the event is
+          incremented but not for the ProxySupplier.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.*:
+          Removed this file. The Method_request_Dispatch accepts a flag
+          that is used to determine if the filters should be executed.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.inl:
+
+          Implements <TAO_NS_Method_Request_Lookup> and
+          <TAO_NS_Method_Request_Lookup_No_Copy> classes.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.inl:
+
+          Implements <TAO_NS_Method_Request_Updates> and
+          <TAO_NS_Method_Request_Updates_No_Copy> classes.
+
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.inl:
+
+          Added accessor for the Event_Manager.
+
+        * orbsvcs/orbsvcs/Notify/Peer.cpp:
+
+          Using Proxy_Guard instead of Refcountable_Guard
+
+        * orbsvcs/orbsvcs/Notify/Property_T.h:
+        * orbsvcs/orbsvcs/Notify/Property_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Property_T.inl:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.h:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.cpp:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.inl:
+
+          Changed type of property name from CString to char*.
+
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp:
+        * orbsvcs/orbsvcs/Notify/Proxy.inl:
+
+          Changed <check_filter> to TAO_NS_Event* instead of
+          TAO_NS_Event_var.
+          Moved the method to the .inl file.
+
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.inl:
+
+          Removed <push> method from this class.
+          Defined the TAO_NS_ProxyConsumer_Guard class.
+
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.inl:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.inl:
+
+          Modified <push> method to include ACE_ENV parameter.
+          Defined the TAO_NS_ProxySupplier_Guard class.
+
+        * orbsvcs/orbsvcs/Notify/QoSProperties.cpp:
+
+          Access property using <value> method.
+
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.cpp:
+
+          Use the priority model passed in the Pool/Lane parameter.
+
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+
+          Modified the <execute> method to include ACE_ENV parameter.
+
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.inl:
+
+          A helper class that increments the reference count in the
+          constructor. The count is decremented in the destructor.
+
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h:
+
+          Modified the <execute> method to include ACE_ENV parameter.
+
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+
+          Modified the <push> methods to include ACE_ENV parameter.
+
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+
+          Modified the <push> methods to include ACE_ENV parameter.
+
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+
+          Modified the <TAO_NS_StructuredEvent> constructor to read the
+          qos parameters directly instead of using the expensive
+          TAO_NS_PropertySeq class.
+
+          Implements 2 types of structured event wrappers - the
+          <TAO_NS_StructuredEvent_No_Copy> does not make a copy of the event.
+
+          The <TAO_NS_StructuredEvent> creates a copy of the event.
+
+        * orbsvcs/orbsvcs/Notify/StructuredProxyPushConsumer.cpp:
+          The <push_structured_event> does not make a copy of the event
+          and the Lookup method request object is created on the stack.
+          We have optimized by not making allocations until it is necessary.
+
+        * orbsvcs/orbsvcs/Notify/StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/StructuredPushConsumer.h:
+
+          The signature of <push_i> is changed to accept TAO_NS_Event*.
+
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+
+          Implements the <TAO_NS_AnyEvent> and <TAO_NS_AnyEvent_No_Copy>
+          classes.
+
+        * orbsvcs/orbsvcs/Notify/ProxyPushConsumer.cpp:
+
+          Optimized <push> avoids unnecessary copies.
+
+        * orbsvcs/orbsvcs/Notify/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/PushConsumer.h:
+
+          signature of <push_i> is changed to accept TAO_NS_Event*.
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+
+          Optimized <push> avoids unnecessary copies.
+
+        * orbsvcs/orbsvcs/Notify/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/SequencePushConsumer.h:
+
+          signature of <push_i> is changed to accept TAO_NS_Event*.
+
+        * orbsvcs/tests/Notify/lib/Peer.h:
+        * orbsvcs/tests/Notify/lib/Peer_T.h:
+        * orbsvcs/tests/Notify/lib/Peer.inl:
+        * orbsvcs/tests/Notify/lib/Peer_T.inl:
+        * orbsvcs/tests/Notify/lib/Peer.cpp:
+        * orbsvcs/tests/Notify/lib/Peer_T.cpp:
+
+          Template implementation of Suppliers and Consumers.
+
+        * orbsvcs/tests/Notify/lib/Consumer_T.h:
+        * orbsvcs/tests/Notify/lib/Consumer_T.cpp:
+        * orbsvcs/tests/Notify/lib/Consumer_T.inl:
+
+          Specialization of Peer_T for Consumers.
+
+        * orbsvcs/tests/Notify/lib/Supplier_T.h:
+        * orbsvcs/tests/Notify/lib/Supplier_T.cpp:
+        * orbsvcs/tests/Notify/lib/Supplier_T.inl:
+
+          Specialization of Peer_T for Suppliers.
+
+        * orbsvcs/tests/Notify/lib/Direct_Consumer.h:
+        * orbsvcs/tests/Notify/lib/Direct_Consumer.inl:
+        * orbsvcs/tests/Notify/lib/Direct_Consumer.cpp:
+
+          A consumer that receives events directly from a supplier and
+          hence does not connect to the EventChannel.
+
+        * orbsvcs/tests/Notify/lib/Relay_Consumer.h:
+        * orbsvcs/tests/Notify/lib/Relay_Consumer.cpp:
+        * orbsvcs/tests/Notify/lib/Relay_Consumer.inl:
+
+          A Direct_Consumer that relays the event received to yet another
+          consumer.
+
+        * orbsvcs/tests/Notify/lib/Direct_Supplier.h:
+        * orbsvcs/tests/Notify/lib/Direct_Supplier.cpp:
+        * orbsvcs/tests/Notify/lib/Direct_Supplier.inl:
+
+          A supplier that sends directly to a consumer and
+          hence does not connect to the EventChannel.
+
+        * orbsvcs/tests/Notify/lib/PushConsumer.h:
+        * orbsvcs/tests/Notify/lib/PushConsumer.cpp:
+        * orbsvcs/tests/Notify/lib/PushConsumer.inl:
+
+          Traits based implementation of ProxyConsumer.
+
+        * orbsvcs/tests/Notify/lib/PushSupplier.h:
+        * orbsvcs/tests/Notify/lib/PushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/PushSupplier.inl:
+
+          Traits based implementation of ProxySupplier.
+
+        * orbsvcs/tests/Notify/lib/SequencePushConsumer.h:
+        * orbsvcs/tests/Notify/lib/SequencePushConsumer.cpp:
+        * orbsvcs/tests/Notify/lib/SequencePushConsumer.inl:
+
+          Traits based implementation of SequenceProxyConsumer.
+
+        * orbsvcs/tests/Notify/lib/SequencePushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/SequencePushSupplier.h:
+        * orbsvcs/tests/Notify/lib/SequencePushSupplier.inl:
+
+          Traits based implementation of SequenceProxySupplier.
+
+        * orbsvcs/tests/Notify/lib/StructuredPushConsumer.h:
+        * orbsvcs/tests/Notify/lib/StructuredPushConsumer.inl:
+        * orbsvcs/tests/Notify/lib/StructuredPushConsumer.cpp:
+
+          Traits based implementation of StructuredProxyConsumer.
+
+        * orbsvcs/tests/Notify/lib/StructuredPushSupplier.h:
+        * orbsvcs/tests/Notify/lib/StructuredPushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/StructuredPushSupplier.inl:
+
+          Traits based implementation of StructuredProxySupplier.
+
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+          Prints hostname to data file.
+
+        * orbsvcs/tests/Notify/lib/Driver.cpp:
+          The thread that executes command objects is initialized to
+          lowest available priority.
+
+        * orbsvcs/tests/Notify/lib/EventChannel.h:
+        * orbsvcs/tests/Notify/lib/EventChannel.cpp:
+
+          Added <create_colocated_ecf> method to created a colocated
+          EventChannelFactory.
+
+        * orbsvcs/tests/Notify/Lookup.h:
+        * orbsvcs/tests/Notify/Lookup.cpp:
+
+          Added resolve methods for
+          CosNotifyChannelAdmin::StructuredProxyPushSupplier_var and
+          CosNotifyChannelAdmin::StructuredProxyPushConsumer_var
+
+          Removed resolve methods for
+          CosNotifyComm::StructuredPushSupplier_var
+          CosNotifyComm::StructuredPushConsumer_var
+          as they are not required.
+
+        * orbsvcs/tests/Notify/lib/Notify_PushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Notify_PushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.h:
+
+          typedef to new implementation for backward compatibility.
+
+        * orbsvcs/tests/Notify/lib/Notify_PushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_PushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.cpp:
+
+          Removed as they are obsoleted by the new implementation.
+
+        * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+
+          Populate the revised definition of NotifyExt::ThreadPoolParams.
+
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
+
+          - Changes to accommodate base class modifications.
+
+          - Note that the periodic consumer receives "warmup events" from
+          the periodic supplier . This helps us avoid huge spikes in
+          latency for the first few iterations of a test run.
+          - The periodic consumer recognizes a special "Stop" event that
+          hints that no event will be supplier now on.
+          - The periodic consumer can be asked to check if the priority of
+          the thread receiving the event is the same as the Priority field
+          in the event QoS.
+
+        * Periodic_Consumer_Command.h:
+        * Periodic_Consumer_Command.cpp:
+
+          Parses options to create a a "Relay" or "Direct" consumer.
+
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+
+          - Changes to accommodate base class modifications.
+
+          - The supplier can be asked to run for a fixed amount of time
+          regardless of if it could send the number of events that we
+          asked it to send.
+
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.cpp:
+
+          Parses options to create a "Direct" supplier.
+
+        * orbsvcs/tests/Notify/lib/Task_Stats.h:
+        * orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.inl:
+
+          The square of the deviation in the sample set is calculated in the
+          <dump_stats> method. The <sample> method only records the sample
+          and does no more.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+
+          By default, always run ORB.run() in a separate thread that has the ORB SCHED
+          policies set on it.
+
+        * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.cpp:
+
+          The RT POA is created with the implicit activation policy.
+
+        * orbsvcs/tests/Notify/lib/Makefile:
+        * orbsvcs/tests/Notify/lib/Makefile.bor:
+        * orbsvcs/tests/Notify/RT_lib/Makefile:
+        * orbsvcs/tests/Notify/lib/Test_Filter/Makefile:
+
+          Updated.
+
+        * orbsvcs/tests/Notify/Lanes/supplier.conf:
+        * orbsvcs/tests/Notify/Lanes/consumer.conf:
+
+          Corrected the Lane info set in the filter.
+
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.h:
+
+          Added method <get_unique_id> to generate unique POA names.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/high_path.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_10/other_paths.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_1/other_paths.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_5/other_paths.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_20/other_paths.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/rt_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_high_path.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_notify.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_other_paths.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/README:
+
+          Test to measure the throughput of the high priority task with
+          increasing number of paths.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_0/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_10/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_15/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_20/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_25/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_30/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_35/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_40/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_45/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_5/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_50/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/rt_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/README:
+
+          Test to measure the Throughput of a High, Medium and Low priority
+          task with increasing load.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/supplier.conf:
+
+          This test measures throughput for a 2-way between a
+          StructuredSupplier and StructuredConsumer.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/relay.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/supplier.conf:
+
+          This test measures throughput for a 2-way between a
+          StructuredSupplier and StructuredConsumer where the consumer is
+          activated in an RT-POA with the CLIENT-PROPAGATED priority model.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/relay.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/supplier.conf:
+
+          In this test, the supplier sends events to a "relay" consumer that forwards it
+          to the final consumer.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/relay.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/supplier.conf:
+
+          The consumers are activated in an RT-POA.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/run_test.pl:
+
+          Tests the throughput obtained when the supplier, CosNotification
+          and consumer are collocated in the same process space.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
+
+          Tests the throughput obtained when the supplier, RT-Notification
+          and consumer are colocated in the same process space.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/run_all.pl:
+
+          Readme and run script for the Max_Throughput set of experiments.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/run_test.pl:
+
+          Max possible throughput measurement for CosNotification.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/supplier.conf:
+
+          Max possible throughput measurement for RT-Notification.
+
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/rt_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_0/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_5/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_10/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_15/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_20/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_25/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_30/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_35/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_40/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_45/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_50/supplier.conf:
+
+          The test measures the throughput with increasing load.
+
+
+Wed Jun 18 19:33:24 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/AMH/*:
+
+          New test for the sequence of different data types. This is
+          based on performance-tests/Latency/AMH, but uses different
+          data types.
+
+Wed Jun 18 19:25:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+
+          Added .in() to a _var argument in a function call.
+
+Wed Jun 18 19:03:53 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/Deffered/*:
+
+          New test for the sequence of different data types. This is
+          based on performance-tests/Latency/Deffered, but uses different
+          data types.
+
+Wed Jun 18 18:36:19 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/DII/*:
+
+          New test for the sequence of different data types for DII. This
+          is based on performance-tests/Latency/DII, but uses different
+          data types.
+
+Wed Jun 18 18:15:33 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/DSI/*:
+
+          New test for the sequence of different data types for DSI. This
+          is based on performance-tests/Latency/DSI, but uses different
+          data types.
+
+Wed Jun 18 17:47:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp: Added the new files for the
+          daily builds.
+
+Wed Jun 18 17:19:47 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+
+          Corrected scoping error for parameters of CORBA::release ()
+          and CORBA::is_nil () for interfaces that inherit from
+          abstract interfaces
+
+Wed Jun 18 17:06:40 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/*:
+
+          New test for the sequence of different data types. This is based
+          on performance-tests/Latency/Thread_Per_Connection, but uses
+          different data types.
+
+
+Wed Jun 18 17:10:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor: Added CRC.cpp for compilation in
+          various builds.
+
+
+Wed Jun 18 16:54:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Event/CRC.h:
+        * orbsvcs/orbsvcs/Event/CRC.cpp: New file for CRC calculation.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.inl: This set of checkins
+          adds a capability to  perform CRC checksum calculations. This is
+          what it does
+
+          - The sender calculates the CRC checksum and sends it as part of
+            the header. The field in the header which is padded, is used
+            for CRC checksums.
+
+          - The receiver after receiving the message calculates the CRC
+            checksum (ofocurse without the checksum value) and compares
+            with the one received.
+
+         Ofcourse, all of the above ar optional, and can be chosen when
+         the receiver is created by the create () call.
+
+         Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
+         Noseworthy <j.russell.noseworthy@objectsciences.com> for
+         providing these patches.
+
+
+Wed Jun 18 16:39:51 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_valuetype.h
+        * TAO_IDL/be/be_valuetype.cpp
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp
+
+          Added mapping of operations of abstract interfaces inherited by
+          concrete interfaces supported by valuetypes to pure virtual
+          methods in the valuetype.
+
+Wed Jun 18 16:18:19 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/Thread_Pool/*: New test for
+          the sequence of different data types. This is based on
+          performance-tests/Latency/Thread_Pool, but uses different data
+          types.
+
+Wed Jun 18 14:01:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.inl:
+
+          Changed signature of the const cast operator from T const *& to
+          T * const &, which eliminates warnings on Irix. Thanks to
+          Michael Rice <MichaelARice@knology.net> for coming up with this
+          Irix-compatible suggestion.
+
+        * tao/Seq_Var_T.h:
+
+          Cosmetic changes.
+
+Wed Jun 18 13:08:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
+        * TAO_IDL/be/be_interface.cpp (copy_ctor_helper);
+
+          Changed the order of base class constructor calls in code
+          generation for the interface copy constructor.
+
+Wed Jun 18 12:50:15 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp
+
+          Fixed bug in factory generation for valuetypes that
+          support interfaces
+
+Wed Jun 18 12:47:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+        * tao/Domain/DomainS.cpp:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+
+          Added call to TAO_Abstract_ServantBase in the copy constructor
+          and/or fixed the order of base class constructor calls in the
+          copy constructor.
+
+Wed Jun 18 12:13:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_eventtype.cpp:
+        * TAO_IDL/be/be_eventtype_fwd.cpp:
+        * TAO_IDL/be/be_union_fwd.cpp:
+
+          Fixed mistakes in constructor reordering from
+
+          Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+Wed Jun 18 13:53:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+          Removed EC_Gateway_UDP.{h,i} from both dsps.
+
+Wed Jun 18 13:17:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+          Updated dependencies.
+
+Wed Jun 18 08:48:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+        * orbsvcs/tests/EC_MT_Mcast/Makefile:
+          Updated this test for all RTEC changes and updated dependencies
+
+Wed Jun 18 08:18:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+          Fixed type
+
+        * orbsvcs/tests/EC_Mcast/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+          Updated dependencies
+
+Wed Jun 18 06:39:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Below an detail overview of all RTEC changes. The changes are made by
+          Carlos O'Ryan <coryan@atdesk.com>, Marina Spivak <marina@cs.wustl.edu>
+          and Jason Smith <jason@atdesk.com>. We have integrated all these
+          changes back into the repo and will make sure that it builds and works
+          using all different compilers.
+
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.h:
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.h:
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.i:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.i:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.h:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.i:
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.h:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.i:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.h:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.i:
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.i:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.i:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
+          Added all these files. See below for details
+
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.inl:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.h:
+          Modified all these files. See below for details
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp
+          Removed these files
+
+          The detailed changes. Changes are listed from recent to old and all
+          together are now migrated into the main repo.
+
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+          Add new attribute to control if the gateway uses blocking or
+          non-blocking UDP sockets.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+          If the send() call returns with -1/EWOULDBLOCK simply report the
+          failure, do not raise exceptions that cause a disconnection.
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+          In short, changed the class to use a dedicated socket for each
+          multicast subscription.
+
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp (filter):
+          Was always returning 1, resulting in not filtering any events
+          out. Fixed.
+
+        * orbsvcs/tests/Event/Mcast/Common/EC_Wrapper.cpp:
+          Enabled "consumer_reconnect" event channel attributes, so the
+          feature is enabled when test clients need it.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+          Made the receiver a little more paranoid about the messages it
+          accepts.  Basically we reject messages whose 'byte_order' field
+          is neither 0 nor 1 (i.e. things like 71 or 42 are rejected when
+          they used to be accepted).  We also inject some magic numbers
+          ('ABC') in the padding bytes after the byte order field, so the
+          receiver can check for those too.
+          This was all motivated by an unexplained crash where the stack
+          trace revealed some out of range numbers in incoming data,
+          though the strangeness does not explain the crash.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
+          Reimplemented to optimize for non-fragmented multicast messages
+          and to make the logic easier to follow and maintain.
+          Non-fragmented messages now incur 0 data copies and 0 memory
+          allocations.  Also, we no longer use reactor timers to
+          expire incomplete messages.  Instead, we purge messages
+          whenever we run out of space in internal structures.
+
+          Instead of using a hash map indexed by address+request_id,
+          we now use a hash map indexed by address, where each entry
+          is an array, used in circular fashion, indexed by
+          request_id.  See source files for more details.
+
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+          Removed -ECGFragmentTimeoutPeriod and
+          -ECGFragmentTimeoutNumber options and related code since we
+          no longer use timeouts.
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+          Removed timeout period and timeout number multicast options
+          related code since we no longer use timeouts to expire
+          messages.
+
+          Updated to reflect minor interface changes in ECG_CDR_Message_Receiver.
+
+          Corrected error handling code: log all errors, but do not
+          return -1 in handle_input(), since this would deregister the
+          handler from reactor and put the object into a useless state.
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+          Re-order fields to make the Attributes structure, the init()
+          arguments, and their declarations consistent.
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+          Enable non-blocking I/O for the incoming UDP multicast
+          sockets. I ran into a dead-lock situation without this flag.
+
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.h
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.i:
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.cpp
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
+          Utility for auto-destroying Event Channel.
+
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.cpp
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
+          Utility for autodisconnecting proxies from Event Channel.
+
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+          Changed the init() methods to receive a single
+          TAO_ECG_Mcast_Gateway::Attributes structure.  It is easier to
+          add more attributes this way, and applications do not need to
+          know all the default values to change just one attribute.
+          Add support to disable the IP_MULTICAST_LOOP flag.
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.i:
+          Updated UDP handler to follow Mcast handlers in
+          interface/behavior.  Updated ECG_Mcast_Gateway so it can be
+          configured to use a UDP handler.
+
+        * orbsvcs/tests/Event/Mcast/Simple/README
+        * orbsvcs/tests/Event/Mcast/Simple/run_test.pl
+        * orbsvcs/tests/Event/Mcast/Simple/udp-consumer-ec.conf
+        * orbsvcs/tests/Event/Mcast/Simple/udp-supplier-ec.conf:
+          Added a test for federating Event Channels using UDP handler and
+          ECG_Mcast_Gateway wrapper.
+
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i
+          Added init() method to ECG_Mcast_Gateway, which allows to
+          configure the gateway programatically (without using config
+          files).
+
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.h
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.i:
+          The most primitive implementation of the
+          RtecUDPAdmin::AddrServer interface: address server always
+          returns the same address it was initialized with.
+
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.h
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.i:
+          Implementation of RtecUDPAdmin::AddrServer idl interface, which
+          returns a different multicast address based on event source (or
+          event type - depending on how the server is configured).  String
+          provided at server initialization specifies type to address
+          mappings.
+
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.h
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.i:
+          Common abstract base class for various implementations of
+          RtecUDPAdmin::AddrServer interface.  The primary goal of this
+          ABC is to provide a common way to initialize all Address Server
+          implementations.
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+          Wrapper for setting up multicast-federated Event Channel.
+          Can be configured through service conf. file.  See .h file for
+          all the valid options.
+
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.h:
+          Define interfaces that Receivers and handler can use to
+          communicate with each other.  Use of these interfaces eliminates
+          the coupling of specific Receivers on specific handlers, and
+          vice versa.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.i
+        * orbsvcs/orbsvcs/Event/ECG_Default_Dgram_Handler.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Default_Dgram_Handler.h
+        * orbsvcs/orbsvcs/Event/ECG_Default_Dgram_Handler.i
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.i
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.i
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.i:
+          EC_Gateway_UDP.* was removed, and its functionality split into
+          ECG_UDP_Sender.* and ECG_UDP_Receiver.*
+
+          Documented/updated documentation for all of the classes in this
+          checkin.
+
+          Changed how lifetime management and shutdown cleanup is done for
+          the above classes:
+          - Classes implementing idl interfaces derive from RefCounted
+          Servant Base - their lifetime is managed by POA
+          - Heap allocation is forced through named constructor idiom
+          - Classes that use these servants use type-safe Servant_vars
+          - Deactivators and auto-disconnect and auto-shutdown objects are
+          used throughout to insure proper object cleanup.
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.i:
+          Endpoint destructor now closes underlying dgram.
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h:
+          Added deactivate_consumer_admin() and
+          deactivate_supplier_admin() helpers.  Unlike previous code,
+          these helpers ignore exceptions thrown during deactivation.  As
+          we migrate Event Channel servants to use refcounting and have
+          their lifetimes managed by POAs, it is possible that admins will
+          be deactivated before Event Channel servant, hence we should be
+          able to not choke up on exceptions in such a case.
+
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.cpp
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.h
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.i
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.cpp
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.i:
+          These files are a temporary location for general CORBA
+          application utilities, e.g., Object Deactivator, ORB Holder,
+          type-safe Servant_Var, etc.  These utilities will be moved into
+          tao lib. Some are already moved and the Event code will be cleaned
+          up a little later.
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.i
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
+          Factored out code for breaking up a CDR message into fragments
+          and sending each fragment with its own header from
+          TAO_ECG_UDP_Sender into a separate TAO_ECG_CDR_Message_Sender class.
+
+          Factored out code for receiving and assembling multicast message
+          fragments TAO_ECG_UDP_Receiver into a separate
+          TAO_ECG_CDR_Message_Receiver class.
+
+          This restructuring allows better reuse of the
+          fragmentation/assembly logic encapsulated into ECG_CDR_Message*
+          classes.
+
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.h
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.i:
+          Added implementation for a simplest possible multicast event
+          handler.  It subscribes to a single prespecified multicast
+          group using one socket and does not observe subscription changes
+          in the Event Channel.  Useful for setups where multicast traffic
+          is _not_ separated into different multicast groups.
+
+        * orbsvcs/tests/Event/Mcast/Common/*.{h,cpp,i}:
+        * orbsvcs/tests/Event/Mcast/Complex/*.{h,cpp,i}:
+        * orbsvcs/tests/Event/Mcast/Simple/*.{h,cpp,i}:
+        * orbsvcs/tests/Event/Mcast/Two_Way/*.{h,cpp,i}:
+          Added new RTEvent tests for the Mcast based federations.
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.i:
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+          Updated these files because of all RTEC changes
+
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+          Updated to reflect all changes
+
+Tue Jun 17 18:31:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        From Terry Lacy <terry.lacy@thomson.net>
+        * orbsvcs/orbsvcs/PortableGroup/PG_Null_Property_Validator.h
+          (validate_criteria):
+
+          Added missing "ACE_ENV_ARG_DECL" emulated exception macro
+          argument.  [Bug 1539]
+
+Tue Jun 17 17:09:46 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+
+          Amended valuetype factory mapping to take into account the
+          presence of supported interfaces by adding a new method to
+          check for this condition.
+
+          Added inheritance of DefaultValueRefCountBase mix-in class to
+          valuetypes that support abstract interfaces.
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+
+          Added inheritance of the valuetype base class and eliminated
+          declarations of _this() and _interface_repository_id() in the
+          skeleton class for valuetypes that support concrete interfaces.
+
+Tue Jun 17 09:59:56 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+          Allow help requests to get down to the directives.
+
+Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_component_fwd.cpp:
+        * TAO_IDL/ast/ast_concrete_type.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_enum_val.cpp:
+        * TAO_IDL/ast/ast_eventtype.cpp:
+        * TAO_IDL/ast/ast_eventtype_fwd.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_factory.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_structure_fwd.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/ast/ast_union_fwd.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/ast/ast_valuetype_fwd.cpp:
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_component_fwd.cpp:
+        * TAO_IDL/be/be_constant.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_enum_val.cpp:
+        * TAO_IDL/be/be_eventtype.cpp:
+        * TAO_IDL/be/be_eventtype_fwd.cpp:
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_factory.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_module.cpp:
+        * TAO_IDL/be/be_native.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_root.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_structure_fwd.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_union_fwd.cpp:
+        * TAO_IDL/be/be_union_label.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_valuetype_fwd.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_constant.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+        * TAO_IDL/be_include/be_eventtype.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_arglist_ch.h:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_eventtype.h:
+        * TAO_IDL/include/ast_factory.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_valuetype.h:
+        * tao/IFR_Client/IFR_Components.pidl:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+
+          Various changes:
+
+          - Added support for exceptions in valuetype factories.
+
+          - Changed the order of constructor calls in IDL compiler
+            source files, to eliminate warnings from gcc 3.3.
+
+          - Fixed bug in code generation for impl classes. Thanks to
+            Victor N. <dreamland_skib2@mailru.com> for reporting the
+            bug.
+
+          - Fixed bug in code generation for typedef'd string
+            constant when it appears inside an interface or
+            valuetype. Thanks to Francesco Baldi <Francesco.Baldi@hit.it>
+            for reporting the bug.
+
+          - Fixed bug in typecode generation for recursive types
+            using a typdef'd sequence and forward struct/union
+            declaration. Thanks to Thomas Wiegert <wiegert@schlund.de>
+            for reporting the bug.
+
+          - Fixed bug in code generation for sequences of managed
+            types, when the managed type is declared in different
+            module than the sequence. Thanks to Huang-Ming Huang
+            <hh1@cse.wustl.edu> for reporting the bug.
+
+          - Added infrastructure to store and pass a default
+            value of 0 for the 'custom' flag applied to
+            valuetypes, even though we don't support it yet.
+
+        * tests/OBV/Factory/FactoryC_impl.cpp:
+        * tests/OBV/Factory/FactoryC_impl.h:
+
+           Added throw spec to test code, now that factoy
+           operations for valuetypes support exceptions.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.i
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.i
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+          Added more support for IDL3 extensions in the IFR and
+          IFR loader. None of this is tested yet.
+
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.cpp:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.inl:
+        * tao/Seq_Out_T.inl:
+        * tao/TAO.dsp:
+        * tao/VarOut_T.inl:
+
+          Changed the position of 'const' qualifiers, which causes
+          no change in semantics, but makes it easier for MSVC to
+          deal with. The workaround on MSVC was causing problems
+          with irix, as reported by Michael Rice <MichaelARice@knology.net>.
+
+Tue Jun 17 09:20:18 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Made the usage a little more readable.
+
+Tue Jun 17 06:54:14 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/params.cpp:
+
+          There was an error in the parse_enpoints() function that affects
+          the semi-colon(;) seperated list of Endpoints if more than 2
+          Enpoints are given:
+
+          -ORBEndpoint "protocolx://V.v@addr1;protocolx://V.v@addr;protocolx://V.v@addr1"
+
+          Thanks to Markus Wild <markus.wild@homag.de> for supplying the
+          fix.
+
+Tue Jun 17 05:50:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/implrepo/index.html:
+          Corrected link to doxygen documentation

@@ -1,0 +1,72 @@
+[Please use the form below to submit bug reports, problem
+ reports, etc., to the CIAO developers and interested users.
+ Send to ciao-users@cs.wustl.edu.  Please send it as plain
+ ASCII text, _not_ uuencoded or as an attachment.
+
+ We prefer that all bug reports be submitted through our bug tracking
+ system.  See $ACE_ROOT/docs/usage-bugzilla.html for more information
+ about how to do this.  If you are unsure as to whether your problem
+ is a real bug or not then please submit your question to the mailing
+ list using the following form.  Not using the problem report form
+ will make it harder or impossible to identify the problem, and in
+ many cases we will be unable to help at all.  Also please try to
+ browse bugzilla and the ChangeLog files to find out if your problem
+ has been solved in a more recent version of CIAO.
+
+ To ensure that you see responses, please try to subscribe to the
+ ciao-users mail list, by sending email with contents "subscribe
+ ciao-users" to majordomo@cs.wustl.edu. 
+
+  Replace/remove all the explanatory text in brackets before mailing.
+
+ Please send this form as ASCII text only.  Do _not_ send it as an
+ attachment, or as tar'ed, compressed and/or uuencoded text.  And
+ limit line lengths to less than 80 characters.
+
+ PLEASE make your Subject: line as descriptive as possible.
+ Subjects like "CIAO bug" or "bug report" are not helpful!
+ Also, do _not_ include the word "help" in the Subject!]
+
+8<----------8<----------8<----------8<----------8<----------8<----------8<----
+
+To: ciao-users@cs.wustl.edu
+Subject: [area]: [synopsis]
+
+    CIAO VERSION: 0.3.3
+    TAO VERSION : 1.3.3
+    ACE VERSION : 5.3.3
+
+    HOST MACHINE and OPERATING SYSTEM:
+        If on Windows based OS's, which version of WINSOCK do you
+        use?:
+
+    TARGET MACHINE and OPERATING SYSTEM, if different from HOST:
+    COMPILER NAME AND VERSION (AND PATCHLEVEL):
+
+    AREA/CLASS/EXAMPLE AFFECTED:
+[What example failed?  What module failed to compile?]
+
+    DOES THE PROBLEM AFFECT:
+        COMPILATION?
+            If so, what do your $ACE_ROOT/ace/config.h and
+            $ACE_ROOT/include/makeinclude/platform_macros.GNU contain?
+        LINKING?
+            On Unix systems, did you run make realclean first?
+        EXECUTION?
+        OTHER (please specify)?
+[Please indicate whether ACE/TAO/CIAO, your application, or both are affected.]
+
+    SYNOPSIS:
+[Brief description of the problem]
+
+    DESCRIPTION:
+[Detailed description of problem.  Don't just say "<blah>
+doesn't work, here's a fix," explain what your program does
+to get to the <blah> state. ]
+
+    REPEAT BY:
+[What you did to get the error; include test program or session
+transcript if at all possible.  ]
+
+    SAMPLE FIX/WORKAROUND:
+[If available ]

@@ -1,0 +1,7 @@
+project: orbsvcslib, rtevent, svc_utils, iortable, portableserver {
+  sharedname = ECMcastTests
+  dynamicflags   = ECMCASTTESTS_BUILD_DLL
+  Header_Files {
+    ectest_export.h
+  }
+}

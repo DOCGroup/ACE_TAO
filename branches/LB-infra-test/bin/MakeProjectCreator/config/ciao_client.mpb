@@ -1,0 +1,7 @@
+project : orbsvcslib, ifr_client, valuetype {
+  after    += CIAO_Client
+  idlflags += -I$(CIAO_ROOT) -I$(TAO_ROOT)/CIAO/ciao
+  libs     += TAO TAO_IFR_Client TAO_Valuetype TAO_Security CIAO_Client
+  libpaths += $(CIAO_ROOT)/ciao
+  includes += $(CIAO_ROOT) $(CIAO_ROOT)/ciao 
+}

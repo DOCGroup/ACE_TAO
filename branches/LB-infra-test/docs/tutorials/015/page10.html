@@ -1,0 +1,128 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+And so finally we come to the Protocol_Stream.  That, after all, is
+the focus of the entire tutorial but it took us half of the day to get
+here!
+<P>
+The Protocol_Stream uses an ACE_Stream to move an ACE_Message_Block
+through a series of tasks.  Each task in the stream is responsible for
+performing some operation on the data in the message block.  That is
+the nature of a protocol stream (or "stack" if you prefer).  In this
+stream, the data is compressed and encrypted* on its way between
+peers.  We also allow users of the stream to install a reader task to
+handle data that percolates up from the peer.  As you saw a page or
+two ago, this is most useful for a server.
+
+<P>
+<font size=-1>*Again, I just pretend to do these things.  It would
+take another day or two to go through any sort of reasonable
+encryption or compression!</font>
+<P>
+Before we get into the code, here's a picture that's shows what's
+going on here.
+<P><center><img src="stream.gif"></center></p>
+<HR>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>PROTOCOL_STREAM_H</font>
+<font color=blue>#define</font> <font color=purple>PROTOCOL_STREAM_H</font>
+
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Stream.h">ace/SOCK_Stream.h</A>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+<font color=blue># pragma</font> <font color=purple>once</font>
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
+<font color=blue>#include</font> "<A HREF="../../../ace/Stream.h">ace/Stream.h</A>"
+
+<font color=red>// Shorthand for the stream.</font>
+typedef ACE_Stream&lt;ACE_MT_SYNCH> Stream;
+
+<font color=red>// Forward references to cut down on the number of <font color=blue>#include</font>s</font>
+class ACE_Message_Block;
+class Recv;
+class Protocol_Task;
+
+<font color=red>/* The Protocol_Stream provides a tidy interface to an ACE_Stream
+   setup to process a data block through a series of protocol stages.
+*/</font>
+class Protocol_Stream
+{
+public:
+  Protocol_Stream (void);
+  ~Protocol_Stream (void);
+
+  <font color=red>// Provide the stream with an ACE_SOCK_Stream on which it can</font>
+  <font color=red>// communicate.  If _reader is non-null, it will be added as the</font>
+  <font color=red>// reader task just below the stream head so that it can process</font>
+  <font color=red>// data read from the peer.</font>
+  int open (ACE_SOCK_Stream &peer,
+            Protocol_Task *reader = 0);
+
+  <font color=red>// Close the stream.  All of the tasks & modules will also be</font>
+  <font color=red>// closed.</font>
+  int close (void);
+
+  <font color=red>// putting data onto the stream will pass it through all protocol</font>
+  <font color=red>// levels and send it to the peer.</font>
+  int put (ACE_Message_Block *&message,
+           ACE_Time_Value *timeout = 0);
+
+  <font color=red>// get will cause the Recv task (at the tail of the stream) to read</font>
+  <font color=red>// some data from the peer and pass it upstream.  The message block</font>
+  <font color=red>// is then taken from the stream reader task's message queue.</font>
+  int get (ACE_Message_Block *&response,
+           ACE_Time_Value *timeout = 0);
+
+  <font color=red>// Tell the Recv task to read some data and send it upstream.  The</font>
+  <font color=red>// data will pass through the protocol tasks and be queued into the</font>
+  <font color=red>// stream head reader task's message queue.  If you've installed a</font>
+  <font color=red>// _reader in open() then that task's recv() method will see the</font>
+  <font color=red>// message and may consume it instead of passing it to the stream</font>
+  <font color=red>// head for queueing.</font>
+  int get (void);
+
+  ACE_SOCK_Stream &peer (void)
+  {
+    return this->peer_;
+  }
+
+private:
+  <font color=red>// Our peer connection</font>
+  ACE_SOCK_Stream peer_;
+
+  <font color=red>// The stream managing the various protocol tasks</font>
+  Stream stream_;
+
+  <font color=red>// A task which is capable of receiving data on a socket.</font>
+  <font color=red>// Note that this is only useful by client-side applications.</font>
+  Recv *recv_;
+
+  Stream &stream (void)
+  {
+    return this->stream_;
+  }
+
+  <font color=red>// Install the protocol tasks into the stream.</font>
+  int open (void);
+};
+
+<font color=blue>#endif</font> <font color=red>/* PROTOCOL_STREAM_H */</font>
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page11.html">Continue This Tutorial</A>]</CENTER>
+

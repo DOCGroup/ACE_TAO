@@ -1,0 +1,138 @@
+project(*AC_CLD) : acelib, ssl {
+  sharedname = AC_CLD
+  dynamicflags = AC_CLD_BUILD_DLL
+  Source_Files {
+    AC_Client_Logging_Daemon.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*AIO_CLD) : acelib, ssl {
+  sharedname = AIO_CLD
+  dynamicflags = AIO_CLD_BUILD_DLL
+  Source_Files {
+    AIO_Client_Logging_Daemon.cpp
+  }
+}
+
+project(*CLD) : acelib {
+  sharedname = CLD
+  dynamicflags = CLD_BUILD_DLL
+  Source_Files {
+    Client_Logging_Daemon.cpp
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*Configurable_Logging_Server) : aceexe {
+  exename = configurable_logging_server
+  Source_Files {
+    Configurable_Logging_Server.cpp
+    Service_Reporter.cpp
+  }
+}
+
+project(*Display_Logfile) : aceexe {
+  exename = display_logfile
+  Source_Files {
+    display_logfile.cpp
+  }
+}
+
+project(*Reactor_Logging_Server) : aceexe {
+  exename = reactor_logging_server
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Event_Handler_Ex.cpp
+    Logging_Handler.cpp
+    Reactor_Logging_Server.cpp
+  }
+}
+
+project(*Select_Reactor_Logging_Server) : aceexe {
+  exename = select_reactor_loggin_server
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Event_Handler_Ex.cpp
+    Logging_Handler.cpp
+    Select_Reactor_Logging_Server.cpp
+  }
+}
+
+project(*SLD) : acelib {
+  sharedname = SLD
+  dynamicflags = SLD_BUILD_DLL
+  Source_Files {
+    SLD.cpp
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*SLDex) : acelib {
+  sharedname = SLDex
+  dynamicflags = SLDEX_BUILD_DLL
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Event_Handler_Ex.cpp
+    Logging_Handler.cpp
+    Reactor_Logging_Server_Adapter.cpp
+    Server_Shutdown.cpp
+    SLDex.cpp
+  }
+}
+
+project(*SR_Configurable_Logging_Server) : aceexe {
+  exename = sr_configurable_logging_server
+  Source_Files {
+    SR_Configurable_Logging_Server.cpp
+  }
+}
+
+project(*TP_Reactor_Logging_Server) : aceexe {
+  exename = tp_reactor_logging_server
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Event_Handler_Ex.cpp
+    Logging_Handler.cpp
+    TP_Reactor_Logging_Server.cpp
+  }
+}
+
+project(*TPCLS) : acelib, ssl {
+  sharedname = TPCLS
+  dynamicflags = TPCLS_BUILD_DLL
+  Source_Files {
+    TPC_Logging_Server.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*TPLS) : acelib {
+  sharedname = TPLS
+  dynamicflags = TPLS_BUILD_DLL
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Handler.cpp
+    TP_Logging_Server.cpp
+  }
+}
+
+project(*WFMO_Reactor_Logging_Server) : aceexe {
+  exename = wfmo_reactor_logging_server
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Event_Handler_Ex.cpp
+    Logging_Handler.cpp
+    WFMO_Reactor_Logging_Server.cpp
+  }
+}

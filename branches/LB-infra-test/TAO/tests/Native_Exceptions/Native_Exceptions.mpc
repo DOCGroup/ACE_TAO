@@ -1,0 +1,20 @@
+project(*Server): taoserver {
+  idlflags  = -Ge 0 -Sc
+  requires += exceptions
+
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient {
+  idlflags  = -Ge 0 -Sc
+  requires += exceptions
+
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

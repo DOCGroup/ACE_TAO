@@ -1,0 +1,78 @@
+#----------------------------------------------------------------------------
+#       GNU Makefile
+#----------------------------------------------------------------------------
+MAKEFILE        = Makefile.ACEXML
+DEPENDENCY_FILE = .depend.Makefile.ACEXML
+LIB_UNCHECKED   = libACEXML.a
+SHLIB_UNCHECKED = libACEXML.$(SOEXT)
+
+
+
+FILES = \
+  AttributesImpl \
+  Attributes_Def_Builder \
+  CharStream \
+  DefaultHandler \
+  DTD_Manager \
+  Element_Def_Builder \
+  Encoding \
+  Env \
+  Exception \
+  FileCharStream \
+  HttpCharStream \
+  InputSource \
+  LocatorImpl \
+  Mem_Map_Stream \
+  NamespaceSupport \
+  SAXExceptions \
+  StrCharStream \
+  StreamFactory \
+  Transcode \
+  URL_Addr \
+  Validator \
+  XMLFilterImpl \
+  XML_Codecs \
+  ZipCharStream
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+LIB   = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
+
+ACE_SHLIBS = -lACE
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+LSRC   = $(addsuffix .cpp, $(FILES))
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+CPPFLAGS     += -I../..
+ifeq ($(shared_libs),1)
+  ifneq ($(SHLIB),)
+    CPPFLAGS += -DACEXML_BUILD_DLL
+  endif
+endif
+ifeq ($(static_libs),1)
+  ifneq ($(LIB),)
+    CPPFLAGS += -DACE_AS_STATIC_LIBS
+  endif
+endif
+
+
+LDFLAGS      += -L../../ace
+
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+realclean: clean 
+ifneq ($(GENERATED_DIRTY),)
+	-$(RM) -r $(GENERATED_DIRTY)
+endif
+

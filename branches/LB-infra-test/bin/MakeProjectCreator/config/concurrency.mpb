@@ -1,0 +1,5 @@
+project : portableserver {
+  after   += CosConcurrency
+  libs    += TAO_CosConcurrency
+  comps   += Concurrency
+}

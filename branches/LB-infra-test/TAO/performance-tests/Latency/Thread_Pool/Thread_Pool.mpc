@@ -1,0 +1,16 @@
+project(*latency server): taoserver, strategies {
+  Source_Files {
+    Roundtrip.cpp
+    Worker_Thread.cpp
+    server.cpp
+  }
+}
+
+project(*latency client): taoclient, strategies {
+  Source_Files {
+    TestC.cpp
+    Client_Task.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,3 @@
+project(EC_Multiple): rteventexe, rtoldevent, rtschedevent, naming, iortable, messaging {
+  exename  = EC_Multiple
+}
