@@ -134,6 +134,7 @@ OBJFILES = \
 	$(OBJDIR)\ORBInitInfo.obj \
 	$(OBJDIR)\ORBInitializer_Registry.obj \
 	$(OBJDIR)\ORB_Core.obj \
+	$(OBJDIR)\ORB_Core_Auto_Ptr.obj \
 	$(OBJDIR)\ORB_Table.obj \
 	$(OBJDIR)\Object.obj \
 	$(OBJDIR)\ObjectIDList.obj \

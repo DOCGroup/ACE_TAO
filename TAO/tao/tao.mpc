@@ -125,6 +125,7 @@ project : acelib, taoversion, core {
       OctetSeqC.cpp
       StringSeqC.cpp
       ORB_Core.cpp
+      ORB_Core_Auto_Ptr.cpp
       Collocation_Resolver.cpp
       Default_Collocation_Resolver.cpp
       Stub_Factory.cpp
