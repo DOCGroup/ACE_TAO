@@ -1,3 +1,9 @@
+Sun May 23 16:37:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event/lib/Driver.cpp:
+	  On IRIX the threads were not activated because the priority was
+	  too high.
+
 Sun May 23 16:06:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:

@@ -674,6 +674,12 @@ EC_Driver::activate_tasks (CORBA::Environment &)
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
 
+  if (ACE_BIT_DISABLED (this->thr_create_flags_, THR_SCHED_FIFO))
+    {
+      priority =
+        ACE_Sched_Params::priority_min (ACE_SCHED_OTHER);
+    }
+
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       this->tasks_[i] = this->allocate_task (i);
@@ -682,8 +688,9 @@ EC_Driver::activate_tasks (CORBA::Environment &)
                                      1, 0, priority) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Cannot activate thread for supplier %d\n",
-                      i));
+                      "EC_Driver (%P|%t) Cannot activate thread "
+                      "for supplier %d\n%p\n",
+                      i, "EC_Driver - OS error is:"));
         }
     }
 }
