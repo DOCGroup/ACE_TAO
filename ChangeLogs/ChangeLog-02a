@@ -1,3 +1,9 @@
+Thu Oct 18 20:42:55 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Proactor_Test.cpp:
+
+	  Fixed Unicode build errors.
+
 Thu Oct 18 19:52:44 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 	* ace/SString.h: clarify example in comments to ACE_Tokenize
