@@ -102,8 +102,8 @@ public:
   // octet sequence is small enough and there is room in the current
   // message block it is more efficient just to copy the buffer.
 
-  int use_IIOP_lite_protocol (void) const;
-  void use_IIOP_lite_protocol (int);
+  int use_lite_protocol (void) const;
+  void use_lite_protocol (int);
   // The ORB will use a modified version of IIOP that minimizes the
   // header size. By default we use the standard IIOP protocol.
 
@@ -150,8 +150,8 @@ private:
   // Control the strategy for copying vs. appeding octet sequences in
   // CDR streams.
 
-  int use_IIOP_lite_protocol_;
-  // For selecting a liteweight IIOP protocol.
+  int use_lite_protocol_;
+  // For selecting a liteweight version of the GIOP protocol.
 
   int use_dotted_decimal_addresses_;
   // For selecting a address notation

@@ -1,133 +1,148 @@
 // $Id$
 
-ACE_INLINE
-IIOP::Version::Version (CORBA::Octet maj, CORBA::Octet min)
-  : major (maj),
-    minor (min)
-{
-}
-
-ACE_INLINE
-IIOP::Profile::Profile (const char *h,
-                        CORBA::UShort p,
-                        const TAO_opaque &key,
-                        const ACE_INET_Addr &addr)
-  : host (0)
-{
-  this->set (h, p, key, addr);
-}
-
-ACE_INLINE
-IIOP::Profile::Profile (void)
-  : host (0),
-    port (0)
-{
-}
-
-ACE_INLINE
-IIOP::Profile::Profile (const IIOP::Profile &src)
-  : host (0)
-{
-  this->set (src.host,
-             src.port,
-             src.object_key,
-             src.object_addr_);
-}
-
-ACE_INLINE
-IIOP::Profile::~Profile (void)
-{
-  delete [] this->host;
-}
-
-ACE_INLINE IIOP::Profile &
-IIOP::Profile::operator= (const IIOP::Profile &src)
-{
-  this->set (src.host,
-             src.port,
-             src.object_key,
-             src.object_addr_);
-  return *this;
-}
-
-ACE_INLINE int
-IIOP::Profile::operator== (const IIOP::Profile &rhs)
-{
-  return 
-    this->object_key == rhs.object_key && 
-    this->port == rhs.port && 
-    ACE_OS::strcmp (this->host, rhs.host) == 0 && 
-    this->iiop_version.minor == rhs.iiop_version.minor && 
-    this->iiop_version.major == rhs.iiop_version.major;
-}
-
-ACE_INLINE void
-IIOP::Profile::reset_object_addr (void)
-{
-  this->object_addr_.set (this->port, this->host);
-}
-
-ACE_INLINE ACE_INET_Addr &
-IIOP::Profile::object_addr (void)
-{
-  return this->object_addr_;
-}
+// @@ Get rid of profile specific stuff, it is now in it's own class and
+// file. fredk
 
 ACE_INLINE
 IIOP_Object::~IIOP_Object (void)
 {
-  assert (this->refcount_ == 0);
-  delete this->fwd_profile_;
-  delete this->fwd_profile_lock_ptr_;
-  
   // Cleanup hint
-  if (this->handler_ != 0)
-    this->handler_->cleanup_hint ();
+  if (profile_in_use_ != 0        &&
+      profile_in_use_ != profile_ &&
+      profile_in_use_ != fwd_profile_)
+  {
+    this->profile_in_use_->reset_hint ();
+    delete this->profile_in_use_;
+  }
+
+  this->profile_in_use_ = 0;
+
+  if (this->profile_ != 0) 
+  {
+    this->profile_->reset_hint ();
+    delete this->profile_;
+    this->profile_ = 0;
+  }
+
+  if (this->fwd_profile_)
+  {
+    this->fwd_profile_ ->reset_hint ();
+    delete this->fwd_profile_;
+    this->fwd_profile_ = 0;
+  }
+
+  assert (this->refcount_ == 0);
 }
 
 ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id)
   : STUB_Object (repository_id),
+    profile_ (0),
+    profile_in_use_ (0),
     fwd_profile_ (0),
+    fwd_profile_lock_ptr_ (0),
     fwd_profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
     refcount_ (1),
     use_locate_request_ (0),
-    first_locate_request_ (0),
-    handler_ (0)
+    first_locate_request_ (0)
 {
+  this->profile_ = this->profile_in_use_ = new TAO_IIOP_Profile;
   this->fwd_profile_lock_ptr_ = 
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
 }
 
 ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id,
-                          const char *host,
-                          CORBA::UShort port,
-                          const TAO_opaque &object_key,
-                          const ACE_INET_Addr &addr)
+                          const TAO_Profile &profile)
   : STUB_Object (repository_id),
-    profile (host, port, object_key, addr),
+    profile_ (0),
+    profile_in_use_ (0),
     fwd_profile_ (0),
+    fwd_profile_lock_ptr_ (0),
     fwd_profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
     refcount_ (1),
     use_locate_request_ (0),
-    first_locate_request_ (0),
-    handler_ (0)
+    first_locate_request_ (0)
 {
+  // @@ XXX need to verify type and deal with wrong types
+  const TAO_IIOP_Profile &pfile = ACE_dynamic_cast (const TAO_IIOP_Profile &, profile);
+  this->profile_ = this->profile_in_use_ = new TAO_IIOP_Profile (pfile);
   this->fwd_profile_lock_ptr_ =  
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
 }
 
+ACE_INLINE
+IIOP_Object::IIOP_Object (char *repository_id,
+                          const TAO_Profile *profile)
+  : STUB_Object (repository_id),
+    profile_ (0),
+    profile_in_use_ (0),
+    fwd_profile_ (0),
+    fwd_profile_lock_ptr_ (0),
+    fwd_profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0)
+{
+  // @@ XXX need to verify type and deal with wrong types
+  const TAO_IIOP_Profile *pfile = ACE_dynamic_cast (const TAO_IIOP_Profile *, profile);
+  this->profile_ = this->profile_in_use_ = new TAO_IIOP_Profile (pfile);
+  this->fwd_profile_lock_ptr_ =  
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
+}
 
 ACE_INLINE
-IIOP::Profile *
+TAO_Profile *
+IIOP_Object::profile_in_use (void)
+{
+  return this->profile_in_use_;
+}
+
+ACE_INLINE
+TAO_Profile *
+IIOP_Object::set_profile_in_use (TAO_Profile *pfile)
+{
+  if (pfile->tag () == TAO_IOP_TAG_INTERNET_IOP)
+  {
+    TAO_IIOP_Profile *p =
+            ACE_dynamic_cast (TAO_IIOP_Profile *, pfile);
+    return (this->profile_in_use_ = p);
+  } else {
+    return 0;
+  }
+}
+
+ACE_INLINE
+TAO_Profile *
+IIOP_Object::set_profile_in_use (void)
+{
+  return this->profile_in_use_ = this->profile_;
+}
+
+ACE_INLINE
+TAO_Profile *
+IIOP_Object::get_profile (void)
+{
+  // @@ should verify type ... but the STUB object needs redoing anyway
+  //    for multiple protocols so willdeal with it then.
+  if (profile_in_use_)
+    return new TAO_IIOP_Profile (ACE_dynamic_cast(TAO_IIOP_Profile *, profile_in_use_));
+  else
+    return 0;
+}
+
+ACE_INLINE
+TAO_Profile *
 IIOP_Object::get_fwd_profile_i (void)
 {
   return this->fwd_profile_;
 }
 
 ACE_INLINE
-IIOP::Profile *
+TAO_Profile *
 IIOP_Object::get_fwd_profile (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
@@ -138,23 +153,28 @@ IIOP_Object::get_fwd_profile (void)
 }
 
 
+// set_fwd_profile is currently called with either an arg of NULL
+// or with a pointer to another IIOP_Object's profile_in_use_.
 ACE_INLINE
-IIOP::Profile *
-IIOP_Object::set_fwd_profile (IIOP::Profile *new_profile)
+TAO_Profile *
+IIOP_Object::set_fwd_profile (const TAO_Profile *new_profile)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
                             guard, 
                             *this->fwd_profile_lock_ptr_, 
                             0));
-  IIOP::Profile *old = this->fwd_profile_;
+  TAO_Profile *old = this->fwd_profile_;
   if (new_profile != 0)
     {
       delete this->fwd_profile_;
+      this->fwd_profile_ = 0;
+      // @@ HACK, need to verify type here!
+      const TAO_IIOP_Profile *iiop_pfile = 
+                       ACE_dynamic_cast(const TAO_IIOP_Profile *, new_profile);
       ACE_NEW_RETURN (this->fwd_profile_,
-                      IIOP::Profile (),
+                      TAO_IIOP_Profile(iiop_pfile),
                       0);
-      *this->fwd_profile_ = *new_profile;
-      // use the copy operator on IIOP_Profile
+      // use the copy constructor!
     }
   return old;
 }
@@ -189,17 +209,3 @@ IIOP_Object::use_locate_requests (CORBA::Boolean use_it)
       this->use_locate_request_ = 0;
     }   
 } 
-
-ACE_INLINE TAO_Client_Connection_Handler *&
-IIOP_Object::handler (void)
-{
-  return this->handler_;
-}
-
-ACE_INLINE void 
-IIOP_Object::reset_handler (void)
-{
-  this->handler_->cleanup_hint ();
-  this->handler_ = 0;
-}
-

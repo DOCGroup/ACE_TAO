@@ -107,7 +107,7 @@ private:
   // weight version.
 
 protected:
-  IIOP_Object *data_;
+  STUB_Object *data_;
   // The object on which this invocation is going.
 
   const char *opname_;

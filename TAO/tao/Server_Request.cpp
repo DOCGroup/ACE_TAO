@@ -155,7 +155,7 @@ IIOP_ServerRequest::parse_header_lite (CORBA::Environment &env)
 void
 IIOP_ServerRequest::parse_header (CORBA::Environment &env)
 {
-  if (this->orb_core_->orb_params ()->use_IIOP_lite_protocol ())
+  if (this->orb_core_->orb_params ()->use_lite_protocol ())
     this->parse_header_lite (env);
   else
     this->parse_header_std (env);

@@ -49,6 +49,7 @@ typedef CORBA::ULong TAO_IOP_Profile_ID;
 
 enum
 {
+  TAO_IOP_TAG_INVALID = -1,        // 
   TAO_IOP_TAG_INTERNET_IOP = 0,        // IIOP
   TAO_IOP_TAG_MULTIPLE_COMPONENTS = 1, // DCE-CIOP
   // = This is a subset of the list of other profile tags.
@@ -310,7 +311,7 @@ public:
     MessageError = 6            // by both.
   };
 
-  static void close_connection (TAO_Client_Connection_Handler *&handle,
+  static void close_connection (TAO_Transport *transport,
                                 void *ctx);
   // Close a connection, first sending GIOP::CloseConnection.
 
@@ -319,12 +320,12 @@ public:
                                        TAO_ORB_Core* orb_core);
   // Build the header for a message of type <t> into stream <msg>.
 
-  static CORBA::Boolean send_request (TAO_SVC_HANDLER *handler,
+  static CORBA::Boolean send_request (TAO_Transport *transport,
                                       TAO_OutputCDR &stream,
                                       TAO_ORB_Core* orb_core);
   // Send message, returns TRUE if success, else FALSE.
 
-  static TAO_GIOP::Message_Type recv_request (TAO_SVC_HANDLER *&handler,
+  static TAO_GIOP::Message_Type recv_request (TAO_Transport *transport,
                                               TAO_InputCDR &msg,
                                               TAO_ORB_Core *orb_core);
   // Reads message, returns message type from header.
@@ -334,10 +335,10 @@ public:
                         size_t len);
   // Print out a message header.
 
-  static void send_error (TAO_SVC_HANDLER *&handler);
+  static void send_error (TAO_Transport *transport);
   // Send an error message back to a caller.
 
-  static ssize_t read_buffer (TAO_SOCK_Stream &peer,
+  static ssize_t read_buffer (TAO_Transport *transport,
                               char *buf,
                               size_t len);
   // Loop on data read ... this is required since <recv> won't block

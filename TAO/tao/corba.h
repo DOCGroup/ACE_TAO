@@ -218,9 +218,18 @@ operator>> (TAO_InputCDR&, TAO_opaque&);
 #include "tao/POA.h"
 
 // TAO specific includes
+
+
 #include "tao/params.h"
 
 #include "tao/Connect.h"
+// Pluggable Protocol Related Includes first
+#include "tao/Pluggable.h"
+#include "tao/IIOP_Profile.h"
+#include "tao/IIOP_Transport.h"
+#include "tao/IIOP_Connector.h"
+#include "tao/IIOP_Acceptor.h"
+// end pluggable protocols
 #include "tao/ORB_Core.h"
 #include "tao/Active_Object_Map.h"
 #include "tao/Operation_Table.h"

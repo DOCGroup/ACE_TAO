@@ -286,7 +286,8 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       IIOP_Object *iiopobj =
         ACE_dynamic_cast (IIOP_Object *, obj->_stubobj ());
 
-      IIOP::Profile *profile = &iiopobj->profile;
+      TAO_IIOP_Profile *profile = 
+        ACE_dynamic_cast (TAO_IIOP_Profile *, iiopobj->profile_in_use());
 
       // STRING, a type ID hint
       stream->encode (CORBA::_tc_string, &iiopobj->type_id, 0, env);
@@ -304,7 +305,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       // this longword; it guarantees the rest is aligned for us.
       u_int hostlen;
 
-      hostlen = ACE_OS::strlen ((char *) profile->host);
+      hostlen = ACE_OS::strlen ((char *) profile->host ());
       CORBA::ULong encap_len =
         1                              // byte order
         + 1                            // version major
@@ -316,7 +317,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
         + 2                            // port
         + ( hostlen & 02)              // optional pad short
         + 4                            // sizeof (key length)
-        + profile->object_key.length (); // key length.
+        + profile->object_key ().length (); // key length.
       stream->write_ulong (encap_len);
 
 #if 0
@@ -328,17 +329,17 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       stream->write_octet (TAO_ENCAP_BYTE_ORDER);
 
       // IIOP::Version, two characters (version 1.0) padding
-      stream->write_char (profile->iiop_version.major);
-      stream->write_char (profile->iiop_version.minor);
+      stream->write_char (profile->version()->major);
+      stream->write_char (profile->version()->minor);
 
       // STRING hostname from profile
-      stream->encode (CORBA::_tc_string, &profile->host, 0, env);
+      stream->encode (CORBA::_tc_string, &profile->host_, 0, env);
 
       // UNSIGNED SHORT port number
-      stream->write_ushort (profile->port);
+      stream->write_ushort (profile->port_);
 
       // OCTET SEQUENCE for object key
-      stream->encode (TC_opaque, &profile->object_key, 0, env);
+      stream->encode (TC_opaque, &profile->object_key (), 0, env);
 
 #if 0
       // This is good for debugging the computation of the key

@@ -42,9 +42,6 @@ public:
   ~TAO_Cached_Connector_Lock (void);
 };
 
-typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
-        TAO_CONNECTOR;
-
 typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
                                     TAO_SOCK_CONNECTOR,
                                     TAO_Cached_Connector_Lock>
@@ -55,7 +52,6 @@ typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
 
 typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
         TAO_NULL_ACTIVATION_STRATEGY;
-
 
 // Forward decl.
 class TAO_Resource_Factory;
@@ -118,13 +114,13 @@ public:
   // Sets the thread-specific pointer to the new POA Current state,
   // returning a pointer to the existing POA Current state.
 
-  // = Set/get the connector.
-  TAO_CONNECTOR *connector (TAO_CONNECTOR *c);
-  TAO_CONNECTOR *connector (void);
+  // = Set/get the connector registry - used to just be the connector.
+  TAO_Connector_Registry *connector_registry (TAO_Connector_Registry *c);
+  TAO_Connector_Registry *connector_registry (void);
 
   // = Set/get the acceptor.
-  TAO_ACCEPTOR *acceptor (TAO_ACCEPTOR *a);
-  TAO_ACCEPTOR *acceptor (void);
+  TAO_Acceptor *acceptor (TAO_Acceptor *a);
+  TAO_Acceptor *acceptor (void);
   // Accessor which returns the acceptor.
 
   // = Set/get pointer to the ORB.
@@ -287,7 +283,8 @@ protected:
   int fini (void);
   // Final termination hook, typically called by CORBA::ORB's DTOR.
 
-  int preconnect (const char *preconnections);
+  // int preconnect (const char *preconnections);
+  // @@ Now defined in IIOP_Connector
   // Attempt to establish connections specified in <preconnections>.
   // Returns -1 in case of error, or the number of connections
   // actually established.
@@ -304,8 +301,9 @@ protected:
   ACE_Thread_Manager *thr_mgr_;
   // Used to manage threads within the ORB
 
-  TAO_CONNECTOR *connector_;
-  // The connector actively initiating connection requests.
+  TAO_Connector_Registry *connector_registry_;
+  // The connector registry which all active connecters must register themselves
+  // with.
 
   CORBA::ORB_ptr orb_;
   // Pointer to the ORB.
@@ -324,7 +322,12 @@ protected:
   TAO_ORB_Parameters *orb_params_;
   // Parameters used by the ORB.
 
-  TAO_ACCEPTOR *acceptor_;
+  // @@ Depricated!
+  ACE_INET_Addr *addr_;
+  // The address of the endpoint on which we're listening for
+  // connections and requests.
+
+  TAO_Acceptor *acceptor_;
   // The acceptor passively listening for connection requests.
 
   TAO_POA_Current *poa_current_;
@@ -472,7 +475,10 @@ public:
   virtual ACE_Thread_Manager *get_thr_mgr (void);
   // Return an <ACE_Thread_Manager> to be utilized.
 
-  virtual TAO_CONNECTOR *get_connector (void);
+  virtual TAO_Connector *get_connector (void);
+  // Return an Connector to be utilized.
+
+  virtual TAO_Connector_Registry *get_connector_registry (void);
   // Return an Connector to be utilized.
 
   virtual TAO_CACHED_CONNECT_STRATEGY *get_cached_connect_strategy (void);
@@ -486,7 +492,7 @@ public:
   // This no-op activation strategy prevents the cached connector from
   // calling the service handler's <open> method multiple times.
 
-  virtual TAO_ACCEPTOR *get_acceptor (void);
+  virtual TAO_Acceptor *get_acceptor (void);
   // Return an Acceptor to be utilized.
 
   virtual TAO_ORB_Parameters *get_orb_params (void);
@@ -563,8 +569,12 @@ public:
     ACE_Thread_Manager tm_;
     // The Thread Manager
 
-    TAO_CONNECTOR c_;
-    // The Connector
+	  TAO_Connector_Registry cr_;
+    // The Connector Registry!
+
+	  TAO_IIOP_Connector c_;
+    // The Connector, HACK to create the first connector which happens to be
+    // IIOP.  
 
     TAO_CACHED_CONNECT_STRATEGY cached_connect_strategy_;
     // The Cached Connect Strategy
@@ -577,7 +587,7 @@ public:
     // This no-op activation strategy prevents the cached connector from
     // calling the service handler's <open> method multiple times.
 
-    TAO_ACCEPTOR a_;
+    TAO_IIOP_Acceptor a_;
     // The Acceptor
 
     TAO_ORB_Parameters orbparams_;

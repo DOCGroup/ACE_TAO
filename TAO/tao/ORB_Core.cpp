@@ -31,49 +31,10 @@ TAO_Collocation_Table_Lock::~TAO_Collocation_Table_Lock (void)
   this->lock_ = 0;
 }
 
-TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (void)
-{
-  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_cached_connector_lock ();
-}
-
-TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
-{
-  delete this->lock_;
-  this->lock_ = 0;
-}
-
-TAO_ST_Connect_Creation_Strategy::TAO_ST_Connect_Creation_Strategy (ACE_Thread_Manager *t)
-  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
-{
-}
-
-TAO_MT_Connect_Creation_Strategy::TAO_MT_Connect_Creation_Strategy (ACE_Thread_Manager *t)
-  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
-{
-}
-
-int
-TAO_ST_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
-{
-  if (sh == 0)
-    ACE_NEW_RETURN (sh, TAO_ST_Client_Connection_Handler (this->thr_mgr_), -1);
-
-  return 0;
-}
-
-int
-TAO_MT_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
-{
-  if (sh == 0)
-    ACE_NEW_RETURN (sh, TAO_MT_Client_Connection_Handler (this->thr_mgr_), -1);
-
-  return 0;
-}
-
 TAO_ORB_Core::TAO_ORB_Core (void)
   : reactor_ (0),
     thr_mgr_ (0),
-    connector_ (0),
+    connector_registry_ (0),
     orb_ (0),
     root_poa_ (0),
     oa_params_ (0),
@@ -503,7 +464,15 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   this->reactor (trf->get_reactor ());
   this->thr_mgr (trf->get_thr_mgr ());
-  this->connector (trf->get_connector ());
+
+  // Init the connector registry ... this initializes the registry
+  // pointer in the ORB core.  The actual registry is either in TSS or global
+  // memory.
+  this->connector_registry (trf->get_connector_registry ());
+  // @@ Make sure the IIOP_Connector is registered with the connector registry. 
+  this->connector_registry ()->add_connector (trf->get_connector ());
+
+  // @@ Init acceptor ... This needs altering for Pluggable Protocols! fredk
   this->acceptor (trf->get_acceptor ());
 
   this->input_cdr_dblock_allocator_ =
@@ -553,7 +522,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   this->orb_params ()->name_service_port (ns_port);
   this->orb_params ()->trading_service_ior (ts_ior);
   this->orb_params ()->trading_service_port (ts_port);
-  this->orb_params ()->use_IIOP_lite_protocol (iiop_lite);
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   if (rcv_sock_size != 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
@@ -562,18 +530,21 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   if (cdr_tradeoff >= 0)
     this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
 
+  this->orb_params ()->use_lite_protocol (iiop_lite);
 
-  if (this->connector ()->open (this->reactor (),
-                                trf->get_null_creation_strategy (),
-                                trf->get_cached_connect_strategy (),
-                                trf->get_null_activation_strategy ()) != 0)
+  this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
+
+  // tell the registry to open all registered interfaces! fredk
+  if (this->connector_registry ()->open (trf, this->reactor ()) != 0)
     return -1;
 
+  // Have registry parse the preconnects 
   if (preconnections)
-    this->preconnect (preconnections);
+    this->connector_registry ()->preconnect (preconnections);
 
   return 0;
 }
+
 
 int
 TAO_ORB_Core::set_endpoint (int dotted_decimal_addresses,
@@ -642,139 +613,10 @@ TAO_ORB_Core::set_endpoint (int dotted_decimal_addresses,
 }
 
 int
-TAO_ORB_Core::preconnect (const char* the_preconnections)
-{
-  // It would be good to use auto_ptr<> to guard against premature
-  // termination and, thus, leaks.
-  char *preconnections = ACE_OS::strdup (the_preconnections);
-
-#if 0
-  if (preconnections)
-    {
-      ACE_INET_Addr dest;
-      TAO_Client_Connection_Handler *handler;
-      ACE_Unbounded_Stack<TAO_Client_Connection_Handler *> handlers;
-
-      char *nextptr = 0;
-      char *where = 0;
-      for (where = ACE::strsplit_r (preconnections, ",", nextptr);
-           where != 0;
-           where = ACE::strsplit_r (0, ",", nextptr))
-        {
-          char *tport = 0;
-          char *thost = where;
-          char *sep = ACE_OS::strchr (where, ':');
-
-          if (sep)
-            {
-              *sep = '\0';
-              tport = sep + 1;
-
-              dest.set (ACE_OS::atoi (tport), thost);
-
-              // Try to establish the connection
-              handler = 0;
-              if (this->connector ()->connect (handler, dest) == 0)
-                {
-                  // Save it for later so we can mark it as idle
-                  handlers.push (handler);
-                }
-              else
-                ACE_ERROR ((LM_ERROR,
-                            "(%P|%t) Unable to preconnect to host '%s', port %d.\n",
-                            dest.get_host_name (),
-                            dest.get_port_number ()));
-            }
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Yow!  Couldn't find a ':' separator in '%s' spec.\n",
-                        where));
-        }
-
-      // Walk the stack of handlers and mark each one as idle now.
-      handler = 0;
-      while (handlers.pop (handler) == 0)
-        handler->idle ();
-
-    }
-#else
-  int successes = 0;
-  if (preconnections)
-    {
-      ACE_INET_Addr dest;
-      ACE_Unbounded_Stack<ACE_INET_Addr> dests;
-
-      char *nextptr = 0;
-      char *where = 0;
-      for (where = ACE::strsplit_r (preconnections, ",", nextptr);
-           where != 0;
-           where = ACE::strsplit_r (0, ",", nextptr))
-        {
-          char *tport = 0;
-          char *thost = where;
-          char *sep = ACE_OS::strchr (where, ':');
-
-          if (sep)
-            {
-              *sep = '\0';
-              tport = sep + 1;
-
-              dest.set (atoi(tport), thost);
-              dests.push (dest);
-            }
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Yow!  Couldn't find a ':' separator in '%s' spec.\n", where));
-        }
-
-      // Create an array of addresses from the stack, as well as an
-      // array of eventual handlers.
-      size_t num_connections = dests.size ();
-      ACE_INET_Addr *remote_addrs = 0;
-      TAO_Client_Connection_Handler **handlers = 0;
-      char *failures = 0;
-
-      ACE_NEW_RETURN (remote_addrs,
-                      ACE_INET_Addr[num_connections],
-                      -1);
-      ACE_NEW_RETURN (handlers,
-                      TAO_Client_Connection_Handler*[num_connections],
-                      -1);
-      ACE_NEW_RETURN (failures,
-                      char[num_connections],
-                      -1);
-
-      // Fill in the remote address array
-      size_t index = 0;
-      while (dests.pop (remote_addrs[index]) == 0)
-        handlers[index++] = 0;
-
-      // Finally, try to connect.
-      this->connector ()->connect_n (num_connections,
-                                     handlers,
-                                     remote_addrs,
-                                     failures);
-      // Loop over all the failures and set the handlers that
-      // succeeded to idle state.
-      for (index = 0; index < num_connections; index++)
-        {
-          if (! failures[index])
-            {
-              handlers[index]->idle ();
-              successes++;
-            }
-        }
-    }
-#endif /* 0 */
-  ACE_OS::free (preconnections);
-
-  return successes;
-}
-
-int
 TAO_ORB_Core::fini (void)
 {
-  this->connector ()->close ();
+  // Ask the registry to close all registered connectors!
+  this->connector_registry ()->close_all ();
 
   TAO_Internal::close_services ();
 
@@ -941,7 +783,7 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
   this->thr_mgr (p->thr_mgr ());
   // We should use the same thread_manager.
 
-  this->connector (p->connector ());
+  this->connector_registry (p->connector_registry ());
   // We'll use the spawning thread's connector.
 
   this->orb (p->orb ());
@@ -1345,8 +1187,11 @@ rtype TAO_Resource_Factory::methodname(void)\
 
 IMPLEMENT_PRE_GET_METHOD(get_reactor, ACE_Reactor *, r_)
 IMPLEMENT_PRE_GET_METHOD(get_thr_mgr, ACE_Thread_Manager *, tm_)
-IMPLEMENT_PRE_GET_METHOD(get_acceptor, TAO_ACCEPTOR *, a_)
-IMPLEMENT_PRE_GET_METHOD(get_connector, TAO_CONNECTOR *, c_)
+IMPLEMENT_PRE_GET_METHOD(get_acceptor, TAO_Acceptor *, a_)
+// Added the default IIOP connector to the resource factor to take advantage
+// of these macros for storing this reference in TSS or global mem.
+IMPLEMENT_PRE_GET_METHOD(get_connector_registry, TAO_Connector_Registry *, cr_)
+IMPLEMENT_PRE_GET_METHOD(get_connector, TAO_Connector *, c_)
 IMPLEMENT_PRE_GET_METHOD(get_cached_connect_strategy, TAO_CACHED_CONNECT_STRATEGY *, cached_connect_strategy_)
 IMPLEMENT_PRE_GET_METHOD(get_null_creation_strategy, TAO_NULL_CREATION_STRATEGY *, null_creation_strategy_)
 IMPLEMENT_PRE_GET_METHOD(get_null_activation_strategy, TAO_NULL_ACTIVATION_STRATEGY *, null_activation_strategy_)
@@ -1605,6 +1450,47 @@ TAO_ORB_Core_instance (void)
   // thread-specific ORB Core Singleton.
   return TAO_ORB_CORE::instance ();
 }
+
+
+TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (void)
+{
+  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_cached_connector_lock ();
+}
+
+TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
+{
+  delete this->lock_;
+  this->lock_ = 0;
+}
+
+TAO_ST_Connect_Creation_Strategy::TAO_ST_Connect_Creation_Strategy (ACE_Thread_Manager *t)
+  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
+{
+}
+
+TAO_MT_Connect_Creation_Strategy::TAO_MT_Connect_Creation_Strategy (ACE_Thread_Manager *t)
+  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
+{
+}
+
+int
+TAO_ST_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
+{
+  if (sh == 0)
+    ACE_NEW_RETURN (sh, TAO_ST_Client_Connection_Handler (this->thr_mgr_), -1);
+
+  return 0;
+}
+
+int
+TAO_MT_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
+{
+  if (sh == 0)
+    ACE_NEW_RETURN (sh, TAO_MT_Client_Connection_Handler (this->thr_mgr_), -1);
+
+  return 0;
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>;
