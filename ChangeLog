@@ -1,3 +1,9 @@
+Sat Mar 13 18:06:57 2004  Olli Savia  <ops@iki.fi>
+
+	* include/makeinclude/platform_g++_common.GNU:
+	* ace/config-lynxos.h:
+	  Enabled implicit template instantiation for LynxOS 3.x.
+
 Sat Mar 13 09:43:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Dirent_Test.cpp:
