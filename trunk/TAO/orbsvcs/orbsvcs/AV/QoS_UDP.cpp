@@ -684,7 +684,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
   ACE_QoS_Params qos_params;
 
-  ACE_Flow_Spec *ace_flow_spec = 0;
+  ACE_Flow_Spec ace_flow_spec;
 
   ACE_QoS* ace_qos = 0;
 
@@ -775,7 +775,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
     { 
   
       handler->translate (qos.QoSParams, 
-			  ace_flow_spec);
+			  &ace_flow_spec);
       
       
       ACE_NEW_RETURN (ace_qos,
@@ -787,7 +787,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
       if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
 	{
 	  if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
-						    ace_flow_spec) !=0)
+						    &ace_flow_spec) !=0)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "Unable to fill simplex sender qos\n"),
 			      -1);
@@ -798,7 +798,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
       else if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
 	{
 	  if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
-						      ace_flow_spec) !=0)
+						      &ace_flow_spec) !=0)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "Unable to fill simplex receiver qos\n"),
 			      -1);
