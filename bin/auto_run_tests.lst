@@ -20,6 +20,8 @@ TAO/tests/AMI/run_test.pl: !MINIMUM
 TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM
 
 TAO/tests/OctetSeq/run_test.pl
+TAO/tests/OctetSeq/run_test1.pl
+TAO/tests/OctetSeq/run_test2.pl
 TAO/tests/Leader_Followers/run_test.pl: !ST
 TAO/tests/Leader_Followers/run_test_mt.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl
