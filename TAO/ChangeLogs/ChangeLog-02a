@@ -1,4 +1,9 @@
-Tue Sep 20 09:05:38 2000  Balachandran Natarajan <bala@cs.wustl.edu>
+Wed Sep 20 09:34:20 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: Thanks to
+	  Andy for pointing a compile error in this file.
+
+Wed Sep 20 09:05:38 2000  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Fault_Tolerance.dsp (CFG):
 	* orbsvcs/orbsvcs/orbsvcs.dsw:
