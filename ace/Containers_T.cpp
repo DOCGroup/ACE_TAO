@@ -62,6 +62,7 @@ ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
           delete [] this->stack_;
           ACE_NEW (this->stack_,
                    T[s.size_]);
+          this->size_ = s.size_;
         }
       this->top_ = s.top_;
 
