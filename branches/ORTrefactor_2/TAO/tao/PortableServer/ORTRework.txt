@@ -1,3 +1,12 @@
+Wed Aug 25 13:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp (object_reference_template_adapter):
+          When we don't have a adapter, first see if we have a factory before
+          locking the POA, in case we then get called from POA::destroy_i()
+          and we don't have an adapter and not factory we don't grep the lock
+          and don't get a deadlock, have to solve this better, but this way I
+          can continue testing
+
 Wed Aug 25 12:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp (ior_interceptor_adapter):
