@@ -1,3 +1,8 @@
+Wed Aug 30 13:51:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableServer/Makefile:
+          Add ORB_Manager to the list of files.
+
 Wed Aug 30 13:46:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * rules.tao.GNU:
