@@ -14,7 +14,7 @@ ACE_RCSID(Misc, test_signals_1, "$Id$")
 // Number of times to allow signal to execute until we quit.
 static size_t count = 10;
 
-static void 
+static void
 my_signal_function (int sig)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -32,7 +32,7 @@ public:
     // @@ Note that this code is not portable to all OS platforms
     // since it uses print statements within signal handler context.
     ACE_DEBUG ((LM_DEBUG,
-                "Executed ACE signal handler for signal %S, count = %d\n", 
+                "Executed ACE signal handler for signal %S, count = %d\n",
 		sig,
                 count));
     count--;
@@ -53,8 +53,8 @@ public:
   }
 };
 
-int 
-main (int argc, char *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // First you need a handler for the timeout.
   My_Handler my_handler;
@@ -66,8 +66,8 @@ main (int argc, char *argv[])
     period.set (ACE_OS::atoi (argv[1]));
 
   // Set up the periodic interval timer.
-  if (ACE_Reactor::instance ()->schedule_timer 
-      (&my_handler, 
+  if (ACE_Reactor::instance ()->schedule_timer
+      (&my_handler,
        "hello",
        period,
        period) == -1)
@@ -78,7 +78,7 @@ main (int argc, char *argv[])
 
   // Set up an ACE signal handler.
 
-  if (ACE_Reactor::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler
       (SIGINT,
        &my_handler) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
@@ -92,7 +92,7 @@ main (int argc, char *argv[])
                       SIGQUIT);
   ACE_UNUSED_ARG (sig);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
 
   // This call executes the reactor events until we're finished.

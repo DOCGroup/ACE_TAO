@@ -158,7 +158,7 @@ worker (void *args)
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_Reactor *react1 = ACE_Reactor::instance ();
   ACE_Reactor *react2 = new ACE_Reactor ();

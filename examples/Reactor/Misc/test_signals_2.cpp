@@ -230,20 +230,20 @@ external_handler (int signum)
 }
 
 #if !defined (HPUX)
-int 
-main (int argc, char *[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
   // If argc > 1 then allow multiple handlers per-signal, else just
   // allow 1 handler per-signal.
   ACE_Sig_Handlers multi_handlers;
 
 #if defined (ACE_WIN32)
-  ACE_WFMO_Reactor reactor_impl (argc > 1 
-                                 ? &multi_handlers 
+  ACE_WFMO_Reactor reactor_impl (argc > 1
+                                 ? &multi_handlers
                                  : (ACE_Sig_Handler *) 0);
 #else
-  ACE_Select_Reactor reactor_impl (argc > 1 
-                                   ? &multi_handlers 
+  ACE_Select_Reactor reactor_impl (argc > 1
+                                   ? &multi_handlers
                                    : (ACE_Sig_Handler *) 0);
 #endif /* ACE_WIN32 */
   ACE_Reactor reactor (&reactor_impl);

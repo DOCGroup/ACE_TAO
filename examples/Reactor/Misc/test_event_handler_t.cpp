@@ -24,7 +24,7 @@ public:
 };
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   typedef ACE_Event_Handler_T<ACE_Test_Sig_Handler> EH_SH;
 
