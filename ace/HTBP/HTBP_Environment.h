@@ -47,8 +47,8 @@ namespace ACE
       /// Accessors to HTID URL
       /// Returns 0 on success
       /// {@
-      int get_htid_url (ACE_CString &htid_url) const;
-      int set_htid_url (const char *htid_generator_url);
+      int get_htid_url (ACE_TString &htid_url) const;
+      int set_htid_url (const ACE_TCHAR *htid_generator_url);
       /// @}
 
       /// Accessors to HTID via proxy - If value is true, HTID request goes
@@ -62,8 +62,8 @@ namespace ACE
       /// Accessors to Proxy Address
       /// Returns 0 on success
       /// {@
-      int get_proxy_host (ACE_CString &proxy_host) const;
-      int set_proxy_host (const char *proxy_host);
+      int get_proxy_host (ACE_TString &proxy_host) const;
+      int set_proxy_host (const ACE_TCHAR *proxy_host);
       /// @}
 
       /// Returns 0 on success

@@ -35,7 +35,7 @@ namespace ACE
       ID_Requestor (Environment * = 0);
 
       /// Accessor to HTID
-      char *get_HTID ();
+      ACE_TCHAR *get_HTID ();
 
     private:
       /// Connects to the remote host
@@ -45,10 +45,10 @@ namespace ACE
       int send_request (ACE_SOCK_Stream *cli_stream);
 
       unsigned port_;
-      ACE_CString host_;
-      ACE_CString url_;
+      ACE_TString host_;
+      ACE_TString url_;
 
-      static ACE_CString htid_;
+      static ACE_TString htid_;
       static ACE_SYNCH_MUTEX htid_lock_;
     };
 

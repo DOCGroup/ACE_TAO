@@ -69,7 +69,7 @@ client (void *arg)
 #endif /* 0 */
 
   ACE::HTBP::ID_Requestor req (&ht_env);
-  ACE::HTBP::Addr local(req.get_HTID());
+  ACE::HTBP::Addr local(ACE_TEXT_ALWAYS_CHAR(req.get_HTID()));
 
   char hostname [128];
 
@@ -81,7 +81,7 @@ client (void *arg)
   ACE::HTBP::Addr remote (remote_addr->get_port_number (),hostname);
 
   unsigned pport;
-  ACE_CString phost;
+  ACE_TString phost;
   ht_env.get_proxy_port(pport);
   ht_env.get_proxy_host(phost);
 
@@ -329,7 +329,7 @@ spawn (void)
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_LACKS_FORK)
-      switch (ACE_OS::fork ("child"))
+      switch (ACE_OS::fork (ACE_TEXT("child")))
         {
         case -1:
           ACE_ERROR ((LM_ERROR,

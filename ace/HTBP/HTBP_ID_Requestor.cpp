@@ -11,8 +11,8 @@ ACE_RCSID(HTBP,
           ACE_HTBP_ID_Requestor,
           "$Id$")
 
-ACE_CString ACE::HTBP::ID_Requestor::htid_;
-ACE_SYNCH_MUTEX ACE::HTBP::ID_Requestor::htid_lock_;
+ACE_TString ACE::HTBP::ID_Requestor::htid_;
+ACE_Thread_Mutex ACE::HTBP::ID_Requestor::htid_lock_;
 
 ACE::HTBP::ID_Requestor::ID_Requestor (ACE::HTBP::Environment *env)
   : port_ (0),
@@ -34,7 +34,7 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
 {
   if (port_ == 0 || host_.length() == 0)
     {
-      int host_start = url_.find ("http://") + 7;
+      int host_start = url_.find (ACE_TEXT("http://")) + 7;
       int port_sep = 0;
       int sep = 0;
       if (host_start == -1)
@@ -42,16 +42,16 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
                            ACE_TEXT("ACE::HTBP::ID_Requestor::")
                            ACE_TEXT("connect_to_server: ")
                            ACE_TEXT("invalid URL: \"%s\"\n"),
-                           ACE_TEXT_CHAR_TO_TCHAR(url_.c_str())),
+                           url_.c_str()),
                           -1);
-      port_sep = url_.find (":",(size_t)host_start);
-      sep = url_.find ("/",(size_t)host_start);
+      port_sep = url_.find (ACE_TEXT(":"),(size_t)host_start);
+      sep = url_.find (ACE_TEXT("/"),(size_t)host_start);
       if (sep == -1 || sep == host_start +1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("ACE::HTBP::ID_Requestor::")
                            ACE_TEXT("connect_to_server: ")
                            ACE_TEXT("invalid URL: \"%s\"\n"),
-                           ACE_TEXT_CHAR_TO_TCHAR(url_.c_str())),
+                           url_.c_str()),
                           -1);
       if (port_sep == -1)
         {
@@ -78,7 +78,8 @@ ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
 {
   char *buffer;
   ACE_NEW_RETURN (buffer, char[this->url_.length()+16],-1);
-  ACE_OS::sprintf (buffer,"GET %s HTTP/1.0\n\n",url_.c_str());
+  ACE_OS::sprintf (buffer,"GET %s HTTP/1.0\n\n",
+                   ACE_TEXT_ALWAYS_CHAR(url_.c_str()));
   int result = cli_stream->send_n (buffer,ACE_OS::strlen(buffer));
   delete [] buffer;
   if (result == -1)
@@ -88,7 +89,7 @@ ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
   return 0;
 }
 
-char *
+ACE_TCHAR *
 ACE::HTBP::ID_Requestor::get_HTID ()
 {
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
@@ -100,7 +101,7 @@ ACE::HTBP::ID_Requestor::get_HTID ()
     return ACE::HTBP::ID_Requestor::htid_.rep();
 
   ACE_SOCK_Stream cli_stream;
-  char * htid = 0;
+  ACE_TCHAR * htid = 0;
 
   if (this->url_.length() == 0 ||
       this->connect_to_server (&cli_stream) == -1 ||
@@ -108,7 +109,8 @@ ACE::HTBP::ID_Requestor::get_HTID ()
     {
       ACE_Utils::UUID_Generator gen;
       ACE_Utils::UUID *uuid = gen.generateUUID ();
-      ACE::HTBP::ID_Requestor::htid_ = *uuid->to_string();
+      const ACE_CString *uuidstr = uuid->to_string();
+      ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_CHAR_TO_TCHAR (uuidstr->c_str());
       delete uuid;
       return ACE::HTBP::ID_Requestor::htid_.rep();
     }
@@ -119,12 +121,12 @@ ACE::HTBP::ID_Requestor::get_HTID ()
   if (result > 0)
     {
       ACE_CString answer ((char *)recv_buf.iov_base,recv_buf.iov_len);
-      ssize_t start = answer.rfind ('\n');
+      ssize_t start = answer.rfind (ACE_TEXT('\n'));
       if (start == ACE_CString::npos)
         start = 0;
       else
         start++;
-      ACE::HTBP::ID_Requestor::htid_ = answer.substr (start);
+      ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_CHAR_TO_TCHAR(answer.substr (start).c_str());
       htid = ACE::HTBP::ID_Requestor::htid_.rep();
     }
   return htid;

@@ -14,7 +14,7 @@
 #include "ace/HTBP/HTBP_Environment.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
@@ -25,18 +25,18 @@ main (int argc, char *argv[])
                       0);
   ACE::HTBP::Environment env;
 #if 0 // this should be a taken from a command line argument
-  env.import_config ("../HTBP_Config.conf");
+  env.import_config (ACE_TEXT("../HTBP_Config.conf"));
 #endif /* 0 */
 
 
   ACE::HTBP::ID_Requestor req (&env);
-  ACE::HTBP::Addr local(req.get_HTID());
+  ACE::HTBP::Addr local(ACE_TEXT_ALWAYS_CHAR(req.get_HTID()));
 
   unsigned remote_port = 8088;
-  const char * remote_host = argv[1];
+  const ACE_TCHAR * remote_host = argv[1];
 
   unsigned proxy_port = 0;
-  ACE_CString proxy_host;
+  ACE_TString proxy_host;
 
   if (env.get_proxy_port(proxy_port) != 0 ||
       env.get_proxy_host(proxy_host) != 0)
@@ -49,7 +49,7 @@ main (int argc, char *argv[])
     }
 
   ACE_INET_Addr proxy(proxy_port,proxy_host.c_str());
-  ACE::HTBP::Addr remote (remote_port,remote_host);
+  ACE::HTBP::Addr remote (remote_port,ACE_TEXT_ALWAYS_CHAR(remote_host));
 
   ACE::HTBP::Session session(remote,
                            local,
