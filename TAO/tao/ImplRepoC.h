@@ -204,7 +204,6 @@ class TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
   friend class TAO_Singleton<TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
@@ -1195,7 +1194,6 @@ class TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter
 {
 public:
 
-  friend class ACE_Singleton<TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
   friend class TAO_Singleton<TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (
@@ -1492,7 +1490,6 @@ class TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapt
 {
 public:
 
-  friend class ACE_Singleton<TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
   friend class TAO_Singleton<TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
   int register_proxy_factory (

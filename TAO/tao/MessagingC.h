@@ -2583,7 +2583,6 @@ class TAO_Export TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
   {
   public:
 
-    friend class ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
     friend class TAO_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
     int register_proxy_factory (
