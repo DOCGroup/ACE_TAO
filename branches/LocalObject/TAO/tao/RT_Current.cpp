@@ -62,7 +62,7 @@ CORBA::Boolean TAO_RT_Current::_is_a (const char *value,
   return 0;
 }
 
-const char* TAO_RT_Current::_interface_repository_id (void) const
+const char* TAO_RT_Current::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/Current:1.0";
 }

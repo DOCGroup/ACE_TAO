@@ -126,7 +126,7 @@ CORBA::Boolean TAO::ClientPriorityPolicy::_is_a (const CORBA::Char *value, CORBA
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* TAO::ClientPriorityPolicy::_interface_repository_id (void) const
+const char* TAO::ClientPriorityPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:TAO/ClientPriorityPolicy:1.0";
 }
@@ -473,7 +473,7 @@ CORBA::Boolean TAO::BufferingConstraintPolicy::_is_a (const CORBA::Char *value, 
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* TAO::BufferingConstraintPolicy::_interface_repository_id (void) const
+const char* TAO::BufferingConstraintPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:TAO/BufferingConstraintPolicy:1.0";
 }

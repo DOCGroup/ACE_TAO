@@ -235,7 +235,7 @@ CORBA::Boolean Messaging::RebindPolicy::_is_a (const CORBA::Char *value, CORBA::
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::RebindPolicy::_interface_repository_id (void) const
+const char* Messaging::RebindPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/RebindPolicy:1.0";
 }
@@ -318,7 +318,7 @@ CORBA::Boolean Messaging::SyncScopePolicy::_is_a (const CORBA::Char *value, CORB
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::SyncScopePolicy::_interface_repository_id (void) const
+const char* Messaging::SyncScopePolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/SyncScopePolicy:1.0";
 }
@@ -429,7 +429,7 @@ CORBA::Boolean Messaging::RequestPriorityPolicy::_is_a (const CORBA::Char *value
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::RequestPriorityPolicy::_interface_repository_id (void) const
+const char* Messaging::RequestPriorityPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/RequestPriorityPolicy:1.0";
 }
@@ -507,7 +507,7 @@ CORBA::Boolean Messaging::ReplyPriorityPolicy::_is_a (const CORBA::Char *value, 
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::ReplyPriorityPolicy::_interface_repository_id (void) const
+const char* Messaging::ReplyPriorityPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/ReplyPriorityPolicy:1.0";
 }
@@ -590,7 +590,7 @@ CORBA::Boolean Messaging::RequestStartTimePolicy::_is_a (const CORBA::Char *valu
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::RequestStartTimePolicy::_interface_repository_id (void) const
+const char* Messaging::RequestStartTimePolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/RequestStartTimePolicy:1.0";
 }
@@ -673,7 +673,7 @@ CORBA::Boolean Messaging::RequestEndTimePolicy::_is_a (const CORBA::Char *value,
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::RequestEndTimePolicy::_interface_repository_id (void) const
+const char* Messaging::RequestEndTimePolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/RequestEndTimePolicy:1.0";
 }
@@ -756,7 +756,7 @@ CORBA::Boolean Messaging::ReplyStartTimePolicy::_is_a (const CORBA::Char *value,
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::ReplyStartTimePolicy::_interface_repository_id (void) const
+const char* Messaging::ReplyStartTimePolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/ReplyStartTimePolicy:1.0";
 }
@@ -839,7 +839,7 @@ CORBA::Boolean Messaging::ReplyEndTimePolicy::_is_a (const CORBA::Char *value, C
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::ReplyEndTimePolicy::_interface_repository_id (void) const
+const char* Messaging::ReplyEndTimePolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/ReplyEndTimePolicy:1.0";
 }
@@ -922,7 +922,7 @@ CORBA::Boolean Messaging::RelativeRequestTimeoutPolicy::_is_a (const CORBA::Char
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::RelativeRequestTimeoutPolicy::_interface_repository_id (void) const
+const char* Messaging::RelativeRequestTimeoutPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/RelativeRequestTimeoutPolicy:1.0";
 }
@@ -1006,7 +1006,7 @@ CORBA::Boolean Messaging::RelativeRoundtripTimeoutPolicy::_is_a (const CORBA::Ch
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::RelativeRoundtripTimeoutPolicy::_interface_repository_id (void) const
+const char* Messaging::RelativeRoundtripTimeoutPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0";
 }
@@ -1117,7 +1117,7 @@ CORBA::Boolean Messaging::RoutingPolicy::_is_a (const CORBA::Char *value, CORBA:
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::RoutingPolicy::_interface_repository_id (void) const
+const char* Messaging::RoutingPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/RoutingPolicy:1.0";
 }
@@ -1200,7 +1200,7 @@ CORBA::Boolean Messaging::MaxHopsPolicy::_is_a (const CORBA::Char *value, CORBA:
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::MaxHopsPolicy::_interface_repository_id (void) const
+const char* Messaging::MaxHopsPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/MaxHopsPolicy:1.0";
 }
@@ -1283,7 +1283,7 @@ CORBA::Boolean Messaging::QueueOrderPolicy::_is_a (const CORBA::Char *value, COR
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::QueueOrderPolicy::_interface_repository_id (void) const
+const char* Messaging::QueueOrderPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/QueueOrderPolicy:1.0";
 }
@@ -1581,7 +1581,7 @@ CORBA::Boolean Messaging::ReplyHandler::_is_a (const CORBA::Char *value, CORBA::
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::ReplyHandler::_interface_repository_id (void) const
+const char* Messaging::ReplyHandler::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/ReplyHandler:1.0";
 }
@@ -2113,7 +2113,7 @@ CORBA::Boolean Messaging::Poller::_is_a (const CORBA::Char *value, CORBA::Enviro
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* Messaging::Poller::_interface_repository_id (void) const
+const char* Messaging::Poller::_remote_interface_repository_id (void) const
 {
   return "IDL:Messaging/Poller:1.0";
 }

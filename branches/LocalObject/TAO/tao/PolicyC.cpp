@@ -425,7 +425,7 @@ CORBA::Boolean CORBA_Policy::_is_a (const CORBA::Char *value, CORBA::Environment
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* CORBA_Policy::_interface_repository_id (void) const
+const char* CORBA_Policy::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Policy:1.0";
 }
@@ -548,7 +548,7 @@ CORBA::Boolean CORBA_PolicyManager::_is_a (const CORBA::Char *value, CORBA::Envi
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* CORBA_PolicyManager::_interface_repository_id (void) const
+const char* CORBA_PolicyManager::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/PolicyManager:1.0";
 }
@@ -600,7 +600,7 @@ CORBA::Boolean CORBA_PolicyCurrent::_is_a (const CORBA::Char *value, CORBA::Envi
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* CORBA_PolicyCurrent::_interface_repository_id (void) const
+const char* CORBA_PolicyCurrent::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/PolicyCurrent:1.0";
 }
