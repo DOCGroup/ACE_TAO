@@ -1,3 +1,9 @@
+Mon Oct 10 12:48:03 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+
+        Added XPG4 multibyte (wchar) support for __GLIBC__ >= 2.
+
 Mon Oct 10 9:43:03 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-tru64.h:

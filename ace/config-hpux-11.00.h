@@ -19,6 +19,11 @@
 
 #  include "ace/config-g++-common.h"
 
+#  if __GLIBC__ >= 2
+     // glibc 2 and higher has wchar support
+#    define ACE_HAS_XPG4_MULTIBYTE_CHAR
+#  endif
+
 // gcc 2.95.2 supplies the ssize_t typedef.
 #  define ACE_HAS_SSIZE_T
 
