@@ -10,7 +10,10 @@ ACE_RCSID (Event_Logging_Service,
 
 
 Event_Logging_Service::Event_Logging_Service (void)
-  : event_log_factory_name_ ("EventLogFactory")
+  : service_name_ ("EventLogFactory"),
+    ior_file_name_ (0),
+    pid_file_name_ (0),
+    bind_to_naming_service_ (1)
 {
   // No-Op.
 }
@@ -49,6 +52,49 @@ Event_Logging_Service::init_ORB  (int& argc, char *argv []
 }
 
 int
+Event_Logging_Service::parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:x"));
+  int opt;
+  
+  while ((opt = get_opt ()) != EOF)
+    {
+      switch (opt)
+    	{
+	case 'n':
+	  service_name_ = get_opt.opt_arg();
+	  break;
+		
+	case 'o':
+	  ior_file_name_ = get_opt.opt_arg();
+	  break;
+
+	case 'p':
+	  pid_file_name_ = get_opt.opt_arg();
+	  break;
+	  
+	case 'x':
+	  bind_to_naming_service_ = 0;
+	  break;
+
+	case '?':
+	default:
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Usage: %s "
+                      "-n service_name "
+                      "-o ior_file_name "
+                      "-p pid_file_name "
+		      "-x [disable naming service bind] "
+		      "\n",
+		      argv[0]));
+	  return -1;
+	}
+    }
+
+  return 0;
+}
+
+int
 Event_Logging_Service::startup (int argc, char *argv[]
                           ACE_ENV_ARG_DECL)
 {
@@ -60,9 +106,8 @@ Event_Logging_Service::startup (int argc, char *argv[]
                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  // Resolve the naming service.
-  this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  if (this->parse_args (argc, argv) == -1)
+    return -1;
 
   // Activate the event log factory
   // CORBA::Object_var obj =
@@ -79,21 +124,54 @@ Event_Logging_Service::startup (int argc, char *argv[]
   ACE_DEBUG ((LM_DEBUG,
               "The Event Log Factory IOR is <%s>\n", str.in ()));
 
-  // Register the Event Log Factory
-  ACE_ASSERT(!CORBA::is_nil (this->naming_.in ()));
+  if (ior_file_name_ != 0)
+    {
+      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_LIB_TEXT("w"));
+      if (iorf == 0) {
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "Cannot open output file for writing IOR: %s",
+			   ior_file_name_),
+			  -1);
+      }
+      
+      ACE_OS::fprintf (iorf, "%s\n", str.in ());
+      ACE_OS::fclose (iorf);
+    }
 
-  CosNaming::Name name (1);
-  name.length (1);
-  name[0].id = CORBA::string_dup (this->event_log_factory_name_);
+  if (pid_file_name_ != 0)
+    {
+      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_LIB_TEXT("w"));
+      if (pidf != 0)
+	{
+	  ACE_OS::fprintf (pidf,
+			   "%ld\n",
+			   ACE_static_cast (long, ACE_OS::getpid ()));
+	  ACE_OS::fclose (pidf);
+	}
+    }
+  
+  if (bind_to_naming_service_) 
+    {
+      // Resolve the naming service.
+      this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
 
-  this->naming_->rebind (name,
-                         obj.in ()
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+      // Register the Event Log Factory.
+      ACE_ASSERT(!CORBA::is_nil (this->naming_.in ()));
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Registered with the naming service as: %s\n",
-              this->event_log_factory_name_));
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup (this->service_name_);
+
+      this->naming_->rebind (name,
+			     obj.in ()
+			     ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "Registered with the naming service as: %s\n",
+		  this->service_name_));
+    }
 
   return 0;
 }
@@ -150,13 +228,16 @@ Event_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // Unbind from the naming service.
-  CosNaming::Name name (1);
-  name.length (1);
-  name[0].id = CORBA::string_dup (this->event_log_factory_name_);
+  if (bind_to_naming_service_)
+    {
+      // Unbind from the naming service.
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup (this->service_name_);
 
-  this->naming_->unbind (name
-                         ACE_ENV_ARG_PARAMETER);
+      this->naming_->unbind (name
+			     ACE_ENV_ARG_PARAMETER);
+    }
 
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
