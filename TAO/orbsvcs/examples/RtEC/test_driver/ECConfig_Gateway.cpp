@@ -4,13 +4,22 @@
  */
 #include "ECConfig_Gateway.h"
 #include "ace/OS_NS_stdio.h"
+#include "orbsvcs/Event_Utilities.h"
 
-ECConfig_Gateway::ECConfig_Gateway (void) {}
-ECConfig_Gateway::~ECConfig_Gateway (void) {}
+ECConfig_Gateway::ECConfig_Gateway (void)
+  : TAO_EC_Gateway_Sched()
+{
+}
+
+ECConfig_Gateway::~ECConfig_Gateway (void)
+{
+}
 
 void ECConfig_Gateway::push (const RtecEventComm::EventSet &events ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
   ACE_OS::printf ("ECConfig_Gateway::push - %p\n", &events);
+
+  //call super function
   TAO_EC_Gateway_Sched::push(events);
 }
 
@@ -18,6 +27,7 @@ void ECConfig_Gateway::update_consumer (const RtecEventChannelAdmin::ConsumerQOS
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  /*
   ACE_OS::printf ("ECConfig_Gateway::update_consumer - %p\n", &sub);
   ACE_OS::printf ("   Dependencies:\n");
   for (unsigned int i = 0; i < sub.dependencies.length(); ++i) {
@@ -41,7 +51,7 @@ void ECConfig_Gateway::update_consumer (const RtecEventChannelAdmin::ConsumerQOS
            sub.dependencies[i].event.header.ec_send_time);
     //   //RtecEventComm::EventData data
     // RtecBase::handle_t rt_info
-    ACE_OS::printf("     - RT_Info: %d", sub.dependencies[i].rt_info);
+    ACE_OS::printf("     - RT_Info: %d\n", sub.dependencies[i].rt_info);
   }
   ACE_OS::printf ("   Is this a gateway:");
   if (sub.is_gateway) {
@@ -51,7 +61,12 @@ void ECConfig_Gateway::update_consumer (const RtecEventChannelAdmin::ConsumerQOS
     ACE_OS::printf (" false");
   }
   ACE_OS::printf("\n");
+  */
 
+  ACE_DEBUG ((LM_DEBUG, "ECConfig (%t) Gateway/Consumer "));
+  ACE_ConsumerQOS_Factory::debug(sub);
+
+  //call super function
   TAO_EC_Gateway_Sched::update_consumer(sub);
 }
 
@@ -59,6 +74,7 @@ void ECConfig_Gateway::update_supplier (const RtecEventChannelAdmin::SupplierQOS
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  /*
   ACE_OS::printf ("ECConfig_Gateway::update_supplier - %p\n", &pub);
   // SupplierQOS
   //   RtecEventChannelAdmin::PublicationSet publications;
@@ -97,7 +113,11 @@ void ECConfig_Gateway::update_supplier (const RtecEventChannelAdmin::SupplierQOS
     //     RtecBase::Dependency_Enabled_Type_t enabled;
     ACE_OS::printf("       dependency enabled type: %d\n", pub.publications[i].dependency_info.enabled);
   }
+  */
 
+  ACE_DEBUG ((LM_DEBUG, "ECConfig (%t) Gateway/Supplier "));
+  ACE_SupplierQOS_Factory::debug(pub);
 
+  //call super function
   TAO_EC_Gateway_Sched::update_supplier(pub);
 }
