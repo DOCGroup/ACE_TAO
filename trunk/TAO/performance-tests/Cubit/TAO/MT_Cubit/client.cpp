@@ -5,9 +5,9 @@
 #include "client.h"
 #include "Globals.h"
 
-#if defined (NO_ACE_QUANTIFY)
-#include "quantify.h"
-#endif /* NO_ACE_QUANTIFY */
+#if defined (ACE_HAS_QUANTIFY)
+# include "quantify.h"
+#endif /* ACE_HAS_QUANTIFY */
 
 ACE_RCSID(MT_Cubit, client, "$Id$")
 
@@ -216,7 +216,7 @@ Client_i::output_latency (void)
                       j);
       // This loop visits each request latency from a client.
       JITTER_ARRAY_ITERATOR iterator =
-	this->ts_->global_jitter_array_ [j]->begin ();
+        this->ts_->global_jitter_array_ [j]->begin ();
 
       u_int i = 0;
       ACE_timer_t *latency = 0;
@@ -254,12 +254,12 @@ Client_i::init_low_priority (void)
   if (this->ts_->use_multiple_priority_ == 1)
     this->low_priority_ =
       this->priority_.get_low_priority (this->num_low_priority_,
-					prev_priority,
+                                        prev_priority,
                                         1);
   else
     this->low_priority_ =
       this->priority_.get_low_priority (this->num_low_priority_,
-					prev_priority,
+                                        prev_priority,
                                         0);
   this->num_priorities_ =
     this->priority_.number_of_priorities ();

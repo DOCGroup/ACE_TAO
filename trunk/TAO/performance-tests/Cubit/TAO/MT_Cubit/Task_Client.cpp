@@ -4,9 +4,9 @@
 #include "Timer.h"
 #include "ace/Stats.h"
 
-#if defined (NO_ACE_QUANTIFY)
+#if defined (ACE_HAS_QUANTIFY)
 # include "quantify.h"
-#endif /* NO_ACE_QUANTIFY */
+#endif /* ACE_HAS_QUANTIFY */
 
 inline
 ACE_UINT32
@@ -353,8 +353,8 @@ Client::get_high_priority_jitter (void)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
 
-  JITTER_ARRAY_ITERATOR iterator  = 
-    this->ts_->global_jitter_array_[0]->begin (); 
+  JITTER_ARRAY_ITERATOR iterator  =
+    this->ts_->global_jitter_array_[0]->begin ();
 
   // latency in usecs.
   ACE_timer_t *latency = 0;
@@ -370,8 +370,8 @@ Client::get_high_priority_jitter (void)
 
       ACE_DEBUG ((LM_DEBUG, "high sample: %12.4f\n", *latency)); // ????
       if (stats.sample (ACE_round (*latency)) == -1)
-	ACE_DEBUG ((LM_DEBUG, "Error: stats.sample returned -1\n"));
-      
+        ACE_DEBUG ((LM_DEBUG, "Error: stats.sample returned -1\n"));
+
     }
 
   // Return the square root of the sum of the differences computed
@@ -413,7 +413,7 @@ Client::get_low_priority_jitter (void)
       ACE_DEBUG ((LM_DEBUG, "count: %u\n", ts_->count_[j])); // ????
 
       JITTER_ARRAY_ITERATOR iterator =
-	this->ts_->global_jitter_array_ [j]->begin (); 
+        this->ts_->global_jitter_array_ [j]->begin ();
 
       ACE_timer_t number_of_calls =
         this->ts_->count_ [j] / this->ts_->granularity_;
@@ -429,7 +429,7 @@ Client::get_low_priority_jitter (void)
           ++number_of_samples;
           ACE_timer_t difference = *latency - average;
           jitter += difference * difference;
-	  ACE_DEBUG ((LM_DEBUG, "low sample: %12.4f\n", *latency)); // ????
+          ACE_DEBUG ((LM_DEBUG, "low sample: %12.4f\n", *latency)); // ????
           stats.sample (ACE_round (*latency));
         }
     }
@@ -1210,8 +1210,8 @@ Client::do_test (void)
           delta = this->calc_delta (real_time,delta);
           this->latency_ += real_time * this->ts_->granularity_;
 
-          if ((result = this->my_jitter_array_->enqueue_tail (real_time)) != 0) 
-	    ACE_DEBUG ((LM_DEBUG, "(%t) Error: my_jitter_array->enqueue_tail() returned %d\n", result));
+          if ((result = this->my_jitter_array_->enqueue_tail (real_time)) != 0)
+            ACE_DEBUG ((LM_DEBUG, "(%t) Error: my_jitter_array->enqueue_tail() returned %d\n", result));
         }
       if (this->ts_->thread_per_rate_ == 1
           && id_ < (this->ts_->thread_count_ - 1))
@@ -1279,5 +1279,3 @@ Client::run_tests (void)
   this->print_stats ();
   return 0;
 }
-
-

@@ -49,18 +49,15 @@
 #define sqrt(X) (1)
 #endif /* ACE_LACKS_FLOATING_POINT */
 
-#if defined (NO_ACE_QUANTIFY)
-#define START_QUANTIFY \
-quantify_start_recording_data ();
-#define STOP_QUANTIFY \
-quantify_stop_recording_data();
-#define CLEAR_QUANTIFY \
-quantify_clear_data ();
-#else /*!NO_ACE_QUANTIFY */
-#define START_QUANTIFY 
-#define STOP_QUANTIFY 
-#define CLEAR_QUANTIFY
-#endif /* !NO_ACE_QUANTIFY */
+#if defined (ACE_HAS_QUANTIFY)
+# define START_QUANTIFY quantify_start_recording_data ();
+# define STOP_QUANTIFY quantify_stop_recording_data();
+# define CLEAR_QUANTIFY quantify_clear_data ();
+#else /* ! ACE_HAS_QUANTIFY */
+# define START_QUANTIFY
+# define STOP_QUANTIFY
+# define CLEAR_QUANTIFY
+#endif /* ! ACE_HAS_QUANTIFY */
 
 
 enum Cubit_Datatypes
@@ -99,7 +96,7 @@ class Task_State
   //     multiple concurrent clients.
 public:
   Task_State (void);
-  // Constructor. 
+  // Constructor.
 
   int parse_args (int argc,char **argv);
   // parses the arguments with the provided argc and argv.
@@ -255,14 +252,14 @@ public:
   // Returns the latency of the high priority thread in usecs.
 
   ACE_timer_t get_low_priority_latency (void);
-  // Returns the average latency found for the low 
+  // Returns the average latency found for the low
   // priority threads in usecs.
 
   ACE_timer_t get_high_priority_jitter (void);
   // Returns the high priority jitter in usecs.
 
   ACE_timer_t get_low_priority_jitter (void);
-  // Returns the jitter for all the low priority 
+  // Returns the jitter for all the low priority
   // thread request in usecs.
 
   ACE_timer_t get_latency (u_int thread_id);
@@ -302,7 +299,7 @@ private:
 
   int cube_short (void);
   // call cube short on the cubit object.
-  
+
   int cube_long (void);
   // call cube long on the cubit object.
 
@@ -368,7 +365,7 @@ private:
 
   CORBA::ORB_var orb_;
   // ORB pointer.
-  
+
   u_int naming_success_;
   // flag indicating the success of naming service.
 

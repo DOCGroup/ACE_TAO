@@ -11,7 +11,7 @@
 // = AUTHOR
 //    Andy Gokhale,
 //    Sumedh Mungee,
-//    Sergio Flores-Gaitan, and 
+//    Sergio Flores-Gaitan, and
 //    Nagarajan Surendran
 //
 // ============================================================================
@@ -19,9 +19,9 @@
 #include "server.h"
 #include "ace/Sched_Params.h"
 
-#if defined (NO_ACE_QUANTIFY)
-#include "quantify.h"
-#endif /* NO_ACE_QUANTIFY */
+#if defined (ACE_HAS_QUANTIFY)
+# include "quantify.h"
+#endif /* ACE_HAS_QUANTIFY */
 
 ACE_RCSID(MT_Cubit, server, "$Id$")
 
@@ -104,7 +104,7 @@ Server::init_low_priority (void)
   ACE_Sched_Priority prev_priority = this->high_priority_;
 
   // Drop the priority.
-  if (GLOBALS::instance ()->thread_per_rate == 1 
+  if (GLOBALS::instance ()->thread_per_rate == 1
       || GLOBALS::instance ()->use_multiple_priority == 1)
     this->low_priority_ =
       this->priority_.get_low_priority (this->num_low_priority_,
@@ -199,7 +199,7 @@ Server::activate_high_servant (void)
                   -1);
 
   // Make the high priority task an active object.
-  if (this->high_priority_task_->activate 
+  if (this->high_priority_task_->activate
       (THR_BOUND | ACE_SCHED_FIFO,
        1,
        0,
@@ -208,10 +208,10 @@ Server::activate_high_servant (void)
                 "(%P|%t) %p\n"
                 "\thigh_priority_task->activate failed"));
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, 
-			    ready_mon, 
-			    GLOBALS::instance ()->ready_mtx_,
-			    -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
+                            ready_mon,
+                            GLOBALS::instance ()->ready_mtx_,
+                            -1));
 
   // Wait on the condition variable for the high priority client to
   // finish parsing the arguments.
@@ -248,7 +248,7 @@ Server::activate_low_servants (void)
       ACE_OS::sprintf (orbport,
                       "-ORBport %d",
                        GLOBALS::instance ()->base_port == 0
-                       ? (int) 0 
+                       ? (int) 0
                        : GLOBALS::instance ()->base_port + i);
 
       char *low_second_argv[] = {orbport,
@@ -264,14 +264,14 @@ Server::activate_low_servants (void)
 
       ACE_NEW_RETURN (this->low_priority_tasks_ [i - 1],
                       Cubit_Task (this->low_argv_->buf (),
-				  "internet",
-				  1,
+                                  "internet",
+                                  1,
                                   &this->servant_manager_,
-				  i),
+                                  i),
                       -1);
 
       // Make the low priority task an active object.
-      if (this->low_priority_tasks_ [i - 1]->activate 
+      if (this->low_priority_tasks_ [i - 1]->activate
           (THR_BOUND | ACE_SCHED_FIFO,
            1,
            0,
@@ -286,7 +286,7 @@ Server::activate_low_servants (void)
 
       // Use different priorities on thread per rate or multiple
       // priority.
-      if (GLOBALS::instance ()->use_multiple_priority == 1 
+      if (GLOBALS::instance ()->use_multiple_priority == 1
           || GLOBALS::instance ()->thread_per_rate == 1)
         {
           this->counter_ = (this->counter_ + 1) % this->grain_;
@@ -296,7 +296,7 @@ Server::activate_low_servants (void)
                //threads, we make sure we don't go overboard.
               && this->num_priorities_ * this->grain_ > this->num_low_priority_ - (i - 1))
             // Get the next higher priority.
-            this->low_priority_ = ACE_Sched_Params::next_priority 
+            this->low_priority_ = ACE_Sched_Params::next_priority
               (ACE_SCHED_FIFO,
                this->low_priority_,
                ACE_SCOPE_THREAD);
