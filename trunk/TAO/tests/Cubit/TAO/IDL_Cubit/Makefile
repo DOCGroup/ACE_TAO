@@ -14,7 +14,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
+LDLIBS = -lorbsvcs -lTAO
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
 PROG_SRCS = $(IDL_SRC) svr.cpp clnt.cpp tmplinst.cpp
@@ -46,6 +46,8 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 DCFLAGS = -g
+LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
 #$(IDL_SRC): cubit.idl
 #	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl

@@ -1,5 +1,8 @@
 Mon Feb 16 17:22:15 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: Added code to register 
+	IDL_Cubit/cubit_factory name with the naming service.
+
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Added a -s flag to use the
 	NamingService to resolve the cubit_factory flag. It still has the
 	commandline IOR and -f ior_file options.
