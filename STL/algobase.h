@@ -48,6 +48,7 @@ inline void swap(T& a, T& b) {
     b = tmp;
 }
 
+#if ! defined (VXWORKS)
 template <class T>
 inline const T& min(const T& a, const T& b) {
     return b < a ? b : a;
@@ -67,6 +68,7 @@ template <class T, class Compare>
 inline const T& max(const T& a, const T& b, Compare comp) {
     return comp(a, b) ? b : a;
 }
+#endif /* VXWORKS */
 
 template <class InputIterator, class Distance>
 void __distance(InputIterator first, InputIterator last, Distance& n, 
