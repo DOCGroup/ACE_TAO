@@ -221,9 +221,9 @@ Server_Repository::get_repository_size ()
 }
   
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Repository_Record *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Repository_Record *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+//#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+//template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Repository_Record *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
+//#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+//#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Repository_Record *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
+//#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
