@@ -162,6 +162,16 @@ Fri Mar 18 09:49:32 2005  Boris Kolpackov  <boris@kolpackov.net>
         * protocols/ace/RMCast/Retransmit.cpp:
         * protocols/ace/RMCast/Acknowledge.cpp: Added missing headers.
 
+Thu Mar 17 23:13:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-lite.h:
+
+	  Mark ACE template specialization related macros as deprecated
+	  through documentation and by placing them within an "#if
+	  !defined (ACE_LACKS_DEPRECATED_MACROS)" block.  Developers
+	  should use the standard C++ template specialization syntax
+	  instead.
+
 Thu Mar 17 11:02:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
