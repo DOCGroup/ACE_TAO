@@ -1,40 +1,45 @@
+Tue Jun 15 11:59:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-qnx-neutrino.h: removed ACE_LACKS_PRAGMA_ONCE
+          #define, because it's in config-g++-common.h.
+
 Tue Jun 15 09:28:34 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Added ACE_HAS_SSIZE_T for egcs.
 
 Mon Jun 14 22:52:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Map_Manager_Test.cpp: Removed template instantiation
-	  regarding ACE_Read_Mutex<Thread_Mutex>. Added template
-	  instantiations for ACE_Pair<VALUE, int> and
-	  ACE_Reference_Pair<TYPE, VALUE> to make sunc++5.0 happy.
+        * tests/Map_Manager_Test.cpp: Removed template instantiation
+          regarding ACE_Read_Mutex<Thread_Mutex>. Added template
+          instantiations for ACE_Pair<VALUE, int> and
+          ACE_Reference_Pair<TYPE, VALUE> to make sunc++5.0 happy.
 
-	* ace/Caching_Strategy_Utility_T.{h.cpp}: Removed math.h from the
-	  include list since it caused problems when native exceptions were
-	  enabled. 
+        * ace/Caching_Strategy_Utility_T.{h.cpp}: Removed math.h from the
+          include list since it caused problems when native exceptions were
+          enabled.
 
 Mon Jun 14 21:41:40 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* ace/Connector.h: Added a comment to clarify that if
- 	  Connector::connect() fails the close() hook of the Svc_Handler
- 	  is called to prevent resource leaks.  Thanks to V. Lakshmanan
- 	  <lakshman@doplight.nssl.noaa.gov> for motivating this.
+        * ace/Connector.h: Added a comment to clarify that if
+          Connector::connect() fails the close() hook of the Svc_Handler
+          is called to prevent resource leaks.  Thanks to V. Lakshmanan
+          <lakshman@doplight.nssl.noaa.gov> for motivating this.
 
 Mon Jun 14 20:54:09 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Synch.cpp: Declared template definitions for
-	  ACE_Read_Mutex<ACE_Thread_Mutex> to get around compiler errors
-	  while building $ACE_ROOT/tests. Thanks to Dr.Schmidt for
-	  suggesting this. 
+        * ace/Synch.cpp: Declared template definitions for
+          ACE_Read_Mutex<ACE_Thread_Mutex> to get around compiler errors
+          while building $ACE_ROOT/tests. Thanks to Dr.Schmidt for
+          suggesting this.
 
 Mon Jun 14 19:33:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_Acceptor.cpp (accept): Fixed a bizarre problem with
- 	  Win32 where it's imperative that the third parameter to <accept>
- 	  must be a NULL pointer if we want to ignore the client address.
+        * ace/SOCK_Acceptor.cpp (accept): Fixed a bizarre problem with
+          Win32 where it's imperative that the third parameter to <accept>
+          must be a NULL pointer if we want to ignore the client address.
 
-	* ace/OS.i: Cleaned up warnings in join_leaf() and ioctl() due to
- 	  unused args.  Thanks to Marina for reporting this.
+        * ace/OS.i: Cleaned up warnings in join_leaf() and ioctl() due to
+          unused args.  Thanks to Marina for reporting this.
 
 Mon Jun 14 15:56:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
