@@ -1,3 +1,9 @@
+Mon Apr 26 15:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue.cpp:
+          In ACE_Message_Queue_NT::open() use ACTIVATED instead of
+          WAS_ACTIVE because the last is deprecated
+
 Mon Apr 26 10:04:43 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/mfc.mpb:
