@@ -260,6 +260,48 @@ const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew =
 ACE_INT64_LITERAL (0x19db1ded53e8000);
 # endif
 
+// Increment microseconds (the only reason this is here is to allow
+// the use of ACE_Atomic_Op with ACE_Time_Value).
+
+ACE_Time_Value
+ACE_Time_Value::operator +(int)
+{
+  ACE_OS_TRACE ("ACE_Time_Value::operator++(int)");
+  usec (usec () 1);
+  normalize ();
+  return *this;
+}
+
+ACE_Time_Value
+&ACE_Time_Value::operator +(void)
+{
+  ACE_OS_TRACE ("ACE_Time_Value::operator++(void)");
+  usec (usec () 1);
+  normalize ();
+  return *this;
+}
+
+// Decrement microseconds (the only reason this is here is / to allow
+// the use of ACE_Atomic_Op with ACE_Time_Value).
+
+ACE_Time_Value 
+ACE_Time_Value::operator -- (int)
+{
+  ACE_OS_TRACE ("ACE_Time_Value::operator--(int)");
+  usec (usec () - 1);
+  normalize ();
+  return *this;
+}
+
+ACE_Time_Value &
+ACE_Time_Value::operator -- (void)
+{
+  ACE_OS_TRACE ("ACE_Time_Value::operator--(void)");
+  usec (usec () - 1);
+  normalize ();
+  return *this;
+}
+
 //  Initializes the ACE_Time_Value object from a Win32 FILETIME
 
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
