@@ -2,6 +2,7 @@
 // $Id$
 
 project(NotifyTests_Lib): orbsvcslib, notification, naming {
-  sharedname = NotifyTests
+  sharedname = TAO_NotifyTests
   dynamicflags = TAO_NOTIFY_TEST_BUILD_DLL
 }
+
