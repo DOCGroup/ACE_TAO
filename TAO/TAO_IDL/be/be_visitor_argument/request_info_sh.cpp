@@ -69,7 +69,7 @@ int be_visitor_args_request_info_sh::visit_argument (be_argument *node)
                         -1);
     }
   // As we visit each type we print out the &.
-  *os << node->local_name () << "_;\n";
+  *os <<" "<< node->local_name () << "_;\n";
   return 0;
 }
 int be_visitor_args_request_info_sh::visit_array (be_array *node)
@@ -252,7 +252,7 @@ int be_visitor_args_request_info_sh::visit_string (be_string *node)
           *os << "const char *"<<" &";
           break;
         case AST_Argument::dir_INOUT:
-          *os << "char *&"<<" &";
+          *os << "char *&";
           break;
         case AST_Argument::dir_OUT:
           *os << "CORBA::String_out";
@@ -267,7 +267,7 @@ int be_visitor_args_request_info_sh::visit_string (be_string *node)
           *os << "const CORBA::WChar *"<<" &";
           break;
         case AST_Argument::dir_INOUT:
-          *os << "CORBA::WChar *&"<<" &";
+          *os << "CORBA::WChar *&";
           break;
         case AST_Argument::dir_OUT:
           *os << "CORBA::WString_out";
