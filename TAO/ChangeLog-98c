@@ -1,3 +1,11 @@
+Mon Aug 24 15:07:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Cubit/TAO_IDL_Cubit/{client,server}.dsp: Added RTI_IO.cpp
+	  into the project.
+
+	* tests/Cubit/TAO/IDL_Cubit/RTI_IO.h: Make sure we use "ace/OS.h"
+	  instead of <iostream.h> directly.
+
 Tue Aug 25 14:32:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (cube_rti_data): 
