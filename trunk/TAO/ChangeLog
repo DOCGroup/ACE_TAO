@@ -11,11 +11,11 @@ Wed Nov 19 17:39:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           change. Removed the option -Gic to make the generated code
           inline, since it is now redundant.
 
-          * docs/compiler.html:
-          * docs/releasenotes/index.html:
+        * docs/compiler.html:
+        * docs/releasenotes/index.html:
 
-            Updated the IDL compiler options table and the releasenotes
-            with the changes above.
+          Updated the IDL compiler options table and the releasenotes
+          with the changes above.
 
 Wed Nov 19 13:51:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
