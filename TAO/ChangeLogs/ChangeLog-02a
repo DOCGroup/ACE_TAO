@@ -1,3 +1,9 @@
+Tue Aug 15 16:49:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher): The
+	  message_state_ field was not initialized.  Thanks to Jeff Greif
+	  for reporting this.
+
 Tue Aug 15 10:23:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
