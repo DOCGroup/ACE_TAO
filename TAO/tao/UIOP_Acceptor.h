@@ -94,6 +94,11 @@ private:
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
+
+  int unlink_on_close_;
+  // Flag that determines whether or not the rendezvous point should
+  // be unlinked on close.  This is really only used when an error
+  // occurs.
 };
 
 # endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
