@@ -93,6 +93,12 @@ ACE_USES_EXPLICIT_STD_NAMESPACE         Set this when ::fclose doesn't work and 
                                         have to explicitly specify the std namespace.
                                         This is needed with the Borland 6 and earlier
                                         compilers.
+ACE_USES_GPROF                          ACE calls getitimer before spawning
+                                        a new thread and setitimer after spawning
+                                        the thread in order to overcome the problems
+                                        of gprof with multithreaded applications.
+                                        It uses the idea from
+                                        http://sam.zoy.org/writings/programming/gprof.html
 ACE_WSOCK_VERSION                       A parameter list indicating
                                         the version of WinSock (e.g.,
                                         "1, 1" is version 1.1).
@@ -1603,3 +1609,16 @@ ACE_USE_POLL_IMPLEMENTATION:
   Notes:
      in the reactor, use poll instead of select.  In general,
      good thing to have set.
+
+ACE_USES_GPROF:
+----------------------------
+  Used in:
+    ace/Base_Thread_Adapter.h
+    ace/Base_Thread_Adapter.inl
+    ace/Base_Thread_Adapter.cpp
+
+  Notes:
+    When using gprof mainly on Linux, #define ACE_USES_GPROF 
+    will add calls to getitimer/setitimer in order to initialize profile
+    timer and overcome the problem of gprof with multithreaded applications.
+
