@@ -111,6 +111,14 @@ SOURCE=.\TestS.cpp
 
 SOURCE=.\AMI_Buffering_Admin.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\TestC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TestS.h
+# End Source File
 # End Group
 # Begin Group "IDL Files"
 
