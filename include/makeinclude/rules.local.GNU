@@ -55,7 +55,9 @@ VLIBS ?=
 BUILD ?=
 BIN ?=
 VBIN ?= $(BIN:%=%$(VAR))
-$(VBIN): $(VLIBS)
+ifneq ($(VBIN),)
+  $(VBIN): $(VLIBS)
+endif
 
 # Always build the V* targets in this order.  We control assignment to them
 # elsewhere. We add the existing $(BUILD) targets to the end to allow the
@@ -63,7 +65,9 @@ $(VBIN): $(VLIBS)
 # single makefile--note that we filter out any that are already present.
 VBUILD = $(IDL_SRC) $(VLIBS) $(VBIN) $(filter-out $(IDL_SRC) $(VLIBS) $(VBIN), $(BUILD))
 
-$(VBIN) $(VLOBJS) $(VSHOBJS) $(VSHOBJS1): $(IDL_SRC)
+ifneq ($(IDL_SRC),)
+  $(VBIN) $(VLOBJS) $(VSHOBJS) $(VSHOBJS1): $(IDL_SRC)
+endif
 
 build.local: $(VBUILD)
 
