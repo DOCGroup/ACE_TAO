@@ -58,7 +58,7 @@ $MODULE='ACE_wrappers';
       'TAO/orbsvcs/tests/EC_Custom_Marshal , run_test.pl',
       'TAO/orbsvcs/tests/EC_Multiple , run_test.pl',
       'TAO/orbsvcs/tests/Property , run_test.pl',
-      'TAO/orbsvcs/performance-tests/Cubit/TAO/IDL_Cubit', 'run_test.pl');
+      'TAO/performance-tests/Cubit/TAO/IDL_Cubit', 'run_test.pl');
 
 # We obtain our revision to report errors.
 $REVISION='$Revision$';
