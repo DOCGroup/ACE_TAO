@@ -95,12 +95,12 @@ ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
 }
 
 ACE_INLINE void
-ACE_High_Res_Timer::global_scale_factor (u_long gsf)
+ACE_High_Res_Timer::global_scale_factor (ACE_UINT32 gsf)
 {
   global_scale_factor_ = gsf;
 }
 
-ACE_INLINE u_long
+ACE_INLINE ACE_UINT32
 ACE_High_Res_Timer::global_scale_factor ()
 {
   return global_scale_factor_;

@@ -49,14 +49,14 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
 }
 
 /* static */
-u_long ACE_High_Res_Timer::global_scale_factor_ = ACE_High_Res_Timer::get_registry_scale_factor ();
+ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = ACE_High_Res_Timer::get_registry_scale_factor ();
 
 #else
 
 // A scale_factor of 1000 converts nanosecond ticks to microseconds.
 // That is, on these platforms, 1 tick == 1 nanosecond.
 /* static */
-u_long ACE_High_Res_Timer::global_scale_factor_ = ACE_ONE_SECOND_IN_MSECS;
+ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = ACE_ONE_SECOND_IN_MSECS;
 
 #endif /* ACE_WIN32 */
 
@@ -100,9 +100,7 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)  The cast
   // avoids a MSVC 4.1 compiler warning about narrowing.
-  // The division by 1 transparently converts an ACE_U_LongLong to an
-  // ACE_UINT32.
-  u_long nseconds = (u_long) ((this->end_ - this->start_) / 1 %
+  u_long nseconds = (u_long) ((this->end_ - this->start_) %
                                 global_scale_factor_ * 1000 /
                                 global_scale_factor_);
 
@@ -144,9 +142,7 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)
   // The cast avoids a MSVC 4.1 compiler warning about narrowing.
-  // The division by 1 transparently converts an ACE_U_LongLong to an
-  // ACE_UINT32.
-  u_long nseconds = (u_long) ((this->end_ - this->start_) / 1 %
+  u_long nseconds = (u_long) ((this->end_ - this->start_) %
                                 global_scale_factor_ * 1000 /
                                 global_scale_factor_);
 
@@ -169,7 +165,7 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
 
   // Separate to seconds and nanoseconds.
   u_long total_secs  = (u_long) (total_nanoseconds / ACE_ONE_SECOND_IN_NSECS);
-  ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds / 1 % ACE_ONE_SECOND_IN_NSECS);
+  ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   char buf[100];
   if (count > 1)
@@ -198,7 +194,7 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
 
   // Separate to seconds and nanoseconds.
   u_long total_secs  = (u_long) (total_nanoseconds / ACE_ONE_SECOND_IN_NSECS);
-  ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds / 1 % ACE_ONE_SECOND_IN_NSECS);
+  ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   char buf[100];
   if (count > 1)

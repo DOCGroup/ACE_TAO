@@ -50,9 +50,7 @@ class ACE_Export ACE_High_Res_Timer
   //     therefore be 200.
   //
   //     NOTE:  the elapsed time calculations in the print methods use
-  //     ACE_hrtime_t values.  If ACE_hrtime_t is not a 64-bit type
-  //     (ACE_HAS_LONGLONG_T), then those calculations are more susceptible
-  //     to overflow.  Those methods do _not_ check for overflow!
+  //     ACE_hrtime_t values.  Those methods do _not_ check for overflow!
   //
   //     NOTE:  Gabe <begeddov@proaxis.com> raises this issue regarding
   //     ACE_OS::gethrtime ():  on multi-processors, the processor that you
@@ -65,7 +63,7 @@ class ACE_Export ACE_High_Res_Timer
 public:
   // = Initialization method.
 
-  static void global_scale_factor (u_long gsf);
+  static void global_scale_factor (ACE_UINT32 gsf);
   // global_scale_factor_ is set to <gsf>.  All High_Res_Timers use
   // global_scale_factor_.  This allows applications to set the scale
   // factor just once for all High_Res_Timers.  Check
@@ -75,7 +73,7 @@ public:
   // not be set.  Careful, a <scale_factor> of 0 will cause division
   // by zero exceptions.
 
-  static u_long global_scale_factor ();
+  static ACE_UINT32 global_scale_factor ();
   // Accesses the current global_scale_factor.
 
   static int get_env_global_scale_factor (const char *env = "ACE_SCALE_FACTOR");
@@ -182,7 +180,7 @@ private:
   ACE_hrtime_t start_incr_;
   // Start time of incremental timing.
 
-  static u_long global_scale_factor_;
+  static ACE_UINT32 global_scale_factor_;
   // Converts ticks to microseconds.  That is, ticks /
   // global_scale_factor_ == microseconds.
 };
