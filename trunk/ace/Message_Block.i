@@ -123,7 +123,7 @@ ACE_INLINE size_t
 ACE_Message_Block::space (void) const
 {
   ACE_TRACE ("ACE_Message_Block::space");
-  return this->size () - this->length ();
+  return this->end () - this->wr_ptr ();
 }
 
 ACE_INLINE ACE_Message_Block::ACE_Message_Type
