@@ -37,7 +37,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 LSRC    = $(addsuffix .cpp,$(FILES))
 PSRC    = $(addsuffix .cpp,$(BIN))
-LIBS    = -lorbsvcs -lTAO
+ACE_SHLIBS = -lorbsvcs -lTAO -lACE
 LDLIBS  = -lorbsvcs -lTAO
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,

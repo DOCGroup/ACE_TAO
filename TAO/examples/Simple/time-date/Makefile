@@ -20,7 +20,7 @@ FILES   = Time_Date Time_Date_i Time_DateS Time_DateC
 LSRC    = $(addsuffix .cpp,$(FILES))
 
 LDLIBS  = -lorbsvcs -lTAO
-LIBS    = $(LDLIBS)
+ACE_SHLIBS = -lorbsvcs -lTAO -lACE
 
 IDL_SRC = Time_DateC.cpp Time_DateS.cpp
 

@@ -31,7 +31,7 @@ override TAO_IDLFLAGS += \
 
 VPATH=.:Naming:Time:Concurrency:Property:Trader:Sched:Event:CosEvent:AV:
 
-LIBS    += -lTAO -lACE
+ACE_SHLIBS = -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

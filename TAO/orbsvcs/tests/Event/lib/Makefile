@@ -19,7 +19,8 @@ ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
   SHLIB = $(SHLIB2)
 endif # Event2
 
-LIBS    += -lorbsvcs -lTAO -lACE
+ACE_SHLIBS = -lorbsvcs -lTAO -lACE
+LDLIBS  = -lorbsvcs -lTAO
 
 SRCS = Driver Consumer Supplier
 FILES = $(SRCS)

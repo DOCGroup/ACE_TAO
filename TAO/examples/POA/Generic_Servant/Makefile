@@ -33,7 +33,7 @@ POA_CLT_OBJS = $(addprefix $(VDIR),$(addsuffix .o,$(BINFILES)))
 
 BIN = client
 
-LIBS = -lTAO
+ACE_SHLIBS = -lTAO -lACE
 LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
 PSRC = $(addsuffix .cpp,$(BIN))

@@ -19,8 +19,8 @@ FILES 	= driver \
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-LDLIBS = -lACE
-LIBS = -lACE
+ACE_SHLIBS = -lACE
+LDLIBS = -lbenchmark
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO

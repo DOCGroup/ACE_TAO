@@ -170,8 +170,7 @@ endif
 
 DEFS    = $(addsuffix .h,$(PUB_HDRS))
 
-LDLIBS = -lACE
-LIBS += $(ACELIB)
+ACE_SHLIBS = -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
