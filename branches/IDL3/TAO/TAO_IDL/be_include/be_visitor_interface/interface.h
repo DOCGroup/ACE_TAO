@@ -61,8 +61,8 @@ public:
   // visit the interface node
 
   virtual int visit_scope (be_scope *node);
-  // Overrides the method so we can deal with possible operations or
-  // attributes from a parent abstract interface.
+  // An override of the base class method so we can generate code for
+  // any abstract parents the interface may have.
 
   // =visit methods on all elements syntactically valid in a Interface scope
 

@@ -86,8 +86,8 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << be_uidt_nl // idt = 1
-      << ")" << be_uidt; // idt = 0
+  *os << be_uidt_nl
+      << ")"; // idt = 0
 
   // Now generate the throw specs.
   if (this->gen_throw_spec (node) == -1)

@@ -81,6 +81,18 @@ AST_ValueType::redefine (AST_Interface *from)
   this->pd_truncatable = vt->pd_truncatable;
 }
 
+AST_Interface **
+AST_ValueType::supports (void) const
+{
+  return this->pd_supports;
+}
+
+long
+AST_ValueType::n_supports (void) const
+{
+  return this->pd_n_supports;
+}
+
 AST_ValueType *
 AST_ValueType::inherits_concrete (void) const
 {

@@ -128,6 +128,11 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+
+protected:
+  virtual int compute_size_type (void);
+  // Compute the size type if it is unknown.
+
 protected:
   ACE_Unbounded_Queue<AST_Field *> fields_;
   // Container for this struct's field nodes. Excludes nodes included

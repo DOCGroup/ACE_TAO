@@ -130,15 +130,15 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
               continue;
             }
 
+          if (has_concrete_parent == 1)
+            {
+              *os << "," << be_nl;
+            }
+
           *os << "public virtual " << "POA_"
               << parent->name ();
 
           has_concrete_parent = 1;
-
-          if (i < n_parents - 1)
-            {
-              *os << "," << be_nl;
-            }
         }
     }
 
@@ -319,6 +319,57 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   return 0;
 }
 
+int 
+be_visitor_interface_sh::gen_abstract_ops_helper (
+    be_interface *node,
+    be_interface *base,
+    TAO_OutStream *os
+  )
+{
+  if (node == base)
+    {
+      return 0;
+    }
+
+  AST_Decl *d = 0;
+  be_visitor_context ctx;
+  ctx.stream (os);
+
+  for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      d = si.item ();
+
+      if (d == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_sh::"
+                             "abstract_base_ops_helper - "
+                             "bad node in this scope\n"),
+                            -1);
+        }
+
+      if (d->node_type () == AST_Decl::NT_op)
+        {
+          UTL_ScopedName item_new_name (d->local_name (),
+                                        0);
+
+          AST_Operation *op = AST_Operation::narrow_from_decl (d);
+          be_operation new_op (op->return_type (),
+                               op->flags (),
+                               &item_new_name,
+                               op->is_local (),
+                               op->is_abstract ());
+
+          ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
+          be_visitor_operation_sh op_visitor (&ctx);
+          op_visitor.visit_operation (&new_op);
+        }
+    }
+
+  return 0;
+}
 
 void
 be_visitor_interface_sh::this_method (be_interface *node)

@@ -111,7 +111,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
       throw_spec_close = "))";
     }
 
-  *os << be_idt_nl << throw_spec_open
+  *os << be_nl << throw_spec_open
       << be_idt_nl << "CORBA::SystemException";
 
   if (node->exceptions ())

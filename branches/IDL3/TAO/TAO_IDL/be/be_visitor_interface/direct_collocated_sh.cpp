@@ -159,3 +159,74 @@ int be_visitor_interface_direct_collocated_sh::visit_interface (
   os->gen_endif ();
   return 0;
 }
+
+int 
+be_visitor_interface_direct_collocated_sh::gen_abstract_ops_helper (
+    be_interface *node,
+    be_interface *base,
+    TAO_OutStream *os
+  )
+{
+  if (node == base)
+    {
+      return 0;
+    }
+
+  AST_Decl *d = 0;
+  be_visitor_context ctx;
+  ctx.stream (os);
+
+  for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      d = si.item ();
+
+      if (d == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_thru_poa_proxy_"
+                             "impl_sh::abstract_base_ops_helper - "
+                             "bad node in this scope\n"),
+                            -1);
+        }
+
+      AST_Decl::NodeType nt = d->node_type ();
+
+      if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
+        {
+          UTL_ScopedName item_new_name (d->local_name (),
+                                        0);
+
+          if (nt == AST_Decl::NT_op)
+            {
+              AST_Operation *op = AST_Operation::narrow_from_decl (d);
+              be_operation new_op (op->return_type (),
+                                   op->flags (),
+                                   &item_new_name,
+                                   op->is_local (),
+                                   op->is_abstract ());
+
+              ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SH);
+              be_visitor_operation_direct_collocated_sh op_visitor (&ctx);
+              op_visitor.visit_operation (&new_op);
+            }
+          else
+            {
+              AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
+              be_attribute new_attr (attr->readonly (),
+                                     attr->field_type (),
+                                     &item_new_name,
+                                     attr->is_local (),
+                                     attr->is_abstract ());
+
+              ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH);
+              be_visitor_attribute attr_visitor (&ctx);
+              attr_visitor.visit_attribute (&new_attr);
+            }
+        }
+    }
+
+  return 0;
+}
+

@@ -48,8 +48,14 @@ public:
   virtual int visit_operation (be_operation *node);
   virtual int visit_field (be_field *node);
 
-  void begin_public ();
-  void begin_private ();
+  void begin_public (void);
+  void begin_private (void);
+
+  static int gen_supported_ops (be_interface *node,
+                                be_interface *base,
+                                TAO_OutStream *os);
+  // Helper method passed to the template method to generate code for
+  // the operations of the parents of supported interfaces.
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_CH_H_ */

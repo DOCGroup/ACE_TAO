@@ -501,6 +501,43 @@ AST_Structure::dump (ACE_OSTREAM_TYPE &o)
   o << "}";
 }
 
+// Compute the size type of the node in question.
+int
+AST_Structure::compute_size_type (void)
+{
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      // Get the next AST decl node.
+      AST_Decl *d = si.item ();
+
+      if (d->node_type () == AST_Decl::NT_enum_val)
+        {
+          continue;
+        }
+
+      AST_Field *f = AST_Field::narrow_from_decl (d);
+      AST_Type *t = f->field_type ();
+
+      if (t != 0)
+        {
+          this->size_type (t->size_type ());
+
+          // While we're iterating, we might as well do this one too.
+          this->has_constructor (t->has_constructor ());
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "WARNING (%N:%l) be_structure::compute_size_type - "
+                      "narrow_from_decl returned 0\n"));
+        }
+    }
+
+  return 0;
+}
+
 int
 AST_Structure::ast_accept (ast_visitor *visitor)
 {

@@ -43,7 +43,7 @@ be_visitor_interface_proxy_impls_ch::visit_interface (be_interface *node)
   if (node->accept (&bpi_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ch::"
+                         "be_visitor_interface_proxy_impls_ch::"
                          "visit_interface - "
                          "codegen for Base Proxy Impl. class failed\n"),
                         -1);
@@ -56,7 +56,7 @@ be_visitor_interface_proxy_impls_ch::visit_interface (be_interface *node)
   if (node->accept (&rpi_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ch::"
+                         "be_visitor_interface_proxy_impls_ch::"
                          "visit_interface - "
                          "codegen for Remote Proxy Broker class failed\n"),
                         -1);

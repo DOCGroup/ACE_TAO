@@ -42,8 +42,6 @@ be_visitor_interface::visit_interface (be_interface *)
   return -1;
 }
 
-// Overridden so we can deal with possible operations or attributes
-// in abstract parent classes.
 int
 be_visitor_interface::visit_scope (be_scope *node)
 {
@@ -53,65 +51,99 @@ be_visitor_interface::visit_scope (be_scope *node)
     }
 
   be_interface *intf = be_interface::narrow_from_scope (node);
-  AST_Interface **parent = 0;
-  AST_Decl *d = 0;
-  be_decl *bd = 0;
 
-  for (ACE_Unbounded_Queue_Iterator<AST_Interface *> iter (
-           intf->abstract_parents_
-         );
-       iter.done () == 0;
-       iter.advance ())
+  if (intf == 0)
     {
-      iter.next (parent);
+      return 0;
+    }
 
-      for (UTL_ScopeActiveIterator si ((*parent), UTL_Scope::IK_decls);
-           !si.is_done ();
-           si.next ())
-        {
-          d = si.item ();
+  if (intf->is_abstract ())
+    {
+      return 0;
+    }
 
-          if (d == 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface::visit_scope - "
-                                 "bad node in this scope\n"),
-                                -1);
-            }
+  if (! intf->has_mixed_parentage ())
+    {
+      return 0;
+    }
 
-          AST_Decl::NodeType nt = d->node_type ();
+  be_interface::tao_code_emitter helper = 0;
 
-          if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
-            {
-              UTL_ScopedName *item_new_name =
-                (UTL_ScopedName *)intf->name ()->copy ();
+  switch (this->ctx_->state ())
+    {
+      case TAO_CodeGen::TAO_INTERFACE_CH:
+        helper = 
+          be_visitor_interface_ch::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_IMPL_CH:
+        helper = 
+          be_visitor_interface_base_proxy_impl_ch::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CH:
+        helper = 
+          be_visitor_interface_remote_proxy_impl_ch::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_CS:
+        helper = 
+          be_visitor_interface_cs::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS:
+        helper = 
+          be_visitor_interface_remote_proxy_impl_cs::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
+        helper = 
+          be_visitor_interface_interceptors_cs::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_SH:
+        helper = 
+          be_visitor_interface_sh::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
+        helper = 
+          be_visitor_interface_thru_poa_proxy_impl_sh::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
+        helper = 
+          be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_SS:
+        helper = 
+          be_visitor_interface_ss::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
+        helper = 
+          be_visitor_interface_interceptors_ss::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
+        helper = 
+          be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper;
+        break;
+      case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
+        helper = 
+          be_visitor_interface_thru_poa_proxy_impl_ss::gen_abstract_ops_helper;
+        break;
+      default:
+        break;
+    }
 
-              Identifier *id = 0;
-              ACE_NEW_RETURN (id,
-                              Identifier (d->local_name ()->get_string ()),
-                              -1);
+  if (helper == 0)
+    {
+      return 0;
+    }
 
-              UTL_ScopedName *sn = 0;
-              ACE_NEW_RETURN (sn,
-                              UTL_ScopedName (id,
-                                              0),
-                              -1);
+  int status =
+    intf->traverse_inheritance_graph (helper,
+                                      this->ctx_->stream (),
+                                      I_TRUE);
 
-              item_new_name->nconc (sn);
-              d->set_name (item_new_name);
-              d->set_defined_in (node);
-              bd = be_decl::narrow_from_decl (d);
-
-              if (bd == 0 || bd->accept (this) == -1)
-                {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "(%N:%l) be_visitor_interface::"
-                                     "visit_scope - "
-                                     "codegen for scope failed\n"),
-                                    -1);
-                }
-            }
-        }
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_*::"
+                         "visit_scope - "
+                         "traversal of inheritance graph failed\n"),
+                        -1);
     }
 
   return 0;

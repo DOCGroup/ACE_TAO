@@ -95,7 +95,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Find if we are at the top scope or inside some module,
@@ -381,6 +381,67 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   return 0;
 }
 
+int 
+be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
+                                                  be_interface *base,
+                                                  TAO_OutStream *os)
+{
+  if (node == base)
+    {
+      return 0;
+    }
+
+  AST_Decl *d = 0;
+  be_visitor_context ctx;
+  ctx.stream (os);
+
+  for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      d = si.item ();
+
+      if (d == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_ss::"
+                             "abstract_base_ops_helper - "
+                             "bad node in this scope\n"),
+                            -1);
+        }
+
+      if (d->node_type () == AST_Decl::NT_op)
+        {
+          UTL_ScopedName *item_new_name  = 0;
+          ACE_NEW_RETURN (item_new_name,
+                          UTL_ScopedName (d->local_name ()->copy (),
+                                          0),
+                          -1);
+
+          UTL_ScopedName *base = (UTL_ScopedName *)node->name ()->copy ();
+          base->nconc (item_new_name);
+
+          AST_Operation *op = AST_Operation::narrow_from_decl (d);
+          be_operation new_op (op->return_type (),
+                               op->flags (),
+                               0,
+                               op->is_local (),
+                               op->is_abstract ());
+
+          new_op.set_defined_in (node);
+          new_op.set_name (base);
+          ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
+          be_visitor_operation_ss op_visitor (&ctx);
+          op_visitor.visit_operation (&new_op);
+
+          base->destroy ();
+          delete base;
+          base = 0;
+        }
+    }
+
+  return 0;
+}
 
 void
 be_visitor_interface_ss::this_method (be_interface *node)

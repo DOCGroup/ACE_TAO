@@ -941,9 +941,27 @@ be_visitor_root::visit_valuetype (be_valuetype *node)
         break;
       }
     case TAO_CodeGen::TAO_ROOT_SH:
-    case TAO_CodeGen::TAO_ROOT_IH:
+      {
+        ctx.state (TAO_CodeGen::TAO_VALUETYPE_SH);
+        be_visitor_valuetype_sh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_SI:
+      {
+        ctx.state (TAO_CodeGen::TAO_VALUETYPE_SI);
+        be_visitor_valuetype_si visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_SS:
+      {
+        ctx.state (TAO_CodeGen::TAO_VALUETYPE_SS);
+        be_visitor_valuetype_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_TIE_SH:
       return 0;    // nothing to do.

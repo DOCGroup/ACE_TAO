@@ -26,6 +26,7 @@ ACE_RCSID (be_visitor_valuetype,
 // **************************************************
 // Valuetype visitor for client inline.
 // **************************************************
+
 be_visitor_valuetype_ci::be_visitor_valuetype_ci (be_visitor_context *ctx)
   : be_visitor_valuetype (ctx),
     opt_accessor_ (0)
@@ -53,21 +54,45 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
 
   os->indent ();
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "ACE_INLINE" << be_nl;
-  *os << node->name () << "::" << node->local_name () <<
-    " () // default constructor" << be_nl;
-  *os << "{}" << be_nl << be_nl;
+  *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
+
+  if (node->supports_abstract ())
+    {
+      *os << "{" << be_idt;
+
+      int status =
+        node->traverse_supports_list_graphs (
+            be_valuetype::gen_abstract_init_helper,
+            os,
+            I_TRUE
+          );
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_valuetype_ci::"
+                             "visit_valuetype - "
+                             "traversal of supported interfaces failed\n"),
+                            -1);
+        }
+
+      *os << be_uidt_nl << "}" << be_nl << be_nl;
+    }
+  else
+    {
+      *os << "{}" << be_nl << be_nl;
+    }
 
   *os << "ACE_INLINE" << be_nl;
-  *os << node->name () << "::~" << node->local_name () <<
-    " () // destructor" << be_nl;
+  *os << node->name () << "::~" << node->local_name () << " (void)" << be_nl;
   *os << "{}\n" << be_nl;
 
   *os << "ACE_INLINE const char* " << be_nl
-      << node->name() << "::_tao_obv_static_repository_id ()" << be_nl
+      << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
       <<  "{" << be_idt_nl
       <<     "return \"" << node->repoID () << "\";" << be_uidt_nl
       <<  "}\n\n";

@@ -96,6 +96,24 @@ public:
   // For building the name for private data fields.
   be_valuetype *statefull_inherit (void);
 
+  /// Load the insert queue with all the interfaces we support, and
+  /// call the generic version of traverse_inheritance_graph().
+  int traverse_supports_list_graphs (
+      tao_code_emitter gen,
+      TAO_OutStream *os,
+      idl_bool abstract_paths_only = I_FALSE
+    );
+
+  /// Load the insert queue with the concrete interface we support, and
+  /// call the generic version of traverse_inheritance_graph().
+  int traverse_concrete_inheritance_graph (
+      tao_code_emitter gen,
+      TAO_OutStream *os
+    );
+
+  idl_bool supports_abstract (void) const;
+  // Do we support at least one abstract interface?
+
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
@@ -118,8 +136,29 @@ public:
   virtual idl_bool in_recursion (AST_Type *node = 0);
   // Check if we are in recursion.
 
+  static int abstract_supports_helper (be_interface *node,
+                                       be_interface *base,
+                                       TAO_OutStream *os);
+  // Helper method passed to the template method to generate code for
+  // adding abstract supported interfaces to the inheritance list.
+
+  static int gen_abstract_init_helper (be_interface *node,
+                                       be_interface *base,
+                                       TAO_OutStream *os);
+  // Helper method to initialize the val_ member of the generated
+  // C++ class for each abstract interface that we support.
+
+  static int gen_skel_helper (be_interface *node,
+                              be_interface *base,
+                              TAO_OutStream *os);
+  // Helper method to generate *_skel operations for the concrete
+  // interface that we support (if any) and those of its base classes.
+
 private:
   char *full_obv_skel_name_;
+
+  idl_bool supports_abstract_;
+  // Do we support at least one abstract interface?
 };
 
 #endif  // if !defined

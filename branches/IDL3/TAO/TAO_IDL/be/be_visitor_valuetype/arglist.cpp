@@ -88,6 +88,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     {
       *os << be_uidt_nl;
     }
+
   *os << ")";
 
   be_visitor_context ctx = *this->ctx_;
@@ -102,18 +103,18 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
       // Each method is pure virtual in the Valuetype class.
-      *os << " = 0;" << be_uidt_nl;
+      *os << " = 0;" << be_nl;
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
-      *os << ";" << be_uidt_nl;
+      *os << ";" << be_nl;
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
     default:
-       *os << be_uidt_nl;
+       *os << be_nl;
     }
 
   return 0;

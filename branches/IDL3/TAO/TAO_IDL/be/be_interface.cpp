@@ -22,13 +22,13 @@
 
 #include "be_interface.h"
 #include "be_interface_strategy.h"
+#include "be_attribute.h"
+#include "be_operation.h"
 #include "be_visitor.h"
 #include "be_helper.h"
 #include "be_stream_factory.h"
 #include "be_extern.h"
 #include "utl_identifier.h"
-#include "ast_attribute.h"
-#include "ast_operation.h"
 #include "ast_generator.h"
 #include "global_extern.h"
 #include "idl_defines.h"
@@ -82,7 +82,7 @@ be_interface::be_interface (UTL_ScopedName *n,
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (I_TRUE);      // always the case
 
-  if (! abstract)
+  if (! abstract && this->node_type () == AST_Decl::NT_interface)
     {
       this->analyze_parentage (ih,
                                nih);
@@ -510,35 +510,18 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 
       if (this->has_mixed_parentage_)
         {
-          AST_Interface **parent = 0;
-          idl_bool nested = this->is_nested ();
+          int status = 
+            this->traverse_inheritance_graph (
+                      be_interface::gen_abstract_init_helper, 
+                      os,
+                      I_TRUE
+                    );
 
-          for (ACE_Unbounded_Queue_Iterator<AST_Interface *> iter (
-                   this->abstract_parents_
-                );
-               iter.done () == 0;
-               iter.advance ())
+          if (status == -1)
             {
-              iter.next (parent);
-              idl_bool both_nested = nested && (*parent)->is_nested ();
-
-              if (both_nested)
-                {
-                  UTL_Scope *parent_scope = (*parent)->defined_in ();
-                  AST_Decl *parent_decl = ScopeAsDecl (parent_scope);
-
-                  *os << be_nl
-                      << "this->ACE_NESTED_CLASS ("
-                      << parent_decl->name () << ", "
-                      << (*parent)->local_name () 
-                      << ")::obj_ = this;";
-                }
-              else
-                {
-                  *os << be_nl
-                      << "this->" << (*parent)->name ()
-                      << "::obj_ = this;";
-                }
+              ACE_ERROR ((LM_ERROR,
+                          "be_interface::gen_stub_ctor - "
+                          "inheritance graph traversal failed\n"));
             }
         }
 
@@ -1528,43 +1511,17 @@ be_interface::analyze_parentage (AST_Interface **parents,
       if (parents[i]->is_abstract ())
         {
           this->has_mixed_parentage_ = I_TRUE;
-          be_global->mixed_parentage_interfaces.enqueue_tail (this);
-          this->abstract_parents_.enqueue_tail (parents[i]);
-          this->complete_abstract_paths (parents[i]);
+          break;
         }
     }
-}
 
-void
-be_interface::complete_abstract_paths (AST_Interface *ai)
-{
-  AST_Interface **parents = ai->inherits ();
-  long n_parents = ai->n_inherits ();
-
-  for (long i = 0; i < n_parents; ++i)
+  if (this->has_mixed_parentage_ == I_TRUE)
     {
-      if (parents[i]->is_abstract ())
-        {
-          this->abstract_parents_.enqueue_tail (parents[i]);
-          this->complete_abstract_paths (parents[i]);
-        }
+      be_global->mixed_parentage_interfaces.enqueue_tail (this);
     }
 }
 
 // ****************************************************************
-
-class be_code_emitter_wrapper : public TAO_IDL_Inheritance_Hierarchy_Worker
-{
-public:
-  be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
-
-  virtual int emit (be_interface *derived_interface,
-                    TAO_OutStream *output_stream,
-                    be_interface *base_interface);
-
-private:
-  be_interface::tao_code_emitter emitter_;
-};
 
 be_code_emitter_wrapper::
 be_code_emitter_wrapper (be_interface::tao_code_emitter emitter)
@@ -1587,34 +1544,15 @@ be_code_emitter_wrapper::emit (be_interface *derived_interface,
 // out by the function passed as argument.
 int
 be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
-                                          TAO_OutStream *os)
+                                          TAO_OutStream *os,
+                                          idl_bool abstract_paths_only)
 {
-  be_code_emitter_wrapper wrapper (gen);
-
-  return this->traverse_inheritance_graph (wrapper, os);
-}
-
-int
-be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &worker,
-                                          TAO_OutStream *os)
-{
-  // Queue data structure needed for breadth-first traversal of
-  // inheritance tree.
-  ACE_Unbounded_Queue <be_interface*> queue;
-
-  // For a special case of a deeply nested inheritance graph and one specific
-  // way of inheritance in which a node that was already visited,
-  // but is not present in
-  // the queue, gets inserted at the tail. This situation arises when a node
-  // multiply inherits from two or more interfaces in which the first parent is
-  // higher up in the tree than the second parent. In addition, if the second
-  // parent turns out to be a child of the first .
-
-  // Queue of dequeued nodes to be searched for the above case.
-  ACE_Unbounded_Queue <be_interface*> del_queue;
+  // Make sure the queues are empty.
+  this->insert_queue.reset ();
+  this->del_queue.reset ();
 
   // Insert ourselves in the queue.
-  if (queue.enqueue_tail (this) == -1)
+  if (insert_queue.enqueue_tail (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_interface::traverse_inheritance_graph - "
@@ -1622,19 +1560,33 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
                         -1);
     }
 
+  be_code_emitter_wrapper wrapper (gen);
+
+  return this->traverse_inheritance_graph (wrapper, 
+                                           os, 
+                                           abstract_paths_only);
+}
+
+int
+be_interface::traverse_inheritance_graph (
+    TAO_IDL_Inheritance_Hierarchy_Worker &worker,
+    TAO_OutStream *os,
+    idl_bool abstract_paths_only
+  )
+{
   // Do until queue is empty.
-  while (!queue.is_empty ())
+  while (!this->insert_queue.is_empty ())
     {
       be_interface *bi;  // element inside the queue
 
       // Use breadth-first strategy i.e., first generate entries for ourselves,
       // followed by nodes that we immediately inherit from, and so on. In the
       // process make sure that we do not generate code for the same node more
-      // than once. Such a case may arise due to multiple inheritance forming a
-      // diamond like inheritance graph.
+      // than once. Such a case may arise due to multiple inheritance forming
+      // a diamond-like inheritance graph.
 
       // Dequeue the element at the head of the queue.
-      if (queue.dequeue_head (bi))
+      if (this->insert_queue.dequeue_head (bi))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
@@ -1643,7 +1595,7 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
         }
 
       // Insert the dequeued element in the del_queue.
-      if (del_queue.enqueue_tail (bi) == -1)
+      if (this->del_queue.enqueue_tail (bi) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
@@ -1678,12 +1630,19 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
                                 -1);
             }
 
+          if (abstract_paths_only && ! parent->is_abstract ())
+            {
+              continue;
+            }
+
           // Now insert this node at the tail of the queue, but make sure that
           // it doesn't already exist in the queue.
           int found = 0;
 
           // Initialize an iterator to search the queue for duplicates.
-          for (ACE_Unbounded_Queue_Iterator<be_interface*> q_iter (queue);
+          for (ACE_Unbounded_Queue_Iterator<be_interface*> q_iter (
+                   this->insert_queue
+                 );
                !q_iter.done ();
                (void) q_iter.advance ())
             {
@@ -1707,7 +1666,7 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
 
           // Initialize an iterator to search the del_queue for duplicates.
           for (ACE_Unbounded_Queue_Iterator<be_interface*> del_q_iter (
-                   del_queue
+                   this->del_queue
                  );
                !found && !del_q_iter.done ();
                (void) del_q_iter.advance ())
@@ -1733,7 +1692,7 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
           if (!found)
             {
               // Insert the parent in the queue.
-              if (queue.enqueue_tail (parent) == -1)
+              if (this->insert_queue.enqueue_tail (parent) == -1)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_interface::gen_server_skeletons - "
@@ -2230,6 +2189,17 @@ be_interface::gen_skel_helper (be_interface *derived,
       return 0;
     }
 
+  // If an operation or an attribute is abstract (declared in an
+  // abstract interface), we will either generate the full
+  // definition (if there are no concrete interfaces between the
+  // abstract ancestor and us) or, if there is a concrete ancestor
+  // in between, we will catch its definition elsewhere in this
+  // traversal.
+  if (ancestor->is_abstract ())
+    {
+      return 0;
+    }
+
   // Else generate code that does the cast to the appropriate type.
 
   if (ancestor->nmembers () > 0)
@@ -2245,17 +2215,6 @@ be_interface::gen_skel_helper (be_interface *derived,
         {
           // Get the next AST decl node
           AST_Decl *d = si.item ();
-
-          // If an operation or an attribute is abstract (declared in an
-          // abstract interface), we will either generate the full
-          // definition (if there are no concrete interfaces between the
-          // abstract ancestor and us) or, if there is a concrete ancestor
-          // in between, we will catch its definition elsewhere in this
-          // iteration.
-          if (d->is_abstract ())
-            {
-              continue;
-            }
 
           if (d->node_type () == AST_Decl::NT_op)
             {
@@ -2467,6 +2426,37 @@ be_interface::in_mult_inheritance_helper (be_interface *derived,
       // Direct multiple inheritance.
       derived->in_mult_inheritance (1);
   }
+
+  return 0;
+}
+
+int 
+be_interface::gen_abstract_init_helper (be_interface *node,
+                                        be_interface *base,
+                                        TAO_OutStream *os)
+{
+  if (node == base)
+    {
+      return 0;
+    }
+
+  if (node->is_nested () && base->is_nested ())
+    {
+      UTL_Scope *parent_scope = base->defined_in ();
+      AST_Decl *parent_decl = ScopeAsDecl (parent_scope);
+
+      *os << be_nl
+          << "this->ACE_NESTED_CLASS ("
+          << parent_decl->name () << ", "
+          << base->local_name () 
+          << ")::obj_ = this;";
+    }
+  else
+    {
+      *os << be_nl
+          << "this->" << base->name ()
+          << "::obj_ = this;";
+    }
 
   return 0;
 }

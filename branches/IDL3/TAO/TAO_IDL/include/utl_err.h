@@ -113,6 +113,7 @@ public:
     EIDL_CONSTANT_EXPECTED,     // We got something else..
     EIDL_INTERFACE_EXPECTED,    // We got something else..
     EIDL_VALUETYPE_EXPECTED,    // We got something else..
+    EIDL_ABSTRACT_EXPECTED,     // We got something else..
     EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
     EIDL_KEYWORD_ERROR,         // Case-insensitive clash with IDL keyword
@@ -246,6 +247,12 @@ public:
   // something else instead. This most likely is a case in a primary
   // key, emits, publishes or consumes declaration.
   void valuetype_expected (AST_Decl *d);
+
+  // Report a situation where an abstract type was expected but we got
+  // something else instead. This is the case in an inheritance
+  // list where a concrete type appears after an abstract type, or
+  // where a valuetype inherits more than one concrete valuetype.
+  void abstract_expected (AST_Decl *d);
 
   // Report a situation where an enumerator was expected but we got
   // something else instead. This occurs when a union with an enum

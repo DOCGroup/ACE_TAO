@@ -168,6 +168,26 @@ AST_Array::ast_accept (ast_visitor *visitor)
   return visitor->visit_array (this);
 }
 
+// Compute the size type of the node in question.
+int
+AST_Array::compute_size_type (void)
+{
+  AST_Type *type = this->base_type ();
+
+  if (!type)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_array::compute_size_type - "
+                         "bad base type\n"), 
+                        -1);
+    }
+
+  // Our size type is the same as our type.
+  this->size_type (type->size_type ());
+
+  return 0;
+}
+
 // Data accessors.
 unsigned long
 AST_Array::n_dims (void)

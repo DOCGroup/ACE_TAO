@@ -122,6 +122,10 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
+protected:
+  virtual int compute_size_type (void);
+  // Compute the size type if it is unknown.
+
 private:
   // Data.
 

@@ -107,9 +107,6 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                         -1);
     }
 
-  // Generate the exceptions thrown by the operation
-  // this->gen_throw_spec (node);
-
   *os <<be_idt_nl << "{"<<be_idt_nl;
   *os << "//Add your implementation here"<<be_uidt_nl;
   *os << "}" << be_nl << be_uidt_nl;
