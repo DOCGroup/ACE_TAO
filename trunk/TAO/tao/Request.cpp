@@ -56,7 +56,8 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     env_ (ACE_TRY_ENV),
     contexts_ (0),
     ctx_ (0),
-    refcount_ (1)
+    refcount_ (1),
+    lazy_evaluation_ (0)
 {
   target_ = CORBA::Object::_duplicate (obj);
   opname_ = CORBA::string_dup (op);
@@ -69,7 +70,8 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     env_ (ACE_TRY_ENV),
     contexts_ (0),
     ctx_ (0),
-    refcount_ (1)
+    refcount_ (1),
+    lazy_evaluation_ (0)
 {
   target_ = CORBA::Object::_duplicate (obj);
   opname_ = CORBA::string_dup (op);
@@ -101,12 +103,13 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->target_->_stubobj ();
 
-  stub->do_dynamic_call ((char *) opname_,
+  stub->do_dynamic_call ((char *) this->opname_,
                          1,
-                         args_,
-                         result_,
-                         flags_,
-                         exceptions_,
+                         this->args_,
+                         this->result_,
+                         this->flags_,
+                         this->exceptions_,
+                         this->lazy_evaluation_,
                          ACE_TRY_ENV);
 }
 
@@ -117,10 +120,11 @@ CORBA_Request::send_oneway (CORBA::Environment &ACE_TRY_ENV)
 
   stub->do_dynamic_call ((char *) opname_,
                          0,
-                         args_,
-                         result_,
-                         flags_,
-                         exceptions_,
+                         this->args_,
+                         this->result_,
+                         this->flags_,
+                         this->exceptions_,
+                         this->lazy_evaluation_,
                          ACE_TRY_ENV);
 }
 

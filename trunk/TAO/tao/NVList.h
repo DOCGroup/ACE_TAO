@@ -240,8 +240,10 @@ public:
 
   // = TAO Extensions:
 
-  void _tao_incoming_cdr (const TAO_InputCDR &cdr,
-                          int flag);
+  void _tao_incoming_cdr (TAO_InputCDR &cdr,
+                          int flag,
+                          int lazy_evaluation,
+                          CORBA::Environment &ACE_TRY_ENV);
   // Set the incoming CDR stream, this is used by TAO to perform lazy
   // evaluation of the NVList in an incoming ServerRequest.
   // The <flag> is used to check which parameters (IN, OUT and/or
@@ -249,9 +251,16 @@ public:
 
   void _tao_encode (TAO_OutputCDR &cdr,
                     TAO_ORB_Core *orb_core,
+                    int flag,
                     CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ());
-  // Encode the NVList into the
+  // Encode the NVList into the CDR stream. <flag> masks the type of
+  // arguments (IN, OUT or INOUT) that are to be marshaled.
+
+  void _tao_decode (TAO_InputCDR &cdr,
+                    int flag,
+                    CORBA::Environment &ACE_TRY_ENV);
+  // Decode the NVList arguments from the <cdr> stream.
 
   // Useful for template programming.
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -270,7 +279,7 @@ private:
   // helper to increase the list size. This is used by all the add_
   // methods of the NVList class
 
-  void compute_list (CORBA::Environment &ACE_TRY_ENV);
+  void evaluate (CORBA::Environment &ACE_TRY_ENV);
   // Lazy evaluation routine to fill up the Anys in the NVList from
   // the CDR stream.
 

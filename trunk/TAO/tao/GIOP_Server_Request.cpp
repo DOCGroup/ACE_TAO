@@ -50,6 +50,7 @@ TAO_GIOP_ServerRequest::
   : incoming_ (&input),
     outgoing_ (&output),
     response_expected_ (0),
+    lazy_evaluation_ (0),
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -224,6 +225,7 @@ TAO_GIOP_ServerRequest::
     incoming_ (0),
     outgoing_ (&output),
     response_expected_ (response_expected),
+    lazy_evaluation_ (0),
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -277,13 +279,15 @@ TAO_GIOP_ServerRequest::oa (void)
 
 void
 TAO_GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
-                                   CORBA::Environment &)
+                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // Save params for later use when marshaling the reply.
   this->params_ = list;
 
   this->params_->_tao_incoming_cdr (*this->incoming_,
-                                    CORBA::ARG_IN | CORBA::ARG_INOUT);
+                                    CORBA::ARG_IN | CORBA::ARG_INOUT,
+                                    this->lazy_evaluation_,
+                                    ACE_TRY_ENV);
 }
 
 // Store the result value.  There's either an exception, or a result,
@@ -404,6 +408,7 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
         {
           this->params_->_tao_encode (*this->outgoing_,
                                       this->orb_core_,
+                                      CORBA::ARG_INOUT | CORBA::ARG_OUT,
                                       ACE_TRY_ENV);
           ACE_CHECK;
         }

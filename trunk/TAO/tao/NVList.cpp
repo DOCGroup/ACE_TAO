@@ -10,6 +10,7 @@
 #include "tao/Environment.h"
 #include "tao/ORB.h"
 #include "tao/debug.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/NVList.i"
@@ -231,7 +232,7 @@ CORBA::NamedValue_ptr
 CORBA_NVList::add_element (CORBA::Flags flags,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  this->compute_list (ACE_TRY_ENV);
+  this->evaluate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::NamedValue::_nil ());
 
   if (ACE_BIT_DISABLED (flags,
@@ -259,7 +260,7 @@ CORBA_NVList::add_element (CORBA::Flags flags,
 CORBA::NamedValue_ptr
 CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &ACE_TRY_ENV)
 {
-  this->compute_list (ACE_TRY_ENV);
+  this->evaluate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::NamedValue::_nil ());
 
   if (n >= this->max_) // 0 based indexing
@@ -272,9 +273,18 @@ CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-CORBA_NVList::_tao_incoming_cdr (const TAO_InputCDR &cdr,
-                                 int flag)
+CORBA_NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
+                                 int flag,
+                                 int lazy_evaluation,
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
+  if (!lazy_evaluation)
+    {
+      this->_tao_decode (cdr,
+                         flag,
+                         ACE_TRY_ENV);
+      return;
+    }
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
   if (this->incoming_ != 0)
     {
@@ -289,6 +299,7 @@ CORBA_NVList::_tao_incoming_cdr (const TAO_InputCDR &cdr,
 void
 CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
                            TAO_ORB_Core *orb_core,
+                           int flag,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
@@ -304,7 +315,7 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
 
           CORBA::NamedValue_ptr nv = *item;
 
-          if (ACE_BIT_DISABLED (nv->flags (), this->incoming_flag_))
+          if (ACE_BIT_DISABLED (nv->flags (), flag))
             continue;
 
           if (TAO_debug_level > 3)
@@ -317,7 +328,8 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
                           "NVList::_tao_encode - parameter <%s>\n",
                           arg));
             }
-          cdr.append (nv->value ()->type_,
+          CORBA::TypeCode_var tc = nv->value ()->type ();
+          cdr.append (tc.in (),
                       this->incoming_,
                       ACE_TRY_ENV);
           ACE_CHECK;
@@ -341,37 +353,23 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
 
       CORBA::NamedValue_ptr nv = *item;
 
-      if (ACE_BIT_DISABLED (nv->flags (), this->incoming_flag_))
+      if (ACE_BIT_DISABLED (nv->flags (), flag))
         continue;
 
-      // If the Any owns the data, then we have allocated space.
-      if (nv->value ()->any_owns_data_)
-        {
-          (void) cdr.encode (nv->value ()->type_,
-                             nv->value ()->value_, 0,
-                             ACE_TRY_ENV);
-          ACE_CHECK;
-        }
-      else
-        {
-          TAO_InputCDR in (nv->value ()->cdr_,
-                           TAO_ENCAP_BYTE_ORDER,
-                           orb_core);
-          cdr.append (nv->value ()->type_, &in, ACE_TRY_ENV);
-          ACE_CHECK;
-        }
+      nv->value ()->_tao_encode (cdr,
+                                 orb_core,
+                                 ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
 void
-CORBA_NVList::compute_list (CORBA::Environment &ACE_TRY_ENV)
+CORBA_NVList::_tao_decode (TAO_InputCDR &incoming,
+                           int flag,
+                           CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
-  if (this->incoming_ == 0)
-    return;
-
   if (TAO_debug_level > 3)
-    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) : NVList::compute_list\n"));
+    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) : NVList::_tao_decode\n"));
 
   // Then unmarshal each "in" and "inout" parameter.
   ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> i (this->values_);
@@ -387,74 +385,48 @@ CORBA_NVList::compute_list (CORBA::Environment &ACE_TRY_ENV)
       // @@ this is where we assume that the NVList is coming from
       //    a Server-side request, we could probably handle both
       //    cases with a flag, but there is no clear need for that.
-      if (ACE_BIT_DISABLED (nv->flags (), this->incoming_flag_))
+      if (ACE_BIT_DISABLED (nv->flags (), flag))
         continue;
 
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) : NVList::compute_list - %s\n",
+                    "TAO (%P|%t) : NVList::_tao_decode - %s\n",
                     nv->name ()?nv->name ():"(no name given)" ));
 
       CORBA::Any_ptr any = nv->value ();
-      CORBA::TypeCode_var tc = any->type ();
-
-      // @@ (JP) The following code depends on the fact that
-      //         TO_InputCDR does not contain chained message blocks,
-      //         otherwise <begin> and <end> could be part of
-      //         different buffers!
-
-      // This will be the start of a new message block.
-      char *begin = this->incoming_->rd_ptr ();
-
-      // Skip over the next aregument.
-      CORBA::TypeCode::traverse_status status =
-        this->incoming_->skip (tc.in (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        {
-          if (TAO_debug_level > 0)
-            {
-              const char* param_name = nv->name ();
-              if (param_name == 0)
-                param_name = "(no name given)";
-
-              ACE_ERROR ((LM_ERROR,
-                          "CORBA_NVList::compute_list - problem while"
-                          " decoding parameter <%s>\n", param_name));
-            }
-          return;
-        }
-
-      // This will be the end of the new message block.
-      char *end = this->incoming_->rd_ptr ();
-
-      // Allocate the new message block and set its endpoints.
-      ACE_Message_Block cdr (end - begin);
-
-      cdr.rd_ptr (begin);
-
-      cdr.wr_ptr (end);
-
-      // Stick it into the Any. It gets duplicated there.
-      any->_tao_replace (tc.in (),
-                         &cdr,
-                         ACE_TRY_ENV);
+      any->_tao_decode (incoming,
+                        ACE_TRY_ENV);
       ACE_CHECK;
     }
+}
 
-  delete this->incoming_;
+void
+CORBA_NVList::evaluate (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
+  if (this->incoming_ == 0)
+    return;
+
+  auto_ptr<TAO_InputCDR> incoming (this->incoming_);
   this->incoming_ = 0;
+
+  this->_tao_decode (*(incoming.get ()),
+                     this->incoming_flag_,
+                     ACE_TRY_ENV);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node<CORBA::NamedValue_ptr>;
 template class ACE_Unbounded_Queue<CORBA::NamedValue_ptr>;
 template class ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>;
+template class ACE_Auto_Basic_Ptr<TAO_InputCDR>;
+template class auto_ptr<TAO_InputCDR>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Node<CORBA::NamedValue_ptr>
 #pragma instantiate ACE_Unbounded_Queue<CORBA::NamedValue_ptr>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_InputCDR>
+#pragma instantiate auto_ptr<TAO_InputCDR>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

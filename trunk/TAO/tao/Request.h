@@ -123,6 +123,9 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
+  void _tao_lazy_evaluation (int lazy_evaluation);
+  // Set the lazy evaluation flag
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Request_ptr _ptr_type;
   typedef CORBA_Request_var _var_type;
@@ -181,6 +184,9 @@ private:
 
   ACE_SYNCH_MUTEX refcount_lock_;
   // protect the reference count
+
+  int lazy_evaluation_;
+  // If not zero then the NVList is not evaluated by default
 };
 
 typedef CORBA_Request* CORBA_Request_ptr;

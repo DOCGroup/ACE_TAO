@@ -336,6 +336,17 @@ public:
                        TAO_default_environment ());
   // Replace the value of the Any, used in the >>= operators.
 
+  void _tao_encode (TAO_OutputCDR &cdr,
+                    TAO_ORB_Core *orb_core,
+                    CORBA::Environment &ACE_TRY_ENV =
+                       TAO_default_environment ());
+  // Encode the contents of the Any into <cdr>
+
+  void _tao_decode (TAO_InputCDR &cdr,
+                    CORBA::Environment &ACE_TRY_ENV =
+                       TAO_default_environment ());
+  // Decode the <cdr> using the typecode in the Any object.
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Any_ptr _ptr_type;
   typedef CORBA_Any_var _var_type;
@@ -363,9 +374,8 @@ private:
   void operator<<= (unsigned char);
   CORBA::Boolean operator>>= (unsigned char&) const;
 
-  friend class TAO_Stub;
-  friend class TAO_Marshal_Any;
   friend class CORBA_NVList;
+  friend class TAO_Marshal_Any;
 };
 
 class TAO_Export CORBA_Any_var
