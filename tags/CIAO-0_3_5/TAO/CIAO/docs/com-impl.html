@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<!-- $Id$ -->
+<html> <head>
+<title>Implementing a CCM Component</title>
+</head>
+
+<body>
+<h1>Implementing a CCM Component</h1>
+
+This document explains how to implement a single component.  At this
+moment, CIAO lacks a CIDL compiler, and we depends on manually
+generating the servant glue code for containers and local executor
+interface.  Check out this <a href="new_component.html">page</a> to
+find how all files are generate4d  in CIAO.
+The following figure shows how this is done:<p>
+
+
+<img src="imgs/File-Gen-Existing.png"><p>
+
+And when we have a working CIDL (or, CCIDL "CIAO's Component
+Implementation Definition Language") compiler, the file will be
+generated using a CIDL file (which is rather simple.) This figure
+depicts the "Right Way" [TM] this should be done:<p>
+
+<img src="imgs/File-Gen-Future.png"><p>
+
+Checkout a <a href="../tools/CCIDL/README">list of things to do</a> for implementing CIDL compiler.<p>
+
+I think it is debatable whether we should merge the "Servant DLL" and
+"Component Implementation DLL" into one DLL.  Me think not.  My
+approach, however, creates some complication on requireing a mechanism
+to locate the servant code (and DLL) from component implementation.
+
+
+<h2>Libraries Dependencies</h2> Implementing a component creates 3
+DLL's as shown in the above figure.  Both "Servant DLL" and "Component
+Implementation DLL" depend on the "Client DLL".  "Servant DLL" and
+"Component Implementation DLL" are not mutually dependent, however.
+All the generated DLLs depends on other TAO and CIAO common
+libraries.  Here's a break down of which libraries depends on which
+other libraries:
+
+<ul>
+  <li><b>Client DLL</b>: ace.lib tao.lib TAO_IFR_Client.lib
+      CIAO_Clientd.lib
+  <li><b>Servant DLL</b>: ace.lib tao.lib <b>Client DLL</b>
+      TAO_IFR_Client.lib TAO_PortableServer.lib TAO_Security.lib
+      CIAO_Container.lib CIAO_Client.lib
+  <li><b>Component Implementation DLL</b>: ace.lib tao.lib
+      <b>Client DLL</b> TAO_IFR_Client.lib TAO_Security.lib
+      CIAO_Container.lib
+</ul>
+
+        <!--#include virtual="/~nanbor/signature.html" -->
+<!-- <hr> -->
+<!-- <\!-- hhmts start -\-> -->
+<!-- Last modified: Tue Dec 10 22:41:50 Central Standard Time 2002 -->
+<!-- <\!-- hhmts end -\-> -->
+<!-- <address>Nanbor Wang &lt;nanbor@cs.wustl.edu&gt;</address> -->
+</body> </html>
