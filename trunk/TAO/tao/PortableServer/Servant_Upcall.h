@@ -109,11 +109,11 @@ namespace TAO
       void post_invoke (void);
 
       /// Locate POA.
-      TAO_Root_POA *lookup_POA (const TAO::ObjectKey &key
-                           ACE_ENV_ARG_DECL);
+      ::TAO_Root_POA *lookup_POA (const TAO::ObjectKey &key
+                                  ACE_ENV_ARG_DECL);
 
       /// POA accessor.
-      TAO_Root_POA &poa (void) const;
+      ::TAO_Root_POA &poa (void) const;
 
       /// Object Adapter accessor.
       TAO_Object_Adapter &object_adapter (void) const;
@@ -187,7 +187,7 @@ namespace TAO
 
       TAO_Object_Adapter *object_adapter_;
 
-      TAO_Root_POA *poa_;
+      ::TAO_Root_POA *poa_;
 
       PortableServer::Servant servant_;
 

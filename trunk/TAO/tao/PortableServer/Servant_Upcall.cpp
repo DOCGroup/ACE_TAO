@@ -233,9 +233,9 @@ namespace TAO
     {
     }
 
-    TAO_Root_POA *
+    ::TAO_Root_POA *
     Servant_Upcall::lookup_POA (const TAO::ObjectKey &key
-                                                    ACE_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
     {
       // Acquire the object adapter lock first.
       int result = this->object_adapter_->lock ().acquire ();
