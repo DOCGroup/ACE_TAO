@@ -9,6 +9,8 @@
 
 ACE_RCSID(orbsvcs, Runtime_Scheduler, "$Id$")
 
+  // Constructor. Initialize the data from the POD_RT_Info array.
+
 ACE_Runtime_Scheduler::
 ACE_Runtime_Scheduler (int config_count,
                        ACE_Scheduler_Factory::POD_Config_Info config_info[],
@@ -21,9 +23,12 @@ ACE_Runtime_Scheduler (int config_count,
 {
 }
 
+// Create an RT_Info.  In the config run scheduler this actually constructs
+// a new RT_Info.  Here, we just return its handle, or an error value if
+// it's not present.
+
 RtecScheduler::handle_t
 ACE_Runtime_Scheduler::create (const char *entry_point,
-                               // @@ Chris, please use TAO_TRY_ENV not _env.  Please fix this throughout the file.
                                CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::DUPLICATE_NAME))
@@ -38,6 +43,9 @@ ACE_Runtime_Scheduler::create (const char *entry_point,
   return -1;
 }
 
+// Lookup a handle for an RT_Info, and return its handle, or an error
+// value if it's not present.
+
 RtecScheduler::handle_t
 ACE_Runtime_Scheduler::lookup (const char * entry_point,
                                CORBA::Environment &_env)
@@ -45,6 +53,9 @@ ACE_Runtime_Scheduler::lookup (const char * entry_point,
 {
   return create (entry_point, _env);
 }
+
+
+// Return a pointer to the RT_Info corresponding to the passed handle.
 
 RtecScheduler::RT_Info *
 ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
@@ -59,9 +70,13 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
   // we are supposed to allocate an structure and return it, the
   // caller owns it from then on.
 
-  // @@ Chris, please make sure to ALWAYS use the ACE_NEW_RETURN or
-  // ACE_NEW macros in situations like this...
-  RtecScheduler::RT_Info* info = new RtecScheduler::RT_Info;
+  // Allocate a new RT_Info
+  RtecScheduler::RT_Info* info;
+  ACE_NEW_THROW_RETURN (info,
+                        RtecScheduler::RT_Info,
+                        CORBA::NO_MEMORY (),
+                        0);
+
 
   info->entry_point = rt_info_[handle - 1].entry_point;
   info->handle = rt_info_[handle - 1].handle;
@@ -81,15 +96,15 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
   return info;
 }
 
-// @@ Chris, please reformat ALL the methods like this:
-// void
-// ACE_Runtime_Scheduler::nameofmethod()...
 
-void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
+// Set characteristics of the RT_Info corresponding to the passed handle.
+
+void
+ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
                                  RtecScheduler::Criticality_t criticality,
-				 RtecScheduler::Time time,
-				 RtecScheduler::Time typical_time,
-				 RtecScheduler::Time cached_time,
+                                 RtecScheduler::Time time,
+                                 RtecScheduler::Time typical_time,
+                                 RtecScheduler::Time cached_time,
                                  RtecScheduler::Period_t period,
                                  RtecScheduler::Importance_t importance,
                                  RtecScheduler::Quantum_t quantum,
@@ -123,11 +138,16 @@ void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
   // TODO: throw something here.
 }
 
-void ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
-                                      RtecScheduler::OS_Priority& o_priority,
-                                      RtecScheduler::Preemption_Subpriority_t& subpriority,
-                                      RtecScheduler::Preemption_Priority_t& p_priority,
-                                      CORBA::Environment &_env)
+
+// Returns the priority and subpriority values assigned to an RT_Info,
+// based on its handle.
+
+void
+ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
+                                 RtecScheduler::OS_Priority& o_priority,
+                                 RtecScheduler::Preemption_Subpriority_t& subpriority,
+                                 RtecScheduler::Preemption_Priority_t& p_priority,
+                                 CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK,
                       RtecScheduler::NOT_SCHEDULED))
@@ -141,12 +161,16 @@ void ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
   p_priority = rt_info_[handle - 1].preemption_priority;
 }
 
-void ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
-                                                  RtecScheduler::OS_Priority& priority,
-                                                  RtecScheduler::Preemption_Subpriority_t& subpriority,
-                                                  RtecScheduler::Preemption_Priority_t& p_priority,
-                                                  // @@ Chris, please use the TAO_TRY_ENV macro rather than _env...
-                                                  CORBA::Environment &_env)
+
+// Returns the priority and subpriority values assigned to an RT_Info,
+// based on its entry point name.
+
+void
+ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
+                                             RtecScheduler::OS_Priority& priority,
+                                             RtecScheduler::Preemption_Subpriority_t& subpriority,
+                                             RtecScheduler::Preemption_Priority_t& p_priority,
+                                             CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK,
                       RtecScheduler::NOT_SCHEDULED))
@@ -162,12 +186,16 @@ void ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
                   _env);
 }
 
-void ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
+
+// In the config run scheduler, this method registers a dependency between
+// two RT_Infos.  In the run time scheduler, this is a no-op.
+
+void
+ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
                                             RtecScheduler::handle_t dependency,
                                             CORBA::Long number_of_calls,
                                             RtecScheduler::Dependency_Type_t
                                               dependency_type,
-                                            // @@ Chris, please don't use _env...
                                             CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))
@@ -193,14 +221,17 @@ void ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
 #endif
 }
 
-void ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
-                                                CORBA::Long maximum_priority,
-                                                RtecScheduler::RT_Info_Set_out infos,
-												                               RtecScheduler::Config_Info_Set_out configs,
-                                                RtecScheduler::Scheduling_Anomaly_Set_out anomalies,
+// In the config run scheduler, this method causes scheduling information
+// to be computed for all registered RT_Infos.  In the run time scheduler,
+// this is a no-op.
 
-                                                // @@ Chris, please don't use env...
-                                                CORBA::Environment &_env)
+void
+ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
+                                           CORBA::Long maximum_priority,
+                                           RtecScheduler::RT_Info_Set_out infos,
+                                           RtecScheduler::Config_Info_Set_out configs,
+                                           RtecScheduler::Scheduling_Anomaly_Set_out anomalies,
+                                           CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                       RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
@@ -212,7 +243,10 @@ void ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   return;
 }
 
-void 
+// Provides the thread priority and queue type for the given priority
+// level.
+
+void
 ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                                RtecScheduler::OS_Priority& priority,
                                                RtecScheduler::Dispatching_Type_t & d_type,
@@ -222,7 +256,7 @@ ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priorit
                       RtecScheduler::UNKNOWN_PRIORITY_LEVEL))
 {
   // Throw an exception if a valid schedule has not been loaded
-  if (config_count_ <= 0 
+  if (config_count_ <= 0
       || config_info_ [p_priority].preemption_priority != p_priority)
     {
       TAO_THROW (RtecScheduler::NOT_SCHEDULED ());
@@ -242,35 +276,21 @@ ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priorit
     }
 }
 
-// @@ Chris, these comments are in the wrong part of the function.
-// They should go at the beginning, NOT the end...  Please fix all
-// these.
 
-// provide the thread priority and queue type for the given priority
-// level
+// Returns the last priority number assigned to an operation in the
+// schedule.  The number returned is one less than the total number
+// of scheduled priorities.  All scheduled priorities range from 0
+// to the number returned, inclusive.
 
-RtecScheduler::Preemption_Priority_t 
+RtecScheduler::Preemption_Priority_t
 ACE_Runtime_Scheduler::last_scheduled_priority (CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED))
 {
   // throw an exception if a valid schedule has not been loaded
   if (config_count_ <= 0)
-    TAO_THROW_RETURN (RtecScheduler::NOT_SCHEDULED(), 
+    TAO_THROW_RETURN (RtecScheduler::NOT_SCHEDULED(),
                       (RtecScheduler::Preemption_Priority_t) -1);
   else
     return (RtecScheduler::Preemption_Priority_t) (config_count_ - 1);
 }
-
-// Returns the last priority number assigned to an operation in the
-// schedule.  The number returned is one less than the total number of
-// scheduled priorities.  All scheduled priorities range from 0 to the
-// number returned, inclusive.
-
-
-
-
-
-
-
-
