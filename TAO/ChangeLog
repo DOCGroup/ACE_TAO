@@ -1,3 +1,135 @@
+Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and pradeep@oomworks.com>
+
+	* RTCORBA thread pools are assigned a single endpoint. When bands are
+	  configured, the TAO transport connection cache does not create
+	  separate connections for each band specified because it reads a
+	  single endpoint associated with the server object.
+
+	  This is fixed by extending the transport descriptor to be aware
+	  of bands. When the connection cache tries to look for an
+	  exisiting connection, we match the request against endpoint and
+	  band information.  Thus now, 2 bands to the same endpoint would
+	  create 2 seperate connections.
+
+	* tao/RTCORBA/RT_Transport_Descriptor.h:
+	* tao/RTCORBA/RT_Transport_Descriptor.cpp:
+	* tao/RTCORBA/RT_Transport_Descriptor.inl:	
+
+	  RT transport descriptor is a container for transport descriptor
+	  properties.
+
+	* tao/RTCORBA/RT_Transport_Descriptor_Property.h:
+	* tao/RTCORBA/RT_Transport_Descriptor_Property.cpp:
+	* tao/RTCORBA/RT_Transport_Descriptor_Property.inl:
+
+	  Contains the
+	  TAO_RT_Transport_Descriptor_Banded_Connection_Property and
+	  TAO_RT_Transport_Descriptor_Private_Connection_Property classes
+	  that hold the bands and private connections specific data.
+
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp (endpoint_from_profile):
+
+	  Modified this method to populate the RT_Transport_Descriptor
+	  with the endpoint, bands and/or private connection property.
+
+	* tao/RTCORBA/Private_Transport_Descriptor.h:
+	* tao/RTCORBA/Private_Transport_Descriptor.cpp:
+	* tao/RTCORBA/Private_Transport_Descriptor.inl:
+
+	  Removed because obsolete.
+	
+	* tao\RTCORBA\TAO_RTCORBA.dsp: 
+	* tao\RTCORBA\TAO_RTCORBA_Static.dsp: 
+	* tao\RTCORBA\Makefile: 
+	* tao\RTCORBA\Makefile.bor: 
+
+	  Update project and Makefiles.
+
+	* tests/RTCORBA/Priority_Inversion_With_Bands:
+
+	  Added new test. This test check for priority inversion when
+	  using different RTCORBA configurations.  The following four
+	  configurations are tested:
+
+	  (a) Thread lanes without bands
+	  (b) Thread lanes without bands
+	  (c) Thread pool without bands
+  	  (d) Thread pool with bands
+
+          The server has a servant registered with a POA serviced by a
+	  thread pool without lanes and another servant registered with a
+	  POA serviced by a thread pool with lanes.  The thread pool with
+	  lanes has a low and a high priority lane.
+	  
+          The client makes several oneway low priority invocations
+	  followed by several oneway high priority invocations.  Each
+	  invocation performs about 2 seconds of CPU bound work.  Priority
+	  inversion occurs if low priority invocations get processed
+	  before high priority invocations.
+	  
+          (a) shows the best result of high priority requests getting
+	  serviced before low priority requests even though low priority
+	  requests were sent before high priority requests.  This is
+	  because low priority invocations are processed by the low
+	  priority lane and high priority invocations are processed by the
+	  high priority lane.  In addition, low priority requests are sent
+	  on a different connection than the high priority requests since
+	  each lane has a different endpoint.
+	  
+          (b) does not improve on (a) since the requests are already sent
+	  on different connections.
+	  
+          (c) shows priority inversion as low priority requests get
+	  processed before high priority requests.  This is because only
+	  one connection is used for both low and high priority requests.
+	  Therefore, the high priority requests are queued behind the low
+	  priority requests.
+	  
+          (d) shows improvement on (c) since using bands allows the high
+	  priority requests to go on a different connection than the low
+	  priority requests.  However, priority inversion still exists
+	  since the server does not distinguish between the low priority
+	  connection and the high priority connection and therefore treats
+	  them equally.  Removing this priority inversion will require two
+	  improvements: (1) band information needs to be propagated to the
+	  server when a banded connection is established by the client;
+	  (2) server side dispatching needs to be based on the priority of
+	  the connections.
+
+          See run_test.pl to see how to run this test.  The server
+	  static_threads should be set to the number of CPUs on the
+	  machine.
+
+	  Added the following files:
+
+          - tests/RTCORBA/Priority_Inversion_With_Bands/Makefile
+          - tests/RTCORBA/Priority_Inversion_With_Bands/Makefile.bor
+          - tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.dsw
+          - tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc
+          - tests/RTCORBA/Priority_Inversion_With_Bands/README
+          - tests/RTCORBA/Priority_Inversion_With_Bands/client.bor
+          - tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp
+          - tests/RTCORBA/Priority_Inversion_With_Bands/client.dsp
+          - tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl
+          - tests/RTCORBA/Priority_Inversion_With_Bands/server.bor
+          - tests/RTCORBA/Priority_Inversion_With_Bands/server.cpp
+          - tests/RTCORBA/Priority_Inversion_With_Bands/server.dsp
+          - tests/RTCORBA/Priority_Inversion_With_Bands/svc.conf
+          - tests/RTCORBA/Priority_Inversion_With_Bands/svc.conf.xml
+          - tests/RTCORBA/Priority_Inversion_With_Bands/test.idl
+          - tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp
+          - tests/RTCORBA/Priority_Inversion_With_Bands/test_i.h	  
+
+	  The following files were modified:
+
+          - tao/RTCORBA/TAO_RTCORBA.dsp
+          - tests/RTCORBA/Makefile
+          - tests/RTCORBA/Makefile.bor
+          - tests/RTCORBA/README
+          - tests/RTCORBA/RTCORBA-test-configurations.xls
+          - tests/RTCORBA/RTCORBA_tests.dsw
+          - $ACE_ROOT/bin/tao_orb_tests.lst	 
+
 Sat Jul 12 11:08:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_constant.cpp:
