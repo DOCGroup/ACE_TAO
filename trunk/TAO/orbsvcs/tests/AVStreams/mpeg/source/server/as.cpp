@@ -59,7 +59,13 @@ main (int argc,char **argv)
 
   if (audio_child.init (argc,argv) == -1)
     return 1;
-  if (audio_child.run () == -1)
-    return 2;
+//   while  (1)
+//     {
+      int result = audio_child.run () ;
+//       if (errno == EINTR)
+//         continue;
+//       else
+//         break;
+//     }
   return 0;
 }

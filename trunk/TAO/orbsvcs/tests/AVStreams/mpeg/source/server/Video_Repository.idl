@@ -18,9 +18,9 @@ module TAO_VR
   struct Movie
   {
     string name_;
-    string filename_;
+    string audio_filename_;
+    string video_filename_;                        
     string description_;
-    //    string video_filename_;      
     //    string movie_format_;
     //    unsigned long filesize_;
     //    unsigned long duration_;

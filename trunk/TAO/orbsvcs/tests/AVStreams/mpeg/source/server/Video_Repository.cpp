@@ -5,6 +5,7 @@
 
 ACE_RCSID(server, Video_Repository, "$Id$")
 
+
 const char* TAO_Video_Repository::MOVIE_INFO = "Movie_Info";
 
 TAO_Video_Repository::TAO_Video_Repository (const char* file_name)
@@ -98,18 +99,24 @@ TAO_Video_Repository::parse_file (const char* database, int num_lines)
 	  TAO_VR::Movie& movie = this->movie_info_[i];
 
 	  movie.name_ = (const char*) current;
-	  movie.filename_ = (const char*) ACE_OS::strtok (0, delim);
+	  movie.audio_filename_ = (const char*) ACE_OS::strtok (0, delim);
+	  movie.video_filename_ = (const char*) ACE_OS::strtok (0, delim);
 	  movie.description_ = (const char*) ACE_OS::strtok (0, delim);
 
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Movie Name: %s\nFile Name: %s\nDescription: %s\n",
 		      (const char *) movie.name_,
-		      (const char *) movie.filename_,
+		      (const char *) movie.audio_filename_,
+		      (const char *) movie.video_filename_,
 		      (const char *) movie.description_));
 
 	  // From the actual movie file, extract the techincal information.
 	  TAO_Video_Repository::
-	    obtain_movie_info (movie.filename_, movie);
+	    obtain_movie_info (movie.audio_filename_, movie);
+
+	  TAO_Video_Repository::
+	    obtain_movie_info (movie.video_filename_, movie);
+
 
 	  current = ACE_OS::strtok (0, delim);
 	  i++;
