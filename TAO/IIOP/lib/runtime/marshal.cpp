@@ -502,14 +502,7 @@ CDR::encoder (
 // and need some kind of init function.  Luckily, they're increasingly
 // rare in any "production" environment.
 //
-#if THE_COMPILER_CAN_FIND_THIS_PROPERLY
-const				// The extern reference in onc/xdr.cpp doesn't
-				// seem to be able to find this decl with as
-				// long as the const is part of it.  I even
-				// tried changing the ref decl to have 'const'
-				// in it, to no avail.  --cjc
-#endif
-CORBA_TypeCode_ptr
+const CORBA_TypeCode_ptr
 __tc_consts [TC_KIND_COUNT] = {
     _tc_CORBA_Null
     , _tc_CORBA_Void

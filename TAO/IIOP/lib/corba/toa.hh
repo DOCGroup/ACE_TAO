@@ -84,7 +84,11 @@ class TOA : public IUnknown
     //   such as maintaining persistent tables keyed by references to
     //   objects that may no longer exist.
     //
+#if !defined (_WIN32)
     typedef void __stdcall (*dsi_handler) (		// DIR
+#else
+    typedef void (*dsi_handler) (		// DIR
+#endif
 	CORBA_OctetSeq		&obj_id,
 	CORBA_ServerRequest	&request,
 	void			*context,
