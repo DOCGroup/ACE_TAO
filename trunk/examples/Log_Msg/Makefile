@@ -43,7 +43,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/test_log_msg.o .shobj/test_log_msg.: test_log_msg.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -52,6 +52,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/streams.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

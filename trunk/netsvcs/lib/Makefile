@@ -41,7 +41,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 ifeq ($(SUPPRESS_DASH_G),1)
 #### Build this target without -g on some platforms.
-$(VDIR)Server_Logging_Handler.o $(VSHDIR)Server_Logging_Handler.$(SOEXT):
 	$(COMPILE-NO_DASH_G.cc) -o $@ $<
 endif # SUPPRESS_DASH_G
 
@@ -56,7 +55,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -68,40 +67,6 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  TS_Server_Handler.h \
@@ -110,15 +75,35 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -131,36 +116,27 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -182,7 +158,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -213,42 +189,27 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -258,36 +219,27 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -311,7 +263,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -341,36 +293,22 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -383,36 +321,27 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -445,7 +374,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -455,40 +384,6 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  Name_Handler.h \
@@ -497,15 +392,35 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -518,36 +433,27 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -576,7 +482,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -600,7 +506,6 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
@@ -631,33 +536,20 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -670,45 +562,36 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- Base_Optimizer.h Server_Logging_Handler_T.cpp
+ Base_Optimizer.h
 .obj/Log_Message_Receiver.o .shobj/Log_Message_Receiver.so: Log_Message_Receiver.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -729,14 +612,13 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- Log_Message_Receiver.h Log_Message_Receiver.cpp
+ Log_Message_Receiver.h
 .obj/Server_Logging_Handler.o .shobj/Server_Logging_Handler.so: Server_Logging_Handler.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -757,9 +639,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
  Server_Logging_Handler.h Log_Message_Receiver.h \
- Log_Message_Receiver.cpp Server_Logging_Handler_T.h \
+ Server_Logging_Handler_T.h \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
@@ -790,33 +671,20 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -829,47 +697,36 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- Base_Optimizer.h Server_Logging_Handler_T.cpp \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i
+ Base_Optimizer.h
 .obj/Token_Handler.o .shobj/Token_Handler.so: Token_Handler.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -900,36 +757,22 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -942,36 +785,27 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -990,7 +824,6 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Local_Tokens.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Local_Tokens.i \
  $(ACE_ROOT)/ace/Token_Collection.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -1003,7 +836,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1013,6 +846,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/streams.h \
  Logging_Strategy.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
