@@ -44,21 +44,21 @@ struct Printer
 
 typedef ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
 
-Printer::Printer (const char *message) 
+Printer::Printer (const char *message)
   : message_ (message)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Creating Printer object\n")));
 }
 
-Printer::~Printer (void) 
+Printer::~Printer (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Deleting Printer object\n")));
 }
 
-void 
-Printer::print (void) 
+void
+Printer::print (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) %s\n"),
@@ -245,7 +245,7 @@ Scheduler::end (void)
   this->activation_queue_.enqueue (new Method_Request_end (this));
 }
 
-// Here's where the work takes place. 
+// Here's where the work takes place.
 
 void
 Scheduler::print (Printer_var &printer)
@@ -346,7 +346,7 @@ main (int, ACE_TCHAR *[])
   }
 
   // Close things down.
-  scheduler->end (); 
+  scheduler->end ();
 
   ACE_OS::sleep (5);
 
@@ -358,5 +358,11 @@ main (int, ACE_TCHAR *[])
               ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
+
+#if defined (DIGITAL_UNIX)
+  // Never terminates on Tru64 5.1 [Bug
+  ACE_OS::exit (0);
+#endif /* DIGITAL_UNIX */
+
   return 0;
 }
