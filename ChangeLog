@@ -1,3 +1,9 @@
+Mon May 14 14:45:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.h (ACE_InputCDR): Somehow the removed
+	  steal_data () got back into the header file. Removed the
+	  method. 
+
 Mon May 14 11:02:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Strategies_T.i: Removed the ACE_ERROR statement from the
