@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Sock_Connect.h"
+#include "ace/OS.h"             // Needed to get the ifreq stuff
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/Handle_Set.h"
@@ -1238,3 +1239,14 @@ ACE_Sock_Connect::ipv6_enabled (void)
   return 0;
 #endif /* ACE_HAS_IPV6 */
 }
+
+#if defined (__unix) || defined (__unix__) || defined (__Lynx__) || \
+    defined (_AIX) || defined (__MACOSX__)
+#  if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Auto_Array_Ptr<struct ifreq>;
+template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
+#  elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Auto_Array_Ptr<struct ifreq>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<struct ifreq>
+#  endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* (__unix || __Lynx_ || AIX || MacOSX) */
