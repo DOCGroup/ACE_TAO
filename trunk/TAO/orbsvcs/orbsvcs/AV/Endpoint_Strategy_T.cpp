@@ -4,6 +4,7 @@
 #define TAO_AV_ENDPOINT_STRATEGY_T_C
 
 #include "Endpoint_Strategy_T.h"
+#include "ace/Process_Semaphore.h"
 
 // ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Reactive_Strategy
