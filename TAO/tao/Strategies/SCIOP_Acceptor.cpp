@@ -8,6 +8,7 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/Transport.h"
+#include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
 #include "SCIOP_Acceptor.i"
