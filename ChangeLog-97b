@@ -58,10 +58,6 @@ Fri Oct 10 19:27:28 1997  Steve Huston  <shuston@riverace.com>
 	  examples/ASX/CCM_App/Makefile
 	     Removed the changes to these files added Oct 01.
 
-Fri Oct 10 18:36:52 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-	* ACE version 4.3.14, released Fri Oct 10 18:36:52 1997.
-
 Fri Oct 10 15:21:07 1997    <irfan@TWOSTEP>
 
 	* examples/Connection/non_blocking/CPP-connector.cpp
