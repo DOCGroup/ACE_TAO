@@ -35,6 +35,13 @@ class TAO_Notify_EventChannelFactory_i;
 class TAO_Notify_ConsumerAdmin_i;
 class TAO_Notify_SupplierAdmin_i;
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class  TAO_Notify_EventChannel_i :
 public virtual POA_CosNotifyChannelAdmin::EventChannel,
 public virtual TAO_Notify_QoSAdmin_i
@@ -209,5 +216,9 @@ virtual void set_admin (
   CosNotifyFilter::FilterFactory_var filter_factory_;
   // The default filter factory
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* NOTIFY_EVENTCHANNEL_I_H_ */
