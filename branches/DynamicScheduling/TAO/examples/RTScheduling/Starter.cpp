@@ -154,7 +154,7 @@ main (int argc, char** argv)
       return 1;
     }
   ACE_ENDTRY;
-
+return 0;
 }
 
 
