@@ -18,14 +18,17 @@
 #   define ACE_NEEDS_DEV_IO_CONVERSION
 # elif (__SUNPRO_CC >= 0x420)
 # define ACE_HAS_ANSI_CASTS
-# if 0 /* Explicit instantiation requires the -instances=explicit
-          CCFLAG.  It seems to work for the most part, except for:
-          1) Static data members get instantiated multiple times.
-          2) In TAO, the TAO_Unbounded_Sequence vtbl can't be found. */
-    // Sun C++ 4.2 (and beyond) supports template specialization.
+# if (__SUNPRO_CC >= 0x500)
+    /* Explicit instantiation requires the -instances=explicit
+       CCFLAG.  It seems to work for the most part, except for:
+       1) Static data members get instantiated multiple times.
+       2) In TAO, the TAO_Unbounded_Sequence vtbl can't be found.
+       With CC 5.0, those problems may be fixed.  And, this is necessary
+       to work around problems with automatic template instantiation. */
 #   define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #   define ACE_TEMPLATES_REQUIRE_SOURCE
-# endif /* 0 */
+#   define ACE_LACKS_ACE_IOSTREAM
+# endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
 # define ACE_CAST_CONST const
 # define ACE_HAS_HI_RES_TIMER
