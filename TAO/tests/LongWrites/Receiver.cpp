@@ -33,3 +33,19 @@ Receiver::receive_data (const Test::Payload &payload,
 
   ACE_DEBUG ((LM_DEBUG, "Receiver::receive_data\n"));
 }
+
+void
+Receiver::receive_data_oneway (const Test::Payload &payload,
+                               CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->receive_data (payload, ACE_TRY_ENV);
+}
+
+Test::Payload *
+Receiver::return_data (const Test::Payload &payload,
+                       CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return new Test::Payload (payload);
+}

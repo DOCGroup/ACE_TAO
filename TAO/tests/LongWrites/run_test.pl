@@ -12,35 +12,39 @@ use Cwd;
 my $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 
-my $SV = new PerlACE::Process ("server", "-o $iorfile");
+foreach $i ("ONEWAY", "READ", "READ_WRITE") {
 
-$SV->Spawn ();
+  my $SV = new PerlACE::Process ("server", "-o $iorfile");
 
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
-} 
+  $SV->Spawn ();
 
-$CL1 = new PerlACE::Process ("client", " -k file://$iorfile ");
-$CL2 = new PerlACE::Process ("client", " -k file://$iorfile ");
-$CL3 = new PerlACE::Process ("client", " -k file://$iorfile ");
+  if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+  }
 
-$CL1->Spawn (60);
-$CL2->Spawn (60);
-$CL3->Spawn (60);
+  $CL1 = new PerlACE::Process ("client", " -k file://$iorfile -t $i");
+  $CL2 = new PerlACE::Process ("client", " -k file://$iorfile -t $i");
+  $CL3 = new PerlACE::Process ("client", " -k file://$iorfile -t $i");
 
-$client1 = $CL1->WaitKill (60);
-$client2 = $CL2->WaitKill (60);
-$client3 = $CL3->WaitKill (60);
-$server = $SV->WaitKill (5);
+  $CL1->Spawn ();
+  $CL2->Spawn ();
+  $CL3->Spawn ();
 
-unlink $iorfile;
+  $client1 = $CL1->WaitKill (120);
+  $client2 = $CL2->WaitKill (120);
+  $client3 = $CL3->WaitKill (120);
+  $server = $SV->WaitKill (5);
+
+  unlink $iorfile;
   
-if ($server != 0
-    || $client1 != 0 || $client2 != 0 || $client3 != 0) {
-  print "ERROR: non-zero status returned by the server or clients\n";
-  exit 1;
+  if ($server != 0
+      || $client1 != 0 || $client2 != 0 || $client3 != 0) {
+    print "ERROR: non-zero status returned by the server or clients\n";
+    print "ERROR: server = $server, client1 = $client1, client2 = $client2, client3 = $client3\n";
+    exit 1;
+  }
 }
 
 exit 0;

@@ -22,10 +22,20 @@ class Sender
 {
 public:
   /// Constructor
-  Sender (void);
+  Sender (int test_type);
 
   /// Destructor
   virtual ~Sender (void);
+
+  /// Control the type of test
+  enum {
+    /// Run the test using receive_data_oneway() operations
+    TEST_ONEWAY,
+    /// Run the test using receive_data() operations
+    TEST_WRITE,
+    /// Run the test using return_data() operations
+    TEST_READ_WRITE,
+  };
 
   /// Return 1 after <shutdown> is invoked
   int shutdown_called (void);
@@ -42,12 +52,18 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
+  /// The type of test
+  int test_type_;
+
+  /// Synchronize the internal state
   ACE_SYNCH_MUTEX mutex_;
 
+  /// Keep track of all the receivers
   size_t receiver_count_;
   size_t receiver_length_;
   Test::Receiver_var *receivers_;
 
+  /// Set to 1 if the shutdown() operations was called.
   int shutdown_called_;
 };
 

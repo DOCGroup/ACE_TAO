@@ -20,6 +20,7 @@ parse_args (int argc, char *argv[])
       case 'o':
 	ior_output_file = get_opts.optarg;
 	break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,

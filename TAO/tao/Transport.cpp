@@ -277,7 +277,7 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
       // @@ I don't think we want to hold the mutex here, however if
       // we release it we need to recheck the status of the transport
       // after we return... once I understand the final form for this
-      // code I will re-visit this stuff.
+      // code I will re-visit this decision
       ssize_t n = this->send_message_block_chain (message_block,
                                                   byte_count,
                                                   max_wait_time);

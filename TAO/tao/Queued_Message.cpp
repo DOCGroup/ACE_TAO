@@ -16,6 +16,7 @@ TAO_Queued_Message::TAO_Queued_Message (ACE_Message_Block *contents,
   : contents_ (contents)
   , own_contents_ (own_contents)
   , callback_ (callback)
+  , current_block_ (contents)
   , next_ (0)
   , prev_ (0)
 {
@@ -62,20 +63,14 @@ TAO_Queued_Message::bytes_transferred (size_t byte_count)
 {
   while (!this->done () && byte_count > 0)
     {
-      size_t l = this->contents_->length ();
+      size_t l = this->current_block_->length ();
       if (byte_count < l)
         {
-          this->contents_->rd_ptr (byte_count);
+          this->current_block_->rd_ptr (byte_count);
           return;
         }
-      ACE_Message_Block *cont = this->contents_->cont ();
       byte_count -= l;
-      if (this->own_contents_)
-        {
-          this->contents_->cont (0);
-          ACE_Message_Block::release (this->contents_);
-        }
-      this->contents_ = cont;
+      this->current_block_ = this->current_block_->cont ();
     }
 }
 

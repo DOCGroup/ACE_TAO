@@ -34,6 +34,12 @@ public:
   virtual void receive_data (const Test::Payload &payload,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_data_oneway (const Test::Payload &payload,
+                                    CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Test::Payload *return_data (const Test::Payload &payload,
+                                      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   ACE_SYNCH_MUTEX mutex_;
