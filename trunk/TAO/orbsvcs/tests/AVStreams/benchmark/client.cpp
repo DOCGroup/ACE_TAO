@@ -103,11 +103,11 @@ ttcp_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 
   if (this->acceptor_.open (tcp_addr,
                             TAO_ORB_Core_instance ()->reactor ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"%p\n","open"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,"%p\n","open"),0);
   ACE_INET_Addr local_addr;
 
   if (this->acceptor_.acceptor ().get_local_addr (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)acceptor get local addr failed %p"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)acceptor get local addr failed %p"),0);
 
   char client_address_string [BUFSIZ];
   ::sprintf (client_address_string,
@@ -141,12 +141,13 @@ ttcp_Client_StreamEndPoint::open (void *)
 }
 
 Client::Client (int argc, char **argv,int task_id)
-  : reactive_strategy_ (&orb_manager_),
-    ttcp_reactive_strategy_ (&orb_manager_,this),
-    client_mmdevice_ (0),
-    argc_ (argc),
-    argv_ (argv),
-    task_id_ (task_id)
+  :ttcp_reactive_strategy_ (&orb_manager_,this),
+   reactive_strategy_ (&orb_manager_),
+   client_mmdevice_ (0),
+   argc_ (argc),
+   argv_ (argv),
+   task_id_ (task_id)
+
 {
 }
 
@@ -332,13 +333,7 @@ Client::svc (void)
       timer.start ();
       for (int i=0;i<number;i++)
 	{
-	  cerr << i << " ";
-	  if (i == 136)
-	    {
-	      	  this->stream_.send_n (buffer,buffer_siz);
-	    }
-	  else
-	    this->stream_.send_n (buffer,buffer_siz);
+          this->stream_.send_n (buffer,buffer_siz);
 	}
       timer.stop ();
       timer.elapsed_time (tv2);
@@ -472,7 +467,8 @@ main (int argc, char **argv)
 
   GLOBALS::instance ()->thread_count_ = 1;
   // Preliminary argument processing.
-  for (int i=0;i< argc;i++)
+  int i;
+  for (i=0;i< argc;i++)
     {
       if (ACE_OS::strcmp (argv[i],"-t") == 0
           && (i - 1 < argc))
@@ -508,6 +504,8 @@ template class TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDe
 template class ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Task<ACE_SYNCH>;
+template class ACE_Condition<ACE_SYNCH_MUTEX> ;
+template class ACE_Singleton<Globals,ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
@@ -516,4 +514,6 @@ template class ACE_Task<ACE_SYNCH>;
 #pragma instantiate ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Task<ACE_SYNCH>
+#pragma instantiate ACE_Condition<ACE_SYNCH_MUTEX> 
+#pragma instantiate ACE_Singleton <Globals,ACE_SYNCH_MUTEX> 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
