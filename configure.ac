@@ -653,17 +653,13 @@ AS_IF([test "$ace_has_xti_funcs" = yes],
      ],)
 
 dnl Check if XTI headers define TCP macros that conflict with netinet/tcp.h's
-   ACE_CACHE_CHECK([if TCP macros are defined in XTI headers],
+   ACE_CACHE_CHECK([if TCP macros in sys/xti.h conflict with netinet/tcp.h],
      [ace_cv_lib_has_conflicting_xti_macros],
      [
-      AC_EGREP_CPP([ACE_CONFLICTING_XTI_MACROS],
-        [
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-
-#if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
+      ACE_CONVERT_WARNINGS_TO_ERRORS([
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #  if defined (ACE_HAS_XTI)
+#    include <sys/types.h>
 #    if defined (ACE_HAS_SYS_XTI_H)
 #      include /**/ <sys/xti.h>
 #    else
@@ -674,18 +670,17 @@ dnl Check if XTI headers define TCP macros that conflict with netinet/tcp.h's
 #      include /**/ <tiuser.h>
 #    endif
 #  endif /* ACE_HAS_XTI */
-#endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
-
-#if defined (TCP_NODELAY) || defined (TCP_MAXSEG)
-ACE_CONFLICTING_XTI_MACROS
-#endif  /* TCP_NODELAY || TCPMAXSEG  */
-        ],
-        [
-         ace_cv_lib_has_conflicting_xti_macros=yes
-        ],
-        [
+#  if !defined (ACE_LACKS_NETINET_TCP_H)
+#    include /**/ <netinet/tcp.h>
+#  endif /* !ACE_LACKS_NETIINET_TCP_H */
+        ]],[[
+         int a = 0;
+        ]])],[
          ace_cv_lib_has_conflicting_xti_macros=no
+        ],[
+         ace_cv_lib_has_conflicting_xti_macros=yes
         ])
+      ])
      ],
      [
       AC_DEFINE([ACE_HAS_CONFLICTING_XTI_MACROS])
