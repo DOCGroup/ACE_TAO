@@ -23,6 +23,8 @@
 #include "Driver.h"
 #include "Reactor_Timer_Queue_Test.h"
 
+ACE_RCSID(Timer_Queue, main_reactor, "$Id$")
+
 typedef Timer_Queue_Test_Driver <ACE_Timer_Heap, 
 	                         Input_Handler,
 				 Input_Handler::ACTION>

@@ -3,6 +3,8 @@
 #include "ace/OS.h"
 #include "ace/streams.h"
 
+ACE_RCSID(Misc, test_time_value, "$Id$")
+
 inline int my_abs (int d) { return d > 0 ? d : -d; }
 
 ostream &

@@ -7,6 +7,8 @@
 #include "ace/Malloc.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
+
 typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC; 
 
 // Default address for shared memory mapped files and SYSV shared

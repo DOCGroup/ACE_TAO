@@ -1,7 +1,8 @@
-
 // $Id$
 
 #include "ace/Shared_Memory_MM.h"
+
+ACE_RCSID(Shared_Memory, test_MM, "$Id$")
 
 #define SHMSZ 27
 char shm_key[] = "/tmp/fooXXXXXX";

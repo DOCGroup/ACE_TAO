@@ -3,6 +3,8 @@
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Acceptor.h"
 
+ACE_RCSID(SPIPE_SAP, NPServer, "$Id$")
+
 #if defined (ACE_WIN32)
 #define MAKE_PIPE_NAME(X) \\\\.\\pipe\\#X
 #else

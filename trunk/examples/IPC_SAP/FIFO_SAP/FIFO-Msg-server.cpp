@@ -1,6 +1,8 @@
-#include "ace/FIFO_Recv_Msg.h"
 // $Id$
 
+#include "ace/FIFO_Recv_Msg.h"
+
+ACE_RCSID(FIFO_SAP, FIFO_Msg_server, "$Id$")
 
 #if defined (ACE_HAS_STREAM_PIPES)
 

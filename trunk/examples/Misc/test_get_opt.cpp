@@ -4,6 +4,7 @@
 
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Misc, test_get_opt, "$Id$")
 
 int
 main (int argc, char *argv[])

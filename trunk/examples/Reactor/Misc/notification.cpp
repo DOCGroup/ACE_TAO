@@ -5,6 +5,8 @@
 #include "ace/Thread.h"
 #include "ace/Synch_T.h"
 
+ACE_RCSID(Misc, notification, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 #if defined (CHORUS)
 // Chorus does not have signal, so we'll stop after a number of rounds.

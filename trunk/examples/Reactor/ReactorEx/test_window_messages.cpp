@@ -22,6 +22,8 @@
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/Auto_Ptr.h"
 
+ACE_RCSID(ReactorEx, test_window_messages, "$Id$")
+
 class Event_Handler : public ACE_Event_Handler
 {
 public:

@@ -4,6 +4,8 @@
 #include "ace/LSOCK_Stream.h"
 #include "ace/UNIX_Addr.h"                                       
 
+ACE_RCSID(SOCK_SAP, FD_unserver, "$Id$")
+
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // ACE_LSOCK Server

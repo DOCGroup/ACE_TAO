@@ -10,6 +10,8 @@
 #include "ace/Malloc.h"
 #include "ace/SV_Semaphore_Complex.h"
 
+ACE_RCSID(SV_Semaphores, Semaphores_2, "$Id$")
+
 #if defined (ACE_HAS_SYSV_IPC)
 
 // Shared memory allocator (note that this chews up the

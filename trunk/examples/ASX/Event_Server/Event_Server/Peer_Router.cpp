@@ -8,6 +8,8 @@
 #include "Options.h"
 #include "Peer_Router.h"
 
+ACE_RCSID(Event_Server, Peer_Router, "$Id$")
+
 // Send the <ACE_Message_Block> to all the peers.  Note that in a
 // "real" application this logic would most likely be more selective,
 // i.e., it would actually do "routing" based on addressing

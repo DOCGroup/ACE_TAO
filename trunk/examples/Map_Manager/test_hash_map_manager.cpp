@@ -5,6 +5,8 @@
 #include "ace/SString.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(Map_Manager, test_hash_map_manager, "$Id$")
+
 const int MAX_KEY_LEN = 1000;
 
 typedef ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_RW_Mutex> MAP_MANAGER;

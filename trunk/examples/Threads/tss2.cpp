@@ -17,10 +17,12 @@
 //
 // ============================================================================
 
+#include "ace/Thread.h"
 #include "TSS_Data.h"
 #include "TSS_Obj.h"
 #include "TSS_Task.h"
-#include "ace/Thread.h"
+
+ACE_RCSID(Threads, tss2, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

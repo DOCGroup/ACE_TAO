@@ -1,10 +1,11 @@
-#include "ace/OS.h"
 // $Id$
 
-
+#include "ace/OS.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
+
+ACE_RCSID(FILE_SAP, client, "$Id$")
 
 int 
 main (int argc, char *argv[])

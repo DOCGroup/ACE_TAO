@@ -7,6 +7,8 @@
 
 #include "ace/Service_Config.h"
 
+ACE_RCSID(Misc, test_signals_1, "$Id$")
+
 // Number of times to allow signal to execute until we quit.
 static size_t count = 10;
 

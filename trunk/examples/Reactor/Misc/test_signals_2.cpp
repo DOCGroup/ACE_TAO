@@ -101,6 +101,8 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 
+ACE_RCSID(Misc, test_signals_2, "$Id$")
+
 class Sig_Handler_1 : public ACE_Event_Handler
 {
 public:

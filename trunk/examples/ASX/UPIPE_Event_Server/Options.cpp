@@ -1,9 +1,11 @@
-#include "ace/Get_Opt.h"
 // $Id$
 
+#include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 
 #include "Options.h"
+
+ACE_RCSID(UPIPE_Event_Server, Options, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

@@ -7,6 +7,8 @@
 #include "ace/Reactor.h"
 #include "ace/Message_Block.h"
 
+ACE_RCSID(Misc, test_XtReactor2, "$Id$")
+
 #if defined (ACE_HAS_XT)
 #define String XtString
 #include <Xm/PushB.h>

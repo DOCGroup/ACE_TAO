@@ -1,7 +1,8 @@
-
 // $Id$
 
 #include "ace/TLI_Connector.h"
+
+ACE_RCSID(TLI_SAP, ftp_client, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 

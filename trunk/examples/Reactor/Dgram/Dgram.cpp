@@ -9,6 +9,8 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
+ACE_RCSID(Dgram, Dgram, "$Id$")
+
 // Port used to receive for dgrams.
 static u_short port1;
 

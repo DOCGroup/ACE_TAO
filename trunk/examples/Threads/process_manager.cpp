@@ -7,6 +7,8 @@
 #include "ace/Process_Manager.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Threads, process_manager, "$Id$")
+
 #if !defined (ACE_WIN32) && defined (ACE_HAS_THREADS)
 
 // Global process manager.

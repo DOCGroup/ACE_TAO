@@ -9,6 +9,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Transceiver, transceiver, "$Id$")
+
 class Event_Transceiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
   // = TITLE

@@ -3,6 +3,8 @@
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"                              
                                                         
+ACE_RCSID(SOCK_SAP, FD_unclient, "$Id$")
+
 #if defined (ACE_HAS_MSG) && !defined (ACE_HAS_UNIX_DOMAIN_SOCKETS)
 // ACE_LSOCK Client.
                                                         

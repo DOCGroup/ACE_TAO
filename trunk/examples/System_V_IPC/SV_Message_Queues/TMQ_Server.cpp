@@ -6,6 +6,8 @@
 #include "test.h"
 #include "ace/streams.h"
 
+ACE_RCSID(SV_Message_Queues, TMQ_Server, "$Id$")
+
 // Must be global for signal Message...
 static ACE_Typed_SV_Message_Queue<Message_Data> ace_sv_message_queue
   (SRV_KEY, ACE_Typed_SV_Message_Queue<Message_Data>::ACE_CREATE);

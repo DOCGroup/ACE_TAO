@@ -11,6 +11,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 
+ACE_RCSID(Misc, test_demuxing, "$Id$")
+
 // Default is to have a 2 second timeout.
 static int timeout = 2;
 

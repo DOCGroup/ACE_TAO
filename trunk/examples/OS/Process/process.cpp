@@ -21,6 +21,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Process.h"
 
+ACE_RCSID(Process, process, "$Id$")
+
 #if defined (ACE_WIN32)
 #define EXEC_NAME "MORE.COM"
 const char *DATE_PATH = "date.exe";

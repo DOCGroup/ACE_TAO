@@ -141,6 +141,8 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 
+ACE_RCSID(ReactorEx, test_talker, "$Id$")
+
 typedef ACE_Task<ACE_MT_SYNCH> MT_TASK;
 
 class Peer_Handler : public MT_TASK, public ACE_Handler

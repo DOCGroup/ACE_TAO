@@ -1,6 +1,6 @@
-// The test shows the use of an ACE_Manual_Event to create a
 // $Id$
 
+// The test shows the use of an ACE_Manual_Event to create a
 // Pseudo_Barrier. Multiple threads are created which do the
 // following:
 //
@@ -14,6 +14,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
+
+ACE_RCSID(Threads, manual_event, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 static ACE_Atomic_Op <ACE_Thread_Mutex, int> amount_of_work = 0;

@@ -2,6 +2,8 @@
 
 #include "ace/FIFO_Send_Msg.h"
 
+ACE_RCSID(FIFO, client, "$Id$")
+
 int 
 main (int, char *[])
 {

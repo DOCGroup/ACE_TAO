@@ -39,6 +39,8 @@
 #include "ace/Reactor.h"
 #include "ace/Pipe.h"
 
+ACE_RCSID(Misc, pingpong, "$Id$")
+
 class Ping_Pong : public ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
 {
 public:

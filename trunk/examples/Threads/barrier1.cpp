@@ -1,12 +1,13 @@
-// This test program illustrates how the ACE barrier synchronization
 // $Id$
 
+// This test program illustrates how the ACE barrier synchronization
 // mechanisms work.
-
 
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
+
+ACE_RCSID(Threads, barrier1, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

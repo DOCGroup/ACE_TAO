@@ -4,6 +4,8 @@
 
 #include "ace/Service_Config.h"
 
+ACE_RCSID(server, server_test, "$Id$")
+
 int
 main (int argc, char *argv[])
 {

@@ -23,6 +23,8 @@
 
 #include "Async_Timer_Queue_Test.h"
 
+ACE_RCSID(Timer_Queue, Async_Timer_Queue_Test, "$Id$")
+
 // Hook method that is called to handle the expiration of a timer.
 int
 Async_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,

@@ -13,6 +13,8 @@
 #include "ace/Singleton.h"
 #include "ace/streams.h"
 
+ACE_RCSID(Acceptor_server, server_loggerd, "$Id$")
+
 // ----------------------------------------
 
 class Options

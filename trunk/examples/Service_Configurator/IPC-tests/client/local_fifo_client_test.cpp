@@ -1,12 +1,13 @@
-/* Send a file through ACE_FIFO communication channel by
 // $Id$
 
-   break it (the file) into pieces. */
+// Send a file through ACE_FIFO communication channel by
+// breaking it (the file) into pieces.
 
 #include "ace/Mem_Map.h"
 #include "ace/FIFO_Send_Msg.h"
-
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(client, local_fifo_client_test, "$Id$")
 
 // Name of the program.
 static char *program_name;

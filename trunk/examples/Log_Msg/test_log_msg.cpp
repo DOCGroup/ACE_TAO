@@ -21,6 +21,8 @@
 #include "ace/OS.h"
 #include "ace/streams.h"
 
+ACE_RCSID(Log_Msg, test_log_msg, "$Id$")
+
 static void
 cleanup (void)
 {

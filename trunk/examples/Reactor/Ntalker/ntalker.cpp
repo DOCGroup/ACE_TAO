@@ -11,6 +11,8 @@
 #include "ace/Service_Config.h"
 #include "ace/streams.h"
 
+ACE_RCSID(Ntalker, ntalker, "$Id$")
+
 #if defined (ACE_HAS_IP_MULTICAST)
 // Network interface to subscribe to.  This is hardware specific.  use
 // netstat(1M) to find whether your interface is le0 or ie0

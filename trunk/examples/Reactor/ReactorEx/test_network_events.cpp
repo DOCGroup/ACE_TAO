@@ -37,6 +37,8 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 
+ACE_RCSID(ReactorEx, test_network_events, "$Id$")
+
 // Globals for this test
 int stop_test = 0;
 ACE_Reactor reactor;

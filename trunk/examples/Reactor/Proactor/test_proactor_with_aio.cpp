@@ -34,6 +34,8 @@
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
 
+ACE_RCSID(Proactor, test_proactor_with_aio, "$Id$")
+
 static char *host = 0;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 static char *file = "test_proactor.cpp";

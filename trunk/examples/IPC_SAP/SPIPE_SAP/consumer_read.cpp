@@ -3,6 +3,8 @@
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Acceptor.h"
 
+ACE_RCSID(SPIPE_SAP, consumer_read, "$Id$")
+
 #if defined (ACE_HAS_STREAM_PIPES)
 
 #include "shared.h"

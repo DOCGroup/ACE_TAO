@@ -2,6 +2,8 @@
 
 #include "Timer_Service.h"
 
+ACE_RCSID(Misc, Timer_Service, "$Id$")
+
 int
 Timer_Service_1::init (int argc, char *argv[])
 {

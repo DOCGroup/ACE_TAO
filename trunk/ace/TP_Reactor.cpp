@@ -9,6 +9,8 @@
 #include "ace/TP_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, TP_Reactor, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE (ACE_TP_Reactor)
 
 ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,

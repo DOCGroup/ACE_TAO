@@ -27,6 +27,8 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(ReactorEx, test_multithreading, "$Id$")
+
 static int concurrent_threads = 1;
 static int number_of_handles = ACE_Reactor::instance ()->size ();
 static int number_of_handles_to_signal = 1;

@@ -4,6 +4,8 @@
 #include "ace/CORBA_Handler.h"
 #include "Test_i.h"
 
+ACE_RCSID(CORBA, server, "$Id$")
+
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 #if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)

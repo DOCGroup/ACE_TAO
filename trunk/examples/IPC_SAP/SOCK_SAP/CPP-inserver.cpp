@@ -9,6 +9,8 @@
 #include "ace/Handle_Set.h"
 #include "ace/Profile_Timer.h"
 
+ACE_RCSID(SOCK_SAP, CPP_inserver, "$Id$")
+
 // Are we running verbosely?
 static int verbose = 0;
 

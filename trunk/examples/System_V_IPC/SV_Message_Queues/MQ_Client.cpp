@@ -1,9 +1,10 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ace/SV_Message_Queue.h"
 #include "test.h"
 #include "ace/streams.h"
+
+ACE_RCSID(SV_Message_Queues, MQ_Client, "$Id$")
 
 int 
 main (int, char *[])

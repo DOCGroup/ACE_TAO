@@ -30,6 +30,8 @@
 #include "ace/Process.h"
 #include "ace/Signal.h"
 
+ACE_RCSID(Process, imore, "$Id$")
+
 #if defined (ACE_WIN32)
 static const char * executable = "MORE.COM";
 #else

@@ -10,6 +10,8 @@
 
 #include "ace/Task.h"
 
+ACE_RCSID(Threads, wfmo, "$Id$")
+
 #if defined (ACE_WIN32)
 
 // Number of threads.

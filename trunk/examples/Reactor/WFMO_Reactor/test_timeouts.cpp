@@ -28,6 +28,8 @@
 #include "ace/Service_Config.h"
 #include "ace/OS.h"
 
+ACE_RCSID(ReactorEx, test_timeouts, "$Id$")
+
 class Timeout_Handler : public ACE_Event_Handler
 // = TITLE
 //     Generic timeout handler.

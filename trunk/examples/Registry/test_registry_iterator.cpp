@@ -7,9 +7,10 @@
 //
 // This examples points the cool iterators in ACE_Registry
 
-
 #include "ace/Registry.h"
 #include "ace/streams.h"
+
+ACE_RCSID(Registry, test_registry_iterator, "$Id$")
 
 // Indentation while printing names
 static const u_long INDENTATION_LEVEL = 3;

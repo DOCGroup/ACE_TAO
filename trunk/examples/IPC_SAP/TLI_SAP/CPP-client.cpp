@@ -3,6 +3,8 @@
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"                              
 
+ACE_RCSID(TLI_SAP, CPP_client, "$Id$")
+
 #if defined (ACE_HAS_TLI)
 
 /* ACE_TLI Client */

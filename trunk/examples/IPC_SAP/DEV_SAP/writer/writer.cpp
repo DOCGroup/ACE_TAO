@@ -1,8 +1,9 @@
-
 // $Id$
 
 #include "ace/DEV_Connector.h"
 #include "ace/TTY_IO.h"
+
+ACE_RCSID(writer, writer, "$Id$")
 
 int 
 main (int argc, char *argv[])

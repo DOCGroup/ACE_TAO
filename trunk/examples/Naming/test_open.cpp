@@ -2,6 +2,8 @@
 
 #include "ace/Naming_Context.h"
 
+ACE_RCSID(Naming, test_open, "$Id$")
+
 int 
 main (int argc, char **argv) 
 {

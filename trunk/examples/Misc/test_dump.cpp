@@ -6,6 +6,8 @@
 
 #include "ace/Dump.h"
 
+ACE_RCSID(Misc, test_dump, "$Id$")
+
 class SOCK
 {
 public:

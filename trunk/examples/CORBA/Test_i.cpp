@@ -1,6 +1,8 @@
-#include "Test_i.h"
 // $Id$
 
+#include "Test_i.h"
+
+ACE_RCSID(CORBA, Test_i, "$Id$")
 
 void
 Test_i::method (long input,

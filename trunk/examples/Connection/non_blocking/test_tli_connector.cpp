@@ -1,10 +1,12 @@
-// ACE_TLI Client.
 // $Id$
 
+// ACE_TLI Client.
 
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"
 #include "CPP-connector.h"
+
+ACE_RCSID(non_blocking, test_tli_connector, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 

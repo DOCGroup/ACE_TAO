@@ -1,7 +1,10 @@
-#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 // $Id$
 
 #include "Handle_L_Stream.h"
+
+ACE_RCSID(server, Handle_L_Stream, "$Id$")
+
+#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 /* Static variables. */
 
@@ -14,4 +17,5 @@ char *Handle_L_Stream::login_name = 0;
 
 Handle_L_Stream local_stream;
 ACE_Service_Object_Type ls (&local_stream, "Local_Stream");
+
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

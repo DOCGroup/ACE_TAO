@@ -24,6 +24,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(ReactorEx, test_removals, "$Id$")
+
 class Event_Handler : public ACE_Event_Handler
 // = TITLE
 //    Generic Event Handler.

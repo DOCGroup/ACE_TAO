@@ -20,6 +20,8 @@
 
 #include "ace/Reactor.h"
 
+ACE_RCSID(ReactorEx, test_console_input, "$Id$")
+
 class Event_Handler : public ACE_Event_Handler
 {
 public:

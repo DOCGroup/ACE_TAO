@@ -2,6 +2,8 @@
 
 #include "ace/SString.h"
 
+ACE_RCSID(Misc, test_sstring, "$Id$")
+
 int 
 main (int, char *[])
 {

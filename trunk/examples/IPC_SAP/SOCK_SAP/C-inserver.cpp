@@ -2,6 +2,8 @@
 
 #include "ace/OS.h"
 
+ACE_RCSID(SOCK_SAP, C_inserver, "$Id$")
+
 /* BSD socket server. */
 
 int main (int argc, char *argv[])

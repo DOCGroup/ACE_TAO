@@ -4,6 +4,8 @@
 
 #include "Log_Wrapper.h"
 
+ACE_RCSID(Multicast, Log_Wrapper, "$Id$")
+
 Log_Wrapper::Log_Wrapper (void)
 {
   sequence_number_ = 0;

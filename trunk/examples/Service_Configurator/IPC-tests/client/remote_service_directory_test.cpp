@@ -1,11 +1,12 @@
-// Test program for the INET IPC-SAPs...
 // $Id$
 
-
+// Test program for the INET IPC-SAPs...
 
 #include "ace/SOCK_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(client, remote_service_directory_test, "$Id$")
 
 // Port number to use. 
 static unsigned short port_number = ACE_DEFAULT_SERVICE_PORT;

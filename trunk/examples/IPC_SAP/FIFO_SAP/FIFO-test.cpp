@@ -9,6 +9,8 @@
 #include "ace/FIFO_Recv.h"
 #include "ace/FIFO_Send.h"
 
+ACE_RCSID(FIFO_SAP, FIFO_test, "$Id$")
+
 #define PERMS                   0666
 #define EXEC_NAME               "more"
 #define EXEC_COMMAND_ARG        "more"

@@ -8,6 +8,8 @@
 #include "ace/Signal.h"
 #include "IO_Test.h"
 
+ACE_RCSID(IO_tests, test_io, "$Id$")
+
 // Name of program.
 static const char *program_name;
 

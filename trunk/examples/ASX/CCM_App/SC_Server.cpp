@@ -1,11 +1,13 @@
-// Simple driver program for the server.
 // $Id$
 
+// Simple driver program for the server.
 
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Synch.h"
 #include "ace/Signal.h"
+
+ACE_RCSID(CCM_App, SC_Server, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {
@@ -44,9 +46,9 @@ main (int argc, char *argv[])
   Event_Handler handler;
   ACE_Sig_Adapter shutdown_handler ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
-  if (ACE::register_stdin_handler (&handler,
-				   ACE_Reactor::instance (),
-				   ACE_Thread_Manager::instance ()) == -1)
+  if (ACE_Event_Handler::register_stdin_handler (&handler,
+						 ACE_Reactor::instance (),
+						 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
 
   if (loggerd.open (argc, argv) == -1 && errno != ENOENT)

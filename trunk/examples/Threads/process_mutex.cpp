@@ -6,6 +6,8 @@
 #include "ace/Synch.h"
 #include "ace/Signal.h"
 
+ACE_RCSID(Threads, process_mutex, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 static sig_atomic_t done;

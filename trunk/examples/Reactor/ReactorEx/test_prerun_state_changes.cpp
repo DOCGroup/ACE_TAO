@@ -21,6 +21,8 @@
 
 #include "ace/Reactor.h"
 
+ACE_RCSID(ReactorEx, test_prerun_state_changes, "$Id$")
+
 class Event_Handler : public ACE_Event_Handler
 // = TITLE
 //    Generic Event Handler.

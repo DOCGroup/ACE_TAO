@@ -1,10 +1,12 @@
-// ACE_TLI Server.
 // $Id$
 
+// ACE_TLI Server.
 
 #include "ace/TLI_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "CPP-acceptor.h"
+
+ACE_RCSID(non_blocking, test_tli_acceptor, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 typedef Svc_Handler<ACE_TLI_STREAM> SVC_HANDLER;

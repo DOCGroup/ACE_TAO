@@ -8,6 +8,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(Threads, recursive_mutex, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 // Total number of iterations.

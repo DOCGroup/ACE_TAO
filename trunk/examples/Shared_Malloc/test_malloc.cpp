@@ -8,6 +8,8 @@
 #include "Malloc.h"
 #include "Options.h"
 
+ACE_RCSID(Shared_Malloc, test_malloc, "$Id$")
+
 static int
 gen_size (void)
 {

@@ -25,6 +25,8 @@
 
 #include "ace/WFMO_Reactor.h"
 
+ACE_RCSID(ReactorEx, test_exceptions, "$Id$")
+
 class Event_Handler : public ACE_Event_Handler
 {
 public:

@@ -1,9 +1,12 @@
 // $Id$
 
+#include "ace/WFMO_Reactor.h"
+
 #include "Logging_Acceptor.h"
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
-#include "ace/WFMO_Reactor.h"
+
+ACE_RCSID(simple_server, Logging_Acceptor, "$Id$")
 
 // Initialize peer_acceptor object.
 

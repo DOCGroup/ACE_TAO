@@ -8,6 +8,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Threads, reader_writer, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.

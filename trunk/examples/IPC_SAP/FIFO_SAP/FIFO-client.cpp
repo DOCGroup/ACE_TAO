@@ -1,7 +1,8 @@
-
 // $Id$
 
 #include "ace/FIFO_Send.h"
+
+ACE_RCSID(FIFO_SAP, FIFO_client, "$Id$")
 
 int 
 main (int, char *[])

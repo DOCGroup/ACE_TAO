@@ -10,6 +10,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(SOCK_SAP, CPP_inclient, "$Id$")
+
 // ACE SOCK_SAP client.
 
 class Options
