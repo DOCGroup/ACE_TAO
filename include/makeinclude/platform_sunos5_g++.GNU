@@ -10,6 +10,11 @@
 # NOTE: On Solaris86, you'll need to use GNU as instead of /usr/ccs/bin/as,
 #       if you want -gstabs+ and -pipe support.
 
+ACE_HAS_GNUG_PRE_2_8 := \
+  $(shell \
+    if $(CXX) --version | egrep '^(cygnus-)?2\.[0-7]' > /dev/null; then \
+    echo 1; else echo 0; fi)
+
 ifeq (,$(debug))
   debug = 1
 endif
