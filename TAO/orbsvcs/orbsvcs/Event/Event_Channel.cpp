@@ -542,13 +542,13 @@ ACE_Push_Consumer_Proxy::disconnect_push_supplier (CORBA::Environment &_env)
 }
 
 void
-ACE_Push_Consumer_Proxy::suspend (CORBA::Environment &)
+ACE_Push_Consumer_Proxy::suspend_connection (CORBA::Environment &)
 {
   correlation_.suspend ();
 }
 
 void
-ACE_Push_Consumer_Proxy::resume (CORBA::Environment &)
+ACE_Push_Consumer_Proxy::resume_connection (CORBA::Environment &)
 {
   correlation_.resume ();
 }
