@@ -105,6 +105,7 @@ TAO/tests/Connection_Timeout/run_test.pl: !MINIMUM
 #TAO/tests/Connection_Failure/run_test.pl ! Timesout for good reasons
 TAO/tests/MProfile_Connection_Timeout/run_test.pl: !MINIMUM
 TAO/tests/Codec/run_test.pl
+TAO/tests/Bug_1693_Test/run_test.pl
 TAO/tests/IDL_Test/run_test.pl
 TAO/tests/ORB_init/run_test.pl
 TAO/tests/ORB_destroy/run_test.pl

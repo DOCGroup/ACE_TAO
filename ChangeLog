@@ -1,3 +1,9 @@
+Sun Dec 28 22:36:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/tao_orb_tests.lst:
+
+	  Added Bug_1693_Test to the daily builds.
+
 Sun Dec 28 15:46:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:
