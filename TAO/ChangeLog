@@ -1,3 +1,21 @@
+Mon Oct 13 22:10:35 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile:
+
+	  Do not build the CPU load monitor test if the CosLoadBalancing
+	  ORB services component hasn't been configured/built.  Addresses
+	  minimum CORBA build problems.  Thanks to Venkita for pointing
+	  out the problem.
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP (ACE_SHLIBS):
+
+	  Reverted "Fri Jan 19 13:16:10 2001  Priyanka Gontla
+	  <pgontla@ece.uci.edu>" change that caused ACE_SHLIBS to be
+	  undefined on HPUX.  It's not clear why it was necessary.  Allows
+	  the TAO_SSLIOP library to be linked on HPUX again.  Thanks to
+	  Torsten Kuepper <torsten.kuepper@nokia.com> for reporting the
+	  problem.  [Bug 1590]
+
 Mon Oct 13 16:35:00 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:

@@ -10,7 +10,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-BIN = client
+BIN2 = client
 
 SRC = $(addsuffix .cpp, $(BIN))
 
@@ -27,6 +27,12 @@ LDLIBS = \
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (CosLoadBalancing,$(findstring CosLoadBalancing,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # CosLoadBalancing
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
