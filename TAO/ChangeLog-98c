@@ -181,6 +181,13 @@ Tue Sep 29 13:23:25 1998  Jeff Parsons <jp4@cs.wustl.edu>
         * TAO/docs/releasenotes/orbcore.html
           Added entry for current status of DynAny support.
 
+Tue Sep 29 13:09:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* TAO/performance-tests/Cubit/TAO/MT_Cubit/client.cpp:	
+	* TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Used
+ 	begin() to obtain iterator fom the ACE_Unbounded_Queue class.  In
+ 	addition, I made changes to fix minor warnings.
+
 Tue Sep 29 12:20:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * docs/releasenotes/ec.html:
