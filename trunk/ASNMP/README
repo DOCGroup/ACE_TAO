@@ -1,6 +1,6 @@
-Wed Jul 15 20:37:54 CDT 1998
+Fri Dec 18 09:43:35 CST 1998
 ====================================================================
-ASNMP = ACE+SNMP++ Version 2.0
+ASNMP = ACE+SNMP++ Version 2.1
 By Michael R. MacFaden mrm@acm.org, mrm@yagosys.com
 ====================================================================
 
@@ -80,14 +80,26 @@ What about SNMP Version 2c?
   their behavior. V2c hasn't been deployed 
 
 What about SNMP Version 3?
-   It is looking good for V3, but so far, we're just wathing.
+   It is looking good for V3, but so far, we're just watching.
    http://www.ietf.org/html.charters/snmpv3-charter.html
-
+   A C implemenation is now available from UC Davis. 
+ 
 What copyrights/legal requirements are required when using this code?
   See ./COPYRIGHT 
 
 Does this really work?
   See tests/ directory  for the current test reports (purify/purecov/...).
+
+How does one Extend an SNMP Agent?
+  Extending an agent typically means updating the agent source or
+  using a dynamic link style API. RFC 2257 (AgentX) is the current design
+  for doing this in a standard way. This hasn't been well formalized yet
+  so extending an existing agent is still a vendor API thing. 
+
+  The agent provided here is a template. A mib compiler and agent
+  library typically provide better agent support. See the UC-Davis
+  SNMP software for an example Agent that is portable and can report
+  on many flavors of UNIX and Windows.
 
 Any Future Plans? 
   The ASNMP library will be improved for performance and made to use 
@@ -99,10 +111,9 @@ Any Future Plans?
 Regards,
 Michael R. MacFaden
 Member of the Technical Staff
-YAGO Systems, Inc.
-795 Vaqueros Ave 
-Sunnyvale, CA 94086
-408-774-2900 x251
+Cabletron Systems, Inc.
+215 Moffet Park Drive
+Sunnyvale, CA 94089
 mrm@yagosys.com
 http://www.yagosys.com
 
@@ -143,7 +154,7 @@ wpdu.cpp             - Adapter pattern based class between CMU and HP code
 transaction.cpp      - synchronous transaction clss  
 vb.cpp               - Variable Binding class source (oid + value)
 
-<<  SMI datatypes used to get/set values in SNMPv1 agents>>
+<< SMI datatypes used to get/set values in SNMPv1 agents >>
 
 address.cpp          - Address class source
 gauge.cpp            - Gauge32 class source
