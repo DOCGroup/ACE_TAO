@@ -58,6 +58,7 @@ protected:
   /// Pointer to the <ACE_Timer_List> that we are iterating over.
   ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &timer_list_;
 
+  /// Current position in the <ACE_Timer_List>
   ACE_Timer_Node_T<TYPE> *position_;
 };
 
@@ -142,7 +143,7 @@ public:
                               const ACE_Time_Value &interval);
 
   /**
-   * Cancel all timer associated with <type>.  If <dont_call> is 0
+   * Cancel all timers associated with <type>.  If <dont_call> is 0
    * then the <functor> will be invoked.  Returns number of timers
    * cancelled.
    */

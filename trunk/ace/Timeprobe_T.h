@@ -93,8 +93,8 @@ public:
   /// Reset the slots.  All old time probes will be lost.
   void reset (void);
 
+  /// Not implemented (stupid MSVC won't let it be protected).
   ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &);
-  // Not implemented (stupid MSVC won't let it be protected).
 
   // = (Somewhat private) Accessors
 
@@ -107,7 +107,7 @@ public:
   /// VME slot address.
   u_int *current_slot_vme_address (void);
 
-  /// Find description of event <i>
+  /// Find description of event \<i\>
   const char *find_description_i (u_long i);
 
   /// Sort event descriptions

@@ -159,7 +159,7 @@ public:
                               const ACE_Time_Value &interval);
 
   /**
-   * Cancel all timer associated with <type>.  If <dont_call> is 0
+   * Cancel all timers associated with <type>.  If <dont_call> is 0
    * then the <functor> will be invoked.  Returns number of timers
    * cancelled.
    */
@@ -279,7 +279,7 @@ private:
    * An array of "pointers" that allows each <ACE_Timer_Node> in the
    * <heap_> to be located in O(1) time.  Basically, <timer_id_[i]>
    * contains the slot in the <heap_> array where an <ACE_Timer_Node>
-   * * with timer id <i> resides.  Thus, the timer id passed back from
+   * * with timer id \<i\> resides.  Thus, the timer id passed back from
    * <schedule> is really a slot into the <timer_ids> array.  The
    * <timer_ids_> array serves two purposes: negative values are
    * indications of free timer IDs, whereas positive values are
