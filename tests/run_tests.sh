@@ -1,4 +1,4 @@
-#!/bin/sh -f
+#!/bin/sh
 # $Id$
 #
 # This is the UNIX version of the one-button ACE tests.
@@ -68,6 +68,11 @@ run()
 if [ -x /bin/uname -a `uname -s` = 'LynxOS' ]; then
   LynxOS=1
 fi
+
+if [ ! "$chorus" ]; then
+  user=${LOGNAME:-`whoami`}
+  start_test_resources=`ipcs | egrep $user`
+fi # ! chorus
 
 echo "Starting tests..."
 
@@ -140,8 +145,17 @@ test $chorus || run Conn_Test           # uses Thread_Manager, Acceptor/Connecto
 
 echo "Tests complete..."
 
-/bin/rm -f ace_pipe_name pattern $tmp/ace_temp_file $tmp/ace_temp_file2 $tmp/ace_test_file $tmp/Naming_Test*
-echo; echo
-ipcs
+/bin/rm -f ace_pipe_name pattern \
+           $tmp/ace_temp_file* \
+           $tmp/ace_test_file \
+           $tmp/Naming_Test*
+
+if [ ! "$chorus" ]; then
+  end_test_resources=`ipcs | egrep $user`
+  if [ "$start_test_resources" != "$end_test_resources" ]; then
+    echo WARNING: the ACE tests _may_ have leaked OS resources!
+    ipcs
+  fi
+fi
 
 # EOF
