@@ -1,14 +1,21 @@
+Sun Jul  2 17:58:47 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/RT_Policy_i.cpp:
+
+          Fixed warning about not initializing superclass in copy
+	  constructor.
+
 Sun Jul  2 14:44:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
-	  
-	  In the case where an operation has one or more OUT 
-	  parameters which are a sequence, or a struct or array 
+
+	  In the case where an operation has one or more OUT
+	  parameters which are a sequence, or a struct or array
 	  of dynamic element type, we allocate memory for that
 	  argument to demarshal into. If the operation also has
 	  a non-void return type, the TAO IDL compiler does this
 	  by generating ACE_NEW_RETURN (...., ....., _tao_retval);
-	  in the stub operation body. For some return types, 
+	  in the stub operation body. For some return types,
 	  _tao_safe_retval (which may be a _var) is defined
 	  instead of _tao_retval, so _tao_retval has been replaced
 	  in the ACE_NEW_RETURN statement with 0. Thanks to
@@ -25,7 +32,7 @@ Fri Jun 30 12:28:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  example reporting a lookup error. I didn't find that
 	  (he may be using an older version of the IDL compiler),
 	  but I did a different problem. According to the spec, a
-	  type defined inside a scope which is itself defined 
+	  type defined inside a scope which is itself defined
 	  inside an interface or valuetype should be added to the
 	  list of types referenced in the interface's scope. This
 	  was being done even for types not defined but referenced
