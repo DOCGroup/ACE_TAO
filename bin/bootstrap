@@ -67,8 +67,8 @@ if test -d m4; then
   # Update the NEWS file
   # For now just copy the contents of the `VERSION' file to make automake
   # happy.  Eventually, we should start putting real news in to it.
-  echo "Creating a NEWS file"
-  cp VERSION NEWS
+#  echo "Creating a NEWS file"
+#  cp VERSION NEWS
 
   # Generate an `aclocal.m4' file from all existing m4 macro files
   # including those in the `m4' directory.

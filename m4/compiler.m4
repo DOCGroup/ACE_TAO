@@ -8,7 +8,7 @@ dnl       that set/determine compiler configurations for ACE.
 dnl 
 dnl -------------------------------------------------------------------------
 
-dnl  Copyright (C) 1998, 1999  Ossama Othman
+dnl  Copyright (C) 1998, 1999, 2003  Ossama Othman
 dnl
 dnl  All Rights Reserved
 dnl
@@ -316,7 +316,7 @@ changequote([, ])dnl
 
            if test "$ace_user_enable_exceptions" != yes; then
              dnl See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h.
-             AC_DEFINE([_RWSTD_NO_EXCEPTIONS])
+             ACE_CPPFLAGS="$ACE_CPPFLAGS -D_RWSTD_NO_EXCEPTIONS"
            fi
          fi
 

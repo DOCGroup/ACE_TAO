@@ -9,7 +9,7 @@ dnl       to define.
 dnl 
 dnl -------------------------------------------------------------------------
 
-dnl  Copyright (C) 1998, 1999, 2000, 2002  Ossama Othman
+dnl  Copyright (C) 1998, 1999, 2000, 2002, 2003  Ossama Othman
 dnl
 dnl  All Rights Reserved
 dnl
@@ -59,6 +59,30 @@ dnl    AC_DEFINE([ACE_HAS_AIX_BROKEN_SOCKET_HEADER])
   *aix*)
     AC_DEFINE([AIX])
     ;;
+dnl /* Cray specific configuration parameters */
+dnl /*
+dnl  *  The following predefined macros are used within ACE ifdefs.
+dnl  *  These are defined when using the Cray compilers.  _CRAYMPP
+dnl  *  is defined, for example, if you are running on a Cray T3E
+dnl  *  massively parallel machine.  Moreover, in the case of the T3E,
+dnl  *  _CRAYT3E will be defined.  This is used to determine the
+dnl  *  ACE_SIZEOF defines for primitive types.
+dnl  *
+dnl  *  _UNICOS is defined as either the major version of UNICOS being run,
+dnl  *  e.g. 9 or 10 on the vector machines (e.g. C90, T90, J90, YMP, ...)
+dnl  *  or the major+minor+level UNICOS/mk version, e.g. 2.0.3 => 203,
+dnl  *  being run on an MPP machine.
+dnl  *
+dnl  *  Summary:
+dnl  *
+dnl  *  _CRAYMPP  (defined only if running on MPP machine, e.g. T3E, UNICOS/mk)
+dnl  *  _CRAYT3E  (defined specifically if compiling on a Cray T3E)
+dnl  *  _UNICOS   (defined if running UNICOS or UNICOS/mk)
+dnl  *
+dnl  *  Tested on UNICOS 10.0.0.2, UNICOS/mk 2.0.3.10
+dnl  *
+dnl  *  Contributed by Doug Anderson <doug "at" clark.net>
+dnl  */
   t3e-cray-unicosmk*)
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_CRAYMPP -D_CRAYT3E -D_UNICOS"
     ;;
@@ -92,6 +116,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
   *hpux10*)
     AC_DEFINE([HPUX])
     AC_DEFINE([HPUX_10])
+    dnl _HPUX_SOURCE : Enable HP-UX specific features in platform headers
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_HPUX_SOURCE"
     AC_DEFINE([ACE_DEFAULT_BASE_ADDR], [((char *) 0x80000000)])
     AC_DEFINE([ACE_TLI_TCP_DEVICE], ["/dev/inet_cots"])
@@ -127,6 +152,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE([IRIX6])
     AC_DEFINE([ACE_DEFAULT_BASE_ADDR], [((char *) (1024U * 1024 * 1024))])
     AC_DEFINE([ACE_TIMER_SKEW], [(1000 * 10)])
+    dnl _MODERN_C_ : Enable modern features in SGI C++ compiler
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_SGI_MP_SOURCE -D_MODERN_C_"
 
     case "$host" in
@@ -146,7 +172,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE([ACE_TIMER_SKEW], [(1000 * 10)])
     ;;
   *lynxos*)
-    AC_DEFINE([_POSIX_THREADS_CALLS])
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_THREADS_CALLS"
     AC_DEFINE([__NO_INCLUDE_WARN__])
     AC_DEFINE([ACE_MALLOC_ALIGN], [8])
     AC_DEFINE([ACE_MAP_PRIVATE], [ACE_MAP_SHARED])
@@ -269,6 +295,12 @@ dnl Check for _POSIX_C_SOURCE macro
   *unixware2.1*)
     AC_DEFINE([UNIXWARE])
     AC_DEFINE([UNIXWARE_2_1])
+    ;;
+  *UnixWare7.1*)
+    AC_DEFINE([UNIXWARE])
+    AC_DEFINE([UNIXWARE_7_1])
+    AC_DEFINE([__IOCTL_VERSIONED__])
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_REENTRANT"
     ;;
   *vxworks*)
     AC_DEFINE([VXWORKS])

@@ -3223,11 +3223,11 @@ extern "C"
 #     include /**/ <netinet/tcp.h>
 #   endif /* ACE_LACKS_TCP_H */
 
-#   if defined (__Lynx__)
+#   if defined (__Lynx__) || defined (UNIXWARE_7_1)
 #     ifndef howmany
 #       define howmany(x, y)   (((x)+((y)-1))/(y))
 #     endif /* howmany */
-#   endif /* __Lynx__ */
+#   endif /* __Lynx__ || UNIXWARE_7_1 */
 
 #   if defined (CHORUS)
 #     include /**/ <chorus.h>
