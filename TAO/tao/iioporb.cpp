@@ -257,7 +257,7 @@ iiop_string_to_object (CORBA::String string,
   *cp = 0;
   string++;
 
-  cp = ACE_OS::strchr ((char *)string, '/');
+  cp = ACE_OS::strchr ((char *) string, '/');
 
   if (cp == 0)
     {
@@ -267,15 +267,16 @@ iiop_string_to_object (CORBA::String string,
       return 0;
     }
 
-  data->profile.port = (short) ACE_OS::atoi ((char *)string);
-  data->profile.set_object_addr ();
+  data->profile.port = (short) ACE_OS::atoi ((char *) string);
+  data->profile.object_addr (0);
   string = ++cp;
 
   // Parse the key ... it's ASCII plus hex escapes for everything
   // nonprintable.  This assumes that printable ASCII is the common
   // case ... but since stringification is uncommon, no big deal.
 
-  data->profile.object_key.buffer = (u_char *) CORBA::string_copy (string);
+  data->profile.object_key.buffer =
+    (u_char *) CORBA::string_copy (string);
 
   // Strip out whitespace and adjust length accordingly.
 
@@ -311,7 +312,8 @@ iiop_string_to_object (CORBA::String string,
   // Return the objref.
   CORBA::Object_ptr obj;
 
- (void) data->QueryInterface (IID_CORBA_Object, (void **)&obj);
+  (void) data->QueryInterface (IID_CORBA_Object,
+                               (void **) &obj);
   data->Release ();
   return obj;
 }

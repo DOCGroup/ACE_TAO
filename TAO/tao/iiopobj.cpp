@@ -10,52 +10,142 @@
 
 #include "tao/corba.h"
 
-IIOP::Profile::Profile (const IIOP::Profile &src)
-  : iiop_version (src.iiop_version),
-    port (src.port)
+int
+IIOP::Profile::set (const char *h,
+                    const CORBA::UShort p,
+                    const ACE_INET_Addr *addr)
 {
-  assert (src.iiop_version.major == MY_MAJOR);
-  assert (src.iiop_version.minor == MY_MINOR);
+  this->iiop_version.major = IIOP::MY_MAJOR;
+  this->iiop_version.minor = IIOP::MY_MINOR;
 
-  // Free up our host if we've got one.
   if (this->host)
     ACE_OS::free (this->host);
-  
-  this->host = ACE_OS::strdup (src.host);
 
-  this->object_key.length = src.object_key.length;
-  this->object_key.maximum = src.object_key.length;
-
-  //  object_key.buffer = (CORBA::Octet *) ACE_OS::malloc (object_key.maximum);
-  this->object_key.buffer = new CORBA::Octet [this->object_key.maximum];
-
-  (void) ACE_OS::memcpy (this->object_key.buffer,
-                         src.object_key.buffer,
-                         this->object_key.length);
-  this->set_object_addr ();
+  this->port = p;
+  this->host = ACE_OS::strdup (h);
+  if (this->host == 0)
+    return -1;
+  this->object_addr (addr);
+  return 0;
 }
 
-IIOP::Profile::Profile (const IIOP::Version &v,
-                        const char *h,
-                        const CORBA::UShort p,
-                        const TAO_opaque &key)
-  : iiop_version (v),
-    port (p)
+int
+IIOP::Profile::set (const char *h,
+                    const CORBA::UShort p,
+                    const char *key,
+                    const ACE_INET_Addr *addr)
 {
-  this->host = ACE_OS::strdup (h);
+  if (this->set (h, p, addr) == -1)
+    return -1;
+
+  this->object_key.length = ACE_OS::strlen (key);
+  this->object_key.maximum = this->object_key.length;
+
+  ACE_NEW_RETURN (this->object_key.buffer,
+                  CORBA::Octet[this->object_key.maximum + 1],
+                  -1);
+
+  (void) ACE_OS::strcpy ((char *) this->object_key.buffer, key);
+  return 0;
+}
+
+int
+IIOP::Profile::set (const char *h,
+                    const CORBA::UShort p,
+                    const TAO_opaque &key,
+                    const ACE_INET_Addr *addr)
+{
+  if (this->set (h, p, addr) == -1)
+    return -1;
+
   this->object_key.length = key.length;
   this->object_key.maximum = key.length;
 
-  //  object_key.buffer = (CORBA::Octet *) ACE_OS::malloc (object_key.maximum);
-  this->object_key.buffer = new CORBA::Octet [object_key.maximum];
+  ACE_NEW_RETURN (this->object_key.buffer,
+                  CORBA::Octet[key.maximum + 1],
+                  -1);
 
-  (void) ACE_OS::memcpy (this->object_key.buffer,
+  (void) ACE_OS::memcpy ((char *) this->object_key.buffer,
                          key.buffer,
-                         this->object_key.length);
-  this->set_object_addr ();
+                         key.length);
+  // NUL-terminate this guy...
+  this->object_key.buffer[key.length] = '\0';
+  return 0;
 }
 
-// Quick'n'dirty hash of objref data, for partitioning objrefs into sets
+IIOP::Profile::Profile (const IIOP::Profile &src)
+{
+  (void) this->set (src.host,
+                    src.port,
+                    src.object_key,
+                    &src.object_addr_);
+}
+
+int
+IIOP::Profile::set (const ACE_INET_Addr &addr,
+                    const char *key)
+{
+  // Set up an IIOP object to hold the host name.
+  char tempname[MAXHOSTNAMELEN + 1];
+
+  // Retrieve the host name.
+  if (addr.get_host_name (tempname,
+                          MAXHOSTNAMELEN) == -1)
+    return -1;
+  else
+    return this->set (tempname, 
+                      addr.get_port_number (),
+                      key,
+                      &addr);
+}
+
+int
+IIOP::Profile::set (const ACE_INET_Addr &addr,
+                    const TAO_opaque &key)
+{
+  // Set up an IIOP object to hold the host name.
+  char tempname[MAXHOSTNAMELEN + 1];
+
+  // Retrieve the host name.
+  if (addr.get_host_name (tempname,
+                          MAXHOSTNAMELEN) == -1)
+    return -1;
+  else
+    return this->set (tempname, 
+                      addr.get_port_number (),
+                      key,
+                      &addr);
+}
+
+IIOP::Profile::Profile (const char *h,
+                        const CORBA::UShort p,
+                        const char *key)
+{
+  (void) this->set (h, p, key);
+}
+
+IIOP::Profile::Profile (const char *h,
+                        const CORBA::UShort p,
+                        const char *key,
+                        const ACE_INET_Addr &addr)
+{
+  (void) this->set (h, p, key, &addr);
+}
+
+IIOP::Profile::Profile (const ACE_INET_Addr &addr,
+                        const char *key)
+{
+  (void) this->set (addr, key);
+}
+
+IIOP::Profile::Profile (const ACE_INET_Addr &addr,
+                        const TAO_opaque &key)
+{
+  (void) this->set (addr, key);
+}
+
+// Quick'n'dirty hash of objref data, for partitioning objrefs into
+// sets.
 //
 // NOTE that this must NOT go across the network!
 
@@ -186,66 +276,41 @@ IIOP_Object::QueryInterface (REFIID riid,
 char *
 IIOP_Object::_get_name (CORBA::Environment &)
 {
-  char *name;
-
-  name = CORBA::string_alloc (this->profile.object_key.length);
-  ACE_OS::memset (name, '\0', this->profile.object_key.length+1);
-  ACE_OS::memcpy (name, this->profile.object_key.buffer,
+  char *name = CORBA::string_alloc (this->profile.object_key.length);
+  ACE_OS::memcpy (name,
+                  this->profile.object_key.buffer,
                   this->profile.object_key.length);
   return name;
 }
 
-// Constructor
-// It will usually be used by the _bind call
+// It will usually be used by the _bind call.
+//
+// Note that if the repository ID (typeID) is NULL, it will make
+// narrowing rather expensive, though it does ensure that type-safe
+// narrowing code gets thoroughly exercised/debugged!  Without a
+// typeID, the _narrow will be required to make an expensive remote
+// "is_a" call.
+
 IIOP_Object::IIOP_Object (const char *host,
                           const CORBA::UShort port,
                           const char *objkey,
                           char *repository_id)
   : STUB_Object (repository_id),
+    profile (host, port, objkey),
     base (this),
     refcount_ (1),
     fwd_profile_ (0)
 {
-  // If the repository ID (typeID) is NULL, it will make narrowing
-  // rather expensive, though it does ensure that type-safe narrowing
-  // code gets thoroughly excercised/debugged!  Without a typeID, the
-  // _narrow will be required to make an expensive remote "is_a" call.
-
-  // we set this to use IIOP version 1.0
-  this->profile.iiop_version.major = IIOP::MY_MAJOR;
-  this->profile.iiop_version.minor = IIOP::MY_MINOR;
-
-  // set the profile information
-  this->profile.host = ACE_OS::strdup (host);
-  this->profile.port = port;
-
-  // set the obj key in the profile info
-  this->profile.object_key.buffer = (u_char *) CORBA::string_copy (objkey);
-  this->profile.object_key.length = ACE_OS::strlen (objkey);
-  this->profile.object_key.maximum = this->profile.object_key.length;
 }
 
 // Constructor.  It will usually be used by the server side.
 IIOP_Object::IIOP_Object (char *repository_id,
-                          const ACE_INET_Addr &addr, const
-                          char *objkey)
+                          const ACE_INET_Addr &addr, 
+                          const char *objkey)
   : STUB_Object (repository_id),
+    profile (addr, objkey),
     base (this),
     refcount_ (1),
     fwd_profile_ (0)
 {
-  // set up an IIOP object
-  char tempname [MAXHOSTNAMELEN]; // to hold the host name
-
-  // setup the profile information
-  this->profile.iiop_version.major = IIOP::MY_MAJOR;
-  this->profile.iiop_version.minor = IIOP::MY_MINOR;
-  ACE_OS::memset (tempname, '\0', MAXHOSTNAMELEN);
-  (void) addr.get_host_name (tempname, MAXHOSTNAMELEN); // retrieve the host
-                                                        // name
-  this->profile.host = ACE_OS::strdup (tempname);
-  this->profile.port = addr.get_port_number ();
-  this->profile.object_key.length = ACE_OS::strlen (objkey);
-  this->profile.object_key.maximum = this->profile.object_key.length;
-  this->profile.object_key.buffer = (u_char *) CORBA::string_copy (objkey);
 }
