@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_UNBOUNDED_QUEUE_H
 #define ACE_UNBOUNDED_QUEUE_H
