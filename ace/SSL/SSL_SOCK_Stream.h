@@ -57,6 +57,15 @@ public:
                          ACE_SSL_Context::instance ());
   // Constructor
 
+  // @@ The user must currently ensure that assignment or copy
+  //    operations are atomic!
+
+  void operator= (const ACE_SSL_SOCK_Stream &);
+  // Assignment operator
+
+  ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &);
+  // Copy constructor
+
   ~ACE_SSL_SOCK_Stream (void);
   // Destructor
 
@@ -208,9 +217,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  ACE_SSL_Context *context (void) const;
-  // Return a pointer to the underlying SSL context.
-
   void set_handle (ACE_HANDLE fd);
   // Overridden set_handle() method.
   //
@@ -223,21 +229,10 @@ protected:
   SSL *ssl (void) const;
   // Return a pointer to the underlying SSL structure.
 
-
-
   ACE_SOCK_Stream & peer (void);
   // Return the underlying <ACE_SOCK_Stream> which SSL runs atop of.
 
-private:
-
-  // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_SSL_SOCK_Stream &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &))
-
 protected:
-
-  ACE_SSL_Context *context_;
-  // The SSL context.
 
   SSL *ssl_;
   // The SSL session.

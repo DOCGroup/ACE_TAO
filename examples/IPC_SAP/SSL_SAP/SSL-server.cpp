@@ -140,7 +140,10 @@ twoway_server (void *arg)
   // Close new endpoint (listening endpoint stays open).
   new_stream->close ();
 
+  delete new_stream;
+
   delete [] request;
+
   return 0;
 }
 
@@ -274,7 +277,10 @@ oneway_server (void *arg)
   // Close new endpoint (listening endpoint stays open).
   new_stream->close ();
 
+  delete new_stream;
+
   delete [] request;
+
   return 0;
 }
 
@@ -313,7 +319,6 @@ run_event_loop (u_short port)
 
   // Keep these objects out here to prevent excessive constructor
   // calls within the loop.
-  ACE_SSL_SOCK_Stream new_stream;
 
   ACE_Handle_Set handle_set;
   handle_set.set_bit (twoway_acceptor.get_handle ());
@@ -340,13 +345,35 @@ run_event_loop (u_short port)
                     "(%P|%t) select timed out\n"));
       else
         {
+          // A new ACE_SSL_SOCK_Stream must be initialized for each
+          // connection.  However, it retains (SSL) state so simply
+          // initializing a new ACE_SSL_SOCK_Stream by passing it a
+          // handle isn't enough, nor is it allowed.  Such a scheme is
+          // is sometimes done with the non-SSL aware
+          // ACE_SOCK_Stream.  An ACE_SSL_SOCK_Stream should only be
+          // initialized by an ACE_SSL_SOCK_Acceptor (server side), or an
+          // ACE_SSL_SOCK_Connector (client side).
+          //
+          // It is also possible to copy or assign an
+          // ACE_SSL_SOCK_Stream since it implements both
+          // methods/operators.  However, the user must ensure that
+          // the copy or assignment is atomic.
+
+          ACE_SSL_SOCK_Stream * new_stream = 0;
+          ACE_NEW_RETURN (new_stream,
+                          ACE_SSL_SOCK_Stream,
+                          -1);
+
           if (temp.is_set (twoway_acceptor.get_handle ()))
             {
-              if (twoway_acceptor.accept (new_stream) == -1)
+              if (twoway_acceptor.accept (*new_stream) == -1)
                 {
                   ACE_ERROR ((LM_ERROR,
                               "%p\n",
                               "accept"));
+
+                  delete new_stream;
+
                   continue;
                 }
               else
@@ -355,13 +382,16 @@ run_event_loop (u_short port)
                           
               // Run the twoway server.
               run_server (twoway_server,
-                          &new_stream);
+                          new_stream);
             }
           if (temp.is_set (oneway_acceptor.get_handle ()))
             {
-              if (oneway_acceptor.accept (new_stream) == -1)
+              if (oneway_acceptor.accept (*new_stream) == -1)
                 {
                   ACE_ERROR ((LM_ERROR, "%p\n", "accept"));
+
+                  delete new_stream;
+
                   continue;
                 }
               else
@@ -370,7 +400,7 @@ run_event_loop (u_short port)
 
               // Run the oneway server.
               run_server (oneway_server,
-                          &new_stream);
+                          new_stream);
             }
         }
     }
