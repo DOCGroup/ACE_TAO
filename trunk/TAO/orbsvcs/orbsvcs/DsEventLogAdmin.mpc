@@ -31,6 +31,10 @@ project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
   Resource_Files {
     DsEventLogAdmin.rc
   }
+
+  Pkgconfig_Files {
+    TAO_DsEventLogAdmin.pc.in
+  }
 }
 
 project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_skel, event_skel, portableserver {
@@ -58,6 +62,10 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_sk
   Template_Files {
     DsEventLogAdminS_T.cpp
   }
+
+  Pkgconfig_Files {
+    TAO_DsEventLogAdmin_Skel.pc.in
+  }
 }
 
 project(DsEventLogAdmin_Serv) : orbsvcslib, core, dseventlogadmin_skel, dslogadmin_serv, event_serv {
@@ -81,5 +89,9 @@ project(DsEventLogAdmin_Serv) : orbsvcslib, core, dseventlogadmin_skel, dslogadm
   }
 
   Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_DsEventLogAdmin_Serv.pc.in
   }
 }

@@ -35,6 +35,10 @@ project(DsLogAdmin) : orbsvcslib, core {
   Resource_Files {
     DsLogAdmin.rc
   }
+
+  Pkgconfig_Files {
+    TAO_DsLogAdmin.pc.in
+  }
 }
 
 
@@ -72,6 +76,10 @@ project(DsLogAdmin_Skel) : orbsvcslib, core, dslogadmin, portableserver {
     DsLogAdminS_T.cpp
     DsLogNotificationS_T.cpp
   }
+
+  Pkgconfig_Files {
+    TAO_DsLogAdmin_Skel.pc.in
+  }
 }
 
 
@@ -101,5 +109,9 @@ project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, 
   }
 
   Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_DsLogAdmin_Serv.pc.in
   }
 }

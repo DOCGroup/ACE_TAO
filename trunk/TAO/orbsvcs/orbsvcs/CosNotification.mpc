@@ -52,6 +52,10 @@ project(CosNotification) : orbsvcslib, core, event {
   Resource_Files{
     CosNotification.rc
   }
+
+  Pkgconfig_Files {
+    TAO_CosNotification.pc.in
+  }
 }
 
 
@@ -112,6 +116,10 @@ project(CosNotification_Skel) : orbsvcslib, core, notification, event_skel, port
     CosNotifyChannelAdminS_T.cpp
     NotifyExtS_T.cpp
     Event_ForwarderS_T.cpp
+  }
+
+  Pkgconfig_Files {
+    TAO_CosNotification_Skel.pc.in
   }
 }
 
@@ -214,6 +222,11 @@ project(CosNotification_Serv) : orbsvcslib, svc_utils, core, notification_skel, 
 
   Template_Files {
   }
+
+  Pkgconfig_Files {
+    TAO_CosNotification_Serv.pc.in
+  }
+
 }
 
 project(CosNotification_Persist) : notification_serv, acexml {
