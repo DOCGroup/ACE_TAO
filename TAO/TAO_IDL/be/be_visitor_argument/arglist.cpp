@@ -187,13 +187,33 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
     } // end of if
   else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
     {
+      // The only PT_pseudo that doesn't take a _ptr suffix.
+      idl_bool is_tckind =
+        (ACE_OS::strcmp (node->local_name ()->get_string (), "TCKind") == 0);
+
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << this->type_name (node, "_ptr");
+          if (is_tckind)
+            {
+              *os << this->type_name (node);
+            }
+          else
+            {
+              *os << this->type_name (node, "_ptr");
+            }
+
           break;
         case AST_Argument::dir_INOUT:
-          *os << this->type_name (node, "_ptr") << " &";
+          if (is_tckind)
+            {
+              *os << this->type_name (node) << " &";
+            }
+          else
+            {
+              *os << this->type_name (node, "_ptr") << " &";
+            }
+
           break;
         case AST_Argument::dir_OUT:
           *os << this->type_name (node, "_out");
