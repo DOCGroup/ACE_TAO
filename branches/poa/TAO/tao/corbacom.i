@@ -51,7 +51,10 @@ ACE_INLINE
 CORBA::String_var::~String_var (void)
 {
   if (this->ptr_ != 0)
-    CORBA::string_free (this->ptr_);
+    {
+      CORBA::string_free (this->ptr_);
+      this->ptr_ = 0;
+    }
 }
 
 ACE_INLINE

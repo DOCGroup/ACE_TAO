@@ -265,6 +265,7 @@ be_interface::gen_client_header (void)
       ch->gen_ifdef_macro (this->flatname ());
 
       // now generate the class definition
+      ch->indent ();
       *ch << "class " << this->local_name ();
 
       if (this->n_inherits () > 0)  // this interface inherits from other interfaces

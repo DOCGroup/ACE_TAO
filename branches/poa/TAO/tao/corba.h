@@ -25,7 +25,7 @@
 //
 // ============================================================================
 
-#if !defined(TAO_CORBA_H)
+#if !defined (TAO_CORBA_H)
 #define TAO_CORBA_H
 
 // ACE specific includes
@@ -142,6 +142,7 @@
 #include "tao/corbacom.i"
 #include "tao/sequence.i"
 #include "tao/typecode.i"
+#include "tao/nvlist.i"
 #include "tao/any.i"
 #include "tao/stub.i"
 #include "tao/object.i"

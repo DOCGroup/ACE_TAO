@@ -4,13 +4,15 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    nvlist.h
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
-// 
+//     and
+//     Aniruddha Gokhale (additions, missing operations)
+//
 // ============================================================================
 
 #if !defined (TAO_NVLIST_H)
@@ -28,13 +30,17 @@ class TAO_Export CORBA_NamedValue
   // the value is packaged as an Any.  The flags indicate parameter
   // mode, and some ownership rules for "top level" memory.
 public:
-  TAO_CONST CORBA::String _FAR name (void) 
-    { return (CORBA::String) _name; }
+  TAO_CONST char *name (void) const;
+  // optional name
 
-  CORBA::Any_ptr	_FAR value (void) { return &_any; }
-  CORBA::Flags flags (void) const { return _flags; }
+  CORBA::Any_ptr value (void) const;
+  // return the value
+
+  CORBA::Flags flags (void) const;
+  // return the parameter mode flag
 
   ~CORBA_NamedValue (void);
+  // destructor - manages the name and value
 
   // = Methods required for COM IUnknown support.
 
@@ -45,19 +51,31 @@ public:
 
 private:
   u_int refcount_;
+  // refcount used in release
+
   ACE_SYNCH_MUTEX lock_;
+  // for synchronization
 
-  CORBA::Any _any;
-  CORBA::Flags _flags;
-  const CORBA::Char *_FAR _name;
+  CORBA::Any any_;
+  // holds the value
 
-  CORBA_NamedValue (void) : refcount_(0), _flags (0), _name (0) { }
+  CORBA::Flags flags_;
+  // parameter mode flags
 
+  char *name_;
+  // optional IDL name of the parameter
+
+  CORBA_NamedValue (void);
+  // private constructor. Cannot be directly instantiated other than by its
+  // friends.
+
+  friend class CORBA_ORB;
   friend class CORBA_NVList;
   friend class CORBA_Request;
 };
 
 class TAO_Export CORBA_NVList
+{
   // = TITLE
   //   NVList ... this is used in the (client side) DII (Dynamic
   //   Invocation Interface) to hold parameters, except for the return
@@ -70,20 +88,48 @@ class TAO_Export CORBA_NVList
   //   Request or ServerRequest pseudo-object.  The ORB copies data
   //   to/from the IPC messages (e.g. IIOP::Request, IIOP::Response)
   //   as appropriate.
-{
 public:
-  CORBA::ULong count (void) const
-  { return len_; }
-
-  CORBA::NamedValue_ptr add_value (const CORBA::Char *_FAR ,
-				   const CORBA::Any _FAR &,
-				   CORBA::Flags,
-				   CORBA::Environment _FAR &);
-
-  CORBA::NamedValue_ptr item (CORBA::Long n) const
-  { return &values_ [(u_int) n]; }
-
   ~CORBA_NVList (void);
+  // destructor
+
+  CORBA::ULong count (void) const;
+  // return the current number of elements in the list
+
+  CORBA::NamedValue_ptr add (CORBA::Flags,
+                             CORBA::Environment &);
+  // add an element and just initialize the flags
+
+  CORBA::NamedValue_ptr add_item (const char *,
+                                  CORBA::Flags,
+                                  CORBA::Environment &);
+  // add an element and initialize its name and flags
+
+  CORBA::NamedValue_ptr add_value (const char *,
+                                   const CORBA::Any &,
+                                   CORBA::Flags,
+                                   CORBA::Environment &);
+  // initializes a value, name, and flags
+
+  CORBA::NamedValue_ptr add_item_consume (char *,
+                                          CORBA::Flags,
+                                          CORBA::Environment &);
+  // just like add_item. In addition, memory management of char * name is taken
+  // over by the NVList
+
+  CORBA::NamedValue_ptr add_value_consume (char *,
+                                           CORBA::Any_ptr,
+                                           CORBA::Flags,
+                                           CORBA::Environment &);
+  // just like add_value. In addition, the NVList controls the memory
+  // management of the char *name and Any *value parameter
+
+  CORBA::NamedValue_ptr item (CORBA::ULong n, CORBA::Environment &env);
+  // retrieve the item at the nth location. Raises Bounds
+
+
+  //  CORBA::Status
+  void remove (CORBA::ULong n, CORBA::Environment &env);
+  // remove element at index n. Raises Bounds
 
   // = Methods required for COM IUnknown support
 
@@ -93,19 +139,28 @@ public:
                               void **ppv);
 
 private:
-  // @@ Do we really need to keep these _FAR macros?
-  CORBA::NamedValue *_FAR values_;
-  u_int max_;
-  u_int len_;
-  ACE_SYNCH_MUTEX lock_;
-  u_int refcount_;
+  CORBA_NVList (void);
+  // constructor - cannot be instantiated directly other than through the
+  // ORB::create_list method
 
-  CORBA_NVList (void)
-    : values_ (0), 
-    max_ (0),
-    len_ (0), 
-    refcount_ (1)
-  { }
+  CORBA::Boolean add_element (CORBA::Flags, CORBA::Environment &);
+  // helper to increase the list size. This is used by all the add_ methods of
+  // the NVList class
+
+  CORBA::NamedValue *values_;
+  // list of parameters stored as NamedValues
+
+  CORBA::ULong max_;
+  // maximum length of list
+
+  CORBA::ULong len_;
+  // current length of list
+
+  ACE_SYNCH_MUTEX lock_;
+  // for synchronization
+
+  CORBA::ULong refcount_;
+  // maintains how many references exist to this object
 
   friend class CORBA_ORB;
   friend class CORBA_Request;

@@ -44,6 +44,10 @@ public:
 
     return this->timer_queue_->expire () == -1 ? -1 : 0;
   }
+  virtual int handle_events (ACE_Time_Value &max_wait_time)
+  {
+    return this->handle_events (&max_wait_time);
+  }
 };
 
 #endif /* FAST_REACTOR_H */

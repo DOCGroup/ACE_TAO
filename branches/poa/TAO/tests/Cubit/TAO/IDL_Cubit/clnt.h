@@ -94,7 +94,7 @@ private:
   char *hostname_;
   // Hostname of server.
 
-  CORBA::ULong portnum_;
+  CORBA::UShort portnum_;
   // default port number of server.
 
   u_int loop_count_;

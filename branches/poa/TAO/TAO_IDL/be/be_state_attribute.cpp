@@ -187,6 +187,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               // passed to the decoder
               *os << "CORBA::Object_ptr _tao_base_" << attr->local_name ()
                   << ";" << nl;
+#if 0
               // now define a NamedValue_ptr
               *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                 ";" << nl;
@@ -194,6 +195,13 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
                 bt->tc_name () << ", &_tao_base_" << attr->local_name () <<
                 "); // ORB does not own" << nl;
+#endif
+              // insert into the Any
+              *os << "(void) nvlist->add_item (\"" << attr->local_name () <<
+                "\", CORBA::ARG_IN, _tao_environment)->value ()->" <<
+                "replace (" << bt->tc_name ()
+                  << ", &_tao_base_" << attr->local_name () << ", 0, " <<
+                "_tao_environment); // ORB does not own" << nl;
             }
             break;
           case TAO_CodeGen::TAO_ATTRIBUTE_PRE_UPCALL_SS:
@@ -208,7 +216,10 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
             break;
           case TAO_CodeGen::TAO_ATTRIBUTE_POST_UPCALL_SS:
             {
-              // nothing for an in parameter
+              // we must release the in parameter
+              *os << "CORBA::release (" << attr->local_name () << ");" << nl;
+              *os << "CORBA::release (_tao_base_" << attr->local_name () <<
+                ");" << nl;
             }
             break;
           case TAO_CodeGen::TAO_ATTRIBUTE_UPCALL_SS:
@@ -274,6 +285,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << bt->name () << " ";
                     // declare a variable
                   *os << attr->local_name () << ";" << nl;
+#if 0
                     // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                     ";" << nl;
@@ -281,6 +293,13 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
                     bt->tc_name () << ", &" << attr->local_name () <<
                     "); // ORB does not own" << nl;
+#endif
+                  // insert into the Any
+                  *os << "(void) nvlist->add_item (\"" << attr->local_name () <<
+                    "\", CORBA::ARG_IN, _tao_environment)->value ()->" <<
+                    "replace (" << bt->tc_name ()
+                      << ", &" << attr->local_name () << ", 0, " <<
+                    "_tao_environment); // ORB does not own" << nl;
                 }
                 break;
               case TAO_CodeGen::TAO_ATTRIBUTE_PRE_DOCALL_CS:
@@ -390,8 +409,8 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               case TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_SS:
                 {
                     // declare a variable
-                  *os << bt->name () << "_ptr ";
-                  *os << attr->local_name () << ";" << nl;
+                  *os << bt->name () << "_ptr " << attr->local_name () << ";" << nl;
+#if 0
                     // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                     ";" << nl;
@@ -399,6 +418,13 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
                     bt->tc_name () << ", &" << attr->local_name () <<
                     "); // ORB does not own" << nl;
+#endif
+                  // insert into the Any
+                  *os << "(void) nvlist->add_item (\"" << attr->local_name
+                    () << "\", CORBA::ARG_IN, _tao_environment)->" <<
+                    "value ()->replace (" << bt->tc_name ()
+                      << ", &" << attr->local_name () << ", 0, " <<
+                    "_tao_environment); // ORB does not own" << nl;
                 }
                 break;
               case TAO_CodeGen::TAO_ATTRIBUTE_PRE_DOCALL_CS:
@@ -428,7 +454,9 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_ATTRIBUTE_POST_UPCALL_SS:
                 {
-                  // nothing
+                  //release the in parameter
+                  *os << "CORBA::release (" << attr->local_name () << ");"
+                      << nl;
                 }
                 break;
               case TAO_CodeGen::TAO_ATTRIBUTE_RETURN_TYPE_CH:
@@ -505,6 +533,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                     // declare a variable
                   *os << bt->name () << " " << attr->local_name () << ";" <<
                     nl;
+#if 0
                     // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                     ";" << nl;
@@ -512,6 +541,13 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
                     bt->tc_name () << ", &" << attr->local_name () <<
                     "); // ORB does not own" << nl;
+#endif
+                  // insert into the Any
+                  *os << "(void) nvlist->add_item (\"" << attr->local_name
+                    () << "\", CORBA::ARG_IN, _tao_environment)->value ()"
+                      << "->replace (" << bt->tc_name ()
+                      << ", &" << attr->local_name () << ", 0, " <<
+                    "_tao_environment); // ORB does not own" << nl;
                 }
                 break;
               case TAO_CodeGen::TAO_ATTRIBUTE_PRE_DOCALL_CS:
@@ -650,7 +686,9 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
             break;
           case TAO_CodeGen::TAO_ATTRIBUTE_POST_UPCALL_SS:
             {
-              // nothing
+              // we need to free the "in" string that got decoded
+              *os << "CORBA::string_free (" << attr->local_name () << ");"
+                  << nl;
             }
             break;
           case TAO_CodeGen::TAO_ATTRIBUTE_UPCALL_SS:
@@ -687,8 +725,12 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
           case TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_SS:
             {
                     // declare a variable
-              *os << "char *" << attr->local_name () << ";" <<
-                nl;
+              if (bt->node_type () == AST_Decl::NT_typedef)
+                *os << bt->name ();
+              else
+                *os << "char *";
+              *os << " " << attr->local_name () << ";" << nl;
+#if 0
                     // now define a NamedValue_ptr
               *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                 ";" << nl;
@@ -696,6 +738,12 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
                 bt->tc_name () << ", &" << attr->local_name () <<
                 "); // ORB does not own" << nl;
+#endif
+              // insert into the Any
+              *os << "(void) nvlist->add_item (\"" << attr->local_name () <<
+                "\", CORBA::ARG_IN, _tao_environment)->value ()->replace ("
+                  << bt->tc_name () << ", &" << attr->local_name () <<
+                ", 0, _tao_environment); // ORB does not own" << nl;
             }
             break;
           case TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_SH:
@@ -836,6 +884,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               // declare a variable
               *os << bt->name () << " " << attr->local_name () <<
                 ";" << nl;
+#if 0
               // now define a NamedValue_ptr
               *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                 ";" << nl;
@@ -843,6 +892,13 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
                 bt->tc_name () << ", &" << attr->local_name () <<
                 "); // ORB does not own" << nl;
+#endif
+              // insert into the Any
+              *os << "(void) nvlist->add_item (\"" << attr->local_name () <<
+                "\", CORBA::ARG_IN, _tao_environment)->value ()->" <<
+                "replace (" << bt->tc_name ()
+                  << ", &" << attr->local_name () << ", 0, " <<
+                "_tao_environment); // ORB does not own" << nl;
             }
             break;
           case TAO_CodeGen::TAO_ATTRIBUTE_PRE_DOCALL_CS:
@@ -888,6 +944,22 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_ATTRIBUTE_RETVAL_RETURN_CS:
             {
+#if 0
+              if (type->node_type () == AST_Decl::NT_sequence)
+                {
+                  be_sequence *seq = be_sequence::narrow_from_decl (type);
+                  // init_mgr method for managed types
+                  switch (seq->managed_type ())
+                    {
+                    case be_sequence::MNG_OBJREF:
+                    case be_sequence::MNG_STRING:
+                      *os << "retval->init_mgr ();" << nl;
+                      break;
+                    default:
+                      break;
+                    }
+                }
+#endif
               *os << "return retval;" << nl;
             }
           break;
@@ -987,6 +1059,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                     // declare a variable
               *os << bt->name () << " " << attr->local_name () << ";" <<
                 nl;
+#if 0
                     // now define a NamedValue_ptr
               *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
                 ";" << nl;
@@ -994,6 +1067,13 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
                 bt->tc_name () << ", &" << attr->local_name () <<
                 "); // ORB does not own" << nl;
+#endif
+              // insert into the Any
+              *os << "(void) nvlist->add_item (\"" << attr->local_name
+                () << "\", CORBA::ARG_IN, _tao_environment)->value ()"
+                  << "->replace (" << bt->tc_name ()
+                  << ", &" << attr->local_name () << ", 0, " <<
+                "_tao_environment); // ORB does not own" << nl;
             }
             break;
           case TAO_CodeGen::TAO_ATTRIBUTE_PRE_DOCALL_CS:
@@ -1034,6 +1114,7 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
             }
             break;
           case TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_CS:
+
           case TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_SH:
             {
               *os << bt->name () << " " << attr->local_name ();

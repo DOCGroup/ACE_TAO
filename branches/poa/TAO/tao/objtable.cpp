@@ -7,8 +7,7 @@ TAO_Object_Table::~TAO_Object_Table (void)
 
 // Template Specialization for char*. Needed for the dynamic hash lookup
 int 
-ACE_Hash_Map_Manager<const char *, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>::equal (const char *const &id1,
-										 const char *const &id2)
+ACE_Hash_Map_Manager<const char *, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>::equal (const char *const &id1, const char *const &id2)
 {
   // do a string compare
   return ACE_OS::strcmp (id1, id2) == 0;
@@ -38,8 +37,10 @@ TAO_Dynamic_Hash_ObjTable::~TAO_Dynamic_Hash_ObjTable (void)
        iterator.next (entry) != 0;
        iterator.advance ())
     {
-      CORBA::string_free ((char *)entry->ext_id_); // we had allocated memory and stored
-      // the string. So we free the memory
+      CORBA::string_free ((char *)entry->ext_id_); // we had allocated memory
+                                                   // and stored the string. So
+                                                   // we free the memory
+      entry->ext_id_ = 0;
       entry->int_id_ = 0;  // we do not own this. So we just set it to 0
     }
 
@@ -134,6 +135,7 @@ TAO_Linear_ObjTable_Entry::TAO_Linear_ObjTable_Entry (void)
 TAO_Linear_ObjTable_Entry::~TAO_Linear_ObjTable_Entry (void)
 {
   CORBA::string_free (this->opname_); // reclaim space consumed by the string
+  this->opname_ = 0;
   this->obj_ = 0;  // cannot delete this as we do not own it
 }
 

@@ -20,18 +20,6 @@
 #if !defined (TAO_TYPECODE_H)
 #  define TAO_TYPECODE_H
 
-// = Kinds of typecodes.
-
-// @@ What does this comment refer to?  I don't see any enums in this
-// file.  Can you please move this to the right place?
-// @@ (ANDY) Do you know what this comment is about?
-
-// Do not change these enum values, or duplicate them if you need to
-// add values.  They are used to index tables, and if you change the
-// values you'll need to find and update all of those tables.  The
-// values are also part of the Common Data Representation, and hence
-// are part of IIOP and other ORB protocols.
-
 struct CDR;
 
 // Two "user exceptions" are defined for manipulating TypeCodes. These two

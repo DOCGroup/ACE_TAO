@@ -184,6 +184,24 @@ IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
             {
               void *ptr = va_arg (param_vector, void *);
 
+              // XXXASG - added this 12/24/97
+              // if it is an inout parameter, it would become necessary to
+              // first release the "in" memory
+              if (pdp->mode == PARAM_INOUT)
+                {
+                  // XXXASG - add others as we test each case
+                  switch (pdp->tc->kind (env))
+                    {
+                    case CORBA::tk_string:
+                      {
+                        CORBA::string_free (*(char **)ptr);
+                        *(char **)ptr = 0;
+                      }
+                      break;
+                    default:
+                      break;
+                    }
+                }
               if (pdp->mode == PARAM_RETURN
                   || pdp->mode == PARAM_OUT
                   || pdp->mode == PARAM_INOUT)
@@ -262,7 +280,7 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
 
       for (i = 0; i < args->count (); i++)
         {
-          CORBA::NamedValue_ptr value = args->item (i);
+          CORBA::NamedValue_ptr value = args->item (i, env);
 
           if (value->flags () == CORBA::ARG_IN
               || value->flags () == CORBA::ARG_INOUT)
@@ -331,7 +349,7 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
 
           for (i = 0; i < args->count (); i++)
             {
-              CORBA::NamedValue_ptr	value = args->item (i);
+              CORBA::NamedValue_ptr	value = args->item (i, env);
 
               if (value->flags () == CORBA::ARG_OUT
                   || value->flags () == CORBA::ARG_INOUT)

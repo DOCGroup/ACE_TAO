@@ -119,6 +119,7 @@ be_type::nested_type_name (be_decl *d, char *suffix)
 	  // get our enclosing scope
 	  t = be_scope::narrow_from_scope (this->defined_in ())->decl ();
 
+#if 0 // this may not work in all cases
 	  // now check if the scope in which we were defined is the same
 	  // as the current scope in which we are used or one of its ancestors
 	  while (d && d->node_type () != AST_Decl::NT_root) // keep moving up the
@@ -142,6 +143,48 @@ be_type::nested_type_name (be_decl *d, char *suffix)
 			}
 		  d = be_scope::narrow_from_scope (d->defined_in ())->decl ();
 		} // end of while
+#endif
+      // start with our local name
+      ACE_OS::sprintf (macro, this->local_name ()->get_string ());
+      if (suffix) // append the suffix (if any)
+        {
+          ACE_OS::strcat (macro, suffix);
+        }
+
+	  while (d && t && d->node_type () != AST_Decl::NT_root) // keep moving up
+                                                             // the chain
+		{
+		  if (!ACE_OS::strcmp (t->fullname (), d->fullname ()))
+			{
+              // is my scope the same as d? If so, we are done
+			  ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (%s, %s)",
+                               t->fullname (),
+                               ACE_OS::strdup (macro));
+              return macro;
+            }
+          else
+            {
+              // our scope is not the same as the one in which it is referred
+              // to. Try to see if the scope of our scope and the scope in
+              // which we are referred to are the same. At the same time, make
+              // a partial scoped name that includes our current scope and the
+              // scope dname generated so far
+              ACE_OS::sprintf (macro, "%s::%s",
+                               t->local_name ()->get_string (),
+                               ACE_OS::strdup (macro));
+              if (t->defined_in ())
+                t = be_scope::narrow_from_scope (t->defined_in ())->decl ();
+              else
+                t = 0;
+              if (d->defined_in ())
+                d = be_scope::narrow_from_scope (d->defined_in ())->decl ();
+              else
+                d = 0;
+            }
+        }
+
+      // failure. reset the generated macro
+      ACE_OS::memset (macro, '\0', NAMEBUFSIZE); // no success, fall through
 	} // end of if is_nested
 
   // not nested OR not defined in the same scope as "d" or its

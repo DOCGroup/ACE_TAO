@@ -272,7 +272,6 @@ CORBA_POA::bind (const CORBA::OctetSeq &key,
   return objtable_->bind (key, obj);
 }
 
-
 // IUnknown calls
 ULONG
 CORBA_POA::AddRef (void)

@@ -126,7 +126,7 @@ public:
   DEF_NARROW_FROM_DECL (be_sequence);
 
 protected:
-  virtual const char *gen_name (void);
+  virtual char *gen_name (void);
   // helper to create_name
 
 private:
