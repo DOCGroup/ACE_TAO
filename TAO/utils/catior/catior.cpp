@@ -489,6 +489,7 @@ main (int argc, char *argv[])
                         "reading the file %s\n",
                         get_opt.opt_arg ()));
 
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
             ifstream ifstr (get_opt.opt_arg ());
 
             if (!ifstr.good ())
@@ -511,6 +512,31 @@ main (int argc, char *argv[])
                     aString += ch;
                     have_some_input = 1;
                   }
+#else
+            FILE* ifstr = ACE_OS::fopen (get_opt.opt_arg (), "r");
+
+            if (ifstr && !ferror (ifstr))
+              {
+                if (ifstr)
+				  ACE_OS::fclose (ifstr);
+                return -1;
+              }
+
+            int have_some_input = 0;
+            while (!feof (ifstr))
+              {
+                char ch;
+                ACE_CString aString;
+
+                while (!feof (ifstr))
+                  {
+                    ch = ACE_OS::fgetc (ifstr);
+                    if (ch == '\n' || ch == EOF)
+                      break;
+                    aString += ch;
+                    have_some_input = 1;
+                  }
+#endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
                 if (have_some_input == 0)
                   break;
                 ACE_DEBUG ((LM_DEBUG,
@@ -567,7 +593,11 @@ main (int argc, char *argv[])
             else
               ACE_DEBUG ((LM_DEBUG,
                           "catior returned false\n"));
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
             ifstr.close ();
+#else
+			ACE_OS::fclose (ifstr);
+#endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
           }
         break;
         case '?':
