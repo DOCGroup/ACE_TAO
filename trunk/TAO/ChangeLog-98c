@@ -1,3 +1,36 @@
+Sat Oct 25 18:14:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll (idl_parse_line_and_file): Had to make a minor
+ 	change to skip over the #line directive from Microsoft.
+
+	* TAO_IDL/fe/idl.ll: Added a new rule to handle the fact
+	that the Microsoft C++ preprocessor generates tags of the
+	form 
+
+	#line 1 "bar.idl"
+	
+	rather than
+
+	#1 "bar.idl"
+
+	which is what UNIX C++ compilers seem to do.
+
+	* TAO_IDL/be/be_decl.cpp (compute_fullname, compute_flatname):
+ 	Fixed a nasty bug where the original author thought new always
+ 	returned 0'd memory...  Sheesh!
+
+	* TAO_IDL/driver/drv_preproc.cpp: Changed fd < 0 to fd ==
+	ACE_INVALID_HANDLE to be more portable.
+
+	* TAO_IDL/be/be_decl.cpp (be_decl): There were two fields,
+ 	flatname_ and repoID_, that weren't given initial values of 0.
+  	Thanks to Purify for finding this!
+
+	* TAO_IDL/fe/idl.{yy,ll}: Replaced all uses of type names <name>
+ 	(e.g., FLOAT) with IDL_<name> (e.g., IDL_FLOAT) so that the code
+ 	won't bomb on lame systems like NT that typedef basic types to all
+ 	capitals (e.g., typedef float FLOAT).
+
 Sat Oct 25 22:05:43 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_constant.cpp (exprtype_to_string): 
@@ -36,7 +69,6 @@ Sat Oct 25 17:45:17 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp: Fixed proper tmp filename
 	creation.
-
 
 Sat Oct 25 14:14:53 1997  Carlos O'Ryan  <coryan@MILONGA>
 

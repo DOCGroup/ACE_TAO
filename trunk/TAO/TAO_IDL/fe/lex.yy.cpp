@@ -1929,22 +1929,25 @@ idl_parse_line_and_file(char *buf)
   /* of putting #line num instead of #num. */ 
 
   if (ACE_OS::strncmp (r, "line", 4) == 0)
-    r += 4;
+    r += 5;
 
   /* Find line number */
-  for (r++; *r == ' ' || *r == '\t'; r++);
+  while (*r == ' ' || *r == '\t')
+    r++;
   h = r;
-  for (; *r != '\0' && *r != ' ' && *r != '\t'; r++);
+  for (; *r != '\0' && *r != ' ' && *r != '\t'; r++)
+    continue;
   *r++ = 0;
   idl_global->set_lineno(idl_atoi(h, 10));
 
   /* Find file name, if present */
-  for (; *r != '"'; r++) {
+  for (; *r != '"'; r++) 
     if (*r == '\n' || *r == '\0')
       return;
-  }
+
   h = ++r;
-  for (; *r != '"'; r++);
+  for (; *r != '"'; r++)
+    continue;
   *r = 0;
   if (*h == '\0')
     idl_global->set_filename(new String("standard input"));
