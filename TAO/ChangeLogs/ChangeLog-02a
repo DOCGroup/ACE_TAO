@@ -1,3 +1,15 @@
+Wed Apr 18 10:28:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_be_visitor_union/union_cs.cpp:
+
+          Added check for self-assignment in code generation for
+          assignment operator. The lack of the check caused not
+          only inefficiency, but also a crash if the union's
+          active member is a pointer type, since the code
+          deallocates the old member first. Thanks to
+          Uwe Jäger <jaeger@varial.de> for pointing out the missing
+          check.
+
 Wed Apr 18 09:44:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Leader_Follwer.h: Added TAO_Export macros. Looks to me that
