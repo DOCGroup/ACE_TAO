@@ -1,6 +1,6 @@
 /* -*- C++ -*- $Id$ */
 
-#include "orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.h"
+#include "Notify_ProxyPushConsumer_i.h"
 #include "Notify_SupplierAdmin_i.h"
 
 // Implementation skeleton constructor
@@ -12,10 +12,10 @@ TAO_Notify_ProxyPushConsumer_i::TAO_Notify_ProxyPushConsumer_i
 
 // Implementation skeleton destructor
 TAO_Notify_ProxyPushConsumer_i::~TAO_Notify_ProxyPushConsumer_i (void)
-  {
-  }
+{
+}
 
-CosNotifyChannelAdmin::ProxyPushConsumer_ptr
+CosNotifyChannelAdmin::ProxyConsumer_ptr
 TAO_Notify_ProxyPushConsumer_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 {
   return _this (ACE_TRY_ENV);
@@ -53,5 +53,4 @@ TAO_Notify_ProxyPushConsumer_i::disconnect_push_consumer
                    CORBA::SystemException
                    ))
 {
-
-  }
+}

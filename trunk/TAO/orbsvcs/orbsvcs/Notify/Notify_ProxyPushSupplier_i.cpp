@@ -22,7 +22,18 @@ TAO_Notify_ProxyPushSupplier_i::dispatch_event (const CORBA::Any & data,
   ACE_CHECK;
 }
 
-CosNotifyChannelAdmin::ProxyPushSupplier_ptr
+void
+TAO_Notify_ProxyPushSupplier_i::dispatch_event
+(const CosNotification::StructuredEvent& event,
+ CORBA::Environment &ACE_TRY_ENV)
+{
+  // check if it passes filter, disconnected etc.
+  // pass the any data.
+  push_consumer_->push (event.remainder_of_body, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CosNotifyChannelAdmin::ProxySupplier_ptr
 TAO_Notify_ProxyPushSupplier_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 {
   return _this (ACE_TRY_ENV);

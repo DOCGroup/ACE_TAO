@@ -43,7 +43,10 @@ public:
   //Destructor
   virtual ~TAO_Notify_ProxyConsumer_i (void);
 
-  void init (CORBA::Environment &ACE_TRY_ENV);
+  virtual void init (CORBA::Environment &ACE_TRY_ENV);
+  //
+
+  virtual CosNotifyChannelAdmin::ProxyConsumer_ptr get_ref (CORBA::Environment &ACE_TRY_ENV) = 0;
   //
 
   virtual CosNotifyChannelAdmin::ProxyType MyType (
