@@ -1,3 +1,10 @@
+Sun Apr  2 01:34:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* utils/nslist/Makefile: 
+	* utils/nslist/nsadd.cpp:
+	* utils/nslist/nsdel.cpp:
+	  New programs to add and remove IORs from the Naming Service
+
 Tue Mar 28 20:53:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadBalancer.h:
