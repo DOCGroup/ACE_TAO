@@ -505,7 +505,7 @@ sub write_workspace {
 
     my($abort_creation) = 0;
     if ($duplicates > 0 && !$self->allow_duplicates()) {
-      print "WARNING: Duplicates not allowed.\n";
+      print "ERROR: Duplicates not allowed.\n";
       $abort_creation = 1;
     }
     else {
