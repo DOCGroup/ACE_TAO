@@ -756,8 +756,12 @@ Client::svc (void)
 
 #if defined (VXWORKS)
   // To avoid a memPartFree on VxWorks.  It will leak memory, though.
-  int status;
-  ACE_OS::thr_exit (&status);
+  int status = 0;
+
+  if (thr_mgr ())
+    thr_mgr ()->exit (&status, 1);
+  else
+    ACE_OS::thr_exit (&status);
 #endif /* VXWORKS */
 
   return 0;
