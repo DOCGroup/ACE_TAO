@@ -198,6 +198,13 @@ libDLL_Test.$(SOEXT): DLL_Test_Impl.cpp DLL_Test_Impl.h
 libService_Config_DLL.$(SOEXT): Service_Config_DLL.cpp Service_Config_DLL.h
 	@$(MAKE) -f Makefile.Service_Config_DLL
 
+ifdef VXWORKS
+all: run_test.vxworks
+
+run_test.vxworks: run_test.lst
+	run_test.pl -v -Config STATIC -Config CHECK_RESOURCES > run_test.vxworks
+endif
+
 realclean: clean
 	-$(RM) libDLL_Test.$(SOEXT) libService_Config_DLL.*
 	-$(RM) log/compilations.log*

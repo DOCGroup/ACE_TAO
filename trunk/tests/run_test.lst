@@ -22,16 +22,16 @@ Barrier_Test
 Basic_Types_Test
 Buffer_Stream_Test
 Cache_Map_Manager_Test
-Cached_Conn_Test: !LynxOS
-Cached_Accept_Conn_Test
+Cached_Conn_Test: !LynxOS !VxWorks
+Cached_Accept_Conn_Test: !VxWorks
 Capabilities_Test
 CDR_Test
 CDR_File_Test
 CDR_Array_Test
 Collection_Test
 Config_Test
-Conn_Test: !chorus
-Dirent_Test
+Conn_Test: !chorus !VxWorks
+Dirent_Test: !VxWorks
 DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test
 Dynamic_Priority_Test
@@ -45,30 +45,30 @@ Hash_Map_Bucket_Iterator_Test
 High_Res_Timer_Test
 IOStream_Test
 Lazy_Map_Manager_Test
-Log_Msg_Test
+Log_Msg_Test: !VxWorks
 Logging_Strategy_Test: !STATIC !ST
 Map_Manager_Test
 Map_Test
 Max_Default_Port_Test: !ST
-MEM_Stream_Test
+MEM_Stream_Test: !VxWorks
 Mem_Map_Test: !chorus !Unicos
 Message_Block_Test: !chorus
 Message_Queue_Notifications_Test
 Message_Queue_Test: !chorus
 Message_Queue_Test_Ex: !chorus
 MM_Shared_Memory_Test: !chorus !Unicos
-MT_Reactor_Timer_Test
+MT_Reactor_Timer_Test: !VxWorks
 MT_SOCK_Test: !chorus
 Malloc_Test
-Naming_Test: OTHER !chorus !LynxOS !Unicos
+Naming_Test: OTHER !chorus !LynxOS !Unicos !VxWorks
 New_Fail_Test: ALL !DISABLED
 Notify_Performance_Test
 Object_Manager_Test
 OrdMultiSet_Test
 OS_Test
 Pipe_Test: !MSVC !chorus
-Priority_Buffer_Test
-Priority_Reactor_Test: !chorus
+Priority_Buffer_Test: !VxWorks
+Priority_Reactor_Test: !chorus !VxWorks
 Priority_Task_Test: !Unicos
 Process_Manager_Test: ALL MSVC !DISABLED
 Process_Mutex_Test: !MSVC !chorus
@@ -81,7 +81,7 @@ Reactor_Performance_Test: !chorus
 Reactor_Timer_Test
 Reader_Writer_Test
 Recursive_Mutex_Test: !ST
-Refcounted_Auto_Ptr_Test
+Refcounted_Auto_Ptr_Test: !VxWorks
 Reverse_Lock_Test
 Semaphore_Test
 Service_Config_Test: !STATIC
@@ -99,7 +99,7 @@ Thread_Manager_Test: !Unicos
 Thread_Mutex_Test: !chorus
 Thread_Pool_Reactor_Test: OTHER
 Thread_Pool_Reactor_Resume_Test: OTHER !ST
-Thread_Pool_Test: !LynxOS
+Thread_Pool_Test: !LynxOS !VxWorks
 Timer_Queue_Test
 Timeprobe_Test
 Time_Service_Test: ALL !STATIC !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
