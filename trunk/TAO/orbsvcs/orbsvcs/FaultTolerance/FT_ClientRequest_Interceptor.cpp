@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "FT_ClientRequest_Interceptor.h"
 #include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/CORBA_String.h"
@@ -9,8 +10,9 @@
 #include "ace/Synch_Traits.h"
 
 ACE_RCSID (FaultTolerance,
-           FT_ClientORBInitializer,
+           FT_ClientRequest_Interceptor.cpp
            "$Id$")
+
 
 
 namespace TAO
@@ -223,9 +225,9 @@ namespace TAO
 
             cdr.reset_byte_order (ACE_static_cast (int,byte_order));
 
-            FT::FTGroupVersionServiceContext gvsc;
+            FT::TagFTGroupTaggedComponent gtc;
 
-            if ((cdr >> gvsc) == 0)
+            if ((cdr >> gtc) == 0)
               ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
                                            CORBA::COMPLETED_NO));
 
@@ -236,7 +238,7 @@ namespace TAO
             if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
               ACE_THROW (CORBA::MARSHAL ());
 
-            if (!(ocdr << gvsc))
+            if (!(ocdr << gtc.object_group_ref_version))
               ACE_THROW (CORBA::MARSHAL ());
 
             CORBA::ULong length =
