@@ -575,7 +575,7 @@ Bill Rizzi <rizzi@softserv.com>
 Peter Windle <peterw@ugsolutions.com>
 Andy Alvarez <axab@eci.esys.com>
 Jaepil Kim <jpkim@lgsoft.com>
-Dmitry Goldshtain <goldshtain.dmitry@usa.net>
+Dmitry Goldshtain <goldstein@arcormail.de>
 Carl Grinstead <grinstea@tsunami.com>
 Henric Jungheim <junghelh@pe-nelson.com>
 Konstantinos Margaritis <kmargar@cc.uoa.gr>
@@ -1353,7 +1353,6 @@ Tad Hetke <thetke@oresis.com>
 Graeme Clark <gclark@opentext.com>
 Gu Song <gusong_m@yahoo.com>
 Chris Hughes <chughes@stentor.com>
-
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
