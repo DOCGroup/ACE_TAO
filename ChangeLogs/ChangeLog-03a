@@ -1,3 +1,11 @@
+Fri Dec  8 09:27:01 2000  Chad Elliott <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_chorus4.x_g++.GNU:
+
+          Modified to build only static libraries.  Something changed
+          between the time of the port and now, which caused it to try
+          to build shared libraries (which Chorus 4.0 doesn't support).
+
 Fri Dec  8 06:47:12 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * tests/Makefile.bor:
