@@ -134,7 +134,7 @@ Headers::end_of_line (char * &line, int &offset) const
   const char *old_line = line;
   char *ptr = ACE_OS::strchr (old_line, '\n');
 
-  if (pt == NULL)
+  if (ptr == NULL)
     return 0;
 
   line = ptr;
