@@ -1,3 +1,12 @@
+Tue Sep 25 16:12:14 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.i (recv_i):
+
+	  Use ACE_OS::set_errno_to_last_error() set errno instead of doing
+	  so manually to get around broken compilers that reset the last
+	  error when assigning to errno.  Thanks to Chris Kohloff for
+	  pointing out the problem and suggesting this fix.
+
 Tue Sep 25 13:00:37 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Obstack.h: Fixed a typo when declaring ACE_Obstack
