@@ -1,3 +1,9 @@
+Tue Mar 23 09:01:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.h:
+	* tao/Invocation.cpp:
+	  Fixed throw spec declarations.
+
 Tue Mar 23 08:59:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Stub.cpp (do_static_call,do_dynamic_call): removed
