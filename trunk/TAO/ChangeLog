@@ -1,3 +1,11 @@
+Fri Oct 11 09:41:43 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+
+	  Re-enabled the Telecom Logging Service by default.
+
+	  Fixed some Telecom Logging Service dependencies.
+
 Thu Oct 10 16:03:08 2002  Ossama Othman  <othman@cs.wustl.edu>
 
         * TAO version 1.2.5 released.
