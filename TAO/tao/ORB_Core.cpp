@@ -1418,10 +1418,10 @@ template class ACE_Node<ACE_SYNCH_CONDITION*>;
 template class ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>;
 template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
 
-#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
 template class ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
+template class ACE_Lock_Adapter<ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
 template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
-#endif /* !ACE_MT_SAFE || ACE_MT_SAFE == 0 */
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Env_Value<int>
@@ -1468,10 +1468,10 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 #pragma instantiate ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>
 
-#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
-#   pragma instantiate ACE_Select_Reactor_Token_T<ACE_Noop_Token>
-#   pragma instantiate ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
-#endif /* !ACE_MT_SAFE || ACE_MT_SAFE == 0 */
+#pragma instantiate ACE_Select_Reactor_Token_T<ACE_Noop_Token>
+#pragma instantiate ACE_Lock_Adapter< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
+#pragma instantiate ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_FACTORY_DEFINE (TAO, TAO_Resource_Factory)
