@@ -300,6 +300,7 @@ ACE_HAS_INLINED_OSCALLS                 Inline all the static class OS
                                         methods to remove call
                                         overhead
 ACE_HAS_IP_MULTICAST                    Platform supports IP multicast
+ACE_HAS_IP6                             Platform supports IPv6.
 ACE_HAS_IRIX62_THREADS                  Platform supports the very odd
                                         IRIX 6.2 threads...
 ACE_HAS_NONSTATIC_OBJECT_MANAGER        Causes the ACE_Object_Manager

@@ -503,6 +503,9 @@
 /* Platform supports IP multicast */
 #undef ACE_HAS_IP_MULTICAST
 
+/* Platform supports IPv6 */
+#undef ACE_HAS_IP6
+
 /* Platform supports the very odd IRIX 6.2 threads... */
 #undef ACE_HAS_IRIX62_THREADS
 

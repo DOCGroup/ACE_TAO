@@ -5370,6 +5370,7 @@ public:
                                         int length,
                                         int type);
   static struct hostent *gethostbyname (const char *name);
+  static struct hostent *gethostbyname2 (const char *name, int type);
   static struct hostent *gethostbyaddr_r (const char *addr,
                                           int length,
                                           int type,

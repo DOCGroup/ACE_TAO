@@ -1,3 +1,13 @@
+Thu Apr 29 18:32:43 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/README:
+	* ace/OS.h (ACE_OS): 
+	* ace/OS.i (gethostbyname2): 
+
+	  Added support for the gethostbyname2() system call.  It is only
+	  enabled if ACE_HAS_IP6 is defined.  When I have time, I'll add
+	  more IPv6 support.
+
 Thu Apr 29 15:30:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/INET_Addr.cpp (string_to_addr): Added support to check for
