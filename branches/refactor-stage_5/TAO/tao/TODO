@@ -38,12 +38,8 @@
 
 . Multiprofile IOR and fallback in case of failure
 
-. Generate the right exception specification in the skeleton for
-  collocated cases. 
 
-. Operation names in skeletons for collocated cases.
 
-. For operation names in ThruPOA collocation that doesnt have
-  arguments, need to send blank arguments to avoid compiler warnings. 
 
-. Cannot declare any variable by name tmp ie. struct tmp {} or exception tmp {};
+
+

@@ -116,7 +116,7 @@ public:
   /// initialization time.
   static void hook (TAO_ORB_Core *orb_core,
                     TAO_Stub *stub,
-                    int &has_synchronization,
+                    bool &has_synchronization,
                     Messaging::SyncScope &scope);
 
   /// Helper method for the implementation of

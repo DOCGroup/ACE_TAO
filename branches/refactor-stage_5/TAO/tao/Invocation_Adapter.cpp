@@ -150,6 +150,7 @@ namespace TAO
     if (is_timeout)
       max_wait_time = &tmp_wait_time;
 
+
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
 
@@ -233,7 +234,7 @@ namespace TAO
   bool
   Invocation_Adapter::get_timeout (ACE_Time_Value &timeout)
   {
-    bool has_timeout;
+    bool has_timeout = false;
     this->target_->orb_core ()->call_timeout_hook (this->target_->_stubobj (),
                                                    has_timeout,
                                                    timeout);

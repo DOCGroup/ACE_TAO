@@ -2635,7 +2635,6 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
       return;
     }
   (*timeout_hook) (this, stub, has_timeout, time_value);
-  has_timeout = true;
 }
 
 void
