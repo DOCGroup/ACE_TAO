@@ -169,6 +169,12 @@ be_constant::exprtype_to_string (void)
   return NULL;
 }
 
+int
+be_constant::accept (be_visitor *visitor)
+{
+  return visitor->visit_constant (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_constant, AST_Constant, be_decl)
 IMPL_NARROW_FROM_DECL (be_constant)

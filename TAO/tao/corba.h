@@ -89,6 +89,7 @@
 
 // individual CORBA classes
 #include "tao/sequence.h"
+#include "tao/sequence_T.h"
 #include "tao/any.h"
 #include "tao/poa.h"
 
@@ -139,6 +140,7 @@
 #include "tao/orb_core.i"
 #include "tao/corbacom.i"
 #include "tao/sequence.i"
+#include "tao/sequence_T.i"
 #include "tao/typecode.i"
 #include "tao/nvlist.i"
 #include "tao/any.i"

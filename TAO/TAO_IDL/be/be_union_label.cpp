@@ -14,3 +14,9 @@ be_union_label::be_union_label(AST_UnionLabel::UnionLabel ul,
 {
 }
 
+int
+be_union_label::accept (be_visitor *visitor)
+{
+  return visitor->visit_union_label (this);
+}
+

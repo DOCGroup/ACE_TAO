@@ -246,7 +246,7 @@ void ACE_Scheduler::export(RT_Info& info, FILE* file)
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Lock_Adapter<ACE_NULL_MUTEX>;
+template class ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>;
 template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;
 
   template class ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX>;
@@ -265,7 +265,7 @@ template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
+#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>
 
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX>
