@@ -47,6 +47,26 @@
         <pre>
         perl -pi -e 'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
         </pre><p>
+
+    <li>Every program should have a ``usage'' message.  It should be
+        printed out if erroneous command line arguments, or a
+        <strong><code>-?</code></strong> command line argument, are
+        provided to the program.<p>
+
+    <li>The program <strong><code>main</code></strong> function should
+        always be declared with arguments, e.g.,
+        <pre>
+        int
+        main (int argc, char *argv[])
+        {
+          [...]
+
+          return 0;
+        }
+        </pre><p>
+
+        It should also return 0 on successful termination, and non-zero
+        otherwise.<p>
   </ul>
 
   <li><strong>Preprocessor</strong><p>
