@@ -903,7 +903,8 @@ ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
         {
           return -1;
         }
-      else if (sched_params.policy () == ACE_SCHED_FIFO)
+      else if (sched_params.policy () == ACE_SCHED_FIFO  ||
+               sched_params.policy () == ACE_SCHED_RR)
         {
           // This thread's LWP is in the RT class, so we need to set
           // its priority.
@@ -1804,6 +1805,22 @@ ACE_Thread_Adapter::invoke (void)
   // not to access <this> anywhere below this point.
   delete this;
 
+#if defined (ACE_NEEDS_LWP_PRIO_SET)
+  // On Solaris 2.5.x and 2.6, the LWP priority needs to be set in
+  // order to get preemption when running in the RT class.  This is
+  // the ACE way to do that . . .
+  ACE_hthread_t thr_handle;
+  ACE_Thread::self (thr_handle);
+  int prio;
+
+  // thr_getprio () on the current thread should never fail.
+  ACE_OS::thr_getprio (thr_handle, prio);
+
+  // ACE_OS::thr_setprio () has the special logic to set the LWP priority,
+  // if running in the RT class.
+  ACE_OS::thr_setprio (prio);
+#endif /* ACE_NEEDS_LWP_PRIO_SET */
+
   void *status = 0;
 
   ACE_SEH_TRY
@@ -2123,7 +2140,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           int spolicy;
 
 #      if defined (ACE_HAS_ONLY_SCHED_OTHER)
-            // Solaris, thru version 2.5.1, only supports SCHED_OTHER.
+            // Solaris, thru version 2.6, only supports SCHED_OTHER.
             spolicy = SCHED_OTHER;
 #      else
           // Make sure to enable explicit scheduling, in case we didn't
@@ -2418,7 +2435,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           // The memset to 0 sets the priority to 0, so we don't need
           // to explicitly set sparam.sched_priority.
 
-          // The only policy currently (version 2.5.1) supported by by Solaris
+          // The only policy supported by by Solaris, thru version 2.6,
           // is SCHED_OTHER, so that's hard-coded below.
           ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (
                                                  *thr_id,
@@ -2433,7 +2450,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #if 0
   // It would be useful if we could make this work.  But, it requires
   // a mechanism for determining the ID of an LWP to which another
-  // thread is bound.  Is there a way to do that?
+  // thread is bound.  Is there a way to do that?  Instead, just rely
+  // on the code in ACE_Thread_Adapter::invoke () to set the LWP
+  // priority.
 
   // If the thread is bound, then set the priority on its LWP.
   if (ACE_BIT_ENABLED (flags, THR_BOUND))
