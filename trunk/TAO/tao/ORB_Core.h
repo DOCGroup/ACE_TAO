@@ -142,6 +142,7 @@ private:
   // The connector actively initiating connection requests.
 
   void root_poa (TAO_POA *np);
+  void create_and_set_root_poa (void);
   TAO_POA *root_poa_;
   // Pointer to the root POA.  It will eventually be the pointer
   // returned by calls to CORBA::ORB::resolve_initial_references

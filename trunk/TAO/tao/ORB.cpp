@@ -218,28 +218,6 @@ CORBA_ORB::resolve_poa (void)
 
   TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
 
-  // Need to do double-checked locking here to cover the case of
-  // multiple threads using a global resource policy.
-  if (poa == 0)
-    {
-      TAO_POA_Manager *manager = new TAO_Strategy_POA_Manager;
-      TAO_POA_Policies root_poa_policies;
-      root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
-
-      // Construct a new POA
-      poa = new TAO_Strategy_POA ("RootPOA",
-                                  *manager,
-                                  root_poa_policies,
-                                  0,
-                                  env);
-
-      if (env.exception () != 0)
-        return CORBA_Object::_nil ();
-
-      // set the poa in the orbcore instance
-      TAO_ORB_Core_instance ()->root_poa (poa);
-    }
-
   PortableServer::POA_var result = poa->_this (env);
   if (env.exception () != 0)
     return CORBA_Object::_nil ();

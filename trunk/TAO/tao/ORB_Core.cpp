@@ -346,8 +346,6 @@ TAO_ORB_Core::init (int& argc, char** argv)
   (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
 #endif /* SIGPIPE */
 
-  ACE_OS::socket_init (ACE_WSOCK_VERSION);
-
   // Initialize the Service Configurator
   //  -check for return values.
   int result = TAO_Internal::open_services (svc_config_argc, svc_config_argv);
@@ -585,9 +583,6 @@ TAO_ORB_Core::fini (void)
   if (!this->server_factory_from_service_config_)
     delete server_factory_;
 
-  ACE_OS::socket_fini ();
-  // Closing down sockets.
-
   return 0;
 }
 
@@ -708,6 +703,32 @@ TAO_ORB_Core::root_poa (TAO_POA *np)
   // we already did in ::init()
   this->resource_factory ()->set_root_poa (np);
   this->root_poa_ = np;
+}
+
+void
+TAO_ORB_Core::create_and_set_root_poa (void)
+{
+  CORBA::Environment env;
+  TAO_POA *poa;
+
+  // Need to do double-checked locking here to cover the case of
+  // multiple threads using a global resource policy.
+  TAO_POA_Manager *manager = new TAO_Strategy_POA_Manager;
+  TAO_POA_Policies root_poa_policies;
+  root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
+  
+  // Construct a new POA
+  poa = new TAO_Strategy_POA ("RootPOA",
+                              *manager,
+                              root_poa_policies,
+                              0,
+                              env);
+  
+  if (env.exception () != 0)
+    return;
+
+  // set the poa in the orbcore instance
+  this->root_poa (poa);
 }
 
 TAO_Resource_Factory::TAO_Resource_Factory (void)
