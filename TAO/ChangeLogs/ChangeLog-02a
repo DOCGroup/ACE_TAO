@@ -1,3 +1,15 @@
+Tue Mar 21 19:06:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  Changed the function that looks up succesive
+	  components of a scoped name to recursive instead of
+	  iterative. This makes it easier to handle backing
+	  up and trying another path when the IDL file 
+	  contains reopened and/or nested and/or #included
+	  modules. Thanks to Florian Lackerbauer 
+	  <florian.lackerbauer@mchp.siemens.de> for sending
+	  in the nasty IDL example file.
+
 Tue Mar 21 12:16:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:
