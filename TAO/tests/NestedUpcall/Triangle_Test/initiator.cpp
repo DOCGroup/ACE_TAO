@@ -224,7 +224,7 @@ Initiator_Server::init (int argc,
 
 
 int
-Initiator_Server::run (CORBA::Environment& env)
+Initiator_Server::run (CORBA::Environment &)
 {
   TAO_TRY
   {

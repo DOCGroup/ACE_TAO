@@ -42,7 +42,8 @@ test_write_octet (TAO_OutputCDR &cdr,
 
 static int
 test_read_octet (TAO_InputCDR &cdr,
-                 char* buf, size_t bufsize,
+                 char* /* buf */, 
+                 size_t bufsize,
                  CORBA::Environment& env)
 {
   Test::OctetSeq os;
@@ -61,7 +62,8 @@ test_read_octet (TAO_InputCDR &cdr,
 
 static int
 test_write_char (TAO_OutputCDR &cdr,
-                 char* buf, size_t bufsize,
+                 char* buf, 
+                 size_t bufsize,
                  CORBA::Environment& env)
 {
   Test::CharSeq cs (bufsize, bufsize, buf);
@@ -74,7 +76,8 @@ test_write_char (TAO_OutputCDR &cdr,
 
 static int
 test_read_char (TAO_InputCDR &cdr,
-                char* buf, size_t bufsize,
+                char* /* buf */, 
+                size_t bufsize,
                 CORBA::Environment& env)
 {
   Test::CharSeq cs;

@@ -111,7 +111,7 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
 
 CORBA::Boolean
 CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
-                      CORBA::Environment &TAO_IN_ENV)
+                      CORBA::Environment &)
 {
   CC_LockModeEnum lm = lmconvert (mode);
 

@@ -39,7 +39,7 @@ CC_Lock::~CC_Lock (void)
 }
 
 void
-CC_Lock::lock (CORBA::Environment &TAO_IN_ENV)
+CC_Lock::lock (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::lock\n"));

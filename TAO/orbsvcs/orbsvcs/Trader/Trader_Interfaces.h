@@ -183,7 +183,7 @@ private:
   // Check if offers of a type fit the constraints and order them
   // according to the preferences submitted.
 
-  int fill_receptacles (const char* type,
+  int fill_receptacles (const char *,
                         CORBA::ULong how_many,
                         const CosTrading::Lookup::SpecifiedProps& desired_props,
                         TAO_Policies& policies,
@@ -614,47 +614,47 @@ public:
   // = Importing Parameters (used by the Lookup Interface)
 
   virtual CORBA::ULong set_def_search_card (CORBA::ULong value,
-                                            CORBA::Environment &env)
+                                            CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::ULong set_max_search_card (CORBA::ULong value,
-                                            CORBA::Environment &env)
+                                            CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   // search card is the cardinality of the offers searched for
   // constraint compliance.
 
 
   virtual CORBA::ULong set_def_match_card (CORBA::ULong value,
-                                            CORBA::Environment &env)
+                                            CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::ULong set_max_match_card (CORBA::ULong value,
-                                            CORBA::Environment &env)
+                                            CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   // match card is the cardinality of offers found compliant with the
   // constraints.
 
   virtual CORBA::ULong set_def_return_card (CORBA::ULong value,
-                                            CORBA::Environment &env)
+                                            CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::ULong set_max_return_card (CORBA::ULong value,
-                                            CORBA::Environment &env)
+                                            CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   // return card is the cardinality of the offers returned from
   // Lookup.
 
   virtual CORBA::ULong set_max_list (CORBA::ULong value,
-                                     CORBA::Environment &env)
+                                     CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::Boolean
     set_supports_modifiable_properties (CORBA::Boolean value,
-                                        CORBA::Environment &env)
+                                        CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::Boolean
     set_supports_dynamic_properties (CORBA::Boolean value,
-                                     CORBA::Environment &env)
+                                     CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::Boolean
     set_supports_proxy_offers (CORBA::Boolean value,
-                               CORBA::Environment &env)
+                               CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   // Types of offers available for consideration. Ween out those
   // offers with modifiable properties
@@ -662,39 +662,39 @@ public:
   // = Link Interface parameters
 
   virtual CORBA::ULong set_def_hop_count (CORBA::ULong value,
-                                          CORBA::Environment &env)
+                                          CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::ULong set_max_hop_count (CORBA::ULong value,
-                                          CORBA::Environment &env)
+                                          CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::FollowOption
     set_def_follow_policy (CosTrading::FollowOption policy,
-                           CORBA::Environment &env)
+                           CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   virtual CosTrading::FollowOption
     set_max_follow_policy (CosTrading::FollowOption policy,
-                           CORBA::Environment &env)
+                           CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
   virtual CosTrading::FollowOption
     set_max_link_follow_policy (CosTrading::FollowOption policy,
-                                CORBA::Environment &env)
+                                CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
   // = Set Type Repository
 
   virtual CosTrading::TypeRepository_ptr
     set_type_repos (CosTrading::TypeRepository_ptr repository,
-                    CORBA::Environment& env)
+                    CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::Admin::OctetSeq*
-    request_id_stem (CORBA::Environment& env)
+    request_id_stem (CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::Admin::OctetSeq*
     set_request_id_stem (const CosTrading::Admin::OctetSeq& stem,
-                         CORBA::Environment& env)
+                         CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
   virtual void list_offers (CORBA::ULong how_many,
@@ -723,9 +723,9 @@ public:
   // the "id_itr" is nil.
   // END SPEC
 
-  virtual void list_proxies (CORBA::ULong how_many,
-                             CosTrading::OfferIdSeq_out ids,
-                             CosTrading::OfferIdIterator_out id_itr,
+  virtual void list_proxies (CORBA::ULong,
+                             CosTrading::OfferIdSeq_out,
+                             CosTrading::OfferIdIterator_out,
                              CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::NotImplemented));
@@ -861,7 +861,7 @@ public:
   // state.
   // END SPEC
 
-  virtual CosTrading::LinkNameSeq* list_links (CORBA::Environment& _env)
+  virtual CosTrading::LinkNameSeq* list_links (CORBA::Environment &)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
   // BEGIN SPEC
@@ -940,12 +940,12 @@ public:
   ~TAO_Proxy (void);
 
   virtual CosTrading::OfferId
-    export_proxy (CosTrading::Lookup_ptr target,
-                  const char *type,
-                  const CosTrading::PropertySeq& properties,
+    export_proxy (CosTrading::Lookup_ptr,
+                  const char *,
+                  const CosTrading::PropertySeq &,
                   CORBA::Boolean if_match_all,
-                  const char * recipe,
-                  const CosTrading::PolicySeq& policies_to_pass_on,
+                  const char *,
+                  const CosTrading::PolicySeq &,
                   CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::IllegalServiceType,
@@ -959,7 +959,7 @@ public:
                     CosTrading::DuplicatePropertyName,
                     CosTrading::DuplicatePolicyName));
 
-  virtual void withdraw_proxy (const char *id,
+  virtual void withdraw_proxy (const char *,
                                CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::IllegalOfferId,
@@ -967,7 +967,7 @@ public:
                     CosTrading::Proxy::NotProxyOfferId));
 
   virtual CosTrading::Proxy::ProxyInfo *
-  describe_proxy (const char *id,
+  describe_proxy (const char *,
                   CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::IllegalOfferId,
@@ -976,9 +976,9 @@ public:
 
    // = CosTrading::TraderComponents methods.
 
-  virtual void list_proxies (CORBA::ULong how_many,
-                             CosTrading::OfferIdSeq*& ids,
-                             CosTrading::OfferIdIterator_ptr& id_itr,
+  virtual void list_proxies (CORBA::ULong,
+                             CosTrading::OfferIdSeq *&,
+                             CosTrading::OfferIdIterator_ptr &,
                              CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::NotImplemented));

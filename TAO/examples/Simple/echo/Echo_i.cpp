@@ -28,7 +28,7 @@ Echo_i::orb (CORBA::ORB_ptr o)
 
 Echo::List *
 Echo_i::echo_list (const char *message,
-                   CORBA::Environment &env)
+                   CORBA::Environment &)
 {
   Echo::List *list;
   

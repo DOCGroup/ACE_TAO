@@ -123,7 +123,7 @@ TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec &the_spec,
 // @@ Need to throw not-supported exception here
 CORBA::Object_ptr
 TAO_Basic_StreamCtrl::get_flow_connection (const char *flow_name,
-                                           CORBA::Environment &env)
+                                           CORBA::Environment &)
 {
   TAO_String_Hash_Key flow_name_key (flow_name);
   FlowConnection_Map::ENTRY *flow_connection_entry = 0;
@@ -457,7 +457,7 @@ CORBA::Boolean
 TAO_Server_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                     AVStreams::streamQoS &qos_spec,
                                     const AVStreams::flowSpec &the_spec,
-                                    CORBA::Environment &env)
+                                    CORBA::Environment &)
 {
   ACE_UNUSED_ARG (responder);
   ACE_UNUSED_ARG (qos_spec);
@@ -476,7 +476,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
                                         CORBA::Boolean is_mcast,
                                         AVStreams::streamQoS &qos,
                                         AVStreams::flowSpec &the_spec,
-                                        CORBA::Environment &env)
+                                        CORBA::Environment &)
 {
   ACE_UNUSED_ARG (initiator);
   ACE_UNUSED_ARG (is_mcast);
@@ -545,7 +545,7 @@ TAO_StreamEndPoint::set_FPStatus (const AVStreams::flowSpec &the_spec,
 
 CORBA::Object_ptr
 TAO_StreamEndPoint::get_fep (const char *flow_name,
-                             CORBA::Environment &env)
+                             CORBA::Environment &)
 {
   TAO_String_Hash_Key fep_name_key (flow_name);
   FlowEndPoint_Map::ENTRY *fep_entry = 0;
@@ -656,7 +656,7 @@ TAO_StreamEndPoint::set_key (const char *flow_name,
 // Set the source id.
 void
 TAO_StreamEndPoint::set_source_id (CORBA::Long source_id,
-                                   CORBA::Environment &env)
+                                   CORBA::Environment &)
 {
   this->source_id_ = source_id;
 }

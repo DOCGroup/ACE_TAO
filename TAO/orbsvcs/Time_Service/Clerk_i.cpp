@@ -296,7 +296,7 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
 // Initialise the Naming Service.
 
 int
-Clerk_i::init_naming_service (CORBA::Environment& env)
+Clerk_i::init_naming_service (CORBA::Environment &)
 {
   TAO_TRY
     {
@@ -466,7 +466,7 @@ Clerk_i::register_clerk (void)
 int
 Clerk_i::init (int argc,
                char *argv[],
-               CORBA::Environment &env)
+               CORBA::Environment &)
 {
   TAO_TRY
     {
@@ -549,7 +549,7 @@ Clerk_i::init (int argc,
 }
 
 int
-Clerk_i::run (CORBA::Environment &env)
+Clerk_i::run (CORBA::Environment &)
 {
   TAO_TRY
     {

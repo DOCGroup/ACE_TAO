@@ -41,9 +41,9 @@ MyFooServantLocator::~MyFooServantLocator ()
 
 PortableServer::Servant
 MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
-                                PortableServer::POA_ptr poa_ptr,
+                                PortableServer::POA_ptr /* poa_ptr */,
                                 const char *operation,
-                                PortableServer::ServantLocator::Cookie &cookie,
+                                PortableServer::ServantLocator::Cookie & /* cookie */,
                                 CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (operation);
@@ -110,7 +110,7 @@ MyFooServantLocator::postinvoke (const PortableServer::ObjectId &oid,
 }
 
 void
-MyFooServantLocator::forward (CORBA::Environment &env)
+MyFooServantLocator::forward (CORBA::Environment &)
 {
   this->forwarding_ = 1;
 }

@@ -715,15 +715,15 @@ IR_Forwarder::IR_Forwarder (CORBA::ORB_ptr orb_ptr,
 }
 
 CORBA::RepositoryId
-IR_Forwarder::_primary_interface (const PortableServer::ObjectId &oid,
-                                  PortableServer::POA_ptr poa,
-                                  CORBA::Environment &env)
+IR_Forwarder::_primary_interface (const PortableServer::ObjectId & /* oid */,
+                                  PortableServer::POA_ptr /* poa */,
+                                  CORBA::Environment &)
 {
   return 0;
 }
 
 void
-IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
+IR_Forwarder::invoke (CORBA::ServerRequest_ptr /* request */,
                       CORBA::Environment &TAO_IN_ENV)
 {
   // Get the POA Current object reference
