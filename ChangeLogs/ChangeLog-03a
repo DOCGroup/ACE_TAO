@@ -2,7 +2,7 @@ Mon Dec  3 18:19:11 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/fuzz.pl (check_for_id_string):
 
-	  Corrected capitalization of "$Id$" in output message.
+	  Corrected capitalization of "\$Id\$" in output message.
 
 Mon Dec  3 16:30:07 2001  Ossama Othman  <ossama@uci.edu>
 
