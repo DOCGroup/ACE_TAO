@@ -22,7 +22,7 @@ ALT_DIRS = CIDLC \
            examples \
            tests
 
-CLONE   = GNUMakefile \
+CLONE   = GNUmakefile \
 	  CIDLC \
 	  bin \
 	  ciao \
@@ -47,7 +47,7 @@ ifneq ($(static_libs_only),1)
 endif #static_libs_only
 
 # Need boost and utility libs in order to compile these.  You
-# may need to run MPC in these directories to create the GNUMakefiles
+# may need to run MPC in these directories to create the GNUmakefiles
 # first.
 ifdef BOOST_ROOT
   ifdef UTILITY_ROOT
