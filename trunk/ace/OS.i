@@ -4090,7 +4090,7 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
 ACE_INLINE struct protoent *
 ACE_OS::getprotobyname (const char *name)
 {
-#if defined (VXWORKS) || defined (ACE_HAS_WINCE)
+#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || (defined (ghs) && defined (__Chorus))
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
@@ -4107,7 +4107,7 @@ ACE_OS::getprotobyname_r (const char *name,
                           struct protoent *result,
                           ACE_PROTOENT_DATA buffer)
 {
-#if defined (VXWORKS) || defined (ACE_HAS_WINCE)
+#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || (defined (ghs) && defined (__Chorus))
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
@@ -4146,7 +4146,7 @@ ACE_OS::getprotobyname_r (const char *name,
 ACE_INLINE struct protoent *
 ACE_OS::getprotobynumber (int proto)
 {
-#if defined (VXWORKS) || defined (ACE_HAS_WINCE)
+#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || (defined (ghs) && defined (__Chorus))
   ACE_UNUSED_ARG (proto);
   ACE_NOTSUP_RETURN (0);
 #else
@@ -4160,7 +4160,7 @@ ACE_OS::getprotobynumber_r (int proto,
                             struct protoent *result,
                             ACE_PROTOENT_DATA buffer)
 {
-#if defined (VXWORKS) || defined (ACE_HAS_WINCE)
+#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || (defined (ghs) && defined (__Chorus))
   ACE_UNUSED_ARG (proto);
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
