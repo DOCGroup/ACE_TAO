@@ -1,3 +1,8 @@
+Sun Apr 28 18:03:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added the new test to our daily list of
+	  tests that needs to be run.
+
 Sun Apr 28 11:50:17 2002  Edan Ayal <edanayal@yahoo.com>
 
 	* ace/WIN32_Asynch_IO.cpp:
