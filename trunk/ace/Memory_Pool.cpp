@@ -23,7 +23,7 @@ ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (LPCTSTR ,
 }
 
 void *
-ACE_Local_Memory_Pool::acquire (size_t nbytes, 
+ACE_Local_Memory_Pool::acquire (size_t nbytes,
 				size_t &rounded_bytes)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::acquire");
@@ -80,7 +80,7 @@ ACE_MMAP_Memory_Pool::sync (void *addr, size_t len, int flags)
 // starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
 // then change protection of all pages in the mapped region.
 
-int 
+int
 ACE_MMAP_Memory_Pool::protect (ssize_t len, int prot)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::protect");
@@ -94,7 +94,7 @@ ACE_MMAP_Memory_Pool::protect (ssize_t len, int prot)
 // Change the protection of the pages of the mapped region to <prot>
 // starting at <addr> up to <len> bytes.
 
-int 
+int
 ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::protect");
@@ -107,7 +107,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
     flags_ (MAP_SHARED),
     write_each_page_ (0),
     minimum_bytes_ (0),
-    sa_ (options->sa_)
+    sa_ (0)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
 
@@ -136,6 +136,8 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
       this->minimum_bytes_ = options->minimum_bytes_;
       if (options->flags_ != 0)
 	this->flags_ = options->flags_;
+      if (options->sa_ != 0)
+        this->sa_ = options->sa_;
     }
 
   if (backing_store_name == 0)
@@ -143,8 +145,8 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
     // if the user didn't supply one...
     backing_store_name = ACE_DEFAULT_BACKING_STORE; // from "ace/OS.h"
 
-  ACE_OS::strncpy (this->backing_store_name_, 
-		   backing_store_name, 
+  ACE_OS::strncpy (this->backing_store_name_,
+		   backing_store_name,
 		   (sizeof this->backing_store_name_ / sizeof (TCHAR)));
 
 #if !defined (ACE_WIN32) && !defined (CHORUS)
@@ -176,12 +178,12 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
   // this->write_each_page == 0).
 
   for (size_t cur_block = 0;
-       cur_block < rounded_bytes; 
+       cur_block < rounded_bytes;
        cur_block += seek_len)
-    { 
+    {
       file_offset = ACE_OS::lseek (this->mmap_.handle () , seek_len - 1, SEEK_END);
 
-      if (file_offset == -1 || ACE_OS::write (this->mmap_.handle (), "", 1) == -1) 
+      if (file_offset == -1 || ACE_OS::write (this->mmap_.handle (), "", 1) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", this->backing_store_name_), -1);
     }
 
@@ -204,9 +206,9 @@ ACE_MMAP_Memory_Pool::map_file (off_t file_offset)
   if (this->mmap_.map (file_offset, PROT_RDWR,
 		       this->flags_, this->base_addr_, 0, this->sa_) == -1
       || this->base_addr_ != 0 && this->mmap_.addr () != this->base_addr_)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "(%P|%t) base_addr = %u, addr = %u, file_offset = %u, %p\n", 
-		      this->mmap_.addr (), this->base_addr_, 
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "(%P|%t) base_addr = %u, addr = %u, file_offset = %u, %p\n",
+		      this->mmap_.addr (), this->base_addr_,
 		       file_offset, this->backing_store_name_), -1);
 
   return 0;
@@ -217,7 +219,7 @@ ACE_MMAP_Memory_Pool::map_file (off_t file_offset)
 // locks are held when it is called.
 
 void *
-ACE_MMAP_Memory_Pool::acquire (size_t nbytes, 
+ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
 			       size_t &rounded_bytes)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::acquire");
@@ -228,7 +230,7 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
 
   off_t file_offset;
 
-  if (this->commit_backing_store_name (rounded_bytes, 
+  if (this->commit_backing_store_name (rounded_bytes,
 				       file_offset) == -1)
     return 0;
 
@@ -242,25 +244,25 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
   return (void *) ((char *) this->mmap_.addr () + (this->mmap_.size () - rounded_bytes));
 }
 
-// Ask system for initial chunk of shared memory. 
+// Ask system for initial chunk of shared memory.
 
 void *
-ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes, 
-				    size_t &rounded_bytes, 
+ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
+				    size_t &rounded_bytes,
 				    int &first_time)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::init_acquire");
 
   first_time = 0;
 
-  if (nbytes < (size_t) this->minimum_bytes_) 
+  if (nbytes < (size_t) this->minimum_bytes_)
     nbytes = this->minimum_bytes_;
 
-  if (this->mmap_.open (this->backing_store_name_, 
-			O_RDWR | O_CREAT | O_TRUNC | O_EXCL, 
+  if (this->mmap_.open (this->backing_store_name_,
+			O_RDWR | O_CREAT | O_TRUNC | O_EXCL,
 			ACE_DEFAULT_FILE_PERMS, this->sa_) != -1)
     {
-      // First time in, so need to acquire memory. 
+      // First time in, so need to acquire memory.
       first_time = 1;
       return this->acquire (nbytes, rounded_bytes);
     }
@@ -285,19 +287,19 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
 }
 
-int 
+int
 ACE_MMAP_Memory_Pool::remap (void *addr)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::remap");
   ACE_DEBUG ((LM_DEBUG, "Remapping with fault address at: %X\n", addr));
-  off_t current_file_offset = ACE_OS::filesize (this->mmap_.handle ()); 
+  off_t current_file_offset = ACE_OS::filesize (this->mmap_.handle ());
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
 
   if (!(addr < (void *) ((char *) this->mmap_.addr () + current_file_offset)
 	&& addr >= this->mmap_.addr ()))
     return -1;
-  
-  // Extend the mapping to cover the size of the backing store. 
+
+  // Extend the mapping to cover the size of the backing store.
   return this->map_file (current_file_offset);
 }
 
@@ -335,8 +337,8 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   ACE_TRACE ("ACE_MMAP_Memory_Pool::handle_signal");
 
   if (signum != SIGSEGV)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "(%P|%t) ignoring signal %S\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "(%P|%t) ignoring signal %S\n",
 		       signum), -1);
   else
     ; // ACE_DEBUG ((LM_DEBUG, "(%P|%t) received %S\n", signum));
@@ -351,7 +353,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
     {
       // ACE_DEBUG ((LM_DEBUG, "(%P|%t) si_signo = %d, si_code = %d, addr = %u\n", siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
       if (this->remap ((void *) siginfo->si_addr) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n", 
+	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n",
 			   siginfo->si_addr), -1);
       return 0;
     }
@@ -364,7 +366,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   // signals or exceptions.
   if (guess_on_fault_)
     return this->remap (0);
-  else 
+  else
     return -1;
 }
 
@@ -394,10 +396,10 @@ ACE_Lite_MMAP_Memory_Pool::sync (void *, size_t, int)
 #if !defined (ACE_LACKS_SBRK)
 ACE_ALLOC_HOOK_DEFINE(ACE_Sbrk_Memory_Pool)
 
-// Ask system for more local memory via sbrk(2). 
+// Ask system for more local memory via sbrk(2).
 
 void *
-ACE_Sbrk_Memory_Pool::acquire (size_t nbytes, 
+ACE_Sbrk_Memory_Pool::acquire (size_t nbytes,
 			       size_t &rounded_bytes)
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::acquire");
@@ -446,15 +448,15 @@ ACE_Shared_Memory_Pool::dump (void) const
   ACE_TRACE ("ACE_Shared_Memory_Pool::dump");
 }
 
-int 
-ACE_Shared_Memory_Pool::in_use (off_t &offset, 
+int
+ACE_Shared_Memory_Pool::in_use (off_t &offset,
 				size_t &counter)
 {
   offset = 0;
   SHM_TABLE *st = (SHM_TABLE *) this->base_addr_;
   shmid_ds buf;
 
-  for (counter = 0; 
+  for (counter = 0;
        counter < this->max_segments_ && st[counter].used_ == 1;
        counter++)
     {
@@ -467,16 +469,16 @@ ACE_Shared_Memory_Pool::in_use (off_t &offset,
   return 0;
 }
 
-int 
+int
 ACE_Shared_Memory_Pool::find_seg (const void*const searchPtr,
-                                  off_t &offset, 
+                                  off_t &offset,
                                   size_t &counter)
 {
   offset = 0;
   SHM_TABLE *st = (SHM_TABLE *) this->base_addr_;
   shmid_ds buf;
-    
-  for (counter = 0; 
+
+  for (counter = 0;
        counter < this->max_segments_
 	 && st[counter].used_ == 1;
        counter++)
@@ -496,7 +498,7 @@ ACE_Shared_Memory_Pool::find_seg (const void*const searchPtr,
         }
       // ACE_DEBUG ((LM_DEBUG, "(%P|%t) segment size = %d, offset = %d\n", buf.shm_segsz, offset));
     }
-    
+
   return 0;
 }
 
@@ -513,7 +515,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
     return -1;
 
   if (counter == this->max_segments_)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
 		      "exceeded max number of segments = %d, base = %u, offset = %u\n",
 		       counter, this->base_addr_, offset), -1);
   else
@@ -531,7 +533,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
       void *shmem = ACE_OS::shmat (st[counter].shmid_, (char *) address, 0);
 
       if (shmem != address)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p, shmem = %u, address = %u\n", 
+	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p, shmem = %u, address = %u\n",
 			   "shmat", shmem, address), 0);
     }
   return 0;
@@ -543,7 +545,7 @@ int
 ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::handle_signal");
-  // ACE_DEBUG ((LM_DEBUG, "signal %S occurred\n", signum)); 
+  // ACE_DEBUG ((LM_DEBUG, "signal %S occurred\n", signum));
 
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)
   off_t offset;
@@ -559,7 +561,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
       else if (!(siginfo->si_code == SEGV_MAPERR
 	   && siginfo->si_addr < (((char *) this->base_addr_) + offset)
 	   && siginfo->si_addr >= ((char *) this->base_addr_)))
-	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n", 
+	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n",
 			   siginfo->si_addr), -1);
     }
 
@@ -579,9 +581,9 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   void *shmem = ACE_OS::shmat (st[counter].shmid_, (char *) address, 0);
 
   if (shmem != address)
-      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p, shmem = %u, address = %u\n", 
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p, shmem = %u, address = %u\n",
                          "shmat", shmem, address), 0);
-	
+
   // NOTE: this won't work if we dont have SIGINFO_T or SI_ADDR
 #else
   ACE_UNUSED_ARG (siginfo);
@@ -620,7 +622,7 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (LPCTSTR backing_store_name,
 // Ask system for more shared memory.
 
 void *
-ACE_Shared_Memory_Pool::acquire (size_t nbytes, 
+ACE_Shared_Memory_Pool::acquire (size_t nbytes,
 				 size_t &rounded_bytes)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::acquire");
@@ -637,20 +639,20 @@ ACE_Shared_Memory_Pool::acquire (size_t nbytes,
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d\n", nbytes, rounded_bytes));
   return ((char *) this->base_addr_) + offset;
 }
- 
+
 // Ask system for initial chunk of shared memory.
 
 void *
-ACE_Shared_Memory_Pool::init_acquire (size_t nbytes, 
-				      size_t &rounded_bytes, 
+ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
+				      size_t &rounded_bytes,
 				      int &first_time)
-{  
+{
   ACE_TRACE ("ACE_Shared_Memory_Pool::init_acquire");
 
   size_t counter;
   off_t shm_table_offset = ACE::round_to_pagesize (sizeof (SHM_TABLE));
-  rounded_bytes = this->round_up (nbytes > (size_t) this->minimum_bytes_ 
-				  ? nbytes 
+  rounded_bytes = this->round_up (nbytes > (size_t) this->minimum_bytes_
+				  ? nbytes
 				  : (size_t) this->minimum_bytes_);
 
   // Acquire the semaphore to serialize initialization and prevent
@@ -678,7 +680,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p, base_addr = %u\n",
 			   "shmat", this->base_addr_), 0);
     }
-  else 
+  else
     {
       first_time = 1;
 
@@ -719,7 +721,7 @@ ACE_Shared_Memory_Pool::release (void)
   int result = 0;
   SHM_TABLE *st = (SHM_TABLE *) this->base_addr_;
 
-  for (size_t counter = 0; 
+  for (size_t counter = 0;
        counter < this->max_segments_ && st[counter].used_ == 1;
        counter++)
     if (ACE_OS::shmctl (st[counter].shmid_, IPC_RMID, NULL) == -1)
