@@ -862,13 +862,10 @@ public:
   void bidir_giop_policy (CORBA::Boolean);
 
 
-  /**
-   * Return the table that maps object key/name to de-stringified
-   * object reference.  The contents of this table do not correspond
-   * to the contents of any other similar table, such as the table
-   * that maps object key/name to stringified object reference.  It is
-   * a completely independent table.
-   */
+
+  /// Return the table that maps object key/name to de-stringified
+  /// object reference.  It is needed for supporting local objects in
+  /// the resolve_initial_references() mechanism.
   TAO_Object_Ref_Table &object_ref_table (void);
 
 protected:
