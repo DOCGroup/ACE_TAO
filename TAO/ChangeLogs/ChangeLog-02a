@@ -1,3 +1,15 @@
+Mon Jun  3 11:10:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+          Added a call to bind the repository, once it is created, to the
+          ORB's table of initialized object references. This enables
+          resolve_initial_references to resolve the IFR a step sooner and
+          avoid resorting to multicast, which is especially helpful when
+          the IFR is collocated with the application doing the resolving.
+          Thanks to Craig Rodrigues <crodrigu@bbn.com> for supplying the
+          patch.
+
 Fri May 31 15:22:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: 
