@@ -1,3 +1,8 @@
+Tue Sep 12 22:00:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: Added missing 'FD_SETSIZE' to #undef
+          directive.
+
 Tue Sep 12 15:15:54 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE_export.h (ACE_SINGLETON_DECLARATION): Added the new
