@@ -1,3 +1,16 @@
+Sun Jun  8 13:39:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+
+	  Fixed a bug in CDR operator generation for octet sequences.
+	  Previous changes were causing the octet sequence no-copy
+	  optimization to never be generated.
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+
+	  Fixed a bug in name creation for anonymous sequences that
+	  are themselves sequence elements.
+
 Sun Jun  8 11:12:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbwsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
