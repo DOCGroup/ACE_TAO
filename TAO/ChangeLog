@@ -1,3 +1,13 @@
+Fri Aug 20 13:11:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Updated.
+
+	* orbsvcs/orbsvcs/ec_typed_events.mpc:
+
+	  Changed to prepend "orbsvcs/" to export include path.
+
 Fri Aug 20 19:15:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Wait_On_LF_No_Upcall.cpp:

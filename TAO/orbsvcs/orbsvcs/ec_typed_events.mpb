@@ -4,7 +4,7 @@
 
 feature(ec_typed_events): dynamicinterface, ifr_client, taoidldefaults {
   macros   += TAO_HAS_TYPED_EVENT_CHANNEL
-  idlflags += -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h
+  idlflags += -Wb,export_macro=TAO_Event_Export -Wb,export_include=orbsvcs/CosEvent/event_export.h
 
   IDL_Files {
     CosTypedEventComm.idl
