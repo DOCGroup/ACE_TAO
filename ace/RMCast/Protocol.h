@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // file      : ace/RMCast/Protocol.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
@@ -268,9 +270,13 @@ namespace ACE_RMCast
     Profiles profiles_;
   };
 
-  typedef
-  ACE_Vector<Message_ptr>
-  Messages;
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
+  // Borland C++ Builder 6 and earlier don't handle default template
+  // arguments correctly.  Provide an explicit template argument.
+  typedef ACE_Vector<Message_ptr, ACE_VECTOR_DEFAULT_SIZE> Messages;
+#else
+  typedef ACE_Vector<Message_ptr> Messages;
+#endif  /* __BORLANDC__ <= 0x570 */
 
 
   //
@@ -503,13 +509,16 @@ namespace ACE_RMCast
   {
     static u16 const id = 0x0005;
 
-    typedef
-    ACE_Vector<u64>
-    SerialNumbers;
 
-    typedef
-    SerialNumbers::Iterator
-    iterator;
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
+  // Borland C++ Builder 6 and earlier don't handle default template
+  // arguments correctly.  Provide an explicit template argument.
+    typedef ACE_Vector<u64, ACE_VECTOR_DEFAULT_SIZE> SerialNumbers;
+#else
+    typedef ACE_Vector<u64> SerialNumbers;
+#endif  /* __BORLANDC__ <= 0x570 */
+
+    typedef SerialNumbers::Iterator iterator;
 
   public:
     NAK (Header const& h, istream& is)
