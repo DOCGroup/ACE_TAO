@@ -1,3 +1,9 @@
+Wed Jul 15 20:12:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: Changed the warnings that occur when 
+	  a conf file is not found to be debug warnings (only show 
+	  up with -ORBdebug)
+
 Wed Jul 15 19:28:51 1998  Seth Widoff  <sbw1@cs.wuslt.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp: Added trader files.
@@ -18,7 +24,6 @@ Wed Jul 15 16:00:39 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 	* client.cpp: Changed a few cast statments; added comments
 
 	* runtests.pl: New script to automate running of tests
-
 
 Wed Jul 15 15:44:10 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
