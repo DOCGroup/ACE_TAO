@@ -1,3 +1,10 @@
+Thu Feb  4 21:33:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* utils/catior/catior.cpp: 
+	  It included $ACE_ROOT/tao/IIOP_Profile.h explicitly, the file
+	  has been removed. I'm not sure if the program will work, but at
+	  least I could update the Makefile dependencies.
+
 Thu Feb  4 19:18:51 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
     * Multiple Profiles (MP).
