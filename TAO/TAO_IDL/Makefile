@@ -187,6 +187,23 @@ else  # ! CROSS-COMPILE
 	rm -f tao_idl TAGS
 endif # ! CROSS-COMPILE
 
+fe/lex.yy.cpp:	fe/idl.ll
+	@echo "WARNING: Potentially outdated fe/lex.yy.cpp"
+	@echo "         either touch(1) the file or explicitly"
+	@echo "         generate it using:"
+	@echo "    make lex.yy.cpp.target"
+
+.PHONY: lex.yy.cpp.target
+
+lex.yy.cpp.target:
+		$(LEX) -t -I fe/idl.ll | \
+		sed -e "s/yy/tao_yy/g" \
+		    -e "s/YY/TAO_YY/g" \
+		    -e "s@#include <unistd\.h>@#include \"ace/OS.h\"@" \
+		    -e "s@#include <@#include /**/ <@" \
+		    -e "s@ECHO@TAO_YY_ECHO@" \
+		    -e 's/\$$Header$$/$$Id$$/' > fe/lex.yy.cpp
+
 tags:
 	rm -f TAGS
 	etags -C tao_idl.cpp include/*.h be_include/*.h be_include/be_visitor_*/*.h \
