@@ -107,6 +107,8 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 	  
 	  // Initiate the modifying of the qos for the flows.
 	  this->streamctrl_->modify_QoS (qos, flow_spec, ACE_TRY_ENV);
+	  ACE_CHECK_RETURN (0);
+
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Stream Ctrl available....Modify QoS called\n"));
 	}
