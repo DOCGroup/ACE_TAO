@@ -14,16 +14,16 @@ $sleeptime = 5;
 
 $SV = Process::Create ("..$DIR_SEPARATOR"
 		       ."IDL_Cubit".$DIR_SEPARATOR.
-		       "server".$Process::EXE_EXT.
+		       "server".$Process::EXE_EXT,
                        " -ORBport ".$server_port.
 		       " -ORBobjrefstyle url".
-		       " -s -o $iorfile");
+		       " -o $iorfile");
 
 sleep $sleeptime;
 
 $status = system ("client".$Process::EXE_EXT.
 		  " -ORBport $client_port".
-		  " -s -f $iorfile -x");
+		  " -f $iorfile -x");
 
 # @@ TODO change to Wait() once the -x option works.
 $SV->Kill (); $SV->Wait ();
