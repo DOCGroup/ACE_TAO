@@ -52,9 +52,62 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // Set the right type.
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Global functions to allow non-defined forward declared interfaces
+  // access to some methods in the full definition.
+  *os << node->full_name () << "_ptr" << be_nl
+      << "tao_" << node->flat_name () << "_duplicate (" << be_idt << be_idt_nl
+      << node->full_name () << "_ptr p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->full_name () << "::_duplicate (p);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "void" << be_nl
+      << "tao_" << node->flat_name () << "_release (" << be_idt << be_idt_nl
+      << node->full_name () << "_ptr p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::release (p);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << node->full_name () <<  "_ptr" << be_nl
+      << "tao_" << node->flat_name () << "_nil (" << be_idt << be_idt_nl
+      << "void" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << node->full_name () << "_ptr" << be_nl
+      << "tao_" << node->flat_name () << "_narrow (" << be_idt << be_idt_nl
+      << "CORBA::Object *p," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->full_name () << "::_narrow (p, ACE_TRY_ENV);" 
+      << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "CORBA::Object *" << be_nl
+      << "tao_" << node->flat_name () << "_upcast (" << be_idt << be_idt_nl
+      << "void *src" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << node->full_name () << " **tmp =" << be_idt_nl
+      << "ACE_static_cast (" << node->full_name () << " **, src);" 
+      << be_uidt_nl
+      << "return *tmp;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // Generate the _var class.
   if (node->gen_var_impl () == -1)
@@ -135,8 +188,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
       delete visitor;
     }
-
-  TAO_OutStream *os = this->ctx_->stream ();
 
    // Generate the destructor and default constructor.
   *os << be_nl;

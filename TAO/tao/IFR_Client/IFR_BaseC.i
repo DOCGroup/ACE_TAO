@@ -23,49 +23,6 @@
 #if !defined (_CORBA_IROBJECT___CI_)
 #define _CORBA_IROBJECT___CI_
 
-ACE_INLINE CORBA_IRObject_ptr
-tao_CORBA_IRObject_duplicate (
-    CORBA_IRObject_ptr p
-  )
-{
-  return CORBA_IRObject::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_CORBA_IRObject_release (
-    CORBA_IRObject_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_IRObject_ptr
-tao_CORBA_IRObject_nil (
-    void
-  )
-{
-  return CORBA_IRObject::_nil ();
-}
-
-ACE_INLINE CORBA_IRObject_ptr
-tao_CORBA_IRObject_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return CORBA_IRObject::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_IRObject_upcast (
-    void *src
-  )
-{
-  CORBA_IRObject **tmp =
-    ACE_static_cast (CORBA_IRObject **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 CORBA_IRObject::CORBA_IRObject (
     TAO_Stub *objref,
@@ -276,49 +233,6 @@ CORBA_Contained::Description_out::operator-> (void)
 
 #if !defined (_CORBA_CONTAINED___CI_)
 #define _CORBA_CONTAINED___CI_
-
-ACE_INLINE CORBA_Contained_ptr
-tao_CORBA_Contained_duplicate (
-    CORBA_Contained_ptr p
-  )
-{
-  return CORBA_Contained::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_CORBA_Contained_release (
-    CORBA_Contained_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_Contained_ptr
-tao_CORBA_Contained_nil (
-    void
-  )
-{
-  return CORBA_Contained::_nil ();
-}
-
-ACE_INLINE CORBA_Contained_ptr
-tao_CORBA_Contained_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return CORBA_Contained::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_Contained_upcast (
-    void *src
-  )
-{
-  CORBA_Contained **tmp =
-    ACE_static_cast (CORBA_Contained **, src);
-  return *tmp;
-}
 
 ACE_INLINE
 CORBA_Contained::CORBA_Contained (
@@ -4768,49 +4682,6 @@ CORBA_Container::DescriptionSeq_out::operator[] (CORBA::ULong index)
 #if !defined (_CORBA_CONTAINER___CI_)
 #define _CORBA_CONTAINER___CI_
 
-ACE_INLINE CORBA_Container_ptr
-tao_CORBA_Container_duplicate (
-    CORBA_Container_ptr p
-  )
-{
-  return CORBA_Container::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_CORBA_Container_release (
-    CORBA_Container_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_Container_ptr
-tao_CORBA_Container_nil (
-    void
-  )
-{
-  return CORBA_Container::_nil ();
-}
-
-ACE_INLINE CORBA_Container_ptr
-tao_CORBA_Container_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return CORBA_Container::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_Container_upcast (
-    void *src
-  )
-{
-  CORBA_Container **tmp =
-    ACE_static_cast (CORBA_Container **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 CORBA_Container::CORBA_Container (
     TAO_Stub *objref,
@@ -4829,49 +4700,6 @@ CORBA_Container::CORBA_Container (
 #if !defined (_CORBA_IDLTYPE___CI_)
 #define _CORBA_IDLTYPE___CI_
 
-ACE_INLINE CORBA_IDLType_ptr
-tao_CORBA_IDLType_duplicate (
-    CORBA_IDLType_ptr p
-  )
-{
-  return CORBA_IDLType::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_CORBA_IDLType_release (
-    CORBA_IDLType_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_IDLType_ptr
-tao_CORBA_IDLType_nil (
-    void
-  )
-{
-  return CORBA_IDLType::_nil ();
-}
-
-ACE_INLINE CORBA_IDLType_ptr
-tao_CORBA_IDLType_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return CORBA_IDLType::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_IDLType_upcast (
-    void *src
-  )
-{
-  CORBA_IDLType **tmp =
-    ACE_static_cast (CORBA_IDLType **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 CORBA_IDLType::CORBA_IDLType (
     TAO_Stub *objref,
@@ -4889,49 +4717,6 @@ CORBA_IDLType::CORBA_IDLType (
 
 #if !defined (_CORBA_TYPEDEFDEF___CI_)
 #define _CORBA_TYPEDEFDEF___CI_
-
-ACE_INLINE CORBA_TypedefDef_ptr
-tao_CORBA_TypedefDef_duplicate (
-    CORBA_TypedefDef_ptr p
-  )
-{
-  return CORBA_TypedefDef::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_CORBA_TypedefDef_release (
-    CORBA_TypedefDef_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_TypedefDef_ptr
-tao_CORBA_TypedefDef_nil (
-    void
-  )
-{
-  return CORBA_TypedefDef::_nil ();
-}
-
-ACE_INLINE CORBA_TypedefDef_ptr
-tao_CORBA_TypedefDef_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return CORBA_TypedefDef::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_TypedefDef_upcast (
-    void *src
-  )
-{
-  CORBA_TypedefDef **tmp =
-    ACE_static_cast (CORBA_TypedefDef **, src);
-  return *tmp;
-}
 
 ACE_INLINE
 CORBA_TypedefDef::CORBA_TypedefDef (

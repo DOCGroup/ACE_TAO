@@ -5254,407 +5254,407 @@ _TAO_CORBA_TypedefDef_Proxy_Broker *
     CORBA::Object_ptr obj
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_Repository
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_Repository_ptr
 tao_CORBA_Repository_duplicate (
     CORBA_Repository_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_Repository_release (
     CORBA_Repository_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_Repository_ptr
 tao_CORBA_Repository_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_Repository_ptr
 tao_CORBA_Repository_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_Repository_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_ModuleDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ModuleDef_ptr
 tao_CORBA_ModuleDef_duplicate (
     CORBA_ModuleDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_ModuleDef_release (
     CORBA_ModuleDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ModuleDef_ptr
 tao_CORBA_ModuleDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ModuleDef_ptr
 tao_CORBA_ModuleDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_ModuleDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_ConstantDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ConstantDef_ptr
 tao_CORBA_ConstantDef_duplicate (
     CORBA_ConstantDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_ConstantDef_release (
     CORBA_ConstantDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ConstantDef_ptr
 tao_CORBA_ConstantDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ConstantDef_ptr
 tao_CORBA_ConstantDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_ConstantDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_StructDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_StructDef_ptr
 tao_CORBA_StructDef_duplicate (
     CORBA_StructDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_StructDef_release (
     CORBA_StructDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_StructDef_ptr
 tao_CORBA_StructDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_StructDef_ptr
 tao_CORBA_StructDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_StructDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_UnionDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_UnionDef_ptr
 tao_CORBA_UnionDef_duplicate (
     CORBA_UnionDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_UnionDef_release (
     CORBA_UnionDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_UnionDef_ptr
 tao_CORBA_UnionDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_UnionDef_ptr
 tao_CORBA_UnionDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_UnionDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_EnumDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_EnumDef_ptr
 tao_CORBA_EnumDef_duplicate (
     CORBA_EnumDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_EnumDef_release (
     CORBA_EnumDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_EnumDef_ptr
 tao_CORBA_EnumDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_EnumDef_ptr
 tao_CORBA_EnumDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_EnumDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_AliasDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_AliasDef_ptr
 tao_CORBA_AliasDef_duplicate (
     CORBA_AliasDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_AliasDef_release (
     CORBA_AliasDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_AliasDef_ptr
 tao_CORBA_AliasDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_AliasDef_ptr
 tao_CORBA_AliasDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_AliasDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_InterfaceDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_InterfaceDef_ptr
 tao_CORBA_InterfaceDef_duplicate (
     CORBA_InterfaceDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_InterfaceDef_release (
     CORBA_InterfaceDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_InterfaceDef_ptr
 tao_CORBA_InterfaceDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_InterfaceDef_ptr
 tao_CORBA_InterfaceDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_InterfaceDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_ExceptionDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ExceptionDef_ptr
 tao_CORBA_ExceptionDef_duplicate (
     CORBA_ExceptionDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_ExceptionDef_release (
     CORBA_ExceptionDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ExceptionDef_ptr
 tao_CORBA_ExceptionDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ExceptionDef_ptr
 tao_CORBA_ExceptionDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_ExceptionDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_NativeDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_NativeDef_ptr
 tao_CORBA_NativeDef_duplicate (
     CORBA_NativeDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_NativeDef_release (
     CORBA_NativeDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_NativeDef_ptr
 tao_CORBA_NativeDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_NativeDef_ptr
 tao_CORBA_NativeDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_NativeDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_ValueDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ValueDef_ptr
 tao_CORBA_ValueDef_duplicate (
     CORBA_ValueDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_ValueDef_release (
     CORBA_ValueDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ValueDef_ptr
 tao_CORBA_ValueDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ValueDef_ptr
 tao_CORBA_ValueDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_ValueDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_ValueBoxDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ValueBoxDef_ptr
 tao_CORBA_ValueBoxDef_duplicate (
     CORBA_ValueBoxDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_ValueBoxDef_release (
     CORBA_ValueBoxDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ValueBoxDef_ptr
 tao_CORBA_ValueBoxDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_ValueBoxDef_ptr
 tao_CORBA_ValueBoxDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_ValueBoxDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_AbstractInterfaceDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_AbstractInterfaceDef_ptr
 tao_CORBA_AbstractInterfaceDef_duplicate (
     CORBA_AbstractInterfaceDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_AbstractInterfaceDef_release (
     CORBA_AbstractInterfaceDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_AbstractInterfaceDef_ptr
 tao_CORBA_AbstractInterfaceDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_AbstractInterfaceDef_ptr
 tao_CORBA_AbstractInterfaceDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_AbstractInterfaceDef_upcast (
     void *
   );
 
-// External declarations for undefined interface
+// Declarations for undefined interface
 // CORBA_LocalInterfaceDef
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_LocalInterfaceDef_ptr
 tao_CORBA_LocalInterfaceDef_duplicate (
     CORBA_LocalInterfaceDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 void
 tao_CORBA_LocalInterfaceDef_release (
     CORBA_LocalInterfaceDef_ptr
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_LocalInterfaceDef_ptr
 tao_CORBA_LocalInterfaceDef_nil (
     void
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA_LocalInterfaceDef_ptr
 tao_CORBA_LocalInterfaceDef_narrow (
     CORBA::Object *,
     CORBA::Environment &
   );
-extern TAO_IFR_Client_Export
+TAO_IFR_Client_Export
 CORBA::Object *
 tao_CORBA_LocalInterfaceDef_upcast (
     void *
