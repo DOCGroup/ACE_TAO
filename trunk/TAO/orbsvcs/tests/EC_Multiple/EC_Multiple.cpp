@@ -61,8 +61,8 @@ Test_ECG::Test_ECG (void)
 void
 print_priority_info (const char *const name)
 {
-#if defined (ACE_HAS_PTHREADS) || defined (sun)
-#if defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_PTHREADS_STD) || defined (sun)
+#if defined (ACE_HAS_PTHREADS_STD)
   struct sched_param param;
   int policy, status;
 
@@ -88,7 +88,7 @@ print_priority_info (const char *const name)
   } else {
     ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));
   }
-#endif /* ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_PTHREADS_STD */
 
 #ifdef sun
   // Find what scheduling class the thread's LWP is in.
@@ -114,7 +114,9 @@ print_priority_info (const char *const name)
                   sched_params.priority ()));
     }
 #endif /* sun */
-#endif /* ACE_HAS_PTHREADS */
+#else
+  ACE_UNUSED_ARG (name);
+#endif /* ACE_HAS_PTHREADS_STD */
 }
 
 
@@ -300,14 +302,14 @@ Test_ECG::run (int argc, char* argv[])
               ACE_Scheduler_Factory::use_runtime (
                 sizeof (runtime_configs_2)/sizeof (runtime_configs_2[0]),
                 runtime_configs_2,
-				sizeof (runtime_infos_2)/sizeof (runtime_infos_2[0]),
+                                sizeof (runtime_infos_2)/sizeof (runtime_infos_2[0]),
                 runtime_infos_2);
 
               scheduler_impl =
                 auto_ptr<POA_RtecScheduler::Scheduler>
                     (new ACE_Runtime_Scheduler (runtime_configs_2_size,
                                                 runtime_configs_2,
-												runtime_infos_2_size,
+                                                                                                runtime_infos_2_size,
                                                 runtime_infos_2));
               if (scheduler_impl.get () == 0)
                 return -1;
@@ -320,14 +322,14 @@ Test_ECG::run (int argc, char* argv[])
               ACE_Scheduler_Factory::use_runtime (
                 sizeof (runtime_configs_3)/sizeof (runtime_configs_3[0]),
                 runtime_configs_3,
-				sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
+                                sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
                 runtime_infos_3);
 
               scheduler_impl =
                 auto_ptr<POA_RtecScheduler::Scheduler>
                     (new ACE_Runtime_Scheduler (runtime_configs_3_size,
                                                 runtime_configs_3,
-												runtime_infos_3_size,
+                                                                                                runtime_infos_3_size,
                                                 runtime_infos_3));
               if (scheduler_impl.get () == 0)
                 return -1;
@@ -576,7 +578,7 @@ Test_ECG::run (int argc, char* argv[])
 #endif /* ! __SUNPRO_CC */
 
           TAO_CHECK_ENV;
-          ACE_Scheduler_Factory::dump_schedule (infos.in (), 
+          ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                                 configs.in (),
                                                 this->schedule_file_);
         }
@@ -967,9 +969,7 @@ Test_ECG::push_consumer (void *consumer_cookie,
           // + Use the start of the test to keep the current frame.
           // + Use the last execution.
 
-          // Work around MSVC++ bug, it does not not how to convert an
-          // unsigned 64 bit int into a long....
-          CORBA::ULong tmp = ACE_static_cast(CORBA::ULong,(s - now));
+          CORBA::ULong tmp = ACE_U64_TO_U32 (s - now);
           this->stats_[ID].laxity_[count] = 1 + tmp/1000.0F/interval;
           count++;
         }
@@ -1067,9 +1067,7 @@ Test_ECG::dump_results (void)
       ACE_OS::sprintf (buf, "LP%02.2d", i);
       this->dump_results (buf, this->stats_[i + this->hp_consumers_]);
     }
-  // the cast is to workaround a msvc++ bug...
-  CORBA::ULong tmp = ACE_static_cast(CORBA::ULong,
-                                     this->test_stop_ - this->test_start_);
+  CORBA::ULong tmp = ACE_U64_TO_U32 (this->test_stop_ - this->test_start_);
   double usec =  tmp / 1000.0;
   ACE_DEBUG ((LM_DEBUG, "Time[TOTAL]: %.3f\n", usec));
 }
@@ -1078,27 +1076,23 @@ void
 Test_ECG::dump_results (const char* name, Stats& stats)
 {
   // @@ We are reporting the information without specifics about
-  // the cast is to workaround a msvc++ bug...
-  double usec = ACE_static_cast(CORBA::ULong,stats.total_time_) / 1000.0;
+  double usec = ACE_U64_TO_U32 (stats.total_time_) / 1000.0;
   ACE_DEBUG ((LM_DEBUG, "Time[LCL,%s]: %.3f\n", name, usec));
   int i;
   for (i = 1; i < stats.lcl_count_ - 1; ++i)
     {
-      // the cast is to workaround a msvc++ bug...
-      usec = ACE_static_cast(CORBA::ULong,stats.lcl_latency_[i]) / 1000.0;
+      usec = ACE_U64_TO_U32 (stats.lcl_latency_[i]) / 1000.0;
       ACE_DEBUG ((LM_DEBUG, "Latency[LCL,%s]: %.3f\n", name, usec));
 
       double percent = stats.laxity_[i] * 100.0;
       ACE_DEBUG ((LM_DEBUG, "Laxity[LCL,%s]: %.3f\n", name, percent));
 
-      // the cast is to workaround a msvc++ bug...
-      usec = ACE_static_cast(CORBA::ULong,stats.end_[i] - this->test_start_) / 1000.0;
+      usec = ACE_U64_TO_U32 (stats.end_[i] - this->test_start_) / 1000.0;
       ACE_DEBUG ((LM_DEBUG, "Completion[LCL,%s]: %.3f\n", name, usec));
     }
   for (i = 1; i < stats.rmt_count_ - 1; ++i)
     {
-      // the cast is to workaround a msvc++ bug...
-      double usec = ACE_static_cast(CORBA::ULong,stats.rmt_latency_[i]) / 1000.0;
+      double usec = ACE_U64_TO_U32 (stats.rmt_latency_[i]) / 1000.0;
       ACE_DEBUG ((LM_DEBUG, "Latency[RMT,%s]: %.3f\n", name, usec));
     }
 }
