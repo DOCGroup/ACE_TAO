@@ -1,6 +1,8 @@
 Thu Nov 19 18:01:00 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
         * ace/DLL.cpp ACE_DLL::ACE_DLL (int close_on_destruction):
-	 made base-member initialisation change to member variable close_mode_.
+	 made base-member initialisation change to member variable 
+	 close_mode_.
+
 Thu Nov 19 10:28:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/context_switch_time.cpp: fixed 64-to-32
