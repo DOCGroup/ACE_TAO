@@ -297,7 +297,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void *
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
 {
+#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc");
+#endif /* !ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   if (this->cb_ptr_ == 0)
     return 0;
@@ -432,7 +434,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::calloc (size_t nbytes,
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
 {
+#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free");
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   if (ap == 0 || this->cb_ptr_ == 0)
     return;
@@ -492,7 +496,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void*
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find (const char *name)
 {
+#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find");
+#endif /* !ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   if (this->cb_ptr_ == 0)
     return 0;
