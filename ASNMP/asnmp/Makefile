@@ -64,7 +64,7 @@ CCFLAGS += -I$(ACE_ROOT)/ASNMP/
 address.o: address.cpp /home/cs/guest/mrm/ASNMP/asnmp/address.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -79,7 +79,7 @@ address.o: address.cpp /home/cs/guest/mrm/ASNMP/asnmp/address.h \
 asn1.o: asn1.cpp /home/cs/guest/mrm/ASNMP/asnmp/asn1.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -153,7 +153,7 @@ counter.o: counter.cpp /home/cs/guest/mrm/ASNMP/asnmp/counter.h \
  /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -168,7 +168,7 @@ ctr64.o: ctr64.cpp /home/cs/guest/mrm/ASNMP/asnmp/ctr64.h \
  /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -183,7 +183,7 @@ gauge.o: gauge.cpp /home/cs/guest/mrm/ASNMP/asnmp/gauge.h \
  /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -197,7 +197,7 @@ integer.o: integer.cpp /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
  /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -209,7 +209,7 @@ integer.o: integer.cpp /home/cs/guest/mrm/ASNMP/asnmp/integer.h \
 octet.o: octet.cpp \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -224,7 +224,7 @@ octet.o: octet.cpp \
 oid.o: oid.cpp /home/cs/guest/mrm/ASNMP/asnmp/oid.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -241,7 +241,7 @@ pdu.o: pdu.cpp /home/cs/guest/mrm/ASNMP/asnmp/snmp.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -312,7 +312,7 @@ snmp.o: snmp.cpp /home/cs/guest/mrm/ASNMP/asnmp/snmp.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -386,7 +386,7 @@ target.o: target.cpp /home/cs/guest/mrm/ASNMP/asnmp/target.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -408,7 +408,7 @@ timetick.o: timetick.cpp /home/cs/guest/mrm/ASNMP/asnmp/timetick.h \
  /home/cs/guest/mrm/ASNMP/asnmp/smi.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -423,7 +423,7 @@ transaction.o: transaction.cpp \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/ACE.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -495,7 +495,7 @@ transaction.o: transaction.cpp \
 vb.o: vb.cpp /home/cs/guest/mrm/ASNMP/asnmp/oid.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -518,7 +518,7 @@ vb.o: vb.cpp /home/cs/guest/mrm/ASNMP/asnmp/oid.h \
 wpdu.o: wpdu.cpp /home/cs/guest/mrm/ASNMP/asnmp/wpdu.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \

@@ -45,7 +45,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/invariant.o .shobj/invariant.so: invariant.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \

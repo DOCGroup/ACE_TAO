@@ -45,7 +45,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Blob.o .shobj/Blob.so: Blob.cpp Blob.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -169,7 +169,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Blob_Handler.o .shobj/Blob_Handler.so: Blob_Handler.cpp Blob_Handler.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -283,7 +283,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Options.o .shobj/Options.so: Options.cpp Blob.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \

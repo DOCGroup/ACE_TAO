@@ -63,7 +63,7 @@ dump_schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -234,7 +234,7 @@ dump_schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -403,7 +403,7 @@ dump_schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -575,7 +575,7 @@ dump_schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \

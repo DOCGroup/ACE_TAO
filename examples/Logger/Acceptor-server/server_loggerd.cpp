@@ -11,6 +11,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Synch.h"
 #include "ace/Singleton.h"
+#include "ace/streams.h"
 
 // ----------------------------------------
 

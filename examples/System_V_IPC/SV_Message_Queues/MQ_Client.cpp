@@ -2,6 +2,7 @@
 // $Id$
 
 #include "test.h"
+#include "ace/streams.h"
 
 int 
 main (int, char *[])

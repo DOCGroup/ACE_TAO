@@ -4,6 +4,7 @@
 #include "ace/Typed_SV_Message_Queue.h"
 
 #include "test.h"
+#include "ace/streams.h"
 
 // Must be global for signal Message...
 static ACE_Typed_SV_Message_Queue<Message_Data> msgque

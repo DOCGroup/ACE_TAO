@@ -57,7 +57,7 @@ CPPFLAGS += -I$(TAO_ROOT)/Benchmark/
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/ACE.i \
@@ -67,7 +67,7 @@ CPPFLAGS += -I$(TAO_ROOT)/Benchmark/
  $(ACE_ROOT)/TAO/Benchmark/benchmark/marshal_options.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -85,7 +85,7 @@ CPPFLAGS += -I$(TAO_ROOT)/Benchmark/
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -103,7 +103,7 @@ CPPFLAGS += -I$(TAO_ROOT)/Benchmark/
  $(ACE_ROOT)/TAO/Benchmark/benchmark/marshal_options.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
