@@ -198,8 +198,7 @@ REL                = beta
 ZIP_FILES          =
 
 #### The release target creates the ACE (only) kit.
-release: $(APPLY_NEW_TAG)
-	@$(ACE_ROOT)/bin/bootstrap workspace  # Temporary ACE+autoconf hack.
+release: $(APPLY_NEW_TAG
 	@$(ACE_ROOT)/bin/make_release -k ace $(ACE_TAG) \
          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
 
@@ -220,7 +219,6 @@ releasetao:
 ####      The make then recursively invokes make releasetao in this
 ####      directory to create the combined ACE-TAO kit.
 releaseall: $(APPLY_NEW_TAG)
-	@$(ACE_ROOT)/bin/bootstrap  # Temporary ACE+autoconf hack.
 	@cd TAO  &&  $(MAKE) -s release REL=$(REL)
 
 .PHONY: show_controlled_files show_release_files show_release_lib_files
