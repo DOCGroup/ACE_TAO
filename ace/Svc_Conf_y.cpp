@@ -17,7 +17,7 @@ static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
                                         const ACE_TCHAR *svc_name);
 
-#define ACE_YYDEBUG_LEXER_TEXT (ace_yytext[ace_yyleng] = ACE_TEXT ('\0'), ace_yytext)
+#define ACE_YYDEBUG_LEXER_TEXT (ace_yytext[ace_yyleng] = ACE_LIB_TEXT ('\0'), ace_yytext)
 
 /* Force the pretty debugging code to compile.*/
 /* #define ACE_YYDEBUG 1*/
@@ -261,7 +261,7 @@ ace_yyerror (const ACE_TCHAR *s)
 #endif /* ACE_NLOGGING */
 
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("[error %d] on line %d: %s\n"),
+              ACE_LIB_TEXT ("[error %d] on line %d: %s\n"),
               ++ace_yyerrno,
               ace_yylineno,
               s));
@@ -286,7 +286,7 @@ ace_get_module (ACE_Static_Node *str_rec,
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("cannot locate Module_Type %s in STREAM_Type %s\n"),
+                  ACE_LIB_TEXT ("cannot locate Module_Type %s in STREAM_Type %s\n"),
                   svc_name,
                   str_rec->name ()));
       ace_yyerrno++;
@@ -310,7 +310,7 @@ ace_get_module (ACE_Static_Node *str_rec,
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
+                  ACE_LIB_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
                   module_type_name,
                   str_rec->name ()));
       ace_yyerrno++;
@@ -323,7 +323,7 @@ ace_get_module (ACE_Static_Node *str_rec,
   if (ACE_OS::strcmp (mp->name (), module_type_name) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
+                  ACE_LIB_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
                   module_type_name,
                   mp->name ()));
       mp->name (module_type_name);
@@ -366,7 +366,7 @@ ace_create_service_type (const ACE_TCHAR *name,
       break;
     default:
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("unknown case\n")));
+                  ACE_LIB_TEXT ("unknown case\n")));
       ace_yyerrno++;
       break;
     }
@@ -480,7 +480,7 @@ int ace_yyindent;
     ACE_YYDEBUG_INDENT(ace_yyindent);
     printf("          .... look ahead at %s   `%s'\n",
            ace_yytoken_string,
-           (0 == ace_yytoken_num) ? ACE_TEXT ("\0") : ACE_YYDEBUG_LEXER_TEXT);
+           (0 == ace_yytoken_num) ? ACE_LIB_TEXT ("\0") : ACE_YYDEBUG_LEXER_TEXT);
 }
 #endif /* ACE_YYDEBUG_LOOK_AHEAD */
 #ifndef ACE_YYDEBUG_DISCARD_STATE
@@ -621,7 +621,7 @@ ace_yyloop:
     goto ace_yynewerror;
 #endif
 
-    ace_yyerror(ACE_TEXT ("syntax error"));
+    ace_yyerror(ACE_LIB_TEXT ("syntax error"));
 #ifdef lint
     goto ace_yyerrlab;
 #endif
@@ -828,7 +828,7 @@ case 25:
               || st->push (mt) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("dynamic initialization failed for Module %s\n"),
+                          ACE_LIB_TEXT ("dynamic initialization failed for Module %s\n"),
                           svc_type->name ()));
               ace_yyerrno++;
             }
@@ -843,7 +843,7 @@ case 26:
       if (((ACE_Stream_Type *) (ace_yyvsp[-2].static_node_)->record ()->type ())->push (mt) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Problem with static\n")));
+                      ACE_LIB_TEXT ("Problem with static\n")));
           ace_yyerrno++;
         }
     }
@@ -881,7 +881,7 @@ case 29:
       if (mt != 0 && st->remove (mt) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
+                      ACE_LIB_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
                       module->name (),
                       stream->name ()));
           ace_yyerrno++;
@@ -913,7 +913,7 @@ case 30:
       else
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Unable to find service: %s\n"),
+                      ACE_LIB_TEXT ("Unable to find service: %s\n"),
                       ace_yyvsp[-3].ident_));
           ++ace_yyerrno;
           ace_yyval.svc_record_ = 0;
@@ -1033,7 +1033,7 @@ to state %d\n", *ace_yyssp, ace_yystate);
     *++ace_yyvsp = ace_yyval;
     goto ace_yyloop;
 ace_yyoverflow:
-    ace_yyerror(ACE_TEXT ("yacc stack overflow"));
+    ace_yyerror(ACE_LIB_TEXT ("yacc stack overflow"));
 ace_yyabort:
     return (1);
 ace_yyaccept:

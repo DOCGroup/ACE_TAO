@@ -25,7 +25,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("ACE_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("instance_ = %x"),
               ACE_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
@@ -119,7 +119,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("instance_ = %x"),
               ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
@@ -206,7 +206,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("instance_ = %x"),
               ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
@@ -291,7 +291,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("instance_ = %x"),
               ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */

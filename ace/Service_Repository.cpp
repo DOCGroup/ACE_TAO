@@ -114,8 +114,8 @@ ACE_Service_Repository::ACE_Service_Repository (int size)
 
   if (this->open (size) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Service_Repository")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Service_Repository")));
 }
 
 // Finalize (call <fini> and possibly delete) all the services.
@@ -139,7 +139,7 @@ ACE_Service_Repository::fini (void)
         {
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("finalizing %s\n"),
+                        ACE_LIB_TEXT ("finalizing %s\n"),
                         this->service_vector_[i]->name ()));
           ACE_Service_Type *s =
             ACE_const_cast (ACE_Service_Type *,

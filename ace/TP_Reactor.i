@@ -35,5 +35,5 @@ ACE_TP_Reactor::notify_handle (ACE_HANDLE,
                                ACE_EH_PTMF)
 {
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("ACE_TP_Reactor::notify_handle: Wrong version of notify_handle() gets called")));
+              ACE_LIB_TEXT ("ACE_TP_Reactor::notify_handle: Wrong version of notify_handle() gets called")));
 }

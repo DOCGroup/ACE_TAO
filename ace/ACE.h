@@ -466,16 +466,16 @@ public:
   // 0 if unsuccessful, else returns pointer to beginning of the
   // "time" portion of <day_and_time>.
 
-  static pid_t fork (const ACE_TCHAR *program_name = ACE_TEXT ("<unknown>"),
+  static pid_t fork (const ACE_TCHAR *program_name = ACE_LIB_TEXT ("<unknown>"),
                      int avoid_zombies = 0);
   // if <avoid_zombies> == 0 call <ACE_OS::fork> directly, else create
   // an orphan process that's inherited by the init process; init
   // cleans up when the orphan process terminates so we don't create
   // zombies.
 
-  static int daemonize (const ACE_TCHAR pathname[] = ACE_TEXT ("/"),
+  static int daemonize (const ACE_TCHAR pathname[] = ACE_LIB_TEXT ("/"),
                         int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
-                        const ACE_TCHAR program_name[] = ACE_TEXT ("<unknown>"));
+                        const ACE_TCHAR program_name[] = ACE_LIB_TEXT ("<unknown>"));
   // Become a daemon process using the algorithm in Richard Stevens
   // "Advanced Programming in the UNIX Environment."  If
   // <close_all_handles> is non-zero then all open file handles are

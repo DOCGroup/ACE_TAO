@@ -1314,8 +1314,8 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
 # endif /* ACE_HAS_PACE */
 }
 
-ACE_INLINE ACE_TCHAR *
-ACE_OS::cuserid (ACE_TCHAR *user, size_t maxlen)
+ACE_INLINE char *
+ACE_OS::cuserid (char *user, size_t maxlen)
 {
   ACE_OS_TRACE ("ACE_OS::cuserid");
 #if defined (VXWORKS)
@@ -1338,7 +1338,7 @@ ACE_OS::cuserid (ACE_TCHAR *user, size_t maxlen)
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
-  BOOL result = ACE_TEXT_GetUserName (user, (u_long *) &maxlen);
+  BOOL result = GetUserNameA (user, (u_long *) &maxlen);
   if (result == FALSE)
     ACE_FAIL_RETURN (0);
   else
@@ -1373,7 +1373,7 @@ ACE_OS::cuserid (ACE_TCHAR *user, size_t maxlen)
   ::endpwent ();
 
   size_t max_length = 0;
-  ACE_TCHAR *userid = 0;
+  char *userid = 0;
 
   if (user == 0)
     {
@@ -1381,12 +1381,12 @@ ACE_OS::cuserid (ACE_TCHAR *user, size_t maxlen)
       // zero pointer was passed in as the destination.
 
 #if defined (_POSIX_SOURCE)
-      static ACE_TCHAR tmp[L_cuserid];
+      static char tmp[L_cuserid];
 #else
-      static ACE_TCHAR tmp[9];  // 8 character user ID + NULL
+      static char tmp[9];  // 8 character user ID + NULL
 #endif  /* _POSIX_SOURCE */
 
-      max_length = sizeof(tmp) / sizeof(ACE_TCHAR);
+      max_length = sizeof(tmp);
 
       userid = tmp;
     }
@@ -1409,9 +1409,38 @@ ACE_OS::cuserid (ACE_TCHAR *user, size_t maxlen)
 #else
   // Hackish because of missing buffer size!
   ACE_UNUSED_ARG (maxlen);
-  ACE_OSCALL_RETURN (::cuserid (user), ACE_TCHAR *, 0);
+  ACE_OSCALL_RETURN (::cuserid (user), char *, 0);
 #endif /* VXWORKS */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::cuserid (wchar_t *user, size_t maxlen)
+{
+# if defined (ACE_WIN32)
+  BOOL result = GetUserNameW (user, (u_long *) &maxlen);
+  if (result == FALSE)
+    ACE_FAIL_RETURN (0);
+  else
+    return user;
+# else /* ACE_WIN32 */
+  char *char_user;
+  wchar_t *result = 0;
+
+  ACE_NEW_RETURN (char_user, char[maxlen], 0);
+
+  if (ACE_OS::cuserid (char_user, maxlen)) 
+    {
+      ACE_OS::strcpy (user, ACE_Ascii_To_Wide (char_user).wchar_rep ());
+      result = user;
+    }
+
+  delete char_user;
+
+  return result;
+# endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::atexit (ACE_EXIT_HOOK func)
@@ -6808,7 +6837,7 @@ ACE_OS::inet_ntop (int family, const void *addrptr, ACE_TCHAR *strptr, size_t le
       // doesn't appear to be very portable.  For now, hope that using
       // sprintf() will not cause any string/memory overrun problems.
       ACE_OS::sprintf (temp,
-                       ACE_TEXT ("%d.%d.%d.%d"),
+                       ACE_LIB_TEXT ("%d.%d.%d.%d"),
                        p[0], p[1], p[2], p[3]);
 
       if (ACE_OS::strlen (temp) >= len)
@@ -8261,7 +8290,7 @@ ACE_OS::access (const char *path, int amode)
 #elif defined (ACE_HAS_WINCE)
   // @@ WINCE: There should be a Win32 API that can do this.
   // Hard coded read access here.
-  FILE* handle = ACE_OS::fopen (path, ACE_TEXT ("r"));
+  FILE* handle = ACE_OS::fopen (path, ACE_LIB_TEXT ("r"));
   ACE_UNUSED_ARG (amode);
 
   ACE_OS::fclose (handle);
@@ -8363,7 +8392,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
       if (ACE_OS::strlen (name) == 0)
         {
           // Try the HOST environment variable.
-          ACE_TCHAR *const hostenv = ::getenv (ACE_TEXT ("HOST"));
+          ACE_TCHAR *const hostenv = ::getenv (ACE_LIB_TEXT ("HOST"));
           if (hostenv)
             ACE_OS::strncpy (name, hostenv, maxnamelen);
         }
@@ -8543,7 +8572,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   // SunOS4 does not automatically call _fini()!
   void *ptr;
 
-  ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_fini")), void *, 0, ptr);
+  ACE_OSCALL (::dlsym (handle, ACE_LIB_TEXT ("_fini")), void *, 0, ptr);
 
   if (ptr != 0)
     (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
@@ -8637,7 +8666,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
       // Some systems (e.g., SunOS4) do not automatically call _init(), so
       // we'll have to call it manually.
 
-      ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_init")), void *, 0, ptr);
+      ACE_OSCALL (::dlsym (handle, ACE_LIB_TEXT ("_init")), void *, 0, ptr);
 
       if (ptr != 0 && (*((int (*)(void)) ptr)) () == -1) // Call _init hook explicitly.
         {
@@ -11033,8 +11062,8 @@ ACE_OS::mkdir (const ACE_TCHAR *path, mode_t mode)
 #endif /* ACE_HAS_PACE */
 }
 
-ACE_INLINE ACE_TCHAR *
-ACE_OS::getenv (const ACE_TCHAR *symbol)
+ACE_INLINE char *
+ACE_OS::getenv (const char *symbol)
 {
   ACE_OS_TRACE ("ACE_OS::getenv");
 #if defined (ACE_HAS_PACE)
@@ -11042,12 +11071,18 @@ ACE_OS::getenv (const ACE_TCHAR *symbol)
 #elif defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wgetenv (symbol), ACE_TCHAR *, 0);
 #else /* ACE_HAS_WINCE || ACE_PSOS */
   ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
 #endif /* symbol */
 }
+
+#if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
+ACE_INLINE wchar_t *
+ACE_OS::getenv (const wchar_t *symbol)
+{
+  ACE_OSCALL_RETURN (::_wgetenv (symbol), wchar_t *, 0);
+}
+#endif /* ACE_HAS_WCHAR && ACE_WIN32 */
 
 ACE_INLINE int
 ACE_OS::putenv (const ACE_TCHAR *string)
@@ -11610,14 +11645,14 @@ ACE_OS::fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode)
 {
     switch (x)
       {
-      case ACE_TEXT ('r'):
+      case ACE_LIB_TEXT ('r'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_WRONLY);
             ACE_SET_BITS (hmode, _O_RDONLY);
           }
         break;
-      case ACE_TEXT ('w'):
+      case ACE_LIB_TEXT ('w'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_RDONLY);
@@ -11625,7 +11660,7 @@ ACE_OS::fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode)
           }
         ACE_SET_BITS (hmode, _O_CREAT | _O_TRUNC);
         break;
-      case ACE_TEXT ('a'):
+      case ACE_LIB_TEXT ('a'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_RDONLY);
@@ -11633,15 +11668,15 @@ ACE_OS::fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode)
           }
         ACE_SET_BITS (hmode, _O_CREAT | _O_APPEND);
         break;
-      case ACE_TEXT ('+'):
+      case ACE_LIB_TEXT ('+'):
         ACE_CLR_BITS (hmode, _O_RDONLY | _O_WRONLY);
         ACE_SET_BITS (hmode, _O_RDWR);
         break;
-      case ACE_TEXT ('t'):
+      case ACE_LIB_TEXT ('t'):
         ACE_CLR_BITS (hmode, _O_BINARY);
         ACE_SET_BITS (hmode, _O_TEXT);
         break;
-      case ACE_TEXT ('b'):
+      case ACE_LIB_TEXT ('b'):
         ACE_CLR_BITS (hmode, _O_TEXT);
         ACE_SET_BITS (hmode, _O_BINARY);
         break;
@@ -11663,7 +11698,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
 #else
   ACE_TCHAR *temp = 0;
 
-  if (str[0] == ACE_TEXT ('$')
+  if (str[0] == ACE_LIB_TEXT ('$')
       && (temp = ACE_OS::getenv (&str[1])) != 0)
     return ACE_OS::strdup (temp);
   else

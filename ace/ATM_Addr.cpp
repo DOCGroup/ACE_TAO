@@ -367,7 +367,7 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
                   atm_addr_.sap.t_atm_sap_addr.address,
                   ATMNSAP_ADDR_LEN);
   ACE_OS::sprintf (buffer,
-                   ACE_TEXT ("%s"),
+                   ACE_LIB_TEXT ("%s"),
                    atmnsap_ntoa (nsap));
 
   size_t total_len = ACE_OS::strlen (buffer) + sizeof ('\0');
@@ -387,7 +387,7 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
 
   for ( i = 0; i < ATM_ADDR_SIZE; i++ ) {
     buffer[ i * 3 ] = '\0';
-	  ACE_OS::sprintf( buffer, ACE_TEXT( "%s%02x." ), 
+	  ACE_OS::sprintf( buffer, ACE_LIB_TEXT ( "%s%02x." ), 
                      buffer, 
                      atm_addr_.satm_number.Addr[ i ]);
   }
@@ -492,8 +492,8 @@ ACE_ATM_Addr::dump (void) const
 
   ACE_TCHAR s[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 16];
   ACE_OS::sprintf (s,
-                   ACE_TEXT ("%s"),
+                   ACE_LIB_TEXT ("%s"),
                    this->addr_to_string ());
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s"), s));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("%s"), s));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

@@ -125,7 +125,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
         {
           if (this->subscribe (mcast_addr,
                                reuse_addr,
-                               ACE_TEXT ("0.0.0.0"),
+                               ACE_LIB_TEXT ("0.0.0.0"),
                                protocol_family,
                                protocol) == 0)
             ++nr_subscribed;
@@ -260,7 +260,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
       if (if_cnt < 2)
         {
           if (this->unsubscribe (mcast_addr,
-                                 ACE_TEXT ("0.0.0.0"),
+                                 ACE_LIB_TEXT ("0.0.0.0"),
                                  protocol_family,
                                  protocol) == 0)
             ++nr_unsubscribed;

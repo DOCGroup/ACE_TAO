@@ -43,8 +43,8 @@ ACE_Cache_Map_Manager<ACE_T2>::ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_
 {
   if (this->open (size, alloc) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Cache_Map_Manager::ACE_Cache_Map_Manager")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Cache_Map_Manager::ACE_Cache_Map_Manager")));
 
 }
 

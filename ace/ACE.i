@@ -310,11 +310,11 @@ ASYS_INLINE u_char
 ACE::hex2byte (ACE_TCHAR c)
 {
   if (isdigit (c))
-    return (u_char) (c - ACE_TEXT ('0'));
+    return (u_char) (c - ACE_LIB_TEXT ('0'));
   else if (islower (c))
-    return (u_char) (10 + c - ACE_TEXT ('a'));
+    return (u_char) (10 + c - ACE_LIB_TEXT ('a'));
   else
-    return (u_char) (10 + c - ACE_TEXT ('A'));
+    return (u_char) (10 + c - ACE_LIB_TEXT ('A'));
 }
 
 ASYS_INLINE char

@@ -14,18 +14,18 @@ ACE_RCSID(ace, OS, "$Id$")
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # if defined (ACE_HAS_WINCE)
-const wchar_t *ACE_OS::day_of_week_name[] = {ACE_TEXT ("Sun"), ACE_TEXT ("Mon"),
-                                             ACE_TEXT ("Tue"), ACE_TEXT ("Wed"),
-                                             ACE_TEXT ("Thu"), ACE_TEXT ("Fri"),
-                                             ACE_TEXT ("Sat")};
-const wchar_t *ACE_OS::month_name[] = {ACE_TEXT ("Jan"), ACE_TEXT ("Feb"),
-                                       ACE_TEXT ("Mar"), ACE_TEXT ("Apr"),
-                                       ACE_TEXT ("May"), ACE_TEXT ("Jun"),
-                                       ACE_TEXT ("Jul"), ACE_TEXT ("Aug"),
-                                       ACE_TEXT ("Sep"), ACE_TEXT ("Oct"),
-                                       ACE_TEXT ("Nov"), ACE_TEXT ("Dec") };
+const wchar_t *ACE_OS::day_of_week_name[] = {ACE_LIB_TEXT ("Sun"), ACE_LIB_TEXT ("Mon"),
+                                             ACE_LIB_TEXT ("Tue"), ACE_LIB_TEXT ("Wed"),
+                                             ACE_LIB_TEXT ("Thu"), ACE_LIB_TEXT ("Fri"),
+                                             ACE_LIB_TEXT ("Sat")};
+const wchar_t *ACE_OS::month_name[] = {ACE_LIB_TEXT ("Jan"), ACE_LIB_TEXT ("Feb"),
+                                       ACE_LIB_TEXT ("Mar"), ACE_LIB_TEXT ("Apr"),
+                                       ACE_LIB_TEXT ("May"), ACE_LIB_TEXT ("Jun"),
+                                       ACE_LIB_TEXT ("Jul"), ACE_LIB_TEXT ("Aug"),
+                                       ACE_LIB_TEXT ("Sep"), ACE_LIB_TEXT ("Oct"),
+                                       ACE_LIB_TEXT ("Nov"), ACE_LIB_TEXT ("Dec") };
 
-static const ACE_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
+static const ACE_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_LIB_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
 # endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_WIN32)
@@ -439,8 +439,8 @@ ACE_Time_Value::dump (void) const
   ACE_OS_TRACE ("ACE_Time_Value::dump");
 #if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* 0 */
 }
@@ -549,7 +549,7 @@ ACE_OS::uname (struct utsname *name)
 # if defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname,
-                  ACE_TEXT ("Win32"));
+                  ACE_LIB_TEXT ("Win32"));
 
   OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -571,7 +571,7 @@ ACE_OS::uname (struct utsname *name)
 #   else
   ::GetSystemInfo(&sinfo);
 
-  ACE_OS::strcpy (name->sysname, ACE_TEXT ("Win32"));
+  ACE_OS::strcpy (name->sysname, ACE_LIB_TEXT ("Win32"));
 #   endif /* ACE_HAS_PHARLAP */
 
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
@@ -579,14 +579,14 @@ ACE_OS::uname (struct utsname *name)
       // Get information from the two structures
       ACE_OS::sprintf (name->release,
 #   if defined (ACE_HAS_WINCE)
-                       ACE_TEXT ("Windows CE %d.%d"),
+                       ACE_LIB_TEXT ("Windows CE %d.%d"),
 #   else
-                       ACE_TEXT ("Windows NT %d.%d"),
+                       ACE_LIB_TEXT ("Windows NT %d.%d"),
 #   endif /* ACE_HAS_WINCE */
                        vinfo.dwMajorVersion,
                        vinfo.dwMinorVersion);
       ACE_OS::sprintf (name->version,
-                       ACE_TEXT ("Build %d %s"),
+                       ACE_LIB_TEXT ("Build %d %s"),
                        vinfo.dwBuildNumber,
                        vinfo.szCSDVersion);
 
@@ -596,77 +596,77 @@ ACE_OS::uname (struct utsname *name)
       // subtype.  The -1 is necessary for because of the space
       // between processor and subtype in the machine name.
       const int bufsize = ((sizeof (name->machine) / sizeof (ACE_TCHAR)) / 2) - 1;
-      ACE_TCHAR processor[bufsize] = ACE_TEXT ("Unknown");
-      ACE_TCHAR subtype[bufsize] = ACE_TEXT ("Unknown");
+      ACE_TCHAR processor[bufsize] = ACE_LIB_TEXT ("Unknown");
+      ACE_TCHAR subtype[bufsize] = ACE_LIB_TEXT ("Unknown");
 
       WORD arch = sinfo.wProcessorArchitecture;
 
       switch (arch)
         {
         case PROCESSOR_ARCHITECTURE_INTEL:
-          ACE_OS::strcpy (processor, ACE_TEXT ("Intel"));
+          ACE_OS::strcpy (processor, ACE_LIB_TEXT ("Intel"));
           if (sinfo.wProcessorLevel == 3)
-            ACE_OS::strcpy (subtype, ACE_TEXT ("80386"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("80386"));
           else if (sinfo.wProcessorLevel == 4)
-            ACE_OS::strcpy (subtype, ACE_TEXT ("80486"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("80486"));
           else if (sinfo.wProcessorLevel == 5)
-            ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("Pentium"));
           else if (sinfo.wProcessorLevel == 6)
-            ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium Pro"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("Pentium Pro"));
           else if (sinfo.wProcessorLevel == 7)  // I'm guessing here
-            ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium II"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("Pentium II"));
           break;
         case PROCESSOR_ARCHITECTURE_MIPS:
-          ACE_OS::strcpy (processor, ACE_TEXT ("MIPS"));
-          ACE_OS::strcpy (subtype, ACE_TEXT ("R4000"));
+          ACE_OS::strcpy (processor, ACE_LIB_TEXT ("MIPS"));
+          ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("R4000"));
           break;
         case PROCESSOR_ARCHITECTURE_ALPHA:
-          ACE_OS::strcpy (processor, ACE_TEXT ("Alpha"));
-          ACE_OS::sprintf (subtype, ACE_TEXT ("%d"), sinfo.wProcessorLevel);
+          ACE_OS::strcpy (processor, ACE_LIB_TEXT ("Alpha"));
+          ACE_OS::sprintf (subtype, ACE_LIB_TEXT ("%d"), sinfo.wProcessorLevel);
           break;
         case PROCESSOR_ARCHITECTURE_PPC:
-          ACE_OS::strcpy (processor, ACE_TEXT ("PPC"));
+          ACE_OS::strcpy (processor, ACE_LIB_TEXT ("PPC"));
           if (sinfo.wProcessorLevel == 1)
-            ACE_OS::strcpy (subtype, ACE_TEXT ("601"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("601"));
           else if (sinfo.wProcessorLevel == 3)
-            ACE_OS::strcpy (subtype, ACE_TEXT ("603"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("603"));
           else if (sinfo.wProcessorLevel == 4)
-            ACE_OS::strcpy (subtype, ACE_TEXT ("604"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("604"));
           else if (sinfo.wProcessorLevel == 6)
-            ACE_OS::strcpy (subtype, ACE_TEXT ("603+"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("603+"));
           else if (sinfo.wProcessorLevel == 9)
-            ACE_OS::strcpy (subtype, ACE_TEXT ("804+"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("804+"));
           else if (sinfo.wProcessorLevel == 20)
-            ACE_OS::strcpy (subtype, ACE_TEXT ("620"));
+            ACE_OS::strcpy (subtype, ACE_LIB_TEXT ("620"));
           break;
         case PROCESSOR_ARCHITECTURE_UNKNOWN:
         default:
           // @@ We could provide WinCE specific info here.  But let's
           //    defer that to some later point.
-          ACE_OS::strcpy (processor, ACE_TEXT ("Unknown"));
+          ACE_OS::strcpy (processor, ACE_LIB_TEXT ("Unknown"));
           break;
         }
-      ACE_OS::sprintf (name->machine, ACE_TEXT ("%s %s"), processor, subtype);
+      ACE_OS::sprintf (name->machine, ACE_LIB_TEXT ("%s %s"), processor, subtype);
     }
   else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
     {
       // Get Windows 95 Information
-      ACE_OS::strcpy (name->release, ACE_TEXT ("Windows 95"));
-      ACE_OS::sprintf (name->version, ACE_TEXT ("%d"), LOWORD (vinfo.dwBuildNumber));
+      ACE_OS::strcpy (name->release, ACE_LIB_TEXT ("Windows 95"));
+      ACE_OS::sprintf (name->version, ACE_LIB_TEXT ("%d"), LOWORD (vinfo.dwBuildNumber));
       if (sinfo.dwProcessorType == PROCESSOR_INTEL_386)
-        ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel 80386"));
+        ACE_OS::strcpy (name->machine, ACE_LIB_TEXT ("Intel 80386"));
       else if (sinfo.dwProcessorType == PROCESSOR_INTEL_486)
-        ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel 80486"));
+        ACE_OS::strcpy (name->machine, ACE_LIB_TEXT ("Intel 80486"));
       else if (sinfo.dwProcessorType == PROCESSOR_INTEL_PENTIUM)
-        ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel Pentium"));
+        ACE_OS::strcpy (name->machine, ACE_LIB_TEXT ("Intel Pentium"));
     }
   else
     {
       // We don't know what this is!
 
-      ACE_OS::strcpy (name->release, ACE_TEXT ("???"));
-      ACE_OS::strcpy (name->version, ACE_TEXT ("???"));
-      ACE_OS::strcpy (name->machine, ACE_TEXT ("???"));
+      ACE_OS::strcpy (name->release, ACE_LIB_TEXT ("???"));
+      ACE_OS::strcpy (name->version, ACE_LIB_TEXT ("???"));
+      ACE_OS::strcpy (name->machine, ACE_LIB_TEXT ("???"));
     }
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
@@ -874,17 +874,17 @@ ACE_OS::ace_flock_t::dump (void) const
 
 #if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %u"), this->handle_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("handle_ = %u"), this->handle_));
 #if defined (ACE_WIN32)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nInternal = %d"), this->overlapped_.Internal));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nInternalHigh = %d"), this->overlapped_.InternalHigh));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nOffsetHigh = %d"), this->overlapped_.OffsetHigh));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhEvent = %d"), this->overlapped_.hEvent));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nInternal = %d"), this->overlapped_.Internal));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nInternalHigh = %d"), this->overlapped_.InternalHigh));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nOffsetHigh = %d"), this->overlapped_.OffsetHigh));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nhEvent = %d"), this->overlapped_.hEvent));
 #elif !defined (CHORUS)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_whence = %d"), this->lock_.l_whence));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_start = %d"), this->lock_.l_start));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_len = %d"), this->lock_.l_len));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_type = %d"), this->lock_.l_type));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_whence = %d"), this->lock_.l_whence));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_start = %d"), this->lock_.l_start));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_len = %d"), this->lock_.l_len));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_type = %d"), this->lock_.l_type));
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* 0 */
@@ -1614,9 +1614,9 @@ ACE_TSS_Info::dump (void)
 
 #if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("key_ = %u\n"), this->key_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("destructor_ = %u\n"), this->destructor_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("tss_obj_ = %u\n"), this->tss_obj_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("key_ = %u\n"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("destructor_ = %u\n"), this->destructor_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("tss_obj_ = %u\n"), this->tss_obj_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* 0 */
 }
@@ -2405,7 +2405,7 @@ int ACE_SEH_Default_Exception_Selector (void *)
 {
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Win32 structured exception exiting thread\n")));
+              ACE_LIB_TEXT ("(%t) Win32 structured exception exiting thread\n")));
 #endif /* 0 */
   return (DWORD) ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION;
 }
@@ -4084,7 +4084,7 @@ ACE_OS::unique_name (const void *object,
   // <object>.
   ACE_TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
-                   ACE_TEXT ("%lx%d"),
+                   ACE_LIB_TEXT ("%lx%d"),
                    ACE_reinterpret_cast (long, object),
                    ACE_static_cast (int, ACE_OS::getpid ()));
   ACE_OS::strncpy (name,
@@ -4197,7 +4197,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
               // The OS layer should not print stuff out.
               // In fact this functions should go into ACE_ARGV!!
               // ACE_ERROR ((LM_ERROR,
-              //            ACE_TEXT ("unmatched %c detected\n"),
+              //            ACE_LIB_TEXT ("unmatched %c detected\n"),
               //            quote));
               argc--;
               break;
@@ -4552,14 +4552,14 @@ ACE_OS::mktemp (ACE_TCHAR *s)
     return 0;
   else
     {
-      ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
+      ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_LIB_TEXT ("XXXXXX"));
 
       if (xxxxxx == 0)
         // the template string doesn't contain "XXXXXX"!
         return s;
       else
         {
-          ACE_TCHAR unique_letter = ACE_TEXT ('a');
+          ACE_TCHAR unique_letter = ACE_LIB_TEXT ('a');
           struct stat sb;
 
           // Find an unused filename for this process.  It is assumed
@@ -4569,20 +4569,20 @@ ACE_OS::mktemp (ACE_TCHAR *s)
           // template).  This appears to match the behavior of the
           // SunOS 5.5 mktemp().
           ACE_OS::sprintf (xxxxxx,
-                           ACE_TEXT ("%05d%c"),
+                           ACE_LIB_TEXT ("%05d%c"),
                            ACE_OS::getpid (),
                            unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
-              if (++unique_letter <= ACE_TEXT ('z'))
+              if (++unique_letter <= ACE_LIB_TEXT ('z'))
                 ACE_OS::sprintf (xxxxxx,
-                                 ACE_TEXT ("%05d%c"),
+                                 ACE_LIB_TEXT ("%05d%c"),
                                  ACE_OS::getpid (),
                                  unique_letter);
               else
                 {
                   // maximum of 26 unique files per template, per process
-                  ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%s"), ACE_TEXT (""));
+                  ACE_OS::sprintf (xxxxxx, ACE_LIB_TEXT ("%s"), ACE_LIB_TEXT (""));
                   return s;
                 }
             }
@@ -4605,10 +4605,10 @@ ACE_OS::socket_init (int version_high, int version_low)
       if (error != 0)
 #   if defined (ACE_HAS_WINCE)
         {
-          wchar_t fmt[] = ACE_TEXT ("%s failed, WSAGetLastError returned %d");
+          wchar_t fmt[] = ACE_LIB_TEXT ("%s failed, WSAGetLastError returned %d");
           wchar_t buf[80];  // @@ Eliminate magic number.
-          ACE_OS::sprintf (buf, fmt, ACE_TEXT ("WSAStartup"), error);
-          ::MessageBox (NULL, buf, ACE_TEXT ("WSAStartup failed!"), MB_OK);
+          ACE_OS::sprintf (buf, fmt, ACE_LIB_TEXT ("WSAStartup"), error);
+          ::MessageBox (NULL, buf, ACE_LIB_TEXT ("WSAStartup failed!"), MB_OK);
         }
 #   else
       ACE_OS::fprintf (stderr,
@@ -4636,10 +4636,10 @@ ACE_OS::socket_fini (void)
         {
           int error = ::WSAGetLastError ();
 #   if defined (ACE_HAS_WINCE)
-          wchar_t fmt[] = ACE_TEXT ("%s failed, WSAGetLastError returned %d");
+          wchar_t fmt[] = ACE_LIB_TEXT ("%s failed, WSAGetLastError returned %d");
           wchar_t buf[80];  // @@ Eliminate magic number.
-          ACE_OS::sprintf (buf, fmt, ACE_TEXT ("WSACleanup"), error);
-          ::MessageBox (NULL, buf , ACE_TEXT ("WSACleanup failed!"), MB_OK);
+          ACE_OS::sprintf (buf, fmt, ACE_LIB_TEXT ("WSACleanup"), error);
+          ::MessageBox (NULL, buf , ACE_LIB_TEXT ("WSACleanup failed!"), MB_OK);
 #   else
           ACE_OS::fprintf (stderr,
                            "ACE_OS::socket_fini; WSACleanup failed, "
@@ -4860,7 +4860,7 @@ ACE_OS::inet_aton (const ACE_TCHAR *host_name, struct in_addr *addr)
 
   if (ip_addr == (ACE_UINT32) htonl ((ACE_UINT32) ~0)
       // Broadcast addresses are weird...
-      && ACE_OS::strcmp (host_name, ACE_TEXT ("255.255.255.255")) != 0)
+      && ACE_OS::strcmp (host_name, ACE_LIB_TEXT ("255.255.255.255")) != 0)
     return 0;
   else if (addr == 0)
     return 0;
@@ -6655,7 +6655,7 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_OS_MONITOR_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
+              __LINE__, ACE_LIB_TEXT ("ACE_OS_MONITOR_LOCK"));
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_CLEANUP_LOCK)
           if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
@@ -6663,7 +6663,7 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_CLEANUP_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
+              __LINE__, ACE_LIB_TEXT ("ACE_TSS_CLEANUP_LOCK"));
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t,
                                      ACE_LOG_MSG_INSTANCE_LOCK)
           if (ACE_OS::thread_mutex_init (ACE_reinterpret_cast (
@@ -6671,7 +6671,7 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK"));
+              __LINE__, ACE_LIB_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK"));
 #   if defined (ACE_HAS_TSS_EMULATION)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_KEY_LOCK)
@@ -6680,7 +6680,7 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_KEY_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
+              __LINE__, ACE_LIB_TEXT ("ACE_TSS_KEY_LOCK"));
 #     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_BASE_LOCK)
@@ -6689,7 +6689,7 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_BASE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
+              __LINE__, ACE_LIB_TEXT ("ACE_TSS_BASE_LOCK"));
 #     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #   endif /* ACE_HAS_TSS_EMULATION */
 # endif /* ACE_MT_SAFE */
@@ -6767,7 +6767,7 @@ ACE_OS_Object_Manager::fini (void)
         ACE_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
-          __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
+          __LINE__, ACE_LIB_TEXT ("ACE_OS_MONITOR_LOCK"));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_OS_MONITOR_LOCK)
@@ -6778,7 +6778,7 @@ ACE_OS_Object_Manager::fini (void)
         ACE_OS_Object_Manager::preallocated_object[
           ACE_TSS_CLEANUP_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
-          __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
+          __LINE__, ACE_LIB_TEXT ("ACE_TSS_CLEANUP_LOCK"));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_CLEANUP_LOCK)
@@ -6789,7 +6789,7 @@ ACE_OS_Object_Manager::fini (void)
         ACE_OS_Object_Manager::preallocated_object
             [ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
-          __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK "));
+          __LINE__, ACE_LIB_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK "));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_LOG_MSG_INSTANCE_LOCK)
@@ -6801,7 +6801,7 @@ ACE_OS_Object_Manager::fini (void)
           ACE_OS_Object_Manager::preallocated_object[
             ACE_TSS_KEY_LOCK])) != 0)
           ACE_OS_Object_Manager::print_error_message (
-            __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
+            __LINE__, ACE_LIB_TEXT ("ACE_TSS_KEY_LOCK"));
 #     endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_KEY_LOCK)
@@ -6813,7 +6813,7 @@ ACE_OS_Object_Manager::fini (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_BASE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
+              __LINE__, ACE_LIB_TEXT ("ACE_TSS_BASE_LOCK"));
 #       endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_BASE_LOCK)
@@ -6881,7 +6881,7 @@ ACE_OS_Object_Manager::print_error_message (u_int line_number,
                    NULL);
   ::MessageBox (NULL,
                 lpMsgBuf,
-                ACE_TEXT ("ACE_OS error"),
+                ACE_LIB_TEXT ("ACE_OS error"),
                 MB_OK);
 #endif
 }

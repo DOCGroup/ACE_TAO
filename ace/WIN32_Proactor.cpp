@@ -50,8 +50,8 @@ ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                                      this->number_of_threads_);
   if (this->completion_port_ == 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("CreateIoCompletionPort")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("CreateIoCompletionPort")));
 }
 
 ACE_WIN32_Proactor::~ACE_WIN32_Proactor (void)
@@ -92,8 +92,8 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
           if (ACE::debug ())
             {
               ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("%p\n"),
-                          ACE_TEXT ("CreateIoCompletionPort")));
+                          ACE_LIB_TEXT ("%p\n"),
+                          ACE_LIB_TEXT ("CreateIoCompletionPort")));
             }
           return -1;
         }
@@ -428,8 +428,8 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
           if (ACE::debug ())
             {
               ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("%p\n"),
-                          ACE_TEXT ("GetQueuedCompletionStatus")));
+                          ACE_LIB_TEXT ("%p\n"),
+                          ACE_LIB_TEXT ("GetQueuedCompletionStatus")));
             }
           return -1;
         }
@@ -499,8 +499,8 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("PostQueuedCompletionStatus failed")));
+                      ACE_LIB_TEXT ("%p\n"),
+                      ACE_LIB_TEXT ("PostQueuedCompletionStatus failed")));
         }
       return -1;
     }

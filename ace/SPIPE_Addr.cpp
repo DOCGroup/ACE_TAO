@@ -84,20 +84,20 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
 
   if (colonp == 0) // Assume it's a local name.
     {
-      ACE_OS::strcpy (temp, ACE_TEXT ( "\\\\.\\pipe\\"));
+      ACE_OS::strcpy (temp, ACE_LIB_TEXT ( "\\\\.\\pipe\\"));
       ACE_OS::strcat (temp, addr);
     }
   else
     {
       
       if (ACE_OS::strncmp (addr,
-                           ACE_TEXT ("localhost"),
+                           ACE_LIB_TEXT ("localhost"),
                            ACE_OS::strlen ("localhost")) == 0)
         // change "localhost" to "."
-        ACE_OS::strcpy (temp, ACE_TEXT ("\\\\."));
+        ACE_OS::strcpy (temp, ACE_LIB_TEXT ("\\\\."));
       else
         {
-          ACE_OS::strcpy (temp, ACE_TEXT ("\\\\"));
+          ACE_OS::strcpy (temp, ACE_LIB_TEXT ("\\\\"));
 
           ACE_TCHAR *t;
           
@@ -105,13 +105,13 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
           // NUL character into it.
           ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (addr), -1);
 
-          t[colonp - addr] = ACE_TEXT ('\0');
+          t[colonp - addr] = ACE_LIB_TEXT ('\0');
           ACE_OS::strcpy (temp, t);
 
           ACE_OS::free (t);
         }
 
-      ACE_OS::strcat (temp, ACE_TEXT ("\\pipe\\"));
+      ACE_OS::strcat (temp, ACE_LIB_TEXT ("\\pipe\\"));
       ACE_OS::strcat (temp, colonp + 1);
     }
   this->ACE_Addr::base_set (AF_SPIPE, 

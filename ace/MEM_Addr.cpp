@@ -57,7 +57,7 @@ ACE_MEM_Addr::initialize_local (u_short port_number)
     return -1;
 
   this->external_.set (port_number, name);
-  this->internal_.set (port_number, ACE_TEXT ("localhost"));
+  this->internal_.set (port_number, ACE_LIB_TEXT ("localhost"));
   return 0;
 }
 

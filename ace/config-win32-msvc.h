@@ -12,7 +12,7 @@
 
 # include "ace/config-win32-common.h"
 
-# define ACE_CC_NAME ACE_TEXT ("Visual C++")
+# define ACE_CC_NAME ACE_LIB_TEXT ("Visual C++")
 # define ACE_CC_PREPROCESSOR "CL.EXE"
 # define ACE_CC_PREPROCESSOR_ARGS "-nologo -E"
 
@@ -201,8 +201,8 @@ inline void *operator new (unsigned int, void *p) { return p; }
 # pragma warning(default: 4201)  /* winnt.h uses nameless structs */
 
 // At least for Win32 - MSVC compiler (ver. 5)
-# define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%I64d")
-# define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%I64u")
+# define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
 
 #endif /* _MSC_VER */
 

@@ -911,10 +911,10 @@ ACE_YY_RULE_SETUP
 case 24:
 ACE_YY_RULE_SETUP
 #line 84 "Svc_Conf.l"
-{ ACE_ERROR ((LM_ERROR, ACE_TEXT ("unknown character = (%d"), *ace_yytext));
+{ ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("unknown character = (%d"), *ace_yytext));
                         if (ACE_OS::ace_isprint (*ace_yytext))
-                          ACE_ERROR ((LM_ERROR, ACE_TEXT ("|%c"), *ace_yytext));
-                        ACE_ERROR ((LM_ERROR, ACE_TEXT (")\n")));
+                          ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("|%c"), *ace_yytext));
+                        ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT (")\n")));
                       }
 	ACE_YY_BREAK
 case ACE_YY_STATE_EOF(INITIAL):
@@ -1053,7 +1053,7 @@ ACE_SVC_CONF_ECHO;
 
 	default:
 		ACE_YY_FATAL_ERROR(
-			ACE_TEXT ("fatal flex scanner internal error--no action found" ));
+			ACE_LIB_TEXT ("fatal flex scanner internal error--no action found" ));
 	} /* end of action switch */
 		} /* end of scanning one token */
 	} /* end of ace_yylex */
@@ -1076,7 +1076,7 @@ static int ace_yy_get_next_buffer()
 
 	if ( ace_yy_c_buf_p > &ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars + 1] )
 		ACE_YY_FATAL_ERROR(
-		ACE_TEXT ("fatal flex scanner internal error--end of buffer missed" ));
+		ACE_LIB_TEXT ("fatal flex scanner internal error--end of buffer missed" ));
 
 	if ( ace_yy_current_buffer->ace_yy_fill_buffer == 0 )
 		{ /* Don't try to fill the buffer, so this is an EOF. */
@@ -1149,7 +1149,7 @@ static int ace_yy_get_next_buffer()
 
 			if ( ! b->ace_yy_ch_buf )
 				ACE_YY_FATAL_ERROR(
-				ACE_TEXT ("fatal error - scanner input buffer overflow") );
+				ACE_LIB_TEXT ("fatal error - scanner input buffer overflow") );
 
 			ace_yy_c_buf_p = &b->ace_yy_ch_buf[ace_yy_c_buf_p_offset];
 
@@ -1452,7 +1452,7 @@ int size;
 
 	b = (ACE_YY_BUFFER_STATE) ace_yy_flex_alloc( sizeof( struct ace_yy_buffer_state ) );
 	if ( ! b )
-		ACE_YY_FATAL_ERROR( ACE_TEXT ("out of dynamic memory in ace_yy_create_buffer()") );
+		ACE_YY_FATAL_ERROR( ACE_LIB_TEXT ("out of dynamic memory in ace_yy_create_buffer()") );
 
 	b->ace_yy_buf_size = size;
 
@@ -1461,7 +1461,7 @@ int size;
 	 */
 	b->ace_yy_ch_buf = (ACE_TCHAR *) ace_yy_flex_alloc( b->ace_yy_buf_size + 2 );
 	if ( ! b->ace_yy_ch_buf )
-		ACE_YY_FATAL_ERROR( ACE_TEXT ("out of dynamic memory in ace_yy_create_buffer()") );
+		ACE_YY_FATAL_ERROR( ACE_LIB_TEXT ("out of dynamic memory in ace_yy_create_buffer()") );
 
 	b->ace_yy_is_our_buffer = 1;
 
@@ -1573,7 +1573,7 @@ ace_yy_size_t size;
 
 	b = (ACE_YY_BUFFER_STATE) ace_yy_flex_alloc( sizeof( struct ace_yy_buffer_state ) );
 	if ( ! b )
-		ACE_YY_FATAL_ERROR( ACE_TEXT ("out of dynamic memory in ace_yy_scan_buffer()") );
+		ACE_YY_FATAL_ERROR( ACE_LIB_TEXT ("out of dynamic memory in ace_yy_scan_buffer()") );
 
 	b->ace_yy_buf_size = size - 2;	/* "- 2" to take care of EOB's */
 	b->ace_yy_buf_pos = b->ace_yy_ch_buf = base;
@@ -1627,7 +1627,7 @@ int len;
 	n = len + 2;
 	buf = (ACE_TCHAR *) ace_yy_flex_alloc( n );
 	if ( ! buf )
-		ACE_YY_FATAL_ERROR( ACE_TEXT ("out of dynamic memory in ace_yy_scan_bytes()") );
+		ACE_YY_FATAL_ERROR( ACE_LIB_TEXT ("out of dynamic memory in ace_yy_scan_bytes()") );
 
 	for ( i = 0; i < len; ++i )
 		buf[i] = bytes[i];
@@ -1636,7 +1636,7 @@ int len;
 
 	b = ace_yy_scan_buffer( buf, n );
 	if ( ! b )
-		ACE_YY_FATAL_ERROR( ACE_TEXT ("bad buffer in ace_yy_scan_bytes()") );
+		ACE_YY_FATAL_ERROR( ACE_LIB_TEXT ("bad buffer in ace_yy_scan_bytes()") );
 
 	/* It's okay to grow etc. this buffer, and we should throw it
 	 * away when we're done.
@@ -1672,7 +1672,7 @@ int new_state;
 
 		if ( ! ace_yy_start_stack )
 			ACE_YY_FATAL_ERROR(
-			ACE_TEXT ("out of memory expanding start-condition stack") );
+			ACE_LIB_TEXT ("out of memory expanding start-condition stack") );
 		}
 
 	ace_yy_start_stack[ace_yy_start_stack_ptr++] = ACE_YY_START;
@@ -1686,7 +1686,7 @@ int new_state;
 static void ace_yy_pop_state()
 	{
 	if ( --ace_yy_start_stack_ptr < 0 )
-		ACE_YY_FATAL_ERROR( ACE_TEXT ("start-condition stack underflow") );
+		ACE_YY_FATAL_ERROR( ACE_LIB_TEXT ("start-condition stack underflow") );
 
 	BEGIN(ace_yy_start_stack[ace_yy_start_stack_ptr]);
 	}

@@ -26,8 +26,8 @@ ACE_Connector<SH, PR_CO_2>::dump (void) const
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nclosing_ = %d"), this->closing_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags_ = %d"), this->flags_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nclosing_ = %d"), this->closing_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nflags_ = %d"), this->flags_));
   this->handler_map_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -214,9 +214,9 @@ ACE_Svc_Tuple<SH>::dump (void) const
   ACE_TRACE ("ACE_Svc_Tuple<SH>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("svc_handler_ = %x"), this->svc_handler_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\narg_ = %x"), this->arg_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncancellation_id_ = %d"), this->cancellation_id_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("svc_handler_ = %x"), this->svc_handler_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\narg_ = %x"), this->arg_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ncancellation_id_ = %d"), this->cancellation_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -267,8 +267,8 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
       // Error, entry not found in map.
       errno = ENOENT;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p %d not found in map\n"),
-                         ACE_TEXT ("find"),
+                         ACE_LIB_TEXT ("%p %d not found in map\n"),
+                         ACE_LIB_TEXT ("find"),
                          handle),
                         -1);
     }
@@ -708,9 +708,9 @@ ACE_Connector<SH, PR_CO_2>::info (ACE_TCHAR **strp, size_t length) const
   ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ACE_TEXT ("%s\t %s"),
-                   ACE_TEXT ("ACE_Connector"),
-                   ACE_TEXT ("# connector factory\n"));
+                   ACE_LIB_TEXT ("%s\t %s"),
+                   ACE_LIB_TEXT ("ACE_Connector"),
+                   ACE_LIB_TEXT ("# connector factory\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -836,7 +836,7 @@ ACE_Strategy_Connector<SH, PR_CO_2>::ACE_Strategy_Connector
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
 
   if (this->open (reactor, cre_s, conn_s, con_s, flags) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Strategy_Connector::ACE_Strategy_Connector")));
+    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_Strategy_Connector::ACE_Strategy_Connector")));
 }
 
 template <class SH, PR_CO_1>
