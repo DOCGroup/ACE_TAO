@@ -531,10 +531,11 @@ all.nested: all.local
 
 Svc_Conf_y.cpp: Svc_Conf.y
 	if [ -f /pkg/gnu/bin/bison ]; then \
-          /pkg/gnu/bin/bison -d Svc_Conf.y; \
+          /pkg/gnu/bin/bison -l -d Svc_Conf.y; \
           sed -e "s/char \*getenv/char *ace_foo/g" \
               -e "s/= getenv/= ACE_OS::getenv/g" \
               -e "s/yy/ace_yy/g" \
+              -e "s/->ace_yyerrno/->yyerrno/g" \
               -e "s/YY/ACE_YY/g" \
               -e "s/Svc_Conf\.tab\.c/Svc_Conf_y.cpp/g" < Svc_Conf.tab.c > /tmp/$@; \
           cp /tmp/$@ $@; \
@@ -547,7 +548,7 @@ Svc_Conf_y.cpp: Svc_Conf.y
 
 Svc_Conf_l.cpp: Svc_Conf.l
 	if [ -f /pkg/gnu/bin/flex ]; then \
-          /pkg/gnu/bin/flex -t -I Svc_Conf.l > $@; \
+          /pkg/gnu/bin/flex -L -t -I Svc_Conf.l > $@; \
           sed -e "s/unistd/stdio/g" \
               -e "s/yy/ace_yy/g" \
               -e "s/YY/ACE_YY/g" \
