@@ -12,6 +12,7 @@
 
 #include "ace/Service_Repository.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Dynamic_Service, "$Id$")
 
