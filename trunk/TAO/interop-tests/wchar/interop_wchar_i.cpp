@@ -134,8 +134,7 @@ interop_WChar_Passer_i::wunion_to_server (const interop::wunion & test,
     return this->wstring_to_server (test.u_string(),key);
   case interop::is_warray :
     return this->warray_to_server (test.u_array(),key);
-  default:
-    return 0;
+  default:;
   }
   return 0;
 }
