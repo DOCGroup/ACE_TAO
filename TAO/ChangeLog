@@ -4,6 +4,8 @@ Tue Apr 2 11:06:06 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/Test_Filter:
 	  Moved the test library for RT Noification features and the test
 	  filter into seperate directories from orbsvcs/tests/Notify/lib
+	* orbsvcs/orbsvcs/Makefile:
+	  Added RT_Notify as a build target.
 
 Thu Mar 27 01:04:43 2003  Pradeep Gore  <pradeep@.oomworks.com>
 

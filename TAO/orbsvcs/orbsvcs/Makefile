@@ -71,7 +71,7 @@ ifndef TAO_ORBSVCS
 
     # The PortableGroup library requires several methods in the POA,
     # which are disabled by Minimum CORBA. Further it also needs AMI
-    # support 
+    # support
     ifeq ($(ami),1)
       TAO_ORBSVCS += PortableGroup
       ifeq ($(interceptors),1)
@@ -92,7 +92,11 @@ ifndef TAO_ORBSVCS
       endif #corba_messaging
   endif # ssl
 
-  TAO_ORBSVCS += Notify 
+  TAO_ORBSVCS += Notify
+
+  ifeq ($(rt_corba),1)
+    TAO_ORBSVCS += RT_Notify
+  endif #rt_corba
 
 endif # TAO_ORBSVCS
 
@@ -227,7 +231,9 @@ endif
 ifneq (,$(findstring  IFRService, $(TAO_ORBSVCS)))
   MKLIST += Makefile.IFRService
 endif
-
+ifneq (,$(findstring  RT_Notify, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.ETCL Makefile.CosNotification Makefile.RT_Notification
+endif
 #----------------------------------------------------------------------------
 #       Local rules
 #----------------------------------------------------------------------------
@@ -237,7 +243,7 @@ endif
 ## Recursively invoked makes from this file will still be run in parallel.
 .NOTPARALLEL:
 
-all: ORBSVCS_COMPONENTS 
+all: ORBSVCS_COMPONENTS
 
 realclean: ORBSVCS_COMPONENTS_realclean
 
@@ -247,12 +253,12 @@ realclean: ORBSVCS_COMPONENTS_realclean
 	@echo $(MAKE) -f $< $(MKFILE_TARGET)
 	@$(MAKE) -f $< $(MKFILE_TARGET)
 
-# This rule invokes make again with the list of .mkfile targets as a 
+# This rule invokes make again with the list of .mkfile targets as a
 # parameter.  For example, if the all target is being made, make is invoked
 # as follows:
 #
 # make -f Makefile MKFILE_TARGET=all Makefile.Svc_Utils.mkfile \
-#                                    Makefile.CosNaming.mkfile ..... 
+#                                    Makefile.CosNaming.mkfile .....
 all debug profile install deinstall clean clobber depend rcs_info idl_stubs realclean:
 ifneq ($(MKLIST),)
 	@echo $(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
