@@ -46,13 +46,13 @@ void
 Grid_i::set (CORBA::Short x,
 	     CORBA::Short y,
 	     CORBA::Long value,
-	     CORBA::Environment &TAO_IN_ENV)
+	     CORBA::Environment &ACE_TRY_ENV)
 {
   if (x < 0
       || y < 0
       || x >= width_
       || y >= height_)
-    TAO_THROW (Grid::RANGE_ERROR ());
+    ACE_THROW (Grid::RANGE_ERROR ());
   else 
     array_[x][y] = value;
 }
@@ -62,13 +62,13 @@ Grid_i::set (CORBA::Short x,
 CORBA::Long
 Grid_i::get (CORBA::Short x,
              CORBA::Short y,
-             CORBA::Environment &TAO_IN_ENV)
+             CORBA::Environment &ACE_TRY_ENV)
 {
   if (x < 0
       || y < 0
       || x >= width_
       || y >= height_)
-    TAO_THROW_RETURN (Grid::RANGE_ERROR (), 0);
+    ACE_THROW_RETURN (Grid::RANGE_ERROR (), -1);
   else 
     return array_[x][y];
 }
