@@ -8,126 +8,144 @@ X = NOT SUPPORTED
 FILE                    linux   lynxos  sunos   win32
 .............................................................
 <aio.h>
- aio_cancel()                                   X
- aio_error()                                    X
- aio_fsync()                                    X
- aio_read()                                     X
- aio_return()                                   X
- aio_suspend()                                  X
- aio_write()                                    X
- lio_listen()                                   X
+ aio_cancel()                                   x
+ aio_error()                                    x
+ aio_fsync()                                    x
+ aio_read()                                     x
+ aio_return()                                   x
+ aio_suspend()                                  x
+ aio_write()                                    x
+ lio_listen()                                   x
 .............................................................
 <assert.h>
- assert()                                       N
+ assert()                                       -N
 .............................................................
 <ctype.h>
- isalnum()                                      N
- isalpha()                                      N
- iscntrl()                                      N
- isdigit()                                      N
- isgraph()                                      N
- islower()                                      N
- isprint()                                      N
- ispunct()                                      N
- isspace()                                      N
- isupper()                                      N
- isxdigit()                                     N
- tolower()                                      N
+ isalnum()                                      -N
+ isalpha()                                      -N
+ iscntrl()                                      -N
+ isdigit()                                      -N
+ isgraph()                                      -N
+ islower()                                      -N
+ isprint()                                      -N
+ ispunct()                                      -N
+ isspace()                                      -N
+ isupper()                                      -N
+ isxdigit()                                     -N
+ tolower()                                      -N
 .............................................................
 <dirent.h>
- closedir()                                     E
- opendir()                                      E
- readdir()                                      E
- readdir_r()                                    X
- rewinddir()                                    X
+ closedir()                                     -E
+ opendir()                                      -E
+ readdir()                                      -E
+ readdir_r()                                    x
+ rewinddir()                                    x
 .............................................................
 <fcntl.h>
- creat()                                        X
+ creat()                                        x
 .............................................................
 <grp.h>
- getgrgid()                                     X
- getgrdid_r()                                   X
- getgrname()                                    X
- getgrname_r()                                  X
+ getgrgid()                                     x
+ getgrdid_r()                                   x
+ getgrname()                                    x
+ getgrname_r()                                  x
 .............................................................
 <locale.h>
- localeconv()                                   N
- setlocale()                                    N
+ localeconv()                                   -N
+ setlocale()                                    -N
 .............................................................
 <math.h>
- acos()                                         N
- asin()                                         N
- atan()                                         N
- atan2()                                        N
- cos()                                          N
- sin()                                          N
- tan()                                          N
- cosh()                                         N
- sinh()                                         N
- tanh()                                         N
- exp()                                          N
- frexp()                                        N
- ldexp()                                        N
- log()                                          N
- log10()                                        N
- modf()                                         N
- pow()                                          N
- sqrt()                                         N
- ceil()                                         N
- fabs()                                         N
- floor()                                        N
- fmod()                                         N
+ acos()                                         -N
+ asin()                                         -N
+ atan()                                         -N
+ atan2()                                        -N
+ cos()                                          -N
+ sin()                                          -N
+ tan()                                          -N
+ cosh()                                         -N
+ sinh()                                         -N
+ tanh()                                         -N
+ exp()                                          -N
+ frexp()                                        -N
+ ldexp()                                        -N
+ log()                                          -N
+ log10()                                        -N
+ modf()                                         -N
+ pow()                                          -N
+ sqrt()                                         -N
+ ceil()                                         -N
+ fabs()                                         -N
+ floor()                                        -N
+ fmod()                                         -N
 .............................................................
 <mman.h>
- mlock()                                        X
- mlockall()                                     X
- mmap()                                         E
- mprotect()                                     E
- msync()                                        E
- munlock()                                      X
- munlockall()                                   X
- munmap()                                       E
- shm_open()                                     X
- shm_unlink()                                   E
+ mlock()                                        x
+ mlockall()                                     x
+ mmap()                                         -E
+ mprotect()                                     -E
+ msync()                                        -E
+ munlock()                                      x
+ munlockall()                                   x
+ munmap()                                       -E
+ shm_open()                                     x
+ shm_unlink()                                   -E
 .............................................................
 <mqueue.h>
- mq_close()                                     X
- mq_getattr()                                   X
- mq_notify()                                    X
- mq_open()                                      X
- mq_receive()                                   X
- mq_send()                                      X
- mq_setattr()                                   X
- mq_unlink()                                    X
+ mq_close()                                     x
+ mq_getattr()                                   x
+ mq_notify()                                    x
+ mq_open()                                      x
+ mq_receive()                                   x
+ mq_send()                                      x
+ mq_setattr()                                   x
+ mq_unlink()                                    x
 .............................................................
 <pwd.h>
- getpwuid()                                     X
- getpwuid_r()                                   X
- getpwnam()                                     X
- getpwnam_r()                                   X
-.............................................................
+ getpwuid()                                     x
+ getpwuid_r()                                   x
+ getpwnam()                                     x
+ getpwnam_r()                                   x
+............................................................
 <sched.h>
- sched_get_priority_max()                       X
- sched_get_priority_min()                       X
- sched_getparam()                               X
- sched_rr_get_interval()                        X
- sched_setparam()                               X
- sched_getscheduler                             X
- sched_yield()                                  X
+ sched_get_priority_max()                       x
+ sched_get_priority_min()                       x
+ sched_getparam()                               x
+ sched_rr_get_interval()                        x
+ sched_setparam()                               x
+ sched_getscheduler                             x
+ sched_yield()                                  x
 .............................................................
 <semaphore.h>
- sem_close()                                    X
- sem_destroy()                                  X
- sem_getvalue()                                 X
- sem_init()                                     X
- sem_post()                                     X
- sem_trywait()                                  X
- sem_unlink()                                   X
- sem_wait()                                     X
+ sem_close()                                    x
+ sem_destroy()                                  x
+ sem_getvalue()                                 x
+ sem_init()                                     x
+ sem_post()                                     x
+ sem_trywait()                                  x
+ sem_unlink()                                   x
+ sem_wait()                                     x
 .............................................................
 <setjmp.h>
- setjmp()                                       N
- longjmp()                                      N
- sigsetjmp()                                    X
- siglongjmp()                                   X
+ setjmp()                                       -N
+ longjmp()                                      -N
+ sigsetjmp()                                    x
+ siglongjmp()                                   x
 .............................................................
+<signal.h>
+  kill()                                        x
+  raise()                                       x
+  sigaction()                                   -E
+  sigaddset()                                   x
+  sigemptyset()                                 x
+  sigdelset()                                   x
+  sigfillset()                                  x
+  sigismember()                                 x
+  signal()                                      -N
+  sigpending()                                  x
+  sigprocmask()                                 x
+  sigqueue()                                    x
+  sigsuspend()                                  x
+  sigtimedwait()                                x
+  sigwait()                                     x
+  sigwaitinfo()                                 x
+.............................................................  
