@@ -1,6 +1,6 @@
 // $Id$
 #include "Stub_Factory.h"
-
+#include "debug.h"
 
 ACE_RCSID(tao, TAO_Stub_Factory, "$Id$")
 
@@ -16,7 +16,8 @@ TAO_Stub_Factory::create_stub (const char *repository_id,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Stub *retval = 0;
-  ACE_DEBUG ((LM_DEBUG, "don't want to be here\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "don't want to be here\n"));
 
   ACE_NEW_THROW_EX (retval,
                     TAO_Stub (repository_id, profiles, orb_core),
