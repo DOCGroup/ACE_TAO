@@ -5,6 +5,14 @@ Mon Jul 12 09:55:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Modified fwd_redefinition_helper method to allow for
 	  reopened modules.
 
+Mon Jul 12 09:50:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * tao/DynUnion_i_T.cpp: Added #include "tao/Any.h" to pick up the
+          extract operators during template instantiation on IBM C++.
+
+        * TAO_IDL/driver/drv_preproc.cpp: Added +W 67 to CPP args for HP
+          aC++ - this shuts up the "invalid #pragma name" warnings from IDL.
+
 Mon Jul 12 09:00:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Exception.cpp (_tao_errno): conditionally compile
