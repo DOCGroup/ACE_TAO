@@ -1,3 +1,21 @@
+Wed Sep  1 20:27:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/ntp-time.h: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+	* orbsvcs/orbsvcs/AV/Policy.cpp:
+	* orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+	* orbsvcs/orbsvcs/AV/RTCP.cpp :
+	* orbsvcs/orbsvcs/AV/RTP.cpp:
+	* orbsvcs/orbsvcs/AV/TCP.cpp:
+	* orbsvcs/orbsvcs/AV/Transport.cpp:
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
+	* orbsvcs/orbsvcs/AV/media-timer.cpp:
+	* orbsvcs/orbsvcs/AV/media-timer.h:
+	* orbsvcs/orbsvcs/AV/source.cpp: Fixed warnings/errors in SunOS5.0
+	  with exceptions turned on. Also tested on Linux EGCS
+
 Wed Sep  1 21:17:17 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tao/default_resource.{h,cpp}: Added support for ORBReactorType
