@@ -2,7 +2,6 @@
 
 #include "Timer_Queue.h"
 #include "ace/Timer_Heap.h"
-#include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Timer_Queue.inl"
