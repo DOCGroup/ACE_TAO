@@ -515,23 +515,13 @@ namespace CCF
         CompilerElements::Context&
         context ()
         {
-          if (context_holder_.in () == 0)
-          {
-            context_holder_ = ContextHolderPtr (new ContextHolder);
-          }
-
-          return context_holder_->context;
+          return context_holder ()->context;
         }
 
         CompilerElements::Context const&
         context () const
         {
-          if (context_holder_.in () == 0)
-          {
-            context_holder_ = ContextHolderPtr (new ContextHolder);
-          }
-
-          return context_holder_->context;
+          return context_holder ()->context;
         }
 
       public:
@@ -543,6 +533,11 @@ namespace CCF
         ContextHolderPtr
         context_holder () const
         {
+          if (context_holder_.in () == 0)
+          {
+            context_holder_ = ContextHolderPtr (new ContextHolder);
+          }
+          
           return context_holder_;
         }
 
