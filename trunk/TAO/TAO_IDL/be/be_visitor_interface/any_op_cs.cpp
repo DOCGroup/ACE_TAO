@@ -100,14 +100,14 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "TAO_CHECK_ENV;" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl
-      << "return 0; // failure" << be_uidt_nl
+      << "// failure" << be_uidt_nl
       << "}" << be_nl
       << "TAO_CATCHANY" << be_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
       << "TAO_ENDTRY;" << be_nl
-      << "ACE_NOTREACHED (return 0);" << be_uidt_nl
+      << "return 0;" << be_uidt_nl
       << "}\n\n";
 
   *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)" << be_idt_nl

@@ -110,8 +110,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "}" << be_nl
       << "else" << be_nl
       << "{" << be_idt_nl
-      << "delete _tao_elem;" << be_nl
-      << "return 0;" << be_uidt_nl
+      << "delete _tao_elem;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl  // else any does not own the data
@@ -127,7 +126,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "return 0; " << be_uidt_nl
       << "}" << be_nl
       << "TAO_ENDTRY;" << be_nl
-      << "ACE_NOTREACHED (return 0);" << be_uidt_nl
+      << "return 0;" << be_uidt_nl
       << "}\n\n";
 
 

@@ -111,8 +111,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "}" << be_nl
       << "else" << be_nl  // decode failed
       << "{" << be_idt_nl
-      << "delete _tao_elem;" << be_nl
-      << "return 0;" << be_uidt_nl
+      << "delete _tao_elem;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl  // else any does not own the data
@@ -128,7 +127,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
       << "TAO_ENDTRY;" << be_nl
-      << "ACE_NOTREACHED (return 0);" << be_uidt_nl
+      << "return 0;" << be_uidt_nl
       << "}\n\n";
 
 
