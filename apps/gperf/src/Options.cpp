@@ -73,7 +73,7 @@ void
 Options::usage (void)
 {
   ACE_ERROR ((LM_ERROR,
-              "Usage: %n [-acCdDef[num]gGhH<hashname>i<init>Ijk<keys>K<keyname>lL<language>nN<function name>oOprs<size>S<switches>tTvZ<class name>].\n"
+              "Usage: %n [-acCdDef[num]gGhH<hashname>i<init>IjJk<keys>K<keyname>lL<language>mMnN<function name>oOprs<size>S<switches>tTvZ<class name>].\n"
               "(type %n -h for help)\n"));
 }
 
@@ -300,6 +300,7 @@ Options::operator() (int argc, char *argv[])
                              "\tSetting this value larger helps inflate the size of the final table.\n"
                              "-j\tAffects the ``jump value,'' i.e., how far to advance the associated\n"
                              "\tcharacter value upon collisions.  Must be an odd number, default is %d.\n"
+                             "-J\tSkips '#include <string.h>' part in the output.\n"
                              "-k\tAllows selection of the key positions used in the hash function.\n"
                              "\tThe allowable choices range between 1-%d, inclusive.  The positions\n"
                              "\tare separated by commas, ranges may be used, and key positions may\n"
@@ -311,6 +312,9 @@ Options::operator() (int argc, char *argv[])
                              "\tcut down on the number of string comparisons made during the lookup.\n"
                              "-L\tGenerates code in the language specified by the option's argument.  Languages\n"
                              "\thandled are currently C++ and C.  The default is C.\n"
+                             "-m\tAvoids the warning about identical hash values. This is valid\n"
+                             "\tonlyif the -D option is enabled.\n"
+                             "-MSkips class definition in the output. This is valid only in C++ mode.\n"
                              "-n\tDo not include the length of the keyword when computing the hash function\n"
                              "-N\tAllow user to specify name of generated lookup function.  Default\n"
                              "\tname is `in_word_set.'\n"
