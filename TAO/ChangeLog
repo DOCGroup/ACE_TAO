@@ -1,3 +1,8 @@
+Mon Dec  8 17:00:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+	  Fixed release configuration
+
 Mon Dec  8 16:31:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Bug_1636_Regression/bug_1636_testclient.dsp:
