@@ -1225,6 +1225,17 @@ CORBA_ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+#if defined (ACE_HAS_EXCEPTIONS)
+  // This must be done after the system TypeCodes and Exceptions have
+  // been initialized.  An unexpected exception will cause TAO's
+  // unexpected exception handler to be called.  That handler
+  // transforms all unexpected exceptions to CORBA::UNKNOWN, which of
+  // course requires the TypeCode constants and system exceptions to
+  // have been initialized.
+  TAO_Singleton_Manager::instance ()->_set_unexpected (
+    CORBA_ORB::_tao_unexpected_exception);
+#endif /* ACE_HAS_EXCEPTIONS */
+
   // Verify some of the basic implementation requirements.  This test
   // gets optimized away by a decent compiler (or else the rest of the
   // routine does).
