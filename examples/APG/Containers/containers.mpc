@@ -47,7 +47,7 @@ project(Map Manager Specialization) : aceexe {
   }
 }
 
-project(Hash Map) : aceexe {
+project(*Hash Map) : aceexe {
   exename = Hash_Map
   Source_Files {
     Hash_Map.cpp

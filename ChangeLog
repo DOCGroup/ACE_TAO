@@ -1,84 +1,95 @@
+Fri Jan  2 08:56:04 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/APG/Config/config.mpc:
+        * examples/APG/Containers/containers.mpc:
+        * examples/APG/Reactor/reactor.mpc:
+        * examples/APG/Shared_Memory/shared_memory.mpc:
+        * examples/APG/Svc_Config/svc_config.mpc:
+
+          Changed instances of dllflags to dynamicflags and added the '*'
+          operator to some of the project names to remove duplicates.
+
 Fri Jan 02 08:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/bor.mpd:
-	  Also overrule PASCALDIR and UNICODEDIR
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Also overrule PASCALDIR and UNICODEDIR
 
 Thu Jan 01 20:25:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/TSS_Static_Test.dsp:
+        * tests/TSS_Static_Test.dsp:
 
-	  A new project file for TSS_Static_Test.
+          A new project file for TSS_Static_Test.
 
-	* tests/tests.dsw:
+        * tests/tests.dsw:
 
-	  Added the new dsp file into the project.
+          Added the new dsp file into the project.
 
 Thu Jan  1 17:56:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_sys_socket.inl (closesocket): On HP-UX, use
-	  shutdown() rather than close() to close a socket. shutdown()
-	  will abort an in-progress operation in another thread, while
-	  close() won't. This fixes the hang in the
-	  MT_Reference_Counted_Event_Handler_Test and will make the Proactor
-	  stuff more easy to work with as well.
+        * ace/OS_NS_sys_socket.inl (closesocket): On HP-UX, use
+          shutdown() rather than close() to close a socket. shutdown()
+          will abort an in-progress operation in another thread, while
+          close() won't. This fixes the hang in the
+          MT_Reference_Counted_Event_Handler_Test and will make the Proactor
+          stuff more easy to work with as well.
 
-	* ace/Time_Value.h: Don't include <time.h> (or <sys/time.h>) directly;
-	  use ace/os_include/sys/os_time.h to get what's needed. This
-	  prevents HP-UX from pulling in <time.h> before <sys/time.h> and
-	  picking up the wrong declaration for select(). Fixes gcc builds.
+        * ace/Time_Value.h: Don't include <time.h> (or <sys/time.h>) directly;
+          use ace/os_include/sys/os_time.h to get what's needed. This
+          prevents HP-UX from pulling in <time.h> before <sys/time.h> and
+          picking up the wrong declaration for select(). Fixes gcc builds.
 
-	* ace/Name_Space.h: Replace forward declarations of ACE_Unbounded_Set
-	  with #include "ace/Unbounded_Set.h". Needed to generate template
-	  specializations.
+        * ace/Name_Space.h: Replace forward declarations of ACE_Unbounded_Set
+          with #include "ace/Unbounded_Set.h". Needed to generate template
+          specializations.
 
-	* examples/APG/Logging/Callback-2.h:
-	* examples/APG/Logging/LogManager.h:
-	* examples/APG/Naming/Thermometer.h:
-	* examples/APG/Naming/Temperature_Monitor.cpp:
-	* examples/APG/Naming/Temperature_Monitor2.cpp:
-	* examples/APG/Proactor/HA_Proactive_Status.h:
-	* examples/APG/Processes/Process_Manager_Death.cpp:
-	* examples/APG/Reactor/HAStatus.cpp:
-	* examples/APG/Reactor/Reschedule.cpp:
-	* examples/APG/Reactor/Schedule_Timers.cpp:
-	* examples/APG/Reactor/Timer_Cancel.cpp:
-	* examples/APG/Reactor/Timer_State_Data.cpp:
-	* examples/APG/Shared_Memory/Malloc.cpp:
-	* examples/APG/Shared_Memory/PI_Malloc.cpp:
-	* examples/APG/Signals/SigInfo.cpp:
-	* examples/APG/Streams/RecordingDevice.h:
-	* examples/APG/ThreadManagement/Coop_Cancel.cpp:
-	* examples/APG/ThreadPools/Futures.cpp:
-	* examples/APG/ThreadPools/Task_ThreadPool.cpp:
-	* examples/APG/ThreadPools/ThreadPool.cpp:
-	* examples/APG/ThreadSafety/Barrier.cpp:
-	  Added #includes for "ace/OS_NS_*.h" as needed to convert from
-	  5.3 OS.h usage to refactored OS_NS_*.h headers. Added missing
-	  header includes that worked by accident in ACE 5.3.
+        * examples/APG/Logging/Callback-2.h:
+        * examples/APG/Logging/LogManager.h:
+        * examples/APG/Naming/Thermometer.h:
+        * examples/APG/Naming/Temperature_Monitor.cpp:
+        * examples/APG/Naming/Temperature_Monitor2.cpp:
+        * examples/APG/Proactor/HA_Proactive_Status.h:
+        * examples/APG/Processes/Process_Manager_Death.cpp:
+        * examples/APG/Reactor/HAStatus.cpp:
+        * examples/APG/Reactor/Reschedule.cpp:
+        * examples/APG/Reactor/Schedule_Timers.cpp:
+        * examples/APG/Reactor/Timer_Cancel.cpp:
+        * examples/APG/Reactor/Timer_State_Data.cpp:
+        * examples/APG/Shared_Memory/Malloc.cpp:
+        * examples/APG/Shared_Memory/PI_Malloc.cpp:
+        * examples/APG/Signals/SigInfo.cpp:
+        * examples/APG/Streams/RecordingDevice.h:
+        * examples/APG/ThreadManagement/Coop_Cancel.cpp:
+        * examples/APG/ThreadPools/Futures.cpp:
+        * examples/APG/ThreadPools/Task_ThreadPool.cpp:
+        * examples/APG/ThreadPools/ThreadPool.cpp:
+        * examples/APG/ThreadSafety/Barrier.cpp:
+          Added #includes for "ace/OS_NS_*.h" as needed to convert from
+          5.3 OS.h usage to refactored OS_NS_*.h headers. Added missing
+          header includes that worked by accident in ACE 5.3.
 
-	* examples/APG/Timers/Upcall.h: Added registration () method that
-	  is now required for a timer queue upcall functor class. This is
-	  also new at ACE 5.4.
+        * examples/APG/Timers/Upcall.h: Added registration () method that
+          is now required for a timer queue upcall functor class. This is
+          also new at ACE 5.4.
 
 Thu Jan  1 16:23:17 2004  Steve Huston  <shuston@riverace.com>
 
-	* bin/make_release: Add VC6 to files that generate_makefiles() makes.
+        * bin/make_release: Add VC6 to files that generate_makefiles() makes.
 
 Thu Jan  1 15:20:30 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/Makefile:
-	* examples/APG: Added all examples from "The ACE Programmer's Guide".
+        * examples/Makefile:
+        * examples/APG: Added all examples from "The ACE Programmer's Guide".
 
 Thu Jan  1 20:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* include/makeinclude/outputdir.bor:
-	  Object files are always placed in subdirectories dependent on the
-	  configuration
+        * include/makeinclude/outputdir.bor:
+          Object files are always placed in subdirectories dependent on the
+          configuration
 
 Thu Jan  1 17:59:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/OS_NS_Thread.h:
-	  Removed not needed doxygen close group tag
+        * ace/OS_NS_Thread.h:
+          Removed not needed doxygen close group tag
 
 Thu Jan  1 17:23:44 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
@@ -101,40 +112,40 @@ Thu Jan  1 17:23:44 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
 Thu Jan  1 16:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ASNMP/asnmp/asn1.cpp:
-	  Removed not needed ;. This is the last fix for bugzilla [BUGID 1677]
+        * ASNMP/asnmp/asn1.cpp:
+          Removed not needed ;. This is the last fix for bugzilla [BUGID 1677]
 
 Thu Jan  1 09:51:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst:
+        * bin/tao_orb_tests.lst:
 
-	  Added smart proxies test to the daily builds.
+          Added smart proxies test to the daily builds.
 
 Thu Jan  1 00:35:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
 
-	  Fixed a warning in Solaris 8 builds.
+          Fixed a warning in Solaris 8 builds.
 
 Wed Dec 31 21:57:08 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
 
-	* ace/Base_Thread_Adapter.h:
-	* ace/Base_Thread_Adapter.inl:
-	* ace/Base_Thread_Adapter.cpp:
+        * ace/Base_Thread_Adapter.h:
+        * ace/Base_Thread_Adapter.inl:
+        * ace/Base_Thread_Adapter.cpp:
 
-	  Added #include "os_include/sys/os_time.h" and
-	  data member itimerval itimer_ wrapped with ACE_USES_GPROF.
+          Added #include "os_include/sys/os_time.h" and
+          data member itimerval itimer_ wrapped with ACE_USES_GPROF.
 
-	  This data member will hold the thread profiling timer.
-	  Added Accessor function to itimer_ data member.
-	  (ACE_Base_Thread_Adapter) Constructor calls getitimer.
-	  (ace_thread_adapter) Calls setitimer.
-	  Both are wrapped with ACE_USES_GPROF
+          This data member will hold the thread profiling timer.
+          Added Accessor function to itimer_ data member.
+          (ACE_Base_Thread_Adapter) Constructor calls getitimer.
+          (ace_thread_adapter) Calls setitimer.
+          Both are wrapped with ACE_USES_GPROF
 
-	* ace/README:
-	  Added Useful information about ACE_USES_GPROF macro.
-	  That macro enable profiling with gprof in a multithreaded
-	  application.
+        * ace/README:
+          Added Useful information about ACE_USES_GPROF macro.
+          That macro enable profiling with gprof in a multithreaded
+          application.
 
 Wed Dec 31 13:13:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
