@@ -50,6 +50,10 @@ public:
 
   /// Destroy consumer event channel control.
   void destroy_consumerec_control (TAO_ECG_ConsumerEC_Control* x);
+
+  /// Accessors to use_ttl flag
+  int use_ttl (void) const;
+
 private:
   /// Helper for agrument parsing.  Prints out an error message about
   /// unsupported option value.
@@ -68,10 +72,20 @@ protected:
 
   /// The control timeout in usecs for the consumer event channel
   ACE_Time_Value consumer_ec_control_timeout_;
+
+  /// If 1, we use the TTL flags, if 0, we just ignore TTL.
+  /// @note When this flag is set to 0, make sure that no recursive structures
+  /// exists in the gateway setup for the same source/type combination, else
+  /// one event will flow continuosly through all gateways.
+  int use_ttl_;
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Gateway_IIOP_Factory)
 ACE_FACTORY_DECLARE (TAO_RTEvent, TAO_EC_Gateway_IIOP_Factory)
+
+#if defined (__ACE_INLINE__)
+#include "EC_Gateway_IIOP_Factory.i"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_GATEWAY_IIOP_FACTORY_H */

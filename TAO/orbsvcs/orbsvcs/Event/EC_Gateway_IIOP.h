@@ -194,9 +194,15 @@ protected:
   /// from these proxy
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
 
+  /// The consumer ec control which controls the behaviour in case of a
+  /// misbehaving consumer ec
   TAO_ECG_ConsumerEC_Control* ec_control_;
 
+  /// The Gateway IIOP Factory for all the settings
   TAO_EC_Gateway_IIOP_Factory* factory_;
+
+  /// If 1, we use the TTL flags, if 0, we just ignore TTL
+  int use_ttl_;
 };
 
 #include /**/ "ace/post.h"
