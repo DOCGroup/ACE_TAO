@@ -70,8 +70,9 @@ int be_visitor_args_ami_handler_upcall_cs::visit_argument (be_argument *node)
   return 0;
 }
 
-int be_visitor_args_ami_handler_upcall_cs::visit_array (be_array *)
+int be_visitor_args_ami_handler_upcall_cs::visit_array (be_array *node)
 {
+  ACE_UNUSED_ARG (node);
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
@@ -88,8 +89,10 @@ int be_visitor_args_ami_handler_upcall_cs::visit_array (be_array *)
   return 0;
 }
 
-int be_visitor_args_ami_handler_upcall_cs::visit_enum (be_enum *)
+int be_visitor_args_ami_handler_upcall_cs::visit_enum (be_enum *node)
 {
+  ACE_UNUSED_ARG (node);
+
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
@@ -107,8 +110,10 @@ int be_visitor_args_ami_handler_upcall_cs::visit_enum (be_enum *)
   return 0;
 }
 
-int be_visitor_args_ami_handler_upcall_cs::visit_interface (be_interface *)
+int be_visitor_args_ami_handler_upcall_cs::visit_interface (be_interface *node)
 {
+  ACE_UNUSED_ARG (node);
+
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
@@ -129,8 +134,10 @@ int be_visitor_args_ami_handler_upcall_cs::visit_interface (be_interface *)
   return 0;
 }
 
-int be_visitor_args_ami_handler_upcall_cs::visit_interface_fwd (be_interface_fwd *)
+int be_visitor_args_ami_handler_upcall_cs::visit_interface_fwd (be_interface_fwd *node)
 {
+  ACE_UNUSED_ARG (node);
+
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
@@ -153,8 +160,9 @@ int be_visitor_args_ami_handler_upcall_cs::visit_interface_fwd (be_interface_fwd
 
 #ifdef IDL_HAS_VALUETYPE
 
-int be_visitor_args_ami_handler_upcall_cs::visit_valuetype (be_valuetype *)
+int be_visitor_args_ami_handler_upcall_cs::visit_valuetype (be_valuetype *node)
 {
+  ACE_UNUSED_ARG (node);
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
@@ -175,8 +183,10 @@ int be_visitor_args_ami_handler_upcall_cs::visit_valuetype (be_valuetype *)
   return 0;
 }
 
-int be_visitor_args_ami_handler_upcall_cs::visit_valuetype_fwd (be_valuetype_fwd *)
+int be_visitor_args_ami_handler_upcall_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
+  ACE_UNUSED_ARG (node);
+
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
@@ -253,8 +263,10 @@ int be_visitor_args_ami_handler_upcall_cs::visit_predefined_type (be_predefined_
   return 0;
 }
 
-int be_visitor_args_ami_handler_upcall_cs::visit_sequence (be_sequence *)
+int be_visitor_args_ami_handler_upcall_cs::visit_sequence (be_sequence *node)
 {
+  ACE_UNUSED_ARG (node);
+
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
@@ -271,8 +283,10 @@ int be_visitor_args_ami_handler_upcall_cs::visit_sequence (be_sequence *)
   return 0;
 }
 
-int be_visitor_args_ami_handler_upcall_cs::visit_string (be_string *)
+int be_visitor_args_ami_handler_upcall_cs::visit_string (be_string *node)
 {
+  ACE_UNUSED_ARG (node);
+
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
@@ -299,8 +313,10 @@ int be_visitor_args_ami_handler_upcall_cs::visit_string (be_string *)
   return 0;
 }
 
-int be_visitor_args_ami_handler_upcall_cs::visit_structure (be_structure *)
+int be_visitor_args_ami_handler_upcall_cs::visit_structure (be_structure *node)
 {
+  ACE_UNUSED_ARG (node);
+
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
@@ -317,8 +333,10 @@ int be_visitor_args_ami_handler_upcall_cs::visit_structure (be_structure *)
   return 0;
 }
 
-int be_visitor_args_ami_handler_upcall_cs::visit_union (be_union *)
+int be_visitor_args_ami_handler_upcall_cs::visit_union (be_union *node)
 {
+  ACE_UNUSED_ARG (node);
+
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
