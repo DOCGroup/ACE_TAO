@@ -579,6 +579,13 @@ public:
   virtual idl_bool exception_support (void);
   // check if real C++ exception support is to be enabled
 
+  virtual void gen_locality_constraint (idl_bool);
+  // Enable generating locality constraint objects stubs/skeletons.
+
+  virtual idl_bool gen_locality_constraint (void);
+  // check if generating locality constraint objects support is to be
+  // enabled.
+
   virtual void opt_tc (idl_bool);
   // enable optimized typecodes
 
@@ -741,6 +748,9 @@ private:
 
   idl_bool exception_support_;
   // do we support real C++ exceptions (strict mapping) for stubs/skeletons?
+
+  idl_bool gen_locality_constraint_;
+  // do we support generating of locality constraint objects?
 
   idl_bool opt_tc_;
   // do we generate optimized typecodes?
