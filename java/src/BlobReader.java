@@ -77,7 +77,7 @@ public class BlobReader
       }
     // Cache number of bytes read
     this.bytesRead_ = this.length_;
-    return new MessageBlock (new String (dataBuf, 0));
+    return new MessageBlock (new String (dataBuf, 0, this.length_));
   }
 
   public int close (long flags)

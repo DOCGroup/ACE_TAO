@@ -81,5 +81,5 @@ public abstract class SvcHandler extends Task
     return -1;
   }
   
-  private SOCKStream stream_;
+  protected SOCKStream stream_;
 }
