@@ -4,23 +4,19 @@
 //
 // = LIBRARY
 //    TAO/tests/IDL_Cubit
-// 
+//
 // = FILENAME
 //    svr.cpp
 //
 // = AUTHOR
 //    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
-// 
+//
 // ============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "tao/corba.h"
 #include "cubit_i.h"
-
-// @@ Shouldn't this be defined in a headerfile somewhere?
-extern void
-print_exception (const CORBA::Exception *, const char *, FILE *f=stdout);
 
 // Global Variables
 static int num_of_objs = 1;
@@ -31,24 +27,24 @@ static int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "dn:");
-  int			c;
+  int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':  // debug flag
-	TAO_debug_level++;
-	break;
+        TAO_debug_level++;
+        break;
       case 'n':	// number of cubit objects we hold
-	num_of_objs = ACE_OS::atoi (get_opts.optarg);
-	break;
+        num_of_objs = ACE_OS::atoi (get_opts.optarg);
+        break;
       case '?':
       default:
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "usage:  %s"
-			   " [-d]"
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s"
+                           " [-d]"
                            " [-n] <num of cubit objects>"
-			   "\n", argv [0]), 1);
+                           "\n", argv [0]), 1);
       }
 
   return 0;  // Indicates successful parsing of command line
@@ -66,7 +62,7 @@ main (int argc, char *argv[])
 
   if (env.exception () != 0)
     {
-      print_exception (env.exception (), "ORB init");
+      env.print_exception ("ORB init");
       return 1;
     }
 
@@ -83,7 +79,7 @@ main (int argc, char *argv[])
 
   // create a factory implementation
   Cubit_Factory_ptr factory;
-  
+
   ACE_NEW_RETURN (factory, Cubit_Factory_i ("factory", num_of_objs), 1);
 
   if (TAO_debug_level >= 0)
@@ -98,7 +94,7 @@ main (int argc, char *argv[])
 
       if (env.exception () != 0)
         {
-          print_exception (env.exception (), "object2string");
+          env.print_exception ("object2string");
           return 1;
         }
 
