@@ -1204,7 +1204,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 
       // Get an object handle to the named reserved memory object.
       object_handle_ =
-        ACE_TEXT_CreateFileMapping ((HANDLE) 0xffffffff,
+        ACE_TEXT_CreateFileMapping (INVALID_HANDLE_VALUE,
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
                                       &sa,
 #else
