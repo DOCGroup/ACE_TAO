@@ -1,3 +1,8 @@
+Thu Jul 15 18:19:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Makefile:
+	  Added IDL_Test directory to Makefile.
+
 Thu Jul 15 17:52:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/IDL_Test/anonymous.idl:
