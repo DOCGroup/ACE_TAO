@@ -44,7 +44,7 @@ RSC=rc.exe
 <%if(type_is_dynamic)%>
 # PROP Output_Dir "<%libout%>"
 <%endif%>
-# PROP Intermediate_Dir "<%intermediate_dir%>"
+# PROP Intermediate_Dir "<%intermediate_dir%>\<%noextension(project_file)%>"
 <%if(type_is_dynamic)%>
 # PROP Ignore_Export_Lib 0
 <%endif%>
@@ -52,7 +52,7 @@ RSC=rc.exe
 <%if(type_is_static)%>
 LINK32=link.exe -lib
 <%endif%>
-# ADD CPP /nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(pch_header)%>.pch" <%endif%>/FD /c
+# ADD CPP /nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_header)%>.pch" <%endif%>/FD /c
 <%if(compile_flags_removed)%>
 # SUBTRACT CPP <%compile_flags_removed%>
 <%endif%>
