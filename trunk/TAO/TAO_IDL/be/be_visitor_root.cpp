@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 // ============================================================================
 //
@@ -18,10 +16,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_root.h"
 
 // Root visitor for client header
@@ -65,6 +62,7 @@ int be_visitor_root_ch::visit_root (be_root *node)
 
 int be_visitor_root_ch::visit_sequence (be_sequence *node)
 {
+  ACE_UNUSED_ARG (node);
   return 0;
 }
 
