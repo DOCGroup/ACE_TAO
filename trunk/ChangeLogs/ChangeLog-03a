@@ -1,3 +1,9 @@
+Thu May  9 20:02:10 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/ACE-bug-process.html: Fixed a typo in the hostname of
+	  the TAO FAQ.  Thanks to Jeff Adams <Jeff.Adams@gd-ais.com>
+	  for reporting this.
+
 Thu May  9 16:26:48 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/examples/SAXPrint/main.cpp: Added missing include file.
