@@ -1,3 +1,8 @@
+Fri Jun 25 08:40:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+          Fixed unreachable code warning in Tru64 build
+
 Fri Jun 25 08:36:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
