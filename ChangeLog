@@ -1,3 +1,8 @@
+Sun Jul 11 16:48:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Acceptor.cpp:
+          Fixed compile error in commit of Douglas below
+
 Sun Jul 11 10:52:06 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/SOCK_Acceptor.cpp (shared_open): ACE_SOCK_Acceptor::shared_open()
