@@ -1,3 +1,31 @@
+Sun Nov 16 23:49:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/INET_Addr.h:
+
+	  Fixed a typo in the interface documentation. 
+
+	* ace/SOCK_Dgram.cpp:
+
+	  In shared_open () used INADDR_ANY when calling bind_port ()
+	  instead of 0. 
+	
+	* ace/Asynch_Acceptor.cpp:
+
+	  Modifies the call to bind_port in open () so that if the address
+	  passed in is the any address, the protocol is passed to
+	  bind_port so that when IPv6 is enabled, it will bind to the IPv6
+	  any address instead of the IPv4 one
+	
+	* ace/Sock_Connect.cpp:
+
+	  Modified bind_port () so that if the protocol specified is
+	  PF_INET6 and the IP address is not INADDR_ANY, then the address
+	  will be set to an IPv4-mapped IPv6 address before doing the
+	  bind. 
+
+	  Thanks to Brian Buesker <bbuesker@qualcomm.com> for the
+	  patches. 
+
 Sun Nov 16 23:08:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/footprint_stats.sh:

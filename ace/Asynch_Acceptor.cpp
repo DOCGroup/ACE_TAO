@@ -95,7 +95,9 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   static ACE_INET_Addr sa (ACE_sap_any_cast (const ACE_INET_Addr &));
 
   if (address == sa &&
-      ACE_Sock_Connect::bind_port (this->listen_handle_) == -1)
+      ACE_Sock_Connect::bind_port (this->listen_handle_,
+	                           INADDR_ANY,
+				   address.get_type()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("ACE::bind_port")),
