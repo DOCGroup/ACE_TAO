@@ -51,8 +51,8 @@ TAO_SHMIOP_Endpoint::port (CORBA::UShort p)
   return this->port_ = p;
 }
 
-ACE_INLINE TAO_SHMIOP_Client_Connection_Handler *&
+/*ACE_INLINE TAO_SHMIOP_Client_Connection_Handler *&
 TAO_SHMIOP_Endpoint::hint (void)
 {
   return this->hint_;
-}
+}*/

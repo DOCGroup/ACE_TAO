@@ -632,6 +632,25 @@ SOURCE=.\Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connector_Impl.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Registry.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1088,44 +1107,6 @@ SOURCE=.\FILE_Parser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Accept_State.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1145,7 +1126,7 @@ SOURCE=.\GIOP_Message_Base.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Connectors.cpp
+SOURCE=.\GIOP_Message_Generator_Parser.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -1164,7 +1145,64 @@ SOURCE=.\GIOP_Message_Connectors.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.cpp
+SOURCE=.\GIOP_Message_Generator_Parser_10.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_11.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_12.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_Impl.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -1184,6 +1222,25 @@ SOURCE=.\GIOP_Message_Headers.cpp
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Lite.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Locate_Header.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -1278,7 +1335,7 @@ SOURCE=.\IIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Connect.cpp
+SOURCE=.\IIOP_Connection_Handler.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3384,6 +3441,10 @@ SOURCE=.\Connection_Handler.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connector_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
@@ -3492,27 +3553,35 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Accept_State.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Connectors.h
+SOURCE=.\GIOP_Message_Generator_Parser.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.h
+SOURCE=.\GIOP_Message_Generator_Parser_10.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_11.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_12.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_Impl.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Lite.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Locate_Header.h
 # End Source File
 # Begin Source File
 
@@ -3540,7 +3609,7 @@ SOURCE=.\IIOP_Acceptor.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Connect.h
+SOURCE=.\IIOP_Connection_Handler.h
 # End Source File
 # Begin Source File
 
@@ -4172,27 +4241,35 @@ SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Accept_State.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Connectors.i
+SOURCE=.\GIOP_Message_Generator_Parser.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.i
+SOURCE=.\GIOP_Message_Generator_Parser_10.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_11.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_12.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_Impl.inl
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Lite.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Locate_Header.i
 # End Source File
 # Begin Source File
 
@@ -4220,7 +4297,7 @@ SOURCE=.\IIOP_Acceptor.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Connect.i
+SOURCE=.\IIOP_Connection_Handler.i
 # End Source File
 # Begin Source File
 

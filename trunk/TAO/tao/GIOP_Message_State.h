@@ -21,10 +21,17 @@
 #ifndef TAO_GIOP_MESSAGE_STATE_H
 #define TAO_GIOP_MESSAGE_STATE_H
 #include "ace/pre.h"
+#include "tao/TAO_Export.h"
 
-#include "tao/Pluggable_Messaging.h"
 
-// @@ Bala more missing #pragma once
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/corbafwd.h"
+#include "tao/CDR.h"
+
+class TAO_ORB_Core;
 
 class TAO_Export TAO_GIOP_Version
 {
@@ -58,27 +65,18 @@ public:
   // Equality operator
 };
 
-// @@ Bala: do you see how these names are inconsistent! It is a
-// @@ message state factory for GIOP or is it a message state?
-class TAO_Export TAO_GIOP_Message_State : public TAO_Message_State_Factory
+
+class TAO_Export TAO_GIOP_Message_State
 {
   // = TITLE
   //   Generic definitions for Message States.
   //
   // = DESCRIPTION
-  //   @@ Bala: please don't write comments in conditional form.
-  //   @@ Don't say what the class could or would do, say what it
-  //   @@ *does*
-  //   @@ Bala: i remain unconvinced as to whether the base class here
-  //   @@ is any useful.
-  //
-  //   This would represent the state of the incoming message states.
-  //   As the ORB processes incoming messages it need to keep track of
+  //   This  represents the state of the incoming GIOP message
+  //   As the ORB processes incoming messages it needs to keep track of
   //   how much of the message has been read, if there are any
-  //   fragments following this message etc. This class attempts to
-  //   give a generic interface to all the messaging protocols message
-  //   states so that the Transport layer does not really know with
-  //   whom it is interacting with.
+  //   fragments following this message etc.
+
 public:
   TAO_GIOP_Message_State (TAO_ORB_Core *orb_core);
   // Ctor

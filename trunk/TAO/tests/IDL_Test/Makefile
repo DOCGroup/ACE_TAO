@@ -245,23 +245,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -332,6 +325,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -434,6 +429,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  anonymousS_T.h anonymousS_T.i anonymousS_T.cpp anonymousS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -602,23 +599,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -689,6 +679,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -791,6 +783,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  arrayS_T.h arrayS_T.i arrayS_T.cpp arrayS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -959,23 +953,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -1046,6 +1033,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1148,6 +1137,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  constantsS_T.h constantsS_T.i constantsS_T.cpp constantsS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -1316,23 +1307,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -1403,6 +1387,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1505,6 +1491,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  enum_in_structS_T.h enum_in_structS_T.i enum_in_structS_T.cpp \
  enum_in_structS.i \
@@ -1674,23 +1662,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -1761,6 +1742,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1863,6 +1846,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  generic_objectS_T.h generic_objectS_T.i generic_objectS_T.cpp \
  generic_objectS.i \
@@ -2032,23 +2017,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -2119,6 +2097,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2221,6 +2201,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  includedS_T.h includedS_T.i includedS_T.cpp includedS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -2389,23 +2371,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -2476,6 +2451,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2578,6 +2555,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  includedS_T.h includedS_T.i includedS_T.cpp includedS.i includingC.h \
  includingC.i includingS_T.h includingS_T.i includingS_T.cpp \
@@ -2748,23 +2727,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -2835,6 +2807,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2937,6 +2911,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  interfaceS_T.h interfaceS_T.i interfaceS_T.cpp interfaceS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -3105,23 +3081,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -3192,6 +3161,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -3294,6 +3265,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  keywordsS_T.h keywordsS_T.i keywordsS_T.cpp keywordsS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -3462,23 +3435,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -3549,6 +3515,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -3651,6 +3619,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  nested_scopeS_T.h nested_scopeS_T.i nested_scopeS_T.cpp \
  nested_scopeS.i \
@@ -3820,23 +3790,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -3907,6 +3870,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4009,6 +3974,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  paramsS_T.h paramsS_T.i paramsS_T.cpp paramsS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -4177,23 +4144,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -4264,6 +4224,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4366,6 +4328,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  pragmaS_T.h pragmaS_T.i pragmaS_T.cpp pragmaS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -4534,23 +4498,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -4621,6 +4578,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4723,6 +4682,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  sequenceS_T.h sequenceS_T.i sequenceS_T.cpp sequenceS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -4891,23 +4852,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -4978,6 +4932,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -5080,6 +5036,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  typedefS_T.h typedefS_T.i typedefS_T.cpp typedefS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -5248,23 +5206,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -5335,6 +5286,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -5437,6 +5390,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  unionS_T.h unionS_T.i unionS_T.cpp unionS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -5605,23 +5560,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -5692,6 +5640,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -5929,23 +5879,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -6016,6 +5959,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -6253,23 +6198,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -6340,6 +6278,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -6577,23 +6517,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -6664,6 +6597,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -6901,23 +6836,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -6988,6 +6916,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -7225,23 +7155,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -7312,6 +7235,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -7549,23 +7474,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -7636,6 +7554,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -7873,23 +7793,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -7960,6 +7873,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -8197,23 +8112,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -8284,6 +8192,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -8521,23 +8431,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -8608,6 +8511,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -8845,23 +8750,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -8932,6 +8830,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -9169,23 +9069,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -9256,6 +9149,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -9493,23 +9388,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -9580,6 +9468,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -9817,23 +9707,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -9904,6 +9787,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -10141,23 +10026,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -10228,6 +10106,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -10465,23 +10345,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -10552,6 +10425,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -10791,23 +10666,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -10878,6 +10746,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -10980,6 +10850,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  reopen_include1S_T.h reopen_include1S_T.i reopen_include1S_T.cpp \
  reopen_include1S.i reopen_include2C.h reopen_include2C.i \
@@ -11153,23 +11025,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -11240,6 +11105,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -11477,23 +11344,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -11564,6 +11424,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -11666,6 +11528,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  reopen_include1S_T.h reopen_include1S_T.i reopen_include1S_T.cpp \
  reopen_include1S.i \
@@ -11835,23 +11699,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -11922,6 +11779,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -12160,23 +12019,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -12247,6 +12099,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -12349,6 +12203,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  reopen_include1S_T.h reopen_include1S_T.i reopen_include1S_T.cpp \
  reopen_include1S.i reopen_include2C.h reopen_include2C.i \
@@ -12519,23 +12375,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -12606,6 +12455,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -12708,6 +12559,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  pragmaS_T.h pragmaS_T.i pragmaS_T.cpp pragmaS.i unionC.h unionC.i
 
@@ -12855,23 +12708,16 @@ realclean:	clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -12942,6 +12788,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -13046,6 +12894,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  reopen_include1S_T.h reopen_include1S_T.i reopen_include1S_T.cpp \
  reopen_include1S.i reopen_include2S_T.h reopen_include2S_T.i \

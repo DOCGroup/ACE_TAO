@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 #include "UIOP_Connector.h"
 
 #if TAO_HAS_UIOP == 1
@@ -16,44 +17,8 @@
 ACE_RCSID(Strategies, UIOP_Connector, "$Id$")
 
 
-TAO_UIOP_Connect_Creation_Strategy::
-  TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t,
-                                      TAO_ORB_Core* orb_core,
-                                      void *arg,
-                                      CORBA::Boolean flag)
-    :  ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler> (t),
-       orb_core_ (orb_core),
-       arg_ (arg),
-       lite_flag_ (flag)
-{
-}
-
-TAO_UIOP_Connect_Creation_Strategy::
-  ~TAO_UIOP_Connect_Creation_Strategy (void)
-{
-}
-
-
-int
-TAO_UIOP_Connect_Creation_Strategy::make_svc_handler
-  (TAO_UIOP_Client_Connection_Handler *&sh)
-{
-  if (sh == 0)
-    ACE_NEW_RETURN (sh,
-                    TAO_UIOP_Client_Connection_Handler
-                    (this->orb_core_->thr_mgr (),
-                     this->orb_core_,
-                     this->lite_flag_,
-                     this->arg_),
-                    -1);
-  return 0;
-}
-
-// *************************************************************
-
 TAO_UIOP_Connector::TAO_UIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
-    null_activation_strategy_ (),
     connect_strategy_ (),
     base_connector_ (),
     lite_flag_ (flag)
@@ -72,19 +37,28 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
   if (this->init_uiop_properties () != 0)
     return -1;
 
-  TAO_UIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
+  // Our connect creation strategy
+  TAO_UIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
+
   ACE_NEW_RETURN (connect_creation_strategy,
-                  TAO_UIOP_Connect_Creation_Strategy
-                  (this->orb_core ()->thr_mgr (),
-                   this->orb_core (),
-                   &(this->uiop_properties_),
-                   this->lite_flag_),
+                  TAO_UIOP_CONNECT_CREATION_STRATEGY
+                      (orb_core->thr_mgr (),
+                       orb_core,
+                       &(this->uiop_properties_),
+                       this->lite_flag_),
+                  -1);
+
+  /// Our activation strategy
+  TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
+
+  ACE_NEW_RETURN (concurrency_strategy,
+                  TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
 
   return this->base_connector_.open (this->orb_core ()->reactor (),
                                      connect_creation_strategy,
                                      &this->connect_strategy_,
-                                     &this->null_activation_strategy_);
+                                     concurrency_strategy);
 }
 
 int
@@ -92,9 +66,11 @@ TAO_UIOP_Connector::close (void)
 {
   // Zap the creation strategy that we created earlier.
   delete this->base_connector_.creation_strategy ();
+  delete this->base_connector_.concurrency_strategy ();
 
   return this->base_connector_.close ();
 }
+
 
 int
 TAO_UIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
@@ -130,7 +106,7 @@ TAO_UIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
     return -1;
 
   int result = 0;
-  TAO_UIOP_Client_Connection_Handler *svc_handler = 0;
+  TAO_UIOP_Connection_Handler *svc_handler = 0;
   TAO_Connection_Handler *conn_handler = 0;
 
   // Check the Cache first for connections
@@ -144,7 +120,7 @@ TAO_UIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
 
       // We have found a connection and a handler
       svc_handler =
-        ACE_dynamic_cast (TAO_UIOP_Client_Connection_Handler *,
+        ACE_dynamic_cast (TAO_UIOP_Connection_Handler *,
                           conn_handler);
     }
   else
@@ -270,7 +246,7 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
       // array of eventual handlers.
       num_connections = dests.size ();
       ACE_UNIX_Addr *remote_addrs = 0;
-      TAO_UIOP_Client_Connection_Handler **handlers = 0;
+      TAO_UIOP_Connection_Handler **handlers = 0;
       char *failures = 0;
 
       ACE_NEW_RETURN (remote_addrs,
@@ -280,10 +256,10 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
       ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr> safe_remote_addrs (remote_addrs);
 
       ACE_NEW_RETURN (handlers,
-                      TAO_UIOP_Client_Connection_Handler *[num_connections],
+                      TAO_UIOP_Connection_Handler *[num_connections],
                       -1);
 
-      ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Client_Connection_Handler *>
+      ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Connection_Handler *>
         safe_handlers (handlers);
 
       ACE_NEW_RETURN (failures,
@@ -520,20 +496,19 @@ template class ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr>;
 template class ACE_Hash<ARHR<ACE_UNIX_Addr> >;
 template class ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr> >;
 
+template class TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
+template class TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>;
+template class ACE_Strategy_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
+template class ACE_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
+template class ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>;
 
-template class ACE_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>;
-template class ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>;
-template class ACE_Connector<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>;
-
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>*>;
-template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Client_Connection_Handler*>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*>;
+template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Connection_Handler*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -544,19 +519,19 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Client_Connection_Handler*>;
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr>
 #pragma instantiate ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr> >
 
-#pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>
+#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
+#pragma instantiate TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>
+#pragma instantiate ACE_Strategy_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>
+#pragma instantiate ACE_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>
+#pragma instantiate ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>
 
-#pragma instantiate ACE_Connector<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_Connector>
-#pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
-#pragma instantiate ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>
-#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>*>
-#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Client_Connection_Handler*>
+#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_UIOP_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*>
+#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_UIOP_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Connection_Handler*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -29,14 +29,14 @@ CPP_SRCS += \
   UIOP_Transport \
   UIOP_Connector \
   UIOP_Acceptor \
-  UIOP_Connect \
+  UIOP_Connection_Handler \
   UIOP_Endpoint \
   SHMIOP_Factory \
   SHMIOP_Profile \
   SHMIOP_Transport \
   SHMIOP_Connector \
   SHMIOP_Acceptor \
-  SHMIOP_Connect \
+  SHMIOP_Connection_Handler \
   SHMIOP_Endpoint \
   TAO_Strategies_Internal \
   uiop_endpoints \

@@ -5,18 +5,22 @@
 
 ACE_RCSID(tao, Asynch_Reply_Dispatcher, "$Id$")
 
-#include "tao/GIOP_Message_State.h"
+
+#include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/Leader_Follower.h"
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Asynch_Reply_Dispatcher.i"
 #endif /* __ACE_INLINE__ */
 
 // Constructor.
-TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (void)
-  : message_state_ (0),
+TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core)
+  : reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+                TAO_ENCAP_BYTE_ORDER,
+                orb_core),
     transport_ (0)
 {
 }
@@ -33,20 +37,17 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
 // Must override pure virtual method in TAO_Reply_Dispatcher.
 int
 TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
-    CORBA::ULong /* reply_status */,
-    const TAO_GIOP_Version & /* version */,
-    IOP::ServiceContextList & /* reply_ctx */,
-    TAO_GIOP_Message_State * /* message_state */
+    TAO_Pluggable_Reply_Params & /*params*/
   )
 {
   return 0;
 }
 
-TAO_GIOP_Message_State *
+/*TAO_GIOP_Message_State *
 TAO_Asynch_Reply_Dispatcher_Base::message_state (void)
 {
   return this->message_state_;
-}
+} */
 
 void
 TAO_Asynch_Reply_Dispatcher_Base::dispatcher_bound (TAO_Transport *)
@@ -65,10 +66,12 @@ TAO_Asynch_Reply_Dispatcher_Base::connection_closed (void)
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
     const TAO_Reply_Handler_Skeleton &reply_handler_skel,
-    Messaging::ReplyHandler_ptr reply_handler
+    Messaging::ReplyHandler_ptr reply_handler,
+    TAO_ORB_Core *orb_core
   )
-  : reply_handler_skel_ (reply_handler_skel),
-    reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler))
+  :TAO_Asynch_Reply_Dispatcher_Base (orb_core),
+   reply_handler_skel_ (reply_handler_skel),
+   reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler))
 {
 }
 
@@ -80,20 +83,21 @@ TAO_Asynch_Reply_Dispatcher::~TAO_Asynch_Reply_Dispatcher (void)
 // Dispatch the reply.
 int
 TAO_Asynch_Reply_Dispatcher::dispatch_reply (
-    CORBA::ULong reply_status,
-    const TAO_GIOP_Version & /* version */,
-    IOP::ServiceContextList &reply_ctx,
-    TAO_GIOP_Message_State *message_state
+    TAO_Pluggable_Reply_Params &params
   )
 {
-  this->reply_status_ = reply_status;
-  this->message_state_ = message_state;
+  this->reply_status_ = params.reply_status_;
+
+  // this->message_state_ = message_state;
+
+  // Steal the buffer so that no copying is done.
+  this->reply_cdr_.steal_from (params.input_cdr_);
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
-  CORBA::ULong max = reply_ctx.maximum ();
-  CORBA::ULong len = reply_ctx.length ();
-  IOP::ServiceContext *context_list = reply_ctx.get_buffer (1);
+  CORBA::ULong max = params.svc_ctx_.maximum ();
+  CORBA::ULong len = params.svc_ctx_.length ();
+  IOP::ServiceContext *context_list = params.svc_ctx_.get_buffer (1);
   this->reply_service_info_.replace (max, len, context_list, 1);
 
 
@@ -105,7 +109,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
     }
 
   CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
-  switch (reply_status)
+  switch (this->reply_status_)
     {
     case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
       reply_error = TAO_AMI_REPLY_OK;
@@ -129,7 +133,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   ACE_TRY_NEW_ENV
     {
       // Call the Reply Handler's skeleton.
-      reply_handler_skel_ (this->message_state_->cdr,
+      reply_handler_skel_ (this->reply_cdr_,
                            this->reply_handler_.in (),
                            reply_error,
                            ACE_TRY_ENV);

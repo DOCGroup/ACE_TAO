@@ -25,7 +25,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
   while (reply_received != 1)
     {
       reply_received =
-        this->transport_->handle_client_input (1, max_wait_time);
+        this->transport_->read_process_message (max_wait_time, 1);
       if (reply_received == -1)
         return -1;
     }

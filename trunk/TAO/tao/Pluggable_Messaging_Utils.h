@@ -23,17 +23,12 @@
 
 #include "tao/IOPC.h"
 
-// @@ Bala: It is not clear that all protocol would use a request id
-// or that they will be able to pass a service context around.  OTOH
-// we can always leave the svc_ctx empty for protocols that don't
-// support it.  And use an internal table to map request ids to
-// whatever underlying request token is used.
-// @@ Carlos: I agree. My aim (not a great one though) was to identify
-// the different components, seggregate them at different logical
-// places. That would help us when we do the next iteration to attack
-// these places. IMHO, your idea of internal table to map request_ids
-// to different request tokens can be extended to other data in the
-// class.
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/CDR.h"
+
 class TAO_Export TAO_Pluggable_Reply_Params
 {
   // = TITLE
@@ -43,7 +38,7 @@ class TAO_Export TAO_Pluggable_Reply_Params
   //   This represents a set of data that would be received by the
   //   connector from the acceptor.
 public:
-  TAO_Pluggable_Reply_Params (void);
+  TAO_Pluggable_Reply_Params (TAO_ORB_Core *orb_core);
   // Constructor.
 
   IOP::ServiceContextList svc_ctx_;
@@ -78,6 +73,10 @@ public:
   // A flag that indicates if there is any data is going to get
   // marshalled in the reply
 
+  TAO_InputCDR input_cdr_;
+  // The stream with the non-demarshalled reply. This stream will be
+  // passed up to the stubs to demarshall the parameter values.
+
 private:
   IOP::ServiceContextList *service_context_;
   // The service context list that we don't own.
@@ -103,13 +102,7 @@ enum TAO_Pluggable_Header_Type
   TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER
 };
 
-// @@ Bala: This is a hopeless GIOPism. it should not be exposed in
-// the Pluggable Messaging generic classes.  What we should think
-// about is what *methods* are required to expose this functionality
-// to the rest of the ORB.
-// @@Carlos: Good idea. I would start doing that. I will slowly start
-// changing things as I work on GIOP1.2. So, please do not remove the
-// comments here.
+
 enum TAO_Pluggable_Message_Type
 {
   // = DESCRIPTION
@@ -119,6 +112,12 @@ enum TAO_Pluggable_Message_Type
   //   types you are welcome but please do not change the numbering
   //   scheme as this would affect GIOP.
 
+  //   NOTE: We may not need evrything here. It would be good if we
+  //   have only the following messages TAO_PLUGGABLE_MESSAGE_REQUEST,
+  //   TAO_PLUGGABLE_MESSAGE_REPLY,
+  //   TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
+  //   TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.  Changes will be made once
+  //   the rest of the stuff gets ready to roll.
   TAO_PLUGGABLE_MESSAGE_REQUEST = 0,                // sent by client.
   TAO_PLUGGABLE_MESSAGE_REPLY = 1,                  // by server.
   TAO_PLUGGABLE_MESSAGE_CANCELREQUEST = 2,          // by client.

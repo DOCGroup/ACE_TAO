@@ -153,8 +153,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.i testS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -168,19 +167,12 @@ realclean: clean
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
- $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -188,6 +180,18 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -197,98 +201,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
- $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
- $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.h \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.i \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/PortableServer/MessagingS.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.h \
- $(TAO_ROOT)/tao/Invocation.h \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
- $(TAO_ROOT)/tao/TAOC.i \
- $(TAO_ROOT)/tao/operation_details.h \
- $(TAO_ROOT)/tao/target_specification.h \
- $(TAO_ROOT)/tao/Object_KeyC.h \
- $(TAO_ROOT)/tao/Object_KeyC.i \
- $(TAO_ROOT)/tao/target_specification.i \
- $(TAO_ROOT)/tao/operation_details.i \
- $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/Profile.h \
- $(TAO_ROOT)/tao/Tagged_Components.h \
- $(TAO_ROOT)/tao/CONV_FRAMEC.h \
- $(TAO_ROOT)/tao/CONV_FRAMEC.i \
- $(TAO_ROOT)/tao/Tagged_Components.i \
- $(TAO_ROOT)/tao/Profile.i \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
- $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/ORB.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/CORBA_String.h \
- $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Principal.h \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
- $(TAO_ROOT)/tao/Principal.i \
- $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
- $(TAO_ROOT)/tao/GIOPC.h \
- $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/TAO_Server_Request.i \
- $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Message_Queue_T.h \
@@ -297,10 +222,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -349,10 +270,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/ORB_Core.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
- $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -366,7 +283,20 @@ realclean: clean
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -391,6 +321,76 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.h \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.i \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.cpp \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
+ $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
@@ -399,8 +399,6 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
@@ -413,7 +411,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  testS_T.h testS_T.i testS_T.cpp testS.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
@@ -458,8 +455,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i test_i.h testS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -519,19 +515,12 @@ realclean: clean
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
- $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -539,6 +528,18 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -548,98 +549,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
- $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
- $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.h \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.i \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/PortableServer/MessagingS.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.h \
- $(TAO_ROOT)/tao/Invocation.h \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
- $(TAO_ROOT)/tao/TAOC.i \
- $(TAO_ROOT)/tao/operation_details.h \
- $(TAO_ROOT)/tao/target_specification.h \
- $(TAO_ROOT)/tao/Object_KeyC.h \
- $(TAO_ROOT)/tao/Object_KeyC.i \
- $(TAO_ROOT)/tao/target_specification.i \
- $(TAO_ROOT)/tao/operation_details.i \
- $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/Profile.h \
- $(TAO_ROOT)/tao/Tagged_Components.h \
- $(TAO_ROOT)/tao/CONV_FRAMEC.h \
- $(TAO_ROOT)/tao/CONV_FRAMEC.i \
- $(TAO_ROOT)/tao/Tagged_Components.i \
- $(TAO_ROOT)/tao/Profile.i \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
- $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/ORB.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/CORBA_String.h \
- $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Principal.h \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
- $(TAO_ROOT)/tao/Principal.i \
- $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
- $(TAO_ROOT)/tao/GIOPC.h \
- $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/TAO_Server_Request.i \
- $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Message_Queue_T.h \
@@ -648,10 +570,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -700,10 +618,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/ORB_Core.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
- $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -717,7 +631,20 @@ realclean: clean
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -742,6 +669,76 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.h \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.i \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.cpp \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
+ $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
@@ -750,8 +747,6 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
@@ -764,7 +759,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  testS_T.h testS_T.i testS_T.cpp testS.i
 
 .obj/test_i.o .obj/test_i.so .shobj/test_i.o .shobj/test_i.so: test_i.cpp test_i.h testS.h \
@@ -796,8 +790,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -869,19 +862,12 @@ realclean: clean
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
- $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -889,6 +875,18 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -898,98 +896,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
- $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
- $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.h \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.i \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/PortableServer/MessagingS.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.h \
- $(TAO_ROOT)/tao/Invocation.h \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
- $(TAO_ROOT)/tao/TAOC.i \
- $(TAO_ROOT)/tao/operation_details.h \
- $(TAO_ROOT)/tao/target_specification.h \
- $(TAO_ROOT)/tao/Object_KeyC.h \
- $(TAO_ROOT)/tao/Object_KeyC.i \
- $(TAO_ROOT)/tao/target_specification.i \
- $(TAO_ROOT)/tao/operation_details.i \
- $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/Profile.h \
- $(TAO_ROOT)/tao/Tagged_Components.h \
- $(TAO_ROOT)/tao/CONV_FRAMEC.h \
- $(TAO_ROOT)/tao/CONV_FRAMEC.i \
- $(TAO_ROOT)/tao/Tagged_Components.i \
- $(TAO_ROOT)/tao/Profile.i \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
- $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/ORB.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/CORBA_String.h \
- $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Principal.h \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
- $(TAO_ROOT)/tao/Principal.i \
- $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
- $(TAO_ROOT)/tao/GIOPC.h \
- $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/TAO_Server_Request.i \
- $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Message_Queue_T.h \
@@ -998,10 +917,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1050,10 +965,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/ORB_Core.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
- $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -1067,7 +978,20 @@ realclean: clean
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -1092,6 +1016,76 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.h \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.i \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.cpp \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
+ $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
@@ -1100,8 +1094,6 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
@@ -1114,7 +1106,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  testS_T.h testS_T.i testS_T.cpp testS.i
 
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
@@ -1261,23 +1252,16 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -1348,6 +1332,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1473,8 +1459,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1546,19 +1531,12 @@ realclean: clean
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
- $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -1566,6 +1544,18 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -1575,98 +1565,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
- $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
- $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.h \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.i \
- $(TAO_ROOT)/tao/PortableServer/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/PortableServer/MessagingS.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.h \
- $(TAO_ROOT)/tao/Invocation.h \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
- $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
- $(TAO_ROOT)/tao/TAOC.i \
- $(TAO_ROOT)/tao/operation_details.h \
- $(TAO_ROOT)/tao/target_specification.h \
- $(TAO_ROOT)/tao/Object_KeyC.h \
- $(TAO_ROOT)/tao/Object_KeyC.i \
- $(TAO_ROOT)/tao/target_specification.i \
- $(TAO_ROOT)/tao/operation_details.i \
- $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/Profile.h \
- $(TAO_ROOT)/tao/Tagged_Components.h \
- $(TAO_ROOT)/tao/CONV_FRAMEC.h \
- $(TAO_ROOT)/tao/CONV_FRAMEC.i \
- $(TAO_ROOT)/tao/Tagged_Components.i \
- $(TAO_ROOT)/tao/Profile.i \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
- $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/ORB.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/CORBA_String.h \
- $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Principal.h \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
- $(TAO_ROOT)/tao/Principal.i \
- $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
- $(TAO_ROOT)/tao/GIOPC.h \
- $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/TAO_Server_Request.i \
- $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Message_Queue_T.h \
@@ -1675,10 +1586,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1727,10 +1634,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/ORB_Core.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
- $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -1744,7 +1647,20 @@ realclean: clean
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -1769,6 +1685,76 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.h \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.i \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS_T.cpp \
+ $(TAO_ROOT)/tao/PortableServer/MessagingS.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
+ $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
@@ -1777,8 +1763,6 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
@@ -1791,7 +1775,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  testS_T.h testS_T.i testS_T.cpp testS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \

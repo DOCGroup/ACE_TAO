@@ -36,5 +36,6 @@ TAO_GIOP_DII_Deferred_Invocation::TAO_GIOP_DII_Deferred_Invocation (
   // So this->rd_ is 0, because we do not need to
   // hold a pointer to it.
   ACE_NEW (this->rd_,
-           TAO_DII_Deferred_Reply_Dispatcher (req));
+           TAO_DII_Deferred_Reply_Dispatcher (req,
+                                              orb_core));
 }

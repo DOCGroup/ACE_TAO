@@ -29,11 +29,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IIOP_Connect.h"
+#include "tao/IIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
+#include "tao/GIOP_Message_State.h"
 
 // TAO IIOP_Acceptor concrete call defination
 
@@ -56,10 +57,10 @@ public:
   // @@ Helper method for the implementation repository, should go
   //    away
 
-  typedef ACE_Strategy_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_IIOP_Server_Connection_Handler> TAO_IIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler> TAO_IIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_ACCEPT_STRATEGY;
+  typedef ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
+  typedef TAO_Creation_Strategy<TAO_IIOP_Connection_Handler> TAO_IIOP_CREATION_STRATEGY;
+  typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> TAO_IIOP_CONCURRENCY_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_ACCEPT_STRATEGY;
 
   // = The TAO_Acceptor methods, check the documentation in
   //   Pluggable.h for details.
@@ -133,6 +134,8 @@ protected:
 
   TAO_GIOP_Version version_;
   // The GIOP version for this endpoint
+  // @@ Theoretically they shouldn't be here!! We need to look at a
+  // way to move this out
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
