@@ -132,7 +132,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
   delete visitor;
 
   //generate the excetions thrown by the operation
-  this->gen_raise_exception (node);
+  this->gen_throw_spec (node);
 
   *os <<be_idt_nl << "{"<<be_idt_nl;
   *os << "//Add your implementation here"<<be_uidt_nl;
@@ -173,55 +173,3 @@ be_visitor_operation_is::visit_operation (be_operation *node)
   return 0;
 }
 
-
-//method to generate the exceptions throw by the operation
-int
-be_visitor_operation_is::gen_raise_exception (be_operation *node)
-{
-
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
-   if (node->exceptions ())
-    {
-      os->indent ();
-     
-      // initialize an iterator to iterate thru the exception list
-      UTL_ExceptlistActiveIterator *ei;
-      ACE_NEW_RETURN (ei,
-                      UTL_ExceptlistActiveIterator (node->exceptions ()),
-                      -1);
-      *os << be_idt_nl << "TAO_THROW_SPEC ((";
-      // continue until each element is visited
-      while (!ei->is_done ())
-        {
-          be_exception *excp = be_exception::narrow_from_decl (ei->item ());
-
-          if (excp == 0)
-            {
-              delete ei;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_operation_exceptlist_cs"
-                                 "visit_operation - "
-                                 "codegen for scope failed\n"), -1);
-
-            }
-   
-
-          // allocator method
-          *os << excp->name ();
-          ei->next ();
-          if (!ei->is_done ())
-            {
-              *os << "," <<be_nl<<"\t\t";
-              //os->indent ();
-            }
-          // except the last one is processed?
-
-        } // end of while loop
-      delete ei;
-      *os << "))"<<be_uidt;
-    } // end of if
-
-   return 0;
-
-}

@@ -131,8 +131,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   os->indent ();
-  // declare an environment variable for user raised exceptions
-  //  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
   // get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl = ("
       << intf->full_skel_name () << " *)_tao_object_reference;\n\n";
@@ -185,7 +183,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ss::"
                          "visit_operation - "
-                         "codegen for making upcall failed\n"),
+                         "codegen for pre upcall failed\n"),
                         -1);
     }
   // make the upcall and assign to the return val
@@ -216,15 +214,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                          "codegen for making upcall failed\n"),
                         -1);
     }
-  // last argument is the environment
-  if (node->argument_count () > 0)
-    *os << ",\n";
-  os->indent ();
-  //  *os << "_tao_skel_environment";
-  *os << "ACE_TRY_ENV";
+
   // end the upcall
-  *os << be_uidt_nl;
-  *os << ");\n";
+  *os << be_uidt_nl << ");\n";
 
   if (node->flags () != AST_Operation::OP_oneway)
     {

@@ -43,8 +43,6 @@ public:
   virtual int visit_operation (be_operation *node);
   // visit operation. We provide code for this method in the derived class
 
-  int gen_raise_exception (be_operation *node);
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_IS_CPP_ */

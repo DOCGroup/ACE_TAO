@@ -32,9 +32,10 @@ ACE_RCSID(be_visitor_operation, argument, "$Id$")
 // do_static_call/upcall stuff with arguments
 // ************************************************************
 
-be_visitor_operation_argument::be_visitor_operation_argument (be_visitor_context
-                                                            *ctx)
-  : be_visitor_scope (ctx)
+be_visitor_operation_argument::
+be_visitor_operation_argument (be_visitor_context
+                               *ctx)
+  : be_visitor_operation (ctx)
 {
 }
 
@@ -47,6 +48,9 @@ be_visitor_operation_argument::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
+  // if we are not the last parameter, we insert a comma. This is only
+  // applicable for the upcalls or the call to (de)marshal that we use in the
+  // interpreted marshaling.
   if (!this->last_node (bd))
     {
       switch (this->ctx_->state ())
@@ -67,6 +71,8 @@ be_visitor_operation_argument::post_process (be_decl *bd)
 int
 be_visitor_operation_argument::visit_operation (be_operation *node)
 {
+  TAO_OutStream *os = this->ctx_->stream ();
+
   // all we do is hand over code generation to our scope
   if (this->visit_scope (node) == -1)
     {
@@ -75,6 +81,28 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
                          "visit_operation - "
                          "codegen for scope failed\n"),
                         -1);
+    }
+
+  // if we are supporting the alternate mapping, we must pass the
+  // CORBA::Environment parameter as the last parameter
+  if (!idl_global->exception_support ())
+    {
+      switch (this->ctx_->state ())
+        {
+        case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
+        case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
+          // applicable only to these cases where the actual upcall is made 
+
+          // last argument is the environment
+          if (node->argument_count () > 0)
+            // insert a comma only if there were previous parameters
+            *os << ",\n";
+          os->indent ();
+          *os << "ACE_TRY_ENV";
+          break;
+        default:
+          break;
+        }
     }
 
   return 0;

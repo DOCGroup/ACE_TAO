@@ -487,14 +487,14 @@ be_visitor_field_ch::visit_union (be_union *node)
       ctx.node (node); // set the node to be the node being visited. The scope
                        // is still the same
 
-      // first generate the enum declaration
-      ctx.state (TAO_CodeGen::TAO_ENUM_CH);
+      // first generate the union declaration
+      ctx.state (TAO_CodeGen::TAO_UNION_CH);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_ch::"
-                             "visit_enum - "
+                             "visit_union - "
                              "Bad visitor\n"
                              ), -1);
         }
@@ -502,7 +502,7 @@ be_visitor_field_ch::visit_union (be_union *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_ch::"
-                             "visit_enum - "
+                             "visit_union - "
                              "codegen failed\n"
                              ), -1);
         }

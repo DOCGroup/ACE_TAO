@@ -130,7 +130,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << ");\n" << be_uidt_nl;
 
   // add a skeleton for our _non_existent method
-  os->indent ();
   *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
       << "CORBA::ServerRequest &req," << be_nl
       << "void *obj," << be_nl
@@ -158,7 +157,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // the _interface_repository_id method
   *os << "virtual const char* _interface_repository_id "
-      << "(void) const;" << be_uidt_nl;
+      << "(void) const;\n\n";
 
   // generate code for elements in the scope (e.g., operations)
   if (this->visit_scope (node) ==  -1)
@@ -181,7 +180,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "};\n\n";
+
+  *os << be_uidt_nl << "};\n\n";
 
   // generate the collocated class
   be_visitor_context ctx (*this->ctx_);
