@@ -473,8 +473,10 @@ TAO_PropertySet::define_property (const char *property_name,
   if (property_name == 0)
     ACE_THROW (CosPropertyService::InvalidPropertyName());
 
+  CORBA::TypeCode_var arg_tc = property_value.type ();
+
   // Is this type allowed?
-  if (is_type_allowed (property_value.type ()) != 1)
+  if (is_type_allowed (arg_tc.in ()) != 1)
     ACE_THROW (CosPropertyService::UnsupportedTypeCode());
 
   // Is this property allowed?
@@ -492,6 +494,9 @@ TAO_PropertySet::define_property (const char *property_name,
   int ret = this->hash_table_.bind (hash_key,
                                     hash_value,
                                     entry_ptr);
+
+  CORBA::TypeCode_var mapped_tc;
+
   switch (ret)
     {
     case 0:
@@ -503,8 +508,10 @@ TAO_PropertySet::define_property (const char *property_name,
       if (entry_ptr == 0)
         ACE_THROW (CORBA::UNKNOWN ());
 
+      mapped_tc = entry_ptr->int_id_.pvalue_.type ();
+
       // If type is not the same, raise exception.
-      if (entry_ptr->int_id_.pvalue_.type () != property_value.type ())
+      if (! mapped_tc.in ()->equal (arg_tc.in ()))
         ACE_THROW (CosPropertyService::ConflictingProperty());
 
       // If mode is read only, raise exception.
