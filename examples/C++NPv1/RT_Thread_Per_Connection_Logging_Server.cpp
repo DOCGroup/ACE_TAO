@@ -57,7 +57,7 @@ RT_Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 // For simplicity, the Thread_Per_Connection_Logging_Server methods
 // are duplicated here.
 
-void *Thread_Per_Connection_Logging_Server::run_svc (void *arg)
+ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 {
   auto_ptr<Thread_Args> thread_args (ACE_static_cast (Thread_Args *, arg));
 

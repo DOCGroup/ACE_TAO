@@ -41,7 +41,7 @@ public:
 
 static int abandon = 1;
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *data)
 {
   Event_Handler *handler = (Event_Handler *) data;

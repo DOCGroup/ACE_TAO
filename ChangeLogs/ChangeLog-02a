@@ -1,3 +1,66 @@
+Tue Jul  2 11:53:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-all.h: Changed definition of ACE_THR_FUNC to incorporate
+          the platform's thread function return type (DWORD on Windows,
+          void * on most others). Uses a new typedef ACE_THR_FUNC_RETURN
+          to specify the platform's thread function return type.
+
+        * ace/OS.{h i cpp} (thr_exit, thr_join): The status arg is now
+          a ACE_THR_FUNC_RETURN *.
+          Also moved remaining thread function definition type things to
+          config-all.h with the rest of them.
+
+        * ace/Base_Thread_Adapter.{h cpp} (invoke(), ace_thread_adapter()):
+        * ace/OS_Thread_Adapter.{h cpp}
+        * ace/Thread_Adapter.{h cpp} (invoke(), invoke_i()):
+          Return type changed from void * to ACE_THR_FUNC_RETURN.
+
+        * ace/Event_Handler.{cpp h} (read_adapter): Change return value from
+          void* to ACE_THR_FUNC_RETURN.
+
+        * ace/Thread_Hook.{h cpp}: ACE_Thread_Hook::start () returns
+          ACE_THR_FUNC_RETURN, not void *.
+
+        * ace/Thread.{h i} (exit, join): 'status' arg is now
+          ACE_THR_FUNC_RETURN *, not void *.
+
+        * ace/Thread_Control.{h inl cpp} (status, exit):
+        * ace/Thread_Manager.{h cpp} (exit, join): Thread exit status
+          type changed from void * to ACE_THR_FUNC_RETURN.
+
+        * ace/Task.{h cpp} (ACE_Task_Base): Return type from svc_run now
+          ACE_THR_FUNC_RETURN.
+
+        * examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/Thread_Per_Connection_Logging_Server.{cpp, h}:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Server_Shutdown.cpp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+        * examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * performance-tests/TCP/tcp_test.cpp:
+        * tests/ACE_Init_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Service_Config_DLL.cpp:
+        * tests/Task_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+          Change thread function to return ACE_THR_FUNC_RETURN, not void *.
+
+        * examples/C++NPv2/TP_Logging_Server.cpp (handle_input, svc):
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp (open):
+        * examples/C++NPv2/display_logfile.cpp (svc): Change
+          ACE_reinterpret_cast to ACE_static_cast. Thanks to Doug Schmidt
+          for finding this.
+
+        * examples/C++NPv2/TP_Logging_Server.h:
+        * examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp: Corrected use
+          of ACE_NEW_RETURN.
+
 Mon Jul  1 23:16:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * */Makefile:
@@ -96,6 +159,7 @@ Sun Jun 30 12:22:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 	  Updated these files so that the new PortableGroup doxygen
 	  documentation is generated and listed in the index page.
 
+>>>>>>> 4.3830
 Fri Jun 28 08:07:12 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Logging_Strategy.cpp: Added the ability to toggle

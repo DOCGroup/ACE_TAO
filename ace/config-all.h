@@ -600,7 +600,40 @@ typedef ACE_HANDLE ACE_SOCKET;
 
 #endif /* ACE_WIN32 */
 
-typedef void *(*ACE_THR_FUNC)(void *);
+// Define the type that's returned from the platform's native thread
+// functions. ACE_THR_FUNC_RETURN is the type defined as the thread
+// function's return type, except when the thread function doesn't return
+// anything (pSoS). The ACE_THR_FUNC_NO_RETURN_VAL macro is used to
+// indicate that the actual thread function doesn't return anything. The
+// rest of ACE uses a real type so there's no a ton of conditional code
+// everywhere to deal with the possibility of no return type.
+# if defined (VXWORKS)
+//typedef FUNCPTR ACE_THR_FUNC;  // where typedef int (*FUNCPTR) (...)
+typedef int ACE_THR_FUNC_RETURN;
+# elif defined (ACE_PSOS)
+typedef int ACE_THR_FUNC_RETURN;
+// pSOS task functions don't really return anything... this just makes it
+// easier to deal with declaring variables internally in ACE.
+# elif defined (ACE_WIN32)
+typedef DWORD ACE_THR_FUNC_RETURN;
+# else
+typedef void* ACE_THR_FUNC_RETURN;
+# endif /* VXWORKS */
+typedef ACE_THR_FUNC_RETURN (*ACE_THR_FUNC)(void *);
+
+// Now some platforms have special requirements...
+# if defined (VXWORKS)
+typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
+# elif defined (ACE_PSOS)
+typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
+# else
+typedef ACE_THR_FUNC ACE_THR_FUNC_INTERNAL;
+# endif /* VXWORKS */
+
+extern "C" {
+typedef void (*ACE_THR_C_DEST)(void *);
+}
+typedef void (*ACE_THR_DEST)(void *);
 
 # if defined (VXWORKS)
 #   if defined (ghs)
@@ -623,7 +656,7 @@ typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
 typedef void (*PSOS_TASK_ENTRY_POINT)();
 typedef void (*ACE_THR_C_FUNC)(void *);
 # else
-typedef void *(*ACE_THR_C_FUNC)(void *);
+typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 # endif /* VXWORKS */
 }
 

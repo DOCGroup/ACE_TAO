@@ -7,7 +7,7 @@ ACE_RCSID (tests,
            Service_Config_DLL,
            "$Id$")
 
-static void *
+static ACE_THR_FUNC_RETURN
 invoke_service_config (void *arg)
 {
   const ACE_TCHAR *directive = ACE_reinterpret_cast (const ACE_TCHAR *,

@@ -17,7 +17,7 @@
 
 static void sigterm_handler (int /* signum */) { /* No-op. */ }
 
-void *Thread_Per_Connection_Logging_Server::run_svc (void *arg)
+ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 {
   auto_ptr<Thread_Args> thread_args (ACE_static_cast (Thread_Args *, arg));
 

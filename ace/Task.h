@@ -227,7 +227,7 @@ public:
   void thr_count_dec (void);
 
   /// Routine that runs the service routine as a daemon thread.
-  static void *svc_run (void *);
+  static ACE_THR_FUNC_RETURN svc_run (void *);
 
   /// Cleanup hook that is called when a thread exits to gracefully
   /// shutdown an <ACE_Task>.

@@ -3,8 +3,8 @@
 
 // Set the exit status.
 
-ACE_INLINE void *
-ACE_Thread_Control::status (void *s)
+ACE_INLINE ACE_THR_FUNC_RETURN
+ACE_Thread_Control::status (ACE_THR_FUNC_RETURN s)
 {
   ACE_OS_TRACE ("ACE_Thread_Control::status");
   return this->status_ = s;
@@ -12,7 +12,7 @@ ACE_Thread_Control::status (void *s)
 
 // Get the exit status.
 
-ACE_INLINE void *
+ACE_INLINE ACE_THR_FUNC_RETURN
 ACE_Thread_Control::status (void)
 {
   ACE_OS_TRACE ("ACE_Thread_Control::status");

@@ -41,7 +41,7 @@ private:
 };
 
 
-static void *controller (void *arg) {
+static ACE_THR_FUNC_RETURN controller (void *arg) {
   ACE_Reactor *reactor = ACE_static_cast (ACE_Reactor *, arg);
 
   Quit_Handler *quit_handler = 0;

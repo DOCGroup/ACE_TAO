@@ -102,8 +102,8 @@ public:
 
   virtual int init (int argc, ACE_TCHAR *argv[]) {
     int i;
-    char *array = 0;
-    ACE_NEW_RETURN (array, new char *[argc], -1);
+    char **array = 0;
+    ACE_NEW_RETURN (array, char*[argc], -1);
     ACE_Auto_Array_Ptr<char *> char_argv (array);
 
     for (i = 0; i < argc; ++i)

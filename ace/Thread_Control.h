@@ -32,14 +32,14 @@ class ACE_Thread_Manager;
  * @brief Used to keep track of a thread's activities within its entry
  * point function.
  *
- * A <ACE_Thread_Manager> uses this class to ensure that threads
+ * A ACE_Thread_Manager uses this class to ensure that threads
  * it spawns automatically register and unregister themselves
  * with it.
  * This class can be stored in thread-specific storage using the
- * <ACE_TSS> wrapper.  When a thread exits the
+ * ACE_TSS wrapper.  When a thread exits the
  * <ACE_TSS::cleanup> function deletes this object, thereby
  * ensuring that it gets removed from its associated
- * <ACE_Thread_Manager>.
+ * ACE_Thread_Manager.
  */
 class ACE_Export ACE_Thread_Control
 {
@@ -53,10 +53,10 @@ public:
   /// the thread if <do_thr_exit> is enabled.
   ~ACE_Thread_Control (void);
 
-  /// Remove this thread from its associated <Thread_Manager> and exit
-  /// the thread if <do_thr_exit> is enabled.
-  void *exit (void *status,
-              int do_thr_exit);
+  /// Remove this thread from its associated ACE_Thread_Manager and exit
+  /// the thread if @a do_thr_exit is enabled.
+  ACE_THR_FUNC_RETURN exit (ACE_THR_FUNC_RETURN status,
+                            int do_thr_exit);
 
   /// Store the <Thread_Manager> and use it to register ourselves for
   /// correct shutdown.
@@ -70,10 +70,10 @@ public:
   ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *);
 
   /// Set the exit status (and return existing status).
-  void *status (void *status);
+  ACE_THR_FUNC_RETURN status (ACE_THR_FUNC_RETURN status);
 
   /// Get the current exit status.
-  void *status (void);
+  ACE_THR_FUNC_RETURN status (void);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -86,7 +86,7 @@ private:
   ACE_Thread_Manager *tm_;
 
   /// Keeps track of the exit status for the thread.
-  void *status_;
+  ACE_THR_FUNC_RETURN status_;
 };
 
 # if defined (ACE_HAS_INLINED_OSCALLS)

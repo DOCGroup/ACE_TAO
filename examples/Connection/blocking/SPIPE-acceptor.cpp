@@ -155,7 +155,7 @@ IPC_Server::parse_args (int argc, char *argv[])
   return 0;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 run_reactor_event_loop (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) worker thread starting\n"));

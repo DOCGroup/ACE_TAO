@@ -414,7 +414,7 @@ Server::handle_close (ACE_HANDLE,
   return 0;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 thread_pool_worker (void *)
 {
   // Server thread function.

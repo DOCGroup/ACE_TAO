@@ -24,17 +24,17 @@
 /**
  * @class ACE_OS_Thread_Adapter
  *
- * @brief Converts a C++ function into a function <ace_thread_adapter>
- * function that can be called from a thread creation routine
- * (e.g., <pthread_create> or <_beginthreadex>) that expects an
+ * @brief Converts a C++ function into a function that can be
+ * called from a thread creation routine
+ * (e.g., pthread_create() or _beginthreadex()) that expects an
  * extern "C" entry point.  This class also makes it possible to
  * transparently provide hooks to register a thread with an
- * <ACE_Thread_Manager>.
+ * ACE_Thread_Manager.
  *
- * This class is used in <ACE_OS::thr_create>.  In general, the
+ * This class is used in ACE_OS::thr_create().  In general, the
  * thread that creates an object of this class is different from
- * the thread that calls <invoke> on this object.  Therefore,
- * the <invoke> method is responsible for deleting itself.
+ * the thread that calls invoke() on this object.  Therefore,
+ * the invoke() method is responsible for deleting itself.
  */
 class ACE_OS_Export ACE_OS_Thread_Adapter : public ACE_Base_Thread_Adapter
 {
@@ -50,11 +50,11 @@ public:
                          );
 
   /**
-   * Execute the <user_func_> with the <arg>.  This function deletes
-   * <this>, thereby rendering the object useless after the call
+   * Execute the @a user_func_ with the @a arg.  This function deletes
+   * @c this, thereby rendering the object useless after the call
    * returns.
    */
-  virtual void *invoke (void);
+  virtual ACE_THR_FUNC_RETURN invoke (void);
 
 private:
   /// Ensure that this object must be allocated on the heap.

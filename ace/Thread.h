@@ -134,11 +134,11 @@ public:
   /// Wait for one or more threads to exit and reap their exit status.
   static int join (ACE_thread_t,
                    ACE_thread_t *,
-                   void **status);
+                   ACE_THR_FUNC_RETURN *status);
 
   /// Wait for one thread to exit and reap its exit status.
   static int join (ACE_hthread_t,
-                   void ** = 0);
+                   ACE_THR_FUNC_RETURN * = 0);
 
   /// Continue the execution of a previously suspended thread.
   static int resume (ACE_hthread_t);
@@ -171,7 +171,7 @@ public:
 
   /// Exit the current thread and return "status".
   /// Should _not_ be called by main thread.
-  static void exit (void *status = 0);
+  static void exit (ACE_THR_FUNC_RETURN status = 0);
 
   /// Get the LWP concurrency level of the process.
   static int getconcurrency (void);

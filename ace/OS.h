@@ -4080,21 +4080,6 @@ union semun
 
 typedef const char **SYS_SIGLIST;
 
-// This is for C++ static methods.
-# if defined (VXWORKS)
-typedef int ACE_THR_FUNC_INTERNAL_RETURN_TYPE;
-typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
-# elif defined (ACE_PSOS)
-typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
-# else
-typedef ACE_THR_FUNC ACE_THR_FUNC_INTERNAL;
-# endif /* VXWORKS */
-
-extern "C" {
-typedef void (*ACE_THR_C_DEST)(void *);
-}
-typedef void (*ACE_THR_DEST)(void *);
-
 # if !defined (MAP_FAILED) || defined (ACE_HAS_BROKEN_MAP_FAILED)
 #   undef MAP_FAILED
 #   define MAP_FAILED ((void *) -1)
@@ -5782,7 +5767,7 @@ public:
                           int &prio,
                           int *policy = 0);
   static int thr_join (ACE_Thread_ID waiter_id,
-                       void **status);
+                       ACE_THR_FUNC_RETURN *status);
   static int thr_kill (ACE_Thread_ID thr_id,
                        int signum);
   static ACE_Thread_ID thr_self (void);
@@ -5843,10 +5828,10 @@ public:
   static int thr_getprio (ACE_hthread_t thr_id,
                           int &prio);
   static int thr_join (ACE_hthread_t waiter_id,
-                       void **status);
+                       ACE_THR_FUNC_RETURN *status);
   static int thr_join (ACE_thread_t waiter_id,
                        ACE_thread_t *thr_id,
-                       void **status);
+                       ACE_THR_FUNC_RETURN *status);
   static int thr_kill (ACE_thread_t thr_id,
                        int signum);
   static ACE_thread_t thr_self (void);
@@ -5861,7 +5846,7 @@ public:
                       ACE_hthread_t t2);
   static int thr_equal (ACE_thread_t t1,
                         ACE_thread_t t2);
-  static void thr_exit (void *status = 0);
+  static void thr_exit (ACE_THR_FUNC_RETURN status = 0);
   static int thr_getconcurrency (void);
   static int lwp_getparams (ACE_Sched_Params &);
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -6412,7 +6397,7 @@ public:
    * NOTE: tss_open () is called by ACE for threads that it spawns.
    * If your application spawns threads without using ACE, and it uses
    * ACE's TSS emulation, each of those threads should call tss_open
-   * ().  See the ace_thread_adapter () implementaiton for an example.
+   * ().  See the ace_thread_adapter () implementation for an example.
    */
   static void *tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX]);
 

@@ -107,7 +107,7 @@ ACE_Task_Base::activate (long flags,
     // Thread Ids were not specified
     grp_spawned =
       this->thr_mgr_->spawn_n (n_threads,
-                               ACE_THR_FUNC (&ACE_Task_Base::svc_run),
+                               &ACE_Task_Base::svc_run,
                                (void *) this,
                                flags,
                                priority,
@@ -121,7 +121,7 @@ ACE_Task_Base::activate (long flags,
     grp_spawned =
       this->thr_mgr_->spawn_n (thread_ids,
                                n_threads,
-                               ACE_THR_FUNC (&ACE_Task_Base::svc_run),
+                               &ACE_Task_Base::svc_run,
                                (void *) this,
                                flags,
                                priority,
@@ -182,7 +182,7 @@ ACE_Task_Base_cleanup (void *object, void *)
 }
 #endif /* ACE_HAS_SIG_C_FUNC */
 
-void *
+ACE_THR_FUNC_RETURN
 ACE_Task_Base::svc_run (void *args)
 {
   ACE_TRACE ("ACE_Task_Base::svc_run");
@@ -200,7 +200,8 @@ ACE_Task_Base::svc_run (void *args)
 #endif /* ACE_HAS_SIG_C_FUNC */
 
   // Call the Task's svc() hook method.
-  void * status = ACE_reinterpret_cast(void *, t->svc ());
+  ACE_THR_FUNC_RETURN status =
+    ACE_reinterpret_cast(ACE_THR_FUNC_RETURN, t->svc ());
 
 // If we changed this zero change the other if in OS.cpp Thread_Adapter::invoke
 #if 1
