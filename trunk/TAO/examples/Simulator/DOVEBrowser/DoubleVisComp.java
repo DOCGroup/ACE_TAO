@@ -32,14 +32,20 @@ public class DoubleVisComp extends Canvas implements VisComp
   private int max_value_;
   private int old_max_value_;
   private int spacing_;
-  private float local_max_ = 0;
   private boolean max_increased_ = false;
   private static boolean monotonic_scale_ = false;
-  private static int global_max_value_ = 0;
+
+  private float local_max_ = 0;
+  private static float local_max_values_ [] = null;
+  private static int local_max_value_count_ = 0;
+  private int local_max_value_index_ = 0;
 
   public DoubleVisComp()
   {
     super();
+
+    // Re-initialize the global array of local maxima.
+    local_max_init ();
 
     plot_ = new Queue();
     spacing_ = MIN_SPACING;
@@ -71,14 +77,6 @@ public class DoubleVisComp extends Canvas implements VisComp
 
   public static synchronized boolean monotonic_scale () {
     return monotonic_scale_;
-  }
-
-  public static synchronized void raise_global_max_value (int i) {
-    global_max_value_ = global_max_value_ < i ? i : global_max_value_;
-  }
-
-  public static synchronized int global_max_value () {
-    return global_max_value_;
   }
 
   public void setName (String title) {
@@ -122,17 +120,21 @@ public class DoubleVisComp extends Canvas implements VisComp
     plot_.enqueue_head(new Float(new_point));
     
     if (new_point > local_max_)
-      local_max_ = new_point;
+      {
+        local_max_ = new_point;
+        local_max_values_ [local_max_value_index_] = local_max_;
+      }
     
     if (monotonic_scale_)
       {
-        while (local_max_ > max_value_)
-          max_value_ *= 2;
+        float global_max = 0;
+        global_max = global_max_value ();
 
-        while (global_max_value_ > max_value_)
+        while (global_max > max_value_)
           max_value_ *= 2;
-
-        raise_global_max_value (max_value_);
+    
+        while ((global_max < max_value_/2) && (max_value_ > old_max_value_))
+          max_value_ /= 2;
       }
     else
       {
@@ -171,6 +173,7 @@ public class DoubleVisComp extends Canvas implements VisComp
     g.draw3DRect (2, 2, d.width - 5, d.height - 5, true);
     
     local_max_ = 0;
+
     offgraphics_.setColor (getBackground());
     offgraphics_.fillRect (0, 0, offscreensize_.width, offscreensize_.height);
     offgraphics_.setColor (getForeground());    
@@ -199,6 +202,8 @@ public class DoubleVisComp extends Canvas implements VisComp
 	  break;
       }
 
+    local_max_values_ [local_max_value_index_] = local_max_;
+
     g.drawImage(offscreen_, 3, 3, null);
   }
   
@@ -222,6 +227,40 @@ public class DoubleVisComp extends Canvas implements VisComp
     update(g);
   }
 
+  private static synchronized float global_max_value () {
+    float result = 0;
+
+    for (int i = 0; i < local_max_value_count_; ++i)
+      {
+        if (result < local_max_values_ [i])
+          {
+            result = local_max_values_ [i];
+          }
+      }
+
+    return result;
+  }
+
+  private synchronized void local_max_init () {
+
+    // Create a new, larger, array to hold the local maxima
+    float new_max_values [] = 
+      new float [local_max_value_count_ + 1];
+
+    // Copy the previously stored maxima (if any) into the new array.
+    for (int i = 0; i < local_max_value_count_; ++i)
+      {
+        new_max_values [i] = local_max_values_ [i];
+      }
+
+    // Replace the old array with the new one.
+    local_max_values_ = new_max_values;
+
+    // Store the local index for this object, bump up the count.
+    local_max_value_index_ = local_max_value_count_;
+    local_max_value_count_++;
+  }
+
 
   private int normalize(int height, float coord)
   {
@@ -232,4 +271,5 @@ public class DoubleVisComp extends Canvas implements VisComp
     return Math.round(location);
   }
 }
+
 
