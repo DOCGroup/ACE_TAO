@@ -136,6 +136,30 @@ public:
  * This class uses an <ACE_Allocator> to allocate memory.  The
  * user can make this a persistent class by providing an
  * <ACE_Allocator> with a persistable memory pool.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Binary tree
+ *   - Duplicates allowed?
+ *       No
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       Log(n)
+ *   - Insert/replace speed
+ *       Log(n)
+ *   - Iterator still valid after change to container?
+ *       Yes
+ *   - Frees memory for removed elements?
+ *       Yes
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *       -# operator==
+ *       -# operator<
  */
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree : public ACE_RB_Tree_Base

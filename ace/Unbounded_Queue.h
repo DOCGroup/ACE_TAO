@@ -122,6 +122,29 @@ private:
  *
  * This implementation of an unbounded queue uses a circular
  * linked list with a dummy node.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Circular linked list
+ *   - Duplicates allowed?
+ *       Yes
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       N/A
+ *   - Insert/replace speed
+ *       N/A
+ *   - Iterator still valid after change to container?
+ *       Yes
+ *   - Frees memory for removed elements?
+ *       Yes
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *
  */
 template <class T>
 class ACE_Unbounded_Queue
