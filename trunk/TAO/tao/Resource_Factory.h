@@ -144,18 +144,22 @@ public:
   /// Return an Connector to be utilized.
   virtual TAO_Connector_Registry *get_connector_registry (void);
 
-  /// Access the input CDR allocators.
+  /// @name Access the input CDR allocators.
+  //@{
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
+  //@}
 
   // Return 1 when the input CDR allocator uses a lock else 0.
   virtual int input_cdr_allocator_type_locked (void);
 
-  /// Access the output CDR allocators.
+  /// @name Access the output CDR allocators.
+  //@{
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
   virtual ACE_Allocator* output_cdr_msgblock_allocator (void);
+  //@}
 
   /**
    * The protocol factory list is implemented in this class since
@@ -168,7 +172,7 @@ public:
   virtual TAO_Codeset_Manager *get_codeset_manager(void);
 
   /**
-   * this method will loop through the protocol list and
+   * This method will loop through the protocol list and
    * using the protocol name field this method will
    * retrieve a pointer to the associated protocol factory
    * from the service configurator.  It is assumed
@@ -192,7 +196,7 @@ public:
                                 int &number_of_names);
 
   /// Creates the lock for the lock needed in the Cache Map
-  /// @deprecated:
+  /// @deprecated
   virtual ACE_Lock *create_cached_connection_lock (void);
 
   /// Should the transport cache have a lock or not? Return 1 if the
