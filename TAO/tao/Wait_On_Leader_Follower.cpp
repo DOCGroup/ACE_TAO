@@ -91,6 +91,9 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                       this->transport_,
                       cond));
 
+        // Keep the entry on the stack
+        ACE_NESTED_CLASS (TAO_Leader_Follower, TAO_Follower_Node) node(cond);
+
         while (!reply_received &&
                leader_follower.leader_available ())
           {
@@ -118,7 +121,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
             // lost.
             //
 
-            (void) leader_follower.add_follower (cond);
+            (void) leader_follower.add_follower (&node);
 
             if (max_wait_time == 0)
               {
@@ -145,10 +148,10 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                                   ACE_TEXT ("cond == 0 || cond->wait (tv) == -1\n"),
                                   this->transport_));
 
-                    if (leader_follower.remove_follower (cond) == -1)
+                    if (leader_follower.remove_follower (&node) == -1)
                       ACE_ERROR ((LM_ERROR,
                                   "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
-                                  "remove_follower failed for <%x>\n", cond));
+                                  "remove_follower failed for <%x>\n", node.follower_));
 
                     return -1;
                   }
@@ -161,10 +164,10 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
         // Cannot remove the follower here, we *must* remove it when
         // we signal it so the same condition is not signalled for
         // both wake up as a follower and as the next leader.
-        if (leader_follower.remove_follower (cond) == -1)
+        if (leader_follower.remove_follower (&node) == -1)
           ACE_ERROR ((LM_ERROR,
                       "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
-                      "remove_follower failed for <%x>\n", cond));
+                      "remove_follower failed for <%x>\n", node.follower));
 #endif /* 0 */
 
         if (TAO_debug_level >= 5)
@@ -274,7 +277,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
           result = -1;
           errno = ETIME;
         }
-      else if (reply_received == -1)        
+      else if (reply_received == -1)
         {
           // If the time did not expire yet, but we get a failure,
           // e.g. the connections closed, we should still return an error.
@@ -316,6 +319,10 @@ TAO_Wait_On_Leader_Follower::reply_dispatched (int &reply_received_flag,
 
   reply_received_flag = 1;
 
+  // The following works as the node is assumed to be on the stack
+  // till the thread is alive.
+  ACE_NESTED_CLASS (TAO_Leader_Follower, TAO_Follower_Node) node (condition);
+
   // We *must* remove it when we signal it so the same condition
   // is not signalled for both wake up as a follower and as the
   // next leader.
@@ -323,7 +330,7 @@ TAO_Wait_On_Leader_Follower::reply_dispatched (int &reply_received_flag,
   // the consumer is not yet waiting for it (i.e. it send the
   // request but has not blocked to receive the reply yet).
   // Ignore errors.
-  (void) leader_follower.remove_follower (condition);
+  (void) leader_follower.remove_follower (&node);
 
   if (condition->signal () == -1)
     return -1;
@@ -346,7 +353,11 @@ TAO_Wait_On_Leader_Follower::connection_closed (int &reply_received_flag,
 
   reply_received_flag = -1;
 
-  (void) leader_follower.remove_follower (condition);
+  // The following works as the node is assumed to be on the stack
+  // till the thread is alive.
+  ACE_NESTED_CLASS (TAO_Leader_Follower, TAO_Follower_Node) node(condition);
+
+  (void) leader_follower.remove_follower (&node);
 
   (void) condition->signal ();
 }
