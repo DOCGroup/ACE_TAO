@@ -42,6 +42,7 @@ Client_Task::svc (void)
       ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::Any scope_as_any;
       scope_as_any <<= this->sync_scope_;

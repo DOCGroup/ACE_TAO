@@ -69,6 +69,8 @@ main (int argc, char *argv[])
 
       Test::Coordinator_var coordinator =
         Test::Coordinator::_narrow(tmp.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (coordinator.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
