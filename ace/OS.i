@@ -1476,24 +1476,24 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   // Only do these initializations if the <attributes> parameter
   // wasn't originally set.
   if (attributes == &l_attributes)
-  {
-    if (::pace_pthread_mutexattr_init (attributes) == 0)
-      result = 0;
-    else
-      result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
-  }
+    {
+      if (::pace_pthread_mutexattr_init (attributes) == 0)
+        result = 0;
+      else
+        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
+    }
 
   if (result == 0)
-  {
-    if (
+    {
+      if (
 #     if defined (_POSIX_THREAD_PROCESS_SHARED)
-        ::pace_pthread_mutexattr_setpshared (attributes, type) == 0 &&
+          ::pace_pthread_mutexattr_setpshared (attributes, type) == 0 &&
 #     endif /* _POSIX_THREAD_PROCESS_SHARED */
-        ::pace_pthread_mutex_init (m, attributes) == 0)
-      result = 0;
-    else
-      result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
-  }
+          ::pace_pthread_mutex_init (m, attributes) == 0)
+        result = 0;
+      else
+        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
+    }
   ACE_UNUSED_ARG (sa);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (type);
