@@ -8,8 +8,9 @@ namespace CCF
   {
     namespace SyntaxTree
     {
-      struct InterfaceDef
+      class InterfaceDef
       {
+      protected:
         InterfaceDef ();
       };
       

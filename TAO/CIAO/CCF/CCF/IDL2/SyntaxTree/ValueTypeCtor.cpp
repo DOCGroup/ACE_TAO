@@ -8,8 +8,9 @@ namespace CCF
   {
     namespace SyntaxTree
     {
-      struct ValueTypeDef
+      class ValueTypeDef
       {
+      protected:
         ValueTypeDef ();
       };
       

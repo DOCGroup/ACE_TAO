@@ -29,10 +29,14 @@ class TypeNameEmitter : public Traversal::VoidDecl,
                         public Traversal::FloatDecl,
                         public Traversal::DoubleDecl,
                         public Traversal::StringDecl,
+                        public Traversal::TypedefDecl<StringDecl>,
                         public Traversal::WstringDecl,
+                        public Traversal::TypedefDecl<WstringDecl>,
                         public Traversal::ObjectDecl,
                         public Traversal::ValueBaseDecl,
                         public Traversal::AnyDecl,
+                        public Traversal::StructDecl,
+                        public Traversal::SequenceDecl,
                         public Traversal::LocalInterfaceDecl
 {
 protected:
@@ -63,10 +67,14 @@ public:
   virtual void traverse (FloatDeclPtr const&);
   virtual void traverse (DoubleDeclPtr const&);
   virtual void traverse (StringDeclPtr const&);
+  virtual void traverse (TypedefDeclPtr const&, StringDeclPtr const&);
   virtual void traverse (WstringDeclPtr const&);
+  virtual void traverse (TypedefDeclPtr const&, WstringDeclPtr const&);
   virtual void traverse (ObjectDeclPtr const&);
   virtual void traverse (ValueBaseDeclPtr const&);
   virtual void traverse (AnyDeclPtr const&);
+  virtual void traverse (StructDeclPtr const&);
+  virtual void traverse (SequenceDeclPtr const&);
   virtual void traverse (LocalInterfaceDeclPtr const&);
 };
 
@@ -95,6 +103,8 @@ public:
   virtual void traverse (ObjectDeclPtr const&);
   virtual void traverse (ValueBaseDeclPtr const&);
   virtual void traverse (AnyDeclPtr const&);
+  virtual void traverse (StructDeclPtr const&);
+  virtual void traverse (SequenceDeclPtr const&);
 };
 
 // Generates the typename of an INOUT argument.
@@ -122,6 +132,8 @@ public:
   virtual void traverse (ObjectDeclPtr const&);
   virtual void traverse (ValueBaseDeclPtr const&);
   virtual void traverse (AnyDeclPtr const&);
+  virtual void traverse (StructDeclPtr const&);
+  virtual void traverse (SequenceDeclPtr const&);
 };
 
 // Generates the typename of an OUT argument.
@@ -149,6 +161,8 @@ public:
   virtual void traverse (ObjectDeclPtr const&);
   virtual void traverse (ValueBaseDeclPtr const&);
   virtual void traverse (AnyDeclPtr const&);
+  virtual void traverse (StructDeclPtr const&);
+  virtual void traverse (SequenceDeclPtr const&);
 };
 
 #endif /* TYPENAME_EMITTER_HPP */
