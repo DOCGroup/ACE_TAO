@@ -1,3 +1,7 @@
+Thu Mar 05 12:36:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ACE_TRACE): Added a missing right paren.
+
 Thu Mar 05 10:04:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_chorus_ghs.GNU:  this works,
