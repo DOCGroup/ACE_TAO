@@ -54,7 +54,7 @@ Locator_NT_Service::handle_exception (ACE_HANDLE)
 
 
 /**
- * We do almost the same thing as we do in run_standalone () 
+ * We do almost the same thing as we do in run_standalone ()
  */
 int
 Locator_NT_Service::svc (void)
@@ -71,7 +71,7 @@ Locator_NT_Service::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int status = server.init (opts ACE_ENV_SINGLE_ARG_PARAMETER);
+      int status = server.init (opts ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == -1)
