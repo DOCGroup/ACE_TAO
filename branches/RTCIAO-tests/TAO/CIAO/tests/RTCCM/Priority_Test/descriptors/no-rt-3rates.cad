@@ -59,6 +59,7 @@
           </registercomponent>
         </componentinstantiation>
       </homeplacement>
+     <destination>Remote</destination>
      </processcollocation>
 
   </partitioning>

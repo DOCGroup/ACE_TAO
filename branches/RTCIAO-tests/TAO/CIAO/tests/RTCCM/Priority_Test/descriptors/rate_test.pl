@@ -22,9 +22,8 @@ if ($CIAO_ROOT eq "") {
 
 
 $status = 0;
+$local = 1;
 $assembly = PerlACE::LocalFile ("no-rt-3rates.cad");
-$deploy_config = PerlACE::LocalFile ("test.dat");
-#$deploy_config = PerlACE::LocalFile ("remote.dat");
 $daemon_ior = PerlACE::LocalFile ("daemon.ior");
 $am_ior = PerlACE::LocalFile ("am.ior");
 $c25_ior = PerlACE::LocalFile ("c25.ior");
@@ -33,10 +32,10 @@ $c75_ior = PerlACE::LocalFile ("c75.ior");
 $cookie = PerlACE::LocalFile ("ck_demo_deployment");
 
 ## The following control how to iterate thru various work amount
-$start_work = 10;
-$end_work = 300;
-$work_step = 300;
-$run_time = 10;                 # run for $run_time sec.
+$start_work = 300;
+$end_work = 301;
+$work_step = 100;
+$run_time = 40;                 # run for $run_time sec.
 
 unlink $daemon_ior;
 unlink $am_ior;
@@ -51,14 +50,27 @@ while ( $#ARGV >= 0)
     if ($ARGV[0] =~ m/^-test_deploy/i) {
         $test_deploy = 1;
     }
-    elsif ($ARGV[0] =~ m/^-no_daemon/i) {
-        $no_daemon = 1;
+    elsif ($ARGV[0] =~ m/^-remote/i) {
+        $local = 0;
+    }
+    elsif ($ARGV[0] =~ m/^-assmbly/i) {
+        shift;
+        if ($#ARGV >= 0) {
+            $assembly = PerlACE::LocalFile ("$ARGV[0]");
+        }
     }
     else {
         die "Invalid flag: $ARGV[0]\n";
     }
 
     shift;
+}
+
+if ($local == 1) {
+    $deploy_config = PerlACE::LocalFile ("test.dat");
+}
+else {
+    $deploy_config = PerlACE::LocalFile ("remote.dat");
 }
 
 # CIAO Daemon command line arguments
@@ -74,7 +86,7 @@ $ad_teardown = " -k file://$am_ior -d $cookie -x";
 $DS = new PerlACE::Process ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
                             "$daemon_args1");
 
-if ($no_daemon == 0) {
+if ($local == 1) {
 ## Starting up the CIAO daemon
     $DS->Spawn ();
     if (PerlACE::waitforfile_timed ($daemon_ior, 15) == -1) {
@@ -159,7 +171,9 @@ $DS->Kill ();
 
 
 unlink $cookie;
-unlink $controller_ior;
+unlink $c25_ior;
+unlink $c50_ior;
+unlink $c75_ior;
 unlink $daemon_ior;
 unlink $am_ior;
 

@@ -22,7 +22,7 @@ if ($CIAO_ROOT eq "") {
 
 
 $status = 0;
-$assembly = PerlACE::LocalFile ("demo-50.cad");
+$assembly = PerlACE::LocalFile ("demo.cad");
 $deploy_config = PerlACE::LocalFile ("test.dat");
 #$deploy_config = PerlACE::LocalFile ("remote.dat");
 $daemon_ior = PerlACE::LocalFile ("daemon.ior");
@@ -30,10 +30,12 @@ $am_ior = PerlACE::LocalFile ("am.ior");
 $controller_ior = PerlACE::LocalFile ("controller.ior");
 $cookie = PerlACE::LocalFile ("ck_demo_deployment");
 
+$compserver="$CIAO_ROOT/tools/ComponentServer/ComponentServer";
+
 ## The following control how to iterate thru various work amount
 $start_work = 10;
-$end_work = 300;
-$work_step = 300;
+$end_work = 400;
+$work_step = 10;
 $run_time = 30;                 # run for $run_time sec.
 
 unlink $daemon_ior;
@@ -65,7 +67,7 @@ while ( $#ARGV >= 0)
 }
 
 # CIAO Daemon command line arguments
-$daemon_args1 = "-ORBEndpoint iiop://localhost:10000 -o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
+$daemon_args1 = "-ORBEndpoint iiop://localhost:10000 -o $daemon_ior -i CIAO_Installation_Data.ini -n $compserver";
 
 $assembly_manager_args = "-o $am_ior -c $deploy_config";
 
