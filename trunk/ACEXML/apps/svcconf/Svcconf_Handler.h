@@ -294,7 +294,7 @@ private:
   ACE_Service_Type *stream_svc_type_;
   ACE_Stream_Type *stream_;
 
-  ACE_SHLIB_HANDLE dll_handle_;
+  //ACE_SHLIB_HANDLE dll_handle_;
 
   ACE_Parsed_Info parsed_info_;
 

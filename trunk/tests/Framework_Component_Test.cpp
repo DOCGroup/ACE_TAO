@@ -61,14 +61,10 @@ run_test (u_long unload_mask = 0)
 
   // Now, let the ACE Service Configurator framework load our service from a
   // dll, which contains a singleton.
-  ACE_ARGV args;
-  args.add (ACE_TEXT ("Framework_Component_Test"));
-  args.add (ACE_TEXT ("-n"));
-  args.add (ACE_TEXT ("-d"));
-
-  // Initialize Service Config.
-  ACE_Service_Config::open (args.argc (), args.argv ());
-
+  ACE_Service_Config::open (ACE_TEXT ("Framework_Component_Test"),
+                            ACE_DEFAULT_LOGGER_KEY,
+                            1, 1, 1);
+ 
   // Now add server 1.
   ACE_Service_Config::process_directive (ADD_SERVICE(1));
 
