@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO 
+LDLIBS = -lTAO -lTAO_PortableServer
 IDL_FILES = CCS
 IDL_SRC = CCSC.cpp CCSS.cpp
 IDL_HDR = CCSC.h CCSS.h
@@ -64,15 +64,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 .PRECIOUS: CCSS.cpp CCSS.i CCSS.h
 .PRECIOUS: CCSS_T.cpp CCSS_T.i CCSS_T.h
 
-override TAO_IDLFLAGS += -hc .hh -hs S.hh -hT S_T.hh \
-			 -cs C.cc -ci C.i \
-                         -ss S.cc -sT S_T.cc  
+override TAO_IDLFLAGS += -Ge 0
 CCFLAGS += -fimplicit-templates -frtti -O0
 
 $(IDL_SRC): CCS.idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl CCS.idl  -hc .h -hs S.h -hT S_T.h \
-	-cs C.cpp  \
-	-ss S.cpp -sT S_T.cpp  
 server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 

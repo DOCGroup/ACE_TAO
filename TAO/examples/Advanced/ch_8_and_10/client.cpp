@@ -17,10 +17,7 @@
 //
 // ============================================================================
 
-
-
-
-#include    "CCS.h"        // ORB-specific
+#include    "CCSC.h"        // ORB-specific
 //#include    <iostream.h>
 
 // Show the details for a thermometer or thermostat.
