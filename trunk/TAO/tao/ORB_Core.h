@@ -1240,7 +1240,7 @@ protected:
  * TAO_ORB_Core_Auto_Ptr should be renamed to TAO_ORB_Core_var
  * since the ORB Core is reference counted.
  */
-class TAO_ORB_Core_Auto_Ptr
+class TAO_Export TAO_ORB_Core_Auto_Ptr
 {
 public:
 
