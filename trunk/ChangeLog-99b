@@ -1,5 +1,10 @@
 Tue Nov 16 07:58:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* netsvcs/lib/Client_Logging_Handler.cpp (fini): 
+	  Make sure to dynamically allocate the logger_key_ and
+ 	  server_host_ so that we don't end up with weird memory problems.
+  	  Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
+
 	* ace/config-irix6.x-common.h: Added
 	  ACE_LACKS_PLACEMENT_OPERATOR_DELETE to keep Irix compilers from
 	  complaining!  Thanks to David for reporting this.
