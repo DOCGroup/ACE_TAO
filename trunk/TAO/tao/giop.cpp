@@ -628,22 +628,10 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   CORBA::Object_ptr obj = 0;
 
   // Get a CORBA::Object_ptr from _data using <QueryInterface>.
- (void) this->data_->QueryInterface (IID_CORBA_Object, (void **) &obj);
+  (void) this->data_->QueryInterface (IID_CORBA_Object, (void **) &obj);
 
-  // Get a pointer to the orb from the object
-  CORBA::ORB_ptr orb;
-
-#if (TAO_HAS_TSS_ORBCORE)
-  // Get the connector from thread-specific storage.
-  orb = TAO_ORB_Core_instance ()->orb ();
-  assert (orb == obj->orb ());
-#else
-  orb = obj->orb ();
-  // con = orb->client_factory ()->connector ();
-#endif /* 0 */
-
-  // Get a pointer to the client connector.
-  TAO_CONNECTOR *con = orb->connector ();
+  // Get a pointer to the connector.
+  TAO_CONNECTOR *con = TAO_ORB_Core_instance ()->connector ();
 
   // Determine the object key and the address to which we'll need a
   // connection.
