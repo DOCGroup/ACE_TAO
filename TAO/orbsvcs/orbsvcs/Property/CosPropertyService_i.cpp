@@ -521,12 +521,12 @@ TAO_PropertySet::define_property (const char *property_name,
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO_PropertySet::Define Property failed\n"));
-          TAO_THROW (CORBA::UNKNOWN ());
+          ACE_THROW (CORBA::UNKNOWN ());
         }
       break;
     default:
       // Error. ret is -1.
-      TAO_THROW (CORBA::UNKNOWN ());
+      ACE_THROW (CORBA::UNKNOWN ());
     }
 
   return;
@@ -845,7 +845,6 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
 
   for (size_t i = 0; i < n; i++)
     {
-      ACE_TRY_ENV.clear ();
       any_ptr = get_property_value (property_names [i],
                                     ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
@@ -1392,13 +1391,12 @@ TAO_PropertySetDef::define_properties_with_modes (const CosPropertyService::Prop
          }
       ACE_CATCH (CosPropertyService::UnsupportedMode, ex)
         {
-          ACE_TRY_ENV.print_exception ("UnsupportedMode");
-            size_t len = multi_ex.exceptions.length ();
-            multi_ex.exceptions.length (len + 1);
-            multi_ex.exceptions[len].reason =
-              CosPropertyService::unsupported_mode;
-            multi_ex.exceptions[len].failing_property_name =
-              property_defs[i].property_name;
+          size_t len = multi_ex.exceptions.length ();
+          multi_ex.exceptions.length (len + 1);
+          multi_ex.exceptions[len].reason =
+            CosPropertyService::unsupported_mode;
+          multi_ex.exceptions[len].failing_property_name =
+            property_defs[i].property_name;
         }
       ACE_CATCH (CORBA::SystemException, sysex)
         {
