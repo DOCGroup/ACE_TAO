@@ -12,12 +12,11 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-TAO_IDLFLAGS += -hc Cli.h -hs Ser.h -hT Ser_T.h
-TAO_IDLFLAGS += -cs Cli.cpp -ci Cli.i
-TAO_IDLFLAGS += -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i
-TAO_IDLFLAGS += -Gc
+override TAO_IDLFLAGS += -hc Cli.h -hs Ser.h -hT Ser_T.h \
+			 -cs Cli.cpp -ci Cli.i \
+			 -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i
 
-LDLIBS     =  -lTAO
+LDLIBS   = -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao
 
 IDL_HDR	= param_testCli.h param_testSer.h
