@@ -4,9 +4,10 @@
 *
 *  $Id$
 *
-*  This visitor creates for AMH implied IDL constructs the appropriate AST
+*  This visitor creates for AMH implied IDL constructs for the ResponseHandler, 
+*  the appropriate AST
 *  (Abstract Syntax Tree) node, sets the corresponding interface or operation
-*  strategy on it and enteres the nodes into the AST.
+*  strategy on it and enters the node into the AST.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 */
@@ -64,38 +65,15 @@ class be_visitor_amh_pre_proc : public be_visitor_scope
                                 be_valuetype *excep_holder,
                                 Operation_Kind operation_kind);
 
-    /// Creates the AMH version of the interface
-    be_interface *create_amh_class (be_interface *node);
+    /// Create the reponse handler interface
+    be_interface *create_response_handler (be_interface *node);
 
-    /// Create a method in the AMH tree
-    int create_amh_operation (be_operation *node,
-                              be_interface *amh_class);
-
-    /// Create the skeleton reponse handler interface
-    be_interface *create_skeleton_response_handler (be_interface *node);
-
-    /// Create the client reponse handler interface
-    be_interface *create_client_response_handler (be_interface *node); //,
-                                           //be_valuetype *excep_holder);
-
-	/// method to add memebers to the response handler interfaces
-	int add_rh_node_members ( be_interface *node,
-		be_interface *response_handler);
-
+    /// method to add memebers to the response handler interfaces
+    int add_rh_node_members ( be_interface *node,
+                              be_interface *response_handler);
+    
 	/// Create the exception holder valuetype
     be_valuetype *create_exception_holder (be_interface *node);
-
-    /// Create a method with "sendc_" prepended, if for_arguments
-    /// equals one the sendc operation contains also the
-    /// object reference to the response handler as the first argument,
-    /// but this should not be marhaled, therefore we need the switch
-    //  be_operation *create_sendc_operation (be_operation *node,
-    //                                        int for_arguments);
-
-    /// Create a method with "_excep" appended
-    //  int create_excep_operation (be_operation *node,
-    //                              be_interface *response_handler,
-    //                              be_valuetype *excep_holder);
 
     /// Create an operation with return, OUT and INOUT arguments
     int create_response_handler_operation (be_operation *node,

@@ -24,6 +24,7 @@
 
 #include "be_visitor_interface.h"
 
+
 ACE_RCSID(be_visitor_interface, interface_ss, "$Id$")
 
 
@@ -43,12 +44,19 @@ be_visitor_interface_ss::~be_visitor_interface_ss (void)
 int
 be_visitor_interface_ss::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os; // output stream
-
   if (node->srv_skel_gen () || node->imported () || node->is_local ())
     return 0;
 
-  os = this->ctx_->stream ();
+  // if we are to generate AMH classes, do it now
+  if (be_global->gen_amh_classes ())
+    {
+      //be_visitor_amh_interface_ss amh_intf (this->ctx_);
+      //amh_intf.visit_interface (node);
+    }
+
+  // Generate the normal skeleton as usual
+
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // generate the skeleton class name
 

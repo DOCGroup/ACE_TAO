@@ -80,29 +80,3 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 //  *os << "this->asynchronous_upcall_reply (req);" << be_uidt_nl;
   *os << be_uidt_nl << "}" << be_nl;
 }
-
-
-
-// ----------------------- RH -----------------------------
-
-be_visitor_amh_rh_interface_ss::be_visitor_amh_rh_interface_ss (be_visitor_context *ctx)
-  : be_visitor_interface_ss (ctx)
-{
-}
-
-be_visitor_amh_rh_interface_ss::~be_visitor_amh_rh_interface_ss (void)
-{
-}
-
-/*void
-be_visitor_amh_rh_interface_ss::this_method (be_interface *node)
-{
-// No need to generate any code
-}
-
-void
-be_visitor_amh_rh_interface_ss::dispatch_method (be_interface *node)
-{
-// No need to generate any code
-}
-*/
