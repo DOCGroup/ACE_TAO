@@ -1,0 +1,104 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file TimeBase.pidl
+ *
+ *  $Id$
+ *
+ * This file was used to generate the code in TimeBase{C,S,S_T}.{h,i,cpp}
+ *
+ * The command used to generate code from this file is:
+ *
+ *   tao_idl.exe
+ *        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *        -Wb,export_macro=TAO_Export
+ *        -Wb,export_include=TAO_Export.h
+ *        -Wb,pre_include="ace/pre.h"
+ *        -Wb,post_include="ace/post.h"
+ *        TimeBase.pidl
+ *
+ * after the file is generated a patch must be applied.  The patch
+ * eliminates cycles in the include dependencies.  The changes are
+ * required because the generated code is part of the TAO library, it
+ * hardly makes any sense to change the IDL compiler to support
+ * changes that are very occasional.
+ *
+ *
+ */
+//=============================================================================
+
+#ifndef TIME_BASE_PIDL
+#define TIME_BASE_PIDL
+
+#pragma prefix "omg.org"
+
+/**
+ * @brief COS Time Service basic types.
+ *
+ *
+ * The standard CORBA Time Service defines a number of data structures
+ * to manipulate and express time.
+ * Over time these data structures have found their way into core
+ * components of CORBA, such as CORBA Messaging, RT CORBA, etc.
+ *
+ */
+module TimeBase
+{
+  /// Time in TimeT is expressed in units of 100 nano seconds
+  /**
+   * In other words each TimeT is 10^-7 seconds.
+   * When used for absolute time 0 is to October 15, 1582. Please read
+   * the spec for further details. 
+   */
+  typedef unsigned long long TimeT;
+
+  /// To express an error estimate for time.
+  typedef TimeT InaccuracyT;
+
+  /// Minutes of displacement from the Greenwich time.
+  typedef short TdfT;
+
+  /**
+   * @brief A timestamp in UTC time
+   *
+   * The inaccuracy is packed into inacclo & inacchi.
+   * tdf holds the time displacement factor.
+   *
+   * There are a total of 16 octets in this struct.
+   *
+   * @todo What is exactly the range of time here?
+   *       Is it [time-inacclo,time+inacchi]?
+   */
+  struct UtcT
+  {
+    /// The actual time
+    TimeT time;
+
+    /// The lowest bound for innacuracy
+    unsigned long inacclo;
+
+    /// The upper bound for the innacuracy
+    unsigned short inacchi;
+
+    /// @todo please document
+    TdfT tdf;
+  };
+
+  /**
+   * @brief An UTC time interval
+   *
+   */
+  struct IntervalT
+  {
+    /// Lower bound of the interval.
+    TimeT lower_bound;
+
+    /// Upper bound of the interval.
+    TimeT upper_bound;
+  };
+};
+
+#pragma prefix ""
+
+#endif /* TIME_BASE_PIDL */

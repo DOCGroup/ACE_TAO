@@ -1,0 +1,3 @@
+project(Current): server {
+  exename = Current
+}
