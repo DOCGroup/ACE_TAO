@@ -44,7 +44,7 @@ ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
   if (event_handler == 0)
     return -1;
 
-  // Upcall 
+  // Upcall
   int status = (event_handler->*callback) (handle);
 
   // If negative, remove from Reactor
@@ -81,7 +81,7 @@ ACE_TP_Reactor::dispatch_io_set (int number_of_active_handles,
     {
       // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_TP_Reactor::dispatching\n")));
       number_dispatched++;
-      
+
       // Remember this info
       this->dispatch_info_.set (handle,
                                 this->handler_rep_.find (handle),
@@ -118,7 +118,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook));
   if (result == -1)
     return -1;
-  
+
   // We got the lock, lets handle some events.  Note: this method will
   // *not* dispatch any handlers.  It will dispatch timeouts and
   // signals.
@@ -128,7 +128,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
       ACE_MT (this->token_.release ());
       return -1;
     }
-  
+
   // If there is any event handler that is ready to be dispatched, the
   // dispatch information is recorded in this->dispatch_info_.
   ACE_EH_Dispatch_Info dispatch_info;
@@ -143,17 +143,17 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 
       // Suspend the handler so that other thread don't start
       // dispatching it.
-      result = this->suspend_i (dispatch_info.handle_);  
+      result = this->suspend_i (dispatch_info.handle_);
       if (result == -1)
         {
           ACE_MT (this->token_.release ());
           return -1;
-        }      
+        }
     }
-  
+
   // Release the lock.  Others threads can start waiting.
   ACE_MT (this->token_.release ());
-  
+
   // If there was an event handler ready, dispatch it.
   if (dispatch_info.dispatch ())
     return this->notify_handle (dispatch_info);
@@ -161,7 +161,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
     return result;
 }
 
-void 
+void
 ACE_TP_Reactor::no_op_sleep_hook (void *)
 {
 }
@@ -172,7 +172,7 @@ ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info (void)
   this->reset ();
 }
 
-void 
+void
 ACE_EH_Dispatch_Info::set (ACE_HANDLE handle,
                            ACE_Event_Handler *event_handler,
                            ACE_Reactor_Mask mask,
@@ -186,7 +186,7 @@ ACE_EH_Dispatch_Info::set (ACE_HANDLE handle,
   this->callback_ = callback;
 }
 
-void 
+void
 ACE_EH_Dispatch_Info::reset (void)
 {
   this->dispatch_ = 0;
@@ -197,10 +197,8 @@ ACE_EH_Dispatch_Info::reset (void)
   this->callback_ = 0;
 }
 
-int 
+int
 ACE_EH_Dispatch_Info::dispatch (void) const
 {
   return this->dispatch_;
 }
-
-

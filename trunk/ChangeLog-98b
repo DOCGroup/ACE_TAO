@@ -1,3 +1,12 @@
+Wed Jul 29 12:49:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Makefile (FILES): Added TP_Reactor to the build list.
+	  Updated dependency.
+
+	* ace/TP_Reactor.{h,i} (handle_events,notify_handler): Added two
+	  dummy methods to avoid warnings from SunCC.  Thanks to Carlos
+	  for noticing this.
+
 Wed Jul 29 09:41:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: added #define
