@@ -623,9 +623,26 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
           default:
             if (this->unbounded ())
               {
-                *os << "TAO_Unbounded_Sequence<" << be_idt << be_idt_nl
-                    << elem->nested_type_name (elem_scope) << be_uidt_nl
-                    << ">" << be_uidt;
+                AST_PredefinedType::PredefinedType pt = AST_PredefinedType::PT_void;
+                AST_PredefinedType *pdt = 0;
+
+                if (elem->node_type () == AST_Decl::NT_pre_defined)
+                  {
+                    pdt = AST_PredefinedType::narrow_from_decl (elem);
+                    pt = pdt->pt ();
+                  }
+
+                if (pt == AST_PredefinedType::PT_octet)
+                  {
+                    // TAO has ready-made code for this.
+                    *os << "CORBA::OctetSeq";
+                  }
+                else
+                  {
+                    *os << "TAO_Unbounded_Sequence<" << be_idt << be_idt_nl
+                        << elem->nested_type_name (elem_scope) << be_uidt_nl
+                        << ">" << be_uidt;
+                  }
               }
             else
               {

@@ -1,3 +1,12 @@
+Mon Apr 28 17:35:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+          Changed generated code in several places to be "CORBA::OctetSeq"
+          instead of "TAO_Unbounded_Sequence<CORBA::Octet>".
+
 Mon Apr 28 18:59:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/Generic_Servant/Makefile:
