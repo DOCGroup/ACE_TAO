@@ -1,3 +1,8 @@
+Mon Nov 22 12:10:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: Fixed custom build rule for
+	  DsLogAdmin.idl.
+
 Sun Nov 21 19:15:10 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -51,7 +56,7 @@ Sun Nov 21 19:15:10 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
         * tao/TimeBaseS_T.h:
         * tao/WrongTransactionC.h:
         * tao/corbafwd.h:
-        
+
           MSVC 5 doesn't support the #pragma warning(push/pop) commands,
           so changed them to be conditionally compiled in MSVC 6 or higher.
 
@@ -68,7 +73,7 @@ Sat Nov 20 20:40:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  Just to keep Old G++ Compiler (version < 2.8) happy, added
 	  declaration and definition of the destructor for Smart_Proxy_Base
 	  class instead of banking on the implicit one.
-			
+
 Fri Nov 19 22:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simulator/DOVEBrowser/Makefile: a few fixes
