@@ -22,11 +22,10 @@
 using namespace boost::unit_test_framework;
 using namespace TAO;
 
-typedef details::value_traits<int,true> tested_element_traits;
-typedef details::unbounded_allocation_traits<int,true> tested_allocation_traits;
-typedef details::range_checking<int,true> range;
-
 typedef unbounded_value_sequence<int> tested_sequence;
+typedef tested_sequence::element_traits tested_element_traits;
+typedef tested_sequence::allocation_traits tested_allocation_traits;
+typedef details::range_checking<int,true> range;
 
 struct Tester
 {

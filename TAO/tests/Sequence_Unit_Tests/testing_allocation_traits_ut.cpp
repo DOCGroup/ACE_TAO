@@ -26,8 +26,8 @@ CORBA::ULong const MAXIMUM = 32;
 template<class value_type>
 struct Tester
 {
-  typedef unbounded_allocation_traits<value_type,true> unbounded;
-  typedef bounded_allocation_traits<value_type,MAXIMUM,true> bounded;
+  typedef unbounded_value_allocation_traits<value_type,true> unbounded;
+  typedef bounded_value_allocation_traits<value_type,MAXIMUM,true> bounded;
 
   template<class aspect>
   void test_allocbuf()
