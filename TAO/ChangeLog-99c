@@ -1,3 +1,53 @@
+Thu Mar 25 16:34:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_union_branch.cpp:
+	  The TypeCode buffer generated for unions that had a short,
+	  ushort, char or wchar as discriminator was broken.  This was
+	  giving all kinds of problems with the new test in Param_Test
+	  (union inside any).  Hopefully it will fix the problem that
+	  Frank Buschmann reported.
+
+	* tao/Typecode.cpp: 
+	  Changed one of the methods (private_member_label) to use the
+	  ACE_TRY macros and fixed several problems with its demarshaling
+	  of the labels.  Another attempt at fixing the problem with
+	  unions that was good, but no the right solution.
+
+	* TAO_IDL/be_include/be_visitor_union/any_op_cs.h: 
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp: 
+	  Added support for interpretive and compiled marshaling versions
+	  of the <<= and >>= operators for unions.
+	  This was an attempt to fix a bug in marshaling unions inside
+	  anys, but finally the problem was in other place, the change is
+	  useful though, and I am leaving it as an example on how to start 
+	  removing the need for the encode() and decode() operations, even 
+	  in the support of the CORBA::Any type.
+
+	* tao/Any.h:
+	* tao/Any.cpp:
+	  Added new operations to manipulate CORBA::Any with compiled
+	  marshaling.
+
+	* tests/Param_Test/any.h:
+	* tests/Param_Test/any.cpp:
+	* tests/Param_Test/client.cpp:
+	* tests/Param_Test/param_test_i.cpp:
+	  Added new sub-test for the any test. It inserts a union into the 
+	  any.
+
+	* tao/encode.cpp: 
+	  Simplified implementation of union marshaling.
+
+	* tao/decode.cpp: 
+	  Minor optimization in Any demarshaling.
+
+	* tao/Invocation.cpp: 
+	  Added @@ comment.
+
+	* tao/Stub.cpp: 
+	* tao/GIOP.cpp: 
+	  Minor cosmetic fix.
+
 Thu Mar 25 16:24:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/{MT_Cubit_Test,run_test.pl}:

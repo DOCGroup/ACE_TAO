@@ -291,6 +291,21 @@ public:
                        CORBA::default_environment ());
   // Replace via message block instead of <value_>.
 
+  void _tao_replace (CORBA::TypeCode_ptr type,
+                     const ACE_Message_Block *mb,
+                     CORBA::Boolean any_owns_data,
+                     void* value,
+                     CORBA::Environment &TAO_IN_ENV =
+                       CORBA::default_environment ());
+  // Replace all the contents of the any, used in the <<= operators.
+
+  void _tao_replace (CORBA::TypeCode_ptr type,
+                     CORBA::Boolean any_owns_data,
+                     void* value,
+                     CORBA::Environment &TAO_IN_ENV =
+                       CORBA::default_environment ());
+  // Replace the value of the Any, used in the >>= operators.
+
 protected:
   void free_value (CORBA::Environment &TAO_IN_ENV);
   // Release the <value_>.
