@@ -1762,7 +1762,10 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       // memory and next because the realignment may introduce
       // extra padding. 2*MAX_ALIGNMENT should be enough.
       // @@EXC@@ This doesn't seem to be exception safe.
-      TAO_OutputCDR out (end - begin + 2 * ACE_CDR::MAX_ALIGNMENT);
+      TAO_OutputCDR out (end - begin + 2 * ACE_CDR::MAX_ALIGNMENT,
+                         ACE_CDR_BYTE_ORDER,
+                         ACE_Allocator::instance (),
+                         ACE_Allocator::instance ());
 
       retval = out.append (tc, &stream, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
