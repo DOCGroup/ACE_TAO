@@ -43,5 +43,6 @@
 #include "var_array.h"
 #include "var_struct.h"
 #include "except.h"
+#include "big_union.h"
 
 #endif /* if !defined */

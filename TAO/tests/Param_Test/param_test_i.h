@@ -230,6 +230,12 @@ public:
 
   void shutdown (CORBA::Environment &env);
 
+  virtual Param_Test::Big_Union*
+      test_big_union (const Param_Test::Big_Union& u1,
+                      Param_Test::Big_Union& u2,
+                      Param_Test::Big_Union_out u3,
+                      CORBA::Environment &env);
+
 private:
   Coffee_i obj_;
   // the coffee object reference we maintain

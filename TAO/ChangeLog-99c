@@ -1,3 +1,39 @@
+Fri Feb 26 11:35:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/Makefile:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_union_branch.cpp:
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_visitor_union/cdr_op_cs.h:
+	  Implemented compiled marshaling for unions.
+	  I also had to debug and fix parts of the union implementation
+	  too.
+
+	* tests/Param_Test/Makefile:
+	* tests/Param_Test/run_test.pl:
+	* tests/Param_Test/tests.h:
+	* tests/Param_Test/driver.cpp:
+	* tests/Param_Test/driver.h:
+	* tests/Param_Test/options.cpp:
+	* tests/Param_Test/options.h:
+	* tests/Param_Test/param_test.idl:
+	* tests/Param_Test/param_test_i.cpp:
+	* tests/Param_Test/param_test_i.h:
+	* tests/Param_Test/big_union.h:
+	* tests/Param_Test/big_union.cpp:
+	  Added a new test for unions, the union contains many basic
+	  types, sequences, arrays, variable and fixed sized structures,
+	  object references, sequences, strings, etc.
+	  I couldn't test unions inside unions because there seems to be a 
+	  bug with union code generator.
+
 Fri Feb 26 10:06:57 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * Fixed inline function ordering in Stub.i!

@@ -16,11 +16,11 @@
 //
 // ============================================================================
 
+#include "driver.h"
 #include "results.h"
 #include "client.h"
 #include "tests.h"
 #include "ace/Get_Opt.h"
-#include "driver.h"
 
 ACE_RCSID(Param_Test, driver, "$Id$")
 
@@ -448,6 +448,21 @@ Driver::run (void)
         delete client;
       }
       break;
+
+    case Options::TEST_BIG_UNION:
+      {
+        Param_Test_Client<Test_Big_Union> *client = new
+          Param_Test_Client<Test_Big_Union> (this->orb_.in (),
+                                             this->objref_.in(),
+                                             new Test_Big_Union);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+
     default:
       break;
     }
@@ -470,6 +485,7 @@ Driver::run (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class Param_Test_Client<Test_Short>;
 template class Param_Test_Client<Test_ULongLong>;
 template class Param_Test_Client<Test_Unbounded_String>;
@@ -495,7 +511,10 @@ template class Param_Test_Client<Test_Bounded_Long_Sequence>;
 template class Param_Test_Client<Test_Fixed_Array>;
 template class Param_Test_Client<Test_Var_Array>;
 template class Param_Test_Client<Test_Exception>;
+template class Param_Test_Client<Test_Big_Union>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate Param_Test_Client<Test_Short>
 #pragma instantiate Param_Test_Client<Test_ULongLong>
 #pragma instantiate Param_Test_Client<Test_Unbounded_String>
@@ -521,4 +540,6 @@ template class Param_Test_Client<Test_Exception>;
 #pragma instantiate Param_Test_Client<Test_Fixed_Array>
 #pragma instantiate Param_Test_Client<Test_Var_Array>
 #pragma instantiate Param_Test_Client<Test_Exception>
+#pragma instantiate Param_Test_Client<Test_Big_Union>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

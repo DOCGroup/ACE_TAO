@@ -75,15 +75,15 @@ interface Param_Test
 
   // = Sequences of long, strings, Var_Struct and Object
   // references...
-  
-  
+
+
   struct NameComponent
   {
     string id;
     string kind;
   };
-  
-  struct Step 
+
+  struct Step
   {
     NameComponent name;
     boolean process;
@@ -95,7 +95,7 @@ interface Param_Test
 					   inout PathSpec s2,
 					   out PathSpec s3);
   typedef sequence<short> Short_Seq;
-  
+
   Short_Seq test_short_sequence (in Short_Seq s1,
                                  inout Short_Seq s2,
                                  out Short_Seq s3);
@@ -231,6 +231,40 @@ interface Param_Test
 				inout unsigned long s2,
 				out unsigned long s3)
     raises (Ooops);
+
+  union Big_Union switch (short)
+    {
+    case 0:
+      Fixed_Array the_array;
+    case 1:
+      Coffee the_interface;
+    case 2:
+      long the_long;
+    case 3:
+      short another_array[32];
+    case 4:
+      string the_string;
+    case 5:
+      Short_Seq the_sequence;
+    case 6:
+      any the_any;
+    case 7:
+      octet the_octet;
+    case 8:
+      char the_char;
+    case 9:
+      boolean the_boolean;
+    case 10:
+      Var_Struct the_var_struct;
+    case 11:
+      Fixed_Struct the_fixed_struct;
+      // case 12:
+      // Other_Union the_union;
+    };
+
+  Big_Union test_big_union (in Big_Union u1,
+                            inout Big_Union u2,
+                            out Big_Union u3);
 
 #if 0
   // multidimensional arrays (fixed). The following will give rise to a 3
