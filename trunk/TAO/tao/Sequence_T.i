@@ -216,7 +216,7 @@ TAO_Object_Manager<T>::~TAO_Object_Manager (void)
 }
 
 template <class T> ACE_INLINE
-TAO_Object_Manager<T>::TAO_Object_Manager (const TAO_Object_Manager &rhs)
+TAO_Object_Manager<T>::TAO_Object_Manager (const TAO_Object_Manager<T> &rhs)
   : ptr_ (rhs.ptr_),
     release_ (rhs.release_)
 {

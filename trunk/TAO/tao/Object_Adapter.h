@@ -131,6 +131,8 @@ protected:
   static ACE_Lock *create_lock (int enable_locking,
                                 ACE_SYNCH_MUTEX &thread_lock);
 
+public:
+
   class Hint_Strategy
   {
     // = TITLE
@@ -222,6 +224,8 @@ protected:
                                        const poa_name &system_name);
 
   };
+
+protected:
 
   Hint_Strategy *hint_strategy_;
 

@@ -20,13 +20,12 @@ CFG=TAO - Win32 Debug
 !MESSAGE 
 !MESSAGE "TAO - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 
@@ -105,12 +104,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /Gt0 nologo MT Gt0 W3 GX O2 I "..\..\\ /I" D "WIN32" D "NDEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD ..\\ c
 # ADD CPP /Gt0 nologo MD Gt0 W3 GX O2 I "..\..\\ /I" D "WIN32" D "NDEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD ..\\ c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -135,12 +134,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MTd ..\\ c
 # ADD CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MDd ..\\ c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -190,7 +189,6 @@ DEP_CPP_ACTIV=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -425,6 +423,7 @@ DEP_CPP_ACTIV=\
 	".\varout.i"\
 	
 NODEP_CPP_ACTIV=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -452,7 +451,6 @@ DEP_CPP_ACTIV=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -687,6 +685,7 @@ DEP_CPP_ACTIV=\
 	".\varout.i"\
 	
 NODEP_CPP_ACTIV=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -725,7 +724,6 @@ DEP_CPP_ANY_C=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -960,6 +958,7 @@ DEP_CPP_ANY_C=\
 	".\varout.i"\
 	
 NODEP_CPP_ANY_C=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -987,7 +986,6 @@ DEP_CPP_ANY_C=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -1222,6 +1220,7 @@ DEP_CPP_ANY_C=\
 	".\varout.i"\
 	
 NODEP_CPP_ANY_C=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -1260,7 +1259,6 @@ DEP_CPP_APPEN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -1495,6 +1493,7 @@ DEP_CPP_APPEN=\
 	".\varout.i"\
 	
 NODEP_CPP_APPEN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -1522,7 +1521,6 @@ DEP_CPP_APPEN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -1757,6 +1755,7 @@ DEP_CPP_APPEN=\
 	".\varout.i"\
 	
 NODEP_CPP_APPEN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -1795,7 +1794,6 @@ DEP_CPP_CDR_C=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -2036,6 +2034,7 @@ DEP_CPP_CDR_C=\
 	".\varout.i"\
 	
 NODEP_CPP_CDR_C=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -2063,7 +2062,6 @@ DEP_CPP_CDR_C=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -2304,6 +2302,7 @@ DEP_CPP_CDR_C=\
 	".\varout.i"\
 	
 NODEP_CPP_CDR_C=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -2342,7 +2341,6 @@ DEP_CPP_CDR_I=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -2577,6 +2575,7 @@ DEP_CPP_CDR_I=\
 	".\varout.i"\
 	
 NODEP_CPP_CDR_I=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -2604,7 +2603,6 @@ DEP_CPP_CDR_I=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -2839,6 +2837,7 @@ DEP_CPP_CDR_I=\
 	".\varout.i"\
 	
 NODEP_CPP_CDR_I=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -2877,7 +2876,6 @@ DEP_CPP_CLIEN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -3112,6 +3110,7 @@ DEP_CPP_CLIEN=\
 	".\varout.i"\
 	
 NODEP_CPP_CLIEN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -3139,7 +3138,6 @@ DEP_CPP_CLIEN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -3374,6 +3372,7 @@ DEP_CPP_CLIEN=\
 	".\varout.i"\
 	
 NODEP_CPP_CLIEN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -3412,7 +3411,6 @@ DEP_CPP_CONNE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -3654,6 +3652,7 @@ DEP_CPP_CONNE=\
 	".\varout.i"\
 	
 NODEP_CPP_CONNE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -3681,7 +3680,6 @@ DEP_CPP_CONNE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -3923,6 +3921,7 @@ DEP_CPP_CONNE=\
 	".\varout.i"\
 	
 NODEP_CPP_CONNE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -3976,7 +3975,6 @@ DEP_CPP_CURRE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -4211,6 +4209,7 @@ DEP_CPP_CURRE=\
 	".\varout.i"\
 	
 NODEP_CPP_CURRE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -4238,7 +4237,6 @@ DEP_CPP_CURRE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -4473,6 +4471,7 @@ DEP_CPP_CURRE=\
 	".\varout.i"\
 	
 NODEP_CPP_CURRE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -4511,7 +4510,6 @@ DEP_CPP_CURREN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -4746,6 +4744,7 @@ DEP_CPP_CURREN=\
 	".\varout.i"\
 	
 NODEP_CPP_CURREN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -4773,7 +4772,6 @@ DEP_CPP_CURREN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -5008,6 +5006,7 @@ DEP_CPP_CURREN=\
 	".\varout.i"\
 	
 NODEP_CPP_CURREN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -5046,7 +5045,6 @@ DEP_CPP_DEBUG=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -5281,6 +5279,7 @@ DEP_CPP_DEBUG=\
 	".\varout.i"\
 	
 NODEP_CPP_DEBUG=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -5308,7 +5307,6 @@ DEP_CPP_DEBUG=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -5543,6 +5541,7 @@ DEP_CPP_DEBUG=\
 	".\varout.i"\
 	
 NODEP_CPP_DEBUG=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -5581,7 +5580,6 @@ DEP_CPP_DECOD=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -5816,6 +5814,7 @@ DEP_CPP_DECOD=\
 	".\varout.i"\
 	
 NODEP_CPP_DECOD=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -5843,7 +5842,6 @@ DEP_CPP_DECOD=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -6078,6 +6076,7 @@ DEP_CPP_DECOD=\
 	".\varout.i"\
 	
 NODEP_CPP_DECOD=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -6116,7 +6115,6 @@ DEP_CPP_DEEP_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -6351,6 +6349,7 @@ DEP_CPP_DEEP_=\
 	".\varout.i"\
 	
 NODEP_CPP_DEEP_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -6378,7 +6377,6 @@ DEP_CPP_DEEP_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -6613,6 +6611,7 @@ DEP_CPP_DEEP_=\
 	".\varout.i"\
 	
 NODEP_CPP_DEEP_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -6651,7 +6650,6 @@ DEP_CPP_DEFAU=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -6886,6 +6884,7 @@ DEP_CPP_DEFAU=\
 	".\varout.i"\
 	
 NODEP_CPP_DEFAU=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -6913,7 +6912,6 @@ DEP_CPP_DEFAU=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -7148,6 +7146,7 @@ DEP_CPP_DEFAU=\
 	".\varout.i"\
 	
 NODEP_CPP_DEFAU=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -7201,7 +7200,6 @@ DEP_CPP_DEFAUL=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -7436,6 +7434,7 @@ DEP_CPP_DEFAUL=\
 	".\varout.i"\
 	
 NODEP_CPP_DEFAUL=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -7463,7 +7462,6 @@ DEP_CPP_DEFAUL=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -7698,6 +7696,7 @@ DEP_CPP_DEFAUL=\
 	".\varout.i"\
 	
 NODEP_CPP_DEFAUL=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -7736,7 +7735,6 @@ DEP_CPP_DYNAN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -7978,6 +7976,7 @@ DEP_CPP_DYNAN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNAN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -8005,7 +8004,6 @@ DEP_CPP_DYNAN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -8247,6 +8245,7 @@ DEP_CPP_DYNAN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNAN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -8285,7 +8284,6 @@ DEP_CPP_DYNANY=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -8520,6 +8518,7 @@ DEP_CPP_DYNANY=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNANY=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -8547,7 +8546,6 @@ DEP_CPP_DYNANY=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -8782,6 +8780,7 @@ DEP_CPP_DYNANY=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNANY=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -8820,7 +8819,6 @@ DEP_CPP_DYNANYS=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -9055,6 +9053,7 @@ DEP_CPP_DYNANYS=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNANYS=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -9082,7 +9081,6 @@ DEP_CPP_DYNANYS=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -9317,6 +9315,7 @@ DEP_CPP_DYNANYS=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNANYS=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -9355,7 +9354,6 @@ DEP_CPP_DYNAR=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -9591,6 +9589,7 @@ DEP_CPP_DYNAR=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNAR=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -9618,7 +9617,6 @@ DEP_CPP_DYNAR=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -9854,6 +9852,7 @@ DEP_CPP_DYNAR=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNAR=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -9892,7 +9891,6 @@ DEP_CPP_DYNEN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -10128,6 +10126,7 @@ DEP_CPP_DYNEN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNEN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -10155,7 +10154,6 @@ DEP_CPP_DYNEN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -10391,6 +10389,7 @@ DEP_CPP_DYNEN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNEN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -10429,7 +10428,6 @@ DEP_CPP_DYNSE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -10665,6 +10663,7 @@ DEP_CPP_DYNSE=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNSE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -10692,7 +10691,6 @@ DEP_CPP_DYNSE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -10928,6 +10926,7 @@ DEP_CPP_DYNSE=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNSE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -10966,7 +10965,6 @@ DEP_CPP_DYNST=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -11202,6 +11200,7 @@ DEP_CPP_DYNST=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNST=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -11229,7 +11228,6 @@ DEP_CPP_DYNST=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -11465,6 +11463,7 @@ DEP_CPP_DYNST=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNST=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -11503,7 +11502,6 @@ DEP_CPP_DYNUN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -11741,6 +11739,7 @@ DEP_CPP_DYNUN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNUN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -11768,7 +11767,6 @@ DEP_CPP_DYNUN=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -12006,6 +12004,7 @@ DEP_CPP_DYNUN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNUN=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -12044,7 +12043,6 @@ DEP_CPP_ENCOD=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -12279,6 +12277,7 @@ DEP_CPP_ENCOD=\
 	".\varout.i"\
 	
 NODEP_CPP_ENCOD=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -12306,7 +12305,6 @@ DEP_CPP_ENCOD=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -12541,6 +12539,7 @@ DEP_CPP_ENCOD=\
 	".\varout.i"\
 	
 NODEP_CPP_ENCOD=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -12579,7 +12578,6 @@ DEP_CPP_ENVIR=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -12814,6 +12812,7 @@ DEP_CPP_ENVIR=\
 	".\varout.i"\
 	
 NODEP_CPP_ENVIR=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -12841,7 +12840,6 @@ DEP_CPP_ENVIR=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -13076,6 +13074,7 @@ DEP_CPP_ENVIR=\
 	".\varout.i"\
 	
 NODEP_CPP_ENVIR=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -13114,7 +13113,6 @@ DEP_CPP_EXCEP=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -13349,6 +13347,7 @@ DEP_CPP_EXCEP=\
 	".\varout.i"\
 	
 NODEP_CPP_EXCEP=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -13376,7 +13375,6 @@ DEP_CPP_EXCEP=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -13611,6 +13609,7 @@ DEP_CPP_EXCEP=\
 	".\varout.i"\
 	
 NODEP_CPP_EXCEP=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -13649,7 +13648,6 @@ DEP_CPP_FORWA=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -13885,6 +13883,7 @@ DEP_CPP_FORWA=\
 	".\varout.i"\
 	
 NODEP_CPP_FORWA=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -13912,7 +13911,6 @@ DEP_CPP_FORWA=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -14148,6 +14146,7 @@ DEP_CPP_FORWA=\
 	".\varout.i"\
 	
 NODEP_CPP_FORWA=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -14186,7 +14185,6 @@ DEP_CPP_GIOP_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -14428,6 +14426,7 @@ DEP_CPP_GIOP_=\
 	".\varout.i"\
 	
 NODEP_CPP_GIOP_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -14455,7 +14454,6 @@ DEP_CPP_GIOP_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -14697,6 +14695,7 @@ DEP_CPP_GIOP_=\
 	".\varout.i"\
 	
 NODEP_CPP_GIOP_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -14810,7 +14809,6 @@ DEP_CPP_INCON=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -15045,6 +15043,7 @@ DEP_CPP_INCON=\
 	".\varout.i"\
 	
 NODEP_CPP_INCON=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -15072,7 +15071,6 @@ DEP_CPP_INCON=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -15307,6 +15305,7 @@ DEP_CPP_INCON=\
 	".\varout.i"\
 	
 NODEP_CPP_INCON=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -15345,7 +15344,6 @@ DEP_CPP_INVOC=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -15587,6 +15585,7 @@ DEP_CPP_INVOC=\
 	".\varout.i"\
 	
 NODEP_CPP_INVOC=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -15614,7 +15613,6 @@ DEP_CPP_INVOC=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -15856,6 +15854,7 @@ DEP_CPP_INVOC=\
 	".\varout.i"\
 	
 NODEP_CPP_INVOC=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -15924,7 +15923,6 @@ DEP_CPP_MANAG=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -16159,6 +16157,7 @@ DEP_CPP_MANAG=\
 	".\varout.i"\
 	
 NODEP_CPP_MANAG=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -16186,7 +16185,6 @@ DEP_CPP_MANAG=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -16421,6 +16419,7 @@ DEP_CPP_MANAG=\
 	".\varout.i"\
 	
 NODEP_CPP_MANAG=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -16459,7 +16458,6 @@ DEP_CPP_MARSH=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -16694,6 +16692,7 @@ DEP_CPP_MARSH=\
 	".\varout.i"\
 	
 NODEP_CPP_MARSH=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -16721,7 +16720,6 @@ DEP_CPP_MARSH=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -16956,6 +16954,7 @@ DEP_CPP_MARSH=\
 	".\varout.i"\
 	
 NODEP_CPP_MARSH=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -17039,7 +17038,6 @@ DEP_CPP_NVLIS=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -17274,6 +17272,7 @@ DEP_CPP_NVLIS=\
 	".\varout.i"\
 	
 NODEP_CPP_NVLIS=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -17301,7 +17300,6 @@ DEP_CPP_NVLIS=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -17536,6 +17534,7 @@ DEP_CPP_NVLIS=\
 	".\varout.i"\
 	
 NODEP_CPP_NVLIS=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -17574,7 +17573,6 @@ DEP_CPP_OBJEC=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -17809,6 +17807,7 @@ DEP_CPP_OBJEC=\
 	".\varout.i"\
 	
 NODEP_CPP_OBJEC=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -17836,7 +17835,6 @@ DEP_CPP_OBJEC=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -18071,6 +18069,7 @@ DEP_CPP_OBJEC=\
 	".\varout.i"\
 	
 NODEP_CPP_OBJEC=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -18124,7 +18123,6 @@ DEP_CPP_OBJECT=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -18359,6 +18357,7 @@ DEP_CPP_OBJECT=\
 	".\varout.i"\
 	
 NODEP_CPP_OBJECT=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -18386,7 +18385,6 @@ DEP_CPP_OBJECT=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -18621,6 +18619,7 @@ DEP_CPP_OBJECT=\
 	".\varout.i"\
 	
 NODEP_CPP_OBJECT=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -18659,7 +18658,6 @@ DEP_CPP_OPERA=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -18901,6 +18899,7 @@ DEP_CPP_OPERA=\
 	".\varout.i"\
 	
 NODEP_CPP_OPERA=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -18928,7 +18927,6 @@ DEP_CPP_OPERA=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -19170,6 +19168,7 @@ DEP_CPP_OPERA=\
 	".\varout.i"\
 	
 NODEP_CPP_OPERA=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -19208,7 +19207,6 @@ DEP_CPP_ORB_C=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -19455,6 +19453,7 @@ DEP_CPP_ORB_C=\
 	".\varout.i"\
 	
 NODEP_CPP_ORB_C=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -19482,7 +19481,6 @@ DEP_CPP_ORB_C=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -19729,6 +19727,7 @@ DEP_CPP_ORB_C=\
 	".\varout.i"\
 	
 NODEP_CPP_ORB_C=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -19768,7 +19767,6 @@ DEP_CPP_ORB_CO=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -20023,6 +20021,7 @@ DEP_CPP_ORB_CO=\
 	".\varout.i"\
 	
 NODEP_CPP_ORB_CO=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -20051,7 +20050,6 @@ DEP_CPP_ORB_CO=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -20306,6 +20304,7 @@ DEP_CPP_ORB_CO=\
 	".\varout.i"\
 	
 NODEP_CPP_ORB_CO=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -20344,7 +20343,6 @@ DEP_CPP_PARAM=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -20579,6 +20577,7 @@ DEP_CPP_PARAM=\
 	".\varout.i"\
 	
 NODEP_CPP_PARAM=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -20606,7 +20605,6 @@ DEP_CPP_PARAM=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -20841,6 +20839,7 @@ DEP_CPP_PARAM=\
 	".\varout.i"\
 	
 NODEP_CPP_PARAM=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -20894,7 +20893,6 @@ DEP_CPP_POA_C=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -21137,6 +21135,7 @@ DEP_CPP_POA_C=\
 	".\varout.i"\
 	
 NODEP_CPP_POA_C=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -21164,7 +21163,6 @@ DEP_CPP_POA_C=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -21407,6 +21405,7 @@ DEP_CPP_POA_C=\
 	".\varout.i"\
 	
 NODEP_CPP_POA_C=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -21445,7 +21444,6 @@ DEP_CPP_POAC_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -21680,6 +21678,7 @@ DEP_CPP_POAC_=\
 	".\varout.i"\
 	
 NODEP_CPP_POAC_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -21707,7 +21706,6 @@ DEP_CPP_POAC_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -21942,6 +21940,7 @@ DEP_CPP_POAC_=\
 	".\varout.i"\
 	
 NODEP_CPP_POAC_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -21995,7 +21994,6 @@ DEP_CPP_POAS_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -22230,6 +22228,7 @@ DEP_CPP_POAS_=\
 	".\varout.i"\
 	
 NODEP_CPP_POAS_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -22257,7 +22256,6 @@ DEP_CPP_POAS_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -22492,6 +22490,7 @@ DEP_CPP_POAS_=\
 	".\varout.i"\
 	
 NODEP_CPP_POAS_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -22545,7 +22544,6 @@ DEP_CPP_POLIC=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -22780,6 +22778,7 @@ DEP_CPP_POLIC=\
 	".\varout.i"\
 	
 NODEP_CPP_POLIC=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -22807,7 +22806,6 @@ DEP_CPP_POLIC=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -23042,6 +23040,7 @@ DEP_CPP_POLIC=\
 	".\varout.i"\
 	
 NODEP_CPP_POLIC=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -23080,7 +23079,6 @@ DEP_CPP_POLICY=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -23315,6 +23313,7 @@ DEP_CPP_POLICY=\
 	".\varout.i"\
 	
 NODEP_CPP_POLICY=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -23342,7 +23341,6 @@ DEP_CPP_POLICY=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -23577,6 +23575,7 @@ DEP_CPP_POLICY=\
 	".\varout.i"\
 	
 NODEP_CPP_POLICY=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -23615,7 +23614,6 @@ DEP_CPP_PRINC=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -23850,6 +23848,7 @@ DEP_CPP_PRINC=\
 	".\varout.i"\
 	
 NODEP_CPP_PRINC=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -23877,7 +23876,6 @@ DEP_CPP_PRINC=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -24112,6 +24110,7 @@ DEP_CPP_PRINC=\
 	".\varout.i"\
 	
 NODEP_CPP_PRINC=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -24150,7 +24149,6 @@ DEP_CPP_REQUE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -24385,6 +24383,7 @@ DEP_CPP_REQUE=\
 	".\varout.i"\
 	
 NODEP_CPP_REQUE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -24412,7 +24411,6 @@ DEP_CPP_REQUE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -24647,6 +24645,7 @@ DEP_CPP_REQUE=\
 	".\varout.i"\
 	
 NODEP_CPP_REQUE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -24700,7 +24699,6 @@ DEP_CPP_SEQUE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -24935,6 +24933,7 @@ DEP_CPP_SEQUE=\
 	".\varout.i"\
 	
 NODEP_CPP_SEQUE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -24962,7 +24961,6 @@ DEP_CPP_SEQUE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -25197,12 +25195,28 @@ DEP_CPP_SEQUE=\
 	".\varout.i"\
 	
 NODEP_CPP_SEQUE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sequence_T.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -25235,7 +25249,6 @@ DEP_CPP_SERVA=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -25477,6 +25490,7 @@ DEP_CPP_SERVA=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVA=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -25504,7 +25518,6 @@ DEP_CPP_SERVA=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -25746,6 +25759,7 @@ DEP_CPP_SERVA=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVA=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -25784,7 +25798,6 @@ DEP_CPP_SERVE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -26026,6 +26039,7 @@ DEP_CPP_SERVE=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -26053,7 +26067,6 @@ DEP_CPP_SERVE=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -26295,6 +26308,7 @@ DEP_CPP_SERVE=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVE=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -26333,7 +26347,6 @@ DEP_CPP_SERVER=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -26568,6 +26581,7 @@ DEP_CPP_SERVER=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVER=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -26595,7 +26609,6 @@ DEP_CPP_SERVER=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -26830,6 +26843,7 @@ DEP_CPP_SERVER=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVER=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -26868,7 +26882,6 @@ DEP_CPP_SKIP_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -27103,6 +27116,7 @@ DEP_CPP_SKIP_=\
 	".\varout.i"\
 	
 NODEP_CPP_SKIP_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -27130,7 +27144,6 @@ DEP_CPP_SKIP_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -27365,6 +27378,7 @@ DEP_CPP_SKIP_=\
 	".\varout.i"\
 	
 NODEP_CPP_SKIP_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -27403,7 +27417,6 @@ DEP_CPP_STUB_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -27638,6 +27651,7 @@ DEP_CPP_STUB_=\
 	".\varout.i"\
 	
 NODEP_CPP_STUB_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -27665,7 +27679,6 @@ DEP_CPP_STUB_=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -27900,6 +27913,7 @@ DEP_CPP_STUB_=\
 	".\varout.i"\
 	
 NODEP_CPP_STUB_=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -27938,7 +27952,6 @@ DEP_CPP_TAO_C=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -28174,6 +28187,7 @@ DEP_CPP_TAO_C=\
 	".\varout.i"\
 	
 NODEP_CPP_TAO_C=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -28201,7 +28215,6 @@ DEP_CPP_TAO_C=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -28437,6 +28450,7 @@ DEP_CPP_TAO_C=\
 	".\varout.i"\
 	
 NODEP_CPP_TAO_C=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -28475,7 +28489,6 @@ DEP_CPP_TAO_I=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -28711,6 +28724,7 @@ DEP_CPP_TAO_I=\
 	".\varout.i"\
 	
 NODEP_CPP_TAO_I=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -28738,7 +28752,6 @@ DEP_CPP_TAO_I=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -28974,6 +28987,7 @@ DEP_CPP_TAO_I=\
 	".\varout.i"\
 	
 NODEP_CPP_TAO_I=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -29042,7 +29056,6 @@ DEP_CPP_TYPEC=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -29277,6 +29290,7 @@ DEP_CPP_TYPEC=\
 	".\varout.i"\
 	
 NODEP_CPP_TYPEC=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -29304,7 +29318,6 @@ DEP_CPP_TYPEC=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -29539,6 +29552,7 @@ DEP_CPP_TYPEC=\
 	".\varout.i"\
 	
 NODEP_CPP_TYPEC=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -29577,7 +29591,6 @@ DEP_CPP_TYPECO=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -29812,6 +29825,7 @@ DEP_CPP_TYPECO=\
 	".\varout.i"\
 	
 NODEP_CPP_TYPECO=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -29839,7 +29853,6 @@ DEP_CPP_TYPECO=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -30074,6 +30087,7 @@ DEP_CPP_TYPECO=\
 	".\varout.i"\
 	
 NODEP_CPP_TYPECO=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -30112,7 +30126,6 @@ DEP_CPP_UNION=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -30347,6 +30360,7 @@ DEP_CPP_UNION=\
 	".\varout.i"\
 	
 NODEP_CPP_UNION=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -30374,7 +30388,6 @@ DEP_CPP_UNION=\
 	"..\..\ace\config-win32-common.h"\
 	"..\..\ace\config-win32.h"\
 	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
 	"..\..\ace\Connector.cpp"\
 	"..\..\ace\Connector.h"\
 	"..\..\ace\Connector.i"\
@@ -30609,6 +30622,7 @@ DEP_CPP_UNION=\
 	".\varout.i"\
 	
 NODEP_CPP_UNION=\
+	"..\..\ace\config.h"\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -30831,6 +30845,10 @@ SOURCE=.\nvlist.h
 # Begin Source File
 
 SOURCE=.\object.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Adapter.h
 # End Source File
 # Begin Source File
 

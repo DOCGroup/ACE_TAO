@@ -69,6 +69,13 @@ class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
 class TAO_InputCDR;
 class TAO_OutputCDR;
+
+// Forward declaration and typedefs for the exception thrown by
+// the ORB Dynamic Any factory functions.
+class CORBA_ORB_InconsistentTypeCode;
+typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
+typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
+
 #ifdef TAO_HAS_VALUETYPE
 class TAO_ValueFactory_Map;
 #endif /* TAO_HAS_VALUETYPE */
@@ -344,12 +351,6 @@ public:
   //
   // It is platform-specific how the application and ORB arrange to
   // use compatible threading primitives.
-
-  // Forward declaration and typedefs for the exception thrown by
-  // the ORB Dynamic Any factory functions.
-  class CORBA_ORB_InconsistentTypeCode;
-  typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
-  typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
 
   // Typecode for the above exception.
   static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
