@@ -76,15 +76,15 @@ Globals::parse_args (int argc, char *argv[])
 int
 Globals::sched_fifo_init (void)
 {
-  int result;
 #if defined (ACE_HAS_THREADS)
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-  result = SCHED_PARAMS_FIFO;
-  if (result != 0)
+  if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
+                                              SCHED_PRIORITY,
+                                              ACE_SCOPE_PROCESS)))
     {
       if (ACE_OS::last_error () == EPERM)
         ACE_DEBUG ((LM_MAX,
-                    "preempt: user is not superuser, "
+                    "User is not superuser, "
                     "so remain in time-sharing class\n"));
       else
         ACE_ERROR_RETURN ((LM_ERROR,
