@@ -14,7 +14,7 @@ DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
 LIBS            += -ldl
-OCFLAGS         += -O
+OCFLAGS         += -O3
 PIC             = -fPIC
 AR              = ar
 ARFLAGS         = ruv
@@ -23,3 +23,7 @@ RANLIB          = ranlib
 SOFLAGS = $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
+
+#### as appears to have a string limit of about 4096 characters.
+#### Suppressing the -g for a few files helps.
+SUPPRESS_DASH_G = 1

@@ -17,10 +17,6 @@ FILES	=  TS_Server_Handler \
 	   Token_Handler \
 	   Logging_Strategy
 
-# Put these in when things are finally working!
-# Server_Logging_Handler_T 
-# Log_Message_Receiver 
-
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
@@ -39,6 +35,16 @@ include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  
+#----------------------------------------------------------------------------
+#	Local targets
+#----------------------------------------------------------------------------
+
+ifeq ($(SUPPRESS_DASH_G),1)
+#### Build this target without -g on some platforms.
+$(VDIR)Server_Logging_Handler.o $(VSHDIR)Server_Logging_Handler.$(SOEXT):
+	$(COMPILE-NO_DASH_G.cc) -o $@ $<
+endif # SUPPRESS_DASH_G
+
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------
