@@ -469,7 +469,7 @@ ACE_HAS_PTHREADS_STD                    Platform supports POSIX.1c-1995 threads
                                         (This is the final standard
                                         Pthreads).
 ACE_HAS_PTHREADS_UNIX98_EXT             Platform has the UNIX98 extensions to
-                                        Pthreads (susp/cont, rwlocks)
+                                        Pthreads (rwlocks)
 ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP     Platform has pthread_condattr_setkind_np().
 ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP    Platform has
                                         pthread_mutexattr_setkind_np().
@@ -859,6 +859,8 @@ ACE_LACKS_RECVMSG                       Platform lacks recvmsg()
                                         (e.g., Linux)
 ACE_LACKS_RWLOCK_T                      Platform lacks readers/writer
                                         locks.
+ACE_LACKS_RWLOCKATTR_PSHARED            Platform lacks
+                                        pthread_rwlockattr_setpshared().
 ACE_LACKS_SBRK                          Platform lacks a working
                                         sbrk() (e.g., Win32 and
                                         VxWorks)
