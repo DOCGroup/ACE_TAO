@@ -21,6 +21,13 @@ Thu Jan 01 17:13:06 1998  David L. Levine  <levine@cs.wustl.edu>
         * apps/Gateway/Peer/Peer.cpp (Peer_Connector::open): added
           return 0 statement at end.
 
+        * apps/Gateway/Gateway/Options.cpp (Options ctor): reordered
+          initializers to match declaration order.
+
+        * apps/Gateway/Gateway/Makefile: removed LOBJ and SHOBJ macros
+          because they're not needed.  And, restored BUILD so that static
+          lib will be built if requested.
+
 Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * apps/Gateway/Peer/Options.cpp (parse_args): Changed the option
