@@ -23,6 +23,12 @@ TAO_AV_Core::TAO_AV_Core (void)
   :connector_registry_ (0),
    acceptor_registry_ (0)
 {
+  ACE_NEW (this->connector_registry_,
+           TAO_AV_Connector_Registry
+           );
+  ACE_NEW (this->acceptor_registry_,
+           TAO_AV_Acceptor_Registry
+           );
 }
 
 TAO_AV_Core::~TAO_AV_Core (void)
@@ -41,12 +47,7 @@ TAO_AV_Core::init (int &argc,
   int result = this->orb_manager_.init (argc,argv,env);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"orb_manager::init"),result);
-  ACE_NEW_RETURN (this->connector_registry_,
-                  TAO_AV_Connector_Registry,
-                  -1);
-  ACE_NEW_RETURN (this->acceptor_registry_,
-                  TAO_AV_Acceptor_Registry,
-                  -1);
+ 
   this->orb_ = this->orb_manager_.orb ();
   this->reactor (this->orb_->orb_core ()->reactor ());
   this->init_transport_factories ();
@@ -265,7 +266,9 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
               }
           }
         // Change the reverse flow spec to be sent.
-        flow_spec = new_flowspec;
+        int index = flow_spec.length () + 1;
+        flow_spec.length (index);
+        flow_spec [index - 1] = new_flowspec [0];
       }
       break;
     default:
@@ -347,16 +350,27 @@ TAO_AV_Core::get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
 TAO_AV_Acceptor*
 TAO_AV_Core::get_acceptor (const char *flowname)
 {
-  TAO_AV_AcceptorSetItor acceptor =
-    this->acceptor_registry_->begin ();
-  TAO_AV_AcceptorSetItor end =
-    this->acceptor_registry_->end ();
-
-  for (;acceptor != end; ++acceptor)
+ 
+  ACE_TRY_NEW_ENV
     {
-      if (ACE_OS::strcmp ((*acceptor)->flowname (),flowname) == 0)
-        return *acceptor;
+      
+      TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
+      ACE_TRY_CHECK;
+      
+      TAO_AV_AcceptorSetItor end =
+        this->acceptor_registry_->end ();
+      
+      for (;acceptor != end; ++acceptor)
+        {
+          if (ACE_OS::strcmp ((*acceptor)->flowname (),flowname) == 0)
+            return *acceptor;
+        }
     }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_AV_Core::get_acceptor"); 
+    }
+  ACE_ENDTRY;
   return 0;
 }
 
