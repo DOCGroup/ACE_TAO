@@ -17,9 +17,10 @@
 // ============================================================================
 
 #include "tao/IORManipulation.h"
-#include "tao/corba.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/MProfile.h"
+#include "tao/Stub.h"
+
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(tao, IORManipulation, "$Id$")
 
