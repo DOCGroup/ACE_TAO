@@ -276,6 +276,7 @@ sub wanted {
         ! /^.*\.exp\z/s &&
         ! /^.*\.pdb\z/s &&
         ! /^\.cvsignore\z/s &&
+        ! /^\.disable\z/s &&
         ! /^Makefile.*\z/s
       );
     }
