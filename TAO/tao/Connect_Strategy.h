@@ -65,6 +65,13 @@ public:
    */
   virtual int wait (TAO_Connection_Handler *ch,
                     ACE_Time_Value *val) = 0;
+
+  /*
+   * Do any left over memory management or related things after
+   * the connect failed.
+   */
+  virtual int post_failed_connect (TAO_Connection_Handler *ch);
+
 protected:
 
   /// Cached copy of the ORB core pointer
