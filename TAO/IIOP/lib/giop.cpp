@@ -43,6 +43,8 @@
 #include	<stdlib.h>
 #include	<string.h>
 
+#include <ace/SOCK_Stream.h>
+
 #if	unix
 #	include	<sys/types.h>
 #	include	<sys/socket.h>
@@ -140,10 +142,15 @@ dump_msg (const char *label, const unsigned char *ptr, size_t len)
 #endif	// !DEBUG
 
 CORBA_Boolean
-GIOP::send_message (
-    CDR			&stream,
-    ACE_HANDLE		&connection
-)
+GIOP::send_message(CDR& stream, ACE_SOCK_Stream& peer)
+{
+  int h = peer.get_handle();
+  send_message(stream, h);
+  peer.set_handle(h);
+}
+
+CORBA_Boolean
+GIOP::send_message (CDR& stream, ACE_HANDLE& connection)
 {
     char	*buf = (char *) stream.buffer;
     size_t	buflen = stream.next - stream.buffer;
@@ -251,10 +258,15 @@ close_message [GIOP_HDR_LEN] = {
 
 
 void
-GIOP::close_connection (
-    ACE_HANDLE	&fd,
-    void	*		// currently unused
-)
+GIOP::close_connection (ACE_SOCK_Stream& peer, void* unused)
+{
+  int h = peer.get_handle();
+  close_connection(h, unused);
+  peer.set_handle(h);
+}
+
+void
+GIOP::close_connection (ACE_HANDLE& fd, void* unused)
 {
     //
     // It's important that we use a reliable shutdown after we send
@@ -296,6 +308,14 @@ send_error (ACE_HANDLE &fd)
     fd = ACE_INVALID_HANDLE;
 }
 
+static inline void
+send_error(ACE_SOCK_Stream& peer)
+{
+  int h = peer.get_handle();
+  send_error(h);
+  peer.set_handle(h);
+}
+
 
 //
 // Loop on data read ... this is required with some implementations of
@@ -304,30 +324,31 @@ send_error (ACE_HANDLE &fd)
 //
 static int
 read_buffer (
-    ACE_HANDLE	fd,
-    char	*buf,
-    size_t	len
+    ACE_SOCK_Stream& peer,
+    char* buf,
+    size_t len
 )
 {
-    int		bytes_read = 0;
+  int bytes_read = 0;
 
-    while (len != 0) {
-	int	retval;
+  while (len != 0) 
+    {
+      int	retval;
 
-	retval = ACE::recv (fd, buf, len);
+      retval = peer.recv(buf, len);
 
 #ifdef	DEBUG
-	dmsg_filter (6, "read %d bytes from connection: %d", retval, fd);
+      dmsg_filter (6, "read %d bytes from connection: %d", retval, fd);
 #endif
-	if (retval <= 0)			// EOF or error
-	    return retval;
+      if (retval <= 0)			// EOF or error
+	return retval;
 
-	len -= retval;
-	buf += retval;
-	bytes_read += retval;
+      len -= retval;
+      buf += retval;
+      bytes_read += retval;
     }
 
-    return bytes_read;
+  return bytes_read;
 }
 
 
@@ -351,133 +372,137 @@ read_buffer (
 // with both optimizations applied?
 //
 GIOP::MsgType
-GIOP::read_message (
-    ACE_HANDLE		&connection,
-    CDR			&msg,
-    CORBA_Environment	&env
-)
+GIOP::read_message (ACE_HANDLE& fd, CDR& msg, CORBA_Environment& env)
 {
-    GIOP::MsgType	retval;
-    CORBA_ULong	message_size;
+  ACE_SOCK_Stream s;
+  s.set_handle(fd);
+  return read_message(s, msg, env);
+}
 
-    //
-    // Read the message header off the wire.
-    //
-    // THREADING NOTE:  the connection manager handed us this connection
-    // for exclusive use, so we need not worry about having two threads
-    // interleave reads of partial messages.  This model is excellent
-    // for "lightly threaded" systems (as will be the majority in the
-    // near future) but makes less effective use of connection resources
-    // as the "duty factor" goes down because of either long calls or
-    // bursty contention during numerous short calls to the same server.
-    //
-    assert (msg.length > GIOP_HDR_LEN);
+GIOP::MsgType
+GIOP::read_message (ACE_SOCK_Stream& connection, CDR& msg, CORBA_Environment& env)
+{
+  GIOP::MsgType	retval;
+  CORBA_ULong	message_size;
 
-    msg.next = msg.buffer;
-    msg.remaining = GIOP_HDR_LEN;
+  //
+  // Read the message header off the wire.
+  //
+  // THREADING NOTE:  the connection manager handed us this connection
+  // for exclusive use, so we need not worry about having two threads
+  // interleave reads of partial messages.  This model is excellent
+  // for "lightly threaded" systems (as will be the majority in the
+  // near future) but makes less effective use of connection resources
+  // as the "duty factor" goes down because of either long calls or
+  // bursty contention during numerous short calls to the same server.
+  //
+  assert (msg.length > GIOP_HDR_LEN);
 
-    char 	*bufptr = (char _FAR *) msg.buffer;
-    int		len;
+  msg.next = msg.buffer;
+  msg.remaining = GIOP_HDR_LEN;
 
-    //
-    // Read the header into the buffer.
-    //
-    if ((len = read_buffer (connection, bufptr, GIOP_HDR_LEN))
-	    != GIOP_HDR_LEN) {
-	if (len == 0) {			// EOF
-	    dmsg1 ("Header EOF ... peer probably aborted connection %d", 
-		  connection);
+  char 	*bufptr = (char _FAR *) msg.buffer;
+  int		len;
 
-	    //
-	    // XXX should probably find some way to report this without
-	    // an exception, since for most servers it's not an error.
-	    // Is it _never_ an error?  Not sure ...
-	    //
-	} else if (len < 0) {		// error
-	    dsockerr ("GIOP::read_message header");
-	} else {			// short read ... 
-	    dmsg ("read message header failed (short)");
-	}
-	env.exception (new CORBA_COMM_FAILURE (COMPLETED_MAYBE));
-	return MessageError;
+  //
+  // Read the header into the buffer.
+  //
+  if ((len = read_buffer (connection, bufptr, GIOP_HDR_LEN))
+      != GIOP_HDR_LEN) {
+    if (len == 0) {			// EOF
+      dmsg1 ("Header EOF ... peer probably aborted connection %d", 
+	     connection);
+
+      //
+      // XXX should probably find some way to report this without
+      // an exception, since for most servers it's not an error.
+      // Is it _never_ an error?  Not sure ...
+      //
+    } else if (len < 0) {		// error
+      dsockerr ("GIOP::read_message header");
+    } else {			// short read ... 
+      dmsg ("read message header failed (short)");
+    }
+    env.exception (new CORBA_COMM_FAILURE (COMPLETED_MAYBE));
+    return MessageError;
+  }
+
+  //
+  // NOTE:  if message headers, or whome messages, get encrypted in
+  // application software (rather than by the network infrastructure)
+  // they should be decrypted here ... 
+  //
+
+  //
+  // First make sure it's a GIOP message of any version.
+  //
+  if (!(msg.buffer [0] == 'G' && msg.buffer [1] == 'I'
+	&& msg.buffer [2] == 'O' && msg.buffer [3] == 'P')) {
+    env.exception (new CORBA_MARSHAL (COMPLETED_MAYBE));	// header
+    dmsg ("bad header, magic word");
+    return MessageError;
+  }
+
+  //
+  // Then make sure the major version is ours, and the minor version is
+  // one that we understand.
+  //
+  if (!(msg.buffer [4] == MY_MAJOR && msg.buffer [5] <= MY_MINOR)) {
+    env.exception (new CORBA_MARSHAL (COMPLETED_MAYBE));	// header
+    dmsg ("bad header, version");
+    return MessageError;
+  }
+
+  //
+  // Get the message type out and adjust the buffer's records to record
+  // that we've read everything except the length.
+  //
+  retval = (GIOP::MsgType) msg.buffer [7];
+  msg.skip_bytes (8);
+
+  //
+  // Make sure byteswapping is done if needed, and then read the message
+  // size (appropriately byteswapped).
+  //
+  msg.do_byteswap = (msg.buffer [6] != MY_BYTE_SEX);
+  msg.get_ulong (message_size);
+
+  //
+  // Make sure we have the full length in memory, growing the
+  // buffer if needed.
+  //
+  // NOTE:  We could overwrite these few bytes of header... they're
+  // left around for now as a debugging aid.
+  //
+  assert (message_size <= UINT_MAX);
+
+  if ((GIOP_HDR_LEN + message_size) > msg.length)
+    msg.grow ((size_t) (GIOP_HDR_LEN + message_size));
+
+  msg.remaining = (size_t) message_size;
+  bufptr = (char *) & msg.buffer [GIOP_HDR_LEN];
+
+  //
+  // Read the rest of this message into the buffer.
+  //
+  if ((len = read_buffer (connection, bufptr, (size_t) message_size))
+      != (int) message_size) {
+    if (len == 0) {
+      dmsg1 ("read message body, EOF on fd %d", connection);
+    } else if (len < 0) {
+      dperror ("GIOP::read_message() body");
+    } else {
+      dmsg2 ("short read, only %d of %d bytes", len, message_size);
     }
 
-    //
-    // NOTE:  if message headers, or whome messages, get encrypted in
-    // application software (rather than by the network infrastructure)
-    // they should be decrypted here ... 
-    //
+    // clean up, and ...
+    env.exception (new CORBA_COMM_FAILURE (COMPLETED_MAYBE));	// body
+    dmsg ("couldn't read rest of message");
+    return MessageError;
+  }
 
-    //
-    // First make sure it's a GIOP message of any version.
-    //
-    if (!(msg.buffer [0] == 'G' && msg.buffer [1] == 'I'
-		&& msg.buffer [2] == 'O' && msg.buffer [3] == 'P')) {
-	env.exception (new CORBA_MARSHAL (COMPLETED_MAYBE));	// header
-	dmsg ("bad header, magic word");
-	return MessageError;
-    }
-
-    //
-    // Then make sure the major version is ours, and the minor version is
-    // one that we understand.
-    //
-    if (!(msg.buffer [4] == MY_MAJOR && msg.buffer [5] <= MY_MINOR)) {
-	env.exception (new CORBA_MARSHAL (COMPLETED_MAYBE));	// header
-	dmsg ("bad header, version");
-	return MessageError;
-    }
-
-    //
-    // Get the message type out and adjust the buffer's records to record
-    // that we've read everything except the length.
-    //
-    retval = (GIOP::MsgType) msg.buffer [7];
-    msg.skip_bytes (8);
-
-    //
-    // Make sure byteswapping is done if needed, and then read the message
-    // size (appropriately byteswapped).
-    //
-    msg.do_byteswap = (msg.buffer [6] != MY_BYTE_SEX);
-    msg.get_ulong (message_size);
-
-    //
-    // Make sure we have the full length in memory, growing the
-    // buffer if needed.
-    //
-    // NOTE:  We could overwrite these few bytes of header... they're
-    // left around for now as a debugging aid.
-    //
-    assert (message_size <= UINT_MAX);
-
-    if ((GIOP_HDR_LEN + message_size) > msg.length)
-	msg.grow ((size_t) (GIOP_HDR_LEN + message_size));
-
-    msg.remaining = (size_t) message_size;
-    bufptr = (char *) & msg.buffer [GIOP_HDR_LEN];
-
-    //
-    // Read the rest of this message into the buffer.
-    //
-    if ((len = read_buffer (connection, bufptr, (size_t) message_size))
-	    != (int) message_size) {
-	if (len == 0) {
-	    dmsg1 ("read message body, EOF on fd %d", connection);
-	} else if (len < 0) {
-	    dperror ("GIOP::read_message() body");
-	} else {
-	    dmsg2 ("short read, only %d of %d bytes", len, message_size);
-	}
-
-	// clean up, and ...
-	env.exception (new CORBA_COMM_FAILURE (COMPLETED_MAYBE));	// body
-	dmsg ("couldn't read rest of message");
-	return MessageError;
-    }
-
-    dump_msg ("recv", msg.buffer, (size_t)(message_size + GIOP_HDR_LEN));
-    return retval;
+  dump_msg ("recv", msg.buffer, (size_t)(message_size + GIOP_HDR_LEN));
+  return retval;
 }
 
 
@@ -743,7 +768,7 @@ GIOP::Invocation::invoke (
     //
     // Send Request, return on error or if we're done
     //
-    if (!send_message (stream, endpoint->fd)) {
+    if (!GIOP::send_message (stream, endpoint->fd)) {
 	//
 	// send_message() closed the connection; we just release it here.
 	//
@@ -798,7 +823,7 @@ GIOP::Invocation::invoke (
     // all C stack frames must also have their (explicitly coded) handlers
     // called.  We assume a POSIX.1c/C/C++ environment.
     //
-    switch (read_message (endpoint->fd, stream, env)) {
+    switch (GIOP::read_message (endpoint->fd, stream, env)) {
       case Reply:
 	// handle reply ... must be right one etc
 	break;
@@ -1095,7 +1120,7 @@ GIOP::Invocation::invoke (
 //
 void
 GIOP::incoming_message (
-    ACE_HANDLE		&fd,
+    ACE_SOCK_Stream&	peer,
     LocateStatusType	check_forward (
 			    opaque		&key,
 			    CORBA_Object_ptr	&objref,
@@ -1115,7 +1140,7 @@ GIOP::incoming_message (
     unsigned char	buffer [CDR::DEFAULT_BUFSIZE];
     CDR			msg (&buffer [0], sizeof buffer);
 
-    switch (read_message (fd, msg, env)) {
+    switch (read_message (peer, msg, env)) {
       case Request:
 	{
 	    RequestHeader	req;
@@ -1209,7 +1234,7 @@ GIOP::incoming_message (
 			CDR::encoder (_tc_CORBA_Object, &fwd_ref,
 				0, &response, env);
 			CORBA_release (fwd_ref);
-			(void) send_message (response, fd);
+			(void) send_message (response, peer);
 
 		    //
 		    // ... or report exception that the object doesn't exist.
@@ -1221,7 +1246,7 @@ GIOP::incoming_message (
 			(void) CDR::encoder (_tc_CORBA_OBJECT_NOT_EXIST,
 			    &exc, 0, &response, env);
 
-			(void) send_message (response, fd);
+			(void) send_message (response, peer);
 		    }
 
 		    delete req.object_key.buffer;
@@ -1252,7 +1277,7 @@ GIOP::incoming_message (
 		// "handle_request" routine puts ReplyStatusType then
 		// parameters.
 		//
-		(void) send_message (response, fd);
+		(void) send_message (response, peer);
 	    } else
 		handle_request (req, msg, 0, context, env);
 
@@ -1300,7 +1325,7 @@ GIOP::incoming_message (
 		    dmsg ("LocateRequest response:  no such object");
 		}
 	    }
-	    (void) send_message (response, fd);
+	    (void) send_message (response, peer);
 	}
 	break;
 
@@ -1345,7 +1370,7 @@ GIOP::incoming_message (
       // in case (it'll fail on EOF) and then close the connection.
       //
       case MessageError:
-	send_error (fd);
+	send_error (peer);
 	break;
     }
 

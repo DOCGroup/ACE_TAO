@@ -37,6 +37,26 @@ typedef TCP_OA	*TCP_OA_ptr;
 
 extern const IID IID_TCP_OA;
 
+//
+// Data structure passed as "context" to the GIOP code, which then
+// calls back one of the two helper routines as part of handling any
+// particular incoming request.
+//
+struct Dispatch_Context
+{
+  TOA::dsi_handler	skeleton;
+  void (*check_forward) (CORBA_OctetSeq& key,
+			 CORBA_Object_ptr& fwd_ref,
+			 void* context,
+			 CORBA_Environment& env);
+  void* context;
+  TCP_OA* oa;
+  ACE_SOCK_Stream endpoint;	// NOTE!!!  This type MUST match that used for ROA_Handler!
+#ifdef	_POSIX_THREADS
+  CORBA_Boolean aggressive;
+#endif	// _POSIX_THREADS
+};
+
 class _EXPCLASS TCP_OA : public TOA
 {
 public:
@@ -156,25 +176,6 @@ public:
 
   // PRIVATE: 
 
-  //
-  // Data structure passed as "context" to the GIOP code, which then
-  // calls back one of the two helper routines as part of handling any
-  // particular incoming request.
-  //
-  struct dispatch_context
-  {
-    TOA::dsi_handler	skeleton;
-    void (*check_forward) (CORBA_OctetSeq& key,
-			   CORBA_Object_ptr& fwd_ref,
-			   void* context,
-			   CORBA_Environment& env);
-    void* context;
-    TCP_OA* oa;
-    ACE_HANDLE endpoint;
-#ifdef	_POSIX_THREADS
-    CORBA_Boolean aggressive;
-#endif	// _POSIX_THREADS
-  };
 
 private:
   friend class ROA_Handler;	// needed so it can call handle_message()
@@ -193,7 +194,7 @@ private:
   // Used internally by threaded (and unthreaded) code to
   // dispatch incoming GIOP messages
   //
-  void handle_message (dispatch_context& context, CORBA_Environment& env);
+  void handle_message (Dispatch_Context& context, CORBA_Environment& env);
 
 #ifdef	_POSIX_THREADS
   //

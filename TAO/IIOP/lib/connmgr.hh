@@ -30,20 +30,20 @@
 //
 template <class T>
 class autorelease {
-  public:
-    autorelease 	&operator = (T *ptr)
+public:
+  autorelease&          operator= (T* ptr)
 				{
 				    if (_state) _state->release();
 				    _state = ptr; return *this;
 				}
-			operator int () { return _state ? 1 : 0; }
-    T			*operator -> () { return _state; }
+                        operator int () { return _state ? 1 : 0; }
+  T*			operator -> () { return _state; }
 			autorelease () { _state = 0; }
 			~autorelease ()
 				{ if (_state) _state->release (); }
 
-  private:
-    T			*_state;
+private:
+  T*			_state;
 };
 
 
