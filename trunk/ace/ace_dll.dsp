@@ -582,6 +582,25 @@ SOURCE=.\Capabilities.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CDR_Base.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\CDR_Stream.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -4012,6 +4031,10 @@ SOURCE=.\Capabilities.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CDR_Base.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CDR_Stream.h
 # End Source File
 # Begin Source File
@@ -5029,6 +5052,10 @@ SOURCE=.\Caching_Strategy_Utility_T.i
 # Begin Source File
 
 SOURCE=.\Capabilities.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CDR_Base.inl
 # End Source File
 # Begin Source File
 
