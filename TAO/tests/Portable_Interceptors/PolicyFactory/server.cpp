@@ -6,6 +6,7 @@
 #include "testC.h"
 
 #include "tao/PortableServer/PortableServer.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (PolicyFactory,
            server,
