@@ -1,3 +1,11 @@
+Tue Mar 08 09:21:39 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.inl:
+	* tao/Transport_Connector.cpp:
+
+	  Cosmetic fixes to use consts and bools when possible. 
+
 Tue Mar 08 08:53:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (make_connection): 
