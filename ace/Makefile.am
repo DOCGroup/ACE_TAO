@@ -1107,7 +1107,7 @@ INLINE_FILES = \
   Flag_Manip.inl \
   Free_List.inl \
   Functor.inl \
-  Functor_String.inlnl \
+  Functor_String.inl \
   Functor_T.inl \
   Get_Opt.inl \
   Handle_Gobbler.inl \
