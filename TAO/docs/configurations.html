@@ -1,11 +1,13 @@
+<!-- $Id$ -->
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
    <meta name="GENERATOR" content="Mozilla/4.5 [en] (WinNT; I) [Netscape]">
    <title>Configuring TAO's Components</title>
-<!-- $Id$ -->
 </head>
+
 <body text="#000000" bgcolor="#FFFFFF" link="#000FFF" vlink="#FF0F0F">
 
 <hr>
@@ -237,27 +239,24 @@ library contains all of the services that TAO currently supports. To reduce
 build time and library size, you can exclude unused services. To do that,
 define a <tt>TAO_ORBSVCS</tt> variable using one of these approaches:</li><P>
 
-<ol>
-<li>
-In your <tt>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</tt> file,</li>
+  <ol>
+    <li>In your <tt>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</tt>
+      file,<p>
 
-<li>
-On the make command line, <i>e.g.</i>,</li><BR>
-<tt>make TAO_ORBSVCS=Naming</tt><BR>
-or
-<li>
-Set (and export) a <tt>TAO_ORBSVCS</tt> environment variable.</li>
+    <li>On the make command line, <i>e.g.</i>,
+      <tt>make TAO_ORBSVCS=Event</tt>, or<p>
 
-</ol><P>
+    <li>Set (and export) a <tt>TAO_ORBSVCS</tt> environment variable.
+
+  </ol><p>
+
 Please see the <code><a href="../orbsvcs/orbsvcs/Makefile">ORBSVCS
 Makefile</a></code> for the default setting of <code>TAO_ORBSVCS</code>.<p>
 
-Please note the following limitation: <P>
-<ol>
-  <li>We currently don't check for interdependencies between services.
-    For example, if you build the CosEvent service, you must also
-    explicitly specify the Sched and Event services, at least.<p>
-</ol>
+Please note that the Naming Service will always be built, even
+if Naming is not specified in <code>TAO_ORBSVCS</code>.  That's
+because many examples, tests, and presumably applications use it.<p>
+
 </ul>
 
 <hr>
