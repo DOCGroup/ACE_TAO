@@ -6617,7 +6617,7 @@ public:
                       int *sig = 0);
   static int sigtimedwait (const sigset_t *set,
                            siginfo_t *info,
-                           const struct timespec *timeout);
+                           const ACE_Time_Value *timeout);
   static void thr_testcancel (void);
   static void thr_yield (void);
 
