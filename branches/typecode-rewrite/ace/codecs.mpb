@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+feature(ace_codecs) {
+  Source_Files(ACE_COMPONENTS) {
+    Codecs.cpp
+  }
+}

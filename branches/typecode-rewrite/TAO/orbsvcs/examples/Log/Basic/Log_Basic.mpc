@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Client) : orbsvcsexe, dslogadmin, naming {
+  exename = client
+}
