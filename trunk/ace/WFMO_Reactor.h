@@ -593,28 +593,31 @@ private:
 /**
  * @class ACE_WFMO_Reactor
  *
- * @brief An object oriented event demultiplexor and event handler
- * WFMO_Reactor for Win32 WaitForMultipleObjects
+ * @brief An object oriented event demultiplexor and event handler.
+ * ACE_WFMO_Reactor is a Windows-only implementation of the ACE_Reactor
+ * interface that uses the WaitForMultipleObjects() event demultiplexer.
  *
- * The ACE_WFMO_Reactor is an object-oriented event
- * demultiplexor and event handler Reactor.  The sources of
- * events that the ACE_WFMO_Reactor waits for and dispatches
- * includes I/O events, general Win32 synchronization events
- * (such as mutexes, semaphores, threads, etc.) and timer
- * events.
- * Note that changes to the state of WFMO_Reactor are not
+ * Like the other ACE Reactors, ACE_WFMO_Reactor can schedule timers.
+ * It also reacts to signalable handles, such as events (see the documentation
+ * for WaitForMultipleObjects() for a complete list of signalable handle
+ * types). Therefore, I/O handles are not directly usable for registering
+ * for input, output, and exception notification. The exception to this
+ * is ACE_SOCK-based handles, which can be registered for input, output, and
+ * exception notification just as with other platforms. See Chapter 4 in
+ * C++NPv2 for complete details.
+ *
+ * Note that changes to the state of ACE_WFMO_Reactor are not
  * instantaneous.  Most changes (registration, removal,
  * suspension, and resumption of handles, and changes in
- * ownership) are made when the WFMO_Reactor reaches a stable
- * state.  Users should be careful, specially when removing
- * handlers.  This is because the WFMO_Reactor will call
- * handle_close on the handler when it is finally removed and
- * not when remove_handler is called.  If the handler is not
- * going to be around when the WFMO_Reactor calls
- * <ACE_Event_Handler::handle_close>, use the DONT_CALL flag
- * with <remove_handler>.  Or else, dynamically allocate the
- * handler, and then call "delete this" inside
- * <ACE_Event_Handler::handle_close>.
+ * ownership) are made when the ACE_WFMO_Reactor reaches a stable
+ * state.  Users should be careful, especially when removing
+ * handlers.  This is because the ACE_WFMO_Reactor will call
+ * handle_close() on the handler when it is finally removed and
+ * not when remove_handler() is called.  If the registered handler's pointer
+ * is not valid when ACE_WFMO_Reactor calls ACE_Event_Handler::handle_close(),
+ * use the DONT_CALL flag with remove_handler(). Preferably, use dynamically
+ * allocated event handlers and call "delete this" inside the handle_close()
+ * hook method.
  */
 class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
 {
@@ -626,7 +629,7 @@ public:
   {
     /// Default size of the WFMO_Reactor's handle table.
     /**
-     * Two slots will be added to the <size> parameter in the
+     * Two slots will be added to the @a size parameter in the
      * constructor and open methods which will store handles used for
      * internal management purposes.
      */
@@ -635,16 +638,19 @@ public:
 
   // = Initialization and termination methods.
 
-  /// Initialize <ACE_WFMO_Reactor> with the default size.
+  /// Initialize ACE_WFMO_Reactor with the default size.
   ACE_WFMO_Reactor (ACE_Sig_Handler * = 0,
                     ACE_Timer_Queue * = 0,
                     ACE_Reactor_Notify * = 0);
 
   /**
-   * Initialize <ACE_WFMO_Reactor> with size <size>.  <size> should
-   * not exceed <ACE_WFMO_Reactor::DEFAULT_SIZE>. Two slots will be
-   * added to the <size> parameter which will store handles used for
-   * internal management purposes.
+   * Initialize ACE_WFMO_Reactor with the specified size.
+   *
+   * @param size  The maximum number of handles the reactor can
+   *              register. The value should not exceed
+   *              ACE_WFMO_Reactor::DEFAULT_SIZE. Two slots will be
+   *              added to the @a size parameter which will store handles
+   *              used for internal management purposes.
    */
   ACE_WFMO_Reactor (size_t size,
                     int unused = 0,
@@ -653,10 +659,13 @@ public:
                     ACE_Reactor_Notify * = 0);
 
   /**
-   * Initialize <ACE_WFMO_Reactor> with size <size>.  <size> should
-   * not exceed <ACE_WFMO_Reactor::DEFAULT_SIZE>. Two slots will be
-   * added to the <size> parameter which will store handles used for
-   * internal management purposes.
+   * Initialize ACE_WFMO_Reactor with the specified size.
+   *
+   * @param size  The maximum number of handles the reactor can
+   *              register. The value should not exceed
+   *              ACE_WFMO_Reactor::DEFAULT_SIZE. Two slots will be
+   *              added to the @a size parameter which will store handles
+   *              used for internal management purposes.
    */
   virtual int open (size_t size = ACE_WFMO_Reactor::DEFAULT_SIZE,
                     int restart = 0,
@@ -671,20 +680,21 @@ public:
   /// Use a user specified signal handler instead.
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
 
-  /// @deprecated The following method is deprecated.  Use <timer_queue> instead.
-  /// Set a user specified timer queue.
+  /// @deprecated The following method is deprecated.
+  /// Instead, either specify a timer queue when creating/opening the
+  /// object or use the timer_queue() method.
   virtual int set_timer_queue (ACE_Timer_Queue *tq);
 
   /// Set a user-specified timer queue.
   virtual int timer_queue (ACE_Timer_Queue *tq);
 
-  /// Return the current <ACE_Timer_Queue>.
+  /// Return the current ACE_Timer_Queue.
   virtual ACE_Timer_Queue *timer_queue (void) const;
 
-  /// Close down the WFMO_Reactor and release all of its resources.
+  /// Close down the ACE_WFMO_Reactor and release all of its resources.
   virtual int close (void);
 
-  /// Close down the WFMO_Reactor and release all of its resources.
+  /// Close down the ACE_WFMO_Reactor and release all of its resources.
   virtual ~ACE_WFMO_Reactor (void);
 
   // = Event loop drivers.

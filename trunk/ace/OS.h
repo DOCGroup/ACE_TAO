@@ -2138,7 +2138,6 @@ struct ACE_recursive_mutex_state
   // match those in the CRITICAL_SECTION struct.
   LONG lock_count_;
   LONG recursion_count_;
-  HANDLE owning_thread_;
 };
 #  else
 // No need for special handling; just need a type for method signatures.
