@@ -2048,7 +2048,10 @@ readv (ACE_HANDLE handle, struct iovec *iov, int n)
 	   i++)
 	{
 	  ACE_OS::memcpy (iov[i].iov_base, ptr,
-			  copyn > iov[i].iov_len ? iov[i].iov_len : copyn);
+                          // iov_len is int on some platforms, size_t on others
+			  copyn > (int) iov[i].iov_len
+                            ? (size_t) iov[i].iov_len
+                            : (size_t) copyn);
 	  ptr += iov[i].iov_len;
 	  copyn -= iov[i].iov_len;
 	}
