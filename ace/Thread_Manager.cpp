@@ -2370,8 +2370,6 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
   template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
   template class ACE_Free_List<ACE_Thread_Descriptor>;
   template class ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>;
-  template class ACE_Read_Guard <ACE_Thread_Mutex>;
-  // This last one is a test. It may help eliminate totally wacky errors
 # if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
     // These don't necessarily belong here, but it's a convenient place for them.
     template class ACE_TSS<ACE_Dynamic>;
@@ -2389,8 +2387,6 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Free_List<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>
-  #pragma instantiate ACE_Read_Guard <ACE_Thread_Mutex>
-  // This last one is a test. It may help eliminate totally wacky errors
 # if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
     // These don't necessarily belong here, but it's a convenient place for them.
     #pragma instantiate ACE_TSS<ACE_Dynamic>

@@ -1,3 +1,9 @@
+Tue Jun 15 23:15:30 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp
+	  Removed explicit template instantiation for ACE_read_guard
+	  <ACE_thread_mutex> since a recent change by Kirthika makes it unnecessary.
+
 Tue Jun 15 17:41:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast: Added initial support for the Win2K
