@@ -1,3 +1,12 @@
+Wed Jan 29 13:54:21 2003  Ossama Othman  <ossama@uci.edu>
+
+	* configure.ac:
+
+	  Fixed autoconf warnings about AC_DEFINE being called in second
+	  argument of AC_CACHE_VAL.  The second argument should only set
+	  the value of cache ID variable.  No other side effects should
+	  occur.
+
 Tue Jan 28 14:57:50 2003  Ossama Othman  <ossama@uci.edu>
 
 	* bin/bootstrap:

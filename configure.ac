@@ -969,11 +969,11 @@ AC_CHECK_HEADER([iostream.h],
 dnl Check if platform needs to #include <regexpr.h> for
 dnl regular expression support
 ACE_CACHE_CHECK([regexpr.h for regular expression support],
-   [ace_cv_needs_regexpr_h],[
-   AC_EGREP_HEADER([compile],[regexpr.h],
+   [ace_cv_needs_regexpr_h],
+   [
+    AC_EGREP_HEADER([compile],[regexpr.h],
      [
       ace_cv_needs_regexpr_h=yes
-      AC_DEFINE([ACE_NEEDS_REGEXPR_H])
      ],
      [
       AC_EGREP_HEADER([step],[regexpr.h],
@@ -1363,8 +1363,9 @@ ACE_CACHE_CHECK([for condition variable support],[ace_cv_struct_cond_t],
 
 dnl Check for struct timespec
 ACE_CACHE_CHECK([for POSIX timer structure],
-    [ace_cv_lib_posix_timer_struct],[
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+ [ace_cv_lib_posix_timer_struct],
+ [
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <time.h>
 
 #if defined(ACE_LACKS_SYSTIME_H)
@@ -1406,7 +1407,7 @@ ACE_CACHE_CHECK([for POSIX timer structure],
                   [
                    ace_cv_lib_posix_struct_timespec_broken=no
                   ])
-                ],[AC_DEFINE([ACE_HAS_BROKEN_POSIX_TIME])],)
+                ],,)
            ],
            [
             ace_cv_lib_posix_timer_struct=no
