@@ -1061,7 +1061,7 @@ struct strrecvfd {};
 #if defined (ACE_HAS_UNICODE)
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #    include /**/ <cwchar>
-#  else /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#  elif (_MSC_VER) /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #    include /**/ <wchar.h>
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #elif defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
@@ -3979,8 +3979,10 @@ public:
                       size_t len);
   static char *strcpy (char *s,
                        const char *t);
-  static char *strpbrk (const char *s1,
+  static char *strpbrk (char *s1,
                         const char *s2);
+  static const char *strpbrk (const char *s1,
+                              const char *s2);
   static size_t strspn(const char *s1,
                        const char *s2);
   static char *strstr (char *s,
