@@ -5,11 +5,19 @@ Sat Jan 29 23:58:18 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* examples/POA/POA_BiDir/POA_BiDir.cpp:
 	* examples/RTCORBA/Activity/Activity.cpp:
 	* examples/Simple/time-date/server.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp:
+	* orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp:
+	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+	* orbsvcs/Fault_Notifier/FT_Notifier_i.h:
 	* orbsvcs/ImplRepo_Service/Activator_Info.h:
 	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
 	* orbsvcs/TAO_Service/TAO_Service.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h:
 	* orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
 	* orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
 	* orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
@@ -41,6 +49,11 @@ Sat Jan 29 23:58:18 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
 	* orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
 	* orbsvcs/orbsvcs/IFRService/WstringDef_i.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:
 	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.h:
 	* orbsvcs/tests/InterfaceRepo/Application_Test/test_i.cpp:

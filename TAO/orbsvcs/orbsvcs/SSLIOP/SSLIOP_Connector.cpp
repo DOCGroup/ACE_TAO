@@ -161,7 +161,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 
   // Flag that states whether any form of establishment of trust
   // should occur.
-  CORBA::Boolean establish_trust =
+  CORBA::Boolean const establish_trust =
     trust.trust_in_target || trust.trust_in_client;
 
   // @@ Should this be in a "policy validator?"

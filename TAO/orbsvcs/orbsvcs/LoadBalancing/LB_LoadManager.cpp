@@ -16,9 +16,12 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/Reactor.h"
-#include "ace/OS_NS_sys_time.h"
 #include "ace/Reverse_Lock_T.h"
+#include "ace/SString.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (LoadBalancing,
            LB_LoadManager,
