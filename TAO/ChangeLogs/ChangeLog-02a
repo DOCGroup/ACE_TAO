@@ -1,14 +1,22 @@
+Sat May 19 09:09:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/NULL_Connection_Purging_Strategy.h: Made some
+	  cosmetic changes.
+
+	* tao/Strategies/NULL_Connection_Purging_Strategy.cpp: Fixed a
+	  compile error with Win32 builds.
+
 Sat May 19 08:41:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/Event_Service/Makefile:
 	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
 	  dependencies.  This should take care of the NoInterceptors
-	  build. 
+	  build.
 
 Fri May 18 22:16:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp: Fixed a warning in
-	  g++ builds.  
+	  g++ builds.
 
 Fri May 18 19:49:04 2001  Ossama Othman  <ossama@uci.edu>
 
