@@ -44,6 +44,7 @@ ACE_Thread_Manager::dump (void)
 
 ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
 {
+  delete this->sync_;
 }
 
 int
@@ -102,6 +103,7 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
   this->cleanup_info_.cleanup_hook_ = 0;
   this->cleanup_info_.object_ = 0;
   this->cleanup_info_.param_ = 0;
+  ACE_NEW (this->sync_, ACE_DEFAULT_THREAD_MANAGER_LOCK);
 }
 
 // The following macro simplifies subsequence code.
@@ -176,12 +178,17 @@ ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
 
 // Initialize the synchronization variables.
 
-ACE_Thread_Manager::ACE_Thread_Manager (size_t)
+ACE_Thread_Manager::ACE_Thread_Manager (size_t prealloc,
+                                        size_t lwm,
+                                        size_t inc,
+                                        size_t hwm)
   : grp_id_ (1),
     automatic_wait_ (1)
 #if defined (ACE_HAS_THREADS)
     , zero_cond_ (lock_)
 #endif /* ACE_HAS_THREADS */
+    , thread_desc_freelist_ (ACE_FREE_LIST_WITH_POOL,
+                             prealloc, lwm, hwm, inc)
 {
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
 }
@@ -464,11 +471,21 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 
   // Create a new thread running <func>.  *Must* be called with the
   // <lock_> held...
+#if 1
+  ACE_Thread_Descriptor *new_thr_desc = this->thread_desc_freelist_.remove ();
+  // Get a "new" Thread Descriptor from the freelist.
+
+  new_thr_desc->sync_->acquire ();
+  // Acquire the <sync_> lock to block the spawned thread from
+  // removing this Thread Descriptor before it gets put into our
+  // thread table.
+#else
   ACE_Thread_Descriptor *new_thr_desc = 0;
 
   ACE_NEW_RETURN (new_thr_desc,
                   ACE_Thread_Descriptor,
                   -1);
+#endif /* 1 */
 
   ACE_Thread_Adapter *thread_args =
     new ACE_Thread_Adapter (func,
@@ -683,6 +700,7 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
   thr_desc->flags_ = flags;
 
   this->thr_list_.insert_head (thr_desc);
+  thr_desc->sync_->release ();
 
   return 0;
 }
@@ -786,6 +804,11 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
+  td->sync_->acquire ();
+  // Acquire the lock before removing <td> from the thread table.  If
+  // this thread is in the table already, it should simply acquire the
+  // lock easily.
+
 #if defined (VXWORKS)
   ACE_thread_t tid = td->self ();
 #endif /* VXWORKS */
@@ -805,7 +828,16 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 #else
   ACE_UNUSED_ARG (close_handler);
 #endif /* ACE_WIN32 */
+
+#if 1
+  td->sync_->release ();
+  // Release the lock before putting it back to freelist.
+
+  this->thread_desc_freelist_.add (td);
+#else
   delete td;
+#endif /* 1 */
+
 #if defined (ACE_HAS_THREADS)
   // Tell all waiters when there are no more threads left in the pool.
   if (this->thr_list_.size () == 0)
@@ -1328,7 +1360,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
           {
             // Mark thread as terminated.
             td->thr_state_ = ACE_THR_TERMINATED;
-            this->terminated_thr_queue_.enqueue_tail (*td);
+            this->terminated_thr_queue_.enqueue_tail (td);
           }
 #if defined (ACE_WIN32)
         else
@@ -1409,16 +1441,16 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 #if !defined (VXWORKS)
   // @@ VxWorks doesn't support thr_join (yet.)  We are working
   //on our implementation.   Chorus'es thr_join seems broken.
-  ACE_Thread_Descriptor item;
+  ACE_Thread_Descriptor *item;
 
 #if defined (CHORUS)
   if (ACE_Object_Manager::shutting_down () != 1)
     {
 #endif /* CHORUS */
       while (this->terminated_thr_queue_.dequeue_head (item) == 0)
-        if (ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
-            || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
-          ACE_Thread::join (item.thr_handle_);
+        if (ACE_BIT_DISABLED (item->flags_, (THR_DETACHED | THR_DAEMON))
+            || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
+          ACE_Thread::join (item->thr_handle_);
       // Detached handles shouldn't reached here.
 #if defined (CHORUS)
     }
@@ -1805,11 +1837,6 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if !defined (VXWORKS)
-  template class ACE_Unbounded_Queue<ACE_Thread_Descriptor>;
-  template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>;
-  template class ACE_Node<ACE_Thread_Descriptor>;
-#endif /* ! VXWORKS */
   template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
   template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
   template class ACE_Node<ACE_Thread_Descriptor*>;
@@ -1817,17 +1844,14 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
   template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
   // This doesn't necessarily belong here, but it's a convenient place for it.
   template class ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>;
+  template class ACE_Free_List<ACE_Thread_Descriptor>;
+  template class ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>;
 # if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
     // These don't necessarily belong here, but it's a convenient place for them.
     template class ACE_TSS<ACE_Dynamic>;
     template class ACE_TSS<ACE_Thread_Exit>;
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if !defined (VXWORKS)
-  #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Node<ACE_Thread_Descriptor>
-#endif /* ! VXWORKS */
   #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Node<ACE_Thread_Descriptor*>
@@ -1835,6 +1859,8 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
   #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
   // This doesn't necessarily belong here, but it's a convenient place for it.
   #pragma instantiate ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>
+  #pragma instantiate ACE_Free_List<ACE_Thread_Descriptor>
+  #pragma instantiate ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>
 # if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
     // These don't necessarily belong here, but it's a convenient place for them.
     #pragma instantiate ACE_TSS<ACE_Dynamic>

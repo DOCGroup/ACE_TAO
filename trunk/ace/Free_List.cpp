@@ -1,3 +1,5 @@
+// $Id$
+
 #if !defined (ACE_FREE_LIST_C)
 #define ACE_FREE_LIST_C
 
@@ -9,7 +11,7 @@
 
 // Empty constructor
 
-template <class T>  
+template <class T>
 ACE_Free_List<T>::~ACE_Free_List (void)
 {
   // Nothing
@@ -19,11 +21,11 @@ ACE_Free_List<T>::~ACE_Free_List (void)
 // (<prealloc>), a low and high water mark (<lwm> and <hwm>) and an
 // increment value (<inc>)
 
-template <class T, class ACE_LOCK>  
+template <class T, class ACE_LOCK>
 ACE_Locked_Free_List<T, ACE_LOCK>::ACE_Locked_Free_List (int mode,
-						     size_t prealloc, 
-                                                     size_t lwm, 
-                                                     size_t hwm, 
+						     size_t prealloc,
+                                                     size_t lwm,
+                                                     size_t hwm,
                                                      size_t inc)
   : mode_ (mode),
     free_list_ (0),
@@ -37,7 +39,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::ACE_Locked_Free_List (int mode,
 
 // Destructor - removes all the elements from the free_list
 
-template <class T, class ACE_LOCK>  
+template <class T, class ACE_LOCK>
 ACE_Locked_Free_List<T, ACE_LOCK>::~ACE_Locked_Free_List (void)
 {
   if (this->mode_ != ACE_PURE_FREE_LIST)
@@ -51,11 +53,9 @@ ACE_Locked_Free_List<T, ACE_LOCK>::~ACE_Locked_Free_List (void)
 
 // Allocates <n> extra nodes for the freelist
 
-template <class T, class ACE_LOCK> void 
+template <class T, class ACE_LOCK> void
 ACE_Locked_Free_List<T, ACE_LOCK>::alloc (size_t n)
 {
-  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
-
   for (; n > 0; n--)
     {
       T *temp;
@@ -68,11 +68,9 @@ ACE_Locked_Free_List<T, ACE_LOCK>::alloc (size_t n)
 
 // Removes and frees <n> nodes from the freelist.
 
-template <class T, class ACE_LOCK> void 
+template <class T, class ACE_LOCK> void
 ACE_Locked_Free_List<T, ACE_LOCK>::dealloc (size_t n)
 {
-  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
-
   for (; this->free_list_ != 0 && n > 0;
        n--)
     {

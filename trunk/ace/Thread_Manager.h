@@ -20,6 +20,53 @@
 #include "ace/Thread.h"
 #include "ace/Synch.h"
 #include "ace/Containers.h"
+#include "ace/Free_List.h"
+
+// The following macros control how a Thread Manager manages a pool of
+// Thread_Descriptor.  Currently, the default behavior is not to
+// preallocate any thread descriptor and never (well, almost never)
+// free up any thread descriptor until the Thread Manager gets
+// destructed.  Which means, once your system is stable, you rarely
+// need to pay the price of memory allocation.  On a deterministic
+// system, which means, the number of threads spawned can be
+// determined before hand, you can either redefined these macros of
+// constructed the Thread_Manager accordingly.  That way, you don't
+// pay the price of memory allocation when the system is really doing
+// its job.  OTOH, on system with resources constraint, you may want
+// to lower the to avoid unused memory hanging around.
+
+#if !defined (ACE_DEFAULT_THREAD_MANAGER_PREALLOC)
+# define ACE_DEFAULT_THREAD_MANAGER_PREALLOC 0
+#endif /* ACE_DEFAULT_THREAD_MANAGER_PREALLOC */
+
+#if !defined (ACE_DEFAULT_THREAD_MANAGER_LWM)
+# define ACE_DEFAULT_THREAD_MANAGER_LWM 1
+#endif /* ACE_DEFAULT_THREAD_MANAGER_LWM */
+
+#if !defined (ACE_DEFAULT_THREAD_MANAGER_INC)
+# define ACE_DEFAULT_THREAD_MANAGER_INC 1
+#endif /* ACE_DEFAULT_THREAD_MANAGER_INC */
+
+#if !defined (ACE_DEFAULT_THREAD_MANAGER_HWM)
+# define ACE_DEFAULT_THREAD_MANAGER_HWM ACE_DEFAULT_FREE_LIST_HWM
+// this is a big number
+#endif /* ACE_DEFAULT_THREAD_MANAGER_HWM */
+
+
+// This is the synchronization mechanism used to prevent a thread
+// descriptor gets removed from the Thread_Manager before it gets
+// stash into it.  If you want to disable this feature (and risk of
+// corrupting the freelist,) you define the lock as ACE_Null_Mutex.
+// Usually, if you can be sure that your threads will run for an
+// extended period of time, you can safely disable the lock.
+
+#if !defined (ACE_DEFAULT_THREAD_MANAGER_LOCK)
+# if defined (ACE_HAS_THREADS)
+#   define ACE_DEFAULT_THREAD_MANAGER_LOCK ACE_Thread_Mutex
+# else
+#   define ACE_DEFAULT_THREAD_MANAGER_LOCK ACE_Null_Mutex
+# endif /* ACE_HAS_THREADS */
+#endif /* ACE_DEFAULT_THREAD_MANAGER_LOCK */
 
 // Forward declarations.
 class ACE_Task_Base;
@@ -84,6 +131,11 @@ public:
   long flags (void) const;
   // Get the thread creation flags.
 
+  void set_next (ACE_Thread_Descriptor *td);
+  ACE_Thread_Descriptor *get_next (void);
+  // Set/get the <next_> pointer.  These are required by the
+  // ACE_Free_List.
+
 private:
   ACE_thread_t thr_id_;
   // Unique thread ID.
@@ -111,6 +163,8 @@ private:
   ACE_Task_Base *task_;
   // Pointer to an <ACE_Task_Base> or NULL if there's no
   // <ACE_Task_Base>;
+
+  ACE_DEFAULT_THREAD_MANAGER_LOCK *sync_;
 
   ACE_Thread_Descriptor *next_;
   ACE_Thread_Descriptor *prev_;
@@ -159,8 +213,10 @@ public:
 #endif /* !__GNUG__ */
 
   // = Initialization and termination methods.
-  ACE_Thread_Manager (size_t size = 0);
-  // <size> is currently unused.
+  ACE_Thread_Manager (size_t preaolloc = 0,
+                      size_t lwm = ACE_DEFAULT_THREAD_MANAGER_LWM,
+                      size_t inc = ACE_DEFAULT_THREAD_MANAGER_INC,
+                      size_t hwm = ACE_DEFAULT_THREAD_MANAGER_HWM);
   virtual ~ACE_Thread_Manager (void);
 
   static ACE_Thread_Manager *instance (void);
@@ -518,7 +574,7 @@ protected:
   // affecting other thread's descriptor entries.
 
 #if !defined (VXWORKS)
-  ACE_Unbounded_Queue<ACE_Thread_Descriptor> terminated_thr_queue_;
+  ACE_Unbounded_Queue<ACE_Thread_Descriptor*> terminated_thr_queue_;
   // Collect terminated but not yet joined thread entries.
 #endif /* VXWORKS */
 
@@ -542,6 +598,8 @@ protected:
 #endif /* ACE_HAS_THREADS */
 
 private:
+  ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_Thread_Mutex> thread_desc_freelist_;
+
   static ACE_Thread_Manager *thr_mgr_;
   // Pointer to a process-wide <ACE_Thread_Manager>.
 
