@@ -9,22 +9,34 @@
 //	client.cpp
 //
 // = DESCRIPTION
-//      This class implements a simple CORBA client for the Cubit
-//      example using DII functionality
+//      This class implements a simple CORBA client of the Cubit
+//      interface using DII functionality
 //
 // = AUTHOR
 //	Jeff Parsons <jp4@cs.wustl.edu>
 // ============================================================================
 
-#include "client.h"
+#include "tao/corba.h"
+#include "ace/streams.h"
+#include "ace/Profile_Timer.h"
+#include "ace/Get_Opt.h"
+#include "ace/Env_Value_T.h"
+#include "ace/Read_Buffer.h"
+#include "orbsvcs/CosNamingC.h"
 
-// Some magic numbers used below.
+// Since we don't yet have an interface repository or dynamic-Any, we
+// just get the info from the IDL-generated files, since we're mainly
+// interested in timing comparisons anyway.
+#include "../IDL_Cubit/cubitC.h"
+
+// Some constants used below.
 const CORBA::ULong DEFAULT_LOOP_COUNT = 250;
 #define DEFAULT_FACTORY_IOR "ior00"
 const int SMALL_OCTET_SEQ_LENGTH = 16;
 const int LARGE_OCTET_SEQ_LENGTH = 4096;
 const int SMALL_LONG_SEQ_LENGTH = 4;
 const int LARGE_LONG_SEQ_LENGTH = 1024;
+const int NUMBER_OF_TESTS = 10;
 
 // Some macros for env checks used identically in each operation.
 #define CUBIT_CHECK_ENV_RETURN_VOID(PRINT_STRING) \
@@ -52,6 +64,119 @@ const int LARGE_LONG_SEQ_LENGTH = 1024;
       CORBA::release (REQ); \
       return; \
     }
+
+class DII_Cubit_Client 
+{
+  // = TITLE
+  //    Defines a class that encapsulates behaviour of a Cubit client
+  //    that makes requests using DII rather than stubs.
+  //
+  // = DESCRIPTION
+  //    This class declares an interface to run an example client for a
+  //    Cubit CORBA server.  All the complexity for initializing the 
+  //    client is hidden in the class.  Just the run() interface is needed.
+public:
+  // Constructor and destructor.
+  DII_Cubit_Client (void);
+  ~DII_Cubit_Client (void);
+
+  int init (int argc, char **argv);
+  // Initialize the ORB and gets the Cubit objref.
+
+  int run (void);
+  // Execute client example code.
+
+private:
+  int init_naming_service (void);
+  // Gets objref through naming service.
+
+  int parse_args (void);
+  // Parses the arguments passed on the command line.
+
+  int read_ior (char *filename);
+  // Function to read the cubit factory IOR from a file.
+
+  void print_stats (const char *call_name,
+                    ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
+  // Prints the timing stats.
+
+  // DII versions of Cubit operations:
+	
+  void cube_short_dii (void);
+
+  void cube_long_dii (void);
+
+  void cube_octet_dii (void);
+
+  void cube_union_dii (void);
+
+  void cube_struct_dii (void);
+
+  void cube_octet_seq_dii (int length);
+
+  void cube_long_seq_dii (int length);
+
+  // Wrappers for cubing small and large sequences w/o args:
+
+  void cube_small_long_seq (void);
+  
+  void cube_large_long_seq (void);
+
+  void cube_small_octet_seq (void);
+
+  void cube_large_octet_seq (void);
+
+  void cube_mixin (void);
+  // Wrapper for the mixin call, just to be neat.
+
+  void (DII_Cubit_Client::*op_array_[NUMBER_OF_TESTS])(void);
+  // Array of pointers to the operation functions.
+
+  static char *stats_messages_[];
+  // Array of labels for passing to print_stats.
+  
+  int argc_;
+  // # of arguments on the command line.
+
+  char **argv_;
+  // arguments from command line.
+
+  CORBA::ULong loop_count_;
+  // # of calls in test loop.
+
+  int shutdown_;
+  // Flag to tell server to exit.
+
+  int use_naming_service_;
+  // Flag toggling use of naming service to get IOR.
+
+  CORBA::Environment env_;
+  // Environment variable.
+
+  CORBA::ORB_var orb_var_;
+  // Storage of the ORB reference.
+
+  CORBA::Object_var factory_var_;
+  // Storage of the Cubit_factory objref
+
+  CORBA::Object_var obj_var_;
+  // Storage of the Cubit objref.
+
+  CORBA::ULong call_count_;
+  // # of calls made to functions.
+
+  CORBA::ULong error_count_;
+  // # of errors incurred in the lifetime of the application.
+
+  char *factory_IOR_;
+  // IOR of the factory used to make a Cubit object.
+
+  FILE *cubit_factory_ior_file_;
+  // File from which to obtain the IOR.
+
+  ACE_HANDLE f_handle_;
+  // File handle to read the IOR.
+};
 
 // Constructor
 DII_Cubit_Client::DII_Cubit_Client (void)
@@ -155,8 +280,8 @@ DII_Cubit_Client::init (int argc, char **argv)
                                              TAO_TRY_ENV);
       TAO_CHECK_ENV;
 	
-      // make_cubit takes a char *arg that it doesn't use, but we must
-      // include it in the request.
+      // make_cubit takes a char* arg that it doesn't use, but we must
+      // still include it in the request.
       CORBA::String dummy = "";
 
       CORBA::Any string_arg (CORBA::_tc_string,
@@ -277,7 +402,7 @@ DII_Cubit_Client::parse_args (void)
 	this->use_naming_service_ = 0;
         this->factory_IOR_ = opts.optarg;
         break;
-      case 'f':   // read the IOR from the file.
+      case 'f':   // Read the IOR from the file.
 	this->use_naming_service_ = 0;
         result = this->read_ior (opts.optarg);
         if (result < 0)
@@ -395,7 +520,8 @@ DII_Cubit_Client::cube_short_dii (void)
 
   CUBIT_CHECK_ENV_RETURN_VOID ("cube_short_dii request create");
 
-  CORBA::Short ret_short, arg_short = -3;
+  CORBA::Short ret_short = 0;
+  CORBA::Short arg_short = -3;
 
   // Make an Any out of the short and add it to the request arg list.
   CORBA::Any arg_holder (CORBA::_tc_short,
@@ -446,7 +572,7 @@ DII_Cubit_Client::cube_long_dii (void)
 
   CUBIT_CHECK_ENV_RETURN_VOID ("cube_long_dii request create");
 
-  CORBA::Long ret_long;
+  CORBA::Long ret_long = 0;
   CORBA::Long arg_long = -7;
 
   // Make an Any out of the long and add it to the request arg list.
@@ -498,7 +624,7 @@ DII_Cubit_Client::cube_octet_dii (void)
 
   CUBIT_CHECK_ENV_RETURN_VOID ("cube_octet_dii request create");
 
-  CORBA::Octet ret_octet;
+  CORBA::Octet ret_octet = 0;
   CORBA::Octet arg_octet = 5;
 
   // Make an Any out of the octet and add it to the request arg list.
@@ -550,12 +676,16 @@ DII_Cubit_Client::cube_union_dii (void)
   CUBIT_CHECK_ENV_RETURN_VOID ("cube_union_dii request create");
 
   Cubit::oneof arg_union, ret_union;
-   
+
   arg_union._d(Cubit::e_3rd);
   arg_union.cm ().l = 5;
   arg_union.cm ().s = -7;
   arg_union.cm ().o = 3;
 
+  // A different discrim value than arg_ret, just to be ornery.
+  ret_union._d(Cubit::e_1st);
+  ret_union.s (0);
+   
   // Make an Any out of the union and add it to the request arg list.
   CORBA::Any arg_holder (Cubit::_tc_oneof,
                          &arg_union,
@@ -608,7 +738,11 @@ DII_Cubit_Client::cube_struct_dii (void)
   CUBIT_CHECK_ENV_RETURN_VOID ("cube_struct_dii request create");
 
   Cubit::Many arg_struct, ret_struct;
-   
+
+  ret_struct.l = 0;
+  ret_struct.s = 0;
+  ret_struct.o = 0;
+  
   arg_struct.l = 5;
   arg_struct.s = -7;
   arg_struct.o = 3;
@@ -665,9 +799,11 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
   CUBIT_CHECK_ENV_RETURN_VOID ("cube_octet_seq_dii request create");
 
   // Same length as in IDL_Cubit tests so timings can be compared.
-  Cubit::octet_seq ret_octet_seq, arg_octet_seq;
+  // Return value holder is set to a different length to test resizing.
+  Cubit::octet_seq ret_octet_seq (1), arg_octet_seq (length);
   arg_octet_seq.length (length);
-  arg_octet_seq[0] = 4;
+  arg_octet_seq[0] = 4;  
+  ret_octet_seq[0] = 0;
 
   // Make an Any out of the octet_seq and add it to the request arg list
   CORBA::Any arg_holder (Cubit::_tc_octet_seq,
@@ -728,9 +864,11 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
   CUBIT_CHECK_ENV_RETURN_VOID ("cube_long_seq_dii request create");
 
   // Same length as in IDL_Cubit tests so timings can be compared.
-  Cubit::long_seq ret_long_seq, arg_long_seq;
+  // Return value holder is set to a different length to test resizing.
+  Cubit::long_seq ret_long_seq (1), arg_long_seq (length);
   arg_long_seq.length (length);
   arg_long_seq[0] = 4;
+  ret_long_seq[0] = 0;
 
   // Make an Any out of the long_seq and add it to the request arg list.
   CORBA::Any arg_holder (Cubit::_tc_long_seq,
