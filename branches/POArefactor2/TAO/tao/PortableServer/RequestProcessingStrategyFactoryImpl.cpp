@@ -25,36 +25,21 @@ namespace TAO
         ::PortableServer::ServantRetentionPolicyValue srvalue)
     {
       RequestProcessingStrategy* strategy = 0;
+      RequestProcessingStrategyFactory *strategy_factory = 0;
 
       switch (value)
       {
         case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
         {
-          RequestProcessingStrategyFactory *strategy_factory =
+          strategy_factory =
             ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyAOMOnlyFactory");
-
-          if (strategy_factory != 0)
-            strategy = strategy_factory->create (value, srvalue);
-          else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("Unable to get ")
-                        ACE_TEXT ("RequestProcessingStrategyAOMOnlyFactory")));
 
           break;
         }
         case ::PortableServer::USE_DEFAULT_SERVANT :
         {
-          RequestProcessingStrategyFactory *strategy_factory =
+          strategy_factory =
             ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyDefaultServantFactory");
-
-          if (strategy_factory != 0)
-            strategy = strategy_factory->create (value, srvalue);
-          else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("Unable to get ")
-                        ACE_TEXT ("RequestProcessingStrategyDefaultServantFactory")));
 
           break;
         }
@@ -65,12 +50,16 @@ namespace TAO
           {
             case ::PortableServer::RETAIN :
             {
-              ACE_NEW_RETURN (strategy, RequestProcessingStrategyServantActivator, 0);
+              strategy_factory =
+                ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyServantActivatorFactory");
+
               break;
             }
             case ::PortableServer::NON_RETAIN :
             {
-              ACE_NEW_RETURN (strategy, RequestProcessingStrategyServantLocator, 0);
+              strategy_factory =
+                ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyServantLocatorFactory");
+
               break;
             }
           }
@@ -78,6 +67,14 @@ namespace TAO
           break;
         }
       }
+
+      if (strategy_factory != 0)
+        strategy = strategy_factory->create (value, srvalue);
+      else
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("Unable to get ")
+                    ACE_TEXT ("RequestProcessingStrategyFactory")));
 
       return strategy;
     }
@@ -87,52 +84,53 @@ namespace TAO
       RequestProcessingStrategy *strategy
       ACE_ENV_ARG_DECL)
     {
+      RequestProcessingStrategyFactory *strategy_factory = 0;
+
       switch (strategy->type ())
       {
         case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
         {
-          RequestProcessingStrategyFactory *strategy_factory =
+          strategy_factory =
             ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyAOMOnlyFactory");
 
-          if (strategy_factory != 0)
-            {
-              strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-            }
           break;
         }
         case ::PortableServer::USE_DEFAULT_SERVANT :
         {
-          RequestProcessingStrategyFactory *strategy_factory =
+          strategy_factory =
             ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyDefaultServantFactory");
 
-          if (strategy_factory != 0)
-            {
-              strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-            }
           break;
         }
         case ::PortableServer::USE_SERVANT_MANAGER :
         {
 #if (TAO_HAS_MINIMUM_POA == 0)
-/*          switch (srvalue)
+          switch (strategy->sr_type ())
           {
             case ::PortableServer::RETAIN :
             {
-              ACE_NEW_RETURN (strategy, RequestProcessingStrategyServantActivator, 0);
+              strategy_factory =
+                ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyServantActivatorFactory");
+
               break;
             }
             case ::PortableServer::NON_RETAIN :
             {
-              ACE_NEW_RETURN (strategy, RequestProcessingStrategyServantLocator, 0);
+              strategy_factory =
+                ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyServantLocatorFactory");
               break;
             }
-          }*/
+          }
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
           break;
         }
       }
+
+      if (strategy_factory != 0)
+        {
+          strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
     }
 
     ACE_STATIC_SVC_DEFINE (

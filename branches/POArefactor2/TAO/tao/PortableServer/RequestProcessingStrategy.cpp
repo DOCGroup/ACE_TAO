@@ -32,6 +32,16 @@ namespace TAO
 
     void
     RequestProcessingStrategy::strategy_init(
+      TAO_Root_POA *poa,
+      ::PortableServer::ServantRetentionPolicyValue sr_value
+      ACE_ENV_ARG_DECL_NOT_USED)
+    {
+      poa_ = poa;
+      sr_value_ = sr_value;
+    }
+
+    void
+    RequestProcessingStrategy::strategy_init(
       TAO_Root_POA *poa
       ACE_ENV_ARG_DECL_NOT_USED)
     {
@@ -42,6 +52,12 @@ namespace TAO
     RequestProcessingStrategy::strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       poa_ = 0;
+    }
+
+    ::PortableServer::ServantRetentionPolicyValue
+    RequestProcessingStrategy::sr_type() const
+    {
+      return sr_value_;
     }
   }
 }

@@ -40,6 +40,8 @@
 
 #include "RequestProcessingStrategyDefaultServantFactoryImpl.h"
 #include "RequestProcessingStrategyAOMOnlyFactoryImpl.h"
+#include "RequestProcessingStrategyServantActivatorFactoryImpl.h"
+#include "RequestProcessingStrategyServantLocatorFactoryImpl.h"
 
 ACE_RCSID (PortableServer,
            PortableServer,
@@ -163,6 +165,16 @@ TAO_POA_Initializer::init (void)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyDefaultServantFactoryImpl
     );
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyServantActivatorFactoryImpl
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyServantLocatorFactoryImpl
+    );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ServantRetentionStrategyFactoryImpl

@@ -130,7 +130,7 @@ namespace TAO
 
       if (request_processing_strategy_ != 0)
         {
-          request_processing_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
+          request_processing_strategy_->strategy_init (poa, policies.servant_retention() ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 

@@ -55,7 +55,14 @@ namespace TAO
 
       virtual ~RequestProcessingStrategy (void);
 
-      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init(
+        TAO_Root_POA *poa
+        ACE_ENV_ARG_DECL);
+
+      virtual void strategy_init(
+        TAO_Root_POA *poa,
+        ::PortableServer::ServantRetentionPolicyValue
+        ACE_ENV_ARG_DECL);
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 
@@ -118,8 +125,12 @@ namespace TAO
         const TAO::Portable_Server::Servant_Upcall &servant_upcall) = 0;
 
       virtual ::PortableServer::RequestProcessingPolicyValue type() const = 0;
+
+      virtual ::PortableServer::ServantRetentionPolicyValue sr_type() const;
+
     protected:
       TAO_Root_POA* poa_;
+      ::PortableServer::ServantRetentionPolicyValue sr_value_;
     };
   }
 }
