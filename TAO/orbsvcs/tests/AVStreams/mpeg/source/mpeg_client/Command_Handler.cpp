@@ -79,18 +79,18 @@ Command_Handler::init (int argc,
   // Increase the debug_level so that we can see the output
   TAO_debug_level++;
   CORBA::String_var ior;
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       this->orb_manager_.init_child_poa (this->argc_,
                                          this->argv_,
                                          "child_poa",
-                                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       this->parse_args (this->argc_, this->argv_);
       // activate the client video mmdevice under the child poa.
       ior = this->orb_manager_.activate (&this->receiver_,
-                                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Initialize the naming services
       if (my_name_client_.init (orb_manager_.orb ()) != 0)
@@ -124,12 +124,12 @@ Command_Handler::init (int argc,
                            "(%P|%t) register_handler for notification handler failed\n"),
                           -1);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Command_Handler::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Command_Handler::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 
@@ -137,25 +137,25 @@ Command_Handler::init (int argc,
 int
 Command_Handler::run (void)
 {
-  int result;
-  TAO_TRY
+  int result = -1;
+  ACE_TRY_NEW_ENV
     {
-      result = this->orb_manager_.run (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      result = this->orb_manager_.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("orb:run ()");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "orb:run ()");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return result;
 }
 
 
 int
 Command_Handler::handle_timeout (const ACE_Time_Value &,
-                                  const void *arg)
+                                 const void * /* arg */)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t)Command_Handler::handle_timeout called \n"));
@@ -166,17 +166,17 @@ Command_Handler::handle_timeout (const ACE_Time_Value &,
 int
 Command_Handler::resolve_audio_reference (void)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       if (this->audio_mmdevice_ior_.in ()!=0)
         {
           CORBA::Object_var mmdevice_obj = this->orb_manager_.orb ()->string_to_object (this->audio_mmdevice_ior_,
-                                                                                        TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+                                                                                        ACE_TRY_ENV);
+          ACE_TRY_CHECK;
           if (CORBA::is_nil (mmdevice_obj.in ()) == 0)
             {
               this->audio_server_mmdevice_ = AVStreams::MMDevice::_narrow (mmdevice_obj.in (),
-                                                                           TAO_TRY_ENV);
+                                                                           ACE_TRY_ENV);
             }
           this->audio_mmdevice_ior_ = (char *)0;
           return 0;
@@ -188,13 +188,13 @@ Command_Handler::resolve_audio_reference (void)
       audio_server_mmdevice_name [0].id = CORBA::string_dup ("Audio_Server_MMDevice");
       CORBA::Object_var audio_server_mmdevice_obj =
         this->my_name_client_->resolve (audio_server_mmdevice_name,
-                                        TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       this->audio_server_mmdevice_ =
         AVStreams::MMDevice::_narrow (audio_server_mmdevice_obj.in (),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->audio_server_mmdevice_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -202,16 +202,16 @@ Command_Handler::resolve_audio_reference (void)
                           -1);
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Audio_MMDevice successfully resolved: %s\n",
                   this->orb_manager_.orb ()->object_to_string (this->audio_server_mmdevice_.in (),
-                                                               TAO_TRY_ENV)));
-      TAO_CHECK_ENV;
+                                                               ACE_TRY_ENV)));
+      ACE_TRY_CHECK;
 
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Command_Handler::resolve_audio_reference");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Command_Handler::resolve_audio_reference");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -219,17 +219,17 @@ Command_Handler::resolve_audio_reference (void)
 int
 Command_Handler::resolve_video_reference (void)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       if (this->video_mmdevice_ior_.in ()!= 0)
         {
           CORBA::Object_var mmdevice_obj = this->orb_manager_.orb ()->string_to_object (this->video_mmdevice_ior_,
-                                                                                        TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+                                                                                        ACE_TRY_ENV);
+          ACE_TRY_CHECK;
           if (CORBA::is_nil (mmdevice_obj.in ()) == 0)
             {
               this->video_server_mmdevice_ = AVStreams::MMDevice::_narrow (mmdevice_obj.in (),
-                                                                           TAO_TRY_ENV);
+                                                                           ACE_TRY_ENV);
             }
           this->video_mmdevice_ior_ = (char *) 0;
           return 0;
@@ -240,13 +240,13 @@ Command_Handler::resolve_video_reference (void)
       video_server_mmdevice_name [0].id = CORBA::string_dup ("Video_Server_MMDevice");
       CORBA::Object_var video_server_mmdevice_obj =
         this->my_name_client_->resolve (video_server_mmdevice_name,
-                                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       this->video_server_mmdevice_ =
         AVStreams::MMDevice::_narrow (video_server_mmdevice_obj.in (),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->video_server_mmdevice_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -254,16 +254,16 @@ Command_Handler::resolve_video_reference (void)
                           -1);
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Video_MMDevice successfully resolved: %s\n",
                   this->orb_manager_.orb ()->object_to_string (this->video_server_mmdevice_.in (),
-                                                               TAO_TRY_ENV)));
-      TAO_CHECK_ENV;
+                                                               ACE_TRY_ENV)));
+      ACE_TRY_CHECK;
 
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Command_Handler::resolve_video_reference");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Command_Handler::resolve_video_reference");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) MMDevice successfully resolved.\n"));
   return 0;
@@ -281,7 +281,7 @@ int
 Command_Handler::handle_input (ACE_HANDLE fd)
 {
   unsigned char cmd;
-  int val;
+  int val = -1;
 
   //  ACE_DEBUG ((LM_DEBUG, "handle_input, fd: %d\n", fd));
 
@@ -303,7 +303,7 @@ Command_Handler::handle_input (ACE_HANDLE fd)
         }
 
       //      fprintf(stderr, "CTR: cmd received - %d\n", cmd);
-      TAO_TRY
+      ACE_TRY_NEW_ENV
         {
           switch (cmd)
             {
@@ -330,12 +330,12 @@ Command_Handler::handle_input (ACE_HANDLE fd)
               break;
             case CmdPLAY:
               if (this->play (0,
-                              TAO_TRY_ENV) < 0)
+                              ACE_TRY_ENV) < 0)
                 {
                   this->busy_ = 0;
                   ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)play failed\n"),0);
                 }
-              TAO_CHECK_ENV;
+              ACE_TRY_CHECK;
               break;
             case CmdPOSITION:
               this->position ();
@@ -370,12 +370,12 @@ Command_Handler::handle_input (ACE_HANDLE fd)
           this->busy_ = 0;
           // unset the busy flag,done with processing the command.
         }
-      TAO_CATCHANY
+      ACE_CATCHANY
         {
-          TAO_TRY_ENV.print_exception ("Command_Handler::handle_input ()");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Command_Handler::handle_input ()");
           return 0;
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
     }
   return 0;
 }
@@ -384,14 +384,13 @@ int
 Command_Handler::init_av (void)
 {
   cerr << "inside init_av \n";
-  int i, j;
+  int i;
 
   /* try to stop and close previous playing */
   if (audioSocket >= 0 || videoSocket >= 0)
     {
       //      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
       // this may have to be taken care of afterwards.
-      unsigned char tmp = CmdCLOSE;
       int result =
         this->stop_playing();
       if (result < 0)
@@ -540,7 +539,6 @@ Command_Handler::init_java_av (char *audio_ior,
     ACE_DEBUG ((LM_DEBUG,"%s\n",audio_file));
   if (video_file != 0)
     ACE_DEBUG ((LM_DEBUG,"%s\n",video_file));
-  int j;
   this->audio_mmdevice_ior_ = audio_ior;
   this->video_mmdevice_ior_ = video_ior;
 
@@ -549,7 +547,6 @@ Command_Handler::init_java_av (char *audio_ior,
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
       // this may have to be taken care of afterwards.
-      unsigned char tmp = CmdCLOSE;
       int result =
         this->stop_playing();
       if (result < 0)
@@ -711,13 +708,13 @@ Command_Handler::init_audio_channel (char *audiofile)
       para->audiofile [i] = audiofile [i];
 
     // CORBA call
-    TAO_TRY
+    ACE_TRY_NEW_ENV
       {
         CORBA::Boolean result;
         result = this->audio_control_->init_audio (para.in (),
                                                    reply.out (),
-                                                   TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+                                                   ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         if (result == (0))
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%P|%) init_audio failed\n"),
@@ -725,12 +722,12 @@ Command_Handler::init_audio_channel (char *audiofile)
         else
           ACE_DEBUG ((LM_DEBUG,"(%P|%t) init_audio success \n"));
       }
-    TAO_CATCHANY
+    ACE_CATCHANY
       {
-        TAO_TRY_ENV.print_exception ("audio_control_->init_audio (..)");
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "audio_control_->init_audio (..)");
         return -1;
       }
-    TAO_ENDTRY;
+    ACE_ENDTRY;
 
     /*
     fprintf(stderr, "AF Audio para: encode %d, ch %d, sps %d, bps %d.\n",
@@ -738,7 +735,6 @@ Command_Handler::init_audio_channel (char *audiofile)
             para.para.samplesPerSecond, para.para.bytesPerSample);
      */
     {
-      int flag = 1;
 
       shared->live += reply->live;
       shared->audioFormat = reply->format;
@@ -818,26 +814,26 @@ Command_Handler::set_mmdevice (CORBA::Object_ptr audio_mmdevice,
                                const char *video_file)
 
 {
-  CORBA::String audio_mmdevice_ior (0);
-  CORBA::String video_mmdevice_ior (0);
-  TAO_TRY
+  CORBA::String_var audio_mmdevice_ior ;
+  CORBA::String_var video_mmdevice_ior ;
+  ACE_TRY_NEW_ENV
     {
       audio_mmdevice_ior =
         this->orb_manager_.orb ()->object_to_string (audio_mmdevice,
-                                                     TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      ACE_DEBUG ((LM_DEBUG,"audio_mmdevice ior is %s\n",audio_mmdevice_ior));
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG,"audio_mmdevice ior is %s\n",audio_mmdevice_ior.in ()));
       video_mmdevice_ior =
         this->orb_manager_.orb ()->object_to_string (video_mmdevice,
-                                                     TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      ACE_DEBUG ((LM_DEBUG,"audio_mmdevice ior is %s\n",video_mmdevice_ior));
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG,"audio_mmdevice ior is %s\n",video_mmdevice_ior.in ()));
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR,"set_audio_mmdevice failed\n"));
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   this->init_java_av (audio_mmdevice_ior,video_mmdevice_ior,(char *)audio_file,(char *)video_file);
   return;
 }
@@ -898,28 +894,28 @@ Command_Handler::init_video_channel (char *videofile)
     para->videofile.length (strlen(videofile));
 
     // string to sequence <char>
-    for (int i=0;i<para->videofile.length ();i++)
+    for (u_int i=0;i<para->videofile.length ();i++)
       para->videofile [i] = videofile [i];
 
     // CORBA call
-    TAO_TRY
+    ACE_TRY_NEW_ENV
       {
         CORBA::Boolean result;
         result = this->video_control_->init_video (para.in (),
                                                    reply,
-                                                   TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+                                                   ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         if (result == (0))
           return -1;
         else
           ACE_DEBUG ((LM_DEBUG,"(%P|%t) init_video success \n"));
       }
-    TAO_CATCHANY
+    ACE_CATCHANY
       {
-        TAO_TRY_ENV.print_exception ("video_control_->init_video (..)");
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "video_control_->init_video (..)");
         return -1;
       }
-    TAO_ENDTRY;
+    ACE_ENDTRY;
     shared->live += reply->live;
     shared->videoFormat = reply->format;
     shared->totalHeaders = reply->totalHeaders;
@@ -1134,8 +1130,8 @@ Command_Handler::init_video_channel (char *videofile)
 
 
 int
-Command_Handler::stat_stream (CORBA::Char_out ch,
-                              CORBA::Long_out size)
+Command_Handler::stat_stream (CORBA::Char_out /* ch */,
+                              CORBA::Long_out /* size */)
 {
   return 0;
 }
@@ -1144,14 +1140,14 @@ Command_Handler::stat_stream (CORBA::Char_out ch,
 int
 Command_Handler::close (void)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       if (CORBA::is_nil (this->audio_control_) == 0)
         {
           // one way function call.
-          this->audio_control_->close (TAO_TRY_ENV);
+          this->audio_control_->close (ACE_TRY_ENV);
 
-          TAO_CHECK_ENV;
+          ACE_TRY_CHECK;
           if (ABpid > 0) {
             char message[BUFSIZ];
             message [0] = EXIT;
@@ -1164,8 +1160,8 @@ Command_Handler::close (void)
       if (CORBA::is_nil (this->video_control_) == 0)
         {
           // one way function call.
-          this->video_control_->close (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          this->video_control_->close (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
           if (VBpid > 0) {
             char message[BUFSIZ];
             message [0] = EXIT;
@@ -1174,23 +1170,23 @@ Command_Handler::close (void)
           }
           ACE_DEBUG ((LM_DEBUG,"(%P|%t) video close done \n"));
         }
-      this->orb_manager_.child_poa ()->destroy (1,0,TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->orb_manager_.child_poa ()->destroy (1,0,ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)destroy childpoa done\n"));
 
       this->orb_manager_.init_child_poa (argc_,
                                          argv_,
                                          "child_poa",
-                                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,"(%P)New child poa initialized\n"));
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("video_control_->close (..)");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "video_control_->close (..)");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   delete this->audio_reactive_strategy_;
   ACE_DEBUG ((LM_DEBUG,"(%P)%N,%l"));
   delete this->audio_client_mmdevice_;
@@ -1251,22 +1247,22 @@ Command_Handler::fast_forward (void)
         para->usecPerFrame = shared->usecPerFrame;
         para->framesPerSecond = shared->framesPerSecond;
         startTime = get_usec();
-        TAO_TRY
+        ACE_TRY_NEW_ENV
           {
             CORBA::Boolean result;
             result = this->video_control_->fast_forward (para.in (),
-                                                         TAO_TRY_ENV);
-            TAO_CHECK_ENV;
+                                                         ACE_TRY_ENV);
+            ACE_TRY_CHECK;
             if (result == (0))
               return -1;
             ACE_DEBUG ((LM_DEBUG,"(%P|%t) fast_forward done \n"));
           }
-        TAO_CATCHANY
+        ACE_CATCHANY
           {
-            TAO_TRY_ENV.print_exception ("video_control_->fast_forward_video (..)");
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "video_control_->fast_forward_video (..)");
             return -1;
           }
-        TAO_ENDTRY;
+        ACE_ENDTRY;
         start_timer();
       }
   }
@@ -1312,22 +1308,22 @@ Command_Handler::fast_backward (void)
       para->usecPerFrame = shared->usecPerFrame;
       para->framesPerSecond = shared->framesPerSecond;
       startTime = get_usec();
-        TAO_TRY
+        ACE_TRY_NEW_ENV
           {
             CORBA::Boolean result;
             result = this->video_control_->fast_backward (para.in (),
-                                                          TAO_TRY_ENV);
-            TAO_CHECK_ENV;
+                                                          ACE_TRY_ENV);
+            ACE_TRY_CHECK;
             if (result == (0))
               return -1;
             ACE_DEBUG ((LM_DEBUG,"(%P|%t) fast_backward done \n"));
           }
-        TAO_CATCHANY
+        ACE_CATCHANY
           {
-            TAO_TRY_ENV.print_exception ("video_control_->fast_forward_video (..)");
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "video_control_->fast_forward_video (..)");
             return -1;
           }
-        TAO_ENDTRY;
+        ACE_ENDTRY;
 
         start_timer();
     }
@@ -1352,22 +1348,22 @@ Command_Handler::step (void)
          to let VD give out the remaining frame in its ring[] buffer */
       para->sn = shared->cmdsn;
       para->nextFrame = shared->nextFrame;
-      TAO_TRY
+      ACE_TRY_NEW_ENV
         {
           CORBA::Boolean result;
           result = this->video_control_->step (para.in (),
-                                               TAO_TRY_ENV);
+                                               ACE_TRY_ENV);
           ACE_DEBUG ((LM_DEBUG,"(%P|%t) step done \n"));
-          TAO_CHECK_ENV;
+          ACE_TRY_CHECK;
           if (result == (0))
             return -1;
           }
-        TAO_CATCHANY
+        ACE_CATCHANY
           {
-            TAO_TRY_ENV.print_exception ("video_control_->step (..)");
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "video_control_->step (..)");
             return -1;
           }
-        TAO_ENDTRY;
+        ACE_ENDTRY;
      /*
         fprintf(stderr, "CTR: STEP . . . frame-%d\n", para.nextFrame);
     */
@@ -1380,12 +1376,11 @@ Command_Handler::step (void)
 
 int
 Command_Handler::play (int auto_exp,
-                       CORBA::Environment& env)
+                       CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA::Long vts;
-  CORBA::Long ats;
-  CORBA::Boolean result;
-  unsigned char tmp;
+  CORBA::Long vts = 0;
+  CORBA::Long ats = 0;
+  CORBA::Boolean result = 0;
   int cmdstarted = 0;
   int stuffsamples = 0;
 
@@ -1458,11 +1453,11 @@ Command_Handler::play (int auto_exp,
 
       result =this->audio_control_->play (para.in (),
                                           ats,
-                                          env);
+                                          ACE_TRY_ENV);
 
       if (result == 0)
         return -1;
-      TAO_CHECK_ENV_RETURN (env,-1);
+      ACE_CHECK_RETURN (-1);
     }
   if (videoSocket >= 0 && shared->nextFrame < shared->totalFrames)
     {
@@ -1528,10 +1523,10 @@ Command_Handler::play (int auto_exp,
       // CORBA call
       result =this->video_control_->play (para.in (),
                                           vts,
-                                          env);
+                                          ACE_TRY_ENV);
       if (result == 0)
         return -1;
-      TAO_CHECK_ENV_RETURN (env,-1);
+      ACE_CHECK_RETURN (-1);
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)Reached line %d in %s",__LINE__,__FILE__));
       if (shared->config.qosEffective) {
         /*
@@ -1582,7 +1577,7 @@ Command_Handler::play (int auto_exp,
   }
   if (cmdstarted)
     start_timer ();
-  tmp = CmdDONE;
+  unsigned char tmp = CmdDONE;
   CmdWrite (&tmp, 1);
   return 0;
 }
@@ -1620,22 +1615,22 @@ Command_Handler::position_action (int operation_tag)
         para->sn = shared->cmdsn;
         para->nextGroup = shared->nextGroup;
         tmp = CmdPOSITION;
-        TAO_TRY
+        ACE_TRY_NEW_ENV
           {
             CORBA::Boolean result;
             result = this->video_control_->position (para.in (),
-                                                     TAO_TRY_ENV);
-            TAO_CHECK_ENV;
+                                                     ACE_TRY_ENV);
+            ACE_TRY_CHECK;
             if (result == (0))
               return -1;
             //            ACE_DEBUG ((LM_DEBUG,"(%P|%t) position done \n"));
           }
-        TAO_CATCHANY
+        ACE_CATCHANY
           {
-            TAO_TRY_ENV.print_exception ("video_control_->position (..)");
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "video_control_->position (..)");
             return -1;
           }
-        TAO_ENDTRY;
+        ACE_ENDTRY;
         if (operation_tag)  /* release or LOOPrewind */
           this->wait_for_display (POSITION);
       }
@@ -1703,11 +1698,10 @@ Command_Handler::speed (void)
 
 {
   ACE_DEBUG ((LM_DEBUG,"COmmand_Handler::speed ()\n"));
-  unsigned char tmp;
   CORBA::Boolean result;
   OurCmdRead((char *)&shared->speedPosition, 4);
   set_speed();
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       if (!shared->live && shared->cmd == CmdPLAY)
         {
@@ -1732,8 +1726,8 @@ Command_Handler::speed (void)
                 para->sendPattern[i]=shared->sendPattern[i];
               // CORBA call
               result = this->video_control_->speed (para.in (),
-                                                    TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+                                                    ACE_TRY_ENV);
+              ACE_TRY_CHECK;
               if (result == (0))
                 return -1;
               if (fbstate) {
@@ -1753,19 +1747,19 @@ Command_Handler::speed (void)
               // CORBA call
               result =
                 this->audio_control_->speed (para.in (),
-                                             TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+                                             ACE_TRY_ENV);
+              ACE_TRY_CHECK;
               if (result == (0))
                 return -1;
             }
         }
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("audio_control->speed ()");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "audio_control->speed ()");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -1799,12 +1793,11 @@ Command_Handler::stop_playing (void)
 {
   unsigned char precmd = shared->cmd;
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       if (precmd == CmdFF || precmd == CmdFB || precmd == CmdPLAY)
         {
           //          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
-          unsigned char tmp = CmdSTOP;
           NewCmd(CmdSTOP);
 
           /* notify AS and/or VS */
@@ -1816,11 +1809,11 @@ Command_Handler::stop_playing (void)
               // CORBA call
               CORBA::Boolean result =
                 this->audio_control_->stop (shared->cmdsn,
-                                            TAO_TRY_ENV);
+                                            ACE_TRY_ENV);
               //              cerr << "audio_control_->stop result is " << result << endl;
               if (result == (0))
                   return -1;
-              TAO_CHECK_ENV;
+              ACE_TRY_CHECK;
             }
           if (CORBA::is_nil (this->video_control_) == 0)
             {
@@ -1828,10 +1821,10 @@ Command_Handler::stop_playing (void)
               // CORBA call
               CORBA::Boolean result =
                 this->video_control_->stop (shared->cmdsn,
-                                            TAO_TRY_ENV);
+                                            ACE_TRY_ENV);
               if (result == (0))
                 return -1;
-              TAO_CHECK_ENV;
+              ACE_TRY_CHECK;
             }
           //          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
 
@@ -1859,12 +1852,12 @@ Command_Handler::stop_playing (void)
             shared->nextGroup = shared->currentGroup + 1;
         }
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Command_Handler.stop(..)");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Command_Handler.stop(..)");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 
@@ -1875,7 +1868,7 @@ Command_Handler::connect_to_video_server (void)
   // set the pointers to the correct values
   //  *max_pkt_size = -INET_SOCKET_BUFFER_SIZE;
   // initialize the command handler , ORB
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
   if (this->resolve_video_reference () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1895,27 +1888,27 @@ Command_Handler::connect_to_video_server (void)
 
   this->orb_manager_.activate_under_child_poa ("Video_Client_MMDevice",
                                                this->video_client_mmdevice_,
-                                               TAO_TRY_ENV);
-  TAO_CHECK_ENV;
+                                               ACE_TRY_ENV);
+  ACE_TRY_CHECK;
 
   ACE_NEW_RETURN (this->video_streamctrl_,
                   TAO_StreamCtrl,
                   -1);
   this->video_streamctrl_->bind_devs
-    (this->video_client_mmdevice_->_this (TAO_TRY_ENV),
+    (this->video_client_mmdevice_->_this (ACE_TRY_ENV),
          this->video_server_mmdevice_.in (),
          the_qos.inout (),
          the_flows.in (),
-         TAO_TRY_ENV);
+         ACE_TRY_ENV);
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("video_streamctrl.bind_devs:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "video_streamctrl.bind_devs:");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 
@@ -1929,7 +1922,7 @@ Command_Handler::connect_to_audio_server (void)
   // // set the pointers to the correct values
   //  *max_pkt_size = -INET_SOCKET_BUFFER_SIZE;
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
 
   if (this->resolve_audio_reference () == -1)
@@ -1951,8 +1944,8 @@ Command_Handler::connect_to_audio_server (void)
   // activate the client audio mmdevice under the child poa.
   this->orb_manager_.activate_under_child_poa ("Audio_Client_MMDevice",
                                                this->audio_client_mmdevice_,
-                                               TAO_TRY_ENV);
-  TAO_CHECK_ENV;
+                                               ACE_TRY_ENV);
+  ACE_TRY_CHECK;
 
   ACE_NEW_RETURN (this->audio_streamctrl_,
                   TAO_StreamCtrl,
@@ -1960,20 +1953,20 @@ Command_Handler::connect_to_audio_server (void)
 
   // Bind the client and server mmdevices.
       this->audio_streamctrl_->bind_devs
-        (this->audio_client_mmdevice_->_this (TAO_TRY_ENV),
+        (this->audio_client_mmdevice_->_this (ACE_TRY_ENV),
          this->audio_server_mmdevice_.in (),
          the_qos.inout (),
          the_flows.in (),
-         TAO_TRY_ENV);
+         ACE_TRY_ENV);
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("audio_streamctrl.bind_devs:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "audio_streamctrl.bind_devs:");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -2259,7 +2252,7 @@ Client_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 void
-Client_Sig_Handler::TimerHandler(int sig)
+Client_Sig_Handler::TimerHandler(int /* sig */)
 {
   int currentUPF = shared->currentUPF;
   /*
@@ -2332,7 +2325,7 @@ Client_Sig_Handler::TimerHandler(int sig)
     /* audio involved,  TimerProcessing() will adjust the rate automatically */
     }
   if ((shared->cmd == CmdFF) || (shared->cmd == CmdFB))
-    shared->nextFrame = shared->nextGroup * frames_per_group;
+    shared->nextFrame = (int) (shared->nextGroup * frames_per_group);
 }
 
 void
@@ -2388,7 +2381,6 @@ Client_Sig_Handler::DisplayPicture(void)
     Fprintf(stderr, "CTR in diplayPicture().\n");
   */
   {
-    int i, j;
     FrameBlock *buf, *next;
 #if 0
     if (shared->cmd == CmdPLAY && rtplay &&
@@ -2845,7 +2837,6 @@ CORBA::Boolean
 Audio_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_preconnect called\n"));
-  CORBA::UShort server_port;
   ACE_INET_Addr local_addr;
 
   // Get the local UDP address
@@ -2870,7 +2861,7 @@ Audio_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
     return 0;
 
   if (this->dgram_.get_local_addr (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram get local addr failed %p"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram get local addr failed %p"),0);
   // form a string
   char client_address_string [BUFSIZ];
   ::sprintf (client_address_string,
@@ -2900,7 +2891,7 @@ Audio_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spe
   server_udp_addr.dump ();
   if (ACE_OS::connect (this->dgram_.get_handle (),(sockaddr *) server_udp_addr.get_addr (),
                        server_udp_addr.get_size ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) datagram connect failed %p\n"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) datagram connect failed %p\n"),0);
   // Now set the data handle of the command handler.
 
   this->command_handler_->set_audio_data_handle (this->dgram_.get_handle ());
@@ -2908,24 +2899,24 @@ Audio_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spe
 }
 
 int
-Audio_Client_StreamEndPoint::handle_start (const AVStreams::flowSpec &the_spec,
-                                           CORBA::Environment &env)
+Audio_Client_StreamEndPoint::handle_start (const AVStreams::flowSpec & /* the_spec */,
+                                           CORBA::Environment & /* env */)
 
 {
   return -1;
 }
 
 int
-Audio_Client_StreamEndPoint::handle_stop (const AVStreams::flowSpec &the_spec,
-                                          CORBA::Environment &env)
+Audio_Client_StreamEndPoint::handle_stop (const AVStreams::flowSpec & /* the_spec */,
+                                          CORBA::Environment & /* env */)
 
 {
   return -1;
 }
 
 int
-Audio_Client_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,
-                                             CORBA::Environment &env)
+Audio_Client_StreamEndPoint::handle_destroy (const AVStreams::flowSpec & /* the_spec */,
+                                             CORBA::Environment & /* env */)
 
 {
   return -1;
@@ -2963,7 +2954,6 @@ CORBA::Boolean
 Video_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_preconnect called\n"));
-  CORBA::UShort server_port;
   ACE_INET_Addr local_addr;
 
   // Get the local UDP address
@@ -2988,7 +2978,7 @@ Video_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
     return 0;
 
   if (this->dgram_.get_local_addr (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram get local addr failed %p"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram get local addr failed %p"),0);
   // form a string
   char client_address_string [BUFSIZ];
   ::sprintf (client_address_string,
@@ -3015,7 +3005,7 @@ Video_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spe
   server_udp_addr.dump ();
   if (ACE_OS::connect (this->dgram_.get_handle (),(sockaddr *) server_udp_addr.get_addr (),
                        server_udp_addr.get_size ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) datagram connect failed %p\n"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) datagram connect failed %p\n"),0);
   // Now set the data handle of the command handler.
 
   this->command_handler_->set_video_data_handle (this->dgram_.get_handle ());
@@ -3023,24 +3013,24 @@ Video_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spe
 }
 
 int
-Video_Client_StreamEndPoint::handle_start (const AVStreams::flowSpec &the_spec,
-                                           CORBA::Environment &env)
+Video_Client_StreamEndPoint::handle_start (const AVStreams::flowSpec & /* the_spec */,
+                                           CORBA::Environment & /* env */)
 
 {
   return -1;
 }
 
 int
-Video_Client_StreamEndPoint::handle_stop (const AVStreams::flowSpec &the_spec,
-                                          CORBA::Environment &env)
+Video_Client_StreamEndPoint::handle_stop (const AVStreams::flowSpec &,
+                                          CORBA::Environment &)
 
 {
   return -1;
 }
 
 int
-Video_Client_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,
-                                             CORBA::Environment &env)
+Video_Client_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &,
+                                             CORBA::Environment &)
 
 {
   return -1;
@@ -3070,14 +3060,13 @@ Video_Client_VDev::Video_Client_VDev (Command_Handler *command_handler)
 
 CORBA::Boolean
 Video_Client_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl,
-                                   CORBA::Environment &env)
+                                   CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Client_VDev::set_media_ctrl ()\n"));
   this->video_control_ = Video_Control::_narrow (media_ctrl,
-                                                 env);
+                                                 ACE_TRY_ENV);
 
-  TAO_CHECK_ENV_RETURN (env,0);
-
+  ACE_CHECK_RETURN (0);
   this->command_handler_->set_video_control (this->video_control_);
 
   return 1;
@@ -3101,13 +3090,13 @@ Audio_Client_VDev::Audio_Client_VDev (Command_Handler *command_handler)
 
 CORBA::Boolean
 Audio_Client_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl,
-                                   CORBA::Environment &env)
+                                   CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Client_VDev::set_media_ctrl ()\n"));
   this->audio_control_ = Audio_Control::_narrow (media_ctrl,
-                                                 env);
+                                                 ACE_TRY_ENV);
 
-  TAO_CHECK_ENV_RETURN (env,0);
+  ACE_CHECK_RETURN (0);
 
   this->command_handler_->set_audio_control (this->audio_control_);
 
