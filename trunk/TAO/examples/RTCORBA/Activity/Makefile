@@ -71,8 +71,6 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -269,8 +267,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Module.i \
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
- JobC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp JobC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -311,20 +309,17 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- JobC.i activity_export.h \
- $(ACE_ROOT)/ace/Arg_Shifter.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i JobC.i \
+ activity_export.h $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(TAO_ROOT)/tao/debug.h \
- Task_Stats.h Task_Stats.inl
+ $(TAO_ROOT)/tao/debug.h Task_Stats.h \
+ Task_Stats.inl
 
 .obj/Thread_Task.o .obj/Thread_Task.so .shobj/Thread_Task.o .shobj/Thread_Task.so: Thread_Task.cpp Thread_Task.h Periodic_Task.h \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -521,8 +516,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Module.i \
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
- JobC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp JobC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -563,12 +558,10 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- JobC.i activity_export.h \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i JobC.i \
+ activity_export.h $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(TAO_ROOT)/tao/debug.h \
- Activity.h \
+ $(TAO_ROOT)/tao/debug.h Activity.h \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
@@ -588,8 +581,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -806,8 +797,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
- activity_export.h \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
+ activity_export.h $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
@@ -881,9 +871,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(TAO_ROOT)/tao/ORB_Core.i \
- Thread_Task.h Periodic_Task.h \
- $(ACE_ROOT)/ace/Task.h \
+ $(TAO_ROOT)/tao/ORB_Core.i Thread_Task.h \
+ Periodic_Task.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -900,8 +889,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Module.i \
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
- JobC.h JobC.i Job_i.h JobS.h \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp JobC.h JobC.i \
+ Job_i.h JobS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -919,8 +908,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1150,8 +1137,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- activity_export.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h activity_export.h \
  $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1162,8 +1148,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Get_Opt.i \
- POA_Holder.h \
+ $(ACE_ROOT)/ace/Get_Opt.i POA_Holder.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  Job_i.h JobS.h JobC.h JobC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
@@ -1204,8 +1189,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Module.i \
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
- Activity.h \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp Activity.h \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
@@ -1213,8 +1197,6 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1371,15 +1353,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- activity_export.h \
- $(ACE_ROOT)/ace/Arg_Shifter.h \
+ activity_export.h $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(TAO_ROOT)/tao/debug.h
 
 .obj/Job_i.o .obj/Job_i.so .shobj/Job_i.o .shobj/Job_i.so: Job_i.cpp Job_i.h JobS.h JobC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1558,8 +1537,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- JobC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i JobC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1576,8 +1554,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  JobS_T.h JobS_T.i JobS_T.cpp JobS.i activity_export.h \
  $(TAO_ROOT)/tao/debug.h \
- $(ACE_ROOT)/ace/Arg_Shifter.h \
- Activity.h \
+ $(ACE_ROOT)/ace/Arg_Shifter.h Activity.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
@@ -1618,8 +1595,6 @@ realclean: clean
 .obj/Task_Stats.o .obj/Task_Stats.so .shobj/Task_Stats.o .shobj/Task_Stats.so: Task_Stats.cpp Task_Stats.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1687,14 +1662,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
- activity_export.h Task_Stats.inl
+ $(TAO_ROOT)/tao/TAO_Export.h activity_export.h \
+ Task_Stats.inl
 
-.obj/JobC.o .obj/JobC.so .shobj/JobC.o .shobj/JobC.so: JobC.cpp JobC.h \
- $(TAO_ROOT)/tao/corba.h \
+.obj/JobC.o .obj/JobC.so .shobj/JobC.o .shobj/JobC.so: JobC.cpp JobC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1873,8 +1845,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- JobC.i $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i JobC.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1991,8 +1963,6 @@ realclean: clean
 .obj/JobS.o .obj/JobS.so .shobj/JobS.o .shobj/JobS.so: JobS.cpp JobS.h JobC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2171,8 +2141,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- JobC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i JobC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2190,9 +2159,7 @@ realclean: clean
  JobS_T.h JobS_T.i JobS_T.cpp JobS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
