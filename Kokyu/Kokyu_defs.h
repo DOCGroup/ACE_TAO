@@ -77,7 +77,7 @@ namespace Kokyu
 
   typedef ACE_Array<ConfigInfo> ConfigInfoSet;
 
-  struct Dispatcher_Attributes
+  struct Kokyu_Export Dispatcher_Attributes
   {
     Dispatcher_Attributes();
     ConfigInfoSet config_info_set_;
