@@ -13,14 +13,19 @@
 #include "ace/config-sunos5.6.h"
 
 #if defined (__GNUG__)
-  // Disable the following, because g++ 2.7.2.3 can't handle it.
-  // Maybe later g++ versions can?
-# undef ACE_HAS_XPG4_MULTIBYTE_CHAR
+# if __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8
+    // Assume that later g++ were built on SunOS 5.7, so they don't
+    // have these problems . . .
 
-  // The Solaris86 g++ 2.7.2.3 sys/types.h doesn't have these . . .
-  typedef long          t_scalar_t;  /* historical versions */
-  typedef unsigned long t_uscalar_t;
-  typedef void          *timeout_id_t;
+    // Disable the following, because g++ 2.7.2.3 can't handle it.
+    // Maybe later g++ versions can?
+#   undef ACE_HAS_XPG4_MULTIBYTE_CHAR
+
+    // The Solaris86 g++ 2.7.2.3 sys/types.h doesn't have these . . .
+    typedef long          t_scalar_t;  /* historical versions */
+    typedef unsigned long t_uscalar_t;
+    typedef void          *timeout_id_t;
+# endif /* __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8 */
 #endif /* __GNUG__ */
 
 #endif /* ACE_CONFIG_H */
