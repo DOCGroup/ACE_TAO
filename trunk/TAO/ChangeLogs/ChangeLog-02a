@@ -1,3 +1,12 @@
+Sat Aug 25 23:38:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * orbsvcs/performance-tests/EC_Federated_Latency/server.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Latency/client.cpp:
+	* orbsvcs/performance-tests/EC_Latency/server.cpp:
+	* orbsvcs/performance-tests/EC_Latency/client.cpp: #included
+	  "tao/Messaging.h". Fixes build problems in no interceptors
+	  build. 
+
 Sat Aug 25 09:49:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/File_IO/server.dsp:
