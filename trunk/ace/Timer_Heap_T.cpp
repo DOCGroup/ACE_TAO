@@ -71,7 +71,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Heap_T (size_t size,
   : INHERITED (upcall_functor, freelist),
     max_size_ (size),
     cur_size_ (0),
-    iterator_ (*this),
     timer_ids_freelist_ (0),
     preallocated_nodes_ (0),
     preallocated_nodes_freelist_ (0)
@@ -110,6 +109,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Heap_T (size_t size,
       this->preallocated_nodes_freelist_ = 
 	&this->preallocated_nodes_[0];
     }
+
+  iterator_ = new HEAP_ITERATOR(*this);
 }
 
 template <class TYPE, class FUNCTOR, class LOCK> 
@@ -118,7 +119,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_functor
   : INHERITED (upcall_functor, freelist),
     max_size_ (ACE_DEFAULT_TIMERS),
     cur_size_ (0),
-    iterator_ (*this),
     timer_ids_freelist_ (0),
     preallocated_nodes_ (0),
     preallocated_nodes_freelist_ (0)
@@ -136,6 +136,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_functor
   // array.
   for (size_t i = 0; i < this->max_size_; i++)
     this->timer_ids_[i] = -((long) (i + 1));
+
+  iterator_ = new HEAP_ITERATOR(*this);
 }
 
 
@@ -143,6 +145,8 @@ template <class TYPE, class FUNCTOR, class LOCK>
 ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_Heap_T (void)
 {
   ACE_TRACE ("ACE_Timer_Heap::~ACE_Timer_Heap");
+
+  delete iterator_;
 
   // Clean up all the nodes still in the queue
   for (size_t i = 0; i < this->cur_size_; i++)
@@ -220,7 +224,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::is_empty (void) const
 template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &
 ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::iter (void)
 {
-  return this->iterator_;
+  return *this->iterator_;
 }
 
 // Returns earliest time in a non-empty queue.

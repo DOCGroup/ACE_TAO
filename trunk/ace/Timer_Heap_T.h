@@ -210,7 +210,7 @@ private:
   size_t cur_size_;
   // Current size of the heap.
   
-  HEAP_ITERATOR iterator_;
+  HEAP_ITERATOR *iterator_;
   // Iterator used to expire timers.
 
   ACE_Timer_Node_T<TYPE> **heap_;

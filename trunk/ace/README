@@ -89,6 +89,7 @@ ACE_HAS_NONCONST_GETBY			Platform uses non-const char * in calls to gethostbyadd
 ACE_HAS_NONCONST_MSGSND			Platform has a non-const parameter to msgsend() (e.g., SCO).
 ACE_HAS_NONCONST_SELECT_TIMEVAL		Platform's select() uses non-const timeval* (only found on Linux right now)
 ACE_HAS_OLD_MALLOC			Compiler/platform uses old malloc()/free() prototypes (ugh)
+ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R	Uses ctime_r & asctime_r with only two parameters vs. three.
 ACE_HAS_ONEARG_SIGWAIT			sigwait() takes only one argument.
 ACE_HAS_ONLY_SCHED_OTHER                Platform, e.g., Solaris 2.5, only supports SCHED_OTHER POSIX scheduling policy.
 ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R	Uses ctime_r & asctime_r with only two parameters vs. three.
@@ -113,7 +114,8 @@ ACE_HAS_PTHREAD_SIGMASK			Platform has pthread_sigmask() defined.
 ACE_HAS_PTHREAD_T			Platform has pthread_t defined.
 ACE_HAS_PTHREAD_YIELD_VOIDPTR		pthread_yield() takes a void pointer arg.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS	Platform will recurse infinitely on thread exits from TSS cleanup routines (e.g., AIX).  
-ACE_HAS_REENTRANT_FUNCTIONS 		Platform supports reentrant functions (i.e., all the POSIX *_r functions).
+ACE_HAS_REENTRANT_FUNCTIONS		Platform supports reentrant functions (i.e., all the POSIX *_r functions).
+ACE_LACKS_NETDB_REENTRANT_FUNCTIONS	Platform does not support reentrant netdb functions (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r, gethostbyname_r, getservbyname_r).
 ACE_HAS_REGEX				Platform supports the POSIX regular expression library
 ACE_HAS_SELECT_H			Platform has special header for select().
 ACE_HAS_SEMUN				Compiler/platform defines a union semun for SysV shared memory

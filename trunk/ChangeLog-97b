@@ -1,3 +1,39 @@
+Wed Sep  3 21:38:18 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
+
+	* ace/config-irix6.x-sgic++.h: 
+	  IRIX uses pthread_sigmask to manage per-thread signal mask,
+	  thanks to Gonzalo Diethelm (gonzo@ing.puc.cl) for pointing out
+	  this one.
+
+	* ace/OS.h: 
+	  Removed an initial '#' for a comment line, thanks to Gonzalo
+	  Diethelm (gonzo@ing.puc.cl) for pointing out this one.
+
+	* ace/Timer_Hash_T.cpp: 
+	* ace/Timer_Hash_T.h: 
+	* ace/Timer_Heap_T.cpp: 
+	* ace/Timer_Heap_T.h: 
+	* ace/Timer_List.cpp: 
+	* ace/Timer_List_T.cpp: 
+	* ace/Timer_List_T.h: 
+	* ace/Timer_Queue_T.cpp: 
+	* ace/Timer_Queue_T.h: 
+	* ace/Timer_Wheel_T.cpp: 
+	* ace/Timer_Wheel_T.h: 
+	  In the word of its author: Modified the iterators kept in each
+	  of these classes so that they are constructed dynamically on the
+	  heap after the Queue has been properly initialized. Otherwise,
+	  the iterators try to iterate over a non-initialized queue, and
+	  fail miserably (usually dumping core).
+	  Once more thanks to Gonzalo Diethelm (gonzo@ing.puc.cl) for this
+	  changes.
+
+	* tests/UPIPE_SAP_Test.cpp: 
+	  Gonzalo improved the error message.
+
+	* ace/README: 
+	  Gonzalo updated the documentation for some macros.
+
 Wed Sep 03 15:21:46 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: define ACE_TSS macros with ACE_HAS_TSS_EMULATION,

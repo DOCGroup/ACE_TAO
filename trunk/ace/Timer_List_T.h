@@ -161,7 +161,7 @@ private:
   ACE_Timer_Node_T<TYPE> *head_; 
   // Pointer to linked list of <ACE_Timer_Handles>.
 
-  LIST_ITERATOR iterator_;
+  LIST_ITERATOR *iterator_;
   // Iterator used to expire timers.
 
   long timer_id_;

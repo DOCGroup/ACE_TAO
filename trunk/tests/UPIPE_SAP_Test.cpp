@@ -176,8 +176,16 @@ main (int, char *[])
     ACE_DEBUG ((LM_DEBUG, "(%t) joined with acceptor thread\n"));
 
 #else
-  ACE_ERROR ((LM_ERROR, "threads and/or UPIPE not supported on this platform\n"));
-#endif /* ACE_HAS_THREADS */
+
+#if !defined (ACE_HAS_THREADS)
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#else
+#if !defined (ACE_HAS_STREAM_PIPES) && !defined (ACE_WIN32)
+  ACE_ERROR ((LM_ERROR, "UPIPE is not supported on this platform\n"));
+#endif /* !defined (ACE_HAS_STREAM_PIPES) && ! defined (ACE_WIN32) */
+#endif /* !defined (ACE_HAS_THREADS) */
+#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)) */
+
   ACE_END_TEST;
   return 0;
 }

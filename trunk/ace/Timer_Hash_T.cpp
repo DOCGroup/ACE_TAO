@@ -181,7 +181,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET>::item (void)
 template <class TYPE, class FUNCTOR, class LOCK, class BUCKET> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &
 ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::iter (void)
 {
-  return this->iterator_;
+  return *this->iterator_;
 }
 
 // Create an empty queue.
@@ -195,8 +195,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::ACE_Timer_Hash_T (size_t table_si
     table_ (new BUCKET* [table_size]),
     table_size_ (table_size),
     table_functor_ (this),
-    earliest_position_ (0),
-    iterator_ (*this)
+    earliest_position_ (0)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
@@ -207,6 +206,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::ACE_Timer_Hash_T (size_t table_si
       this->table_[i] = new BUCKET (&this->table_functor_, this->free_list_);
       this->table_[i]->gettimeofday (ACE_OS::gettimeofday);
     }
+
+  iterator_ = new HASH_ITERATOR(*this);
 }
 
 
@@ -218,8 +219,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::ACE_Timer_Hash_T (FUNCTOR *upcall
     table_ (new BUCKET* [ACE_DEFAULT_TIMER_HASH_TABLE_SIZE]),
     table_size_ (ACE_DEFAULT_TIMER_HASH_TABLE_SIZE),
     table_functor_ (this),
-    earliest_position_ (0),
-    iterator_ (*this)
+    earliest_position_ (0)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
@@ -230,6 +230,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::ACE_Timer_Hash_T (FUNCTOR *upcall
       this->table_[i] = new BUCKET (&this->table_functor_, this->free_list_);
       this->table_[i]->gettimeofday (ACE_OS::gettimeofday);
     }
+
+  iterator_ = new HASH_ITERATOR(*this);
 }
 
 
@@ -240,6 +242,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::~ACE_Timer_Hash_T (void)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::~ACE_Timer_Hash_T");
   ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
+
+  delete iterator_;
 
   for (size_t i = 0; i < this->table_size_; i++)
     delete this->table_[i];

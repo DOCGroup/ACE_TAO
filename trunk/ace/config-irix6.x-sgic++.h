@@ -29,12 +29,11 @@
 // even though it supports pthreads! (like Irix 6.2)
 #define ACE_LACKS_CONDATTR_PSHARED
 
-// Platform lacks pthread_thr_sigsetmask (e.g., MVS, HP/UX, OSF/1 3.2,
-// Irix 6.2)
-#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-
 // IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
 #define ACE_HAS_PTHREADS
+
+// Platforms has pthread_thr_sigsetmask
+#define ACE_HAS_PTHREAD_SIGMASK
 
 // Platform has pthread_equal().
 #define ACE_HAS_PTHREAD_EQUAL

@@ -21,6 +21,7 @@
 #include "ace/Time_Value.h"
 #include "ace/Signal.h"
 #include "ace/Free_List.h"
+#include "ace/Signal.h"
 
 // This should be nested within the ACE_Timer_Queue class but some C++
 // compilers still don't like this...
