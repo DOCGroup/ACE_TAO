@@ -1,3 +1,8 @@
+Tue Dec 30 12:38:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+          Removed not needed ; to fix Tru64 warning
+
 Tue Dec 30 11:25:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RTCORBA_includeC.h:
