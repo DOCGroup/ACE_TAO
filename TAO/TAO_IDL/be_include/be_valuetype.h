@@ -87,7 +87,6 @@ public:
   // For building the name for private data fields.
   be_valuetype *statefull_inherit (void);
 
-
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
@@ -100,7 +99,8 @@ public:
   // Compute the fully scoped skel class name.
 
   ACE_CDR::ULong data_members_count (
-      AST_Field::Visibility vis = AST_Field::vis_NA);
+      AST_Field::Visibility vis = AST_Field::vis_NA
+    );
   // Compute the count of private/public/all data members.
 
   virtual idl_bool in_recursion (AST_Type *node = 0);
