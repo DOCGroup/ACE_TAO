@@ -821,6 +821,20 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                                    value.c_str ()),
                                   -1);
             }
+          else if (name == "portspan")
+            {
+              int range = ACE_static_cast (int, ACE_OS::atoi (value.c_str ()));
+              // @@ What's the lower bound on the range?  zero, or one?
+              if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
+                                   ACE_TEXT ("portspan: <%s>\n")
+                                   ACE_TEXT ("Valid range 1 -- %d\n"), 
+                                   value.c_str (), ACE_MAX_DEFAULT_PORT),
+                                  -1);
+              
+              this->port_span_ = ACE_static_cast (u_short, range);
+            }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid IIOP option: <%s>\n"),
