@@ -1990,6 +1990,13 @@ struct sockaddr_un {
 #  define USYNC_PROCESS           1 /* it's all global on VxWorks (without MMU
                                      option) */
 
+#if !defined (ACE_DEFAULT_SYNCH_TYPE)
+ // Types include these options: SEM_Q_PRIORITY, SEM_Q_FIFO,
+ // SEM_DELETE_SAFE, and SEM_INVERSION_SAFE.  SEM_Q_FIFO is
+ // used as the default because that is VxWorks' default.
+# define ACE_DEFAULT_SYNCH_TYPE SEM_Q_FIFO
+#endif /* ! ACE_DEFAULT_SYNCH_TYPE */
+
 typedef SEM_ID ACE_mutex_t;
 // implement ACE_thread_mutex_t with ACE_mutex_t sinces there's just one process . . .
 typedef ACE_mutex_t ACE_thread_mutex_t;
@@ -3230,6 +3237,10 @@ typedef short ACE_pri_t;
 
 #endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
+#if !defined (ACE_DEFAULT_SYNCH_TYPE)
+# define ACE_DEFAULT_SYNCH_TYPE USYNC_THREAD
+#endif /* ! ACE_DEFAULT_SYNCH_TYPE */
+
 #if !defined (ACE_MAP_PRIVATE)
 # define ACE_MAP_PRIVATE MAP_PRIVATE
 #endif /* ! ACE_MAP_PRIVATE */
@@ -3946,7 +3957,7 @@ public:
   static int cond_broadcast (ACE_cond_t *cv);
   static int cond_destroy (ACE_cond_t *cv);
   static int cond_init (ACE_cond_t *cv,
-                        int type = USYNC_THREAD,
+                        int type = ACE_DEFAULT_SYNCH_TYPE,
                         LPCTSTR name = 0,
                         void *arg = 0);
   static int cond_signal (ACE_cond_t *cv);
@@ -4231,7 +4242,7 @@ public:
 
   // = A set of wrappers for mutex locks.
   static int mutex_init (ACE_mutex_t *m,
-                         int type = USYNC_THREAD,
+                         int type = ACE_DEFAULT_SYNCH_TYPE,
                          LPCTSTR name = 0,
                          void *arg = 0,
                          LPSECURITY_ATTRIBUTES sa = 0);
@@ -4260,7 +4271,7 @@ public:
   // = A set of wrappers for mutex locks that only work within a
   // single process.
   static int thread_mutex_init (ACE_thread_mutex_t *m,
-                                int type = USYNC_THREAD,
+                                int type = ACE_DEFAULT_SYNCH_TYPE,
                                 LPCTSTR name = 0,
                                 void *arg = 0);
   static int thread_mutex_destroy (ACE_thread_mutex_t *m);
@@ -4394,7 +4405,7 @@ public:
 
   // = A set of wrappers for readers/writer locks.
   static int rwlock_init (ACE_rwlock_t *rw,
-                          int type = USYNC_THREAD,
+                          int type = ACE_DEFAULT_SYNCH_TYPE,
                           LPCTSTR name = 0,
                           void *arg = 0);
   static int rwlock_destroy (ACE_rwlock_t *rw);
@@ -4409,7 +4420,7 @@ public:
   static int event_init (ACE_event_t *event,
                          int manual_reset = 0,
                          int initial_state = 0,
-                         int type = USYNC_THREAD,
+                         int type = ACE_DEFAULT_SYNCH_TYPE,
                          LPCTSTR name = 0,
                          void *arg = 0,
                          LPSECURITY_ATTRIBUTES sa = 0);
@@ -4425,7 +4436,7 @@ public:
   static int sema_destroy (ACE_sema_t *s);
   static int sema_init (ACE_sema_t *s,
                         u_int count,
-                        int type = USYNC_THREAD,
+                        int type = ACE_DEFAULT_SYNCH_TYPE,
                         LPCTSTR name = 0,
                         void *arg = 0,
                         int max = 0x7fffffff,
