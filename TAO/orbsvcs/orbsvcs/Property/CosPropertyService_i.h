@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosPropertyServiceS.h"
+#include "orbsvcs/CosPropertyS.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"

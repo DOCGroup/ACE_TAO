@@ -1,3 +1,24 @@
+Tue Mar 15 22:15:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerate.
+
+	* orbsvcs/orbsvcs/AVStreams.idl:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+	* orbsvcs/tests/Property/main.cpp:
+
+	  Update to use CosProperty.idl, etc.
+
+	* orbsvcs/orbsvcs/CosProperty.mpc:
+	* orbsvcs/orbsvcs/CosProperty.idl:
+	* orbsvcs/orbsvcs/CosPropertyService.idl:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+
+	  Current OMG specs refer to Property Service via CosProperty.idl
+	  instead of CosPropertyService.idl.  Rename *.idl file, but keep
+	  a wrapper version for backwards compatibility.
+
 Tue Mar 15 16:20:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
