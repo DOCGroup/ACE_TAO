@@ -461,6 +461,9 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
 {
   ACE_TRACE ("ACE_Service_Config::open");
 
+  // Clear the LM_DEBUG bit from log messages if appropriate
+  if (!ACE_Service_Config::debug_)
+    ACE_Log_Msg::disable_debug_messages();
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
     ACE_Service_Config::start_daemon ();

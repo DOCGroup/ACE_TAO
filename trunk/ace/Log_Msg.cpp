@@ -241,6 +241,17 @@ ACE_Log_Msg::instance (void)
 }
 #undef ACE_NEW_RETURN_I
 
+void
+ACE_Log_Msg::disable_debug_messages()
+  // Clears the LM_DEBUG flag from the default priority mask used to
+  // initialise ACE_Log_Msg instances, as well as the current instance.
+{
+  default_priority_mask_ &= ~LM_DEBUG;
+  ACE_Log_Msg *currentInstance = ACE_Log_Msg::instance();
+  currentInstance->priority_mask(currentInstance->priority_mask() &
+~LM_DEBUG);
+}
+
 // Name of the local host.
 const ASYS_TCHAR *ACE_Log_Msg::local_host_ = 0;
 
@@ -255,6 +266,20 @@ pid_t ACE_Log_Msg::pid_ = -1;
 
 // Current offset of msg_[].
 int ACE_Log_Msg::msg_off_ = 0;
+
+// Default priority mask
+// By default, all priorities are enabled.
+u_long ACE_Log_Msg::default_priority_mask_ = LM_SHUTDOWN
+                                           | LM_TRACE
+                                           | LM_DEBUG
+                                           | LM_INFO
+                                           | LM_NOTICE
+                                           | LM_WARNING
+                                           | LM_STARTUP
+                                           | LM_ERROR
+                                           | LM_CRITICAL
+                                           | LM_ALERT
+                                           | LM_EMERGENCY;
 
 void
 ACE_Log_Msg::close (void)
@@ -374,17 +399,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     trace_active_ (0),
     tracing_enabled_ (1), // On by default?
     thr_desc_ (0),
-    priority_mask_ (LM_SHUTDOWN // By default, all priorities are enabled.
-                    | LM_TRACE
-                    | LM_DEBUG
-                    | LM_INFO
-                    | LM_NOTICE
-                    | LM_WARNING
-                    | LM_STARTUP
-                    | LM_ERROR
-                    | LM_CRITICAL
-                    | LM_ALERT
-                    | LM_EMERGENCY)
+    priority_mask_ (default_priority_mask_)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 
