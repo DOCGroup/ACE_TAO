@@ -111,7 +111,7 @@ ACE_OS_String::strchr (char *s, int c)
 #if !defined (ACE_HAS_WINCE)
   return ::strchr (s, c);
 #else
-  return ACE_OS::strchr_emulation (s, c);
+  return ACE_OS_String::strchr_emulation (s, c);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -243,7 +243,7 @@ ACE_OS_String::strrchr (const wchar_t *s, wint_t c)
 #if !defined (ACE_LACKS_WCSRCHR)
   return (const wchar_t *) ::wcsrchr (s, c);
 #else 
-  return ACE_OS_String::strrchr (s, c);
+  return ACE_OS_String::strrchr_emulation (s, c);
 #endif /* ACE_LACKS_WCSRCHR */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -265,7 +265,7 @@ ACE_OS_String::strrchr (wchar_t *s, wint_t c)
 #if !defined (ACE_LACKS_WCSRCHR)
   return (wchar_t *) ::wcsrchr (s, c);
 #else 
-  return ACE_OS_String::strrchr (s, c);
+  return ACE_OS_String::strrchr_emulation (s, c);
 #endif /* ACE_LACKS_WCSRCHR */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -343,17 +343,15 @@ ACE_OS_String::strpbrk (const char *s1, const char *s2)
 ACE_INLINE int
 ACE_OS_String::strcasecmp (const char *s, const char *t)
 {
-#if !defined (ACE_WIN32) || defined (ACE_HAS_WINCE)
-# if defined (ACE_LACKS_STRCASECMP)
+#if defined (ACE_LACKS_STRCASECMP)
   return ACE_OS_String::strcasecmp_emulation (s, t);
-# else
-  return ::strcasecmp (s, t);
-# endif /* ACE_LACKS_STRCASECMP */
 #elif defined(__BORLANDC__)
   return ::stricmp (s, t);
-#else /* !ACE_WIN32 && !__BORLANDC__ */
+#elif defined (ACE_WIN32)
   return ::_stricmp (s, t);
-#endif /* ACE_WIN32 */
+#else /* !ACE_LACKS_STRCASECMP && !__BORLANDC__ && !ACE_WIN32 */
+  return ::strcasecmp (s, t);
+#endif /* !ACE_LACKS_STRCASECMP && !__BORLANDC__ && !ACE_WIN32 */
 }
 
 #if defined (ACE_HAS_WCHAR) 
@@ -366,22 +364,20 @@ ACE_OS_String::strcasecmp (const wchar_t *s, const wchar_t *t)
   return ::_wcsicmp (s, t);
 #endif /* ACE_WIN32 */ 
 }
-#endif /* ACE_HAS_WCHAR*/
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS_String::strncasecmp (const char *s, const char *t, size_t len)
 {
-#if !defined (ACE_WIN32) || defined (ACE_HAS_WINCE)
-# if defined (ACE_LACKS_STRCASECMP)
+#if defined (ACE_LACKS_STRCASECMP)
   return ACE_OS_String::strncasecmp_emulation (s, t, len);
-# else
-  return ::strncasecmp (s, t, len);
-# endif /* ACE_LACKS_STRCASECMP */
 #elif defined(__BORLANDC__)
   return ::strnicmp (s, t, len);
-#else /* !ACE_WIN32 && !__BORLANDC__ */
+#elif defined defined (ACE_WIN32)
   return ::_strnicmp (s, t, len);
-#endif /* ACE_WIN32 */
+#else /* !ACE_LACKS_STRCASECMP && !__BORLANDC__ && !ACE_WIN32 */
+  return ::strncasecmp (s, t, len);
+#endif /* !ACE_LACKS_STRCASECMP && !__BORLANDC__ && !ACE_WIN32 */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -389,7 +385,7 @@ ACE_INLINE int
 ACE_OS_String::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
 {
 #if !defined (ACE_WIN32)
-  return ACE_OS::strncasecmp_emulation (s, t, len);
+  return ACE_OS_String::strncasecmp_emulation (s, t, len);
 #else /* ACE_WIN32 */
   return ::_wcsnicmp (s, t, len);
 #endif /* ACE_WIN32 */
