@@ -1,3 +1,14 @@
+Mon Aug 16 14:53:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/sequence.h:
+	* tao/sequence.i:
+	* tao/sequence.cpp:
+	* tao/Sequence_T.h:
+	* tao/Sequence_T.i:
+	* tao/Sequence_T.cpp:
+	  Added classes TAO_Bounded_WString_Sequence and
+	  TAO_Unbounded_WString_Sequence.
+
 Mon Aug 16 13:04:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe.idl.yy:
