@@ -6,6 +6,10 @@ Fri Jun 20 07:40:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/orbsvcs/Event/EC_Gateway.h:
           Updated documentation
 
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+          Added missing explicit template instantiations
+
 Fri Jun 20 04:22:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/RTCORBA/Continuous_Priority_Mapping.cpp:
