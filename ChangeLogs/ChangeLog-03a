@@ -1,6 +1,6 @@
 Tue Sep 03 22:59:27 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
-        * ACEXML\common\XML_Common.dsp:
+        * ACEXML/common/XML_Common.dsp:
 
           Added URL_Addr.inl to common.
 
