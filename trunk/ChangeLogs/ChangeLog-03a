@@ -1,3 +1,20 @@
+Wed Jun 27 12:00:34 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/FIFO_Send_Msg.i (send): Make sure that when we use the
+	  putmsg() variant of this call that we correctly return the
+ 	  length.  Thanks to David Trusty <david.trusty@westwave.com> for
+ 	  reporting this.
+
+	* ace/FIFO_Recv_Msg.i (recv): Make sure that when we use the 
+	  getmsg() variant of this call that we correctly return the
+ 	  length.  Thanks to David Trusty <david.trusty@westwave.com> for
+ 	  reporting this.
+
+	* ace/Log_Record.{h,cpp}: Added support for extending the 
+	  names of the types of logging requests.  Thanks to Kelly
+ 	  F. Hickel <kfh@mqsoftware.com> and Jonathan Reis
+ 	  <reis@stentor.com> for this fix.
+
 Thu Jun 28 13:44:52 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-sunos5.5.h:
@@ -54,7 +71,7 @@ Wed Jun 27 14:07:43 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 	  Changed write_wstring() and read_wstring() to partially comply
 	  with GIOP 1.2.
-	
+  
 Wed Jun 27 07:13:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/OS_TLI.inl: Fixed a compile error in Win32 builds.

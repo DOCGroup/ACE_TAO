@@ -19,10 +19,13 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf *data,
 			 int flags)
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::send");
-  return ACE_OS::putmsg (this->get_handle (), 
-			 (strbuf *) cntl, 
-			 (strbuf *) data, 
-			 flags);
+  if (ACE_OS::putmsg (this->get_handle (), 
+                      (strbuf *) cntl, 
+                      (strbuf *) data, 
+                      flags) == -1)
+    return-1;
+  else
+    return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
 }
 
 ASYS_INLINE ssize_t
@@ -32,10 +35,14 @@ ACE_FIFO_Send_Msg::send (int band,
 			 int flags)
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::send");
-  return ACE_OS::putpmsg (this->get_handle (), 
-			  (strbuf *) cntl, 
-			  (strbuf *) data, 
-			  band, 
-			  flags);
+
+  if (ACE_OS::putpmsg (this->get_handle (), 
+                       (strbuf *) cntl, 
+                       (strbuf *) data, 
+                       band, 
+                       flags) == -1)
+    return -1;
+  else
+    return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
 }
 #endif /* ACE_HAS_STREAM_PIPES */
