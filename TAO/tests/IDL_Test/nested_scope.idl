@@ -123,5 +123,17 @@ module obj_b_skip
   };
 };
 
+// This one caused several problems - in the stub declaration of
+// the operation, in the skeleton body's allocation of return type,
+// and in the generated code for the ancestor in _tao_QueryInterface().
+module Negotiator
+{ 
+  interface UAV_Negotiator {};
+
+  interface UAV_Negotiator_Factory : ::Negotiator::UAV_Negotiator
+  { 
+    ::Negotiator::UAV_Negotiator make_negotiator (in string bitrate_sc);
+  };
+};
 
 
