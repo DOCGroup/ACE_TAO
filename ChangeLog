@@ -1,7 +1,14 @@
+Fri Nov 12 09:10:28 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-integritySCA.h:
+        * include/makeinclude/platform_integrity_ghs.GNU:
+
+          Merged in changes from TAO 1.3a.
+
 Fri Nov 12 09:48:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/ACE.cpp (terminate_process): Return 0 for success (not 1) and
-	  -1 for failure (not 0). Thanks to Russell Mora for this fix.
+        * ace/ACE.cpp (terminate_process): Return 0 for success (not 1) and
+          -1 for failure (not 0). Thanks to Russell Mora for this fix.
 
 Fri Nov 12 06:33:02 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -13,8 +20,8 @@ Fri Nov 11 12:29:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
         * bin/MakeProjectCreator/templates/gnu.mpd:
-	* ace/config-vxworks5.x.h:
-	  More changes to accommodate VxWorks 5.5.1 builds.
+        * ace/config-vxworks5.x.h:
+          More changes to accommodate VxWorks 5.5.1 builds.
 
 Thu Nov 11 19:05:45 2004  Krishnakumar B  <kitty@spam.invalid.domain>
 
@@ -64,7 +71,7 @@ Thu Nov 11 17:27:24 2004  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
         Fixed handle_timeout conditional test to check the max_size
         against the size of the file and not the value of a pointer. Fix
         init to handle re-init correctly. When wipeout_logfile_ is true,
-	than close the file and reopen it truncated, when wipeout_logfile_
+        than close the file and reopen it truncated, when wipeout_logfile_
         is false, don't reopen the file unless its not open already.
 
 Thu Nov 11 08:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
