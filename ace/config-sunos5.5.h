@@ -91,6 +91,9 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
+// Need to define this explicitly as SunOS doesn't ship with the latest
+// binutils needed for implicit template instantiation
+# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 # define ACE_HAS_HI_RES_TIMER
   // Denotes that GNU has cstring.h as standard, to redefine memchr().
 # define ACE_HAS_GNU_CSTRING_H
