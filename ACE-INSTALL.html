@@ -40,10 +40,10 @@ HREF="ACE.FAQ.html">FAQ</A> before building and installing ACE.
 <p>The ADAPTIVE Communication Environment has been ported and tested
 extensively on a wide range of C++ compilers and uni-processor and
 multi-processor OS platforms including Win32, i.e., WinNT/i386,
-WinNT/Alpha, and Win95; most versions of UNIX, e.g., SunOS 4.x and
-5.x, SGI IRIX, DG/UX, HP-UX, OSF/1 a.k.a. DEC UNIX, AIX 4.x, Linux,
-SCO, UnixWare, <A HREF="http://www.freebsd.org/">FreeBSD</A>, <A
-HREF="http://www.s390.ibm.com/products/oe/index.html">MVS
+WinNT/Alpha, Win95, and Windows CE; most versions of UNIX, e.g., SunOS
+4.x and 5.x, SGI IRIX, DG/UX, HP-UX, OSF/1 a.k.a. DEC UNIX, AIX 4.x,
+Linux, SCO, UnixWare, <A HREF="http://www.freebsd.org/">FreeBSD</A>,
+<A HREF="http://www.s390.ibm.com/products/oe/index.html">MVS
 OpenEdition</A>, and <A HREF="http://www.lynx.com/">LynxOS</A>; <A
 HREF="http://www.wrs.com">VxWorks</A>; and PSoS.  If you have a
 problem compiling the ACE wrappers on the platforms shown below please
@@ -65,7 +65,7 @@ is known to support well.<P>
         </tr>
         <tr valign=top bgcolor="#AFAFAF">
           <td><b>Nearly fully supported, i.e., periodically tested</b></td>
-          <td>Solaris 2.6, Windows 95, IRIX 6.x, MVS
+          <td>Solaris 2.6, Windows 95, Windows CE, IRIX 6.x, MVS
           </td>
         </tr>
         <tr valign=top>
@@ -98,6 +98,15 @@ Visual C++ 4.x and 5.0 compilers (the 2.0 compiler may also work, but
 we haven't tested it recently).  ACE can be built as both a static and
 dynamic library, using the Win32 installation process described
 below.<P>
+
+<li> <b>Windows CE</b><p>
+
+Most of ACE has been ported to Windows CE using Visual C++ 5.0 with CE
+    Toolkit.  ACE has been tested on x86 Emulator and an HP 360LX
+    with an SH series CPU.  Please be sure to read this file (<a
+    href="CE-status.txt">CE-status.txt</a>) for
+    up-to-date information about ACE on CE.  ACE can only be built as
+    DLL library now.
 
 <LI> <B> Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x) using Sun CC 3.0.1, Sun
      C++ 4.0.x, Centerline C++ 2.x, and GNU gcc 2.7.x. </B> <P>
