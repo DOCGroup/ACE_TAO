@@ -161,7 +161,6 @@ Worker::Worker (CORBA::ORB_ptr orb,
     RTCORBA::TCPProtocolProperties::_narrow (base_transport_protocol_properties.in ());
 
   tcp_base_transport_protocol_properties->enable_network_priority (this->enable_diffserv_code_points_);
-  ACE_CHECK;
 
   RTCORBA::ProtocolList protocols;
   protocols.length (1);
@@ -189,7 +188,6 @@ Worker::Worker (CORBA::ORB_ptr orb,
         RTCORBA::UserDatagramProtocolProperties::_narrow (test_transport_protocol_properties.in ());
 
       udp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
-      ACE_CHECK;
     }
   else if (protocols[0].protocol_type == TAO_TAG_SCIOP_PROFILE)
     {
@@ -197,7 +195,6 @@ Worker::Worker (CORBA::ORB_ptr orb,
         RTCORBA::StreamControlProtocolProperties::_narrow (test_transport_protocol_properties.in ());
 
       sctp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
-      ACE_CHECK;
     }
   else if (protocols[0].protocol_type == IOP::TAG_INTERNET_IOP)
     {
@@ -205,7 +202,6 @@ Worker::Worker (CORBA::ORB_ptr orb,
         RTCORBA::TCPProtocolProperties::_narrow (test_transport_protocol_properties.in ());
 
       tcp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
-      ACE_CHECK;
     }
 
   protocols[0].transport_protocol_properties =
