@@ -1,3 +1,9 @@
+Fri Sep 29 14:06:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB.cpp: Removed ACE_INLINE keywords from two methods. It
+	  got spilled over when I moved stuff from inline files to cpp
+	  files.Thanks to Nanbor for pointing this out.
+
 Fri Sep 29 13:34:45 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp
