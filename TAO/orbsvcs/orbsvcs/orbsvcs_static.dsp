@@ -83,7 +83,7 @@ LIB32=link.exe -lib
 # Name "ORB Services Static - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter ".cpp"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Log\BasicLog_i.cpp
@@ -330,6 +330,10 @@ SOURCE=.\Event\EC_Basic_Filter_Builder.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Bitmask_Filter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Busy_Lock.cpp
 # End Source File
 # Begin Source File
@@ -383,6 +387,10 @@ SOURCE=.\Event\EC_Gateway.cpp
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway_UDP.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Masked_Type_Filter.cpp
 # End Source File
 # Begin Source File
 
@@ -518,14 +526,6 @@ SOURCE=.\Naming\Hash_Naming_Context.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Trader\Interpreter.cpp
 # End Source File
 # Begin Source File
@@ -539,10 +539,6 @@ SOURCE=.\Trader\Interpreter_Utils_T.cpp
 # Begin Source File
 
 SOURCE=.\IOR_Multicast.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IR_Helper.cpp
 # End Source File
 # Begin Source File
 
@@ -859,7 +855,7 @@ SOURCE=.\Naming\Transient_Naming_Context.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter ".h"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Log\BasicLog_i.h
@@ -1130,6 +1126,10 @@ SOURCE=.\Event\EC_Basic_Filter_Builder.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Bitmask_Filter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Busy_Lock.h
 # End Source File
 # Begin Source File
@@ -1183,6 +1183,10 @@ SOURCE=.\Event\EC_Gateway.h
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway_UDP.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Masked_Type_Filter.h
 # End Source File
 # Begin Source File
 
@@ -1318,23 +1322,11 @@ SOURCE=.\Notify\ID_Pool_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ImplRepoS_T.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOR_Multicast.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IR_Helper.h
 # End Source File
 # Begin Source File
 
@@ -1675,7 +1667,7 @@ SOURCE=.\Naming\Transient_Naming_Context.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter ".i"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\CosEvent\CEC_ConsumerAdmin.i
@@ -1882,6 +1874,10 @@ SOURCE=.\Event\EC_Basic_Filter_Builder.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Bitmask_Filter.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Busy_Lock.i
 # End Source File
 # Begin Source File
@@ -1927,6 +1923,10 @@ SOURCE=.\Event\EC_Filter.i
 # Begin Source File
 
 SOURCE=.\Event\EC_Filter_Builder.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Masked_Type_Filter.i
 # End Source File
 # Begin Source File
 
@@ -2046,18 +2046,6 @@ SOURCE=.\Notify\ID_Pool_T.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\LifeCycleServiceC.i
 # End Source File
 # Begin Source File
@@ -2067,18 +2055,6 @@ SOURCE=.\LifeCycleServiceS.i
 # Begin Source File
 
 SOURCE=.\Event\Memory_Pools.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingS_T.i
 # End Source File
 # Begin Source File
 
@@ -3178,91 +3154,6 @@ USERDEP__DSLOG="..\..\..\bin\tao_idl_static.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\DsLogAdmin.idl
 InputName=DsLogAdmin
-
-BuildCmds= \
-	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao        -Wb,export_macro=TAO_ORBSVCS_Export                                                          -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepo.idl
-
-!IF  "$(CFG)" == "ORB Services Static - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\Release\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\ImplRepo.idl
-InputName=ImplRepo
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao          -Wb,export_macro=TAO_ORBSVCS_Export                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\ImplRepo.idl
-InputName=ImplRepo
 
 BuildCmds= \
 	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao        -Wb,export_macro=TAO_ORBSVCS_Export                                                          -Wb,export_include=orbsvcs_export.h $(InputName).idl

@@ -7048,52 +7048,8 @@ SOURCE=.\Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Pointer_T.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
+SOURCE=.\Based_Pointer_T.cpp
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
