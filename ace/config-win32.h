@@ -197,9 +197,6 @@
 // MSVC already defined __TEXT
 #define ACE_HAS_TEXT_MACRO_CONFLICT
 
-// So we can use ACE_TEMPLATE_SPECIALIZATION macro
-#define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-
 #define ACE_HAS_GPERF
 
 // ----------------------- platform specific defines --------------------
