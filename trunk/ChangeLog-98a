@@ -1,3 +1,8 @@
+Wed Nov 26 15:49:14 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU: added information
+          on necessary OS patches.
+
 Wed Nov 26 09:45:43 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/OS.h (ACE_PROPER_SINGLETON_INSTANTIATION): Corrected
