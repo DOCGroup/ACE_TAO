@@ -1,7 +1,9 @@
 Thu Jun 29 16:42:31 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/posix/pthread.{h,inl}:
-	Changed pthead_condattr_init to pthread_condattr init :)
+	Changed pthead_condattr_init to pthread_condattr init
+	and pace_pace_pthread... to pace_pthread...
+
 
 Thu Jun 29 15:04:42 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
