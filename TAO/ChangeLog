@@ -1,3 +1,10 @@
+Mon Dec 29 13:12:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+
+	  Another one that shouldn't be built when minimum_corba is
+	  enabled. 
+
 Mon Dec 29 13:00:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1568_Regression/client.dsp:
