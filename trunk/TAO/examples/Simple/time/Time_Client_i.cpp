@@ -18,15 +18,15 @@ Time_Client_i::~Time_Client_i (void)
 
 int
 Time_Client_i::run (int argc,
-                    char** argv)
+                    char *argv[])
 {
-  // Initialize the client
+  // Initialize the client.
   if (client.init (argc, argv) == -1)
     return -1;
 
   TAO_TRY 
     {
-      //Make the RMI
+      //Make the RMI.
       CORBA::Long timedate = client->time (TAO_TRY_ENV);
       
       // Print out value
