@@ -407,7 +407,7 @@ TAO_ORB_Core::add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup,
                                                              slot_id);
 }
 
-TAO_Cleanup_Func_Registry *
+ACE_INLINE TAO_Cleanup_Func_Registry *
 TAO_ORB_Core::tss_cleanup_funcs (void)
 {
   return &(this->tss_cleanup_funcs_);
