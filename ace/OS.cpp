@@ -2529,3 +2529,62 @@ ACE_OS::mktime (struct tm *t)
   ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
 #endif /* ACE_HAS_MT_SAFE_MKTIME */
 }
+
+#if !defined (ACE_HAS_THREADS) || !defined (ACE_HAS_STHREADS)
+// The ACE_HAS_THREADS and ACE_HAS_STHREADS case is in OS.i
+int 
+ACE_OS::rwlock_init (ACE_rwlock_t *rw, 
+		     int type, 
+		     LPCTSTR name, 
+		     void *arg)
+{
+  // ACE_TRACE ("ACE_OS::rwlock_init");
+  type = type;
+  name = name;
+#if defined (ACE_HAS_THREADS)
+#if !defined (ACE_HAS_STHREADS)
+  /* NT, POSIX, and VxWorks don't support this natively. */
+  ACE_UNUSED_ARG (name);
+  int result = -1;
+  
+  // Since we cannot use the user specified name for all three
+  // objects, we will create three complete new names
+  TCHAR name1[100];
+  TCHAR name2[100];
+  TCHAR name3[100];
+
+  ACE::unique_name (&rw->lock_, name1, sizeof name1);
+  ACE::unique_name (&rw->waiting_readers_, name2, sizeof name2);
+  ACE::unique_name (&rw->waiting_writers_, name3, sizeof name3);
+
+  if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
+      && ACE_OS::cond_init (&rw->waiting_readers_, type, name2, arg) == 0
+      && ACE_OS::cond_init (&rw->waiting_writers_, type, name3, arg) == 0)
+    {
+      // Success!  
+      rw->ref_count_ = 0;
+      rw->num_waiting_writers_ = 0;
+      rw->num_waiting_readers_ = 0;
+
+      result = 0;
+    }
+
+  if (result == -1)
+    {
+      int error = errno;
+      ACE_OS::mutex_destroy (&rw->lock_);
+      ACE_OS::cond_destroy (&rw->waiting_readers_);
+      ACE_OS::cond_destroy (&rw->waiting_writers_);
+      errno = error;
+    }
+  return result;
+#endif /* ACE_HAS_STHREADS */
+#else
+  ACE_UNUSED_ARG (rw);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+#endif /* ACE_HAS_THREADS || ACE_HAS_STHREADS */
