@@ -126,6 +126,20 @@ src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
 wrappers for shared memory and memory-mapped files.  This library will
 depend on <CODE>libACE_OS</CODE>.<P>
 
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Token</CODE> -- This library contains the ACE C++
+wrappers for token support.  This library is not needed by
+<a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>.<p>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Other</CODE> -- This library contains miscellaneous code,
+primarily including a CORBA interface and naming support.  It is not
+actively supported, and is not needed by <a
+href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>.  Its
+functionality is included in TAO.<P>
+
 </DL>
 </OL>
 
@@ -418,34 +432,28 @@ XtReactor
 <hr><p>
 <h3><a name="Status">Current ACE Subsetting Status</a></h3>
 
-The following are the remaining major subsetting issues: <P>
+The ACE subsetting effort has identified a few areas for
+improvement.  These will be addressed in the future:<p>
 
   <ul>
-    <li>Remove remaining dependencies on higher layers from ACE_OS.
-      (These can be seen by searching for ACE_HAS_MINIMAL_ACE_OS
-       in OS.cpp, and by looking at the conditional #includes
-       near the top of OS.cpp.)
-    <ul>
-      <li>ACE_Thread_Manager
-      <li>ACE_Array
-      <li>ACE_TSS: move all ACE_TSS support into separate .h,.i,cpp files
-    </ul><p>
-
     <li>Log_Msg cleanup:  We have a good start on this, but it needs work
       to finish.  It might be easiest to make an abstract
       base class, then have ACE_Log_Msg derive from it.  That way
       we could remove the exposure of all the #includes in Log_Msg.cpp
-      to applications that don't need it.<p>
+      to applications that don't need it.  Another alternative would
+      be to disable compilation of Log_Msg.cpp when ACE_NLOGGING is
+      enabled.<p>
 
-    <li>Higher layer interdependencies:  we haven't been paying much
-      attention to this.  We need to figure out what's there, and
-      if/how to deal with the interdependencies.<p>
+    <li>Higher layer interdependencies:  we haven't exhaustively
+      tested all possible combinations of subsets.  It's possible
+      that there are interdependencies between some layers that
+      we haven't yet identified.<p>
 
     <li>Remove use of multiple inheritance:  its only used in a few
-      places, in one of the SOCK classes and Service Config.<p>
+      places, in one of the SOCK classes and Service Config.  This
+      isn't really a subsetting problem, but is necessary to
+      support Embedded C++.<p>
   </ul><P>
-
-Please let us know if you're able to contribute to this effort.<p>
 
 
 <hr><p>
