@@ -12,11 +12,13 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
 #elif defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
   // The pointer to the <ACE_DIR> buffer *must* be passed to
-  // ACE_OS_Dirent::closedir to free it and avoid a memory leak.
+  // <ACE_OS_Dirent::closedir> to free it and avoid a memory leak.
   ACE_DIR *dir;
   u_long result;
   ACE_NEW_RETURN (dir, ACE_DIR, 0);
-  result = ::open_dir (ACE_const_cast (char *, filename), &(dir->xdir));
+  result = ::open_dir (ACE_const_cast (ACE_TCHAR *,
+                                       filename),
+                       &dir->xdir);
   if (result == 0)
     return dir;
   else
@@ -29,7 +31,7 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
   return ::ACE_OS_Dirent::opendir_emulation (filename);
 #    else /* ! ACE_WIN32 */
   // VxWorks' ::opendir () is declared with a non-const argument.
-  return ::opendir (ACE_const_cast (char *, filename));
+  return ::opendir (ACE_const_cast (ACE_TCHAR *, filename));
 #    endif /* ACE_WIN32 */
 #  endif /* ACE_PSOS */
 #else

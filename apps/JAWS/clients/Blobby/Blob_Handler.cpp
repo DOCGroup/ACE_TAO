@@ -13,11 +13,11 @@ ACE_Blob_Handler::ACE_Blob_Handler (void)
 ACE_Blob_Handler::ACE_Blob_Handler (ACE_Message_Block * mb,
                                     size_t length,
                                     size_t offset,
-                                    char *filename) :
+                                    ACE_TCHAR *filename) :
   mb_ (mb),
   length_ (length),
   offset_ (offset),
-  filename_ (ACE_OS::strdup (filename)),
+  filename_ (ACE_OS_String::strdup (filename)),
   bytecount_ (0)
 {
 }
@@ -80,7 +80,7 @@ ACE_Blob_Handler::byte_count (void)
 ACE_Blob_Reader::ACE_Blob_Reader (ACE_Message_Block * mb,
                                   size_t length,
                                   size_t offset,
-                                  char *filename,
+                                  ACE_TCHAR *filename,
                                   const char *request_prefix,
                                   const char *request_suffix) :
   ACE_Blob_Handler (mb, length, offset, filename),
@@ -96,7 +96,9 @@ ACE_Blob_Reader::send_request (void)
   char mesg [MAX_HEADER_SIZE];
 
   // Check to see if the request is too big
-  if ( MAX_HEADER_SIZE < (strlen (request_prefix_) + strlen (filename_) + strlen (request_suffix_) + 4))
+  if (MAX_HEADER_SIZE < (ACE_OS_String::strlen (request_prefix_)
+                         + ACE_OS_String::strlen (filename_) 
+                         + ACE_OS_String::strlen (request_suffix_) + 4))
     ACE_ERROR_RETURN((LM_ERROR,"Request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
@@ -242,7 +244,7 @@ ACE_Blob_Reader::receive_reply (void)
 ACE_Blob_Writer::ACE_Blob_Writer (ACE_Message_Block * mb,
                                   size_t length,
                                   size_t offset,
-                                  char *filename,
+                                  ACE_TCHAR *filename,
                                   const char *request_prefix,
                                   const char *request_suffix) :
   ACE_Blob_Handler (mb, length, offset, filename),

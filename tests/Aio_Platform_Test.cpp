@@ -163,10 +163,8 @@ have_asynchio (void)
 #endif /* _POSIX_ASYNCHRONOUS_IO */
 }
 
-
-
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST ("Aio_Platform_Test");
   

@@ -688,9 +688,9 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
           ACE_ASSERT (0); // just to see it coming
 
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t)ACE_Bounded_Cached_Connect_Strategy<>::")
-                      ACE_TEXT ("find_or_create_svc_handler_i - ")
-                      ACE_TEXT ("error polling server socket state.\n")));
+                      ACE_LIB_TEXT ("(%t)ACE_Bounded_Cached_Connect_Strategy<>::")
+                      ACE_LIB_TEXT ("find_or_create_svc_handler_i - ")
+                      ACE_LIB_TEXT ("error polling server socket state.\n")));
 
           return -1;
         }

@@ -408,15 +408,15 @@ public:
    * <pathname> and is not reentrant.
    */
   static const ACE_TCHAR *dirname (const ACE_TCHAR *pathname,
-                                   ACE_TCHAR delim =
-                                     ACE_DIRECTORY_SEPARATOR_CHAR);
+                                   ACE_TCHAR delim = ACE_DIRECTORY_SEPARATOR_CHAR);
 
   /**
    * Returns the current timestamp in the form
    * "hour:minute:second:microsecond."  The month, day, and year are
-   * also stored in the beginning of the date_and_time array.  Returns
+   * also stored in the beginning of the <date_and_time> array, which
+   * is a user-supplied array of size <time_len> <ACE_TCHAR>s.  Returns  
    * 0 if unsuccessful, else returns pointer to beginning of the
-   * "time" portion of <day_and_time>.  If
+   * "time" portion of <date_and_time>.  If
    * <return_pointer_to_first_digit> is 0 then return a pointer to the
    * space before the time, else return a pointer to the beginning of
    * the time portion.
