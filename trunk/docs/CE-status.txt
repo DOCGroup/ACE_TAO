@@ -43,7 +43,6 @@
 
 [Hints on writing portable code using ACE]
 
-
   [Testing Non-Window based ACE programs]
      Rumor has it that Microsoft will provide a DOS shell in their
      next release of CE.  Oh well, I made it up and there'll probably
@@ -133,7 +132,12 @@
 
 [Tidbits]
 
+  [Web resources]
+    
+     http://www.sockets.com/ws_wince.htm
+
   [FILETIME]
+
      Win32's FILETIME format can be converted to struct timeval thru a
      simple conversion.  However, the tricky part here is, FILETIME is
      the total 100ns elapse since _1601_ (why the heck did Microsoft
@@ -217,17 +221,17 @@
            [SH] Runs successfully
     [F] Conn_Test
            [EM] Runs successfully
-           [SH] Hang halfway.
+           [SH] Hangs at halfway.  (Can't have two server threads
+                running at the same time.) 
     [X] Enum_Interfaces_Test
           Sort of working right.
            [EM] Report get_ip_interface error
            [SH] Report get_ip_interface error
     [N] Env_Value_Test
     [X] Future_Test
-           This test seems to run to completion without error but the
-           display hangs before printing out the ending message.
-           [EM]
-           [SH]
+           Runs successfully after reducing the number of iterations.
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Handle_Set_Test
            [EM] Runs successfully
            [SH] Runs successfully
@@ -238,12 +242,9 @@
            ???
     [N] MM_Shared_Memory_Test
            ???
-    [F] MT_Reactor_Timer_Test
+    [X] MT_SOCK_Test
            [EM] Runs successfully
-           [SH]
-    [F] MT_SOCK_Test
-           [EM] Runs successfully
-           [SH] 
+           [SH] Runs if client threads reduced to 5.
     [X] Map_Manager_Test
            [EM] Runs successfully
            [SH] Runs successfully
@@ -257,7 +258,10 @@
     [F] Message_Queue_Notifications_Test
            Hang at termination.
            [EM] Runs successfully
-           [SH]
+           [SH] There appears to be more compiler bugs that affect
+this test.  The notify pipe used by the reactor was not set to
+non-blocking mode and thus the test hang at termination.  I was not
+able to set any break points into places I wanted.  CE sucks.
     [X] Message_Queue_Test
            [EM] Runs successfully
            [SH] Runs successfully
@@ -265,7 +269,7 @@
            Registry is not added into CE yet.
     [F] Notify_Performance_Test
            [EM] Runs successfully
-           [SH]
+           [SH] ???
     [X] OrdMultiSet_Test
            [EM] Runs successfully
            [SH] Runs successfully
@@ -288,16 +292,16 @@
     [F] Reactor_Notify_Test
            Hang at "starting limited notifications test."
            [EM] Runs successfully
-           [SH]
+           [SH] ???
     [F] Reactor_Performance_Test
            [EM] Runs successfully
-           [SH]
+           [SH] ???
     [X] Reactor_Timer_Test
            [EM] Runs successfully
            [SH] Runs successfully
     [F] Reactors_Test
            Hang after done_count reaches 0.  Reactors were not shutting down.
-           [EM]
+           [EM] ???
            [SH]
     [X] Reader_Writer_Test
            [EM] Runs successfully
