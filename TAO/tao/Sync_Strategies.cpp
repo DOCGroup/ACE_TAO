@@ -212,13 +212,7 @@ TAO_Eager_Buffering_Sync_Strategy::timer_check (TAO_Transport &transport,
       ACE_Time_Value timeout =
         this->time_conversion (buffering_constraint.timeout);
 
-      // Get our reactor.
-      ACE_Reactor *reactor = transport.orb_core ()->reactor ();
-
-      long timer_id = reactor->schedule_timer (transport.event_handler (),
-                                               0,
-                                               timeout,
-                                               timeout);
+      long timer_id = transport.register_for_timer_event (0, timeout, timeout);
 
       transport.buffering_timer_id (timer_id);
       transport.buffering_timeout_value (timeout);

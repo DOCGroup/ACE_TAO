@@ -47,7 +47,6 @@ DIRS = \
 	Client_Leaks \
 	Server_Leaks \
 	Crashed_Callback \
-	LongUpcalls \
-	Hello
+	LongUpcalls
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
