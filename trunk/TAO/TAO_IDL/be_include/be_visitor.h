@@ -91,6 +91,7 @@ public:
   virtual int visit_string (be_string *node);
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_root (be_root *node);
+  virtual int visit_native (be_native *node);
 };
 
 #endif // TAO_BE_VISITOR_H

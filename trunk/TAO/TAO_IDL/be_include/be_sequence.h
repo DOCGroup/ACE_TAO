@@ -114,6 +114,9 @@ public:
   virtual be_decl *decl (void);
   // overridden method on the be_scope class
 
+  // Visiting
+  virtual int accept (be_visitor *visitor);
+
   // Narrowing
   DEF_NARROW_METHODS3 (be_sequence, AST_Sequence, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_sequence);

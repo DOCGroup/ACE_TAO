@@ -77,6 +77,9 @@ public:
   virtual char *nested_type_name (be_decl *d, char *suffix = 0);
   // type name of a node used when generating declarations
 
+  // Visiting
+  virtual int accept (be_visitor *visitor);
+
   // Narrowing
   DEF_NARROW_METHODS2 (be_type, AST_Type, be_decl);
   DEF_NARROW_FROM_DECL (be_type);

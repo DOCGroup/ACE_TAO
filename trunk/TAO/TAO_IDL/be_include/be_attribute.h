@@ -53,6 +53,9 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the attribute
 
+  // Visiting
+  virtual int accept (be_visitor *visitor);
+
   // Narrowing
   DEF_NARROW_METHODS2 (be_attribute, AST_Attribute, be_decl);
   DEF_NARROW_FROM_DECL (be_attribute);

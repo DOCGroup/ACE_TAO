@@ -12,7 +12,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 # These are components that are only headers and must be installed
 CORBA_HDRS = orb sequence stub orbconf objtable optable $(CORBA_SRCS)
 CORBA_SRCS = any corbacom except nvlist object orbobj poa \
-	     principa request svrrqst typecode
+	     principa request svrrqst typecode sequence
 
 # These are components that are only headers and must be installed
 OTHERS_HDRS = align cdr giop iiopobj iioporb xdr connect params marshal debug \

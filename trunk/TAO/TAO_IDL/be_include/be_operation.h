@@ -58,6 +58,9 @@ public:
   virtual int argument_count (void);
   // return the count of members
 
+  // Visiting
+  virtual int accept (be_visitor *visitor);
+
   // Narrowing
   DEF_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl);
   DEF_NARROW_FROM_DECL (be_operation);
