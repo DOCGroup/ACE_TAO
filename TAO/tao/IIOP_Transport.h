@@ -1,3 +1,4 @@
+
 // This may look like C, but it's really -*- C++ -*-
 // -*- C++ -*-
 // ===================================================================
@@ -27,13 +28,13 @@
 #include "ace/Svc_Handler.h"
 #include "tao/IIOPC.h"
 
-
 // Forward decls.
 class TAO_IIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
 class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
+class TAO_Adapter;
 
 // Service Handler for this transport
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -74,7 +75,6 @@ protected:
   //@{
 
   virtual ACE_Event_Handler * event_handler_i (void);
-  virtual TAO_Connection_Handler * connection_handler_i (void);
   virtual ACE_Event_Handler * invalidate_event_handler_i (void);
 
   /// Access the underlying messaging object
@@ -105,6 +105,9 @@ public:
                             int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0);
 
+  /*virtual int send_reply (TAO_OutputCDR &stream,
+			  TAO_Adapter *poa = 0);*/
+
   virtual int generate_request_header (TAO_Operation_Details &opdetails,
                                        TAO_Target_Specification &spec,
                                        TAO_OutputCDR &msg);
@@ -113,6 +116,8 @@ public:
                               CORBA::Octet minor);
 
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
+
+  virtual TAO_Connection_Handler * connection_handler_i (void);
 
   //@}
 
