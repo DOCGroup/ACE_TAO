@@ -1,6 +1,5 @@
 // $Id$
 
-
 #define ACE_BUILD_DLL
 #include "ace/OS.h"
 #include "ace/SString.h"
@@ -1653,17 +1652,17 @@ ACE_Thread_Adapter::invoke (void)
     ACE_SEH_FINALLY {
       // Call the Task->close () hook.
       if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)
-	{
-	  ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
-	  ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
+        {
+          ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
+          ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
 
-	  // This calls the Task->close () hook.
-	  task_ptr->cleanup (task_ptr, 0);
+          // This calls the Task->close () hook.
+          task_ptr->cleanup (task_ptr, 0);
 
-	  // This prevents a second invocation of the cleanup code (called
-	  // later by ACE_Thread_Manager::exit()).
-	  thr_mgr_ptr->at_exit (task_ptr, 0, 0);
-	}
+          // This prevents a second invocation of the cleanup code (called
+          // later by ACE_Thread_Manager::exit()).
+          thr_mgr_ptr->at_exit (task_ptr, 0, 0);
+        }
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
       // Call TSS destructors.
@@ -1676,9 +1675,9 @@ ACE_Thread_Adapter::invoke (void)
       // thread now if we are running an MFC thread.
       CWinThread *pThread = ::AfxGetThread ();
       if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-	::_endthreadex ((DWORD) status);
+        ::_endthreadex ((DWORD) status);
       else
-	::AfxEndThread ((DWORD)status);
+        ::AfxEndThread ((DWORD)status);
 # endif /* ACE_WIN32 && ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
@@ -1807,12 +1806,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #endif /* ACE_NO_THREAD_ADAPTER */
 
 #if defined (ACE_HAS_THREADS)
+
+#if !defined (VXWORKS)
+  // On VxWorks, the OS will provide a task name if the user doesn't.
+  // So, we don't need to create a tmp_thr.  If the caller of this
+  // member function is the Thread_Manager, than thr_id will be non-zero
+  // anyways.
   ACE_thread_t tmp_thr;
-  ACE_hthread_t tmp_handle;
 
   if (thr_id == 0)
     thr_id = &tmp_thr;
+#endif /* ! VXWORKS */
 
+  ACE_hthread_t tmp_handle;
   if (thr_handle == 0)
     thr_handle = &tmp_handle;
 
@@ -2388,7 +2394,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   if (stacksize == 0) stacksize = 20000;
 
-  ACE_hthread_t tid = ::taskSpawn (0, 
+  const u_int thr_id_provided = thr_id && ACE_OS::strcmp (*thr_id, "ace_t");
+
+  ACE_hthread_t tid = ::taskSpawn (thr_id_provided ? *thr_id : 0,
                                    priority,
                                    (int) flags,
                                    (int) stacksize,
@@ -2399,12 +2407,18 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     return -1;
   else
     {
-      // ::taskTcb (int tid) returns the address of the WIND_TCB
-      // (task control block).  According to the ::taskSpawn()
-      // documentation, the name of the new task is stored at
-      // pStackBase, but is that of the current task?  If so, it
-      // might be a bit quicker than this extraction of the tcb . . .
-      *thr_id = ::taskTcb (tid)->name;
+      if (! thr_id_provided)
+        {
+          // ::taskTcb (int tid) returns the address of the WIND_TCB
+          // (task control block).  According to the ::taskSpawn()
+          // documentation, the name of the new task is stored at
+          // pStackBase, but is that of the current task?  If so, it
+          // might be a bit quicker than this extraction of the tcb . . .
+          ACE_OS::strncpy (*thr_id + 5, ::taskTcb (tid)->name, 10);
+        }
+      // else if the thr_id was provided, there's no need to overwrite
+      // it with the same value (string).
+
       *thr_handle = tid;
       return 0;
     }
@@ -2906,7 +2920,7 @@ spa (FUNCPTR entry, ...)
 
   // Hardcode a program name because the real one isn't available
   // through the VxWorks shell.
-  argv[0] = "spa ():t";
+  argv[0] = "ace_main";
 
   // Peel off arguments to spa () and put into argv.  va_arg () isn't
   // necessarily supposed to return 0 when done, though since the
@@ -2928,8 +2942,8 @@ spa (FUNCPTR entry, ...)
     {
       // try to read another arg, and warn user if the limit was exceeded
       if (va_arg (pvar, char *) != 0)
-        ::fprintf (stderr, "spa(): number of arguments limited to %d\n",
-                   MAX_ARGS);
+        ACE_OS::fprintf (stderr, "spa(): number of arguments limited to %d\n",
+                         MAX_ARGS);
     }
   else
     {
@@ -2939,10 +2953,13 @@ spa (FUNCPTR entry, ...)
         argv[i] = 0;
     }
 
-  int ret = ::sp (entry, argc, (int) argv, 0, 0, 0, 0, 0, 0, 0);
+  // The hard-coded options are what ::sp () uses.
+  const int ret = ::taskSpawn (argv[0], 100, VX_FP_TASK, 20000,
+                               entry, argc, (int) argv,
+                               0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
-  // ::sp () returns the taskID on success: return 0 instead if
+  // ::taskSpawn () returns the taskID on success: return 0 instead if
   // successful
   return ret > 0 ? 0 : ret;
 }
