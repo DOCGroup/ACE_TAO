@@ -182,11 +182,13 @@ run_main (int argc, ACE_TCHAR *argv[])
   //Ports beyond 65279 were said to bad on NT sp 3.
   for (u_short idx = USHRT_MAX; idx != USHRT_MAX - 300; --idx)
     {
+#if defined (ACE_VXWORKS)
 	  if (retry_port_>0)
 	  {
 	  	++idx;
         ACE_OS::sleep (ACE_Time_Value (2*ACE_DEFAULT_TIMEOUT));
 	  }
+#endif
 
       ACE_INET_Addr addr (idx);
 
