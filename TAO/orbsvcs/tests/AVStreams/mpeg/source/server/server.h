@@ -40,17 +40,18 @@
 
 class Mpeg_Svc_Handler;
 
-class Mpeg_Acceptor : public ACE_Acceptor <Mpeg_Svc_Handler, ACE_SOCK_ACCEPTOR>
+class Mpeg_Acceptor 
+  : public virtual ACE_Acceptor <Mpeg_Svc_Handler, 
+                                 ACE_SOCK_ACCEPTOR>
 {
 public:  
   virtual int make_svc_handler (Mpeg_Svc_Handler *&sh);
   // Initialize the <Mpeg_Svc_Handler>.
 };
 
-// typedef ACE_Acceptor <Mpeg_Svc_Handler, ACE_SOCK_ACCEPTOR> Mpeg_Acceptor;
-
 class Mpeg_Svc_Handler 
-  : public virtual ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+  : public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, 
+                                    ACE_NULL_SYNCH>
 {
   // @@ Naga, please make sure to document all these classes with the =TITLE/=DESCRIPTION stuff!
 public:
@@ -59,8 +60,10 @@ public:
                     Mpeg_Acceptor * = 0);
 
   virtual int open (void *);
-  // Perform the work of the SVC_HANDLER.
+  // Perform the work of the SVC_HANDLER. Called by the acceptor
+  // when a new connection shows up
   
+  // %% rename this to int handle_connection (void); ??
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   // Handle one client connection.
 
