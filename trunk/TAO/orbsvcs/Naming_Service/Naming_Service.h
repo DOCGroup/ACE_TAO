@@ -48,7 +48,7 @@ public:
   ~TAO_Naming_Service (void);
   // Destructor.
 
-private:
+protected:
   int parse_args (int argc, char *argv[]);
   // parses the arguments.
 

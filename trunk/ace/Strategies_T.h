@@ -29,6 +29,9 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Hash_Map_Manager.h"
 
+// Needed for broken linkers that can't grok long symbols.
+#define ACE_Refcounted_Hash_Recyclable ARHR
+
 template<class SVC_HANDLER>
 class ACE_Recycling_Strategy
 {
