@@ -11,10 +11,9 @@ CORBA::AbstractBase::_nil (void)
 
 ACE_INLINE CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_narrow (CORBA::AbstractBase_ptr obj
-                              ACE_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL_NOT_USED)
 {
-  return CORBA::AbstractBase::_unchecked_narrow (obj
-                                                 ACE_ENV_ARG_PARAMETER);
+  return CORBA::AbstractBase::_duplicate (obj);
 }
 
 ACE_INLINE
@@ -38,13 +37,6 @@ const char *
 CORBA::AbstractBase::_tao_obv_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/AbstractBase:1.0";
-}
-
-ACE_INLINE
-void *
-CORBA::AbstractBase::_tao_obv_narrow (ptrdiff_t /* type_id */)
-{
-  return this;
 }
 
 ACE_INLINE

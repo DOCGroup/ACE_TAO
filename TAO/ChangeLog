@@ -1,3 +1,52 @@
+Thu Nov 20 18:05:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/AbstractBase.inl:
+        * tao/Valuetype/AbstractBase_T.cpp (unchecked_narrow):
+
+          Removed _downcast() and _unchecked_narrow() methods. The
+          second has been removed from TAO entirely, replace with
+          dynamic_cast<>, while the first was added to the original
+          implementation of abstract interfaces but, in hindsight
+          seems not to be need. Thanks to George Edwards 
+          <edwardsgt@vanderbilt.edu> for his advice on this last item.
+
+        * tao/Valuetype/TAO_Valuetype.dsp:
+
+          Added missing files AbstractBase_T.h and AbstractBase_T.cpp
+          to the project.
+
+        * tao/Valuetype/ValueBase.h:
+
+          Removed no-op inline remanat of _tao_obv_narrow(), that was
+          only waiting for regeration of code within the TAO libraries
+          to be removed.
+
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+
+          Removed overlooked code generation of _unchecked_narrow()
+          and _tao_class_id, both of which have been already removed
+          from interface code generation.
+
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+
+          Added missing 'static' qualifier to code generation for a
+          constant inside an interface or a valuetype.
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Cosmetic changes to comments in source code.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/interface_cs.h:
+
+          Removed code generation for _downcast() and _tao_obv_narrow()
+          for abstract interfaces. Also removed methods (no longer used)
+          that generated _unchecked_narrow() for concrete and abstract
+          interfaces.
+
 Thu Nov 20 13:05:00 2003  Justin mIchel <michel_j@ociweb.com>
 
 	* tao/PortableServer/ImR_LocatorC.cpp:

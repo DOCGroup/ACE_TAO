@@ -163,13 +163,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "_ptr)0;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  if (node->is_abstract ())
-    {
-      *os << "static " << node->local_name ()
-          << "_ptr _downcast (CORBA::AbstractBase_ptr abs);"
-          << be_nl << be_nl;
-    }
-
   if (be_global->any_support ())
     {
       *os << "static void _tao_any_destructor (void *);";
@@ -215,16 +208,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // The virtual marshal method, to prevent marshal of local iterfaces.
   *os << be_nl << "virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);";
-
-  if (node->is_abstract ())
-    {
-      *os << be_nl << be_nl
-          << "virtual void *_tao_obv_narrow (ptrdiff_t type_id);"
-          << "\n#if defined (_MSC_VER)" << be_nl
-          << "virtual void *" << node->flat_name ()
-          << "_tao_obv_narrow (ptrdiff_t type_id);"
-          << "\n#endif /* _MSC_VER */";
-    }
 
   if (! node->is_local ())
     {

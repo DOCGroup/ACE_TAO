@@ -124,12 +124,6 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  *os << "static " << node->local_name () << "_ptr "
-      << "_unchecked_narrow (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
-
   // This method is defined in the header file to workaround old
   // g++ problems.
   *os << "static " << node->local_name () << "_ptr _nil (void)"

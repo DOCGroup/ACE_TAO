@@ -89,16 +89,15 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   // We are nested inside an interface or a valuetype.
   else 
     {
-      if (!be_global->gen_inline_constants ())
+      AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
+
+      if (snt != AST_Decl::NT_module)
         {
-          if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-            {
-              *os << "TAO_NAMESPACE_STORAGE_CLASS ";
-            }
-          else
-            {
-              *os << "static ";
-            }
+          *os << "static ";
+        }
+      else if (!be_global->gen_inline_constants ())
+        {
+          *os << "TAO_NAMESPACE_STORAGE_CLASS ";
         }
 
       *os << "const ";

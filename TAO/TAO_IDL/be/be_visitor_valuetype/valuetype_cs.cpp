@@ -101,7 +101,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "}";
     }
 
-  // The _downcast method    // %! use ACE_xxx_cast here ?
+  // The _downcast method.
   *os << be_nl << be_nl
       << node->name () << " *" << be_nl << node->name ()
       << "::_downcast (CORBA::ValueBase *v)" << be_nl
@@ -113,7 +113,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "return dynamic_cast<" << node->name () << " *> (v);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // The _tao_obv_repository_id method
+  // The _tao_obv_repository_id method.
   *os << "const char *" << be_nl
       << node->name () << "::_tao_obv_repository_id (void) const" << be_nl
       << "{" << be_idt_nl
