@@ -23,7 +23,8 @@ Tue Nov 21 16:26:03 2000  Ossama Othman  <ossama@uci.edu>
 
 	  The ORB table increases the reference count on the ORB Core so
 	  do not release it here.  Allow the TAO_ORB_Core_Auto_Ptr to
-	  decrease the reference on the ORB Core.
+	  decrease the reference on the ORB Core when it goes out of
+	  scope.
 
 	  Initialize the Service Configurator.  This must occur before the
 	  ORBInitializer::pre_init() method is invoked on each registered
