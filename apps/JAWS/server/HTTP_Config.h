@@ -77,10 +77,19 @@ private:
 
 private:
   // = Data members
-  // James, please document these.
+
   char *document_root_;
+  // The directory root from which documents will be fetched
+
   char *cgi_path_;
+  // The directories from which to expect CGI scripts
+
   char *user_dir_;
+  // Name of the sub-directory where user Web pages are
+
   char *dir_index_;
+  // Name of the Web page to present in place of a directory listing
+
   int proxy_flag_;
+  // Should we support proxy requests?  Ignored for now.
 };

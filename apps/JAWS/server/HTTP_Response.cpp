@@ -181,13 +181,14 @@ HTTP_Response::normal_response (void)
         this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                               "Unauthorized to use PUT method");
       else if (ACE_OS::strncmp (hv, "Basic ", 6) != 0)
+        // ``6'' is the length of the string "Basic "
         this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                               "Unknown authroization method");
       else
         {
           ACE_Mem_Map mmapfile;
-	  // James, please document where the value 6 comes from (up above too).
           const char *hvv = hv + 6;
+          // Skip past the string "Basic "
           char *buf = new char [ACE_OS::strlen (hv)];
           char *auth
             = HTTP_Helper::HTTP_decode_base64 (ACE_OS::strcpy (buf, hvv));

@@ -158,10 +158,14 @@ public:
   // the protocol
 };
 
-// This only works on Win32
 #if defined (ACE_WIN32)
 class Asynch_HTTP_Handler_Factory : public HTTP_Handler_Factory, public ACE_Service_Handler
-// James, please document this class.
+  // = TITLE
+  //     
+  //     This class is used to create new HTTP handlers that will use
+  //     Asynchronous IO.  This only works on Win32.
+  //
+  // = DESCRIPTION
 {
 public:
   void destroy_http_handler (HTTP_Handler &handler,
