@@ -1,3 +1,12 @@
+Tue Nov 13 08:58:13 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp
+	  (dispatch_event_i):
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp
+	  (dispatch_event_i):
+
+	  Silence a fuzz warning.  The code is correct.
+
 Mon Nov 12 21:28:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl
