@@ -157,6 +157,15 @@ main (int, char *[])
 			      mmap.addr (),
 			      mmap.size ()) == 0);
 
+  // Delete ACE_DEFAULT_TEST_FILE
+  mmap.remove ();
+
+  // Delete ACE_TEMP_TEST_FILE
+  temp_mmap.remove ();
+
+  // Delete ACE_TEMP_TEST_FILE_2
+  temp_mmap2.remove ();
+
   ACE_END_TEST;
   return 0;
 }
