@@ -1,3 +1,11 @@
+Sun Dec 09 13:56:41 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/EC_Scalability/server.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/client.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/server.cpp:
+	  Explicitly include "tao/Messaging.h", it is required for builds
+	  that disable interceptors.
+
 Sun Dec 09 13:52:46 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/examples/CosEC/RtEC_Based/lib/lib.dsw:
