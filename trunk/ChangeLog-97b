@@ -23,7 +23,7 @@ Thu Oct 16 08:43:50 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/test_config.h (VxWorks): restored the removal of the log
 	  file, because it again appears to be necessary.
 
-	* tests/run_tests.vxworks: updated test status.
+	* tests/run_tests.vxworks: updated VxWorks tests status.
 
 Thu Oct 16 02:26:12 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
