@@ -89,7 +89,7 @@ ACE_IPC_SAP::enable (int signum) const
       return -1;
     }
 #endif /* !ACE_WIN32 */
-  ACE_NOTREACHED(return 0);
+  return 0;
 }
 
 // Restore the IPC_SAPet by turning off synchronous I/O or urgent
@@ -148,6 +148,6 @@ ACE_IPC_SAP::disable (int signum) const
       return -1;
     }
 #endif /* !ACE_WIN32 */
-  ACE_NOTREACHED(return 0);
+  return 0;
 }
 
