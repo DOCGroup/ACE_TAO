@@ -47,8 +47,14 @@ endif # ! minimum_corba
 ifeq ($(rt_corba),0)
   CPPFLAGS += -DTAO_DISABLE_RT_CORBA
 else  # ! rt_corba
-  override rt_corba =
+  override rt_corba = 1
 endif # ! rt_corba
+
+ifeq ($(corba_messaging),0)
+else  # ! corba_messaging
+  override corba_messaging = 1
+  CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING
+endif # ! corba_messaging
 
 ifeq (1,$(CROSS-COMPILE))
 else

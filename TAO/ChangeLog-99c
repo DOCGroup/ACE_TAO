@@ -1,3 +1,23 @@
+Wed Oct 20 17:30:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* rules.tao.GNU: <rt_corba> should default to 1. Also, added the
+	  default for <corba_messaging>.
+
+	* tao/Makefile: The defaulting of <corba_messaging> and <rt_corba>
+	  should happen in rules.tao.GNU and not in this Makefile.  Also,
+	  moved the files related to <corba_messaging> and <rt_corba> to
+	  after the inclusion of rules.tao.GNU (which itself was moved
+	  up).
+
+	* tao/orbconf.h (TAO_HAS_CORBA_MESSAGING): Added protection
+	  against redefinition (in case it was defined on the command
+	  line).
+
+	* examples/Makefile: Moved the inclusion of
+	  $(TAO_ROOT)/rules.tao.GNU to the top of the file so that we get
+	  the correct definition of <corba_messaging> in the place we need
+	  it.
+
 Wed Oct 20 10:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/simple_client.cpp,
