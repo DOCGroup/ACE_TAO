@@ -1,23 +1,30 @@
+Sun Sep 05 23:04:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/IIOP_Connector.cpp,UIOP_Connector.cpp:
+          use the explicit template instantiations even with ACE_HAS_GNU_REPO.
+          g++ 2.91.66 misses them with -frepo, when building static
+          libs. [Bug 248]
+
 Sun Sep  5 21:28:16 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_field.cpp (dump): To shutup various compilers 
-	  I added an ACE_ASSERT() macro if the vis_NA case shows up in the
- 	  dump() method.  However, this isn't a good long-term fix!
+        * TAO_IDL/ast/ast_field.cpp (dump): To shutup various compilers
+          I added an ACE_ASSERT() macro if the vis_NA case shows up in the
+          dump() method.  However, this isn't a good long-term fix!
 
 Sun Sep  5 17:50:04 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB.h:
-	* tao/ORB.cpp: Added two methods by name create_interface_tc () &
-	  create_enum_tc () under the CORBA_ORB namespace. This was added
-	  for Philippe Merle <Philippe.Merle@lifl.fr> who is interested in
-	  running CORBA Script on TAO. 
-	  	
+        * tao/ORB.h:
+        * tao/ORB.cpp: Added two methods by name create_interface_tc () &
+          create_enum_tc () under the CORBA_ORB namespace. This was added
+          for Philippe Merle <Philippe.Merle@lifl.fr> who is interested in
+          running CORBA Script on TAO.
+
 Sun Sep  5 16:03:54 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/media-timer.cpp: 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	Fixed warnings on VxWorks
+        * orbsvcs/orbsvcs/AV/media-timer.cpp:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        Fixed warnings on VxWorks
 
 Sun Sep 05 08:28:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
