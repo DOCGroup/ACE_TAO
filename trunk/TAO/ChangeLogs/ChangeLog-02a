@@ -1,10 +1,24 @@
+Wed Jun 19 14:34:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/orbconf.h: Removed the #define,
+	  TAO_RESUMES_CONNECTION_HANDLER
+
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_handler.cpp:
+	  Changed the use of the above #define to
+	  ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER in the method
+	  resume_handler ().
+	
 Wed Jun 19 12:16:32 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation): 
-    ACE_ENV macros were generated immediately after the arguments 
-    like: (Float xACE_ENV).  Changed the generation so that there
-    is now at least one space between the last argument and the 
-    macro.     
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation):  
+          ACE_ENV macros were generated immediately after the arguments
+	  like: (Float xACE_ENV).  Changed the generation so that there is
+	  now at least one space between the last argument and the macro.
 
 Wed Jun 19 11:52:55 2002  Carlos O'Ryan  <coryan@atdesk.com>
 

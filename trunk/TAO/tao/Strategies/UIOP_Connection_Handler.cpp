@@ -217,7 +217,7 @@ TAO_UIOP_Connection_Handler::handle_close_i (void)
 int
 TAO_UIOP_Connection_Handler::resume_handler (void)
 {
-  return TAO_RESUMES_CONNECTION_HANDLER;
+  return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 
