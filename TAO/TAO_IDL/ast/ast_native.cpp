@@ -34,6 +34,12 @@ AST_Native::dump (ostream &o)
   AST_Decl::dump (o);
 }
 
+int
+AST_Native::accept (ast_visitor *visitor)
+{
+  return visitor->visit_native (this);
+}
+
 // Narrowing.
 IMPL_NARROW_METHODS1(AST_Native, AST_Type)
 IMPL_NARROW_FROM_DECL(AST_Native)

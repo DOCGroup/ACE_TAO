@@ -101,6 +101,9 @@ public:
   // AST Dumping.
   virtual void dump (ostream &);
 
+  // Visiting.
+  virtual int accept (ast_visitor *visitor);
+
 private:
   // Data.
 

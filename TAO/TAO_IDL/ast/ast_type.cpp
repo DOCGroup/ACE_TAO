@@ -99,6 +99,12 @@ AST_Type::in_recursion (AST_Type *)
   return 0;
 }
 
-// Narrowing
+int
+AST_Type::accept (ast_visitor *visitor)
+{
+  return visitor->visit_type (this);
+}
+
+// Narrowing.
 IMPL_NARROW_METHODS1(AST_Type, AST_Decl)
 IMPL_NARROW_FROM_DECL(AST_Type)

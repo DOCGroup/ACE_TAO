@@ -514,6 +514,12 @@ AST_Structure::dump (ostream &o)
   o << "}";
 }
 
+int
+AST_Structure::accept (ast_visitor *visitor)
+{
+  return visitor->visit_structure (this);
+}
+
 void
 AST_Structure::destroy (void)
 {

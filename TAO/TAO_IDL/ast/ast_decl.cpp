@@ -549,6 +549,12 @@ AST_Decl::dump (ostream &o)
   this->pd_local_name->dump (o);
 }
 
+int
+AST_Decl::accept (ast_visitor *visitor)
+{
+  return visitor->visit_decl (this);
+}
+
 void
 AST_Decl::destroy (void)
 {

@@ -120,6 +120,12 @@ AST_Typedef::dump (ostream &o)
   this->local_name ()->dump (o);
 }
 
+int
+AST_Typedef::accept (ast_visitor *visitor)
+{
+  return visitor->visit_typedef (this);
+}
+
 // Data accessors.
 
 AST_Type *

@@ -182,6 +182,12 @@ AST_Constant::dump (ostream &o)
   this->pd_constant_value->dump (o);
 }
 
+int
+AST_Constant::accept (ast_visitor *visitor)
+{
+  return visitor->visit_constant (this);
+}
+
 // Data accessors.
 
 AST_Expression *

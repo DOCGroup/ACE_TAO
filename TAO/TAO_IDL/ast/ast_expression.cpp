@@ -2496,6 +2496,12 @@ AST_Expression::dump (ostream &o)
     }
 }
 
+int
+AST_Expression::accept (ast_visitor *visitor)
+{
+  return visitor->visit_expression (this);
+}
+
 // Data accessors.
 
 UTL_Scope *
