@@ -1,6 +1,11 @@
+Mon Feb 28 11:10:58 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Acknowledge.h: Made Acknowledge::Queue
+	a friend of Acknowledge. Hopefully this will help Sun C++ 5.4.
+
 Sun Feb 27 08:51:23 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_stdio.cpp (snprintf): Enhanced this function so 
+	* ace/OS_NS_stdio.cpp (snprintf): Enhanced this function so
 	  it terminates the string with a null char if it is *exactly* the
  	  same length as the buffer.  Thanks to Bruce MacDonald <brucemac
  	  at netcomuk dot co dot uk> for reporting this and providing a
@@ -14,7 +19,7 @@ Fri Feb 25 18:46:33 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/POSIX_Asynch_IO.cpp: Additional handle cleanups and checks
 	  for ACE_POSIX_Asynch_Accept::close ().
-	
+
 Fri Feb 25 17:29:12 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-hpux-11.00.h: Always set ACE_HAS_SVR4_DYNAMIC_LINKING.

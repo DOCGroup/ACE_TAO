@@ -194,6 +194,8 @@ namespace ACE_RMCast
       u64 sn_, max_sn_;
     };
 
+    friend struct Acknowledge::Queue;
+
     typedef
     ACE_Hash_Map_Manager_Ex<Address,
                             Queue,
