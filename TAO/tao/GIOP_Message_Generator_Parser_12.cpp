@@ -21,6 +21,7 @@ ACE_RCSID (tao,
            GIOP_Message_Gen_Parser_12,
            "$Id$")
 
+
 // This is used by GIOP1.2. This is to align the message body on a
 // 8-octet boundary. This is declared static so that it is in file
 // scope.

@@ -12,7 +12,6 @@ TAO_Connector::orb_core (TAO_ORB_Core *orb_core)
   this->orb_core_ = orb_core;
 }
 
-
 ACE_INLINE CORBA::ULong
 TAO_Connector::tag (void) const
 {

@@ -54,6 +54,7 @@ public:
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
   virtual int allow_callback (void);
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
+  virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *);
   virtual ACE_Lock *create_ft_service_retention_id_lock (void);
 
 protected:
@@ -88,6 +89,16 @@ private:
 
   /// The wait-for-reply strategy.
   Wait_Strategy wait_strategy_;
+
+  enum Connect_Strategy
+  {
+    TAO_BLOCKED_CONNECT,
+    TAO_REACTIVE_CONNECT,
+    TAO_LEADER_FOLLOWER_CONNECT
+  };
+
+  /// The connection initiation strategy.
+  Connect_Strategy connect_strategy_;
 };
 
 #if defined (__ACE_INLINE__)

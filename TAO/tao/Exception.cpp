@@ -1,6 +1,5 @@
 // $Id$
 
-
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
@@ -26,7 +25,6 @@
 ACE_RCSID (TAO,
            Exception,
            "$Id$")
-
 
 // Static initializers.
 
@@ -170,7 +168,7 @@ CORBA_UserException::CORBA_UserException (void)
 
 CORBA_UserException::CORBA_UserException (const char *repository_id,
                                           const char *local_name)
-  : CORBA_Exception (repository_id, 
+  : CORBA_Exception (repository_id,
                      local_name)
 {
 }

@@ -211,6 +211,10 @@ SOURCE=.\Block_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Blocked_Connect_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.cpp
 # End Source File
 # Begin Source File
@@ -260,6 +264,10 @@ SOURCE=.\CodecFactory_ORBInitializer.cpp
 # Begin Source File
 
 SOURCE=.\Collocation_Resolver.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connect_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -519,6 +527,10 @@ SOURCE=.\Leader_Follower_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Connect_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Event.cpp
 # End Source File
 # Begin Source File
@@ -724,6 +736,10 @@ SOURCE=.\Protocols_Hooks.cpp
 # Begin Source File
 
 SOURCE=.\Queued_Message.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Connect_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -979,6 +995,10 @@ SOURCE=.\Block_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Blocked_Connect_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.h
 # End Source File
 # Begin Source File
@@ -1028,6 +1048,10 @@ SOURCE=.\CodecFactory_ORBInitializer.h
 # Begin Source File
 
 SOURCE=.\Collocation_Resolver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connect_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1303,6 +1327,10 @@ SOURCE=.\Leader_Follower_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Connect_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Event.h
 # End Source File
 # Begin Source File
@@ -1520,6 +1548,10 @@ SOURCE=.\Protocols_Hooks.h
 # Begin Source File
 
 SOURCE=.\Queued_Message.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Connect_Strategy.h
 # End Source File
 # Begin Source File
 

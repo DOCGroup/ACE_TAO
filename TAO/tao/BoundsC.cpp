@@ -118,7 +118,7 @@ void CORBA::Bounds::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -131,7 +131,7 @@ void CORBA::Bounds::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -139,16 +139,16 @@ static const CORBA::Long _oc_CORBA_Bounds[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   29,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f426f), 
-  ACE_NTOHL (0x756e6473), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f426f),
+  ACE_NTOHL (0x756e6473),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Bounds:1.0
   7,
-  ACE_NTOHL (0x426f756e), 
+  ACE_NTOHL (0x426f756e),
   ACE_NTOHL (0x64730000),  // name = Bounds
   0, // member count
 };
@@ -212,13 +212,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::Bounds *&_t
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (CORBA::_tc_Bounds ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (CORBA::Bounds *)_tao_any.value ();
@@ -262,4 +262,3 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::Bounds *&_t
   ACE_ENDTRY;
   return 0;
 }
-

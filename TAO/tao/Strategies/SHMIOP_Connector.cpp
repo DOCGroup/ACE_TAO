@@ -6,6 +6,7 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "SHMIOP_Profile.h"
+#include "SHMIOP_Endpoint.h"
 #include "tao/debug.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/ORB_Core.h"
@@ -14,10 +15,12 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/Blocked_Connect_Strategy.h"
 
 ACE_RCSID (Strategies,
            SHMIOP_Connector,
            "$Id$")
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -69,6 +72,13 @@ int
 TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core (orb_core);
+
+  // The SHMIOP always uses a blocked connect strategy
+  // @@todo: There are better ways of doing this. Let it be like this
+  // for the  present.
+  ACE_NEW_RETURN (this->active_connect_strategy_,
+                  TAO_Blocked_Connect_Strategy (orb_core),
+                  -1);
 
   // Our connect creation strategy
   TAO_SHMIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
@@ -157,10 +167,8 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
 
-  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
-    ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
-                      desc->endpoint ());
+    this->remote_endpoint (desc->endpoint ());
 
   if (shmiop_endpoint == 0)
     return -1;
@@ -168,7 +176,7 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   const ACE_INET_Addr &remote_address =
     shmiop_endpoint->object_addr ();
 
-  int result = 0;
+
   TAO_SHMIOP_Connection_Handler *svc_handler = 0;
 
   if (TAO_debug_level > 2)
@@ -176,30 +184,28 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                 ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
                 ACE_TEXT ("making a new connection \n")));
 
-  // Purge connections (if necessary)
-  this->orb_core ()->lane_resources ().transport_cache ().purge ();
+  ACE_Time_Value *max_wait_time =
+    invocation->max_wait_time ();
 
-  if (max_wait_time != 0)
-    {
-      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                       *max_wait_time);
 
-          // We obtain the transport in the <svc_handler> variable. As
-      // we know now that the connection is not available in Cache
-      // we can make a new connection
-      result = this->base_connector_.connect (svc_handler,
+  // Get the right synch options
+  ACE_Synch_Options synch_options;
+
+  this->active_connect_strategy_->synch_options (max_wait_time,
+                                                 synch_options);
+
+  int result = this->base_connector_.connect (svc_handler,
                                               remote_address,
                                               synch_options);
-    }
-  else
-    {
-      // We obtain the transport in the <svc_handler> variable. As
-      // we know now that the connection is not available in Cache
-      // we can make a new connection
-      result = this->base_connector_.connect (svc_handler,
-                                              remote_address);
-    }
 
+  // Reduce the refcount to the svc_handler that we have. The
+  // increment to the handler is done in make_svc_handler (). Now
+  // that we dont need the reference to it anymore we can decrement
+  // the refcount whether the connection is successful ot not.
+  svc_handler->decr_refcount ();
+
+  // = We dont do a wait since we know that we are doing a blocking
+  // connect
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
@@ -209,7 +215,7 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
     {
       char buffer [MAXNAMELEN * 2];
       desc->endpoint ()->addr_to_string (buffer,
-                                (MAXNAMELEN * 2) - 1);
+                                         (MAXNAMELEN * 2) - 1);
 
       // Give users a clue to the problem.
       if (TAO_debug_level > 0)
@@ -333,5 +339,19 @@ TAO_SHMIOP_Connector::object_key_delimiter (void) const
   return TAO_SHMIOP_Profile::object_key_delimiter_;
 }
 
+TAO_SHMIOP_Endpoint *
+TAO_SHMIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
+{
+  if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
+    return 0;
+
+  TAO_SHMIOP_Endpoint *shmiop_endpoint =
+    ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
+                      endpoint );
+  if (shmiop_endpoint == 0)
+    return 0;
+
+  return shmiop_endpoint;
+}
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

@@ -49,7 +49,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/DomainS.o .obj/DomainS.so .shobj/DomainS.o .shobj/DomainS.so: DomainS.cpp DomainS.h $(ACE_ROOT)/ace/pre.h \
+.obj/DomainS.o .obj/DomainS.so .shobj/DomainS.o .shobj/DomainS.so: DomainS.cpp DomainS.h \
+ $(ACE_ROOT)/ace/pre.h domain_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -245,8 +246,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i DomainS_T.h DomainS_T.i \
- DomainS_T.cpp DomainS.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ DomainS_T.h DomainS_T.i DomainS_T.cpp DomainS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \

@@ -77,11 +77,15 @@ public:
    */
   enum {
     /// The event is created, initial state can only move to
-    /// LFS_ACTIVE
+    /// LFS_ACTIVE or LFS_CONNECTION_WAIT
     LFS_IDLE,
     /// The event is active, can change to any of the following
     /// states, each of them is a final state
     LFS_ACTIVE,
+    /// The event is waiting for connection completion. It can change
+    /// to the any of the following states, each of them being a final
+    /// state.
+    LFS_CONNECTION_WAIT,
     /// The event has completed successfully
     LFS_SUCCESS,
     /// A failure has been detected while the event was active
