@@ -4,9 +4,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.3
 ====================================================
-
 - (Bala) Bug 1890-Select_Reactor and Priority_Reactor performance can
   be improved
+  Finished.
 
 - (Boris) Addition of XSC
 
