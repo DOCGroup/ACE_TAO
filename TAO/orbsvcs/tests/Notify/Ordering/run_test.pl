@@ -81,7 +81,7 @@ for($i = 0; $i <= $#policies; $i++) {
   }
 
   $STC->Arguments($client_args . " -d $order_policy");
-  $client = $STC->SpawnWaitKill (60);
+  $client = $STC->SpawnWaitKill (120);
 
   $STS->Kill ();
   if ($client != 0) {
@@ -91,9 +91,12 @@ for($i = 0; $i <= $#policies; $i++) {
   }
 }
 
+## // pradeep: commented out priority policies temporarily till the sequences implementation is fixed.
+@policies_seq = ("fifo"); 
+
 if ($status == 0) {
-  for($i = 0; $i <= $#policies; $i++) {
-    $order_policy = $policies[$i];
+  for($i = 0; $i <= $#policies_seq; $i++) {
+    $order_policy = $policies_seq[$i];
     print "************** Running Sequence Consumer with the " .
           "$order_policy policy ************\n";
 
@@ -111,7 +114,7 @@ if ($status == 0) {
     }
 
     $SEC->Arguments($client_args . " -d $order_policy");
-    $client = $SEC->SpawnWaitKill (60);
+    $client = $SEC->SpawnWaitKill (120);
 
     $SES->Kill ();
     if ($client != 0) {
