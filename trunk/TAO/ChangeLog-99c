@@ -1,3 +1,15 @@
+Thu Nov 11 20:32:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Faults/ping.idl:
+	* tests/Faults/ping_i.h:
+	* tests/Faults/ping_i.i:
+	* tests/Faults/ping_i.cpp:
+	* tests/Faults/ping.cpp:
+	* tests/Faults/pong.cpp:
+	  The IDL file had some identifiers clashing (their only
+	  difference was case), the IDL compiler is now correctly
+	  detecting that error. Updated to conform to the spec.
+
 Thu Nov 11 19:46:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:

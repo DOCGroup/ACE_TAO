@@ -53,8 +53,8 @@ parse_args (int argc, char *argv[])
 
 void
 run_client (CORBA::ORB_ptr orb,
-            Ping_ptr server,
-            Ping_ptr callback,
+            PingObject_ptr server,
+            PingObject_ptr callback,
             CORBA::Environment &ACE_TRY_ENV)
 {
   // Run the client requests in a separate routine to isolate the
@@ -164,8 +164,8 @@ main (int argc, char *argv[])
         orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Ping_var server =
-        Ping::_narrow (object.in (), ACE_TRY_ENV);
+      PingObject_var server =
+        PingObject::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -176,10 +176,10 @@ main (int argc, char *argv[])
                             1);
         }
 
-      Ping_i callback_impl (orb.in (),
+      PingObject_i callback_impl (orb.in (),
                             persistent_poa.in ());
 
-      Ping_var callback =
+      PingObject_var callback =
         callback_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
