@@ -4,23 +4,23 @@ template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::bind (ACE_Active_Map_Manager_Key &key,
                                  T *&internal_value)
 {
-  size_t index;
-  int result = this->next_free (index);
+  size_t slot_index;
+  int result = this->next_free (slot_index);
 
   if (result == 0)
     {
       // Move from free list to occupied list
-      this->move_from_free_list_to_occupied_list (index);
+      this->move_from_free_list_to_occupied_list (slot_index);
 
       // Reset the key.
-      this->search_structure_[index].ext_id_.increment_generation_count ();
-      this->search_structure_[index].ext_id_.index (index);
+      this->search_structure_[slot_index].ext_id_.increment_slot_generation_count ();
+      this->search_structure_[slot_index].ext_id_.slot_index (slot_index);
 
       // Copy the key for the user.
-      key = this->search_structure_[index].ext_id_;
+      key = this->search_structure_[slot_index].ext_id_;
 
       // This is where the user should place the value.
-      internal_value = &this->search_structure_[index].int_id_;
+      internal_value = &this->search_structure_[slot_index].int_id_;
 
       // Update the current size.
       ++this->cur_size_;
@@ -57,19 +57,19 @@ template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
                                  T *&internal_value)
 {
-  size_t index = key.index ();
-  size_t generation = key.generation ();
+  size_t slot_index = key.slot_index ();
+  size_t slot_generation = key.slot_generation ();
 
-  if (index > this->total_size_ ||
-      this->search_structure_[index].ext_id_.generation () != generation ||
-      this->search_structure_[index].ext_id_.index () == this->free_list_id ())
+  if (slot_index > this->total_size_ ||
+      this->search_structure_[slot_index].ext_id_.slot_generation () != slot_generation ||
+      this->search_structure_[slot_index].ext_id_.slot_index () == this->free_list_id ())
     {
       return -1;
     }
   else
     {
       // This is where the user value is.
-      internal_value = &this->search_structure_[index].int_id_;
+      internal_value = &this->search_structure_[slot_index].int_id_;
     }
 
   return 0;
@@ -108,7 +108,7 @@ ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
   if (result == 0)
     {
       // Store new value.
-      this->search_structure_[key.index ()].int_id_ = value;
+      this->search_structure_[key.slot_index ()].int_id_ = value;
     }
 
   return result;
@@ -124,10 +124,10 @@ ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
   if (result == 0)
     {
       // Copy old value.
-      old_value = this->search_structure_[key.index ()].int_id_;
+      old_value = this->search_structure_[key.slot_index ()].int_id_;
 
       // Store new value.
-      this->search_structure_[key.index ()].int_id_ = value;
+      this->search_structure_[key.slot_index ()].int_id_ = value;
     }
 
   return result;
@@ -144,13 +144,13 @@ ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
   if (result == 0)
     {
       // Copy old key.
-      old_key = this->search_structure_[key.index ()].ext_id_;
+      old_key = this->search_structure_[key.slot_index ()].ext_id_;
 
       // Copy old value.
-      old_value = this->search_structure_[key.index ()].int_id_;
+      old_value = this->search_structure_[key.slot_index ()].int_id_;
 
       // Store new value.
-      this->search_structure_[key.index ()].int_id_ = value;
+      this->search_structure_[key.slot_index ()].int_id_ = value;
     }
 
   return result;
@@ -165,13 +165,13 @@ ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key,
 
   if (result == 0)
     {
-      size_t index = key.index ();
+      size_t slot_index = key.slot_index ();
 
       // Move from occupied list to free list
-      this->move_from_occupied_list_to_free_list (index);
+      this->move_from_occupied_list_to_free_list (slot_index);
 
-      // Reset the index.  This will tell us that this entry is free.
-      this->search_structure_[index].ext_id_.index (this->free_list_id ());
+      // Reset the slot_index.  This will tell us that this entry is free.
+      this->search_structure_[slot_index].ext_id_.slot_index (this->free_list_id ());
 
       // Update the current size.
       --this->cur_size_;

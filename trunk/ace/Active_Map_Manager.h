@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Export ACE_Active_Map_Manager_Key 
+class ACE_Export ACE_Active_Map_Manager_Key
 {
   // = TITLE
   //     Key used in the Active Object Map.
@@ -36,24 +36,24 @@ public:
   ACE_Active_Map_Manager_Key (void);
   // Default constructor.
 
-  ACE_Active_Map_Manager_Key (u_long index,
-                              u_long generation);
-  // Constructor given the index and generation number.  This is
-  // useful once the user has somehow recovered the index and
-  // generation number from the client.
+  ACE_Active_Map_Manager_Key (ACE_UINT32 slot_index,
+                              ACE_UINT32 slot_generation);
+  // Constructor given the <slot_index> and <slot_generation> number.
+  // This is useful once the user has somehow recovered the
+  // <slot_index> and <slot_generation> number from the client.
 
-  u_long index (void) const;
-  void index (u_long i);
-  // Get/Set the index.
-  
-  u_long generation (void) const;
-  void generation (u_long g);
-  // Get/Set the generation number.
-  
+  ACE_UINT32 slot_index (void) const;
+  void slot_index (ACE_UINT32 i);
+  // Get/Set the <slot_index>.
+
+  ACE_UINT32 slot_generation (void) const;
+  void slot_generation (ACE_UINT32 g);
+  // Get/Set the <slot_generation> number.
+
   static size_t size (void);
   // Size required to store information about active key.
 
-  void decode (const void *data);  
+  void decode (const void *data);
   // Recover state of active key from <data>.  User must make sure
   // that <data> encoded using the <encode> method.
 
@@ -68,15 +68,15 @@ public:
   // = This really should be protected but because of template
   // friends, they are not.
 
-  void increment_generation_count (void);
-  // Increment the generation number.
+  void increment_slot_generation_count (void);
+  // Increment the <slot_generation> number.
 
 private:
-  u_long index_;
-  // Index in the active map.
+  ACE_UINT32 slot_index_;
+  // Slot index in the active map.
 
-  u_long generation_;
-  // Generation number of <index_> slot in the active map.
+  ACE_UINT32 slot_generation_;
+  // Slot generation number of <slot_index_> slot in the active map.
 };
 
 #if defined (__ACE_INLINE__)

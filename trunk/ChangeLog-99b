@@ -1,3 +1,12 @@
+Fri Mar 19 23:36:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Active_Map_Manager.h (ACE_Active_Map_Manager_Key): Changed
+	  method index() to slot_index() and generation() to
+	  slot_generation().  This is cause the broken and evil
+	  OpenEdition platform/compiler defines a macro called index().
+	  Also, changed the type of <index_> and <generation_> from u_long
+	  to ACE_UINT32 to get consistent size across platforms.
+
 Fri Mar 19 22:50:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/ace_ld: inserted ^['"]? at beginning of patterns that check
