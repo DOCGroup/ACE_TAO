@@ -47,7 +47,7 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/Scheduling_Service.o .obj/Scheduling_Service. .shobj/Scheduling_Service.o .shobj/Scheduling_Service.: Scheduling_Service.cpp \
+.obj/Scheduling_Service.o .obj/Scheduling_Service.so .shobj/Scheduling_Service.o .shobj/Scheduling_Service.so: Scheduling_Service.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -162,22 +162,26 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -185,9 +189,15 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -196,7 +206,6 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -205,7 +214,6 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -224,7 +232,7 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  Config_Scheduler.i
-.obj/Config_Scheduler.o .obj/Config_Scheduler. .shobj/Config_Scheduler.o .shobj/Config_Scheduler.: Config_Scheduler.cpp \
+.obj/Config_Scheduler.o .obj/Config_Scheduler.so .shobj/Config_Scheduler.o .shobj/Config_Scheduler.so: Config_Scheduler.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -341,22 +349,26 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -364,9 +376,15 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -375,7 +393,6 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -384,7 +401,6 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -404,7 +420,7 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
  Config_Scheduler.i
-.obj/Scheduler.o .obj/Scheduler. .shobj/Scheduler.o .shobj/Scheduler.: Scheduler.cpp \
+.obj/Scheduler.o .obj/Scheduler.so .shobj/Scheduler.o .shobj/Scheduler.so: Scheduler.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -523,22 +539,26 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -546,9 +566,15 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -557,7 +583,6 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -566,7 +591,6 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -579,7 +603,7 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  Scheduler.i
-.obj/Scheduler_Generic.o .obj/Scheduler_Generic. .shobj/Scheduler_Generic.o .shobj/Scheduler_Generic.: Scheduler_Generic.cpp \
+.obj/Scheduler_Generic.o .obj/Scheduler_Generic.so .shobj/Scheduler_Generic.o .shobj/Scheduler_Generic.so: Scheduler_Generic.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -698,22 +722,26 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -721,9 +749,15 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -732,7 +766,6 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -741,7 +774,6 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \

@@ -55,7 +55,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/Event_Service.o .obj/Event_Service. .shobj/Event_Service.o .shobj/Event_Service.: Event_Service.cpp \
+.obj/Event_Service.o .obj/Event_Service.so .shobj/Event_Service.o .shobj/Event_Service.so: Event_Service.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -170,22 +170,26 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -193,9 +197,15 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -204,7 +214,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -213,7 +222,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -259,7 +267,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  Event_Channel.i
-.obj/BCU.o .obj/BCU. .shobj/BCU.o .shobj/BCU.: BCU.cpp BCU.h \
+.obj/BCU.o .obj/BCU.so .shobj/BCU.o .shobj/BCU.so: BCU.cpp BCU.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -275,7 +283,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i
-.obj/CORBA_Utils_T.o .obj/CORBA_Utils_T. .shobj/CORBA_Utils_T.o .shobj/CORBA_Utils_T.: CORBA_Utils_T.cpp CORBA_Utils_T.h \
+.obj/CORBA_Utils_T.o .obj/CORBA_Utils_T.so .shobj/CORBA_Utils_T.o .shobj/CORBA_Utils_T.so: CORBA_Utils_T.cpp CORBA_Utils_T.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -390,22 +398,26 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -413,9 +425,15 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -424,7 +442,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -433,7 +450,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -444,7 +460,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
  CORBA_Utils_T.i
-.obj/Dispatching_Modules.o .obj/Dispatching_Modules. .shobj/Dispatching_Modules.o .shobj/Dispatching_Modules.: Dispatching_Modules.cpp \
+.obj/Dispatching_Modules.o .obj/Dispatching_Modules.so .shobj/Dispatching_Modules.o .shobj/Dispatching_Modules.so: Dispatching_Modules.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -563,22 +579,26 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -586,9 +606,15 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -597,7 +623,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -606,7 +631,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -649,7 +673,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Timer_List_T.h \
  Event_Channel.i Dispatching_Modules.h Dispatching_Modules.i \
  Memory_Pools.i
-.obj/Event_Channel.o .obj/Event_Channel. .shobj/Event_Channel.o .shobj/Event_Channel.: Event_Channel.cpp \
+.obj/Event_Channel.o .obj/Event_Channel.so .shobj/Event_Channel.o .shobj/Event_Channel.so: Event_Channel.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -766,22 +790,26 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -789,9 +817,15 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -800,7 +834,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -809,7 +842,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -852,39 +884,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  Local_ESTypes.i RT_Task.h RT_Task.i Event_Channel.h CORBA_Utils_T.h \
  CORBA_Utils_T.i Task_Manager.h Task_Manager.i Event_Channel.i \
  Dispatching_Modules.i Memory_Pools.h Memory_Pools.i
-.obj/GPlot_File.o .obj/GPlot_File. .shobj/GPlot_File.o .shobj/GPlot_File.: GPlot_File.cpp GPlot_File.h \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- GPlot_File.i
-.obj/Local_ESTypes.o .obj/Local_ESTypes. .shobj/Local_ESTypes.o .shobj/Local_ESTypes.: Local_ESTypes.cpp Local_ESTypes.h \
+.obj/Local_ESTypes.o .obj/Local_ESTypes.so .shobj/Local_ESTypes.o .shobj/Local_ESTypes.so: Local_ESTypes.cpp Local_ESTypes.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -999,22 +999,26 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -1022,9 +1026,15 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -1033,7 +1043,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -1042,7 +1051,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -1068,7 +1076,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  Local_ESTypes.i
-.obj/Memory_Pools.o .obj/Memory_Pools. .shobj/Memory_Pools.o .shobj/Memory_Pools.: Memory_Pools.cpp Memory_Pools.h \
+.obj/Memory_Pools.o .obj/Memory_Pools.so .shobj/Memory_Pools.o .shobj/Memory_Pools.so: Memory_Pools.cpp Memory_Pools.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1187,22 +1195,26 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -1210,9 +1222,15 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -1221,7 +1239,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -1230,7 +1247,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -1269,7 +1285,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Timer_List_T.h \
  Event_Channel.i Dispatching_Modules.h Dispatching_Modules.i \
  Memory_Pools.i
-.obj/RT_Task.o .obj/RT_Task. .shobj/RT_Task.o .shobj/RT_Task.: RT_Task.cpp \
+.obj/RT_Task.o .obj/RT_Task.so .shobj/RT_Task.o .shobj/RT_Task.so: RT_Task.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1386,22 +1402,26 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -1409,9 +1429,15 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -1420,7 +1446,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -1429,7 +1454,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -1472,7 +1496,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Timer_List_T.h \
  Event_Channel.i Memory_Pools.h Dispatching_Modules.h \
  Dispatching_Modules.i Memory_Pools.i
-.obj/ReactorTask.o .obj/ReactorTask. .shobj/ReactorTask.o .shobj/ReactorTask.: ReactorTask.cpp \
+.obj/ReactorTask.o .obj/ReactorTask.so .shobj/ReactorTask.o .shobj/ReactorTask.so: ReactorTask.cpp \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1593,22 +1617,26 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -1616,9 +1644,15 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -1627,7 +1661,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -1636,7 +1669,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -1674,7 +1706,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  Local_ESTypes.i RT_Task.h RT_Task.i
-.obj/Task_Manager.o .obj/Task_Manager. .shobj/Task_Manager.o .shobj/Task_Manager.: Task_Manager.cpp Task_Manager.h \
+.obj/Task_Manager.o .obj/Task_Manager.so .shobj/Task_Manager.o .shobj/Task_Manager.so: Task_Manager.cpp Task_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1726,8 +1758,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- RT_Task.h \
- $(ACE_ROOT)/ace/Task.h \
+ RT_Task.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -1792,22 +1823,26 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -1815,9 +1850,15 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -1826,7 +1867,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -1835,7 +1875,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \

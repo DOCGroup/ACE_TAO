@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 $date = `/usr/bin/date +"%a %b %d %T %Y"`;
 chop $date;
 $VERSION = "VERSION";
