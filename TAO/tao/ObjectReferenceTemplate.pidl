@@ -50,7 +50,7 @@ module PortableInterceptor
 
   // new from orbos/01-01-04 ORT
   abstract valuetype ObjectReferenceFactory {
-    Object make_object (in string repository_id, 
+    Object make_object (in string repository_id,
 			in ObjectId id) ;
   };
 
