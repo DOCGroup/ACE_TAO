@@ -50,10 +50,10 @@ be_string::be_string (AST_Expression *v)
 be_string::be_string (AST_Expression *v, 
                       long wide)
   : AST_String (v, wide),
-    AST_Decl (wide == sizeof (char)
+    AST_Decl (wide == (long) sizeof (char)
                 ? AST_Decl::NT_string
                 : AST_Decl::NT_wstring,
-              wide == sizeof (char)
+              wide == (long) sizeof (char)
                 ? new UTL_ScopedName (new Identifier ("string",
                                                       1,
                                                       0,

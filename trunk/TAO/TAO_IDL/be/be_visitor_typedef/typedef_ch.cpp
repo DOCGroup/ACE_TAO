@@ -339,7 +339,7 @@ be_visitor_typedef_ch::visit_string (be_string *node)
   // now generate the typedefs
   os->indent ();
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "typedef char *"
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;

@@ -625,7 +625,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
               }
             else
               {
-                if (str->width () == sizeof (char))
+                if (str->width () == (long) sizeof (char))
                   {
                     *os << "_tao_marshal_flag = (strm >> "
                         << "CORBA::Any::to_string (_tao_sequence[i].out (), ";

@@ -462,7 +462,7 @@ be_visitor_field_ch::visit_string (be_string *node)
   os->indent (); // start from current indentation level
 
   // set the right type;
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "TAO_String_Manager";
     }

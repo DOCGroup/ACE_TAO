@@ -559,7 +559,7 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
   os->indent ();
 
   // three methods to set the string value
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << pre_op ()
           << "void " << ub->local_name () << " (char *)"

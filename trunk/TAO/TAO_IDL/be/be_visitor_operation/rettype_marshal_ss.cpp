@@ -389,7 +389,7 @@ int be_visitor_operation_rettype_marshal_ss::visit_string (be_string *node)
         }
       else
         {
-          if (node->width () == sizeof (char))
+          if (node->width () == (long) sizeof (char))
             {
               *os << "CORBA::Any::from_string ((char *)_tao_retval.in (), ";
             }
@@ -411,7 +411,7 @@ int be_visitor_operation_rettype_marshal_ss::visit_string (be_string *node)
         }
       else
         {
-          if (node->width () == sizeof (char))
+          if (node->width () == (long) sizeof (char))
             {
               *os << "CORBA::Any::to_string (_tao_safe_retval.inout (), ";
             }
