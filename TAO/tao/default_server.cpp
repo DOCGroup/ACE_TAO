@@ -10,11 +10,8 @@
 //     $Id$
 // ============================================================================
 
-#if 0
 #include "tao/default_server.h"
-#endif /* 0 */
-
-#include "tao/corba.h"
+#include "tao/Orb_Core.h"
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (0),
@@ -72,9 +69,11 @@ TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
 int
 TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 {
+  TAO_ORB_Core *orb_core = TAO_ORB_CORE::instance();
+  
   if ((this->parse_args (argc, argv) == 0)
-      && (reactive_strategy_.open (ACE_Reactor::instance()) == 0)
-      && (threaded_strategy_.open (ACE_Thread_Manager::instance(), this->thread_flags_) == 0))
+      && (reactive_strategy_.open (orb_core->reactor ()) == 0)
+      && (threaded_strategy_.open (orb_core->thr_mgr (), this->thread_flags_) == 0))
     return 0;
   else
     return -1;
@@ -153,7 +152,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
     case TAO_USER_DEFINED:
       // it is assumed that the user would have used the hooks to supply a
       // user-defined instance of the object table
-      this->objtable_ = TAO_OA_PARAMS::instance ()->userdef_lookup_strategy ();
+      this->objtable_ = TAO_ORB_CORE::instance() -> oa_params() -> userdef_lookup_strategy();
       break;
     case TAO_ACTIVE_DEMUX:
       ACE_NEW_RETURN (this->objtable_,

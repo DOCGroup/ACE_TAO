@@ -29,6 +29,8 @@
 #  include "tao/objtable.h"
 #endif /* 0 */
 
+#include "tao/corba.h"
+
 class TAO_Default_Client_Strategy_Factory : public TAO_Client_Strategy_Factory
   // = TITLE
   //   This is the "default" client strategy factor for

@@ -306,6 +306,10 @@ public:
 
   typedef CORBA_BOA         BOA;
   typedef BOA               *BOA_ptr;
+  // These will go away when we have a POA, but we can write good code
+  // now.
+  typedef BOA               POA;
+  typedef POA               *POA_ptr;
 
   typedef CORBA_Environment Environment;
   typedef Environment       *Environment_ptr;

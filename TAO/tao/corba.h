@@ -95,6 +95,7 @@
 #include "tao/iiopobj.h"
 #include "tao/iioporb.h"
 #include "tao/giop.h"
+#include "tao/Orb_Core.h"
 
 // TAO specific includes
 #include "tao/connect.h"
@@ -120,7 +121,6 @@
 #include "tao/object.i"  // should always be included
 #include "tao/orbobj.i"
 #include "tao/marshal.i" // always
-#include "tao/iiopobj.i"
 #include "tao/client_factory.i"
 
 #  if defined(do_undef_on_ACE_INLINE)
@@ -133,14 +133,17 @@
 #include "tao/boa.i"
 #include "tao/giop.i"
 #include "tao/svrrqst.i"
-//#include "tao/factories.i"
 #include "tao/params.i"
 #include "tao/server_factory.i"
 #include "tao/default_client.i"
 #include "tao/default_server.i"
-#include "tao/iioporb.i"
 #include "tao/connect.i"
 #include "tao/roa.i"
+#include "tao/iioporb.i"
+#include "tao/iiopobj.i"
+#include "tao/Orb_Core.i"
 #endif /* __ACE_INLINE__ */
+
+#include "tao/singletons.h"
 
 #endif /* TAO_CORBA_H */
