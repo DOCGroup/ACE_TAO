@@ -120,7 +120,7 @@ query (const char *type,
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
     support_attrs.service_type_repos ();
-  CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct = 
+  CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
     rep->fully_describe_type (type, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
 
@@ -242,11 +242,11 @@ lookup_one_type (const char* type,
   // MSVC won't grok this for some reason, but it's necessary for the
   // HP compiler, which seriously requires the typename keyword
   // here. I apologize if this ifdef offends some ACE users'
-  // sensibilities --- it certainly offends mine. 
+  // sensibilities --- it certainly offends mine.
   ACE_TYPENAME TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
     offer_iter (type, offer_database);
 #endif
-  
+
   while (offer_filter.ok_to_consider_more () &&
          offer_iter.has_more_offers ())
     {
@@ -632,7 +632,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
           TAO_CHECK_ENV;
 
           CosTrading::Lookup_var remote_lookup =
-	    CosTrading::Lookup::_duplicate (link_info->target);
+            CosTrading::Lookup::_duplicate (link_info->target.in ());
 
           // Perform the federated query.
           remote_lookup->query (type,
@@ -755,7 +755,7 @@ forward_query (const char* next_hop,
       TAO_CHECK_ENV;
 
       CosTrading::Lookup_var remote_lookup =
-	CosTrading::Lookup::_duplicate (link_info->target);
+        CosTrading::Lookup::_duplicate (link_info->target.in ());
 
       CORBA::Object_var us = this->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -1096,24 +1096,24 @@ withdraw_using_constraint (const char *type,
     // MSVC won't grok this for some reason, but it's necessary for the
     // HP compiler, which seriously requires the typename keyword
     // here. I apologize if this ifdef offends some ACE users'
-    // sensibilities --- it certainly offends mine. 
+    // sensibilities --- it certainly offends mine.
     ACE_TYPENAME TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
       offer_iter (type, offer_database);
 #endif
-    
+
     TAO_Constraint_Validator validator (type_struct.in ());
     TAO_Constraint_Interpreter constr_inter (validator, constr, _env);
     TAO_CHECK_ENV_RETURN_VOID (_env);
-    
+
     while (offer_iter.has_more_offers ())
       {
         CosTrading::Offer* offer = offer_iter.get_offer ();
         // Add offer if it matches the constraints
-        
+
         TAO_Constraint_Evaluator evaluator (offer, dp_support);
         if (constr_inter.evaluate (evaluator))
           ids.enqueue_tail (offer_iter.get_id ());
-        
+
         offer_iter.next_offer ();
       }
   }
@@ -1166,7 +1166,7 @@ resolve (const CosTrading::TraderName &name,
       TAO_CHECK_ENV;
 
       remote_reg =
-	CosTrading::Register::_narrow (link_info->target_reg, TAO_TRY_ENV);
+        CosTrading::Register::_narrow (link_info->target_reg.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
