@@ -1,3 +1,9 @@
+Mon Aug  4 00:07:24 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* server/main.cpp (main): Service configurator now doesn't return
+	  -1 when errors occur.  Therefore, we check for not success
+	  instread of fail when opening the service contifurator.
+
 Mon Jul 28 04:54:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* server/Parse_Headers.cpp (place): Reformatted the same

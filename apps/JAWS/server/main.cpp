@@ -29,7 +29,7 @@ main (int argc, char *argv[])
   ACE_OS::signal (SIGCHLD, SIG_IGN);
   ACE_UNUSED_ARG (sa);
 
-  if (daemon.open (argc, argv) == -1)
+  if (daemon.open (argc, argv) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
 
   // Run forever, performing the configured services until we receive
