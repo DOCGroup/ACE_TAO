@@ -190,7 +190,7 @@ Client_i::output_latency (void)
   char buffer[BUFSIZ];
 
   ACE_OS::sprintf (latency_file,
-                   "cb-%d.txt",
+                   "c%d",
                    this->ts_->thread_count_);
 
   ACE_DEBUG ((LM_DEBUG,
