@@ -6130,8 +6130,8 @@ public:
                         const char *strptr,
                         void *addrptr);
   static int enum_protocols (int *protocols,
-			 				 ACE_Protocol_Info *protocol_buffer,
-							 u_long *buffer_length);
+                             ACE_Protocol_Info *protocol_buffer,
+                             u_long *buffer_length);
   // Retrieve information about available transport protocols 
   // installed on the local machine.
   static ACE_HANDLE join_leaf (ACE_HANDLE socket,
