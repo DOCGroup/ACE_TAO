@@ -122,7 +122,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << ");" << be_uidt_nl
       << "CORBA::Object_var _tao_obj_var;" << be_nl
       << "ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);" << be_nl
-      << "if (stream >> _tao_elem)" << be_nl
+      << "if (stream >> _tao_obj_var.out ())" << be_nl
       << "{" << be_idt_nl
       << "_tao_elem = " << node->full_name ()
       << "::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);" << be_nl
