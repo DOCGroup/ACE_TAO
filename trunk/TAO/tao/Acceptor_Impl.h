@@ -63,6 +63,34 @@ protected:
   // Pointer to the ORB Core.
 };
 
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
+class TAO_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+{
+public:
+
+  TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
+  // Constructor.
+
+  int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+            int restart = 0);
+  // Initialize the <peer_acceptor_> with <local_addr>.  If the
+  // process runs out of handles, purge some "old" connections.
+
+  int accept_svc_handler (SVC_HANDLER *svc_handler);
+  // Delegates to the <accept> method of the PEER_ACCEPTOR. If the
+  // process runs out of handles, purge some "old" connections.
+
+protected:
+  int out_of_sockets_handler (void);
+  // Handler which deals with purging "old" connections.
+
+  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
+  // Base class.
+
+  TAO_ORB_Core *orb_core_;
+  // Pointer to the ORB Core.
+};
+
 #if defined(__ACE_INLINE__)
 #include "tao/Acceptor_Impl.i"
 #endif /* __ACE_INLINE__ */

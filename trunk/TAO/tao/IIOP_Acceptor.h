@@ -82,6 +82,7 @@ public:
   typedef ACE_Strategy_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_IIOP_Server_Connection_Handler> TAO_IIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler> TAO_IIOP_CONCURRENCY_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_ACCEPT_STRATEGY;
 
 private:
   int open_i (TAO_ORB_Core* orb_core,
@@ -94,6 +95,7 @@ private:
 
   TAO_IIOP_CREATION_STRATEGY *creation_strategy_;
   TAO_IIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
+  TAO_IIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
 
   ACE_INET_Addr address_;
