@@ -36,20 +36,20 @@ be_visitor_operation_ss::~be_visitor_operation_ss (void)
 {
 }
 
-// Processing to be done after every element in the scope is processed.
-int
-be_visitor_operation_ss::post_process (be_decl *bd)
-{
-  // All we do here is to insert a comma and a newline.
-  TAO_OutStream *os = this->ctx_->stream ();
+// // Processing to be done after every element in the scope is processed.
+// int
+// be_visitor_operation_ss::post_process (be_decl *bd)
+// {
+//   // All we do here is to insert a comma and a newline.
+//   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (!this->last_node (bd))
-    {
-      *os << ",\n";
-    }
+//   if (!this->last_node (bd))
+//     {
+//       *os << ",\n";
+//     }
 
-  return 0;
-}
+//   return 0;
+// }
 
 int
 be_visitor_operation_ss::visit_operation (be_operation * node)
@@ -140,174 +140,6 @@ be_visitor_operation_ss::gen_pre_skel_info (be_operation * node)
 }
 
 int
-be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
-                                               be_type *)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor_context ctx;
-
-  // Now make sure that we have some in and inout parameters. Otherwise, there
-  // is nothing to be marshaled in.
-  if (this->has_param_type (node, AST_Argument::dir_IN) ||
-      this->has_param_type (node, AST_Argument::dir_INOUT))
-    {
-      // demarshal the in and inout arguments
-      *os << be_nl << be_nl << "if (!(" << be_idt << be_idt;
-
-      // Marshal each in and inout argument.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS);
-      ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-      be_visitor_operation_argument_marshal oad_visitor (&ctx);
-
-      if (node->accept (&oad_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_ss::"
-                             "gen_demarshal_params - "
-                             "codegen for demarshal failed\n"),
-                            -1);
-        }
-
-      *os << be_nl << "))" << be_uidt_nl;
-
-      // If marshaling fails, raise exception (codesetting has minor codes)
-      *os << "{" << be_idt_nl
-          << "TAO_InputCDR::throw_skel_exception "
-          << "(errno ACE_ENV_ARG_PARAMETER);"
-          << be_nl
-          << "ACE_CHECK;" << be_uidt_nl
-          << "}" << be_uidt;
-    };
-
-  return 0;
-}
-
-int
-be_visitor_operation_ss::gen_marshal_params (be_operation *node,
-                                             be_type *bt)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor_context ctx;
-
-  // Setup parameters for marshaling and marshal them into the
-  // outgoing stream.
-  // The code below this is for 2way operations only.
-
-  // We will be here only if we are 2way
-  // first initialize a reply message
-  *os << "_tao_server_request.init_reply ();";
-
-  // We still need the following check because we maybe 2way and yet have no
-  // parameters and a void return type.
-  if (this->void_return_type (bt)
-      && !this->has_param_type (node, AST_Argument::dir_INOUT)
-      && !this->has_param_type (node, AST_Argument::dir_OUT))
-    {
-      return 0;
-    }
-
-  // Create temporary variables for the out and return parameters.
-  if (!this->void_return_type (bt))
-    {
-      ctx = *this->ctx_;
-
-      be_visitor_operation_rettype_post_upcall_ss visitor (&ctx);
-
-      if (bt->accept (&visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_ss::"
-                             "gen_marshal_params - "
-                             "codegen for return var [post upcall] failed\n"),
-                            -1);
-        }
-    }
-
-  // Generate any temporary variables to demarshal the arguments.
-  ctx = *this->ctx_;
-  be_visitor_args_post_upcall_ss vis1 (&ctx);
-
-  if (node->accept (&vis1) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "gen_pre_stub_info - "
-                         "codegen for pre args failed\n"),
-                        -1);
-    }
-
-  // Skip marshalling on location forward
-  *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
-      << "if (!_tao_vfr.location_forwarded ())" << be_idt_nl
-      << "{" << be_idt;
-  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */"<< be_nl;
-
-  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
-      << be_nl << be_nl;
-
-  *os << "if (!(" << be_idt << be_idt;
-
-  if (!this->void_return_type (bt))
-    {
-      // Demarshal the return val and each inout and out argument.
-      ctx = *this->ctx_;
-      ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-      be_visitor_operation_rettype_marshal_ss orm_visitor (&ctx);
-
-      if (node->accept (&orm_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_ss::"
-                             "gen_marshal_params - "
-                             "codegen for return var failed\n"),
-                            -1);
-        }
-    }
-
-  if (this->has_param_type (node, AST_Argument::dir_INOUT)
-      || this->has_param_type (node, AST_Argument::dir_OUT))
-    {
-      if (!this->void_return_type (bt))
-        {
-          // We have already printed the return val. SO put a &&.
-          *os << " &&";
-        }
-
-      // Marshal each in and inout argument.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS);
-      ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-      be_visitor_operation_argument_marshal oam_visitor (&ctx);
-
-      if (node->accept (&oam_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_ss::"
-                             "gen_marshal_params - "
-                             "codegen for args failed\n"),
-                            -1);
-        }
-    }
-
-  *os << be_nl << "))" << be_uidt_nl;
-
-  // If marshaling fails, raise exception (codesetting has minor codes)
-  *os << "{" << be_idt_nl
-      << "TAO_OutputCDR::throw_skel_exception (errno ACE_ENV_ARG_PARAMETER);"
-      << be_nl
-      << "ACE_CHECK;" << be_uidt_nl
-      << "}" << be_uidt;
-
-  // End of scope: Skip marshalling on location forward
-  *os << "\n#if TAO_HAS_INTERCEPTORS == 1"
-      << be_uidt_nl << "}" << be_uidt;
-  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
-
-  return 0;
-}
-
-int
 be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                                                   be_type * return_type)
 {
@@ -352,7 +184,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request," << be_nl
       << "void *_tao_servant," << be_nl
-      << "void *_tao_servant_upcall" << be_nl
+      << "void * TAO_INTERCEPTOR (_tao_servant_upcall)" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
 
@@ -473,11 +305,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "ACE_CHECK;" << be_nl;
 
 
-  *os << be_nl << be_nl
-      << "// In case _tao_servant_upcall is not used in this function"
-      << be_nl
-      << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_uidt_nl
-      << "}";;
+  *os << be_uidt_nl
+      << "}";
 
   return 0;
 }
