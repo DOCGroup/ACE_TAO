@@ -100,6 +100,12 @@ protected:
   /// From ACE_POSIX_AIOCB_Proactor.
   virtual int start_aio (ACE_POSIX_Asynch_Result *result);
 
+  /// Check AIO for completion, error and result status
+  /// Return: 1 - AIO completed , 0 - not completed yet
+  virtual int get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
+                                 int &error_status,
+                                 int &return_status);
+
   /// Extract the results of aio.
   ACE_POSIX_Asynch_Result *find_completed_aio (aio_result_t *result,
                                                int &error_status,
