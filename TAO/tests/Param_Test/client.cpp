@@ -64,11 +64,18 @@ Param_Test_Client<T>::run_sii_test (void)
   // Declare the Env
   ACE_DECLARE_NEW_CORBA_ENV;
   // Initialize parameters for the test.
-  if (this->test_object_->init_parameters (this->param_test_, ACE_TRY_ENV) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) client.cpp - run_sii_test:"
-                       "init_parameters failed for opname - %s",
-                       opname), -1);
+  int check = this->test_object_->init_parameters (this->param_test_, 
+                                                   ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (check == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) client.cpp - run_sii_test:"
+                         "init_parameters failed for opname - %s",
+                         opname), 
+                        -1);
+    }
 
 
   // Make the calls in a loop.
@@ -84,7 +91,8 @@ Param_Test_Client<T>::run_sii_test (void)
           this->results_.start_timer ();
 
           // make the call
-          this->test_object_->run_sii_test (this->param_test_, ACE_TRY_ENV);
+          this->test_object_->run_sii_test (this->param_test_, 
+                                            ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // stop the timer.
@@ -164,11 +172,18 @@ Param_Test_Client<T>::run_dii_test (void)
   // Environment variable
   ACE_DECLARE_NEW_CORBA_ENV;
   // initialize parameters for the test
-  if (this->test_object_->init_parameters (this->param_test_, ACE_TRY_ENV) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) client.cpp - run_dii_test:"
-                       "init_parameters failed for opname - %s",
-                       opname), -1);
+  int check = this->test_object_->init_parameters (this->param_test_, 
+                                                   ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (check == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) client.cpp - run_dii_test:"
+                         "init_parameters failed for opname - %s",
+                         opname), 
+                        -1);
+    }
 
       // Make the calls in a loop.
   for (CORBA::ULong i = 0; i < opt->loop_count (); i++)
@@ -195,12 +210,13 @@ Param_Test_Client<T>::run_dii_test (void)
         {
           // add arguments and typecode for return valueto the NVList
           this->test_object_->add_args (nvlist,
-					retval.in (),
-					ACE_TRY_ENV);
+					                              retval.in (),
+					                              ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           CORBA::NamedValue_ptr result =
-            CORBA::NamedValue::_duplicate (retval->item (0, ACE_TRY_ENV));
+            CORBA::NamedValue::_duplicate (retval->item (0, 
+                                                         ACE_TRY_ENV));
           ACE_TRY_CHECK;
 
           this->param_test_->_create_request (CORBA_Context::_nil (),
@@ -220,13 +236,16 @@ Param_Test_Client<T>::run_dii_test (void)
             ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
 
           // Make the invocation, verify the result.
-          this->test_object_->dii_req_invoke (req, ACE_TRY_ENV);
+          this->test_object_->dii_req_invoke (req, 
+                                              ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
           this->results_.error_count (this->results_.error_count () + 1);
-          ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,opname);
+
+          ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
+                                opname);
           goto loop_around;
         }
       ACE_ENDTRY;
@@ -244,6 +263,7 @@ Param_Test_Client<T>::run_dii_test (void)
                       "(%N:%l) client.cpp - "
                       "Invalid results in run_dii_test in iteration %d\n",
                       i));
+
           continue;
         }
 
@@ -270,7 +290,7 @@ Param_Test_Client<T>::run_dii_test (void)
 		  "********** Finished running %s DII *********\n",
 		  opname));
     }
-  return this->results_.error_count ()? -1:0;
+  return this->results_.error_count () ? -1 : 0;
 }
 
 
