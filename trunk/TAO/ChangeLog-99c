@@ -1,3 +1,16 @@
+Fri Dec 10 16:13:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+	* performance-tests/RTCorba/Oneways/Reliable/test_i.h.cpp:
+	* performance-tests/RTCorba/Oneways/Reliable/test_i.cpp.cpp:
+	* performance-tests/RTCorba/Oneways/Reliable/test.idl:
+	* performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
+	* performance-tests/RTCorba/Oneways/Reliable/client_test.pl:
+	* performance-tests/RTCorba/Oneways/Reliable/README:
+	  Added new command line argument that will control how much
+	  'work' is done by the servant. This is useful when
+	  comparing reliable oneways with twoway requests.
+
 Fri Dec 10 14:09:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
