@@ -1,11 +1,17 @@
-// -*- C++ -*-
-
 #include "FOO_ClientRequestInterceptor.h"
 #include "testC.h"
+
 
 ACE_RCSID (IORInterceptor,
            FOO_ClientRequestInterceptor,
            "$Id$")
+
+
+FOO_ClientRequestInterceptor::FOO_ClientRequestInterceptor (
+  IOP::Codec_ptr codec)
+  : codec_ (IOP::Codec::_duplicate (codec))
+{
+}
 
 char *
 FOO_ClientRequestInterceptor::name (
@@ -45,12 +51,36 @@ FOO_ClientRequestInterceptor::send_request (
     {
       // This should never happen because the IORInterceptor name is
       // not an empty string.
+      ACE_ERROR ((LM_ERROR,
+                  "Internal test error.  Empty tagged component.\n"));
+
       ACE_THROW (CORBA::INTERNAL ());
     }
 
-  char *name =
-    ACE_reinterpret_cast (char *,
-                          component->component_data.get_buffer ());
+  CORBA::ULong maximum   = component->component_data.maximum ();
+  CORBA::ULong length    = component->component_data.length ();
+  CORBA::Octet * buffer  = component->component_data.get_buffer ();
+  CORBA::Boolean release = 0;  // TaggedComponent retains ownership.
+
+  CORBA::OctetSeq data (maximum, length, buffer, release);
+
+  // Extract the data from the octet sequence.
+  CORBA::Any_var decoded_data =
+    this->codec_->decode_value (data,
+                                CORBA::_tc_string
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  const char * name = 0;
+
+  if (!(decoded_data.in () >>= name))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Unable to extract tagged component "
+                  "data from Any.\n"));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) String extracted from tagged component "
