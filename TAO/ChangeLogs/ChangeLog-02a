@@ -507,7 +507,6 @@ Fri Mar 30 10:32:06 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           - CORBA::Object::_get_interface() method implemented.
 
->>>>>>> 1.3035
 Thu Mar 29 19:17:56 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * orbsvcs/tests/Security/SecurityLevel1/README:
