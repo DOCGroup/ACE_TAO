@@ -21,6 +21,23 @@ shared_libs =
 static_libs = 1
 
 
+ifeq (,$(WIND_BASE))
+  default:
+        @ERROR: you must set your WIND_BASE environment variable
+endif # WIND_BASE
+
+ifeq (,$(WIND_HOST_TYPE))
+  default:
+        @ERROR: you must set your WIND_HOST_TYPE environment variable
+endif # WIND_HOST_TYPE
+
+HOST_DIR        = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
+
+ifeq (,$(findstring $(HOST_DIR)/bin,$PATH))
+  PATH +=:$(HOST_DIR)/bin
+endif # PATH
+
+
 #### BEGIN target CPU-specific settings
 
 #### This is kind of messy so that it can support multiple
@@ -31,9 +48,8 @@ static_libs = 1
 ####
 ####  WIND_BASE = /project/doc/wind
 ####  WIND_HOST_TYPE = sun4-solaris2
-####  PATH += :$(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin
-####
 ####  CPU = I80486
+####
 ####  include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU
 ####
 #### 2) modify the code below to set CPU, or
@@ -55,20 +71,6 @@ endif # PPC604
 
 #### END target CPU-specific settings
 
-ifeq (,$(WIND_BASE))
-  default:
-        @ERROR: you must set your WIND_BASE environment variable
-endif # WIND_BASE
-
-ifeq (,$(WIND_HOST_TYPE))
-  default:
-        @ERROR: you must set your WIND_HOST_TYPE environment variable
-endif # WIND_HOST_TYPE
-
-
-TARGET_DIR      = $(WIND_BASE)/target
-HOST_DIR        = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
-BIN_DIR         = $(HOST_DIR)/bin
 
 #### Set up Win32 vs. Unix host specific macros.
 ifeq ($(WIND_HOST_TYPE),x86-win32)
@@ -77,6 +79,7 @@ else  # ! x86-win32
   CXX      = g++$(TOOLENV)
   PIPE_OPT = -pipe
 endif # ! x86-win32
+
 
 CC              = cc$(TOOLENV)
 CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -Wall
@@ -92,12 +95,13 @@ LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld -c \
                   -m "munch" -n "nm$(TOOLENV)" ld$(TOOLENV)
 LDFLAGS         += -X -r
 #### WindRiver only recommends -O, not -O2, with some CPUs, including
-#### the i386 family.
+#### the i386 family.  And -O2 causes some compilation failures.
 OCFLAGS         += -O
 PIC             =
 AR              = ar$(TOOLENV)
 ARFLAGS         = rv
 RANLIB          = /bin/true
+
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
 LINK.c           = override
@@ -105,6 +109,7 @@ LINK.c.override  = $(LD) $(LDFLAGS) $(LDLIBS) $(LIBS)
 
 LINK.cc          = override
 LINK.cc.override = $(LD)
+
 
 #### The symbol table extractor is target-dependent.
 ifeq ($(CPU),I80486)
