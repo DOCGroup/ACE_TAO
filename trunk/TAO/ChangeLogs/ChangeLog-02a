@@ -1,3 +1,15 @@
+Tue Apr 16 14:20:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport_Connector.h: Made the connect () call
+	  virtual. Theoretically this shouldnt be needed. The connect ()
+	  should check whether there is any connection in cache and if not
+	  it should invoke a make_connection () on the concrete
+	  connectors. This works for all protocols but SSLIOP. SSLIOP
+	  tends to validate some policies in every invocation after which
+	  it sets up a different code flow path. Making the connect ()
+	  virtaul helps to retain the existing code path by paying the
+	  cost of a virtual call! 
+
 Tue Apr 16 11:57:28 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/NVList.cpp:
