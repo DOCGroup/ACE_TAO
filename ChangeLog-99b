@@ -1,3 +1,8 @@
+Fri Jun 18 20:49:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Synch.cpp: Added template instantiations for
+	  ACE_Write_Guard<ACE_Thread_Mutex>.
+
 Fri Jun 18 19:30:09 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.42 released.
