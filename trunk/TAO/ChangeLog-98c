@@ -1,3 +1,24 @@
+Sun Nov  2 19:20:57 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO/tao/except.*: Made the "print_exception" utility function
+	as a method of class Environment.
+
+	* TAO/tao/giop.cpp: In the TAO_GIOP_Invocation::start method, we
+	were previously not returning even if the connection establishment
+	phase was failing. A return statement is inserted. However, there
+	still are problems when the GIOP_Invocation variable called "call"
+	goes out of scope.
+
+	* TAO_IDL Compiler: be_interface.cpp - The _bind call now
+	generates a "char IOR" instead of "static char IOR" since the
+	latter will be problematic with multiple threads. Thanks to
+	Arturo Montes <mitosys@colomsat.net.co> for pointing that out.
+
+	*TAO/test/Cubit/TAO/IDL_Cubit : Improved the code so that it uses
+	the "print_exception" which is now defined on class
+	CORBA::Environment. The clnt still needs improvement in terms of
+	handling invalid parameters and gracefully exiting.
+
 Sun Nov  2 13:28:19 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IDL_Compiler: The bug resulting out of encoding object
