@@ -96,7 +96,9 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface (be_interface *node)
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_var _tao_safe_retval;";
+  *os << bt->name () << "_ptr _tao_retval = " 
+      << bt->name () << "::_nil ();" << be_nl;
+  *os << bt->name () << "_var _tao_safe_retval (_tao_retval);";
 
   *os << be_nl << be_nl;
 
@@ -115,6 +117,8 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (be_interface_fwd *
     bt = node;
 
   os->indent ();
+  *os << bt->name () << "_ptr _tao_retval = " 
+      << bt->name () << "::_nil ();" << be_nl;
   *os << bt->name () << "_var _tao_safe_retval;";
 
   *os << be_nl << be_nl;
@@ -137,6 +141,8 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype (be_valuetype *node)
 
   os->indent ();
 
+  *os << bt->name () << "_ptr _tao_retval = " 
+      << bt->name () << "::_nil ();" << be_nl;
   *os << bt->name () << "_var _tao_safe_retval;";
 
   *os << be_nl << be_nl;
@@ -156,6 +162,8 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype_fwd (be_valuetype_fwd *
     bt = node;
 
   os->indent ();
+  *os << bt->name () << "_ptr _tao_retval = " 
+      << bt->name () << "::_nil ();" << be_nl;
   *os << bt->name () << "_var _tao_safe_retval;";
 
   *os << be_nl << be_nl;
@@ -180,6 +188,8 @@ be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_ty
     {
     case AST_PredefinedType::PT_pseudo:
       os->indent ();
+      *os << bt->name () << "_ptr _tao_retval = " 
+          << bt->name () << "::_nil ();" << be_nl;
       *os << bt->name () << "_var _tao_safe_retval;";
       break;
     case AST_PredefinedType::PT_any:
