@@ -1,15 +1,20 @@
+Wed Jan 06 15:03:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/echo/Client_i.cpp (echo_list): added .in ()
+          dereference to "ior".
+
 Wed Jan 06 14:07:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Exception.{h,cpp} (TAO_DONT_CATCH):
-	* tao/try_macros.h: Reverted my previous change about not using
-	  catch (...) on TAO_CATCHANY for debug build.  This "feature" is
-	  turned on only when you define TAO_DONT_CATCH_DOT_DOT_DOT.
-	  Thanks to Irfan for persuading me.
+        * tao/Exception.{h,cpp} (TAO_DONT_CATCH):
+        * tao/try_macros.h: Reverted my previous change about not using
+          catch (...) on TAO_CATCHANY for debug build.  This "feature" is
+          turned on only when you define TAO_DONT_CATCH_DOT_DOT_DOT.
+          Thanks to Irfan for persuading me.
 
 Wed Jan  6 13:44:29 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/Time_Service/Server_i.h (class Server_i): Addded the
-	IR related code.
+        * orbsvcs/Time_Service/Server_i.h (class Server_i): Addded the
+        IR related code.
 
 Wed Jan 06 13:29:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
