@@ -43,7 +43,9 @@ class ACE_Allocator;
  * @brief Implement a generic LIFO abstract data type.
  *
  * This implementation of a Stack uses a bounded array
- * that is allocated dynamically.
+ * that is allocated dynamically.  The Stack interface 
+ * provides the standard constant time push, pop, and top 
+ * operations. 
  */
 template <class T>
 class ACE_Bounded_Stack
@@ -51,19 +53,37 @@ class ACE_Bounded_Stack
 public:
   // = Initialization, assignment, and termination methods.
 
-  /// Initialize a new stack so that it is empty.
-  /// The copy constructor (performs initialization).
+  /// Initialize a new empty stack with the provided size..
+  /**
+   * Initialize and allocate space for a new Bounded_Stack with the provided
+   * size. 
+   */
   ACE_Bounded_Stack (size_t size);
+
+  /// Initialize the stack to be a copy of the stack provided. 
+  /**
+   * Initialize the stack to be an exact copy of the Bounded_Stack provided
+   * as a parameter.  
+   */
   ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
 
-  /// Assignment operator (performs assignment).
+  /// Assignment operator
+  /**
+   * Perform a deep copy operation using the Bounded_Stack parameter.  If the capacity
+   * of the lhs isn't sufficient for the rhs, then the underlying data structure will
+   * be reallocated to accomadate the larger number of elements. 
+   */
   void operator= (const ACE_Bounded_Stack<T> &s);
 
   /// Perform actions needed when stack goes out of scope.
+  /** 
+   * Deallocate the memory used by the Bounded_Stack. 
+   */
   ~ACE_Bounded_Stack (void);
 
   // = Classic Stack operations.
 
+  ///Add an element to the top of the stack. 
   /**
    * Place a new item on top of the stack.  Returns -1 if the stack
    * is already full, 0 if the stack is not already full, and -1 if
@@ -71,6 +91,7 @@ public:
    */
   int push (const T &new_item);
 
+  ///Remove an item from the top of stack.
   /**
    * Remove and return the top stack item.  Returns -1 if the stack is
    * already empty, 0 if the stack is not already empty, and -1 if
@@ -78,6 +99,7 @@ public:
    */
   int pop (T &item);
 
+  ///Examine the contents of the top of stack. 
   /**
    * Return top stack item without removing it.  Returns -1 if the
    * stack is already empty, 0 if the stack is not already empty, and
@@ -88,12 +110,21 @@ public:
   // = Check boundary conditions.
 
   /// Returns 1 if the container is empty, otherwise returns 0.
+  /**
+   * Performs constant time check to determine if the stack is empty. 
+   */
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
+  /**
+   * Performs constant time check to determine if the stack is at capacity. 
+   */
   int is_full (void) const;
 
   /// The number of items in the stack.
+  /**
+   * Return the number of items currently in the stack. 
+   */
   size_t size (void) const;
 
   /// Dump the state of an object.
@@ -621,7 +652,7 @@ public:
  * circular linked list with a dummy node.  It is pretty much
  * like the <ACE_Unbounded_Queue> except that it allows removing
  * of a specific element from a specific location.
- * Notice that this class is an implementation of a very simply
+ * Notice that this class is an implementation of a very simple
  * data structure.is *NOT* a container class.  You can use the
  * class to implement other contains classes but it is *NOT* a
  * general purpose container class.
@@ -629,8 +660,9 @@ public:
  * and users of this class are responsible to follow the general
  * rules of using double-linked lists to maintaining the list
  * integrities.
- * If you need a double linked container class, check out the
- * DLList class in this file.
+ * If you need a double linked container class, use the DLList
+ * class which is a container but delegates to the Double_Linked_List 
+ * class. 
  */
 template <class T>
 class ACE_Double_Linked_List
@@ -647,35 +679,63 @@ public:
   // = Initialization and termination methods.
   /// construction.  Use user specified allocation strategy
   /// if specified.
+  /**
+   * Initizlize an empy list using the allocation strategy specified by the user. 
+   * If none is specified, then use default allocation strategy. 
+   */
   ACE_Double_Linked_List (ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
+  /**
+   * Create a double linked list that is a copy of the provided 
+   * parameter.  
+   */
   ACE_Double_Linked_List (const ACE_Double_Linked_List<T> &);
 
   /// Assignment operator.
+  /**
+   * Perform a deep copy of the provided list by first deleting the nodes of the 
+   * lhs and then copying the nodes of the rhs. 
+   */
   void operator= (const ACE_Double_Linked_List<T> &);
 
   /// Destructor.
+  /**
+   * Clean up the memory allocated for the nodes of the list. 
+   */
   ~ACE_Double_Linked_List (void);
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns 1 if the container is empty, 0 otherwise. 
+  /** 
+   * Performs constant time check to determine if the list is empty. 
+   */
   int is_empty (void) const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// The list is unbounded, so this always returns 0. 
+  /**
+   * Since the list is unbounded, the method simply returns 0. 
+   */
   int is_full (void) const;
 
   // = Classic queue operations.
 
   /// Adds <new_item> to the tail of the list. Returns the new item
   /// that was inserted.
+  /**
+   * Provides constant time insertion at the end of the list structure. 
+   */
   T *insert_tail (T *new_item);
 
   /// Adds <new_item> to the head of the list.Returns the new item that
   /// was inserted.
+  /**
+   * Provides constant time insertion at the head of the list. 
+   */
   T *insert_head (T *new_item);
 
+  ///Removes the head of the list and returns a pointer to that item. 
   /**
    * Removes and returns the first <item> in the list.  Returns
    * internal node's address on success, 0 if the queue was empty.
@@ -683,6 +743,7 @@ public:
    */
   T* delete_head (void);
 
+  ///Removes the tail of the list and returns a pointer to that item. 
   /**
    * Removes and returns the last <item> in the list.  Returns
    * internal nodes's address on success, 0 if the queue was
@@ -692,6 +753,7 @@ public:
 
   // = Additional utility methods.
 
+  ///Empty the list. 
   /**
    * Reset the <ACE_Double_Linked_List> to be empty.
    * Notice that since no one is interested in the items within,
@@ -701,15 +763,25 @@ public:
 
   /// Get the <slot>th element in the set.  Returns -1 if the element
   /// isn't in the range {0..<size> - 1}, else 0.
+  /**
+   * Iterates through the list to the desired index and assigns the provides pointer
+   * with the address of the node occupying that index. 
+   */
   int get (T *&item, size_t slot = 0);
 
   /// The number of items in the queue.
+  /**
+   * Constant time call to return the current size of the list. 
+   */
   size_t size (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
 
   /// Use DNode address directly.
+  /**
+   * Constant time removal of an item from the list using it's address. 
+   */
   int remove (T *n);
 
   /// Declare the dynamic allocation hooks.
@@ -717,23 +789,34 @@ public:
 
 protected:
   /// Delete all the nodes in the list.
+  /**
+   * Removes and deallocates memory for all of the list nodes. 
+   */
   void delete_nodes (void);
 
   /// Copy nodes from <rhs> into this list.
+  /**
+   * Copy the elements of the provided list by allocated new nodes and assigning
+   * them with the proper data. 
+   */
   void copy_nodes (const ACE_Double_Linked_List<T> &rhs);
 
   /// Setup header pointer.  Called after we create the head node in ctor.
+  /**
+   * Initialize the head pointer so that the list has a dummy node. 
+   */
   void init_head (void);
 
+  ///Constant time insert a new item into the list structure. 
   /**
    * Insert a <new_element> into the list.  It will be added before
    * or after <old_item>.  Default is to insert the new item *after*
-   * <head_>.  Return 0 if succeed, -1 if error occured.
+   * <head_>.  Return 0 if succeed, -1 if error occured.  
    */
   int insert_element (T *new_item,
                       int before = 0,
                       T *old_item = 0);
-
+  ///Constant time delete an item from the list structure. 
   /**
    * Remove an <item> from the list.  Return 0 if succeed, -1 otherwise.
    * Notice that this function checks if item is <head_> and either its
@@ -1184,7 +1267,7 @@ private:
   ACE_Bounded_Set<T> &s_;
 
   /// How far we've advanced over the set.
-  ssize_t next_;
+  size_t next_;
 };
 
 /**
@@ -1194,7 +1277,11 @@ private:
  * set at creation time.
  *
  * This implementation of an unordered set uses a Bounded array.
- * This implementation does not allow duplicates...
+ * This implementation does not allow duplicates.  It provides
+ * linear insert/remove/find operations.  Insertion/removal does not 
+ * invalidate iterators, but caution should be taken to ensure
+ * expected behavior.  Once initialized, the object has a maximum size
+ * which can only be increased by the assignment of another larger Bounded_Set.
  */
 template <class T>
 class ACE_Bounded_Set
@@ -1211,49 +1298,86 @@ public:
   };
 
   // = Initialization and termination methods.
-  /// Constructor.
+  /// Construct a Bounded_Set using the default size.
+  /**
+   * The default constructor initializes the Bounded_Set to a maximum size 
+   * specified by the DEFAULT_SIZE.  
+   */ 
   ACE_Bounded_Set (void);
 
-  /// Constructor.
+  /// Construct a Bounded_Set with the provided sizeB.
+  /**
+   * Initialize the Bounded_Set to have a maximum size equal to the size parameter
+   * specified. 
+   */
   ACE_Bounded_Set (size_t size);
 
-  /// Copy constructor.
+  /// Construct a Bounded_Set that is a copy of the provides Bounded_Set.
+  /**
+   * Initialize the Bounded_Set to be a copy of the Bounded_Set parameter. 
+   */
   ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
 
   /// Assignment operator.
+  /**
+   * The assignment will make a deep copy of the Bounded_Set provided.  If the 
+   * rhs has more elements than the capacity of the lhs, then the lhs will be 
+   * deleted and reallocated to accomadate the larger number of elements. 
+   */
   void operator= (const ACE_Bounded_Set<T> &);
 
   /// Destructor
+  /** 
+   * Clean up the underlying dynamically allocated memory that is used by
+   * the Bounded_Set. 
+   */
   ~ACE_Bounded_Set (void);
 
   // = Check boundary conditions.
 
   /// Returns 1 if the container is empty, otherwise returns 0.
+  /**
+   * A constant time check is performed to determine if the Bounded_Set is empty.
+   */
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
+  /** 
+   * Performs a constant time check to determine if the Bounded_Set is at capacity. 
+   */
   int is_full (void) const;
 
   // = Classic unordered set operations.
 
+  ///Inserts a new element unique to the set. 
   /**
-   * Insert <new_item> into the set (doesn't allow duplicates).
+   * Insert <new_item> into the set (doesn't allow duplicates) in linear
+   * time.  
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
   int insert (const T &new_item);
 
+  ///Finds the specified element and removes it from the set. 
   /**
    * Remove first occurrence of <item> from the set.  Returns 0 if it
    * removes the item, -1 if it can't find the item, and -1 if a
-   * failure occurs.
+   * failure occurs.  The linear remove operation does not reclaim the 
+   * memory associated with the removed item. B
    */
   int remove (const T &item);
 
   /// Finds if <item> occurs in the set.  Returns 0 if finds, else -1.
+  /**
+   * find preforms a linear search for <item> and returns 0 on successful
+   * find and -1 otherwise.  
+   */
   int find (const T &item) const;
 
   /// Size of the set.
+  /**
+   * Returns a size_t representing the current size of the set. 
+   */
   size_t size (void) const;
 
   /// Dump the state of an object.
