@@ -6,88 +6,90 @@ Sat Oct 25 10:26:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sat Oct 25 10:13:56 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* ace/Singleton.h: added comment about best ACE_LOCK types to use.
+        * ace/Singleton.h: added comment about best ACE_LOCK types to use.
+
+        * Makefile (TIMESTAMP): replace tab with spaces in ChangeLog entry.
 
 Sat Oct 25 01:02:34 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ACE version 4.3.27, released Sat Oct 25 01:02:34 1997.
+        * ACE version 4.3.27, released Sat Oct 25 01:02:34 1997.
 
 Fri Oct 24 17:39:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/ACE.cpp: Changed all the ACE_BIT_ENABLED () == 0 macros to
- 	  ACE_BIT_DISABLED() since the logic is clearer.
+        * ace/ACE.cpp: Changed all the ACE_BIT_ENABLED () == 0 macros to
+          ACE_BIT_DISABLED() since the logic is clearer.
 
-	* ace/SOCK_Acceptor.cpp (shared_accept): Improved the handling of
- 	  timed accepts.  The original implementation was prone to race
- 	  conditions if there were multiple processes all doing timed
- 	  connects on the *same acceptor socket*!  That's because select()
- 	  and accept() are not performed atomically.  Now, we're smarted
- 	  about handling this...
+        * ace/SOCK_Acceptor.cpp (shared_accept): Improved the handling of
+          timed accepts.  The original implementation was prone to race
+          conditions if there were multiple processes all doing timed
+          connects on the *same acceptor socket*!  That's because select()
+          and accept() are not performed atomically.  Now, we're smarted
+          about handling this...
 
-	* tests/Conn_Test.cpp: Simplified the shutdown logic, which
- 	  appeared to have race conditions.
+        * tests/Conn_Test.cpp: Simplified the shutdown logic, which
+          appeared to have race conditions.
 
-	* tests/Conn_Test.cpp: Modified this test to spawn off a number of
- 	  server processes, all of which will listen for connections on
- 	  the same acceptor port.  This demonstrates a useful idiom for
- 	  writing connection-oriented concurrent server pools.
+        * tests/Conn_Test.cpp: Modified this test to spawn off a number of
+          server processes, all of which will listen for connections on
+          the same acceptor port.  This demonstrates a useful idiom for
+          writing connection-oriented concurrent server pools.
 
-	* netsvcs/lib/Server_Logging_Handler_T: Fixed this code so that if
- 	  we're on an HP/UX that has broken templates we don't use the
- 	  Base_Optimizer.  Thanks to Per Andersson for providing this fix.
+        * netsvcs/lib/Server_Logging_Handler_T: Fixed this code so that if
+          we're on an HP/UX that has broken templates we don't use the
+          Base_Optimizer.  Thanks to Per Andersson for providing this fix.
 
-	* ace/Thread_Manager: Added a destructor for ACE_Thread_Descriptor
- 	  to keep some compilers happy.  Thanks to Chuck Gehr
- 	  <gehr@sweng.stortek.com> for reporting this.
+        * ace/Thread_Manager: Added a destructor for ACE_Thread_Descriptor
+          to keep some compilers happy.  Thanks to Chuck Gehr
+          <gehr@sweng.stortek.com> for reporting this.
 
-	* ace/Task.cpp (ACE_Task_Base_cleanup):  Changed
-	  ACE_Task_Base::cleanup (object);
+        * ace/Task.cpp (ACE_Task_Base_cleanup):  Changed
+          ACE_Task_Base::cleanup (object);
 
           to:
 
           ACE_Task_Base::cleanup (object, 0);
 
-	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
-	  this.
+          Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
+          this.
 
-	* ace/Thread_Manager.cpp (find_thread): Fixed another problem with
- 	  == being used to compare threads rather than
- 	  ACE_OS::thr_equal().  Thanks to Chuck Gehr
- 	  <gehr@sweng.stortek.com> for reporting this.
+        * ace/Thread_Manager.cpp (find_thread): Fixed another problem with
+          == being used to compare threads rather than
+          ACE_OS::thr_equal().  Thanks to Chuck Gehr
+          <gehr@sweng.stortek.com> for reporting this.
 
 Fri Oct 24 17:11:14 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
         * Thread_Timer_Queue_Test.cpp (shutdown_timer): added logic to
- 	  cancel preemptively or voluntarily, the dispatching thread,
- 	  depending on whether the platoform supports pthread_cancel().
+          cancel preemptively or voluntarily, the dispatching thread,
+          depending on whether the platoform supports pthread_cancel().
 
         * Timer_Queue_Adapters.cpp (ACE_Thread_Timer_Queue_Adapter): Added
- 	  initialization of <active_> flag to 1, active mode.  We assume
- 	  we start in active mode.  Added an internal variable <thr_id_>
- 	  that stores the thread id of the currently running thread.  The
- 	  motivation behind this is to be able to cancel this thread
- 	  whenever we are shutting down.  It is initialized to
- 	  ACE_OS::NULL_thread.
+          initialization of <active_> flag to 1, active mode.  We assume
+          we start in active mode.  Added an internal variable <thr_id_>
+          that stores the thread id of the currently running thread.  The
+          motivation behind this is to be able to cancel this thread
+          whenever we are shutting down.  It is initialized to
+          ACE_OS::NULL_thread.
 
         * Timer_Queue_Adapters.cpp (svc): Assign the <thr_id_> with the
- 	  current running thread ID, using ACE_Thread::self ().
+          current running thread ID, using ACE_Thread::self ().
 
         * Timer_Queue_Adapters.h (ACE_Thread_Timer_Queue_Adapter): Added
- 	  default <ACE_Thread_Manager> to be
- 	  ACE_Thread_Manager::instance()
+          default <ACE_Thread_Manager> to be
+          ACE_Thread_Manager::instance()
 
         * Timer_Queue_Adapters.h (activate): Override the default
- 	  <activate> method to be able to enforce one thread of execution
- 	  per timer queue.  Does make much sense to have more than one
- 	  managing the timer queue, and like Doug said too many weird
- 	  things can happen...
+          <activate> method to be able to enforce one thread of execution
+          per timer queue.  Does make much sense to have more than one
+          managing the timer queue, and like Doug said too many weird
+          things can happen...
 
         * Timer_Queue_Adapters.i (thr_id): Added this method to access the
- 	  thread ID of this task.
+          thread ID of this task.
 
         * Timer_Queue_Adapters.i (activate): Call
- 	  ACE_Task_Base::activate() with n_threads = 1 to ensure that a
- 	  single thread is spawned.
+          ACE_Task_Base::activate() with n_threads = 1 to ensure that a
+          single thread is spawned.
 
 Fri Oct 24 10:00:02 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
@@ -334,9 +336,9 @@ Wed Oct 22 07:23:21 1997  David L. Levine  <levine@cs.wustl.edu>
           get_singleton_lock () function and preallocated lock would
           have to be added.
 
-	  As noted in Singleton.h, the best types of ACE_LOCKs to use
-	  for instantiating ACE_Singleton are ACE_Recursive_Thread_Mutex
-	  and ACE_Null_Mutex.
+          As noted in Singleton.h, the best types of ACE_LOCKs to use
+          for instantiating ACE_Singleton are ACE_Recursive_Thread_Mutex
+          and ACE_Null_Mutex.
 
           In addition to the above change, I made these two other
           changes:
