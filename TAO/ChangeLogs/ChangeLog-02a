@@ -1,3 +1,8 @@
+Wed Feb  2 19:15:09 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Added the two filters Carlos
+          created to the MSVC project file.
+
 Wed Feb  2 17:49:33 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/pluggable_protocols/index.html:
