@@ -528,6 +528,7 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
   socket_address = ACE_reinterpret_cast(sockaddr_in *,
                                         &if_address.ifr_addr);
   multicast_address.imr_interface.s_addr = socket_address->sin_addr.s_addr;
+#endif /* ACE_WIN32 */
 
   /*
    * Now. I got the interface address for the 'nic' specified.
@@ -538,6 +539,4 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
                               IP_MULTICAST_IF,
                               &multicast_address.imr_interface.s_addr,
                               sizeof (struct in_addr));
-#endif /* ACE_WIN32 */
-
 }

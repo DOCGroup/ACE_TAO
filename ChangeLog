@@ -1,3 +1,9 @@
+Sat Jul 20 08:53:05 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SOCK_Dgram.cpp (set_nic): Moved the #endif for
+	  ACE_WIN32 *ahead* of the set_options() call.  Thanks to Joe
+ 	  Hayes <Joe.Hayes@lmco.com> for reporting this.
+
 Fri Jul 19 14:42:37 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/WFMO_Reactor.cpp (make_changes_in_suspension_infos,
