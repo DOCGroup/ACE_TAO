@@ -179,7 +179,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
       *os << be_nl
           << "if (rval == 0)" << be_idt_nl
-          << "{" << be_idt_nl
+          << "{"
+          << "\n#ifndef _MSC_VER" << be_idt_nl
           << "rval = ";
 
       AST_Decl::NodeType nt = 
@@ -192,7 +193,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           be_decl *scope_decl = scope->decl ();
 
           *os << "ACE_NESTED_CLASS ("
-              << scope_decl->name () << ","
+              << scope_decl->name () << ", "
               << inherited->local_name () << ")";
         }
       else
@@ -200,7 +201,11 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           *os << inherited->name ();
         }
 
-      *os << "::_tao_obv_narrow (type_id);" << be_uidt_nl
+      *os << "::_tao_obv_narrow (type_id);"
+          << "\n#else" << be_nl
+          << "rval = this->" << inherited->flat_name ()
+          << "_tao_obv_narrow (type_id);"
+          << "\n#endif" << be_uidt_nl
           << "}" << be_uidt_nl;
     }
 
