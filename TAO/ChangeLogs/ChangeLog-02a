@@ -1,3 +1,9 @@
+Thu Apr  5 18:35:23 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/Simple/*/README: Changed the README files to
+	  replace the use of "client -o" to "client -f".  Thanks to Gautam
+ 	  Thaker <gthaker@atl.lmco.com> for reporting this.
+
 Thu Apr  5 14:49:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/diffs/PolicyC.h.diff:

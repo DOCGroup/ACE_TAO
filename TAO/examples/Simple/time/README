@@ -14,7 +14,7 @@ for more details.
 run_test.pl : This is a perl script to run the server and client as :
 ------------
 	      server -o ior_file
-	      client -o ior_file
+	      client -f ior_file
 
 This perl script runs the server and client and shuts down the server
 when it is done.
