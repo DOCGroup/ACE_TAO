@@ -1,16 +1,8 @@
 // $Id$
 
-#ifndef ACE_DYNAMIC_SERVICE_BASE_C
-#define ACE_DYNAMIC_SERVICE_BASE_C
-
-#include "ace/Service_Config.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Service_Repository.h"
 #include "ace/Dynamic_Service_Base.h"
+#include "ace/Service_Config.h"
+#include "ace/Service_Repository.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Dynamic_Service_Base, "$Id$")
@@ -41,11 +33,7 @@ ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name)
 
   if (type == 0)
     return 0;
-  else
-    {
-      void *obj = type->object ();
-      return obj;
-    }
-}
 
-#endif /* ACE_DYNAMIC_SERVICE_BASE_C */
+  void *obj = type->object ();
+  return obj;
+}

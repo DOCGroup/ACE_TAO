@@ -861,6 +861,29 @@ SOURCE=.\Dynamic_Service.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Dynamic_Service_Base.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_Service_Base.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event_Handler.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
