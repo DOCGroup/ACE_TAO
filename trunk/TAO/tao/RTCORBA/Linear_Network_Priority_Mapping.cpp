@@ -3,6 +3,8 @@
 
 #include "tao/orbconf.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "Linear_Network_Priority_Mapping.h"
 #include "tao/debug.h"
 #include "ace/Sched_Params.h"
@@ -133,3 +135,5 @@ TAO_Linear_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority /*networ
                 "TAO_Linear_Network_Priority_Mapping::to_corba\n"));
   return 1;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

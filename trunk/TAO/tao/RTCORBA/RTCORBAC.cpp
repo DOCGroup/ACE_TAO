@@ -30,6 +30,9 @@
 
 
 #include "RTCORBA.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
@@ -6263,3 +6266,4 @@ CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_RTCORBA_PriorityBands_CPP_ */
 
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

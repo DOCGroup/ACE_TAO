@@ -2,6 +2,8 @@
 
 #include "Network_Priority_Mapping_Manager.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #if ! defined (__ACE_INLINE__)
 #include "Network_Priority_Mapping_Manager.i"
 #endif /* __ACE_INLINE__ */
@@ -68,4 +70,5 @@ TAO_Network_Priority_Mapping_Manager::_interface_repository_id (void) const
 {
   return "IDL:Network_Priority_Mapping_Manager:1.0";
 }
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

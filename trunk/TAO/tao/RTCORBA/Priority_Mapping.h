@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #define TAO_RTCORBA_SAFE_INCLUDE
 #include "RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
@@ -52,6 +54,8 @@ public:
 #if defined (__ACE_INLINE__)
 # include "Priority_Mapping.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_PRIORITY_MAPPING_H */

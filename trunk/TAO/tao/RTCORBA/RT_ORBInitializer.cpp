@@ -1,5 +1,6 @@
 #include "RT_ORBInitializer.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 ACE_RCSID (RTCORBA,
            RT_ORBInitializer,
@@ -293,3 +294,5 @@ TAO_RT_ORBInitializer::register_policy_factories (
       ACE_CHECK;
     }
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

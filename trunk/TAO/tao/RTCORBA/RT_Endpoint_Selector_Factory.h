@@ -20,6 +20,8 @@
 
 #include "rtcorba_export.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -65,6 +67,8 @@ private:
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif  /* RT_ENDPOINT_SELECTOR_FACTORY_H */

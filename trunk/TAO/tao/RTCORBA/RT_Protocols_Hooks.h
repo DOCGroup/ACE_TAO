@@ -17,6 +17,9 @@
 #include "ace/pre.h"
 
 #include "tao/Protocols_Hooks.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "Priority_Mapping_Manager.h"
 #include "Network_Priority_Mapping_Manager.h"
 
@@ -173,6 +176,8 @@ protected:
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_RT_PROTOCOLS_HOOKS_H */

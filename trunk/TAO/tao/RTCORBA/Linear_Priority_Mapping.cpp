@@ -2,6 +2,8 @@
 
 #include "tao/orbconf.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "Linear_Priority_Mapping.h"
 #include "tao/debug.h"
 #include "ace/Sched_Params.h"
@@ -160,3 +162,5 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
 
 #endif /* ACE_WIN32 */
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

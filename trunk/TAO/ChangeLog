@@ -1,3 +1,75 @@
+Fri Jun 20 04:22:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/RTCORBA/Continuous_Priority_Mapping.cpp:
+        * tao/RTCORBA/Continuous_Priority_Mapping.h:
+        * tao/RTCORBA/Direct_Priority_Mapping.cpp:
+        * tao/RTCORBA/Direct_Priority_Mapping.h:
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.cpp:
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.h:
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:
+        * tao/RTCORBA/Linear_Priority_Mapping.h:
+        * tao/RTCORBA/Network_Priority_Mapping.cpp:
+        * tao/RTCORBA/Network_Priority_Mapping.h:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.cpp:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+        * tao/RTCORBA/Priority_Mapping.cpp:
+        * tao/RTCORBA/Priority_Mapping.h:
+        * tao/RTCORBA/Priority_Mapping_Manager.cpp:
+        * tao/RTCORBA/Priority_Mapping_Manager.h:
+        * tao/RTCORBA/Private_Transport_Descriptor.cpp:
+        * tao/RTCORBA/Private_Transport_Descriptor.h:
+        * tao/RTCORBA/RTCORBA.cpp:
+        * tao/RTCORBA/RTCORBA.h:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RT_Current.cpp:
+        * tao/RTCORBA/RT_Current.h:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+        * tao/RTCORBA/RT_Endpoint_Utils.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h:
+        * tao/RTCORBA/RT_Mutex.cpp:
+        * tao/RTCORBA/RT_Mutex.h:
+        * tao/RTCORBA/RT_ORB.cpp:
+        * tao/RTCORBA/RT_ORB.h:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.h:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_ORB_Loader.h:
+        * tao/RTCORBA/RT_PolicyFactory.cpp:
+        * tao/RTCORBA/RT_PolicyFactory.h:
+        * tao/RTCORBA/RT_Policy_i.cpp:
+        * tao/RTCORBA/RT_Policy_i.h:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.h:
+        * tao/RTCORBA/RT_Stub.cpp:
+        * tao/RTCORBA/RT_Stub.h:
+        * tao/RTCORBA/RT_Stub_Factory.cpp:
+        * tao/RTCORBA/RT_Stub_Factory.h:
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/RTCORBA/Thread_Pool.h:
+        * tao/RTPortableServer/RTPortableServer.cpp:
+        * tao/RTPortableServer/RTPortableServer.h:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RT_Acceptor_Filters.cpp:
+        * tao/RTPortableServer/RT_Acceptor_Filters.h:
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+        * tao/RTPortableServer/RT_Collocation_Resolver.h:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.h:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_POA.h:
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+        * tao/RTPortableServer/RT_Policy_Validator.h:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.h:
+          Ifdef'd out all the code if TAO_HAS_CORBA_MESSAGING = 0, since
+          RTCORBA depends on messaging.
+
 Thu Jun 19 20:45:06 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/lib/Peer_T.cpp:

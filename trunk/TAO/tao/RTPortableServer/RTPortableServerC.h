@@ -27,6 +27,9 @@
 
 #include "ace/pre.h"
 #include "rtportableserver_export.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/PortableServer/PortableServerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -264,6 +267,8 @@ TAO_RTPortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTPo
 #if defined (__BORLANDC__)
 #pragma option pop
 #endif /* __BORLANDC__ */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* ifndef */

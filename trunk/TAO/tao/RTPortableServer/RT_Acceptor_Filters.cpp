@@ -1,6 +1,9 @@
 // @(#) $Id$
 
 #include "RT_Acceptor_Filters.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/Transport_Acceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
@@ -60,3 +63,5 @@ TAO_Server_Protocol_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
 
   return 0;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

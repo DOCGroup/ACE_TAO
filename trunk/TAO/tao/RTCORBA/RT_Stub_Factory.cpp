@@ -1,5 +1,8 @@
 // $Id$
 #include "RT_Stub_Factory.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "RT_Stub.h"
 
 ACE_RCSID(tao, RT_TAO_Stub_Factory, "$Id$")
@@ -39,3 +42,4 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Stub_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_Stub_Factory)
 
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

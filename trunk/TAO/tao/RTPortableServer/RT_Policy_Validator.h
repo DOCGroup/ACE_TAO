@@ -17,6 +17,8 @@
 #include "ace/pre.h"
 #include "tao/orbconf.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -87,6 +89,8 @@ private:
   TAO_Thread_Pool *thread_pool_;
 
 };
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_RT_POLICY_VALIDATOR_H_ */

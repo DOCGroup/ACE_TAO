@@ -1,4 +1,7 @@
 #include "RT_Endpoint_Selector_Factory.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "RT_Invocation_Endpoint_Selectors.h"
 #include "RT_Endpoint_Utils.h"
 #include "RT_Stub.h"
@@ -39,3 +42,5 @@ ACE_STATIC_SVC_DEFINE (RT_Endpoint_Selector_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
