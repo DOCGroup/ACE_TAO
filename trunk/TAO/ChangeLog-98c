@@ -1,3 +1,10 @@
+Tue Mar 31 19:50:48 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/server.cpp (Cubit_Server): Removed the
+	naming service unbind code from the destructor as the naming
+	server is a component and not an external server. Also they will
+	be destructed when the ~Cubit_Server is called.
+
 Tue Mar 31 19:30:03 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/server.cpp (Cubit_Server): Added a
