@@ -16,6 +16,10 @@
 #include "client.h"
 #include "ace/Sched_Params.h"
 
+#if defined (ACE_QUANTIFY)
+#include "quantify.h"
+#endif /* ACE_QUANTIFY */
+
 double csw = 0.0;
   
 #if defined (VXWORKS) 
@@ -51,6 +55,48 @@ initialize (void)
   ACE::set_handle_limit ();
 
   return 0;
+}
+
+void
+output_latency (Task_State &ts)
+{
+  FILE *latency_file_handle = 0;
+  char latency_file[BUFSIZ];
+  char buffer[BUFSIZ];
+
+  ACE_OS::sprintf (latency_file,
+                   "cb__%d.txt",
+                   ts.thread_count_);
+
+  ACE_OS::fprintf(stderr,
+                  "--->Output file for latency data is \"%s\"\n",
+                  latency_file);
+
+  latency_file_handle = ACE_OS::fopen (latency_file, "w");
+
+  // This loop visits each client.  thread_count_ is the number of clients.
+  for (u_int j = 0; j < ts.thread_count_; j ++)
+    {
+      ACE_OS::sprintf(buffer,
+                      "%s #%d",
+                      j==0? "High Priority": "Low Priority",
+                      j);
+      // this loop visits each request latency from a client
+      for (u_int i = 0; i < (j==0? ts.high_priority_loop_count_:ts.loop_count_)/ts.granularity_; i ++)
+        {
+          ACE_OS::sprintf(buffer+strlen(buffer),
+#if defined (CHORUS)
+                          "\t%u\n",
+#else
+                          "\t%f\n",
+#endif /* !CHORUS */
+                          ts.global_jitter_array_[j][i]);
+          fputs (buffer, latency_file_handle);
+          buffer[0]=0;
+        }
+    }
+
+  ACE_OS::fclose (latency_file_handle);
 }
 
 int
@@ -252,6 +298,11 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   // any further.
   ts.barrier_->wait ();
 
+#if defined (ACE_QUANTIFY)
+  quantify_stop_recording_data();
+  quantify_clear_data ();
+#endif /* ACE_QUANTIFY */
+
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
   ACE_Profile_Timer timer_for_context_switch;
   ACE_Profile_Timer::Rusage usage;
@@ -278,6 +329,10 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   
   // Wait for all the client threads to exit (except the utilization thread).
   thread_manager.wait ();
+
+#if defined (ACE_QUANTIFY)
+  quantify_stop_recording_data();
+#endif /* ACE_QUANTIFY */
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) >>>>>>> ending test on %D\n"));
 
@@ -334,39 +389,8 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   // output the latency values to a file, tab separated, to import it
   // to Excel to calculate jitter, in the mean time we come up with
   // the sqrt() function.
-  FILE *latency_file_handle = 0;
-  char latency_file[BUFSIZ];
-  char buffer[BUFSIZ];
+  output_latency (ts);
 
-  ACE_OS::sprintf (latency_file,
-                   "cb__%d.txt",
-                   ts.thread_count_);
-
-  ACE_OS::fprintf(stderr,
-                  "--->Output file for latency data is \"%s\"\n",
-                  latency_file);
-
-  latency_file_handle = ACE_OS::fopen (latency_file, "w");
-
-  // This loop visits each client.  thread_count_ is the number of clients.
-  for (u_int j = 0; j < ts.thread_count_; j ++)
-    {
-      ACE_OS::sprintf(buffer,
-                      "%s #%d",
-                      j==0? "High Priority": "Low Priority",
-                      j);
-      // this loop visits each request latency from a client
-      for (u_int i = 0; i < (j==0? ts.high_priority_loop_count_:ts.loop_count_)/ts.granularity_; i ++)
-        {
-          ACE_OS::sprintf(buffer+strlen(buffer),
-                          "\t%f\n",
-                          ts.global_jitter_array_[j][i]);
-          fputs (buffer, latency_file_handle);
-          buffer[0]=0;
-        }
-    }
-
-  ACE_OS::fclose (latency_file_handle);
 #elif defined (CHORUS)
   ACE_DEBUG ((LM_DEBUG, 
 	      "Test done.\n"
@@ -378,39 +402,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   // output the latency values to a file, tab separated, to import it
   // to Excel to calculate jitter, in the mean time we come up with
   // the sqrt() function.
-  FILE *latency_file_handle = 0;
-  char latency_file[BUFSIZ];
-  char buffer[BUFSIZ];
-
-  ACE_OS::sprintf (latency_file,
-                   "cb__%d.txt",
-                   ts.thread_count_);
-
-  ACE_OS::fprintf(stderr,
-                  "--->Output file for latency data is \"%s\"\n",
-                  latency_file);
-
-  latency_file_handle = ACE_OS::fopen (latency_file, "w");
-
-  // This loop visits each client.  thread_count_ is the number of clients.
-  for (u_int j = 0; j < ts.thread_count_; j ++)
-    {
-      ACE_OS::sprintf(buffer,
-                      "%s #%d",
-                      j==0? "High Priority": "Low Priority",
-                      j);
-      // this loop visits each request latency from a client
-      for (u_int i = 0; i < ts.loop_count_/ts.granularity_; i ++)
-        {
-          ACE_OS::sprintf(buffer+strlen(buffer),
-                          "\t%u\n",
-                          ts.global_jitter_array_[j][i]);
-          fputs (buffer, latency_file_handle);
-          buffer[0]=0;
-        }
-    }
-
-  ACE_OS::fclose (latency_file_handle);
+  output_latency (ts);
 #else /* !CHORUS */
   ACE_DEBUG ((LM_DEBUG, "Test done.\n"
               "High priority client latency : %f msec, jitter: %f msec\n"
@@ -424,6 +416,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
               context_switch,
               csw/1000,
               csw * context_switch/1000 ));
+  output_latency (ts);
 #endif /* !VXWORKS && !CHORUS */
 
   // This loop visits each client.  thread_count_ is the number of clients.
@@ -549,6 +542,7 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
     // Wait for all the threads to exit.
     thread_manager.wait ();
 
+#if defined (ACE_LACKS_FLOATING_POINT)
     ACE_DEBUG ((LM_DEBUG,
                 "Test done.\n"
                 "40Hz client latency : %u usec\n"
@@ -561,6 +555,20 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
                 CB_10Hz_client.get_latency (2),
                 CB_5Hz_client.get_latency (3),
                 CB_1Hz_client.get_latency (4)));
+#else
+    ACE_DEBUG ((LM_DEBUG,
+                "Test done.\n"
+                "40Hz client latency : %f msec\n"
+                "20Hz client latency : %f msec\n"
+                "10Hz client latency : %f msec\n"
+                "5Hz client latency : %f msec\n"
+                "1Hz client latency : %f msec\n",
+	        CB_40Hz_client.get_latency (0),
+                CB_20Hz_client.get_latency (1),
+                CB_10Hz_client.get_latency (2),
+                CB_5Hz_client.get_latency (3),
+                CB_1Hz_client.get_latency (4)));
+#endif /* ! ACE_LACKS_FLOATING_POINT */
     return 0;
 }
 

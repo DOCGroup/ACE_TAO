@@ -16,6 +16,10 @@
 #include "server.h"
 #include "ace/Sched_Params.h"
 
+#if defined (ACE_QUANTIFY)
+#include "quantify.h"
+#endif /* ACE_QUANTIFY */
+
 // Global options used to configure various parameters.
 static char hostname[BUFSIZ];
 static char *ior_file = 0;
@@ -666,8 +670,19 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "Wait for all the threads to exit\n"));
 
+#if defined (ACE_QUANTIFY)
+  quantify_stop_recording_data();
+  quantify_clear_data ();
+  quantify_start_recording_data();
+#endif /* ACE_QUANTIFY */
+
   // Wait for all the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
+
+#if defined (ACE_QUANTIFY)
+  quantify_stop_recording_data();
+#endif /* ACE_QUANTIFY */
+
 #else
   ACE_DEBUG ((LM_DEBUG,
               "Test not run.  This platform doesn't seem to have threads.\n"));
