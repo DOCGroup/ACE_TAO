@@ -1,3 +1,8 @@
+Wed Mar 11 21:02:13 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/svrrqst.cpp (marshal): instead of declaring a new loop
+          index "i", use the one at outer scope because it was shadowed.
+
 Wed Mar 11 18:10:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO_IDL/tao_idl.dsp: Added new visitor files into the project.
