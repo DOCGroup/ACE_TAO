@@ -1,3 +1,11 @@
+Thu Jun 24 12:42:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+          Don't generate #if 0/#endif around the explicit template
+          instantiations in the skeleton file. I will generate the
+          explicit template instantiations for the AMH_RH's in this
+          file, so the code must be enabled.
+
 Thu Jun 24 10:32:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation_Base.cpp:
