@@ -1,3 +1,11 @@
+Fri Dec 18 12:14:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Scheduler_Info.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	  I'm starting to support a run-time scheduler for this test.
+	  But it is still experimental and must be enabled at compile
+	  time.
+
 Fri Dec 18 09:34:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Driver.h: 
