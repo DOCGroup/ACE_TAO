@@ -37,6 +37,8 @@ public:
   be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims);
   // constructor
 
+  ~be_array (void);
+
   virtual int gen_client_header (void);
   // generate client header for array
 
@@ -106,6 +108,13 @@ protected:
 
   virtual int create_name (void);
   // create a name for us
+
+  const char* tao_name (void);
+
+private:
+  char* tao_name_;
+  // We need a name to generate typecodes and other objects, but it
+  // must be different from the typedef name....
 };
 
 #endif

@@ -1,3 +1,25 @@
+Fri Feb  6 15:31:17 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_array.cpp: 
+	  Fixed several problems with the array code generation,
+	  including:
+	  + The name for the array TypeCode and its alias TypeCode were
+	    clashing.
+	  + Several inconsistencies in the declaration and definition of
+	    operations for _var, _out and _forany parameters.
+	  Thanks to James Mason <jmason2@mdc.com> for reporting this.
+
+	* TAO_IDL/be/be_type.cpp: 
+	  Increased the buffer size for some names to the "standard"
+	  NAMEBUFSIZE.
+
+	* docs/releasenotes/orbcore.html: 
+	  The "Last Updated" field is set by CVS now.
+
+	* tao/interp.cpp: 
+	* tao/encode.cpp: 
+	  Removed obsolete comments.
+
 Wed Feb  4 12:30:43 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/objkeyC.h: Modified so that the namespace mapping for the

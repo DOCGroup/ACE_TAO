@@ -752,7 +752,6 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
 {
   CORBA::Boolean continue_encoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;
-  //  CORBA::OctetSeq *seq = (CORBA::OctetSeq *) data;
   TAO_Base_Sequence *seq = (TAO_Base_Sequence *)data;
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
