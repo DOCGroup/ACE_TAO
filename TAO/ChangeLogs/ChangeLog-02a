@@ -1,3 +1,42 @@
+Thu May 23 15:30:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Cleanup_Func_Registry.h:
+	* tao/debug.h:
+
+	  No need to include `corbafwd.h'.  `TAO_Export.h' is enough.
+
+	* tao/Connection_Handler.h:
+
+	  No need to include `ace/SOCK.h'.  Forward declaring ACE_SOCK is
+	  enough.
+
+	  Removed non-essential forward declarations, i.e. ACE_Reactor and
+	  ACE_Event_Handler.
+
+	  Added forward declarations for TAO_Transport, ACE_SOCK and
+	  ACE_Lock.
+
+	* tao/LF_Event.h:
+
+	  No need to include `corbafwd.h'.  `TAO_Export.h' is enough.
+
+	  No need to forward declare TAO_Transport and
+	  TAO_Leader_Follower.
+
+	* tao/ORB.cpp (register_initial_reference):
+
+	  Removed redundant parameter checks.
+
+	* tao/Object_Ref_Table.cpp (register_initial_reference):
+
+	  Corrected exception thrown if the object ID parameter is
+	  invalid.  CORBA::ORB::InvalidName should be thrown instead of
+	  CORBA::BAD_PARAM.
+
+	  When attempting to register a duplicate object reference, throw
+	  CORBA::ORB::InvalidName instead of CORBA::INV_OBJREF.  This is
+	  required by the spec.
+
 Thu May 23 12:51:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.ll:
