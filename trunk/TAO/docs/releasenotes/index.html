@@ -78,8 +78,21 @@ A complete list of all modifications to TAO is available in the <A HREF="http://
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@research.bell-labs.com">Aniruddha Gokhale</A>
 
-<P>Current status: (As of November 15, 1998.)
+<P>Current status: (As of Dec 11, 1998.)
 <UL>
+     <LI>
+     Compile problems with sequence of forward declared interfaces is
+     fixed. In addition, problems with sequence of CORBA::Objects is
+     fixed. In this specific case, we were not generating the
+     _downcast and _upcase methods.
+     </LI>
+
+     <LI>
+     Some more problems with the front-end have been fixed. In
+     particular, oneway operations with a "raises" clause or having an
+     "inout", "out", or "return" mode is flagged as an error.
+     </LI>
+
      <LI>
      For platforms that support namespaces, we now allow reopening
      modules.

@@ -16,8 +16,9 @@
 // = AUTHOR
 //    Michael Kircher
 //
+//    Modifications by Aniruddha Gokhale
+//
 // ============================================================================
-
 
 #include	"be.h"
 
@@ -66,6 +67,10 @@ be_visitor_sequence_ch::gen_object_manager (be_sequence *node)
   const char * object_manager = node->object_manager_name ();  
   // create the name for the object manager
 
+  // !! branching in either compile time template instantiation
+  // or manual template instatiation
+  os->gen_ifdef_AHETI();
+
   os->gen_ifdef_macro (object_manager);
 
   os->indent ();
@@ -78,12 +83,7 @@ be_visitor_sequence_ch::gen_object_manager (be_sequence *node)
 
   // constructor
   *os << "// = Initialization and termination methods." << be_nl
-      << object_manager << " (const " << object_manager << " &rhs)" << be_idt_nl
-      << ": ptr_ (rhs.ptr_)," << be_nl
-      << "release_ (rhs.release_)" << be_uidt_nl
-      << "{" << be_nl
-      << "}" << be_nl
-      << be_nl;
+      << object_manager << " (const " << object_manager << " &rhs);" << be_nl;
 
   // constructor
   *os << object_manager << " ("; 
@@ -98,120 +98,61 @@ be_visitor_sequence_ch::gen_object_manager (be_sequence *node)
                         "base type visit failed\n"),
                         -1);
   }
-  *os << "** buffer, CORBA::Boolean release)" << be_idt_nl
-      << ": ptr_ (buffer)," << be_nl
-      << "release_ (release)" << be_uidt_nl
-      << "{" << be_nl
-      << "}" << be_nl
-      << be_nl;
+  *os << "** buffer, CORBA::Boolean release);" << be_nl;
 
   // destructor
-  *os << "~" << object_manager << " (void)" << be_nl
-      << "{" << be_nl
-      << "}" << be_nl
-      << be_nl;
+  *os << "~" << object_manager << " (void);" << be_nl;
 
   // operator=
-  *os << object_manager << " &operator= (const " << object_manager << " &rhs)" << be_nl
-      << "{" << be_idt_nl
-      << "if (this == &rhs)" << be_idt_nl
-      << "return *this;" << be_uidt_nl
-      << be_nl
-      << "if (this->release_)" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::release (*this->ptr_);" << be_nl
-      << "*this->ptr_ = "; pt->accept (visitor); *os << "::_duplicate (*rhs.ptr_);" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_idt_nl
-      << "*this->ptr_ = *rhs.ptr_;" << be_uidt_nl
-      << be_nl
-      << "return *this;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
+  *os << object_manager << " &operator= (const " << object_manager << " &rhs);" << be_nl;
 
   // operator=
-  *os << object_manager << " &operator= ("; pt->accept (visitor); *os << " *p)" << be_nl
-      << "// Assignment from "; pt->accept (visitor); *os << " *." << be_nl
-      << "{" << be_idt_nl
-      << "if (this->release_)" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::release (*this->ptr_);" << be_nl
-      << "*this->ptr_ = p;" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_idt_nl
-      << "*this->ptr_ = p;" << be_uidt_nl
-      << be_nl
-      << "return *this;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
+  *os << object_manager << " &operator= ("; 
+  pt->accept (visitor); 
+  *os << " *p);" << be_nl;
 
   //  cast operator
-  *os << "operator const "; pt->accept (visitor); *os << " *() const // Cast (read-only)." << be_nl
-      << "{" << be_idt_nl
-      << "return *this->ptr_;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
+  *os << "operator const "; 
+  pt->accept (visitor); 
+  *os << " *() const; // Cast (read-only)." << be_nl;
 
   // cast operator
-  *os << "operator "; pt->accept (visitor); *os << " *&() // Cast." << be_nl
-      << "{" << be_idt_nl
-      << "return *this->ptr_;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-
+  *os << "operator "; 
+  pt->accept (visitor); 
+  *os << " *&(); // Cast." << be_nl;
+  
   // in method
-  *os << "const "; pt->accept (visitor); *os << " *in (void) const // in " 
-      << be_nl
-      << "{" << be_idt_nl
-      << "return *this->ptr_;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
+  *os << "const "; 
+  pt->accept (visitor); 
+  *os << " *in (void) const; // in " << be_nl;
                                            
   // inout method
   pt->accept (visitor); 
-  *os << " *&inout (void) // inout " 
-      << be_nl
-      << "{" << be_idt_nl
-      << "return *this->ptr_;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
+  *os << " *&inout (void); // inout " << be_nl;
                                            
   // out method
   pt->accept (visitor);
-  *os << " *&out (void) // out " 
-      << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::release (*this->ptr_);" << be_nl
-      << "*this->ptr_ = "; pt->accept (visitor); *os << "::_nil ();"
-      << be_nl
-      << "return *this->ptr_;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
+  *os << " *&out (void); // out " << be_nl;
                                            
   // retn method
   pt->accept (visitor); 
-  *os << " *_retn (void) // retn " 
-      << be_nl
-      << "{" << be_idt_nl;
-  pt->accept (visitor);
-  *os << " *temp = *this->ptr_;" << be_nl
-      << "*this->ptr_ = "; pt->accept (visitor); *os << "::_nil ();"
-      << be_nl
-      << "return temp;" << be_uidt_nl
-      << "}" << be_nl
-      << be_uidt_nl;
+  *os << " *_retn (void); // retn " << be_uidt_nl;
                                            
   // members
   *os << "private:" << be_idt_nl;
-  pt->accept(visitor); *os <<" **ptr_;" << be_nl
+  pt->accept(visitor); 
+  *os <<" **ptr_;" << be_nl
       << "// data member, notice that it is a pointer, to implement the" << be_nl
       << "// reference behavior for assignment." << be_nl
       << be_nl
       << "CORBA::Boolean release_;" << be_nl
       << "// release flag based on parent's flag" << be_uidt_nl
       << "};" << be_nl;
-
+  
   os->gen_endif (); // endif macro
+
+  // generate #endif for AHETI
+  os->gen_endif_AHETI();
 
   delete visitor;
   return 0;
