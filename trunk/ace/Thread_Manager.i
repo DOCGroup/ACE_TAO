@@ -44,6 +44,14 @@ ACE_Thread_Descriptor::state (void)
   return thr_state_;
 }
 
+// Get the thread creation
+ACE_INLINE long
+ACE_Thread_Descriptor::flags (void) const
+{
+  ACE_TRACE ("ACE_Thread_Descriptor::flag");
+  return flags_;
+}
+
 // Set the exit status.
 
 ACE_INLINE void *
