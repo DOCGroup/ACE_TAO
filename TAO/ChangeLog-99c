@@ -1,3 +1,8 @@
+Thu Oct 21 14:19:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * docs/implrepo/index.html: Removed the discussion link and 
+          added a note about the paper.
+
 Thu Oct 21 13:14:59 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: The following files were changed to fix #include such that
