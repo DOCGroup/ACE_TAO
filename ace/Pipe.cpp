@@ -115,7 +115,7 @@ ACE_Pipe::open (int buffer_size)
                        ASYS_TEXT ("ioctl")), -1);
 #else  /* ! ACE_WIN32 && ! ACE_LACKS_SOCKETPAIR && ! ACE_HAS_STREAM_PIPES */
   if (ACE_OS::socketpair (AF_UNIX,
-                          SOCK_DGRAM,
+                          SOCK_STREAM,
                           0,
                           this->handles_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -128,7 +128,8 @@ ACE_Pipe::open (int buffer_size)
   if (ACE_OS::setsockopt (this->handles_[0],
                           SOL_SOCKET,
                           SO_RCVBUF,
-                          ACE_reinterpret_cast (const char *, &buffer_size),
+                          ACE_reinterpret_cast (const char *,
+                                                &buffer_size),
                           sizeof (buffer_size)) == -1
       && errno != ENOTSUP)
     return -1;
