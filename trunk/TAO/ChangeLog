@@ -1,3 +1,9 @@
+Thu Sep 18 13:25:13 2003  George Edwards  <g.edwards@vanderbilt.edu>
+
+        * tests/OBV/Supports/Supports_Test_impl.cpp:
+
+          Added missing exception specifications.
+
 Wed Sep 17 16:05:13 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* tests/Bug_1551_Regression/README
@@ -14,8 +20,6 @@ Wed Sep 17 15:24:01 2003  Pradeep Gore  <pradeep@oomworks.com>
 	Renamed the <init> method to <_init>. This avoids warnings on
 	solaris regarding hiding the ACE_Shared_Object::init signature.
 
-
->>>>>>> 1.2548
 Wed Sep 17 13:29:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/extra_core.mpb:
