@@ -29,11 +29,9 @@ template class TAO_Bounded_Object_Sequence<Coffee,
                                            tao_Coffee_cast,
                                            32>;
 template class TAO_Unbounded_Array_Sequence<Param_Test::Fixed_Array,
-                                            Param_Test::Fixed_Array_var,
-                                            Param_Test::tao_Fixed_Array_life>;
+                                            Param_Test::Fixed_Array_var>;
 template class TAO_Bounded_Array_Sequence<Param_Test::Fixed_Array,
                                           Param_Test::Fixed_Array_var,
-                                          Param_Test::tao_Fixed_Array_life,
                                           32>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -56,11 +54,9 @@ template class TAO_Bounded_Array_Sequence<Param_Test::Fixed_Array,
                                                 tao_Coffee_cast, \
                                                 32>
 #pragma instantiate TAO_Unbounded_Array_Sequence<Param_Test::Fixed_Array, \
-                                                 Param_Test::Fixed_Array_var, \
-                                                 Param_Test::tao_Fixed_Array_life>
+                                                 Param_Test::Fixed_Array_var>
 #pragma instantiate TAO_Bounded_Array_Sequence<Param_Test::Fixed_Array, \
                                                Param_Test::Fixed_Array_var, \
-                                               Param_Test::tao_Fixed_Array_life, \
                                                32>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
