@@ -1,3 +1,10 @@
+Tue Dec  2 17:21:43 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.cpp:
+          Fix it the way bala fixed it in the main trunk.
+
+
 Tue Dec  2 14:34:51 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.cpp:
