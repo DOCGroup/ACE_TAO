@@ -126,8 +126,8 @@ Wed Oct  8 07:29:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.bor:
         * tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Server.bor:
         * tests/RTScheduling/Thread_Cancel/Thread_Cancel.bor:
-          Corrected these makefiles. Looks that the MPC generation for Borland isn't correct
-          yet.
+          Corrected these makefiles. Looks that the MPC generation for
+	  Borland isn't correct yet.
 
         * examples/Makefile.bor:
         * tests/Makefile.bor:
