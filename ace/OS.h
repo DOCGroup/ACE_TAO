@@ -7512,7 +7512,7 @@ private:
 
 # define ACE_NOOP(x)
 
-# define ACE_DES_NOFREE (POINTER,CLASS) \
+# define ACE_DES_NOFREE(POINTER,CLASS) \
    do { \
         if (POINTER) \
           { \
@@ -7521,7 +7521,7 @@ private:
       } \
    while (0)
 
-# define ACE_DES_ARRAY_NOFREE (POINTER,SIZE,CLASS) \
+# define ACE_DES_ARRAY_NOFREE(POINTER,SIZE,CLASS) \
    do { \
         if (POINTER) \
           { \
@@ -7561,7 +7561,7 @@ private:
    while (0)
 
 # if defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR)
-#   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
+#   define ACE_DES_NOFREE_TEMPLATE(POINTER,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
             { \
@@ -7569,7 +7569,7 @@ private:
             } \
         } \
      while (0)
-#   define ACE_DES_ARRAY_NOFREE_TEMPLATE (POINTER,SIZE,T_CLASS,T_PARAMETER) \
+#   define ACE_DES_ARRAY_NOFREE_TEMPLATE(POINTER,SIZE,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
             { \
@@ -7671,7 +7671,7 @@ private:
         } \
      while (0)
 # else /* ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
-#   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
+#   define ACE_DES_NOFREE_TEMPLATE(POINTER,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
             { \
@@ -7679,7 +7679,7 @@ private:
             } \
         } \
      while (0)
-#   define ACE_DES_ARRAY_NOFREE_TEMPLATE (POINTER,SIZE,T_CLASS,T_PARAMETER) \
+#   define ACE_DES_ARRAY_NOFREE_TEMPLATE(POINTER,SIZE,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
             { \
@@ -7742,7 +7742,7 @@ private:
               } \
           } \
        while (0)
-#     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3, T_PARAM4) \
+#     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3,T_PARAM4) \
        do { \
             if (POINTER) \
               { \
