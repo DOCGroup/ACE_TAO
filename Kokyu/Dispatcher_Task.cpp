@@ -53,6 +53,28 @@ int
 Dispatcher_Task::svc (void)
 {
   int done = 0;
+
+    ACE_hthread_t thr_handle;
+    ACE_Thread::self (thr_handle);
+    int prio;
+
+    if (ACE_Thread::getprio (thr_handle, prio) == -1)
+      {
+        if (errno == ENOTSUP)
+          {
+            ACE_DEBUG((LM_DEBUG,
+                       ACE_TEXT ("getprio not supported on this platform\n")
+                       ));
+            return 0;
+          }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("getprio failed")),
+                          -1);
+      }
+
+    ACE_DEBUG ((LM_DEBUG, "(%t) Dispatcher Thread started prio=%d\n", prio));
+  
   while (!done)
     {
       ACE_Message_Block *mb;

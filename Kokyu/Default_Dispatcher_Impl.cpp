@@ -11,14 +11,20 @@ ACE_RCSID(Kokyu, Default_Dispatcher_Impl, "$Id$")
 
 namespace Kokyu
 {
+
+Default_Dispatcher_Impl::Default_Dispatcher_Impl ()
+  : activated_ (0)
+{
+}
+
 int
-Default_Dispatcher_Impl::init_i (const ConfigInfoSet& config_info_set)
+Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
 {
   //create and init the dispatcher tasks here
 
   //ACE_DEBUG ((LM_DEBUG, "entering init_t\n" ));
   int size;
-  size = config_info_set.size ();
+  size = attrs.config_info_set_.size ();
 
   if (size == 0)
     return -1;
@@ -33,7 +39,8 @@ Default_Dispatcher_Impl::init_i (const ConfigInfoSet& config_info_set)
 
   //ACE_DEBUG ((LM_DEBUG, "task array auto_ptr set\n" ));
 
-  ConfigInfoSet& config_set = const_cast<ConfigInfoSet&> (config_info_set);
+  ConfigInfoSet& config_set = 
+    const_cast<ConfigInfoSet&> (attrs.config_info_set_);
   ConfigInfoSet::ITERATOR iter(config_set);
   int i=0;
 
@@ -51,16 +58,23 @@ Default_Dispatcher_Impl::init_i (const ConfigInfoSet& config_info_set)
       //tasks_[i++].reset (task);
     }
 
-  this->activate ();
+  if (attrs.immediate_activation_ && !this->activated_)
+    {
+      this->activate_i ();
+    }
 
-  curr_config_info_ = config_info_set;
+  curr_config_info_ = attrs.config_info_set_;
   return 0;
 }
 
 int
-Default_Dispatcher_Impl::activate ()
+Default_Dispatcher_Impl::activate_i ()
 {
   int i;
+
+  if (this->activated_)
+    return 0;
+
   for(i=0; i<ntasks_; ++i)
     {
       long flags = THR_BOUND | THR_SCHED_FIFO;
@@ -79,6 +93,7 @@ Default_Dispatcher_Impl::activate ()
         }
     }
 
+  this->activated_ = 1;
   return 0;
 }
 

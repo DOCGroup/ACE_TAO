@@ -59,6 +59,8 @@ namespace Kokyu
     /// Supply this interface with an appripriate implementation.
     void implementation (Dispatcher_Impl*);
 
+    int activate ();
+
     /// Non virtual destructor. Read as <b><i>this class not available
     /// for inheritance<i></b>.
     ~Dispatcher ();
@@ -91,8 +93,8 @@ namespace Kokyu
        *
        * @return Auto pointer to the dispatcher.
        */
-      static Dispatcher_Auto_Ptr create_dispatcher (const ConfigInfoSet& config);
-
+      static Dispatcher_Auto_Ptr 
+      create_dispatcher (const Dispatcher_Attributes& attr);
     };
 } //end of namespace
 

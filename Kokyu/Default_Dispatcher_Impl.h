@@ -37,10 +37,11 @@ namespace Kokyu
   class Default_Dispatcher_Impl : public Dispatcher_Impl
   {
   public:
-    int activate ();
+    Default_Dispatcher_Impl ();
 
   private:
-    int init_i (const ConfigInfoSet&);
+    int activate_i ();
+    int init_i (const Dispatcher_Attributes&);
     int dispatch_i (const Dispatch_Command*,
                   const QoSDescriptor&);
     int shutdown_i ();
@@ -51,6 +52,7 @@ namespace Kokyu
     ACE_Auto_Array_Ptr<Dispatcher_Task_Auto_Ptr> tasks_;
     int ntasks_;
     ConfigInfoSet curr_config_info_;
+    int activated_;
   };
 
   class Shutdown_Task_Command : public Dispatch_Command
