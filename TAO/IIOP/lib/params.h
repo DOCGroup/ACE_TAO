@@ -30,7 +30,7 @@ class ROA;
 typedef ROA* ROA_ptr;
 class TAO_OA_Connection_Handler;
 
-class TAO_ORB_Parameters
+class ACE_Svc_Export TAO_ORB_Parameters
 // = TITLE
 //    Parameters that are specific to the ORB.  These parameters can be
 //    for the client, the server, or for both.
@@ -39,7 +39,7 @@ public:
   // = SERVER-SIDE
 };
 
-class TAO_OA_Parameters
+class ACE_Svc_Export TAO_OA_Parameters
 // = TITLE
 //    Parameters specific to an Object Adapter.  By definition, this
 //    is only on the server side, since a client does not have an object

@@ -28,7 +28,7 @@
 
 typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Skeleton, ACE_SYNCH_RW_MUTEX> OP_MAP_MANAGER;
 
-class TAO_Operation_Table
+class ACE_Svc_Export TAO_Operation_Table
   // = TITLE
   //     Abstract class for maintaining and lookup of CORBA IDL
   //     operation names. 
@@ -48,7 +48,7 @@ public:
   virtual ~TAO_Operation_Table (void);
 };
 
-class TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
+class ACE_Svc_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
 // = TITLE
 // Dynamic Hashing scheme
 {
@@ -72,7 +72,7 @@ private:
   OP_MAP_MANAGER hash_;
 };
 
-struct TAO_Linear_OpTable_Entry
+struct ACE_Svc_Export TAO_Linear_OpTable_Entry
 // = TITLE
 // Linear strategy
 {
@@ -83,7 +83,7 @@ struct TAO_Linear_OpTable_Entry
   ~TAO_Linear_OpTable_Entry (void);
 };
 
-class TAO_Linear_OpTable : public TAO_Operation_Table
+class ACE_Svc_Export TAO_Linear_OpTable : public TAO_Operation_Table
 {
 public:
   TAO_Linear_OpTable (CORBA_ULong size);
@@ -107,7 +107,7 @@ private:
   TAO_Linear_OpTable_Entry *tbl_;
 };
 
-struct TAO_Active_Demux_OpTable_Entry
+struct ACE_Svc_Export TAO_Active_Demux_OpTable_Entry
 // = TITLE
 // Active Demux
 {
@@ -117,7 +117,7 @@ struct TAO_Active_Demux_OpTable_Entry
   ~TAO_Active_Demux_OpTable_Entry (void);
 };
 
-class TAO_Active_Demux_OpTable : public TAO_Operation_Table
+class ACE_Svc_Export TAO_Active_Demux_OpTable : public TAO_Operation_Table
 {
 public:
   TAO_Active_Demux_OpTable (CORBA_ULong size);
@@ -141,7 +141,7 @@ private:
   TAO_Active_Demux_OpTable_Entry *tbl_;
 };
 
-class TAO_Operation_Table_Parameters
+class ACE_Svc_Export TAO_Operation_Table_Parameters
 {
 public:
   enum DEMUX_STRATEGY
@@ -167,7 +167,7 @@ private:
 
 typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RW_MUTEX> TAO_OP_TABLE_PARAMETERS;
 
-class TAO_Operation_Table_Factory
+class ACE_Svc_Export TAO_Operation_Table_Factory
 {
 public:
   TAO_Operation_Table *opname_lookup_strategy (void);

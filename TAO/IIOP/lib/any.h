@@ -21,7 +21,7 @@
 
 extern const IID IID_CORBA_Any;
 
-class CORBA_Any : public IUnknown
+class ACE_Svc_Export CORBA_Any : public IUnknown
   // = TITLE
   //   Class "Any" can wrap values of any type, with the assistance
   //   of a TypeCode to describe that type.
