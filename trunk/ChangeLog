@@ -1,3 +1,12 @@
+Wed Jun 18 03:22:15 UTC 2003
+
+        * ace/config-borland-common.h:
+        * ace/config-win32-borland.h:
+          Moved ACE_LACKS that were added to config-borland-common.h in
+          Tue Jun 17 18:34:39 UTC 2003  Don Hinton
+          <dhinton@dresystems.com> to config-win32-borland.h.  Moved
+          ACE_LACKS_STRRECVFD from config-borland-common.h to config-win32-borland.h.
+
 Tue Jun 17 21:50:13 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Synch.{h,i,cpp}: Changed the ACE_Recursive_Thread_Mutex's
