@@ -31,6 +31,7 @@ sub new {
                                       'VA4ProjectCreator',
                                       'MakeProjectCreator',
                                       'AutomakeProjectCreator',
+                                      'BMakeProjectCreator',
                                     ],
                      }, $class;
   return $self;

@@ -30,6 +30,7 @@ sub new {
                                       'VA4WorkspaceCreator',
                                       'MakeWorkspaceCreator',
                                       'AutomakeWorkspaceCreator',
+                                      'BMakeWorkspaceCreator',
                                     ],
                      }, $class;
   return $self;
