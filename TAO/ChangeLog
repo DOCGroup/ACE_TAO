@@ -1,3 +1,27 @@
+Mon Nov  3 22:46:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added check for IDL exception to condition for generating
+          #include of ace/OS_NS_String.h - the _downdast() method uses
+          strcmp().
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Removed extra empty line in code generation for the interface
+          constructor from Stub.
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+
+          Added visit_component() and visit_component_fwd().
+
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+
+          Added ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION macro to traits
+          specialization definitions.
+
 Mon Nov  3 21:36:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/diffs/Current.diff:
