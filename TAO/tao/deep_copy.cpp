@@ -223,6 +223,7 @@ TAO_Marshal_Principal::deep_copy (CORBA::TypeCode_ptr  tc,
       dmsg ("TAO_Marshal_Primitive::deep_copy detected error");
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // Deep_copy structs.
