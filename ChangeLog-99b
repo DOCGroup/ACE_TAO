@@ -4,6 +4,9 @@ Mon Mar 08 12:27:54 1999  David L. Levine  <levine@cs.wustl.edu>
           if ACE_NDEBUG is defined, to avoid compilation warning about
           unused argument with debug=0.
 
+        * docs/ACE-subsets.html: added subset characterizations on
+          several platforms.
+
 Mon Mar 08 11:58:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Task.cpp (activate): Made sure we don't mess with the passed
