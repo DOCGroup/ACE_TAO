@@ -9,7 +9,7 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Cubit \
-	Thruput_test 
+	Thruput
 
 # The following test hasn't been updated yet
 # Demux_Test
