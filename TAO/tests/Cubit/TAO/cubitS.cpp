@@ -22,6 +22,7 @@ _skel_Cubit::_skel_Cubit (const char *obj_name)
   IIOP_Object *data;
 
   CORBA::BOA_ptr oa = TAO_ORB_CORE::instance ()->root_poa ();
+  CORBA::ORB_ptr orb = TAO_ORB_CORE::instance ()->orb ();
 
   if (oa == 0)
     {
@@ -36,8 +37,9 @@ _skel_Cubit::_skel_Cubit (const char *obj_name)
 
   data->profile.iiop_version.major = IIOP::MY_MAJOR;
   data->profile.iiop_version.minor = IIOP::MY_MINOR;
-  data->profile.host = ACE_OS::strdup (oa->get_addr ().get_host_name ());
-  data->profile.port = oa->get_addr ().get_port_number ();
+  const ACE_INET_Addr& addr = orb->params ()->addr ();
+  data->profile.host = ACE_OS::strdup (addr.get_host_name ());
+  data->profile.port = addr.get_port_number ();
   data->profile.object_key.length =  ACE_OS::strlen (obj_name);
   data->profile.object_key.maximum = data->profile.object_key.length;
   data->profile.object_key.buffer =

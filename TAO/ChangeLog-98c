@@ -1,3 +1,25 @@
+Fri Sep 26 10:20:06 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orbobj.*: Added acceptor initialization code to CORBA_ORB
+ 	CTOR.  (We still need to find a way to NOT do this on the client
+ 	side.)  Moved CORBA_ORB CTOR into .cpp to avoid nasty
+ 	interdependencies caused when it was in the .i file.  Moved the
+ 	specification of host and port to be ORB parameters rather than OA
+ 	parameters, i.e., -OAhost is now -ORBhost and -OAport is now
+ 	-ORBport.
+
+	* tao/roa.*: Removed server-side connection endpoint
+ 	initialization (Acceptor stuff) and put it into the ORB.
+
+	* tao/connect.h: Renamed ROA_Acceptor to TAO_Acceptor (since it's
+ 	not related to the OA any longer), and restored explicit inclusion
+ 	of ace headers to avoid having to include "corba.h".
+
+	* tao/boa.h: Removed unneeded get_addr() method.
+
+	* tests/Cubit/TAO/cubitS.cpp: Updates to support changes in ORB
+ 	Core.
+
 Thu Sep 25 12:28:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/params.*: Added explicit CTOR & DTOR for
