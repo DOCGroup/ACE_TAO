@@ -24,7 +24,7 @@
 #include "helloS.h"
 #include "helloEC.h"
 
-class CIAO_HelloWorld_Context :
+class HELLO_SERVANT_Export CIAO_HelloWorld_Context :
   public virtual CCM_HelloWorld_Context
 // @@ The following line is causing compiler to barf.
 //  , public virtual ::Components::SessionContext
@@ -64,7 +64,7 @@ public:
                      Components::IllegalState));
 };
 
-class CIAO_HelloWorld_Servant
+class HELLO_SERVANT_Export CIAO_HelloWorld_Servant
   : public virtual POA_HelloWorld,
   // @@ Perhaps we could implement a common component servant class
   //    which provide common functionality for operations defined in
@@ -213,7 +213,7 @@ protected:
 };
 
 
-class CIAO_HelloHome_Servant :
+class HELLO_SERVANT_Export CIAO_HelloHome_Servant :
   public virtual POA_HelloHome,
   public virtual PortableServer::RefCountServantBase
 {

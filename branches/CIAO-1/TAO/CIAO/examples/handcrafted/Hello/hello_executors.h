@@ -5,7 +5,6 @@
 #if !defined (HELLO_EXECUTORS_H)
 #define HELLO_EXECUTORS_H
 
-#include "hello_executor_export.h"
 #include "helloEC.h"
 
 class HelloWorld_Impl : public virtual CCM_HelloWorld
