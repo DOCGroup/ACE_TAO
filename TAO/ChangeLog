@@ -1,3 +1,55 @@
+Fri Jan  2 00:59:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	The following changes work around a problem introduced by "magic"
+	static constructors in the TAO PortableServer headers where
+	dynamic loading/unloading of the ORB failed.  TAO's singleton
+	manager must be explicitly initialized to avoid registering itself
+	with the ACE_Object_Manager in the DLL ORB case.  The static
+	constructors in the PortableServer library were causing the
+	TAO_Singleton_Manager to be implicitly initialized.  In that case,
+	the TAO_Singleton_Manager will register itself with the
+	ACE_Object_Manager, thus preventing DLL ORB loading/unloading from
+	from functioning properly.
+
+	* examples/Simple/time-date/Time_Date.h:
+	* examples/Simple/time-date/Time_Date.cpp:
+
+	  Removed all dependencies on the TAO_ORB_Manager.  It implicitly
+	  introduces the static "magic" constructors that prevent DLL ORB
+	  loading/unloading from functioning properly.
+
+	* examples/Simple/time-date/Time_Date_Client_i.h:
+	* examples/Simple/time-date/client.cpp:
+
+	  Nuked trailing whitespace.
+
+	* examples/Simple/time-date/Time_Date_i.h (Time_Date_i):
+
+	  Reference count the servant to improve memory management.
+
+	* examples/Simple/time-date/Time_Date_i.cpp:
+
+	  Removed no-op constructor and destructor.  The compiler
+	  generated versions satisfy our needs.
+
+	* examples/Simple/time-date/Makefile (server):
+
+	  No need to link "../Simple_util.o" object file in the server
+	  binary.
+
+	  (LDLIBS, ACE_SHLIBS, client):
+
+	  Explicitly link CosNaming related libraries only to client
+	  binary.  The server and libTime_Date binaries do not depend on
+	  the CosNaming related libraries.
+
+	* examples/Simple/time-date/Simple_time_date.mpc:
+	* examples/Simple/time-date/client.bor:
+	* examples/Simple/time-date/server.bor:
+	* examples/Simple/time-date/time_date.bor:
+
+	  Likewise.
+
 Fri Jan  2 08:38:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:

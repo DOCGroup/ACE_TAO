@@ -8,11 +8,14 @@
 # define Alt_Resource_Factory_BUILD_DLL
 #endif
 
+#include "Time_Date_i.h"
+
 #include "Time_Date.h"
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Dynamic_Service.h"
+
 
 ACE_Reactor *
 My_Resource_Factory::get_reactor (void)
@@ -37,7 +40,7 @@ DLL_ORB::svc (void)
   ACE_TRY_NEW_ENV
     {
       // Run the ORB event loop in its own thread.
-      this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
@@ -73,9 +76,36 @@ DLL_ORB::init (int argc, char *argv[])
                   "\n\tInitialize ORB (%t)\n\n"));
 
       // Initialize the ORB.
-      this->orb_manager_.init (argc,
-                               argv
-                               ACE_ENV_ARG_PARAMETER);
+      // Initialize the ORB.
+      this->orb_ = CORBA::ORB_init (argc,
+                                   argv,
+                                   ""
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (this->orb_.in ()))
+        return -1;
+
+      CORBA::Object_var poa_object =
+        this->orb_->resolve_initial_references ("RootPOA"
+                                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (poa_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the POA.\n"),
+                          1);
+
+      this->poa_ =
+        PortableServer::POA::_narrow (poa_object.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      this->poa_manager_ =
+        this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #if defined (ACE_HAS_THREADS)
@@ -91,6 +121,7 @@ DLL_ORB::init (int argc, char *argv[])
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "DLL_ORB::init");
     }
   ACE_ENDTRY;
+
   return -1;
 }
 
@@ -159,8 +190,16 @@ Time_Date_Servant::init (int argc, char *argv[])
                            this->orb_),
                           -1);
 
-      CORBA::String_var str = orb->orb_manager_.activate (&servant_
-                                                          ACE_ENV_ARG_PARAMETER);
+      Time_Date_i * servant = new Time_Date_i;
+      PortableServer::ServantBase_var safe_servant = servant;
+
+      CORBA::Object_var obj =
+        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::String_var str =
+        orb->orb_->object_to_string (obj.in ()
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->ior_output_file_)

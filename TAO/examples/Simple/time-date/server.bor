@@ -7,7 +7,6 @@
 NAME = server
 
 OBJFILES = \
-	$(OBJDIR)\Simple_util.obj \
 	$(OBJDIR)\server.obj
 
 IDLFILES = \
