@@ -127,7 +127,7 @@ static void TestGenAddr()
   SnmpSyntax& operator=( SnmpSyntax &val);
   IpAddress& operator=( const IpAddress &ipaddress);
   SnmpSyntax *clone() const;
-  char *friendly_name(int &status);
+  char *resolve_hostname(int &status);
   virtual char *to_string() ;
   virtual operator const char *() const;
   void mask( const IpAddress& ipaddr);
@@ -180,17 +180,17 @@ static void TestIpAddress()
   
   // other routines
   int status = 1;
-  const char *ptr = ia5.friendly_name(status);
+  const char *ptr = ia5.resolve_hostname(status);
   ACE_ASSERT(status == 0);
   ACE_ASSERT(ptr != 0);
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:ia5.friendly_name():(\"\") [%s]\n", 
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:ia5.resolve_hostname():(\"\") [%s]\n", 
     ptr));
 
   // now lets try one we setup with a hostname
-  ptr = ia3.friendly_name(status);
+  ptr = ia3.resolve_hostname(status);
   ACE_ASSERT(status == 0);
   ACE_ASSERT(ptr != 0);
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:ia3.friendly_name()(\"localhost\") [%s]\n", 
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:ia3.resolve_hostname()(\"localhost\") [%s]\n", 
     ptr));
 
    ptr = (const char *)ia5;
