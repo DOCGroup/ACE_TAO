@@ -6,7 +6,7 @@
 ACE_INLINE ACE_Data_Block *
 ACE_Message_Block::data_block (void) const
 {
-  ACE_TRACE ("ACE_Data_Block::data_block");
+  ACE_TRACE ("ACE_Message_Block::data_block");
   return this->data_block_;
 }
 
@@ -114,14 +114,14 @@ ACE_Message_Block::size (void) const
 ACE_INLINE ACE_Message_Block::ACE_Message_Type
 ACE_Data_Block::msg_type (void) const
 {
-  ACE_TRACE ("ACE_Message_Block::msg_type");
+  ACE_TRACE ("ACE_Data_Block::msg_type");
   return this->type_;
 }
 
 ACE_INLINE void
 ACE_Data_Block::msg_type (ACE_Message_Block::ACE_Message_Type t)
 {
-  ACE_TRACE ("ACE_Message_Block::msg_type");
+  ACE_TRACE ("ACE_Data_Block::msg_type");
   this->type_ = t;
 }
 
