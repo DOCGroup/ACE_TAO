@@ -61,6 +61,9 @@ const double bogey = .2;
 const float trip = 2.;
 const double vision = .2e-4;
 const double take = 2e3;
+const double dip = 1.7976931348623157E+308;
+const double trouble = 2.2250738585072014E-308;
+
 
 
 
