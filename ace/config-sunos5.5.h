@@ -3,7 +3,7 @@
 
 // This configuration file is designed to work for SunOS 5.5 platforms
 // using the following compilers:
-//   * SunC++ 4.2 and later, patched as noted below
+//   * Sun C++ 4.2 and later (including 5.x), patched as noted below
 //   * g++ 2.7.2 and later, including egcs
 //   * GreenHills 1.8.8 and later
 
