@@ -812,7 +812,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
-  RTPortableServerC.i RTPortableServerA.h \
+  RTPortableServerC.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \

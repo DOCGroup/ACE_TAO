@@ -16131,7 +16131,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   TC_Constants_Forward.h \
-  PortableInterceptorA.h \
   Any_Impl_T.h \
   Any_Impl.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \

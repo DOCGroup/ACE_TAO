@@ -1,7 +1,15 @@
+Tue Apr 13 06:46:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTPortableServer/Makefile:
+        * tao/Makefile.tao:
+          Removed references to the files I removed yesterday. I am already
+          so familiar with MPC that I forgot the dependencies in the GNU
+          makefiles that are in the archive ;-).
+
 Mon Apr 12 14:27:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/GIOP.pidl:
-        
+
           Uncommented the omg.org #pragma prefix directive, and
           updated the suggested IDL compiler command line options
           for regenerating this file.
@@ -9,8 +17,8 @@ Mon Apr 12 14:27:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Apr 12 13:58:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/corba.h:
-        
-          Added inclusion of the stub header files for all the 
+
+          Added inclusion of the stub header files for all the
           sequences of CORBA basic types that have been added to
           TAO so far. Sequences of CORBA basic types are now required
           to be contained in a compliant ORB, so users should be
@@ -20,16 +28,16 @@ Mon Apr 12 13:58:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           other types in the ORB, without requiring any knowledge
           of TAO internals to determine the specific include files
           needed.
-          
+
         * tao/DynamicAny/DynamicAny.mpc:
-        
+
           Added valuetype dependency to generated project and makefiles.
-          The absence of this dependency is a legacy from the days 
+          The absence of this dependency is a legacy from the days
           when TAO did not support valuetypes.
-          
+
         * tao/DynamicAny/DynamicAny.pidl:
         * tao/RTCORBA/RTCORBA.pidl:
-        
+
           Added include path to TAO_ROOT to the suggested IDL compiler
           command line options for regenerating these files.
 
