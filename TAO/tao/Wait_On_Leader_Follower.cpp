@@ -169,8 +169,8 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
         if (TAO_debug_level >= 5)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - done (follower) "
-                      ACE_TEXT ("on <%x>, reply_received %d\n")),
+                      "TAO (%P|%t) - done (follower) "
+                      "on <%x>, reply_received %d\n",
                       this->transport_, reply_received));
 
         // Now somebody woke us up to become a leader or to handle our
@@ -274,7 +274,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
           result = -1;
           errno = ETIME;
         }
-      else if (reply_received == -1)        
+      else if (reply_received == -1)
         {
           // If the time did not expire yet, but we get a failure,
           // e.g. the connections closed, we should still return an error.

@@ -1,3 +1,8 @@
+Tue Mar 27 17:01:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Wait_On_Leader_Follower.cpp (wait): Reverted a change to
+	  ACE_TEXT and did as per Darrell's advise.
+
 Tue Mar 27 15:56:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Default_Protocols_Hooks.cpp: 
