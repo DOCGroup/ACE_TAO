@@ -503,6 +503,15 @@ project(Message Queue Notifications Test) : aceexe {
   }
 }
 
+project(Multicast Test) : aceexe {
+  exename = Multicast_Test
+  Source_Files {
+    Multicast_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
 project(Notify Performance Test) : aceexe {
   exename = Notify_Performance_Test
   Source_Files {
