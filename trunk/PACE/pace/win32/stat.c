@@ -24,7 +24,7 @@
 
 #if (PACE_HAS_POSIX_FS_UOF)
 int
-win32_mkdir (const char * path, pace_mode_t mode)
+pace_win32_mkdir (const char * path, pace_mode_t mode)
 {
   PACE_UNUSED_ARG (mode);
 # if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
