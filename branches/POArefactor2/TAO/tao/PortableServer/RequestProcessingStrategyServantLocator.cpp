@@ -3,7 +3,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/PortableServer/RequestProcessingStrategyServantLocator.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"

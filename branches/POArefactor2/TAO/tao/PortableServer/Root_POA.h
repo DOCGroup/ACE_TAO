@@ -65,6 +65,7 @@
 class TAO_Acceptor_Filter;
 class TAO_Acceptor_Registry;
 class TAO_IORInfo;
+class TAO_Regular_POA;
 
 namespace PortableInterceptor
 {
@@ -564,7 +565,7 @@ protected:
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   /// Template method for creating new POA's of this type.
-  virtual TAO_POA *new_POA (const String &name,
+  virtual TAO_Root_POA *new_POA (const String &name,
                             TAO_POA_Manager &poa_manager,
                             const TAO_POA_Policy_Set &policies,
                             TAO_Root_POA *parent,
@@ -584,7 +585,7 @@ protected:
                      PortableServer::POA::AdapterAlreadyExists,
                      PortableServer::POA::InvalidPolicy));
 
-  TAO_POA *create_POA_i (const String &adapter_name,
+  TAO_Root_POA *create_POA_i (const String &adapter_name,
                          TAO_POA_Manager &poa_manager,
                          const TAO_POA_Policy_Set &policies
                          ACE_ENV_ARG_DECL)
@@ -592,7 +593,7 @@ protected:
                      PortableServer::POA::AdapterAlreadyExists,
                      PortableServer::POA::InvalidPolicy));
 
-  TAO_POA *find_POA_i (const ACE_CString &child_name,
+  TAO_Root_POA *find_POA_i (const ACE_CString &child_name,
                        CORBA::Boolean activate_it
                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -873,7 +874,7 @@ protected:
 
   typedef
     ACE_Hash_Map_Manager_Ex<
-        ACE_CString, TAO_POA *,
+        ACE_CString, TAO_Root_POA *,
         ACE_Hash<ACE_CString>,
         ACE_Equal_To<ACE_CString>,
         ACE_Null_Mutex
@@ -932,11 +933,11 @@ public:
  *
  * This class is used by the POA to store the resources global to
  * all POA's.  All instance variables that would have been
- * declared "static" in TAO_POA, should be declared in this class
+ * declared "static" in TAO_Regular_POA, should be declared in this class
  * to avoid the "static initialization order fiasco" as described in
  * http://www.parashift.com/c++-faq-lite/ctors.html#faq-10.11.
  * Briefly, this is the problem that occurs if any static initializers
- * in any other code call into set static members of TAO_POA.
+ * in any other code call into set static members of TAO_Regular_POA.
  * Since the order in which these initializers execute is unspecified,
  * uninitialized members can be accessed.
  */

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "IdUniquenessStrategyUnique.h"
-#include "POA.h"
+#include "Root_POA.h"
 
 ACE_RCSID (PortableServer,
            Id_Uniqueness_Strategy,

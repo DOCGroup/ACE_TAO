@@ -1,7 +1,7 @@
 // $Id$
 
 #include "POAManager.h"
-#include "POA.h"
+#include "Root_POA.h"
 #include "poa_macros.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
@@ -222,9 +222,9 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
                    PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
-  TAO_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                 wait_for_completion
-                                                 ACE_ENV_ARG_PARAMETER);
+  TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
+                                                      wait_for_completion
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // This operation changes the state of the POA manager to

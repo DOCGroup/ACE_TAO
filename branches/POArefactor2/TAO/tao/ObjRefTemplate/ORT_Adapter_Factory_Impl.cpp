@@ -2,7 +2,7 @@
 
 #include "ORT_Adapter_Factory_Impl.h"
 #include "ORT_Adapter_Impl.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 
 ACE_RCSID (ORT,
            ORT_Adapter_Factory_Impl,
@@ -35,7 +35,7 @@ namespace TAO
   int
   ORT_Adapter_Factory_Impl::Initializer (void)
   {
-    TAO_POA::ort_adapter_factory_name ("Concrete_ORT_Adapter_Factory"
+    TAO_Root_POA::ort_adapter_factory_name ("Concrete_ORT_Adapter_Factory"
       );
 
     return

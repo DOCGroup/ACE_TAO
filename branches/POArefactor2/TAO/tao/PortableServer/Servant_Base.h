@@ -39,7 +39,6 @@ class TAO_PortableServer_Export TAO_ServantBase
   : public virtual TAO_Abstract_ServantBase
 {
 public:
-  friend class TAO_POA;
   friend class TAO_Object_Adapter;
   friend class TAO_Local_ServantBase;
 

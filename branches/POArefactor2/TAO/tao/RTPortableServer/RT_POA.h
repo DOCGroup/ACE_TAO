@@ -18,7 +18,7 @@
 
 #include "rtportableserver_export.h"
 
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Regular_POA.h"
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -44,7 +44,7 @@ class TAO_PriorityBandedConnectionPolicy;
 
 class TAO_RTPortableServer_Export TAO_RT_POA :
   public virtual RTPortableServer::POA,
-  public virtual TAO_POA
+  public virtual TAO_Regular_POA
 {
 public:
 
@@ -270,7 +270,7 @@ public:
 protected:
 
   /// Template method for creating new POA's of this type.
-  virtual TAO_POA *new_POA (const String &name,
+  virtual TAO_Root_POA *new_POA (const String &name,
                             TAO_POA_Manager &poa_manager,
                             const TAO_POA_Policy_Set &policies,
                             TAO_Root_POA *parent,

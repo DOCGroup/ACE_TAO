@@ -6,8 +6,7 @@ ACE_RCSID (PortableServer,
            ServerRequestInfo,
            "$Id$")
 
-#include "tao/PortableServer/POA.h"
-#include "tao/PortableServer/POA_Policy_Set.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 
 #include "tao/TAO_Server_Request.h"

@@ -4,7 +4,7 @@
 #include "IORInfo.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 
 ACE_RCSID (IORInterceptor,

@@ -1,7 +1,7 @@
 // @(#) $Id$
 
 #include "Default_Servant_Dispatcher.h"
-#include "POA.h"
+#include "Root_POA.h"
 
 ACE_RCSID(PortableServer,
           Default_Servant_Dispatcher,

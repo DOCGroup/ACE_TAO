@@ -4,7 +4,7 @@
 #include "tao/TSS_Resources.h"
 #include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/ServantManagerC.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/POA_Current_Impl.h"

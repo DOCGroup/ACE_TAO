@@ -2,7 +2,7 @@
 
 #include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
 #include "tao/PortableServer/ServantManagerC.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/ORB_Constants.h"
 
 ACE_RCSID (PortableServer,

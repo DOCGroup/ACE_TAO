@@ -1,4 +1,4 @@
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Regular_POA.h"
 
 ACE_RCSID (PortableServer,
            POA,
@@ -6,10 +6,10 @@ ACE_RCSID (PortableServer,
 
 //
 #if !defined (__ACE_INLINE__)
-# include "POA.i"
+# include "Regular_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
-TAO_POA::TAO_POA (const TAO_POA::String &name,
+TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
                   TAO_POA_Manager &poa_manager,
                   const TAO_POA_Policy_Set &policies,
                   TAO_Root_POA *parent,
@@ -30,7 +30,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 {
 }
 
-TAO_POA::~TAO_POA (void)
+TAO_Regular_POA::~TAO_Regular_POA (void)
 {
 }
 

@@ -9,7 +9,7 @@ ACE_RCSID (PortableServer,
 #include "tao/debug.h"
 #include "tao/PortableServer/ImplRepo_i.h"
 #include "tao/PortableServer/ImplRepoC.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POAManager.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"

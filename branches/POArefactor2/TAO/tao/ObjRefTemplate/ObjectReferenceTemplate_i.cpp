@@ -1,5 +1,5 @@
 #include "ObjectReferenceTemplate_i.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/ORB_Constants.h"

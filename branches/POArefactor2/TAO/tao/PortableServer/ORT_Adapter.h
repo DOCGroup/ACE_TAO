@@ -26,8 +26,6 @@
 #include "ace/Array_Base.h"
 #include "tao/PI_ForwardC.h"
 
-class TAO_POA;
-
 namespace CORBA
 {
   class Object;

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 

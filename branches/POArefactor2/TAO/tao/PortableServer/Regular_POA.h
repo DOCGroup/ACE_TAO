@@ -12,8 +12,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_POA_H
-#define TAO_POA_H
+#ifndef TAO_REGULAR_POA_H
+#define TAO_REGULAR_POA_H
 
 #include /**/ "ace/pre.h"
 
@@ -24,17 +24,17 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
- * @class TAO_POA
+ * @class TAO_Regular_POA
  *
  * @brief Implementation of the PortableServer::POA interface.
  *
  * Implementation of the PortableServer::POA interface.
  */
-class TAO_PortableServer_Export TAO_POA
+class TAO_PortableServer_Export TAO_Regular_POA
   : public TAO_Root_POA
 {
 public:
-  TAO_POA (const String &name,
+  TAO_Regular_POA (const String &name,
            TAO_POA_Manager &poa_manager,
            const TAO_POA_Policy_Set &policies,
            TAO_Root_POA *parent,
@@ -44,7 +44,7 @@ public:
            TAO_Object_Adapter *object_adapter
            ACE_ENV_ARG_DECL);
 
-  virtual ~TAO_POA (void);
+  virtual ~TAO_Regular_POA (void);
 
 protected:
 
@@ -58,9 +58,9 @@ protected:
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "POA.i"
+# include "Regular_POA.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_POA_H */
+#endif /* TAO_REGULAR_POA_H */

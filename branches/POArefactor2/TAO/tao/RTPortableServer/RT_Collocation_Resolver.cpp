@@ -10,7 +10,7 @@ ACE_RCSID(RTCORBA, RT_Collocation_Resolver, "$Id$")
 #include "tao/Object.h"
 #include "tao/Stub.h"
 #include "tao/PortableServer/Servant_Upcall.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Profile.h"
 

@@ -1,5 +1,5 @@
 #include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Regular_POA.h"
 
 ACE_RCSID (PortableServer,
            POA,
@@ -427,21 +427,21 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
 
   PortableServer::POAManager_var safe_poa_manager = tao_poa_manager;
 
-  TAO_POA *poa = this->create_POA_i (adapter_name,
+  TAO_Root_POA *poa = this->create_POA_i (adapter_name,
                                      *tao_poa_manager,
                                      tao_policies
                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Release the POA_Manager_var since we got here without error.  The
-  // TAO_POA object takes ownership of the POA_Manager object
+  // TAO_Regular_POA object takes ownership of the POA_Manager object
   // (actually it shares the ownership with its peers).
   (void) safe_poa_manager._retn ();
 
   return PortableServer::POA::_duplicate (poa);
 }
 
-TAO_POA *
+TAO_Root_POA *
 TAO_Root_POA::new_POA (const String &name,
                   TAO_POA_Manager &poa_manager,
                   const TAO_POA_Policy_Set &policies,
@@ -452,10 +452,10 @@ TAO_Root_POA::new_POA (const String &name,
                   TAO_Object_Adapter *object_adapter
                   ACE_ENV_ARG_DECL)
 {
-  TAO_POA *poa = 0;
+  TAO_Regular_POA *poa = 0;
 
   ACE_NEW_THROW_EX (poa,
-                    TAO_POA (name,
+                    TAO_Regular_POA (name,
                              poa_manager,
                              policies,
                              parent,
@@ -470,7 +470,7 @@ TAO_Root_POA::new_POA (const String &name,
   return poa;
 }
 
-TAO_POA *
+TAO_Root_POA *
 TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
                        TAO_POA_Manager &poa_manager,
                        const TAO_POA_Policy_Set &policies
@@ -502,7 +502,7 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
   // copied before this operation returns, so the application is free
   // to destroy them while the POA is in use. Policies are not
   // inherited from the parent POA.
-  TAO_POA *poa = this->new_POA (adapter_name,
+  TAO_Root_POA *poa = this->new_POA (adapter_name,
                                 poa_manager,
                                 policies,
                                 this,
@@ -569,7 +569,7 @@ TAO_Root_POA::find_POA (const char *adapter_name,
   TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
   ACE_UNUSED_ARG (non_servant_upcall);
 
-  TAO_POA *poa = this->find_POA_i (adapter_name,
+  TAO_Root_POA *poa = this->find_POA_i (adapter_name,
                                    activate_it
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
@@ -577,14 +577,14 @@ TAO_Root_POA::find_POA (const char *adapter_name,
   return PortableServer::POA::_duplicate (poa);
 }
 
-TAO_POA *
+TAO_Root_POA *
 TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
                      CORBA::Boolean activate_it
                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::AdapterNonExistent))
 {
-  TAO_POA *child = 0;
+  TAO_Root_POA *child = 0;
   int result = this->children_.find (child_name,
                                      child);
 
@@ -853,7 +853,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
        iterator != this->children_.end ();
        ++iterator)
     {
-      TAO_POA *child_poa = (*iterator).int_id_;
+      TAO_Root_POA *child_poa = (*iterator).int_id_;
 
       // Get the adapter template related to the ChildPOA
       PortableInterceptor::ObjectReferenceTemplate *child_at =
@@ -886,7 +886,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
        destroy_iterator != this->children_.end ();
        ++destroy_iterator)
     {
-      TAO_POA *destroy_child_poa = (*destroy_iterator).int_id_;
+      TAO_Root_POA *destroy_child_poa = (*destroy_iterator).int_id_;
 
       destroy_child_poa->destroy_i (etherealize_objects,
                                     wait_for_completion
@@ -1002,7 +1002,7 @@ TAO_Root_POA::the_children_i (ACE_ENV_SINGLE_ARG_DECL)
        iterator != this->children_.end ();
        ++iterator, ++index)
     {
-      TAO_POA *child_poa = (*iterator).int_id_;
+      TAO_Root_POA *child_poa = (*iterator).int_id_;
       children[index] = PortableServer::POA::_duplicate (child_poa);
     }
 
@@ -1502,8 +1502,8 @@ TAO_Root_POA::reference_to_servant_i (CORBA::Object_ptr reference
 
 bool
 TAO_Root_POA::is_poa_generated (CORBA::Object_ptr reference,
-                           PortableServer::ObjectId &system_id
-                           ACE_ENV_ARG_DECL)
+                                PortableServer::ObjectId &system_id
+                                ACE_ENV_ARG_DECL)
 {
   TAO::ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
@@ -2914,33 +2914,33 @@ TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
 template class ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>;
 
 template class ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>;
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_POA *>;
-template class ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString, TAO_Root_POA *>;
+template class ACE_Hash_Map_Manager<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
 template class ACE_Array_Base <IOP::ProfileId>;
-template class ACE_Node<TAO_POA *>;
+template class ACE_Node<TAO_Root_POA *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>
 
 #pragma instantiate ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_POA *>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_Root_POA *>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
 #pragma instantiate ACE_Array_Base <IOP::ProfileId>
-#pragma instantiate ACE_Node<TAO_POA *>
+#pragma instantiate ACE_Node<TAO_Root_POA *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -3,7 +3,7 @@
 // -- PortableServer Include --
 #include "Object_Adapter.h"
 #include "POA_Current_Impl.h"
-#include "POA.h"
+#include "Root_POA.h"
 #include "POA_Guard.h"
 #include "ServerRequestInfo.h"
 #include "Default_Servant_Dispatcher.h"
