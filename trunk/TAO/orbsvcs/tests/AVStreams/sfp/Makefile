@@ -9,7 +9,7 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS    =  -lorbsvcs -lTAO -lACE
+LDLIBS    =  -lorbsvcs -lTAO 
 
 PROG_SRCS =  client.cpp server.cpp
 
@@ -49,13 +49,10 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 server:$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
-	$(LINK.cc) $(LDFAGS) -o $@@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFAGS) -o $@ $^ $(VLDLIBS)
 
 client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@@ $^ $(VLDLIBS)
-
-#main: $(addprefix $(VDIR), $(COSPROPERTY_OBJS))
-#	$(LINK.cc) $(LDFAGS) -o $@@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
 # realclean: clean
 #	-$(RM)
@@ -72,6 +69,8 @@ client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -344,6 +343,8 @@ client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
