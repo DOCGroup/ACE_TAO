@@ -19,7 +19,7 @@ Iterator_Factory_i::get_iterator (const char *pathname,
               ACE_TEXT ("Received request for file: <%s>\n"),
               pathname));
 
-  struct stat file_status;
+  ACE_stat file_status;
   if (ACE_OS::stat (pathname, &file_status) == -1)
     {
       ACE_THROW (Web_Server::Error_Result (500));
@@ -79,7 +79,7 @@ Iterator_Factory_i::get_iterator (const char *pathname,
 }
 
 int
-Iterator_Factory_i::modification_date (struct stat *file_status,
+Iterator_Factory_i::modification_date (ACE_stat *file_status,
                                        Web_Server::Metadata_Type_out metadata)
 {
   // Get the modification time from the file status structure/
