@@ -1,9 +1,18 @@
 //$Id$
+#include "tao/RTScheduling/Scheduler.h"
+#include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "testS.h"
 
 class test_impl :public POA_test
 {
 public:
+
+	test_impl (RTScheduling::Current_ptr current)
+		: current_ (RTScheduling::Current::_duplicate (current))
+	{
+		
+	}
+
   virtual void one_way (const char * message)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -15,8 +24,18 @@ public:
   virtual char * two_way (const char * message)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return (char*) message;
+    
+    
+	RTScheduling::DistributableThread_var DT = this->current_->lookup (*(this->current_->id ())
+								    ACE_ENV_ARG_PARAMETER);
+	ACE_CHECK;
+	
+	  DT->cancel (ACE_ENV_ARG_PARAMETER);
+    
+    return CORBA::string_dup (message);
   }
+private:
+	RTScheduling::Current_var current_;
 };
 
 main (int argc, char* argv[])
@@ -48,9 +67,14 @@ main (int argc, char* argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
   
+	  CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+    
+    RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
+									  ACE_ENV_ARG_PARAMETER);
+
       test_impl* test_i;
       ACE_NEW_RETURN (test_i,
-		      test_impl,
+		      test_impl (current.in ()),
 		      -1);
 
       PortableServer::ObjectId_var id;
@@ -74,6 +98,19 @@ main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
 		  "IOR = %s\n",
 		  ior.in ()));
+
+	  CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
+								       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
+									      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      TAO_Scheduler scheduler;
+
+      manager->rtscheduler (&scheduler);
+
 
       const char* filename = "test.ior";
       // Print ior to the file.
