@@ -1899,6 +1899,7 @@ protected:
 // can be taken recursively).
 #  include /**/ <semLib.h>
 
+#  include /**/ <envLib.h>
 #  include /**/ <hostLib.h>
 #  include /**/ <ioLib.h>
 #  include /**/ <remLib.h>
@@ -3840,6 +3841,7 @@ public:
   // = A set of wrappers for miscellaneous operations.
   static int atoi (const char *s);
   static char *getenv (const char *symbol);
+  static int putenv (const char *string);
   static int getopt (int argc,
                      char *const *argv,
                      const char *optstring);
