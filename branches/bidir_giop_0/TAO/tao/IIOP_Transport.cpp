@@ -146,10 +146,13 @@ int
 TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
                                           int block)
 {
+  cout << "In IIOP_TRansport " <<endl;
+
   // Read the message of the socket
   int result =  this->messaging_object_->read_message (this,
                                                        block,
                                                        max_wait_time);
+
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -436,6 +439,7 @@ TAO_IIOP_Transport::process_message (void)
   TAO_Pluggable_Message_Type t =
     this->messaging_object_->message_type ();
 
+
   int result = 0;
   if (t == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION)
     {
@@ -467,6 +471,7 @@ TAO_IIOP_Transport::process_message (void)
           this->tms_->connection_closed ();
           return -1;
         }
+
 
       result =
         this->tms_->dispatch_reply (params);
@@ -518,6 +523,7 @@ TAO_IIOP_Transport::process_message (void)
           return 0;
         }
 
+
       // This is a NOOP for the Exclusive request case, but it actually
       // destroys the stream in the muxed case.
       //this->tms_->destroy_message_state (message_state);
@@ -527,6 +533,7 @@ TAO_IIOP_Transport::process_message (void)
       return -1;
     }
 
+  this->messaging_object_->reset ();
   return 1;
 }
 

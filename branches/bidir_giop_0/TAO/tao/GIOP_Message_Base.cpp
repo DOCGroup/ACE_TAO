@@ -205,7 +205,7 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - \n")
-                          ACE_TEXT ("TAO_GIOP_Message_Base::handle_input \n")));
+                          ACE_TEXT ("TAO_GIOP_Message_Base::read_message \n")));
             }
 
           return -1;
@@ -294,6 +294,7 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
         }
     }
 
+  cout << "Amba " <<endl;
   return this->message_state_.is_complete ();
 }
 

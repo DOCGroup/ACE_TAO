@@ -103,7 +103,6 @@ PLUGGABLE_MESSAGING_FILES = \
   GIOP_Utils \
   GIOP_Message_Locate_Header \
   target_specification \
-  #GIOP_Message_Lite \
   GIOP_Message_State \
   Tagged_Profile
 

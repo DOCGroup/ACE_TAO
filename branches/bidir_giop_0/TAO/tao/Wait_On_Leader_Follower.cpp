@@ -204,6 +204,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
       while (1)
         {
+          cout << "In the while loop... " <<endl;
           // Run the event loop.
           result = reactor->handle_events (max_wait_time);
 
