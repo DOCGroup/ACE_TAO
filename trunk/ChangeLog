@@ -1,3 +1,12 @@
+Sat Feb 24 20:59:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * apps/gperf/src/gperf.dsp:
+        * apps/gperf/src/gperf.dsw:
+        * apps/gperf/src/gperf_lib.dsp: (removed)
+
+          Merged gperf into one project.  This will bring the
+          structure in line with the Makefiles.
+
 Sat Feb 24 19:28:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.i:
