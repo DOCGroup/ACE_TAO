@@ -1921,6 +1921,12 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
             break;
 
           case AST_Expression::EV_wchar:
+            os->print ("ACE_IDL_NSTOHL (0x%04.4x)", 
+                       (unsigned short)dv.u.wchar_val);
+            // size of short/wchar aligned to 4 bytes
+            this->tc_offset_ += sizeof (ACE_CDR::ULong);
+            break;
+
           case AST_Expression::EV_short:
             os->print ("ACE_IDL_NSTOHL (0x%04.4x)", 
                        (unsigned short)dv.u.short_val);
