@@ -65,6 +65,9 @@ public:
   // not be set.  Careful, a <scale_factor> of 0 will cause division
   // by zero exceptions.
 
+  static u_long global_scale_factor ();
+  // Accesses the current global_scale_factor.
+
   static int get_env_global_scale_factor (const char *env = "ACE_SCALE_FACTOR");
   // Sets the global_scale_factor to the value in the <env>
   // environment variable.  Returns 0 on success, -1 on failure.  Note

@@ -99,3 +99,9 @@ ACE_High_Res_Timer::global_scale_factor (u_long gsf)
 {
   global_scale_factor_ = gsf;
 }
+
+ACE_INLINE u_long
+ACE_High_Res_Timer::global_scale_factor ()
+{
+  return global_scale_factor_;
+}
