@@ -1,3 +1,28 @@
+Mon Dec  8 19:44:04 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/rules.nested.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Make sure that all variables are defined prior to first use to
+          get rid of warnings.
+
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Moved the initial assignment of SOVERSION and SONAME from
+          wrapper_macros.GNU to rules.lib.GNU so that users can set them
+          in a Makefile or in another file, e.g., rules.tao.GNU.
+          Since it must be set prior to it's use in rules.lib.GNU--it's
+          used in a target name that isn't a pattern, so it's evaluated
+          when the file is read--it can't be set later.  If versioned_so=1
+          and the user has not set a value, either in the Makefile or by
+          including a file like rules.tao.GNU that defines it, the default
+          ACE version number will be used.  Note that rules.tao.GNU now
+          behaves like rules.lib.GNU and only sets SOVERSION and SONAME
+          if versioned_so=1 and they have not yet been set.  Thanks to
+          Milan Cvetkovic <mcvetkovic@mpathix.com> for motivating this
+          change.
+
 Mon Dec  8 07:38:52 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Logging_Strategy.cpp (fini): Check whether there's a reactor

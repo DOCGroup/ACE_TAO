@@ -7,6 +7,7 @@
 #       Requires GNU make
 #----------------------------------------------------------------------------
 
+
 CLEANUP_OBJDIRS =
 CLEANUP_DIRS =
 
@@ -62,6 +63,8 @@ ifndef VBIN
   ifdef BIN
     VBIN = $(BIN:%=%$(VAR))
     $(VBIN): $(VLIBS)
+  else
+    VBIN ?=
   endif
 endif
 
@@ -186,8 +189,6 @@ endif
 #       Library generation targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS: $(VLIB)
-
 #### show_statics shows static objects in locally-created object files.
 #### It assumes that the object files were built using g++.
 #### TOOLENV selects the proper nm in VxWorks host environments.
@@ -206,11 +207,28 @@ show_uninit:
 #       Installation targets
 #----------------------------------------------------------------------------
 
+ifndef INSTALL
+  INSTALL ?=
+endif # INSTALL
+# Libraries always depend on idl_stubs, if they exist.
+ifdef IDL_SRC
+  $(VLIBS): $(IDL_SRC)
+endif
+
+# Always add LIB_INSTALL to INSTALL, so libs will get installed even no BIN
+# is built.  LIB_INSTALL is a dependency for BIN, so libs are installed prior
+# to use.  Also, make LIB_INSTALL depend on VLIB, so libs get built prior to
+# installation.
+INSTALL += $(LIB_INSTALL)
+$(LIB_INSTALL): $(VLIBS)
+
 install.local: $(INSTALL)
 
 deinstall.local:
-ifneq ($(CLEANUP_INSTALL),)
+ifdef CLEANUP_INSTALL
+  ifneq ($(CLEANUP_INSTALL),)
 	$(RM) $(CLEANUP_INSTALL)
+  endif # CLEANUP_INSTALL
 endif # CLEANUP_INSTALL
 
 ifndef LN_S
@@ -275,12 +293,18 @@ ifdef IDL_FILES
 	-$(RM) $(foreach ext, $(IDL_EXT), $(addsuffix $(ext), $(IDL_FILES)))
 endif
 
+ifdef CLEANUP_BIN
+  CLEANUP_BIN ?=
+endif # CLEANUP_BIN
 ifneq ($(CLEANUP_BIN),)
   DO_CLEANUP = 1
   REALCLEAN_FILES = $(CLEANUP_BIN:%=%$(EXEEXT)) $(CLEANUP_BIN:%=%_debug$(EXEEXT)) $(CLEANUP_BIN:%=%_profile$(EXEEXT)) $(CLEANUP_BIN:%=%_optimize$(EXEEXT))
 endif # !CLEANUP_BIN
 
 ifdef static_libs
+  ifdef CLEANUP_LIB
+    CLEANUP_LIB ?=
+  endif # CLEANUP_LIB
   ifneq ($(CLEANUP_LIB),)
     DO_CLEANUP = 1
     REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
@@ -288,15 +312,23 @@ ifdef static_libs
 endif # static_libs
 
 ifdef shared_libs
+  ifdef CLEANUP_SHLIB
+    CLEANUP_SHLIB ?=
+  endif
   ifneq ($(CLEANUP_SHLIB),)
     DO_CLEANUP = 1
     REALCLEAN_FILES += $(CLEANUP_VSHLIB:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%_debug) $(CLEANUP_VSHLIB_NO_VER:%=%_profile) $(CLEANUP_VSHLIB_NO_VER:%=%_optimize)
   endif # !CLEANUP_SHLIB
 endif # shared_libs
 
-CLEANUP_OBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC)))))
 CLEANUP_OBJS += $(addsuffix .o, $(addprefix $(VDIR),$(CLEANUP_BIN)))
-CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
+
+ifdef SRC
+  CLEANUP_OBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC)))))
+endif # SRC
+ifdef LSRC
+  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
+endif # LSRC
 
 clean.local: makefile_name.local
 ifdef DO_CLEANUP
@@ -394,12 +426,14 @@ ifndef IDL_CLIENT_HDR_EXT
 endif
 idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
 
+ifdef $(TAO_IDL_DEP)
 $(TAO_IDL_DEP):
 	@if test ! -s $(TAO_IDL_DEP); then \
 	  echo " ***"; \
 	  echo " *** ERROR: $(TAO_IDL_DEP) not found."; \
 	  echo " ***"; \
 	  echo; /bin/false; fi
+endif # TAO_IDL_DEP
 
 #----------------------------------------------------------------------------
 #       RCS info target
@@ -429,3 +463,4 @@ SPLIT:
 	@echo "Splitting source files..."
 	@$(ACE_ROOT)/bin/split-cpp -s Svc_Conf_l.cpp -s Svc_Conf_y.cpp $(LSRC)
 	@echo "done."
+

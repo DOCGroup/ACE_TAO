@@ -1,3 +1,10 @@
+Mon Dec  8 19:44:04 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * rules.tao.GNU:
+          Only set SOVERSION and SONAME if versioned_so=1 and they have
+          not yet been set.  Thanks to Milan Cvetkovic
+          <mcvetkovic@mpathix.com> for motivating this change.
+
 Mon Dec  8 19:33:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Synch_Invocation.cpp:
