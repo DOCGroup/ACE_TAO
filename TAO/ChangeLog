@@ -1,3 +1,8 @@
+Sun Jul  7 09:38:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/AMH_Exceptions/server.cpp (write_ior_to_file): Fixed a
+	  warning in GCC 3.0.4 builds.
+
 Fri Jul  5 13:50:28 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tests/AMH_Exceptions/server.cpp (start_orb_and_poa): 
