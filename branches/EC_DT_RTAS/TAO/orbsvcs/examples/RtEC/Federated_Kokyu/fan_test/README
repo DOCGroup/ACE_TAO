@@ -1,0 +1,24 @@
+What: Supplier_EC, Consumer_EC
+
+How: This test runs a single task which has multiple subtasks. T1_1 is
+in Supplier_EC and you can have X other subtasks (where X is some
+integer), each in its own separate instance of Consumer_EC. To do this,
+you'll need to specify different IOR file names for each Consumer_EC,
+like this:
+
+`Consumer_EC -o iorfilename`
+
+Then, once all the Consumer_EC's are started, start the Supplier_EC and
+give it the filenames for all the Consumer_EC's. If there are 2
+Consumer_ECs with IOR filenames "consumer1_ec.ior" and
+"consumer2_ec.ior", then start Supplier_EC like this:
+
+`Supplier_EC -i consumer1_ec.ior -i consumer2_ec.ior`
+
+Note that to run with EDF instead of RMS (the default), you'll need
+the '-s edf' flag just as with the RG test.
+
+Where:
+norbert (Client)
+ron (Server1)
+hermione (Server2)
