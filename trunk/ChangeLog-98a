@@ -1,3 +1,8 @@
+Thu Feb 26 02:42:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.cpp (load_static_svcs): Removed explicit
+	  constness cast from the allocation function.
+
 Wed Feb 25 23:08:44 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/MT_Reactor_Timer_Test.cpp: Made this test compile on
