@@ -24,6 +24,10 @@ Mon Dec  6 22:20:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Debugging output updates.
 
+	* tests/ORB_init/README:
+
+	  Updated the documentation.
+
 Mon Dec 06 21:16:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_Transport.cpp (send/recv):
