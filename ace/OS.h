@@ -3391,14 +3391,7 @@ unsigned long inet_network(const char *);
 #     endif /* howmany */
 #   endif /* __Lynx__ */
 
-#   if defined (CYGWIN32)
-#     include /**/ <sys/uio.h>
-#     include /**/ <sys/file.h>
-#     include /**/ <sys/time.h>
-#     include /**/ <sys/resource.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <pwd.h>
-#   elif defined (CHORUS)
+#   if defined (CHORUS)
 #     include /**/ <chorus.h>
 #     include /**/ <cx/select.h>
 #     include /**/ <sys/uio.h>
@@ -3424,6 +3417,23 @@ typedef cx_fd_mask fd_mask;
 #       define howmany(x, y)   (((x)+((y)-1))/(y))
 #     endif /* howmany */
 typedef void (*__sighandler_t)(int); // keep Signal compilation happy
+#   elif defined (CYGWIN32)
+#     include /**/ <sys/uio.h>
+#     include /**/ <sys/file.h>
+#     include /**/ <sys/time.h>
+#     include /**/ <sys/resource.h>
+#     include /**/ <sys/wait.h>
+#     include /**/ <pwd.h>
+#   elif defined (__QNX__)
+#     include /**/ <sys/uio.h>
+#     include /**/ <sys/ipc.h>
+#     include /**/ <sys/sem.h>
+#     include /**/ <sys/time.h>
+#     include /**/ <sys/wait.h>
+#     include /**/ <pwd.h>
+#     ifndef howmany
+#       define howmany(x, y)   (((x)+((y)-1))/(y))
+#     endif /* howmany */
 #   elif ! defined (VXWORKS)
 #     include /**/ <sys/uio.h>
 #     include /**/ <sys/ipc.h>
@@ -3449,7 +3459,11 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #   endif /* ACE_HAS_STRINGS */
 
 #   if defined (ACE_HAS_TERM_IOCTLS)
-#     include /**/ <sys/termios.h>
+#     if defined (__QNX__)
+#       include /**/ <termios.h>
+#     else  /* ! __QNX__ */
+#       include /**/ <sys/termios.h>
+#     endif /* ! __QNX__ */
 #   endif /* ACE_HAS_TERM_IOCTLS */
 
 #   if !defined (ACE_LACKS_UNISTD_H)
@@ -3470,7 +3484,11 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 
 #   if defined (ACE_HAS_SIGINFO_T)
 #     if !defined (ACE_LACKS_SIGINFO_H)
-#       include /**/ <siginfo.h>
+#       if defined (__QNX__)
+#         include /**/ <sys/siginfo.h>
+#       else  /* ! __QNX__ */
+#         include /**/ <siginfo.h>
+#       endif /* ! __QNX__ */
 #     endif /* ACE_LACKS_SIGINFO_H */
 #     if !defined (ACE_LACKS_UCONTEXT_H)
 #       include /**/ <ucontext.h>
