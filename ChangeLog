@@ -1,3 +1,25 @@
+Sat Aug 23 12:38:08 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Dev_Poll_Reactor.cpp:
+
+	  Added "const" qualifier to some constant variables.
+
+	From Carlos O'Ryan <coryan@atdesk.com>
+	* ace/DLL.cpp (symbol):
+	* ace/config-linux.h:
+
+	  Fixed problem where seg fault could occur if symbol() method is
+	  called after a failed call to open().  Thanks to Jody Hagins
+	  <jody@atdesk.com> for finding this bug.  [Bug 1576]
+
+	* tests/Bug_1576_Regression_Test.cpp:
+	* tests/Makefile.tests (BIN):
+	* tests/run_test.lst:
+	* tests/tests.mpc:
+
+	  New test that verifies whether or not bug 1576 regressions
+	  occur.
+
 Sat Aug 23 19:26:41 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ASNMP/agent/agent.mpc:

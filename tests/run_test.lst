@@ -24,6 +24,7 @@ Barrier_Test
 Basic_Types_Test
 Bound_Ptr_Test
 Buffer_Stream_Test
+Bug_1576_Regression_Test
 CDR_Array_Test
 CDR_File_Test
 CDR_Test
