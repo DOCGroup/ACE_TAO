@@ -1,3 +1,16 @@
+Wed Nov  5 21:22:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_NS_stdio.h:
+          Changed export declaration for
+          default_win32_security_attributes(),
+          fopen_mode_to_open_mode_converter(), and fputs() to
+          ACE_NAMESPACE_INLINE_FUNCTION to fix link errors on Windows.
+
+        * ace/OS_NS_stropts.h:
+          Changed export declaration for getmsg(), getpmsg(), and
+          fattach() to ACE_NAMESPACE_INLINE_FUNCTION to fix link errors on
+          Windows.
+
 Wed Nov  5 15:09:00 2003  Justin Michel <michel_j@ociweb.com>
 
 	* apps/gperf/src/gperf.cpp:
