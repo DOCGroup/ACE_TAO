@@ -22,7 +22,7 @@ typedef struct
   INSTR *pc;
 } task_info;
 
-const int SWITCHES=25000;
+const u_int SWITCHES = 25000;
 task_info tInfo[SWITCHES];
 
 extern "C"
