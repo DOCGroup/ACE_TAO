@@ -526,13 +526,14 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 #elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (::fstat_f (handle, stp), int, -1);
 #else
-# if defined (fstat)
-    // Don't put a "::" in front of fstat() if it's defined as a
-    // macro, e.g., on Solaris for Intel.
-    ACE_OSCALL_RETURN (fstat (handle, stp), int, -1);
-# else  /* ! fstat */
+# if defined (ACE_HAS_X86_STAT_MACROS)
+    // Solaris for intel uses an macro for fstat(), this is a wrapper
+    // for _fxstat() use of the macro.
+    // causes compile and runtime problems.
+    ACE_OSCALL_RETURN (::_fxstat (_STAT_VER, handle, stp), int, -1);
+# else  /* !ACE_HAS_X86_STAT_MACROS */
     ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
-# endif /* ! fstat */
+# endif /* !ACE_HAS_X86_STAT_MACROS */
 #endif /* defined (ACE_PSOS) */
 }
 
@@ -954,7 +955,13 @@ ACE_OS::stat (const char *file, struct stat *stp)
 #elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (::stat_f ((char *) file, stp), int, -1);
 #else
+# if defined (ACE_HAS_X86_STAT_MACROS)
+   // Solaris for intel uses an macro for stat(), this macro is a
+   // wrapper for _xstat().
+  ACE_OSCALL_RETURN (::_xstat (_STAT_VER, file, stp), int, -1);
+#else /* !ACE_HAS_X86_STAT_MACROS */
   ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
+#endif /* !ACE_HAS_X86_STAT_MACROS */
 # endif /* VXWORKS */
 }
 #endif /* ACE_HAS_WINCE */
