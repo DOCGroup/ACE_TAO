@@ -120,12 +120,12 @@ namespace TAO
          this->excp_list_ != 0 && i < this->excp_list_->count ();
          i++)
       {
-          CORBA::TypeCode_ptr tcp =
+          CORBA::TypeCode_var tc =
             this->excp_list_->item (i
                                     ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-          const char *xid = tcp->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+          const char *xid = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
           if (ACE_OS::strcmp (buf.in (), xid) != 0)
@@ -137,7 +137,7 @@ namespace TAO
           TAO::Unknown_IDL_Type *unk = 0;
           ACE_NEW_RETURN (unk,
                           TAO::Unknown_IDL_Type (
-                              tcp,
+                              tc.in (),
                               cdr.start (),
                               cdr.byte_order ()
                             ),
