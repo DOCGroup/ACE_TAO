@@ -235,7 +235,7 @@ ACE_Task_Base::svc_run (void *args)
   ACE_Task_Exit &exit_hook = *ACE_Task_Exit::instance ();
 #else
   // Without TSS, create an ACE_Task_Exit instance.  When this
-  // function returns, its destructor will be call because the
+  // function returns, its destructor will be called because the
   // object goes out of scope.  The drawback with this appraoch is
   // that the destructor _won't_ get called if thr_exit () is called.
   // So, threads shouldn't exit that way.  Instead, they should
