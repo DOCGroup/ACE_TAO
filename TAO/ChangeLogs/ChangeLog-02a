@@ -1,30 +1,42 @@
+Sat May  6 14:57:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+          Make sure that the testC.* and testS* files are generated
+          *before* recursing to the subdirectories.
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+          Updated dependencies.
+
 Sat May  6 13:47:35 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB.cpp (ORB_init):
+        * tao/ORB.cpp (ORB_init):
 
-	  Relaxed the restriction that ensured argv[0] be non-empty when
-	  argc was non-zero.  TAO no longer checks the length of argv[0]
-	  when argc is non-zero.  Instead it trusts the user's judgment.
-	  Thanks to Terry Rosenbaum <Terry.Rosenbaum@Radiology.MSU.edu>
-	  for pointing out that some users may wish to pass an empty
-	  program name argument (argv[0]) to CORBA::ORB_init().
+          Relaxed the restriction that ensured argv[0] be non-empty when
+          argc was non-zero.  TAO no longer checks the length of argv[0]
+          when argc is non-zero.  Instead it trusts the user's judgment.
+          Thanks to Terry Rosenbaum <Terry.Rosenbaum@Radiology.MSU.edu>
+          for pointing out that some users may wish to pass an empty
+          program name argument (argv[0]) to CORBA::ORB_init().
 
 Thu May  4 17:17:32 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Accept_State.cpp: Fixed a problem with the way
-	  service context list is marshalled for DSI_Gateways in GIOP
-	  1.2. Previous version of GIOP was using a padding scheme which
-	  was not needed for GIOP 1.2. Thanks to Carlos for pointing this
-	  out. 
-		
-	* tao/GIOP_Message_Accept_State.h: Some cosmetic changes.
-	
+        * tao/GIOP_Message_Accept_State.cpp: Fixed a problem with the way
+          service context list is marshalled for DSI_Gateways in GIOP
+          1.2. Previous version of GIOP was using a padding scheme which
+          was not needed for GIOP 1.2. Thanks to Carlos for pointing this
+          out.
+
+        * tao/GIOP_Message_Accept_State.h: Some cosmetic changes.
+
 Thu May  4 14:53:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/AV_Core.h:
         * orbsvcs/orbsvcs/AV/AV_export.h:
 
-          Defined TAO_AV_SINGLETON_DECLARE in a different way to 
+          Defined TAO_AV_SINGLETON_DECLARE in a different way to
           hopefully solve this problem on all compilers.  Since some
           do not want anything defined, we cannot use a no-argument
           version of the macro.  Now it takes in the singleton type,
@@ -42,20 +54,20 @@ Thu May  4 13:59:58 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu May  4 14:57:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Exception.h:
-	  Added missing 'TAO_Export to CORBA_ExceptionList. Thanks
-	  to Philippe Merle <Philippe.Merle@lifl.fr> for pointing
-	  this out.
+        * tao/Exception.h:
+          Added missing 'TAO_Export to CORBA_ExceptionList. Thanks
+          to Philippe Merle <Philippe.Merle@lifl.fr> for pointing
+          this out.
 
 Thu May  4 14:45:40 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* rules.tao.GNU: Parameterized /bin/true.  Not all OSes put true
-	  in /bin directory.
+        * rules.tao.GNU: Parameterized /bin/true.  Not all OSes put true
+          in /bin directory.
 
-	* orbsvcs/Trading_Service/Makefile:
-	* orbsvcs/tests/Trading/Makefile: Moved the settings of actually
-	  targets down after rules.tao.GNU.  Otherwise, these tests
-	  wouldn't get compiled even if minimum_corba is not used.
+        * orbsvcs/Trading_Service/Makefile:
+        * orbsvcs/tests/Trading/Makefile: Moved the settings of actually
+          targets down after rules.tao.GNU.  Otherwise, these tests
+          wouldn't get compiled even if minimum_corba is not used.
 
 Thu May  4 10:40:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -81,26 +93,26 @@ Thu May  4 10:40:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu May  4 10:10:38 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
-	* orbsvcs/tests/AVStreams/Latency/Makefile:
-	* orbsvcs/tests/AVStreams/Multicast/Makefile:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
-	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
-	  Add missing libraries to the Makefile, this is only a problem
-	  for static builds, well some platforms have problems with
-	  dynamic libraries too.
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Latency/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile:
+          Add missing libraries to the Makefile, this is only a problem
+          for static builds, well some platforms have problems with
+          dynamic libraries too.
 
-	* performance-tests/POA/Demux/Makefile:
-	  More missing libraries.
+        * performance-tests/POA/Demux/Makefile:
+          More missing libraries.
 
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
-	  Fixed some more problems with calls to ::feof()
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+          Fixed some more problems with calls to ::feof()
 
-	* utils/catior/catior.cpp:
-	  Print out 1.2 profiles too their format is identical to 1.1
-	  profiles.
+        * utils/catior/catior.cpp:
+          Print out 1.2 profiles too their format is identical to 1.1
+          profiles.
 
 Wed May  3 18:31:54 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
