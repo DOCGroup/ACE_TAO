@@ -3929,8 +3929,12 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, int len, int flags)
 }
 
 ACE_INLINE int
-ACE_OS::sendto (ACE_HANDLE handle, const char *buf, int len,
-                int flags, const struct sockaddr *addr, int addrlen)
+ACE_OS::sendto (ACE_HANDLE handle,
+                const char *buf,
+                int len,
+                int flags,
+                const struct sockaddr *addr,
+                int addrlen)
 {
   // ACE_TRACE ("ACE_OS::sendto");
 #if defined (VXWORKS)
