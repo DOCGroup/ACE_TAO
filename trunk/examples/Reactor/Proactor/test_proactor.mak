@@ -66,8 +66,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/test_proactor.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -127,8 +125,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/test_timeout.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -156,6 +152,9 @@ LINK32_OBJS= \
 <<
 
 !ENDIF 
+
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/test_proactor.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
@@ -285,8 +284,15 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Heap.h"\
+	{$(INCLUDE)}"\ace\Timer_List.cpp"\
+	{$(INCLUDE)}"\ace\Timer_List.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.i"\
+	{$(INCLUDE)}"\ace\Timers.h"\
+	{$(INCLUDE)}"\ace\Timers.i"\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
@@ -410,8 +416,15 @@ DEP_CPP_TEST_T=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Heap.h"\
+	{$(INCLUDE)}"\ace\Timer_List.cpp"\
+	{$(INCLUDE)}"\ace\Timer_List.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.i"\
+	{$(INCLUDE)}"\ace\Timers.h"\
+	{$(INCLUDE)}"\ace\Timers.i"\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\

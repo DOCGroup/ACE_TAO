@@ -21,18 +21,19 @@
 // ============================================================================
 
 #include "ace/Profile_Timer.h"
-#include "ace/Timer_List.h"
-#include "ace/Timer_Heap.h"
+#include "ace/Timers.h"
 #include "test_config.h"
 
 static void
 randomize_array (int array[], size_t size)
 {
+  size_t i;
+
   ACE_OS::srand (ACE_OS::time (0L));
 
   // Randomize the array.
 
-  for (size_t i = 0; i < size; i++)
+  for (i = 0; i < size; i++)
     {
       int index = ACE_OS::rand() % size--;
       int temp = array [index];
@@ -233,7 +234,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.start ();
 
-  for (i = 0; i < max_iterations; i++)
+  for (i = max_iterations - 1; i >= 0; i--)
     tq->cancel (timer_ids[i]);
 
   ACE_ASSERT (tq->is_empty ());
@@ -303,8 +304,6 @@ main (int argc, char *argv[])
 			timer_queues[i].name_);
       delete timer_queues[i].queue_;
     }
-
-  delete [] timer_ids;
 
   ACE_END_TEST;
   return 0;
