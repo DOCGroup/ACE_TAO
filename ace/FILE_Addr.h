@@ -75,7 +75,7 @@ public:
 
 private:
   /// Name of the file.
-  ACE_TCHAR filename_[MAXNAMLEN + 1];
+  ACE_TCHAR filename_[MAXPATHLEN + 1];
 };
 
 #if defined (__ACE_INLINE__)

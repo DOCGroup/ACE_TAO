@@ -104,7 +104,7 @@ private:
     uid_t uid_;
 
     /// Pathname in the file system.
-    ACE_TCHAR rendezvous_[MAXNAMLEN + 1];
+    ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
 
   } SPIPE_addr_;
   // Contents of an SPIPE address.
