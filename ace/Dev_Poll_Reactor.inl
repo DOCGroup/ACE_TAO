@@ -13,13 +13,14 @@ ACE_Dev_Poll_Event_Tuple::ACE_Dev_Poll_Event_Tuple (void)
 
 // ---------------------------------------------------------------------
 
-
+#if 0
 ACE_INLINE
 ACE_Dev_Poll_Ready_Set::ACE_Dev_Poll_Ready_Set (void)
   : pfds (0),
     nfds (0)
 {
 }
+#endif  /* 0 */
 
 // ---------------------------------------------------------------------
 
@@ -90,7 +91,7 @@ ACE_Dev_Poll_Reactor_Handler_Repository::size (void) const
   return this->max_size_;
 }
 
-ACE_INLINE size_t
+ACE_INLINE unsigned long
 ACE_Dev_Poll_Reactor_Handler_Repository::add_ref (ACE_HANDLE handle)
 {
   // ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::add_ref");
@@ -103,7 +104,7 @@ ACE_Dev_Poll_Reactor_Handler_Repository::add_ref (ACE_HANDLE handle)
   return 0;
 }
 
-ACE_INLINE size_t
+ACE_INLINE unsigned long
 ACE_Dev_Poll_Reactor_Handler_Repository::remove_ref (ACE_HANDLE handle)
 {
   // ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::remove_ref");
@@ -112,7 +113,7 @@ ACE_Dev_Poll_Reactor_Handler_Repository::remove_ref (ACE_HANDLE handle)
 
   if (this->handle_in_range (handle))
     {
-      size_t & refcount = this->handlers_[handle].refcount;
+      unsigned long & refcount = this->handlers_[handle].refcount;
 
       ACE_ASSERT  (refcount > 0);
 
@@ -176,4 +177,25 @@ ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard (void)
    * @todo Resume the handler so that other threads will be allowed to
    *       dispatch the handler.
    */
+}
+
+// ---------------------------------------------------------------------
+
+ACE_INLINE int
+ACE_Dev_Poll_Reactor::upcall (ACE_Event_Handler *event_handler,
+                              int (ACE_Event_Handler::*callback)(ACE_HANDLE),
+                              ACE_HANDLE handle)
+{
+  // If the handler returns positive value (requesting a reactor
+  // callback) just call back as many times as the handler requests
+  // it.  Other threads are off handling other things.
+  int status = 0;
+
+  do
+    {
+      status = (event_handler->*callback) (handle);
+    }
+  while (status > 0);
+
+  return status;
 }
