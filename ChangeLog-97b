@@ -1,3 +1,9 @@
+Fri Sep 19 14:52:53 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/OS.cpp (thr_exit): Commented out the call to
+ 	  ACE_TSS_Cleanup::exit () because ACE_OS::thr_exit is actually
+ 	  called from ACE_TSS_Cleanup::exit ().
+
 Fri Sep 19 12:50:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ACE-INSTALL*: added requirement for explicit main () arguments
