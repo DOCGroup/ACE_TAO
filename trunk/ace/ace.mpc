@@ -416,6 +416,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     TSS_T.h
     Timer_Queuefwd.h
     UPIPE_Addr.h
+    Value_Ptr.h
     Version.h
     ace_wchar.h
     config-WinCE.h
