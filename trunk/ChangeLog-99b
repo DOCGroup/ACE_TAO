@@ -1,3 +1,10 @@
+Tue Mar 16 14:25:03 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (get_ip_interfaces, count_interfaces, get_bcast_addr):
+          On AIX, use CSIOCGIFCONF instead of SIOCGIFCONF to retrieve
+          interface information.  Thanks to Eric Newton <ecn@smart.net> for
+          figuring this out.
+
 Tue Mar 16 12:20:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Service_Config.h (ACE_Service_Config): 
