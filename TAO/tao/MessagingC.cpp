@@ -1217,7 +1217,8 @@ TAO_NAMESPACE_END
 
 // ****************************************************************
 
-#if defined(TAO_POLLER)
+#if defined (TAO_HAS_AMI_POLLER)
+
 static const CORBA::Long _oc_Messaging_ExceptionHolder[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
@@ -1270,9 +1271,14 @@ static const CORBA::Long _oc_Messaging_ExceptionHolder__tao_seq_Octet[] =
   0,
 };
 static CORBA::TypeCode _tc_TAO_tc_Messaging_ExceptionHolder__tao_seq_Octet (CORBA::tk_sequence, sizeof (_oc_Messaging_ExceptionHolder__tao_seq_Octet), (char *) &_oc_Messaging_ExceptionHolder__tao_seq_Octet, 0, sizeof (Messaging::ExceptionHolder::_tao_seq_Octet));
+
 CORBA::TypeCode_ptr Messaging::ExceptionHolder::_tc__tao_seq_Octet = &_tc_TAO_tc_Messaging_ExceptionHolder__tao_seq_Octet;
 
+#endif /* TAO_HAS_AMI_POLLER */
+
 // ****************************************************************
+
+#if defined(TAO_HAS_AMI_CALLBACK)
 
 Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_narrow (
     CORBA::Object_ptr obj,
@@ -1336,6 +1342,9 @@ TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyHandler, &_tc_TAO_tc_Messaging_ReplyHandler)
 TAO_NAMESPACE_END
 
+#endif /* TAO_HAS_AMI_CALLBACK */
+
+#if defined(TAO_HAS_AMI_POLLER)
 
 Messaging::Poller_ptr Messaging::Poller::_narrow (
     CORBA::Object_ptr obj,
@@ -2015,7 +2024,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSe
 
 // ****************************************************************
 
-#if defined(TAO_POLLER)
+#if defined(TAO_HAS_AMI_POLLER)
 void operator<<= (CORBA::Any &_tao_any, const Messaging::ExceptionHolder &_tao_elem) // copying
 {
   Messaging::ExceptionHolder *_any_val;
@@ -2185,29 +2194,29 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
   ACE_ENDTRY;
   return 0;
 }
-#endif /* TAO_POLLER */
+#endif /* TAO_HAS_AMI_POLLER */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class TAO_Unbounded_Sequence<Messaging::PolicyValue>;
 
-#if defined(TAO_POLLER)
+#if defined(TAO_HAS_AMI_POLLER)
   template class TAO_Object_Field_T<Messaging::ReplyHandler,Messaging::ReplyHandler_var>;
   template class TAO_Object_Field_T<Messaging::Poller,Messaging::Poller_var>;
   template class TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>;
   template class TAO_Object_Manager<Messaging::Poller,Messaging::Poller_var>;
-#endif /* TAO_POLLER */
+#endif /* TAO_HAS_AMI_POLLER */
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Unbounded_Sequence<Messaging::PolicyValue>
 
-#if defined(TAO_POLLER)
+#if defined(TAO_HAS_AMI_POLLER)
 #  pragma instantiate TAO_Object_Field_T<Messaging::ReplyHandler,Messaging::ReplyHandler_var>
 #  pragma instantiate TAO_Object_Field_T<Messaging::Poller,Messaging::Poller_var>
 #  pragma instantiate TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>
 #  pragma instantiate TAO_Object_Manager<Messaging::Poller,Messaging::Poller_var>
-#endif /* TAO_POLLER */
+#endif /* TAO_HAS_AMI_POLLER */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    ami_handler_servant_operation_cs.cpp
+//    ami_handler_servant_operation_ss.cpp
 //
 // = DESCRIPTION
 //    Visitor generating code for Operation in the server skeleton
@@ -25,25 +25,25 @@
 #include "be_visitor_operation.h"
 #include "be_visitor_argument.h"
 
-ACE_RCSID(be_visitor_operation, ami_handler_servant_operation_cs, "$Id$")
+ACE_RCSID(be_visitor_operation, ami_handler_servant_operation_ss, "$Id$")
 
 
 // ************************************************************
 // Operation visitor for server skeletons
 // ************************************************************
 
-be_visitor_operation_ami_handler_servant_operation_cs::be_visitor_operation_ami_handler_servant_operation_cs (be_visitor_context *ctx)
+be_visitor_operation_ami_handler_servant_operation_ss::be_visitor_operation_ami_handler_servant_operation_ss (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_ami_handler_servant_operation_cs::~be_visitor_operation_ami_handler_servant_operation_cs (void)
+be_visitor_operation_ami_handler_servant_operation_ss::~be_visitor_operation_ami_handler_servant_operation_ss (void)
 {
 }
 
 // processing to be done after every element in the scope is processed
 int
-be_visitor_operation_ami_handler_servant_operation_cs::post_process (be_decl *bd)
+be_visitor_operation_ami_handler_servant_operation_ss::post_process (be_decl *bd)
 {
   // all we do here is to insert a comma and a newline
   TAO_OutStream *os = this->ctx_->stream ();
@@ -53,7 +53,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::post_process (be_decl *bd
 }
 
 int
-be_visitor_operation_ami_handler_servant_operation_cs::visit_operation (be_operation *node)
+be_visitor_operation_ami_handler_servant_operation_ss::visit_operation (be_operation *node)
 {
   TAO_OutStream *os; // output stream
   be_type *bt;       // type node for return type
@@ -72,7 +72,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::visit_operation (be_opera
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "Bad return type\n"),
                         -1);
@@ -89,7 +89,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::visit_operation (be_opera
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "bad interface scope\n"),
                         -1);
@@ -164,7 +164,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::visit_operation (be_opera
   if (this->gen_pre_skel_info (node, bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "gen_pre_skel_info failed\n"),
                         -1);
@@ -183,7 +183,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::visit_operation (be_opera
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "codegen for return var decl failed\n"),
                         -1);
@@ -199,7 +199,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::visit_operation (be_opera
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "codegen for return var decl failed\n"),
                         -1);
@@ -211,7 +211,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::visit_operation (be_opera
   if (this->gen_demarshal_params (node, bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "gen_demarshal_params failed\n"),
                         -1);
@@ -234,7 +234,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::visit_operation (be_opera
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "codegen for making upcall failed\n"),
                         -1);
@@ -256,7 +256,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::visit_operation (be_opera
 }
 
 int
-be_visitor_operation_ami_handler_servant_operation_cs::visit_argument (be_argument *node)
+be_visitor_operation_ami_handler_servant_operation_ss::visit_argument (be_argument *node)
 {
   // this method is used to generate the ParamData table entry
 
@@ -268,7 +268,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::visit_argument (be_argume
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_argument - "
                          "Bad argument type\n"),
                         -1);
@@ -294,7 +294,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::visit_argument (be_argume
 }
 
 int
-be_visitor_operation_ami_handler_servant_operation_cs::gen_raise_exception (be_type *,
+be_visitor_operation_ami_handler_servant_operation_ss::gen_raise_exception (be_type *,
                                               const char *excep,
                                               const char *completion_status,
                                               const char * /* env */)
@@ -309,7 +309,7 @@ be_visitor_operation_ami_handler_servant_operation_cs::gen_raise_exception (be_t
 }
 
 int
-be_visitor_operation_ami_handler_servant_operation_cs::gen_check_exception (be_type *, const char * /* env */)
+be_visitor_operation_ami_handler_servant_operation_ss::gen_check_exception (be_type *, const char * /* env */)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -326,19 +326,19 @@ be_visitor_operation_ami_handler_servant_operation_cs::gen_check_exception (be_t
 // Operation visitor for server skeletons using interpretive marshaling
 // *********************************************************************
 
-be_interpretive_visitor_operation_ami_handler_servant_operation_cs::
-be_interpretive_visitor_operation_ami_handler_servant_operation_cs (be_visitor_context *ctx)
-  : be_visitor_operation_ami_handler_servant_operation_cs (ctx)
+be_interpretive_visitor_operation_ami_handler_servant_operation_ss::
+be_interpretive_visitor_operation_ami_handler_servant_operation_ss (be_visitor_context *ctx)
+  : be_visitor_operation_ami_handler_servant_operation_ss (ctx)
 {
 }
 
-be_interpretive_visitor_operation_ami_handler_servant_operation_cs::
-~be_interpretive_visitor_operation_ami_handler_servant_operation_cs (void)
+be_interpretive_visitor_operation_ami_handler_servant_operation_ss::
+~be_interpretive_visitor_operation_ami_handler_servant_operation_ss (void)
 {
 }
 
 int
-be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_pre_skel_info (be_operation *node,
+be_interpretive_visitor_operation_ami_handler_servant_operation_ss::gen_pre_skel_info (be_operation *node,
                                                          be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -375,7 +375,7 @@ be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_pre_skel
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "visit scope failed\n"),
                         -1);
@@ -440,7 +440,7 @@ be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_pre_skel
 }
 
 int
-be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_demarshal_params (be_operation *node,
+be_interpretive_visitor_operation_ami_handler_servant_operation_ss::gen_demarshal_params (be_operation *node,
                                                             be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -471,7 +471,7 @@ be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_demarsha
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "codegen for return var in demarshal failed\n"),
                         -1);
@@ -488,7 +488,7 @@ be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_demarsha
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "codegen for argument in demarshal failed\n"),
                         -1);
@@ -504,7 +504,7 @@ be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_demarsha
 }
 
 int
-be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_marshal_params (be_operation *node,
+be_interpretive_visitor_operation_ami_handler_servant_operation_ss::gen_marshal_params (be_operation *node,
                                                           be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -537,7 +537,7 @@ be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_marshal_
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "codegen for return var in marshal failed\n"),
                         -1);
@@ -556,7 +556,7 @@ be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_marshal_
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_servant_operation_ss::"
                          "visit_operation - "
                          "codegen for argument in marshal failed\n"),
                         -1);
@@ -572,19 +572,19 @@ be_interpretive_visitor_operation_ami_handler_servant_operation_cs::gen_marshal_
 // Operation visitor for server skeletons using compiled marshaling
 // *********************************************************************
 
-be_compiled_visitor_operation_ami_handler_servant_operation_cs::
-be_compiled_visitor_operation_ami_handler_servant_operation_cs (be_visitor_context *ctx)
-  : be_visitor_operation_ami_handler_servant_operation_cs (ctx)
+be_compiled_visitor_operation_ami_handler_servant_operation_ss::
+be_compiled_visitor_operation_ami_handler_servant_operation_ss (be_visitor_context *ctx)
+  : be_visitor_operation_ami_handler_servant_operation_ss (ctx)
 {
 }
 
-be_compiled_visitor_operation_ami_handler_servant_operation_cs::
-~be_compiled_visitor_operation_ami_handler_servant_operation_cs (void)
+be_compiled_visitor_operation_ami_handler_servant_operation_ss::
+~be_compiled_visitor_operation_ami_handler_servant_operation_ss (void)
 {
 }
 
 int
-be_compiled_visitor_operation_ami_handler_servant_operation_cs::gen_pre_skel_info (be_operation *node,
+be_compiled_visitor_operation_ami_handler_servant_operation_ss::gen_pre_skel_info (be_operation *node,
                                                          be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -604,7 +604,7 @@ be_compiled_visitor_operation_ami_handler_servant_operation_cs::gen_pre_skel_inf
 }
 
 int
-be_compiled_visitor_operation_ami_handler_servant_operation_cs::gen_demarshal_params (be_operation *node,
+be_compiled_visitor_operation_ami_handler_servant_operation_ss::gen_demarshal_params (be_operation *node,
                                                         be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -631,7 +631,7 @@ be_compiled_visitor_operation_ami_handler_servant_operation_cs::gen_demarshal_pa
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_compiled_visitor_operation_ami_handler_servant_operation_cs::"
+                             "(%N:%l) be_compiled_visitor_operation_ami_handler_servant_operation_ss::"
                              "gen_demarshal_params - "
                              "codegen for demarshal failed\n"),
                             -1);
@@ -652,7 +652,7 @@ be_compiled_visitor_operation_ami_handler_servant_operation_cs::gen_demarshal_pa
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_compiled_visitor_operation_ami_handler_servant_operation_cs::"
+                             "(%N:%l) be_compiled_visitor_operation_ami_handler_servant_operation_ss::"
                              "gen_demarshal_params - "
                              "codegen for demarshal failed\n"),
                             -1);
@@ -665,7 +665,7 @@ be_compiled_visitor_operation_ami_handler_servant_operation_cs::gen_demarshal_pa
                                      "ACE_TRY_ENV") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_compiled_visitor_operation_ami_handler_servant_operation_cs::"
+                             "(%N:%l) be_compiled_visitor_operation_ami_handler_servant_operation_ss::"
                              "gen_marshal_and invoke - "
                              "codegen for return var failed\n"),
                             -1);
@@ -678,7 +678,7 @@ be_compiled_visitor_operation_ami_handler_servant_operation_cs::gen_demarshal_pa
 }
 
 int
-be_compiled_visitor_operation_ami_handler_servant_operation_cs::gen_marshal_params (be_operation *,
+be_compiled_visitor_operation_ami_handler_servant_operation_ss::gen_marshal_params (be_operation *,
                                                       be_type *)
 {
   // because we do not want to return something.

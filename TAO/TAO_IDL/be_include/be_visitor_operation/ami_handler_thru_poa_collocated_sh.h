@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    thru_poa_collocated_ch.h
+//    thru_poa_collocated_sh.h
 //
 // = DESCRIPTION
 //    Visitor for generating code for IDL operations for the thru_poa collocated case
@@ -20,18 +20,18 @@
 //
 // ============================================================================
 
-#ifndef _BE_VISITOR_OPERATION_ami_handler_thru_poa_collocated_ch_H_
-#define _BE_VISITOR_OPERATION_ami_handler_thru_poa_collocated_ch_H_
+#ifndef _BE_VISITOR_OPERATION_AMI_HANDLER_THRU_POA_COLLOCATED_SH_H_
+#define _BE_VISITOR_OPERATION_AMI_HANDLER_THRU_POA_COLLOCATED_SH_H_
 
 // ************************************************************
 // Operation visitor for server header in the thru_poa collocated class
 // ************************************************************
 
-class be_visitor_operation_ami_handler_thru_poa_collocated_ch : public be_visitor_scope
+class be_visitor_operation_ami_handler_thru_poa_collocated_sh : public be_visitor_scope
 {
   //
   // = TITLE
-  //   be_visitor_operation_ami_handler_thru_poa_collocated_ch
+  //   be_visitor_operation_ami_handler_thru_poa_collocated_sh
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate the server header for operation
@@ -39,10 +39,10 @@ class be_visitor_operation_ami_handler_thru_poa_collocated_ch : public be_visito
   //
   //
 public:
-  be_visitor_operation_ami_handler_thru_poa_collocated_ch (be_visitor_context *ctx);
+  be_visitor_operation_ami_handler_thru_poa_collocated_sh (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_operation_ami_handler_thru_poa_collocated_ch (void);
+  ~be_visitor_operation_ami_handler_thru_poa_collocated_sh (void);
   // destructor
 
   virtual int visit_operation (be_operation *node);
@@ -50,4 +50,4 @@ public:
 
 };
 
-#endif /* _BE_VISITOR_OPERATION_ami_handler_thru_poa_collocated_ch_H_ */
+#endif /* _BE_VISITOR_OPERATION_AMI_HANDLER_THRU_POA_COLLOCATED_SH_H_ */

@@ -1,3 +1,60 @@
+Tue Aug 24 5:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_sh.cpp,
+	  TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_sh.h
+	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp,	  
+	  TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_ss.h,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_servant_operation_ss.cpp,
+	  TAO_IDL/be_include/be_visitor_operation/ami_handler_servant_operation_ss.h:
+	  Introduced these files and removed the corresponding *_{cs,ch}.{h,cpp} 
+	  files because the code is generated in the server header and 
+	  server implementation files.
+	  
+	* TAO/TAO_IDL/be/be_codegen.cpp,
+	  TAO/TAO_IDL/be/be_interface.cpp,
+	  TAO/TAO_IDL/be/be_visitor_factory.cpp,
+	  TAO/TAO_IDL/be/be_visitor_interface.cpp,
+	  TAO/TAO_IDL/be/be_visitor_operation.cpp,
+	  TAO/TAO_IDL/be/be_visitor_interface/interface.cpp,
+	  TAO/TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
+	  TAO/TAO_IDL/be/be_visitor_interface/interface_cs.cpp,
+	  TAO/TAO_IDL/be/be_visitor_interface/interface_sh.cpp,
+	  TAO/TAO_IDL/be/be_visitor_interface/interface_ss.cpp,
+	  TAO/TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+	  TAO/TAO_IDL/be_include/be_codegen.h,
+	  TAO/TAO_IDL/be_include/be_interface.h,
+	  TAO/TAO_IDL/be_include/be_visitor_interface.h,
+	  TAO/TAO_IDL/be_include/be_visitor_operation.h:
+	  Made minor adjustments to have AMI callbacks properly working.
+
+	* TAO/tao/Asynch_Invocation.cpp
+	  TAO/tao/Asynch_Invocation.h
+	  TAO/tao/Asynch_Invocation.i
+	  TAO/tao/MessagingC.cpp
+	  TAO/tao/MessagingC.h
+	  TAO/tao/MessagingS.cpp
+ 	  TAO/tao/MessagingS.h
+	  TAO/tao/MessagingS_T.cpp
+	  TAO/tao/POA_CORBA.h
+	  TAO/tao/PollableC.cpp
+	  TAO/tao/PollableC.h
+	  TAO/tao/PollableS.cpp
+	  TAO/tao/PollableS.h
+	  TAO/tao/Reply_Dispatcher.cpp
+	  TAO/tao/Reply_Dispatcher.h
+	  TAO/tao/Typecode_Constants.cpp: Introduced the TAO_HAS_AMI_CALLBACK and
+	  TAO_HAS_AMI_POLLER define. Removed the TAO_POLLER define.
+
+	* TAO/tests/AMI/client.cpp,
+	  TAO/tests/AMI/client.dsp,
+	  TAO/tests/AMI/run_test.pl,
+	  TAO/tests/AMI/server.cpp,
+	  TAO/tests/AMI/server.dsp,
+	  TAO/tests/AMI/test.idl,
+	  TAO/tests/AMI/test_i.cpp,
+	  TAO/tests/AMI/test_i.h: Revived this test again.
+
+
 Tue Aug 24 00:47:47 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* TAO/examples/Load_Balancing/Makefile:
