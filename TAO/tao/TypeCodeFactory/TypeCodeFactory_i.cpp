@@ -536,8 +536,17 @@ TAO_TypeCodeFactory_i::create_recursive_tc (
                   CORBA::TypeCode::OFFSET_LIST,
                   CORBA::TypeCode::_nil ());
   list->enqueue_tail (initial_offset);
-  (void) map->bind (CORBA::string_dup (id),
-                    list);
+  char *str = CORBA::string_dup (id);
+  int status = map->bind (str, list);
+                          
+  if (status != 0)
+    {
+      CORBA::string_free (str);
+      delete list;
+      delete map;
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
 
   TAO_OutputCDR cdr;
   CORBA::Long max_neg = 0xffffffff;
@@ -1582,7 +1591,7 @@ TAO_TypeCodeFactory_i::update_map (
           propagating_recursion = ACE_OS::strcmp (member_id, id);
         }
 
-      if (propagating_recursion)
+     if (propagating_recursion)
         {
           ACE_NEW (offset_list,
                    CORBA::TypeCode::OFFSET_LIST);
@@ -1647,7 +1656,18 @@ TAO_TypeCodeFactory_i::update_map (
 
       if (no_matching_id && offset_map != 0)
         {
-          (void) offset_map->bind (member_id, offset_list);
+          char *str = CORBA::string_dup (member_id);
+          int status = offset_map->bind (str, offset_list);
+          
+          if (status != 0)
+            {
+              CORBA::string_free (str);
+              
+              if (propagating_recursion)
+                {
+                  delete offset_list;
+                }
+            }
         }
     }
 }
@@ -1686,12 +1706,28 @@ template class ACE_Bounded_Set_Iterator<CORBA::ULong>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, int>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, \
+                                                  int, \
+                                                  ACE_Hash<ACE_CString>, \
+                                                  ACE_Equal_To<ACE_CString>, \
+                                                  ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, \
+                                             int, \
+                                             ACE_Hash<ACE_CString>, \
+                                             ACE_Equal_To<ACE_CString>, \
+                                             ACE_Null_Mutex>
 #pragma instantiate ACE_Equal_To<ACE_CString>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, \
+                                                     int, \
+                                                     ACE_Hash<ACE_CString>, \
+                                                     ACE_Equal_To<ACE_CString>, \
+                                                     ACE_Null_Mutex>
 #pragma instantiate ACE_Hash<ACE_CString>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, \
+                                            int, \
+                                            ACE_Hash<ACE_CString>, \
+                                            ACE_Equal_To<ACE_CString>, \
+                                            ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex>
 #pragma instantiate ACE_Bounded_Set<CORBA::Long>
 #pragma instantiate ACE_Bounded_Set<CORBA::ULong>
