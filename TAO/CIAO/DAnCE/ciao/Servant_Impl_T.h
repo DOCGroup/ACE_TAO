@@ -43,7 +43,7 @@ namespace CIAO
             typename EXEC_VAR, 
             typename CONTEXT>
   class Servant_Impl : public virtual BASE_SKEL,
-                       public Servant_Impl_Base
+                       public virtual Servant_Impl_Base
   {
   public:
     Servant_Impl (EXEC * exe,
