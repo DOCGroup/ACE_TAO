@@ -1,3 +1,11 @@
+Wed Jun 23 15:24:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Asynch_Queued_Message.h:
+        * tao/ORB.h:
+        * tao/Profile.h:
+        * tao/Profile_Transport_Resolver.h:
+          Small doxygen tag and documentation updates
+
 Wed Jun 23 12:26:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Allocator.h:
