@@ -27,8 +27,10 @@ ACE_SV_Semaphore_Simple::control (int cmd,
       semun semctl_arg;
 
       semctl_arg.val = value;
-      return ACE_OS::semctl (this->internal_id_, semnum, 
-			     cmd, semctl_arg);
+      return ACE_OS::semctl (this->internal_id_,
+                             semnum, 
+			     cmd,
+                             semctl_arg);
     }
 }
 

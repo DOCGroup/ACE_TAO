@@ -8,9 +8,6 @@
 #include "Malloc.h"
 #include "Options.h"
 
-// Global thread manager.
-static ACE_Thread_Manager thread_manager;
-
 static int
 gen_size (void)
 {
@@ -40,24 +37,32 @@ malloc_recurse (int count)
       void *ptr = Malloc::instance ()->malloc (alloc_size);
 
       if (ptr == 0)
-        ACE_ERROR ((LM_ERROR, "(%P|%t) *** malloc of size %d failed, %p\n%a",
-                   "malloc", alloc_size));
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) *** malloc of size %d failed, %p\n%a",
+                   "malloc",
+                    alloc_size));
       else
         {
           ACE_OS::memset (ptr, default_char++, alloc_size);
 
           if (Options::instance ()->debug ())
-            ACE_DEBUG ((LM_INFO, "(%P|%t) %u (alloc), size = %d\n", ptr, alloc_size));
+            ACE_DEBUG ((LM_INFO,
+                        "(%P|%t) %u (alloc), size = %d\n",
+                        ptr,
+                        alloc_size));
 
           // Call ourselves recursively
           malloc_recurse (count - 1);
 
           if (Options::instance ()->debug ())
-            ACE_DEBUG ((LM_INFO, "(%P|%t) %u (free), size = %d\n", ptr, alloc_size));
-
+            ACE_DEBUG ((LM_INFO,
+                        "(%P|%t) %u (free), size = %d\n",
+                        ptr,
+                        alloc_size));
           Malloc::instance ()->free (ptr);
         }
     }
+
   return 0;
 }
 
@@ -82,13 +87,15 @@ spawn (void)
   if (Options::instance ()->spawn_threads ())
     {
 #if defined (ACE_HAS_THREADS)
-      if (thread_manager.spawn (ACE_THR_FUNC (worker),
-                         (void *) Options::instance ()->iteration_count (),
-                         THR_BOUND) == -1)
+      if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (worker),
+                                                  (void *) Options::instance ()->iteration_count (),
+                                                  THR_BOUND) == -1)
         ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 #else
       if (Options::instance ()->spawn_count () > 1)
-        ACE_ERROR ((LM_ERROR, "only one thread may be run in a process on this platform\n%a", 1));
+        ACE_ERROR ((LM_ERROR,
+                    "only one thread may be run in a process on this platform\n%a",
+                    1));
 #endif /* ACE_HAS_THREADS */
     }
 #if !defined (ACE_WIN32)
@@ -99,9 +106,12 @@ spawn (void)
           char iterations[20];
           char msg_size[20];
 
-          ACE_OS::sprintf (iterations, "%d", Options::instance ()->iteration_count ());
-          ACE_OS::sprintf (msg_size, "%d", Options::instance ()->max_msg_size ());
-
+          ACE_OS::sprintf (iterations,
+                           "%d",
+                           Options::instance ()->iteration_count ());
+          ACE_OS::sprintf (msg_size,
+                           "%d",
+                           Options::instance ()->max_msg_size ());
           char *argv[] =
           {
             (char *) Options::instance ()->slave_name (),
@@ -126,6 +136,7 @@ spawn (void)
                       Options::instance ()->iteration_count ()));
 
           malloc_recurse (Options::instance ()->iteration_count ());
+          Malloc::instance ()->remove ();
           ACE_OS::exit (0);
         }
     }
@@ -141,7 +152,7 @@ wait_for_children (void)
     {
 #if defined (ACE_HAS_THREADS)
       // Wait for the threads to terminate.
-      thread_manager.wait ();
+      ACE_Thread_Manager::instance ()->wait ();
 #else
       malloc_recurse (Options::instance ()->iteration_count ());
 #endif /* ACE_HAS_THREADS */
@@ -182,11 +193,14 @@ main (int argc, char *argv[])
 
       // We've been forked...
       malloc_recurse (Options::instance ()->iteration_count ());
+      Malloc::instance ()->remove ();
     }
   else
 #endif /* ACE_WIN32 */
     {
-      for (size_t i = 0; i < Options::instance ()->spawn_count (); i++)
+      for (size_t i = 0;
+           i < Options::instance ()->spawn_count ();
+           i++)
         spawn ();
 
       wait_for_children ();
