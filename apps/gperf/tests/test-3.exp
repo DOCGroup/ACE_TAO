@@ -1,6 +1,6 @@
 /* C code produced by gperf version 2.6 (GNU C++ version) */
-/* Command-line: ../src/gperf -p -j 1 -g -o -a -C -g -t -k1,4,$  */
-/* Command-line: gperf -p -j1 -g -o -t -N is_reserved_word -k1,4,$ gplus.gperf  */
+/* Command-line: ../src/gperf -p -j 1 -o -a -C -g -t -k1,4,$  */
+/* Command-line: gperf -p -j1 -o -t -N is_reserved_word -k1,4,$ gplus.gperf  */
 #include <string.h>
 struct resword { char *name; short token; enum rid rid;};
 
