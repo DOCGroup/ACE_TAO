@@ -93,18 +93,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip.in ()))
@@ -118,7 +118,7 @@ main (int argc, char *argv[])
       for (int j = 0; j < 100; ++j)
         {
           ACE_hrtime_t start = 0;
-          (void) roundtrip->test_method (start TAO_ENV_ARG_PARAMETER);
+          (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -139,19 +139,19 @@ main (int argc, char *argv[])
 
               request[j] =
                 roundtrip->_request ("test_method"
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               request[j]->add_in_arg () <<= start;
               request[j]->set_return_type (CORBA::_tc_ulonglong);
 
-              request[j]->send_deferred (TAO_ENV_SINGLE_ARG_PARAMETER);
+              request[j]->send_deferred (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
           for (j = 0; j != burst; ++j)
             {
-              request[j]->get_response (TAO_ENV_SINGLE_ARG_PARAMETER);
+              request[j]->get_response (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CORBA::ULongLong retval;
@@ -187,7 +187,7 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          roundtrip->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -13,11 +13,11 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 
 void
 Roundtrip::invoke (CORBA::ServerRequest_ptr request
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
 {
   if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
     {
-      this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       return;
@@ -26,18 +26,18 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   else if (ACE_OS::strcmp ("_is_a", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list TAO_ENV_ARG_PARAMETER);
+      this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Any type_id (CORBA::_tc_string);
       list->add_value ("type_id", type_id, CORBA::ARG_IN
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      request->arguments (list TAO_ENV_ARG_PARAMETER);
+      request->arguments (list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::NamedValue_ptr nv = list->item (0 TAO_ENV_ARG_PARAMETER);
+      CORBA::NamedValue_ptr nv = list->item (0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       const char *arg;
@@ -52,7 +52,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
       CORBA::Any result;
       result <<= CORBA::Any::from_boolean (type_matches);
 
-      request->set_result (result TAO_ENV_ARG_PARAMETER);
+      request->set_result (result ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       return;
@@ -61,21 +61,21 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   else if (ACE_OS::strcmp ("test_method", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list TAO_ENV_ARG_PARAMETER);
+      this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Any send_time (CORBA::_tc_ulonglong);
       list->add_value ("send_time", send_time, CORBA::ARG_IN
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      request->arguments (list TAO_ENV_ARG_PARAMETER);
+      request->arguments (list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::NamedValue_ptr nv = list->item (0 TAO_ENV_ARG_PARAMETER);
+      CORBA::NamedValue_ptr nv = list->item (0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      request->set_result (*(nv->value ()) TAO_ENV_ARG_PARAMETER);
+      request->set_result (*(nv->value ()) ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       return;
@@ -84,14 +84,14 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   CORBA::Any bad_operation;
   CORBA::BAD_OPERATION exception;
   bad_operation <<= exception;
-  request->set_exception (bad_operation TAO_ENV_ARG_PARAMETER);
+  request->set_exception (bad_operation ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 CORBA::RepositoryId
 Roundtrip::_primary_interface (const PortableServer::ObjectId &,
                                PortableServer::POA_ptr
-                               TAO_ENV_ARG_DECL_NOT_USED)
+                               ACE_ENV_ARG_DECL_NOT_USED)
 {
   return CORBA::string_dup ("IDL:Test/Roundtrip:1.0");
 }

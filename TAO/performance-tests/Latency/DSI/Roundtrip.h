@@ -28,11 +28,11 @@ public:
 
   // = The DSI methods
   virtual void invoke (CORBA::ServerRequest_ptr request
-                       TAO_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL);
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa
-      TAO_ENV_ARG_DECL);
+      ACE_ENV_ARG_DECL);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown
