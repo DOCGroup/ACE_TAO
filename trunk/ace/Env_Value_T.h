@@ -75,6 +75,61 @@ template <class T> void ACE_Convert (const char *s, T &t);
 #include "ace/Env_Value_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
+
+// Default calls a CTOR on type T of the form 'T::T(const char*)', but
+// users can feel free to create their own specialized conversion
+// functions if necessary, as shown below.  Note that for 'char*' the
+// default is used because a simple cast will be performed and no
+// conversion will be necessary.
+
+template <class T> inline void
+ACE_Convert (const char *s, T &t)
+{
+  t = T (s);
+}
+
+inline void
+ACE_Convert (const char *s, char *&v)
+{
+  v = (char *) s;
+}
+
+inline void
+ACE_Convert (const char *s, short &si)
+{
+  si = ACE_static_cast (short, ACE_OS::strtol (s, 0, 10));
+}
+
+inline void
+ACE_Convert (const char *s, unsigned short &us)
+{
+  us = ACE_static_cast (unsigned short, ACE_OS::strtol (s, 0, 10));
+}
+
+inline void
+ACE_Convert (const char *s, long &l)
+{
+  l = ACE_OS::strtol (s, 0, 10);
+}
+
+inline void
+ACE_Convert (const char *s, int &i)
+{
+  i = ACE_static_cast (int, ACE_OS::strtol (s, 0, 10));
+}
+
+inline void
+ACE_Convert (const char *s, u_long &ul)
+{
+  ul = ACE_OS::strtoul (s, 0, 10);
+}
+
+inline void
+ACE_Convert (const char *s, double &d)
+{
+  d = ACE_OS::strtod (s, 0);
+}
+
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Env_Value_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
