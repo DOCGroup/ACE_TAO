@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    SOCK_Connector_Test.cpp
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Steve Huston
-// 
+//
 // ============================================================================
 
 #include "ace/OS.h"
@@ -22,10 +22,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 #include "test_config.h"
-
-#if !defined (ACE_WIN32) && !defined (VXWORKS)  && !defined (ACE_PSOS)
-#include <sys/utsname.h>
-#endif /* !defined (ACE_WIN32) && !defined (VXWORKS) */
 
 // The original problem this program tested for was incorrectly saying
 // a non-blocking connect completed successfully when it didn't.  The
@@ -36,10 +32,10 @@
 static void
 find_another_host (char other_host[])
 {
-  ACE_OS::strcpy (other_host, ACE_DEFAULT_SERVER_HOST);	// If all else fails
+  ACE_OS::strcpy (other_host, ACE_DEFAULT_SERVER_HOST); // If all else fails
 
   // These gethost-type things don't work everywhere.
-#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_NETBSD) && !defined (ACE_PSOS)
+#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_NETBSD) && !defined (ACE_PSOS) && !defined (__Lynx__)
   struct hostent *h;
   struct utsname un;
 
@@ -48,26 +44,26 @@ find_another_host (char other_host[])
   h = ACE_OS::gethostbyname (un.nodename);
 
   // Use me if can't find another
-  ACE_OS::strcpy (other_host, h->h_name);	
+  ACE_OS::strcpy (other_host, h->h_name);
 
   // @@ We really need to add wrappers for these hostent methods.
   sethostent (1);
 
-  while ((h = gethostent ()) != NULL) 
+  while ((h = gethostent ()) != NULL)
     {
       if (ACE_OS::strcmp (h->h_name, ACE_DEFAULT_SERVER_HOST) == 0)
-	continue;
+        continue;
       // AIX just _has_ to be different
       if (ACE_OS::strcmp (h->h_name, "loopback") == 0)
-	continue;
+        continue;
 
       // If not me
       if (ACE_OS::strcmp (h->h_name, other_host) != 0 &&
-	  ACE_OS::strcmp (h->h_name, un.nodename) != 0   )
-	{
-	  ACE_OS::strcpy (other_host, h->h_name);
-	  break;
-	}
+          ACE_OS::strcmp (h->h_name, un.nodename) != 0   )
+        {
+          ACE_OS::strcpy (other_host, h->h_name);
+          break;
+        }
     }
 
   endhostent ();
@@ -90,7 +86,7 @@ fail_no_listener_nonblocking (void)
   status = con.connect (sock, nobody_home, &nonblock);
 
   // Need a port that will fail.
-  ACE_ASSERT (status == -1);		
+  ACE_ASSERT (status == -1);
 
   // On some systems, a failed connect to localhost will return
   // ECONNREFUSED or ENETUNREACH directly, instead of
@@ -101,28 +97,28 @@ fail_no_listener_nonblocking (void)
       if (sock.get_handle () != ACE_INVALID_HANDLE)
         status = con.complete (sock);
 
-      if (status != -1) 
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Connect which should fail didn't\n"));
-	  status = -1;
-	}
-      else 
-	{
-	  ACE_DEBUG ((LM_DEBUG, "%p\n", "Proper fail"));
-	  status = 0;
-	}
+      if (status != -1)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Connect which should fail didn't\n"));
+          status = -1;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "%p\n", "Proper fail"));
+          status = 0;
+        }
     }
-  else 
+  else
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "Test not executed fully; expected EWOULDBLOCK, %p\n",
-		  "not"));
+                  "Test not executed fully; expected EWOULDBLOCK, %p\n",
+                  "not"));
       status = -1;
     }
 
   // Just in case.
-  sock.close ();    
+  sock.close ();
 
   return status;
 }
@@ -140,4 +136,3 @@ main (int, char *[])
   ACE_END_TEST;
   return status;
 }
-
