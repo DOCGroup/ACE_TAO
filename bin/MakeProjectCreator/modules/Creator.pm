@@ -37,20 +37,23 @@ sub new {
   my($type)     = shift;
   my($self)     = Parser::new($class);
 
-  $self->{'relative'}      = $relative;
-  $self->{'template'}      = $template;
-  $self->{'ti'}            = $ti;
-  $self->{'global_cfg'}    = $global;
-  $self->{'grammar_type'}  = $type;
-  $self->{'type_check'}    = $type . '_defined';
-  $self->{'global_read'}   = 0;
-  $self->{'include_path'}  = $inc;
-  $self->{'current_input'} = '';
-  $self->{'progress'}      = $progress;
-  $self->{'addtemp'}       = $addtemp;
-  $self->{'addproj'}       = $addproj;
-  $self->{'toplevel'}      = $toplevel;
-  $self->{'files_written'} = [];
+  $self->{'relative'}       = $relative;
+  $self->{'template'}       = $template;
+  $self->{'ti'}             = $ti;
+  $self->{'global_cfg'}     = $global;
+  $self->{'grammar_type'}   = $type;
+  $self->{'type_check'}     = $type . '_defined';
+  $self->{'global_read'}    = 0;
+  $self->{'include_path'}   = $inc;
+  $self->{'current_input'}  = '';
+  $self->{'progress'}       = $progress;
+  $self->{'addtemp'}        = $addtemp;
+  $self->{'addproj'}        = $addproj;
+  $self->{'toplevel'}       = $toplevel;
+  $self->{'files_written'}  = [];
+  $self->{'reading_global'} = 0;
+  $self->{'global_assign'}  = {};
+  $self->{'assign'}         = {};
 
   return $self;
 }
@@ -435,9 +438,91 @@ sub extension_recursive_input_list {
   return @files;
 }
 
+
+sub process_assignment {
+  my($self)   = shift;
+  my($name)   = shift;
+  my($value)  = shift;
+  my($assign) = shift;
+  my($tag)    = ($self->{'reading_global'} ? 'global_assign' : 'assign');
+
+  ## If no hash table was passed in
+  if (!defined $assign) {
+    $assign = $self->{$tag};
+  }
+
+  ## If we haven't yet defined the hash table in this project
+  if (!defined $assign) {
+    $assign = {};
+    $self->{$tag} = $assign;
+  }
+
+  if (defined $value) {
+    $value =~ s/^\s+//;
+    $value =~ s/\s+$//;
+
+    if ($self->convert_slashes()) {
+      $value = $self->slash_to_backslash($value);
+    }
+  }
+
+  $$assign{$name} = $value;
+}
+
+
+sub process_assignment_add {
+  my($self)   = shift;
+  my($name)   = shift;
+  my($value)  = shift;
+  my($assign) = shift;
+  my($nval)   = $self->get_assignment($name, $assign);
+  if (defined $nval) {
+    $nval = "$value $nval";
+  }
+  else {
+    $nval = $value;
+  }
+  $self->process_assignment($name, $nval, $assign);
+  $self->process_duplicate_modification($name, $assign);
+}
+
+
+sub process_assignment_sub {
+  my($self)   = shift;
+  my($name)   = shift;
+  my($value)  = shift;
+  my($assign) = shift;
+  my($nval)   = $self->get_assignment($name, $assign);
+
+  if (defined $nval) {
+    my($parts) = $self->create_array($nval);
+    $nval = '';
+    foreach my $part (@$parts) {
+      if ($part ne $value && $part ne '') {
+        $nval .= "$part ";
+      }
+    }
+    $self->process_assignment($name, $nval, $assign);
+  }
+}
+
+
+sub get_assignment {
+  my($self) = shift;
+  my($name) = shift;
+  my($tag)  = ($self->{'reading_global'} ? 'global_assign' : 'assign');
+  return $self->{$tag}->{$name};
+}
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
+
+sub process_duplicate_modification {
+  #my($self)   = shift;
+  #my($name)   = shift;
+  #my($assign) = shift;
+}
 
 sub generate_recursive_input_list {
   #my($self) = shift;

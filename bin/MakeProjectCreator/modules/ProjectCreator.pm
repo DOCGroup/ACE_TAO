@@ -90,9 +90,7 @@ sub new {
                                 $progress, $toplevel, 'project');
 
   $self->{$self->{'type_check'}}   = 0;
-  $self->{'global_assign'}         = {};
   $self->{'project_info'}          = [];
-  $self->{'reading_global'}        = 0;
   $self->{'reading_parent'}        = [];
   $self->{'dexe_template_input'}   = undef;
   $self->{'lexe_template_input'}   = undef;
@@ -492,74 +490,6 @@ sub parse_verbatim {
   }
 
   return 1;
-}
-
-
-sub process_assignment {
-  my($self)   = shift;
-  my($name)   = shift;
-  my($value)  = shift;
-  my($assign) = shift;
-  my($tag)    = ($self->{'reading_global'} ? 'global_assign' : 'assign');
-
-  ## If no hash table was passed in
-  if (!defined $assign) {
-    $assign = $self->{$tag};
-  }
-
-  ## If we haven't yet defined the hash table in this project
-  if (!defined $assign) {
-    $assign = {};
-    $self->{$tag} = $assign;
-  }
-
-  if (defined $value) {
-    $value =~ s/^\s+//;
-    $value =~ s/\s+$//;
-
-    if ($self->convert_slashes()) {
-      $value = $self->slash_to_backslash($value);
-    }
-  }
-
-  $$assign{$name} = $value;
-}
-
-
-sub process_assignment_add {
-  my($self)   = shift;
-  my($name)   = shift;
-  my($value)  = shift;
-  my($assign) = shift;
-  my($nval)   = $self->get_assignment($name, $assign);
-  if (defined $nval) {
-    $nval = "$value $nval";
-  }
-  else {
-    $nval = $value;
-  }
-  $self->process_assignment($name, $nval, $assign);
-  $self->process_duplicate_modification($name, $assign);
-}
-
-
-sub process_assignment_sub {
-  my($self)   = shift;
-  my($name)   = shift;
-  my($value)  = shift;
-  my($assign) = shift;
-  my($nval)   = $self->get_assignment($name, $assign);
-
-  if (defined $nval) {
-    my($parts) = $self->create_array($nval);
-    $nval = '';
-    foreach my $part (@$parts) {
-      if ($part ne $value && $part ne '') {
-        $nval .= "$part ";
-      }
-    }
-    $self->process_assignment($name, $nval, $assign);
-  }
 }
 
 
@@ -1277,14 +1207,6 @@ sub exe_target {
 }
 
 
-sub get_assignment {
-  my($self) = shift;
-  my($name) = shift;
-  my($tag)  = ($self->{'reading_global'} ? 'global_assign' : 'assign');
-  return $self->{$tag}->{$name};
-}
-
-
 sub get_component_list {
   my($self)  = shift;
   my($tag)   = shift;
@@ -1580,12 +1502,6 @@ sub translate_value {
     $val =~ s/\s+$//;
   }
   return $val;
-}
-
-
-sub convert_slashes {
-  #my($self) = shift;
-  return 1;
 }
 
 

@@ -1,3 +1,23 @@
+Fri Mar 21 10:42:41 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Parser.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Factored assignment processing from ProjectCreator into Creator.
+          Factored convert_slashes() from ProjectCreator into Parser.
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/Options.pm:
+
+          Factored option processing from Driver into a new module, Options.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added support for workspace specific assignments.  Currently the
+          only valid assignment is 'cmdline' which allows mwc to apply
+          command line options to a specific set of mpc files.
+
 Fri Mar 21 09:48:33 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
