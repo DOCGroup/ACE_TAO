@@ -5,12 +5,10 @@
 #include "tao/LocalObject.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"
-
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-#include "tao/InterfaceC.h"
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+#include "tao/IFR_Client_Adapter.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/LocalObject.i"
@@ -103,44 +101,66 @@ CORBA_LocalObject::_non_existent (CORBA_Environment &)
 
 void
 CORBA_LocalObject::_create_request (CORBA::Context_ptr,
-                                     const CORBA::Char *,
-                                     CORBA::NVList_ptr,
-                                     CORBA::NamedValue_ptr,
-                                     CORBA::Request_ptr &,
-                                     CORBA::Flags,
-                                     CORBA_Environment &ACE_TRY_ENV)
+                                    const CORBA::Char *,
+                                    CORBA::NVList_ptr,
+                                    CORBA::NamedValue_ptr,
+                                    CORBA::Request_ptr &,
+                                    CORBA::Flags,
+                                    CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void
 CORBA_LocalObject::_create_request (CORBA::Context_ptr,
-                                     const CORBA::Char *,
-                                     CORBA::NVList_ptr,
-                                     CORBA::NamedValue_ptr,
-                                     CORBA::ExceptionList_ptr,
-                                     CORBA::ContextList_ptr,
-                                     CORBA::Request_ptr &,
-                                     CORBA::Flags,
-                                     CORBA_Environment &ACE_TRY_ENV)
+                                    const CORBA::Char *,
+                                    CORBA::NVList_ptr,
+                                    CORBA::NamedValue_ptr,
+                                    CORBA::ExceptionList_ptr,
+                                    CORBA::ContextList_ptr,
+                                    CORBA::Request_ptr &,
+                                    CORBA::Flags,
+                                    CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 CORBA::Request_ptr
 CORBA_LocalObject::_request (const CORBA::Char *,
-                              CORBA_Environment &ACE_TRY_ENV)
+                             CORBA_Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-IR_InterfaceDef_ptr
+CORBA_IRObject_ptr
+CORBA_LocalObject::_get_interface_def (CORBA_Environment &ACE_TRY_ENV)
+{
+  TAO_IFR_Client_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+
+  CORBA::ORB_var orb = this->_stubobj ()->servant_orb_var ();
+
+  return adapter->get_interface_def (orb.in (),
+                                     this->_interface_repository_id (),
+                                     ACE_TRY_ENV);
+}
+
+IR_InterfaceDef *
 CORBA_LocalObject::_get_interface (CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  TAO_IFR_Client_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+
+  CORBA::ORB_var orb = this->_stubobj ()->servant_orb_var ();
+
+  return adapter->get_interface (orb.in (),
+                                 this->_interface_repository_id (),
+                                 ACE_TRY_ENV);
 }
-#endif /* TAO_HAS_INTERFACE_REPOSITORY */
 
 CORBA::ImplementationDef_ptr
 CORBA_LocalObject::_get_implementation (CORBA_Environment &ACE_TRY_ENV)

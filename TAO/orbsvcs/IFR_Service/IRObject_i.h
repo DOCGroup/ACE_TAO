@@ -36,7 +36,7 @@
 
 class TAO_Repository_i;
 
-class TAO_IRObject_i : public POA_CORBA::IRObject
+class TAO_IRObject_i : public POA_CORBA_IRObject
 {
   // = TITLE
   //    TAO_IRObject_i

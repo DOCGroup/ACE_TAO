@@ -22,11 +22,9 @@ struct_test(), union_test() and exception_test().
 
 To build this test, the TAO library, the TypeCodeFactory
 library, the Interface Repository (the last two found in
-TAO/orbsvcs/IFR_Service), and these test files must all be built
-either with the compiler option 'interface_repo=1' or (for
-MSVC users) the line #define TAO_HAS_INTERFACE_REPOSITORY 1
-uncommented in TAO/tao/orbconf.h. In addition, the Interface
-Repository requires the TAO_Svc_Utils library in TAO/orbsvcs/orbsvcs.
+TAO/orbsvcs/IFR_Service), and these test files must all be built. 
+In addition, the Interface Repository requires the TAO_Svc_Utils 
+library in TAO/orbsvcs/orbsvcs.
 
 To run this test, either use the Perl script run_test.pl, or
 

@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/IFR_Client/InterfaceC.h"
 #include "TCF_Export.h"
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)

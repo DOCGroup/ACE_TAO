@@ -16,10 +16,10 @@ ACE_INLINE void POA_CORBA_ConstructionPolicy::_get_policy_type_skel (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
-  POA_CORBA::Policy::_get_policy_type_skel (
+  POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
+  POA_CORBA_Policy::_get_policy_type_skel (
       req,
-      (POA_CORBA::Policy_ptr) impl,
+      (POA_CORBA_Policy_ptr) impl,
       context,
       ACE_TRY_ENV
     );
@@ -31,12 +31,12 @@ ACE_INLINE void POA_CORBA_ConstructionPolicy::copy_skel (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
-  POA_CORBA::Policy::copy_skel (
+  POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
+  POA_CORBA_Policy::copy_skel (
       req,
-      (POA_CORBA::Policy_ptr) impl,
+      (POA_CORBA_Policy_ptr) impl,
       context,
-       ACE_TRY_ENV
+      ACE_TRY_ENV
     );
 }
 ACE_INLINE void POA_CORBA_ConstructionPolicy::destroy_skel (
@@ -46,12 +46,12 @@ ACE_INLINE void POA_CORBA_ConstructionPolicy::destroy_skel (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
-  POA_CORBA::Policy::destroy_skel (
+  POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
+  POA_CORBA_Policy::destroy_skel (
       req,
-      (POA_CORBA::Policy_ptr) impl,
+      (POA_CORBA_Policy_ptr) impl,
       context,
-       ACE_TRY_ENV
+      ACE_TRY_ENV
     );
 }
 

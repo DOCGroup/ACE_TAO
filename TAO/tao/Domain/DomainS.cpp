@@ -9,8 +9,9 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "DomainS.h"
-#include "Object_Adapter.h"
-#include "Operation_Table.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Operation_Table.h"
+#include "tao/IFR_Client/InterfaceC.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
@@ -771,7 +772,7 @@ POA_CORBA_ConstructionPolicy::POA_CORBA_ConstructionPolicy (void)
 
 // copy ctor
 POA_CORBA_ConstructionPolicy::POA_CORBA_ConstructionPolicy (const POA_CORBA_ConstructionPolicy& rhs)
-  :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
+  : POA_CORBA_Policy (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -787,12 +788,12 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
     CORBA::Environment &ACE_TRY_ENV
 )
 {
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_CORBA_ConstructionPolicy *_tao_impl = (POA_CORBA_ConstructionPolicy *)_tao_object_reference;
 
   IR_InterfaceDef_var object_type;
   CORBA::Boolean constr_policy;
+
   if (!(
     (_tao_in >> object_type.out ()) &&
     (_tao_in >> CORBA::Any::to_boolean (constr_policy))
@@ -844,11 +845,6 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
 #endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply ();
-#else
-  ACE_UNUSED_ARG (_tao_server_request);
-  ACE_UNUSED_ARG (_tao_object_reference);
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-#endif /* TAO_HAS_INTERFACE_REPOSITORY */
 }
 
 void POA_CORBA_ConstructionPolicy::_is_a_skel (
@@ -912,7 +908,7 @@ void* POA_CORBA_ConstructionPolicy::_downcast (
 if (ACE_OS::strcmp (logical_type_id, "IDL:CORBA/ConstructionPolicy:1.0") == 0)
     return ACE_static_cast (POA_CORBA_ConstructionPolicy_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Policy:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::Policy_ptr, this);
+    return ACE_static_cast (POA_CORBA_Policy_ptr, this);
     if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -1052,7 +1048,7 @@ void POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::make_domain_manager 
   return;
 }
 
-#if (TAO_HAS_INTERCEPTORS == 1) && (TAO_HAS_INTERFACE_REPOSITORY == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
     TAO_ServerRequest &tao_server_request,
@@ -1080,8 +1076,8 @@ POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_ma
 
   CORBA::ULong len = parameter_list->length ();
   parameter_list->length (len + 1);
-  (*parameter_list)[len].argument <<=  this->object_type_;
-
+  (*parameter_list)[len].argument <<= this->object_type_;
+    
   (*parameter_list)[len].mode = Dynamic::PARAM_IN;
   len = parameter_list->length ();
   parameter_list->length (len + 1);
@@ -1121,6 +1117,6 @@ POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_ma
   return result_any;
 }
 
-#endif /* TAO_HAS_INTERCEPTORS && TAO_HAS_INTERFACE_REPOSITORY */
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

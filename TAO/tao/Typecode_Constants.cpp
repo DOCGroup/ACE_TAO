@@ -166,14 +166,6 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Current, 0)
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Identifier, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RepositoryId, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ORBid, 0)
 TAO_NAMESPACE_END
 
@@ -468,58 +460,6 @@ TAO_TypeCodes::init (void)
                          (char*) &_oc_CORBA_TypeCode_BadKind,
                          1,
                          sizeof (CORBA::TypeCode::BadKind));
-
-  static const CORBA::Long _oc_CORBA_Identifier[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    25,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4964),
-    ACE_NTOHL (0x656e7469),
-    ACE_NTOHL (0x66696572),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0xfdfdfd),  // repository ID = IDL:CORBA/Identifier:1.0
-    11,
-    ACE_NTOHL (0x4964656e),
-    ACE_NTOHL (0x74696669),
-    ACE_NTOHL (0x657200fd),  // name = Identifier
-    CORBA::tk_string,
-    0, // string length
-  };
-
-  CORBA::_tc_Identifier =
-    new CORBA::TypeCode (CORBA::tk_alias,
-                         sizeof (_oc_CORBA_Identifier),
-                         (char *) &_oc_CORBA_Identifier,
-                         1,
-                         sizeof (CORBA::Identifier));
-
-  static const CORBA::Long _oc_CORBA_RepositoryId[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    27,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f5265),
-    ACE_NTOHL (0x706f7369),
-    ACE_NTOHL (0x746f7279),
-    ACE_NTOHL (0x49643a31),
-    ACE_NTOHL (0x2e3000fd),  // repository ID = IDL:CORBA/RepositoryId:1.0
-    13,
-    ACE_NTOHL (0x5265706f),
-    ACE_NTOHL (0x7369746f),
-    ACE_NTOHL (0x72794964),
-    ACE_NTOHL (0xfdfdfd),  // name = RepositoryId
-    CORBA::tk_string,
-    0, // string length
-  };
-  CORBA::_tc_RepositoryId =
-    new CORBA::TypeCode (CORBA::tk_alias,
-                         sizeof (_oc_CORBA_RepositoryId),
-                         (char *) &_oc_CORBA_RepositoryId,
-                         1,
-                         sizeof (CORBA::RepositoryId));
 
   static const CORBA::Long _oc_CORBA_ORB_InvalidName[] =
   {
@@ -1716,10 +1656,6 @@ TAO_TypeCodes::fini (void)
   CORBA::release (CORBA::_tc_PolicyList);
 
   CORBA::release (CORBA::_tc_Current);
-
-  CORBA::release (CORBA::_tc_Identifier);
-
-  CORBA::release (CORBA::_tc_RepositoryId);
 
   CORBA::release (CORBA::ORB::_tc_InvalidName);
 

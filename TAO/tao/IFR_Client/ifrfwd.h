@@ -26,14 +26,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-
+#include "ifr_client_export.h"
 #include "tao/corbafwd.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_IFR_Client_Export
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -427,22 +427,22 @@ TAO_NAMESPACE  IR
   typedef char * Identifier;
   typedef CORBA::String_var Identifier_var;
   typedef CORBA::String_out Identifier_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Identifier;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Identifier;
 
   typedef char * ScopedName;
   typedef CORBA::String_var ScopedName_var;
   typedef CORBA::String_out ScopedName_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ScopedName;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ScopedName;
 
   typedef char * RepositoryId;
   typedef CORBA::String_var RepositoryId_var;
   typedef CORBA::String_out RepositoryId_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RepositoryId;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RepositoryId;
 
   typedef char * VersionSpec;
   typedef CORBA::String_var VersionSpec_var;
   typedef CORBA::String_out VersionSpec_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_VersionSpec;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_VersionSpec;
 
   typedef char * ContextIdentifier;
   typedef CORBA::String_var ContextIdentifier_var;
@@ -592,6 +592,12 @@ TAO_NAMESPACE  IR
   typedef IR_UsesDef_var UsesDef_var;
   typedef IR_UsesDef_out UsesDef_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_UsesDef;
+
+  typedef IR_UsesDescription UsesDescription;
+  typedef IR_UsesDescription_var UsesDescription_var;
+  typedef IR_UsesDescription_out UsesDescription_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IR_UsesDescription;
+
 
   typedef IR_UsesDefSeq UsesDefSeq;
   typedef IR_UsesDefSeq_var UsesDefSeq_var;
@@ -925,8 +931,6 @@ TAO_NAMESPACE_CLOSE // module IR
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
 #include "ace/post.h"
 #endif /* TAO_IFRFWD_H */

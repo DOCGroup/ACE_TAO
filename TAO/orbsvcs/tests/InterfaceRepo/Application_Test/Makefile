@@ -29,7 +29,7 @@ CLNT_TEST_OBJS = client.o ifr_dii_client.o
 
 SVR_TEST_OBJS = testC.o testS.o server.o test_i.o
 
-BIN_UNCHECKED = client server
+BIN = client server
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -39,11 +39,6 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(interface_repo),1)
-  BIN=$(BIN_UNCHECKED)
-endif # interface_repo
-
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

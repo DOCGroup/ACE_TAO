@@ -14,7 +14,7 @@
 //    IR objects into the repository with one function, and querying the
 //    repository with another, with a repository shutdown in between.
 //
-// = AUTHORS
+// = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
@@ -22,6 +22,7 @@
 #if !defined (PTEST_H)
 #define PTEST_H
 
+#include "tao/IFR_Client/InterfaceC.h"
 #include "tao/corba.h"
 
 class Ptest

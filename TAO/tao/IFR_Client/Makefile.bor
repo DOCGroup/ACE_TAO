@@ -1,0 +1,29 @@
+#
+# Makefile for building the TAO IFR Client library
+#
+
+NAME = TAO_IFR_Client
+
+OBJFILES = \
+	$(OBJDIR)\InterfaceC.obj \
+        $(OBJDIR)\IFR_Client_Adapter_Impl
+
+!ifdef STATIC
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IFR_CLIENT_CFLAGS)
+!else
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IFR_CLIENT_CFLAGS) \
+	-DTAO_IFR_CLIENT_BUILD_DLL
+!endif
+
+CPPDIR = .
+
+INCDIR_NAME = tao/IFR_Client
+INCLUDES = \
+	*.h *.i
+
+LIBFILES = \
+        $(TAO_DOMAIN_LIB) \
+	$(TAO_LIB) \
+	$(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

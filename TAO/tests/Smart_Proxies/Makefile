@@ -17,7 +17,7 @@ LDFLAGS += -L$(ACE_ROOT)/bin
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
-BIN_UNCHECKED = client server
+BIN = client server
 DIRS=On_Demand
 FILES = Smart_Proxy_Impl
 
@@ -34,11 +34,6 @@ TAO_IDLFLAGS += -Ge 1 -Gsp
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(smart_proxies),1)
-BIN=$(BIN_UNCHECKED)
-endif # smart_proxies
-
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

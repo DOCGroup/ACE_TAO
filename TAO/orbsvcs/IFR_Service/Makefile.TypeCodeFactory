@@ -12,11 +12,11 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
+LDLIBS = -lTAO_IFR_Client -lTAO -lACE
 
 LIBNAME = libTypeCodeFactory_DLL
-LIB_UNCHECKED = $(LIBNAME).a
-SHLIB_UNCHECKED = $(LIBNAME).$(SOEXT)
+LIB = $(LIBNAME).a
+SHLIB = $(LIBNAME).$(SOEXT)
 
 LSRC = \
 	TypeCodeFactoryC.cpp \
@@ -30,12 +30,6 @@ LSRC = \
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(interface_repo),1)
-  LIB = $(LIB_UNCHECKED)
-  SHLIB = $(SHLIB_UNCHECKED)
-endif # interface_repo
-
 include $(TAO_ROOT)/taoconfig.mk
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU

@@ -13,9 +13,11 @@ DIRS = \
   PortableServer \
   DynamicAny \
   DynamicInterface \
+  IFR_Client \
   IORManipulation \
   IORTable \
   Strategies \
+  Domain \
   SmartProxies
 
 # These are headers for things which are exported and must be
@@ -279,7 +281,7 @@ ORB_CORE_FILES += \
   Dynamic_Adapter
 
 INTERFACE_REPO_FILES += \
-  InterfaceC
+  IFR_TypeCodes
 
 endif # minimum_corba
 

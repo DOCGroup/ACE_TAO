@@ -71,12 +71,6 @@
 #include "tao/DomainC.h"
 #include "tao/WrongTransactionC.h"
 
-#ifdef TAO_HAS_INTERFACE_REPOSITORY
-// Interface repository
-#include "tao/InterfaceC.h"
-
-#endif /*TAO_HAS_INTERFACE_REPOSITORY */
-
 #include "tao/BoundsC.h"
 #include "tao/TAOC.h"
 #include "tao/MessagingC.h"

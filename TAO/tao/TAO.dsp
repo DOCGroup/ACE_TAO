@@ -1430,6 +1430,44 @@ SOURCE=.\GIOPC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFR_Client_Adapter.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_TypeCodes.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Acceptor.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1621,25 +1659,6 @@ SOURCE=.\IIOPC.cpp
 # Begin Source File
 
 SOURCE=.\Interceptor_List.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3891,7 +3910,7 @@ SOURCE=.\GIOPS_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ifrfwd.h
+SOURCE=.\IFR_Client_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -3936,10 +3955,6 @@ SOURCE=.\IIOPC.h
 # Begin Source File
 
 SOURCE=.\Interceptor_List.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
 
@@ -4664,10 +4679,6 @@ SOURCE=.\IIOPC.i
 # Begin Source File
 
 SOURCE=.\Interceptor_List.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.i
 # End Source File
 # Begin Source File
 

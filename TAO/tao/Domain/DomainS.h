@@ -11,17 +11,17 @@
 #define _TAO_IDL_ORIG_DOMAINS_H_
 
 #include "ace/pre.h"
-
-#include "PortableServerC.h"
-#include "POA_CORBA.h"
-#include "Servant_Base.h"
-#include "Collocated_Object.h"
-#include "tao/DomainC.h"
-#include "ServerRequestInfo.h"
+#include "domain_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/DomainC.h"
+#include "tao/PortableServer/PolicyS.h"
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/PortableServer/Collocated_Object.h"
+#include "tao/PortableServer/ServerRequestInfo.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -30,126 +30,129 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-  class POA_CORBA_DomainManager;
-  typedef POA_CORBA_DomainManager *POA_CORBA_DomainManager_ptr;
-  class TAO_PortableServer_Export POA_CORBA_DomainManager :  public virtual PortableServer::ServantBase
-  {
-  protected:
-    POA_CORBA_DomainManager (void);
+class POA_CORBA_DomainManager;
+typedef POA_CORBA_DomainManager *POA_CORBA_DomainManager_ptr;
 
-  public:
-    POA_CORBA_DomainManager (const POA_CORBA_DomainManager& rhs);
-    virtual ~POA_CORBA_DomainManager (void);
+class TAO_Domain_Export POA_CORBA_DomainManager 
+  : public virtual PortableServer::ServantBase
+{
+protected:
+  POA_CORBA_DomainManager (void);
+
+public:
+  POA_CORBA_DomainManager (const POA_CORBA_DomainManager& rhs);
+  virtual ~POA_CORBA_DomainManager (void);
 
 
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+  virtual CORBA::Boolean _is_a (
+      const char* logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
 
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
+  virtual void* _downcast (
+      const char* logical_type_id
+    );
 
-    static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+  static void _is_a_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
 
-    static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+  static void _non_existent_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
 
-    virtual void _dispatch (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+  virtual void _dispatch (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
 
-    ::CORBA::DomainManager *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+  ::CORBA::DomainManager *_this (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
 
-    virtual const char* _interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 
-    virtual CORBA::Policy_ptr get_domain_policy (
-        CORBA::PolicyType policy_type,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+  virtual CORBA::Policy_ptr get_domain_policy (
+      CORBA::PolicyType policy_type,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    static void get_domain_policy_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+  static void get_domain_policy_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-    // Generation of interceptors related RequestInfo classes per operation.
-    // This needed to be able to store the arguments, exceptiosn, constexts
-    // and build the lists dynamically on demand so that unnecessary time overhead
-    // of building these lists when they arent used is avoided.
-    class TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy : public TAO_ServerRequestInfo
-    {
-    public:
-      friend class POA_CORBA_DomainManager;
-      TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (
-          TAO_ServerRequest &_tao_server_request,
-          POA_CORBA_DomainManager *tao_impl,
-          CORBA::PolicyType& policy_type,
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        );
+  // Generation of interceptors related RequestInfo classes per operation.
+  // This needed to be able to store the arguments, exceptiosn, constexts
+  // and build the lists dynamically on demand so that unnecessary time
+  // overhead of building these lists when they arent used is avoided.
+  class TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy 
+    : public TAO_ServerRequestInfo
+  {
+  public:
+    friend class POA_CORBA_DomainManager;
+    TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (
+        TAO_ServerRequest &_tao_server_request,
+        POA_CORBA_DomainManager *tao_impl,
+        CORBA::PolicyType& policy_type,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
-      virtual Dynamic::ParameterList * arguments (
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual Dynamic::ExceptionList * exceptions (
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual Dynamic::ExceptionList * exceptions (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual CORBA::Any * result (
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    private:
-      TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (
-          const TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy &
-        );
-      void operator= (
-          const TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy &
-        );
+  private:
+    TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (
+        const TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy &
+      );
+    void operator= (
+        const TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy &
+      );
 
-      POA_CORBA_DomainManager *_tao_impl;
+    POA_CORBA_DomainManager *_tao_impl;
 
-      CORBA::PolicyType &policy_type_;
-      void result (CORBA::Policy_ptr  result);
-      // update the result
-      CORBA::Policy_ptr _result;
-    };
+    CORBA::PolicyType &policy_type_;
+    void result (CORBA::Policy_ptr  result);
+    // update the result
+    CORBA::Policy_ptr _result;
+  };
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -159,7 +162,8 @@
 #if !defined (_CORBA_DOMAINMANAGER___THRU_POA_COLLOCATED_SH_)
 #define _CORBA_DOMAINMANAGER___THRU_POA_COLLOCATED_SH_
 
-class TAO_PortableServer_Export POA_CORBA__tao_thru_poa_collocated_DomainManager : public virtual ::CORBA::DomainManager
+class TAO_Domain_Export POA_CORBA__tao_thru_poa_collocated_DomainManager 
+  : public virtual CORBA::DomainManager
 {
 public:
   POA_CORBA__tao_thru_poa_collocated_DomainManager (
@@ -192,7 +196,7 @@ public:
 #if !defined (_CORBA_DOMAINMANAGER___DIRECT_COLLOCATED_SH_)
 #define _CORBA_DOMAINMANAGER___DIRECT_COLLOCATED_SH_
 
-class TAO_PortableServer_Export POA_CORBA__tao_direct_collocated_DomainManager 
+class TAO_Domain_Export POA_CORBA__tao_direct_collocated_DomainManager 
   : public virtual CORBA::DomainManager, 
     public virtual TAO_Collocated_Object
 {
@@ -234,7 +238,8 @@ private:
 #if defined (ACE_HAS_USING_KEYWORD)
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_PortableServer_Export POA_CORBA_DomainManager_tie : public POA_CORBA_DomainManager
+class TAO_Domain_Export POA_CORBA_DomainManager_tie 
+  : public POA_CORBA_DomainManager
 {
 public:
   POA_CORBA_DomainManager_tie (T &t);
@@ -243,7 +248,9 @@ public:
   // ctor taking a POA
   POA_CORBA_DomainManager_tie (T *tp, CORBA::Boolean release=1);
   // ctor taking pointer and an ownership flag
-  POA_CORBA_DomainManager_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+  POA_CORBA_DomainManager_tie (T *tp, 
+                               PortableServer::POA_ptr poa, 
+                               CORBA::Boolean release = 1);
   // ctor with T*, ownership flag and a POA
   ~POA_CORBA_DomainManager_tie (void);
   // dtor
@@ -253,7 +260,7 @@ public:
   // return the underlying object
   void _tied_object (T &obj);
   // set the underlying object
-  void _tied_object (T *obj, CORBA::Boolean release=1);
+  void _tied_object (T *obj, CORBA::Boolean release = 1);
   // set the underlying object and the ownership flag
   CORBA::Boolean _is_owner (void);
   // do we own it
@@ -290,7 +297,9 @@ private:
 
 class POA_CORBA_ConstructionPolicy;
 typedef POA_CORBA_ConstructionPolicy *POA_CORBA_ConstructionPolicy_ptr;
-class TAO_PortableServer_Export POA_CORBA_ConstructionPolicy : public virtual POA_CORBA::Policy
+
+class TAO_Domain_Export POA_CORBA_ConstructionPolicy 
+  : public virtual POA_CORBA_Policy
 {
 protected:
   POA_CORBA_ConstructionPolicy (void);
@@ -341,7 +350,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
   virtual void make_domain_manager (
-      IR_InterfaceDef* object_type,
+      IR_InterfaceDef *object_type,
       CORBA::Boolean constr_policy,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
@@ -386,8 +395,8 @@ public:
 #if (TAO_HAS_INTERCEPTORS == 1)
     // Generation of interceptors related RequestInfo classes per operation.
   // This needed to be able to store the arguments, exceptiosn, constexts
-  // and build the lists dynamically on demand so that unnecessary time overhead
-  // of building these lists when they arent used is avoided.
+  // and build the lists dynamically on demand so that unnecessary time
+  // overhead of building these lists when they arent used is avoided.
   class TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager 
     : public TAO_ServerRequestInfo
   {
@@ -442,8 +451,9 @@ public:
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___THRU_POA_COLLOCATED_SH_)
 #define _CORBA_CONSTRUCTIONPOLICY___THRU_POA_COLLOCATED_SH_
 
-class TAO_PortableServer_Export POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy   : public virtual ::CORBA::ConstructionPolicy,
-    public virtual POA_CORBA::_tao_thru_poa_collocated_Policy
+class TAO_Domain_Export POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy
+  : public virtual CORBA::ConstructionPolicy,
+    public virtual _tao_thru_poa_collocated_Policy
 {
 public:
   POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy (
@@ -459,7 +469,7 @@ public:
     );
 
     virtual void make_domain_manager (
-      IR_InterfaceDef* object_type,
+      IR_InterfaceDef *object_type,
       CORBA::Boolean constr_policy,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
@@ -477,7 +487,8 @@ public:
 #if defined (ACE_HAS_USING_KEYWORD)
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class TAO_PortableServer_Export POA_CORBA_ConstructionPolicy_tie : public POA_CORBA_ConstructionPolicy
+class TAO_Domain_Export POA_CORBA_ConstructionPolicy_tie : 
+  public POA_CORBA_ConstructionPolicy
 {
 public:
   POA_CORBA_ConstructionPolicy_tie (T &t);
@@ -486,7 +497,9 @@ public:
   // ctor taking a POA
   POA_CORBA_ConstructionPolicy_tie (T *tp, CORBA::Boolean release=1);
   // ctor taking pointer and an ownership flag
-  POA_CORBA_ConstructionPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+  POA_CORBA_ConstructionPolicy_tie (T *tp, 
+                                    PortableServer::POA_ptr poa, 
+                                    CORBA::Boolean release = 1);
   // ctor with T*, ownership flag and a POA
   ~POA_CORBA_ConstructionPolicy_tie (void);
   // dtor
@@ -496,7 +509,7 @@ public:
   // return the underlying object
   void _tied_object (T &obj);
   // set the underlying object
-  void _tied_object (T *obj, CORBA::Boolean release=1);
+  void _tied_object (T *obj, CORBA::Boolean release = 1);
   // set the underlying object and the ownership flag
   CORBA::Boolean _is_owner (void);
   // do we own it
