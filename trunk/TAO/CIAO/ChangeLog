@@ -1,3 +1,17 @@
+Wed Jan 14 10:59:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/releasenotes:
+
+	  New directory.
+
+	* docs/releasenotes/index.html:
+
+	  The actual document is placed here to be consistent with TAO. 
+
+	* docs/releasenotes.html:
+
+	  Removed the file since it has been moved into a new directory.
+
 Tue Jan 13 20:54:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ChangeLog:
