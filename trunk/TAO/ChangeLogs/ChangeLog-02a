@@ -1,3 +1,9 @@
+Wed Feb 27 10:39:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Asynch_Timeout_Handler.h:
+          Replaced the old TAO_Export macro with the TAO_Messaging_Export
+          macro
+
 Wed Feb 27 01:33:44 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/Makefile:
@@ -39,7 +45,7 @@ Wed Feb 27 01:33:44 2002  Carlos O'Ryan  <coryan@uci.edu>
 	* orbsvcs/performance-tests/RTEvent/lib/Supplier.cpp:
 	  Add new test library to capture shared code, start new Roundtrip
 	  delay test.
-	
+
 Wed Feb 27 09:32:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Messaging/Makefile.bor:
