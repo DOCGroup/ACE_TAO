@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// $Id$
-
-#include "Minimum_Dispersion.h"
+#include "LB_Minimum_Dispersion.h"
 #include "ReplicaProxy.h"
 
 ACE_RCSID (LoadBalancing,
-           Minimum_Dispersion,
+           LB_Minimum_Dispersion,
            "$Id$")
 
 

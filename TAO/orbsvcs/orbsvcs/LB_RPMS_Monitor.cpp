@@ -43,7 +43,7 @@ TAO_LB_RPMS_Monitor::current_load (CORBA::Environment &ACE_TRY_ENV)
   // maximize throughput in a multithreaded server replica by
   // preventing two allocations from being added to the critical path
   // of the client request.
-  // 
+  //
   // This optimization won't make a difference on single-threaded
   // server replicas.
 

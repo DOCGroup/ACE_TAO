@@ -13,7 +13,7 @@ TAO_LB_RPMS_Monitor_Interceptor::current_load (void) const
   CORBA::Float load =
     ACE_static_cast (CORBA::Float,
                      this->request_count_) / elapsed_time.msec ();
- 
+
   this->request_count_ = 0;
   this->interval_start_ = ACE_OS::gettimeofday ();
 
