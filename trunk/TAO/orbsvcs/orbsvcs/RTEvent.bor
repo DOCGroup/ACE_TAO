@@ -44,6 +44,9 @@ OBJFILES = \
 	$(OBJDIR)\EC_Group_Scheduling.obj \
 	$(OBJDIR)\EC_Gateway.obj \
    $(OBJDIR)\EC_Gateway_IIOP.obj \
+   $(OBJDIR)\EC_Gateway_IIOP_Factory.obj \
+   $(OBJDIR)\ECG_ConsumerEC_Control.obj \
+   $(OBJDIR)\ECG_Reactive_ConsumerEC_Control.obj \
    $(OBJDIR)\ECG_UDP_Out_Endpoint.obj \
 	$(OBJDIR)\ECG_Mcast_EH.obj \
 	$(OBJDIR)\ECG_UDP_Sender.obj \

@@ -1,3 +1,44 @@
+Fri Jul 25 13:09:56 UTC 2003  Johnny Willlemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h:
+          Extended the gateway with a factory and a consumer event channel
+          control. With this control the behaviour when a misbehaving consumer
+          ec is detected can be controlled.
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.h:
+          New factory for the options of the IIOP Gateway.
+
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+          Added the defaults for the new controls
+
+        * orbsvcs/orbsvcs/Event/ECG_ConsumerEC_Control.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_ConsumerEC_Control.h:
+        * orbsvcs/orbsvcs/Event/ECG_ConsumerEC_Control.i:
+          Default control that just ignores any error and continues as normal.
+          This is exactly the same as the behaviour of the IIOP Gateway before
+          this checkin. Is selected by not setting -ECGIIOPConsumerECControl or
+          setting it to null.
+
+        * orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.h:
+        * orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.i:
+          A reactive control that disconnects the consumer event channel in
+          case it misbehaves. Also it is possible to configure this control that
+          the consumer ec is polled on a certain internal. Is selected by
+          setting -ECGIIOPConsumerECControl to reactive.
+
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+          Added new files
+
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+          Doxygen improvement
+
 Thu Jul 24 17:38:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         Various scoreboard items ----
@@ -38,13 +79,13 @@ Thu Jul 24 17:38:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Messaging/MessagingS.cpp:
         * TAO_IDL/fe/fe_lookup.cpp:
 
-	  Modified char type array subscripts to be cast 
+	  Modified char type array subscripts to be cast
 	  to int, reflecting recent changes to gperf.
 
 Thu Jul 24 17:30:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/lib/Peer_T.ccp (status):
-	 
+
 	  Changed ENV to NOT_USED to fix compile warning.
 
 Thu Jul 24 16:06:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -54,47 +95,47 @@ Thu Jul 24 16:06:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  footprint of this file. The problem is that we use macros to
 	  create and initalize a tonne of system exceptions. The footprint
 	  blow up is due to code duplication. This checkin primarily tries
-	  to reduce code duplication which helps the footprint. 
+	  to reduce code duplication which helps the footprint.
 
 Thu Jul 24 14:26:12 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/Makefile: 
+	* examples/Makefile:
 
-	Updated the Makefile to include the RTScheduling DIR.  
-	
+	Updated the Makefile to include the RTScheduling DIR.
+
 	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
 	* examples/RTScheduling/MIF_Scheduler/Makefile:
 
 	Removed rules to compile FP_Scheduling.idl and
 	MIF_Scheduling.idl.
-	
+
 Thu Jul 24 13:48:33 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* orbsvcs/examples/Notify/ThreadPool/Supplier.cpp
-	  (subscription_change): 
+	  (subscription_change):
 
 	  string_var needed .in() accessor.
 
-	* orbsvcs/examples/Notify/ThreadPool/run_test.pl: 
+	* orbsvcs/examples/Notify/ThreadPool/run_test.pl:
 
 	  Fixed typo.
 
 Thu Jul 24 13:36:48 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTScheduling/Scheduler.cpp: 
-	* tests/RTScheduling/VoidData/test_client.cpp (main): 
-	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp (main): 
-	* tests/RTScheduling/Current/test.cpp: 
-	* tests/RTScheduling/Current/Thread_Task.cpp: 
-	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp: 
+	* tests/RTScheduling/Scheduler.cpp:
+	* tests/RTScheduling/VoidData/test_client.cpp (main):
+	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp (main):
+	* tests/RTScheduling/Current/test.cpp:
+	* tests/RTScheduling/Current/Thread_Task.cpp:
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
 
 	  Fixed use of ACE_ENV.
 
 Thu Jul 24 13:01:46 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp
-	  (initialize): 
-	  
+	  (initialize):
+
 	  ACE_ENV_ARG was not used in this function.
 
 Thu Jul 24 11:35:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -102,7 +143,7 @@ Thu Jul 24 11:35:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Any_Dual_Impl_T.h:
         * tao/Any_Dual_Impl_T.cpp:
 
-          Fixed a bug in the extraction of exceptions. Thanks to 
+          Fixed a bug in the extraction of exceptions. Thanks to
           Arturo Montes <mitosys@colomsat.net.co> for reporting the
           problem in the DII version of Param_Test::test_exception's
           mishandling of CORBA::UnknownUserException.
@@ -111,7 +152,7 @@ Thu Jul 24 11:36:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosTrading.idl: Thanks to Sebastien Lalonde
 	  <SLalonde@interstarinc.com> for reporting that the IDL is not
-	  spec compatible. The IDL should now be spec compliant. 
+	  spec compatible. The IDL should now be spec compliant.
 
 Thu Jul 24 11:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -119,8 +160,8 @@ Thu Jul 24 11:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Exception.cpp:
 
           Reverted the previous changes to these files. They were
-          somehow causing exceptions thrown in the servant to 
-          bypass the catch block in 
+          somehow causing exceptions thrown in the servant to
+          bypass the catch block in
           TAO_ServantBase::synchronous_upcall_dispatch and instead be
           caught in TAO_GIOP_Message_Base::process_request, where they
           were incorrectly handled.
@@ -132,7 +173,7 @@ Thu Jul 24 08:27:07 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  Reverted accidental changes. Thanks to Johnny Willemsen for
 	  pointing this out.
 
-Thu Jul 24 03:03:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>		
+Thu Jul 24 03:03:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	Two example schedulers were plugged into the Dynamic Scheduling
 	framework to illustrate the pluggable scheduler concept of the
@@ -141,13 +182,13 @@ Thu Jul 24 03:03:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	Fixed Priority Scheduler
 	------------------------
- 	
-	* examples/RTScheduling/FP_Scheduling.pidl:	
-	* examples/RTScheduling/FP_SchedulingC.h:		
+
+	* examples/RTScheduling/FP_Scheduling.pidl:
+	* examples/RTScheduling/FP_SchedulingC.h:
 	* examples/RTScheduling/FP_SchedulingC.cpp:
-	* examples/RTScheduling/FP_SchedulingC.i:			
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h:	
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp: 	
+	* examples/RTScheduling/FP_SchedulingC.i:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp:
 	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.h:
 	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.cpp:
 	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.h:
@@ -174,13 +215,13 @@ Thu Jul 24 03:03:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	MIF Scheduler
 	--------------
-	
-	* examples/RTScheduling/MIF_Scheduling.pidl:	
-	* examples/RTScheduling/MIF_SchedulingC.h:		
+
+	* examples/RTScheduling/MIF_Scheduling.pidl:
+	* examples/RTScheduling/MIF_SchedulingC.h:
 	* examples/RTScheduling/MIF_SchedulingC.cpp:
-	* examples/RTScheduling/MIF_SchedulingC.i:			
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:	
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp: 	
+	* examples/RTScheduling/MIF_SchedulingC.i:
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
 	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:
 	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
 	* examples/RTScheduling/MIF_Scheduler/MIF_Task.h:
@@ -195,7 +236,7 @@ Thu Jul 24 03:03:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	In this experiment we show how dynamic scheduling is done using
 	the Dynamic Scheduling framework with the MIF Scheduler as the
-	pluggable scheduler. 
+	pluggable scheduler.
 
 	This scheduler manages a ready queue of Distributable Threads
 	(DTs) ordered by their importance and suspended on a condition
