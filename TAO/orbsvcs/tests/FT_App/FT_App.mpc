@@ -88,6 +88,7 @@ project(*FaultConsumer): taoserver, fault_tolerance, orbsvcsexe {
   avoids += minimum_corba
   requires += exceptions
   libs    += TAO_ReplicationManagerLib
+  after   += TAO_ReplicationManagerLib
   Source_Files {
     FTAPP_FaultConsumer_Main.cpp
     ReplicationManagerFaultConsumerAdapter.cpp
@@ -110,7 +111,7 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
   }
 
   Header_Files {
- 
+
   }
   // explicitly omit IDL files
   IDL_Files {
