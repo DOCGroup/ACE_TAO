@@ -6,6 +6,9 @@ Wed Mar 26 08:47:24 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
 	  reporting this.
 
+	* netsvcs/lib/{Name_Handler.cpp,TS_Service_Handler.cpp,
+	  Token_Handler.cpp}: added template specializations.
+
 Tue Mar 25 22:54:49 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/OS.i: Added UNICODE support for ACE_OS::chdir().  Thanks to
