@@ -45,11 +45,13 @@ OBJFILES = \
 	$(OBJDIR)\Block_Flushing_Strategy.obj \
 	$(OBJDIR)\Blocked_Connect_Strategy.obj \
 	$(OBJDIR)\BoundsC.obj \
+	$(OBJDIR)\BoundsA.obj \
 	$(OBJDIR)\Buffering_Constraint_Policy.obj \
 	$(OBJDIR)\CDR.obj \
 	$(OBJDIR)\CDR_Encaps_Codec.obj \
    $(OBJDIR)\Collocated_Invocation.obj \
 	$(OBJDIR)\CONV_FRAMEC.obj \
+	$(OBJDIR)\CONV_FRAMEA.obj \
 	$(OBJDIR)\CORBALOC_Parser.obj \
 	$(OBJDIR)\CORBANAME_Parser.obj \
 	$(OBJDIR)\CORBA_String.obj \
@@ -72,6 +74,7 @@ OBJFILES = \
 	$(OBJDIR)\Connector_Impl.obj \
 	$(OBJDIR)\Connector_Registry.obj \
 	$(OBJDIR)\CurrentC.obj \
+	$(OBJDIR)\CurrentA.obj \
 	$(OBJDIR)\DLL_ORB.obj \
 	$(OBJDIR)\DLL_Parser.obj \
 	$(OBJDIR)\Default_Endpoint_Selector_Factory.obj \
@@ -79,10 +82,12 @@ OBJFILES = \
 	$(OBJDIR)\Default_Stub_Factory.obj \
 	$(OBJDIR)\Default_Thread_Lane_Resources_Manager.obj \
 	$(OBJDIR)\DomainC.obj \
+	$(OBJDIR)\DomainA.obj \
 	$(OBJDIR)\DynamicC.obj \
 	$(OBJDIR)\DynamicA.obj \
 	$(OBJDIR)\Dynamic_Adapter.obj \
    $(OBJDIR)\Dynamic_ParameterC.obj \
+   $(OBJDIR)\Dynamic_ParameterA.obj \
 	$(OBJDIR)\Encodable.obj \
 	$(OBJDIR)\Endpoint.obj \
 	$(OBJDIR)\Endpoint_Selector_Factory.obj \
@@ -93,6 +98,7 @@ OBJFILES = \
 	$(OBJDIR)\Fault_Tolerance_Service.obj \
 	$(OBJDIR)\Flushing_Strategy.obj \
 	$(OBJDIR)\GIOPC.obj \
+	$(OBJDIR)\GIOPA.obj \
 	$(OBJDIR)\GIOP_Message_Base.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_10.obj \
@@ -106,6 +112,7 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\IFR_Client_Adapter.obj \
 	$(OBJDIR)\IIOPC.obj \
+	$(OBJDIR)\IIOPA.obj \
 	$(OBJDIR)\IOP_CodecC.obj \
 	$(OBJDIR)\IOP_CodecA.obj \
 	$(OBJDIR)\IOP_IORC.obj \
@@ -115,6 +122,7 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Connector.obj \
 	$(OBJDIR)\IIOP_Endpoint.obj \
 	$(OBJDIR)\IIOP_EndpointsC.obj \
+	$(OBJDIR)\IIOP_EndpointsA.obj \
 	$(OBJDIR)\IIOP_Factory.obj \
 	$(OBJDIR)\IIOP_Lite_Factory.obj \
 	$(OBJDIR)\IIOP_Profile.obj \

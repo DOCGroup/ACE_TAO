@@ -1,3 +1,9 @@
+Tue Dec 23 19:35:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Makefile.bor:
+
+	  Updated with new files.
+
 Tue Dec 23 19:19:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/BoundsA.cpp:
@@ -8,8 +14,6 @@ Tue Dec 23 19:19:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/CurrentA.h:
 	* tao/DomainA.cpp:
 	* tao/DomainA.h:
-	* tao/DynamicA.cpp:
-	* tao/DynamicA.h:
 	* tao/Dynamic_ParameterA.cpp:
 	* tao/Dynamic_ParameterA.h:
 	* tao/GIOPA.cpp:
@@ -19,7 +23,14 @@ Tue Dec 23 19:19:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/IIOP_EndpointsA.cpp:
 	* tao/IIOP_EndpointsA.h:
 
-	  Added the generated Any files into the repository.
+	  Added the generated Any files into the repository. These were
+	  not in the repository before. This was due to a bug in the IDL
+	  compiler which was fixed in "Thu Nov 20 20:12:37 2003  Jeff
+	  Parsons <j.parsons@vanderbilt.edu>". We never updated the
+	  repository after this change.
+
+	* tao/DynamicA.cpp:
+	* tao/DynamicA.h:
 
 	* tao/tao.mpc:
 	* tao/Makefile.tao:
