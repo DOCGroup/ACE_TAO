@@ -44,7 +44,8 @@ if ($server == -1) {
   $SV->Kill (); $SV->TimedWait (1);
 }
 
-unlink $iorfile;
+unlink $iorfile1;
+unlink $iorfile2;
 
 if ($server != 0 || $client != 0) {
   exit 1;
