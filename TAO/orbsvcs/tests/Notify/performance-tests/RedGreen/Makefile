@@ -45,7 +45,7 @@ include $(TAO_ROOT)/orbsvcs/tests/Notify/notify_tests.GNU
 #----------------------------------------------------------------------------
 
 
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
+LDFLAGS += -L$(TAO_ROOT)/orbsvcs/tests/Notify/lib -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 override TAO_IDLFLAGS += -I$(TAO_ROOT)/orbsvcs -Ge 1

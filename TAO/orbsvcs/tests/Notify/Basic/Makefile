@@ -55,6 +55,8 @@ ifdef TEMPINCDIR
 COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
 endif
 
+LDFLAGS      += -L$(TAO_ROOT)/orbsvcs/tests/Notify/lib -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
+
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------

@@ -1,3 +1,19 @@
+Mon May 19 15:51:20 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Blocking/Makefile:
+        * orbsvcs/tests/Notify/Discarding/Makefile:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+        * orbsvcs/tests/Notify/Ordering/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+
+          Fixed link errors on builds.
+
 Sun May 18 05:47:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/POA.cpp: Fixed a warning in minimum builds.
@@ -7,8 +23,8 @@ Sun May 18 05:42:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Sequence_T.i: TAO_Unbounded_Array_Sequence and
 	  TAO_Bounded_Array_Sequence  were parametrized by T and
 	  T_var. But the template parameters in the .i file read T
-	  and T_life. Borland 6 compiler doesnt seem to like this 
-	  throwing up a bunch of link errors. 
+	  and T_life. Borland 6 compiler doesnt seem to like this
+	  throwing up a bunch of link errors.
 
 	  Thanks to Johnny Willemsen for providing this patch.
 
@@ -33,7 +49,7 @@ Fri May 16 18:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  adding the MAX_ALIGNMENT to the aligned value.
 
 	  This will not fix all the problems with Any's. There are some
-	  more fixes which would be checked in in the next few days. 
+	  more fixes which would be checked in in the next few days.
 
 Thu May 15 14:54:31 2003  Simon McQueen  <sm@prismtechnologies.com>
 
