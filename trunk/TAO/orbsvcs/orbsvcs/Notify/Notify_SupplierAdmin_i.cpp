@@ -60,9 +60,11 @@ TAO_Notify_SupplierAdmin_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
   // notice that this is a very expensive operation, you may want to
   // cache the result if it is invoked very often...
 
-  return CosNotifyChannelAdmin::SupplierAdmin
-    ::_narrow (this->resource_manager_->
-               servant_to_reference (this->my_POA_.in (), this, ACE_TRY_ENV));
+  CORBA::Object_var obj = this->resource_manager_->
+    servant_to_reference (this->my_POA_.in (), this, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::SupplierAdmin::_nil ());
+
+  return CosNotifyChannelAdmin::SupplierAdmin::_narrow (obj.in ());
 }
 
 // @@ Pradeep: it is possible that you want methods like this
@@ -160,7 +162,7 @@ TAO_Notify_SupplierAdmin_i::get_proxy_consumer (CosNotifyChannelAdmin::ProxyID p
                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
 
-  return CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj._retn ());
+  return CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in ());
 }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
@@ -276,7 +278,7 @@ TAO_Notify_SupplierAdmin_i::obtain_notification_push_consumer (CosNotifyChannelA
 
   this->proxy_pushconsumer_ids_.next ();
 
-  return CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj._retn (),
+  return CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in (),
                                                         ACE_TRY_ENV);
 }
 
