@@ -1,12 +1,18 @@
+Mon Dec 22 10:38:55 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/vc7_orbsvcs.mwc:
+
+          Removed this file.  It was obsolete.
+
 Mon Dec 22 16:37:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/*C.{h,cpp}:
-	  Removed not needed ; after c++ namespace closure.
+        * tao/*C.{h,cpp}:
+          Removed not needed ; after c++ namespace closure.
 
 Mon Dec 22 16:12:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/TAO_Static.dsp:
-	  Removed files that are removed earlier from the repo.
+        * tao/TAO_Static.dsp:
+          Removed files that are removed earlier from the repo.
 
 Mon Dec 22 09:54:15 2003  Dale Wilson  <wilson_d@ociweb.com>
 
