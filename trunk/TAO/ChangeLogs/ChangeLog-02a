@@ -1,3 +1,15 @@
+Wed Nov 21 16:11:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/*/TAO_*.rc:
+
+          New resource files that enable the corresponding DLL icon to disply
+          version info in its 'about' menu item.
+
+        * tao/*/TAO_*.dsp:
+
+          Modified project files to use the new .rc files. Thanks to David
+          Hauck <davidh@netacquire.com> for sending in these patches.
+
 Wed Nov 21 16:50:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	New tests suplied by Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
