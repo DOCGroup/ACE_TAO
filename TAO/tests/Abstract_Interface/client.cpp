@@ -116,8 +116,7 @@ dump_tree (TreeController *tc)
 }
 
 void
-test_state (base_ptr abs
-            TAO_ENV_ARG_DECL)
+test_state (base_ptr abs)
 {
   CORBA::ValueBase_var vbase = abs->_to_value ();
   TreeController *tc = TreeController::_downcast (vbase.in ());
@@ -276,9 +275,7 @@ main (int argc, char *argv[])
                                 -1);
             }
 
-          test_state (package.in ()
-                      TAO_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test_state (package.in ());
         }
 
       if (which_test != TEST_STATE)
@@ -327,7 +324,7 @@ main (int argc, char *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "%s\n",
-                      ex.message));
+                      ex.message.in ()));
         }
     }
   ACE_CATCHANY
