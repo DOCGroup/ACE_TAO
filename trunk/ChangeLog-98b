@@ -18,6 +18,16 @@ Thu Jul 02 09:14:20 1998  David L. Levine  <levine@cs.wustl.edu>
           use timer_id outside of an assert, so that we don't get compile
           warnings with ACE_NDEBUG about it being unused.
 
+        * ace/OS.cpp (thr_create): on VxWorks only, check if thr_id
+          points to a zero char *.  If so, assign the VxWorks task
+          name pointer to it (*thr_id).
+
+        * ace/Thread_Manager.cpp (spawn_i): on VxWorks only, augmented
+          comment to explain the various cases for t_id and *t_id values.
+
+        * ace/Thread_Manager.h (spawn*): on VxWorks only, added comment
+          explaining use of ACE_thread_t * argument.
+
         * tests/Barrier_Test.cpp: on VxWorks only, added test of
           an ACE_thread_t that points to a 0 char *.
 
