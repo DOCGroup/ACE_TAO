@@ -1,3 +1,10 @@
+Thu Jun  3 12:37:21 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/NodeManager/Node_Daemon.cpp:
+
+          Used OS_NS_stdio.h header file for fopen  fclose methods defined
+          in ACE_OS namespace.
+
 Thu Jun  3 10:51:32 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/NodeManager/NodeDaemon.idl:
