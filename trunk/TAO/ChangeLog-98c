@@ -3,6 +3,10 @@ Thu Oct 01 10:39:44 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/ORB_Core.cpp (input_cdr_dblock_allocator): wrapped
           break following return with ACE_NOTREACHED, in two places.
 
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp: removed
+          ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>
+          instantiation because it's now in tao/ORB_Core.cpp.
+
 Thu Oct 01 00:17:17 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/ORB_Core.h: Removed template specialization for
