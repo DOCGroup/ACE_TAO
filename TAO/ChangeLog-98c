@@ -4,99 +4,106 @@ Fri Mar 06 09:36:47 1998  David L. Levine  <levine@cs.wustl.edu>
           declaration order.  Also, move _set_parent () before the
           constructor so that it is defined before being used.
 
+        * tao/cdr.h: added RCS keyword string.
+
+        * tao/cdr.{i,cpp}: modified to base in/out operations
+          on ULongLong instead of LongLong, because we have
+          better support for ULongLong with ACE_LACKS_LONGLONG_T.
+          (get_ulonglong): removed const argument qualifier in .i file.
+
 Fri Mar 06 00:18:38 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/poaS and poaC: Removed about a 1000 lines of stubs and
- 	  skeletons code from poaC.cpp and poaS.cpp.  This code was not
- 	  necessary because of the locality constraints on certain POA
- 	  objects. This should help reduce the footprint of TAO.
+        * tao/poaS and poaC: Removed about a 1000 lines of stubs and
+          skeletons code from poaC.cpp and poaS.cpp.  This code was not
+          necessary because of the locality constraints on certain POA
+          objects. This should help reduce the footprint of TAO.
 
 Thu Mar  5 19:54:27 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: bind_context, rebind,
- 	and bind were fixed to handle errors more carefully.  Thanks to
- 	Mark Boriack for pointing this out.
-	
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: bind_context, rebind,
+        and bind were fixed to handle errors more carefully.  Thanks to
+        Mark Boriack for pointing this out.
+
 Thu Mar  5 18:15:32 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tao/giop.cpp: Removed crufty unused code.
+        * tao/giop.cpp: Removed crufty unused code.
 
-	* tao/iioporb.cpp: 
-	* tao/iiopobj.*: 
-	* tao/decode.cpp: 
-	* tao/object.{h,i}:
-	* tao/orbobj.cpp:
-	* tao/poaC.cpp:
-	* tao/request.cpp:
-	* tao/servant_base.{h,cpp}:
-	Broke the old, incestous, bizarre "contained" relationship between
- 	IIOP_Object and CORBA_Object.  Now, multiple CORBA_Objects can
- 	reference the same IIOP_Object, and each is reference-counted
- 	separately.  Moreover, an IIOP_Object has no back-pointer to a
- 	CORBA_Object.  All of this should help alleviate many memory
- 	leaks.
+        * tao/iioporb.cpp:
+        * tao/iiopobj.*:
+        * tao/decode.cpp:
+        * tao/object.{h,i}:
+        * tao/orbobj.cpp:
+        * tao/poaC.cpp:
+        * tao/request.cpp:
+        * tao/servant_base.{h,cpp}:
+        Broke the old, incestous, bizarre "contained" relationship between
+        IIOP_Object and CORBA_Object.  Now, multiple CORBA_Objects can
+        reference the same IIOP_Object, and each is reference-counted
+        separately.  Moreover, an IIOP_Object has no back-pointer to a
+        CORBA_Object.  All of this should help alleviate many memory
+        leaks.
 
-	* TAO_IDL/be/be_interface.cpp: Changed emitted code for _narrow
- 	and _bind to deal with new relationship btw. CORBA_Object and
- 	IIOP_Object.
+        * TAO_IDL/be/be_interface.cpp: Changed emitted code for _narrow
+        and _bind to deal with new relationship btw. CORBA_Object and
+        IIOP_Object.
 
 Thu Mar  5 17:45:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/cdr.i: 
-	  If CORBA::WChar is an alias for CORBA::Short we cannot overload
-	  operator<< on it.
+        * tao/cdr.i:
+          If CORBA::WChar is an alias for CORBA::Short we cannot overload
+          operator<< on it.
 
-	* tao/corbacom.h: 
-	* tao/typecode.h: 
-	  MSVC++ does not like a class forward declared as a structure.
+        * tao/corbacom.h:
+        * tao/typecode.h:
+          MSVC++ does not like a class forward declared as a structure.
 
 
-	* tests/Cubit/TAO/MT_Cubit/Makefile: 
-	  -lm is required in IRIX.
+        * tests/Cubit/TAO/MT_Cubit/Makefile:
+          -lm is required in IRIX.
 
 Thu Mar 05 16:18:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/poa.cpp (ObjectId_to_wstring and ObjectId_to_const_wstring):
- 	  Changed the odd looking access to a sequence's buffer to use the
- 	  new buffer() accessor.
+        * tao/poa.cpp (ObjectId_to_wstring and ObjectId_to_const_wstring):
+          Changed the odd looking access to a sequence's buffer to use the
+          new buffer() accessor.
 
 Thu Mar  5 13:15:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/cdr.h: 
-	* tao/cdr.i: 
-	  Added a error flag to the class and some << and >> operators to
-	  start a more useable interface for the CDR streams.
+        * tao/cdr.h:
+        * tao/cdr.i:
+          Added a error flag to the class and some << and >> operators to
+          start a more useable interface for the CDR streams.
 
-	* tao/any.h: 
-	* tao/any.cpp: 
-	* tao/except.h: 
-	* tao/except.cpp: 
-	* tao/nvlist.h: 
-	* tao/nvlist.cpp: 
-	* tao/principa.h: 
-	* tao/principa.cpp: 
-	* tao/request.h: 
-	* tao/request.cpp: 
-	* tao/typecode.h: 
-	* tao/typecode.i: 
-	* tao/typecode.cpp: 
-	  They don't inherit from IUnknown any more. Removed the
-	  QueryInterface method, but kept AddRef and Release to keep the
-	  change propagation to a minimum.
-	  In accordance to the new memory managment scheme the locks were
-	  also removed, the agument is:
-	  + In the common case the locks are *not* needed.
-	  + When needed a lock at that level does *not* work.
-	  + The application can add its own locking for the objects that
-	  are effectively shared among threads.
+        * tao/any.h:
+        * tao/any.cpp:
+        * tao/except.h:
+        * tao/except.cpp:
+        * tao/nvlist.h:
+        * tao/nvlist.cpp:
+        * tao/principa.h:
+        * tao/principa.cpp:
+        * tao/request.h:
+        * tao/request.cpp:
+        * tao/typecode.h:
+        * tao/typecode.i:
+        * tao/typecode.cpp:
+          They don't inherit from IUnknown any more. Removed the
+          QueryInterface method, but kept AddRef and Release to keep the
+          change propagation to a minimum.
+          In accordance to the new memory managment scheme the locks were
+          also removed, the agument is:
+          + In the common case the locks are *not* needed.
+          + When needed a lock at that level does *not* work.
+          + The application can add its own locking for the objects that
+          are effectively shared among threads.
 
-	* tao/sequence.h: 
-	* tao/sequence.cpp: 
-	* tao/sequence_T.h: 
-	* tao/sequence_T.cpp: 
-	  Sequences of objects require some post processing *after*
-	  demarshalling: the object references must be narrowed to the
-	  right type; a new virtual method was added for that purpose.
+        * tao/sequence.h:
+        * tao/sequence.cpp:
+        * tao/sequence_T.h:
+        * tao/sequence_T.cpp:
+          Sequences of objects require some post processing *after*
+          demarshalling: the object references must be narrowed to the
+          right type; a new virtual method was added for that purpose.
 
 Thu Mar 05 09:08:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -112,18 +119,18 @@ Wed Mar 04 19:49:31 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Mar  4 16:35:37 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
-	* tao/orbobj.*: Added an extension to the CORBA_ORB interface
- 	that allows an application to preconnect to multiple servers by
- 	specifying a string of host:port pairs.
+        * tao/orbobj.*: Added an extension to the CORBA_ORB interface
+        that allows an application to preconnect to multiple servers by
+        specifying a string of host:port pairs.
 
-	* tao/orb_core.*: Broke the preconnection logic out of init()
- 	and made it its own method, preconnect().  This also uses
- 	Connector<>::connect_n() rather than implementing its own loop.
-  	It really didn't make things much easier, but we can take
- 	advantage of future improvements to that implementation
- 	transparently, now.
+        * tao/orb_core.*: Broke the preconnection logic out of init()
+        and made it its own method, preconnect().  This also uses
+        Connector<>::connect_n() rather than implementing its own loop.
+        It really didn't make things much easier, but we can take
+        advantage of future improvements to that implementation
+        transparently, now.
 
-	* docs/Options.html: Added more details on various options.
+        * docs/Options.html: Added more details on various options.
 
 Tue Mar 03 21:11:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -182,7 +189,7 @@ Mon Mar  2 13:13:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Mon Mar 02 08:00:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
-	* tao/orb_core.cpp: only instantiate ACE_Convert with g++.
+        * tao/orb_core.cpp: only instantiate ACE_Convert with g++.
           Even that shouldn't need it, because it's always inline.
           But, g++ typically creates out-of-line instantiations of
           inline template member functions.
