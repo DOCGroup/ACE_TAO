@@ -313,8 +313,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
   this->total_w_   += rcvr.get_total_w ();
   this->total_r_   += rcvr.get_total_r ();
 
-  if (rcvr.index_ >= 0
-      && rcvr.index_ < MAX_RECEIVERS
+  if (rcvr.index_ < MAX_RECEIVERS
       && this->list_receivers_[rcvr.index_] == &rcvr)
     this->list_receivers_[rcvr.index_] = 0;
 
@@ -674,8 +673,7 @@ Connector::on_delete_sender (Sender & sndr)
   this->total_w_   += sndr.get_total_w();
   this->total_r_   += sndr.get_total_r();
 
-  if (sndr.index_ >= 0
-      && sndr.index_ < MAX_SENDERS
+  if (sndr.index_ < MAX_SENDERS
       && this->list_senders_[sndr.index_] == &sndr)
     this->list_senders_[sndr.index_] = 0;
 
