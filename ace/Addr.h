@@ -67,7 +67,7 @@ public:
   int operator != (const ACE_Addr &sap) const;
 
   /// Initializes instance variables.
-  void base_set (int type,[                  int size);
+  void base_set (int type, int size);
 
 #if defined (ACE_HAS_BROKEN_SAP_ANY)
   /// Wild-card address.
