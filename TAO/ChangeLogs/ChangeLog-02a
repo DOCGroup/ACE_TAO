@@ -1,3 +1,26 @@
+Wed Aug 15 11:37:24 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/GIOP_Message_Lite.cpp (process_request):
+
+	  Removed statement that initialized a reference to a
+	  CORBA::Environment from TAO_default_environment().
+	  TAO_default_environment() incurs a TSS access.  This removes a
+	  TSS access from the critical path when using TAO's GIOPlite
+	  implementation.
+
+	  Verify that forward object reference was successfully marshaled
+	  into the CDR stream before continuing.
+
+	* tao/GIOP_Message_Base.cpp (process_request):
+
+	  Verify that forward object reference was successfully marshaled
+	  into the CDR stream before continuing.
+
+	* tao/Object.cpp (operator>>):
+
+	  Fixed improper emulated exception code.  It unnecessarily
+	  introduced a TSS access by using TAO_default_environment().
+	
 Wed Aug 15 14:26:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Single_Threaded_Latency/svc.conf: Add the
@@ -13,7 +36,7 @@ Wed Aug 15 12:11:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
           generated output on many platforms has only 15, rounded
           up. The problem arises with gcc 3.0, which outputs a
           warning, since the rounded value is greater than the
-          allowed maximum. Thanks to Ossama Othman <ossama@doc.ece.uci.edu> 
+          allowed maximum. Thanks to Ossama Othman <ossama@uci.edu>
           for pointing out the problem.
 
 Wed Aug 15 12:06:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>

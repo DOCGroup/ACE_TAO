@@ -790,7 +790,15 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           this->generate_reply_header (output,
                                        reply_params);
 
-          output << forward_to.in ();
+          if (!(output << forward_to.in ()))
+            {
+              if (TAO_debug_level > 0)
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) ERROR: Unable to marshal ")
+                            ACE_TEXT ("forward reference.\n")));
+
+              return -1;
+            }
 
           int result = transport->send_message (output);
           if (result == -1)
@@ -802,7 +810,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send reply\n"),
-                              ACE_TEXT ("TAO_GIOP::process_server_message")));
+                              ACE_TEXT ("TAO_GIOP_Message_Base::process_request")));
                 }
             }
           return result;
@@ -885,7 +893,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send exception\n"),
-                              ACE_TEXT ("process_connector_request ()")));
+                              ACE_TEXT ("process_request ()")));
                   ACE_PRINT_EXCEPTION (
                       exception,
                       "TAO_GIOP_Message_Base::process_request[3]");
@@ -1021,7 +1029,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
       status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP::process_server_locate - ")
+                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Base::process_locate_request - ")
                     ACE_TEXT ("CORBA exception raised\n")));
     }
 #if defined (TAO_HAS_EXCEPTIONS)
@@ -1031,7 +1039,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
       status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP::process_server_locate - ")
+                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Base::process_locate_request - ")
                     ACE_TEXT ("C++ exception raised\n")));
     }
 #endif /* TAO_HAS_EXCEPTIONS */
@@ -1070,7 +1078,7 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
-                      ACE_TEXT ("TAO_GIOP::process_server_message")));
+                      ACE_TEXT ("TAO_GIOP_Message_Base::make_send_locate_reply")));
         }
     }
 
@@ -1237,7 +1245,7 @@ TAO_GIOP_Message_Base::
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) TAO_GIOP::send_close_connection -"
+                    "TAO (%P|%t) TAO_GIOP_Message_Base::send_close_connection -"
                     " connection already closed\n"));
       return;
     }
