@@ -21,11 +21,17 @@
 //
 // ============================================================================
 
+interface Reactor;
+
 interface EventHandler 
 {
   Long peer ();
   // Returns an integer corresponding to the event handler's file
   // descriptor.
+
+  UShort decrement (in Reactor r, in UShort num);
+  // Decrements <num> by invoking the <decrement> operation on <r>
+  // and returning that value, finally stopping when it gets to zero.
 };
 
 interface Reactor 
@@ -35,4 +41,8 @@ interface Reactor
 
   oneway void set_value ();
   // do-nothing oneway to check for proper operation.
+
+  UShort decrement (in EventHandler eh, in UShort num);
+  // Decrements <num> by invoking the <decrement> operation on <eh>
+  // and returning that value, finally stopping when it gets to zero.
 };

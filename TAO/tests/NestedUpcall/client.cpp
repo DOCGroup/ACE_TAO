@@ -155,7 +155,9 @@ main (int argc, char *argv[])
 
       remote_reactor->set_value (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
+      remote_reactor->decrement (eh, 5, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {

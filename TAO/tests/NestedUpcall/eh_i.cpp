@@ -26,3 +26,21 @@ EventHandler_i::peer (CORBA::Environment &env)
   
   return val;
 }
+
+CORBA::UShort
+EventHandler_i::decrement (Reactor_ptr eh,
+                      CORBA::UShort num,
+                      CORBA::Environment &env)
+{
+  CORBA::UShort ret;
+  if (--num <= 0)
+    ret = 0;
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) EventHandler::decrement() invoking Reactor::decrement(%d)\n", num));
+      ret = eh->decrement (_this (env), num, env);
+    }
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) EventHandler::decrement() returning %d\n", ret));
+  return ret;
+}
+

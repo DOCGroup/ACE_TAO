@@ -50,3 +50,20 @@ Reactor_i::set_value (CORBA::Environment &env)
               "(%P|%t) doing Reactor_i::set_value()\n"));
 }
 
+CORBA::UShort
+Reactor_i::decrement (EventHandler_ptr eh,
+                      CORBA::UShort num,
+                      CORBA::Environment &env)
+{
+  CORBA::UShort ret;
+  if (--num <= 0)
+    ret = 0;
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reactor::decrement() invoking EventHandler::decrement(%d)\n", num));
+      ret = eh->decrement (_this (env), num, env);
+    }
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reactor_i::decrement() returning %d\n", ret));
+  return ret;
+}
+
