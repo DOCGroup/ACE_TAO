@@ -1,3 +1,10 @@
+Thu Jul 30 13:01:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Task.h (ACE_Task_Base): Changed the spelling of
+	  ACE_Task_Exit to ACE_Thread_Exit, which is correct.
+	  Thanks to Daniel Winder <Daniel.Winder@cern.ch> for 
+	  reporting this.
+
 Thu Jul 30 08:43:41 1998  Steve Huston  <shuston@riverace.com>
 
 	* tests/tests.(mdp mak): Made include and library paths relative.
