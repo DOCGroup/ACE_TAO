@@ -60,24 +60,45 @@ release of <A HREF="TAO.html">TAO</A>:
       <UL>
 	<LI> Generates C++ stubs and skeletons that use TAO's <A
 	HREF="HICSS-97.ps.gz">interpretive IIOP protocol
-	engine</A>.</LI>
+	engine</A>. We use the C++ mapping presented in the OMG's
+        ORBOS/97-05-15 document.</LI>
 
-	<LI>Works for <I>most</I> IDL constructs. Although code is
-	generated for everything, support for unions, sequences whose
-	element types are anonymous sequences or strings, arrays of
-	strings, and other very complicated types may result in C++
-	compilation errors.</LI>
+	<LI>Works for <I>most</I> IDL constructs. Some of the known
+            bugs/incomplete tasks are:
+            <UL>
+              <LI>
+                  TypeCode generation for multidimensional arrays and
+                  indirected typecodes is still a problem. </LI>
+              <LI>
+                  The generated code for sequences whose base types are
+                  anonymous sequences is still not perfect.</LI>
+              <LI>
+                  Exceptions are not well-supported. TAO does not use
+                  C++ Exceptions. Instead we use the alternative
+                  mapping that uses CORBA::Environment. </LI>
+              <LI>
+                  Some problems noticed when IDL files are included
+                  and definitions from included files are used.</LI>
+            </UL>
+        </LI>
       </UL>
 
-      Future work:
+      Upcoming tasks:
       <UL>
 	<LI>Add Orbix-like <TT>_bind</TT> calls in lieu of always
 	needing a Naming Service.</LI>
 
 	<LI>Improve IDL compiler to support complete IDL-to-C++ mapping.</LI>
 
-	<LI>Fix bugs in the SunSoft IDL front-end we've uncovered.</LI>
+	<LI>Fix bugs in the SunSoft IDL front-end we've
+            uncovered. These primarily include support for Unions.</LI>
 
+        <LI>Add command line options to TAO IDL. These options will
+            decide what strategy to use for operation name
+            demultiplexing. Another option may decide whether to use
+            the interpretive IIOP engine or generate compiled
+            stubs/skeletons. </LI>
+            
 	<LI>Use <A
 	HREF="http://www.cs.utah.edu/projects/flux/flick/">Flick</A>
 	(from the University of Utah) to generate compiled stubs.</LI>
@@ -292,6 +313,6 @@ $Id$
 </pre>
 <!-- Created: Mon Oct 20 09:53:33 CDT 1997 -->
 <!-- hhmts start -->
-Last modified: Mon Oct 20 10:50:22 CDT 1997
+Last modified: Mon Oct 20 22:06:41 CDT 1997
 <!-- hhmts end -->
 </HTML>
