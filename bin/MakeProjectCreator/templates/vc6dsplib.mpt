@@ -53,3 +53,4 @@ MFC Debug {
 }
 
 conditional_include "vcpartialmacros"
+conditional_include "zziplib"

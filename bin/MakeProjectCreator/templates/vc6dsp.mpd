@@ -8,20 +8,20 @@ CFG=<%project_name%> - <%platform("Win32")%> <%default_configuration("Debug")%>
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE run the tool that generated this project file and specify the
 !MESSAGE nmake output type.  You can then use the following command:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "<%make_file_name%>".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "<%make_file_name%>" CFG="<%project_name%> - <%platform%> <%default_configuration%>"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 <%foreach(configurations)%>
 !MESSAGE "<%project_name%> - <%platform%> <%configuration%>" (based on "<%platform%> (<%platform_hardware%>) <%type_description%>")
 <%endfor%>
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -52,7 +52,7 @@ RSC=rc.exe
 <%if(type_is_static)%>
 LINK32=link.exe -lib
 <%endif%>
-# ADD CPP /nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_header)%>.pch" <%endif%>/FD /c
+# ADD CPP /nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines common_defines)%>/D <%define%>=1 <%endfor%><%if(zzip)%><%foreach(zzip_defines)%> /D <%zzip_define%>=1 <%endfor%> /I "$(ZZIP_ROOT)\include" <%endif%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_header)%>.pch" <%endif%>/FD /c
 <%if(compile_flags_removed)%>
 # SUBTRACT CPP <%compile_flags_removed%>
 <%endif%>
@@ -61,7 +61,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo <%if(sharedname)%>/o"<%libout%>\<%sharedname%>.bsc"<%endif%>
 <%if(type_is_binary)%>
 LINK32=link.exe
-# ADD LINK32 <%systemlibs("advapi32.lib user32.lib")%> <%if(ssl)%><%foreach(ssl_libs)%><%ssl_lib%>.lib <%endfor%><%endif%>/INCREMENTAL:<%incremental("NO")%> <%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>" <%endfor%>/nologo /version:<%version("1.0")%> /subsystem:<%subsystem("windows")%><%if(pdb)%><%if(sharedname)%> /pdb:"<%dllout%>\<%sharedname%><%lib_modifier%>.pdb"<%else%><%if(exename)%> /pdb:"<%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.pdb"<%endif%><%endif%><%endif%><%if(type_is_dynamic)%> /dll<%endif%> <%debug_switch("/debug")%> /machine:<%machine("I386")%> /out:"<%if(sharedname)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.exe<%endif%>"
+# ADD LINK32 <%systemlibs("advapi32.lib user32.lib")%> <%if(zzip)%><%foreach(zzip_libs)%><%zzip_lib%>.lib <%endfor%><%endif%><%if(ssl)%><%foreach(ssl_libs)%><%ssl_lib%>.lib <%endfor%><%endif%>/INCREMENTAL:<%incremental("NO")%> <%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>" <%endfor%><%if(zzip)%>/libpath:"$(ZZIP_ROOT)\lib" <%endif%>/nologo /version:<%version("1.0")%> /subsystem:<%subsystem("windows")%><%if(pdb)%><%if(sharedname)%> /pdb:"<%dllout%>\<%sharedname%><%lib_modifier%>.pdb"<%else%><%if(exename)%> /pdb:"<%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.pdb"<%endif%><%endif%><%endif%><%if(type_is_dynamic)%> /dll<%endif%> <%debug_switch("/debug")%> /machine:<%machine("I386")%> /out:"<%if(sharedname)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.exe<%endif%>"
 <%if(link_flags_removed)%>
 # SUBTRACT LINK32 <%link_flags_removed%>
 <%endif%>

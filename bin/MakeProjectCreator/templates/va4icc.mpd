@@ -6,6 +6,11 @@ if $__TOS_WIN__ {
 <%foreach(defines common_defines)%>
                 define ("<%define%>", "1"),
 <%endfor%>
+<%if(zzip)%>
+<%foreach(zzip_defines)%>
+                define ("<%zzip_define%>", "1"),
+<%endfor%>
+<%endif%>
 <%if(type_is_dynamic)%>
 <%foreach(dllflags)%>
                 define ("<%dllflag%>", "1"),
@@ -49,10 +54,16 @@ option
 <%foreach(includes)%>
          incl(searchPath, '<%include%>'),
 <%endfor%>
+<%if(zzip)%>
+         incl(searchPath, '$(ZZIP_ROOT)/include'),
+<%endif%>
 <%if(sharedname)%>
          link(exportAll),
 <%endif%>
          link(linkwithsharedlib),
+<%if(zzip)%>
+         link(libSearchPath, '$(ZZIP_ROOT)/lib'),
+<%endif%>
 <%foreach(libpaths)%>
          link(libSearchPath, '<%libpath%>'),
 <%endfor%>
@@ -94,6 +105,11 @@ option
                        source type (lib) "ws2_32.lib"
                        source type (lib) "wsock32.lib"
                        source type (lib) "mswsock.lib"
+<%if(zzip)%>
+<%foreach(zzip_libs)%>
+                       source type (lib) "<%zzip_lib%>.lib"
+<%endfor%>
+<%endif%>
 <%foreach(lit_libs)%>
                        source type (lib) "<%lit_lib%>.lib"
 <%endfor%>
@@ -125,6 +141,12 @@ option
 <%foreach(libs defaultlibs lit_libs)%>
                        source type (lib) "lib<%lib%>.a"
 <%endfor%>
+<%if(zzip)%>
+<%foreach(zzip_libs)%>
+                       source type (lib) "lib<%zzip_lib%>.a"
+<%endfor%>
+<%endif%>
+
 <%if(type_is_dynamic)%>
                        source type (lib) "libtli_r.a"
                        source type (lib) "libpthreads.a"

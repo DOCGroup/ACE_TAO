@@ -1,6 +1,7 @@
 configurations     = Release Debug "Static Release" "Static Debug"
 common_defines     = WIN32 _WINDOWS
 ssl_libs           = libeay32 ssleay32
+zzip_libs          = z zzip
 
 Release {
   type_is_dynamic  = 1
@@ -98,3 +99,4 @@ Static MFC Debug {
 }
 
 conditional_include "vcfullmacros"
+conditional_include "zziplib"
