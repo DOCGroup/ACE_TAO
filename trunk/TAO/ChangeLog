@@ -1,9 +1,15 @@
+Mon Aug 30 15:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Updated this file for the moving of AMH_Response_Handler, forgot this
+          file this morning
+
 Mon Aug 30 15:29:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB.h (CORBA): 
+	* tao/ORB.h (CORBA):
 
 	  Added documentation for run () with a timeout parameter. Thanks
-	  to Jules Colding <jules at tdcadsl dot dk> for motivating this. 
+	  to Jules Colding <jules at tdcadsl dot dk> for motivating this.
 
 Mon Aug 30 08:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
