@@ -1,3 +1,9 @@
+Mon May 17 18:17:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/UIOP_Transport.cpp,
+	  tao/IIOP_Transport.cpp: Removed ACE_DEFAULT_WRITEV_MAX and
+ 	  replaced it with IOV_MAX.
+
 Mon May 17 15:25:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Event_Latency/run_tests.sh: replaced
