@@ -258,6 +258,33 @@ public:
   /// data is not removed. * See note below
   virtual int import_config (const ACE_TCHAR* filename);
 
+  /// Imports the configuration database from filename as strings.
+  /// Allows non-typed values. (no #, dword: hex:, etc. prefixes) and
+  /// skips whitespace (tabs and spaces) as in standard .ini and .conf
+  /// files. Values (to right of equal sign) can be double quote
+  /// delimited to embed tabs and spaces in the string.
+  /// Caller must convert string to type.
+  /// A corresponding export_config is not supported.
+  ///
+  /// This method allows for lines in the .ini or .conf file like this:
+  /// 
+  /// TimeToLive     =    100
+  /// Delay          =    FALSE
+  /// Flags          =    FF34
+  /// Heading        =    "ACE - Adaptive Communication Environment"
+  /// 
+  /// (note leading whitespace (tabs) in examples below)
+  /// 
+  /// 		SeekIndex  =  14
+  /// 		TraceLevel = 6      # Can comment lines like this
+  ///             Justification = left_justified
+  /// 
+  /// The caller can then retrieve the string with the regular
+  /// <get_string_value> function and convert the string to the
+  /// desired data type.
+
+  virtual int import_config_as_strings (const ACE_TCHAR *filename);
+
   // Note - The above import/export routines have the following bugs/limitations
   //   1) Strings with embedded newlines cause the import to fail
   //   2) Strings with embedded quotes " cause the import to fail
@@ -268,6 +295,9 @@ public:
 protected:
   /// Default ctor
   ACE_Configuration (void);
+
+  /// Skips whitespace
+  ACE_TCHAR *skip_whitespace (ACE_TCHAR *src);
 
   /// resolves the internal key from a section key
   ACE_Section_Key_Internal* get_internal_key
