@@ -1,3 +1,26 @@
+Tue Mar 16 03:05:22 1999  James Hu <jxh@entera.com>
+        * ace/Cache_Hash_T.{cpp,h}:
+        * ace/Cache_Heap_T.{cpp,h}:
+        * ace/Cache_List_T.{cpp,h}:
+        * ace/Cache_Manager.{cpp,h}:
+        * ace/Cache_Manager_T.{cpp,h}:
+        * ace/Cache_Object.{cpp,h}:
+        * ace/Hash_Bucket_T.{cpp,h}:
+          Incorporated fixes from purify and benchmarking sessions at Entera.
+          Cosmetic changes coming soon (documentation strings and removal
+          of magic numbers).
+
+        * ace/Makefile: Added above files to Makefile.
+
+        * ace/OS.i: FreeBSD does not support the timezone() function as
+          documented by Vischal below.  Using Chris Gill's implementation
+          for LynxOS.
+
+        * tests/Makefile:
+        * tests/Cache_Manager_Test.cpp:  Added this test to illustrate
+          Cache_Manager.  Still needs changes to use ACE_DEBUG instead of
+          cerr.
+
 Mon Mar 15 19:05:22 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: New config file that covers all of the AIX 4.x
