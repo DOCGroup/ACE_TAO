@@ -2246,6 +2246,10 @@ typedef u_int ACE_thread_key_t;
 #   elif defined (ACE_HAS_WTHREADS)
 
 typedef CRITICAL_SECTION ACE_thread_mutex_t;
+
+#     if defined (ACE_HAS_PACE)
+typedef pace_pthread_mutex_t ACE_mutex_t;
+#     else 
 typedef struct
 {
   int type_; // Either USYNC_THREAD or USYNC_PROCESS
@@ -2255,6 +2259,7 @@ typedef struct
     CRITICAL_SECTION thr_mutex_;
   };
 } ACE_mutex_t;
+#     endif /* ACE_HAS_PACE */
 
 // Wrapper for NT Events.
 typedef HANDLE ACE_event_t;
@@ -2356,10 +2361,15 @@ struct ACE_Export ACE_condattr_t
 {
   int type;
 };
+
+#     if defined (ACE_HAS_PACE)
+typedef pace_pthread_mutexattr_t ACE_mutexattr_t;
+#     else
 struct ACE_Export ACE_mutexattr_t
 {
   int type;
 };
+#     endif /* ACE_HAS_PACE */
 #   endif /* ACE_LACKS_COND_T */
 
 #   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
@@ -3167,10 +3177,17 @@ inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
 // Win32 dummies to help compilation.
 
 #   if !defined (__BORLANDC__)
+#     if defined (ACE_HAS_PACE)
+typedef pace_nlink_t nlink_t;
+typedef pace_mode_t mode_t;
+typedef pace_uid_t uid_t;
+typedef pace_gid_t gid_t;
+#     else /* !ACE_HAS_PACE */
 typedef DWORD nlink_t;
 typedef int mode_t;
 typedef int uid_t;
 typedef int gid_t;
+#     endif /* ACE_HAS_PACE */
 #   endif /* __BORLANDC__ */
 typedef char *caddr_t;
 
