@@ -16,13 +16,13 @@ INFO    = README \
           VERSION
 
 DIRS    = ace \
+	  ACEXML \
           netsvcs \
           tests \
           apps \
           examples \
           performance-tests \
-          websvcs \
-	  ACEXML
+          websvcs
 
 CLONE   = Makefile \
           ace \
