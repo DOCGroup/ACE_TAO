@@ -1,3 +1,12 @@
+Wed Aug  1 07:14:42 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* include/makeinclude/platform_vxworks5.x_g++.GNU: Checked in a new
+	  version of this file, which includes support for the Hitachi
+ 	  chip.  Thanks to Frank Wolf for this.
+
+	* ace/Log_Record.cpp (format_msg): Added a cast to fix a warning.
+	  Thanks to Bala for reporting this.
+
 Tue Jul 31 22:53:26 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/libService_Config_DLL.icc:
