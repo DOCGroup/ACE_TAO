@@ -90,8 +90,6 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
             {
-              // if the operation node has parameters, then we need to insert a comma
-              //if (node->argument_count () > 0)
               // @@ Do it for all cases i.e arg count > = 0
               *os << "," << be_nl;
 
@@ -173,16 +171,17 @@ be_visitor_operation_interceptors_arglist::pre_process (be_decl *bd)
 int
 be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
 {
-  // get the visitor that will dump the argument's mapping in the operation
+  // Get the visitor that will dump the argument's mapping in the operation
   // signature.
   be_visitor_context ctx (*this->ctx_);
 
-  // first grab the interface definition inside which this operation is
+  // First grab the interface definition inside which this operation is
   // defined. We need this since argument types may very well be declared
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
   be_operation *op = this->ctx_->be_scope_as_operation ();
-  if (!op)
+
+  if (op == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interceptors_arglist::"
@@ -191,13 +190,15 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
                         -1);
     }
 
-  // We dont generate the "out" args as part of arglist
+  // We don't generate the "out" args as part of arglist
   if (node->direction () == AST_Argument::dir_OUT)
-    return 0;
+    {
+      return 0;
+    }
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
-  // information from the context
+  // information from the context.
   be_interface *intf;
   intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
@@ -211,18 +212,21 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
                          "Bad interface\n"),
                         -1);
     }
+
   ctx.scope (intf); // set new scope
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH);
+      ctx.sub_state (TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CH);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH);
+      ctx.sub_state (TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB);
       // ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS:
@@ -235,7 +239,7 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_PARAMLIST);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
-      // ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_SH);
+      // ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH);
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
@@ -251,7 +255,6 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS);
       break;
-
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -264,6 +267,7 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
 
   // Grab a visitor.
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -272,6 +276,7 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
                          "Bad visitor\n"),
                         -1);
     }
+
   if (node->accept (visitor) == -1)
     {
       delete visitor;
@@ -281,6 +286,7 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
                          "codegen for interceptors_arglist failed\n"),
                         -1);
     }
+
   delete visitor;
   return 0;
 }

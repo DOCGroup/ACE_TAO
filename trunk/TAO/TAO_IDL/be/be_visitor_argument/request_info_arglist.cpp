@@ -30,12 +30,16 @@ ACE_RCSID(be_visitor_argument, request_info_arglist, "$Id$")
 // definitions
 // ************************************************************
 
-be_visitor_args_request_info_arglist::be_visitor_args_request_info_arglist (be_visitor_context *ctx)
+be_visitor_args_request_info_arglist::be_visitor_args_request_info_arglist (
+    be_visitor_context *ctx
+  )
   : be_visitor_args (ctx)
 {
 }
 
-be_visitor_args_request_info_arglist::~be_visitor_args_request_info_arglist (void)
+be_visitor_args_request_info_arglist::~be_visitor_args_request_info_arglist (
+    void
+  )
 {
 }
 
@@ -56,7 +60,7 @@ int be_visitor_args_request_info_arglist::visit_argument (be_argument *node)
     }
 
   // Different types have different mappings when used as in/out or
-  // inout parameters. Let this visitor deal with the type
+  // inout parameters. Let this visitor deal with the type.
 
   if (bt->accept (this) == -1)
     {
@@ -73,16 +77,22 @@ int be_visitor_args_request_info_arglist::visit_argument (be_argument *node)
 
 int be_visitor_args_request_info_arglist::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_type *bt; // type to use
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = 0;
 
-  // use the typedefed name if that is the one used in the IDL defn
+  // Use the typedefed name if that is the one used in the IDL defn.
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
-  // ACE_NESTED_CLASS macros needed for MSVC.
+  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
+  // because otherwise the types are not defined in the
+  // same scope, which they must be to use ACE_NESTED_CLASS.
 
   be_decl* scope =
     be_scope::narrow_from_scope (bt->defined_in ())->decl ();
@@ -94,12 +104,17 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
     case AST_Argument::dir_IN:
       {
         if (bt->is_nested ()
-            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
-	          *os  << ")";
+	          *os << ")";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -111,12 +126,17 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
     case AST_Argument::dir_INOUT:
       {
         if (bt->is_nested ()
-            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
-	          *os  << ")";
+	          *os << ")";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -128,12 +148,17 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
     case AST_Argument::dir_OUT:
       {
         if (bt->is_nested ()
-            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
-	          *os  << "_out)";
+	          *os << "_out)";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -149,16 +174,22 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
 
 int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_type *bt; // type to use
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = 0;
 
-  // use the typedefed name if that is the one used in the IDL defn
+  // Use the typedefed name if that is the one used in the IDL defn.
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
-  // ACE_NESTED_CLASS macros needed for MSVC.
+  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
+  // because otherwise the types are not defined in the
+  // same scope, which they must be to use ACE_NESTED_CLASS.
 
   be_decl* scope =
     be_scope::narrow_from_scope (bt->defined_in ())->decl ();
@@ -170,12 +201,17 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
     case AST_Argument::dir_IN:
       {
         if (bt->is_nested ()
-            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
-	          *os  << ")" << " &";
+	          *os << ")" << " &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -187,12 +223,17 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
     case AST_Argument::dir_INOUT:
       {
         if (bt->is_nested ()
-            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
-	          *os  << ") &";
+	          *os << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -204,12 +245,17 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
     case AST_Argument::dir_OUT:
       {
         if (bt->is_nested ()
-            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
-	          *os  << "_out)";
+	          *os << "_out)";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -225,7 +271,7 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
 
 int be_visitor_args_request_info_arglist::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
@@ -242,9 +288,11 @@ int be_visitor_args_request_info_arglist::visit_interface (be_interface *node)
   return 0;
 }
 
-int be_visitor_args_request_info_arglist::visit_interface_fwd (be_interface_fwd *node)
+int be_visitor_args_request_info_arglist::visit_interface_fwd (
+    be_interface_fwd *node
+  )
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
@@ -263,7 +311,7 @@ int be_visitor_args_request_info_arglist::visit_interface_fwd (be_interface_fwd 
 
 int be_visitor_args_request_info_arglist::visit_native (be_native *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
@@ -280,11 +328,13 @@ int be_visitor_args_request_info_arglist::visit_native (be_native *node)
   return 0;
 }
 
-int be_visitor_args_request_info_arglist::visit_predefined_type (be_predefined_type *node)
+int be_visitor_args_request_info_arglist::visit_predefined_type (
+    be_predefined_type *node
+  )
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
-  // check if the type is an any
+  // Check if the type is an any.
   if (node->pt () == AST_PredefinedType::PT_any)
     {
       switch (this->direction ())
@@ -300,7 +350,7 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (be_predefined_t
           break;
         } // end switch direction
     } // end of if
-  else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
+  else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g. CORBA::Object
     {
       switch (this->direction ())
         {
@@ -315,7 +365,7 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (be_predefined_t
           break;
         } // end switch direction
     } // end else if
-  else // simple predefined types
+  else // Simple predefined types.
     {
       switch (this->direction ())
         {
@@ -336,75 +386,104 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (be_predefined_t
 
 int be_visitor_args_request_info_arglist::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  be_type *bt; // type to use
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = 0;
 
-  // use the typedefed name if that is the one used in the IDL defn
+  // Use the typedefed name if that is the one used in the IDL defn.
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
-  // ACE_NESTED_CLASS macros needed for MSVC.
+  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
+  // because otherwise the types are not defined in the
+  // same scope, which they must be to use ACE_NESTED_CLASS.
+
+  be_decl* scope =
+    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+
+  AST_Decl::NodeType nt = scope->node_type ();
 
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
-                                 || scope->node_type () == AST_Decl::NT_union ))
+        if (bt->is_nested ()
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << ") &";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
-          *os << "const " << this->type_name (node) << " &";
+          {
+            *os << "const " << this->type_name (node) << " &";
+          }
+
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
-                                 || scope->node_type () == AST_Decl::NT_union ))
+        if (bt->is_nested ()
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << ") &";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
-          *os << this->type_name (node) << " &";
+          {
+            *os << this->type_name (node) << " &";
+          }
+
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
-                                 || scope->node_type () == AST_Decl::NT_union ))
+        if (bt->is_nested ()
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << "_out)";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os << "_out)";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
-          *os << this->type_name (node, "_out");
+          {
+            *os << this->type_name (node, "_out");
+          }
+
         break;
       }
-
     }
+
   return 0;
 }
 
 int be_visitor_args_request_info_arglist::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   if (node->width () == (long) sizeof (char))
     {
@@ -442,141 +521,202 @@ int be_visitor_args_request_info_arglist::visit_string (be_string *node)
 
 int be_visitor_args_request_info_arglist::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  be_type *bt; // type to use
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = 0;
 
-  // use the typedefed name if that is the one used in the IDL defn
+  // Use the typedefed name if that is the one used in the IDL defn.
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
-  // ACE_NESTED_CLASS macros needed for MSVC.
+  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
+  // because otherwise the types are not defined in the
+  // same scope, which they must be to use ACE_NESTED_CLASS.
+
+  be_decl* scope =
+    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+
+  AST_Decl::NodeType nt = scope->node_type ();
 
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
-                                 || scope->node_type () == AST_Decl::NT_union ))
+        if (bt->is_nested ()
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union)
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << ") &";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
-          *os << "const " << this->type_name (node) << " &";
+          {
+            *os << "const " << this->type_name (node) << " &";
+          }
+
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
-                                 || scope->node_type () == AST_Decl::NT_union ))
+        if (bt->is_nested ()
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << ") &";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
-          *os << this->type_name (node) << " &";
+          {
+            *os << this->type_name (node) << " &";
+          }
+
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
-                                 || scope->node_type () == AST_Decl::NT_union ))
+        if (bt->is_nested ()
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union)
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << "_out)";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os << "_out)";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
-          *os << this->type_name (node, "_out");
+          {
+            *os << this->type_name (node, "_out");
+          }
+
         break;
       }
     }
+
   return 0;
 }
 
 int be_visitor_args_request_info_arglist::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  be_type *bt; // type to use
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = 0;
 
-  // use the typedefed name if that is the one used in the IDL defn
+  // Use the typedefed name if that is the one used in the IDL defn.
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
-  // ACE_NESTED_CLASS macros needed for MSVC.
+  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
+  // because otherwise the types are not defined in the
+  // same scope, which they must be to use ACE_NESTED_CLASS.
+
+  be_decl* scope =
+    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+
+  AST_Decl::NodeType nt = scope->node_type ();
+
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
-                                 || scope->node_type () == AST_Decl::NT_union ))
+        if (bt->is_nested ()
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << ") &";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os  << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
-          *os << "const " << this->type_name (node) << " &";
+          {
+            *os << "const " << this->type_name (node) << " &";
+          }
+
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
-                                 || scope->node_type () == AST_Decl::NT_union ))
+        if (bt->is_nested ()
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << ") &";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os  << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
-          *os << this->type_name (node) << " &";
+          {
+            *os << this->type_name (node) << " &";
+          }
+
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
-                                 || scope->node_type () == AST_Decl::NT_union ))
+        if (bt->is_nested ()
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << "_out)";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os  << "_out)";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
-          *os << this->type_name (node, "_out");
+          {
+            *os << this->type_name (node, "_out");
+          }
+
         break;
       }
-
     }
+
   return 0;
 }
 
 int be_visitor_args_request_info_arglist::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -585,6 +725,7 @@ int be_visitor_args_request_info_arglist::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }
@@ -594,7 +735,7 @@ int be_visitor_args_request_info_arglist::visit_typedef (be_typedef *node)
 
 int be_visitor_args_request_info_arglist::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
@@ -608,12 +749,13 @@ int be_visitor_args_request_info_arglist::visit_valuetype (be_valuetype *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
 int be_visitor_args_request_info_arglist::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
@@ -627,6 +769,7 @@ int be_visitor_args_request_info_arglist::visit_valuetype_fwd (be_valuetype_fwd 
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 

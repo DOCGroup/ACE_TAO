@@ -60,13 +60,14 @@ int be_visitor_interface_interceptors_sh::visit_interface (be_interface *node)
       // elements of its scope. We depend on the front-end to have made sure
       // that only legal syntactic elements appear in our scope.
 
-  os->indent (); // start with the current indentation level
-  *os << "// Generation of interceptors related RequestInfo classes per operation."<<be_nl
-      << "// This needed to be able to store the arguments, exceptiosn, constexts"<<be_nl
-      << "// and build the lists dynamically on demand so that unnecessary time overhead"<<be_nl
-      << "// of building these lists when they arent used is avoided." << be_nl;
-
-      os->indent ();
+  *os << "// Generation of interceptors related RequestInfo classes "
+      << "per operation." << be_nl
+      << "// This needed to be able to store the arguments, exceptiosn, "
+      << "constexts" << be_nl
+      << "// and build the lists dynamically on demand so that "
+      << "unnecessary time overhead" << be_nl
+      << "// of building these lists when they arent used is avoided." 
+      << be_nl;
 
       if (this->visit_scope (node) == -1)
         {
