@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -53,11 +52,11 @@ public:
             void *addr = 0,
             int flags = 0);
 
-  virtual int  close (void);
+  virtual int close (void);
   // Close down the shared memory segment.
 
-  virtual int  remove (void);
-  // Remove the shared memory segment and the underlying file.
+  virtual int remove (void);
+  // Remove the underlying shared memory segment.
 
   // = Allocation and deallocation methods.
   virtual void *malloc (size_t = 0);
