@@ -20,6 +20,10 @@ Wed May 09 14:07:56 2001  Jeff Parsons  <parsons@cs.wustl.edu>
         * tests/DSI_Gateway/test_i.cpp:
         * tests/DSI_Gateway/test_i.h:
 
+          New file:
+
+        * tests/DSI_Gateway/run_exception_test.pl:
+
           Changes to DynamicInterface classes to enable the
           storage/retrieval of a user exception when instantiation
           of these classe are used in a gateway. Also changes
@@ -27,8 +31,8 @@ Wed May 09 14:07:56 2001  Jeff Parsons  <parsons@cs.wustl.edu>
           remove the gateway's dependence on any IDL-generated
           files. README file updated, and files added to the
           MSVC project for completeness. The gateway test may
-          now be run normally, as before, or with a command line
-          option that tests the passing of a user exception
+          now be run normally, as before, or with a new script
+          that tests the passing of a user exception
           from the server, through the gateway and back to the
           client. This closes [BUGID:500].
 
