@@ -1,8 +1,14 @@
+Tue Sep 21 21:56:10 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-subsets.html: replaced absolute link to
+          ../ACE-INSTALL.html#repo with a relative link.  And,
+          added "typically" to the 25 percent size reduction figure.
+
 Tue Sep 21 16:49:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/ACE-subsets.html: Updated the document to point to the
-	  -frepo discussion.  Thanks to Timothy Canham
- 	  <Timothy.Canham@jpl.nasa.gov> for motivating this.
+        * docs/ACE-subsets.html,ACE-INSTALL.html: Updated the document
+          to point to the -frepo discussion.  Thanks to Timothy Canham
+          <Timothy.Canham@jpl.nasa.gov> for motivating this.
 
 Tue Sep 21 16:07:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -1979,6 +1985,8 @@ Sat Aug 21 12:36:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           ACE_OS_Object_Manager_Internal_Exit_Hook () to void
           ACE_OS_Object_Manager_Internal_Exit_Hook (void) so that this
           will match the type declaration for ACE_EXIT_HOOK.
+          [NOTE: that's not really a signature change.  g++ needs the
+          "void", however, to avoid a bug without -pedantic.]
 
         * ace/Process_Manager.cpp: Use the new ACE_OS::wait() method,
           which is portable to Win32, rather than ACE_OS::waitpid().
