@@ -57,13 +57,13 @@ parse_args (int argc, char **argv)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           "-a IOR 1"
-                           "-b IOR 2"
-                           "-c IOR 3"
-                           "-d IOR 4"
-                           "-e IOR 5"
-                           "-f IOR 6"
+                           "usage:  %s "
+                           "-a IOR 1 "
+                           "-b IOR 2 "
+                           "-c IOR 3 "
+                           "-d IOR 4 "
+                           "-e IOR 5 "
+                           "-f IOR 6 "
                            "\n",
                            argv [0]),
                           -1);
@@ -109,9 +109,11 @@ void
 run_test (CORBA::ORB_var &orb, 
           char *IOR,
           CORBA::Environment &env,
-          T_var &dummy)
+          T *dummy1,
+          T_var &dummy2)
 {
-  ACE_UNUSED_ARG (dummy);
+  ACE_UNUSED_ARG (dummy1);
+  ACE_UNUSED_ARG (dummy2);
 
   if (IOR != 0)
     {
@@ -189,26 +191,32 @@ main (int argc, char **argv)
   run_test<Foo, Foo_var> (orb, 
                           IOR[i++], 
                           env,
+                          0,
                           Foo_var ());
   run_test<Outer::Foo, Outer::Foo_var> (orb, 
                                         IOR[i++], 
                                         env,
+                                        0,
                                         Outer::Foo_var ());
   run_test<Outer::Inner::Foo, Outer::Inner::Foo_var> (orb, 
                                                       IOR[i++], 
                                                       env,
+                                                      0,
                                                       Outer::Inner::Foo_var ());
   run_test<Foo, Foo_var> (orb, 
                           IOR[i++], 
                           env,
+                          0,
                           Foo_var ());
   run_test<Outer::Foo, Outer::Foo_var> (orb, 
                                         IOR[i++], 
                                         env,
+                                        0,
                                         Outer::Foo_var ());
   run_test<Outer::Inner::Foo, Outer::Inner::Foo_var> (orb, 
                                                       IOR[i++], 
                                                       env,
+                                                      0,
                                                       Outer::Inner::Foo_var ());
   return 0;
 }
