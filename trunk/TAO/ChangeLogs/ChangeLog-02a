@@ -1,3 +1,9 @@
+Thu Nov 16 17:30:04 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Makefile:
+          Add show_release_tag_files pseudo-target, if not present we get
+          a warning in the release.
+
 Thu Nov 16 16:36:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/INS.html:
@@ -24,7 +30,7 @@ Thu Nov 16 18:21:23 2000  Marina Spivak  <marina@cs.wustl.edu>
         * tests/RTCORBA/Banded_Connections/test.idl:
 
           Added a test for RTCORBA::PriorityBandedConnectionPolicy.
-        
+
 Thu Nov 16 16:16:47 2000  Ossama Othman  <ossama@uci.edu>
 
         * tao/TAO.dsp:
