@@ -7,6 +7,10 @@ Thu May 20 13:52:04 1999  David L. Levine  <levine@cs.wustl.edu>
           The rwlock functions are a Solaris threads interface, and
           are not POSIX.
 
+        * include/makeinclude/platform_sunos5_ghs.GNU: default to
+          building without threads support, because Green Hills 1.8.9
+          is incompatible with the SunOS threads libraries.
+
 Thu May 20 12:12:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp},Sched_Params.cpp: with ACE_HAS_PRIOCNTL,
