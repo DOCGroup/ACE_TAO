@@ -1,3 +1,12 @@
+Sat Jun 19 09:05:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+
+	  Added missing "avoids += minimum_corba".  These services require
+	  functionality that is disabled when minimum CORBA support is
+	  enabled.
+
 Sat Jun 19 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * interop-tests/wchar/client.cpp:
@@ -519,7 +528,6 @@ Fri Jun 11 13:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           we don't mix virtual and non-virtual bases. This fixes warnings
           from the HP aCC compiler.
 
->>>>>>> 1.4232
 Thu Jun 10 19:44:55 2004  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
