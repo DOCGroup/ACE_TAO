@@ -452,6 +452,19 @@ Wed Dec 30 02:47:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
           initialization routine.  This way these functions are only
           called once per ORB and not once per object.
 
+	  In other words, these changes were necessary to improve the
+ 	  performance of object creation in TAO.  The change is fairly
+ 	  simple in the sense that previously the IIOP::Profile was fed
+ 	  the endpoint INET_Addr on creation by the ORB_Core and the
+ 	  Profile figured out the host and port information from the
+ 	  INET_Addr. The figuring out part was through the very expensive
+ 	  gethostby{name,addr} routine.
+
+	  The change was to move the expensive gethostby{name,addr}
+ 	  routine out of the Profile and into the ORB_Core and simply
+ 	  provide the cached host and port information to the
+ 	  IIOP::Profile when it is constructed.
+
         * tao/Servant_Base.cpp (_create_stub): Removed the creation of an
           extra STUB_Object.
 
