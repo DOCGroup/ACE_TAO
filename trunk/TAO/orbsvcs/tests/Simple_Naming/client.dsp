@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="Simple Naming Client" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -17,12 +17,13 @@ CFG=Simple Naming Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Naming Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Simple Naming Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Naming Client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Simple Naming Client - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -128,6 +129,7 @@ SOURCE=.\test_object.idl
 !IF  "$(CFG)" == "Simple Naming Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test_object.idl
 InputName=test_object
@@ -166,6 +168,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test_object.idl
 InputName=test_object
