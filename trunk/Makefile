@@ -139,7 +139,13 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                          "\"$${major}.$${minor}.$${beta}\\0\"\n";' > \
                 ace/Version.h; \
               cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG ace/Version.h; \
-              chmod 644 VERSION $$CHANGELOG ace/Version.h) &&
+              chmod 644 VERSION $$CHANGELOG ace/Version.h; \
+	      VERSION_TAG=ACE_`perl -ne  'if (/ACE version/) \
+                { s/[^0-9]+(\d+)\.(\d+)\.(\d+).+/\1_\2_\3/ ; print }' VERSION`;\
+	      export VERSION_TAG; \
+	      CURRENT_TAG=Current; export CURRENT_TAG; \
+	      cvs tag $$VERSION_TAG $(RELEASE_FILES) ; \
+	      cvs tag -F $$CURRENT_TAG $(RELEASE_FILES)) &&
 else
   TIMESTAMP =
 endif
