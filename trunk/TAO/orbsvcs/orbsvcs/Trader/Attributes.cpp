@@ -72,7 +72,7 @@ TAO_Support_Attributes_Impl::type_repos (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->trader_.lock (),
 			 CosTrading::TypeRepository::_nil ());
-  return this->type_repos_->_duplicate (type_repos_);
+  return this->type_repos_;
 }
   
 void

@@ -94,7 +94,7 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   offer.reference = (reference->_duplicate (reference));
   offer.properties = properties;
   
-  // Inser the offer into the underlying type map.
+  // Insert the offer into the underlying type map.
   CosTrading::OfferId id = service_type_map.insert_offer (type, offer);
   
   if (id == 0)

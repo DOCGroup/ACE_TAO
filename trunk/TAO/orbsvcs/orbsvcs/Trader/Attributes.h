@@ -64,7 +64,7 @@ private:
   CORBA::Boolean supports_proxy_offers_;
   // Indicator of whether the trader supports proxy offers.
 
-  CosTrading::TypeRepository_ptr type_repos_;
+  CORBA::Object_var type_repos_;
   // A reference to the TypeRepostitory used by the trader.
 };
 

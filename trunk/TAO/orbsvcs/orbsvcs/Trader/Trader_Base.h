@@ -24,6 +24,26 @@
 
 #include "Attributes.h"
 
+// Forward Declaration
+template <class TRADER_LOCK_TYPE, MAP_LOCK_TYPE>
+class TAO_Trader;
+
+// Cludge to avoid template instantiation in the executable.
+class TAO_Trader_Factory
+{
+public:
+  
+  typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex> TAO_TRADER;  
+  static TAO_TRADER* TAO_create_linked_trader (void);
+  
+#ifdef ACE_HAS_THREADS
+  
+  typedef TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex> TAO_MT_TRADER;
+  static TAO_MT_TRADER* TAO_MT_create_linked_trader (void);
+  
+#endif /* ACE_HAS_THREADS */
+};
+
 class TAO_Export TAO_Trader_Base
   //
   // = TITLE
@@ -87,5 +107,6 @@ protected:
   TAO_Link_Attributes_Impl link_attributes_;
   // Stores and allows access/modification of trader's link attributes.
 };
+
 
 #endif /* TAO_TRADER_BASE_H */

@@ -95,7 +95,6 @@ protected:
   PortableServer::ServantBase* ifs_[5];
 };
 
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Trader.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
