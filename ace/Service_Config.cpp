@@ -229,7 +229,7 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         break;
       case 'k':
         ACE_Service_Config::logger_key_ =
-          getopt.optarg;
+          ASYS_ONLY_WIDE_STRING (getopt.optarg);
         break;
       case 'n':
         ACE_Service_Config::no_static_svcs_ = 1;
