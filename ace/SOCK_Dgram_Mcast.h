@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -22,7 +21,6 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
-#if defined (ACE_HAS_IP_MULTICAST)
 class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
   // = TITLE
   //     Defines the member functions for the ACE_SOCK multicast abstraction. 
@@ -108,5 +106,4 @@ private:
 
 #include "ace/SOCK_Dgram_Mcast.i"
 
-#endif /* ACE_HAS_IP_MULTICAST */
 #endif /* ACE_SOCK_DGRAM_MCAST_H */
