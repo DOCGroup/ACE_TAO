@@ -23,7 +23,7 @@ same host.
 Naming Service:
 --------------
 
-% $TAO_ROOT/orbsvcs/NamingService/NamingService [-ORBnameserviceport <portnum>]
+% $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service [-ORBnameserviceport <portnum>]
 
 Server:
 -----
