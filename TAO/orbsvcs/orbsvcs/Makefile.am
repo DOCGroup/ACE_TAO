@@ -1,13 +1,13 @@
 ##  Process this file with automake to create Makefile.in
 
-includedir = @includedir@/orbsvcs/orbsvcs
+includedir = @includedir@/orbsvcs
 
 ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
 TAO_BUILDDIR = $(top_builddir)
 
-TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(top_builddir)/TAO_IDL/tao_idl
+TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
 ## Makefile.Svc_Utils.am 
@@ -888,7 +888,7 @@ nobase_include_HEADERS += \
   CosTypedEventChannelAdmin.idl \
   CosTypedEventComm.idl
 
-endif
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   CosEvent.rc
@@ -1125,7 +1125,7 @@ nobase_include_HEADERS += \
   FT_CORBA_ORB.idl \
   PortableGroup_Simple_DS.idl
 
-endif
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.PortableGroup.am 
 
@@ -1331,7 +1331,7 @@ nobase_include_HEADERS += \
   PortableGroup.idl \
   miop.idl
 
-endif
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   PortableGroup.rc
@@ -1508,8 +1508,8 @@ nobase_include_HEADERS += \
   CosLoadBalancing.idl \
   LB_ORT.idl
 
-endif
-endif
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_AMI
 
 EXTRA_DIST += \
   CosLoadBalancing.rc
@@ -2552,7 +2552,7 @@ nobase_include_HEADERS += \
   DsEventLogAdminS_T.cpp \
   DsEventLogAdmin.idl
 
-endif
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.DsNotifyLogAdmin.am 
 
@@ -2650,7 +2650,7 @@ nobase_include_HEADERS += \
   DsNotifyLogAdminS_T.cpp \
   DsNotifyLogAdmin.idl
 
-endif
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.FTRT_ClientORB.am 
 
@@ -3300,7 +3300,7 @@ nobase_include_HEADERS += \
   FtRtecEventChannelAdmin.idl \
   FtRtecEventComm.idl
 
-endif
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.FTRT_EventChannel.am 
 
@@ -3421,8 +3421,8 @@ nobase_include_HEADERS += \
   FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp \
   FtRtEvent/EventChannel/Fault_Detector_T.cpp
 
-endif
-endif
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.FT_ClientORB.am 
 
@@ -3488,8 +3488,8 @@ nobase_include_HEADERS += \
   FaultTolerance/FT_Service_Callbacks.i \
   Channel_Clients_T.cpp
 
-endif
-endif
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_ACE_UUID
 
 ## Makefile.FT_ServerORB.am 
 
@@ -3546,7 +3546,7 @@ nobase_include_HEADERS += \
   FaultTolerance/FT_ServerPolicy_i.inl \
   Channel_Clients_T.cpp
 
-endif
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.FaultTolerance.am 
 
@@ -3792,8 +3792,8 @@ nobase_include_HEADERS += \
   FT_Replica.idl \
   FT_ReplicationManager.idl
 
-endif
-endif
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_ACE_UUID
 
 EXTRA_DIST += \
   FaultTolerance.rc
@@ -3953,7 +3953,7 @@ nobase_include_HEADERS += \
   IFRService/IFR_ExtendedS.i \
   Channel_Clients_T.cpp
 
-endif
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   IFRService.rc
@@ -4007,7 +4007,7 @@ nobase_include_HEADERS += \
   Event/EC_RTCORBA_Factory.inl \
   Channel_Clients_T.cpp
 
-endif
+endif BUILD_RT_CORBA
 
 ## Makefile.RTCosScheduling.am 
 
@@ -4093,8 +4093,8 @@ nobase_include_HEADERS += \
   RTCosSchedulingS_T.cpp \
   RTCosScheduling.idl
 
-endif
-endif
+endif BUILD_INTERCEPTORS
+endif BUILD_RT_CORBA
 
 ## Makefile.RTSched.am 
 
@@ -4549,7 +4549,7 @@ nobase_include_HEADERS += \
   Notify/Structured/RT_StructuredProxyPushSupplier.inl \
   Channel_Clients_T.cpp
 
-endif
+endif BUILD_RT_CORBA
 
 EXTRA_DIST += \
   RT_Notification.rc
@@ -4876,8 +4876,8 @@ nobase_include_HEADERS += \
   SecurityLevel2.idl \
   SecurityLevel3.idl
 
-endif
-endif
+endif BUILD_INTERCEPTORS
+endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
   Security.rc
@@ -5019,8 +5019,8 @@ nobase_include_HEADERS += \
   SSLIOPS_T.cpp \
   SSLIOP.idl
 
-endif
-endif
+endif BUILD_INTERCEPTORS
+endif BUILD_SSL
 
 EXTRA_DIST += \
   SSLIOP.rc
