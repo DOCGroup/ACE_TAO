@@ -48,7 +48,7 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
@@ -57,32 +57,32 @@ static const CORBA::Long _oc_Messaging_Timeout[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5469), 
-  ACE_NTOHL (0x6d656f75), 
-  ACE_NTOHL (0x743a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5469),
+  ACE_NTOHL (0x6d656f75),
+  ACE_NTOHL (0x743a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/Timeout:1.0
     8,
-  ACE_NTOHL (0x54696d65), 
+  ACE_NTOHL (0x54696d65),
   ACE_NTOHL (0x6f757400),  // name = Timeout
     CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
         6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
         CORBA::tk_ulonglong,
 
@@ -108,7 +108,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::RelativeRoundtripTimeoutPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_duplicate (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p
@@ -117,7 +117,7 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_duplicate (
   return Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_release (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p
@@ -126,14 +126,14 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_nil (void)
 {
   return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_marshal (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p,
@@ -144,7 +144,7 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_RelativeRoundtripTimeoutPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -155,7 +155,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (void)
 Messaging::RelativeRoundtripTimeoutPolicy::~RelativeRoundtripTimeoutPolicy (void)
 {}
 
-void 
+void
 Messaging::RelativeRoundtripTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RelativeRoundtripTimeoutPolicy *_tao_tmp_pointer =
@@ -173,10 +173,10 @@ Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
     {
       return RelativeRoundtripTimeoutPolicy::_nil ();
     }
-  
+
   RelativeRoundtripTimeoutPolicy_ptr proxy =
     dynamic_cast<RelativeRoundtripTimeoutPolicy_ptr> (_tao_objref);
-  
+
   return RelativeRoundtripTimeoutPolicy::_duplicate (proxy);
 }
 
@@ -187,7 +187,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (RelativeRoundtripTimeoutP
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
