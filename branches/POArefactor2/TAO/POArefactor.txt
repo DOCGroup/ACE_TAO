@@ -1,3 +1,10 @@
+Thu Nov 11 11:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Upcall.cpp (servant_locator_cleanup):
+          Added a todo that this method is not behaving according to the spec.
+          I just stumbled on this, but will have to look more in detail how to
+          update the code so that it matches the spec
+
 Thu Nov 11 11:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/RequestProcessingStrategyServantManager.{h,cpp}:
