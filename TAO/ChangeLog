@@ -1,3 +1,9 @@
+Thu Apr 10 01:39:23 2003 Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Destroy/Makefile:
+	* orbsvcs/tests/Notify/Destroy/.depend.Makefile:
+	  Corrected the Makefile.
+	
 Thu Apr 10 10:39:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
