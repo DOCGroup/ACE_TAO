@@ -29,5 +29,6 @@ files =	ImageFilterFactory.java \
 	StatusDisplay.java \
 	Icon.java \
 	Hierarchy.java \
+	HierarchyAdapter.java \
 	FileBrowser.java \
 	ListFiles.java
