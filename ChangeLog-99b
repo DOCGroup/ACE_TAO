@@ -1,3 +1,9 @@
+Wed Jun 16 15:55:28 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* examples/Misc/test_trace.cpp: Cleaned up this example of
+ 	  ACE_Trace to work properly with a different number of threads.
+  	  Thanks to Hao Ruan <hruan@lucent.com> for reporting this.
+
 Wed Jun 16 15:54:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h:
