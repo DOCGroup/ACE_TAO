@@ -117,6 +117,9 @@
 #define ACE_LACKS_WRITEV
 #define ACE_PAGE_SIZE 4096
 
+// Chorus has syslog, but doesn't have setlogmask()
+#define ACE_LACKS_SETLOGMASK
+
 // Yes, we do have threads.
 #define ACE_HAS_THREADS
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
