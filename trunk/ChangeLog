@@ -3,7 +3,7 @@ Fri Jul  9 23:45:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ace/RB_Tree.h (ACE_RB_Tree_Base::allocator):
 	* ace/RB_Tree.inl:
 
-	  This non-template class method is inlined in the RB_Tree.h
+	  This non-template class method is now inlined in the RB_Tree.h
 	  header rather than in RB_Tree.inl since that file may be
 	  included multiple times when inlining is disabled and on
 	  platforms where ACE_TEMPLATES_REQUIRE_SOURCE is defined.  In
@@ -52,7 +52,7 @@ Thu Jul  8 08:56:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Thu Jul  8 01:09:32 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace: Renamed config-aix5.1.h to config-aix-5.1.h to be consistent 
+	* ace: Renamed config-aix5.1.h to config-aix-5.1.h to be consistent
 	  with the other AIX config*.h files.
 
 Wed Jul  7 21:26:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
