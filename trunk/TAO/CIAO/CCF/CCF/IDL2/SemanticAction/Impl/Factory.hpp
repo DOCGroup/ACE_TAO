@@ -27,6 +27,7 @@
 #include "CCF/IDL2/SemanticAction/Impl/Struct.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Typedef.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/TypeId.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Union.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/ValueType.hpp"
 
 namespace CCF
@@ -121,6 +122,12 @@ namespace CCF
             return type_prefix_;
           }
 
+          virtual SemanticAction::Union&
+          union_ ()
+          {
+            return union__;
+          }
+
           virtual SemanticAction::ValueType&
           value_type ()
           {
@@ -144,6 +151,7 @@ namespace CCF
           Typedef typedef__;
           TypeId type_id_;
           TypePrefix type_prefix_;
+          Union union__;
           ValueType value_type_;
         };
       }

@@ -21,6 +21,7 @@
 #include "CCF/IDL2/Traversal/Struct.hpp"
 #include "CCF/IDL2/Traversal/Translation.hpp"
 #include "CCF/IDL2/Traversal/TypeId.hpp"
+#include "CCF/IDL2/Traversal/Union.hpp"
 #include "CCF/IDL2/Traversal/ValueType.hpp"
 
 #endif  // CCF_IDL2_TRAVERSAL_HPP
