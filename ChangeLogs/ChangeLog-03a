@@ -1,3 +1,7 @@
+Mon Oct 22 15:50:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* THANKS: Added Chris Hughes name to the Hall of Fame
+
 Sun Oct 21 16:44:41 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Proactor_Test.cpp (disable_signal):
