@@ -1,3 +1,23 @@
+Fri Oct 22 14:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_Current_Impl.{h,inl}:
+          Added new replace_object_id(), this is needed for the Request
+          Processing strategies to replace the object id in a smart way
+
+Fri Oct 22 13:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/portableserver_export.h:
+          Removed include of ObjRef_VarOut_T.h, when neede somewhere include
+          it there. With this include at this place everyone gets this include
+          even when not needed.
+
+        * tao/PortableServer/Active_Policy_Strategies:
+        * tao/PortableServer/POA_Guard.h:
+        * tao/PortableServer/POAManager.h:
+        * tao/PortableServer/Policy_Strategy.h:
+        * tao/PortableServer/Thread_Strategy.h:
+          Added missing includes
+
 Thu Oct 14 07:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
