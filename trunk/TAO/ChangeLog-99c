@@ -53,11 +53,7 @@ Sun Mar 28 14:20:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Sun Mar 28 11:39:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * examples/Simple/grid/Grid_Client_i.cpp: Added #include
-          "ace/CORBA_macros.h".
-
         * examples/Simple/bank/AccountManager_i.cpp (open): Fixed a typo.
-
 
 Sun Mar 28 07:40:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
