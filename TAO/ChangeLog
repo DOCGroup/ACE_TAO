@@ -1,3 +1,12 @@
+Wed Nov 27 16:35:03 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
+
+	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.h: 
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h: 
+	* orbsvcs/orbsvcs/Log/NotifyLogNotification.h: 
+
+	Removed includes to deprecated files.
+	
+
 Wed Nov 27 13:54:55 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/client.cpp:

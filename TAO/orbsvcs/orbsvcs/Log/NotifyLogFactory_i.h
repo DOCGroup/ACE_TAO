@@ -26,7 +26,6 @@
 
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/LogMgr_i.h"
-#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 #include "NotifyLog_i.h"
 
 #if defined(_MSC_VER)
