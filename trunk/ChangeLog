@@ -1,3 +1,16 @@
+Tue Aug 17 08:00:00 2004  Martin Corino <mcorino@remedy.nl>
+
+    * ace/ACE.h:
+      ace/ACE.cpp:
+      
+      Added ACE::is_sock_error() to be able to test if errorcode is
+      WinSock error *before* converting to error string.
+      
+    * ace/OS_NS_String.cpp:
+    
+      Fixed WCHAR bug in ACE_OS::strerror().
+      Introduced use of ACE::is_sock_error().
+
 Mon Aug 16 22:53:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.cpp (~ACE_SSL_SOCK_Stream):
