@@ -1,3 +1,8 @@
+Fri Oct 24 17:14:51 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/Traversal/Typedef.hpp: New implementation of
+	  typedef traverser.
+
 Fri Oct 24 11:31:34 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
         * CIAO version 0.3.5 released.
@@ -35,12 +40,12 @@ Thu Oct 16 16:45:35 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/CCF/IDL3/SyntaxTree/Operation.hpp:
 	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
 	  Added support for struct.
-	
+
 	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
 	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
 	  Added a few structs for testing.
 
-	* CCF/Documentation/TODO: Marked some items as done or 
+	* CCF/Documentation/TODO: Marked some items as done or
 	  partially done.
 
 Thu Oct 16 12:55:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
@@ -283,16 +288,16 @@ Sun Oct 12 20:44:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/ServantHeaderGenerator.hpp:
         * CIDLC/ServantSourceGenerator.cpp:
         * CIDLC/ServantSourceGenerator.hpp:
-	  Changed top of files to match the title/author/cvs id  format for 
+	  Changed top of files to match the title/author/cvs id  format for
 	  all other CCF and CIDLC files.
 
         * CIDLC/TypeNameEmitter.cpp:
         * CIDLC/TypeNameEmitter.hpp:
 
-	  New files, adding support for all basic IDL types, and factoring 
-	  out the typename emitter classes for operation return types and 
-	  parameters into a separate translation unit, to eliminate the 
-	  duplication in ServantHeaderGenerator.cpp and 
+	  New files, adding support for all basic IDL types, and factoring
+	  out the typename emitter classes for operation return types and
+	  parameters into a separate translation unit, to eliminate the
+	  duplication in ServantHeaderGenerator.cpp and
 	  ServantSourceGenerator.cpp.
 
         * CIDLC/cidlc.mpc:
