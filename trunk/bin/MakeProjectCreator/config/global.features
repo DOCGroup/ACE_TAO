@@ -30,4 +30,4 @@ rpc           = 0
 sctp 	      = 0
 xt_reactor    = 0
 dummy_label   = 0
-cidl          = 1
+cidl          = 0
