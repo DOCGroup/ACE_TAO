@@ -104,8 +104,8 @@ ACE_Log_Record::round_up (void)
     + (sizeof (ASYS_TCHAR) * ((ACE_OS::strlen (this->msg_data_) + 1)));
 
   // Round up to the alignment.
-  this->length_ = 1 + ((len + ACE_Log_Record::ALIGN_WORDB - 1)
-                       & ~(ACE_Log_Record::ALIGN_WORDB - 1));
+  this->length_ = ((len + ACE_Log_Record::ALIGN_WORDB - 1)
+                   & ~(ACE_Log_Record::ALIGN_WORDB - 1));
 }
 
 ACE_Log_Record::ACE_Log_Record (void)
