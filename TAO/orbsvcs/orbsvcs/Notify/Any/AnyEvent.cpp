@@ -138,7 +138,7 @@ TAO_Notify_AnyEvent::~TAO_Notify_AnyEvent ()
 }
 
 const TAO_Notify_Event *
-TAO_Notify_AnyEvent::queueable_copy (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Notify_AnyEvent::queueable_copy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this;
 }

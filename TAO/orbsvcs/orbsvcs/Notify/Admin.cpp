@@ -165,7 +165,7 @@ TAO_Notify_Admin::load_attrs(const TAO_Notify::NVPList& attrs)
 
 TAO_Notify::Topology_Object*
 TAO_Notify_Admin::load_child (const ACE_CString &type,
-  CORBA::Long id, const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL)
+  CORBA::Long id, const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_UNUSED_ARG (attrs);
   TAO_Notify::Topology_Object* result = this;

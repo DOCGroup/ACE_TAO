@@ -293,7 +293,7 @@ TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver ACE_
 
 TAO_Notify::Topology_Object*
 TAO_Notify_EventTypeSeq::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL)
+  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_UNUSED_ARG (id);
   TAO_Notify::Topology_Object *result = this;
