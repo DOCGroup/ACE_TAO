@@ -97,32 +97,71 @@ Quoter_Server::init (int argc,
 int
 Quoter_Server::init_naming_service (CORBA::Environment& env)
 {
-  int result;
-  result = this->my_name_server_.init (this->orb_,
-                              this->child_poa_);
-  if (result < 0)
-    return result;
-  factory = this->factory_impl_._this (env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+  TAO_TRY
+  {
+    CORBA::ORB_var orb_var = TAO_ORB_Core_instance()->orb();
+    TAO_CHECK_ENV;
 
-  CosNaming::Name quoter_context_name (1);
-  quoter_context_name.length (1);
-  quoter_context_name[0].id = CORBA::string_dup ("IDL_Quoter");
-  this->quoter_context_ =
-    this->my_name_server_->bind_new_context (quoter_context_name,
-                                             env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+    CORBA::Object_var naming_obj = 
+      orb_var->resolve_initial_references ("NameService");
+    if (CORBA::is_nil (naming_obj.in ()))
+      ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to resolve the Name Service.\n"),
+         -1);
+    CosNaming::NamingContext_var naming_context = 
+      CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
+    TAO_CHECK_ENV;
+    
+    factory = this->factory_impl_._this (env);
+    TAO_CHECK_ENV_RETURN (env,-1);
 
-  //Register the quoter_factory name with the IDL_quoter Naming
-  //Context...
-  CosNaming::Name factory_name (1);
-  factory_name.length (1);
-  factory_name[0].id = CORBA::string_dup ("quoter_factory");
-  this->quoter_context_->bind (factory_name,
-                              factory.in (),
-                              env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+    
+    CosNaming::Name quoter_context_name (1);
+    quoter_context_name.length (1);
+    quoter_context_name[0].id = CORBA::string_dup ("IDL_Quoter");
+    this->quoter_context_ =
+      naming_context->bind_new_context (quoter_context_name,
+                                    env);
+    TAO_CHECK_ENV_RETURN (env,-1);
+
+    //Register the quoter_factory name with the IDL_quoter Naming
+    //Context...
+    CosNaming::Name factory_name (1);
+    factory_name.length (1);
+    factory_name[0].id = CORBA::string_dup ("quoter_factory");
+    this->quoter_context_->bind (factory_name,
+                                 factory.in (),
+                                 env);
+    TAO_CHECK_ENV_RETURN (env,-1);
+
+//    CosNaming::Name quoter_factory_name (2);
+//    quoter_factory_name.length (2);
+//    quoter_factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
+//    quoter_factory_name[1].id = CORBA::string_dup ("quoter_factory");
+//    CORBA::Object_var factory_obj =
+//      naming_context->resolve (quoter_factory_name,TAO_TRY_ENV);
+//    TAO_CHECK_ENV;
+//    
+//    this->factory_ =
+//      Stock::Quoter_Factory::_narrow (factory_obj.in (),TAO_TRY_ENV);
+//    TAO_CHECK_ENV;
+//    
+//    if (CORBA::is_nil (this->factory_.in ()))
+//      ACE_ERROR_RETURN ((LM_ERROR,
+//      " could not resolve quoter factory in Naming service <%s>\n"),
+//      -1);
+  }
+  TAO_CATCHANY
+  {
+    TAO_TRY_ENV.print_exception ("Quoter::init_naming_service");
+    return -1;
+  }
+  TAO_ENDTRY;
+  
   return 0;
+
+  
+
 }
 
 int
