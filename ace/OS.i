@@ -3361,7 +3361,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   else if (rw->ref_count_ != 1)
     {
       // There were other readers, so we'll have to bail out.
-      error = EBUSY;
+      errno = EBUSY;
       result = -1;
     }
   if (result == 0)
