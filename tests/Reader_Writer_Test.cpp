@@ -253,7 +253,8 @@ int main (int argc, ASYS_TCHAR *argv[])
   current_readers = 0; // Possibly already done
   current_writers = 0; // Possibly already done
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%t) main thread starting\n")));
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT (" (%t) main thread starting\n")));
 
   if (ACE_Thread_Manager::instance ()->spawn_n (n_readers,
                                                ACE_THR_FUNC (reader),
@@ -272,11 +273,13 @@ int main (int argc, ASYS_TCHAR *argv[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%t) exiting main thread\n")));
+  ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT (" (%t) exiting main thread\n")));
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_ERROR, 
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
