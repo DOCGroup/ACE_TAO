@@ -48,7 +48,7 @@ ifndef TAO_ORBSVCS
       endif # findstring Compilers 4.2
     endif # ACE_HAS_GNUG_PRE_2_8
   endif # minimum_corba
-      
+
   ifeq ($(minimum_corba),0)
 
     # Trader uses DynAny which is disabled when compiling with minimum
@@ -73,7 +73,7 @@ ifndef TAO_ORBSVCS
     # The PortableGroup library requires several methods on the POA,
     # which are disabled by Minimum CORBA.
     TAO_ORBSVCS += PortableGroup
-  
+
   endif # minimum_corba
 
   ifeq ($(ssl),1)
