@@ -506,13 +506,8 @@ TAO_find (SEQ& sequence, const OPERAND_TYPE element)
   return (CORBA::Boolean) return_value;
 }
 
-#ifdef ACE_HAS_TEMPLATE_SPECIALIZATION
-template<> CORBA::Boolean
-TAO_find (TAO_Sequences::StringSeq& sequence, const char* element)
-#else
 CORBA::Boolean
 TAO_find_string (TAO_Sequences::StringSeq& sequence, const char* element)
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 {
  int length = sequence.length(),
     return_value = 0;
