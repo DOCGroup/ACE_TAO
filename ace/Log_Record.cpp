@@ -27,11 +27,11 @@ ACE_Log_Record::dump (void) const
   // ACE_TRACE ("ACE_Log_Record::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "length_ = %d\n", this->length_));
-  ACE_DEBUG ((LM_DEBUG, "\ntype_ = %d\n", this->type_));
-  ACE_DEBUG ((LM_DEBUG, "\ntime_stamp_ = (%d, %d)\n", this->time_stamp_.sec (), this->time_stamp_.usec ()));
-  ACE_DEBUG ((LM_DEBUG, "\npid_ = %d\n", this->pid_));
-  ACE_DEBUG ((LM_DEBUG, "\nmsg_data_ = %s\n", this->msg_data_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("length_ = %d\n"), this->length_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntype_ = %d\n"), this->type_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntime_stamp_ = (%d, %d)\n"), this->time_stamp_.sec (), this->time_stamp_.usec ()));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\npid_ = %d\n"), this->pid_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nmsg_data_ = %s\n"), this->msg_data_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
