@@ -79,7 +79,7 @@ write_iors_to_file (const char *first_ior,
   if (output_file_1 == 0 || 
       output_file_2 == 0 || 
       output_file_3 == 0)
-    ACE_ERROR_RETURN ((LM_DEBUG, "Cannot open output files for writing IORs: %s, %s %s", 
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s %s\n", 
                        ior_output_file_1,
                        ior_output_file_2,
                        ior_output_file_3), 
@@ -90,15 +90,33 @@ write_iors_to_file (const char *first_ior,
   result = ACE_OS::fprintf (output_file_1,
                             "%s", 
                             first_ior);
-
+  if (result != ACE_OS::strlen (first_ior))
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+                       first_ior,
+                       ior_output_file_1),
+                      -1);
+  
   result = ACE_OS::fprintf (output_file_2,
                             "%s", 
                             second_ior);
-
+  if (result != ACE_OS::strlen (second_ior))
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+                       second_ior,
+                       ior_output_file_2),
+                      -1);
+  
   result = ACE_OS::fprintf (output_file_3,
                             "%s", 
                             third_ior);
-
+  if (result != ACE_OS::strlen (third_ior))
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+                       third_ior,
+                       ior_output_file_3),
+                      -1);
+  
   ACE_OS::fclose (output_file_1);
   ACE_OS::fclose (output_file_2);
   ACE_OS::fclose (output_file_3);
@@ -322,9 +340,11 @@ main (int argc, char **argv)
               second_ior.in (),
               third_ior.in ()));
 
-  write_iors_to_file (first_ior.in (),
-                      second_ior.in (),
-                      third_ior.in ());
+  int write_result = write_iors_to_file (first_ior.in (),
+                                         second_ior.in (),
+                                         third_ior.in ());
+  if (write_result != 0)
+    return write_result;
 
   // Activate thirdPOA using its ObjectID.
   MyFooServant third_foo_impl (orb.in (), second_poa.in (), 29);

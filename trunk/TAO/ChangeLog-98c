@@ -1,3 +1,8 @@
+Tue Sep 08 14:05:56 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Explicit_Activation/server.cpp (write_iors_to_file):
+ 	  Added checks to catch potential failures in fprintf.
+
 Tue Sep 08 16:12:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp (cleanup_gperf_temp_file):
