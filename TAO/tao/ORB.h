@@ -38,13 +38,14 @@ typedef enum
   TAO_SERVICEID_TRADINGSERVICE
 } TAO_Service_ID;
 
+// @@ NW: Disable messing with the alignment for now.
 // For some reason, PC compilers don't implement "natural" alignment,
 // but only use fixed alignment policies.  The following #pragmas
 // configure fixed one-byte alignment policy, since some fixed policy
 // needs to apply throughout an ORB.
 
 #if defined (_MSC_VER)
-# pragma  pack (push, 1)          // VC++, stack 1-byte alignment policy
+//# pragma  pack (push, 1)          // VC++, stack 1-byte alignment policy
 # ifdef   _DEBUG                  // convert from VC++ convention ...
 #   define  DEBUG           // ... to normal convention
 # endif
@@ -1142,8 +1143,9 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #if  defined (_MSC_VER)
+// @@ NW: Disable messing with alignment for now.
 // VC++, goes back to other padding rules
-# pragma pack (pop)
+//# pragma pack (pop)
 #endif /* _MSV_VER */
 
 #endif /* TAO_ORB_H */
