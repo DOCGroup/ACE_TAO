@@ -56,7 +56,7 @@ public:
   ~Options (void);
   // Termination.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the arguments and set the options.
 
   void print_usage(void);
@@ -110,10 +110,10 @@ public:
   // Our connector port host, i.e., the host running the gatewayd
   // process.
 
-  const char *connection_config_file (void) const;
+  const ACE_TCHAR *connection_config_file (void) const;
   // Name of the connection configuration file.
 
-  const char *consumer_config_file (void) const;
+  const ACE_TCHAR *consumer_config_file (void) const;
   // Name of the consumer map configuration file.
 
   long max_timeout (void) const;
@@ -190,10 +190,10 @@ private:
   CONNECTION_ID connection_id_;
   // The next available connection id.
 
-  char connection_config_file_[MAXPATHLEN + 1];
+  ACE_TCHAR connection_config_file_[MAXPATHLEN + 1];
   // Name of the connection configuration file.
 
-  char consumer_config_file_[MAXPATHLEN + 1];
+  ACE_TCHAR consumer_config_file_[MAXPATHLEN + 1];
   // Name of the consumer map configuration file.
 };
 
