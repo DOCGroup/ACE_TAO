@@ -45,7 +45,7 @@ public:
   virtual int string_to_addr (LPCTSTR address);
   // Initializes an <ACE_URL_Addr> from the <address>, which can be
   // "ip-number:port-number/path-name" (e.g.,
-  // "tango.cs.wustl.edu:1234/~schmidt/" "ip-number:port-number/path-name"
+  // "www.cs.wustl.edu:1234/~schmidt/" "ip-number:port-number/path-name"
   // (e.g., "128.252.166.57:1234/~schmidt").  If there is no ':' in
   // the <address> it is assumed to be an ip-number or ip-address
   // number, with the port number <ACE_DEFAULT_HTTP_PORT>.
@@ -58,7 +58,7 @@ public:
   // "ip-number:port-number/path-name" (e.g.,
   // "128.252.166.57:80/~schmidt/"), whereas if <ipaddr_format> is 0
   // this produces "ip-name:port-number" (e.g.,
-  // "tango.cs.wustl.edu:80/~schmidt/").  Returns -1 if the <size> of
+  // "www.cs.wustl.edu:80/~schmidt/").  Returns -1 if the <size> of
   // the <buffer> is too small, else 0.
 
   virtual LPCTSTR addr_to_string (int ipaddr_format = 1) const;
@@ -67,7 +67,7 @@ public:
   // "ip-number:port-number/path-name" (e.g.,
   // "128.252.166.57:80/~schmidt/"), whereas if <ipaddr_format> is 0
   // this produces "ip-name:port-number" (e.g.,
-  // "tango.cs.wustl.edu:80/~schmidt/").  Uses dynamic memory, which
+  // "www.cs.wustl.edu:80/~schmidt/").  Uses dynamic memory, which
   // is allocated on demand and deallocated when the object is
   // destroyed.  Returns -1 if dynamic memory fails, else 0.
 
