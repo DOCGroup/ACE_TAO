@@ -1,3 +1,18 @@
+Sat May  1 22:35:57 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Future.h (ACE_Future_Rep):
+	* ace/Map_Manager.h (ACE_Map_Manager):
+
+	  Declare lock members as "mutable" to avoid using a
+	  const_cast<> hack in const methods that modify the lock
+	  member through an ACE_GUARD.
+
+	* ace/Future.cpp (get):
+	* ace/Map_Manager.i (current_size, total_size):
+
+	  Removed const_cast<> around lock member.  It is no longer
+	  needed since the lock member is now declared "mutable".
+
 Sun May  2 13:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Task.cpp (svc_run):
