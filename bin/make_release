@@ -670,17 +670,13 @@ sub update_changelog () {
     || return 1;
 
   my $version_h = '';
-  my $version_mpb = '';
 
   if ($KIT eq 'ACE') {
       $version_h = 'ace/Version.h';
-      $version_mpb = 'bin/MakeProjectCreator/config/aceversion.mpb';
   } elsif ($KIT eq 'TAO') {
       $version_h = 'TAO/tao/Version.h';
-      $version_mpb = 'bin/MakeProjectCreator/config/taoversion.mpb';
   } elsif ($KIT eq 'CIAO') {
       $version_h = 'TAO/CIAO/ciao/Version.h';
-      $version_mpb = 'bin/MakeProjectCreator/config/ciaoversion.mpb';
   }
 
 # Incase you are wondering what is all this about. We are trying to
@@ -696,12 +692,12 @@ sub update_changelog () {
       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
   } elsif ($KIT eq 'CIAO') {
   &ex ("cd ../../; $cvs commit -m'$version' " .
-       "TAO/CIAO/VERSION TAO/CIAO/PROBLEM-REPORT-FORM TAO/CIAO/ChangeLog $version_h $version_mpb && " .
+       "TAO/CIAO/VERSION TAO/CIAO/PROBLEM-REPORT-FORM TAO/CIAO/ChangeLog $version_h && " .
        "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h; " .
        "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
   } else {
   &ex ("$cvs commit -m'$version' " .
-       "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb &&" .
+       "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h &&" .
        "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h; " .
        "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
   }

@@ -1,3 +1,9 @@
+Wed Feb 02 08:57:23 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+
+	  Added some comments and removed some old comments. 
+
 Wed Feb  2 08:46:51 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
