@@ -1,3 +1,8 @@
+Sun Aug 16 09:11:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Trader/Trader.cpp: added #include
+          "Trader_Interfaces.h", for use by instantiation pragmas.
+
 Sat Aug 15 12:00:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/varout.h:
