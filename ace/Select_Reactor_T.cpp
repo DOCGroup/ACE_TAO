@@ -1079,7 +1079,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
           dispatch_set.ex_mask_.sync (this->handler_rep_.max_handlep1 ());
 #endif /* ACE_WIN32 */
         }
-      elseif (number_of_active_handles == -1)
+      else if (number_of_active_handles == -1)
         {
           // Normally, select() will reset the bits in dispatch_set
           // so that only those filed descriptors that are ready will
