@@ -105,7 +105,7 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
       CosTrading::OfferIterator* offer_iter;
       this->iters_.dequeue_head (offer_iter);
 
-      ACE_TRY
+      ACE_TRY_NEW_ENV
         {
           offer_iter->destroy (ACE_TRY_ENV);
           ACE_CHECK;
