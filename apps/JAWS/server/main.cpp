@@ -8,10 +8,14 @@ ACE_STATIC_SVC_REQUIRE(HTTP_Server)
 extern "C"
 {
 
-  // call exit() so that static destructors get called 
 static void
 handler (int) 
 { 
+  // reap any threads which have been orphaned.
+  while (ACE_OS::thr_join (0, 0, 0) ==0)
+    ;
+
+  // call exit() so that static destructors get called 
   ACE_OS::exit (0); 
 }
 
