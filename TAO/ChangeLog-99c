@@ -1,3 +1,10 @@
+Fri Jul 30 14:52:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/IDL_Test/IDL_Test.dsw:
+	* tests/IDL_Test/idl_test.dsp: Updated project configurations.
+
+	* version_tests.dsw: Added IDL_Test.
+
 Fri Jul 30 12:40:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/IDL_Test/typedef.idl:
