@@ -29,7 +29,7 @@ class Simple_Server1_i : public POA_Simple_Server1
   //   Implements the Simple_Server1 interface in test1.idl
   //
 public:
-  Simple_Server1_i (CORBA::ORB_ptr orb, 
+  Simple_Server1_i (CORBA::ORB_ptr orb,
                    RTScheduling::Current_ptr current,
                    Task_Stats&,
                    int);

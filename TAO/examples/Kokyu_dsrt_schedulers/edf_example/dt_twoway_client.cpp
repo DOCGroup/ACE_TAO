@@ -75,7 +75,7 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-x (do shutdown)"
+                           "-x (do shutdown)"
                            "-k <ior> "
                            "-s (disable yield)"
                            "\n",
@@ -99,7 +99,7 @@ main (int argc, char *argv[])
 
   if (sched_policy == ACE_SCHED_RR)
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
-  else 
+  else
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
 
   ACE_hthread_t main_thr_handle;
@@ -177,9 +177,9 @@ main (int argc, char *argv[])
             {
               disp_impl_type = Kokyu::DSRT_OS_BASED;
             }
-          
+
           ACE_NEW_RETURN (scheduler,
-                          EDF_Scheduler (orb.in (), 
+                          EDF_Scheduler (orb.in (),
                                          disp_impl_type,
                                          sched_policy,
                                          sched_scope), -1);
@@ -201,13 +201,13 @@ main (int argc, char *argv[])
       int importance=0;
 
       ORBSVCS_Time::Time_Value_to_TimeT (deadline,
-                                         ACE_OS::gettimeofday () + 
+                                         ACE_OS::gettimeofday () +
                                          ACE_Time_Value (50,0) );
 
-      Worker worker1 (orb.in (), 
-                      server.in (), 
-                      current.in (), 
-                      scheduler, 
+      Worker worker1 (orb.in (),
+                      server.in (),
+                      current.in (),
+                      scheduler,
                       deadline,
                       importance,
                       30);
@@ -221,7 +221,7 @@ main (int argc, char *argv[])
 
       worker1.wait ();
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%t): wait for worker threads done in main thread\n"));
 
       if (do_shutdown)
