@@ -19,23 +19,24 @@ IIOP::ProfileBody::~ProfileBody (void)
 ACE_INLINE
 IIOP_Object::~IIOP_Object (void)
 {
-  assert (_refcount == 0);
+  assert (refcount_ == 0);
   delete fwd_profile;
 }
 
 ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id)
-  : fwd_profile (0),
+  : STUB_Object (repository_id),
+    fwd_profile (0),
     base (this),
-    STUB_Object (repository_id),
-    _refcount (1)
+    refcount_ (1)
 {}
 
 ACE_INLINE
-IIOP_Object::IIOP_Object (char *repository_id, IIOP::ProfileBody& a_profile)
-  : fwd_profile (0),
+IIOP_Object::IIOP_Object (char *repository_id,
+			  IIOP::ProfileBody& a_profile)
+  : STUB_Object (repository_id),
+    profile (a_profile),
+    fwd_profile (0),
     base (this),
-    STUB_Object (repository_id),
-    _refcount (1),
-    profile(a_profile)
+    refcount_ (1)
 {}

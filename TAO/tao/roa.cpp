@@ -23,7 +23,7 @@ static GIOP::LocateStatusType request_forwarder (opaque &target_key,
 						 TAO_Dispatch_Context *ctx);
 ROA_ptr
 ROA::init (CORBA_ORB_ptr parent,
-	   ACE_INET_Addr &rendezvous,
+	   ACE_INET_Addr &,
 	   CORBA_Environment &env)
 {
   env.clear ();
@@ -49,7 +49,7 @@ ROA::init (CORBA_ORB_ptr parent,
 }
 
 ROA::ROA (CORBA_ORB_ptr owning_orb,
-	  CORBA_Environment &env)
+	  CORBA_Environment &)
   : do_exit_ (CORBA_B_FALSE), 
     orb_ (owning_orb),
     call_count_ (0),
@@ -257,7 +257,7 @@ ROA::get_request (CORBA_BOA::dsi_handler handler,
 				      CORBA_Environment &env),
 		  CORBA_Boolean	do_thr_create,
 		  void *app_state,
-		  timeval *timeout,
+		  timeval *,
 		  CORBA_Environment &env)
 {
   env.clear ();

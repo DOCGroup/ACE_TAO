@@ -195,7 +195,7 @@ ior_string_to_object (CORBA_String str,
 
   if (tmp [0] && !isspace (tmp [0])) 
     {
-      delete buffer;
+      delete [] buffer;
       env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
       return 0;
     }
@@ -394,5 +394,5 @@ IIOP_ORB::QueryInterface (REFIID riid,
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Singleton<IIOP_ORB, ACE_Thread_Mutex>;
+template class ACE_Singleton<IIOP_ORB, ACE_SYNCH_MUTEX>;
 #endif

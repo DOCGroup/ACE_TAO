@@ -49,7 +49,7 @@ TAO_Client_Connection_Handler::open(void *)
 #  elif defined(WIN32)
 #    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED)
 #  elif defined(sparc)
-#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED|THR_SCOPE_PROCESS)
+#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED | THR_BOUND)
 #  else
 #    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED)
 #  endif
@@ -76,7 +76,7 @@ TAO_Server_Factory::concurrency_strategy ()
   return concurrency_strategy_;
 }
 
-TAO_Object_Table*
+TAO_Object_Table *
 TAO_Server_Factory::object_lookup_strategy (void)
 {
   TAO_OA_Parameters* p = TAO_OA_PARAMS::instance ();
@@ -85,7 +85,9 @@ TAO_Server_Factory::object_lookup_strategy (void)
   switch (p->demux_strategy ())
     {
     case TAO_OA_Parameters::TAO_LINEAR:
-      this->objtable_ = new TAO_Linear_ObjTable (p->tablesize ());
+      ACE_NEW_RETURN (this->objtable_,
+		      TAO_Linear_ObjTable (p->tablesize ()),
+					   0);
       break;
     case TAO_OA_Parameters::TAO_USER_DEFINED:
       // it is assumed that the user would have used the hooks to supply a
@@ -96,7 +98,9 @@ TAO_Server_Factory::object_lookup_strategy (void)
       break;
     case TAO_OA_Parameters::TAO_DYNAMIC_HASH:
     default:
-      this->objtable_ = new TAO_Dynamic_Hash_ObjTable (p->tablesize ());
+      ACE_NEW_RETURN (this->objtable_,
+		      TAO_Dynamic_Hash_ObjTable (p->tablesize ()),
+		      0);
     }
   return this->objtable_;
 }
@@ -131,18 +135,18 @@ template class ACE_Accept_Strategy<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
 template class ACE_Creation_Strategy<TAO_Client_Connection_Handler>;
 template class ACE_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Concurrency_Strategy<TAO_Client_Connection_Handler>;
-template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_RW_Thread_Mutex>;
+template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>;
 template class ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>;
 template class ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
 #define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>
 template class TAO_HASH_ADDR;
-template class ACE_Hash_Map_Manager<TAO_HASH_ADDR, TAO_Client_Connection_Handler*, ACE_RW_Thread_Mutex>;
+template class ACE_Hash_Map_Manager<TAO_HASH_ADDR, TAO_Client_Connection_Handler*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Entry<TAO_HASH_ADDR, TAO_Client_Connection_Handler*>;
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_Client_Connection_Handler>
 template class TAO_SVC_TUPLE;
-template class ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_RW_Thread_Mutex>;
-template class ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_RW_Thread_Mutex>;
+template class ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
 
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

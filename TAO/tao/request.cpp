@@ -17,22 +17,22 @@ DEFINE_GUID (IID_CORBA_Request,
 ULONG __stdcall
 CORBA_Request::AddRef (void)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
  
-  return _refcount++;
+  return refcount_++;
 }
  
 ULONG __stdcall
 CORBA_Request::Release (void)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
- 
-  assert (this != 0);
- 
-  if (--_refcount != 0)
-    return _refcount;
-  
-  guard.release ();
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+
+    ACE_ASSERT (this != 0);
+
+    if (--refcount_ != 0)
+      return refcount_;
+  }
 
   delete this;
   return 0;
@@ -80,7 +80,7 @@ CORBA_Request::CORBA_Request (CORBA_Object_ptr obj,
   : _args (args),
     _result (result),
     _flags (flags),
-    _refcount (1)
+    refcount_ (1)
 {
   _target = CORBA_Object::_duplicate (obj);
   _opname = CORBA_string_copy (op);
@@ -89,7 +89,7 @@ CORBA_Request::CORBA_Request (CORBA_Object_ptr obj,
 CORBA_Request::CORBA_Request (CORBA_Object_ptr obj,
 			      const CORBA_Char *op) 
   : _flags (0),
-    _refcount (1)
+    refcount_ (1)
 {
   _target = CORBA_Object::_duplicate (obj);
   _opname = CORBA_string_copy (op);
@@ -100,7 +100,7 @@ CORBA_Request::CORBA_Request (CORBA_Object_ptr obj,
 
 CORBA_Request::~CORBA_Request (void)
 {
-  assert (_refcount == 0);
+  assert (refcount_ == 0);
 
   CORBA_release (_target);
   CORBA_string_free ((CORBA_String)_opname);

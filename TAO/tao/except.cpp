@@ -32,22 +32,22 @@ DEFINE_GUID (IID_CORBA_SystemException,
 
 CORBA_Exception::CORBA_Exception (CORBA_TypeCode_ptr tc) 
   : _type (tc),
-    _refcnt (1)
+    refcount_ (1)
 {
   if (_type)
     _type->AddRef ();
   assert (_type != 0);
-  assert (_refcnt > 0);
+  assert (refcount_ > 0);
 }
 
 CORBA_Exception::CORBA_Exception (const CORBA_Exception	&src) 
   : _type (src._type),
-    _refcnt (1)
+    refcount_ (1)
 {
   if (_type)
     _type->AddRef ();
   assert (_type != 0);
-  assert (_refcnt > 0);
+  assert (refcount_ > 0);
 }
 
 // NOTE:  It's this code, not anything defined in a subclass, which
@@ -56,7 +56,7 @@ CORBA_Exception::CORBA_Exception (const CORBA_Exception	&src)
 
 CORBA_Exception::~CORBA_Exception (void)
 {
-  assert (_refcnt == 0);
+  assert (refcount_ == 0);
   assert (_type != 0);
 
   assert (1 == 2);
@@ -71,7 +71,7 @@ CORBA_Exception::operator = (const CORBA_Exception &src)
   if (_type)
     _type->AddRef ();
   assert (_type != 0);
-  assert (_refcnt > 0);
+  assert (refcount_ > 0);
 
   return *this;
 }
@@ -81,7 +81,7 @@ CORBA_Exception::id (void) const
 {
   CORBA_Environment env;
 
-  assert (_refcnt > 0);
+  assert (refcount_ > 0);
   if (_type)
     return _type->id (env);
   else
@@ -91,7 +91,7 @@ CORBA_Exception::id (void) const
 const CORBA_TypeCode_ptr
 CORBA_Exception::type (void) const
 {
-  assert (_refcnt > 0);
+  assert (refcount_ > 0);
   return _type;
 }
 
@@ -100,29 +100,28 @@ CORBA_Exception::type (void) const
 ULONG __stdcall
 CORBA_Exception::AddRef (void)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
 
-  assert (_refcnt > 0);
-  return ++_refcnt;
+  assert (refcount_ > 0);
+  return ++refcount_;
 }
 
 ULONG __stdcall
 CORBA_Exception::Release (void)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
 
-  assert (_refcnt > 0);
-  _refcnt--;
-  if (_refcnt != 0)
-    return _refcnt;
+    assert (refcount_ > 0);
+    refcount_--;
+    if (refcount_ != 0)
+      return refcount_;
 
-  guard.release ();
+  }
 
   // CORBA_TypeCode_ptr		tc = _type->_duplicate ();
 
-  { 
-    CORBA_Any free_it_all (_type, this, CORBA_B_TRUE); 
-  }
+  CORBA_Any free_it_all (_type, this, CORBA_B_TRUE); 
 
   // tc->Release ();
 
@@ -133,7 +132,7 @@ HRESULT __stdcall
 CORBA_Exception::QueryInterface (REFIID	riid,
 				 void **ppv)
 {
-  assert (_refcnt > 0);
+  assert (refcount_ > 0);
   *ppv = 0;
 
   if (IID_CORBA_Exception == riid || IID_IUnknown == riid)
@@ -145,14 +144,14 @@ CORBA_Exception::QueryInterface (REFIID	riid,
   if (*ppv == 0)
     return ResultFromScode (E_NOINTERFACE);
 
-  (void) AddRef ();
+ (void) AddRef ();
   return NOERROR;
 }
 
 // Avoid zillions of not-quite-inlined copies of utilities.
 
 CORBA_UserException::CORBA_UserException (CORBA_TypeCode_ptr tc) 
-  : CORBA_Exception	(tc)
+  : CORBA_Exception (tc)
 {
 }
 
@@ -207,7 +206,7 @@ make_standard_typecode (CORBA_TypeCode_ptr tcp,
   static CORBA_TypeCode
     tc_completion_status (tk_enum, 
 			  sizeof oc_completion_status,
-			  (unsigned char *) &oc_completion_status,
+ (unsigned char *) &oc_completion_status,
 			  CORBA_B_FALSE);
 
   static const CORBA_TypeCode_ptr completion_status = &tc_completion_status;
@@ -228,7 +227,7 @@ make_standard_typecode (CORBA_TypeCode_ptr tcp,
 
   char	full_id [100], *strptr = (char *) &full_id;
 
-  (void) ACE_OS::sprintf (full_id, "IDL:omg.org/CORBA/%s:1.0", name);
+ (void) ACE_OS::sprintf (full_id, "IDL:omg.org/CORBA/%s:1.0", name);
   assert (strlen (full_id) <= sizeof full_id);
 
   if (stream.put_byte (MY_BYTE_SEX) != CORBA_B_TRUE
@@ -271,7 +270,7 @@ make_standard_typecode (CORBA_TypeCode_ptr tcp,
 
 // List of standard/system exceptions ... used to create static
 // storage for their typecodes, then later to initialize that storage
-// using the routine above.  (It's just too painful to init these
+// using the routine above. (It's just too painful to init these
 // typecodes statically in all cases!)
 
 #define	STANDARD_EXCEPTION_LIST \
@@ -316,7 +315,7 @@ STANDARD_EXCEPTION_LIST
 #undef	SYSEX
 
 // Runtime initialization of all standard exception typecodes.  Called
-// from CORBA::ORB::init().
+// from CORBA::ORB::init ().
 
 void
 __TC_init_standard_exceptions (CORBA_Environment &env)
@@ -331,7 +330,7 @@ __TC_init_standard_exceptions (CORBA_Environment &env)
 #define	SYSEX(name) \
   if (env.exception () == 0) \
 			       make_standard_typecode (&tc_std_ ## name, #name, \
-						       (unsigned char *) tc_buf_ ## name, \
+ (unsigned char *) tc_buf_ ## name, \
 						       sizeof tc_buf_ ## name, env);
 
   STANDARD_EXCEPTION_LIST

@@ -14,16 +14,17 @@ DEFINE_GUID (IID_IIOP_ServerRequest,
 0x77420086, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 // {4B48D881-F7F0-11ce-9598-0000C07CA898}
-DEFINE_GUID(IID_CORBA_ServerRequest,
+DEFINE_GUID (IID_CORBA_ServerRequest,
 0x4b48d881, 0xf7f0, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-#if !defined(__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #  include "svrrqst.i"
 #endif
 
 IIOP_ServerRequest::~IIOP_ServerRequest (void)
 {
-  assert (_refcount == 0);
+  ACE_ASSERT (refcount_ == 0);
+
   if (_params)
     CORBA_release (_params);
   if (_retval)
@@ -35,24 +36,23 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
 ULONG __stdcall
 IIOP_ServerRequest::AddRef (void)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
  
-  assert (_refcount > 0);
-  return _refcount++;
+  ACE_ASSERT (refcount_ > 0);
+  return refcount_++;
 }
  
 ULONG __stdcall
 IIOP_ServerRequest::Release (void)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
- 
-  assert (this != 0);
-  assert (_refcount > 0);
- 
-  if (--_refcount != 0)
-    return _refcount;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
 
-  guard.release();
+    ACE_ASSERT (this != 0);
+
+    if (--refcount_ != 0)
+      return refcount_;
+  }
 
   delete this;
   return 0;
@@ -62,7 +62,7 @@ HRESULT __stdcall
 IIOP_ServerRequest::QueryInterface (REFIID riid,
 				    void **ppv)
 {
-  assert (_refcount > 0);
+  ACE_ASSERT (refcount_ > 0);
   *ppv = 0;
  
   if (IID_IIOP_ServerRequest == riid
@@ -73,7 +73,7 @@ IIOP_ServerRequest::QueryInterface (REFIID riid,
   if (*ppv == 0)
     return ResultFromScode (E_NOINTERFACE);
  
-  (void) AddRef ();
+ (void) AddRef ();
   return NOERROR;
 }
 
@@ -98,7 +98,8 @@ IIOP_ServerRequest::params (CORBA_NVList_ptr list,
       void *value;
 
       nv = list->item (i);
-      if (!(nv->flags () & (CORBA_ARG_IN | CORBA_ARG_INOUT)))
+
+      if (ACE_BIT_DISABLED (nv->flags (), CORBA_ARG_IN | CORBA_ARG_INOUT))
 	continue;
 
       // First, make sure the memory into which we'll be unmarshaling
@@ -113,12 +114,12 @@ IIOP_ServerRequest::params (CORBA_NVList_ptr list,
       any = nv->value ();
       tc = any->type ();
       tc->AddRef ();
-      value = new char [tc->size (env)];
+      ACE_NEW (value, char [tc->size (env)]);
       any->replace (tc, value, CORBA_B_TRUE, env);
 
       // Decrement the refcount of "tc".
       //
-      // The earlier AddRef is needed since Any::replace() releases
+      // The earlier AddRef is needed since Any::replace () releases
       // the typecode inside the Any.  Without the dup, the reference
       // count can go to zero, and the typecode would then be deleted.
       //
@@ -136,7 +137,7 @@ IIOP_ServerRequest::params (CORBA_NVList_ptr list,
 
   if (_incoming->bytes_remaining () != 0) 
     {
-      dmsg1 ("params(), %d bytes remaining (error)", 
+      dmsg1 ("params (), %d bytes remaining (error)", 
 	     _incoming->bytes_remaining ());
       env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
     }
@@ -169,11 +170,12 @@ IIOP_ServerRequest::exception (CORBA_ExceptionType type,
 {
   if (!_params || _retval || _exception)
     env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
-  else {
-    env.clear ();
-    _exception = value;
-    _ex_type = type;
-  }
+  else 
+    {
+      env.clear ();
+      _exception = value;
+      _ex_type = type;
+    }
 
   // XXX send the message now!
 }

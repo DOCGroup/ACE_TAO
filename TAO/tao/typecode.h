@@ -35,36 +35,36 @@ struct CDR;
 
 enum CORBA_TCKind 
 {
-  tk_null		= 0,
-  tk_void		= 1,
-  tk_short		= 2,
-  tk_long		= 3,
-  tk_ushort		= 4,
-  tk_ulong		= 5,
-  tk_float		= 6,
-  tk_double		= 7,
-  tk_boolean		= 8,
-  tk_char		= 9,
-  tk_octet		= 10,
-  tk_any		= 11,
-  tk_TypeCode		= 12,
-  tk_Principal		= 13,
-  tk_objref		= 14,
-  tk_struct		= 15,
-  tk_union		= 16,
-  tk_enum		= 17,
-  tk_string		= 18,
-  tk_sequence		= 19,
-  tk_array		= 20,
-  tk_alias		= 21,		// 94-11-7
-  tk_except		= 22,		// 94-11-7
+  tk_null               = 0,
+  tk_void               = 1,
+  tk_short              = 2,
+  tk_long               = 3,
+  tk_ushort             = 4,
+  tk_ulong              = 5,
+  tk_float              = 6,
+  tk_double             = 7,
+  tk_boolean            = 8,
+  tk_char               = 9,
+  tk_octet              = 10,
+  tk_any                = 11,
+  tk_TypeCode           = 12,
+  tk_Principal          = 13,
+  tk_objref             = 14,
+  tk_struct             = 15,
+  tk_union              = 16,
+  tk_enum               = 17,
+  tk_string             = 18,
+  tk_sequence           = 19,
+  tk_array              = 20,
+  tk_alias              = 21,           // 94-11-7
+  tk_except             = 22,           // 94-11-7
 
   // these five are OMG-IDL data type extensions
-  tk_longlong		= 23,		// 94-9-32 Appendix A (+ 2)
-  tk_ulonglong		= 24,		// 94-9-32 Appendix A (+ 2)
-  tk_longdouble		= 25,		// 94-9-32 Appendix A (+ 2)
-  tk_wchar		= 26,		// 94-9-32 Appendix A (+ 2)
-  tk_wstring		= 27,		// 94-9-32 Appendix A (+ 2)
+  tk_longlong           = 23,           // 94-9-32 Appendix A (+ 2)
+  tk_ulonglong          = 24,           // 94-9-32 Appendix A (+ 2)
+  tk_longdouble         = 25,           // 94-9-32 Appendix A (+ 2)
+  tk_wchar              = 26,           // 94-9-32 Appendix A (+ 2)
+  tk_wstring            = 27,           // 94-9-32 Appendix A (+ 2)
 
   // This symbol is not defined by CORBA 2.0.  It's used to speed up
   // dispatch based on TCKind values, and lets many important ones
@@ -103,7 +103,7 @@ void CORBA_release (CORBA_TypeCode_ptr);
 CORBA_Boolean CORBA_is_nil (CORBA_TypeCode_ptr obj);
 
 extern const IID IID_CORBA_TypeCode;
-class TC_PRV_State;
+class TC_Private_State;
 
 class ACE_Svc_Export CORBA_TypeCode : public IUnknown
 {
@@ -115,13 +115,13 @@ class ACE_Svc_Export CORBA_TypeCode : public IUnknown
   // Implements the CORBA::TypeCode interface specified by CORBA 2.0 spec
 public:
 
-  static CORBA_TypeCode_ptr _duplicate(CORBA_TypeCode_ptr tc);
-  static CORBA_TypeCode_ptr _nil();
+  static CORBA_TypeCode_ptr _duplicate (CORBA_TypeCode_ptr tc);
+  static CORBA_TypeCode_ptr _nil (void);
 
   CORBA_Boolean equal (const CORBA_TypeCode_ptr, CORBA_Environment &env) const;
   // compares two typecodes
 
-  CORBA_TCKind	kind (CORBA_Environment &) const;
+  CORBA_TCKind  kind (CORBA_Environment &) const;
   // For all TypeCode kinds, returns the "kind" of the typecode
 
   const CORBA_String id (CORBA_Environment &) const;
@@ -160,7 +160,7 @@ public:
   // returns the content type (element type). Raises (BadKind); Useful for
   // tk_sequence, tk_array, and tk_alias
 
-  CORBA_ULong TAO_discrim_pad_size(CORBA_Environment &);
+  CORBA_ULong TAO_discrim_pad_size (CORBA_Environment &);
   // Calculates the padded size of discriminant type
   // TAO Extension
 
@@ -171,10 +171,10 @@ public:
   // that the typecode takes.
 
   CORBA_ULong ulong_param (CORBA_ULong n, 
-			   CORBA_Environment &) const;
+                           CORBA_Environment &) const;
 
   CORBA_TypeCode_ptr typecode_param (CORBA_ULong n,
-				     CORBA_Environment &) const;
+                                     CORBA_Environment &) const;
   // Internal utilities, pending CORBA 2.0 IFR APIs; just enough
   // to make array and sequence typecode interpretation cheap
 
@@ -198,47 +198,44 @@ public:
   // parameter is a string or typecode, length _and_ buffer matter.
 
   CORBA_TypeCode (CORBA_TCKind kind,
-		  CORBA_ULong length,
-		  CORBA_Octet *buffer,
-		  CORBA_Boolean	orb_owns_tc);
+                  CORBA_ULong length,
+                  CORBA_Octet *buffer,
+                  CORBA_Boolean orb_owns_tc);
 
-  void *operator new (size_t, void *p)
-  { return p; }
-
-  void *operator new (size_t s)
-  { return ::operator new(s); }
+  // = Class-specific allocation.
+  void *operator new (size_t, void *p);
+  void *operator new (size_t s);
 
   virtual ~CORBA_TypeCode (void);
 
   enum traverse_status { TRAVERSE_STOP, TRAVERSE_CONTINUE };
 
   typedef traverse_status (_FAR * VisitRoutine) (CORBA_TypeCode_ptr tc,
-						 const void *value1,
-						 const void *value2,
-						 void *context,
-						 CORBA_Environment &env);
+                                                 const void *value1,
+                                                 const void *value2,
+                                                 void *context,
+                                                 CORBA_Environment &env);
 
   traverse_status traverse (const void *value1,
-			    const void *value2,
-				  VisitRoutine	visit,
-				  void *context,
-				  CORBA_Environment &env
-				  );
-  // This routine calls visit() on each component of one (or two)
+                            const void *value2,
+                            VisitRoutine visit,
+                            void *context,
+                            CORBA_Environment &env);
+  // This routine calls visit () on each component of one (or two)
   // structurally equivalent data values.  "Components" are either
   // primitive (long, string, ...) or constructed (struct, ...)  data
   // elements.
   //
   // It will NOT descend into those nodes if they're constructed; it's
-  // the job of the visit() routine to do that as needed.
+  // the job of the visit () routine to do that as needed.
   //
-  // "Context" can be used to hold state used by the visit() routine.
-  // To terminate traversal "early", visit() returns TRAVERSE_STOP.
+  // "Context" can be used to hold state used by the visit () routine.
+  // To terminate traversal "early", visit () returns TRAVERSE_STOP.
   //
   // The "value1" and "value2" parameters are pointers to data values
   // of the structure described by the TypeCode.  Using the normal
   // size, alignment, and padding rules used by the compilers on a
-  // given platform, the visit() routine is called with pointers to
+  // given platform, the visit () routine is called with pointers to
   // subsidiary elements.
   //
   // As all this routine does is appropriate pointer adjustments, it
@@ -246,7 +243,7 @@ public:
   // could ignore one value and examine a data structure; copy from
   // one to the other; compare one to the other; and more.
   //
-  // Normal usage is to have application code call its visit() routine
+  // Normal usage is to have application code call its visit () routine
   // directly, and have that decide whether to use the typecode
   // interpereter's knowledge of data structure layout through mutual
   // recursion.
@@ -262,7 +259,7 @@ public:
   ULONG __stdcall AddRef (void);
   ULONG __stdcall Release (void);
   HRESULT __stdcall QueryInterface (REFIID riid,
-				    void **ppv);
+                                    void **ppv);
   // private:
   //
   // = The guts of the typecode implementation class 
@@ -286,72 +283,73 @@ public:
 private:
   // All the private/helper methods
 
-  void child_free();
+  void child_free (void);
   // helper to the destructor. Called to traverse children and recursively
   // delete them
 
-  CORBA_Boolean prv_equal (CORBA_TypeCode_ptr tc, CORBA_Environment &env) const;
+  CORBA_Boolean private_equal (CORBA_TypeCode_ptr tc, CORBA_Environment &env) const;
   // compares the typecodes
 
-  const CORBA_String prv_id (CORBA_Environment &) const;
+  const CORBA_String private_id (CORBA_Environment &) const;
   // For tk_{objref,struct,union,enum,alias,except}. Returns the repository ID,
   // raises BadKind.
 
-  const CORBA_String prv_name (CORBA_Environment &) const;
+  const CORBA_String private_name (CORBA_Environment &) const;
   // returns name (), raises (BadKind)
 
-  CORBA_ULong prv_member_count (CORBA_Environment &) const;
+  CORBA_ULong private_member_count (CORBA_Environment &) const;
   // returns member_count (), raises (BadKind). Useful for tk_struct, tk_union,
   // tk_enum, tk_alias, and tk_except.
 
-  CORBA_TypeCode_ptr prv_member_type (CORBA_ULong index,
-				      CORBA_Environment &) const; 
+  CORBA_TypeCode_ptr private_member_type (CORBA_ULong index,
+                                      CORBA_Environment &) const; 
   // returns member_type (...), raises (BadKind, Bounds); Useful for tk_struct,
   // tk_union, and tk_except
 
-  //  CORBA_TypeCode_ptr prv_member_label (CORBA_ULong index,
-  //				      CORBA_Environment &) const; 
+  //  CORBA_TypeCode_ptr private_member_label (CORBA_ULong index,
+  //                                  CORBA_Environment &) const; 
   // returns member_label (...), raises (BadKind, Bounds); Useful for tk_union
 
-  CORBA_Any_ptr prv_member_label (CORBA_ULong n, CORBA_Environment&) const;
+  CORBA_Any_ptr private_member_label (CORBA_ULong n, CORBA_Environment&) const;
   // For tk_union. Returns the label. Raises BadKind, Bounds.
 
-  CORBA_TypeCode_ptr prv_discriminator_type (CORBA_Environment &) const;
+  CORBA_TypeCode_ptr private_discriminator_type (CORBA_Environment &) const;
   // returns the discriminator type for tk_union. raises (BadKind);
 
-  CORBA_Long prv_default_index (CORBA_Environment &) const;
+  CORBA_Long private_default_index (CORBA_Environment &) const;
   // returns the default index for the tk_union. Raises (BadKind);
 
-  CORBA_Long prv_length (CORBA_Environment &) const;
+  CORBA_Long private_length (CORBA_Environment &) const;
   // returns length, raises (BadKind). Used for tk_string, tk_sequence, and
   // tk_array 
 
-  CORBA_TypeCode_ptr prv_content_type (CORBA_Environment &) const;
+  CORBA_TypeCode_ptr private_content_type (CORBA_Environment &) const;
   // returns the content type (element type). Raises (BadKind); Useful for
   // tk_sequence, tk_array, and tk_alias
 
-  size_t prv_size (CORBA_Environment &env);
+  size_t private_size (CORBA_Environment &env);
   // returns the size. Used by the IIOP marshaling engine.
 
-  size_t prv_alignment (CORBA_Environment &env);
+  size_t private_alignment (CORBA_Environment &env);
   // returns the alignment requirements for this typecode. used by the IIOP
   // marshaling engine.
 
-  CORBA_ULong prv_discrim_pad_size(CORBA_Environment &);
+  CORBA_ULong private_discrim_pad_size (CORBA_Environment &);
   // Calculates the padded size of discriminant type
   // TAO Extension
 
-  ACE_Thread_Mutex lock_;
-
-  u_int _refcount;
+  u_int refcount_;
   // if refcount reaches 0, free this typecode
+
+  ACE_SYNCH_MUTEX lock_;
+  // Protect access to the reference count.
 
   CORBA_Boolean _delete_flag;
   // indicates if we are freeing ourselves
 
-  CORBA_Boolean	_orb_owns;
-  // TAO's approach differs from the SunSoft IIOP. Constant typecodes are owned
-  // by the ORB and get freed only when the ORB dies. 
+  CORBA_Boolean _orb_owns;
+  // TAO's approach differs from the SunSoft IIOP. Constant typecodes
+  // are owned by the ORB and get freed only when the ORB dies.
 
   // If "orb_owns" is false, the value is a constant typecode with
   // both the typecode and the buffer statically allocated; the
@@ -360,27 +358,29 @@ private:
   //
   // "orb owns" is always set, except for TypeCode constants.
 
-  TC_PRV_State *_prv_state;
-  // maintains precomputed state. We need a separate class that maintains the
-  // precomputed state since most of the TypeCode class operations keep the
-  // state of the object constant. However, for the purpose of precomputation,
-  // we need to update the state. We cannot update state directly in the
-  // TypeCode class as that defeats the constness. However, we can keep an
-  // object in our typecode class that remains constant, but  we can update its
+  TC_Private_State *_private_state;
+  // maintains precomputed state. We need a separate class that
+  // maintains the precomputed state since most of the TypeCode class
+  // operations keep the state of the object constant. However, for
+  // the purpose of precomputation, we need to update the state. We
+  // cannot update state directly in the TypeCode class as that
+  // defeats the constness. However, we can keep an object in our
+  // typecode class that remains constant, but we can update its
   // state.
 
   // = No copy constructor or assignment operator supported;
 
-  // Use TypeCode_ptr values, duplicate(), release().
+  // Use TypeCode_ptr values, duplicate (), release ().
   CORBA_TypeCode (const CORBA_TypeCode &src);
   CORBA_TypeCode &operator = (const CORBA_TypeCode &src);
 };
 
-// private state of the TypeCode. Used to store precomputed values
-class TC_PRV_State
+class ACE_Svc_Export TC_Private_State
+// = TITLE
+//   Private state of the TypeCode. Used to store precomputed values
 {
 public:
-  TC_PRV_State();
+  TC_Private_State (void);
 
   // data members that indicate if the desired quantify was precomputed or not.
   CORBA_Boolean tc_id_known_;
@@ -449,13 +449,13 @@ extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Object;
 // at creating typecode interpreters as well as to the ACE convention
 // of placing inline functions into separate files.
 
-#  if !defined(__ACE_INLINE__)
+#  if !defined (__ACE_INLINE__)
 #    undef ACE_INLINE
 #    define ACE_INLINE inline
 #    define do_undef_on_ACE_INLINE
 #  endif
 #  include "typecode.i"
-#  if defined(do_undef_on_ACE_INLINE)
+#  if defined (do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
 #    undef ACE_INLINE
 #    define ACE_INLINE

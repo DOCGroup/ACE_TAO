@@ -27,10 +27,10 @@ CORBA_Principal::CORBA_Principal (void)
 
 CORBA_Principal::~CORBA_Principal (void)
 {
-  assert (_refcount == 0);
+  assert (refcount_ == 0);
 
   if (id.buffer)
-    delete id.buffer;
+    delete [] id.buffer;
 }
 
 //
@@ -45,20 +45,20 @@ DEFINE_GUID (IID_CORBA_Principal,
 ULONG __stdcall
 CORBA_Principal::AddRef (void)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, principal_lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, principal_lock_, 0));
 
-  return ++_refcount;
+  return ++refcount_;
 }
 
 ULONG __stdcall
 CORBA_Principal::Release (void)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, principal_lock_, 0);
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
 
-  if (--_refcount != 0)
-    return _refcount;
-
-  guard.release ();
+    if (--refcount_ != 0)
+      return refcount_;
+  }
 
   delete this;
   return 0;

@@ -24,7 +24,6 @@
 #  define TAO_ORBOBJ_H
 
 #  include "ace/OS.h"
-
 #  include "factories.h"
 #  include "params.h"
 
@@ -90,8 +89,8 @@ protected:
   virtual ~CORBA_ORB (void);
 
 private:
-  ACE_Thread_Mutex lock_;
-  u_int _refcount;
+  ACE_SYNCH_MUTEX lock_;
+  u_int refcount_;
 
   TAO_Client_Factory client_factory_;
   TAO_Server_Factory server_factory_;
