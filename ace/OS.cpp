@@ -780,6 +780,7 @@ ACE_OS::scheduling_class (const char *class_name, ACE_id_t &id)
     }
 #else  /* ! ACE_HAS_PRIOCNTL */
   ACE_UNUSED_ARG (class_name);
+  ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ! ACE_HAS_PRIOCNTL */
 }
@@ -874,6 +875,7 @@ ACE_OS::set_scheduling_params (const ACE_Sched_Params &sched_params,
 
   return 0;
 #else  /* ! ACE_HAS_PRIOCNTL */
+  ACE_UNUSED_ARG (sched_params);
   ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ! ACE_HAS_PRIOCNTL */
