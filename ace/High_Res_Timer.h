@@ -20,10 +20,9 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_High_Res_Timer
-  // = TITLE
-  //     A high resolution timer class wrapper that encapsulates
-  //     OS-specific high-resolution timers, such as those found on
-  //     Solaris, AIX, Win32/Pentium, and VxWorks.
+  // = TITLE A high resolution timer class wrapper that encapsulates
+  // OS-specific high-resolution timers, such as those found on
+  // Solaris, AIX, Win32/Pentium, and VxWorks.
   //
   // = DESCRIPTION
   //     Most of the member functions don't return values.  The only
@@ -33,14 +32,21 @@ class ACE_Export ACE_High_Res_Timer
   //     added.  It returns 1 if high-resolution time (ACE_OS::gethrtime ())
   //     is supported on the platform, and 0 if not.
   //
-  //     The scale factor is required for platforms that have
+  //     The global scale factor is required for platforms that have
   //     high-resolution timers that return units other than
-  //     microseconds, such as clock ticks.  The member functions that
-  //     return or print times use this scale factor.  They divide the
-  //     "time" that they get from ACE_OS::gethrtime () by it to
-  //     obtain the time in microseconds.  Its units are therefore
-  //     1/microsecond.  On Solaris, a scale factor of 1000 should be used
-  //     because its high-resolution timer returns nanoseconds.
+  //     microseconds, such as clock ticks.  It is represented as a
+  //     static u_long, can only be accessed through static methods,
+  //     and is used by all instances of High Res Timer.  The member
+  //     functions that return or print times use the global scale
+  //     factor.  They divide the "time" that they get from
+  //     ACE_OS::gethrtime () by global_scale_factor_ to obtain the
+  //     time in microseconds.  Its units are therefore 1/microsecond.
+  //     On Solaris, a scale factor of 1000 should be used because its
+  //     high-resolution timer returns nanoseconds.  However, on Intel
+  //     platforms, we use RDTSC which returns the number of clock
+  //     ticks since system boot.  For a 200MHz cpu, each clock tick
+  //     is 1/200 of a microsecond; the global_scale_factor_ should
+  //     therefore be 200.
   //
   //     NOTE:  the elapsed time calculations in the print methods use
   //     ACE_hrtime_t values.  If ACE_hrtime_t is not a 64-bit type
@@ -53,37 +59,34 @@ public:
   static int supported ();
   // Returns 1 if high-resolution time is supported on the platform, 0 if not.
 
-  static int get_env_global_scale_factor (const char *env = "ACE_SCALE_FACTOR");
-  // Sets the global_scale_factor to the value in the <env>
-  // environment variable.  Returns 0 on success, -1 on failure.  Note
-  // if <env> points to string "0" (value zero), this call will fail.
-
   static void global_scale_factor (u_long gsf);
-  // <gsf> is used as a global scale factor.  Any High_Res_Timers
-  // constructed with scale_factor == 0 will check and use <gsf> if
-  // set.  This allows applications to set the scale factor just once
-  // for all High_Res_Timers.  The scale factors passed to
-  // constructors take precedence to global_scale_factor_.
-
-  static ACE_Time_Value gettimeofday (void);
-  // Calls ACE_High_Res_Timer::hrtime_to_tv passing ACE_OS::gethrtime
-  // and global_scale_factor_.  This function can be used to
-  // parameterize objects such as ACE_Timer_Queue::gettimeofday.  If
-  // global_scale_factor_ is not set, and we're on a platform that
-  // requires global_scale_factor_ (e.g., Win32), ACE_OS::gettimeofday
-  // will be used instead of ACE_OS::gethrtime.  This allows the
-  // scale_factor of 1 to still result in correct values.
-
-  ACE_High_Res_Timer (u_long scale_factor = 1);
-  // Initialize the timer.  The <scale_factor> != 1 takes precedence
-  // to global_scale_factor_.  That is, to use the
-  // global_scale_factor_, leave <scale_factor> == 1; to override the
-  // global_scale_factor, set <scale_factor> appropriately.  Check
+  // global_scale_factor_ is set to <gsf>.  All High_Res_Timers use
+  // global_scale_factor_.  This allows applications to set the scale
+  // factor just once for all High_Res_Timers.  Check
   // High_Res_Timer.cpp for the default global_scale_factors for
   // several platforms.  For many platforms (e.g., Solaris), the
   // global_scale_factor_ is set to 1000 so that <scale_factor> need
   // not be set.  Careful, a <scale_factor> of 0 will cause division
   // by zero exceptions.
+
+  static int get_env_global_scale_factor (const char *env = "ACE_SCALE_FACTOR");
+  // Sets the global_scale_factor to the value in the <env>
+  // environment variable.  Returns 0 on success, -1 on failure.  Note
+  // if <env> points to string "0" (value zero), this call will fail.
+
+  static ACE_Time_Value gettimeofday (void);
+  // Calls ACE_High_Res_Timer::hrtime_to_tv passing ACE_OS::gethrtime.
+  // This function can be used to parameterize objects such as
+  // ACE_Timer_Queue::gettimeofday.  If global_scale_factor_ is not
+  // set, and we're on a platform that requires global_scale_factor_
+  // (e.g., Win32), ACE_OS::gettimeofday will be used instead of
+  // ACE_OS::gethrtime.  This allows applications on Intel to use
+  // High_Res_Timer even when global_scale_factor is not set.
+  // However, setting the global_scale_factor_ appropriately will
+  // result in the finest resolution possible.
+
+  ACE_High_Res_Timer (void);
+  // Initialize the timer.
 
   void reset (void);
   // Reinitialize the timer.
@@ -134,9 +137,8 @@ public:
 
 private:
   static void hrtime_to_tv (ACE_Time_Value &tv,
-			    ACE_hrtime_t hrt, 
-			    u_long scale_factor);
-  // Converts an <hrt> to <tv> using the <scale_factor>.
+			    ACE_hrtime_t hrt);
+  // Converts an <hrt> to <tv> using global_scale_factor_.
 
   ACE_hrtime_t start_;
   // Starting time.
@@ -150,9 +152,9 @@ private:
   ACE_hrtime_t start_incr_;
   // Start time of incremental timing.
 
-  u_long scale_factor_;
-
   static u_long global_scale_factor_;
+  // Converts ticks to microseconds.  That is, ticks /
+  // global_scale_factor_ == microseconds.
 };
 
 #if defined (__ACE_INLINE__)
