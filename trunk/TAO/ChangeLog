@@ -7,6 +7,7 @@ Fri Aug 15 14:37:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Aug 15 14:32:54 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
         * orbsvcs/orbsvcsProperty/CosPropertyService_i.cpp:
 
 	  Fixed constructors of CORBA::Any and TAO::Unknown_IDL_Type
