@@ -1,16 +1,22 @@
+Sat Nov 14 22:01:52 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release (diff): fixed logic that determines
+          when to use ../diffs/ instead of diffs/.  Thanks to
+          Doug for reporting this.
+
 Sat Nov 14 14:21:49 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.4 released.
 
 Fri Nov 13 12:03:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-sgic++.h: 
-	* ace/config-irix6.x-sgic++-nothreads.h: 
-	  Under some versions of IRIX 6.X the readdir_r() prototype does
-	  not show up unless threads support (actually POSIX1c support) is
-	  enabled. I've change the config file to only use readdir_r() if
-	  threads are enabled. Thanks to Bob Olson <olson@mcs.anl.gov> for
-	  reporting this problem.
+        * ace/config-irix6.x-sgic++.h:
+        * ace/config-irix6.x-sgic++-nothreads.h:
+          Under some versions of IRIX 6.X the readdir_r() prototype does
+          not show up unless threads support (actually POSIX1c support) is
+          enabled. I've change the config file to only use readdir_r() if
+          threads are enabled. Thanks to Bob Olson <olson@mcs.anl.gov> for
+          reporting this problem.
 
 Fri Nov 13 08:55:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
