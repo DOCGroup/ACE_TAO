@@ -1,3 +1,10 @@
+Tue Jul 13 14:57:38 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+
+	  Increased client and server timeout values for the UIOP run.
+	  Heavily loaded machines may need more time.
+
 Tue Jul 13 12:39:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/UIOP_Transport.cpp (send_request):
