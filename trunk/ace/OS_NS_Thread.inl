@@ -643,6 +643,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
            ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes, type),
                              result) == 0 &&
 #     endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_MUTEXATTR_PSHARED */
+#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETTYPE)
+           ACE_ADAPT_RETVAL (::pthread_mutexattr_settype(attributes, type), result) == 0 &&
+#     endif /* ACE_HAS_PTHREADS_MUTEXATTR_SETTYPE */
            ACE_ADAPT_RETVAL (::pthread_mutex_init (m, attributes), result) == 0)
 #   else
         if (
@@ -1858,7 +1861,11 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
   ACE_UNUSED_ARG (sa);
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
-  return ACE_OS::thread_mutex_init (m, 0, name, arg);
+#if defined (ACE_HAS_NONRECURSIVE_MUTEXES)
+  return ACE_OS::thread_mutex_init (m, PTHREAD_MUTEX_RECURSIVE, name, arg);
+#else
+   return ACE_OS::thread_mutex_init (m, 0, name, arg);
+#endif
 #else
   if (ACE_OS::thread_mutex_init (&m->nesting_mutex_, 0, name, arg) == -1)
     return -1;
@@ -4380,8 +4387,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (type);
   // Force the use of USYNC_THREAD!
-  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg);
-
+  return ACE_OS::mutex_init (m, type, name, arg);
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_init (m, type, name, arg);
 
