@@ -53,11 +53,7 @@ ACE_OS_Dirent::readdir_emulation (DIR *d)
 
       if (d->current_handle_ != INVALID_HANDLE_VALUE)
         {
-          ::FindClose (d->current_handle_);
-          d->current_handle_ = INVALID_HANDLE_VALUE;
-        }
-      else // Skip "." and ".."
-        {
+          // Skip "." and ".."
           int retval = 1;
           while (*(d->fdata_.cFileName) == '.'
                  && retval
