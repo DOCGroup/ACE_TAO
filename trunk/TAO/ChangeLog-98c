@@ -1,3 +1,10 @@
+Sun Jan  3 17:32:27 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Vistors.cpp:
+          Added some casting to fix some conversion warnings I was
+          getting while rebuilding with VC5.
+
 Sun Jan  3 13:12:27 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Added the TAO_ORBSVCS_Export macro to the following files.
