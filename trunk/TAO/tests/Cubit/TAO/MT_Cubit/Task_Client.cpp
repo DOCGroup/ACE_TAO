@@ -10,7 +10,7 @@
 
 ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
 
-Task_State::Task_State (int argc, char *argv[])
+Task_State::Task_State (void)
   : barrier_ (0), 
     key_ ("Cubit"),
     loop_count_ (1000),
@@ -18,8 +18,6 @@ Task_State::Task_State (int argc, char *argv[])
     latency_ (0),
     ave_latency_ (0),
     datatype_ (CB_OCTET),
-    argc_ (ACE_static_cast (u_int, argc)),
-    argv_ (argv),
     thread_per_rate_ (0),
     global_jitter_array_ (0),
     count_ (0),
@@ -133,7 +131,7 @@ Task_State::parse_args (int argc,char *argv[])
                   " [-o] // makes client use oneway calls instead"
                   " [-s] // makes client *NOT* use the name service"
                   " [-g granularity_of_timing]"
-                  "\n", this->argv_ [0]));
+                  "\n", argv [0]));
       return -1;
     }
 
@@ -232,17 +230,21 @@ Task_State::~Task_State (void)
   for (i = 0; i < this->iors_count_; i++)
     ACE_OS::free (this->iors_ [i]);
 
+  delete this->iors_;
   // Delete the barrier.
 
   delete this->barrier_;
   delete this->semaphore_;
   delete [] this->latency_;
+  delete [] this->ave_latency_;
   delete [] this->global_jitter_array_;
   delete [] this->count_;
 }
 
 Client::Client (ACE_Thread_Manager *thread_manager,
                 Task_State *ts,
+                int argc,
+                char **argv,
                 u_int id)
   : ACE_Task<ACE_MT_SYNCH> (thread_manager),
     cubit_impl_ (0),
@@ -256,8 +258,17 @@ Client::Client (ACE_Thread_Manager *thread_manager,
     frequency_ (0),
     orb_ (0),
     naming_success_ (0),
-    latency_ (0)
+    latency_ (0),
+    argc_ (argc),
+    argv_ (argv)
 {
+}
+
+Client::~Client (void)
+{
+  delete this->cubit_impl_;
+  delete this->my_jitter_array_;
+  delete this->timer_;
 }
 
 ACE_INLINE int
@@ -534,16 +545,16 @@ Client::init_orb (void)
       ACE_DEBUG ((LM_DEBUG,
                   "I'm thread %t\n"));
 
-  // Add "-ORBobjrefstyle url" argument to the argv vector for the orb
-  // to / use a URL style to represent the ior.
 
   // Convert the argv vector into a string.
-  ACE_ARGV tmp_args (this->ts_->argv_);
+  ACE_ARGV tmp_args (this->argv_);
   char tmp_buf[BUFSIZ];
 
   ACE_OS::strcpy (tmp_buf,
                   tmp_args.buf ());
   // Add the argument.
+  // Add "-ORBobjrefstyle url" argument to the argv vector for the orb
+  // to / use a URL style to represent the ior.
   ACE_OS::strcat (tmp_buf,
                   " -ORBobjrefstyle url "
                   " -ORBrcvsock 32768 "

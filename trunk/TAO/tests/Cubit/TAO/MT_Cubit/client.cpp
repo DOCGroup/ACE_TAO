@@ -73,12 +73,16 @@ Client_i::Client_i (void)
 
 Client_i::~Client_i (void)
 {
+  delete this->high_priority_client_;
   if (this->low_priority_client_ != 0)
     // Delete the low priority task array.
     for (u_int i = this->num_low_priority_;
          i > 0;
          i--)
       delete this->low_priority_client_[i - 1];
+  delete this->low_priority_client_;
+  delete this->util_thread_;
+  delete this->ts_;
 }
 
 int
@@ -98,8 +102,7 @@ Client_i::init (int argc, char *argv[])
   ACE::set_handle_limit ();
 
   ACE_NEW_RETURN (this->ts_,
-                  Task_State (this->argc_,
-                              this->argv_),
+                  Task_State,
                   -1);
 
   // Preliminary argument processing.
@@ -292,6 +295,8 @@ Client_i::activate_high_client (void)
   ACE_NEW_RETURN (this->high_priority_client_,
                   Client (&this->client_thread_manager_,
                           this->ts_,
+                          this->argc_,
+                          this->argv_,
                           0),
                   -1);
 
@@ -355,6 +360,8 @@ Client_i::activate_low_client (void)
       ACE_NEW_RETURN (this->low_priority_client_ [i - 1],
                       Client (&this->client_thread_manager_,
                               this->ts_,
+                              this->argc_,
+                              this->argv_,
                               i),
                       -1);
 #if defined (VXWORKS)
@@ -650,8 +657,8 @@ Client_i::do_priority_inversion_test (void)
   GLOBALS::instance ()->num_of_objs = 1;
   GLOBALS::instance ()->use_name_service = 0;
 
-  for (u_int j = 0; j < this->ts_->argc_; j++)
-    if (ACE_OS::strcmp (this->ts_->argv_[j], "-u") == 0)
+  for (u_int j = 0; j < this->argc_; j++)
+    if (ACE_OS::strcmp (this->argv_[j], "-u") == 0)
       {
         this->start_servant ();
         break;
@@ -721,15 +728,23 @@ Client_i::do_thread_per_rate_test (void)
 {
   Client CB_20Hz_client (&this->client_thread_manager_,
                          this->ts_,
+                         this->argc_,
+                         this->argv_,
                          CB_20HZ_CONSUMER);
   Client CB_10Hz_client (&this->client_thread_manager_,
                          this->ts_,
+                         this->argc_,
+                         this->argv_,
                          CB_10HZ_CONSUMER);
   Client CB_5Hz_client (&this->client_thread_manager_,
                         this->ts_,
+                        this->argc_,
+                        this->argv_,
                         CB_5HZ_CONSUMER);
   Client CB_1Hz_client (&this->client_thread_manager_,
                         this->ts_,
+                        this->argc_,
+                        this->argv_,
                         CB_1HZ_CONSUMER);
   ACE_Sched_Priority priority;
   

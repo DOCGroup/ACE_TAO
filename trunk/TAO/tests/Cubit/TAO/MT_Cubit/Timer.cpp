@@ -48,7 +48,7 @@ MT_Cubit_Timer::get_elapsed (void)
 #endif /* !CHORUS */
 #else /* !ACE_LACKS_FLOATING_POINT */
   
-  // Store the time in secs.
+  // Store the time in usecs.
 
 #if defined (VXWORKS)
   // @@ David, these comments are to temporarily fix what seems a bug
@@ -72,7 +72,7 @@ MT_Cubit_Timer::get_elapsed (void)
                   this->delta_.usec ()));
     }
 
-  real_time = tmp + tmp2 / (ACE_timer_t) ACE_ONE_SECOND_IN_USECS;
+  real_time = tmp * ACE_ONE_SECOND_IN_USECS + tmp2;
 #else
   real_time = ((ACE_timer_t) this->delta_.sec () * ACE_ONE_SECOND_IN_USECS) +
                (ACE_timer_t) this->delta_.usec ();

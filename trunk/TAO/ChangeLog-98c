@@ -6,7 +6,14 @@ Sun Sep 13 18:16:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp: Replaced magic numbers
 	  with symbolic constants.
-	
+
+	* tests/Cubit/TAO/MT_Cubit/Timer.cpp: Fixed the elapsed time
+          calculation for vxworks. Thanks to sergio for finding this.
+
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: 
+	* tests/Cubit/TAO/MT_Cubit/client.cpp:
+		Fixed memory leaks.
+
 Sun Sep 13 00:44:07 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp: 	
