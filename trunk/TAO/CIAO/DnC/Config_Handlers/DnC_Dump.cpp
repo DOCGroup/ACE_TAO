@@ -271,14 +271,214 @@ namespace Deployment
   {
   }
 
+  void DnC_Dump::dump (const ::CORBA::Any &any)
+  {
+    ::CORBA::TypeCode * type = any.type ();
+    switch (type->kind ())
+    {
+      case CORBA::tk_short:
+        {
+          CORBA::Short temp;
+          if (! (any >>= temp))
+          {
+            ACE_DEBUG ((LM_DEBUG, "DnC_Dump::dump (CORBA::Any), expected short\
+                                  encoded different type"));
+            ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
+        }
+        break;
+
+      case CORBA::tk_null:
+        ACE_DEBUG ((LM_DEBUG, "Any value: null value encoded\n"));
+        break;
+
+      case CORBA::tk_void:
+        ACE_DEBUG ((LM_DEBUG, "Any value: void type encoded \n"));
+        break;
+      case CORBA::tk_long:
+        {
+          CORBA::Long temp;
+          if (! (any >>= temp))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected long\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %l \n", temp));
+        }
+        break;
+
+      case CORBA::tk_ushort:
+       {
+          CORBA::UShort temp;
+          if (! (any >>= temp))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected u short\
+                                   encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %u \n", temp));
+        }
+        break;
+
+      case CORBA::tk_ulong:
+       {
+          CORBA::ULong temp;
+          if (! (any >>= temp))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected ulong\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %u \n", temp));
+        }
+        break;
+
+      case CORBA::tk_float:
+       {
+          CORBA::Float temp;
+          if (! (any >>= temp))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected float\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %f \n", temp));
+        }
+        break;
+      case CORBA::tk_double:
+       {
+          CORBA::Double temp;
+          if (! (any >>= temp))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected double\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %f \n", temp));
+        }
+        break;
+      case CORBA::tk_boolean:
+       {
+          CORBA::Boolean temp;
+          if (! (any >>= CORBA::Any::to_boolean (temp)))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected bool\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+
+          if (temp)
+            ACE_DEBUG ((LM_DEBUG, "Any value: True \n"));
+          else 
+            ACE_DEBUG ((LM_DEBUG, "Any value: False \n"));
+        }
+        break;
+
+      case CORBA::tk_char:
+       {
+          CORBA::Char temp;
+          if (! (any >>= CORBA::Any::to_char (temp)))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected char\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %c \n", temp));
+        }
+        break;
+
+      case CORBA::tk_octet:
+       {
+          CORBA::Octet temp;
+          if (! (any >>= CORBA::Any::to_octet (temp)))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected octet\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
+        }
+        break;
+
+      case CORBA::tk_string:
+       {
+          const char * temp = 0;
+          if (! (any >>= temp))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected string\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %s \n", temp));
+        }
+        break;
+      case CORBA::tk_longlong:
+       {
+          CORBA::LongLong temp;
+          if (! (any >>= temp))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longlong\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %l \n", temp));
+        }
+        break;
+
+      case CORBA::tk_longdouble:
+       {
+          CORBA::LongDouble temp;
+          if (! (any >>= temp))
+           {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longdouble\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+           }
+          ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
+        }
+
+        break;
+      case CORBA::tk_wchar:
+       {
+         CORBA::WChar temp;
+         if (! (any >>= CORBA::Any::to_wchar (temp)))
+         {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wchar\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+         }
+         ACE_DEBUG ((LM_DEBUG, "Any value: %c \n", temp));
+       }
+       break;
+
+      case CORBA::tk_wstring:
+       {
+         const CORBA::WChar * temp;
+         if (! (any >>= temp))
+         {
+             ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wstring\
+                                    encoded with different type"));
+             ACE_THROW (CORBA::INTERNAL ());
+         }
+         ACE_DEBUG ((LM_DEBUG, "Any value: %s \n", temp));
+       }
+       break;
+
+      default:
+        ACE_DEBUG ((LM_DEBUG, "Unknown type encoded in Any\n"));
+        ACE_THROW (CORBA::INTERNAL ());  
+    }
+  }
+
   void DnC_Dump::dump (const ::Deployment::Property &property)
   {
     ACE_DEBUG ((LM_DEBUG, "Property:  \n"));
     ACE_DEBUG ((LM_DEBUG, "name: %s \n", property.name.in ()));
-    // @@ Folks, do you have an idea of how to process the value of the 
-    // property? It is of type CORBA::Any. Here in this function, how do we
-    // know what type is inserted into the any. If you do please 
-    // email me <arvindk@dre.vanderbilt.edu>
+
+    // Print the Any value stored
+    DnC_Dump::dump (property.value);
   }
 
   void DnC_Dump::dump (const ::Deployment::NamedImplementationArtifact &nia)
