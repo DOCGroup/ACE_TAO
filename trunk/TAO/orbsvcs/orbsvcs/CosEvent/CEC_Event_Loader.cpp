@@ -1,6 +1,6 @@
 // $ Id$
 
-//=============================================================================================
+//==========================================================================
 // LIBRARY
 //   libTAO_CosEvent.so
 //
@@ -12,9 +12,10 @@
 //   Priyanka Gontla <pgontla@ece.uci.edu>
 //   Carlos O'Ryan <coryan@uci.edu>
 //
-//=============================================================================================
+//===========================================================================
 
 #include "CEC_Event_Loader.h"
+#include "ace/Dynamic_Service.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
