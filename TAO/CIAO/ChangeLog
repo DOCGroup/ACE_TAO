@@ -1,3 +1,10 @@
+Tue Jun 22 10:38:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Added a missing _duplicate () in the connect_emittype () calls. 
+
+
 Mon Jun 21 17:46:32 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Update_Plan.cpp:
