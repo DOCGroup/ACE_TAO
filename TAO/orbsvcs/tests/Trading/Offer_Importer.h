@@ -83,7 +83,7 @@ private:
   CORBA::Boolean verbose_;
   // Output the contents of each returned offer, if true.
   
-  CosTrading::Lookup_var lookup_;
+  CosTrading::Lookup_ptr lookup_;
   // The interface on which to perform all those wonderful queries. 
 };
 

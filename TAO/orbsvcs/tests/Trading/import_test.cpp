@@ -50,7 +50,7 @@ main (int argc, char** argv)
       
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));
-      CosTrading::Lookup_ptr lookup_if = 
+      CosTrading::Lookup_var lookup_if = 
 	CosTrading::Lookup::_narrow (trading_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
       

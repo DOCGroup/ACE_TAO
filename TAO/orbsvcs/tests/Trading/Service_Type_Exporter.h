@@ -106,7 +106,7 @@ private:
   CORBA::Boolean verbose_;
   // True if the user want profuse output.
   
-  CosTrading::Lookup_var lookup_;
+  CosTrading::Lookup_ptr lookup_;
   // A reference to the lookup interface of the trading service
   // instance. 
   
