@@ -60,23 +60,50 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv)
 {
+  // Leave off any microseconds using DIV.
   tv.sec ((long) (this->total_ / global_scale_factor_) / 1000000);
+  // Leave off any seconds using MOD.
   tv.usec ((long) (this->total_ / global_scale_factor_) % 1000000);
 }
+
+// The whole point is to get nanoseconds.  However, our scale_factor
+// gives us microseconds.  We could use floating points to get the
+// nanosecond precision if some compilers didn't barf on 64-bit
+// divisions with doubles.  So, we just extract out the nanoseconds
+// first and then add them to the standard miscrosecond calculation.
+void
+ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
+{
+  // Just grab the nanoseconds.  That is, leave off all values above
+  // microsecond.  This equation is right!  Don't mess with me!
+  int nseconds = (this->end_ - this->start_) % global_scale_factor_ * 1000 / global_scale_factor_;
+
+  // Get just the microseconds (dropping any left over nanoseconds).
+  ACE_hrtime_t useconds; 
+  useconds = (this->end_ - this->start_) / global_scale_factor_;
+
+  // Total nanoseconds in a single 64-bit value.
+  nanoseconds = useconds * 1000 + nseconds;
+}
+
 
 void
 ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_ave");
-  ACE_hrtime_t total;
-  total = (ACE_hrtime_t) ((this->end_ - this->start_) / global_scale_factor_ * 1000);
-  ACE_hrtime_t total_secs  = total / 1000000000;
-  u_long extra_nsecs = (u_long) (total % 1000000000);
+
+  // Get the total number of nanoseconds elapsed.
+  ACE_hrtime_t total_nanoseconds;
+  this->elapsed_time (total_nanoseconds);
+
+  // Separate to seconds and nanoseconds.
+  ACE_hrtime_t total_secs  = total_nanoseconds / 1000000000;
+  u_long extra_nsecs = (u_long) (total_nanoseconds % 1000000000);
 
   char buf[100];
   if (count > 1)
     {
-      ACE_hrtime_t avg_nsecs = total / count;
+      ACE_hrtime_t avg_nsecs = total_nanoseconds / count;
       ACE_OS::sprintf (buf, " count = %d, total (secs %lld, usecs %lu), avg usecs = %lld\n",
              count, total_secs, (extra_nsecs + 500) / 1000,
              (avg_nsecs + 500) / 1000);
@@ -93,9 +120,14 @@ void
 ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_total");
-  ACE_hrtime_t total_secs;
-  total_secs = (ACE_hrtime_t) (this->total_ / global_scale_factor_ / 1000000);
-  u_long extra_nsecs = (u_long) (this->total_ % 1000000000);
+
+  // Get the total number of nanoseconds elapsed.
+  ACE_hrtime_t total_nanoseconds;
+  this->elapsed_time (total_nanoseconds);
+
+  // Separate to seconds and nanoseconds.
+  ACE_hrtime_t total_secs  = total_nanoseconds / 1000000000;
+  u_long extra_nsecs = (u_long) (total_nanoseconds % 1000000000);
 
   char buf[100];
   if (count > 1)
