@@ -1,3 +1,8 @@
+Sat Feb 23 16:49:25 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_export_file.pl: Added code to record the flags used
+	  to generate an export file.
+
 Tue Feb 12 17:10:34 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/examples/svcconf/Svcconf_Handler.h:
