@@ -14,7 +14,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
 
 void 
 Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-				  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+				  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, 
 		   PortableInterceptor::ForwardRequest))
 {
@@ -72,7 +72,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 					      prev_current->dt_hash (),
 					      guid,
 					      0,
-					      prev_current->implicit_scheduling_parameter (),
+					      prev_current->implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_PARAMETER),
 					      0,
 					      dt.in (),
 					      prev_current));
@@ -105,7 +105,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 
 void 
 Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr
-			       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+			       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
     ACE_DEBUG ((LM_DEBUG,
@@ -115,7 +115,7 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr
 
 void 
 Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
-				   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+				   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -134,7 +134,7 @@ Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
   
 void 
 Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
-				       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+				       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, 
 		   PortableInterceptor::ForwardRequest))
 {
@@ -165,7 +165,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
 	{
 	  // Perform the necessary cleanup as the
 	  // thread was cancelled.
-	  prev_current->cancel_thread ();
+	  prev_current->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
 	}
       else
 	{
@@ -178,7 +178,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
   
 void 
 Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
-				   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+				   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, 
 		   PortableInterceptor::ForwardRequest))
 {
@@ -197,14 +197,14 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
 }
 
 char* 
-Client_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+Client_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return  CORBA::string_dup ("RTSchdeuler_Client_Interceptor");
 }
 
 void 
-Client_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+Client_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -217,7 +217,7 @@ Server_Interceptor::Server_Interceptor (TAO_RTScheduler_Current_ptr current)
 
 void 
 Server_Interceptor::receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr
-						      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+						      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, 
 		   PortableInterceptor::ForwardRequest))
 {
@@ -228,7 +228,7 @@ Server_Interceptor::receive_request_service_contexts (PortableInterceptor::Serve
   
 void 
 Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-				     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+				     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, 
 		   PortableInterceptor::ForwardRequest))
 {
@@ -285,10 +285,8 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
       // segment name.
       new_current->id (guid);
       new_current->name (name);
-      new_current->scheduling_parameter (sched_param
-			ACE_ENV_ARG_PARAMETER);
-      new_current->implicit_scheduling_parameter (implicit_sched_param
-													ACE_ENV_ARG_PARAMETER);
+      new_current->scheduling_parameter (sched_param);
+      new_current->implicit_scheduling_parameter (implicit_sched_param);
       new_current->DT (dt.in ());
 	  
       // Install new current in the ORB.
@@ -299,7 +297,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
 
 void 
 Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-				ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+				ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -315,7 +313,7 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
     {
       if (prev_current->DT ()->state () == RTScheduling::DistributableThread::CANCELLED)
 	{
-	  prev_current->cancel_thread (ACE_ENV_ARG_PARAMETER);
+	  prev_current->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
 
@@ -329,7 +327,7 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
   
 void 
 Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-				    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+				    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
@@ -354,7 +352,7 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
   
 void 
 Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri
-				ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+				ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
@@ -378,14 +376,14 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri
 }
 
 char* 
-Server_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+Server_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
     return  CORBA::string_dup ("RTSchdeuler_Server_Interceptor");
 }
 
 void 
-Server_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+Server_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
