@@ -27,19 +27,20 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 # See comment above about only building libPerf.a for max performance.
 BUILD = $(VLIB) $(VBIN)
 
+BIN2 = test_naming
+
+#### If the ACE library wasn't built with sufficient components, don't
+#### try to build here.
+ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
+  BIN += $(BIN2)
+endif # ! Other
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-#### If the ACE library wasn't built with the Other component, don't
-#### try to build test_naming.
-ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
-ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
-  BIN += test_naming
-endif # ! Other
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU

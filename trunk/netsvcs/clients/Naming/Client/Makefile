@@ -8,38 +8,45 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-BIN   	= main
-LIB   	= libClient_Test.a
-SHLIB   = libClient_Test.$(SOEXT)
-
 FILES   = Client_Test
 
-PSRC   	= $(addsuffix .cpp,$(BIN))
+PSRC    = $(addsuffix .cpp,$(BIN))
 OBJ     = $(SRC:%.cpp=$(VDIR)%.o)
 
-LSRC   	= $(addsuffix .cpp,$(FILES))
-LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
+LSRC    = $(addsuffix .cpp,$(FILES))
+LOBJ    = $(LSRC:%.cpp=$(VDIR)%.o)
 SHOBJ   = $(addsuffix .so,$(FILES))
 
 LIBS    += $(ACELIB)
 
-LDLIBS 	= -lClient_Test
- 
+LDLIBS  = -lClient_Test
+
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD   = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+BIN2    = main
+LIB2    = libClient_Test.a
+SHLIB2  = libClient_Test.$(SOEXT)
+
+#### If the ACE library wasn't built with sufficient components, don't
+#### try to build here.
+ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
+  BIN = $(BIN2)
+  LIB = $(LIB2)
+  SHLIB = $(SHLIB2)
+endif # Other
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #       Local targets
@@ -48,6 +55,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 

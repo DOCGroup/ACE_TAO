@@ -73,19 +73,15 @@ BIN =   Aio_Platform_Test \
         UPIPE_SAP_Test \
         Upgradable_RW_Test
 
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+BIN2 = Naming_Test \
+       Thread_Pool_Reactor_Test \
+       XtReactor_Test
 
 #### If the ACE library wasn't built with all components, don't
 #### try to build certain tests.
 ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
 ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
-  BIN += Naming_Test \
-         Thread_Pool_Reactor_Test \
-         XtReactor_Test
+  BIN += $(BIN2)
 endif # ! Other
 ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
   BIN += Tokens_Test
@@ -93,6 +89,11 @@ endif # ! Token
 
 PSRC=$(addsuffix .cpp,$(BIN))
 
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
