@@ -112,17 +112,4 @@ interface Client
   attribute End::Value v;
 };
 
-// We had a problem with the inheritance list
-// in the declaration of A_mod::B_mod::Foo, in 
-// both stub and skeleton files.
-module A_mod
-{
-  interface Foo {};
-
-  module B_mod
-  {
-    interface Foo : A_mod::Foo {};
-  };  
-};
-
 
