@@ -24,7 +24,9 @@
 
 #if defined (ACE_HAS_THREADS)
 
-static const int MAX_TASKS = 20;
+ACE_Thread_Manager *tm;
+
+static const int MAX_TASKS = 5;
 
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
   // = TITLE
@@ -197,6 +199,8 @@ main (int, char *[])
   ACE_Service_Config daemon; 
   ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
+  tm = ACE_Thread_Manager::instance ();
+
   ACE_Reactor *reactor;
 
   ACE_NEW_RETURN (reactor, ACE_Reactor, -1);
@@ -226,12 +230,19 @@ main (int, char *[])
        THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
-  ACE_Thread_Manager::instance ()->wait ();
+  ACE_DEBUG ((LM_DEBUG, "(%t) starting to wait \n"));
+
+  if (ACE_Thread_Manager::instance ()->wait () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "wait"), -1);
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) all threads are finished \n"));
 
   reactor->close ();
   delete reactor;
   // Note that the destructor of ACE_Service_Config daemon will close
   // down the ACE_Reactor::instance().
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) exiting main\n"));
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
