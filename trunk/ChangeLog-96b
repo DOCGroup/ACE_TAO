@@ -1,5 +1,43 @@
 Tue Oct 29 00:02:44 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
+	* ace/config-win32-msvc4.0.h: Defined the STRICT symbol based on a
+ 	  suggestion from Luca.  STRICT type checking in WINDOWS.H
+ 	  enhances type safety for Windows programs by using distinct
+ 	  types to represent all the different HANDLES in Windows. So for
+ 	  example, STRICT prevents you from mistakenly passing an HPEN to
+ 	  a routine expecting an HBITMAP.  Note that if you have STRICT
+ 	  type checking enabled in one file, but not in another, the C++
+ 	  compiler will generate different external link symbols for a
+ 	  single function. This will result in link-time errors If you are
+ 	  mixing STRICT and non-STRICT code, you must be aware of linkage
+ 	  inconsistencies. In general, all MFC programming and all C++
+ 	  should be done with STRICT. If you have legacy C code, then not
+ 	  using STRICT is acceptable
+
+	* ace/OS.cpp (thr_create): Added a special check for the situation
+ 	  where we have both ACE_HAS_PTHREADS and ACE_HAS_STHREADS
+ 	  defined.  In this case, we are running on Solaris, where
+ 	  ACE_thread_t and ACE_hthread_t are the same.  Therefore, we can
+ 	  copy the value of the *thr_id into the *thr_handle.  This
+ 	  ensures that the ACE_Thread_Manager behaves correctly with
+ 	  respect to suspending and resuming threads and ACE_Tasks.
+
+	* ace/Trace.cpp (ACE_Trace): Changed the use of LM_DEBUG to
+ 	  LM_TRACE in the constructor and destructor.  Thanks to Luca for
+ 	  this!
+
+	* ace/OS.i: Added a cast to of (HMODULE) handle so that the STRICT
+ 	  macro would work correctly for Win32.  Thanks to Luca for this.
+
+	* ace/config-win32-msvc4.0.h: According to Luca, ACE compiles file
+ 	  with ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES undefined on NT.  So
+ 	  I undefined it!  If there are any problems with this, please let
+ 	  me know.
+	  
+	* ace/SOCK_Dgram: Added Luca Priorelli <lucapri@mbox.vol.it>
+ 	  implementation of recv() for SOCK Dgrams that allows clients to
+ 	  read from a socket without having to provide a buffer to read.
+
 	* examples/Threads/test_task_four.cpp: This is a new test
 	  program to test the new interfaces.  Thanks to Hamutal Yanay
 	  & Ari Erev for this.
