@@ -518,6 +518,10 @@ public:
   void add_include_path (const char *s);
   // Add another path to 'include_paths_'.
 
+  ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> &
+  file_prefixes (void);
+  // Accessor for the IDL keyword container.
+
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack
@@ -596,6 +600,9 @@ private:
 
   ACE_Unbounded_Queue<char *> include_paths_;
   // List of -I options passed to us.
+
+  ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> file_prefixes_;
+  // Associates a prefix with a file.
 };
 
 

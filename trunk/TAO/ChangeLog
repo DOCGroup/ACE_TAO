@@ -1,3 +1,21 @@
+Tue Jan  6 20:43:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Added hash table to match #pragma prefix directives with
+          file names. This table is used to manage the prefix associated
+          with the root scope. Using preprocessor file directives, as
+          was done previously, is not sufficient. This change enables
+          the calculation of the repository id, which contains the prefix,
+          to be done sooner, at AST node creation time, since the root
+          prefix is updated with each file change and with each prefix
+          directive. This fix closes [BUGID:1687].
+
 Tue Jan  6 16:36:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Two_Objects/run_test.pl:

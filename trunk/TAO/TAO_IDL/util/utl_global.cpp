@@ -1134,6 +1134,22 @@ IDL_GlobalData::update_prefix (char *filename)
   ACE_CString tmp ("", 0, 0);
   char *main_filename = this->pd_main_filename->get_string ();
 
+  ACE_CString ext_id (filename);
+  char *prefix = 0;
+
+  int status = this->file_prefixes_.find (ext_id, prefix);
+
+  if (status == 0)
+    {
+      this->pd_root->prefix (prefix);
+    }
+  else
+    {
+      prefix = ACE::strnew ("");
+      (void) this->file_prefixes_.bind (ext_id, prefix);
+      this->pd_root->prefix ("");
+    }
+
   // The first branch is executed if we are finishing an
   // included IDL file (but the current filename has not yet
   // been changed). So we check for (1) the current filename is
@@ -1154,17 +1170,10 @@ IDL_GlobalData::update_prefix (char *filename)
           this->pragma_prefixes_.pop (trash);
           delete [] trash;
         }
-      else
-        {
-          char *current = 0;
-          this->pragma_prefixes_.top (current);
-          this->pd_root->prefix (current);
-        }
     }
   else
     {
       this->pragma_prefixes_.push (tmp.rep ());
-      this->pd_root->prefix ((char *) tmp.fast_rep ());
     }
 }
 
@@ -1302,3 +1311,10 @@ IDL_GlobalData::add_include_path (const char *s)
 {
   this->include_paths_.enqueue_tail (ACE::strnew (s));
 }
+
+ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> &
+IDL_GlobalData::file_prefixes (void)
+{
+  return this->file_prefixes_;
+}
+

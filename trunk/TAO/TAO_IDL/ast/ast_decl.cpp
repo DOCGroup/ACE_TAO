@@ -437,8 +437,9 @@ AST_Decl::compute_repoID (void)
   long first = I_TRUE;
   long second = I_FALSE;
   char *name = 0;
-  const char *prefix = this->prefix_;
+  const char *prefix = (this->prefix_ ? this->prefix_ : "");
   UTL_Scope *scope = this->defined_in ();
+  const char *parent_prefix = 0;
 
   // If our prefix is empty, we check to see if an ancestor has one.
   while (ACE_OS::strcmp (prefix, "") == 0 && scope != 0)
@@ -451,7 +452,8 @@ AST_Decl::compute_repoID (void)
           break;
         }
 
-      prefix = parent->prefix ();
+      parent_prefix = parent->prefix ();
+      prefix = (parent_prefix ? parent_prefix : "");
       scope = parent->defined_in ();
     }
 
