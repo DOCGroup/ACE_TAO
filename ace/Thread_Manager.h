@@ -636,28 +636,37 @@ public:
                  ACE_Task_Base *task_list[],
                  size_t n);
   // Returns in <task_list> a list of up to <n> <ACE_Tasks> in a
-  // group.  The caller must allocate the memory for <task_list>
+  // group.  The caller must allocate the memory for <task_list>.  In
+  // case of an error, -1 is returned. If no requested values are
+  // found, 0 is returned, otherwise correct number of retrieved
+  // values are returned.
 
   int thread_list (ACE_Task_Base *task,
                    ACE_thread_t thread_list[],
                    size_t n);
   // Returns in <thread_list> a list of up to <n> thread ids in an
   // <ACE_Task_Base>.  The caller must allocate the memory for
-  // <thread_list>.
+  // <thread_list>.  In case of an error, -1 is returned. If no
+  // requested values are found, 0 is returned, otherwise correct
+  // number of retrieved values are returned.
 
   int hthread_list (ACE_Task_Base *task,
                     ACE_hthread_t hthread_list[],
                     size_t n);
   // Returns in <hthread_list> a list of up to <n> thread handles in
   // an <ACE_Task_Base>.  The caller must allocate memory for
-  // <hthread_list>.
+  // <hthread_list>.  In case of an error, -1 is returned. If no
+  // requested values are found, 0 is returned, otherwise correct
+  // number of retrieved values are returned.
 
   int thread_grp_list (int grp_id,
                        ACE_thread_t thread_list[],
                        size_t n);
   // Returns in <thread_list> a list of up to <n> thread ids in a
   // group <grp_id>.  The caller must allocate the memory for
-  // <thread_list>.
+  // <thread_list>.  In case of an error, -1 is returned. If no
+  // requested values are found, 0 is returned, otherwise correct
+  // number of retrieved values are returned.
 
   int hthread_grp_list (int grp_id,
                         ACE_hthread_t hthread_list[],
@@ -665,6 +674,22 @@ public:
   // Returns in <hthread_list> a list of up to <n> thread handles in
   // a group <grp_id>.  The caller must allocate memory for
   // <hthread_list>.
+
+  int task_all_list (ACE_Task_Base *task_list[],
+                     size_t n);
+  // Returns in <task_list> a list of up to <n> <ACE_Tasks>.  The
+  // caller must allocate the memory for <task_list>.  In case of an
+  // error, -1 is returned. If no requested values are found, 0 is
+  // returned, otherwise correct number of retrieved values are
+  // returned.
+
+  int thread_all_list (ACE_thread_t thread_list[],
+                       size_t n);
+  // Returns in <thread_list> a list of up to <n> thread ids.  The
+  // caller must allocate the memory for <thread_list>.  In case of an
+  // error, -1 is returned. If no requested values are found, 0 is
+  // returned, otherwise correct number of retrieved values are
+  // returned.
 
   // = Set/get group ids for a particular task.
   int set_grp (ACE_Task_Base *task, int grp_id);
