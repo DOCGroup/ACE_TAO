@@ -317,18 +317,16 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &the_spec,
 // Called by streamctrl, requesting us to call request_connection 
 // on the responder (to initiate a connection)
 CORBA::Boolean 
-TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder, 
-                             AVStreams::streamQoS &qos_spec, 
-                             const AVStreams::flowSpec &the_spec,  
-                             CORBA::Environment &env)
+TAO_Server_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder, 
+                                    AVStreams::streamQoS &qos_spec, 
+                                    const AVStreams::flowSpec &the_spec,  
+                                    CORBA::Environment &env)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) In TAO_StreamEndPoint::connect\n"));
-  responder->request_connection (this->_this (env),
-                                 0,
-                                 qos_spec,
-                                 the_spec,
-                                 env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+  ACE_ERROR_RETURN ((LM_ERROR, 
+                     "(%P|%t) Calling TAO_Server_StreamEndPoint::connect"
+                     " is not compatible with the spec!"
+                     "\n"),
+                    -1);
 }
   
 // Called by our peer endpoint, requesting us to establish
@@ -451,18 +449,20 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                     const AVStreams::flowSpec &the_spec,  
                                     CORBA::Environment &env)
 {
-  this->handle_preconnect (the_spec);
+  AVStreams::flowSpec flow_spec (the_spec);
+  this->handle_preconnect (flow_spec);
   
   // Use the base class implementation of connect
-  TAO_StreamEndPoint::connect (responder, 
-                               qos_spec, 
-                               the_spec,  
-                               env);
+  responder->request_connection (this->_this (env),
+                                 0,
+                                 qos_spec, 
+                                 flow_spec,  
+                                 env);
   
   TAO_CHECK_ENV_RETURN (env,CORBA::B_FALSE);
 
   // Make the upcall to the app
-  return this->handle_postconnect (the_spec);
+  return this->handle_postconnect (flow_spec);
 
 
 }
