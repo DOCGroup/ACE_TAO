@@ -4,6 +4,7 @@
 
 #include "ORBInitInfo.h"
 #include "ORB_Core.h"
+#include "ORB.h"
 #include "StringSeqC.h"
 #include "CodecFactory.h"
 

@@ -1,6 +1,6 @@
 #include "tao/PortableServer/POA.h"
 
-ACE_RCSID (TAO_PortableServer,
+ACE_RCSID (PortableServer,
            POA,
            "$Id$")
 
@@ -27,6 +27,7 @@ ACE_RCSID (TAO_PortableServer,
 #include "tao/Exception.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
+#include "tao/TSS_Resources.h"
 #include "tao/debug.h"
 #include "tao/IORInterceptor/IORInterceptor_List.h"
 #include "Default_Acceptor_Filter.h"

@@ -5,6 +5,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/ORB_Core.h"
+#include "tao/Policy_Manager.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
