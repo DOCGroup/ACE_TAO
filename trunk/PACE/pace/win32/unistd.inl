@@ -60,7 +60,7 @@ pace_chdir (const char * path)
 #if (PACE_HAS_POSIX_FA_UOF)
 PACE_INLINE
 int
-pace_chown (const char * path, uid_t owner, pace_gid_t group)
+pace_chown (const char * path, pace_uid_t owner, pace_gid_t group)
 {
   PACE_UNUSED_ARG (path);
   PACE_UNUSED_ARG (owner);
@@ -146,7 +146,7 @@ pace_fdatasync (PACE_HANDLE fildes)
 
 #if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
-pid_t
+pace_pid_t
 pace_fork ()
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
@@ -194,7 +194,7 @@ pace_getcwd (char * buf, size_t size)
 
 #if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
-uid_t
+pace_uid_t
 pace_getegid ()
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
@@ -203,7 +203,7 @@ pace_getegid ()
 
 #if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
-uid_t
+pace_uid_t
 pace_geteuid ()
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
@@ -223,10 +223,10 @@ pace_getgroups (int gidsetsize, pace_gid_t grouplist[])
 
 #if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
-uid_t
+pace_uid_t
 pace_getgid ()
 {
-  uid_t retval = -1;
+  pace_uid_t retval = -1;
   PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_UG_UOF */
@@ -252,17 +252,17 @@ pace_getlogin_r (char * name, size_t namesize)
 
 #if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
-pid_t
+pace_pid_t
 pace_getpgrp ()
 {
-  pid_t retval = -1;
+  pace_pid_t retval = -1;
   PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
 #if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
-pid_t
+pace_pid_t
 pace_getpid ()
 {
   return GetCurrentProcessId ();
@@ -271,20 +271,20 @@ pace_getpid ()
 
 #if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
-pid_t
+pace_pid_t
 pace_getppid ()
 {
-  pid_t retval = -1;
+  pace_pid_t retval = -1;
   PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
 #if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
-uid_t
+pace_uid_t
 pace_getuid ()
 {
-  uid_t retval = -1;
+  pace_uid_t retval = -1;
   PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_UG_UOF */
@@ -382,7 +382,7 @@ pace_setgid (pace_gid_t gid)
 #if (PACE_HAS_POSIX_JC_UOF)
 PACE_INLINE
 int
-pace_setpgid (pid_t pid, pid_t pgid)
+pace_setpgid (pace_pid_t pid, pace_pid_t pgid)
 {
   PACE_UNUSED_ARG (pid);
   PACE_UNUSED_ARG (pgid);
@@ -392,7 +392,7 @@ pace_setpgid (pid_t pid, pid_t pgid)
 
 #if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
-pid_t
+pace_pid_t
 pace_setsid ()
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);  
@@ -402,7 +402,7 @@ pace_setsid ()
 #if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 int
-pace_setuid (uid_t uid)
+pace_setuid (pace_uid_t uid)
 {
   PACE_UNUSED_ARG (uid);
   PACE_ERRNO_NO_SUPPORT_RETURN (uid);
@@ -431,10 +431,10 @@ pace_sysconf (int name)
 
 #if (PACE_HAS_POSIX_JC_UOF)
 PACE_INLINE
-pid_t
+pace_pid_t
 pace_tcgetpgrp (PACE_HANDLE fildes)
 {
-  pid_t retval = -1;
+  pace_pid_t retval = -1;
   PACE_UNUSED_ARG (fildes);
   PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
@@ -443,7 +443,7 @@ pace_tcgetpgrp (PACE_HANDLE fildes)
 #if (PACE_HAS_POSIX_JC_UOF)
 PACE_INLINE
 int
-pace_tcsetpgrp (PACE_HANDLE fildes, pid_t pgrp_id)
+pace_tcsetpgrp (PACE_HANDLE fildes, pace_pid_t pgrp_id)
 {
   PACE_UNUSED_ARG (fildes);
   PACE_UNUSED_ARG (pgrp_id);

@@ -1,8 +1,14 @@
+Wed Sep 13 13:25:33 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/unistd.inl:
+
+	  Even more type shifts to pace_*.
+
 Wed Sep 13 13:06:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/unistd.h: 
 
-	  Mor of uid_t to pace_uid_t.
+	  More of uid_t to pace_uid_t.
 
 Wed Sep 13 12:59:52 2000  Luther J Baker  <luther@cs.wustl.edu>
 
