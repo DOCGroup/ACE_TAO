@@ -1,3 +1,14 @@
+Mon Feb 25 19:27:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (log): In handling for %t, fixed the feature
+          test that changes behavior for AIX 4.2 and earlier. This
+          section missed my long-time-ago change to the AIX OS
+          version constants, and ended up being used for all AIX versions
+          which is wrong. Thanks to Yan Dai <dai_y@ociweb.com> for
+          reporting this problem.
+
+        * THANKS: Added Yan Dai to the Hall of Fame.
+
 Mon Feb 25 19:16:12 2002 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/007/thread_pool.{h|cpp}:
