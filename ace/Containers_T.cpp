@@ -1407,7 +1407,7 @@ ACE_Node<T>::ACE_Node (const T &i, ACE_Node<T> *n)
 }
 
 template <class T>
-ACE_Node<T>::ACE_Node (ACE_Node<T> *n, int /* MS_SUCKS */)
+ACE_Node<T>::ACE_Node (ACE_Node<T> *n, int)
   : next_ (n)
 {
 // ACE_TRACE ("ACE_Node<T>::ACE_Node");
