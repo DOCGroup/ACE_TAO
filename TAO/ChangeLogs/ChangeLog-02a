@@ -1,3 +1,12 @@
+Mon Apr 10 13:41:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/compiler.html:  Removed the entry about -Gc flag (compile
+	  marshaling.)
+
+	* examples/OBV/Typed_Events/client.dsp:
+	* examples/OBV/Typed_Events/server.dsp: Removed -Gc flag from
+	  TAO_IDL command.  Compile marshaling is no longer supported.
+
 Mon Apr 10 09:11:43 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Acceptor.cpp (hostname):
