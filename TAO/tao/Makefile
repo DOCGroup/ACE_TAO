@@ -3,6 +3,7 @@
 #
 #	Makefile for TAO
 #----------------------------------------------------------------------------
+shared_libs_only=1
 
 MAKEFILE = Makefile
 LIBNAME  = libTAO
@@ -90,9 +91,11 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
 #CPPFLAGS += -D__IIOP_BUILD -I$(COMPATDIR) -DDEBUG
-CPPFLAGS += -I$(TAO_ROOT) -I$(COMPATDIR) #-H
+TSS_ORB_FLAG = -DTAO_HAS_TSS_ORBCORE
+CPPFLAGS += -I$(TAO_ROOT) -I$(COMPATDIR) $(TSS_ORB_FLAG)#-H
 LDFLAGS += $(RLDFLAGS)
-#OCFLAGS = 
+DCFLAGS = #-g
+OCFLAGS = -fast
 
 INSINC = ../proto/include
 INSLIB = ../proto/lib
@@ -240,6 +243,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -253,7 +257,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -393,6 +396,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -406,7 +410,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -546,6 +549,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -559,7 +563,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -699,6 +702,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -712,7 +716,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -852,6 +855,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -865,7 +869,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -1005,6 +1008,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -1018,7 +1022,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -1158,6 +1161,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -1171,7 +1175,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -1311,6 +1314,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -1324,7 +1328,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -1464,6 +1467,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -1477,7 +1481,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -1617,6 +1620,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -1630,7 +1634,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -1770,6 +1773,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -1783,7 +1787,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -1923,6 +1926,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -1936,7 +1940,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -2076,6 +2079,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -2089,7 +2093,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -2229,6 +2232,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -2242,7 +2246,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -2382,6 +2385,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -2395,7 +2399,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -2535,6 +2538,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -2548,7 +2552,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -2688,6 +2691,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -2701,7 +2705,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -2841,6 +2844,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -2854,7 +2858,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -2994,6 +2997,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -3007,7 +3011,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -3147,6 +3150,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -3160,7 +3164,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -3300,6 +3303,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -3313,7 +3317,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -3453,6 +3456,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -3466,7 +3470,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -3606,6 +3609,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -3619,7 +3623,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -3759,6 +3762,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -3772,7 +3776,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -3912,6 +3915,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -3925,7 +3929,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -4065,6 +4068,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -4078,7 +4082,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -4218,6 +4221,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -4231,7 +4235,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -4371,6 +4374,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -4384,7 +4388,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -4524,6 +4527,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -4537,7 +4541,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -4682,6 +4685,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -4695,7 +4699,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -4835,6 +4838,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -4848,7 +4852,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -4988,6 +4991,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -5001,7 +5005,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -5141,6 +5144,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -5154,7 +5158,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
@@ -5294,6 +5297,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
+ $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/nvlist.h \
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
@@ -5307,7 +5311,6 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
  $(TAO_ROOT)/tao/Orb_Core.h \
- $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
