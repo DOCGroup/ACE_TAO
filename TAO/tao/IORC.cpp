@@ -8,8 +8,6 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-ACE_RCSID(tao, IORC.cpp, "$Id$")
-
 #include "tao/IORC.h"
 
 #if !defined (__ACE_INLINE__)
@@ -19,6 +17,8 @@ ACE_RCSID(tao, IORC.cpp, "$Id$")
 #include "tao/IORS.h"
 #include "tao/Stub.h"
 #include "tao/corba.h"
+
+ACE_RCSID(tao, IORC, "$Id$")
 
 TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
     CORBA::Object_ptr obj,

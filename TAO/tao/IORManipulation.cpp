@@ -21,7 +21,7 @@
 #include "ace/Auto_Ptr.h"
 #include "tao/MProfile.h"
 
-ACE_RCSID(tao, IORManipulation.cpp, "$Id$")
+ACE_RCSID(tao, IORManipulation, "$Id$")
 
 TAO_IOR_Manipulation_impl::TAO_IOR_Manipulation_impl (void)
 {
