@@ -44,7 +44,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -DACTIVITY_BUILD_DLL
 TAO_IDLFLAGS += -Ge 1
 
 #----------------------------------------------------------------------------
