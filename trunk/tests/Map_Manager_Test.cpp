@@ -40,7 +40,11 @@ typedef size_t TYPE;
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 
 // We need this template specialization since TYPE is defined as a
-// size_t, which doesn't have a hash () method defined on it.
+// size_t, which doesn't have a hash() method defined on it.  Template
+// specialization is a powerful C++ feature that makes it possible to
+// customize the implementation of designated template methods to
+// either (1) improve performance or (2) support built-in types that
+// lack "methods" (as in this case, where size_t lacks hash()).
 
 u_long
 ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>::hash (const TYPE& ext_id)
