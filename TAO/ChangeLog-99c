@@ -1,3 +1,11 @@
+Wed Dec 15 19:00:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+	
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp
+	(visit_interface): Changed ACE_Recurisive_Thread_Mutex to
+	ACE_SYNCH_RECURSIVE_MUTEX to take care of single-threaded case
+	too. Thanks to Jeff Parsons <parsons@cs.wustl.edu> for pointing it
+	out.
+			 
 Tue Dec 14 20:22:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IIOP_Factory.h:
