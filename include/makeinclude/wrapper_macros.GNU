@@ -165,6 +165,7 @@
 #  PURE_CACHE_DIR
 #               The full name of the directory in which Pure produces will
 #               produce instrumented libraries.
+#  PWD          Command to get the current working directory
 #  PTDIRS       Pathnames of directories containing template code
 #  RM           Name of program to use to remove files
 #  SOFLAGS      Flags used to build a shared library
@@ -302,6 +303,10 @@ endif
 SOVERSION ?=
 SONAME ?=
 
+ifeq ($(PWD),)
+  PWD=$(shell pwd)
+endif
+
 #----------------------------------------------------------------------------
 #      Platform-independent macro definitions
 #----------------------------------------------------------------------------
@@ -366,8 +371,6 @@ ACELIB ?= -lACE
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
 YACC          ?= bison
-
-
 
 #----------------------------------------------------------------------------
 #      Platform-dependent macros that require platform_macros.GNU.
@@ -766,7 +769,7 @@ endif
 # If not explicitly is set that we don't have rwho, assume we have it.
 rwho ?= 1
 
-# If not explicitly is set that we don't have stlport, assume we 
+# If not explicitly is set that we don't have stlport, assume we
 # don't have it.
 stlport ?= 0
 ifeq ($(stlport),1)
