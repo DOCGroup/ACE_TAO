@@ -69,10 +69,10 @@ Fri Apr 19 16:43:34 2002  Dmitry Goldshtain <dmitry@goldshtain.com>
 	  fix.
 
 Fri Apr 19 13:30:00 2002  Dan Troesser <troesser_d@ociweb.com>
+  
         * docs/Options.html
-
-        Corrected documentation for ORBReactorRegistry.  It is no longer
-        supported.
+	  Corrected documentation for ORBReactorRegistry.  It is no longer
+ 	  supported.
 
 Fri Apr 19 12:13:17 2002  Ossama Othman  <ossama@uci.edu>
 
