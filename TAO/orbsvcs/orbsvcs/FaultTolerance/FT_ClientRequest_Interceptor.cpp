@@ -189,90 +189,75 @@ namespace TAO
 
 
   void
-  FT_ClientRequest_Interceptor::group_version_context (
+    FT_ClientRequest_Interceptor::group_version_context (
     PortableInterceptor::ClientRequestInfo_ptr ri
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    // If the service context is already there dont add new service
-    // context information..
     ACE_TRY
+    {
+      IOP::TaggedComponent_var tp =
+        ri->get_effective_component (IOP::TAG_FT_GROUP
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Grab the object group version
+      // @@ NOTE: This involves an allocation and a dellocation. This is
+      // really bad.
+      TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
+        tp->component_data.get_buffer ()
+        ),
+        tp->component_data.length ());
+      CORBA::Boolean byte_order;
+
+      if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+        return;
+
+      cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+
+      FT::TagFTGroupTaggedComponent gtc;
+
+      if ((cdr >> gtc) == 0)
+        ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
+        CORBA::COMPLETED_NO));
+
+      IOP::ServiceContext sc;
+      sc.context_id = IOP::FT_GROUP_VERSION;
+
+      TAO_OutputCDR ocdr;
+      if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+        return;
+        //ACE_THROW (CORBA::MARSHAL ());
+
+      if (!(ocdr << gtc.object_group_ref_version))
+        return;
+        //ACE_THROW (CORBA::MARSHAL ());
+
+      CORBA::ULong length =
+        ACE_static_cast (CORBA::ULong, ocdr.total_length ());
+      sc.context_data.length (length);
+      CORBA::Octet *buf = sc.context_data.get_buffer ();
+
+      for (const ACE_Message_Block *i = ocdr.begin ();
+        i != 0;
+        i = i->cont ())
       {
-        IOP::ServiceContext_var sc =
-          ri->get_request_service_context (IOP::FT_GROUP_VERSION
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+        buf += i->length ();
       }
-    ACE_CATCH (CORBA::BAD_PARAM, ex)
-      {
-        ACE_TRY_EX (YET_AGAIN)
-          {
-            IOP::TaggedComponent_var tp =
-              ri->get_effective_component (IOP::TAG_FT_GROUP
-                                           ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK_EX (YET_AGAIN);
 
-            // Grab the object group version
-            // @@ NOTE: This involves an allocation and a dellocation. This is
-            // really bad.
-            TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                                    tp->component_data.get_buffer ()
-                                                    ),
-                              tp->component_data.length ());
-            CORBA::Boolean byte_order;
+      // Add this context to the service context list.
+      ri->add_request_service_context (sc,
+        0
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-            if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-              return;
-
-            cdr.reset_byte_order (ACE_static_cast (int,byte_order));
-
-            FT::TagFTGroupTaggedComponent gtc;
-
-            if ((cdr >> gtc) == 0)
-              ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                                           CORBA::COMPLETED_NO));
-
-            IOP::ServiceContext sc;
-            sc.context_id = IOP::FT_GROUP_VERSION;
-
-            TAO_OutputCDR ocdr;
-            if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
-              ACE_THROW (CORBA::MARSHAL ());
-
-            if (!(ocdr << gtc.object_group_ref_version))
-              ACE_THROW (CORBA::MARSHAL ());
-
-            CORBA::ULong length =
-              ACE_static_cast (CORBA::ULong, ocdr.total_length ());
-            sc.context_data.length (length);
-            CORBA::Octet *buf = sc.context_data.get_buffer ();
-
-            for (const ACE_Message_Block *i = ocdr.begin ();
-                 i != 0;
-                 i = i->cont ())
-              {
-                ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-                buf += i->length ();
-              }
-
-            // Add this context to the service context list.
-            ri->add_request_service_context (sc,
-                                             0
-                                             ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK_EX (YET_AGAIN);
-          }
-        ACE_CATCHANY
-          {
-            return;
-          }
-        ACE_ENDTRY;
-        ACE_CHECK;
-      }
+    }
     ACE_CATCHANY
-      {
-        // Not much can be done anyway. Just keep quiet
-        // ACE_RE_THROW;
-      }
+    {
+      // Not much can be done anyway. Just keep quiet
+      // ACE_RE_THROW;
+    }
     ACE_ENDTRY;
     ACE_CHECK;
 
@@ -280,99 +265,86 @@ namespace TAO
   }
 
   void
-  FT_ClientRequest_Interceptor::request_service_context (
+    FT_ClientRequest_Interceptor::request_service_context (
     PortableInterceptor::ClientRequestInfo_ptr ri
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    // If the service context is already there dont add new service
-    // context information..
     ACE_TRY
+    {
+      IOP::ServiceContext sc;
+      sc.context_id = IOP::FT_REQUEST;
+
+
+      CORBA::Policy_var policy =
+        ri->get_request_policy (FT::REQUEST_DURATION_POLICY
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      FT::FTRequestServiceContext ftrsc;
+      ftrsc.client_id =
+        CORBA::string_dup (this->uuid_->to_string ()->c_str ());
+      ftrsc.expiration_time =
+        this->request_expiration_time (policy.in ()
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      FT_TSS *tss =
+        this->tss_resources ();
+
+      if (tss->clean_flag_)
       {
-        IOP::ServiceContext_var sc =
-          ri->get_request_service_context (IOP::FT_REQUEST
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_GUARD  (ACE_Lock,
+          guard,
+          *this->lock_);
+
+        ftrsc.retention_id = ++this->retention_id_;
+
+      //  ACE_DEBUG ((LM_DEBUG,
+      //    "(%P|%t) Retention id [%d]\n",
+      //    ftrsc.retention_id));
+        tss->retention_id_ = ftrsc.retention_id;
+        tss->clean_flag_ = false;
       }
-    ACE_CATCH (CORBA::BAD_PARAM, ex)
+      else
       {
-        IOP::ServiceContext sc;
-        sc.context_id = IOP::FT_REQUEST;
-
-        ACE_TRY_EX (YET_AGAIN)
-          {
-            CORBA::Policy_var policy =
-              ri->get_request_policy (FT::REQUEST_DURATION_POLICY
-                                      ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK_EX (YET_AGAIN);
-
-            FT::FTRequestServiceContext ftrsc;
-            ftrsc.client_id =
-              CORBA::string_dup (this->uuid_->to_string ()->c_str ());
-            ftrsc.expiration_time =
-              this->request_expiration_time (policy.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK_EX (YET_AGAIN);
-
-            FT_TSS *tss =
-              this->tss_resources ();
-
-            if (tss->clean_flag_)
-              {
-                ACE_GUARD  (ACE_Lock,
-                            guard,
-                            *this->lock_);
-
-                ftrsc.retention_id = ++this->retention_id_;
-
-    ACE_DEBUG ((LM_DEBUG,
-          "(%P|%t) Retention id [%d]\n",
-          ftrsc.retention_id));
-                tss->retention_id_ = ftrsc.retention_id;
-    tss->clean_flag_ = false;
-              }
-            else
-              {
-                ftrsc.retention_id =
-                  tss->retention_id_;
-              }
-
-            TAO_OutputCDR ocdr;
-            if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
-              ACE_THROW (CORBA::MARSHAL ());
-
-            if (!(ocdr << ftrsc))
-              ACE_THROW (CORBA::MARSHAL ());
-
-            // Make a *copy* of the CDR stream...
-            CORBA::ULong length =
-              ACE_static_cast (CORBA::ULong, ocdr.total_length ());
-            sc.context_data.length (length);
-            CORBA::Octet *buf = sc.context_data.get_buffer ();
-
-            for (const ACE_Message_Block *i = ocdr.begin ();
-                 i != 0;
-                 i = i->cont ())
-              {
-                ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-                buf += i->length ();
-              }
-
-            // Add this context to the service context list.
-            ri->add_request_service_context (sc,
-                                             0
-                                             ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK_EX (YET_AGAIN);
-          }
-        ACE_CATCHANY
-          {
-          }
-        ACE_ENDTRY;
+        ftrsc.retention_id =
+          tss->retention_id_;
       }
+
+      TAO_OutputCDR ocdr;
+      if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+        return;
+        //ACE_THROW (CORBA::MARSHAL ());
+
+      if (!(ocdr << ftrsc))
+        return;
+        // ACE_THROW (CORBA::MARSHAL ());
+
+      // Make a *copy* of the CDR stream...
+      CORBA::ULong length =
+        ACE_static_cast (CORBA::ULong, ocdr.total_length ());
+      sc.context_data.length (length);
+      CORBA::Octet *buf = sc.context_data.get_buffer ();
+
+      for (const ACE_Message_Block *i = ocdr.begin ();
+        i != 0;
+        i = i->cont ())
+      {
+        ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+        buf += i->length ();
+      }
+
+      // Add this context to the service context list.
+      ri->add_request_service_context (sc,
+        0
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
     ACE_CATCHANY
-      {
-        // ACE_RE_THROW;
-      }
+    {
+      // ACE_RE_THROW;
+    }
     ACE_ENDTRY;
     ACE_CHECK;
     return;
