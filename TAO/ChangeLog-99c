@@ -1,3 +1,15 @@
+Mon Oct 11 12:05:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/Latency/Latency.dsw:
+	* performance-tests/Latency/deferrred_synch_client.dsp:
+	* performance-tests/Latency/dii_client.cpp:
+	* performance-tests/Latency/Makefile:
+	* performance-tests/Latency/run_test.pl:
+	* performance-tests/Latency/README:
+	  New deferred synchronous DII client added to tests.
+	  to compare results with  SII/SMI and SII/AMI
+	  clients.
+
 Mon Oct 11 11:15:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Sync_Strategies.cpp (dequeue_head): Fixed an unused arg
