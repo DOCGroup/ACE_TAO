@@ -127,6 +127,9 @@ TAO_UIOP_Connection_Handler::activate (long flags,
                  flags,
                  THR_BOUND));
 
+  // Set the id in the transport now that we're active.
+  this->transport ()->id ((int) this->get_handle ());
+
   return TAO_UIOP_SVC_HANDLER::activate (flags,
                                          n_threads,
                                          force_active,
@@ -174,16 +177,18 @@ TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  rm));
 
   --this->pending_upcalls_;
-  if (this->pending_upcalls_ == 0 &&
-      this->is_registered ())
+  if (this->pending_upcalls_ == 0)
     {
-      // Make sure there are no timers.
-      this->reactor ()->cancel_timer (this);
+      if (this->is_registered ())
+        {
+          // Make sure there are no timers.
+          this->reactor ()->cancel_timer (this);
 
-      // Set the flag to indicate that it is no longer registered with
-      // the reactor, so that it isn't included in the set that is
-      // passed to the reactor on ORB destruction.
-      this->is_registered (0);
+          // Set the flag to indicate that it is no longer registered with
+          // the reactor, so that it isn't included in the set that is
+          // passed to the reactor on ORB destruction.
+          this->is_registered (0);
+        }
 
       // Close the handle..
       if (this->get_handle () != ACE_INVALID_HANDLE)

@@ -38,6 +38,12 @@ public:
                         CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Parse the policy sent by the ORB_Core
+  virtual int parse_policy (TAO_ORB_Core *orb_core,
+                            CORBA::Policy_ptr policy,
+                            CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
 

@@ -9,7 +9,7 @@ ACE_RCSID(TAO, BiDir_Policy_i, "$Id$")
 
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/BiDir_Policy_i.inl"
+#include "BiDir_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (

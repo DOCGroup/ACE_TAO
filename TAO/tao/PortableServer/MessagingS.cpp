@@ -142,14 +142,14 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::the_TAO_ReplyHandler_
 
 POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::_TAO_ReplyHandler_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
 
 }
 
 POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::~_TAO_ReplyHandler_Strategized_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
 
 }
@@ -160,7 +160,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::select_proxy (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  int strategy =
     TAO_ORB_Core::collocation_strategy (object);
 
   if (this->proxy_cache_[strategy] != 0)
@@ -175,7 +175,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::select_proxy (
 
 void
 POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
-    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
@@ -185,7 +185,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
     {
       switch (strategy)
         {
-        case TAO_ORB_Core::THRU_POA_STRATEGY:
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               POA_Messaging::_TAO_ReplyHandler_ThruPOA_Proxy_Impl,
@@ -194,7 +194,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
           ACE_CHECK;
           break;
 
-        case TAO_ORB_Core::DIRECT_STRATEGY:
+        case TAO_Collocation_Strategies::CS_DIRECT_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
               POA_Messaging::_TAO_ReplyHandler_Direct_Proxy_Impl,
@@ -203,7 +203,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
           ACE_CHECK;
           break;
 
-        case TAO_ORB_Core::REMOTE_STRATEGY:
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
