@@ -21,6 +21,8 @@
 #if !defined (ACE_IOSTREAM_H)
 #define ACE_IOSTREAM_H
 
+#include "ace/config.h"
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #include "ace/INET_Addr.h"
