@@ -1,3 +1,22 @@
+Tue Feb  1 13:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CurrentA.cpp:
+        * tao/CurrentC.{h,cpp}:
+        * tao/Policy_ForwardA.cpp:
+          Regenerated
+
+        * tao/Policy_ForwardC.{h,cpp,i,inl}:
+          Regenerated and replace .i with .inl file
+
+        * tao/Makefile.am:
+          Updated because of change above
+
+        * tao/diffs/Policy_Forward.diff:
+          Updated
+
+        * tao/IORTable/diffs/IORTable.diff:
+          Removed this empty file
+
 Tue Feb  1 12:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor/IORInfoC.{h,cpp,inl}:
