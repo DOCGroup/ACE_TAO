@@ -1,23 +1,29 @@
+Tue Mar 20 17:31:21 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/run_test.lst:
+          The Logging_Strategy_Test dynamically loads the Logger service
+          (from netsvcs), therefore it does not work on static builds.
+
 Tue Mar 20 01:33:24 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
-	* ace/SSL/SSL_SOCK_Stream.i (send, close):
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Stream.i (send, close):
 
-	  Wrap the underlying OpenSSL calls in a do-while(SSL_pending())
-	  loop.  I decided to wrap the SSL_write() calls just in case.
-	  This should fix the last of the non-blocking IO issues in ACE's
-	  SSL wrappers.  [Bug 393]
+          Wrap the underlying OpenSSL calls in a do-while(SSL_pending())
+          loop.  I decided to wrap the SSL_write() calls just in case.
+          This should fix the last of the non-blocking IO issues in ACE's
+          SSL wrappers.  [Bug 393]
 
 Tue Mar 20 00:40:43 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.i (recv):
+        * ace/SSL/SSL_SOCK_Stream.i (recv):
 
-	  Fixed non-blocking IO support for this method.  It was necessary
-	  to ensure that a full SSL record was read before returning
-	  control to the caller.  Note that the send() method doesn't need
-	  modification since OpenSSL always writes a full record before
-	  returning.  [Bug 393]
+          Fixed non-blocking IO support for this method.  It was necessary
+          to ensure that a full SSL record was read before returning
+          control to the caller.  Note that the send() method doesn't need
+          modification since OpenSSL always writes a full record before
+          returning.  [Bug 393]
 
 Mon Mar 19 19:53:34 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -33,7 +39,7 @@ Mon Mar 19 16:57:43 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
           if (result == -1 && this->implementation_->deactivated ())
             return 0;
-        
+
         * tests/Thread_Pool_Reactor_Test.cpp (svr_worker): Changed this
           function to call ACE_Reactor::run_reactor_event_loop() instead
           of ACE_Reactor::handle_events().  In the previous revision, we
@@ -71,7 +77,7 @@ Sun Mar 18 08:31:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * examples/IPC_SAP/FILE_SAP/client.cpp (main): Added a couple of
           casts so that the arguments passed to printf() will match the
-          format specifier types.       
+          format specifier types.
 
 Sat Mar 17 18:02:28 2001  Steve Huston  <shuston@riverace.com>
 
