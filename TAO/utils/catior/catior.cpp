@@ -13,6 +13,8 @@
 //
 // = AUTHORS
 //      Jeff Hopper <jrhopper@cts.com>
+//      SCIOP and Tagged component modifications by:
+//      Jason Cohen, Lockheed Martin ATL <jcohen@atl.lmco.com>
 //
 // ============================================================================
 
@@ -20,8 +22,12 @@
 #include "ace/streams.h"
 #include "tao/corba.h"
 #include "tao/IIOP_Profile.h"
-#include "tao/Strategies/UIOP_Profile.h"
-
+#include "tao/Messaging_PolicyValueC.h"
+#include "tao/Messaging/Messaging_RT_PolicyC.h"
+#include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
+#include "tao/Messaging/Messaging_No_ImplC.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/iiop_endpoints.h"
 
 static CORBA::Boolean
 catiiop (char* string
@@ -117,6 +123,9 @@ catiiop (char* string
 
 static CORBA::Boolean
 cat_iiop_profile (TAO_InputCDR& cdr);
+
+static CORBA::Boolean
+cat_sciop_profile (TAO_InputCDR& cdr);
 
 static CORBA::Boolean
 cat_uiop_profile (TAO_InputCDR& cdr);
@@ -253,6 +262,12 @@ catior (char* str
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_iiop_profile (stream);
+            ACE_DEBUG ((LM_DEBUG, "%}"));
+          }
+        else if (tag == TAO_TAG_SCIOP_PROFILE)
+          {
+            ACE_DEBUG ((LM_DEBUG, "%{"));
+            continue_decoding = cat_sciop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
         else if (tag == TAO_TAG_UIOP_PROFILE)
@@ -522,6 +537,7 @@ main (int argc, char *argv[])
           }
         break;
         case '?':
+	case 'h':
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Usage: %s "
@@ -537,6 +553,199 @@ main (int argc, char *argv[])
     }
 
   return 0;
+}
+
+
+static CORBA::Boolean
+cat_tag_orb_type (TAO_InputCDR& stream) {
+  CORBA::ULong length = 0;
+  if (stream.read_ulong (length) == 0)
+    return 1;
+
+  TAO_InputCDR stream2 (stream, length);
+  stream.skip_bytes(length);
+
+  CORBA::ULong orbtype;
+
+  stream2 >> orbtype;
+  if (orbtype == TAO_ORB_TYPE) {
+    ACE_DEBUG ((LM_DEBUG,
+		"%I ORB Type: %d (TAO)\n",
+		orbtype));
+  } else {
+    ACE_DEBUG ((LM_DEBUG,
+		"%I ORB Type: %d\n",
+		orbtype));
+  }
+
+  return 1;
+}
+
+
+static CORBA::Boolean
+cat_tao_tag_endpoints (TAO_InputCDR& stream) {
+  CORBA::ULong length = 0;
+  if (stream.read_ulong (length) == 0)
+    return 1;
+
+  TAO_InputCDR stream2 (stream, length);
+  stream.skip_bytes(length);
+
+  TAO_IIOPEndpointSequence epseq;
+  stream2 >> epseq;
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "%I Number of endpoints: %d\n",
+	      epseq.length()));
+
+  for (unsigned int iter=0; iter < epseq.length() ; iter++) {
+    ACE_DEBUG ((LM_DEBUG,
+		"%I Endpoint #%d:\n",iter+1));
+    const char *host = epseq[iter].host;
+    ACE_DEBUG ((LM_DEBUG,
+		"%I Host: %s\n",host));
+    unsigned short port = epseq[iter].port;
+    ACE_DEBUG ((LM_DEBUG,
+		"%I Port: %d\n",port));
+    ACE_DEBUG ((LM_DEBUG,
+		"%I Priority: %d\n",epseq[iter].priority));
+  }
+
+  return 1;
+}
+
+
+static CORBA::Boolean
+cat_tag_policies (TAO_InputCDR& stream) {
+  CORBA::ULong length = 0;
+  if (stream.read_ulong (length) == 0)
+    return 1;
+
+  TAO_InputCDR stream2 (stream, length);
+  stream.skip_bytes(length);
+
+  Messaging::PolicyValueSeq policies;
+  stream2 >> policies;
+  
+  ACE_DEBUG ((LM_DEBUG,
+	      "%I Number of policies: %d\n",
+	      policies.length()));
+
+  for (unsigned int iter=0; iter < policies.length() ; iter++) {
+    // Create new stream for pvalue contents
+    char pmbuf[policies[iter].pvalue.length()];
+    for (unsigned int biter=0 ;
+	 biter < policies[iter].pvalue.length() - sizeof(int) ;
+	 biter++) {
+      pmbuf[biter] = policies[iter].pvalue[biter + sizeof(int)];
+    }
+    
+    int byteOrder = policies[iter].pvalue[0];
+    TAO_InputCDR stream3 (pmbuf,
+			  policies[iter].pvalue.length(),
+			  ACE_static_cast(int,byteOrder));
+
+    if (policies[iter].ptype == RTCORBA::PRIORITY_MODEL_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (PRIORITY_MODEL_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+
+      RTCORBA::PriorityModel priority_model;
+      RTCORBA::Priority server_priority;
+
+      stream3 >> priority_model;
+      stream3 >> server_priority;
+
+      if (priority_model == RTCORBA::CLIENT_PROPAGATED) {
+	ACE_DEBUG ((LM_DEBUG,"%I Priority Model: %d (CLIENT_PROPAGATED)\n",
+		    priority_model));
+      } else if (priority_model == RTCORBA::SERVER_DECLARED) {
+	ACE_DEBUG ((LM_DEBUG,"%I Priority Model: %d (SERVER_DECLARED)\n",
+		    priority_model));
+      } else {
+	ACE_DEBUG ((LM_DEBUG,"%I Priority Model: %d (UNKNOWN!)\n",
+		    priority_model));
+      }
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Priority: %d\n",
+		  server_priority));
+
+    } else if (policies[iter].ptype == Messaging::REBIND_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (REBIND_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+    } else if (policies[iter].ptype == Messaging::SYNC_SCOPE_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (SYNC_SCOPE_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+#endif
+    } else if (policies[iter].ptype == Messaging::REQUEST_PRIORITY_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (REQUEST_PRIORITY_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else if (policies[iter].ptype == Messaging::REPLY_PRIORITY_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (REPLY_PRIORITY_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else if (policies[iter].ptype == Messaging::REQUEST_START_TIME_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (REQUEST_START_TIME_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else if (policies[iter].ptype == Messaging::REQUEST_END_TIME_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (REQUEST_END_TIME_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else if (policies[iter].ptype == Messaging::REPLY_START_TIME_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (REPLY_START_TIME_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else if (policies[iter].ptype == Messaging::REPLY_END_TIME_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (REPLY_END_TIME_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else if (policies[iter].ptype == Messaging::RELATIVE_REQ_TIMEOUT_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (RELATIVE_REQ_TIMEOUT_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else if (policies[iter].ptype == Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (RELATIVE_RT_TIMEOUT_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else if (policies[iter].ptype == Messaging::ROUTING_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (ROUTING_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else if (policies[iter].ptype == Messaging::MAX_HOPS_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (MAX_HOPS_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else if (policies[iter].ptype == Messaging::QUEUE_ORDER_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (QUEUE_ORDER_POLICY_TYPE)\n",
+		  iter+1,
+		  policies[iter].ptype));
+    } else {
+      ACE_DEBUG ((LM_DEBUG,
+		  "%I Policy #%d Type: %d (UNKNOWN)\n", iter+1,
+		  policies[iter].ptype));
+    }
+  }
+  
+  return 1;
 }
 
 static CORBA::Boolean
@@ -621,10 +830,43 @@ cat_tagged_components (TAO_InputCDR& stream)
       CORBA::ULong tag;
       stream >> tag;
       ACE_DEBUG ((LM_DEBUG,
-                  "%I The component <%d> has tag <%d>\n", i, tag));
-      ACE_DEBUG ((LM_DEBUG, "%{%{"));
-      cat_octet_seq ("Component Value", stream);
-      ACE_DEBUG ((LM_DEBUG, "%}%}"));
+                  "%I The component <%d> ID is ", i+1, tag));
+
+      if (tag == IOP::TAG_ORB_TYPE) {
+	ACE_DEBUG ((LM_DEBUG,"%d (TAG_ORB_TYPE)\n", tag));
+	ACE_DEBUG ((LM_DEBUG, "%{%{"));
+	cat_tag_orb_type(stream);
+	ACE_DEBUG ((LM_DEBUG, "%}%}"));
+
+      } else if (tag == IOP::TAG_CODE_SETS) {
+	ACE_DEBUG ((LM_DEBUG,"%d (TAG_CODE_SETS)\n", tag));
+	ACE_DEBUG ((LM_DEBUG, "%{%{"));
+	cat_octet_seq ("Component Value" ,stream);
+	ACE_DEBUG ((LM_DEBUG, "%}%}"));
+
+      } else if (tag == IOP::TAG_ALTERNATE_IIOP_ADDRESS) {
+	ACE_DEBUG ((LM_DEBUG,"%d (TAG_ALTERNATE_IIOP_ADDRESS)\n", tag));
+	ACE_DEBUG ((LM_DEBUG, "%{%{"));
+	cat_octet_seq ("Component Value" ,stream);
+	ACE_DEBUG ((LM_DEBUG, "%}%}"));
+
+      } else if (tag == TAO_TAG_ENDPOINTS) {
+	ACE_DEBUG ((LM_DEBUG,"%d (TAO_TAG_ENDPOINTS)\n", tag));
+	ACE_DEBUG ((LM_DEBUG, "%{%{"));
+	cat_tao_tag_endpoints(stream);
+	ACE_DEBUG ((LM_DEBUG, "%}%}"));
+
+      } else if (tag == IOP::TAG_POLICIES) {
+	ACE_DEBUG ((LM_DEBUG,"%d (TAG_POLICIES)\n", tag));
+	ACE_DEBUG ((LM_DEBUG, "%{%{"));
+	cat_tag_policies(stream);
+	ACE_DEBUG ((LM_DEBUG, "%}%}"));
+      } else {
+	ACE_DEBUG ((LM_DEBUG,"%d\n", tag));
+	ACE_DEBUG ((LM_DEBUG, "%{%{"));
+	cat_octet_seq ("Component Value", stream);
+	ACE_DEBUG ((LM_DEBUG, "%}%}"));
+      }
     }
 
   return 1;
@@ -781,6 +1023,97 @@ cat_uiop_profile (TAO_InputCDR& stream)
   if (cat_object_key (str) == 0)
     return 0;
 
+  if (cat_tagged_components (str) == 0)
+    return 0;
+
+  return 1;
+}
+
+static CORBA::Boolean
+cat_sciop_profile (TAO_InputCDR& stream)
+{
+  // OK, we've got an SCIOP profile.
+
+  CORBA::ULong encap_len;
+  if (stream.read_ulong (encap_len) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "cannot read encap length\n"));
+      return 0;
+    }
+
+  // Create the decoding stream from the encapsulation in the
+  // buffer, and skip the encapsulation.
+  TAO_InputCDR str (stream, encap_len);
+
+  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+    return 0;
+
+  // Read and verify major, minor versions, ignoring IIOP
+  // profiles whose versions we don't understand.
+  //
+  // XXX this doesn't actually go back and skip the whole
+  // encapsulation...
+  CORBA::Octet iiop_version_major, iiop_version_minor;
+  if (! (str.read_octet (iiop_version_major)
+         && iiop_version_major == 1
+         && str.read_octet (iiop_version_minor)
+         && iiop_version_minor <= 0))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I detected new v%d.%d SCIOP profile that catior cannot decode",
+                  iiop_version_major,
+                  iiop_version_minor));
+      return 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "SCIOP Version:\t%d.%d\n",
+              iiop_version_major,
+              iiop_version_minor));
+
+  // Get host and port.
+  CORBA::UShort port_number;
+  CORBA::UShort max_streams;
+  char* hostname;
+  CORBA::ULong addresses;
+
+  str >> addresses;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%I Addresses:\t%d\n",
+              addresses));
+
+  for (unsigned int i=0; i< addresses; i++) {
+    if ((str >> hostname) == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "%I problem decoding hostname\n"));
+        return 1;
+      }
+    ACE_DEBUG ((LM_DEBUG,
+                "%I Host Name:\t%s\n",
+                hostname));
+    CORBA::string_free (hostname);
+  }
+
+
+  str >> port_number;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%I Port Number:\t%d\n",
+              port_number));
+
+  str >> max_streams;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%I Max Streams:\t%d\n",
+              max_streams));
+
+  if (cat_object_key (str) == 0)
+    return 0;
+
+  // Unlike IIOP (1.0), SCIOP always has tagged_components.
   if (cat_tagged_components (str) == 0)
     return 0;
 
