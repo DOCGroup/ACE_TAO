@@ -445,6 +445,14 @@ ACE_Reactor::handler_i (int signum, ACE_Event_Handler **eh)
   return 0;
 }
 
+int
+ACE_Reactor::initialized (void)
+{
+  ACE_TRACE ("ACE_Reactor::initialized");
+  ACE_MT (ACE_GUARD (ACE_REACTOR_MUTEX, ace_mon, this->token_));
+  return this->initialized_;
+}
+
 void
 ACE_Reactor::owner (ACE_thread_t tid, ACE_thread_t *o_id)
 {
@@ -833,48 +841,52 @@ ACE_Reactor::open (size_t size,
   ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
 
   // Can't initialize ourselves more than once.
-  if (this->initialized_ != 0)
+  if (this->initialized_ > 0)
     return -1;
-  else
-    this->initialized_ = 1;
 
   this->owner_ = ACE_Thread::self ();
   this->restart_ = restart;
-
   this->signal_handler_ = sh;
+  this->timer_queue_ = tq;
+
+  int result = 0;
 
   // Allows the signal handler to be overridden.
   if (this->signal_handler_ == 0)
     {
-      ACE_NEW_RETURN (this->signal_handler_, ACE_Sig_Handler, -1);
-      this->delete_signal_handler_ = 1;
+      this->signal_handler_ = new ACE_Sig_Handler;
+      
+      if (this->signal_handler_ == 0)
+	result = -1;
+      else
+	this->delete_signal_handler_ = 1;
     }
 
-  this->timer_queue_ = tq;
-
-  if (this->timer_queue_ == 0)
+  if (result != -1 && this->timer_queue_ == 0)
     {
-      // We do this first in case the handler_rep_ call fails (which
-      // it sometimes does on Win32 when we restart applications
-      // quickly due to the use of sockets as a notification
-      // mechanism).  At least this way the timer_queue_ isn't 0, so
-      // we can still use the Reactor as a timer...
-      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_List, -1);
-      this->delete_timer_queue_ = 1;
+      this->timer_queue_ = new ACE_Timer_List;
+
+      if (this->timer_queue_ == 0)
+	result = -1;
+      else
+	this->delete_timer_queue_ = 1;
     }
 
-  if (this->handler_rep_.open (size) == -1)
-    return -1;
+  if (result != -1 && this->handler_rep_.open (size) == -1)
+    result = -1;
 #if defined (ACE_MT_SAFE)
   else if (this->notify_handler_.open (this) == -1)
-    {
-      // Make sure to release resources.
-      this->handler_rep_.close ();
-      return -1;
-    }
+    result = -1;
 #endif /* ACE_MT_SAFE */
 
-  return 0;
+  if (result != -1)
+    // We're all set to go.
+    this->initialized_ = 1;
+  else
+    // This will close down all the allocated resources properly.
+    this->close ();
+
+  return result;
 }
 
 ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh,
@@ -927,22 +939,20 @@ ACE_Reactor::close (void)
   ACE_TRACE ("ACE_Reactor::close");
   ACE_MT (ACE_GUARD (ACE_REACTOR_MUTEX, ace_mon, this->token_));
 
-  if (this->signal_handler_ != 0)
-    {
-      if (this->delete_signal_handler_)
-        delete this->signal_handler_;
-      this->signal_handler_ = 0;
+  if (this->delete_signal_handler_)
+    delete this->signal_handler_;
+  this->signal_handler_ = 0;
 
-      this->handler_rep_.close ();
+  this->handler_rep_.close ();
 
-      if (this->delete_timer_queue_)
-	delete this->timer_queue_;
-      this->timer_queue_ = 0;
+  if (this->delete_timer_queue_)
+    delete this->timer_queue_;
+  this->timer_queue_ = 0;
 
 #if defined (ACE_MT_SAFE)
-      this->notify_handler_.close ();
+  this->notify_handler_.close ();
 #endif /* ACE_MT_SAFE */
-    }
+  this->initialized_ = 0;
 }
   
 ACE_Reactor::~ACE_Reactor (void)
@@ -994,7 +1004,8 @@ ACE_Reactor::register_handler (const ACE_Sig_Set &sigset,
 
   for (int s = 1; s < NSIG; s++)
     if (sigset.is_member (s) 
-        && this->signal_handler_->register_handler (s, new_sh, new_disp) == -1) 
+        && this->signal_handler_->register_handler (s, new_sh, 
+						    new_disp) == -1) 
       result = -1;
 
   return result;

@@ -338,7 +338,6 @@ private:
 
   static size_t pagesize_;
   // Size of a VM page.
-
 };
 
 #include "ace/ACE.i"
