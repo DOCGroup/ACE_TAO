@@ -32,9 +32,12 @@
  * @brief This class implements the NodeApplication interface.
  * This interface is semantically very simillar to container
  * in the old DnC spec. However this class will also be used
- * as a Server for hosting home/component.
+ * as a Server for hosting home/component. This way we reduce the
+ * complexity of the framework by omitting the componentserver layer.
  *
- * Assumptions:
+ * @@TODO add configuration capabilities. Threading is one of them.
+ *
+ * @@Assumptions:
  * 1. There is only 1 container for all components/homes associating
  *    with 1 NodeApplication
  * 2. Now the implementation is not thread safe.
@@ -94,7 +97,7 @@ namespace CIAO
 
     // Start install homes and components.
     virtual ::Deployment::ComponentInfos *
-    install (const ::Deployment::ImplementationInfos & impl_infos
+      install (const ::Deployment::ImplementationInfos & impl_infos
 	     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       ::Deployment::UnknownImplId,
@@ -108,7 +111,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::CCMHome_ptr
-    install_home (const ::Deployment::ImplementationInfo & impl_info
+      install_home (const ::Deployment::ImplementationInfo & impl_info
 		  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::UnknownImplId,
@@ -138,17 +141,10 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
+    // Return all homes.
     virtual ::Components::CCMHomes *
     get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
-    //@@ This interface is supposed to be used by NodeApplicationManager
-    //   to set objref of NAM. Some pre-configuration might happen as well.
-    /*virtual CORBA::Long init (const ::Deployment::Properties & properties
-			      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Components::InvalidConfiguration));
-    */
 
     /*-------------  CIAO specific helper functions (C++)---------
      *
@@ -178,7 +174,10 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::RemoveFailure));
 
-    // This function is a helper for start call.
+    // This function is a helper for start call. Bala's
+    // Idea of adding those pre/post activate calls doesn't work
+    // with the new sepc.
+    //@@ TODO.   Come up with new ways of synchronized initialization process.
     typedef void (Components::CCMObject::*Funct_Ptr)
       (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
@@ -225,13 +224,6 @@ namespace CIAO
     // This will be needed in the case when component/home run in different thread
     // TAO_SYNCH_MUTEX lock_;
 
-    //======================================================
-
-    // Note: only the NodeApplication really holds the home/component
-    //       -->No duplicated() when returning these.
-
-    // Keep a list of managed CCMHome.
-
     //@@ As I have stated in the idl we are not going to use properties for now.
     // parse The Properties
     /*void parse_config_values (const ::Deployment::Properties & properties,
@@ -242,13 +234,6 @@ namespace CIAO
                        Deployment::ImplEntryPointNotFound,
                        Components::InvalidConfiguration));
     */
-
-    // Synchronize access to the object set.
-    // This will be needed in the case when component/home run in different thread
-    // TAO_SYNCH_MUTEX lock_;
-
-    // Keep a list of managed CCMComponent.
-    // Object_Set<Components::CCMComponent, Components::CCMComponent_var> compoene_set_;
   };
 }
 

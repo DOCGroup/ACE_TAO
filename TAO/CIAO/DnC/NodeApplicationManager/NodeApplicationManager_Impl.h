@@ -27,6 +27,7 @@
 #include "CIAO_NAM_Export.h"
 #include "ciao/NodeApp_CB_Impl.h"
 #include "ImplementationInfo.h"
+#include "ciao/CIAO_common.h"
 
 namespace CIAO
 {
@@ -85,12 +86,16 @@ namespace CIAO
      * @param plan has all the information needed for the NodeAppManager to
      *        construct the application locally. Note, this includes the properties
      *        of the NodeApplication. For example, ORB config options etc.
-     * @return value 0 on succeed others on failure.
+     *
+     * @param callback_poa contains child poa created for the callback interface.
+     *
+     * @return the created chile poa pointer.
      **/
-    virtual CIAO::NodeApplicationManager_Impl *
+    virtual PortableServer::POA_ptr
     init (const char *nodeapp_location,
-	  CORBA::ULong delay,
-	  const Deployment::DeploymentPlan & plan
+	  const CORBA::ULong delay,
+	  const Deployment::DeploymentPlan & plan,
+	  const PortableServer::POA_ptr callback_poa
 	  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Deployment::InvalidProperty));

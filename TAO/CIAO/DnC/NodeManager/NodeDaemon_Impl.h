@@ -98,22 +98,25 @@ namespace CIAO
 
     int unbind (const char *id);
 
-    /// Keep a pointer to the managing ORB serving this servant.
+    // Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 
-    /// Keep a pointer to the managing POA.
+    // Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
 
-    /// My Canonical name.
+    // My Canonical name.
     CORBA::String_var name_;
 
-    /// NodeApplication location
+    // NodeApplication location
     CORBA::String_var nodeapp_location_;
 
-    /// Cache reference of last NodeAppManager
+    // Cache reference of last NodeAppManager
     Deployment::NodeApplicationManager_var manager_;
 
-    /// Spawn delay for the NodeAppMgr
+    // Cached callback POA.
+    PortableServer::POA_var callback_poa_;
+
+    // Spawn delay for the NodeAppMgr
     int spawn_delay_;
   };
 }

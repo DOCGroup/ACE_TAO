@@ -69,7 +69,7 @@ namespace CIAO
                                    PortableServer::POA_ptr poa,
                                    Deployment::TargetManager_ptr manager,
                                    const Deployment::DeploymentPlan &plan,
-                                   char * deployment_file)
+                                   const char * deployment_file)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -97,7 +97,8 @@ namespace CIAO
      * @@ What else do we need to initialize here?
      */
     void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((Deployment::ResourceNotAvailable,
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Deployment::ResourceNotAvailable,
                        Deployment::StartError,
                        Deployment::PlanError));
 
@@ -232,7 +233,7 @@ namespace CIAO
     PortableServer::POA_var poa_;
 
     /// Cache a object reference to this servant.
-    Deployment::DomainApplicationManager_var objref_;
+    /// Deployment::DomainApplicationManager_var objref_;
 
     /// Cache the ior of the previous reference
     CORBA::String_var ior_;
