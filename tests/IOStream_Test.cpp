@@ -215,15 +215,15 @@ client (void *arg = 0)
     {
       int eof = server.eof ();
       if (eof)
- 	{
+        {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) Unrecoverable stream error/eof\n"));
           break;
- 	}
+        }
       else
- 	{
+        {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) Recoverable stream error (timeout)\n"));
           server.clear (0);
- 	}
+        }
     }
 
   server >> f1;
@@ -405,7 +405,7 @@ spawn (void)
       ACE_OS::_exit (-1);
     case 0: // In child
       {
-        ACE_APPEND_LOG ("Process_Mutex_Test-children");
+        ACE_APPEND_LOG ("IOStream_Test-children");
         ACE_INET_Addr server_addr;
 
         if (acceptor.get_local_addr (server_addr) == -1)
