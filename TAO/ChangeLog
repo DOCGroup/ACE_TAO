@@ -1,7 +1,14 @@
+Fri Feb 20 20:10:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Latency/Collocation/Collocated_Test.cpp:
+	* performance-tests/Latency/Collocation/Server_Task.cpp:
+	* performance-tests/Latency/Collocation/Server_Task.h:
+	  Fixed warning in Solaris 8 Forte 8 build
+
 Fri Feb 20 13:46:57 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/amh_ss.cpp (visit_attrbute):
-        
+
           Fixed incorrect code generation in the AMH upcall for the
           '_set_' version of the attribute. Thanks to
           Johnny Willemsen <jwillemsen@remedy.nl> for reporting the
