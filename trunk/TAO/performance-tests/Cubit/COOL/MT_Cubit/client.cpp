@@ -46,14 +46,14 @@ do_priority_inversion_test (Task_State &ts)
   // Create the clients
   Client high_priority_client (&ts);
   Client low_priority_client (&ts);
-  
+
   // Create the daemon thread in its own <ACE_Thread_Manager>.
   ACE_Thread_Manager thr_mgr;
-  
+
   Util_Thread util_thread (&ts, &thr_mgr);
-      
-  ACE_Sched_Priority priority = 
-    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO, 
+
+  ACE_Sched_Priority priority =
+    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
 
   // First activate the Utilization thread.  It will wait until all
@@ -66,14 +66,14 @@ do_priority_inversion_test (Task_State &ts)
   // Now activate the high priority client.
   priority = ACE_THR_PRI_FIFO_DEF;
 
-  if (high_priority_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+  if (high_priority_client.activate (THR_BOUND | THR_SCHED_FIFO,
                                      1,
                                      0,
                                      priority) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "activate failed"));
-  
+
   // Drop the priority, so that the priority of clients will increase
   // with increasing client number.
   for (i = 0; i < ts.thread_count_; i++)
@@ -90,7 +90,7 @@ do_priority_inversion_test (Task_State &ts)
     {
       // The first thread starts at min + 1, since the minimum
       // priority thread is the utilization thread.
-      
+
       if (low_priority_client.activate (THR_BOUND,
                                         1,
                                         1,
@@ -126,35 +126,35 @@ do_priority_inversion_test (Task_State &ts)
   FILE *latency_file_handle = 0;
   char latency_file[BUFSIZ];
   char buffer[BUFSIZ];
-  
-  ACE_OS::sprintf (latency_file, 
-		   "cb__%d.txt", 
+
+  ACE_OS::sprintf (latency_file,
+		   "cb__%d.txt",
 		   ts.thread_count_);
 
-  ACE_OS::fprintf(stderr, 
+  ACE_OS::fprintf(stderr,
 		  "--->Output file for latency data is \"%s\"\n",
 		  latency_file);
-  
+
   latency_file_handle = ACE_OS::fopen (latency_file, "w");
-  
+
   for (u_int j = 0; j < ts.start_count_; j ++)
     {
-      ACE_OS::sprintf(buffer, 
-		      "%s #%d", 
-		      j==0? "High Priority": "Low Priority", 
+      ACE_OS::sprintf(buffer,
+		      "%s #%d",
+		      j==0? "High Priority": "Low Priority",
 		      j);
       for (u_int i = 0; i < ts.loop_count_; i ++)
 	{
-	  ACE_OS::sprintf(buffer+strlen(buffer), 
-			  "\t%u\n", 
+	  ACE_OS::sprintf(buffer+strlen(buffer),
+			  "\t%u\n",
 			  ts.global_jitter_array_[j][i]);
 	  fputs (buffer, latency_file_handle);
 	  buffer[0]=0;
 	}
     }
-  
+
   ACE_OS::fclose (latency_file_handle);
-#else 
+#else
     ACE_DEBUG ((LM_DEBUG, "Test done.\n"
                 "High priority client latency : %f msec, jitter: %f msec\n"
                 "Low priority client latency : %f msec, jitter: %f msec\n",
@@ -166,10 +166,10 @@ do_priority_inversion_test (Task_State &ts)
 
     // signal the utilization thread to finish with its work..
     util_thread.done_ = 1;
-    
+
     // This will wait for the utilization thread to finish.
     thr_mgr.wait ();
-    
+
 #if defined (ACE_LACKS_FLOATING_POINT)
     ACE_DEBUG ((LM_DEBUG,
 		"(%t) utilization task performed %u computations\n",
@@ -179,9 +179,9 @@ do_priority_inversion_test (Task_State &ts)
 		"(%t) utilization task performed %g computations\n",
 		util_thread.get_number_of_computations ()));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
-    
+
  return 0;
-    
+
 }
 
 int
@@ -193,9 +193,9 @@ do_thread_per_rate_test (Task_State &ts)
     Client CB_10Hz_client (&ts);
     Client CB_5Hz_client (&ts);
     Client CB_1Hz_client (&ts);
-    
-    ACE_Sched_Priority priority = 
-      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO, 
+
+    ACE_Sched_Priority priority =
+      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                       ACE_SCOPE_THREAD);
 
     // VxWorks priority of 0 causes problems.
@@ -203,19 +203,19 @@ do_thread_per_rate_test (Task_State &ts)
     ACE_DEBUG ((LM_DEBUG, "Creating 40 Hz client with priority %d\n", priority));
     if (CB_40Hz_client.activate (THR_BOUND, 1, 0, priority++) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
-    
+
     ACE_DEBUG ((LM_DEBUG, "Creating 20 Hz client with priority %d\n", priority));
     if (CB_20Hz_client.activate (THR_BOUND, 1, 0, priority++) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
-    
+
     ACE_DEBUG ((LM_DEBUG, "Creating 10 Hz client with priority %d\n", priority));
     if (CB_10Hz_client.activate (THR_BOUND, 1, 0, priority++) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
-    
+
     ACE_DEBUG ((LM_DEBUG, "Creating 5 Hz client with priority %d\n", priority));
     if (CB_5Hz_client.activate (THR_BOUND, 1, 0, priority++) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
-    
+
     ACE_DEBUG ((LM_DEBUG, "Creating 1 Hz client with priority %d\n", priority));
     if (CB_1Hz_client.activate (THR_BOUND, 1, 0, priority++) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
@@ -266,10 +266,10 @@ main (int argc, char *argv [])
   // Initialize the PCC timer Chip
   pccTimerInit();
 
-  if(pccTimer(PCC2_TIMER1_START,&pTime) !=K_OK) 
-    { 
-      printf("pccTimer has a pending bench mark\n"); 
-    } 
+  if(pccTimer(PCC2_TIMER1_START,&pTime) !=K_OK)
+    {
+      printf("pccTimer has a pending bench mark\n");
+    }
 #endif
 
   if (ts.thread_per_rate_ == 0)
@@ -279,10 +279,10 @@ main (int argc, char *argv [])
 
 #if defined (CHORUS)
   // stop the pccTimer for chorus ClassiX
-  if(pccTimer(PCC2_TIMER1_STOP,&pTime) !=K_OK) 
-    { 
-      printf("pccTimer has a pending benchmark\n"); 
-    } 
+  if(pccTimer(PCC2_TIMER1_STOP,&pTime) !=K_OK)
+    {
+      printf("pccTimer has a pending benchmark\n");
+    }
 #endif
 
   return 0;
