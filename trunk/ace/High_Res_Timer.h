@@ -74,11 +74,16 @@ public:
   // will be used instead of ACE_OS::gethrtime.  This allows the
   // scale_factor of 1 to still result in correct values.
 
-  ACE_High_Res_Timer (u_long scale_factor = 1000);
-  // Initialize the timer.  The <scale_factor> takes precedence to
-  // global_scale_factor_.  A scale_factor of 1000 converts the native
-  // time in nanoseconds to microseconds.  A factor of 0 will cause
-  // division by zero exceptions.
+  ACE_High_Res_Timer (u_long scale_factor = 1);
+  // Initialize the timer.  The <scale_factor> != 1 takes precedence
+  // to global_scale_factor_.  That is, to use the
+  // global_scale_factor_, leave <scale_factor> == 1; to override the
+  // global_scale_factor, set <scale_factor> appropriately.  Check
+  // High_Res_Timer.cpp for the default global_scale_factors for
+  // several platforms.  For many platforms (e.g., Solaris), the
+  // global_scale_factor_ is set to 1000 so that <scale_factor> need
+  // not be set.  Careful, a <scale_factor> of 0 will cause division
+  // by zero exceptions.
 
   void reset (void);
   // Reinitialize the timer.

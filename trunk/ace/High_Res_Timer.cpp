@@ -10,15 +10,19 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 
-// For win32, a scale factor is required for ACE_OS::gethrtime.  Thus,
-// initialize the global_scale_factor to zero.  This will prevent use
-// unless someone explicitly sets it.
+// For Intel platforms, a scale factor is required for
+// ACE_OS::gethrtime.  Thus, initialize the global_scale_factor to
+// zero.  This will prevent use unless someone explicitly sets it.
+// All this is necessary since we use the RDTSC instruction in
+// ACE_OS::gethrtime where the value of each tick varies per processor
+// speed.  For instance, on a 200MHz Pentium use a scale factor of
+// 200.  That is, it takes 200 ticks to equal one microsecond.
 #if defined (ACE_WIN32)
 u_long ACE_High_Res_Timer::global_scale_factor_ = 0;
 #else
-// For platforms that do not require a scale factor, we'll set it to
-// one so that the divisions are no ops.
-u_long ACE_High_Res_Timer::global_scale_factor_ = 1;
+// A scale_factor of 1000 converts nanosecond ticks to microseconds.
+// That is, on these platforms, 1 tick == 1 nanosecond.
+u_long ACE_High_Res_Timer::global_scale_factor_ = 1000;
 #endif /* ACE_WIN32 */
 
 void
