@@ -13,6 +13,16 @@
 
 #include "tao/corba.h"
 
+#define SWAP_WORD(L) ((((L) & 0x00FF) << 8) | (((L) & 0xFF00) >> 8))
+
+#ifdef ACE_LITTLE_ENDIAN
+#define ACE_NTOHL(L) ((SWAP_WORD((L) & 0xFFFF) << 16) \
+                     | SWAP_WORD(((L) >> 16) & 0xFFFF))
+#else
+#define ACE_NTOHL(L)
+#endif
+     
+
 #if !defined (__ACE_INLINE__)
 #include "POAC.i"
 #endif // !defined INLINE
@@ -149,7 +159,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ForwardR
 
 static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
 {
-#ifdef ACE_LITTLE_ENDIAN // NT
+/*#ifdef ACE_LITTLE_ENDIAN // NT
   TAO_ENCAP_BYTE_ORDER, // byte order
   38, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x462f7265, 0x6177726f, 0x65526472, 0x73657571, 0x2e313a74, 0xfdfd0030,  // repository ID = IDL:PortableServer/ForwardRequest:1.0
   15, 0x77726f46, 0x52647261, 0x65757165, 0xfd007473,  // name = ForwardRequest
@@ -171,7 +181,17 @@ static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
     TAO_ENCAP_BYTE_ORDER, // byte order
     21, 0x49444c3a, 0x434f5242, 0x412f4f62, 0x6a656374, 0x3a312e30, 0x0,  // repository ID = IDL:CORBA/Object:1.0
     7, 0x4f626a65, 0x63740069,  // name = Object,
-#endif
+#endif*/
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  38, ACE_NTOHL(0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f46), ACE_NTOHL (0x6f727761), ACE_NTOHL (0x72645265), ACE_NTOHL (0x71756573), ACE_NTOHL (0x743a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:PortableServer/ForwardRequest:1.0
+  15, ACE_NTOHL (0x466f7277), ACE_NTOHL (0x61726452), ACE_NTOHL (0x65717565), ACE_NTOHL (0x73740000),  // name = ForwardRequest
+  1, // member count
+    18, ACE_NTOHL (0x666f7277), ACE_NTOHL (0x6172645f), ACE_NTOHL (0x72656665), ACE_NTOHL (0x72656e63), ACE_NTOHL (0x65004004),  // name = forward_reference
+    CORBA::tk_objref,
+44, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    21, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4f62), ACE_NTOHL (0x6a656374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:CORBA/Object:1.0
+    7, ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63740069),  // name = Object,
 
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ForwardRequest (CORBA::tk_except, sizeof (_oc_PortableServer_ForwardRequest), (char *) &_oc_PortableServer_ForwardRequest, CORBA::B_FALSE);
