@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/ACE.h"
 #include "ace/Task.h"
