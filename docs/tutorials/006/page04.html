@@ -16,18 +16,19 @@
 <P>
 <HR WIDTH="100%">
 
-<P><A HREF="client_handler.h">client_handler.h</A> shows a few more changes
-than the previous sources.&nbsp; The important change is the addition of
-a svc() method where our connection thread will exist.
+<P><A HREF="client_handler.h">client_handler.h</A>
+shows a few more changes than the previous sources.&nbsp; The important
+change is the addition of a svc() method where our connection thread will
+exist.
 
 <P>
 <HR WIDTH="100%">
 
 <P><FONT FACE="Arial,Helvetica">// $Id: client_handler.h,v 1.1 1998/08/30
-13:38:27 jcej Exp $</FONT>
+23:47:13 schmidt Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">#ifndef CLIENT_HANDLER_H</FONT>
-<BR><FONT FACE="Arial,Helvetica">#define CLIENT_HANDLER_H</FONT>
+<BR><FONT FACE="Arial,Helvetica">#define CLIENT_HANDLER_H</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Our client handler must exist
@@ -46,18 +47,19 @@ you'll have to contain and maintain an</FONT>
 yourself.&nbsp; With ACE_Svc_Handler (which is a</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; derivative of ACE_Event_Handler)
 some of those details are handled for you.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">#include "ace/Svc_Handler.h"</FONT>
-<BR><FONT FACE="Arial,Helvetica">#include "ace/SOCK_Stream.h"</FONT>
+<BR><FONT FACE="Arial,Helvetica">#include "ace/SOCK_Stream.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Another feature of ACE_Svc_Handler
 is it's ability to present the ACE_Task&lt;></FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; interface as well.&nbsp;
 That's what the ACE_NULL_SYNCH parameter below is all</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; about.&nbsp;&nbsp; If our
-Client_Acceptor has chosen thread-per-connection then our</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; about.&nbsp; If our Client_Acceptor
+has chosen thread-per-connection then our</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; open() method will activate
 us into a thread.&nbsp; At that point, our svc()</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; method will execute.&nbsp;
@@ -70,10 +72,10 @@ object there for an explanation.</FONT>
 <BR><FONT FACE="Arial,Helvetica">class Client_Handler : public ACE_Svc_Handler
 &lt; ACE_SOCK_STREAM, ACE_NULL_SYNCH ></FONT>
 <BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">public:</FONT>
+<BR><FONT FACE="Arial,Helvetica">public:</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; // Constructor...</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; Client_Handler (void);</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; Client_Handler (void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; The destroy()
@@ -88,7 +90,7 @@ we make our destructor protected so that only ourselves,</FONT>
 and our friends can delete us. It's a nice</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; compromise.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; void destroy (void);</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; void destroy (void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Most ACE objects
@@ -110,7 +112,17 @@ too closely to the ACE_Acceptor&lt;> set of objects.&nbsp; In our</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; definition of
 open() you'll see how we get around that.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; int open (void *_acceptor);</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int open (void *_acceptor);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; When an ACE_Task&lt;>
+object falls out of the svc() method, the framework</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; will call the
+close() method.&nbsp; That's where we want to cleanup ourselves</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; if we're running
+in either thread-per-connection or thread-pool mode.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int close(u_long flags = 0);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; When there is
@@ -131,9 +143,9 @@ information between your handle_* method calls. The _handle</FONT>
 explained below...</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; int handle_close (ACE_HANDLE _handle,
-ACE_Reactor_Mask _mask);</FONT>
+ACE_Reactor_Mask _mask);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P><FONT FACE="Arial,Helvetica">protected:</FONT>
+<P><FONT FACE="Arial,Helvetica">protected:</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; If the Client_Acceptor
@@ -145,7 +157,7 @@ will then execute in that thread performing some of the</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; functions we
 used to leave up to the reactor.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; int svc(void);</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int svc(void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; When we register
@@ -167,22 +179,7 @@ not to contain the peer.&nbsp; In that case, the _handleg</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; would be important
 to us for reading the client's data.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; int handle_input (ACE_HANDLE _handle);</FONT>
-
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; This has nothing
-at all to do with ACE.&nbsp; I've added this here as a worker</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; function which
-I will call from handle_input().&nbsp; That allows me to</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; introduce concurrencly
-in later tutorials with a no changes to the worker</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; function.&nbsp;
-You can think of process() as application-level code and</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; everything elase
-as application-framework code.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; int process (char *_rdbuf, int
-_rdbuf_len);</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int handle_input (ACE_HANDLE _handle);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; This has nothing
@@ -192,9 +189,21 @@ I will call from handle_input().&nbsp; As promised in Tutorial 5</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; I will use this
 now to make it easier to switch between our two possible</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; concurrency strategies.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; int process (char *_rdbuf, int
+_rdbuf_len);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; We don't really
+do anything in our destructor but we've declared it to be</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; protected to
+prevent casual deletion of this object.&nbsp; As I said above, I</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; really would
+prefer that everyone goes through the destroy() method to get</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; rid of us.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ~Client_Handler (void);</FONT>
-<BR><FONT FACE="Arial,Helvetica">};</FONT>
+<BR><FONT FACE="Arial,Helvetica">};</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">#endif // CLIENT_HANDLER_H</FONT>
 
@@ -206,7 +215,8 @@ Let's move on to the object definition and see what all the fuss is about.
 
 <P>
 <HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page05.html">Continue
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page05.html">Continue
 This Tutorial</A>]</CENTER>
 
 </BODY>

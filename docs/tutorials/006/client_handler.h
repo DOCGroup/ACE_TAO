@@ -59,6 +59,13 @@ public:
   int open (void *_acceptor);
 
   /*
+     When an ACE_Task<> object falls out of the svc() method, the framework
+	 will call the close() method.  That's where we want to cleanup ourselves
+	 if we're running in either thread-per-connection or thread-pool mode.
+   */
+  int close(u_long flags = 0);
+
+  /*
      When there is activity on a registered handler, the handle_input() method
      of the handler will be invoked.  If that method returns an error code (eg
      -- -1) then the reactor will invoke handle_close() to allow the object to
