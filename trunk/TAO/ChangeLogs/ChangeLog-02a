@@ -1,3 +1,11 @@
+Wed Jun  7 11:35:40 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/tests/CosEvent/lib/CECTest.dsp:
+        * orbsvcs/tests/Event/lib/ECTest.dsp:
+
+          Added DLL to the names of the projects so they will be
+          compiled in the first pass of our Win32 auto builds.
+
 Wed Jun 07 13:19:56 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Profile.cpp
