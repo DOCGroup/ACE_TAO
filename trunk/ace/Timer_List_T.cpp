@@ -84,7 +84,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_List_T (FUNCTOR* uf, FreeLi
   , head_ (new ACE_Timer_Node_T<TYPE>)
   , id_counter_ (0)
 {
-  ACE_TRACE ("ACE_Timer_List_T::ACE_Timer_List");
+  ACE_TRACE ("ACE_Timer_List_T::ACE_Timer_List_T");
 
   this->head_->set_next (this->head_);
   this->head_->set_prev (this->head_);
@@ -345,7 +345,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::get_first (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Timer_Node_T<TYPE> *
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::get_first_i (void) const
 {
-  ACE_TRACE ("ACE_Timer_List_T::get_first");
+  ACE_TRACE ("ACE_Timer_List_T::get_first_i");
   ACE_Timer_Node_T<TYPE>* first = this->head_->get_next();
   if (first != this->head_) // Note : is_empty() uses get_first()
     return first;
