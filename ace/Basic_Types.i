@@ -397,7 +397,7 @@ ACE_U_LongLong::operator++ (int)
   // the pre-increment operator to enforce consistent semantics.
   ACE_U_LongLong temp (*this);
   ++*this;
-  return *temp;
+  return temp;
 }
 
 ACE_INLINE const ACE_U_LongLong
@@ -407,7 +407,7 @@ ACE_U_LongLong::operator-- (int)
   // the pre-decrement operator to enforce consistent semantics.
   ACE_U_LongLong temp (*this);
   --*this;
-  return *temp;
+  return temp;
 }
 
 ACE_INLINE ACE_U_LongLong &
