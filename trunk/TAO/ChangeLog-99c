@@ -1,47 +1,53 @@
+Fri Mar 05 12:51:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * rules.tao.GNU: replace -Wno-used for g++, but just for
+          pre-2.8.  It has many complaints about unused parameters
+          in generated code.
+
 Fri Mar  5 12:15:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader.cpp: 
-	  Removed some repeated template instantiations.
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+          Removed some repeated template instantiations.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	  Removed some template instantiations that belong in
-	  Trader/Trader.cpp
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Removed some template instantiations that belong in
+          Trader/Trader.cpp
 
 Thu Mar 04 21:04:59 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader: Removed TAO_Hashable_ULong as all the
-	  Trader classes were changed to use the new Hash_Map_Manager_Ex.
+        * orbsvcs/orbsvcs/Trader: Removed TAO_Hashable_ULong as all the
+          Trader classes were changed to use the new Hash_Map_Manager_Ex.
 
 Thu Mar  4 20:19:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
-	  Removed redundant cast to ACE_Message_Block* of
-	  the return value of _tao_get_cdr().
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          Removed redundant cast to ACE_Message_Block* of
+          the return value of _tao_get_cdr().
 
 Thu Mar  4 18:40:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/CurrentC.cpp:
-	  Changed the code for the >>= operator to get rid of
-	  another Any::value() inconsistency and to reflect what
-	  the IDL compiler now generates for these operators.
+        * tao/CurrentC.cpp:
+          Changed the code for the >>= operator to get rid of
+          another Any::value() inconsistency and to reflect what
+          the IDL compiler now generates for these operators.
 
 Thu Mar  4 16:53:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
-	  Removed some more unused args, as noted by Irfan and
-	  g++.
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+          Removed some more unused args, as noted by Irfan and
+          g++.
 
 Thu Mar 04 16:29:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	  Added new Event Channel to the orbsvcs project file.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+          Added new Event Channel to the orbsvcs project file.
 
 Thu Mar 04 16:08:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
