@@ -55,7 +55,7 @@ PLATFORM_TK_CPPFLAGS=
 PLATFORM_TK_LIBS=-ltk -ltcl
 PLATFORM_TK_LDFLAGS=
 
-PLATFORM_X11_CPPFLAGS= -I/usr/include -I/usr/dt/include
+PLATFORM_X11_CPPFLAGS= -I/usr/openwin/include -I/usr/dt/include
 PLATFORM_X11_LIBS =-lX11
 PLATFORM_X11_LDFLAGS=
 
