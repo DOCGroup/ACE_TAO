@@ -1,5 +1,12 @@
 //$Id$
 #include "Activity.h"
+#include "Thread_Task.h"
+#include "Job_i.h"
+#include "POA_Holder.h"
+#include "Builder.h"
+
+#include "tao/ORB_Core.h"
+#include "tao/debug.h"
 
 #include "ace/High_Res_Timer.h"
 #include "ace/Barrier.h"
@@ -8,14 +15,9 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
-#include "tao/ORB_Core.h"
-#include "tao/debug.h"
 #include "ace/Signal.h"
+#include "ace/Reactor.h"
 
-#include "Thread_Task.h"
-#include "Job_i.h"
-#include "POA_Holder.h"
-#include "Builder.h"
 
 //***************************************************************//
 extern "C" void handler (int)
