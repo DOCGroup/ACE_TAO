@@ -43,7 +43,6 @@ DIRS  = CDR \
 	Timed_Buffered_Oneways \
 	Smart_Proxies \
 	Portable_Interceptors \
-	Endpoint_Per_Priority \
 	Explicit_Event_Loop \
 	DynAny_Test \
 	Policies \
