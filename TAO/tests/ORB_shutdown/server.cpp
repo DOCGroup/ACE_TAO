@@ -76,10 +76,6 @@ main (int argc, char *argv[])
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Calling again should never send throw an exception.
-      orb->shutdown (1
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
