@@ -54,6 +54,14 @@ CORBA_ExceptionList::_nil (void)
   return (CORBA_ExceptionList_ptr)0;
 }
 
+ACE_INLINE CORBA_ExceptionList *
+CORBA_ExceptionList::_duplicate (CORBA_ExceptionList* x)
+{
+  if (x != 0)
+    x->_incr_refcnt ();
+  return x;
+}
+
 ACE_INLINE
 CORBA_ExceptionList_var::CORBA_ExceptionList_var (void) // default constructor
   : ptr_ (CORBA_ExceptionList::_nil ())

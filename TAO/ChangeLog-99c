@@ -1,3 +1,16 @@
+Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Context.i:
+	* tao/Context.cpp:
+	* tao/Context.h:
+	* tao/Exception.i:
+	* tao/Exception.h:
+	* tao/Exception.cpp: Added _duplicate () methods to pseudo objects
+	  ContextList & ExceptionList with the signature 'static T
+	  *_duplicate (T *) ' to make them compliant with the 2.2
+	  spec. This was found when we were trying to run the 'api' module
+	  of the vsOrb test suite.
+
 Fri Jun 25 12:38:43 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* examples/Logging/Logger_i.cpp,h

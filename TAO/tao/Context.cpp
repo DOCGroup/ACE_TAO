@@ -172,4 +172,18 @@ CORBA_ContextList::_destroy (void)
     delete this;
 }
 
+void
+CORBA_ContextList::_incr_refcnt (void)
+{
+  this->ref_count_++;
+}
+
+void
+CORBA_ContextList::_decr_refcnt (void)
+{
+  this->ref_count_--;
+    if (this->ref_count_ != 0)
+      delete this;
+}
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
