@@ -41,7 +41,7 @@ class ACE_INET_Addr;
 class ACE_Export ACE_Asynch_Result : protected ACE_OVERLAPPED
 {
   // = TITLE
-  //     An abstract class which adds information to the OVERLAPPED
+  //       An abstract class which adds information to the OVERLAPPED
   //     structure to make it more useful.
   //
   // = DESCRIPTION
