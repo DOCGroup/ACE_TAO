@@ -64,7 +64,7 @@ public:
   int operator () (T &t);
 
   /// Returns the current value.
-  T& current_value (void) const;
+  const T& current_value (void) const;
 
 protected:
 

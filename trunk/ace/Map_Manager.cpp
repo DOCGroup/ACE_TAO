@@ -22,7 +22,11 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Map_Entry)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Manager)
 
+ACE_ALLOC_HOOK_DEFINE(ACE_Map_Const_Iterator_Base)
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator_Base)
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Map_Const_Iterator)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator)
 
@@ -627,6 +631,14 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+template <class EXT_ID, class INT_ID, class ACE_LOCK> void
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i (void) const
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("next_ = %d"), this->next_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Map_Entry<EXT_ID, INT_ID>&
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void) const
@@ -643,8 +655,30 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void) const
   return *retv;
 }
 
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
+ACE_Map_Entry<EXT_ID, INT_ID>&
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void) const
+{
+  // @@ This function should be inlined.  We moved it here to avoid a
+  // compiler bug in SunCC 4.2.  Once we know the correct patch to fix
+  // the compiler problem, it should be moved back to .i file again.
+  ACE_Map_Entry<EXT_ID, INT_ID> *retv = 0;
+
+  int result = this->next (retv);
+  ACE_ASSERT (result != 0);
+  ACE_UNUSED_ARG (result);
+
+  return *retv;
+}
+
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
+{
+  this->dump_i ();
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> void
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 {
   this->dump_i ();
 }

@@ -1,3 +1,11 @@
+Tue Aug 21 10:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Map.i: Made the return value of ACE_Incremental_Key_Generator
+          getCurrentValue() const
+
+        * ace/Map_Manager.*: Added a const iterator for the
+          ACE_Map_Manager
+
 Mon Aug 20 18:20:51 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.cpp (pass_handle): Only try to compile the
