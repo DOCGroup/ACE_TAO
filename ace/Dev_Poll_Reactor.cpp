@@ -274,8 +274,6 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
       // Check to see if we've got a short read.
       if (n != sizeof buffer)
         {
-      ACE_DEBUG ((LM_DEBUG, "YO! = %d\n", n));
-
           ssize_t remainder = sizeof buffer - n;
 
           // If so, try to recover by reading the remainder.  If this
@@ -286,7 +284,6 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
                          ((char *) &buffer) + n,
                          remainder) != remainder)
             return -1;
-      ACE_DEBUG ((LM_DEBUG, "   YO! = %d\n", n));
         }
 
 
@@ -305,10 +302,6 @@ int
 ACE_Dev_Poll_Reactor_Notify::handle_input (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::handle_input");
-
-  ACE_DEBUG ((LM_DEBUG,
-              "ACE_Dev_Poll_Reactor_Notify::handle_input -- handle = %d\n",
-              handle));
 
   // @@ We may end up dispatching this event handler twice:  once when
   //    performing the speculative read on the notification pipe
@@ -1128,10 +1121,6 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   // Poll for events
   int nfds = ACE_OS::ioctl (this->poll_fd_, EP_POLL, &evp);
 
-  if (nfds > 0)
-    ACE_DEBUG ((LM_DEBUG, "%%%%%% RECEIVED EVENTS ON %d handles.\n",
-                nfds));
-
   // Retrieve the results from the memory map.
   this->start_pfds_ =
     ACE_reinterpret_cast (struct pollfd *,
@@ -1400,8 +1389,6 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
         // Dispatch all output events.
         if (ACE_BIT_ENABLED (revents, POLLOUT))
           {
-            ACE_DEBUG ((LM_DEBUG, "GOT POLLOUT EVENT\n"));
-
             int status =
               this->upcall (eh, &ACE_Event_Handler::handle_output, handle);
 
@@ -1419,8 +1406,6 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
         // Dispatch all "high priority" (e.g. out-of-band data) events.
         if (ACE_BIT_ENABLED (revents, POLLPRI))
           {
-            ACE_DEBUG ((LM_DEBUG, "GOT POLLPRI EVENT\n"));
-
             int status =
               this->upcall (eh, &ACE_Event_Handler::handle_exception, handle);
 
@@ -1438,10 +1423,6 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
         // Dispatch all input events.
         if (ACE_BIT_ENABLED (revents, POLLIN))
           {
-//             ACE_DEBUG ((LM_DEBUG,
-//                         "GOT POLLIN EVENT ON HANDLE <%d>\n",
-//                         handle));
-
             int status =
               this->upcall (eh, &ACE_Event_Handler::handle_input, handle);
 
@@ -1563,8 +1544,6 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
   // keep going or if it needs to reconsult select().
   // this->state_changed_ = 1;
 
-  ACE_DEBUG ((LM_DEBUG, "REGISTERED HANDLE <%d>\n", handle));
-
   return 0;
 }
 
@@ -1654,15 +1633,7 @@ ACE_Dev_Poll_Reactor::remove_handler (ACE_Event_Handler *handler,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::remove_handler");
 
-  ACE_DEBUG ((LM_DEBUG,
-              "PRE-LOCK ---- ABOUT TO REMOVE HANDLE <%d>\n",
-              handler->get_handle ()));
-
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
-
-  ACE_DEBUG ((LM_DEBUG,
-              "ABOUT TO REMOVE HANDLE <%d>\n",
-              handler->get_handle ()));
 
   return this->remove_handler_i (handler->get_handle (), mask);
 }
@@ -1687,21 +1658,15 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
 
   ACE_Event_Handler *eh = this->handler_rep_.find (handle);
 
-  ACE_DEBUG ((LM_DEBUG, "YO0 = 0x%x!\n", eh));
-
   if (eh == 0
       || this->mask_ops_i (handle, mask, ACE_Reactor::CLR_MASK) != 0)
     return -1;
-
-  ACE_DEBUG ((LM_DEBUG, "YO1!\n"));
 
   // If there are no longer any outstanding events on the given handle
   // then remove it from the handler repository.
   if (this->handler_rep_.mask (handle) == ACE_Event_Handler::NULL_MASK
       && this->handler_rep_.unbind (handle) != 0)
     return -1;
-
-  ACE_DEBUG ((LM_DEBUG, "YO2!\n"));
 
   if (ACE_BIT_DISABLED (mask, ACE_Event_Handler::DONT_CALL))
     (void) eh->handle_close (handle, mask);
@@ -1711,8 +1676,6 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
   // determine whether it can keep going or if it needs to reconsult
   // /dev/poll or /dev/epoll.
   // this->state_changed_ = 1;
-
-  ACE_DEBUG ((LM_DEBUG, "REMOVE HANDLER ==== %d\n", handle));
 
   return 0;
 }
