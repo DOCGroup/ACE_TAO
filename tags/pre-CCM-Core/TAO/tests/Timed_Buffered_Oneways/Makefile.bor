@@ -1,0 +1,10 @@
+#
+# Makefile for building the Timed_Buffered_Oneways example
+#
+
+MAKEFILES = \
+	client.bor \
+	server.bor 
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+

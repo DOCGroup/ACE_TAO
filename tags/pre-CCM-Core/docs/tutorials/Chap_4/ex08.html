@@ -1,0 +1,73 @@
+<HTML>
+<!-- $Id$ -->
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Ambreen Ilyas">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <TITLE>Example 8</TITLE>
+</HEAD>
+<BODY>
+<FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+<BR><FONT COLOR="#CC0000">//// This example is from the ACE Programmers
+Guide.</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; Chapter:&nbsp; "Thread Management"</FONT>
+<BR><FONT COLOR="#CC0000">//// For details please see the guide at</FONT>
+<BR><FONT COLOR="#CC0000">//// http://www.cs.wustl.edu/~schmidt/ACE.html</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; AUTHOR: Umar Syyid (usyyid@hns.com)</FONT>
+<BR><FONT COLOR="#CC0000">//// and Ambreen Ilyas (ambreen@bitsmart.com)</FONT>
+<BR><FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+
+<P><FONT COLOR="#CC0000">//Example 8</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/Synch_T.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/Synch.h"</FONT>
+
+<P>ACE_Atomic_Op&lt;ACE_Thread_Mutex,int> foo;
+
+<P>static void*
+<BR>worker(void *arg){
+<BR>&nbsp; ACE_UNUSED_ARG(arg);
+<BR>&nbsp; foo=5;
+<BR>&nbsp; ACE_ASSERT (foo == 5);
+<BR>&nbsp;
+<BR>&nbsp; ++foo;
+<BR>&nbsp; ACE_ASSERT (foo == 6);
+<BR>&nbsp;
+<BR>&nbsp; --foo;
+<BR>&nbsp; ACE_ASSERT (foo == 5);
+<BR>&nbsp;
+<BR>&nbsp; foo += 10;
+<BR>&nbsp; ACE_ASSERT (foo == 15);
+<BR>&nbsp;
+<BR>&nbsp; foo -= 10;
+<BR>&nbsp; ACE_ASSERT (foo == 5);
+<BR>&nbsp;
+<BR>&nbsp; foo = 5L;
+<BR>&nbsp; ACE_ASSERT (foo == 5);
+<BR>&nbsp;return 0;
+<BR>}
+
+<P>int main(int argc, char *argv[]){
+<BR>if(argc&lt;2){
+<BR>&nbsp;ACE_DEBUG((LM_DEBUG,"Usage: &lt;program_name> &lt;number of threads>\n"));
+<BR>&nbsp;ACE_OS::exit(1);
+<BR>&nbsp;}
+<BR>&nbsp;
+<BR>int n_threads=ACE_OS::atoi(argv[1]);
+<BR>ACE_DEBUG((LM_DEBUG,"Preparing to spawn %d threads\n",n_threads));
+<BR>&nbsp;
+
+<P><FONT COLOR="#FF0000">//Spawn off n_threads number of threads</FONT>
+<BR>for(int i=0; i&lt;n_threads; i++){
+<BR>&nbsp;if(ACE_Thread::spawn((ACE_THR_FUNC)worker,0,THR_DETACHED|THR_NEW_LWP)==-1)
+<BR>&nbsp; ACE_DEBUG((LM_DEBUG,"Error in spawning thread\n"));
+<BR>&nbsp;}
+
+<P><FONT COLOR="#FF0000">//Wait for all the other threads to let the main
+thread know when it is time to exit</FONT>
+<BR>while(ACE_Thread::join(NULL,NULL,NULL)==0);
+<BR>ACE_DEBUG((LM_DEBUG,"(%t)Other threads are finished. Program exiting..\n"));
+<BR>}
+
+<P>&nbsp;<A HREF="../Chap_5/ex01.html">Next Example</A>
+</BODY>
+</HTML>

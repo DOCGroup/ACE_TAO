@@ -1,0 +1,1519 @@
+\input texinfo   @c -*-texinfo-*-
+@tex
+% They are redefined in texinfo, but I need them
+\gdef\`#1{{\accent18 #1}}
+\gdef\'#1{{\accent19 #1}}
+\gdef\[{{[}}
+\gdef\]{{]}}
+@end tex
+@comment %**start of header (This is for running Texinfo on a region.)
+@setfilename rpc++.info
+@settitle A C++ Interface to Remote Procedure Calls
+@setchapternewpage on
+@comment %**end of header (This is for running Texinfo on a region.)
+
+@c You'll have to define the following additional texinfo-formats to
+@c run texinfo on this file.
+@c
+@c   (put '\& 'texinfo-format 'texinfo-format-\&)
+@c   (defun texinfo-format-\& ()
+@c     (texinfo-discard-command)
+@c     (insert "&"))
+@c
+@c   (put '\[ 'texinfo-format 'texinfo-format-\[)
+@c   (defun texinfo-format-\[ ()
+@c     (texinfo-discard-command)
+@c     (insert "["))
+@c
+@c   (put '\] 'texinfo-format 'texinfo-format-\])
+@c   (defun texinfo-format-\] ()
+@c     (texinfo-discard-command)
+@c     (insert "]"))
+
+@ifinfo
+This file documents a C++ interface to Sun remote procedure calls.
+
+Copyright @copyright{} 1992 Michael N. Lipp
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+@ignore
+Permission is granted to process this file through @TeX{} and print the
+results, provided the printed document carries copying permission
+notice identical to this one except for the removal of this paragraph
+(this paragraph not being relevant to the printed manual).
+
+@end ignore
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided also that the
+section entitled ``GNU Library General Public License'' is included exactly as
+in the original, and provided that the entire resulting derived work is
+distributed under the terms of a permission notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that the section entitled ``GNU Library General Public License'' and
+this permission notice may be included in translations approved by the
+Free Software Foundation instead of in the original English.
+@end ifinfo
+
+@titlepage
+
+@title A C++ Interface
+@title to Sun Remote Procedure Calls
+@sp 1
+@subtitle @authorfont{by Michael N. Lipp}
+@sp 20
+@subtitle{for version 2.2}
+@subtitle{Technische Hochschule Darmstadt, Institut f@"ur Datentechnik}
+
+@comment  The following two commands start the copyright page.
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} 1992 Michael N. Lipp
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided also that the
+section entitled ``GNU Library General Public License'' is included exactly as
+in the original, and provided that the entire resulting derived work is
+distributed under the terms of a permission notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that the section entitled ``GNU Library General Public License'' may be
+included in a translation approved by the author instead of in the original
+English.
+@end titlepage
+
+@node Top, Overview, (dir), (dir)
+
+@menu
+* Overview::                    Overview
+* Installation::                Installation
+* Classes::                     The Classes
+* Caveats::                     Caveats
+* References::                  References
+* Copying::                     GNU LIBRARY GENERAL PUBLIC LICENSE
+* Data Type Index::             Data Type Index
+* Function Index::              Function and Method Index
+* Concept Index::               Concept Index
+
+ --- The Detailed Node Listing ---
+
+The classes
+
+* XdrInfo::                     @code{XdrInfo}
+* RpcRequest::                  @code{RpcRequest}
+* Callbacks::                   @code{Callbacks}
+* RpcService::                  @code{RpcService}
+* RpcStub::                     @code{RpcStub}
+
+Callbacks
+
+* RpcCallback::                 @code{RpcCallback}
+* RpcMethodCall::               @code{RpcMethodCall}
+* Calling Conventions::         @code{Calling Conventions}
+
+Caveats
+
+* Global objects::              Global objects
+* Destruction rules::           Destruction rules
+* Matching server and clients::  Matching server and clients
+@end menu
+
+@node    Overview, Installation, Top, Top
+@comment node-name,     next,           previous, up
+@chapter Overview
+@cindex Overview
+
+This document describes my C++ interface to Sun Remote Procedure Calls.
+It is based on sources from Peter Bersen that I got from some newsgroup,
+though I don't remember which one. I liked the basic idea but disliked
+several aspects of the interface details. So I adapted it to my likes. I
+intended some minor changes but soon found myself renaming classes,
+changing method parameters, introducing new classes, etc. The result is
+by no way compatible with the original version. It is, I hope,
+nevertheless useful.
+
+Basically, the interface defines six class: @code{XdrInfo},
+@code{RpcRequest}, @code{RpcCallback}/@code{RpcMethodCall},
+@code{RpcService} and @code{RpcStub}.
+
+@code{XdrInfo} objects describe the external data representation of a
+type. There are predefined @code{XdrInfo}s for the basic types.
+@code{RpcRequest} objects describe the available procedure calls. They
+are constructed from a unique request number, the @code{XdrInfo}s of the
+procedure's arguments and its return type. @code{RpcCallback} is an
+object that holds a pointer to a function and information about the
+number of its arguments. @code{RpcMethodCall} is a template that in a
+similar way holds a pointer to an object and one of its methods and
+Information about the number of its arguments.
+
+An @code{RpcRequest} and its matching @code{RpcCallback} or
+@code{RpcMethodCall} may be registered with an @code{RpcService}.
+Exactly one object of type @code{RpcService} may be instantiated in a
+program that implements an RPC server. Method @code{Provide ()} is a
+loop that waits for requests and dispatches them.
+
+A client program instantiates an object of type @code{RpcStub}.  The
+constructor establishes a connection to the server specified by its
+arguments. Procedures of the server may be invoked using method
+@code{Call (@dots{})}.
+
+@node    Installation, Classes, Overview, Top
+@comment node-name,     next,           previous, up
+@chapter Installation
+@cindex Installation
+
+The rpc++ library has successfully been tested using a patched gcc-2.2.2
+on a SparcStation running SunOS 4.1.[12] and a 386 system running
+Interactive Unix (a SYSV 3.2). Patching gcc-2.2.2 was necessary because
+the unpatched version can't handle typedefs that are local to templates.
+The bug report with patches can be found in the source directory in file
+@code{gcc-2.2.2.fix}.
+
+As a prerequisite to using RPCs with C++ you need ANSI-C/C++ conformant
+header files for RPC. I have provided such files in the directory
+@code{StdHdrs/rpc} of the source tree. To avoid any copyright conflicts,
+they are derived from the public available RPC source code rather than
+from the files that come with SunOS 4.1.X. The differences are minor.
+The SunOS 4.1.X files define some additional functions. You have to
+either copy the files from @code{StdHdrs/rpc} or patched files from your
+@code{/usr/include/rpc} to a directory where gcc can find them. If you
+don't want to install them globally in gcc's include directory, you can
+include them by using an additional ``@code{-I}'' flag during
+compilation.
+
+In SunOS you can simply type `@code{make install INSTROOT=@dots{}}'
+which will make the library and install it in @code{INSTROOT/lib} and
+the header files in @code{INSTROOT/include/rpc++}.  Other Unices will
+probably have problems with the `install' command. Type only `make' and
+copy the resulting @code{librpc++.a} to your local library directory and
+the files @code{rpc++/*} to an @code{rpc++}-subdirectory of your local
+include directory.
+
+@node    Classes, Caveats, Installation, Top
+@comment node-name,     next,           previous,	up
+@chapter The classes
+
+@menu
+* XdrInfo::                     @code{XdrInfo}
+* RpcRequest::                  @code{RpcRequest}
+* Callbacks::                   @code{Callbacks}
+* RpcService::                  @code{RpcService}
+* RpcStub::                     @code{RpcStub}
+@end menu
+
+@node    XdrInfo, RpcRequest,  , Classes
+@comment node-name,     next,           previous, up
+@section @code{XdrInfo}
+@cindex @code{XdrInfo}
+
+Declared in: @code{"rpc++/xdr++.h"}
+
+@deftp Class XdrInfo
+Class XdrInfo describes serializers. It combines the xdrproc_t with the
+size info (the size of the data to be converted) usually needed if you
+want to apply a serializer.
+@end deftp
+
+There is only one constructor for @code{XdrInfo}:
+
+@deftypefn Constructor {} XdrInfo (xdrproc_t @var{t}, size_t @var{s})
+Construct an @code{XdrInfo} for a type. The type can be converted to an
+external data representation (serielized) with function @var{t}. Its
+size (in bytes, from @code{sizeof (type)}), is @var{s}.
+@end deftypefn
+
+The methods query the information given to the constructor:
+
+@deftypefn Method xdrproc_t Proc () const
+Return the conversion function stored in an @code{XdrInfo}.
+@end deftypefn
+
+@deftypefn Method size_t Size () const
+Return the size of the type described by the @code{XdrInfo}.
+@end deftypefn
+
+There are a number of predefined @code{XdrInfo}s. They are defined as
+static members of a class @code{Xdr} for scoping reasons.
+
+@defvr XdrInfo Xdr::Xchar
+The conversion and size information for a character.
+@end defvr
+
+@defvr XdrInfo Xdr::Xshort
+The conversion and size information for a short integer.
+@end defvr
+
+@defvr XdrInfo Xdr::Xint
+The conversion and size information for an integer.
+@end defvr
+
+@defvr XdrInfo Xdr::Xlong
+The conversion and size information for a long integer.
+@end defvr
+
+@defvr XdrInfo Xdr::Xuchar
+The conversion and size information for an unsigned character.
+@end defvr
+
+@defvr XdrInfo Xdr::Xushort
+The conversion and size information for an unsigned short integer.
+@end defvr
+
+@defvr XdrInfo Xdr::Xulong
+The conversion and size information for an unsigned long integer.
+@end defvr
+
+@defvr XdrInfo Xdr::Xfloat
+The conversion and size information for a float.
+@end defvr
+
+@defvr XdrInfo Xdr::Xdouble
+The conversion and size information for a double.
+@end defvr
+
+@defvr XdrInfo Xdr::Xenum_t
+The conversion and size information for any enumeration type.
+@end defvr
+
+@defvr XdrInfo Xdr::Xbool_t
+The conversion and size information for a bool.
+@end defvr
+
+@defvr XdrInfo Xdr::Xvoid
+A special @code{XdrInfo} for the return type of a procedure that returns
+nothing.
+@end defvr
+
+@defvr XdrInfo Xdr::Xnull
+A special @code{XdrInfo} for the return type of a procedure that is to
+be executed batched or asynchronously (@pxref{RpcRequest}).
+@end defvr
+
+@page
+@node    RpcRequest, Callbacks, XdrInfo, Classes
+@comment node-name,     next,           previous, up
+@section @code{RpcRequest}
+@cindex @code{RpcRequest}
+
+Declared in: @code{"rpc++/request.h"}
+
+@deftp Class RpcRequest
+RpcRequest is a class that specifies a request for a procedure that is
+part of (registered with) a service.
+@end deftp
+
+There are several constructors for @code{RpcRequest}. They vary in the
+number of @code{XdrInfo}s used to describe the input parameters of the
+procedure.
+
+@deftypefn Constructor {} RpcRequest (u_long @var{reqid}, const XdrInfo* @var{out}, ReqType @var{t}=normal)
+@end deftypefn
+@deftypefn Constructor {} RpcRequest (u_long @var{reqid}, const XdrInfo* @var{out}, const XdrInfo* @var{in1}, ReqType @var{t}=normal)
+@end deftypefn
+@deftypefn Constructor {} RpcRequest (u_long @var{reqid}, const XdrInfo* @var{out}, const XdrInfo* @var{in1}, const XdrInfo* @var{in2}, ReqType @var{t}=normal)
+These constructors construct an @code{RpcRequest} for a procedure with
+zero, one or two arguments. Additional similar constructors are defined
+for procedures with up to seven arguments. @var{reqid} uniquely
+identifies the request (the procedure of the server). @var{reqid} may
+not be 0. The @code{XdrInfo*}s following @var{reqid} specify the types of
+the input parameters. They are followed by the @code{XdrInfo*} that
+describes the type of the value returned by the RPC. If no value is
+returned, @code{&Xdr::Xvoid} must be given as argument
+(@pxref{XdrInfo}). The final optional argument @var{t} specifies the
+call mode: @code{RpcRequest::normal}, @code{RpcRequest::batched} or
+@code{RpcRequest::async} (see below).
+@end deftypefn
+
+@deftypefn Constructor {} RpcRequest (u_long @var{reqid}, const XdrInfo* @var{out}, const XdrInfo** @var{intypes}, ReqType @var{t}=normal)
+This constructor can be used to construct an @code{RpcRequest} with an
+arbitrary number of arguments. The pointers to @code{XdrInfo} are passed
+in an array. The number of elements in the array must be one more than
+the number of parameters and the last element must be zero.
+@end deftypefn
+
+If the request type @var{t} is @code{RpcRequest::normal}, method
+@code{Call} (@pxref{RpcStub}) assembles the message to the server, sends
+it, waits for a reply and returns the result.
+
+If the request type is @code{RpcRequest::batched}, method
+@code{RpcStub::Call} assembles the message to the server and puts it in
+a buffer. Messages are only flushed if the buffer is full or
+@code{RpcStub::Call} is used with a @code{normal} or @code{async}
+request.
+
+If the request type is @code{RpcRequest::async}, method
+@code{RpcStub::Call} (@pxref{RpcStub}) assembles the message to the
+server and sends it, as with @code{normal}. It does, however, not wait
+for a result. Mode @code{async} is implemented by calling the underlying
+RPC--function @code{clnt_call} with a timeout of zero.
+
+As in both non--normal cases (@code{batched} and @code{async})
+@code{RpcStub::Call} does not wait for a return value from the server,
+the return type of the @code{RpcRequest} must be specified as
+@code{&Xdr::Xnull}.
+
+Note that requests that are registered for a service are stored in an
+array using the request identification as the index, so keep ids small.
+
+Normally, requests should be specified in a header file included by both
+the server and the client program (@pxref{Matching server and clients}).
+
+@page
+@node    Callbacks, RpcService, RpcRequest, Classes
+@comment node-name,     next,           previous, up
+@section Callbacks
+@cindex Callbacks
+
+If a server receives a request from a client, it needs to know how a
+particular procedure is to be invoked. This information is specified
+using objects @code{RpcCallback} or @code{RpcMethodCall} when the
+procedure resp.@ method is specified.
+
+The class
+@deftp Class AnyRpcCallback
+@end deftp
+serves as an abstract base class for the two kinds of callbacks.
+
+The following sections describe the constructors for @code{RpcCallback}
+and @code{RpcMethodCall} and the calling conventions for the functions
+or methods called back.
+
+@menu
+* RpcCallback::                 @code{RpcCallback}
+* RpcMethodCall::               @code{RpcMethodCall}
+* Calling Conventions::         @code{Calling Conventions}
+@end menu
+
+@node    RpcCallback, RpcMethodCall,  , Callbacks
+@comment node-name,     next,           previous, up
+@subsection @code{RpcCallback}
+@cindex @code{RpcCallback}
+
+Declared in: @code{"rpc++/callback.h"}
+
+@deftp Class RpcCallback
+An @code{RpcCallback} describes a function that is to be called by the
+server on request from the client.
+@end deftp
+
+@deftypefn Constructor {} RpcCallback (void* (*)() @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void* (*)(void*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void* (*)(void*, void*) @var{proc})
+Construct an @code{RpcCallback} for a function that takes zero, one or
+two arguments and returns a result. Constructors for functions with
+up to seven arguments are defined.
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void* (*)(void**) @var{proc})
+Construct an @code{RpcCallback} for a function that takes an arbitrary
+number of arguments and returns a result.
+@end deftypefn
+
+@deftypefn Constructor {} RpcCallback (void (*)() @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void (*)(void*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void (*)(void*, void*) @var{proc})
+Construct an @code{RpcCallback} for a function that takes zero, one or
+two arguments and returns no result. Constructors for functions with
+up to seven arguments are defined.
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void (*)(void**) @var{proc})
+Construct an @code{RpcCallback} for a function that takes an arbitrary
+number of arguments and return no result.
+@end deftypefn
+
+@deftypefn Constructor {} RpcCallback (void* (*)(RpcService*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void* (*)(void*, RpcService*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void* (*)(void*, void*, RpcService*) @var{proc})
+Construct an @code{RpcCallback} for a function that takes zero, one or
+two arguments and returns a result. Constructors for functions with
+up to seven arguments are defined. Upon invocation, a pointer to the
+object of type @code{RpcService} that received the request and called
+the function is passed as an additional argument.
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void* (*)(void**) @var{proc})
+Construct an @code{RpcCallback} for a function that takes an arbitrary
+number of arguments and returns a result. Upon invocation, a pointer to the
+object of type @code{RpcService} that received the request and called
+the function is passed as an additional argument.
+@end deftypefn
+
+@deftypefn Constructor {} RpcCallback (void (*)(RpcService*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void (*)(void*, RpcService*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void (*)(void*, void*, RpcService*) @var{proc})
+Construct an @code{RpcCallback} for a function that takes zero, one or
+two arguments and returns a result. Constructors for functions with
+up to seven arguments are defined. Upon invocation, a pointer to the
+object of type @code{RpcService} that received the request and called
+the function is passed as an additional argument.
+@end deftypefn
+@deftypefn Constructor {} RpcCallback (void (*)(void**) @var{proc})
+Construct an @code{RpcCallback} for a function that takes an arbitrary
+number of arguments and returns a result. Upon invocation, a pointer to the
+object of type @code{RpcService} that received the request and called
+the function is passed as an additional argument.
+@end deftypefn
+
+@node    RpcMethodCall, Calling Conventions, RpcCallback, Callbacks
+@comment node-name,     next,           previous, up
+@subsection @code{RpcMethodCall}
+@cindex @code{RpcMethodCall}
+
+Declared in: @code{"rpc++/callback.h"}
+
+@deftp Class RpcMethodCall
+An @code{RpcMethodCall} describes a method of an object that is to be
+called by the server on request from the client.
+@end deftp
+
+@deftypefn Constructor {} RpcMethodCall <class T> (void* (T::*)() @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void* (T::*)(void*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void* (T::*)(void*, void*) @var{proc})
+Construct an @code{RpcMethodCall} for an object and one of its methods that
+takes zero, one or two arguments and returns a result. Constructors for
+methods with up to seven arguments are defined.
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void* (T::*)(void**) @var{proc})
+Construct an @code{RpcMethodCall} for an object and one of its methods
+that takes an arbitrary number of arguments and returns a result.
+@end deftypefn
+
+@deftypefn Constructor {} RpcMethodCall <class T> (void (T::*)() @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void (T::*)(void*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void (T::*)(void*, void*) @var{proc})
+Construct an @code{RpcMethodCall} for an object and one of its methods
+that takes zero, one or two arguments and returns no result.
+Constructors for methods with up to seven arguments are defined.
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void (T::*)(void**) @var{proc})
+Construct an @code{RpcMethodCall} for an object and one of its methods
+that takes an arbitrary number of arguments and return no result.
+@end deftypefn
+
+@deftypefn Constructor {} RpcMethodCall <class T> (void* (T::*)(RpcService*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void* (T::*)(void*, RpcService*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void* (T::*)(void*, void*, RpcService*) @var{proc})
+Construct an @code{RpcMethodCall} for an object and one of its methods
+that takes zero, one or two arguments and returns a result. Constructors
+for methods with up to seven arguments are defined. Upon invocation, a
+pointer to the object of type @code{RpcService} that received the
+request and called the method is passed as an additional argument.
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void* (T::*)(void**) @var{proc})
+Construct an @code{RpcMethodCall} for an object and one of its methods
+that takes an arbitrary number of arguments and returns a result. Upon
+invocation, a pointer to the object of type @code{RpcService} that
+received the request and called the method is passed as an additional
+argument.
+@end deftypefn
+
+@deftypefn Constructor {} RpcMethodCall <class T> (void (T::*)(RpcService*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void (T::*)(void*, RpcService*) @var{proc})
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void (T::*)(void*, void*, RpcService*) @var{proc})
+Construct an @code{RpcMethodCall} for an object and one of its methods
+that takes zero, one or two arguments and returns a result. Constructors
+for methods with up to seven arguments are defined. Upon invocation, a
+pointer to the object of type @code{RpcService} that received the
+request and called the method is passed as an additional argument.
+@end deftypefn
+@deftypefn Constructor {} RpcMethodCall <class T> (void (T::*)(void**) @var{proc})
+Construct an @code{RpcMethodCall} for an object and one of its methods
+that takes an arbitrary number of arguments and returns a result. Upon
+invocation, a pointer to the object of type @code{RpcService} that
+received the request and called the method is passed as an additional
+argument.
+@end deftypefn
+
+@node    Calling Conventions,  , RpcMethodCall, Callbacks
+@comment node-name,     next,           previous, up
+@subsection @code{Calling Conventions}
+@cindex @code{calling conventions}
+
+As could be seen from the parameter types in the constructors, functions
+and methods that are called in response to a request from a client know
+only about pointers to void as arguments and result values because their
+real type is coded in the @code{RpcRequest} and not known at compile
+time. The only way to avoid this is to implement some kind of rpcgen++.
+However, I never liked this kind of tools and I'm willing to risk a bit
+of type unsafeness in this case.
+
+When a procedure (or method) is called, its arguments point to values
+(the variants with an arbitrary number of arguments receive an array of
+pointers to values) of the types specified in the constructor of the
+@code{RpcRequest} that led to the invocation of the procedure. I
+recommend to access the values and assign them to local variables of the
+procedure in the first statements. E.g.:
+@example
+void* Add (void* s1p, void* s2p)
+@{
+  int s1 = *(int*)s1p;
+  int s2 = *(int*)s2p;
+  ...
+@end example
+
+The return value of the procedure is a pointer to the result. Therefore,
+results may never be put in automatic variables. They must be global or
+static. E.g.:
+@example
+  ...
+  static int sum;
+  sum = s1 + s2;
+  return (void*)&sum;
+@}
+@end example
+
+Note the special case of strings (defined as parameters or return values
+using @code{Xdr::Xwrapstring}, @pxref{XdrInfo}). If you think of a
+string as being defined as a type ``@code{typedef char* string}'', it is
+obvious that a string is passed as argument or returned as result by a
+@code{string*}, i.e., a @code{char**}. E.g.:
+@example
+void* Capitalize (void* strp)
+@{
+  static char* str;
+  str = *(char**)strp;
+  str[0] = toupper (str[0]);
+  return (void*)&str;
+@}
+@end example
+
+@page
+@node    RpcService, RpcStub, Callbacks, Classes
+@comment node-name,     next,           previous, up
+@section @code{RpcService}
+@cindex @code{RpcService}
+
+Declared in: @code{"rpc++/service.h"}
+
+@deftp Class RpcService
+An object of type @code{RpcService} provides the server capabilities
+within a program.
+@end deftp
+
+There are two constructors for @code{RpcService}:
+
+@deftypefn Constructor {} RpcService (u_long @var{prog}, u_long @var{vers})
+Construct an object representing the @var{vers}'th version of program
+(service) number @code{prog}.
+@end deftypefn
+@deftypefn Constructor {} RpcService (u_long @var{vers})
+Construct an object representing the @var{vers}'th version of a transient
+program (service).
+@end deftypefn
+
+@deftypefn Method bool OK ()
+Returns TRUE if the service is ready for operation, i.e., has successfully
+been established during construction.
+@end deftypefn
+
+The number of a service, especially a transient service, can be obtained
+with method @code{@w{Program ()}}:
+
+@deftypefn Method u_long Program ()
+Returns the number of the program (service). This is either the number
+passed as an argument to the constructor or a number from the transient
+program area.
+@end deftypefn
+
+The next step after the construction of an @code{RpcService} is to
+register the requests handled by the service:
+
+@deftypefn Method {virtual void} Register (const RpcRequest& @var{req}, const AnyRpcCallback& @var{cb})
+Associate request @var{req} with the procedure or object/method pair
+specified by @code{cb}. The usual way to call @code{Register} is
+@example
+@{
+  RpcService svc (...);
+  svc.register (addreq, RpcCallback (Add));
+  ...
+@}
+@end example
+@end deftypefn
+
+After all requests have been registered, the object of type
+@code{RpcService} can provide the service:
+@deftypefn Method void Provide ()
+Repeatedly wait for a request and handle it by calling the procedure or
+method registered for it.
+@end deftypefn
+
+@deftypefn Method {virtual void*} HandleError ()
+@code{HandleError} is a protected method that is called when an error
+occurs. The cause of the error is stored in a protected member variable
+@code{errorState}. If the default error handling (shown below) is not
+appropriate for your application, derive your own class from
+@code{RpcService} that implements a different error handling policy. If
+you consider an error recoverable, reset @code{errorState} to
+@code{RpcService::noError} in your error handler. Else, @code{OK ()}
+keeps returning FALSE.
+@example
+void RpcService::HandleError ()
+@{
+  switch (errorState)
+    @{
+    case reconstructionAttempt:
+      cerr << "rpc++: Attempt to construct another instance of RpcService.\n";
+      exit (1);
+    case cantCreateTCPService:
+      cerr << "rpc++: can't create tcp service.\n";
+      exit(1);
+    case cantRegisterService:
+      cerr << form ("rpc++: can't register (%d, %d, tcp).", prog, vers);
+      exit(1);
+    case cantSendReply:
+      cerr << "rpc++: can't reply to RPC call.\n";
+      break;
+    case invalidResult:
+      cerr << "rpc++: registered routine has return NULL pointer.\n";
+      abort ();
+    case notRegistered:
+      cerr << "rpc++: requested RPC routine not registered.\n";
+      break;
+    case cantGetArgs:
+      cerr << "rpc++: can't get procedure arguments.\n";
+      break;
+    case cantFreeArgs:
+      cerr << "rpc++: can't free XDR arguments.\n";
+      break;
+    @}
+  errorState = noError;
+@}
+@end example
+@end deftypefn
+
+If the program that provides the service has other things to do as well,
+i.e., does not only handle requests, it usually has its own main loop
+that handles events. This loop must be extended to handle RPC events,
+i.e., if anything happens on the RPC file descriptors, it must call
+@code{svc_getreqset} just as @code{Provide ()} does.
+@example
+void RpcService::Provide ()
+@{
+  int dtbsz = getdtablesize();
+  fd_set readfds;
+
+  for(;;)
+    @{
+      readfds = svc_fdset;
+      switch(select (dtbsz, &readfds, 0, 0, 0))
+        @{
+        case -1:
+          if (errno != EBADF)
+            continue;
+          cerr << "PRC++: select: " << sys_errlist[errno] << '\n';
+          return;
+          break;
+        case 0:
+          continue;
+        default:
+          svc_getreqset (&readfds);
+          break;
+        @}
+    @}
+@}
+@end example
+
+The following methods are only available during the execution of a
+callback, i.e., they can be applied to @code{RpcService} if a pointer to
+the invoking object has been declared as last parameter of a callback
+routine.
+
+@deftypefn Method {struct sockaddr_in*} Caller ()
+Return the socket address information of the calling host.
+@end deftypefn
+
+@deftypefn Method char* CallerName ()
+Return the name of the calling host.
+@end deftypefn
+
+@deftypefn Method void Reply ()
+@end deftypefn
+@deftypefn Method void Reply (void* @var{res})
+Normally, a request to the server terminates when the callback completes
+(either with or without returning a value, depending on the return
+type). In some cases it is desirable to reply to the client before all
+the actions related to the request have been completed. This allows the
+client to resume execution. The result (if any) must of course not
+depend on the functions still to be executed.
+@end deftypefn
+
+@deftypefn Method void Interrupt ()
+This is the proper way to terminate the loop entered by calling
+@code{Provide()}. After return from the callback that invoked
+@code{Interrupt()} method @code{Provide()} will return.
+@end deftypefn
+
+@page
+@node    RpcStub,  , RpcService, Classes
+@comment node-name,     next,           previous, up
+@section @code{RpcStub}
+@cindex @code{RpcStub}
+
+Declared in: @code{"rpc++/stub.h"}
+
+@deftp Class RpcStub
+An @code{RpcStub} represents the client side of a connection.
+@end deftp
+
+There are two constructors for @code{RpcStub} that vary in the position
+of their arguments only:
+
+@deftypefn Constructor {} RpcStub (u_long @code{prognum}, u_long @code{versnum}, char* @var{hostname}="localhost", timeval @var{timeout}=defaultTimeout, bool @var{connect}=TRUE)
+@end deftypefn
+@deftypefn Constructor {} RpcStub (u_long @code{prognum}, u_long @code{versnum}, char* @var{hostname}="localhost", bool @var{connect}=TRUE, timeval @var{timeout}=defaultTimeout)
+Construct an @code{RpcStub} that connects to the @var{versnum}'th
+version of program (service) @var{prognum} on host @var{hostname}. The
+timeout for successful completion of communication operations is
+@var{timeout} which defaults to 25 seconds. Unless @var{connect} is
+false, the constructor makes a connection attempt.
+@end deftypefn
+
+There are various methods:
+
+@deftypefn Method void Reconnect ()
+Connect to the server. Usually this method is called if the connection
+was not to be established by the constructor or if the connection
+attempt failed and is to be repeated.
+@end deftypefn
+
+@deftypefn Method bool OK ()
+Returns TRUE if the stub is ready for operation, i.e., connected to a
+server.
+@end deftypefn
+
+@deftypefn Method CLIENT* Service ()
+Access to the standard RPC level. Returns the handle that identifies the
+server.
+@end deftypefn
+
+@deftypefn Method timeval GetTimeout () const
+Returns the default timeout for network operations.
+@end deftypefn
+
+@deftypefn Method void SetTimeout (timeval& @var{timo})
+Sets the default timeout for network operations
+@end deftypefn
+
+@deftypefn Method void* Call (RpcRequest& @var{req}, bool @var{handle_errors}=TRUE)
+@end deftypefn
+@deftypefn Method void* Call (RpcRequest& @var{req}, void* @var{in1}, bool @var{handle_errors}=TRUE)
+@end deftypefn
+@deftypefn Method void* Call (RpcRequest& @var{req}, void* @var{in1}, @var{in2} bool @var{handle_errors}=TRUE)
+Request the operation specified by @var{req} from the server, passing
+zero, one or two arguments. There are declarations of this method for up
+two seven arguments. Arguments are passed as pointers to the argument
+values. The value returned by @code{Call} is a pointer to the result
+returned by the server. The result is valid until @code{Call} is called
+again. If @var{handle_errors} is FALSE and an error occurs, @code{Call}
+simply returns 0. Else, it calls method @code{HandleError} (see below).
+@end deftypefn
+@deftypefn Method void* Call (RpcRequest& @var{req}, void** @var{invals}, bool @var{handle_errors}=TRUE)
+The variant of @code{Call} that handles an arbitrary number of
+arguments.  Pointers to the arguments are passed in an array in
+parameter @var{invals}. The size of the array must match the number of
+arguments given to the constructor of @var{req}.
+@end deftypefn
+
+@deftypefn Method {virtual void*} HandleError ()
+@code{HandleError} is a protected method that is called when an error
+occurs. The cause of the error is stored in a protected member variable
+@code{errorState}. If the default error handling policy (shown below) is
+not appropriate for your application, derive your own class from
+@code{RpcStub} that implements a different one. If you consider an error
+recoverable, reset @code{errorState} to @code{RpcStub::noError} in your
+error handler. Else, @code{OK ()} keeps returning FALSE.  If an error
+occurs during a @code{Call} and parameter @var{handle_errors} is TRUE,
+@code{Call} invokes @code{HandleError} and returns its result as result
+of the call.
+@example
+void* RpcStub::HandleError ()
+@{
+  switch (errorState)
+    @{
+    case notConnected:
+      cerr << "rpc++: Stub has not been connected to server.\n";
+    case cantCreate:
+      cerr << clnt_spcreateerror ("rpc++") << '\n';
+      break;
+    case cantCall:
+      cerr << clnt_sperror (svc, "rpc++") << '\n';
+      exit (1);
+    @}
+  return 0;
+@}
+@end example
+@end deftypefn
+
+While no or little improvement of coding quality can be gained from
+deriving a service specific class from @code{RpcService}, the opposite
+is true for @code{RpcStub}.  A service specific derivation may define
+methods that have the ``real'' argument lists instead of pointers to
+void. These methods are simply implemented by casting the arguments and
+(inline) calling one of the @code{Call}--methods. Apart from better
+type checking, this has the advantage of keeping details like the
+available @code{RpcRequest}s local to the definition of the derived
+class (see the example in the @code{example}--directory).
+
+@node Caveats, References, Classes, Top
+@comment  node-name,  next,  previous,  up
+@chapter Caveats
+@cindex Caveats
+
+@menu
+* Global objects::              Global objects
+* Destruction rules::           Destruction rules
+* Matching server and clients::  Matching server and clients
+@end menu
+
+@node Global objects, Destruction rules,  , Caveats
+@comment  node-name,  next,  previous,  up
+@section Global objects
+@cindex Global objects
+
+As a general C++ rule, be careful with global objects. The sequence of
+constructor invocations for global objects is not defined. This is the
+reason, why @code{RpcRequests} are constructed from pointers to
+@code{XdrInfo}s rather than from @code{XdrInfo}s.
+
+Both @code{XdrInfo}s and @code{RpcRequest}s tend to be instantiated as
+global objects or static member variables. If the constructor of
+@code{RpcRequest} received @code{XdrInfo}s instead of pointers and
+copied the information contained in the @code{XdrInfo} (the solution I
+had preferred), it may happen that the @code{XdrInfo} has not been
+constructed yet and thus contains invalid data.
+
+The same problem occurs if you want to define a global
+``alias--@code{XdrInfo}'' matching a ``@code{typedef int myint}''.
+Don't use @code{XdrInfo Xmyint (Xdr::Xint)} as this may copy the
+uninitialized @code{Xdr::Xint}. Use @code{XdrInfo& Xmyint = Xdr::Xint}
+instead.
+
+@node Destruction rules, Matching server and clients, Global objects, Caveats
+@comment  node-name,  next,  previous,  up
+@section Destruction rules
+@cindex Destruction rules
+
+Objects of type @code{XdrInfo} are resources that can be used more than
+once, i.e., in different @code{RpcRequest}s. If they were handled
+properly, references to @code{XdrInfo} would be counted and the
+@code{XdrInfo} destructed automatically if the last reference is
+removed (unless it is the @code{XdrInfo} of a predefined type).
+
+Such a resource management for @code{XdrInfo}s has been considered
+unnecessary as @code{XdrInfo}s will rarely be dynamic objects. If the
+user allocates an @code{XdrInfo} on the stack or the heap, it is his
+responsibility to assure that the object is valid until the last
+@code{RpcResource} that uses it has been destructed.
+
+@node Matching server and clients,  , Destruction rules, Caveats
+@comment  node-name,  next,  previous,  up
+@section Matching server and clients
+
+In order to make sure that the server and the clients agree about the
+protocol, all @code{RpcRequest}s for a service should be declared in a
+header file and instantiated in a corresponding source file. The header
+file and the compiled source file make the ``library'' that provides the
+service. Thus a server consists of three files: the server executable, a
+header file defining the service that is to be included in client
+sources and an object file which must be linked to the client
+executable.
+
+@c ======================================================================
+
+@node References, Copying, Caveats, Top
+@comment  node-name,  next,  previous,  up
+@unnumbered References
+
+Margaret A. Ellis, @cite{The Annotated C++ Reference Manual},
+Addison-Wesley, 1990.
+
+Stanley B. Lippmann, @cite{A C++ Primer}, Addison-Wesley, 1989.
+
+Bjarne Stroustrup, @cite{The C++ Programming Language}, Addison-Wesley,
+1986.
+
+Sun Microsystems, @cite{Network Programming}, March 1990.
+
+@c ======================================================================
+
+@node Copying, Data Type Index, References, Top
+@appendix GNU LIBRARY GENERAL PUBLIC LICENSE
+@center Version 2, June 1991
+
+@display
+Copyright @copyright{} 1991 Free Software Foundation, Inc.
+675 Mass Ave, Cambridge, MA 02139, USA
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+@end display
+
+@unnumberedsec Preamble
+
+  The licenses for most software are designed to take away your
+freedom to share and change it.  By contrast, the GNU General Public
+Licenses are intended to guarantee your freedom to share and change
+free software---to make sure the software is free for all its users.
+
+  This license, the Library General Public License, applies to some
+specially designated Free Software Foundation software, and to any
+other libraries whose authors decide to use it.  You can use it for
+your libraries, too.
+
+  When we speak of free software, we are referring to freedom, not
+price.  Our General Public Licenses are designed to make sure that you
+have the freedom to distribute copies of free software (and charge for
+this service if you wish), that you receive source code or can get it
+if you want it, that you can change the software or use pieces of it
+in new free programs; and that you know you can do these things.
+
+  To protect your rights, we need to make restrictions that forbid
+anyone to deny you these rights or to ask you to surrender the rights.
+These restrictions translate to certain responsibilities for you if
+you distribute copies of the library, or if you modify it.
+
+  For example, if you distribute copies of the library, whether gratis
+or for a fee, you must give the recipients all the rights that we gave
+you.  You must make sure that they, too, receive or can get the source
+code.  If you link a program with the library, you must provide
+complete object files to the recipients so that they can relink them
+with the library, after making changes to the library and recompiling
+it.  And you must show them these terms so they know their rights.
+
+  Our method of protecting your rights has two steps: (1) copyright
+the library, and (2) offer you this license which gives you legal
+permission to copy, distribute and/or modify the library.
+
+  Also, for each distributor's protection, we want to make certain
+that everyone understands that there is no warranty for this free
+library.  If the library is modified by someone else and passed on, we
+want its recipients to know that what they have is not the original
+version, so that any problems introduced by others will not reflect on
+the original authors' reputations.
+
+  Finally, any free program is threatened constantly by software
+patents.  We wish to avoid the danger that companies distributing free
+software will individually obtain patent licenses, thus in effect
+transforming the program into proprietary software.  To prevent this,
+we have made it clear that any patent must be licensed for everyone's
+free use or not licensed at all.
+
+  Most GNU software, including some libraries, is covered by the ordinary
+GNU General Public License, which was designed for utility programs.  This
+license, the GNU Library General Public License, applies to certain
+designated libraries.  This license is quite different from the ordinary
+one; be sure to read it in full, and don't assume that anything in it is
+the same as in the ordinary license.
+
+  The reason we have a separate public license for some libraries is that
+they blur the distinction we usually make between modifying or adding to a
+program and simply using it.  Linking a program with a library, without
+changing the library, is in some sense simply using the library, and is
+analogous to running a utility program or application program.  However, in
+a textual and legal sense, the linked executable is a combined work, a
+derivative of the original library, and the ordinary General Public License
+treats it as such.
+
+  Because of this blurred distinction, using the ordinary General
+Public License for libraries did not effectively promote software
+sharing, because most developers did not use the libraries.  We
+concluded that weaker conditions might promote sharing better.
+
+  However, unrestricted linking of non-free programs would deprive the
+users of those programs of all benefit from the free status of the
+libraries themselves.  This Library General Public License is intended to
+permit developers of non-free programs to use free libraries, while
+preserving your freedom as a user of such programs to change the free
+libraries that are incorporated in them.  (We have not seen how to achieve
+this as regards changes in header files, but we have achieved it as regards
+changes in the actual functions of the Library.)  The hope is that this
+will lead to faster development of free libraries.
+
+  The precise terms and conditions for copying, distribution and
+modification follow.  Pay close attention to the difference between a
+``work based on the library'' and a ``work that uses the library''.  The
+former contains code derived from the library, while the latter only
+works together with the library.
+
+  Note that it is possible for a library to be covered by the ordinary
+General Public License rather than by this special one.
+
+@iftex
+@unnumberedsec TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+@end iftex
+@ifinfo
+@center TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+@end ifinfo
+
+@enumerate
+@item
+This License Agreement applies to any software library which
+contains a notice placed by the copyright holder or other authorized
+party saying it may be distributed under the terms of this Library
+General Public License (also called ``this License'').  Each licensee is
+addressed as ``you''.
+
+  A ``library'' means a collection of software functions and/or data
+prepared so as to be conveniently linked with application programs
+(which use some of those functions and data) to form executables.
+
+  The ``Library'', below, refers to any such software library or work
+which has been distributed under these terms.  A ``work based on the
+Library'' means either the Library or any derivative work under
+copyright law: that is to say, a work containing the Library or a
+portion of it, either verbatim or with modifications and/or translated
+straightforwardly into another language.  (Hereinafter, translation is
+included without limitation in the term ``modification''.)
+
+  ``Source code'' for a work means the preferred form of the work for
+making modifications to it.  For a library, complete source code means
+all the source code for all modules it contains, plus any associated
+interface definition files, plus the scripts used to control compilation
+and installation of the library.
+
+  Activities other than copying, distribution and modification are not
+covered by this License; they are outside its scope.  The act of
+running a program using the Library is not restricted, and output from
+such a program is covered only if its contents constitute a work based
+on the Library (independent of the use of the Library in a tool for
+writing it).  Whether that is true depends on what the Library does
+and what the program that uses the Library does.
+
+@item
+You may copy and distribute verbatim copies of the Library's
+complete source code as you receive it, in any medium, provided that
+you conspicuously and appropriately publish on each copy an
+appropriate copyright notice and disclaimer of warranty; keep intact
+all the notices that refer to this License and to the absence of any
+warranty; and distribute a copy of this License along with the
+Library.
+
+  You may charge a fee for the physical act of transferring a copy,
+and you may at your option offer warranty protection in exchange for a
+fee.
+
+@item
+You may modify your copy or copies of the Library or any portion
+of it, thus forming a work based on the Library, and copy and
+distribute such modifications or work under the terms of Section 1
+above, provided that you also meet all of these conditions:
+
+@enumerate
+@item
+The modified work must itself be a software library.
+
+@item
+You must cause the files modified to carry prominent notices
+stating that you changed the files and the date of any change.
+
+@item
+You must cause the whole of the work to be licensed at no
+charge to all third parties under the terms of this License.
+
+@item
+If a facility in the modified Library refers to a function or a
+table of data to be supplied by an application program that uses
+the facility, other than as an argument passed when the facility
+is invoked, then you must make a good faith effort to ensure that,
+in the event an application does not supply such function or
+table, the facility still operates, and performs whatever part of
+its purpose remains meaningful.
+
+(For example, a function in a library to compute square roots has
+a purpose that is entirely well-defined independent of the
+application.  Therefore, Subsection 2d requires that any
+application-supplied function or table used by this function must
+be optional: if the application does not supply it, the square
+root function must still compute square roots.)
+@end enumerate
+
+These requirements apply to the modified work as a whole.  If
+identifiable sections of that work are not derived from the Library,
+and can be reasonably considered independent and separate works in
+themselves, then this License, and its terms, do not apply to those
+sections when you distribute them as separate works.  But when you
+distribute the same sections as part of a whole which is a work based
+on the Library, the distribution of the whole must be on the terms of
+this License, whose permissions for other licensees extend to the
+entire whole, and thus to each and every part regardless of who wrote
+it.
+
+Thus, it is not the intent of this section to claim rights or contest
+your rights to work written entirely by you; rather, the intent is to
+exercise the right to control the distribution of derivative or
+collective works based on the Library.
+
+In addition, mere aggregation of another work not based on the Library
+with the Library (or with a work based on the Library) on a volume of
+a storage or distribution medium does not bring the other work under
+the scope of this License.
+
+@item
+You may opt to apply the terms of the ordinary GNU General Public
+License instead of this License to a given copy of the Library.  To do
+this, you must alter all the notices that refer to this License, so
+that they refer to the ordinary GNU General Public License, version 2,
+instead of to this License.  (If a newer version than version 2 of the
+ordinary GNU General Public License has appeared, then you can specify
+that version instead if you wish.)  Do not make any other change in
+these notices.
+
+  Once this change is made in a given copy, it is irreversible for
+that copy, so the ordinary GNU General Public License applies to all
+subsequent copies and derivative works made from that copy.
+
+  This option is useful when you wish to copy part of the code of
+the Library into a program that is not a library.
+
+@item
+You may copy and distribute the Library (or a portion or
+derivative of it, under Section 2) in object code or executable form
+under the terms of Sections 1 and 2 above provided that you accompany
+it with the complete corresponding machine-readable source code, which
+must be distributed under the terms of Sections 1 and 2 above on a
+medium customarily used for software interchange.
+
+  If distribution of object code is made by offering access to copy
+from a designated place, then offering equivalent access to copy the
+source code from the same place satisfies the requirement to
+distribute the source code, even though third parties are not
+compelled to copy the source along with the object code.
+
+@item
+A program that contains no derivative of any portion of the
+Library, but is designed to work with the Library by being compiled or
+linked with it, is called a ``work that uses the Library''.  Such a
+work, in isolation, is not a derivative work of the Library, and
+therefore falls outside the scope of this License.
+
+  However, linking a ``work that uses the Library'' with the Library
+creates an executable that is a derivative of the Library (because it
+contains portions of the Library), rather than a ``work that uses the
+library''.  The executable is therefore covered by this License.
+Section 6 states terms for distribution of such executables.
+
+  When a ``work that uses the Library'' uses material from a header file
+that is part of the Library, the object code for the work may be a
+derivative work of the Library even though the source code is not.
+Whether this is true is especially significant if the work can be
+linked without the Library, or if the work is itself a library.  The
+threshold for this to be true is not precisely defined by law.
+
+  If such an object file uses only numerical parameters, data
+structure layouts and accessors, and small macros and small inline
+functions (ten lines or less in length), then the use of the object
+file is unrestricted, regardless of whether it is legally a derivative
+work.  (Executables containing this object code plus portions of the
+Library will still fall under Section 6.)
+
+  Otherwise, if the work is a derivative of the Library, you may
+distribute the object code for the work under the terms of Section 6.
+Any executables containing that work also fall under Section 6,
+whether or not they are linked directly with the Library itself.
+
+@item
+As an exception to the Sections above, you may also compile or
+link a ``work that uses the Library'' with the Library to produce a
+work containing portions of the Library, and distribute that work
+under terms of your choice, provided that the terms permit
+modification of the work for the customer's own use and reverse
+engineering for debugging such modifications.
+
+  You must give prominent notice with each copy of the work that the
+Library is used in it and that the Library and its use are covered by
+this License.  You must supply a copy of this License.  If the work
+during execution displays copyright notices, you must include the
+copyright notice for the Library among them, as well as a reference
+directing the user to the copy of this License.  Also, you must do one
+of these things:
+
+@enumerate
+@item
+Accompany the work with the complete corresponding
+machine-readable source code for the Library including whatever
+changes were used in the work (which must be distributed under
+Sections 1 and 2 above); and, if the work is an executable linked
+with the Library, with the complete machine-readable ``work that
+uses the Library'', as object code and/or source code, so that the
+user can modify the Library and then relink to produce a modified
+executable containing the modified Library.  (It is understood
+that the user who changes the contents of definitions files in the
+Library will not necessarily be able to recompile the application
+to use the modified definitions.)
+
+@item
+Accompany the work with a written offer, valid for at
+least three years, to give the same user the materials
+specified in Subsection 6a, above, for a charge no more
+than the cost of performing this distribution.
+
+@item
+If distribution of the work is made by offering access to copy
+from a designated place, offer equivalent access to copy the above
+specified materials from the same place.
+
+@item
+Verify that the user has already received a copy of these
+materials or that you have already sent this user a copy.
+@end enumerate
+
+  For an executable, the required form of the ``work that uses the
+Library'' must include any data and utility programs needed for
+reproducing the executable from it.  However, as a special exception,
+the source code distributed need not include anything that is normally
+distributed (in either source or binary form) with the major
+components (compiler, kernel, and so on) of the operating system on
+which the executable runs, unless that component itself accompanies
+the executable.
+
+  It may happen that this requirement contradicts the license
+restrictions of other proprietary libraries that do not normally
+accompany the operating system.  Such a contradiction means you cannot
+use both them and the Library together in an executable that you
+distribute.
+
+@item
+You may place library facilities that are a work based on the
+Library side-by-side in a single library together with other library
+facilities not covered by this License, and distribute such a combined
+library, provided that the separate distribution of the work based on
+the Library and of the other library facilities is otherwise
+permitted, and provided that you do these two things:
+
+@enumerate
+@item
+Accompany the combined library with a copy of the same work
+based on the Library, uncombined with any other library
+facilities.  This must be distributed under the terms of the
+Sections above.
+
+@item
+Give prominent notice with the combined library of the fact
+that part of it is a work based on the Library, and explaining
+where to find the accompanying uncombined form of the same work.
+@end enumerate
+
+@item
+You may not copy, modify, sublicense, link with, or distribute
+the Library except as expressly provided under this License.  Any
+attempt otherwise to copy, modify, sublicense, link with, or
+distribute the Library is void, and will automatically terminate your
+rights under this License.  However, parties who have received copies,
+or rights, from you under this License will not have their licenses
+terminated so long as such parties remain in full compliance.
+
+@item
+You are not required to accept this License, since you have not
+signed it.  However, nothing else grants you permission to modify or
+distribute the Library or its derivative works.  These actions are
+prohibited by law if you do not accept this License.  Therefore, by
+modifying or distributing the Library (or any work based on the
+Library), you indicate your acceptance of this License to do so, and
+all its terms and conditions for copying, distributing or modifying
+the Library or works based on it.
+
+@item
+Each time you redistribute the Library (or any work based on the
+Library), the recipient automatically receives a license from the
+original licensor to copy, distribute, link with or modify the Library
+subject to these terms and conditions.  You may not impose any further
+restrictions on the recipients' exercise of the rights granted herein.
+You are not responsible for enforcing compliance by third parties to
+this License.
+
+@item
+If, as a consequence of a court judgment or allegation of patent
+infringement or for any other reason (not limited to patent issues),
+conditions are imposed on you (whether by court order, agreement or
+otherwise) that contradict the conditions of this License, they do not
+excuse you from the conditions of this License.  If you cannot
+distribute so as to satisfy simultaneously your obligations under this
+License and any other pertinent obligations, then as a consequence you
+may not distribute the Library at all.  For example, if a patent
+license would not permit royalty-free redistribution of the Library by
+all those who receive copies directly or indirectly through you, then
+the only way you could satisfy both it and this License would be to
+refrain entirely from distribution of the Library.
+
+If any portion of this section is held invalid or unenforceable under any
+particular circumstance, the balance of the section is intended to apply,
+and the section as a whole is intended to apply in other circumstances.
+
+It is not the purpose of this section to induce you to infringe any
+patents or other property right claims or to contest validity of any
+such claims; this section has the sole purpose of protecting the
+integrity of the free software distribution system which is
+implemented by public license practices.  Many people have made
+generous contributions to the wide range of software distributed
+through that system in reliance on consistent application of that
+system; it is up to the author/donor to decide if he or she is willing
+to distribute software through any other system and a licensee cannot
+impose that choice.
+
+This section is intended to make thoroughly clear what is believed to
+be a consequence of the rest of this License.
+
+@item
+If the distribution and/or use of the Library is restricted in
+certain countries either by patents or by copyrighted interfaces, the
+original copyright holder who places the Library under this License may add
+an explicit geographical distribution limitation excluding those countries,
+so that distribution is permitted only in or among countries not thus
+excluded.  In such case, this License incorporates the limitation as if
+written in the body of this License.
+
+@item
+The Free Software Foundation may publish revised and/or new
+versions of the Library General Public License from time to time.
+Such new versions will be similar in spirit to the present version,
+but may differ in detail to address new problems or concerns.
+
+Each version is given a distinguishing version number.  If the Library
+specifies a version number of this License which applies to it and
+``any later version'', you have the option of following the terms and
+conditions either of that version or of any later version published by
+the Free Software Foundation.  If the Library does not specify a
+license version number, you may choose any version ever published by
+the Free Software Foundation.
+
+@item
+If you wish to incorporate parts of the Library into other free
+programs whose distribution conditions are incompatible with these,
+write to the author to ask for permission.  For software which is
+copyrighted by the Free Software Foundation, write to the Free
+Software Foundation; we sometimes make exceptions for this.  Our
+decision will be guided by the two goals of preserving the free status
+of all derivatives of our free software and of promoting the sharing
+and reuse of software generally.
+
+@iftex
+@heading NO WARRANTY
+@end iftex
+@ifinfo
+@center NO WARRANTY
+@end ifinfo
+
+@item
+BECAUSE THE LIBRARY IS LICENSED FREE OF CHARGE, THERE IS NO
+WARRANTY FOR THE LIBRARY, TO THE EXTENT PERMITTED BY APPLICABLE LAW.
+EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR
+OTHER PARTIES PROVIDE THE LIBRARY ``AS IS'' WITHOUT WARRANTY OF ANY
+KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+LIBRARY IS WITH YOU.  SHOULD THE LIBRARY PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+@item
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN
+WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY
+AND/OR REDISTRIBUTE THE LIBRARY AS PERMITTED ABOVE, BE LIABLE TO YOU
+FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+LIBRARY (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE LIBRARY TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+@end enumerate
+
+@iftex
+@heading END OF TERMS AND CONDITIONS
+@end iftex
+@ifinfo
+@center END OF TERMS AND CONDITIONS
+@end ifinfo
+
+@page
+@unnumberedsec How to Apply These Terms to Your New Libraries
+
+  If you develop a new library, and you want it to be of the greatest
+possible use to the public, we recommend making it free software that
+everyone can redistribute and change.  You can do so by permitting
+redistribution under these terms (or, alternatively, under the terms of the
+ordinary General Public License).
+
+  To apply these terms, attach the following notices to the library.  It is
+safest to attach them to the start of each source file to most effectively
+convey the exclusion of warranty; and each file should have at least the
+``copyright'' line and a pointer to where the full notice is found.
+
+@smallexample
+@var{one line to give the library's name and a brief idea of what it does.}
+Copyright (C) @var{year}  @var{name of author}
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
+
+You should have received a copy of the GNU Library General Public
+License along with this library; if not, write to the Free
+Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+@end smallexample
+
+Also add information on how to contact you by electronic and paper mail.
+
+You should also get your employer (if you work as a programmer) or your
+school, if any, to sign a ``copyright disclaimer'' for the library, if
+necessary.  Here is a sample; alter the names:
+
+@example
+Yoyodyne, Inc., hereby disclaims all copyright interest in the
+library `Frob' (a library for tweaking knobs) written by James Random Hacker.
+
+@var{signature of Ty Coon}, 1 April 1990
+Ty Coon, President of Vice
+@end example
+
+That's all there is to it!
+
+@c ========================================================================
+
+@page
+@node    Data Type Index, Function Index, Copying, Top
+@comment node-name,     next, previous,		up
+@unnumbered Data Type Index
+
+@printindex tp
+
+@node  Function Index, Concept Index, Data Type Index, Top
+@comment  node-name,  next,  previous,  up
+@unnumbered Function and Method Index
+
+@printindex fn
+
+@node    Concept Index,  , Function Index, Top
+@comment node-name,     next, previous,      up
+@unnumbered Concept Index
+
+@printindex cp
+
+@contents
+@bye
