@@ -58,17 +58,17 @@ namespace CORBA
    */
 
   /* NOTE:
-     According to the OMG CORBA C++ Mapping version 1.1, all 
+     According to the OMG CORBA C++ Mapping version 1.1, all
 	 constructors, copy constructors and assignment operators
 	 should be moved to "protected" section in class declarations
 
 	 Since the current MS Visual C++ 6.0 compiler will cause some
 	 problems to TAO's exception mechanism, so we defer doing this until
-	 we full migrate from VC 6.0 to VC 7.0 and higher version. 
+	 we full migrate from VC 6.0 to VC 7.0 and higher version.
 
      This later change only affect the "Exception.h" file and won't
 	 affect the "Exception.cpp" file.
-  */ 
+  */
 
   class TAO_Export Exception
   {
@@ -84,7 +84,7 @@ namespace CORBA
     virtual ~Exception (void);
 
     // = To throw the exception (when using the standard mapping).
-    virtual void _raise (void) = 0;
+    virtual void _raise (void) const = 0;
 
     // = The static narrow operation.
     static Exception *_downcast (Exception *x);
@@ -182,7 +182,9 @@ namespace CORBA
     static UserException *_downcast (CORBA::Exception *exception);
 
 	/// The const version of narrow operation
-    static const UserException *_downcast(const CORBA::Exception *exception);
+    static const UserException *_downcast (const CORBA::Exception *exception);
+
+    virtual void _raise (void) const = 0;
 
     // = TAO specific extension.
 
@@ -245,6 +247,8 @@ namespace CORBA
 	/// The const version of narrow operation to a SystemException
     static const SystemException *_downcast(const CORBA::Exception *exception);
 
+    virtual void _raise (void) const = 0;
+
     // = TAO-specific extension.
 
     /// Helper for the _downcast operation.
@@ -277,7 +281,6 @@ namespace CORBA
     /// Overridden base class method to help compilers that use
     /// explicit template instantiations going
     virtual CORBA::Exception *_tao_duplicate (void) const {return 0;}
-    virtual void _raise (void) {}
 
   protected:
 
@@ -319,7 +322,7 @@ namespace CORBA
     name (CORBA::ULong code, \
           CORBA::CompletionStatus completed); \
     static name * _downcast (CORBA::Exception* exception); \
-    virtual void _raise (void); \
+    virtual void _raise (void) const; \
     virtual CORBA::TypeCode_ptr _type (void) const; \
     static void _tao_any_destructor (void*); \
     virtual CORBA::Exception *_tao_duplicate (void) const; \

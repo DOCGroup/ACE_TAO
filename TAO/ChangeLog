@@ -8,15 +8,10 @@ Sat Aug 16 02:17:49 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/IOPS.cpp:
 	* tao/Incoming_Message_Queue.cpp:
 	* tao/Interceptor_List.cpp:
-	* tao/Managed_Types.cpp:
-	* tao/NVList.cpp:
-	* tao/Policy_Manager.cpp:
 	* tao/Policy_Validator.cpp:
 	* tao/Resource_Factory.cpp:
 	* tao/Sync_Strategies.cpp:
-	* tao/TAO_Server_Request.cpp:
 	* tao/Tagged_Components.cpp:
-	* tao/Typecode_Constants.cpp:
 	* tao/default_client.cpp:
 	* tao/default_resource.cpp:
 	* tao/default_server.cpp:
@@ -24,6 +19,10 @@ Sat Aug 16 02:17:49 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  No need to include "tao/ORB_Core.h".
 
 	* tao/IIOP_Profile.cpp:
+	* tao/Managed_Types.cpp:
+	* tao/NVList.cpp:
+	* tao/TAO_Server_Request.cpp:
+	* tao/Typecode_Constants.cpp:
 
 	  No need to include "tao/ORB.h".
 
@@ -65,6 +64,7 @@ Sat Aug 16 02:17:49 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ClientRequestInfo_i.cpp:
 	* tao/Environment.cpp:
+	* tao/Policy_Manager.cpp:
 
 	  Nuked trailing whitespace.
 

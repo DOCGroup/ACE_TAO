@@ -67,7 +67,7 @@ CORBA::UnknownUserException::_downcast (CORBA::Exception *ex)
 }
 
 void
-CORBA::UnknownUserException::_raise (void)
+CORBA::UnknownUserException::_raise (void) const
 {
   TAO_RAISE (*this);
 }

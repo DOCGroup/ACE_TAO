@@ -4,7 +4,6 @@
 
 #include "tao/Interceptor_List.h"
 #include "tao/CORBA_String.h"
-#include "tao/ORB_Core.h"
 
 #include "ace/Dynamic_Service.h"
 

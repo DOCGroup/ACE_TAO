@@ -2,14 +2,15 @@
 
 #include "tao/GIOP_Utils.h"
 #include "tao/debug.h"
-#include "tao/ORB_Core.h"
 #include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Utils.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, GIOP_Utils, "$Id$")
+ACE_RCSID (tao,
+           GIOP_Utils,
+           "$Id$")
 
 int
 TAO_GIOP_Utils::

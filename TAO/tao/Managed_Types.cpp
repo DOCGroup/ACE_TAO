@@ -1,13 +1,17 @@
 // $Id$
 
 #include "tao/Managed_Types.h"
-#include "tao/ORB.h"
+#include "tao/CORBA_String.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Managed_Types.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Managed_Types, "$Id$")
+
+ACE_RCSID (tao,
+           Managed_Types,
+           "$Id$")
+
 
 // assignment from CORBA::String_var makes a copy
 TAO_String_Manager&

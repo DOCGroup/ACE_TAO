@@ -69,7 +69,7 @@ CORBA::TypeCode::Bounds::_tao_duplicate (void) const
 }
 
 void
-CORBA::TypeCode::Bounds::_raise (void)
+CORBA::TypeCode::Bounds::_raise (void) const
 {
   TAO_RAISE(*this);
 }
@@ -119,7 +119,7 @@ CORBA::TypeCode::BadKind::_tao_duplicate (void) const
 }
 
 void
-CORBA::TypeCode::BadKind::_raise (void)
+CORBA::TypeCode::BadKind::_raise (void) const
 {
   TAO_RAISE(*this);
 }
