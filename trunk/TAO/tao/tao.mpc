@@ -128,6 +128,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
       PortableInterceptorC.cpp
       PortableInterceptorA.cpp
       PICurrent.cpp
+      PICurrent_Copy_Callback.cpp
       PICurrent_ORBInitializer.cpp
       DynamicC.cpp
       DynamicA.cpp

@@ -1,7 +1,7 @@
 Tue Mar 16 00:49:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	The following changes are an overhaul that address a number of
-	problems with TAO's PICurrent support.
+	problems with TAO's PICurrent support.  [Bug 1215, 1738]
 
 	* tao/PICurrent_Copy_Callback.h:
 	* tao/PICurrent_Copy_Callback.cpp:
