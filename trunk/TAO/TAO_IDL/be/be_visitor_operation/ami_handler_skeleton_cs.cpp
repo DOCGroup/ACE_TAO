@@ -464,9 +464,21 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::
           << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
     }
 
+
   // Invoke the callback method
   *os << "// Invoke the call back method." << be_nl
       << "_tao_reply_handler_object->";
+
+  // check if we are an attribute node in disguise
+  if (this->ctx_->attribute ())
+    {
+      // now check if we are a "get" or "set" operation
+      if (node->nmembers () == 1) // set
+        *os << "set_";
+      else
+        *os << "get_";
+    }
+
   *os << node->local_name () << " (" << be_idt_nl;
 
 

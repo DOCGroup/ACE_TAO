@@ -93,11 +93,22 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
   // Here we do not have our overridden be_interface methods,
   // so the interface type strategy does not work here. 
   // We have to go by foot.
- // Genereate scope name.
- *os << parent->compute_name ("AMI_", "_Handler");
+  // Genereate scope name.
+  *os << parent->compute_name ("AMI_", "_Handler");
 
   // Generate the operation name.
-  *os << "::" << node->local_name ();
+  *os << "::";
+
+  // check if we are an attribute node in disguise
+  if (this->ctx_->attribute ())
+    {
+      // now check if we are a "get" or "set" operation
+      if (node->nmembers () == 1) // set
+        *os << "set_";
+      else
+        *os << "get_";
+    }  
+  *os << node->local_name ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file).

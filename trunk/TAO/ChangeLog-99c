@@ -1,3 +1,50 @@
+Tue Aug 31 8:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp
+	  TAO_IDL/be/be_visitor_interface/interface.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_ch.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_servant_operation_ss.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp:
+	  Fixed bugs in the code generation for attributes when
+	  compiling in AMI mode.
+
+	* tests/AMI/simple-client.cpp,
+	  tests/AMI/simple_client.dsp,
+	  tests/AMI/client.dsp,
+	  tests/AMI/server.dsp,
+	  tests/AMI/test.idl
+	  tests/AMI/test_i.cpp,
+	  tests/AMI/client.conf,
+	  tests/AMI/simple-client-exclusive.conf,
+	  tests/AMI/simple-client-muxed.conf,
+	  tests/AMI/client-global.conf,	  
+	  tests/AMI/test_i.i:
+	  Removed these files because they got replaced by new ones.
+
+	* tests/AMI/ami_test.idl,
+	  tests/AMI/ami_test_i.cpp,
+	  tests/AMI/ami_test_i.h,
+	  tests/AMI/simple_client_exclusive.conf,
+	  tests/AMI/simple_client_muxed.conf,
+	  tests/AMI/AMI_Test_Client.dsp,
+	  tests/AMI/AMI_Test_Simple_Client.dsp,
+	  tests/AMI/AMI_Test_Server.dsp: 
+	  Added these files for the new generation of AMI tests.
+
+	* tests/AMI/Makefile,
+	  tests/AMI/run_test.pl,
+	  tests/AMI/ami_test.dsw,
+	  tests/AMI/simple_client.cpp,
+	  tests/AMI/client.cpp,
+	  tests/AMI/server.cpp:
+	  Modified these files to make the test more readable
+	  and less MT_Client cut&paste like.
+
+
 Mon Aug 30 23:24:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Makefile:
