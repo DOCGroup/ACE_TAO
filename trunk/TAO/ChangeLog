@@ -1,3 +1,13 @@
+Wed Aug 11 07:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Basic/Basic.mpc:
+        * orbsvcs/tests/Notify/Structured_Filter/Struct_Filter.mpc:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Struct_Multi_Filter.mpc:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.mpc:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.mpc:
+          Removed naming as base project, the notifytests base used is also
+          based on naming
+
 Tue Aug 10 18:33:30 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
