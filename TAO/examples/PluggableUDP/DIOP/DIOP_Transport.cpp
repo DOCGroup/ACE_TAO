@@ -65,12 +65,18 @@ TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
 {
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
 
-  size_t temp;
+  /*size_t temp = 0;
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
-  bytes_transferred = 0;
+  bytes_transferred = 0;*/
+  ssize_t bytes_transferred = 0;
+  if (bt)
+    {
+      bytes_transferred = *bt;
+    }
+
   char stack_buffer[ACE_MAX_DGRAM_SIZE];
-  size_t stack_offset=0;  
-  size_t message_length=0;  
+  size_t stack_offset=0;
+  size_t message_length=0;
 
   iovec iov[IOV_MAX];
   int iovcnt = 0;
@@ -83,7 +89,7 @@ TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
       while (current_message_block != 0)
         {
           size_t current_message_block_length =
-            		current_message_block->length ();
+                        current_message_block->length ();
 
           message_length += current_message_block_length;
 
@@ -94,7 +100,7 @@ TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
 
               // Pluggable_Messaging::transport_message only
               // cares if it gets -1 or 0 so we can return a
-              // partial length and it will think all has gone 
+              // partial length and it will think all has gone
               // well.
 
 
@@ -108,7 +114,7 @@ TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
                               ACE_MAX_DGRAM_SIZE));
                 }
 
-              return 1;			// Pretend it is o.k.
+              return 1;                 // Pretend it is o.k.
               // This is a problem in the message
               // catalogue.
             }
@@ -140,7 +146,7 @@ TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
                   current_message_block_length);
                   stack_offset +=  current_message_block_length;
 
-                  iovcnt = IOV_MAX;	// We just stay with the last buffer.
+                  iovcnt = IOV_MAX;     // We just stay with the last buffer.
                   iov[iovcnt-1].iov_base = stack_buffer;
                   iov[iovcnt-1].iov_len  = stack_offset;
                 }
@@ -161,11 +167,11 @@ TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
                   ACE_TEXT ("iovcnt is %d \n."),iovcnt));
     }
 
-  // Send the buffers. 
+  // Send the buffers.
 
   if (iovcnt != 0)
     {
-      bytes_transferred = 
+      bytes_transferred =
         this->connection_handler_->dgram ().send (iov,
                                                   iovcnt,
                                                   addr);
@@ -192,7 +198,7 @@ TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
                       ACE_TEXT (" %p\n\n"),
                       ACE_TEXT ("Error returned from transport:")));
         }
-      return 1;	// Fake a good return.
+      return 1; // Fake a good return.
     }
 
   // Return total bytes transferred.

@@ -1,3 +1,8 @@
+Thu Apr  5 11:30:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp: Fixed a nagging
+	  warning.  
+
 Thu Apr  5 11:04:52 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
         * tao/RT_Endpoint_Selector_Factory.{cpp,h}:
@@ -194,7 +199,7 @@ Wed Apr  4 08:35:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           uninlined that method. The method is not on the critical path
           and so shouldn't matter.
 
-Wed Apr  4 08:05:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+>>Wed Apr  4 08:05:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp: Added a missing
           #include to fix compile error on Linux.
