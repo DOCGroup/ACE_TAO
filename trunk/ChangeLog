@@ -1,3 +1,10 @@
+Thu Jan  6 08:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_read.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.cpp:
+          Added includes to fix compile errors in Solaris 10 build
+
 Wed Jan  5 14:06:03 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-aix-4.x.h:
