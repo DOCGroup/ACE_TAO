@@ -1,3 +1,13 @@
+Fri Oct 15 17:33:18 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/ACE.h:
+	* ace/OS_NS_signal.h: Include config-lite.h instead of config-all.h.
+	  It drags in too much and some trips up the aC++ compiler. Not sure
+	  why... it's a tangled web.
+
+	* ace/Message_Block.h: Add #include "ace/config-lite.h" since it needs
+	  to know config settings.
+
 Fri Oct 15 16:44:29 2004  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_stdlib.cpp (mkstemp_emulation): Related to:
