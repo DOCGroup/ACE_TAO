@@ -67,7 +67,7 @@ int
 Logging_Supplier::init ()
 {
   this->get_options (argc_, argv_);
-  return this->dOVE_Supplier_.connect ("MIB_unknown");
+  return this->dOVE_Supplier_.connect ();
 }
 
 void

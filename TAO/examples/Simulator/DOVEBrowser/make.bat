@@ -1,9 +1,9 @@
 @REM This File generates the necessary classes for Visibroker and JDK1.2
 @REM call it like: 
 @REM
-@REM make VB    (makes all VB classes)
-@REM make JDK   (makes all JDK classes)
-@REM make clean (removes classes, IDL generated files)
+@REM make VB     (makes all VB classes)
+@REM make JDK    (makes all JDK classes)
+@REM make clean  (removes classes, IDL generated files)
 @REM make realclean (updates IDL files, does make clean)
 @REM
 
@@ -22,6 +22,7 @@
 @if %1. == setup. goto setup
 @if %1. == realclean. goto realclean
 @if %1. == clean. goto clean
+@if %1. == vbjava. goto VBJAVA
 
 
 @echo Usage:
@@ -138,6 +139,9 @@ REM This part build with VB
 @idl2java CosNaming.idl
 @echo idl2java CosTimeBase.idl
 @idl2java CosTimeBase.idl
+
+:VBJAVA
+
 @echo vbjc *.java
 @vbjc *.java
 

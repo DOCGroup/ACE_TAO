@@ -39,7 +39,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
   // Store the number of received events
   private int total_received_ = 0;
   private org.omg.CORBA.ORB orb_;
-  private DataHandler dataHandler_;
+  private MTDataHandlerAdapter dataHandlerAdapter_;
   // private RtecScheduler.RT_InfoHolder rt_info_;
   private RtecScheduler.handle_tHolder rt_info_;
   private RtecEventChannelAdmin.EventChannel channel_admin_;
@@ -49,17 +49,19 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
   public PushConsumer (org.omg.CORBA.ORB orb, DataHandler dataHandler)
     {
       orb_ = orb;
-      dataHandler_ = dataHandler;
+      dataHandlerAdapter_ = new MTDataHandlerAdapter (dataHandler);
+      dataHandlerAdapter_.start ();
     }
 
 
   public void push (RtecEventComm.Event[] events)
     {
       if (total_received_ < 5)
-        System.out.println ("Demo Consumer: Received an event! ->Number: " + total_received_);
+        System.out.println ("Demo Consumer: Received an event set! ->Number: " 
+                            + total_received_);
       else if (total_received_ == 5)
-        System.out.println ("Demo Consumer: Everything is fine. Going to be mute.");
-
+        System.out.println ("Demo Consumer: Everything is fine. " +
+                            "Going to be mute.");
 
       if (events.length == 0)
         {
@@ -68,21 +70,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
       else
         {
           total_received_++;
-
-          for (int i = 0; i < events.length; ++i)
-            {
-              if(events[i].header.type == ACE_ES_EVENT_NOTIFICATION)
-                {
-                  try
-                    {
-                      dataHandler_.update (events[i]);
-                    }
-                  catch(org.omg.CORBA.SystemException e)
-                    {
-                      System.err.println(e);
-                    }
-                }
-            }
+          dataHandlerAdapter_.push (events);
         }
     }
 

@@ -11,15 +11,16 @@ endif # ! TAO_ROOT
 TAO_IDLFLAGS +=  -I$(TAO_ROOT)/orbsvcs/orbsvcs
 IDL_SRC = NavWeapC.cpp NavWeapS.cpp
 IDL_HDR = NavWeapC.h
-EVENT_TEST_SRCS = Event_Sup.cpp Logging_Sup.cpp Event_Con.cpp DOVE_Supplier.cpp
+EVENT_TEST_SRCS = Event_Sup.cpp Logging_Sup.cpp DualEC_Sup.cpp Event_Con.cpp DOVE_Supplier.cpp
 
 LSRC = $(IDL_SRC) $(EVENT_TEST_SRCS)
 
 EVENT_SUP_OBJS = NavWeapC.o Event_Sup.o DOVE_Supplier.o
 EVENT_CON_OBJS = NavWeapC.o Event_Con.o
 LOGGING_SUP_OBJS = NavWeapC.o Logging_Sup.o DOVE_Supplier.o
+DUALEC_SUP_OBJS = NavWeapC.o DualEC_Sup.o DOVE_Supplier.o
 
-BIN = Event_Sup Logging_Sup Event_Con
+BIN = Event_Sup Logging_Sup DualEC_Sup Event_Con
 
 LDLIBS = -lorbsvcs -lTAO
 
@@ -56,6 +57,8 @@ NavWeap.idl: ../NavWeap.idl
 Event_Sup: $(addprefix $(VDIR),$(EVENT_SUP_OBJS))
 
 Logging_Sup: $(addprefix $(VDIR),$(LOGGING_SUP_OBJS))
+
+DualEC_Sup: $(addprefix $(VDIR),$(DUALEC_SUP_OBJS))
 
 Event_Con: $(addprefix $(VDIR),$(EVENT_CON_OBJS))
 

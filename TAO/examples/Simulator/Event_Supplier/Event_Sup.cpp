@@ -59,7 +59,7 @@ int
 Event_Supplier::init ()
 {
   this->get_options (argc_, argv_);
-  return this->dOVE_Supplier_.connect ("MIB_unknown");
+  return this->dOVE_Supplier_.connect ();
 }
 
 void
@@ -76,7 +76,7 @@ Event_Supplier::start_generating_events (void)
   if (schedule_iter.done ())
     {
       ACE_ERROR ((LM_ERROR,
-                  "DOVE_Supplier::start_generating_events: "
+                  "Event_Supplier::start_generating_events: "
                   "there is no scheduling data\n"));
       return;
     }
@@ -154,7 +154,7 @@ Event_Supplier::load_schedule_data
                   if (scan_count != 7)
                     {
                       ACE_ERROR ((LM_ERROR,
-                                  "DOVE_Supplier::start_generating_events: "
+                                  "Event_Supplier::start_generating_events: "
                                   "scanned incorrect number of data elements: %d\n", scan_count));
 
                       delete data;
@@ -169,7 +169,7 @@ Event_Supplier::load_schedule_data
       else
         {
           ACE_ERROR ((LM_ERROR,
-                      "DOVE_Supplier::start_generating_events: "
+                      "Event_Supplier::start_generating_events: "
                       "could not open input file [%s].\n",
                       this->input_file_name_));
           return;
