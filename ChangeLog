@@ -1,5 +1,8 @@
 Sat Mar  5 08:48:02 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
+	* tests/QtReactor_Test.cpp: Reformatted this file so it conforms to
+	  the ACE programming style guide.
+
 	* netsvcs/lib/TS_Clerk_Handler.cpp (parse_args): Fixed a typo
 	  where ACE_TESXT should be ACE_TEXT.  Thanks to 
 	  Sean Parker <supinlick@yahoo.com> for reporting this.
