@@ -20,7 +20,7 @@
 
 namespace Deployment
 {
-  struct PlanConnectionDescription; 
+  struct PlanSubcomponentPortEndpoint; 
 }
 
 namespace CIAO
@@ -29,7 +29,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     
-   struct PlanConnectionDescription;
+   struct PlanSubcomponentPortEndpoint;
    
    /*
     * @class PSPE_Handler
