@@ -31,6 +31,8 @@
 #include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Atomic_Op.h"
+
 
 ACE_RCSID(tests, Future_Test, "$Id$")
 

@@ -52,7 +52,7 @@ ACE_Command_Base::~ACE_Command_Base (void)
 ////////////////////////////////////////////////////////////
 
 ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE 
+ACE_INLINE
 u_long
 ACE_Hash<char>::operator () (char t) const
 {
@@ -123,6 +123,7 @@ ACE_Hash<ACE_TCHAR *>::operator () (const ACE_TCHAR *t) const
   return ACE::hash_pjw (t);
 }
 
+/***********************************************************************/
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
 ACE_Equal_To<const ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
@@ -137,6 +138,41 @@ ACE_Equal_To<ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *r
   return !ACE_OS::strcmp (lhs, rhs);
 }
 
+ACE_INLINE int
+ACE_Equal_To<ACE_UINT16>::operator () (const ACE_UINT16 lhs, const ACE_UINT16 rhs) const
+{
+  return (lhs == rhs);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE int
+ACE_Equal_To<ACE_INT16>::operator () (const ACE_INT16 lhs, const ACE_INT16 rhs) const
+{
+  return (lhs == rhs);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE int
+ACE_Equal_To<ACE_UINT32>::operator () (const ACE_UINT32 lhs, const ACE_UINT32 rhs) const
+{
+  return (lhs == rhs);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE int
+ACE_Equal_To<ACE_INT32>::operator () (const ACE_INT32 lhs, const ACE_INT32 rhs) const
+{
+  return (lhs == rhs);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE int
+ACE_Equal_To<ACE_UINT64>::operator () (const ACE_UINT64 lhs, const ACE_UINT64 rhs) const
+{
+  return (lhs == rhs);
+}
+
+/****************************************************************************/
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
 ACE_Less_Than<const ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const

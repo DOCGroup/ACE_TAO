@@ -19,7 +19,9 @@
 
 #include "ace/Auto_IncDec_T.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Atomic_Op.h"
 #include "tests/test_config.h"
+
 
 ACE_RCSID(tests, Auto_IncDec_Test, "Auto_IncDec_Test.cpp, by Edan Ayal")
 
@@ -28,7 +30,7 @@ ACE_RCSID(tests, Auto_IncDec_Test, "Auto_IncDec_Test.cpp, by Edan Ayal")
 // Default number of threads.
 static size_t n_threads = 15;
 
-typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> INTERLOCKED_INT; 
+typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> INTERLOCKED_INT;
 static INTERLOCKED_INT current_threads_in_first_section;
 static INTERLOCKED_INT current_threads_in_second_section;
 
@@ -96,7 +98,7 @@ main (int, ACE_TCHAR *[])
   current_threads_in_first_section = 0;
   current_threads_in_second_section = 0;
 
-  if (ACE_Thread_Manager::instance ()->spawn_n 
+  if (ACE_Thread_Manager::instance ()->spawn_n
       (n_threads,
        ACE_THR_FUNC (worker),
        0,

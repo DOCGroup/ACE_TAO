@@ -23,6 +23,7 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Reactor.h"
+#include "ace/Atomic_Op.h"
 
 ACE_RCSID(tests, Reactors_Test, "$Id$")
 
@@ -62,6 +63,8 @@ private:
 int Test_Task::task_count_ = 0;
 
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> done_count = MAX_TASKS * 2;
+
+
 
 static ACE_Recursive_Thread_Mutex recursive_lock;
 

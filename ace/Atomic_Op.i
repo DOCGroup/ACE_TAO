@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++ (void)
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++");
@@ -41,7 +41,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex (const ACE_Atomic_Op_Ex<ACE_L
   *this = rhs; // Invoke the assignment operator.
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++ (int)
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++");
@@ -122,7 +122,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value (void) const
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value");
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, this->value_);
-  return this->value_;    
+  return this->value_;
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE &
@@ -132,7 +132,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value_i (void)
   // full, unrestricted access to the underlying value.  This method
   // will usually be used in conjunction with explicit access to the
   // lock.  Use with care ;-)
-  return this->value_;    
+  return this->value_;
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE void

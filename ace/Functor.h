@@ -23,7 +23,7 @@
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  *  @author and on STL-style functor implementations originally done by
- *  @author Irfan Pyarali  <irfan@cs.wustl.edu> 
+ *  @author Irfan Pyarali  <irfan@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -245,6 +245,82 @@ public:
   int operator () (const ACE_TCHAR *lhs,
                    const ACE_TCHAR *rhs) const;
 };
+
+ ACE_TEMPLATE_SPECIALIZATION
+ /**
+ * @class ACE_Equal_To<ACE_UINT16>
+ *
+ * @brief Function object for determining whether two unsigned
+ * 16 bit ints are equal.
+ */
+class ACE_Export ACE_Equal_To<ACE_UINT16>
+{
+public:
+  /// Simply calls built-in operators
+  int operator () (const ACE_UINT16 lhs,
+                   const ACE_UINT16 rhs) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Equal_To<ACE_INT16>
+ *
+ * @brief Function object for determining whether two
+ * 16 bit ints are equal.
+ */
+class ACE_Export ACE_Equal_To<ACE_INT16>
+{
+public:
+  /// Simply calls built-in operators
+  int operator () (const ACE_INT16 lhs,
+                   const ACE_INT16 rhs) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Equal_To<ACE_UINT32>
+ *
+ * @brief Function object for determining whether two unsigned
+ * 32 bit ints are equal.
+ */
+class ACE_Export ACE_Equal_To<ACE_UINT32>
+{
+public:
+  /// Simply calls built-in operators
+  int operator () (const ACE_UINT32 lhs,
+                   const ACE_UINT32 rhs) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Equal_To<ACE_INT32>
+ *
+ * @brief Function object for determining whether two
+ * 32 bit ints are equal.
+ */
+class ACE_Export ACE_Equal_To<ACE_INT32>
+{
+public:
+  /// Simply calls built-in operators
+  int operator () (const ACE_INT32 lhs,
+                   const ACE_INT32 rhs) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Equal_To<ACE_UINT64>
+ *
+ * @brief Function object for determining whether two unsigned
+ * 64 bit ints are equal.
+ */
+class ACE_Export ACE_Equal_To<ACE_UINT64>
+{
+public:
+  /// Simply calls built-in operators
+  int operator () (const ACE_UINT64 lhs,
+                   const ACE_UINT64 rhs) const;
+};
+
 
 ACE_TEMPLATE_SPECIALIZATION
 /**

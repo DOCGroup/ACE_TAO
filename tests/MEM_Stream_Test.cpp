@@ -28,6 +28,7 @@
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Singleton.h"
+#include "ace/Atomic_Op.h"
 
 ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
