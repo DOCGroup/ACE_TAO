@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client): messaging, taoexe, portableserver {
+project(*client): taoclient, messaging, portableserver {
   Source_Files {
     TestC.cpp
     client.cpp

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, utils, portableserver, iortable {
+project(*Server): taoserver, utils, iortable {
   Source_Files {
     INS_i.cpp
     Server_i.cpp
@@ -9,7 +9,7 @@ project(*Server): taoexe, utils, portableserver, iortable {
   }
 }
 
-project(*Client): taoexe {
+project(*Client): taoclient {
   Source_Files {
     INSC.cpp
     INS_test_client.cpp
