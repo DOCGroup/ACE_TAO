@@ -9,12 +9,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 
-char *controller_ior_ = 0;
 int ctrl_off = 0;
 long work = 80;
+typedef ACE_Unbounded_Stack<ACE_CString> STRING_STACK;
+typedef ACE_Unbounded_Stack<Priority_Test::Controller_var> CTRL_STACK;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, char *argv[], STRING_STACK &iors)
 {
   ACE_Get_Opt get_opts (argc, argv, "k:fw:");
   int c;
@@ -24,7 +25,7 @@ parse_args (int argc, char *argv[])
       {
 
       case 'k':
-        controller_ior_ = get_opts.opt_arg ();
+        iors.push (get_opts.opt_arg ());
         break;
 
       case 'f':                 // Turn off controller
@@ -47,7 +48,7 @@ parse_args (int argc, char *argv[])
                           -1);
       }
 
-  if (controller_ior_ == 0 && ctrl_off == 0)
+  if (iors.is_empty () && ctrl_off == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please provide controller IOR\n"),
                       -1);
@@ -63,28 +64,56 @@ main (int argc, char *argv[])
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
 
-      if (parse_args (argc, argv) != 0)
+      STRING_STACK IORs;
+
+      if (parse_args (argc, argv, IORs) != 0)
         return -1;
 
-      CORBA::Object_var obj
-        = orb->string_to_object (controller_ior_
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      Priority_Test::Controller_var ctrlr
-        = Priority_Test::Controller::_narrow (obj.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CTRL_STACK controllers;
 
-      if (CORBA::is_nil (ctrlr.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire 'Controller' objref\n"), -1);
+      while (!IORs.is_empty ())
+        {
+          ACE_CString ior;
+          IORs.top (ior);
+          CORBA::Object_var obj
+            = orb->string_to_object (ior.c_str ()
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      if (ctrl_off != 0)
-        ctrlr->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
-      else
-        ctrlr->start (work
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          Priority_Test::Controller_var ctrlr
+            = Priority_Test::Controller::_narrow (obj.in ()
+                                                  ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (CORBA::is_nil (ctrlr.in ()))
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          "Unable to acquire 'Controller' objref\n",
+                          ior.c_str ()));
+            }
+          else
+            {
+              controllers.push (ctrlr);
+            }
+          IORs.pop (ior);
+
+        }
+
+      while (! controllers.is_empty ())
+        {
+          Priority_Test::Controller_var ctrlr;
+          controllers.top (ctrlr);
+
+          if (ctrl_off != 0)
+            ctrlr->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
+          else
+            ctrlr->start (work
+                          ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          controllers.pop (ctrlr);
+        }
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

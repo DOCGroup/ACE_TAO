@@ -13,6 +13,8 @@
 #include "CIAO_common.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
+#include "ace/Env_Value_T.h"
+#include "ace/Sched_Params.h"
 
 char *ior_file_name_ = 0;
 char *callback_ior_ = 0;
@@ -33,11 +35,11 @@ parse_args (int argc, char *argv[])
 
       case 'o':  // get the file name to write to
        ior_file_name_ = get_opts.opt_arg ();
-      break;
+       break;
 
       case 'k':  // get the activator callback IOR
        callback_ior_ = get_opts.opt_arg ();
-      break;
+       break;
 
       case '?':  // display help for use of the server.
       default:
@@ -46,6 +48,7 @@ parse_args (int argc, char *argv[])
                            "-n Don't not try to callback ServerActivator (testing)\n"
                            "-o <ior_output_file>\n"
                            "-k <activator_callback_ior>\n"
+                           "-f: Enable to run in FIFO scheduling class\n"
                            "\n",
                            argv [0]),
                           -1);
@@ -61,6 +64,33 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  // Define CIAO_FIFO_SCHED=1 to run component server in FIFO_SCHED class
+  ACE_Env_Value<int> envar ("CIAO_FIFO_SCHED", 0);
+  if (envar != 0)
+    {
+      int priority =
+        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
+         + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                  priority);
+      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+
+      if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
+                                                  priority,
+                                                  ACE_SCOPE_PROCESS)) != 0)
+        {
+          if (ACE_OS::last_error () == EPERM)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "ComponentServer (%P|%t): user is not superuser, "
+                          "test runs in time-shared class\n"));
+            }
+          else
+            ACE_ERROR ((LM_ERROR,
+                        "ComponentServer (%P|%t): sched_params failed\n"));
+        }
+    }
+
   ACE_TRY_NEW_ENV
     {
       // Initialize orb

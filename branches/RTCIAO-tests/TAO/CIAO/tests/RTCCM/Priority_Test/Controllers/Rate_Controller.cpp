@@ -208,7 +208,7 @@ extern "C" CONTROLLER_EXEC_Export ::Components::HomeExecutorBase_ptr
 createControllerHome50_Impl (void)
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "extern \"C\" ::createControllerHome_Impl (25hz)\n"));
+    ACE_DEBUG ((LM_DEBUG, "extern \"C\" ::createControllerHome_Impl (50hz)\n"));
   return new MyImpl::Rate_Controller_Home_i (50);
 }
 
@@ -216,6 +216,6 @@ extern "C" CONTROLLER_EXEC_Export ::Components::HomeExecutorBase_ptr
 createControllerHome75_Impl (void)
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "extern \"C\" ::createControllerHome_Impl (25hz)\n"));
+    ACE_DEBUG ((LM_DEBUG, "extern \"C\" ::createControllerHome_Impl (75hz)\n"));
   return new MyImpl::Rate_Controller_Home_i (75);
 }

@@ -22,19 +22,21 @@ if ($CIAO_ROOT eq "") {
 
 
 $status = 0;
-$assembly = PerlACE::LocalFile ("demo-50.cad");
+$assembly = PerlACE::LocalFile ("no-rt-3rates.cad");
 $deploy_config = PerlACE::LocalFile ("test.dat");
 #$deploy_config = PerlACE::LocalFile ("remote.dat");
 $daemon_ior = PerlACE::LocalFile ("daemon.ior");
 $am_ior = PerlACE::LocalFile ("am.ior");
-$controller_ior = PerlACE::LocalFile ("controller.ior");
+$c25_ior = PerlACE::LocalFile ("c25.ior");
+$c50_ior = PerlACE::LocalFile ("c50.ior");
+$c75_ior = PerlACE::LocalFile ("c75.ior");
 $cookie = PerlACE::LocalFile ("ck_demo_deployment");
 
 ## The following control how to iterate thru various work amount
 $start_work = 10;
 $end_work = 300;
 $work_step = 300;
-$run_time = 30;                 # run for $run_time sec.
+$run_time = 10;                 # run for $run_time sec.
 
 unlink $daemon_ior;
 unlink $am_ior;
@@ -104,7 +106,7 @@ if ($AD->SpawnWaitKill (60) == -1) {
 }
 
 ## Make sure the application is up and running
-if (PerlACE::waitforfile_timed ($controller_ior, 15) == -1) {
+if (PerlACE::waitforfile_timed ($c75_ior, 15) == -1) {
     print STDERR "ERROR: Could not find controller ior file <$controller_ior>\n";
     $AM->Kill ();
     $DS->Kill ();
@@ -119,7 +121,7 @@ if ($test_deploy == 0) {
 
 #Start the client to send the trigger message
         $CL = new PerlACE::Process ("../Controllers/client",
-                                    "-k file://$controller_ior -w $work");
+                                    "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior -w $work");
         $CL->SpawnWaitKill(60);
 
 ## Now wait for the test to complete.  Need to figure out a way to
@@ -128,7 +130,7 @@ if ($test_deploy == 0) {
 
 #Start the client to send the trigger message
         $CL = new PerlACE::Process ("../Controllers/client",
-                                    "-k file://$controller_ior -f");
+                                    "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior -f");
         $CL->SpawnWaitKill(60);
     }
 }
