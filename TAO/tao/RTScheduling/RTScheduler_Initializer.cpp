@@ -74,10 +74,10 @@ void
   
   CORBA::Object_var safe_current = current_obj;
   
-  info->register_initial_reference ("RTScheduler_Current",
-                                    current_obj
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    info->register_initial_reference ("RTScheduler_Current",
+				      current_obj
+				      ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
   Client_Interceptor *client_interceptor;
   ACE_NEW_THROW_EX (client_interceptor,
