@@ -13,7 +13,6 @@ using namespace StringLiterals;
 using namespace CCF;
 using namespace CIDL;
 using namespace SyntaxTree;
-using namespace Traversal;
 
 namespace
 {
