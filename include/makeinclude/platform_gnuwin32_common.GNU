@@ -95,7 +95,7 @@ SHLIBBUILD = \
   && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
   && sed 's/;.*$$//g' < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
   && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
-    -shared -o $@ $(LDFLAGS) $(VSHDIR)/$@.def \
+    -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
     $(VSHOBJS1) $(ACE_SHLIBS) $(LIBS)
 
 ifneq ($(GNUWIN32_DLL_ALLOW_EXECP), 1)
