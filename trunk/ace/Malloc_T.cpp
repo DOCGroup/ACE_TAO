@@ -521,8 +521,8 @@ template <ACE_MEM_POOL_1, class LOCK>
 ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::ACE_Malloc_Iterator (ACE_Malloc<ACE_MEM_POOL_2, LOCK> &malloc, 
 								const char *name)
   : malloc_ (malloc), 
-    guard_ (malloc_.lock_),
     curr_ (0),
+    guard_ (malloc_.lock_),
     name_ (name != 0 ? ACE_OS::strdup (name) : 0)
 {
   ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::ACE_Malloc_Iterator");
@@ -542,7 +542,7 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::~ACE_Malloc_Iterator (void)
 
 template <ACE_MEM_POOL_1, class LOCK> int
 ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::next (void *&next_entry, 
-					   char *&name)
+						 char *&name)
 {
   ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::next");
  

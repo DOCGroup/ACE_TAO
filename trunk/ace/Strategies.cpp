@@ -291,7 +291,7 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler");
 
-  if (this->peer_acceptor_.accept (*svc_handler) == -1)
+  if (this->peer_acceptor_.accept (svc_handler->peer ()) == -1)
     {
       svc_handler->close (0);
       return -1;

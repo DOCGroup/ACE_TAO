@@ -138,8 +138,15 @@ public:
   // on success and -1 if not found.
 
   int thr_self (ACE_hthread_t &);
-  // Passes out the "real" handle to the thread, caching it if
-  // necessary in TSS to speed up subsequent lookups.
+  // Passes out the "real" handle to the calling thread, caching it if
+  // necessary in TSS to speed up subsequent lookups.  This is
+  // necessary since on some platforms (e.g., Win32) we can't get this
+  // handle via direct method calls.
+
+  ACE_thread_t thr_self (void);
+  // Return the unique ID of the thread.  This is not strictly
+  // necessary (because a thread can always just call
+  // <ACE_Thread::thr_self>).  However, we put it here to be complete.
 
   // = Suspend methods, which isn't supported on POSIX pthreads (will not block).
   int suspend_all (void);
