@@ -1,3 +1,118 @@
+Mon Mar 04 11:35:34 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.dsw:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.dsp:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.dsp:
+	  Add project files and workspaces for the Federated_Roundtrip test.
+
+	* orbsvcs/performance-tests/RTEvent/RTEvent.dsw:
+	  Add big workspace to simplify compilation.
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.dsp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.dsp:
+
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Pair.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Pair.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Pair.cpp:
+	  Add new class to factor out the code required to setup a
+	  Supplier/Consumer pair (without the loopback).
+
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Pair.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Pair.cpp:
+	  Add support to activate the loopack on a creator-supplied POA.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.cpp:
+	  Use the Client_Pair class to implement this one.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Consumer.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Consumer.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Supplier.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Supplier.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Supplier.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Supplier.cpp:
+	  Add support to activate the object on a creator-supplier POA.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.cpp:
+	  New helper class to initialize the low priority consumers often
+	  found in the EC tests.  It creates the supplier/consumer pairs,
+	  connects them to the EC (and automatically disconnects them),
+	  activate a thread for each supplier, and if needed it can
+	  collect statistics about all of them.
+
+	* orbsvcs/performance-tests/RTEvent/lib/PriorityBand_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/PriorityBand_Setup.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/PriorityBand_Setup.cpp:
+	  New class to setup the PriorityBand policy.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.cpp:
+	  New accessor to find the process priority.
+
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Task.h:
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Task.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Task.cpp:
+	  Add smart-pointer operator-> to find the underlying ORB.
+
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Task_Activator.h:
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Task_Activator.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Task_Activator.cpp:
+	  New helper class to automatically startup the ORB::run() method
+	  on a different thread, shutdown the ORB and wait until it
+	  completes the event loop.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTPOA_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/RTPOA_Setup.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/RTPOA_Setup.cpp:
+	  New helper class to configure a POA with the correct Real-time
+	  properties.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.cpp:
+	  Meta-configuration class, it is a single stop shopping class to
+	  configure the POA, the policies, RTCORBA, etc. etc.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task_Stopper.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task_Stopper.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task_Stopper.cpp:
+	  Add helper class to automatically startup a Send_Task, and then
+	  stop it and wait for it (in the destructor).
+
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.cpp:
+	  Improved code to handle the case where the number of iterations
+	  is 0, i.e. it must run forever.
+
+	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.cpp:
+	  Fixed constructor with multiple defaults.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+	  Add all new files to the project file and (hopefully!) to the
+	  Makefile too.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Task_Activator.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Task_Activator.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Task_Activator.cpp:
+	  Helper class to activate an ACE_Task in the constructor, and
+	  wait for it in the destructor.
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.cpp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.cpp:
+	  Use all the new helper classes to re-write both tests.  The
+	  resulting code is shorter, more exception-safe/neutral and it
+	  actually runs on NT :-)
+
 Mon Mar 04 11:30:06 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile:

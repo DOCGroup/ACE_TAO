@@ -19,6 +19,22 @@ SyncScope_Setup::SyncScope_Setup (CORBA::ORB_ptr orb,
                                   Messaging::SyncScope /*value*/
                                   ACE_ENV_ARG_DECL)
 {
+  this->init (orb, value
+              ACE_ENV_ARG_PARAMETER);
+}
+
+SyncScope_Setup::SyncScope_Setup (CORBA::ORB_ptr orb
+                                  ACE_ENV_ARG_DECL)
+{
+  this->init (orb, Messaging::SYNC_WITH_TARGET
+              ACE_ENV_ARG_PARAMETER);
+}
+
+void
+SyncScope_Setup::init (CORBA::ORB_ptr orb,
+                       Messaging::SyncScope value
+                       ACE_ENV_ARG_DECL)
+{
   CORBA::PolicyManager_var policy_manager =
     RIR_Narrow<CORBA::PolicyManager>::resolve (orb,
                                                "ORBPolicyManager"
@@ -50,4 +66,3 @@ SyncScope_Setup::SyncScope_Setup (CORBA::ORB_ptr orb,
 SyncScope_Setup::~SyncScope_Setup (void)
 {
 }
-

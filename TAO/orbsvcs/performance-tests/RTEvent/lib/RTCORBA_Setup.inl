@@ -11,3 +11,9 @@ RTCORBA_Setup::lanes (void) const
 {
   return this->lanes_;
 }
+
+ACE_INLINE RTCORBA::Priority
+RTCORBA_Setup::process_priority (void) const
+{
+  return this->process_priority_;
+}

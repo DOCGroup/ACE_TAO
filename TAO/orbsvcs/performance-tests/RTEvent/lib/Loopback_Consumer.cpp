@@ -14,10 +14,12 @@ ACE_RCSID(PERF_RTEC, Loopback_Consumer, "$Id$")
 Loopback_Consumer::
 Loopback_Consumer (CORBA::Long experiment_id,
                    CORBA::Long event_type,
-                   Loopback_Supplier *supplier)
+                   Loopback_Supplier *supplier,
+                   PortableServer::POA_ptr poa)
   : experiment_id_ (experiment_id)
   , event_type_ (event_type)
   , supplier_ (Servant_var<Loopback_Supplier>::duplicate (supplier))
+  , default_POA_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
@@ -105,4 +107,11 @@ Loopback_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->proxy_supplier_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
+}
+
+PortableServer::POA_ptr
+Loopback_Consumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

@@ -32,9 +32,15 @@ public:
   /// Run the event loop
   int svc (void);
 
+  /// Smart-pointer operator
+  CORBA::ORB_ptr operator-> (void) const;
+
 private:
   CORBA::ORB_var orb_;
 };
 
+#if defined(__ACE_INLINE__)
+#include "ORB_Task.inl"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_PERF_RTEC_ORB_TASK_H */

@@ -1,5 +1,5 @@
 /**
- * @file SyncScope_Setup.inl
+ * @file Low_Priority_Setup.inl
  *
  * $Id$
  *

@@ -8,6 +8,10 @@
 
 #include "ORB_Task.h"
 
+#if !defined(__ACE_INLINE__)
+#include "ORB_Task.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID(TAO_PERF_RTEC, ORB_Task, "$Id$")
 
 ORB_Task::ORB_Task (CORBA::ORB_ptr orb)

@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_Svc_Utils.lib TAO_RTEvent.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\..\..\bin\RTECPerf.dll" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_Svc_Utils.lib TAO_RTEvent.lib TAO_RTCORBAEvent.lib TAO_Messaging.lib TAO_RTCORBA.lib TAO_RTPortableServer.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\..\..\bin\RTECPerf.dll" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\RTCORBA" /libpath:"..\..\..\..\tao\RTPortableServer" /libpath:"..\..\..\..\tao\Messaging" /libpath:"..\..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "RTECPerf DLL - Win32 Debug"
 
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_Svc_Utilsd.lib TAO_RTEventd.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\..\bin\RTECPerfd.dll" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_Svc_Utilsd.lib TAO_RTEventd.lib TAO_RTCORBAEventd.lib TAO_Messagingd.lib TAO_RTCORBAd.lib TAO_RTPortableServerd.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\..\bin\RTECPerfd.dll" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\RTCORBA" /libpath:"..\..\..\..\tao\RTPortableServer" /libpath:"..\..\..\..\tao\Messaging" /libpath:"..\..\..\..\..\ace"
 
 !ENDIF 
 
@@ -98,6 +98,10 @@ SOURCE=.\Client_Group.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Client_Pair.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Consumer.cpp
 # End Source File
 # Begin Source File
@@ -106,11 +110,27 @@ SOURCE=.\Loopback_Consumer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Loopback_Pair.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Loopback_Supplier.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\ORB_Holder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORB_Task.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORB_Task_Activator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PriorityBand_Setup.cpp
 # End Source File
 # Begin Source File
 
@@ -126,11 +146,27 @@ SOURCE=.\RTEC_Initializer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RTPOA_Setup.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTServer_Setup.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Send_Task.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Send_Task_Stopper.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Supplier.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SyncScope_Setup.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -146,6 +182,10 @@ SOURCE=.\Client_Group.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Client_Pair.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Consumer.h
 # End Source File
 # Begin Source File
@@ -154,11 +194,27 @@ SOURCE=.\Loopback_Consumer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Loopback_Pair.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Loopback_Supplier.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\ORB_Holder.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORB_Task.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORB_Task_Activator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PriorityBand_Setup.h
 # End Source File
 # Begin Source File
 
@@ -182,7 +238,19 @@ SOURCE=.\rtec_perf_export.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RTPOA_Setup.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTServer_Setup.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Send_Task.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Send_Task_Stopper.h
 # End Source File
 # Begin Source File
 
@@ -192,10 +260,14 @@ SOURCE=.\Servant_var.h
 
 SOURCE=.\Supplier.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\SyncScope_Setup.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter ".i"
+# PROP Default_Filter ".i;.inl"
 # Begin Source File
 
 SOURCE=.\Auto_Disconnect.inl
@@ -206,7 +278,23 @@ SOURCE=.\Client_Group.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Client_Pair.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Loopback_Pair.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\ORB_Holder.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORB_Task_Activator.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\PriorityBand_Setup.inl
 # End Source File
 # Begin Source File
 
@@ -218,7 +306,23 @@ SOURCE=.\RTCORBA_Setup.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\RTPOA_Setup.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTServer_Setup.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Send_Task_Stopper.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Servant_var.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\SyncScope_Setup.inl
 # End Source File
 # End Group
 # Begin Group "Template Files"

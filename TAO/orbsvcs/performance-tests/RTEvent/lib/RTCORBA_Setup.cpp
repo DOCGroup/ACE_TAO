@@ -64,6 +64,8 @@ RTCORBA_Setup::RTCORBA_Setup (CORBA::ORB_ptr orb,
                     this->lanes_[2]
                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  this->process_priority_ = this->lanes_[1].lane_priority;
 }
 
 void
