@@ -84,10 +84,9 @@ ld < Task_Test
 write 2, "Task_Test ", 10
 ace_main; unld "Task_Test"
 
-#### Page Fault
-#### ld < Thread_Manager_Test
-#### write 2, "Thread_Manager_Test ", 20
-#### ace_main; unld "Thread_Manager_Test"
+ld < Thread_Manager_Test
+write 2, "Thread_Manager_Test ", 20
+ace_main; unld "Thread_Manager_Test"
 
 ld < Thread_Pool_Test
 write 2, "Thread_Pool_Test ", 17
