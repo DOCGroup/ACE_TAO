@@ -1,3 +1,69 @@
+Mon Jul  1 09:02:32 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/AbstractBase.cpp:
+        * tao/AbstractBase.h:
+        * tao/AbstractBase.inl:
+
+	  New files for abstract interface support.
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any.i:
+
+	  Added the structs to_value and to_absstract_base,
+	  plus the extraction operators for them.
+
+        * tao/ClientRequestInfo_i.cpp:
+        * tao/ClientRequestInfo_i.h:
+
+	  Added a constructor that takes an AbstractBase,
+	  corresponding to the one that takes Object.
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+
+	  Changes to support forward declared valuetypes
+	  not defined in the same IDL file.
+
+        * tao/TAO.dsp
+        * tao/TAO_Static.dsp
+
+	  Added new files to projects.
+
+        * tao/ValueBase.cpp:
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+        * tao/ValueFactory.cpp:
+        * tao/ValueFactory.h:
+        * tao/ValueFactory.i:
+        * tao/ValueFactory_Map.cpp:
+        * tao/ValueFactory_Map.h:
+
+	  Added clases ValueBase_var, ValueBase_out, and
+	  ValueFactory_var.
+
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/corba.h:
+        * tao/corbafwd.h:
+
+	  Added new typedefs, plus the spec-required typedef
+	  of ValueFactoryBase * to ValueFactory.
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynCommon.h:
+        * tao/Object.h:
+
+	  Cosmetic changes.
+
+        * tao/Messaging/MessagingC.cpp:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/ObjectReferenceTemplateC.h:
+
+	  Changed valuetype factory-related code to use the
+	  typedef mentioned above.
+
 Mon Jul  1 08:31:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         Sun Jun 30 17:15:52 2002  Jeff Parsons <parsons@cs.wustl.edu>
