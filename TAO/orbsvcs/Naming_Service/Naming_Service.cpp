@@ -95,11 +95,13 @@ TAO_Naming_Service::init (int argc,
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_manager_.init_child_poa (argc,
-                                         argv,
-                                         "child_poa",
-                                         ACE_TRY_ENV);
+      result = this->orb_manager_.init_child_poa (argc,
+                                                  argv,
+                                                  "child_poa",
+                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      if (result == -1)
+        return result;
 
       orb = this->orb_manager_.orb ();
       child_poa = this->orb_manager_.child_poa ();
