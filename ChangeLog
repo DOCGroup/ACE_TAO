@@ -1,3 +1,14 @@
+Mon Mar 17 19:20:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cygwin32.GNU:
+          Set threads to 0 when it is not defined yet. From the Cygwin daily
+          build we found that threading is just partly enabled with Cygwin.
+          First tries to enable it completely resulted in a lot of new errors,
+          so for the time being disable threads by default and then start
+          working on getting everything working with threading enabled.
+          Also removed setting of optimized and the --enable-auto-import
+          because they are not needed.
+
 Mon Mar 17 09:58:48 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:
