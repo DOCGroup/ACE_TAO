@@ -9,7 +9,7 @@
 
 #include "tao/InterceptorS.h"
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 // skeleton constructor
 POA_PortableInterceptor::Cookie::Cookie (void)

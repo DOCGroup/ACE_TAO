@@ -24,7 +24,7 @@
 
 #include "tao/InconsistentTypeCodeC.h"
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/ORB.h"
 

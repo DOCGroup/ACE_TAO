@@ -162,7 +162,7 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
 # if defined (TAO_HAS_VALUETYPE)
     valuetype_factory_map_ (0),
 # endif /* TAO_HAS_VALUETYPE */
-# if defined (TAO_HAS_INTERCEPTORS)
+# if (TAO_HAS_INTERCEPTORS == 1)
     client_interceptor_ (),
     server_interceptor_ (),
 # endif /* TAO_HAS_INTERCEPTORS */
@@ -291,7 +291,7 @@ CORBA_ORB::work_pending (CORBA_Environment &ACE_TRY_ENV)
   return 1;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 void
 CORBA_ORB::create_list (CORBA::Long count,
@@ -973,7 +973,7 @@ CORBA_ORB::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
     }
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // Dynamic Any factory functions.
 

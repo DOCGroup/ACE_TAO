@@ -773,7 +773,7 @@ public:
 
   // ****************************************************************
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   class DynAny;
   typedef DynAny *DynAny_ptr;

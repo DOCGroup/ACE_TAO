@@ -184,7 +184,7 @@ CORBA_DomainManager_out::operator-> (void)
   return this->ptr_;
 }
 
-#if ! defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 ACE_INLINE
 CORBA_ConstructionPolicy::CORBA_ConstructionPolicy (void) // default constructor
@@ -600,7 +600,7 @@ operator>> (
   return 0;
 }
 
-#if ! defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 ACE_INLINE CORBA::Boolean
 operator<< (

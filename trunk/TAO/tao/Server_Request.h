@@ -83,7 +83,7 @@ public:
   static CORBA_ServerRequest *_nil (void);
   // the standard _nil method on pseudo objects
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   virtual void arguments (CORBA::NVList_ptr &list,
                           CORBA_Environment &ACE_TRY_ENV =

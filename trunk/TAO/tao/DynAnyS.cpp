@@ -24,7 +24,7 @@
 
 #include "tao/DynAnyC.h"
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/POA_CORBA.h"
 #include "tao/Servant_Base.h"

@@ -180,7 +180,7 @@ void POA_ImplementationRepository::ServerObject::ping_skel (
 {
   POA_ImplementationRepository::ServerObject *_tao_impl = (POA_ImplementationRepository::ServerObject *)_tao_object_reference;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -217,7 +217,7 @@ void POA_ImplementationRepository::ServerObject::ping_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -259,7 +259,7 @@ void POA_ImplementationRepository::ServerObject::shutdown_skel (
 {
   POA_ImplementationRepository::ServerObject *_tao_impl = (POA_ImplementationRepository::ServerObject *)_tao_object_reference;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -296,7 +296,7 @@ void POA_ImplementationRepository::ServerObject::shutdown_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -746,7 +746,7 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -784,7 +784,7 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -835,7 +835,7 @@ void POA_ImplementationRepository::Administration::register_server_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -874,7 +874,7 @@ void POA_ImplementationRepository::Administration::register_server_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -925,7 +925,7 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -964,7 +964,7 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1013,7 +1013,7 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1051,7 +1051,7 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1100,7 +1100,7 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1138,7 +1138,7 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1192,7 +1192,7 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1232,7 +1232,7 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1287,7 +1287,7 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1325,7 +1325,7 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1375,7 +1375,7 @@ void POA_ImplementationRepository::Administration::find_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1414,7 +1414,7 @@ void POA_ImplementationRepository::Administration::find_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1471,7 +1471,7 @@ void POA_ImplementationRepository::Administration::list_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1511,7 +1511,7 @@ void POA_ImplementationRepository::Administration::list_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -2185,7 +2185,7 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -2224,7 +2224,7 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -2273,7 +2273,7 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
 {
   POA_ImplementationRepository::ServerInformationIterator *_tao_impl = (POA_ImplementationRepository::ServerInformationIterator *)_tao_object_reference;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -2310,7 +2310,7 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,

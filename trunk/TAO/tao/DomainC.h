@@ -201,7 +201,7 @@ private:
 // ConstructionPolicy
 // *************************************************************
 
-#if ! defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 class TAO_Export CORBA_ConstructionPolicy_var
 {

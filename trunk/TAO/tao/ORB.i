@@ -309,7 +309,7 @@ CORBA_ORB::orb_core (void) const
   return this->orb_core_;
 }
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
 ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
 CORBA_ORB::_register_client_interceptor
   (PortableInterceptor::ClientRequestInterceptor_ptr ci,

@@ -342,7 +342,7 @@ TAO_Locality_Constrained_ServantBase::_dispatch (CORBA::ServerRequest &,
   ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 CORBA::Object_ptr
 TAO_DynamicImplementation::_this (CORBA::Environment &ACE_TRY_ENV)

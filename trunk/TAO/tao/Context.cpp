@@ -2,7 +2,7 @@
 
 #include "tao/Context.h"
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/Typecode.h"
 #include "tao/Environment.h"

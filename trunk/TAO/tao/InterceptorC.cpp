@@ -14,7 +14,7 @@
 #include "tao/InterceptorC.i"
 #endif /* !defined INLINE */
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 PortableInterceptor::Cookie_ptr PortableInterceptor::Cookie::_narrow (
     CORBA::Object_ptr obj,

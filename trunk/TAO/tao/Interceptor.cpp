@@ -19,7 +19,7 @@
 //    return CORBA::string_dup ("TAO default");
 //  }
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
 void POA_PortableInterceptor::
 ServerRequestInterceptor::preinvoke (CORBA::ULong,
                                      CORBA::Boolean,

@@ -248,7 +248,7 @@ CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
   return;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // NON_EXISTENT ... send a simple call to the object, which will
 // either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
@@ -566,7 +566,7 @@ CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies,
 {
   inconsistent_policies = 0;
 
-#if defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 1)
 
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 

@@ -272,7 +272,7 @@ protected:
   // Throws CORBA::BAD_OPERATION exception.
 };
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 class TAO_Export TAO_DynamicImplementation : public virtual TAO_ServantBase
 {

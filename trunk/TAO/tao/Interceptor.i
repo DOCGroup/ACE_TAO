@@ -1,6 +1,6 @@
 /* -*- C++ -*- $Id$ */
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
 ACE_INLINE
 TAO_ClientRequestInterceptor_Adapter::TAO_ClientRequestInterceptor_Adapter
   (PortableInterceptor::ClientRequestInterceptor_ptr interceptor)

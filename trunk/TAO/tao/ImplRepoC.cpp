@@ -83,7 +83,7 @@ void ImplementationRepository::ServerObject::ping (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -150,7 +150,7 @@ void ImplementationRepository::ServerObject::ping (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -194,7 +194,7 @@ void ImplementationRepository::ServerObject::shutdown (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -261,7 +261,7 @@ void ImplementationRepository::ServerObject::shutdown (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -1294,7 +1294,7 @@ void ImplementationRepository::Administration::activate_server (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -1366,7 +1366,7 @@ void ImplementationRepository::Administration::activate_server (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -1418,7 +1418,7 @@ void ImplementationRepository::Administration::register_server (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -1491,7 +1491,7 @@ void ImplementationRepository::Administration::register_server (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -1537,7 +1537,7 @@ void ImplementationRepository::Administration::reregister_server (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -1610,7 +1610,7 @@ void ImplementationRepository::Administration::reregister_server (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -1661,7 +1661,7 @@ void ImplementationRepository::Administration::remove_server (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -1733,7 +1733,7 @@ void ImplementationRepository::Administration::remove_server (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -1784,7 +1784,7 @@ void ImplementationRepository::Administration::shutdown_server (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -1856,7 +1856,7 @@ void ImplementationRepository::Administration::shutdown_server (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -1909,7 +1909,7 @@ char * ImplementationRepository::Administration::server_is_running (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK_RETURN (0);
@@ -1990,7 +1990,7 @@ char * ImplementationRepository::Administration::server_is_running (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -2041,7 +2041,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -2113,7 +2113,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -2166,7 +2166,7 @@ void ImplementationRepository::Administration::find (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -2242,7 +2242,7 @@ void ImplementationRepository::Administration::find (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -2290,7 +2290,7 @@ void ImplementationRepository::Administration::list (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -2367,7 +2367,7 @@ void ImplementationRepository::Administration::list (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -2746,7 +2746,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK_RETURN  (_tao_retval);
@@ -2826,7 +2826,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
@@ -2870,7 +2870,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
       istub->orb_core ()
     );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -2937,7 +2937,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
         break;
         
       }
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY

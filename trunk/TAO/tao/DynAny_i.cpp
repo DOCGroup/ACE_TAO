@@ -15,7 +15,7 @@
 
 #include "tao/DynAny_i.h"
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/DynStruct_i.h"
 #include "tao/DynSequence_i.h"
