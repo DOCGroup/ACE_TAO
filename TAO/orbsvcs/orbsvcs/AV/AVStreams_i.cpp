@@ -3292,12 +3292,6 @@ TAO_MMDevice::TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy)
 {
 }
 
-TAO_MMDevice::TAO_MMDevice (TAO_MMDevice const &mm_device)
-  : TAO_PropertySet (mm_device)
-{
-  //no-op
-}
-
 // create a streamctrl which is colocated with me, use that streamctrl
 // to bind the peer_device with me.
 AVStreams::StreamCtrl_ptr
