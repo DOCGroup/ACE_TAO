@@ -60,15 +60,15 @@ be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
   os->indent ();
   *os << "// Any operators for valuetype " << node->name () << be_nl;
 
-  *os << be_global->stub_export_macro () << "void"
+  *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, " << node->name ()
       << " *); // copying" << be_nl;
 
-  *os << be_global->stub_export_macro () << "void"
+  *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, " << node->name ()
       << " **); // non-copying" << be_nl;
 
-  *os << be_global->stub_export_macro () << "CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
       << node->name () << " *&);\n";
 
