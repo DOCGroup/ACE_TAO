@@ -1089,7 +1089,7 @@ CORBA_ORB::create_enum_tc (const char *id,
   for (CORBA::ULong index = 0; index < len; index++)
     {
       // String length defined inside the enums
-      slen = ACE_OS::strlen (members[index).in ()) + 1;
+      slen = ACE_OS::strlen (members[index].in ()) + 1;
       cdr << slen;
       
       string2long (members[index].in (), larr, arrlen);
