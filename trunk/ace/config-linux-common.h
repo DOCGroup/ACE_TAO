@@ -138,6 +138,7 @@
 
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_MADVISE
+#define ACE_HAS_PROCFS
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
