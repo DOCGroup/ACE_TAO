@@ -165,7 +165,7 @@ namespace TAO
 
     typedef Var_Array_Tag                               idl_tag;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/Var_Array_Argument_T.inl"

@@ -201,7 +201,7 @@ namespace TAO
                                     BOUND>
   {
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/BD_String_Argument_T.inl"
