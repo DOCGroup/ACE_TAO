@@ -1,3 +1,13 @@
+Tue Jan 14 07:05:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/Messaging/Makefile:
+          Set the correct BUILD_DLL define when building a shared lib,
+          this is needed for the Cygwin, MingW and Kylix compiler
+
 Mon Jan 13 20:52:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_GIOP/Makefile:
