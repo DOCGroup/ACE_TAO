@@ -1,3 +1,10 @@
+Thu Mar 11 15:34:24 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/ACE.cpp: removed unnecessary #includes of ace/IPC_SAP.h,
+          ace/Process.h, and ace/SString.h.  Thanks to Elias Sreih
+          <sealstd1@nortelnetworks.com> and Liang Chen
+          <chenl@nortelnetworks.com> for suggesting this.
+
 Thu Mar 11 14:04:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_chorus_ghs.GNU: added protection
