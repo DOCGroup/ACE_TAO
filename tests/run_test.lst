@@ -42,6 +42,7 @@ Enum_Interfaces_Test
 Env_Value_Test: !chorus
 Future_Test
 Future_Set_Test
+Get_Opt_Test
 Handle_Set_Test
 Hash_Map_Manager_Test
 Hash_Map_Bucket_Iterator_Test
