@@ -37,6 +37,9 @@ mingw32 = 1
 # because fe ace.dll.5.2.3 isn't a valid dll name
 versioned_so=0
 
+# MinGW doesn't have rwho
+rwho = 0
+
 # Disable auto-import warnings. The MingW linker has a problem with imports
 # See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
 # for the details why to do this.

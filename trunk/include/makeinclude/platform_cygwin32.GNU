@@ -17,6 +17,9 @@ TCPU = pentiumpro
 
 cygwin32 = 1
 
+# Cygwin doesn't have rwho
+rwho = 0
+
 # Cygwin doesn't allow to add the version number of ACE to the dll name
 # because fe ace.dll.5.2.3 isn't a valid dll name
 versioned_so=0

@@ -29,6 +29,8 @@ endif # ! rtti
 
 shared_libs =
 static_libs = 1
+# VxWorks doesn't have rwho
+rwho = 0
 
 ifeq (,$(WIND_BASE))
   default:
