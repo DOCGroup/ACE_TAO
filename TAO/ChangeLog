@@ -1,3 +1,17 @@
+Tue Dec 31 19:33:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Condition.h:
+	* tao/Condition.cpp: Added missing includes for the AIX compiler.
+	  Thanks to Jan Wackley for providing this patch.
+
+	* tao/Leader_Follower.cpp (wait_for_event): Cached the transport
+	  id before waiting as a follower or drive the event loop as
+	  leader, and use the cached id for all the debug statements. The
+	  transport object could dissappear during the process of waiting
+	  for connection establishment or connection completion and calls
+	  on the transport object could crash. Thanks to Duane Binder for
+	  reporting this problem.
+
 Tue Dec 31 14:03:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/RTCORBA/Profile_And_Endpoint_Selection/lanes_r:

@@ -179,6 +179,10 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   // Optmize the first iteration [no access to errno]
   int result = 1;
 
+  // For some cases the transport may dissappear like when waiting for
+  // connection to be initiated or closed. So cache the id.
+  int t_id = transport->id ();
+
   {
     // Calls this->set_client_thread () on construction and
     // this->reset_client_thread () on destruction.
@@ -202,7 +206,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
                       " (follower), cond <%x>\n",
-                      transport->id (), follower.get ()));
+                      t_id, follower.get ()));
 
         // Bound the follower and the LF_Event, this is important to
         // get a signal when the event terminates
@@ -247,7 +251,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                       ACE_DEBUG ((LM_DEBUG,
                                   "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, "
                                   " (follower) [no timer, cond failed]\n",
-                                  transport->id ()));
+                                  t_id));
 
                     // @@ Michael: What is our error handling in this case?
                     //             We could be elected as leader and
@@ -266,7 +270,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                       ACE_DEBUG ((LM_DEBUG,
                                   "TAO (%P|%t) - Leader_Follower[%d]::wait, "
                                   "(follower) [has timer, follower failed]\n",
-                                  transport->id ()));
+                                  t_id ));
 
                     // We have timedout.. So set the state in the
                     // LF_Event about this.. We call the non-locking,
@@ -295,7 +299,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                             ACE_ERROR ((LM_ERROR,
                                         "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, "
                                         "elect_new_leader failed\n",
-                                        transport->id ()));
+                                        t_id ));
                           }
                       }
 
@@ -317,7 +321,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
                       " done (follower), successful %d\n",
-                      transport->id (),
+                      t_id,
                       event->successful ()));
 
         // Now somebody woke us up to become a leader or to handle our
@@ -363,7 +367,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
                     " (leader) enter reactor event loop\n",
-                    transport->id ()));
+                    t_id));
 
       // If we got our event, no need to run the event loop any
       // further.
@@ -389,7 +393,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
                     " (leader) exit reactor event loop\n",
-                    transport->id ()));
+                    t_id));
     }
   }
   //
@@ -409,14 +413,14 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
                        " failed to elect new leader\n",
-                       transport->id()),
+                       t_id),
                       -1);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
                        " handle_events failed\n",
-                       transport->id()),
+                       t_id),
                       -1);
 
   // Return an error if there was a problem receiving the reply...
