@@ -128,6 +128,7 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
               echo $$ACE_VERSION | perl -ne ' \
                ($$version = $$_) =~ s/ACE version ([\d\.]+).*\n/$$1/; \
                  ($$major, $$minor, $$beta) = split /\./, $$version; \
+                 $$beta = 0 if ! defined $$beta; \
                  print "// \$$Id\$$\n" . \
                        "// This is an automatically generated file.\n\n" . \
                        "\#define ACE_MAJOR_VERSION ($${major}u)\n" . \
