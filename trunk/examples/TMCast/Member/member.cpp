@@ -15,7 +15,7 @@
 class Args {};
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   int status = 0;
   try
@@ -32,7 +32,7 @@ main (int argc, char* argv[])
 
     ACE_INET_Addr address (argv[3]);
 
-    ACE_TMCast::Group group (address, argv[2]);
+    ACE_TMCast::Group group (address, ACE_TEXT_ALWAYS_CHAR (argv[2]));
 
     if (receiver)
     {
