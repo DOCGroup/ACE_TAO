@@ -79,9 +79,9 @@ ACE_Trace::set_nesting_indent (int indent)
 // Perform the first part of the trace, which prints out the string N,
 // the LINE, and the ACE_FILE as the function is entered.
 
-ACE_Trace::ACE_Trace (const char *n,
+ACE_Trace::ACE_Trace (const ASYS_TCHAR *n,
 		      int line,
-		      const char *file)
+		      const ASYS_TCHAR *file)
 {
   this->name_ = n;
 
@@ -92,9 +92,9 @@ ACE_Trace::ACE_Trace (const char *n,
 	  && lm->trace_active () == 0)
 	{
 	  lm->trace_active (1);
-	  ACE_DEBUG ((LM_TRACE, "%*s(%t) calling %s in file `%s' on line %d\n",
+	  ACE_DEBUG ((LM_TRACE, ASYS_TEXT ("%*s(%t) calling %s in file `%s' on line %d\n"),
 		      ACE_Trace::nesting_indent_ * lm->inc (),
-		      "", this->name_, file, line));
+		      ASYS_TEXT (""), this->name_, file, line));
 	  lm->trace_active (0);
 	}
     }
@@ -112,9 +112,9 @@ ACE_Trace::~ACE_Trace (void)
 	  && lm->trace_active () == 0)
 	{
 	  lm->trace_active (1);
-	  ACE_DEBUG ((LM_TRACE, "%*s(%t) leaving %s\n",
+	  ACE_DEBUG ((LM_TRACE, ASYS_TEXT ("%*s(%t) leaving %s\n"),
 		      ACE_Trace::nesting_indent_ * lm->dec (),
-		      "", this->name_));
+		      ASYS_TEXT (""), this->name_));
 	  lm->trace_active (0);
 	}
     }

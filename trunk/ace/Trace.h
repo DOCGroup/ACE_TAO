@@ -31,7 +31,8 @@ class ACE_Export ACE_Trace
 public:
   // = Initialization and termination methods.
 
-  ACE_Trace (const char *n, int line = 0, const char *file = "");
+  ACE_Trace (const ASYS_TCHAR *n, int line = 0,
+             const ASYS_TCHAR *file = ASYS_TEXT (""));
   // Perform the first part of the trace, which prints out the string
   // N, the LINE, and the ACE_FILE as the function is entered.
 
@@ -60,7 +61,7 @@ private:
   // maintained in thread-specific storage to ensure correctness in
   // multiple threads of control.
 
-  const char *name_;
+  const ASYS_TCHAR *name_;
   // Name of the method we are in.
 
   static int nesting_indent_;
