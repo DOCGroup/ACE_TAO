@@ -105,7 +105,55 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_NotifyTests"=.\lib\TAO_NotifyTests.dsp - Package Owner=<4>
+Project: "Structured_Filter_Consumer"=.\Structured_Filter\Structured_Filter_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Filter_Supplier"=.\Structured_Filter\Structured_Filter_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Multi_Filter_Consumer"=.\Structured_Multi_Filter\Structured_Multi_Filter_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Multi_Filter_Supplier"=.\Structured_Multi_Filter\Structured_Multi_Filter_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TAO_NotifyTests DLL"=.\lib\TAO_NotifyTests.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
