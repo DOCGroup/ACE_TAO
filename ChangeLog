@@ -1,3 +1,10 @@
+Tue Aug 17 08:00:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+        * ace/Asynch_Connector.h
+        * tests/Proactor_Test.cpp
+          Due to a long standing fatal cross development compiler bug in the
+          Solaris -> Lynxos cross development environment.
+          (LynxOS gcc 2.95.3 cross compiler)
+
 Tue Aug 17 08:00:00 2004  Martin Corino <mcorino@remedy.nl>
 
     * ace/ACE.h:
