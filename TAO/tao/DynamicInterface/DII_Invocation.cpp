@@ -44,6 +44,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
   Dynamic::ParameterList *
   DII_Invocation::arguments (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Generate the argument list on demand.
     Dynamic::ParameterList *parameter_list =
@@ -183,6 +184,7 @@ namespace TAO
   //@NOTE: Need to figure a way to share this code
   Dynamic::ParameterList *
   DII_Deferred_Invocation::arguments (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Generate the argument list on demand.
     Dynamic::ParameterList *parameter_list =
