@@ -49,3 +49,11 @@ visit_property (TAO_Property_Constraint* literal)
     }
   return return_value;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Manager<ACE_CString, const CORBA::Any*, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, const CORBA::Any*, ACE_SYNCH_MUTEX>
+#pragma instantiate template class ACE_Hash_Map_Manager_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
