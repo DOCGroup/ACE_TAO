@@ -1,3 +1,8 @@
+Mon Dec 14 15:39:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile: 
+	  Updated dependencies.
+
 Mon Dec 14 10:49:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Static_Performance.dsw: Quick and dirty workspace to build
