@@ -19,6 +19,8 @@
 #  debug            Enable debugging; see DCFLAGS and DCCFLAGS.
 #  exceptions       Enable exception handling (not supported by all platforms).
 #  fast             Enable -fast option, e.g., with Sun C++.
+#  inline           Enable ACE inlining.  Some platforms enable inlining by
+#                     default, others do not.
 #  optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
 #  orbix            Enable use of Orbix.
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
@@ -145,6 +147,14 @@ ifneq ($(profile),)
   CFLAGS  += $(PCFLAGS)
   CCFLAGS += $(PCCFLAGS)
 endif # profile
+
+ifeq ($(inline),0)
+  CCFLAGS += -DACE_NO_INLINE
+else
+ifeq ($(inline),1)
+  CCFLAGS += -D__ACE_INLINE__
+endif # inline eq 1
+endif # inline eq 0
 
 ifeq ($(shared_libs),0)
   override shared_libs =
