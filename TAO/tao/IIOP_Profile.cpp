@@ -400,23 +400,34 @@ TAO_IIOP_Profile::parse_string (const char *string,
   // Remove the "N.N//" prefix, and verify the version's one
   // that we accept
   
-  if (isdigit (string [0]) && isdigit (string [2]) && string [1] == '.'
-     && string [3] == '/' && string [4] == '/')
-  {
-    this->version_.set_version ((char) (string [0] - '0'), (char) (string [2] - '0'));
-    string += 5;
-  }
+  if (isdigit (string [0])
+      && isdigit (string [2])
+      && string [1] == '.'
+      && string [3] == '/'
+      && string [4] == '/')
+    {
+      // @@ This may fail for non-ascii character sets [but take that
+      // with a grain of salt]
+      this->version_.set_version ((char) (string [0] - '0'),
+                                  (char) (string [2] - '0'));
+      string += 5;
+    }
   else
-  {
-    env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-  }
+    {
+      // @@ AFAIK the right kind of exception to raise here is
+      // CORBA_MARSHAL: CORBA_DATA_CONVERSION is reserved for failure
+      // to translate *values* (such as character set mismatches,
+      // fixed<> types, floats, etc.)
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+    }
 
   if (this->version_.major != TAO_IIOP_Profile::DEF_IIOP_MAJOR
    || this->version_.minor  > TAO_IIOP_Profile::DEF_IIOP_MINOR)
-  {
-    env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-    return -1;
-  }
+    {
+      // @@ Same thing here....
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return -1;
+    }
 
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
@@ -433,6 +444,15 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   if (this->host_)
   {
+    // @@ You are setting this->host_ using CORBA::string_alloc() a
+    // couple of lines below, you should then use CORBA::string_free() 
+    // to release it!  In general use a single form of memory
+    // allocation for a field/variable to avoid new/free() and
+    // malloc/delete() mismatches.
+    // Ohh, and if you are going to use CORBA::string_alloc() &
+    // friends you may consider using CORBA::String_var to manage
+    // the memory automatically (though there may be forces that
+    // suggest otherwise).
     delete [] this->host_;
     this->host_ = 0;
   }

@@ -1,3 +1,11 @@
+Fri Feb  5 14:21:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IIOP_ORB.cpp: 
+	  Fixed problems in the parsing of URL style IORs.
+
+	* tao/IIOP_Profile.cpp: 
+	  Added some comments for Fred.
+
 Fri Feb 05 13:15:00 1999 Chris Gill <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Simulator/DOVEBrowser/DemoCore.java
