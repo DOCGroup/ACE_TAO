@@ -1,3 +1,11 @@
+Thu Sep  9 11:53:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp (version):
+        
+          Fixed logic of method that computes the version to handle
+          the case where the repository ID is set with 'typeid'
+          with no valid version at the end of the string.
+
 Thu Sep  9 07:16:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
