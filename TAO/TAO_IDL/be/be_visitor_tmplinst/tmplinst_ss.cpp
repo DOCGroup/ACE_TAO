@@ -55,6 +55,33 @@ be_visitor_tmplinst_ss::visit_interface (be_interface *node)
       os->gen_endif ();
     }
 
+  if (node->original_interface () != 0 &&
+     (ACE_OS::strncmp (node->local_name (), "AMH", 3) == 0))
+    {
+      // Serialize explicit template instantiation for AMH RH allocator
+      char *buf;
+      node->compute_full_name ("TAO_", "", buf);
+      ACE_CString response_handler_implementation_name ("POA_");
+      response_handler_implementation_name += buf;
+      delete [] buf;
+      buf = 0;
+
+      *os << be_nl << be_nl
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO::TAO_Buffer_Allocator<" << be_idt_nl
+          << response_handler_implementation_name.c_str () << ","
+          << this->linebreak_ << be_nl
+          << "TAO_AMH_BUFFER_ALLOCATOR>"
+          << this->suffix_ << be_uidt << be_uidt << be_uidt ;
+
+      *os << be_nl << be_nl
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO::TAO_Allocator<" << be_idt_nl
+          << response_handler_implementation_name.c_str ()
+          << ">"
+          << this->suffix_ << be_uidt << be_uidt << be_uidt ;
+    }
+
   // If one of these is true we can skip the rest.
   if (node->imported () || !node->is_defined ())
     {
@@ -74,7 +101,7 @@ be_visitor_tmplinst_ss::visit_interface (be_interface *node)
   return 0;
 }
 
-int 
+int
 be_visitor_tmplinst_ss::visit_valuetype (be_valuetype *node)
 {
   if (this->this_mode_generated (node))
@@ -126,7 +153,7 @@ be_visitor_tmplinst_ss::visit_valuetype (be_valuetype *node)
 int
 be_visitor_tmplinst_ss::visit_operation (be_operation *node)
 {
-  if (this->this_mode_generated (node) 
+  if (this->this_mode_generated (node)
       || node->imported ()
       || node->is_local ())
     {
@@ -149,7 +176,7 @@ be_visitor_tmplinst_ss::visit_operation (be_operation *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_tmplinst_ss::"
                          "visit_operation - "
-                         "codegen for return type failed\n"), 
+                         "codegen for return type failed\n"),
                         -1);
     }
 
@@ -168,7 +195,7 @@ be_visitor_tmplinst_ss::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_tmplinst_ss::"
                              "visit_operation - "
-                             "codegen for argument failed\n"), 
+                             "codegen for argument failed\n"),
                             -1);
         }
     }

@@ -16,9 +16,11 @@
 
 #include "portableserver_export.h"
 
+#include "tao/Allocator.h"
 #include "tao/Service_Context.h"
 #include "tao/CDR.h"
 #include "tao/LocalObject.h"
+#include "tao/Buffer_Allocator_T.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
@@ -32,6 +34,9 @@ class TAO_Pluggable_Messaging;
 class TAO_Output_CDR;
 class TAO_ORB_Core;
 class TAO_ServerRequest;
+class ACE_Allocator;
+
+typedef ACE_Allocator TAO_AMH_BUFFER_ALLOCATOR;
 
 /**
  * @class TAO_AMH_Response_Handler
@@ -65,10 +70,7 @@ class TAO_PortableServer_Export TAO_AMH_Response_Handler
 public:
 
   /// Constructor
-  /**
-   * Stores necessary information from a TAO_Server_Request onto the heap
-   */
-  TAO_AMH_Response_Handler (TAO_ServerRequest &server_request);
+  TAO_AMH_Response_Handler ();
 
   /// Destructor
   /**
@@ -76,6 +78,17 @@ public:
    * exception back to the client
    */
   virtual ~TAO_AMH_Response_Handler (void);
+
+  /**
+   * Stores necessary information from a TAO_Server_Request onto the heap
+   */
+  virtual void init(TAO_ServerRequest &server_request,
+                    TAO_AMH_BUFFER_ALLOCATOR* allocator);
+
+  /// @name Mutators for refcount
+  //@{
+  long decr_refcount (void);
+  //@}
 
 protected:
 
@@ -128,7 +141,7 @@ private:
   /// The reply service context
   TAO_Service_Context reply_service_context_;
 
-  /// Alwyas set to true (we always have soemthing to return to the
+  /// Alwyas set to true (we always have something to return to the
   /// client
   // @@ Mayur: I think not!  This is used to generate padding in GIOP
   //    1.2 messages (where the payload must start on an 8-byte
@@ -145,7 +158,7 @@ private:
   CORBA::ULong exception_type_;
 
   /**
-   * Various states the ResponseHnadler can be in.
+   * Various states the ResponseHandler can be in.
    *
    * These states represent various states the RH can be in and
    * the states are used not only in implementing the 'once-only semantics of
@@ -168,6 +181,36 @@ private:
 
   /// Mutex to ensure the AMH-RH method call is thread-safe.
   ACE_SYNCH_MUTEX mutex_;
+
+  /// Allocator used to allocate this object. If zero then we are allocated
+  /// from the heap
+  TAO_AMH_BUFFER_ALLOCATOR* allocator_;
 };
+
+namespace TAO
+{
+  /**
+   * @class ARH_Refcount_Functor
+   *
+   * @brief Functor for refcounting of TAO_AMH_Response_Handler
+   *
+   * This is used to safely handle the destruction of
+   * TAO_AMH_Response_Handler objects which are created on the
+   * heap. We cannot use auto_ptr <> since it calls delete on the
+   * pointer, and calling delete on TAO_AMH_Response_Handler *
+   * will not work. Hence this functor will be used with Auto_Functor
+   * class to handle the memory safely.
+   *
+   * @todo Ideally, this class can be a generic class. But that
+   * requires quite a bit of cleanup within TAO to be more useful.
+   */
+  class TAO_PortableServer_Export ARH_Refcount_Functor
+  {
+  public:
+    void operator() (TAO_AMH_Response_Handler *arh)
+      ACE_THROW_SPEC (());
+  };
+
+}
 
 #endif /* TAO_AMH_RESPONSE_HANDLER_H */
