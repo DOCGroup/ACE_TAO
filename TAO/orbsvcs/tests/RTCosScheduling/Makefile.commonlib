@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #
@@ -10,8 +11,11 @@
 #
 #----------------------------------------------------------------------------
 MAKEFILE        = Makefile.commonlib
-LIB             = libtestSched_Common.a
-SHLIB           = libtestSched_Common.$(SOEXT)
+LIB_UNCHECKED   = libtestSched_Common.a
+SHLIB_UNCHECKED = libtestSched_Common.$(SOEXT)
+
+LIB = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

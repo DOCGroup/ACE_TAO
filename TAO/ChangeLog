@@ -1,3 +1,32 @@
+Wed Nov 12 07:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Kokyu_dsrt_schedulers/Makefile:
+          Removed unused DIRS variable.
+
+        * orbsvcs/LoadBalancer/Makefile:
+        * orbsvcs/LoadBalancer/Makefile.LoadManager:
+        * orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+          Moved the component test and BIN variable assignment to the two
+          Load* makefiles and added the use of BIN_UNCHECKED variable so
+          that it will get cleaned up.
+
+        * orbsvcs/orbsvcs/Makefile:
+          Removed the ORBSVCS_COMPONENTS_realclean target.  It's unneeded
+          and caused the ORBSVCS_COMPONENTS.list to get deleted
+          immediately during realclean, even though it was needed for
+          testing later.  This is no longer a problem since we now clean
+          the *_UNCHECKED targets by default.
+
+        * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+        * orbsvcs/orbsvcs/Makefile.RT_Notification:
+          Removed the compclean targets--they don't belong here, since
+          they would remove the ORBSVCS_COMPONENTS.list file which isn't
+          what they should be doing.
+
+        * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+        * orbsvcs/tests/RTCosScheduling/Makefile.commonlib:
+          Added use of *_UNCHECKED variables.
+
 Tue Nov 11 16:54:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Callback/server.cpp:

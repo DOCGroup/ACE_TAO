@@ -254,7 +254,8 @@ endif
 
 all: ORBSVCS_COMPONENTS
 
-realclean: ORBSVCS_COMPONENTS_realclean
+realclean:
+	-$(RM) ORBSVCS_COMPONENTS.list
 
 ## Makefile.Svc_Utils.mkfile is a dummy target which will cause
 ## $(MAKE) -f Makefile.Svc_Utils to be invoked
@@ -277,16 +278,3 @@ endif
 .PHONY: ORBSVCS_COMPONENTS
 ORBSVCS_COMPONENTS:
 	@sh $(ACE_ROOT)/bin/ace_components --orbsvcs --set ' $(TAO_ORBSVCS) '
-
-.PHONY: ORBSVCS_COMPONENTS_realclean
-ORBSVCS_COMPONENTS_realclean:
-	-$(RM) ORBSVCS_COMPONENTS.list
-
-#----------------------------------------------------------------------------
-#       Dependencies
-#----------------------------------------------------------------------------
-# DO NOT DELETE THIS LINE -- g++dep uses it.
-# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
-
-# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
