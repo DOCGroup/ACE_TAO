@@ -348,6 +348,8 @@ main (int argc, char *argv[])
   delete [] high_priority_task;
 
 #else
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
 
