@@ -2,6 +2,9 @@ Tue Sep 01 20:59:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (ts_object): commented test appearing after the #endif.
 
+        * ace/ACE.cpp (get_ip_interfaces): removed trailing } after comment
+          following #endif.
+
         * etc/ACE-guidelines.html: added section on scripts.  Added rule
           to prefix constants and enum values with ACE_ or TAO_.
 
