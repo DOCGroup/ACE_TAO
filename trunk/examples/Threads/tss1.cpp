@@ -27,7 +27,8 @@
 
 #if defined (ACE_HAS_THREADS)
 
-static int iterations = 100;
+// (Sun C++ 4.2 with -O3 won't link if the following is not const.)
+static const int iterations = 100;
 
 class Errno
 {
@@ -71,7 +72,8 @@ ACE_MT (ACE_Thread_Mutex Errno::lock_);
 int Errno::flags_;
 
 // This is our thread-specific error handler...
-static ACE_TSS<Errno> TSS_Error;
+// (Sun C++ 4.2 with -O3 won't link if the following is static.)
+ACE_TSS<Errno> TSS_Error;
 
 #if defined (ACE_HAS_THREADS)
 // Serializes output via cout.
@@ -86,7 +88,8 @@ typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
 
 // Keeps track of whether Tester::close () has started.
-static int close_started = 0;
+// (Sun C++ 4.2 with -O3 won't link if the following is static.)
+int close_started = 0;
 
 template <ACE_SYNCH_1>
 class Tester: public ACE_Task<ACE_SYNCH_2>
