@@ -1,3 +1,8 @@
+Fri Jan 30 15:10:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* README: Updated the documentation to reflect the latest changes
+ 	  to TAO.  Thanks to Hans Rohnert for noticing this.
+
 Fri Jan 30 14:38:30 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/util.cpp : Added TAO_ORB_Manager, a simple

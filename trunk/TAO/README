@@ -1,5 +1,5 @@
-Welcome to the alpha release of The ACE ORB (TAO).  TAO is an
-implementation of a CORBA2-compliant ORB that supports real-time
+Welcome to the latest release of The ACE ORB (TAO).  TAO is an
+implementation of a CORBA 2.x-compliant ORB that supports real-time
 extensions.  Please see http://www.cs.wustl.edu/~schmidt/TAO.html for
 more information on TAO.
 
@@ -13,27 +13,35 @@ The current alpha release of TAO contains the following:
        and (3) Thread-per-Rate (which is optimized for certain types
        of deterministic real-time systems).
 
-     * A highly optimized version of the SunSoft IIOP protocol
+     * An optimized version of the SunSoft IIOP protocol
        interpreter;
 
-     * An prototype implementation of the Portable Object Adapter
-       (POA) specification.
+     * An implementation of the Portable Object Adapter (POA)
+       specification. 
 
-     * A prototype IDL compiler, based on the SunSoft IDL compiler. This 
-       IDL compiler generates stubs and skeletons that utilize the
-       SunSoft IIOP protocol interpreter.
+     * A prototype IDL compiler, based on the SunSoft IDL
+       compiler.  This IDL compiler generates stubs and skeletons that
+       utilize the SunSoft IIOP protocol engine.
 
+     * A Real-time Scheduling Service that determines the priority at
+       which Client requests are dispatched by the ORB.
+
+     * A Real-time Event Service that dispatches CORBA events in
+       real-time.
+
+     * Implementations of the CORBA COS Naming service and Trader
+       service, as well as a logging service.
+       
      * Various tests illustrating how to use TAO.
        
 The current version of TAO contains source code and tests that are
-around 0.4 Megabytes when compressed using GNU gzip.
+around 1.5 Megabytes when compressed using GNU gzip.
 
-We've gotten TAO to interoperate with other ORBs (e.g., Orbix and
-Visigenic), so we're confident that the implementation of IIOP is
-robust. We're currently working on the following features for TAO:
+We've gotten TAO to interoperate with other ORBs (e.g., Orbix,
+VisiBroker, miniCOOL, and CORBAplus), so we're confident that its
+implementation of IIOP is robust.  We're currently working on the
+following features for TAO:
    
-     * A complete POA implementation.
-
      * An IDL compiler that generates optimized compiled stubs and
        skeletons. For this, we're planning to use the Flick IDL
        compiler from University of Utah.
@@ -43,32 +51,25 @@ robust. We're currently working on the following features for TAO:
        servants based on object keys and operation names contained in
        CORBA requests.
 
-     * A Real-time Scheduling Service that determines the priority at
-       which Client requests are dispatched by the ORB.
+     * An implementation of the new OMG Audio/Video Streaming
+       service, as well as the Property service.
+ 
+We plan to release these features throughout the spring of 1998.  You
+can keep track of our progress online at URL
 
-     * A Real-time Event Service that dispatches CORBA events in
-       real-time.
-
-     * Implementations of the CORBA COS Naming service and Trader
-       service.
-       
-We plan to release these features throughout the fall of 1997. You can
-keep track of our progress online.
-
-Please feel free to experiment with, dissect, repair, use, etc., TAO.
-We gratefully accept bug reports, appreciate bug fixes/enhancements,
-and will strive to integrate correct bug fixes quickly!
-
-If you have any questions, please post them to the ACE mailing list
-<ace-users@cs.wustl.edu> until we get a TAO mailing list established.
+http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/
 
 A quick build note for users who have used ACE with other ORBs:
 linking TAO with a version of ACE that must also be linked against
 another ORB vendor's library, e.g., liborbix.so, will produce
 undefined and most likely unpredictable and erroneous results.
 
-If you have any questions, please post them to the ACE mailing list
-(ace-users@cs.wustl.edu) until we get a TAO mailing list established.
+We welcome suggestions for improvement, bug fixes, portability
+enhancements, etc. and will strive to integrate correct bug fixes
+quickly!  If you have any questions or problems with TAO, please post
+them to the ACE mailing list (ace-users@cs.wustl.edu) or send email to
+Douglas C. Schmidt (schmidt@cs.wustl.edu) and Chris Cleeland
+(cleeland@cs.wustl.edu).
 
 Thanks,
 
