@@ -25,9 +25,7 @@
  *
  * This class implements the "Test" interface used in this test.
  */
-class Test_i
-  : public virtual POA_Test,
-    public virtual PortableServer::RefCountServantBase
+class Test_i : public virtual POA_Test
 {
 public:
 
