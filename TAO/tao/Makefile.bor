@@ -7,6 +7,7 @@ NAME = TAO
 DIRS = DynamicAny PortableServer IORTable IORManipulation
 
 OBJFILES = \
+	$(OBJDIR)\Abstract_Servant_Base.obj \
 	$(OBJDIR)\Acceptor_Filter.obj \
 	$(OBJDIR)\Acceptor_Registry.obj \
 	$(OBJDIR)\Adapter.obj \
@@ -82,6 +83,8 @@ OBJFILES = \
 	$(OBJDIR)\Object_KeyC.obj \
 	$(OBJDIR)\Object_Loader.obj \
 	$(OBJDIR)\ObjectIDList.obj \
+	$(OBJDIR)\Object_Proxy_Broker.obj \
+	$(OBJDIR)\Object_Proxy_Impl.obj \
 	$(OBJDIR)\operation_details.obj \
 	$(OBJDIR)\ORB.obj \
 	$(OBJDIR)\ORB_Core.obj \
@@ -106,6 +109,8 @@ OBJFILES = \
 	$(OBJDIR)\Protocol_Factory.obj \
 	$(OBJDIR)\Reactor_Per_Priority.obj \
 	$(OBJDIR)\Reactor_Registry.obj \
+	$(OBJDIR)\Remote_Object_Proxy_Broker.obj \
+	$(OBJDIR)\Remote_Object_Proxy_Impl \
 	$(OBJDIR)\Reply_Dispatcher.obj \
 	$(OBJDIR)\Request.obj \
 	$(OBJDIR)\Request_Info.obj \

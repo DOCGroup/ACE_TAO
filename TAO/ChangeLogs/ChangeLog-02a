@@ -1,3 +1,10 @@
+Tue Sep 26 19:58:52 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/PortableServer/Makefile.bor:
+	* tao/Makefile.bor:
+
+	  Added new collocation related file to the borlands.
+
 Tue Sep 26 15:14:33 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer/PortableServerC.cpp: Made a couple of
