@@ -97,9 +97,6 @@ public:
   // Returns the underlying PEER_STREAM (used by
   // ACE_Acceptor::accept() and ACE_Connector::connect() factories).
 
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);
-  // Provide a default implementation to simplify ancestors...
-
   virtual void destroy (void);
   // Call this instead of <delete> to free up dynamically allocated
   // <Svc_Handler>.  This method knows whether or not the object was
@@ -118,9 +115,6 @@ public:
   void operator delete (void *);
   // This really should be private so that users are forced to call
   // destroy().
-
-  virtual int svc (void);
-  // Provide a default implementation to simplify ancestors...
 
 private:  
   void shutdown (void);

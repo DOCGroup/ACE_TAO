@@ -217,21 +217,6 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::close (unsigned long)
 }
 
 template <PR_ST_1, ACE_SYNCH_1> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::svc (void)
-{
-  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::svc");
-  return -1;
-}
-
-template <PR_ST_1, ACE_SYNCH_1> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::put (ACE_Message_Block *, 
-					    ACE_Time_Value *)
-{
-  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::put");
-  return -1;
-}
-
-template <PR_ST_1, ACE_SYNCH_1> int
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::init (int, char *[])
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::init");

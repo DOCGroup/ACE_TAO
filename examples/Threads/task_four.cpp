@@ -55,11 +55,6 @@ private:
   // Number of threads per task.
   int n_iterations_;
   // Number of iterations per thread.
-
-  // = Not needed for this test.
-  virtual int open (void *) { return 0; }
-  virtual int close (u_long) { return 0; }
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
 };
 
 class Worker_Task : public ACE_Task<ACE_MT_SYNCH>

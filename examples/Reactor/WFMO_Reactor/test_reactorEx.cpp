@@ -76,9 +76,6 @@ public:
   // Called when output events should start
 
 private:
-  int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
-  // Make Task happy.
-
   ACE_SOCK_Stream stream_;
   // Socket that we have connected to the server.
 

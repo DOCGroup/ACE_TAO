@@ -1,3 +1,59 @@
+Sun Dec 15 10:29:20 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* netsvcs/servers/svc.conf: Removed the "lib" prefix for the
+ 	  netsvcs DLL.  This is now added automatically by the
+ 	  ACE::ldfind() operation.
+
+	* ace/SString.cpp (ACE_CString): Removed the #pragmas for Win32.
+  	  They aren't necessary since we should replace the ACE_USHORT16
+ 	  cast with a char cast.  Thanks to Amos Shapira <amos@dsi.co.il>
+ 	  for reporting this.
+
+Sat Dec 14 14:25:38 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* build/SunOS5.5/tests/UPIPE_SAP_Test.cpp (main): Fixed several
+ 	  minor bugs with UPIPE_SAP_Test.cpp.
+
+	* ace/OS.i (thr_join): Added implementations for Solaris threads
+ 	  and most versions of POSIX pthreads where ACE_hthread_t and
+ 	  ACE_thread_t are the same type!
+
+	* ace/OS: Began adding hooks so that we can eventually move away
+ 	  from the current split between ACE_thread_t and ACE_hthread_t
+ 	  and unify them via ACE_Thread_ID.
+
+	* ace/{OS,Thread}.h: Changed the interface of thr_getprio() so
+ 	  that it takes an int & rather than an int *.
+
+	* ace/OS.i (thr_getprio): Fixed a minor bug for Win32 where we
+ 	  weren't depositing the thread priority into the return value!
+
+	* Makefile: Changed the order in which things are built so that
+ 	  netsvcs are built right after libACE, followed by the tests.
+
+Sat Dec 14 11:54:22 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Consumer_Map: Change the Consumer_Map class
+ 	  so that it was no longer templatized.  There isn't any point in
+ 	  doing this since we aren't going to be changing these types for
+ 	  this application.
+
+	* apps/Gateway/Gateway: Factored out the code for selecting the
+ 	  concurrency strategy into a separate *.h file called
+ 	  Concurrency_Strategy.h.
+
+	* apps/Gateway/Gateway: Began revising the Gateway application to
+	  use the new ACE Event Channel.
+
+	* ace/Svc_Handler: Now that we've got put() and svc() with no-op
+ 	  defaults in class ACE_Task_Base, we don't need them in
+ 	  ACE_Svc_Handler anymore, so I removed them!
+
+	* ace/Task: Finally got sick of having to provide no-op
+ 	  open()/put()/close() routines in all ACE_Task subclasses, so I
+ 	  changed these methods from pure virtual to virtual with default
+ 	  no-op behavior.  Updated all the tests, as well.
+
 Sat Dec 14 11:39:15 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/{Module,Stream,Svc_Handler,Synch_T,Task_T}.cpp and Synch_T.i:
@@ -20,8 +76,6 @@ Fri Dec 13 22:07:11 1996  David L. Levine  <levine@cs.wustl.edu>
 	* include/makeinclude/platform_sunos5_sunc++*.GNU: replaced
 	  SOLINK step in build of shared objects for SunOS5 with SunC++
 	  with symlink from .so to .o file.
-
-Fri Dec 13 13:44:12 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-vxworks*.h: added ACE_NEEDS_SYSTIME_H to VxWorks
 	  configs because it's needed with inlining
@@ -57,6 +111,16 @@ Thu Dec 12 18:51:04 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  (which is also available to ACE_Task).
 
 	* ace/Thread: Added getprio() and setprio() methods to ACE_Thread.
+
+Fri Dec 13 13:44:12 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-vxworks*.h: added ACE_NEEDS_SYSTIME_H to VxWorks
+	  configs because it's needed with inlining
+
+	* include/makeinclude/platform_vxworks*.GNU: cleaned up VxWorks
+	  config files
+
+Thu Dec 12 18:51:04 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Added a new macro called ACE_UNUSED_ARG() to keep 
 	  the compiler from outputting warnings about unused

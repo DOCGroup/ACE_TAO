@@ -1,6 +1,6 @@
-// Perform a torture test of multiple ACE_Reactors and ACE_Tasks in
 // $Id$
 
+// Perform a torture test of multiple ACE_Reactors and ACE_Tasks in
 // the same process...  Thanks to Detlef Becker for contributing this.
 
 #include "ace/Reactor.h"
@@ -21,7 +21,6 @@ public:
 
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);
   virtual int svc (void);
 
   virtual int handle_input (ACE_HANDLE handle);
@@ -29,7 +28,6 @@ public:
 			    ACE_Reactor_Mask close_mask);
 
 private:
-  ACE_Reactor *r_;
   int handled_;
 
   static int task_count_;
@@ -64,7 +62,7 @@ Test_Task::~Test_Task (void)
 int 
 Test_Task::open (void *args)
 {
-  r_ = (ACE_Reactor *) args;
+  this->reactor ((ACE_Reactor *) args);
   return this->activate (THR_NEW_LWP);
 }
 
@@ -81,13 +79,6 @@ Test_Task::close (u_long)
 }
 
 int 
-Test_Task::put (ACE_Message_Block *,
-		ACE_Time_Value *)
-{
-  return 0;
-}
-
-int 
 Test_Task::svc (void)
 {
   for (int i = 0; i < NUM_INVOCATIONS; i++)
@@ -96,7 +87,7 @@ Test_Task::svc (void)
 
       // ACE_DEBUG ((LM_DEBUG, "(%t) calling notify %d\n", i));
 
-      if (r_->notify (this, ACE_Event_Handler::READ_MASK) == -1)
+      if (this->reactor ()->notify (this, ACE_Event_Handler::READ_MASK) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
       
       // ACE_DEBUG ((LM_DEBUG, "(%t) leaving notify %d\n", i));

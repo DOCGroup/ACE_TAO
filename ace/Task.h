@@ -57,11 +57,11 @@ public:
   ACE_Task_Base (ACE_Thread_Manager *);
 
   // = Initialization and termination hooks (note that these *must* be defined by subclasses).
-  virtual int open (void *args = 0) = 0;
+  virtual int open (void *args = 0);
   // Hook called to open a Task.  <args> can be used to pass arbitrary
   // information into <open>.
 
-  virtual int close (u_long flags = 0) = 0;
+  virtual int close (u_long flags = 0);
   // Hook called from ACE_Task_Exit when during thread exit and from
   // the default implemenation of module_closed().
 
@@ -75,7 +75,7 @@ public:
   // ACE_Task instance exits.
 
   // = Immediate and deferred processing methods, respectively.
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0) = 0;
+  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
   // Transfer msg into the queue to handle immediate processing. 
 
   virtual int svc (void);

@@ -34,9 +34,6 @@ protected:
   // Keeps track of which state we are in.
 
 private:
-  // = Disallow these methods...
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
-  virtual int svc (void) { return 0; }
 };
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>

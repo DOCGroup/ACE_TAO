@@ -12,32 +12,32 @@ An Object-Oriented Network Programming Toolkit
 Overview of ACE
 
 The ADAPTIVE Communication Environment (ACE) is an object-oriented
-toolkit that implements strategic and tactical design patterns to
-simplify the development of concurrent, event-driven communication
-software.  ACE provides a rich set of reusable C++ wrappers, class
-categories, and frameworks that perform common communication software
-tasks across a range of operating system platforms.  The communication
-software tasks provided by ACE include event demultiplexing and event
-handler dispatching, connection establishment, interprocess
-communication, shared memory management, message routing, dynamic
-(re)configuration of distributed services, multi-threading, and
-concurrency control.
+(OO) toolkit that implements fundamental design patterns for
+communication software.  ACE provides a rich set of reusable C++
+wrappers, class categories, and frameworks that perform common
+communication software tasks across a range of operating system
+platforms.  The communication software tasks provided by ACE include
+event demultiplexing and event handler dispatching, service
+initialization, interprocess communication, shared memory management,
+message routing, dynamic (re)configuration of distributed services,
+multi-threading, and concurrency control.
 
-ACE is targeted for developers of high-performance concurrent network
-applications and services.  The primary goal of ACE is to simplify the
-development of concurrent OO communication software that utilizes
-interprocess communication, event demultiplexing, explicit dynamic
-linking, and concurrency.  In addition, ACE automates communication
-software configuration and reconfiguration by dynamically linking
-services into applications at run-time and executing these services on
-one or more processes or threads.
+ACE is targeted for developers of high-performance communication
+services and applications on UNIX, POSIX, and Win32 platforms.  ACE
+simplifies the development of OO network applications and services
+that utilize interprocess communication, event demultiplexing,
+explicit dynamic linking, and concurrency.  ACE automates system
+configuration and reconfiguration by dynamically linking services into
+applications at run-time and executing these services in one or more
+processes or threads.
 
 ACE has been ported to a wide range of uni-processor and multi-process
 OS platforms including Win32 (i.e., WinNT and Win95), most versions of
 UNIX (e.g., SunOS 4.x and 5.x, SGI IRIX, HP-UX, OSF/1, AIX, Linux, and
 SCO), VxWorks, and MVS OpenEdition.  It is currently used in
 commercial products by dozens of companies including Ericsson,
-Bellcore, Siemens, Motorola, and Kodak.
+Bellcore, Siemens, Motorola, and Kodak.  There are both C++ and Java
+versions of ACE available.
 
 The remainder of this document outlines the structure and participants
 of the layers in this diagram.
@@ -130,12 +130,12 @@ medical engineering.
 
 OBTAINING ACE
 
-The current ACE release is provided as a tar file that is slightly
-larger than 1.5 Meg compressed using GNU gzip.  ACE may be obtained
-electronically from http://www.cs.wustl.edu/~schmidt/ACE-obtain.html.
-This release contains contains the source code, test drivers, and
-example applications for C++ wrapper libraries and the higher-level
-ACE network programming framework developed as part of the ADAPTIVE
+The current ACE release is provided as a tar file that is around 1.8
+Meg compressed using GNU gzip.  ACE may be obtained electronically
+from http://www.cs.wustl.edu/~schmidt/ACE-obtain.html.  This release
+contains contains the source code, test drivers, and example
+applications for C++ wrapper libraries and the higher-level ACE
+network programming framework developed as part of the ADAPTIVE
 project at the University of California, Irvine and at Washington
 University.
 

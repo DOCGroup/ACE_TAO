@@ -84,10 +84,10 @@ Gateway_Handler::xmit_stdin (void)
       ACE_Message_Block *mb;
 
       ACE_NEW_RETURN (mb, 
-		      ACE_Message_Block (sizeof (Peer_Message)),
+		      ACE_Message_Block (sizeof (Event)),
 		      -1);
 
-      Peer_Message *peer_msg = (Peer_Message *) mb->rd_ptr ();
+      Event *peer_msg = (Event *) mb->rd_ptr ();
       peer_msg->header_.routing_id_ = this->routing_id_;
 
       n = ACE_OS::read (ACE_STDIN, peer_msg->buf_, sizeof peer_msg->buf_);
@@ -270,7 +270,7 @@ Gateway_Handler::send_peer (ACE_Message_Block *mb)
 int
 Gateway_Handler::recv_peer (ACE_Message_Block *&mb)
 { 
-  Peer_Message *peer_msg;
+  Event *peer_msg;
   size_t       len;
   ssize_t      n;
   size_t       offset = 0;
@@ -278,14 +278,14 @@ Gateway_Handler::recv_peer (ACE_Message_Block *&mb)
   if (this->msg_frag_ == 0)
     {
       ACE_NEW_RETURN (this->msg_frag_,
-		      ACE_Message_Block (sizeof (Peer_Message)),
+		      ACE_Message_Block (sizeof (Event)),
 		      -1);
 
       // No existing fragment...
       if (this->msg_frag_ == 0)
 	ACE_ERROR_RETURN ((LM_ERROR, "out of memory\n"), -1);
 
-      peer_msg = (Peer_Message *) this->msg_frag_->rd_ptr ();
+      peer_msg = (Event *) this->msg_frag_->rd_ptr ();
 
       switch (n = this->peer ().recv (peer_msg, sizeof (Peer_Header)))
 	{
@@ -441,7 +441,7 @@ Gateway_Handler::await_messages (void)
 	// We got a valid message, so let's process it now!  At the
 	// moment, we just print out the message contents...
 
-	Peer_Message  *peer_msg = (Peer_Message *) mb->rd_ptr ();
+	Event  *peer_msg = (Event *) mb->rd_ptr ();
 	this->total_bytes_ += mb->length ();
 
 #if defined (VERBOSE)

@@ -244,7 +244,7 @@ ACE_Thread::self (ACE_hthread_t &t_id)
 }
 
 ACE_INLINE int 
-ACE_Thread::getprio (ACE_hthread_t t_id, int *prio)
+ACE_Thread::getprio (ACE_hthread_t t_id, int &prio)
 {
   ACE_TRACE ("ACE_Thread::getprio");
   return ACE_OS::thr_getprio (t_id, prio);

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -20,11 +19,7 @@
 
 #include "ace/OS.h"
 
-ACE_SVC_FACTORY_DECLARE (ACE_Gateway)
+ACE_SVC_FACTORY_DECLARE (Gateway)
 
 #endif /* ACE_GATEWAY */
-
-
-
-
 

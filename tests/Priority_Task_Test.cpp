@@ -29,7 +29,6 @@ class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 public:
   Priority_Task (void);
 
-  int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
   int close (u_long = 0);
   int open (void *);
   int svc (void);
@@ -65,7 +64,7 @@ Priority_Task::svc (void)
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
-  ACE_Thread::getprio (thr_handle, &prio);
+  ACE_Thread::getprio (thr_handle, prio);
   ACE_ASSERT (this->priority_ == prio);
   return 0;
 }

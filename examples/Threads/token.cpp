@@ -10,9 +10,6 @@ class My_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   My_Task (int n);
-  virtual int open (void *) { return 0; }
-  virtual int close (u_long) { return 0; }
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
   virtual int svc (void);
 
   static void sleep_hook (void *);
