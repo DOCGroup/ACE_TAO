@@ -1,3 +1,13 @@
+Mon Jun 23 16:53:58 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp: 
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp: 
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: 
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp: 
+
+	  Removed '<>' from explicit instantiation for template function
+	  to try to placate the Redhat 7.1 explicit instantiation build.
+
 Mon Jun 23 12:37:48 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
