@@ -1,3 +1,11 @@
+Thu Jul 19 22:39:32 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.cpp:
+	* ace/MEM_IO.h:
+	* ace/MEM_IO.i:
+	* ace/MEM_IO.cpp: On non-Win32 platforms, disable multithreaded
+	  MEM_IO if _ACE_USE_SV_SEM is defined.
+
 Thu Jul 19 15:25:11 2001  Paul Calabrese  <calabrese_p@ociweb.com>
 
 	* ace/MEM_Acceptor.i (mmap_prefix):
@@ -36,7 +44,7 @@ Wed Jul 18 13:15:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	* ace/Malloc_T.i (release): Removed an unnecessary "else" to
 	  make gcc 2.96 happy.  Thanks to Frank Wolf <fwolf@gum.de> for
  	  reporting this.
-  
+
         * Happy birthday to me and Angelo Corsaro!
 
 Tue Jul 17 00:34:40 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>

@@ -8,7 +8,7 @@ ACE_Reactive_MEM_IO::ACE_Reactive_MEM_IO ()
 {
 }
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
 ASYS_INLINE
 ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (void)
   : mq_ (0),
@@ -43,7 +43,7 @@ ACE_MT_MEM_IO::Simple_Queue::init (MQ_Struct *mq,
   this->malloc_ = malloc;
   return 0;
 }
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
 
 ASYS_INLINE ssize_t
 ACE_Reactive_MEM_IO::get_buf_len (const off_t off, ACE_MEM_SAP_Node *&buf)
