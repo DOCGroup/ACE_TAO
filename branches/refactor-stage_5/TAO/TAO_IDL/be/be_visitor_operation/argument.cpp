@@ -172,12 +172,6 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS:
-      {
-        be_visitor_args_post_invoke_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS:
       {
         be_visitor_args_vardecl_ss visitor (&ctx);

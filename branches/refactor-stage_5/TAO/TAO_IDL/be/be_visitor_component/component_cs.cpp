@@ -178,37 +178,6 @@ be_visitor_component_cs::visit_component (be_component *node)
 
 
   be_visitor_context ctx (*this->ctx_);
-
-  // Interceptor classes.  The interceptors helper classes must be
-  // defined before the interface operations because they are used in
-  // the implementation of said operations.
-
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
-  be_visitor_interface_interceptors_cs ii_visitor (&ctx);
-
-  if (node->accept (&ii_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_cs::"
-                         "visit_component - "
-                         "codegen for interceptors classes failed\n"),
-                        -1);
-    }
-
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS);
-  be_visitor_interface_remote_proxy_impl_cs irpi_visitor (&ctx);
-
-  if (node->accept (&irpi_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_cs::"
-                         "visit_component - "
-                         "codegen for Base Proxy Broker class failed\n"),
-                        -1);
-    }
-
-  ctx = *this->ctx_;
   be_visitor_interface_remote_proxy_broker_cs irpb_visitor (&ctx);
 
   if (node->accept (&irpb_visitor) == -1)

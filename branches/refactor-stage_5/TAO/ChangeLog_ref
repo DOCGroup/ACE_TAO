@@ -1,3 +1,48 @@
+Tue Aug 12 10:15:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * be/be_visitor_argument.cpp:
+        * be/be_visitor_interface.cpp:
+        * be/be_visitor_operation.cpp:
+        * be/be_visitor_attribute/attribute.cpp:
+        * be/be_visitor_component/component_ch.cpp:
+        * be/be_visitor_component/component_cs.cpp:
+        * be/be_visitor_interface/interface.cpp:
+        * be/be_visitor_interface/interface_cs.cpp:
+        * be/be_visitor_operation/argument.cpp:
+        * be/be_visitor_operation/operation.cpp:
+        * be/be_visitor_operation/operation_ss.cpp:
+        * be_include/be_codegen.h:
+        * be_include/be_visitor_argument.h:
+        * be_include/be_visitor_interface.h:
+        * be_include/be_visitor_operation.h:
+        * be_include/be_visitor_operation/operation.h:
+        * be_include/be_visitor_operation/operation_ss.h:
+
+	  First pass at removing code now unused due to
+	  the refactoring changes.
+
+        * be/be_visitor_argument/post_invoke_cs.cpp:
+        * be/be_visitor_interface/base_proxy_impl_ch.cpp:
+        * be/be_visitor_interface/interceptors_cs.cpp:
+        * be/be_visitor_interface/proxy_impls_ch.cpp:
+        * be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+        * be/be_visitor_operation/base_proxy_impl_ch.cpp:
+        * be/be_visitor_operation/interceptors_cs.cpp:
+        * be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+        * be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * be_include/be_visitor_argument/post_invoke_cs.h:
+        * be_include/be_visitor_interface/base_proxy_impl_ch.h:
+        * be_include/be_visitor_interface/interceptors_cs.h:
+        * be_include/be_visitor_interface/proxy_impls_ch.h:
+        * be_include/be_visitor_interface/remote_proxy_impl_cs.h:
+        * be_include/be_visitor_operation/base_proxy_impl_ch.h:
+        * be_include/be_visitor_operation/interceptors_cs.h:
+        * be_include/be_visitor_operation/remote_proxy_impl_cs.h:
+        * be_include/be_visitor_operation/rettype_vardecl_cs.h:
+
+	  First pass at removing files containing visitors no
+	  longer used due to the refactoring changes.
+
 Tue Aug 12 07:50:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Abstract_Servant_Base.h:

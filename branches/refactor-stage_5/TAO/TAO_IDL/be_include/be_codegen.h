@@ -79,9 +79,6 @@ public:
       TAO_INTERFACE_INTERCEPTORS_SH,
       TAO_INTERFACE_INTERCEPTORS_SS,
 
-      TAO_INTERFACE_BASE_PROXY_IMPL_CH,
-      TAO_INTERFACE_REMOTE_PROXY_IMPL_CH,
-      TAO_INTERFACE_REMOTE_PROXY_IMPL_CS,
       TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH,
       TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS,
       TAO_INTERFACE_DIRECT_PROXY_IMPL_SH,
@@ -136,7 +133,6 @@ public:
       //   variable to do_static_call
       TAO_OPERATION_ARG_INVOKE_CS,            // passing argument variable to do_static_call
       //   after do_static_call
-      TAO_OPERATION_ARG_POST_INVOKE_CS,       // processing of arg after do_static_call
       TAO_OPERATION_ARG_DECL_SS,              // argument decl in skeleton
       TAO_OPERATION_ARG_DEMARSHAL_SS,         //   and argument variables to the
       TAO_OPERATION_ARG_MARSHAL_SS,
