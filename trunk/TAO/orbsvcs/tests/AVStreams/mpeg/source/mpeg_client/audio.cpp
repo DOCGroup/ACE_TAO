@@ -74,7 +74,7 @@
 #include <X11/Xutil.h>
 #include <X11/Intrinsic.h>
 
-#include "../include/common.h"
+#include "common.h"
 #include "newproto.h"
 #include "global.h"
 

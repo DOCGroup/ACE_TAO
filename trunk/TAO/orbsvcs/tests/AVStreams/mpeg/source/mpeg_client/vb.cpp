@@ -38,12 +38,12 @@
 #include <stropts.h>
 #include <sys/conf.h>
 #endif
-#include "../include/common.h"
+#include "common.h"
 #include "newproto.h"
 #include "global.h"
-#include "../mpeg_shared/filters.h"
-#include "../mpeg_shared/fileio.h"
-#include "../mpeg_shared/com.h"
+#include "filters.h"
+#include "fileio.h"
+#include "com.h"
 
 /* magic number -- deviation is considered
    caused by clock drift only if rate <= 1/MAX_CLOCK_DRIFT.

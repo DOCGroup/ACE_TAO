@@ -61,7 +61,7 @@
 #include <X11/extensions/XShm.h>
 #endif
 
-#include "../include/common.h"
+#include "common.h"
 #include "newproto.h"
 #include "global.h"
 #include "dither.h"

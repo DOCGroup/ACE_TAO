@@ -43,7 +43,8 @@ FILES= 24bit            \
        vp               \
        Command_Handler
 
-
+MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
+CPPFLAGS += -I$(MPEG_ROOT)/include -I$(MPEG_ROOT)/mpeg_shared -I$(MPEG_ROOT)/mpeg_server  -I$(MPEG_ROOT)/mpeg_mib -I$(MPEG_ROOT)/mpeg_client
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
@@ -81,7 +82,8 @@ realclean: clean
 
 .obj/24bit.o .obj/24bit.so .shobj/24bit.o .shobj/24bit.so: 24bit.cpp video.h dither.h proto.h
 .obj/2x2.o .obj/2x2.so .shobj/2x2.o .shobj/2x2.so: 2x2.cpp video.h dither.h proto.h
-.obj/ab.o .obj/ab.so .shobj/ab.o .shobj/ab.so: ab.cpp ../include/common.h \
+.obj/ab.o .obj/ab.so .shobj/ab.o .shobj/ab.so: ab.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -97,9 +99,13 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i newproto.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h \
- ../mpeg_shared/filters.h ../mpeg_shared/fileio.h ../mpeg_shared/com.h
-.obj/audio.o .obj/audio.so .shobj/audio.o .shobj/audio.so: audio.cpp ../include/common.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ global.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/filters.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h
+.obj/audio.o .obj/audio.so .shobj/audio.o .shobj/audio.so: audio.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -115,9 +121,11 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i newproto.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ global.h
 .obj/decoders.o .obj/decoders.so .shobj/decoders.o .shobj/decoders.so: decoders.cpp decoders.h util.h video.h proto.h
-.obj/file.o .obj/file.so .shobj/file.o .shobj/file.so: file.cpp video.h ../include/common.h \
+.obj/file.o .obj/file.so .shobj/file.o .shobj/file.so: file.cpp video.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -133,11 +141,13 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i newproto.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ global.h
 .obj/fs2.o .obj/fs2.so .shobj/fs2.o .shobj/fs2.so: fs2.cpp video.h dither.h fs2.h proto.h
 .obj/fs2fast.o .obj/fs2fast.so .shobj/fs2fast.o .shobj/fs2fast.so: fs2fast.cpp video.h proto.h dither.h
 .obj/fs4.o .obj/fs4.so .shobj/fs4.o .shobj/fs4.so: fs4.cpp fs4.h video.h proto.h dither.h
-.obj/global.o .obj/global.so .shobj/global.o .shobj/global.so: global.cpp ../include/common.h \
+.obj/global.o .obj/global.so .shobj/global.o .shobj/global.so: global.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -163,7 +173,8 @@ realclean: clean
 .obj/motionvector.o .obj/motionvector.so .shobj/motionvector.o .shobj/motionvector.so: motionvector.cpp video.h proto.h util.h
 .obj/ordered.o .obj/ordered.so .shobj/ordered.o .shobj/ordered.so: ordered.cpp video.h proto.h dither.h
 .obj/ordered2.o .obj/ordered2.so .shobj/ordered2.o .shobj/ordered2.so: ordered2.cpp video.h proto.h dither.h
-.obj/para.o .obj/para.so .shobj/para.o .shobj/para.so: para.cpp video.h ../include/common.h \
+.obj/para.o .obj/para.so .shobj/para.o .shobj/para.so: para.cpp video.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -179,9 +190,11 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i newproto.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ global.h
 .obj/parseblock.o .obj/parseblock.so .shobj/parseblock.o .shobj/parseblock.so: parseblock.cpp video.h proto.h decoders.h util.h
-.obj/prog.o .obj/prog.so .shobj/prog.o .shobj/prog.so: prog.cpp video.h ../include/common.h \
+.obj/prog.o .obj/prog.so .shobj/prog.o .shobj/prog.so: prog.cpp video.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -197,7 +210,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i newproto.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ global.h
 .obj/ui.o .obj/ui.so .shobj/ui.o .shobj/ui.so: ui.cpp ../mpeg_mib/mibload.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -213,15 +227,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- interface/fb.xbm interface/play.xbm interface/step.xbm \
- interface/stop.xbm interface/loop.xbm interface/ff.xbm \
- interface/MainWindow.mib interface/Info.mib video.h \
- ../include/common.h newproto.h ../mpeg_shared/routine.h \
- ../mpeg_shared/../include/common.h global.h
+ $(ACE_ROOT)/ace/Log_Record.i interface/fb.xbm \
+ interface/play.xbm interface/step.xbm interface/stop.xbm \
+ interface/loop.xbm interface/ff.xbm interface/MainWindow.mib \
+ interface/Info.mib video.h ../include/common.h newproto.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
+ global.h
 .obj/util.o .obj/util.so .shobj/util.o .shobj/util.so: util.cpp video.h proto.h util.h
 .obj/util32.o .obj/util32.so .shobj/util32.o .shobj/util32.so: util32.cpp video.h proto.h ui.h
-.obj/vb.o .obj/vb.so .shobj/vb.o .shobj/vb.so: vb.cpp ../include/common.h \
+.obj/vb.o .obj/vb.so .shobj/vb.o .shobj/vb.so: vb.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -237,9 +253,13 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i newproto.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h \
- ../mpeg_shared/filters.h ../mpeg_shared/fileio.h ../mpeg_shared/com.h
-.obj/vd.o .obj/vd.so .shobj/vd.o .shobj/vd.so: vd.cpp ../include/common.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ global.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/filters.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h
+.obj/vd.o .obj/vd.so .shobj/vd.o .shobj/vd.so: vd.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -255,9 +275,10 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i newproto.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h \
- dither.h video.h proto.h
-.obj/video.o .obj/video.so .shobj/video.o .shobj/video.so: video.cpp ../include/common.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ global.h dither.h video.h proto.h
+.obj/video.o .obj/video.so .shobj/video.o .shobj/video.so: video.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -272,9 +293,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i decoders.h \
- util.h video.h proto.h global.h ui.h
-.obj/vp.o .obj/vp.so .shobj/vp.o .shobj/vp.so: vp.cpp ../include/common.h \
+ $(ACE_ROOT)/ace/Log_Record.i decoders.h util.h \
+ video.h proto.h global.h ui.h
+.obj/vp.o .obj/vp.so .shobj/vp.o .shobj/vp.so: vp.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -290,8 +312,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i newproto.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h \
- dither.h video.h proto.h ui.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ global.h dither.h video.h proto.h ui.h
 .obj/Command_Handler.o .obj/Command_Handler.so .shobj/Command_Handler.o .shobj/Command_Handler.so: Command_Handler.cpp Command_Handler.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -339,8 +361,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h ctr.cpp \
- ../include/common.h newproto.h ../mpeg_shared/routine.h \
- ../mpeg_shared/../include/common.h global.h ../mpeg_shared/sendpt.h \
- ../mpeg_shared/filters.h ../mpeg_shared/fileio.h ../mpeg_shared/com.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
+ newproto.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ global.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/filters.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

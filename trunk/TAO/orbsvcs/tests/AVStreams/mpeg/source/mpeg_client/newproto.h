@@ -26,7 +26,7 @@
 /* ui.c */
 void UIprocess(int cmdSocket);
 
-#include "../mpeg_shared/routine.h"
+#include "routine.h"
 
 /* ctr.c */
 int CTRmain(void);
