@@ -1,3 +1,11 @@
+Mon Jan  5 12:30:56 2004  Don Hinton <dhinton@ieee.org>
+
+	* include/makeinclude/rules.lib.GNU:
+
+	  Fixed a bug report that caused the generated cpp files to be
+	  added to the archive. Thanks to Werner Buchart <w.buchert@medat.de>
+          for reporting the problem.
+
 Mon Jan  5 10:47:51 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/cbx.mpd:
