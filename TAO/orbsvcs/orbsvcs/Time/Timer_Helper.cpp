@@ -124,9 +124,12 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
       
       // Record the current time in a timestamp to know when global
       // updation of time was done.
-      clerk_->update_timestamp_ = ACE_OS::gettimeofday ().sec () * 
-        ACE_static_cast (CORBA::ULongLong, 10000000)
-        + ACE_OS::gettimeofday ().usec () * 10;
+      clerk_->update_timestamp_ = ACE_static_cast (CORBA::ULongLong,
+                                                   ACE_OS::gettimeofday ().sec ()) * 
+                                  ACE_static_cast (CORBA::ULongLong, 
+                                                   10000000) +
+                                  ACE_static_cast (CORBA::ULongLong,
+                                                   ACE_OS::gettimeofday ().usec () * 10);
       
     }
   ACE_CATCHANY
