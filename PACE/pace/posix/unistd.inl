@@ -73,7 +73,7 @@ pace_close (PACE_HANDLE fildes)
 
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
-int
+PACE_HANDLE
 pace_dup (PACE_HANDLE fildes)
 {
   return dup (fildes);
@@ -82,7 +82,7 @@ pace_dup (PACE_HANDLE fildes)
 
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
-int
+PACE_HANDLE
 pace_dup2 (PACE_HANDLE fildes, int fildes2)
 {
   return dup2 (fildes, fildes2);
