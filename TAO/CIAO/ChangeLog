@@ -1,3 +1,10 @@
+2003-08-06  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
+
+	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
+	* performance-tests/Benchmark/RoundTrip/run_test.pl:
+	Fixed problems relating to parsing arguments when the number of iterations 
+	is specified from the command line.
+
 Tue Aug 05 17:25:45 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.mpc:

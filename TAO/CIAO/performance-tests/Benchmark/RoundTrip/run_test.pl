@@ -43,7 +43,7 @@ $end_args = "end_home -c file://$svr_ior";
 $shutdown_args = "shutdown";
 
 # Client program command line arguments
-$cl_args = "";
+$cl_args = "-i 100000";
 
 # CIAO daemon process definition
 $DS = new PerlACE::Process ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
@@ -79,14 +79,14 @@ if ($client != 0) {
     $status = 1;
 }
 
-## Terminating the ComponentServer running the RateGen home.
+## Terminating the ComponentServer running.
 $DC = new PerlACE::Process ("$controller",
                             "$common_args $end_args");
 
 $ctrl = $DC->SpawnWaitKill (60);
 if ($ctrl != 0) {
     print STDERR "ERROR: Fail to end component server\n";
-    $DS->Kill ();
+    $DC->Kill ();
     exit 1;
 }
 
