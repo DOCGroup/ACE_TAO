@@ -375,7 +375,7 @@ TAO_Array_Forany_T<T,T_slice,TAG>::ptr (void) const
 
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-bool
+CORBA::Boolean
 TAO_Array_Forany_T<T,T_slice,TAG>::nocopy (void) const
 {
   return this->nocopy_;
