@@ -133,7 +133,11 @@ TAO_IIOP_Acceptor::create_new_profiles (const TAO_ObjectKey &object_key,
           return -1;
         }
 
-      if (this->orb_core_->orb_params ()->std_profile_components () == 0)
+      // Do not add any tagged components to the profile if configured
+      // by the user not to do so, or if an IIOP 1.0 endpoint is being
+      // created (IIOP 1.0 did not support tagged components).
+      if (this->orb_core_->orb_params ()->std_profile_components () == 0
+          || (this->version_.major == 1 && this->version_.minor == 0))
         continue;
 
       pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
@@ -190,7 +194,11 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
           return -1;
         }
 
-      if (this->orb_core_->orb_params ()->std_profile_components () != 0)
+      // Do not add any tagged components to the profile if configured
+      // by the user not to do so, or if an IIOP 1.0 endpoint is being
+      // created (IIOP 1.0 did not support tagged components).
+      if (this->orb_core_->orb_params ()->std_profile_components () != 0
+          && (this->version_.major >= 1 && this->version_.minor >= 1))
         {
           iiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
