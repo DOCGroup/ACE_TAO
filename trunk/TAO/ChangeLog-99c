@@ -1,3 +1,11 @@
+Mon Jun 28 12:15:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/any.cpp:
+	* TAO/tests/Param_Test/objref.cpp:
+	* TAO/tests/Param_Test/big_union.cpp:
+	  Moved some code I had mistakenly left outside
+	  ACE_TRY blocks.
+
 Mon Jun 28 12:05:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
