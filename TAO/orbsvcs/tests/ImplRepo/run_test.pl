@@ -40,8 +40,10 @@ sub airplane_ir_test
 
   ACE::waitforfile ($implrepo_ior);
 
+  system ("tao_ir -ORBImplRepoIOR file://$implrepo_ior add plane -c \"airplane_server -i -ORBImplRepoIOR file://$implrepo_ior\"");
+
   $SV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
-                         "-o $airplane_ior -i -r -ORBobjrefstyle url");
+                         "-o $airplane_ior -i -ORBobjrefstyle url -ORBImplRepoIOR file://$implrepo_ior");
 
   ACE::waitforfile ($airplane_ior);
 
@@ -72,14 +74,16 @@ sub nestea_ir_test
 
   ACE::waitforfile ($implrepo_ior);
 
+  system ("tao_ir -ORBImplRepoIOR file://$implrepo_ior add nestea_server -c \"nestea_server -i -ORBImplRepoIOR file://$implrepo_ior\"");
+
   $SV = Process::Create ($EXEPREFIX."nestea_server".$Process::EXE_EXT,
-                         "-o $nestea_ior -i -r -ORBobjrefstyle url");
+                         "-o $nestea_ior -i -ORBobjrefstyle url -ORBImplRepoIOR file://$implrepo_ior");
 
   ACE::waitforfile ($nestea_ior);
 
   system($EXEPREFIX."nestea_client -k file://$nestea_ior -ORBobjrefstyle url");
 
-  $IR->Kill (); $IR->Wait ();
+#  $IR->Kill (); $IR->Wait ();
 }
 
 sub both_ir_test
@@ -89,11 +93,14 @@ sub both_ir_test
 
   ACE::waitforfile ($implrepo_ior);
 
+  system ("tao_ir -ORBImplRepoIOR file://$implrepo_ior add plane -c \"airplane_server -i -ORBImplRepoIOR file://$implrepo_ior\"");
+  system ("tao_ir -ORBImplRepoIOR file://$implrepo_ior add nestea -c \"nestea_server -i -ORBImplRepoIOR file://$implrepo_ior\"");
+
   $ASV = Process::Create ($EXEPREFIX."nestea_server".$Process::EXE_EXT,
-                         "-o $nestea_ior -i -r -ORBobjrefstyle url");
+                         "-o $nestea_ior -i -ORBobjrefstyle url -ORBImplRepoIOR file://$implrepo_ior");
 
   $NSV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
-                         "-o $airplane_ior -i -r -ORBobjrefstyle url");
+                         "-o $airplane_ior -i -ORBobjrefstyle url -ORBImplRepoIOR file://$implrepo_ior");
 
   ACE::waitforfile ($nestea_ior);
 
