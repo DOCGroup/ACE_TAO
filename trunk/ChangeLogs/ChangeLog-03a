@@ -1,3 +1,15 @@
+Fri Dec 13 18:25:42 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Set ACE_HAS_THREADS to 1 or 0 based on the
+          compiler's predefined macros. This lets users build easier without
+          having to worry about what ACE expects - they just have to invoke
+          the compiler correctly. Add #include "ace/config-posix.h" to pick
+          the detectable POSIX-ish settings.
+
+        * ace/config-posix.h: If ACE_HAS_THREADS is defined as 0 on entry,
+          undef it and don't pick up the POSIX threads settings. Allows
+          single-threaded builds using this very handy config.
+
 Fri Dec 13 18:10:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.cpp (wchar snprintf, sprintf): Change the selection for
