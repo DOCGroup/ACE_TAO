@@ -36,7 +36,7 @@ class ACE_Export ACE_Reactor_Impl
   // = TITLE
   //     An abstract class for implementing the Reactor Pattern.
 public:
-  virtual ~ACE_Reactor_Impl (void) {};
+  virtual ~ACE_Reactor_Impl (void) {}
   // Close down and release all resources.
 
   virtual int open (size_t size,
