@@ -17,8 +17,6 @@ LSRC    = $(addsuffix .cpp,$(FILES))
 LOBJ    = $(LSRC:%.cpp=$(VDIR)%.o)
 SHOBJ   = $(addsuffix .$(SOEXT),$(FILES))
 
-LIBS   += $(ACELIB)
-
 BIN2    = main
 LIB2    = libDump_Restore.a
 SHLIB2  = libDump_Restore.$(SOEXT)
