@@ -151,8 +151,13 @@ ACE_INLINE void
 ACE_Time_Value::set (const timestruc_t &tv)
 {
   // ACE_TRACE ("ACE_Time_Value::set");
+#if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   this->tv_.tv_sec = tv.tv_sec;
   this->tv_.tv_usec = tv.tv_nsec / 1000;
+#else
+  this->tv_.tv_sec = tv.ts_sec;
+  this->tv_.tv_usec = tv.ts_nsec / 1000;
+#endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
 
   this->normalize ();
 }
@@ -221,8 +226,13 @@ ACE_Time_Value::operator timestruc_t () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator timestruc_t");
   timestruc_t tv;
+#if !defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   tv.tv_sec = this->tv_.tv_sec;
   tv.tv_nsec = this->tv_.tv_usec * 1000;
+#else
+  tv.ts_sec = this->tv_.tv_sec;
+  tv.ts_nsec = this->tv_.tv_usec * 1000;
+#endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
   return tv;
 }
 
@@ -6402,8 +6412,13 @@ ACE_OS::nanosleep (const struct timespec *requested,
   ACE_UNUSED_ARG (remaining);
 
   // Convert into seconds and microseconds.
+#if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   ACE_Time_Value tv (requested->tv_sec, 
 		     requested->tv_nsec * 1000);
+#else
+  ACE_Time_Value tv (requested->ts_sec, 
+		     requested->ts_nsec * 1000);
+#endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
   return ACE_OS::sleep (tv);
 #endif /* ACE_HAS_CLOCK_GETTIME */
 }

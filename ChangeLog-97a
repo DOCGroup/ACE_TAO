@@ -1,3 +1,17 @@
+Sat May 17 02:19:27 1997  Nanbor Wang  <nw1@number.wustl.edu>
+
+	* ace/config-freebsd.h (ACE_HAS_BROKEN_TIMESPEC_MEMBERS): 
+	* ace/OS.i (set, timestruct_t, nanosleep): 
+	* ace/High_Res_Timer.cpp (elapsed_time): 
+	* ace/README: Added ACE_HAS_BROKEN_TIMESPEC_MEMBERS so that we can
+	  fix that problem FreeBSD 2.1.x brings by defining timespec as {
+	  time_t ts_sec ; long ts_nsec }.  Notice:  This is highly
+	  non-portable.  Please refer to ACE code and see how to write
+	  portable.  Fortunately, only older versions of FreeBSD have
+	  this.  Yesterday's hack didn't work, so, it's removed.  Thanks
+	  to Satoshi Ueno <satoshi.ueno@gs.com> for reporting and helping
+	  debug on his FreeBSD 2.1.7R box.
+
 Sat May 17 00:06:04 1997    <irfan@TWOSTEP>
 
 	* apps/Gateway/Gateway/Proxy_Handler.cpp (open): Turn on
@@ -50,8 +64,9 @@ Fri May 16 18:43:17 1997  Nanbor Wang  <nw1@number.wustl.edu>
 	* ace/config-freebsd.h: Minor modification for working on FreeBSD
 	  2.1.x platform.  Added includion of <sys/time.h> and
 	  <sys/types.h>.  Defined ACE_HAS_POSIX_TIME for 2.1.x.  Redefine
-	  timespec to timeval to hack around a bug on 2.1.x.
-
+	  timespec to timeval to hack around a bug on 2.1.x.  Thanks to
+	  Satoshi Ueno <satoshi.ueno@gs.com> for reporting this.
+	
 Fri May 16 12:25:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* netsvcs/lib: Reverted back to the original Server_Logging_Handler 
