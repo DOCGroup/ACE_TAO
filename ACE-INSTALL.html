@@ -251,7 +251,7 @@ make: *** [libACE.so] Error 8
       to use RedHat 5.1 or later.  ACE works without any modifications on
       RedHat 5.1 and 5.2 on both Intel and Alpha; use the
       <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
-      and <code>ace/config_linux_lxpthreads.h</code> platform/config
+      and <code>ace/config-linux-lxpthreads.h</code> platform/config
       files.<p>
                                                                                      The ACE <code>Tokens_Test</code> hangs with egcs 1.1b on
       Linux.  It runs properly when built with egcs 1.0.2 and egcs
@@ -803,10 +803,10 @@ Thank you to <A HREF="mailto:ben@jetpen.com">Ben Eng</A> for the pointer to
 the STL fixes.
 
 <OL>
-  <LI>Uncompress the ACE distribution into a directory, where it will create a 
-      ACE_wrappers directory containing the distribution.  The ACE_wrappers 
-	  directory will be referred to as ACE_ROOT in the following steps -- so 
-	  ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the 
+  <LI>Uncompress the ACE distribution into a directory, where it will create a
+      ACE_wrappers directory containing the distribution.  The ACE_wrappers
+	  directory will be referred to as ACE_ROOT in the following steps -- so
+	  ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the
 	  root directory.  <BR>
 	  <BR>
   <LI>Create a file called <code>config.h</code> in the ACE_ROOT\ace
