@@ -1,6 +1,7 @@
 // benchd: Adapted from the "ntalker" example.
 // Sumedh Mungee
 
+#include "ace/Process.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
@@ -21,6 +22,8 @@ static int QUIET = 0;
 static const char *INTERFACE = "le0";
 static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
 static const u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
+static const char *OUTPUT_FILE_NAME = "benchd.log";
+static ACE_HANDLE OUTPUT_FILE;
 
 // Handle both multicast and stdin events.
 
@@ -78,17 +81,7 @@ Handle_Events::handle_input (ACE_HANDLE h)
             << " on port " << remote_addr.get_port_number () 
             << " bytes = " << retcode << endl;
             */
-          switch(ACE_OS::fork()) {
-          case -1:
-            ACE_OS::perror ("fork");
-            return -1;
-          case 0:
-            ACE_OS::exit(serve(buf));
-          default:
-            /*   ACE_OS::write (ACE_STDOUT, buf, retcode);
-            cout << endl; */
-            break;
-          }
+          serve(buf);
 	  return 0;
 	}
 
@@ -158,7 +151,8 @@ int
 Handle_Events::serve(char *buf) {
   ACE_ARGV arguments(buf);
   if(ACE_OS::strcmp(arguments[0],TESTER) == 0) {
-    return ACE_OS::execvp(TESTER, arguments.argv());
+    ACE_Process p(arguments.argv(), ACE_INVALID_HANDLE, OUTPUT_FILE, OUTPUT_FILE);
+    return 0;
   }
 }
 
@@ -199,9 +193,14 @@ int
 main (int argc, char *argv[])
 {
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_OS::signal(SIGCLD, SIG_IGN);
   ACE_UNUSED_ARG (sa);
 
   parse_args (argc, argv);
+  
+  OUTPUT_FILE = ACE_OS::open(OUTPUT_FILE_NAME, O_CREAT | O_WRONLY, 0644);
+  if(OUTPUT_FILE == 0) 
+    return 1;
 
   ACE_Reactor reactor;
   Handle_Events handle_events (UDP_PORT, MCAST_ADDR, INTERFACE, reactor);
@@ -211,6 +210,7 @@ main (int argc, char *argv[])
   while (!done)
     reactor.handle_events ();
 
+  ACE_OS::close(OUTPUT_FILE);
   cout << "\nbenchd done.\n";
   return 0;
 }

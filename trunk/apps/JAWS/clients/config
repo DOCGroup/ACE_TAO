@@ -1,6 +1,6 @@
-1.0 50 10 http://mambo:5432/~sumedh/testdata/smallfile.txt 1 a 0 b 0 1 65536
-2.0 50 20 http://mambo:5432/~sumedh/testdata/smallfile.txt 1 a 0 b 0 1  65536
-3.0 50 30 http://mambo:5432/~sumedh/testdata/smallfile.txt 1 a 0 b 0 1  65536
-4.0 50 40 http://mambo:5432/~sumedh/testdata/smallfile.txt 1  a 0 b 0 1 65536
-5.0 50 50 http://mambo:5432/~sumedh/testdata/smallfile.txt 1 a 0 b 0 1  65536
+1.0 50 10 http://mambo:2222/~sumedh/testdata/smallfile.txt 1 a 0 b 0 1 65536
+2.0 50 20 http://mambo:2222/~sumedh/testdata/smallfile.txt 1 a 0 b 0 1  65536
+3.0 50 30 http://mambo:2222/~sumedh/testdata/smallfile.txt 1 a 0 b 0 1  65536
+4.0 50 40 http://mambo:2222/~sumedh/testdata/smallfile.txt 1  a 0 b 0 1 65536
+5.0 50 50 http://mambo:2222/~sumedh/testdata/smallfile.txt 1 a 0 b 0 1  65536
 
