@@ -480,7 +480,8 @@ TAO_GIOP_Message_Lite::process_request_message (TAO_Transport *transport,
 
 int
 TAO_GIOP_Message_Lite::process_reply_message (
-    TAO_Pluggable_Reply_Params &params
+     TAO_Pluggable_Reply_Params &params,
+     TAO_Queued_Data * /* qd */
   )
 {
   // We know we have some reply message. Check whether it is a

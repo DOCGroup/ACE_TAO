@@ -109,7 +109,8 @@ public:
   /// Parse the reply message that we received and return the reply
   /// information though <reply_info>
   virtual int process_reply_message (
-      TAO_Pluggable_Reply_Params &reply_info);
+      TAO_Pluggable_Reply_Params &reply_info,
+      TAO_Queued_Data *qd);
 
   /// Generate a reply message with the exception <ex>.
   virtual int generate_exception_reply (
