@@ -151,6 +151,9 @@
 
 // Compiler/platform supports SVR4 signal typedef.
 #define ACE_HAS_SVR4_SIGNAL_T
+#if __DECCXX_VER >= 60090006
+# define ACE_HAS_SIGWAIT
+#endif /* __DECCXX_VER >= 60090006 */
 
 // Compiler/platform has strerror().
 #define ACE_HAS_STRERROR
