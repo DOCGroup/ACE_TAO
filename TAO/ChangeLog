@@ -1,3 +1,20 @@
+Mon Jul 14 18:41:29 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify_Service.cpp:
+
+	  Fixed a typo in a debug message.
+
+	* orbsvcs/tests/Notify/lib/Direct_Consumer.cpp:
+
+	  Removed unnecessary debug messages.
+
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/relay.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/run_test.pl:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/supplier.conf:
+
+	  Fixed this test to use Direct consumer instead of Relay. removed
+	  the relay.conf file as it is not required.
+
 Mon Jul 14 14:35:00 2003  Justin Michel <michel_j@ociweb.com>
 
         * examples/RTCORBA/Activity/Makefile:
