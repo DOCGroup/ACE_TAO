@@ -245,7 +245,7 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
                     file_name,
                     MAXPATHLEN);
 
-#if defined (CHORUS)
+#if defined (CHORUS) || defined(INTEGRITY)
   this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
 #else
   this->handle_ = ACE_OS::open (file_name, flags, mode, sa);

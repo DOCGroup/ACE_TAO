@@ -321,6 +321,9 @@
 // A simple free list which doen't allocate/deallocate elements.
 # define ACE_PURE_FREE_LIST 2
 
+# if defined (INTEGRITY)
+# define ACE_MAX_USERID 32
+# endif
 
 # if defined (ACE_WIN32)
 

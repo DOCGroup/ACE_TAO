@@ -136,5 +136,15 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_UINT32,ACE_RMCast_Partial_Messa
 template class ACE_Hash_Map_Entry<ACE_UINT32,ACE_RMCast_Partial_Message*>;
 
 template class ACE_Less_Than<ACE_UINT32>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager<ACE_UINT32,ACE_RMCast_Partial_Message*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_UINT32,ACE_RMCast_Partial_Message*,ACE_Hash<ACE_UINT32>,ACE_Equal_To<ACE_UINT32>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_UINT32,ACE_RMCast_Partial_Message*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_UINT32,ACE_RMCast_Partial_Message*,ACE_Hash<ACE_UINT32>,ACE_Equal_To<ACE_UINT32>,ACE_Null_Mutex >
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_UINT32,ACE_RMCast_Partial_Message*,ACE_Hash<ACE_UINT32>,ACE_Equal_To<ACE_UINT32>,ACE_Null_Mutex >
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_UINT32,ACE_RMCast_Partial_Message*,ACE_Hash<ACE_UINT32>,ACE_Equal_To<ACE_UINT32>,ACE_Null_Mutex >
+#pragma instantiate ACE_Hash_Map_Entry<ACE_UINT32,ACE_RMCast_Partial_Message*>
 
+#pragma instantiate ACE_Less_Than<ACE_UINT32>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
