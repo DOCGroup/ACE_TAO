@@ -1,3 +1,26 @@
+Wed Jul 28 21:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+       * examples/Simulator/DOVEBrowser/NS_Resolve.java: fixed name
+         service reply handling, according to new reply format.  Thanks to
+         Rebecca Sanford <Rebecca.A.Sanford@gd-is.com> for reporting the
+         problem and for sending in the fix.
+
+       * examples/Simulator/DOVEBrowser/PushConsumer.java: added missing catch
+         blocks for new RtecScheduler INTERNAL and SYNCHRONIZATION_FAILURE
+         exceptions.
+	
+       * examples/Simulator/DOVEBrowser/make.bat: added commands to copy
+         over TimeBase.pidl file with other IDL files.
+
+       * examples/Simulator/Event_Supplier/DualEC_Sup.dsp,
+         examples/Simulator/Event_Supplier/Event_Sup.dsp,
+         examples/Simulator/Event_Supplier/Logging_Sup.dsp: added
+         orbsvcs/orbsvcs to preprocessor include paths, so generated headers
+         will compile.
+
+       * orbsvcs/Scheduling_Service/Scheduling_Service.cpp: added missing "o:"
+         to get opts string (was not parsing for -o option).
+
 Wed Jul 28 19:01:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Makefile (ORB_CORE_FILES):
