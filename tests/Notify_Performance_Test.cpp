@@ -232,12 +232,14 @@ template class ACE_Auto_Basic_Ptr<ACE_Reactor>;
 template class auto_ptr<ACE_Reactor_Impl>;
 template class ACE_Auto_Basic_Ptr<ACE_Reactor_Impl>;
 template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate auto_ptr<ACE_Reactor>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor>
 #pragma instantiate auto_ptr<ACE_Reactor_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor_Impl>
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, long>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else

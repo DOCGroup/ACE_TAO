@@ -364,8 +364,8 @@ typedef ACE_Future_Rep<const ACE_TCHAR *> *char_star_key;
 typedef ACE_Future_Holder<const ACE_TCHAR *> *char_star_value;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 template class ACE_Future_Holder<const ACE_TCHAR *>;
 template class ACE_Future_Holder<u_long>;
 template class ACE_Future_Observer<const ACE_TCHAR *>;
@@ -398,10 +398,9 @@ template class ACE_Hash_Map_Manager_Ex<char_star_key, char_star_value, ACE_Point
 template class ACE_Hash_Map_Iterator_Base_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Future_Holder<const ACE_TCHAR *>
 #pragma instantiate ACE_Future_Holder<u_long>
 #pragma instantiate ACE_Future_Observer<const ACE_TCHAR *>

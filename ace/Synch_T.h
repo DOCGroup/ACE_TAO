@@ -202,7 +202,7 @@ private:
 };
 
 /**
- * @class ACE_Atomic_Op
+ * @class ACE_Atomic_Op_Ex
  *
  * @brief Transparently parameterizes synchronization into basic
  * arithmetic operations.
@@ -212,17 +212,17 @@ private:
  * templatized version of the Decorator pattern from the GoF book.
  */
 template <class ACE_LOCK, class TYPE>
-class ACE_Atomic_Op
+class ACE_Atomic_Op_Ex
 {
 public:
   // = Initialization methods.
 
-  /// Initialize <value_> to 0.
-  ACE_Atomic_Op (void);
-
-  /// Initialize <value_> to c.
-  ACE_Atomic_Op (const TYPE &c);
-
+  /// Initialize <value_> to 0. 
+  ACE_Atomic_Op_Ex (ACE_LOCK &mtx);
+ 
+  /// Initialize <value_> to c. 
+  ACE_Atomic_Op_Ex (ACE_LOCK &mtx, const TYPE &c); 
+  
   // = Accessors.
 
   /// Atomically pre-increment <value_>.
@@ -265,7 +265,7 @@ public:
   void operator= (const TYPE &i);
 
   /// Atomically assign <rhs> to <value_>.
-  void operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs);
+  void operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs);
 
   /// Explicitly return <value_>.
   TYPE value (void) const;
@@ -277,7 +277,7 @@ public:
   // Declare the dynamic allocation hooks.
 
   /// Manage copying...
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_LOCK, TYPE> &);
+  ACE_Atomic_Op_Ex (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &);
 
   /**
    * Returns a reference to the underlying <ACE_LOCK>.  This makes it
@@ -298,11 +298,35 @@ public:
 
 private:
   /// Type of synchronization mechanism.
-  ACE_LOCK mutex_;
+  ACE_LOCK &mutex_;
 
   /// Current object decorated by the atomic op.
   TYPE value_;
 };
+
+template <class ACE_LOCK, class TYPE> 
+class ACE_Atomic_Op : public ACE_Atomic_Op_Ex <ACE_LOCK, TYPE>
+{ 
+public: 
+  /// Initialize <value_> to 0. 
+  ACE_Atomic_Op (void); 
+ 
+  /// Initialize <value_> to c. 
+  ACE_Atomic_Op (const TYPE &c); 
+ 
+  /// Manage copying... 
+  ACE_Atomic_Op (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &); 
+ 
+  /// Atomically assign i to <value_>.
+  void operator= (const TYPE &i);
+
+  /// Atomically assign <rhs> to <value_>.
+  void operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs);
+
+private: 
+  /// Type of synchronization mechanism. 
+  ACE_LOCK own_mutex_; 
+}; 
 
 /**
  * @class ACE_TSS

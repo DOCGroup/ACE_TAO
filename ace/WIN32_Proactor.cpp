@@ -65,6 +65,31 @@ ACE_WIN32_Proactor::close (void)
   // Close the completion port
   if (this->completion_port_ != 0)
     {
+      // To avoid memory leaks we should delete all results from queue.
+    
+      for (;;)
+        {
+          ACE_OVERLAPPED *overlapped = 0;
+          u_long bytes_transferred = 0;
+          u_long completion_key = 0;
+
+          // Get the next asynchronous operation that completes
+          BOOL res = ::GetQueuedCompletionStatus 
+            (this->completion_port_,
+             &bytes_transferred,
+             &completion_key,
+             &overlapped,
+             0);  // poll
+
+          if (overlapped == 0)
+            break;
+
+          ACE_WIN32_Asynch_Result *asynch_result = 
+            (ACE_WIN32_Asynch_Result *) overlapped;
+
+          delete asynch_result;
+        }
+
       int result = ACE_OS::close (this->completion_port_);
       this->completion_port_ = 0;
       return result;

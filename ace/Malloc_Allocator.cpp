@@ -155,8 +155,10 @@ ACE_Malloc_Stats::dump (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
+template class ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_HAS_MALLOC_STATS */
 
