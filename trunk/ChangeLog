@@ -1,3 +1,13 @@
+Fri Jul  5 10:30:44 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	 * ace/Array_Base.cpp: Swapped the order of includes so that
+	   Array_Base.h comes after Malloc_Base.h.  Thanks to Al Pariante
+           <Albert.Pariante@axcelis.com> for reporting this.
+
+Thu Jul  4 11:27:05 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* Happy 226th Birthday USA!
+	
 Sat Jul 06 19:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Time_Value.h (ACE_Time_Value): Fix for [BUGID 1240]. Some of
