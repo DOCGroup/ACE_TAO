@@ -1278,44 +1278,6 @@ SOURCE=.\IOR_LookupTable.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IORC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORManipulation.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Leader_Follower.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3242,14 +3204,6 @@ SOURCE=.\IOR_LookupTable.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IORC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORManipulation.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Leader_Follower.h
 # End Source File
 # Begin Source File
@@ -3771,10 +3725,6 @@ SOURCE=.\IOPC.i
 # Begin Source File
 
 SOURCE=.\IOPS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORC.i
 # End Source File
 # Begin Source File
 
