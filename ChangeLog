@@ -148,7 +148,6 @@ Fri May  7 09:38:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Include "ace/Log_Msg.h" to pull in ACE_ERROR macros.
 
->>>>>>> 4.6897
 Fri May  7 08:08:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
