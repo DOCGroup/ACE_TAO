@@ -1,3 +1,9 @@
+Tue Jan 25 10:38:31 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+	  Fixed "unreachable statement" warnings on kai.
+
 Tue Jan 25 02:07:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Simple/time/README: Added description on getting
