@@ -236,6 +236,8 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   os->gen_endif ();
 
+  *os << be_nl;
+
   node->cli_inline_gen (1);
   return 0;
 }

@@ -287,7 +287,7 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
 int
 TAO_OutStream::gen_endif (void)
 {
-  *this << "\n\n#endif /* end #if !defined */\n";
+  *this << "\n\n#endif /* end #if !defined */";
 
   return 0;
 }
