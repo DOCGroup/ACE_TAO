@@ -49,33 +49,18 @@ be_visitor_interface_fwd_ci::visit_interface_fwd (be_interface_fwd *node)
 
   if (!node->cli_inline_gen () && !node->imported ())
     {
+#if 0
+      // We don't generate any code here.....
 
-      // generate the ifdefined macro for  the _var type
-      os->gen_ifdef_macro (node->flatname (), "_var");
+      // It is possible to generate the definitions for the _var and
+      // _out types, but if we do that then the _duplicate() and
+      // _nil() methods cannot be inlined.
 
-      if (node->gen_var_impl () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_fwd_ci::"
-                             "visit_interface_fwd - "
-                             "codegen for _var failed\n"), -1);
-        }
+      // Since these classes will be generated once the forward
+      // declaration is resolved there is really no problem here
+#endif /* 0 */
 
-      os->gen_endif ();
-
-      // generate the ifdefined macro for  the _out type
-      os->gen_ifdef_macro (node->flatname (), "_out");
-
-      if (node->gen_out_impl () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_fwd_ci::"
-                             "visit_interface_fwd - "
-                             "codegen for _out failed\n"), -1);
-        }
-      os->gen_endif ();
-
-      node->cli_stub_gen (I_TRUE);
+      node->cli_inline_gen (I_TRUE);
     }
   return 0;
 }
