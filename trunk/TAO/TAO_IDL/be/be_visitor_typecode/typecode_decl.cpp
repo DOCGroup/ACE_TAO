@@ -54,14 +54,15 @@ be_visitor_typecode_decl::visit_type (be_type *node)
       if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
         *os << "TAO_NAMESPACE_STORAGE_CLASS ";
       else
-        *os << "static CORBA::TypeCode_ptr "
-            << node->tc_name ()->last_component () << ";\n\n";
+        *os << "static ";
+      *os << "CORBA::TypeCode_ptr "
+          << node->tc_name ()->last_component () << ";\n\n";
     }
   else
     {
       // we are in the ROOT scope
       os->indent ();
-      *os << "extern CORBA::TypeCode_ptr " << idl_global->export_macro ()
+      *os << "extern " << idl_global->export_macro () << " CORBA::TypeCode_ptr "
           << " " << node->tc_name ()->last_component () << ";\n\n";
     }
   return 0;
