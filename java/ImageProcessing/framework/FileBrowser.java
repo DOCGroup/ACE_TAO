@@ -5,8 +5,9 @@ import java.awt.image.*;
 import java.net.*;
 import java.applet.*;
 import gjt.Separator;
+import gjt.ComponentScroller;
 
-class FileNode extends Hierarchy
+class FileNode extends HierarchyAdapter
 {
   public FileNode (String name, 
 		   Icon icon, 
@@ -99,12 +100,18 @@ class BrowserPanel extends Panel
     int count = list.listFiles (url, this.root_);
     //    System.out.println ("Count: " + count);
     if (count > 0)
-      this.add ("Center", this.root_);
+      {
+	// Add the root to the component scroller and then add the
+	// component scroller to the panel.
+	this.scroller_ = new ComponentScroller (this.root_);
+	this.add ("Center", this.scroller_);
+      }
     return count;
   }
 
   private FileNode root_ = null;
   private ImageApp parent_;
+  private ComponentScroller scroller_;
 }
 
 class FileBrowser extends Frame
