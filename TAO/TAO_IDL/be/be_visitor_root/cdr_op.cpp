@@ -11,8 +11,8 @@
 //    cdr_op.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for the CDR operators for types defined in Root's
-//    scope.
+//    Visitor generating code for the CDR operators for types defined
+//    in Root's scope.
 //
 // = AUTHOR
 //    Aniruddha Gokhale
@@ -25,7 +25,7 @@
 
 #include "be_visitor_root.h"
 
-ACE_RCSID(be_visitor_root, cdr_op, "$Id")
+ACE_RCSID(be_visitor_root, cdr_op, "$Id$")
 
 
 // ***************************************************************************
