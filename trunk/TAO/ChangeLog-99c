@@ -1,3 +1,15 @@
+Tue Apr 13 13:59:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/server.cpp:
+	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/client.cpp:
+          Added inlcudes and macros to send output to a file, as
+	  the tests in ACE_wrappers/tests do. The macros are 
+	  commented out, so the cubit tests will work exactly
+	  the same as before unless client.cpp and server.cpp are
+	  built with those macros uncommented. Especially useful
+	  for dealing with timeprobes, where there might be 
+	  hundreds of entries in the output
+
 Tue Apr 13 12:35:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Connect.h:
