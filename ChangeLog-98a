@@ -1,8 +1,13 @@
+Tue Feb 17 09:23:05 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: there were two SIGCHLD #defines, if it was not
+          already #defined.  I changed the second one to be SIGCLD instead.
+
 Tue Feb 17 08:41:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h (ACE_PROPER_SINGLETON_INSTANTIATION): Changed spelling
- 	  of SINGLETONE to SINGLETON.  Thanks to Mark Maris
- 	  <maris@scgp.com> for reporting this.
+        * ace/OS.h (ACE_PROPER_SINGLETON_INSTANTIATION): Changed spelling
+          of SINGLETONE to SINGLETON.  Thanks to Mark Maris
+          <maris@scgp.com> for reporting this.
 
 Tue Feb 17 07:41:32 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -10,48 +15,48 @@ Tue Feb 17 07:41:32 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Feb 17 03:32:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ACE.*: Changes for Windows CE just keeps going and going and
- 	  going...  All following functions are member functions of class
-	  ACE. 
+        * ace/ACE.*: Changes for Windows CE just keeps going and going and
+          going...  All following functions are member functions of class
+          ACE.
 
-	  This member funcion has wchar version _only_ when
- 	  ACE_HAS_UNICODE_ONLY is defined:
+          This member funcion has wchar version _only_ when
+          ACE_HAS_UNICODE_ONLY is defined:
 
-	               timestamp
+                       timestamp
 
-	  I've added wchar version of the following member functions:
+          I've added wchar version of the following member functions:
 
-	               strecpy
-		       strsplit_r
-		       strrepl
-		       basename
-		       execname
-		       format_hexdump
-		       
-	  These functions are not defined on CE because they make no sense
-	  on CE.
-  
+                       strecpy
+                       strsplit_r
+                       strrepl
+                       basename
+                       execname
+                       format_hexdump
+
+          These functions are not defined on CE because they make no sense
+          on CE.
+
                        strenvdup
-		       daemonize
+                       daemonize
 
-	  There is no stdin defined on CE.  Before we implement a stdin
-	  for CE, these functions don't make any sense.  
-	
-		       read_adapter
-		       register_stdin_handler
-		       remove_stdin_handler
+          There is no stdin defined on CE.  Before we implement a stdin
+          for CE, these functions don't make any sense.
 
-	  Changing these functions to UNICODE will need to change the
-	  svc.conf parser.  Therefore, I'll leave them to a later point.
+                       read_adapter
+                       register_stdin_handler
+                       remove_stdin_handler
 
-	               ldopen
-		       ldfind
+          Changing these functions to UNICODE will need to change the
+          svc.conf parser.  Therefore, I'll leave them to a later point.
 
-	* ace/README: Added a new directive ACE_HAS_UNICODE_ONLY which
-	  indicates that most APIs must use wchar instead of char.  (Note
-	  that on WinCE, only WinSock functions use the traditional char
-	  interfaces.  Most other functions only support wchar
-	  interfaces, include str* functions.)
+                       ldopen
+                       ldfind
+
+        * ace/README: Added a new directive ACE_HAS_UNICODE_ONLY which
+          indicates that most APIs must use wchar instead of char.  (Note
+          that on WinCE, only WinSock functions use the traditional char
+          interfaces.  Most other functions only support wchar
+          interfaces, include str* functions.)
 
 Mon Feb 16 14:57:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -83,82 +88,82 @@ Mon Feb 16 10:51:28 1998  Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
 
 Sun Feb 15 16:32:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* netsvcs/clients/Naming/Client/svc.conf: Removed "-s" flag, which
-	  set the database name for local namespce.  This was causing
-	  grief if users forgot to set this environment variable.  Thanks
-	  to Johannes Gutleber <Johannes.Gutleber@cern.ch> for reporting
-	  this.
+        * netsvcs/clients/Naming/Client/svc.conf: Removed "-s" flag, which
+          set the database name for local namespce.  This was causing
+          grief if users forgot to set this environment variable.  Thanks
+          to Johannes Gutleber <Johannes.Gutleber@cern.ch> for reporting
+          this.
 
 Sun Feb 15 15:55:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/Timer_Hash_T.{cpp,h}: Timer Hash wasn't keeping the earliest
-	  node pointer up to date with cancels.
+        * ace/Timer_Hash_T.{cpp,h}: Timer Hash wasn't keeping the earliest
+          node pointer up to date with cancels.
 
 Sat Feb 14 21:12:52 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Synch_T.h (class ACE_Guard): this->acquire() already sets
- 	  the owner, so we don't need to do it in the constructor.
+        * ace/Synch_T.h (class ACE_Guard): this->acquire() already sets
+          the owner, so we don't need to do it in the constructor.
 
 Sat Feb 14 20:57:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* netsvcs/lib/Log_Message_Receiver.{h,cpp} (log_output): Added this to
-	  all receiver classes.  It allows writing messages to a user
-	  specified ostream.
+        * netsvcs/lib/Log_Message_Receiver.{h,cpp} (log_output): Added this to
+          all receiver classes.  It allows writing messages to a user
+          specified ostream.
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp
-  	  (handle_logging_record): * netsvcs/lib/Client_Logging_Handler.cpp
-	  (send): Use the above change to avoid missing data on NT.  Thanks
-	  to Greg White <gwhite@northlink.com> for providing the fix.
+        * netsvcs/lib/Server_Logging_Handler_T.cpp
+          (handle_logging_record): * netsvcs/lib/Client_Logging_Handler.cpp
+          (send): Use the above change to avoid missing data on NT.  Thanks
+          to Greg White <gwhite@northlink.com> for providing the fix.
 
 Sat Feb 14 18:34:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/Timer_{Wheel,Hash}_T.cpp: Fixed a bug with earliest time
-	  pointers not being set correctly.  Thanks to Mark Evans
-	  <mark.evans@tandem.com> for reporting this.
+        * ace/Timer_{Wheel,Hash}_T.cpp: Fixed a bug with earliest time
+          pointers not being set correctly.  Thanks to Mark Evans
+          <mark.evans@tandem.com> for reporting this.
 
-	* tests/Timer_Queue_Test.cpp: Added a quick test to check to
-	  make sure the earliest time is reported correctly.
+        * tests/Timer_Queue_Test.cpp: Added a quick test to check to
+          make sure the earliest time is reported correctly.
 
 Sat Feb 14 18:28:19 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Fixed a problem with the
- 	  ACE_SOCK_Dgram_Mcast subscription method.  Originally, each time
- 	  the ACE_SOCK_Dgram_Mcast subscribe() method was invoked, it
- 	  created a new socket, did appropriate setsockopt calls
- 	  (e.g. SO_USEPORT), did a bind() to that socket, and then did the
- 	  setsockopt call that actually joins the mcast group.  The
- 	  problem with this was that is wasn't possible to a single socket
- 	  to subscribe to more than one multicast group.  Multiple calls
- 	  to ACE_SOCK_Dgram_Mcast.subscribe() didn't work because the new
- 	  socket descriptor that was issued didn't listen to the old
- 	  multicast group(s).  The fix was to change the subscribe()
- 	  method to only create, set up, and bind the socket if
- 	  get_handle() == ACE_INVALID_HANDLE.  Thanks to Dave Meyer
- 	  <dmeyer@std.saic.com> for reporting this.
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe): Fixed a problem with the
+          ACE_SOCK_Dgram_Mcast subscription method.  Originally, each time
+          the ACE_SOCK_Dgram_Mcast subscribe() method was invoked, it
+          created a new socket, did appropriate setsockopt calls
+          (e.g. SO_USEPORT), did a bind() to that socket, and then did the
+          setsockopt call that actually joins the mcast group.  The
+          problem with this was that is wasn't possible to a single socket
+          to subscribe to more than one multicast group.  Multiple calls
+          to ACE_SOCK_Dgram_Mcast.subscribe() didn't work because the new
+          socket descriptor that was issued didn't listen to the old
+          multicast group(s).  The fix was to change the subscribe()
+          method to only create, set up, and bind the socket if
+          get_handle() == ACE_INVALID_HANDLE.  Thanks to Dave Meyer
+          <dmeyer@std.saic.com> for reporting this.
 
 Sat Feb 14 03:29:50 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* ace/ACE.cpp (set_handle_limit): Fixed a couple of bugs setting
- 	  the maximum number of file descriptors.  If we use setrlimit, we
- 	  should first get the hard limit before calling it, or we get an
- 	  EINVAL for trying to set a hard limit of 0 and a soft limit
- 	  greater than that.  Also, for -1 the call was not setting the
- 	  limit to the maximum allowable.
+        * ace/ACE.cpp (set_handle_limit): Fixed a couple of bugs setting
+          the maximum number of file descriptors.  If we use setrlimit, we
+          should first get the hard limit before calling it, or we get an
+          EINVAL for trying to set a hard limit of 0 and a soft limit
+          greater than that.  Also, for -1 the call was not setting the
+          limit to the maximum allowable.
 
-	* ace/OS.h (ACE_MAX_DGRAM_SIZE): Moved the #define
-	  ACE_MAX_DGRAM_SIZE from the PSOS specific part of OS.h.
+        * ace/OS.h (ACE_MAX_DGRAM_SIZE): Moved the #define
+          ACE_MAX_DGRAM_SIZE from the PSOS specific part of OS.h.
 
 Fri Feb 13 19:25:55 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Log_Record.cpp (ACE_Log_Record): Changed the "set" method
- 	  for priority() so that it doesn't convert the priority into the
- 	  base two logarithm of the parameter.  Instead, this is handled
- 	  by the "get" method of priority().  Thanks to Eric C. Newton
- 	  <ecn@smart.net> for reporting this.
+        * ace/Log_Record.cpp (ACE_Log_Record): Changed the "set" method
+          for priority() so that it doesn't convert the priority into the
+          base two logarithm of the parameter.  Instead, this is handled
+          by the "get" method of priority().  Thanks to Eric C. Newton
+          <ecn@smart.net> for reporting this.
 
-	* ace/OS.h: Added a new #define called ACE_MAX_DGRAM_SIZE, which
- 	  is set to 8k by default.  Naturally, this can be overwritten in
- 	  platform-specific config.h files.
+        * ace/OS.h: Added a new #define called ACE_MAX_DGRAM_SIZE, which
+          is set to 8k by default.  Naturally, this can be overwritten in
+          platform-specific config.h files.
 
 Fri Feb 13 10:40:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -166,7 +171,7 @@ Fri Feb 13 10:40:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Feb 12 14:33:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (mktemp): I missed this one in Win32 section.
+        * ace/OS.i (mktemp): I missed this one in Win32 section.
 
 Fri Feb 13 09:04:13 1998  Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
 
@@ -174,16 +179,16 @@ Fri Feb 13 09:04:13 1998  Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
 
 Wed Feb 11 09:50:27 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-dgux-4.x-ghs.h
-	* include/makeinclude/platform_dgux4_ghs.GNU: Configs for ACE on
-	  DG/UX 4 using Green Hills Multi C++ compiler, and draft 10 pthreads.
+        * ace/config-dgux-4.x-ghs.h
+        * include/makeinclude/platform_dgux4_ghs.GNU: Configs for ACE on
+          DG/UX 4 using Green Hills Multi C++ compiler, and draft 10 pthreads.
 
-	* ace/README
-	* ace/OS.h:  New macro ACE_NEEDS_SCHED_H for platforms which needs to
-	  #include <sched.h> to get complete defs for thread scheduling.
+        * ace/README
+        * ace/OS.h:  New macro ACE_NEEDS_SCHED_H for platforms which needs to
+          #include <sched.h> to get complete defs for thread scheduling.
 
-	* ace/OS.cpp: Added a DG/UX-specific pthread_wait function for use with
-	  draft 10 pthreads on DG/UX.
+        * ace/OS.cpp: Added a DG/UX-specific pthread_wait function for use with
+          draft 10 pthreads on DG/UX.
 
 Wed Feb 11 09:32:10 1998  David L. Levine  <levine@cs.wustl.edu>
 
