@@ -136,8 +136,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << bt->nested_type_name (this->ctx_->scope ())
           << " (stub), " << bt->nested_type_name (this->ctx_->scope ())
           << "::_nil ());"<< be_uidt_nl
+          << "#if (TAO_HAS_SMART_PROXIES == 1)" << be_idt_nl
           << "return TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);"
+          << be_uidt_nl << "#else " << be_idt_nl
+          << "return default_proxy;" << be_uidt_nl
+          << "#endif /*TAO_HAS_SMART_PROXIES == 1*/"
           << be_uidt_nl;
     }
   else

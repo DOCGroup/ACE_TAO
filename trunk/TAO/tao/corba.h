@@ -58,7 +58,9 @@
 
 // TAO specific files, avoid them as much as possible.
 #include "tao/Interceptor.h"
+#if (TAO_HAS_SMART_PROXES == 1)
 #include "tao/Smart_Proxies.h"
+#endif /*TAO_HAS_SMART_PROXES == 1*/
 #include "tao/Stub.h"
 #include "tao/params.h"
 #include "tao/ORB_Core.h"

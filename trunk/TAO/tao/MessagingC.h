@@ -45,6 +45,11 @@
 #include "tao/PollableC.h"
 #include "tao/varout.h"
 
+#if (TAO_HAS_SMART_PROXIES == 1)
+#include "tao/Smart_Proxies.h"
+#include "ace/Singleton.h"
+#endif /*TAO_HAS_SMART_PROXIES ==1*/
+
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
@@ -1961,6 +1966,74 @@ TAO_NAMESPACE  Messaging
     void operator= (const ReplyHandler &);
   };
 
+#if (TAO_HAS_SMART_PROXIES == 1)
+class  TAO_Messaging_ReplyHandler_Default_Proxy_Factory
+{
+public:
+  
+  TAO_Messaging_ReplyHandler_Default_Proxy_Factory (int register_proxy_factory = 1);
+  
+  virtual ~TAO_Messaging_ReplyHandler_Default_Proxy_Factory (void);
+  
+  virtual ReplyHandler_ptr create_proxy (
+      ReplyHandler_ptr proxy,
+      CORBA::Environment &env = 
+        TAO_default_environment ()
+    );
+};
+
+class  TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
+{
+public:
+  
+  friend class ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+  
+  int register_proxy_factory (
+      TAO_Messaging_ReplyHandler_Default_Proxy_Factory *df,
+      CORBA::Environment &env = 
+        TAO_default_environment ()
+    );
+  
+  int unregister_proxy_factory (
+      CORBA::Environment &env = 
+        TAO_default_environment ()
+    );
+  
+  ReplyHandler_ptr create_proxy (
+      ReplyHandler_ptr proxy,
+      CORBA::Environment &env = 
+        TAO_default_environment ()
+    );
+
+protected:
+  TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter (void);
+  ~TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter (void);
+  TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter &operator= (
+      const TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter &
+    );
+  TAO_Messaging_ReplyHandler_Default_Proxy_Factory *proxy_factory_;
+  int delete_proxy_factory_;
+  ACE_SYNCH_RECURSIVE_MUTEX lock_;
+  
+};
+
+typedef ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER;
+
+class  TAO_Messaging_ReplyHandler_Smart_Proxy_Base
+  : public virtual ReplyHandler,
+    public virtual TAO_Smart_Proxy_Base
+{
+public:
+  TAO_Messaging_ReplyHandler_Smart_Proxy_Base (void);
+  ~TAO_Messaging_ReplyHandler_Smart_Proxy_Base (void);
+  virtual TAO_Stub *_stubobj (void) const;
+
+protected:
+  ::Messaging::ReplyHandler_ptr get_proxy (void);
+  ::Messaging::ReplyHandler_var proxy_;
+};
+
+#endif /*TAO_HAS_SMART_PROXIES*/
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyHandler;
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */

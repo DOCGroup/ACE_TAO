@@ -1586,6 +1586,132 @@ const char* Messaging::ReplyHandler::_interface_repository_id (void) const
   return "IDL:Messaging/ReplyHandler:1.0";
 }
 
+#if (TAO_HAS_SMART_PROXIES == 1)
+  Messaging::TAO_Messaging_ReplyHandler_Default_Proxy_Factory::TAO_Messaging_ReplyHandler_Default_Proxy_Factory (int register_proxy_factory)
+  {
+    if (register_proxy_factory)
+      {
+        TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER::instance ()->register_proxy_factory (this);
+      }
+  }
+
+  Messaging::TAO_Messaging_ReplyHandler_Default_Proxy_Factory::~TAO_Messaging_ReplyHandler_Default_Proxy_Factory (void)
+  {
+}
+
+Messaging::ReplyHandler_ptr
+Messaging::TAO_Messaging_ReplyHandler_Default_Proxy_Factory::create_proxy (
+    ::Messaging::ReplyHandler_ptr proxy,
+    CORBA::Environment &
+  )
+{
+  return proxy;
+}
+
+Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter (void)
+   : proxy_factory_ (0),
+     delete_proxy_factory_ (0)
+{
+}
+
+Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::~TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter (void)
+{
+  // Making sure the factory which the adapter has is destroyed with it.
+  if (this->proxy_factory_ != 0)
+    delete this->proxy_factory_;
+}
+
+int
+Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::register_proxy_factory (
+  TAO_Messaging_ReplyHandler_Default_Proxy_Factory *df,
+     CORBA::Environment &ACE_TRY_ENV
+      )
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+    this->lock_, 0));
+  // Remove any existing <proxy_factory_> and replace with the new one.
+  this->unregister_proxy_factory (ACE_TRY_ENV);
+  this->proxy_factory_ = df;
+  this->delete_proxy_factory_ = 0;
+return 0;
+}
+
+int
+Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::unregister_proxy_factory (
+  CORBA::Environment &
+    )
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+    this->lock_, 0));
+  if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
+    {
+      // Its necessary to set <delete_proxy_factory_> to 1 to make sure that it
+      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is 
+      // invoked in the destructor of the class too.
+      this->delete_proxy_factory_ = 1;
+      delete this->proxy_factory_;
+      this->proxy_factory_ = 0;
+    }
+return 0;
+}
+
+Messaging::ReplyHandler_ptr
+Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::create_proxy (
+    ::Messaging::ReplyHandler_ptr proxy,
+    CORBA::Environment &
+  )
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+    this->lock_, 0));
+  // Verify that an <proxy_factory_> is available else make one.
+  if (this->proxy_factory_ == 0)
+    ACE_NEW_RETURN (this->proxy_factory_,
+        TAO_Messaging_ReplyHandler_Default_Proxy_Factory (1), 
+         0);
+      
+    
+  return this->proxy_factory_->create_proxy (proxy);
+}
+
+Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::TAO_Messaging_ReplyHandler_Smart_Proxy_Base (void)
+{
+}
+
+Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::~TAO_Messaging_ReplyHandler_Smart_Proxy_Base (void)
+{
+}
+
+TAO_Stub *
+Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::_stubobj (void) const
+{
+  return this->base_proxy_->_stubobj ();
+}
+
+Messaging::ReplyHandler_ptr
+Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::get_proxy (void)
+  
+{
+  // Obtain the real proxy stored in <base_proxy_>
+  if (CORBA::is_nil (this->proxy_.in ()))
+    {
+      // Necessary to do this else you are stuck in an infinte loop
+      // creating smart proxies!
+      TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER::instance ()->unregister_proxy_factory ();
+      this->proxy_ = ::Messaging::ReplyHandler::_unchecked_narrow (this->base_proxy_.in ());
+    }
+    
+    return this->proxy_.in ();
+  }
+  
+    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
+    defined (ACE_HAS_GNU_REPO)
+  template class ACE_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #pragma instantiate ACE_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /*TAO_HAS_SMART_PROXIES*/
+
 static const CORBA::Long _oc_Messaging_ReplyHandler[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
