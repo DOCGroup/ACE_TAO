@@ -3,9 +3,14 @@
 
 ACE_RCSID(Notify, Notify_Event, "$Id$")
 
+// @@ Pradeep: David is going to give you a hard time from having a
+// static object
 TAO_Notify_EventType
 TAO_Notify_EventType::special_event_type_ ("*", "%ALL");
 
+// @@ You can probably get away returning this stuff by value, and
+// creating it on the fly, assuming there aren't too many calls to
+// this.
 TAO_Notify_EventType&
 TAO_Notify_EventType::special_event_type (void)
 {

@@ -37,6 +37,13 @@
 class TAO_Notify_CO_Factory;
 class TAO_Notify_POA_Factory;
 
+// @@ Pradeep: here is a crazy idea: some people may want to create
+// event channels as separate processes, for protection purposes.  You
+// may need to strategize this class to be able to do so...  You could
+// probably use the ImplRepo or something similar to make that work
+// portably.  I don't mean that you should do that right now, but
+// consider it in your design.
+
 class TAO_Notify_Export TAO_Notify_EventChannelFactory_i : public virtual POA_CosNotifyChannelAdmin::EventChannelFactory, public virtual PortableServer::RefCountServantBase
 {
   // = TITLE

@@ -10,7 +10,8 @@
 //   Notify_Channel_Objects_Factory.h
 //
 // = DESCRIPTION
-//   Factory for all CosNotify objects defined in the idl files and other related objects.
+//   Factory for all CosNotify objects defined in the idl files and
+//   other related objects.
 //
 // = AUTHOR
 //   Pradeep Gore <pradeep@cs.wustl.edu>
@@ -43,6 +44,11 @@ class TAO_Notify_SequenceProxyPushConsumer_i;
 class TAO_Notify_ProxyPushConsumer_i;
 class ACE_Lock;
 
+// @@ Pradeep: I'm not sure if I like the name of this class (and the
+// name of the file is mismatched).... In any case, you need a better
+// description here. I don't see any destroy methods: what if the
+// objects are allocated from a free list, or from shared memory or
+// something like that?
 class TAO_Notify_Export TAO_Notify_CO_Factory : public ACE_Service_Object
 {
   // = TITLE
