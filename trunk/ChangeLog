@@ -1,3 +1,12 @@
+Tue Oct 19 17:04:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/Multicast_Test.cpp: Explicitly specify PF_INET when creating
+	  the multicast socket. All of the addresses used in the test are
+	  IPv4, so force the socket to be IPv4 as well. Fixes run-time errors
+	  when IPv6 is enabled. The TCP stuff can pick up the correct address
+	  family from the specified address, but for datagrams, there's no
+	  real hint to pick up from.
+
 Tue Oct 19 15:29:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Message_Block.cpp (ACE_Data_Block::clone()): When copying data

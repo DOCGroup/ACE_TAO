@@ -511,7 +511,7 @@ MCT_Event_Handler::find (const char *buf)
       local += this->address_vec_[i]->c_str ();
       local += "\n";
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s not in:\n%s"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C not in:\n%C"),
               buf, local.c_str ()));
 
   return -1;
@@ -757,7 +757,7 @@ int producer (MCT_Config &config)
   int retval = 0;
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
-  ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &));
+  ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
 
   // Note that is is IPv4 specific and needs to be changed once
   //
