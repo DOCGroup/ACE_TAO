@@ -16,6 +16,7 @@ public:
 
   // = Set/get filtering criteria.
   void criteria (const char *criteria);
+
   const char *criteria (void);
 
   // = Set/get Event_Comm::Consumer object reference.
@@ -112,8 +113,8 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *receiver,
 
 Consumer_Entry::~Consumer_Entry (void)
 {
-  ACE_OS::free (this->filtering_criteria_);
-  ACE_OS::free (this->compiled_regexp_);
+  ACE_OS::free ((void*)this->filtering_criteria_);
+  ACE_OS::free ((void*)this->compiled_regexp_);
   // Decrement the object reference count.
   CORBA::release (this->receiver_);
 }
@@ -130,15 +131,15 @@ Notifier_i::Notifier_i (size_t size)
 //   2. It has the same marker name and its filtering criteria is "" (the wild card).
 
 void
-Notifier_i::subscribe (Event_Comm::Consumer *receiver_ref,
+Notifier_i::subscribe (Event_Comm::Consumer_ptr receiver_ref,
 		       const char *filtering_criteria,
-		       CORBA::Environment &IT_env)
+		       CORBA::Environment &TAO_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "in Notifier_i::subscribe for %s with filtering criteria \"%s\"\n",
-	      receiver_ref->_marker (),
+	      receiver_ref->marker (),
               filtering_criteria));
-  ACE_SString key (receiver_ref->_marker ());
+  ACE_SString key (receiver_ref->marker ());
   MAP_ITERATOR mi (this->map_);
 
   // Try to locate an entry using its marker name (which should be
@@ -163,7 +164,7 @@ Notifier_i::subscribe (Event_Comm::Consumer *receiver_ref,
 	  errno = EADDRINUSE;
 	  ACE_ERROR ((LM_ERROR,
 		      "duplicate entry for receiver %s with criteria \"%s\"",
-		     receiver_ref->_marker (),
+		     receiver_ref->marker (),
                       filtering_criteria));
 	  // Raise exception here???
 	  return;
@@ -177,7 +178,7 @@ Notifier_i::subscribe (Event_Comm::Consumer *receiver_ref,
            Consumer_Entry (receiver_ref,
                                         filtering_criteria));
   // Try to add new <Consumer_Entry> to the map.
-  else if (this->map_.bind (key, nr_entry) == -1)
+  /*else*/ if (this->map_.bind (key, nr_entry) == -1)
     {
       // Prevent memory leaks.
       delete nr_entry;
@@ -191,20 +192,20 @@ Notifier_i::subscribe (Event_Comm::Consumer *receiver_ref,
 // Remove a receiver from the table.
 
 void
-Notifier_i::unsubscribe (Event_Comm::Consumer *receiver_ref,
+Notifier_i::unsubscribe (Event_Comm::Consumer_ptr receiver_ref,
 			 const char *filtering_criteria,
-			 CORBA::Environment &IT_env)
+			 CORBA::Environment &TAO_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::unsubscribe for %s\n",
-	     receiver_ref->_marker ()));
+	     receiver_ref->marker ()));
   Consumer_Entry *nr_entry = 0;
   ACE_SString key;
   MAP_ITERATOR mi (this->map_);
   int found = 0;
 
   // Don't make a copy since we are deleting...
-  key.rep ((char *) receiver_ref->_marker ());
+  key.rep ((char *) receiver_ref->marker ());
 
   // Locate <Consumer_Entry> and free up resources.  @@
   // Note, we don't properly handle deallocation of KEYS!
@@ -217,14 +218,14 @@ Notifier_i::unsubscribe (Event_Comm::Consumer *receiver_ref,
 	{
 	  ACE_DEBUG ((LM_DEBUG,
                       "removed entry %s with criteria \"%s\"\n",
-                      receiver_ref->_marker (),
+                      receiver_ref->marker (),
                       filtering_criteria));
 	  found = 1;
 	  // @@ This is a hack, we need a better approach!
 	  if (this->map_.unbind (key, nr_entry) == -1)
 	    ACE_ERROR ((LM_ERROR,
                         "unbind failed for %s\n",
-		       receiver_ref->_marker ()));
+		       receiver_ref->marker ()));
 	  else
 	    delete nr_entry;
 	}
@@ -233,7 +234,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer *receiver_ref,
   if (found == 0)
     ACE_ERROR ((LM_ERROR,
                 "entry %s with criteria \"%s\" not found\n",
-	       receiver_ref->_marker (),
+	       receiver_ref->marker (),
                 filtering_criteria));
 }
 
@@ -241,7 +242,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer *receiver_ref,
 
 void
 Notifier_i::disconnect (const char *reason,
-			CORBA::Environment &IT_env)
+			CORBA::Environment &TAO_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_disconnect = %s\n",
@@ -254,23 +255,26 @@ Notifier_i::disconnect (const char *reason,
   for (MAP_ENTRY *me = 0; mi.next (me) != 0; mi.advance ())
     {
       Event_Comm::Consumer *receiver_ref = me->int_id_->receiver ();
-      ACE_ASSERT (receiver_ref->_marker () != 0);
+      ACE_ASSERT (receiver_ref->marker () != 0);
       ACE_DEBUG ((LM_DEBUG,
                   "disconnecting client %s\n",
-                  receiver_ref->_marker ()));
-      TRY
+                  receiver_ref->marker ()));
+      TAO_TRY
         {
-          receiver_ref->disconnect (reason, IT_X);
+          receiver_ref->disconnect (reason, TAO_TRY_ENV);
         }
-      CATCHANY
+      TAO_CATCHANY
         {
-          cerr << "Unexpected exception " << IT_X << endl;
+	  TAO_TRY_ENV.print_exception ("Unexpected exception\n");
         }
-      ENDTRY;
+      TAO_ENDTRY;
+
       delete me->int_id_;
-      delete me->ext_id_.rep ();
+      // delete me->ext_id_.rep ();
+      //@@ what is this? compile error.
       count++;
     }
+
 
   this->map_.close ();
   if (count == 1)
@@ -286,11 +290,11 @@ Notifier_i::disconnect (const char *reason,
 
 void
 Notifier_i::push (const Event_Comm::Event &event,
-		  CORBA::Environment &IT_env)
+		  CORBA::Environment &TAO_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_notification = %s\n",
-	     notification.tag_));
+	      event.tag_));
   MAP_ITERATOR mi (this->map_);
   int count = 0;
 
@@ -300,7 +304,7 @@ Notifier_i::push (const Event_Comm::Event &event,
   for (MAP_ENTRY *me = 0; mi.next (me) != 0; mi.advance ())
     {
       Event_Comm::Consumer *receiver_ref = me->int_id_->receiver ();
-      ACE_ASSERT (receiver_ref->_marker () != 0);
+      ACE_ASSERT (receiver_ref->marker () != 0);
       const char *regexp   = me->int_id_->regexp ();
       const char *criteria = me->int_id_->criteria ();
       ACE_ASSERT (regexp);
@@ -308,23 +312,24 @@ Notifier_i::push (const Event_Comm::Event &event,
 
       // Do a regular expression comparison to determine matching.
       if (ACE_OS::strcmp ("", criteria) == 0 // Everything matches the wildcard.
-//	  || ACE_OS::strcmp (notification.tag_, regexp) == 0)
-	  || ACE_OS::step (notification.tag_, regexp) != 0)
+	  //  || ACE_OS::strcmp (event.tag_, regexp) == 0)
+	  || ACE_OS::step (event.tag_, regexp) != 0)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
                       "string %s matched regexp \"%s\" for client %s\n",
-		     notification.tag_, me->int_id_->criteria (),
-		     receiver_ref->_marker ()));
-	  TRY
+		     event.tag_, me->int_id_->criteria (),
+		     receiver_ref->marker ()));
+	  TAO_TRY
             {
-              receiver_ref->receive_notification (notification, IT_X);
+              receiver_ref->push (event, TAO_TRY_ENV);
+	      TAO_CHECK_ENV;
             }
-	  CATCHANY
+	  TAO_CATCHANY
             {
-              cerr << "Unexpected exception " << IT_X << endl;
+	      TAO_TRY_ENV.print_exception ("Unexpected exception\n");
               continue;
             }
-	  ENDTRY;
+	  TAO_ENDTRY;
 	  count++;
 	}
     }
@@ -351,9 +356,9 @@ Consumer_i::~Consumer_i (void)
 
 void
 Consumer_i::push (const Event_Comm::Event &event,
-		  CORBA::Environment &IT_env)
+		  CORBA::Environment &TAO_TRY_ENV)
 {
-  const char *tmpstr = notification.tag_;
+  const char *tmpstr = event.tag_;
 
   ACE_DEBUG ((LM_DEBUG,
               "**** got notification = %s\n",
@@ -365,7 +370,7 @@ Consumer_i::push (const Event_Comm::Event &event,
 
 void
 Consumer_i::disconnect (const char *reason,
-			CORBA::Environment &IT_env)
+			CORBA::Environment &TAO_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "**** got disconnected due to %s\n",

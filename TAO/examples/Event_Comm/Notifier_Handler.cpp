@@ -36,17 +36,24 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
     }
 }
 
-// Create and initialize a Notifier target object.
+Notifier_Handler::Notifier_Handler()
+{
+  // get the notifier from the naming service.
+}
 
+// Create and initialize a Notifier target object.
 Notifier_Handler::Notifier_Handler (const char *service_location,
 				    const char *marker,
 				    int putit)
 {
   // Create a notifier object using the implementation class
   // Notifier_i.
-  ACE_NEW (this->notifier_,
+  /*ACE_NEW (this->notifier_,
            TIE_Event_Comm_Notifier (Notifier_i) (new Notifier_i,
                                                  marker));
+  */
+  //@@ declare and orb and a notifir_var in the .h
+  // init the orb, register the object with the orb and the naming service
 }
 
 // Destroy a Notifier target object.
