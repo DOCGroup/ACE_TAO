@@ -51,7 +51,7 @@ bgcolor="#ffffff">
         requires the attention of, a particular individual:
         <strong>SEND EMAIL TO THAT INDIVIDUAL!</strong>.<p>
 
-    <li>Every program should have a ``usage'' message.  It should be
+    <li>Every program should have a "usage" message.  It should be
         printed out if erroneous command line arguments, or a
         <strong><code>-?</code></strong> command line argument, are
         provided to the program.<p>
@@ -205,12 +205,12 @@ bgcolor="#ffffff">
     <li>Be very careful with names of macros, <code>enum</code> values, and variables
         It's always best to prefix them with something like <code>ACE_</code>
         or <code>TAO_</code>.  There are too many system headers out
-        there that #define <code>OK</code>, <code>SUCCESS</code>,
+        there that <code>#define</code> <code>OK</code>, <code>SUCCESS</code>,
         <code>ERROR</code>, <code>index</code>, <code>s_type</code>,
         and so on.<p>
 
     <li>When using macros in an arithmetic expression, be sure to test
-      that the macro is defined, using defined(macro) before specifying
+      that the macro is defined, using <code>defined(<em>macro</em>)</code> before specifying
       the expression.  For example:
 <pre>
 #if __FreeBSD__ &lt; 3
@@ -222,8 +222,8 @@ not defined.  The correct way to write that guard is:
 #if defined (__FreeBSD__)  &&  __FreeBSD__ &lt; 3
 </pre>
 
-    <li>Try to centralize <code>#ifdefs</code> with <code>typedefs</code>
-        and <code>#defines</code>.  For example, use this:
+    <li>Try to centralize <code>#ifdef</code>s with <code>typedef</code>s
+        and <code>#define</code>s.  For example, use this:
         <pre>
         #if defined(ACE_PSOS)
           typedef long ACE_NETIF_TYPE;
@@ -261,7 +261,7 @@ not defined.  The correct way to write that guard is:
         file once per compilation unit.  Thanks to Eric C. Newton
         &lt;ecn@smart.net&gt; for pointing that out.<p>
 
-        If the header <code>#includes</code> an ACE library header,
+        If the header <code>#include</code>s an ACE library header,
         then it's a good idea to include the <code>#pragma once</code>
         directive:
         <pre>
@@ -403,22 +403,22 @@ not defined.  The correct way to write that guard is:
   <ul>
     <li><strong><code>for</code></strong> loops should look like:
         <pre>
-        for (u_int i = 0; i &lt; count; ++i)
+        for (unsigned int i = 0; i &lt; count; ++i)
           ++total;
         </pre>
         Though, I prefer to always wrap the body of the loop in braces,
         to avoid surprises when other code or debugging statements are
         added, and to maintain sanity when the body consists of a macro,
-        such as an ACE_ASSERT without a trailing semicolon:
+        such as an <code>ACE_ASSERT</code> without a trailing semicolon:
         <pre>
-        for (u_int i = 0; i &lt; count; ++i)
+        for (unsigned int i = 0; i &lt; count; ++i)
           {
             ACE_ASSERT (++total &lt; UINT_MAX;)
           }
         </pre><p>
 
         Similarly, <strong><code>if</code></strong> statements should have
-        a space after the ``<strong>if</strong>'', and no spaces just after
+        a space after the "<strong>if</strong>", and no spaces just after
         the opening parenthesis and just before the closing parenthesis.<p>
 
     <li>If a loop index is used after the body of the loop, it
@@ -511,7 +511,7 @@ not defined.  The correct way to write that guard is:
 ACE_INLINE
 Foo::bar ()
 {
-  this-&gt;baz();
+  this-&gt;baz ();
 }
 </pre><p>
 
@@ -543,7 +543,7 @@ Foo::bar ()
         // Returns the &lt;ACE_INET_Addr&gt; for this profile.
         </pre><p>
 
-        instead of the ``set_'' and ``get_'' form.<p>
+        instead of the "set_" and "get_" form.<p>
 
     <li>Never use <strong><code>delete</code></strong> to deallocate
         memory that was allocated with <strong><code>malloc</code></strong>.
@@ -1155,7 +1155,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 <hr><p>
   <font size=-1>
 <!-- hhmts start -->
-Last modified: Thu Jan 20 22:49:50 PST 2005
+Last modified: Thu Jan 20 22:57:23 PST 2005
 <!-- hhmts end -->
   </font><p>
 
