@@ -62,9 +62,9 @@ Coordinator::start (CORBA::Environment &ACE_TRY_ENV)
   CORBA::ULong event_size = 256 * 1024;
   ACE_DEBUG ((LM_DEBUG, "Running with payload = %d\n",
               event_size));
-  for (size_t i = 0; i != this->pairs_count_; ++i)
+  for (size_t j = 0; j != this->pairs_count_; ++j)
     {
-      this->pairs_[i].sender->send_events (100, event_size,
+      this->pairs_[j].sender->send_events (100, event_size,
                                            ACE_TRY_ENV);
       ACE_CHECK;
     }

@@ -1,94 +1,100 @@
+Sun Jan 28 07:49:22 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/LongWrites/Coordinator.cpp:
+          Fixed problems with compilers that only support the old rules
+          for variables declared inside a for() loop.
+
 Sat Jan 27 19:42:01 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Service_Context_Manipulation/Client_ORBInitializer.cpp (post_init):
-	* tests/Portable_Interceptors/Service_Context_Manipulation/Server_ORBInitializer.cpp (post_init):
-	* tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Client_ORBInitializer.cpp (post_init):
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Server_ORBInitializer.cpp (post_init):
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
 
-	  Do not call _retn() on the "_var."  The caller (post_init() in
-	  this case) is responsible for storage.  Fixes several memory
-	  leaks.
+          Do not call _retn() on the "_var."  The caller (post_init() in
+          this case) is responsible for storage.  Fixes several memory
+          leaks.
 
-	* tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp
-	  (main):
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp
+          (main):
 
-	  Fixed a memory leak.
+          Fixed a memory leak.
 
-	  Fixed ACE_TRY_CHECK/ACE_CHECK_RETURN mismatches.
+          Fixed ACE_TRY_CHECK/ACE_CHECK_RETURN mismatches.
 
-	  Added missing ACE_TRY_ENV argument to
-	  resolve_initial_references() call.
+          Added missing ACE_TRY_ENV argument to
+          resolve_initial_references() call.
 
-	  Corrected spelling.
+          Corrected spelling.
 
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
 
-	  Fixed memory leaks.
+          Fixed memory leaks.
 
-	  Added missing ACE_TRY_ENV argument to all of the invocations
-	  that were missing it.
+          Added missing ACE_TRY_ENV argument to all of the invocations
+          that were missing it.
 
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
 
-	  Derive/mix-in CORBA::LocalObject into both the client side and
-	  server side interceptors, since interceptors are indeed local
-	  objects.
+          Derive/mix-in CORBA::LocalObject into both the client side and
+          server side interceptors, since interceptors are indeed local
+          objects.
 
-	* tests/Portable_Interceptors/Service_Context_Manipulation/test_i.h:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/test_i.h:
 
-	  Fixed broken throw specs and missing default CORBA::Environment
-	  arguments.
+          Fixed broken throw specs and missing default CORBA::Environment
+          arguments.
 
-	* tests/Portable_Interceptors/Service_Context_Manipulation/test_i.cpp
-	  (shutdown):
+        * tests/Portable_Interceptors/Service_Context_Manipulation/test_i.cpp
+          (shutdown):
 
-	  Do not wait for completion.  Fixes a problem where the server
-	  wouldn't shutdown properly.
+          Do not wait for completion.  Fixes a problem where the server
+          wouldn't shutdown properly.
 
-	* tests/Portable_Interceptors/Service_Context_Manipulation/Service_Context_Manipulation.dsw:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/client.dsp:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/server.dsp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Service_Context_Manipulation.dsw:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client.dsp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server.dsp:
 
-	  New MSVC project files.
+          New MSVC project files.
 
 Sat Jan 27 18:41:28 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/RT_ORBInitializer.cpp (pre_init):
+        * tao/RT_ORBInitializer.cpp (pre_init):
 
-	  Use ACE_NEW_THROW_EX instead of raw "new" operator.
+          Use ACE_NEW_THROW_EX instead of raw "new" operator.
 
-	  Store newly created TAO_Priority_Mapping_Manager reference in
-	  its corresponding "_var" so that proper reference counting
-	  semantics are maintained, i.e., the caller is always responsible
-	  for storage.  Fixes a memory leak.
+          Store newly created TAO_Priority_Mapping_Manager reference in
+          its corresponding "_var" so that proper reference counting
+          semantics are maintained, i.e., the caller is always responsible
+          for storage.  Fixes a memory leak.
 
-	* tao/Priority_Mapping_Manager.h (TAO_Priority_Mapping_Manager):
+        * tao/Priority_Mapping_Manager.h (TAO_Priority_Mapping_Manager):
 
-	  Derive this class from TAO_Local_RefCounted_Object so that we
-	  pull in the version of CORBA::LocalObject with reference
-	  counting implemented.  Fixes a memory leak.
+          Derive this class from TAO_Local_RefCounted_Object so that we
+          pull in the version of CORBA::LocalObject with reference
+          counting implemented.  Fixes a memory leak.
 
-	* tao/Pool_Per_Endpoint.cpp (run):
-	* tao/RT_Protocols_Hooks.cpp (set_thread_priority,
-	  get_thread_priority):
+        * tao/Pool_Per_Endpoint.cpp (run):
+        * tao/RT_Protocols_Hooks.cpp (set_thread_priority,
+          get_thread_priority):
 
-	  Added missing ACE_CHECKs and ACE_CHECK_RETURNs.
+          Added missing ACE_CHECKs and ACE_CHECK_RETURNs.
 
-	* tao/ORB_Core.cpp (priority_mapping_manager):
+        * tao/ORB_Core.cpp (priority_mapping_manager):
 
-	  Fixed problem where this (accessor) method would always return a
-	  nil object reference.
+          Fixed problem where this (accessor) method would always return a
+          nil object reference.
 
-	  Release the old reference before setting the new one in the
-	  mutator version of this method.  Fixes a memory leak.  We won't
-	  need to do this once we change the priority_mapping_manager_
-	  member to be a non-static CORBA::Object_var.
+          Release the old reference before setting the new one in the
+          mutator version of this method.  Fixes a memory leak.  We won't
+          need to do this once we change the priority_mapping_manager_
+          member to be a non-static CORBA::Object_var.
 
-	  (fini):
+          (fini):
 
-	  Release the reference to the priority mapping manager.  Fixes a
-	  memory leak.  We won't need to do this once we change the
-	  priority_mapping_manager_ member to be a non-static
-	  CORBA::Object_var.
+          Release the reference to the priority mapping manager.  Fixes a
+          memory leak.  We won't need to do this once we change the
+          priority_mapping_manager_ member to be a non-static
+          CORBA::Object_var.
 
 Sat Jan 27 16:01:08 2001  Ossama Othman  <ossama@uci.edu>
 
