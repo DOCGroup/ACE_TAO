@@ -93,7 +93,8 @@ Notify_Logging_Service::init (int argc, char *argv[]
   ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
 
   CosNaming::Name_var name =
-    this->naming_->to_name (this->notify_factory_name_.c_str ()
+    this->naming_->to_name (ACE_const_cast (const CosNaming::NamingContextExt::StringName,
+                                            this->notify_factory_name_.c_str ())
                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -165,7 +166,8 @@ Notify_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   CosNaming::Name_var name =
-    this->naming_->to_name (this->notify_factory_name_.c_str ()
+    this->naming_->to_name (ACE_const_cast (const CosNaming::NamingContextExt::StringName,
+                                            this->notify_factory_name_.c_str ())
                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
