@@ -69,11 +69,11 @@ typedef char *ACE_MMAP_TYPE;
 #endif /* ACE_HAS_SYS_FILIO_H */
 
 #if defined (ACE_HAS_SVR4_GETTIMEOFDAY)
-#if !defined (m88k)
+#if !defined (m88k) && !defined (SCO)
 extern "C" int gettimeofday (struct timeval *tp, void * = 0);
 #else
 extern "C" int gettimeofday (struct timeval *tp);
-#endif	/*  m88k */
+#endif	/*  !m88k && !SCO */
 #elif defined (ACE_HAS_OSF1_GETTIMEOFDAY)
 extern "C" int gettimeofday (struct timeval *tp, struct timezone * = 0);
 #elif defined (ACE_HAS_SUNOS4_GETTIMEOFDAY)
