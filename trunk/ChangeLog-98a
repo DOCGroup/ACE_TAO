@@ -1,3 +1,16 @@
+Wed Apr 08 00:37:33 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/ACE.cpp (bind_port): This call was not flexible enough as it
+ 	  always assumed that the user wanted INADDR_ANY.  Added an extra
+ 	  parameter to this function where the user can pass in the addr
+ 	  that she is interested in.  This extra parameter defaults to
+ 	  INADDR_ANY, so no existing should break.
+
+	* ace/SOCK_Acceptor.cpp (open): Not enough information was being
+ 	  passed to the new ACE::bind_port() call.  Changed open() so that
+ 	  the sin_addr part of the address is passed along to
+ 	  ACE::bind_port().
+
 Tue Apr 07 15:25:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-irix*.h: fixed determination of ACE_SIZEOF_LONG_DOUBLE,
