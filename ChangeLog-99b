@@ -1,3 +1,8 @@
+Mon May 10 11:01:58 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/New_Fail_Test.cpp: DEC cxx catches its default,
+          NoNamedException.  OK, I guess.
+
 Mon May 10 08:26:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/g++dep: added support for our Solaris 7 machines.
