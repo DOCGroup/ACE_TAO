@@ -151,6 +151,10 @@ SOURCE=.\Bind_Dispatcher_Guard.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Block_Flushing_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.h
 # End Source File
 # Begin Source File
@@ -315,6 +319,10 @@ SOURCE=.\FILE_Parser.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Flushing_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\giop.h
 # End Source File
 # Begin Source File
@@ -464,6 +472,10 @@ SOURCE=.\Managed_Types.h
 # Begin Source File
 
 SOURCE=.\marshal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Sent_Callback.h
 # End Source File
 # Begin Source File
 
@@ -644,6 +656,14 @@ SOURCE=.\Protocol_Factory.h
 # Begin Source File
 
 SOURCE=.\Protocols_Hooks.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1179,6 +1199,10 @@ SOURCE=.\marshal.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Message_Sent_Callback.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_Policy_i.i
 # End Source File
 # Begin Source File
@@ -1312,6 +1336,10 @@ SOURCE=.\Private_Connection_Descriptor.inl
 # Begin Source File
 
 SOURCE=.\Profile.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.inl
 # End Source File
 # Begin Source File
 
@@ -1547,6 +1575,10 @@ SOURCE=.\Bind_Dispatcher_Guard.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Block_Flushing_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.cpp
 # End Source File
 # Begin Source File
@@ -1703,6 +1735,10 @@ SOURCE=.\FILE_Parser.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Flushing_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Base.cpp
 # End Source File
 # Begin Source File
@@ -1836,6 +1872,10 @@ SOURCE=.\Managed_Types.cpp
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Sent_Callback.cpp
 # End Source File
 # Begin Source File
 
@@ -1996,6 +2036,14 @@ SOURCE=.\Protocol_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Protocols_Hooks.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 

@@ -215,16 +215,6 @@ TAO_Transport::send_current_message (void)
       this->current_message_->destroy ();
 
       this->current_message_ = 0;
-
-      if (retval == -1)
-        {
-          if (errno == EWOULDBLOCK || errno == ETIME)
-            return 0;
-
-          return -1;
-        }
-
-      return 1;
     }
 
   if (retval == -1)
@@ -238,6 +228,8 @@ TAO_Transport::send_current_message (void)
       return -1;
     }
 
+  if (this->current_message_ == 0)
+    return 1;
   return 0;
 }
 
@@ -249,7 +241,7 @@ TAO_Transport::dequeue_next_message (void)
     return -1;
 
   this->current_message_ = this->head_;
-  this->head_->remove_from_list (this->head_, this->tail_);
+  this->current_message_->remove_from_list (this->head_, this->tail_);
 
   return 0;
 }
