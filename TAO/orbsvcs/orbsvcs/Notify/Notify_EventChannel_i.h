@@ -23,7 +23,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <ace/Hash_Map_Manager.h>
+#include "ace/Hash_Map_Manager.h"
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h"
 #include "orbsvcs/orbsvcs/Notify/ID_Pool_T.h"
@@ -201,6 +201,9 @@ virtual void set_admin (
 
   auto_ptr<TAO_Notify_Dispatcher> dispatcher_;
   //
+
+  CosNotifyFilter::FilterFactory_var filter_factory_;
+  // The default filter factory
 };
 
 #endif /* NOTIFY_EVENTCHANNEL_I_H_ */

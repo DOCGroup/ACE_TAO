@@ -6,7 +6,7 @@
 //   orbsvcs
 //
 // = FILENAME
-//   Notify_ProxyPushSupplier_i.h
+//   Notify_StructuredProxyPushSupplier_i.h
 //
 // = DESCRIPTION
 //
@@ -15,8 +15,8 @@
 //    Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // ==========================================================================
-#ifndef NOTIFY_PROXYPUSHSUPPLIER_I_H
-#define NOTIFY_PROXYPUSHSUPPLIER_I_H
+#ifndef NOTIFY_STRUCTUREDPROXYPUSHSUPPLIER_I_H
+#define NOTIFY_STRUCTUREDPROXYPUSHSUPPLIER_I_H
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.h"
@@ -24,23 +24,23 @@
 
 class TAO_Notify_ConsumerAdmin_i;
 
-class TAO_Notify_ProxyPushSupplier_i :
-public virtual POA_CosNotifyChannelAdmin::ProxyPushSupplier,
+class TAO_Notify_StructuredProxyPushSupplier_i :
+public virtual POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier,
   public virtual TAO_Notify_ProxySupplier_i,
   public virtual TAO_NotifySubscribe_i
 {
   // = TITLE
-  //   TAO_Notify_ProxyPushSupplier_i
+  //   TAO_Notify_StructuredProxyPushSupplier_i
   // = DESCRIPTION
   //
   //
 
-public:
+ public:
   //Constructor
-  TAO_Notify_ProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i &consumeradmin);
+  TAO_Notify_StructuredProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i &consumeradmin);
 
   //Destructor
-  virtual ~TAO_Notify_ProxyPushSupplier_i (void);
+  virtual ~TAO_Notify_StructuredProxyPushSupplier_i (void);
 
   virtual void dispatch_event (const CORBA::Any & data,
                                CORBA::Environment &ACE_TRY_ENV);
@@ -48,21 +48,22 @@ public:
 
   virtual void dispatch_event (const CosNotification::StructuredEvent& event,
                                CORBA::Environment &ACE_TRY_ENV);
-  //
 
-  virtual CosNotifyChannelAdmin::ProxySupplier_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
+  CosNotifyChannelAdmin::ProxySupplier_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
+  // convert to object ref.
 
-  virtual void connect_any_push_consumer (
-    CosEventComm::PushConsumer_ptr push_consumer,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+  virtual void connect_structured_push_consumer
+    (
+     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
+     CORBA::Environment &ACE_TRY_ENV
+     )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     CosEventChannelAdmin::AlreadyConnected,
     CosEventChannelAdmin::TypeError
   ));
 
-virtual void suspend_connection (
+  virtual void suspend_connection (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -71,7 +72,7 @@ virtual void suspend_connection (
     CosNotifyChannelAdmin::NotConnected
   ));
 
-virtual void resume_connection (
+  virtual void resume_connection (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -80,14 +81,17 @@ virtual void resume_connection (
     CosNotifyChannelAdmin::NotConnected
   ));
 
-  // = CosEventChannelAdmin::PushSupplier methods
-  virtual void disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  // = CosNotifyComm::StructuredPushSupplier method
+  virtual void disconnect_structured_push_supplier (
+    CORBA::Environment &ACE_TRY_ENV
+    )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
  protected:
-  CosEventComm::PushConsumer_var push_consumer_;
+ CosNotifyComm::StructuredPushConsumer_var push_consumer_;
+ // The consumer that we are connected with.
 };
 
-#endif /* NOTIFY_PROXYPUSHSUPPLIER_I_H */
+#endif /* NOTIFY_STRUCTUREDPROXYPUSHSUPPLIER_I_H */

@@ -4,6 +4,7 @@
 #include "orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h"
 #include "orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h"
 #include "orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h"
+#include "orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.h"
 
 // Implementation skeleton constructor
 TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFactory_i& my_factory)
@@ -20,7 +21,17 @@ void
 TAO_Notify_EventChannel_i::init (CORBA::Environment &ACE_TRY_ENV)
 {
   // TODO: init data members
-  dispatcher_ = auto_ptr<TAO_Notify_Dispatcher>(TAO_Notify_Dispatcher::create (ACE_TRY_ENV));
+  dispatcher_ =
+    auto_ptr<TAO_Notify_Dispatcher>(TAO_Notify_Dispatcher::create (ACE_TRY_ENV));
+  ACE_CHECK;
+
+  TAO_Notify_FilterFactory_i* filter_factory_i;
+  ACE_NEW_THROW_EX (filter_factory_i,
+                    TAO_Notify_FilterFactory_i (),
+                    CORBA::NO_MEMORY ());
+
+  this->filter_factory_ =
+    filter_factory_i->get_ref (ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -68,15 +79,13 @@ CosNotifyChannelAdmin::SupplierAdmin_ptr TAO_Notify_EventChannel_i::default_supp
 
 CosNotifyFilter::FilterFactory_ptr
 TAO_Notify_EventChannel_i::default_filter_factory (
-                                                                                      CORBA::Environment &ACE_TRY_ENV
-                                                                                      )
+                                                   CORBA::Environment &ACE_TRY_ENV
+                                                   )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
-
 {
-  //Add your implementation here
-  return 0;
+  return CosNotifyFilter::FilterFactory::_duplicate (filter_factory_.in ());
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr

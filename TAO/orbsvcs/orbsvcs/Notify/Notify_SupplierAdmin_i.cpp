@@ -1,8 +1,9 @@
 /* -*- C++ -*- $Id$ */
 
 #include "ace/Auto_Ptr.h"
-#include "orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h"
-#include "orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.h"
+#include "Notify_SupplierAdmin_i.h"
+#include "Notify_ProxyPushConsumer_i.h"
+#include "Notify_StructuredProxyPushConsumer_i.h"
 #include "Notify_EventChannel_i.h"
 
 // Implementation skeleton constructor
@@ -25,10 +26,12 @@ TAO_Notify_SupplierAdmin_i::get_dispatcher (void)
 void
 TAO_Notify_SupplierAdmin_i::init (CORBA::Environment &ACE_TRY_ENV)
 {
-
-  dispatcher_ = auto_ptr<TAO_Notify_Dispatcher>(TAO_Notify_Dispatcher::create (ACE_TRY_ENV));
+  dispatcher_ =
+    auto_ptr<TAO_Notify_Dispatcher>(TAO_Notify_Dispatcher::
+                                    create (ACE_TRY_ENV));
   ACE_CHECK;
 
+  dispatcher_->set_FilterAdmin (this);
   dispatcher_->add_dispatcher (myChannel_.get_dispatcher ());
 }
 
@@ -49,15 +52,19 @@ CosNotifyChannelAdmin::AdminID TAO_Notify_SupplierAdmin_i::MyID (
     return 0;
   }
 
-CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_SupplierAdmin_i::MyChannel (
+CosNotifyChannelAdmin::EventChannel_ptr
+TAO_Notify_SupplierAdmin_i::MyChannel (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
   {
-    //Add your implementation here
-    return 0;
+    CosNotifyChannelAdmin::EventChannel_var ec =
+      myChannel_.get_ref (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    return ec._retn ();
   }
 
 CosNotifyChannelAdmin::InterFilterGroupOperator TAO_Notify_SupplierAdmin_i::MyOperator (
@@ -131,49 +138,58 @@ TAO_Notify_SupplierAdmin_i::obtain_notification_push_consumer (
     CORBA::SystemException,
     CosNotifyChannelAdmin::AdminLimitExceeded
   ))
-  {
-    //Add your implementation here
+{
+  //Add your implementation here
+  TAO_Notify_ProxyConsumer_i* proxyconsumer;
+
+  switch (ctype)
+    {
+    case CosNotifyChannelAdmin::ANY_EVENT:
+      {
+        ACE_NEW_THROW_EX (proxyconsumer,
+                          TAO_Notify_ProxyPushConsumer_i (*this),
+                          CORBA::NO_MEMORY ());
+      }
+      break;
+    case CosNotifyChannelAdmin::STRUCTURED_EVENT:
+      {
+        ACE_NEW_THROW_EX (proxyconsumer,
+                          TAO_Notify_StructuredProxyPushConsumer_i (*this),
+                          CORBA::NO_MEMORY ());
+      }
+      break;
+
+    case CosNotifyChannelAdmin::SEQUENCE_EVENT:
+    default:
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        CosNotifyChannelAdmin::ProxyConsumer::_nil ());
+      break;
+    }
+
     CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer_ret;
     CORBA::Object_var obj;
 
-    switch (ctype)
-      {
-      case CosNotifyChannelAdmin::ANY_EVENT:
-        {
-          TAO_Notify_ProxyPushConsumer_i* proxypushconsumer;
-          ACE_NEW_THROW_EX (proxypushconsumer,
-                            TAO_Notify_ProxyPushConsumer_i (*this),
-                            CORBA::NO_MEMORY ());
-          auto_ptr <TAO_Notify_ProxyPushConsumer_i> auto_proxypushcons;
+    auto_ptr <TAO_Notify_ProxyConsumer_i> auto_proxycons (proxyconsumer);
 
-          obj = proxypushconsumer->get_ref (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
+    obj = proxyconsumer->get_ref (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
 
-          proxyconsumer_ret =
-            CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in (),
-                                                           ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
-          obj._retn (); // giveup ownership.
+    proxyconsumer_ret =
+      CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in (),
+                                                     ACE_TRY_ENV);
+    ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
+    obj._retn (); // giveup ownership.
 
-          proxy_id = proxy_consumer_ids.get ();
+    proxy_id = proxy_consumer_ids.get ();
 
-          if (proxypushconsumer_map_.bind (proxy_id,
-                                           proxypushconsumer) == -1)
-            ACE_THROW_RETURN (CORBA::INTERNAL (),
-                              CosNotifyChannelAdmin::ProxyConsumer::_nil ());
-          auto_proxypushcons.release ();
-        }
-        break;
-      case CosNotifyChannelAdmin::STRUCTURED_EVENT:
-        break;
-      case CosNotifyChannelAdmin::SEQUENCE_EVENT:
-        break;
-      default:
-        break;
-      }
+    if (proxyconsumer_map_.bind (proxy_id,
+                                 proxyconsumer) == -1)
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CosNotifyChannelAdmin::ProxyConsumer::_nil ());
+    auto_proxycons.release ();
 
     return proxyconsumer_ret._retn ();
-  }
+}
 
 void TAO_Notify_SupplierAdmin_i::destroy (
     CORBA::Environment &ACE_TRY_ENV

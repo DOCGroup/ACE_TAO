@@ -21,6 +21,9 @@
 
 #include "ace/Containers.h"
 #include "tao/corbafwd.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
+
+class TAO_Notify_FilterAdmin_i;
 
 class TAO_Notify_Dispatcher
 {
@@ -33,12 +36,25 @@ class TAO_Notify_Dispatcher
   //   contained Dispatchers.
 
  public:
+  // = Initialization and termination
+  TAO_Notify_Dispatcher (void);
+  // Constructor
+
+  ~TAO_Notify_Dispatcher (void);
+  // Destructor
+
   static TAO_Notify_Dispatcher* create (CORBA::Environment &ACE_TRY_ENV);
   // Factory method to create dispatchers of various types.
 
+  void set_FilterAdmin (TAO_Notify_FilterAdmin_i* filter_admin);
+  // Set the filter admin for this dispatcher.
+
+  // = Clients of this class should call these methods to dispatch events.
   virtual void dispatch_event (const CORBA::Any & data,
                                CORBA::Environment &ACE_TRY_ENV) = 0;
-  // Clients of this class should call this method to dispatch events.
+
+  virtual void dispatch_event (const CosNotification::StructuredEvent& event,
+                               CORBA::Environment &ACE_TRY_ENV) = 0;
 
   int add_dispatcher (TAO_Notify_Dispatcher& dispatcher);
   // Add a dispatcher to an internal list of event recipients.
@@ -47,6 +63,8 @@ class TAO_Notify_Dispatcher
   //Remove a dispatcher from the internal list.
 
  protected:
+  TAO_Notify_FilterAdmin_i* filter_admin_;
+
   typedef ACE_Unbounded_Set<TAO_Notify_Dispatcher*> DISPATCHER_SET;
   typedef ACE_Unbounded_Set_Iterator<TAO_Notify_Dispatcher*>
     DISPATCHER_SET_ITER;
@@ -63,6 +81,9 @@ class Notify_Reactive_Dispatcher : public TAO_Notify_Dispatcher
   //   Simplest dispatcher - dispatches event in the callers thread.
   //
   virtual void dispatch_event (const CORBA::Any & data,
+                               CORBA::Environment &ACE_TRY_ENV);
+
+  virtual void dispatch_event (const CosNotification::StructuredEvent& event,
                                CORBA::Environment &ACE_TRY_ENV);
 };
 

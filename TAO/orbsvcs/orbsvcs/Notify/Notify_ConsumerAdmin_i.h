@@ -27,7 +27,7 @@
 #include "Notify_Dispatcher.h"
 
 class TAO_Notify_EventChannel_i;
-class TAO_Notify_ProxyPushSupplier_i;
+class TAO_Notify_ProxySupplier_i;
 
 class TAO_Notify_ConsumerAdmin_i :
 public virtual POA_CosNotifyChannelAdmin::ConsumerAdmin,
@@ -188,9 +188,9 @@ protected:
   // Id generator for proxy suppliers.
 
   ACE_Hash_Map_Manager <CosNotifyChannelAdmin::ProxyID,
-                                               TAO_Notify_ProxyPushSupplier_i*,
+                                               TAO_Notify_ProxySupplier_i*,
                                                ACE_SYNCH_MUTEX>
-  proxypushsupplier_map_;
+  proxysupplier_map_;
 
   auto_ptr<TAO_Notify_Dispatcher> dispatcher_;
   //

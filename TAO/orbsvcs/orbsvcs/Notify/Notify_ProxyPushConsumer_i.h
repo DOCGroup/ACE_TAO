@@ -41,7 +41,7 @@ public:
   virtual ~TAO_Notify_ProxyPushConsumer_i (void);
   // Destructor
 
-  CosNotifyChannelAdmin::ProxyPushConsumer_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
+  CosNotifyChannelAdmin::ProxyConsumer_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
 
 virtual void connect_any_push_supplier (
     CosEventComm::PushSupplier_ptr push_supplier,

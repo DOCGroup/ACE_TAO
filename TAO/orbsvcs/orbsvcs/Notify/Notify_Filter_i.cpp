@@ -109,18 +109,23 @@ TAO_Notify_Filter_i::add_constraints (
     CosNotifyFilter::InvalidConstraint
   ))
 {
+  int constraint_length = constraint_list.length ();
+
+  ACE_DEBUG ((LM_DEBUG, "constraint_length = %d\n", constraint_length));
   // create the list that goes out.
   CosNotifyFilter::ConstraintInfoSeq* infoseq;
   ACE_NEW_THROW_EX (infoseq,
-                    CosNotifyFilter::ConstraintInfoSeq (constraint_list.length ()),
+                    CosNotifyFilter::ConstraintInfoSeq (constraint_length),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
+
+  infoseq->length (constraint_length);
 
   auto_ptr<CosNotifyFilter::ConstraintInfoSeq> auto_infoseq (infoseq);
 
   // populate infoseq
   for (int pop_index = 0;
-       pop_index < constraint_list.length ();
+       pop_index < constraint_length;
        ++pop_index)
     {
       (*infoseq)[pop_index].constraint_expression =
