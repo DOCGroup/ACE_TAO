@@ -5362,8 +5362,8 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 	QOS *qos = ACE_reinterpret_cast (QOS*,
 									 qos_buf); 
         
-		result = ::WSAIoctl ((ACE_SOCKET) socket,
-                io_control_code,
+	result = ::WSAIoctl ((ACE_SOCKET) socket,
+			           io_control_code,
                        NULL,
                        0,
                        qos,
@@ -5372,48 +5372,46 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                        NULL,
                        NULL);
 
-        // @@ ACE_OS should *not* depend on ACE_Log_Msg in any way!
-        //      -Ossama
-        // if (result == SOCKET_ERROR)
-        //   ACE_DEBUG ((LM_DEBUG, "SOCKET ERROR\n"));
+    if (result == SOCKET_ERROR)
+		return result;
 
-        ACE_Flow_Spec sending_flowspec (qos->SendingFlowspec.TokenRate,
-                                        qos->SendingFlowspec.TokenBucketSize,
-                                        qos->SendingFlowspec.PeakBandwidth,
-                                        qos->SendingFlowspec.Latency,
-                                        qos->SendingFlowspec.DelayVariation,
+    ACE_Flow_Spec sending_flowspec (qos->SendingFlowspec.TokenRate,
+                                    qos->SendingFlowspec.TokenBucketSize,
+                                    qos->SendingFlowspec.PeakBandwidth,
+                                    qos->SendingFlowspec.Latency,
+                                    qos->SendingFlowspec.DelayVariation,
 #if defined(ACE_HAS_WINSOCK2_GQOS)
-                                        qos->SendingFlowspec.ServiceType,
-                                        qos->SendingFlowspec.MaxSduSize,
-                                        qos->SendingFlowspec.MinimumPolicedSize,
+                                    qos->SendingFlowspec.ServiceType,
+                                    qos->SendingFlowspec.MaxSduSize,
+                                    qos->SendingFlowspec.MinimumPolicedSize,
 #else /* ACE_HAS_WINSOCK2_GQOS */
-                                        0,
-                                        0,
-                                        0,
+                                    0,
+                                    0,
+                                    0,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
-                                        0,
-                                        0);
+                                    0,
+                                    0);
 
-              ACE_Flow_Spec receiving_flowspec (qos->ReceivingFlowspec.TokenRate,
-                                          qos->ReceivingFlowspec.TokenBucketSize,
-                                          qos->ReceivingFlowspec.PeakBandwidth,
-                                          qos->ReceivingFlowspec.Latency,
-                                          qos->ReceivingFlowspec.DelayVariation,
+    ACE_Flow_Spec receiving_flowspec (qos->ReceivingFlowspec.TokenRate,
+                                      qos->ReceivingFlowspec.TokenBucketSize,
+                                      qos->ReceivingFlowspec.PeakBandwidth,
+                                      qos->ReceivingFlowspec.Latency,
+                                      qos->ReceivingFlowspec.DelayVariation,
 #if defined(ACE_HAS_WINSOCK2_GQOS)
-                                          qos->ReceivingFlowspec.ServiceType,
-                                          qos->ReceivingFlowspec.MaxSduSize,
-                                          qos->ReceivingFlowspec.MinimumPolicedSize,
+                                      qos->ReceivingFlowspec.ServiceType,
+                                      qos->ReceivingFlowspec.MaxSduSize,
+                                      qos->ReceivingFlowspec.MinimumPolicedSize,
 #else /* ACE_HAS_WINSOCK2_GQOS */
-                                          0,
-                                          0,
-                                          0,
+                                      0,
+                                      0,
+                                      0,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
-                                          0,
-                                          0);
+                                      0,
+                                      0);
 
-              ace_qos.sending_flowspec (sending_flowspec);
-              ace_qos.receiving_flowspec (receiving_flowspec);
-              ace_qos.provider_specific (*((struct iovec *) (&qos->ProviderSpecific)));
+       ace_qos.sending_flowspec (sending_flowspec);
+       ace_qos.receiving_flowspec (receiving_flowspec);
+       ace_qos.provider_specific (*((struct iovec *) (&qos->ProviderSpecific)));
       
 
       return result;
