@@ -1,3 +1,14 @@
+Tue Feb 22 20:33:21 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+	* Config_Handlers/Singleton_IDREF_Map.cpp
+	* Config_Handlers/Singleton_IDREF_Map.h
+
+	No longer used.  Removed.
+	
+	* Config_Handlers/XML_Error_Handler.cpp
+
+	Made it print out a sane error message when parsing failed.
+
 Tue Feb 15 20:38:41 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* Config_Handlers/ADD_Handler.cpp
