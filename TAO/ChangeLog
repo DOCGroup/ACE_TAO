@@ -1,3 +1,9 @@
+Thu Nov 20 20:25:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/UNKNOWN_Exception/server.dsp:
+
+          Added missing link to TAO_Valuetype*.lib.
+
 Thu Nov 20 20:24:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/VarOut_T.h:
