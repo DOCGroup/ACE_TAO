@@ -17,6 +17,7 @@
 #define PACE_TIME_H_WIN32
 
 #include <time.h>
+#include "pace/sys/types.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
@@ -38,11 +39,6 @@ extern "C" {
 #define PACE_CLOCK_T
   typedef clock_t pace_clock_t;
 #endif /* PACE_CLOCK_T */
-
-#ifndef PACE_SIZE_T
-#define PACE_SIZE_T
-  typedef size_t pace_size_t;
-#endif /* PACE_SIZE_T */
 
 #ifndef PACE_TIMER_T
 #define PACE_TIMER_T

@@ -272,7 +272,7 @@ pace_pthread_cond_signal (pace_pthread_cond_t * cond)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_pthread_cond_timedwait (pthread_cond_t * cond,
+pace_pthread_cond_timedwait (pace_pthread_cond_t * cond,
                              pace_pthread_mutex_t * mutex,
                              const struct timespec * abstime)
 {
@@ -517,7 +517,7 @@ pace_pthread_mutex_setprioceiling (pace_pthread_mutex_t * mutex,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_pthread_mutex_trylock (pthread_mutex_t * mutex)
+pace_pthread_mutex_trylock (pace_pthread_mutex_t * mutex)
 {
   PACE_UNUSED_ARG (mutex);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);

@@ -25,104 +25,56 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #ifndef PACE_TCHAR
-#define PACE_TCHAR
+#define PACE_TCHAR 1
   typedef char pace_tchar;
 #endif /* PACE_TCHAR */
 
 #ifndef PACE_HANDLE
-  typedef HANDLE PACE_HANDLE;
+#define PACE_HANDLE HANDLE
 #endif /* PACE_HANDLE */
 
 #ifndef PACE_INVALID_HANDLE
-#define PACE_INVALID_HANDLE (HANDLE)0
+#define PACE_INVALID_HANDLE (HANDLE)-1
 #endif /* PACE_INVALID_HANDLE */
 
 #ifndef PACE_DEV_T
-#define PACE_DEV_T
+#define PACE_DEV_T 1
   typedef dev_t pace_dev_t;
 #endif /* PACE_DEV_T */
 
 #ifndef PACE_GID_T
-#define PACE_GID_T
+#define PACE_GID_T 1
   typedef int gid_t;
   typedef gid_t pace_gid_t;
 #endif /* PACE_GID_T */
 
 #ifndef PACE_INO_T
-#define PACE_INO_T
+#define PACE_INO_T 1
   typedef ino_t pace_ino_t;
 #endif /* PACE_INO_T */
 
 #ifndef PACE_MODE_T
-#define PACE_MODE_T
+#define PACE_MODE_T 1
   typedef int mode_t;
   typedef mode_t pace_mode_t;
 #endif /* PACE_MODE_T */
 
 #ifndef PACE_NLINK_T
-#define PACE_NLINK_T
+#define PACE_NLINK_T 1
   typedef DWORD nlink_t;
   typedef nlink_t pace_nlink_t;
 #endif /* PACE_NLINK_T */
 
 #ifndef PACE_OFF_T
-#define PACE_OFF_T
+#define PACE_OFF_T 1
   typedef off_t pace_off_t;
 #endif /* PACE_OFF_T */
 
 #ifndef PACE_PID_T
-#define PACE_PID_T
+#define PACE_PID_T 1
   typedef long pid_t;
   typedef pid_t pace_pid_t;
 #endif /* PACE_PID_T */
-
-#ifndef PACE_PTHREAD_ATTR_T
-#define PACE_PTHREAD_ATTR_T
-  typedef int pthread_attr_t;           /* temporary */
-  typedef pthread_attr_t pace_pthread_attr_t;
-#endif /* PACE_PTHREAD_ATTR_T */
-
-#ifndef PACE_PTHREAD_CONDATTR_T
-#define PACE_PTHREAD_CONDATTR_T
-  typedef int pthread_condattr_t;        /* temporary */
-  typedef pthread_condattr_t pace_pthread_condattr_t;
-#endif /* PACE_PTHREAD_CONDATTR_T */
-
-#ifndef PACE_PTHREAD_COND_T
-#define PACE_PTHREAD_COND_T
-  typedef int pthread_cond_t;            /* temporary */
-  typedef pthread_cond_t pace_pthread_cond_t;
-#endif /* PACE_PTHREAD_COND_T */
-
-#ifndef PACE_PTHREAD_KEY_T
-#define PACE_PTHREAD_KEY_T
-  typedef int pthread_key_t;             /* temporary */
-  typedef pthread_key_t pace_pthread_key_t;
-#endif /* PACE_PTHREAD_KEY_T */
-
-#ifndef PACE_PTHREAD_MUTEXATTR_T
-#define PACE_PTHREAD_MUTEXATTR_T
-  typedef int pthread_mutexattr_t;       /* temporary */
-  typedef pthread_mutexattr_t pace_pthread_mutexattr_t;
-#endif /* PACE_PTHREAD_MUTEXATTR_T */
-
-#ifndef PACE_PTHREAD_MUTEX_T
-#define PACE_PTHREAD_MUTEX_T
-  typedef int pthread_mutex_t;           /* temporary */
-  typedef pthread_mutex_t pace_pthread_mutex_t;
-#endif /* PACE_PTHREAD_MUTEX_T */
-
-#ifndef PACE_PTHREAD_ONCE_T
-#define PACE_PTHREAD_ONCE_T
-  typedef int pthread_once_t;            /* temporary */
-  typedef pthread_once_t pace_pthread_once_t;
-#endif /* PACE_PTHREAD_ONCE_T */
-
-#ifndef PACE_PTHREAD_T
-#define PACE_PTHREAD_T
-  typedef DWORD pace_pthread_t;
-  typedef HANDLE pace_hpthread_t;
-#endif /* PACE_PTHREAD_T */
 
 #ifndef PACE_SIZE_T
 #define PACE_SIZE_T
@@ -140,6 +92,8 @@ extern "C" {
   typedef int uid_t;
   typedef uid_t pace_uid_t;
 #endif /* PACE_UID_T */
+
+#include "pace/win32/pthreadtypes.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }

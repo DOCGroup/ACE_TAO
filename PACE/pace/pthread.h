@@ -274,7 +274,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.4.4.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_cond_timedwait (pthread_cond_t * cond,
+  PACE_INLINE int pace_pthread_cond_timedwait (pace_pthread_cond_t * cond,
                                                pace_pthread_mutex_t * mutex,
                                                const pace_timespec * abstime);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
@@ -480,7 +480,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.3.3.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_mutex_trylock (pthread_mutex_t * mutex);
+  PACE_INLINE int pace_pthread_mutex_trylock (pace_pthread_mutex_t * mutex);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
