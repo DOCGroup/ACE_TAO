@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #
 #       $Id$
@@ -19,12 +21,12 @@ endif
 
 TAO_IDL_DEP = $(TAO_IDL)$(EXEEXT)
 
-ifndef COMSPEC
-  ifdef ComSpec
-    #### ACE+TAO use COMSPEC, but ComSpec is defined.
-    COMSPEC = $(ComSpec)
-  endif # ComSpec
-endif # ! COMPSPEC
+ifeq (,$(findstring -L$(TAO_ROOT)/tao,$(LDFLAGS)))
+  LDFLAGS += -L$(TAO_ROOT)/tao
+endif
+ifeq (,$(findstring -I$(TAO_ROOT),$(INCLDIRS)))
+  INCLDIRS += -I$(TAO_ROOT)
+endif
 
 ifdef COMSPEC
   #### Assume we're on a WIN32 host.
@@ -68,6 +70,7 @@ ifeq ($(minimum_corba),1)
     interceptors = 0
   endif  # ! interceptors
   CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA=1
+  ACE_MAKE_OPTIONS += minimum_corba
 else  # minimum_corba
   override minimum_corba = 0
 endif # minimum_corba
@@ -76,6 +79,7 @@ ifeq ($(ami),0)
   CPPFLAGS += -DTAO_HAS_AMI=0
 else
   override ami = 1
+  ACE_MAKE_OPTIONS += ami
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI=1
@@ -94,6 +98,7 @@ else  # ami_poller
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI_POLLER=1
+  ACE_MAKE_OPTIONS += ami_poller
 endif # ami_poller
 
 ifeq ($(ami_callback),0)
@@ -103,6 +108,7 @@ else  # ami_callback
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=1
+  ACE_MAKE_OPTIONS += ami_callback
 endif # ami_callback
 
 ifeq ($(rt_corba),0)
@@ -112,6 +118,7 @@ else  # rt_corba
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_RT_CORBA=1
+  ACE_MAKE_OPTIONS += rt_corba
 endif # rt_corba
 
 ifeq ($(corba_messaging),0)
@@ -121,6 +128,7 @@ else  # corba_messaging
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
+  ACE_MAKE_OPTIONS += corba_messaging
 endif # corba_messaging
 
 ifeq ($(interceptors),0)
@@ -130,9 +138,11 @@ else  # interceptors
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_INTERCEPTORS=1
+  ACE_MAKE_OPTIONS += interceptors
 endif # interceptors
 
 ifeq (1,$(CROSS-COMPILE))
+  ACE_MAKE_OPTIONS += cross_compile
 else
 endif # ! CROSS-COMPILE
 

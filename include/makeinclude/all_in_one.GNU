@@ -11,6 +11,14 @@ ALL_IN_ONE_GNU = 1
 # Include wrapper macros to all user defines, etc.
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
+ifneq ($(ADDITIONAL_INCLUDE),)
+  include $(ADDITIONAL_INCLUDE)
+endif
+
 # Now test for installed components, and set the BIN. LIB, and SHLIB
 # targets from the *_UNCHECKED ones if the component checks 
 # succeed.  Client Makefile must set the variable REQUIRED_COMPONENTS
@@ -57,6 +65,11 @@ endif
 # Finally, add VLIB if building static_libs, which could also be undefined.
 ifdef static_libs 
   BUILD := $(VLIB) $(BUILD)
+endif
+
+# And if IDL_FILES have been defined, prepend idl_stubs.
+ifneq ($(IDL_SRC),)
+   BUILD := idl_stubs $(BUILD)
 endif
 
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
