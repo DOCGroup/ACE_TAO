@@ -9,7 +9,6 @@
 
 Task_State::Task_State (int argc, char **argv)
   : key_ ("Cubit"),
-    start_count_ (0),
     loop_count_ (1000),
     thread_count_ (2),
     datatype_ (CB_OCTET),
@@ -26,9 +25,11 @@ Task_State::Task_State (int argc, char **argv)
     granularity_ (1),
     use_utilization_test_ (0),
     high_priority_loop_count_ (0),
-    use_multiple_priority_ (0)
+    use_multiple_priority_ (0),
+    utilization_task_started_ (0),
+    run_server_utilization_test_ (0)
 {
-  ACE_Get_Opt opts (argc, argv, "musn:t:d:rxof:g:1c");
+  ACE_Get_Opt opts (argc, argv, "Umusn:t:d:rxof:g:1c");
   int c;
   int datatype;
 
@@ -38,6 +39,9 @@ Task_State::Task_State (int argc, char **argv)
       granularity_ = ACE_OS::atoi (opts.optarg);
       if (granularity_ < 1)
         granularity_ = 1;
+      break;
+    case 'U':
+      run_server_utilization_test_ = 1;
       break;
     case 'm':
       use_multiple_priority_ = 1;
@@ -112,6 +116,12 @@ Task_State::Task_State (int argc, char **argv)
   if (thread_per_rate_ == 1)
     thread_count_ = 4;
 
+  if (run_server_utilization_test_ == 1)
+    {
+      shutdown_ = 1;
+      thread_count_ = 1;
+    }
+  
   // allocate the array of character pointers.
   ACE_NEW (iors_,
            char *[thread_count_]);
@@ -656,7 +666,7 @@ Client::run_tests (Cubit_ptr cb,
 
       if ( (i % ts_->granularity_) == 0)
         {
-          if (ts_->use_utilization_test_ == 0)
+          if (ts_->use_utilization_test_ == 0 && ts_->run_server_utilization_test_ == 0)
             {
               ACE_Time_Value tv (0,
                                  (u_long) ((sleep_time - delta) < 0
