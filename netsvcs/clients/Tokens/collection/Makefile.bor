@@ -1,5 +1,0 @@
-
-NAME = collection
-OBJFILES = $(OBJDIR)\collection.obj
-!include <$(ACE_ROOT)\netsvcs\build.bor>
-        
