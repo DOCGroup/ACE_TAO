@@ -5,15 +5,15 @@
 //
 // = LIBRARY
 //    ACE
-// 
+//
 // = FILENAME
-//    ACE_Local_Name_Space
+//    Local_Name_Space.h
 //
 // = AUTHOR
 //    Prashant Jain (pjain@cs.wustl.edu), Irfan Pyarali
 //    (irfan@wuerl.wustl.edu), and Douglas C. Schmidt
-//    (schmidt@cs.wustl.edu). 
-// 
+//    (schmidt@cs.wustl.edu).
+//
 // ============================================================================
 
 #if !defined (ACE_LOCAL_NAME_SPACE_H)
@@ -27,21 +27,21 @@
 class ACE_Export ACE_NS_String
   // = TITLE
   //     This class and ACE_NS_Internal are used as Adapters to work
-  //     with the Map_Manager.  
+  //     with the Map_Manager.
   //
   // = DESCRIPTION
   //     In order to work correctly, this class must be able to
   //     convert back and forth with ACE_WStrings.  Note that this
   //     class must not have a destructor since otherwise we'll have
-  //     problems... 
+  //     problems...
 {
 public:
   // = Initialization.
   ACE_NS_String (void);
   // Default "no-op" constructor.
 
-  ACE_NS_String (ACE_USHORT16 *dst, 
-		 const ACE_USHORT16 *src, 
+  ACE_NS_String (ACE_USHORT16 *dst,
+		 const ACE_USHORT16 *src,
 		 size_t len);
   // Initialization method.
 
@@ -83,7 +83,7 @@ private:
 class ACE_Export ACE_NS_Internal
   // = TITLE
   //     This class and ACE_NS_String are used as Adapters to work
-  //     with the Map_Manager.  
+  //     with the Map_Manager.
 {
 public:
   ACE_NS_Internal (void);
@@ -104,7 +104,7 @@ public:
 private:
   ACE_NS_String value_;
   // Contains the value of the string.
-  
+
   const char *type_;
   // Contains the type of the string.
 };
