@@ -1,3 +1,12 @@
+Mon Jan  8 18:53:39 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
+	* examples/Map_Manager/test_hash_map_manager.cpp:
+	  Removed template instantiations for 
+	  ACE_Guard<ACE_SYNCH_RW_MUTEX>,
+	  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>, and
+	  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> to fix linker
+	  errors under Lynx_I386.
+
 Mon Jan  8 10:44:57 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.h:
