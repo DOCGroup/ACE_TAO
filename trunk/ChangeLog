@@ -1,9 +1,14 @@
+Sun Jan  2 09:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Added, ACE_HAS_NONCONST_GETBY
+
 Sat Jan  1 22:53:41 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* bin/generate_rel_manpages:
 
 	  Fixed the doxygen revision number
-	
+
 	* bin/make_release:
 
 	  Fixed a typo.
