@@ -9,7 +9,7 @@ Thu Mar 27 21:10:59 1997  David L. Levine  <levine@cs.wustl.edu>
 	  set ()'s up, moved arithmetic operators down) so that they are
 	  defined before use.
 
-	* apps/Gateway/{Gateway,Peer}/Makefile: added -lGateway to LIBS to
+	* apps/Gateway/Peer/Makefile: added -lGateway to LIBS to
 	  pick up its template instantiations during links.
 
 	* apps/Gateway/Peer/Peer.cpp: added template instantations.
