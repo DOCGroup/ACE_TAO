@@ -1,3 +1,9 @@
+Wed Sep 30 16:55:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile: 
+	  Updated dependencies, added a realclean target to remove the
+	  output from the tests.
+
 Wed Sep 30 12:41:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* src/Key_List.cpp (dump): Fixed another signed/unsigned int
