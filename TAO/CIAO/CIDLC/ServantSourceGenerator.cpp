@@ -4,9 +4,6 @@
 
 #include "ServantSourceGenerator.hpp"
 
-#include "CCF/CIDL/SyntaxTree.hpp"
-#include "CCF/CIDL/Traversal.hpp"
-
 #include "CCF/CodeGenerationKit/Regex.hpp"
 
 #include "Literals.hpp"
@@ -15,437 +12,512 @@
 #include <ostream>
 #include <sstream>
 
-using namespace CCF;
-using namespace CIDL;
-using namespace SyntaxTree;
+using namespace CCF::CIDL;
+using namespace CCF::CIDL::SemanticGraph;
 using namespace StringLiterals;
 
 namespace
 {
   std::string
-  servant_name (DeclarationPtr const& d)
+  servant_name (Type& t)
   {
     std::ostringstream os;
     os << "::CIAO_GLUE";
 
-    if (d->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () == 0)
+    ScopedName scope (t.scoped_name ().scope_name ());
+    Name stripped (scope.begin () + 1, scope.end ());
+      
+    if (!stripped.str ().empty ())
     {
-      os << "_" << d->scope ()->name ().simple ();
+      os << "_" << stripped;
     }
 
-    os << "::" << d->name ().simple () << "_Servant";
+    os << "::" << t.name () << "_Servant";
 
     return os.str ();
   }
+}
 
-  // Generates an argument's identifier.
-  //
-  //
-  class ArgNameEmitter : public SourceEmitterBase,
-                         public Traversal::TypeDecl
+namespace
+{
+  class Context
   {
   public:
-    ArgNameEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
+    Context (std::ostream& os,
+             string export_macro)
+        : os_ (os),
+          export_macro_ (export_macro)
+    {
+    }
+  
+  std::ostream& 
+  os ()
+  {
+    return os_;
+  }
+    
+  string 
+  export_macro ()
+  {
+    return export_macro_;
+  }
+    
+  private:
+    std::ostream& os_;
+    string export_macro_; 
+  };
+
+  class EmitterBase
+  {
+  public:
+    EmitterBase (Context& c)
+      : ctx (c), 
+        os (ctx.os ())
     {
     }
 
+  protected:
+    Context& ctx;
+    std::ostream& os;
+  };
+  
+  struct OperationExecEmitter : Traversal::Operation,
+                                EmitterBase
+  {
+    OperationExecEmitter (Context& c)
+      : EmitterBase (c)
+    {}
+    
     virtual void
-    pre (OperationParameterPtr const&)
+    name (Type& o)
     {
-      os << endl;
+      os << o.name ();
     }
 
     virtual void
-    post (OperationParameterPtr const& op)
+    receives_pre (Type&)
     {
-      os << " " << op->name ();
+      os << " (" << endl;
     }
 
     virtual void
-    traverse (CommaPtr const&)
+    receives_none (Type&)
     {
-      os << ",";
+      os << " (" << endl
+         << STRS[ENV_SNGL_ARG] << ");";
+    }
+
+    virtual void
+    receives_post (Type&)
+    {
+      os << endl << STRS[ENV_ARG] << ");";
+    }
+
+    virtual void
+    comma (Type&)
+    {
+      os << "," << endl;
     }
   };
 
-  // Generates an attribute's accessor operation.
-  //
-  //
-  class GetAttributeEmitter : public SourceEmitterBase,
-                              public Traversal::AttributeDecl
+  struct OpExecReturnEmitter : Traversal::Type,
+                               Traversal::Void
   {
-  public:
-    GetAttributeEmitter (ostream& os_,
-                         ReturnTypeNameEmitter* return_type_name_emitter)
-      : SourceEmitterBase (os_),
-        AttributeDecl (return_type_name_emitter)
+    OpExecReturnEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+    
+    virtual void
+    traverse (Void&)
     {
+      os << "this->executor_->";
+    }
+    
+    virtual void
+    traverse (SemanticGraph::Type&)
+    {
+      os << "return this->executor_->";
+    }
+    
+  private:
+    std::ostream& os;
+  };
+
+  // For generating parameter names.
+  template <typename T>
+  struct ParameterEmitter : T
+  {
+    ParameterEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+      
+    virtual void
+    name (typename T::Type& p)
+    {
+      os << " " << p.name ();
+    }
+      
+  private:
+    std::ostream& os;
+  };
+
+  // For generating parameter names in operation delegation.
+  template <typename T>
+  struct ParameterExecEmitter : T
+  {
+    ParameterExecEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+      
+    virtual void
+    name (typename T::Type& p)
+    {
+      os << p.name ();
+    }
+      
+  private:
+    std::ostream& os;
+  };
+
+  template <typename T>
+  struct OperationEmitter : Traversal::Operation, EmitterBase
+  {
+    OperationEmitter (Context& c, T& scope)
+      : EmitterBase (c),
+        scope_ (scope)
+    {}
+    
+    virtual void
+    name (Type& o)
+    {
+      os << endl 
+         << scope_.name () << "_Servant::" << o.name ();
     }
 
     virtual void
-    post (AttributeDeclPtr const& a)
+    receives_pre (Type&)
     {
+      os << " (" << endl;
+    }
+
+    virtual void
+    receives_none (Type&)
+    {
+      os << " (" << endl
+         << STRS[ENV_SNGL_SRC] << ")" << endl;
+    }
+
+    virtual void
+    receives_post (Type&)
+    {
+      os << endl << STRS[ENV_SRC] << ")" << endl;
+    }
+
+    virtual void
+    raises_pre (Type&)
+    {
+      os << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl;
+    }
+
+    virtual void
+    raises_none (Type&)
+    {
+      os << STRS[EXCP_SNGL];
+    }
+
+    virtual void
+    raises_post (Type&)
+    {
+      os << "))";
+    }
+
+    virtual void
+    post (Type& o)
+    {
+      os << "{";
+      
+      OperationExecEmitter operation_emitter (ctx);
+
+      Traversal::Receives receives;
+      Traversal::Belongs returns;
+      operation_emitter.edge_traverser (receives);
+      operation_emitter.edge_traverser (returns);
+      
+      ParameterExecEmitter<Traversal::InParameter> in_param (os);
+      ParameterExecEmitter<Traversal::InOutParameter> inout_param (os);
+      ParameterExecEmitter<Traversal::OutParameter> out_param (os);
+      receives.node_traverser (in_param);
+      receives.node_traverser (inout_param);
+      receives.node_traverser (out_param);
+      
+      OpExecReturnEmitter return_emitter (os);
+      returns.node_traverser (return_emitter);
+      
+      operation_emitter.traverse (o);
+
+      os << "}" << endl;
+    }
+
+    virtual void
+    comma (Type&)
+    {
+      os << "," << endl;
+    }
+    
+  protected:
+    T& scope_;
+  };
+  
+  // Generic scoped typename emitter used by various other emitters.
+  struct TypeNameEmitter : Traversal::Type
+  {
+    TypeNameEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+    
+    virtual void
+    traverse (SemanticGraph::Type& t)
+    {
+      os << t.scoped_name ();
+    }
+    
+  private:
+    std::ostream& os;
+  };
+
+  // Generic local typename emitter used by various other emitters.
+  struct SimpleTypeNameEmitter : Traversal::Type
+  {
+    SimpleTypeNameEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+    
+    virtual void
+    traverse (SemanticGraph::Type& t)
+    {
+      os << t.name ();
+    }
+    
+  private:
+    std::ostream& os;
+  };
+  
+  // Generate name of type's enclosing scope.
+  struct EnclosingTypeNameEmitter : Traversal::Type
+  {
+    EnclosingTypeNameEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+    
+    virtual void
+    traverse (SemanticGraph::Type& t)
+    {
+      os << t.scoped_name ().scope_name ();
+    }
+    
+  private:
+    std::ostream& os;
+  };
+
+  struct InterfaceEmitter : Traversal::UnconstrainedInterface,
+                            EmitterBase
+  {
+    InterfaceEmitter (Context& c)
+      : EmitterBase (c)
+    {}
+
+    bool
+    add (UnconstrainedInterface& i)
+    {
+      return interfaces_.insert (&i).second;
+    }
+
+    virtual void
+    traverse (UnconstrainedInterface& i)
+    {
+      if (add (i))
+      {
+        Traversal::UnconstrainedInterface::traverse (i);
+      }
+    }
+    
+  private:
+    std::set<UnconstrainedInterface*> interfaces_;
+  };
+
+  // Generates operations associated with attributes.
+  // @@@ (JP) Need to support exceptions.
+  template <typename T>
+  struct AttributeEmitter : Traversal::ReadWriteAttribute,
+                            EmitterBase
+  {
+    AttributeEmitter (Context& c, T& scope)
+      : EmitterBase (c),
+        write_type_name_emitter_ (c.os ()),
+        read_type_name_emitter_ (c.os ()),
+        scope_ (scope)
+    {
+      write_belongs_.node_traverser (write_type_name_emitter_);
+      read_belongs_.node_traverser (read_type_name_emitter_);
+    }
+    
+    virtual void traverse (SemanticGraph::ReadWriteAttribute& a)
+    {
+      Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
+      
       os << endl
-         << a->name ().scope ().simple ()
-         << "_Servant::" << a->name ().simple () << " (" << endl
+         << scope_.name () << "_Servant::" << a.name () << " (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
-         << "return this->executor_->" << a->name ().simple ()
-         << " (" << endl
+         << "return this->executor_->" << a.name () << " (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl;
-    }
-  };
+         << "}" << endl;
 
-  // Generates an attribute's mutator operation.
-  //
-  //
-  class SetAttributeEmitter : public SourceEmitterBase,
-                              public Traversal::AttributeDecl
-  {
-  public:
-    SetAttributeEmitter (ostream& os_,
-                         INArgTypeNameEmitter* param_type_name_emitter)
-      : SourceEmitterBase (os_),
-        AttributeDecl (param_type_name_emitter)
-    {
-    }
-
-    virtual void
-    pre (AttributeDeclPtr const& a)
-    {
-      os << "void " << endl
-         << a->name ().scope ().simple ()
-         << "_Servant::" << a->name ().simple () << " (" << endl;
-    }
-
-    virtual void
-    post (AttributeDeclPtr const& a)
-    {
-      os << " val" << endl
+      os << "void" << endl
+         << scope_.name () << "_Servant::" << a.name () << " (" << endl;
+      
+      Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
+      
+      os << " " << a.name () << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
-         << "this->executor_->" << a->name ().simple () << " (" << endl
-         << "val" << endl
+         << "this->executor_->" << a.name () << " (" << endl
+         << a.name () << endl
          << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
     }
+    
+  private:
+    INArgTypeNameEmitter write_type_name_emitter_;
+    ReturnTypeNameEmitter read_type_name_emitter_;
+    Traversal::Belongs write_belongs_;
+    Traversal::Belongs read_belongs_;
+    T& scope_;
   };
-
-  // Generates the statement that delegates the operation
-  // to the executor.
-  //
-  class OperationExecEmitter : public SourceEmitterBase,
-                               public Traversal::OperationParameter,
-                               public Traversal::Comma,
-                               public Traversal::OperationDecl
+  
+  // Generates operations associated with readonly attributes.
+  // @@@ (JP) Need to support exceptions.
+  template <typename T>
+  struct ReadOnlyAttributeEmitter : Traversal::ReadAttribute,
+                                    EmitterBase
   {
-  public:
-    OperationExecEmitter (ostream& os_,
-                          ArgNameEmitter* arg_name_emitter_)
-      : SourceEmitterBase (os_),
-        OperationParameter (arg_name_emitter_,
-                            arg_name_emitter_,
-                            arg_name_emitter_)
+    ReadOnlyAttributeEmitter (Context& c, T& scope)
+      : EmitterBase (c),
+        read_type_name_emitter_ (c.os ()),
+        scope_ (scope)
     {
+      read_belongs_.node_traverser (read_type_name_emitter_);
     }
-
-    virtual void
-    pre (OperationParameterPtr const&)
+    
+    virtual void traverse (SemanticGraph::ReadAttribute& a)
     {
-      os << endl;
-    }
-
-    virtual void
-    post (OperationParameterPtr const& op)
-    {
-      os << op->name ();
-    }
-
-    virtual void
-    traverse (CommaPtr const&)
-    {
-      os << ",";
-    }
-  };
-
-  // Generates an operation definition.
-  //
-  //
-  class OperationEmitter : public SourceEmitterBase,
-                           public Traversal::UnconstrainedInterfaceDef,
-                           public virtual Traversal::OperationParameter,
-                           public Traversal::Comma,
-                           public virtual Traversal::OperationDecl
-  {
-  public:
-    OperationEmitter (ostream& os_,
-                      ReturnTypeNameEmitter* return_type_name_emitter,
-                      INArgTypeNameEmitter* inarg_type_name_emitter_,
-                      OUTArgTypeNameEmitter* outarg_type_name_emitter_,
-                      INOUTArgTypeNameEmitter* inoutarg_type_name_emitter_)
-      : SourceEmitterBase (os_),
-        OperationParameter (inarg_type_name_emitter_,
-                            outarg_type_name_emitter_,
-                            inoutarg_type_name_emitter_),
-        OperationDecl (return_type_name_emitter)
-    {
-    }
-
-    virtual void
-    name (OperationDeclPtr const& d)
-    {
+      Traversal::ReadAttribute::belongs (a, read_belongs_);
+      
       os << endl
-         << d->name ().scope ().simple () << "_Servant::"
-         << d->name ().simple () << " (";
-    }
-
-    virtual void
-    pre (OperationParameterPtr const&)
-    {
-      os << endl;
-    }
-
-    virtual void
-    post (OperationParameterPtr const& op)
-    {
-      os << " " << op->name ();
-    }
-
-    virtual void
-    traverse (CommaPtr const&)
-    {
-      os << ",";
-    }
-
-    virtual void
-    post (OperationDeclPtr const& d)
-    {
-      bool void_return_type = d->type ()->is_a<IDL2::SyntaxTree::VoidDecl> ();
-
-      // @@@ (JP) Must add support for user exceptions.
-      os << endl
-         << (d->begin () == d->end () ? STRS[ENV_SNGL_SRC] : STRS[ENV_SRC])
-         << ")" << endl
+         << scope_.name () << "_Servant::" << a.name () << " (" << endl
+         << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
-         << (void_return_type ? "" : "return ")
-         << "this->executor_->" << d->name ().simple () << " (";
-
-      ArgNameEmitter arg_name_emitter (os);
-      OperationExecEmitter operation_exec_emitter (os,
-                                                   &arg_name_emitter);
-      operation_exec_emitter.dispatch (d);
-
-      os << endl
-         << (d->begin () == d->end () ? STRS[ENV_SNGL_ARG] : STRS[ENV_ARG])
-         << ");" << endl
-         << "}" << endl << endl;
+         << "return this->executor_->" << a.name () << " (" << endl
+         << STRS[ENV_SNGL_ARG] << ");" << endl
+         << "}" << endl;
     }
-  };
-
-  // Generates the operation associated with a home factory definition.
-  //
-  //
-  class FactoryEmitter : public SourceEmitterBase,
-                         public Traversal::HomeFactoryDecl,
-                         public Traversal::OperationParameter,
-                         public Traversal::Comma
-  {
-  public:
-    FactoryEmitter (ostream& os_,
-                    INArgTypeNameEmitter* inarg_type_name_emitter_)
-      : SourceEmitterBase (os_),
-        OperationParameter (inarg_type_name_emitter_,
-                            inarg_type_name_emitter_,
-                            inarg_type_name_emitter_)
-    {
-    }
-
-    virtual void
-    type (HomeFactoryDeclPtr const& f)
-    {
-      HomeDefPtr def (f->scope ()->dynamic_type<SyntaxTree::HomeDef> ());
-      os << def->manages ()->name () << "_ptr";
-    }
-
-    virtual void
-    name (HomeFactoryDeclPtr const& f)
-    {
-      os << endl
-         << f->name ().scope ().simple () << "_Servant::"
-         << f->name ().simple () << " (";
-    }
-
-    virtual void
-    pre (OperationParameterPtr const&)
-    {
-      os << endl;
-    }
-
-    virtual void
-    post (OperationParameterPtr const& op)
-    {
-      os << " " << op->name ();
-    }
-
-    virtual void
-    traverse (CommaPtr const&)
-    {
-      os << ",";
-    }
-
-    virtual void
-    post (HomeFactoryDeclPtr const& f)
-    {
-      os << endl
-         << (f->begin () == f->end () ? STRS[ENV_SNGL_SRC] : STRS[ENV_SRC])
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "::Components::EnterpriseComponent_var _ciao_ec =" << endl
-         << "this->executor_->" << f->name ().simple () << " (";
-
-      ArgNameEmitter arg_name_emitter (os);
-      OperationExecEmitter operation_exec_emitter (os,
-                                                   &arg_name_emitter);
-      operation_exec_emitter.dispatch (f);
-
-      // If this cast is 0, a syntax error has slipped through.
-      HomeDefPtr def (f->scope ()->dynamic_type<SyntaxTree::HomeDef> ());
-      ScopedName retval = def->manages ()->name ();
-
-      os << endl
-         << (f->begin () == f->end () ? STRS[ENV_SNGL_ARG] : STRS[ENV_ARG])
-         << ");"
-         << "ACE_CHECK_RETURN (" << retval << "::_nil ());"
-         << endl << endl
-         << retval.scope () << "::CCM_" << retval.simple ()
-         << "_var _ciao_comp =" << endl
-         << retval.scope () << "::CCM_" << retval.simple ()
-         << "::_narrow (" << endl
-         << "_ciao_ec.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "return this->_ciao_activate_component (" << endl
-         << "_ciao_comp.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
-    }
-  };
-
-  // Generates an operation of a supported interface.
-  //
-  //
-  class SupportedOperationEmitter : public OperationEmitter,
-                                    public virtual Traversal::OperationParameter,
-                                    public virtual Traversal::OperationDecl
-  {
+    
   private:
-    SimpleName context_;
-
-  public:
-    SupportedOperationEmitter (ostream& os_,
-                               ReturnTypeNameEmitter* return_type_name_emitter,
-                               INArgTypeNameEmitter* inarg_type_name_emitter,
-                               OUTArgTypeNameEmitter* outarg_type_name_emitter,
-                               INOUTArgTypeNameEmitter* inoutarg_type_name_emitter,
-                               SimpleName context)
-      : OperationEmitter (os_,
-                          return_type_name_emitter,
-                          inarg_type_name_emitter,
-                          outarg_type_name_emitter,
-                          inoutarg_type_name_emitter),
-        OperationParameter (inarg_type_name_emitter,
-                            outarg_type_name_emitter,
-                            inoutarg_type_name_emitter),
-        OperationDecl (return_type_name_emitter),
-        context_ (context)
-    {
-    }
-
-    virtual void
-    name (OperationDeclPtr const& d)
-    {
-      os << endl
-         << context_ << "_Servant::"
-         << d->name ().simple () << " (";
-    }
+    ReturnTypeNameEmitter read_type_name_emitter_;
+    Traversal::Belongs read_belongs_;
+    T& scope_;
   };
-
-
-  //
-  // Select only the facets that are present in a provides declaration.
-  //
-  class FacetSelector : public SourceEmitterBase,
-                        public Traversal::UnconstrainedInterfaceDef
+  
+  struct FacetEmitter : Traversal::UnconstrainedInterface,
+                        EmitterBase
   {
-  private:
-    Declarations const& declarations_;
-
-  public:
-    FacetSelector (ostream& os_, Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations)
+    FacetEmitter (Context& c)
+      : EmitterBase (c),
+        scope_type_name_emitter_ (c.os ()),
+        simple_type_name_emitter_ (c.os ())
     {
+      scope_belongs_.node_traverser (scope_type_name_emitter_);
+      simple_belongs_.node_traverser (simple_type_name_emitter_);
     }
-
-    void
-    traverse (UnconstrainedInterfaceDefPtr const& i)
-    {
-      if (declarations_.find (i))
-      {
-        Traversal::UnconstrainedInterfaceDef::traverse (i);
-      }
-    }
-  };
-
-  //
-  // FacetServantEmitter generates facet servant class definitions.
-  //
-  class FacetServantEmitter : public SourceEmitterBase,
-                              public Traversal::UnconstrainedInterfaceDef
-  {
-  public:
-    FacetServantEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
-    {
-    }
-
+    
     virtual void
-    pre (UnconstrainedInterfaceDefPtr const& i)
+    traverse (UnconstrainedInterface& i)
     {
-      // If we are at file scope, we create a namespace anyway.
-      if (i->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << STRS[GLUE_NS] << endl
-           << "{";
-      }
-
-      os << i->name ().simple () << "_Servant::" << i->name ().simple ()
+      // Open a namespace.
+      os << STRS[GLUE_NS] 
+         << regex::perl_s (i.scoped_name ().scope_name ().str (),
+                           "/::/_/")
+         << "{";
+         
+      os << i.name () << "_Servant::" << i.name ()
          << "_Servant (" << endl
-         << i->name ().scope () << "::CCM_" << i->name ().simple ()
+         << i.scoped_name ().scope_name () << "::CCM_" << i.name ()
          << "_ptr executor," << endl
          << "::Components::CCMContext_ptr c)" << endl
-         << ": executor_ (" << i->name ().scope () << "::CCM_"
-         << i->name ().simple () << "::_duplicate (executor))," << endl
+         << ": executor_ (" << i.scoped_name ().scope_name () << "::CCM_"
+         << i.name () << "::_duplicate (executor))," << endl
          << "ctx_ (::Components::CCMContext::_duplicate (c))" << endl
          << "{"
-         << "}" << endl << endl;
+         << "}" << endl;
 
-      os << i->name ().simple () << "_Servant::~" << i->name ().simple ()
+      os << i.name () << "_Servant::~" << i.name ()
          << "_Servant (void)" << endl
          << "{"
-         << "}" << endl << endl;
-    }
+         << "}" << endl;
+         
+      {
+        InterfaceEmitter interface_emitter (ctx);
+        
+        Traversal::Defines defines_;
+        Traversal::Inherits inherits_;
+        interface_emitter.edge_traverser (defines_);
+        interface_emitter.edge_traverser (inherits_);
+        
+        OperationEmitter<SemanticGraph::UnconstrainedInterface> operation_emitter (ctx, i);
+        defines_.node_traverser (operation_emitter);  
+        inherits_.node_traverser (interface_emitter);
 
-    virtual void
-    post (UnconstrainedInterfaceDefPtr const& i)
-    {
+        Traversal::Receives receives;
+        Traversal::Belongs returns;
+        Traversal::Raises raises;
+        operation_emitter.edge_traverser (receives);
+        operation_emitter.edge_traverser (returns);
+        operation_emitter.edge_traverser (raises);
+        
+        ParameterEmitter<Traversal::InParameter> in_param (os);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
+        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        receives.node_traverser (in_param);
+        receives.node_traverser (inout_param);
+        receives.node_traverser (out_param);
+       
+        ReturnTypeNameEmitter return_type_emitter (os);
+        TypeNameEmitter type_name_emitter (os);
+        returns.node_traverser (return_type_emitter);
+        raises.node_traverser (type_name_emitter);
+        
+        Traversal::Belongs in_belongs, inout_belongs, out_belongs;
+        in_param.edge_traverser (in_belongs);
+        inout_param.edge_traverser (inout_belongs);
+        out_param.edge_traverser (out_belongs);
+        
+        INArgTypeNameEmitter in_arg_emitter (os);        
+        INOUTArgTypeNameEmitter inout_arg_emitter (os);        
+        OUTArgTypeNameEmitter out_arg_emitter (os);
+        in_belongs.node_traverser (in_arg_emitter);
+        inout_belongs.node_traverser (inout_arg_emitter);
+        out_belongs.node_traverser (out_arg_emitter);
+
+        inherits (i, inherits_);
+        names (i, defines_);
+      }
+
       os << "CORBA::Object_ptr" << endl
-         << i->name ().simple () << "_Servant::_get_component (" << endl
+         << i.name () << "_Servant::_get_component (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << "ACE_THROW_SPEC ((CORBA::SystemException))" << endl
          << "{"
@@ -458,7 +530,7 @@ namespace
          << "{"
          << "return sc->get_CCM_object (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl
+         << "}" << endl
          << "::Components::EntityContext_var ec =" << endl
          << "::Components::EntityContext::_narrow (" << endl
          << "this->ctx_.in ()" << endl
@@ -468,79 +540,374 @@ namespace
          << "{"
          << "return ec->get_CCM_object (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl
+         << "}" << endl
          << "ACE_THROW_RETURN (CORBA::INTERNAL (), 0);" << endl
          << "}" << endl;
 
-      // Close the CIAO_GLUE namespace, if we opened one.
-      if (i->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << "}" << endl;
-      }
-
-      os << endl;
+      // Close the CIAO_GLUE namespace.
+      os << "}" << endl;
     }
-  };
-
-  //
-  // Generates component context interface definitions.
-  //
-  class ContextEmitter : public SourceEmitterBase,
-                         public Traversal::ComponentDef,
-                         public Traversal::UsesDecl,
-                         public Traversal::PublishesDecl,
-                         public Traversal::EmitsDecl
-  {
+    
   private:
-    Declarations const& declarations_;
+    EnclosingTypeNameEmitter scope_type_name_emitter_;
+    SimpleTypeNameEmitter simple_type_name_emitter_;
+    Traversal::Belongs scope_belongs_;
+    Traversal::Belongs simple_belongs_;
+  };
+  
+  struct ContextEmitter : Traversal::Component, EmitterBase
+  {
+    ContextEmitter (Context& c)
+      : EmitterBase (c)
+    {}
+    
+  // Nested classes used by ContextEmitter.  
+  private:
+    struct ContextPortsEmitter : Traversal::UserData,
+                                 Traversal::PublisherData,
+                                 Traversal::EmitterData,
+                                 EmitterBase
+    {
+      ContextPortsEmitter (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ()),
+          simple_type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+        simple_belongs_.node_traverser (simple_type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (SemanticGraph::User& u)
+      {
+        Traversal::UserData::belongs (u, belongs_);
+      
+        os << "_ptr" << endl
+           << u.scoped_name ().scope_name ().simple_name () << "_Context::get_connection_"
+           << u.name () << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "return ";
+           
+        Traversal::UserData::belongs (u, belongs_);
+      
+        os << "::_duplicate (" << endl
+           << "this->ciao_uses_" << u.name ()
+           << "_.in ());" << endl
+           << "}" << endl;
+
+        os << "void" << endl
+           << u.scoped_name ().scope_name ().simple_name () << "_Context::connect_"
+           << u.name () << " (" << endl;
+           
+        Traversal::UserData::belongs (u, belongs_);
+      
+        os << "_ptr c" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_AC] << "," << endl
+           << STRS[EXCP_IC] << "))" << endl
+           << "{"
+           << "if (! CORBA::is_nil (this->ciao_uses_"
+           << u.name () << "_.in ()))" << endl
+           << "{"
+           << "ACE_THROW (" << STRS[EXCP_AC] << " ());" << endl
+           << "}" << endl
+           << "if (CORBA::is_nil (c))" << endl
+           << "{"
+           << "ACE_THROW (" << STRS[EXCP_IC] << " ());" << endl
+           << "}" << endl
+           << "this->ciao_uses_" << u.name () << "_ =" << endl;
+           
+        Traversal::UserData::belongs (u, belongs_);
+      
+        os << "::_duplicate (c);" << endl
+           << "}" << endl;
+
+        Traversal::UserData::belongs (u, belongs_);
+      
+        os << "_ptr" << endl
+           << u.scoped_name ().scope_name ().simple_name () << "_Context::disconnect_"
+           << u.name () << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_NC] << "))" << endl
+           << "{"
+           << "if (CORBA::is_nil (this->ciao_uses_"
+           << u.name () << "_.in ()))" << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << endl
+           << STRS[EXCP_NC] << " ()," << endl;
+           
+        Traversal::UserData::belongs (u, belongs_);
+      
+        os << "::_nil ());" << endl
+           << "}" << endl
+           << "return this->ciao_uses_" << u.name ()
+           << "_._retn ();" << endl
+           << "}" << endl;
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Publisher& p)
+      {
+        os << "void" << endl
+           << p.scoped_name ().scope_name ().simple_name () << "_Context::push_"
+           << p.name () << " (" << endl;
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << " *ev" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "ACE_Active_Map_Manager<" << endl; //@@ gcc bug
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << "Consumer_var>::iterator end =" << endl
+           << "this->ciao_publishes_" << p.name ()
+           << "_map_.end ();" << endl
+           << "for (ACE_Active_Map_Manager<" << endl; //@@ gcc bug
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << "Consumer_var>::iterator iter =" << endl
+           << "this->ciao_publishes_" << p.name ()
+           << "_map_.begin ();"
+           << "iter != end;"
+           << "++iter)" << endl
+           << "{"
+           << "ACE_Active_Map_Manager<" << endl; //@@ gcc bug
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << "Consumer_var>::ENTRY &entry = *iter;" << endl;
+        
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << "Consumer_var c =" << endl;
+        
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << "Consumer::_narrow (" << endl
+           << "entry.int_id_.in ()" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK;" << endl
+           << "entry.int_id_->push_";
+           
+        Traversal::PublisherData::belongs (p, simple_belongs_);
+      
+        os << " (" << endl
+           << "ev" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK;" << endl
+           << "}" << endl
+           << "}" << endl;
+
+        os << STRS[COMP_CK] << " *" << endl
+           << p.scoped_name ().scope_name ().simple_name () << "_Context::subscribe_"
+           << p.name () << " (" << endl;
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << "Consumer_ptr c" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "))" << endl
+           << "{"
+           << "if (CORBA::is_nil (c))" << endl
+           << "{"
+           << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << endl
+           << "}" << endl;
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os<< "Consumer_var sub =" << endl;
+        
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << "Consumer::_duplicate (c);" << endl
+           << "ACE_Active_Map_Manager_Key key;"
+           << "this->ciao_publishes_" << p.name ()
+           << "_map_.bind (sub.in (), key);"
+           << "sub._retn ();" << endl
+           << STRS[COMP_CK] << "_var retv = "
+           << "new ::CIAO::Map_Key_Cookie (key);"
+           << "return retv._retn ();" << endl
+           << "}" << endl;
+
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << "Consumer_ptr" << endl
+           << p.scoped_name ().scope_name ().simple_name () << "_Context::unsubscribe_"
+           << p.name () << " (" << endl
+           << STRS[COMP_CK] << " *ck" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_IC] << "))" << endl
+           << "{";
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os<< "Consumer_var retv;"
+           << "ACE_Active_Map_Manager_Key key;" << endl
+           << "if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)"
+           << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << endl
+           << STRS[EXCP_IC] << " ()," << endl;
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << "Consumer::_nil ());" << endl
+           << "}" << endl << endl
+           << "if (this->ciao_publishes_" << p.name ()
+           << "_map_.unbind (key, retv) != 0)" << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << endl
+           << STRS[EXCP_IC] << " ()," << endl;
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+      
+        os << "Consumer::_nil ());" << endl
+           << "}" << endl
+           << "return retv._retn ();" << endl
+           << "}" << endl;
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Emitter& e)
+      {
+        os << "void" << endl
+           << e.scoped_name ().scope_name ().simple_name () << "_Context::push_"
+           << e.name () << " (" << endl;
+
+        Traversal::EmitterData::belongs (e, belongs_);
+      
+        os << " *ev" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "this->ciao_emits_" << e.name ()
+           << "_consumer_->push_";
+           
+        Traversal::EmitterData::belongs (e, simple_belongs_);
+      
+        os << " (" << endl
+           << "ev" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+
+        os << "void" << endl
+           << e.scoped_name ().scope_name ().simple_name () << "_Context::connect_"
+           << e.name () << " (" << endl;
+
+        Traversal::EmitterData::belongs (e, belongs_);
+      
+        os << "Consumer_ptr c" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_AC] << "))" << endl
+           << "{"
+           << "if (CORBA::is_nil (c))" << endl
+           << "{"
+           << "ACE_THROW (CORBA::BAD_PARAM ());" << endl
+           << "}" << endl << endl
+           << "if (! CORBA::is_nil (this->ciao_emits_" << e.name ()
+           << "_consumer_.in ()))" << endl
+           << "{"
+           << "ACE_THROW (" << STRS[EXCP_AC] << " ());" << endl
+           << "}" << endl << endl
+           << "this->ciao_emits_" << e.name ()
+           << "_consumer_ = c;" << endl
+           << "}" << endl;
+
+        Traversal::EmitterData::belongs (e, belongs_);
+      
+        os << "Consumer_ptr" << endl
+           << e.scoped_name ().scope_name ().simple_name () << "_Context::disconnect_"
+           << e.name () << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_NC] << "))" << endl
+           << "{"
+           << "if (CORBA::is_nil (this->ciao_emits_" << e.name ()
+           << "_consumer_.in ()))" << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << endl
+           << STRS[EXCP_NC] << " ()," << endl;
+
+        Traversal::EmitterData::belongs (e, belongs_);
+      
+        os << "Consumer::_nil ());" << endl
+           << "}" << endl << endl
+           << "return this->ciao_emits_" << e.name ()
+           << "_consumer_._retn ();" << endl
+           << "}" << endl;
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      SimpleTypeNameEmitter simple_type_name_emitter_;
+      Traversal::Belongs belongs_;
+      Traversal::Belongs simple_belongs_;
+    };
     
   public:
-    ContextEmitter (ostream& os_,
-                    Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
     virtual void
-    traverse (ComponentDefPtr const& c)
+    pre (Type& t)
     {
-      if (declarations_.find (c))
+      // CIAO has facet classes outside the context and servant classes.
+      // We launch it here to generate the classes at the top of the file,
+      // like the original hand-crafted examples, for easier checking.
+      // This can be moved later to ServantEmitter::pre() or out on its own.
       {
-        Traversal::ComponentDef::traverse (c);
+        Traversal::Defines defines;
+        
+        Traversal::Provider provider;
+        defines.node_traverser (provider);
+        
+        Traversal::Belongs belongs;
+        provider.edge_traverser (belongs);
+        
+        FacetEmitter facet_emitter (ctx);
+        belongs.node_traverser (facet_emitter);
+        
+        names (t, defines);
       }
-    }
-
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
-      // If we are at file scope, we create a namespace anyway.
-      if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << "namespace CIAO_GLUE" << endl
-           << "{";
-      }
-
-      os << c->name ().simple () << "_Context::"
-         << c->name ().simple () << "_Context (" << endl
+      
+      os << STRS[GLUE_NS] 
+         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+         << "{";
+          
+      os << t.name () << "_Context::"
+         << t.name () << "_Context (" << endl
          << "::Components::CCMHome_ptr home," << endl
          << "::CIAO::Session_Container *c," << endl
-         << c->name ().simple () << "_Servant *sv)" << endl
+         << t.name () << "_Servant *sv)" << endl
          << ": home_ (::Components::CCMHome::_duplicate (home))," << endl
          << "container_ (c)," << endl
          << "servant_ (sv)" << endl
          << "{"
-         << "}" << endl << endl;
+         << "}" << endl;
 
-      os << c->name ().simple () << "_Context::~"
-         << c->name ().simple () << "_Context (void)" << endl
+      os << t.name () << "_Context::~"
+         << t.name () << "_Context (void)" << endl
          << "{"
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "// Operations from ::Components::CCMContext." << endl << endl;
 
       os << "::Components::Principal_ptr" << endl
-         << c->name ().simple () << "_Context::"
+         << t.name () << "_Context::"
          << "get_caller_principal (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
@@ -548,20 +915,20 @@ namespace
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::NO_IMPLEMENT ()," << endl
          << "::Components::Principal::_nil ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::CCMHome_ptr" << endl
-         << c->name ().simple () << "_Context::"
+         << t.name () << "_Context::"
          << "get_CCM_home (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "return ::Components::CCMHome::_duplicate (this->home_.in ());"
          << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "CORBA::Boolean" << endl
-         << c->name ().simple () << "_Context::"
+         << t.name () << "_Context::"
          << "get_rollback_only (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
@@ -569,10 +936,10 @@ namespace
          << STRS[EXCP_IS] << "))" << endl
          << "{"
          << "ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::Transaction::UserTransaction_ptr" << endl
-         << c->name ().simple () << "_Context::"
+         << t.name () << "_Context::"
          << "get_user_transaction (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
@@ -582,20 +949,20 @@ namespace
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::NO_IMPLEMENT ()," << endl
          << "::Components::Transaction::UserTransaction::_nil ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "CORBA::Boolean" << endl
-         << c->name ().simple () << "_Context::"
+         << t.name () << "_Context::"
          << "is_caller_in_role (" << endl
          << "const char * /* role */" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "void" << endl
-         << c->name ().simple () << "_Context::"
+         << t.name () << "_Context::"
          << "set_rollback_only (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
@@ -603,13 +970,13 @@ namespace
          << STRS[EXCP_IS] << "))" << endl
          << "{"
          << "ACE_THROW (CORBA::NO_IMPLEMENT ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "// Operations from ::Components::SessionContext interface."
          << endl << endl;
 
       os << "CORBA::Object_ptr" << endl
-         << c->name ().simple () << "_Context::"
+         << t.name () << "_Context::"
          << "get_CCM_object (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
@@ -624,7 +991,7 @@ namespace
          << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl
          << "this->component_ =" << endl
-         << c->name () << "::_narrow (" << endl
+         << t.scoped_name () << "::_narrow (" << endl
          << "obj.in ()" << endl
          << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (CORBA::Object::_nil ());" << endl
@@ -634,283 +1001,741 @@ namespace
          << "::CORBA::INTERNAL ()," << endl
          << "::CORBA::Object::_nil ());" << endl
          << "}" << endl
-         << "}" << endl << endl
-         << "return " << c->name () << "::_duplicate (" << endl
-         << "this->component_.in ());" << endl
-         << "}" << endl << endl;
-
-      os << "// Operations for " << c->name ().simple () << " receptacles"
-         << " and event sources," << endl
-         << "// defined in " << c->name ().scope () << "::CCM_"
-         << c->name ().simple () << "_Context."
-         << endl << endl;
-    }
-
-    virtual void
-    traverse (UsesDeclPtr const& d)
-    {
-      os << d->type ()->name () << "_ptr" << endl
-         << d->scope ()->name ().simple () << "_Context::get_connection_"
-         << d->name ().simple ()
-         << " (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "return " << d->type ()->name () << "::_duplicate (" << endl
-         << "this->ciao_uses_" << d->name ().simple ()
-         << "_.in ());" << endl
-         << "}" << endl << endl;
-
-      os << "void" << endl
-         << d->scope ()->name ().simple () << "_Context::connect_"
-         << d->name ().simple () << " (" << endl
-         << d->type ()->name () << "_ptr c" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_IC] << "))" << endl
-         << "{"
-         << "if (! CORBA::is_nil (this->ciao_uses_"
-         << d->name ().simple () << "_.in ()))" << endl
-         << "{"
-         << "ACE_THROW (" << STRS[EXCP_AC] << " ());" << endl
-         << "}" << endl << endl
-         << "if (CORBA::is_nil (c))" << endl
-         << "{"
-         << "ACE_THROW (" << STRS[EXCP_IC] << " ());" << endl
-         << "}" << endl << endl
-         << "this->ciao_uses_" << d->name ().simple () << "_ =" << endl
-         << d->type ()-> name () << "::_duplicate (c);" << endl
-         << "}" << endl << endl;
-
-      os << d->type ()->name () << "_ptr" << endl
-         << d->scope ()->name ().simple () << "_Context::disconnect_"
-         << d->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NC] << "))" << endl
-         << "{"
-         << "if (CORBA::is_nil (this->ciao_uses_"
-         << d->name ().simple () << "_.in ()))" << endl
-         << "{"
-         << "ACE_THROW_RETURN (" << endl
-         << STRS[EXCP_NC] << " ()," << endl
-         << d->type ()->name () << "::_nil ());" << endl
-         << "}" << endl << endl
-         << "return this->ciao_uses_" << d->name ().simple ()
-         << "_._retn ();" << endl
-         << "}" << endl << endl;
-    }
-
-    virtual void
-    traverse (PublishesDeclPtr const& d)
-    {
-      os << "void" << endl
-         << d->scope ()->name ().simple () << "_Context::push_"
-         << d->name ().simple () << " (" << endl
-         << d->type ()->name () << " *ev" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "ACE_Active_Map_Manager<" << endl //@@ gcc bug
-         << d->type ()->name ()
-         << "Consumer_var>::iterator end =" << endl
-         << "this->ciao_publishes_" << d->name ().simple ()
-         << "_map_.end ();" << endl
-         << "for (ACE_Active_Map_Manager<" << endl //@@ gcc bug
-         << d->type ()->name ()
-         << "Consumer_var>::iterator iter =" << endl
-         << "this->ciao_publishes_" << d->name ().simple ()
-         << "_map_.begin ();"
-         << "iter != end;"
-         << "++iter)" << endl
-         << "{"
-         << "ACE_Active_Map_Manager<" << endl //@@ gcc bug
-         << d->type ()->name ()
-         << "Consumer_var>::ENTRY &entry = *iter;" << endl
-         << d->type ()->name () << "Consumer_var c =" << endl
-         << d->type ()->name () << "Consumer::_narrow (" << endl
-         << "entry.int_id_.in ()" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK;" << endl
-         << "entry.int_id_->push_" << d->type ()->name ().simple ()
-         << " (" << endl
-         << "ev" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK;" << endl
          << "}" << endl
-         << "}" << endl << endl;
+         << "return " << t.name () << "::_duplicate (" << endl
+         << "this->component_.in ());" << endl
+         << "}" << endl;
 
-      os << STRS[COMP_CK] << " *" << endl
-         << d->scope ()->name ().simple () << "_Context::subscribe_"
-         << d->name ().simple () << " (" << endl
-         << d->type ()->name () << "Consumer_ptr c" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_ECL] << "))" << endl
-         << "{"
-         << "if (CORBA::is_nil (c))" << endl
-         << "{"
-         << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << endl
-         << "}" << endl << endl
-         << d->type ()->name () << "Consumer_var sub =" << endl
-         << d->type ()->name () << "Consumer::_duplicate (c);" << endl
-         << "ACE_Active_Map_Manager_Key key;"
-         << "this->ciao_publishes_" << d->name ().simple ()
-         << "_map_.bind (sub.in (), key);"
-         << "sub._retn ();" << endl
-         << STRS[COMP_CK] << "_var retv = "
-         << "new ::CIAO::Map_Key_Cookie (key);"
-         << "return retv._retn ();" << endl
-         << "}" << endl << endl;
-
-      os << d->type ()->name () << "Consumer_ptr" << endl
-         << d->scope ()->name ().simple () << "_Context::unsubscribe_"
-         << d->name ().simple () << " (" << endl
-         << STRS[COMP_CK] << " *ck" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IC] << "))" << endl
-         << "{"
-         << d->type ()->name () << "Consumer_var retv;"
-         << "ACE_Active_Map_Manager_Key key;" << endl
-         << "if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)"
-         << endl
-         << "{"
-         << "ACE_THROW_RETURN (" << endl
-         << STRS[EXCP_IC] << " ()," << endl
-         << d->type ()->name () << "Consumer::_nil ());" << endl
-         << "}" << endl << endl
-         << "if (this->ciao_publishes_" << d->name ().simple ()
-         << "_map_.unbind (key, retv) != 0)" << endl
-         << "{"
-         << "ACE_THROW_RETURN (" << endl
-         << STRS[EXCP_IC] << " ()," << endl
-         << d->type ()->name () << "Consumer::_nil ());" << endl
-         << "}" << endl << endl
-         << "return retv._retn ();" << endl
-         << "}" << endl << endl;
-    }
-
-    virtual void
-    traverse (EmitsDeclPtr const& d)
-    {
-      os << "void" << endl
-         << d->scope ()->name ().simple () << "_Context::push_"
-         << d->name ().simple () << " (" << endl
-         << d->type ()->name () << " *ev" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "this->ciao_emits_" << d->name ().simple ()
-         << "_consumer_->push_" << d->type ()->name ().simple () 
-         << " (" << endl
-         << "ev" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
-
-      os << "void" << endl
-         << d->scope ()->name ().simple () << "_Context::connect_"
-         << d->name ().simple () << " (" << endl
-         << d->type ()-> name () << "Consumer_ptr c" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_AC] << "))" << endl
-         << "{"
-         << "if (CORBA::is_nil (c))" << endl
-         << "{"
-         << "ACE_THROW (CORBA::BAD_PARAM ());" << endl
-         << "}" << endl << endl
-         << "if (! CORBA::is_nil (this->ciao_emits_" << d->name ().simple ()
-         << "_consumer_.in ()))" << endl
-         << "{"
-         << "ACE_THROW (" << STRS[EXCP_AC] << " ());" << endl
-         << "}" << endl << endl
-         << "this->ciao_emits_" << d->name ().simple ()
-         << "_consumer_ = c;" << endl
-         << "}" << endl << endl;
-
-      os << d->type ()->name () << "Consumer_ptr" << endl
-         << d->scope ()->name ().simple () << "_Context::disconnect_"
-         << d->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NC] << "))" << endl
-         << "{"
-         << "if (CORBA::is_nil (this->ciao_emits_" << d->name ().simple ()
-         << "_consumer_.in ()))" << endl
-         << "{"
-         << "ACE_THROW_RETURN (" << endl
-         << STRS[EXCP_NC] << " ()," << endl
-         << d->type ()->name () << "Consumer::_nil ());" << endl
-         << "}" << endl << endl
-         << "return this->ciao_emits_" << d->name ().simple ()
-         << "_consumer_._retn ();" << endl
-         << "}" << endl << endl;
-    }
-
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
-      // Close the CIAO_GLUE namespace, if we opened one.
-      if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
+      os << "// Operations for " << t.name () << " receptacles"
+         << " and event sources," << endl
+         << "// defined in " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_Context."
+         << endl << endl;
+         
+      // Generate Context class operations for receptacles and event sources.   
       {
-        os << "}" << endl;
+        Traversal::Defines defines;
+        ContextPortsEmitter ports_emitter (ctx);
+        defines.node_traverser (ports_emitter);
+        
+        names (t, defines);
+      }
+    }
+    
+    virtual void
+    post (Type& t)
+    {
+      // Namespace closer.
+      os << "}" << endl;
+    }
+  };
+  
+  struct ServantEmitter : Traversal::Component, EmitterBase
+  {
+    ServantEmitter (Context& c)
+      : EmitterBase (c)
+    {}
+
+  // Nested classes used by ServantEmitter.  
+  private:
+    struct NavigationEmitter : Traversal::ProviderData,
+                               EmitterBase
+    {
+      NavigationEmitter (Context& c)
+        : EmitterBase (c)
+      {}
+      
+      virtual void
+      traverse (Type& t)
+      {
+        os << "if (ACE_OS::strcmp (name, \""
+           << t.name () << "\") == 0)" << endl
+           << "{"
+           << "return this->provide_" << t.name ()
+           << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "}" << endl;
+      }
+    };
+    
+    struct PublishesEmitter : Traversal::PublisherData,
+                              EmitterBase
+    {
+      PublishesEmitter (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (Type& p)
+      {
+        os << STRS[COMP_CK] << " *" << endl
+           << p.scoped_name ().scope_name ().simple_name ()
+           << "_Servant::subscribe_" << p.name () << " (" << endl;
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+
+        os << "Consumer_ptr c" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "))" << endl
+           << "{"
+           << "return this->context_->subscribe_" << p.name ()
+           << " (" << endl
+           << "c" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+
+        os << "Consumer_ptr" << endl
+           << p.scoped_name ().scope_name ().simple_name ()
+           << "_Servant::unsubscribe_" << p.name () << " (" << endl
+           << STRS[COMP_CK] << " *ck" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_IC] << "))" << endl
+           << "{"
+           << "return this->context_->unsubscribe_"
+           << p.name () << " (" << endl
+           << "ck" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+    
+    struct UsesConnectEmitter : Traversal::UserData,
+                                EmitterBase
+    {
+      UsesConnectEmitter (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (Type& u)
+      {
+        os << "if (ACE_OS::strcmp (name, \""
+           << u.name () << "\") == 0)" << endl
+           << "{";
+           
+        Traversal::UserData::belongs (u, belongs_);
+
+        os << "_var _ciao_conn =" << endl;
+        
+        Traversal::UserData::belongs (u, belongs_);
+
+        os << "::_narrow (" << endl
+           << "connection" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (0);" << endl
+           << "if (::CORBA::is_nil (_ciao_conn.in ()))" << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
+           << endl
+           << "}" << endl
+           << "// Simplex connect." << endl
+           << "this->connect_" << u.name () << " (" << endl
+           << "_ciao_conn.in ()" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "return 0;" << endl
+           << "}" << endl;
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+      
+    struct UsesDisconnectEmitter : Traversal::UserData,
+                                   EmitterBase
+    {
+      UsesDisconnectEmitter (Context& c)
+        : EmitterBase (c)
+      {
+      }
+      
+      virtual void
+      traverse (Type& u)
+      {
+        os << "if (ACE_OS::strcmp (name, \""
+           << u.name () << "\") == 0)" << endl
+           << "{"
+           << "// Simplex disconnect." << endl
+           << "return this->disconnect_" << u.name ()
+           << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "}" << endl;
+      }
+    };
+  
+    struct UsesEmitter : Traversal::UserData,
+                         EmitterBase
+    {
+      UsesEmitter (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (Type& p)
+      {
+        os << "void" << endl
+           << p.scoped_name ().scope_name ().simple_name () << "_Servant::connect_"
+           << p.name () << " (" << endl;
+           
+        Traversal::UserData::belongs (p, belongs_);
+
+        os << "_ptr c" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_AC] << "," << endl
+           << STRS[EXCP_IC] << "))" << endl
+           << "{"
+           << "this->context_->connect_" << p.name () << " ("
+           << endl
+           << "c" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+
+        Traversal::UserData::belongs (p, belongs_);
+
+        os << "_ptr" << endl
+           << p.scoped_name ().scope_name ().simple_name () << "_Servant::disconnect_"
+           << p.name () << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_NC] << "))" << endl
+           << "{"
+           << "return this->context_->disconnect_" << p.name ()
+           << " (" << endl
+           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "}" << endl;
+
+        Traversal::UserData::belongs (p, belongs_);
+
+        os << "_ptr" << endl
+           << p.scoped_name ().scope_name ().simple_name ()
+           << "_Servant::get_connection_" << p.name ()
+           << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "return this->context_->get_connection_"
+           << p.name () << " (" << endl
+           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "}" << endl;
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+    
+    struct ConsumesGetEmitter : Traversal::ConsumerData,
+                                EmitterBase
+    {
+      ConsumesGetEmitter (Context& c)
+        : EmitterBase (c)
+      {}
+      
+      virtual void
+      traverse (Type& c)
+      {
+        os << "if (ACE_OS::strcmp (sink_name, \""
+           << c.name () << "\") == 0)" << endl
+           << "{"
+           << "return this->get_consumer_" << c.name ()
+           << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "}" << endl;
+      }
+    };
+    
+    struct PublishesSubscribeEmitter : Traversal::PublisherData,
+                                       EmitterBase
+    {
+      PublishesSubscribeEmitter (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (Type& p)
+      {
+        os << "if (ACE_OS::strcmp (publisher_name, \""
+           << p.name () << "\") == 0)" << endl
+           << "{";
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+           
+        os << "Consumer_var _ciao_consumer =" << endl;
+        
+        Traversal::PublisherData::belongs (p, belongs_);
+           
+        os << "Consumer::_narrow (" << endl
+           << "subscribe" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (0);" << endl
+           << "if (::CORBA::is_nil (_ciao_consumer.in ()))" << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
+           << endl
+           << "}" << endl
+           << "return this->subscribe_" << p.name ()
+           << " (" << endl
+           << "_ciao_consumer.in ()" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+    
+    struct PublishesUnsubscribeEmitter : Traversal::PublisherData,
+                                         EmitterBase
+    {
+      PublishesUnsubscribeEmitter (Context& c)
+        : EmitterBase (c)
+      {}
+      
+      virtual void
+      traverse (Type& p)
+      {
+        os << "if (ACE_OS::strcmp (publisher_name, \""
+           << p.name () << "\") == 0)" << endl
+           << "{"
+           << "return this->unsubscribe_" << p.name ()
+           << " (" << endl
+           << "ck" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+      }
+    };
+    
+    struct EmitsEmitter : Traversal::EmitterData,
+                          EmitterBase
+    {
+      EmitsEmitter (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (Type& e)
+      {
+        os << "void" << endl
+           << e.scoped_name ().scope_name ().simple_name () << "_Servant::connect_"
+           << e.name () << " (" << endl;
+           
+        Traversal::EmitterData::belongs (e, belongs_);
+           
+        os << "Consumer_ptr c" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_AC] << "))" << endl
+           << "{"
+           << "this->context_->connect_" << e.name ()
+           << " (" << endl
+           << "c" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+
+        Traversal::EmitterData::belongs (e, belongs_);
+           
+        os << "Consumer_ptr" << endl
+           << e.scoped_name ().scope_name ().simple_name () << "_Servant::disconnect_"
+           << e.name () << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_NC] << "))" << endl
+           << "{"
+           << "return this->context_->disconnect_"
+           << e.name () << " (" << endl
+           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "}" << endl;
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+    
+    struct ServantTypeNameEmitter : Traversal::Type
+    {
+      ServantTypeNameEmitter (std::ostream& os_)
+        : os (os_)
+      {}
+      
+      virtual void
+      traverse (SemanticGraph::Type& t)
+      {
+        os << "::CIAO_GLUE";
+
+        ScopedName scope (t.scoped_name ().scope_name ());
+        Name stripped (scope.begin () + 1, scope.end ());
+          
+        if (!stripped.str ().empty ())
+        {
+          os << "_" << stripped;
+        }
+
+        os << "::" << t.name () << "_Servant";
+      }
+      
+    private:
+      std::ostream& os;
+    };
+    
+    struct FacetProvidesEmitter : Traversal::ProviderData,
+                                  EmitterBase
+    {
+      FacetProvidesEmitter (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ()),
+          simple_type_name_emitter_ (c.os ()),
+          servant_type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+        simple_belongs_.node_traverser (simple_type_name_emitter_);
+        servant_belongs_.node_traverser (servant_type_name_emitter_);   
+      }
+      
+      virtual void
+      traverse (Type& p)
+      {
+        Traversal::ProviderData::belongs (p, belongs_);
+      
+        os << "_ptr" << endl
+           << p.scoped_name ().scope_name ().simple_name ()
+           << "_Servant::provide_" << p.name () << " (" << endl
+           << STRS[ENV_SNGL_ARG] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "if (::CORBA::is_nil (this->provide_"
+           << p.name () << "_.in ()))" << endl
+           << "{"
+           << p.scoped_name ().scope_name ().scope_name () << "::CCM_";
+           
+        Traversal::ProviderData::belongs (p, simple_belongs_);
+      
+        os << "_var fexe =" << endl
+           << "this->executor_->get_" << p.name ()
+           << " (" << STRS[ENV_SNGL_ARG] << ");"
+           << "ACE_CHECK_RETURN (";
+           
+        Traversal::ProviderData::belongs (p, belongs_);
+      
+        os << "::_nil ());"
+           << endl
+           << "if (::CORBA::is_nil (fexe.in ()))" << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << endl
+           << "::CORBA::INTERNAL ()," << endl;
+           
+        Traversal::ProviderData::belongs (p, belongs_);
+      
+        os << "::_nil ());" << endl
+           << "}" << endl;
+           
+        Traversal::ProviderData::belongs (p, servant_belongs_);
+      
+        os << " *svt =" << endl
+           << "new ";
+           
+        Traversal::ProviderData::belongs (p, servant_belongs_);
+      
+        os << " (" << endl
+           << "fexe.in ()," << endl
+           << "this->context_);" << endl
+           << "PortableServer::ServantBase_var safe_servant (svt);"
+           << endl
+           << "::CORBA::Object_var obj =" << endl
+           << "this->container_->install_servant (" << endl
+           << "svt" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (";
+           
+        Traversal::ProviderData::belongs (p, belongs_);
+      
+        os << "::_nil ());"
+           << endl;
+           
+        Traversal::ProviderData::belongs (p, belongs_);
+      
+        os << "_var fo =" << endl;
+        
+        Traversal::ProviderData::belongs (p, belongs_);
+      
+        os << "::_narrow (" << endl
+           << "obj.in ()" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (";
+           
+        Traversal::ProviderData::belongs (p, belongs_);
+      
+        os << "::_nil ());"
+           << endl
+           << "this->provide_" << p.name () << "_ = fo;" << endl
+           << "}" << endl << endl
+           << "return ";
+           
+        Traversal::ProviderData::belongs (p, belongs_);
+      
+        os << "::_duplicate (this->provide_"
+           << p.name () << "_.in ());" << endl
+           << "}" << endl;
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      SimpleTypeNameEmitter simple_type_name_emitter_;
+      ServantTypeNameEmitter servant_type_name_emitter_;
+      Traversal::Belongs belongs_;
+      Traversal::Belongs simple_belongs_;
+      Traversal::Belongs servant_belongs_;
+    };
+    
+    struct ConsumesEmitter : Traversal::ConsumerData,
+                             EmitterBase
+    {
+      ConsumesEmitter (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ()),
+          simple_type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+        simple_belongs_.node_traverser (simple_type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (Type& c)
+      {
+        os << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+        
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << "Consumer_" << c.name ()
+           << "_Servant::";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << "Consumer_" << c.name ()
+           << "_Servant (" << endl
+           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << c.scoped_name ().scope_name ().simple_name  () 
+           << "_ptr executor,"
+           << endl
+           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << c.scoped_name ().scope_name ().simple_name  ()
+           << "_Context_ptr c)" << endl
+           << ": executor_ (" << c.scoped_name ().scope_name ().scope_name ()
+           << "::CCM_" << c.scoped_name ().scope_name ().simple_name  ()
+           << "::_duplicate (executor))," << endl
+           << "ctx_ (" << c.scoped_name ().scope_name ().scope_name ()
+           << "::CCM_" << c.scoped_name ().scope_name ().simple_name  ()
+           << "_Context::_duplicate (c))" << endl
+           << "{"
+           << "}" << endl;
+
+        os << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+        
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << "Consumer_" << c.name ()
+           << "_Servant::~";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << "Consumer_" << c.name ()
+           << "_Servant (void)" << endl
+           << "{"
+           << "}" << endl;
+
+        os << "CORBA::Object_ptr" << endl
+           << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << "Consumer_" << c.name ()
+           << "_Servant::_get_component (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "return this->ctx_->get_CCM_object "
+           << "(" << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "}" << endl;
+
+        os << "void" << endl
+           << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << "Consumer_" << c.name ()
+           << "_Servant::push_";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << " (" << endl;
+        
+        Traversal::ConsumerData::belongs (c, belongs_);
+           
+        os << " *evt" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "this->executor_->push_" << c.name ()
+           << " (" << endl
+           << "evt" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+
+        os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
+           << "void" << endl
+           << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << "Consumer_" << c.name ()
+           << "_Servant::push_event (" << endl
+           << "::Components::EventBase *ev" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_BET] << "))" << endl
+           << "{";
+           
+        Traversal::ConsumerData::belongs (c, belongs_);
+           
+        os << "_var ev_type =" << endl;
+        
+        Traversal::ConsumerData::belongs (c, belongs_);
+           
+        os << "::_downcast (ev);" << endl
+           << "if (ev_type != 0)" << endl
+           << "{"
+           << "this->push_";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << " (" << endl
+           << "ev_type.in ()" << endl
+           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "return;" << endl
+           << "}" << endl
+           << "ACE_THROW (" << STRS[EXCP_BET] << " ());" << endl
+           << "}" << endl;
+
+        Traversal::ConsumerData::belongs (c, belongs_);
+           
+        os << "Consumer_ptr" << endl
+           << c.scoped_name ().scope_name ().simple_name  () << "_Servant::"
+           << "get_consumer_" << c.name () << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "if (CORBA::is_nil (this->consumes_" << c.name ()
+           << "_.in ()))" << endl
+           << "{"
+           << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << "Consumer_" << c.name ()
+           << "_Servant *svt =" << endl
+           << "new " << c.scoped_name ().scope_name ().simple_name  ()
+           << "_Servant::";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+           
+        os << "Consumer_" << c.name ()
+           << "_Servant (" << endl
+           << "this->executor_.in ()," << endl
+           << "this->context_);"
+           << "PortableServer::ServantBase_var safe_servant (svt);"
+           << endl
+           << "CORBA::Object_var obj =" << endl
+           << "this->container_->install_servant (" << endl
+           << "svt" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (";
+           
+        Traversal::ConsumerData::belongs (c, belongs_);
+           
+        os << "Consumer::_nil ());" << endl;
+        
+        Traversal::ConsumerData::belongs (c, belongs_);
+           
+        os << "Consumer_var eco =" << endl;
+        
+        Traversal::ConsumerData::belongs (c, belongs_);
+           
+        os << "Consumer::_narrow (" << endl
+           << "obj.in ()" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (";
+           
+        Traversal::ConsumerData::belongs (c, belongs_);
+           
+        os<< "Consumer::_nil ());" << endl
+           << "this->consumes_" << c.name () << "_ = eco;" << endl
+           << "}" << endl
+           << "return ";
+           
+        Traversal::ConsumerData::belongs (c, belongs_);
+           
+        os << "Consumer::_duplicate (this->consumes_" << c.name ()
+           << "_.in ());" << endl
+           << "}" << endl;
       }
 
-      os << endl;
-    }
- };
-
-  //
-  // Generates component servant interface definition, constructor &
-  // destructor.
-  //
-  class ServantFabricEmitter : public SourceEmitterBase,
-                               public Traversal::ComponentDef
-  {
-  private:
-    Declarations const& declarations_;
+    private:
+      TypeNameEmitter type_name_emitter_;
+      SimpleTypeNameEmitter simple_type_name_emitter_;
+      Traversal::Belongs belongs_;
+      Traversal::Belongs simple_belongs_;
+    };
     
   public:
-    ServantFabricEmitter (ostream& os_,
-                          Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
     virtual void
-    traverse (ComponentDefPtr const& c)
+    pre (Type& t)
     {
-      if (!declarations_.find (c)) return;
-    
-      // If we are at file scope, we create a namespace anyway.
-      if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << "namespace CIAO_GLUE" << endl
-             << "{";
-      }
-
+      os << STRS[GLUE_NS] 
+         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+         << "{";
+          
       // Servant Constructor
-      os << c->name ().simple () << "_Servant::"
-         << c->name ().simple () << "_Servant (" << endl
-         << c->name ().scope () << "::CCM_" << c->name ().simple ()
+      os << t.name () << "_Servant::"
+         << t.name () << "_Servant (" << endl
+         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "::Components::CCMHome_ptr h," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << ": executor_ (" << c->name ().scope () << "::CCM_"
-         << c->name ().simple () << "::_duplicate (exe))," << endl
+         << ": executor_ (" << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "::_duplicate (exe))," << endl
          << "container_ (c)" << endl
          << "{"
          << "this->context_ = "
-         << "new " << c->name ().simple () << "_Context (h, c, this);"
+         << "new " << t.name () << "_Context (h, c, this);"
          << endl
          << "ACE_TRY_NEW_ENV" << endl
          << "{"
@@ -925,16 +1750,16 @@ namespace
          << "this->context_" << endl
          << STRS[ENV_ARG] << ");" << endl
          << "}" << endl
-         << "}" << endl
+         << "}"
          << "ACE_CATCHANY" << endl
          << "{"
-         << "}" << endl
+         << "}"
          << "ACE_ENDTRY;" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       // Servant Destructor
-      os << c->name ().simple () << "_Servant::~"
-         << c->name ().simple () << "_Servant (void)" << endl
+      os << t.name () << "_Servant::~"
+         << t.name () << "_Servant (void)" << endl
          << "{"
          << "ACE_TRY_NEW_ENV" << endl
          << "{"
@@ -947,52 +1772,27 @@ namespace
          << "{"
          << "scom->ccm_remove (" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl
-         << "}" << endl
+         << "}"
          << "ACE_CATCHANY" << endl
          << "{"
-         << "}" << endl
+         << "}"
          << "ACE_ENDTRY;" << endl
          << "this->context_->_remove_ref ();" << endl
-         << "}" << endl << endl;
-    }
-  };
-
-  //
-  // Generates generic navigation interface for a component.  The
-  // concrete provide_XXX operations will be generated by the
-  // FacetProvidesEmitter class.
-  //
-  class NavigationEmitter : public SourceEmitterBase,
-                            public Traversal::ComponentDef,
-                            public Traversal::ProvidesDecl
-  {
-  private:
-    Declarations const& declarations_;
-    
-  public:
-    NavigationEmitter (ostream& os_,
-                       Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
+         << "}" << endl;
+      
+      // Generate provides_<facet> operation.   
       {
-        Traversal::ComponentDef::traverse (c);
+        Traversal::Defines defines;
+        FacetProvidesEmitter provides_emitter (ctx);
+        defines.node_traverser (provides_emitter);
+        
+        names (t, defines);
       }
-    }
 
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
       os << "// Operations for Navigation interface." << endl << endl;
 
       os << "CORBA::Object_ptr" << endl
-         << c->name ().simple () << "_Servant::provide_facet (" << endl
+         << t.name () << "_Servant::provide_facet (" << endl
          << "const char *name" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
@@ -1004,38 +1804,32 @@ namespace
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::BAD_PARAM ()," << endl
          << "::CORBA::Object::_nil ());" << endl
-         << "}" << endl << endl;
-    }
+         << "}" << endl;
+         
+      // Generate an IF block for each facet inside provide_facet().   
+      {
+        Traversal::Defines defines;
+        NavigationEmitter navigation_emitter (ctx);
+        defines.node_traverser (navigation_emitter);
+        
+        names (t, defines);
+      }
 
-    virtual void
-    traverse (ProvidesDeclPtr const& p)
-    {
-      os << "if (ACE_OS::strcmp (name, \""
-         << p->name ().simple () << "\") == 0)" << endl
-         << "{"
-         << "return this->provide_" << p->name ().simple ()
-         << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl;
-    }
-
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
       os << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << "::CORBA::Object::_nil ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::FacetDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_all_facets (" << endl
+         << t.name () << "_Servant::get_all_facets (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::FacetDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_named_facets (" << endl
+         << t.name () << "_Servant::get_named_facets (" << endl
          << "const " << STRS[COMP_NAMES] << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
@@ -1043,10 +1837,10 @@ namespace
          << STRS[EXCP_IN] << "))" << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "CORBA::Boolean" << endl
-         << c->name ().simple () << "_Servant::same_component (" << endl
+         << t.name () << "_Servant::same_component (" << endl
          << "CORBA::Object_ptr object_ref" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
@@ -1054,7 +1848,7 @@ namespace
          << "if (::CORBA::is_nil (object_ref))" << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::BAD_PARAM (), 0);" << endl
-         << "}" << endl << endl
+         << "}" << endl
          << "::CORBA::Object_var the_other =" << endl
          << "object_ref->_get_component (" << STRS[ENV_SNGL_ARG] << ");"
          << "ACE_CHECK_RETURN (0);" << endl
@@ -1064,19 +1858,19 @@ namespace
          << "return me->_is_equivalent (" << endl
          << "the_other.in ()" << endl
          << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::EmitterDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_all_emitters ("
+         << t.name () << "_Servant::get_all_emitters ("
          << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::EmitterDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_named_emitters ("
+         << t.name () << "_Servant::get_named_emitters ("
          << endl
          << "const " << STRS[COMP_NAMES] << endl
          << STRS[ENV_SRC] << ")" << endl
@@ -1085,138 +1879,28 @@ namespace
          << STRS[EXCP_IN] << "))" << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
-    }
-  };
-  
-  //
-  // Specialized from Traversal::ComponentDef so we can override
-  // traverse() and skip components not used in a composition.
-  // Individual port emitters can then be scope delegates of this.
-  //
-  class SelectedComponentEmitter : public Traversal::ComponentDef
-  {
-  private:
-    Declarations const& declarations_;
+         << "}" << endl;
+        
+      // Generate subscribe_* and unsubscribe_* operations.   
+      {
+        Traversal::Defines defines;
+        PublishesEmitter publishes_emitter (ctx);
+        defines.node_traverser (publishes_emitter);
+        
+        names (t, defines);
+      }
       
-  public:
-    SelectedComponentEmitter (Declarations const& declarations)
-      : declarations_ (declarations)
-    {
-    }
-    
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
+      // Generate operations for nested Consumer classes.
       {
-        Traversal::ComponentDef::traverse (c);
+        Traversal::Defines defines;
+        ConsumesEmitter consumes_emitter (ctx);
+        defines.node_traverser (consumes_emitter);
+        
+        names (t, defines);
       }
-    }   
-  };
-
-  //
-  // Generates each of the provide_XXX operations.
-  // class.
-  //
-  class FacetProvidesEmitter : public SourceEmitterBase,
-                               public Traversal::ProvidesDecl
-  {
-  public:
-    FacetProvidesEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
-    {
-    }
-
-    virtual void
-    traverse (ProvidesDeclPtr const& p)
-    {
-      os << p->type ()->name () << "_ptr" << endl
-         << p->scope ()->name ().simple ()
-         << "_Servant::provide_" << p->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_ARG] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "if (::CORBA::is_nil (this->provide_"
-         << p->name ().simple () << "_.in ()))" << endl
-         << "{"
-         << p->name ().scope ().scope () << "::CCM_"
-         << p->type ()->name ().simple ()
-         << "_var fexe =" << endl
-         << "this->executor_->get_" << p->name ().simple ()
-         << " (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK_RETURN (" << p->type ()->name () << "::_nil ());"
-         << endl
-         << "if (::CORBA::is_nil (fexe.in ()))" << endl
-         << "{"
-         << "ACE_THROW_RETURN (" << endl
-         << "::CORBA::INTERNAL ()," << endl
-         << p->type ()->name () << "::_nil ());" << endl
-         << "}" << endl << endl
-         << servant_name (p->type ()) << " *svt =" << endl
-         << "new " << servant_name (p->type ()) << " (" << endl
-         << "fexe.in ()," << endl
-         << "this->context_);" << endl
-         << "PortableServer::ServantBase_var safe_servant (svt);"
-         << endl
-         << "::CORBA::Object_var obj =" << endl
-         << "this->container_->install_servant (" << endl
-         << "svt" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (" << p->type ()->name () << "::_nil ());"
-         << endl
-         << p->type ()->name () << "_var fo =" << endl
-         << p->type ()->name () << "::_narrow (" << endl
-         << "obj.in ()" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (" << p->type ()->name () << "::_nil ());"
-         << endl
-         << "this->provide_" << p->name ().simple () << "_ = fo;" << endl
-         << "}" << endl << endl
-         << "return " << p->type ()->name ()
-         << "::_duplicate (this->provide_"
-         << p->name ().simple () << "_.in ());" << endl
-         << "}" << endl << endl;
-    }
-  };
-
-  //
-  // Generates generic receptacles connection interface for a component.
-  // The concrete connect_XXX, disconnect_XXX and get_connection_XXX
-  // operations will be generated by the ConnectionEmitter class.
-  //
-  class ReceptaclesGenericConnectionEmitter
-    : public SourceEmitterBase,
-      public Traversal::ComponentDef,
-      public Traversal::UsesDecl
-  {
-  private:
-    Declarations const& declarations_;
-    
-  public:
-    ReceptaclesGenericConnectionEmitter (ostream& os_,
-                                         Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
-      {
-        Traversal::ComponentDef::traverse (c);
-      }
-    }
-
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
-      os << "// Operations for Receptacles interface." << endl << endl;
-
+       
       os << STRS[COMP_CK] << " *" << endl
-         << c->name ().simple () << "_Servant::connect (" << endl
+         << t.name () << "_Servant::connect (" << endl
          << "const char *name," << endl
          << "::CORBA::Object_ptr connection" << endl
          << STRS[ENV_SRC] << ")" << endl
@@ -1233,107 +1917,22 @@ namespace
          << "if (name == 0)" << endl
          << "{"
          << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
-         << "}" << endl << endl;
-    }
+         << "}" << endl;
 
-    virtual void
-    traverse (UsesDeclPtr const& u)
-    {
-      os << "if (ACE_OS::strcmp (name, \""
-         << u->name ().simple () << "\") == 0)" << endl
-         << "{"
-         << u->type ()->name () << "_var _ciao_conn =" << endl
-         << u->type ()->name () << "::_narrow (" << endl
-         << "connection" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (0);" << endl
-         << "if (::CORBA::is_nil (_ciao_conn.in ()))" << endl
-         << "{"
-         << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
-         << endl
-         << "}" << endl << endl
-         << "// Simplex connect." << endl
-         << "this->connect_" << u->name ().simple () << " (" << endl
-         << "_ciao_conn.in ()" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "return 0;" << endl
-         << "}" << endl << endl;
-    }
-
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
-      os << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
-         << "}" << endl << endl;
-
-      os << "::Components::ConnectionDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_connections ("
-         << endl
-         << "const char * /* name */" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "))" << endl
-         << "{"
-         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
-
-      os << "::Components::ReceptacleDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_all_receptacles ("
-         << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
-
-      os << "::Components::ReceptacleDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_named_receptacles ("
-         << endl
-         << "const " << STRS[COMP_NAMES] << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "))" << endl
-         << "{"
-         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
-    }
-  };
-
-  //
-  // Generates generic receptacles disconnection interface for a component.
-  //
-  class ReceptaclesGenericDisconnectionEmitter
-    : public SourceEmitterBase,
-      public Traversal::ComponentDef,
-      public Traversal::UsesDecl
-  {
-  private:
-    Declarations const& declarations_;
-    
-  public:
-    ReceptaclesGenericDisconnectionEmitter (ostream& os_,
-                                            Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
+      // Generate IF block in connect operation for each receptacle.   
       {
-        Traversal::ComponentDef::traverse (c);
+        Traversal::Defines defines;
+        UsesConnectEmitter uses_emitter (ctx);
+        defines.node_traverser (uses_emitter);
+        
+        names (t, defines);
       }
-    }
 
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
+      os << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
+         << "}" << endl;
+
       os << "CORBA::Object_ptr" << endl
-         << c->name ().simple () << "_Servant::disconnect (" << endl
+         << t.name () << "_Servant::disconnect (" << endl
          << "const char *name," << endl
          << STRS[COMP_CK] << " * /* ck */" << endl
          << STRS[ENV_SRC] << ")" << endl
@@ -1349,124 +1948,66 @@ namespace
          << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << "::CORBA::Object::_nil ());" << endl
-         << "}" << endl << endl;
-    }
+         << "}" << endl;
 
-    virtual void
-    traverse (UsesDeclPtr const& u)
-    {
-      os << "if (ACE_OS::strcmp (name, \""
-         << u->name ().simple () << "\") == 0)" << endl
-         << "{"
-         << "// Simplex disconnect." << endl
-         << "return this->disconnect_" << u->name ().simple ()
-         << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl;
-    }
+      // Generate IF block in disconnect operation for each receptacle.   
+      {
+        Traversal::Defines defines;
+        UsesDisconnectEmitter uses_emitter (ctx);
+        defines.node_traverser (uses_emitter);
+        
+        names (t, defines);
+      }
 
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
       os << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << "::CORBA::Object::_nil ());" << endl
-         << "}" << endl << endl;
-    }
-  };
+         << "}" << endl;
 
-  //
-  // Generates specific component receptacles connection & disconnection
-  // operations.
-  //
-  class ReceptaclesEmitter : public SourceEmitterBase,
-                             public Traversal::UsesDecl
-  {
-  public:
-    ReceptaclesEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
-    {
-    }
-
-    virtual void
-    traverse (UsesDeclPtr const& p)
-    {
-      os << "void" << endl
-         << p->scope ()->name ().simple () << "_Servant::connect_"
-         << p->name ().simple () << " (" << endl
-         << p->type ()->name () << "_ptr c" << endl
+      os << "::Components::ConnectionDescriptions *" << endl
+         << t.name () << "_Servant::get_connections ("
+         << endl
+         << "const char * /* name */" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_IC] << "))" << endl
+         << STRS[EXCP_IN] << "))" << endl
          << "{"
-         << "this->context_->connect_" << p->name ().simple () << " ("
+         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
+         << "}" << endl;
+
+      os << "::Components::ReceptacleDescriptions *" << endl
+         << t.name () << "_Servant::get_all_receptacles ("
          << endl
-         << "c" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
-
-      os << p->type ()->name () << "_ptr" << endl
-         << p->scope ()->name ().simple () << "_Servant::disconnect_"
-         << p->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NC] << "))" << endl
-         << "{"
-         << "return this->context_->disconnect_" << p->name ().simple ()
-         << " (" << endl
-         << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl;
-
-      os << p->type ()->name () << "_ptr" << endl
-         << p->scope ()->name ().simple ()
-         << "_Servant::get_connection_" << p->name ().simple ()
-         << " (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
-         << "return this->context_->get_connection_"
-         << p->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl;
-    }
-  };
+         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
+         << "}" << endl;
 
-  //
-  // Generates generic Event consumer operations for a component.
-  //
-  class ConsumerGenericEmitter : public SourceEmitterBase,
-                                 public Traversal::ComponentDef,
-                                 public Traversal::ConsumesDecl
-  {
-  private:
-    Declarations const& declarations_;
-    
-  public:
-    ConsumerGenericEmitter (ostream& os_,
-                            Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
+      os << "::Components::ReceptacleDescriptions *" << endl
+         << t.name () << "_Servant::get_named_receptacles ("
+         << endl
+         << "const " << STRS[COMP_NAMES] << endl
+         << STRS[ENV_SRC] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "))" << endl
+         << "{"
+         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
+         << "}" << endl;
 
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
+      // Generate generic operations for receptacles.   
       {
-        Traversal::ComponentDef::traverse (c);
+        Traversal::Defines defines;
+        UsesEmitter uses_emitter (ctx);
+        defines.node_traverser (uses_emitter);
+        
+        names (t, defines);
       }
-    }
-
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
-      os << "// Operations for Events interface." << endl << endl;
 
       os << STRS[COMP_ECB] << "_ptr" << endl
-         << c->name ().simple () << "_Servant::get_consumer (" << endl
+         << t.name () << "_Servant::get_consumer (" << endl
          << "const char *sink_name" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
@@ -1478,30 +2019,24 @@ namespace
          << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << STRS[COMP_ECB] << "::_nil ());" << endl
-         << "}" << endl << endl;
-    }
+         << "}" << endl;
 
-    virtual void
-    traverse (ConsumesDeclPtr const& c)
-    {
-      os << "if (ACE_OS::strcmp (sink_name, \""
-         << c->name ().simple () << "\") == 0)" << endl
-         << "{"
-         << "return this->get_consumer_" << c->name ().simple ()
-         << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl;
-    }
+      // Generate an IF block in for each consumer in get_consumer().   
+      {
+        Traversal::Defines defines;
+        ConsumesGetEmitter consumes_emitter (ctx);
+        defines.node_traverser (consumes_emitter);
+        
+        names (t, defines);
+      }
 
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
       os << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << STRS[COMP_ECB] << "::_nil ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "void" << endl
-         << c->name ().simple () << "_Servant::connect_consumer ("
+         << t.name () << "_Servant::connect_consumer ("
          << endl
          << "const char * /* emitter_name */," << endl
          << STRS[COMP_ECB] << "_ptr consumer" << endl
@@ -1513,10 +2048,10 @@ namespace
          << STRS[EXCP_IC] << "))" << endl
          << "{"
          << "ACE_THROW (::CORBA::NO_IMPLEMENT ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << STRS[COMP_ECB] << "_ptr" << endl
-         << c->name ().simple () << "_Servant::disconnect_consumer ("
+         << t.name () << "_Servant::disconnect_consumer ("
          << endl
          << "const char * /* source_name */" << endl
          << STRS[ENV_SRC] << ")" << endl
@@ -1526,19 +2061,19 @@ namespace
          << STRS[EXCP_NC] << "))" << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::ConsumerDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_all_consumers ("
+         << t.name () << "_Servant::get_all_consumers ("
          << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::ConsumerDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_named_consumers ("
+         << t.name () << "_Servant::get_named_consumers ("
          << endl
          << "const " << STRS[COMP_NAMES] << endl
          << STRS[ENV_SRC] << ")" << endl
@@ -1547,184 +2082,10 @@ namespace
          << STRS[EXCP_IN] << "))" << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
-    }
-  };
+         << "}" << endl;
 
-  //
-  // Generates Event consumers for a component.
-  //
-  class ConsumerEmitter : public SourceEmitterBase,
-                          public Traversal::ConsumesDecl
-  {
-  public:
-    ConsumerEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
-    {
-    }
-
-    virtual void
-    traverse (ConsumesDeclPtr const& c)
-    {
-      os << c->scope ()-> name ().simple  () << "_Servant::"
-         << c->type ()->name ().simple ()
-         << "Consumer_" << c->name ().simple ()
-         << "_Servant::" << c->type ()->name ().simple ()
-         << "Consumer_" << c->name ().simple ()
-         << "_Servant (" << endl
-         << c->scope ()->name ().scope () << "::CCM_"
-         << c->scope ()->name ().simple () << "_ptr executor,"
-         << endl
-         << c->scope ()->name ().scope () << "::CCM_"
-         << c->scope ()->name ().simple ()
-         << "_Context_ptr c)" << endl
-         << ": executor_ (" << c->scope ()->name ().scope ()
-         << "::CCM_" << c->scope ()->name ().simple ()
-         << "::_duplicate (executor))," << endl
-         << "ctx_ (" << c->scope ()->name ().scope ()
-         << "::CCM_" << c->scope ()->name ().simple ()
-         << "_Context::_duplicate (c))" << endl
-         << "{"
-         << "}" << endl << endl;
-
-      os << c->scope ()-> name ().simple () << "_Servant::"
-         << c->type ()->name ().simple ()
-         << "Consumer_" << c->name ().simple ()
-         << "_Servant::~" << c->type ()->name ().simple ()
-         << "Consumer_" << c->name ().simple ()
-         << "_Servant (void)" << endl
-         << "{"
-         << "}" << endl << endl;
-
-      os << "CORBA::Object_ptr" << endl
-         << c->scope ()-> name ().simple () << "_Servant::"
-         << c->type ()->name ().simple ()
-         << "Consumer_" << c->name ().simple ()
-         << "_Servant::_get_component (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "return this->ctx_->get_CCM_object "
-         << "(" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl;
-
-      os << "void" << endl
-         << c->scope ()-> name ().simple () << "_Servant::"
-         << c->type ()->name ().simple ()
-         << "Consumer_" << c->name ().simple ()
-         << "_Servant::push_" << c->type ()->name ().simple ()
-         << " (" << endl
-         << c->type ()->name () << " *evt" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "this->executor_->push_" << c->name ().simple ()
-         << " (" << endl
-         << "evt" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
-
-      os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
-         << "void" << endl
-         << c->scope ()-> name ().simple () << "_Servant::"
-         << c->type ()->name ().simple ()
-         << "Consumer_" << c->name ().simple ()
-         << "_Servant::push_event (" << endl
-         << "::Components::EventBase *ev" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_BET] << "))" << endl
-         << "{"
-         << c->type ()->name () << "_var ev_type =" << endl
-         << c->type ()->name () << "::_downcast (ev);" << endl
-         << "if (ev_type != 0)" << endl
-         << "{"
-         << "this->push_" << c->type ()->name ().simple () << " (" << endl
-         << "ev_type.in ()" << endl
-         << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "return;" << endl
-         << "}" << endl << endl
-         << "ACE_THROW (" << STRS[EXCP_BET] << " ());" << endl
-         << "}" << endl << endl;
-
-      os << c->type ()->name () << "Consumer_ptr" << endl
-         << c->scope ()-> name ().simple () << "_Servant::"
-         << "get_consumer_" << c->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "if (CORBA::is_nil (this->consumes_" << c->name ().simple ()
-         << "_.in ()))" << endl
-         << "{"
-         << c->scope ()-> name ().simple () << "_Servant::"
-         << c->type ()->name ().simple ()
-         << "Consumer_" << c->name ().simple ()
-         << "_Servant *svt =" << endl
-         << "new " << c->scope ()-> name ().simple () << "_Servant::"
-         << c->type ()->name ().simple ()
-         << "Consumer_" << c->name ().simple ()
-         << "_Servant (" << endl
-         << "this->executor_.in ()," << endl
-         << "this->context_);"
-         << "PortableServer::ServantBase_var safe_servant (svt);"
-         << endl
-         << "CORBA::Object_var obj =" << endl
-         << "this->container_->install_servant (" << endl
-         << "svt" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN ("
-         << c->type ()->name () << "Consumer::_nil ());" << endl
-         << c->type ()->name () << "Consumer_var eco =" << endl
-         << c->type ()->name () << "Consumer::_narrow (" << endl
-         << "obj.in ()" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN ("
-         << c->type ()->name () << "Consumer::_nil ());" << endl
-         << "this->consumes_" << c->name ().simple () << "_ = eco;" << endl
-         << "}" << endl << endl
-         << "return " << c->type ()->name ()
-         << "Consumer::_duplicate (this->consumes_" << c->name ().simple ()
-         << "_.in ());" << endl
-         << "}" << endl << endl;
-    }
-
-  };
-
-
-  //
-  // Generates generic publishes subscription interface for a component.
-  //
-  class PublishesGenericSubscribeEmitter
-    : public SourceEmitterBase,
-      public Traversal::ComponentDef,
-      public Traversal::PublishesDecl
-  {
-  private:
-    Declarations const& declarations_;
-    
-  public:
-    PublishesGenericSubscribeEmitter (ostream& os_,
-                                      Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
-      {
-        Traversal::ComponentDef::traverse (c);
-      }
-    }
-
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
       os << STRS[COMP_CK] << " *" << endl
-         << c->name ().simple () << "_Servant::subscribe (" << endl
+         << t.name () << "_Servant::subscribe (" << endl
          << "const char *publisher_name," << endl
          << STRS[COMP_ECB] << "_ptr subscribe" << endl
          << STRS[ENV_SRC] << ")" << endl
@@ -1738,73 +2099,22 @@ namespace
          << "{"
          << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);"
          << endl
-         << "}" << endl << endl;
-    }
+         << "}" << endl;
 
-    virtual void
-    traverse (PublishesDeclPtr const& p)
-    {
-      os << "if (ACE_OS::strcmp (publisher_name, \""
-           << p->name ().simple () << "\") == 0)" << endl
-           << "{"
-           << p->type ()->name () << "Consumer_var _ciao_consumer =" << endl
-           << p->type ()->name () << "Consumer::_narrow (" << endl
-           << "subscribe" << endl
-           << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (0);" << endl
-           << "if (::CORBA::is_nil (_ciao_consumer.in ()))" << endl
-           << "{"
-           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
-           << endl
-           << "}" << endl << endl
-           << "return this->subscribe_" << p->name ().simple ()
-           << " (" << endl
-           << "_ciao_consumer.in ()" << endl
-           << STRS[ENV_ARG] << ");" << endl
-           << "}" << endl << endl;
-    }
-
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
-      os << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
-         << "}" << endl << endl;
-    }
-  };
-
-  //
-  // Generates generic publishes unsubscription interface for a component.
-  //
-  class PublishesGenericUnsubscribeEmitter
-    : public SourceEmitterBase,
-      public Traversal::ComponentDef,
-      public Traversal::PublishesDecl
-  {
-  private:
-    Declarations const& declarations_;
-    
-  public:
-    PublishesGenericUnsubscribeEmitter (ostream& os_,
-                                        Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
+      // Generate an IF block in for each publisher in subscribe().   
       {
-        Traversal::ComponentDef::traverse (c);
+        Traversal::Defines defines;
+        PublishesSubscribeEmitter publishes_emitter (ctx);
+        defines.node_traverser (publishes_emitter);
+        
+        names (t, defines);
       }
-    }
 
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
+      os << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
+         << "}" << endl;
+
       os << STRS[COMP_ECB] << "_ptr" << endl
-         << c->name ().simple () << "_Servant::unsubscribe ("
+         << t.name () << "_Servant::unsubscribe ("
          << endl
          << "const char *publisher_name," << endl
          << STRS[COMP_CK] << " *ck" << endl
@@ -1819,44 +2129,36 @@ namespace
          << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << STRS[COMP_ECB] << "::_nil ());" << endl
-         << "}" << endl << endl;
-    }
+         << "}" << endl;
 
-    virtual void
-    traverse (PublishesDeclPtr const& p)
-    {
-      os << "if (ACE_OS::strcmp (publisher_name, \""
-         << p->name ().simple () << "\") == 0)" << endl
-         << "{"
-         << "return this->unsubscribe_" << p->name ().simple ()
-         << " (" << endl
-         << "ck" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
-    }
+      // Generate an IF block in for each publisher in unsubscribe().   
+      {
+        Traversal::Defines defines;
+        PublishesUnsubscribeEmitter publishes_emitter (ctx);
+        defines.node_traverser (publishes_emitter);
+        
+        names (t, defines);
+      }
 
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
       os << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << STRS[COMP_ECB] << "::_nil ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       // @@ (diego) These are not implemented. Whenever they are,
       // they'll require a treatment as all the other ports above.
 
       os << "::Components::PublisherDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_all_publishers ("
+         << t.name () << "_Servant::get_all_publishers ("
          << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::PublisherDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_named_publishers ("
+         << t.name () << "_Servant::get_named_publishers ("
          << endl
          << "const " << STRS[COMP_NAMES] << endl
          << STRS[ENV_SRC] << ")" << endl
@@ -1865,184 +2167,50 @@ namespace
          << STRS[EXCP_IN] << "))" << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
-    }
-  };
-
-  //
-  // Generates publishes subscription & unsubscription interface
-  // the published events of a component.
-  //
-  class PublishesEmitter : public SourceEmitterBase,
-                           public Traversal::PublishesDecl
-  {
-  public:
-    PublishesEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
-    {
-    }
-
-    virtual void
-    traverse (PublishesDeclPtr const& p)
-    {
-      os << STRS[COMP_CK] << " *" << endl
-         << p->scope ()->name ().simple ()
-         << "_Servant::subscribe_" << p->name ().simple () << " (" << endl
-         << p->type ()->name () << "Consumer_ptr c" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_ECL] << "))" << endl
-         << "{"
-         << "return this->context_->subscribe_" << p->name ().simple ()
-         << " (" << endl
-         << "c" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
-
-      os << p->type ()->name () << "Consumer_ptr" << endl
-         << p->scope ()->name ().simple ()
-         << "_Servant::unsubscribe_" << p->name ().simple () << " (" << endl
-         << STRS[COMP_CK] << " *ck" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IC] << "))" << endl
-         << "{"
-         << "return this->context_->unsubscribe_"
-         << p->name ().simple () << " (" << endl
-         << "ck" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
-    }
-  };
-
-  //
-  // Generates publishes subscription & unsubscription interface
-  // the published events of a component.
-  //
-  class EmitsEmitter : public SourceEmitterBase,
-                       public Traversal::ComponentDef,
-                       public Traversal::EmitsDecl
-  {
-  public:
-    EmitsEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
-    {
-    }
-
-    virtual void
-    traverse (EmitsDeclPtr const& e)
-    {
-      os << "void" << endl
-         << e->scope ()->name ().simple () << "_Servant::connect_"
-         << e->name ().simple () << " (" << endl
-         << e->type ()->name () << "Consumer_ptr c" << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_AC] << "))" << endl
-         << "{"
-         << "this->context_->connect_" << e->name ().simple ()
-         << " (" << endl
-         << "c" << endl
-         << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
-
-      os << e->type ()->name () << "Consumer_ptr" << endl
-         << e->scope ()->name ().simple () << "_Servant::disconnect_"
-         << e->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NC] << "))" << endl
-         << "{"
-         << "return this->context_->disconnect_"
-         << e->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl;
-    }
-  };
-
-  //
-  // Generates component final common part.
-  //
-  class ServantCommonFinalizingEmitter
-    : public SourceEmitterBase,
-      public Traversal::ComponentDef
-  {
-  private:
-    Declarations const& declarations_;
-    
-    ReturnTypeNameEmitter* return_type_name_emitter_;
-    INArgTypeNameEmitter* inarg_type_name_emitter_;
-    OUTArgTypeNameEmitter* outarg_type_name_emitter_;
-    INOUTArgTypeNameEmitter* inoutarg_type_name_emitter_;
-
-  public:
-    ServantCommonFinalizingEmitter (
-        ostream& os_,
-        Declarations const& declarations,
-        ReturnTypeNameEmitter* return_type_name_emitter,
-        INArgTypeNameEmitter* inarg_type_name_emitter,
-        OUTArgTypeNameEmitter* outarg_type_name_emitter,
-        INOUTArgTypeNameEmitter* inoutarg_type_name_emitter
-      )
-      : SourceEmitterBase (os_),
-        declarations_ (declarations),
-        return_type_name_emitter_ (return_type_name_emitter),
-        inarg_type_name_emitter_ (inarg_type_name_emitter),
-        outarg_type_name_emitter_ (outarg_type_name_emitter),
-        inoutarg_type_name_emitter_ (inoutarg_type_name_emitter)
-    {
-    }
-
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
+      // Generate connect() and disconnect() for each emits declaration.
       {
-        Traversal::ComponentDef::traverse (c);
+        Traversal::Defines defines;
+        EmitsEmitter emits_emitter (ctx);
+        defines.node_traverser (emits_emitter);
+        
+        names (t, defines);
       }
-    }
 
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
       os << "// Operations for CCMObject interface." << endl << endl;
 
       os << "CORBA::IRObject_ptr" << endl
-         << c->name ().simple () << "_Servant::get_component_def (" << endl
+         << t.name () << "_Servant::get_component_def (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::NO_IMPLEMENT ()," << endl
          << "::CORBA::IRObject::_nil ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::CCMHome_ptr" << endl
-         << c->name ().simple () << "_Servant::get_ccm_home (" << endl
+         << t.name () << "_Servant::get_ccm_home (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "return this->context_->get_CCM_home "
          << "(ACE_ENV_SINGLE_ARG_PARAMETER);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::PrimaryKeyBase *" << endl
-         << c->name ().simple () << "_Servant::get_primary_key (" << endl
+         << t.name () << "_Servant::get_primary_key (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_NKA] << "))" << endl
          << "{"
          << "ACE_THROW_RETURN (" << STRS[EXCP_NKA] << " (), 0);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "void" << endl
-         << c->name ().simple ()
+         << t.name ()
          << "_Servant::configuration_complete (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
@@ -2050,20 +2218,20 @@ namespace
          << STRS[EXCP_ICF] << "))" << endl
          << "{"
          << "// CIAO to-do" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "void" << endl
-         << c->name ().simple () << "_Servant::remove (" << endl
+         << t.name () << "_Servant::remove (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_RF] << "))" << endl
          << "{"
          << "// CIAO to-do" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::Components::ComponentPortDescription *" << endl
-         << c->name ().simple () << "_Servant::get_all_ports (" << endl
+         << t.name () << "_Servant::get_all_ports (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
@@ -2092,10 +2260,10 @@ namespace
          << "retv->emitters (emitter_desc.in ());"
          << "retv->publishers (publisher_desc.in ());" << endl
          << "return retv._retn ();" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "CORBA::Object_ptr" << endl
-         << c->name ().simple () << "_Servant::_get_component (" << endl
+         << t.name () << "_Servant::_get_component (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
@@ -2108,7 +2276,7 @@ namespace
          << "{"
          << "return sc->get_CCM_object (" << STRS[ENV_SNGL_ARG] << ");"
          << endl
-         << "}" << endl << endl
+         << "}" << endl
          << "::Components::EntityContext_var ec =" << endl
          << "::Components::EntityContext::_narrow (" << endl
          << "this->context_" << endl
@@ -2118,16 +2286,16 @@ namespace
          << "{"
          << "return ec->get_CCM_object (" << STRS[ENV_SNGL_ARG] << ");"
          << endl
-         << "}" << endl << endl
+         << "}" << endl
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::INTERNAL ()," << endl
          << "::CORBA::Object::_nil ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "// CIAO-specific operations." << endl << endl;
 
       os << "void" << endl
-         << c->name ().simple () << "_Servant::_ciao_activate (" << endl
+         << t.name () << "_Servant::_ciao_activate (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
@@ -2140,10 +2308,10 @@ namespace
          << "{"
          << "temp->ccm_activate (" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "void" << endl
-         << c->name ().simple () << "_Servant::_ciao_passivate (" << endl
+         << t.name () << "_Servant::_ciao_passivate (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
@@ -2156,131 +2324,366 @@ namespace
          << "{"
          << "temp->ccm_passivate (" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
-      os << "// Supported operations." << endl;
-
-      SupportedOperationEmitter supported_operation_emitter (
-          os,
-          return_type_name_emitter_,
-          inarg_type_name_emitter_,
-          outarg_type_name_emitter_,
-          inoutarg_type_name_emitter_,
-          c->name ().simple ());
-
-      // @@@ (JP) Must include ancestors' supported interfaces as well.
-      for (SyntaxTree::ComponentDef::Iterator i = c->supports_begin ();
-           i != c->supports_end ();
-           i++)
+      os << "// Supported operations." << endl << endl;
+         
+      // Generate operations for all supported interfaces.   
       {
-        supported_operation_emitter.dispatch (i->resolve ());
+        Traversal::Supports supports_;
+        InterfaceEmitter interface_emitter (ctx);
+        supports_.node_traverser (interface_emitter);
+        
+        Traversal::Defines defines;
+        Traversal::Inherits inherits;
+        interface_emitter.edge_traverser (defines);
+        interface_emitter.edge_traverser (inherits);
+        
+        OperationEmitter<SemanticGraph::Component> operation_emitter (ctx, t);
+        defines.node_traverser (operation_emitter);  
+        inherits.node_traverser (interface_emitter);
+
+        Traversal::Receives receives;
+        Traversal::Belongs returns;
+        Traversal::Raises raises;
+        operation_emitter.edge_traverser (receives);
+        operation_emitter.edge_traverser (returns);
+        operation_emitter.edge_traverser (raises);
+        
+        ParameterEmitter<Traversal::InParameter> in_param (os);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
+        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        receives.node_traverser (in_param);
+        receives.node_traverser (inout_param);
+        receives.node_traverser (out_param);
+       
+        ReturnTypeNameEmitter return_type_emitter (os);
+        TypeNameEmitter type_name_emitter (os);
+        returns.node_traverser (return_type_emitter);
+        raises.node_traverser (type_name_emitter);
+        
+        Traversal::Belongs in_belongs, inout_belongs, out_belongs;
+        in_param.edge_traverser (in_belongs);
+        inout_param.edge_traverser (inout_belongs);
+        out_param.edge_traverser (out_belongs);
+        
+        INArgTypeNameEmitter in_arg_emitter (os);        
+        INOUTArgTypeNameEmitter inout_arg_emitter (os);        
+        OUTArgTypeNameEmitter out_arg_emitter (os);
+        in_belongs.node_traverser (in_arg_emitter);
+        inout_belongs.node_traverser (inout_arg_emitter);
+        out_belongs.node_traverser (out_arg_emitter);
+
+        supports (t, supports_);
+      }
+      
+      // Generate operations for component attributes.
+      os << "// Component attribute operations." << endl << endl;
+      
+      {
+        Traversal::Defines defines;
+        AttributeEmitter<SemanticGraph::Component> attribute_emitter (ctx, t);
+        ReadOnlyAttributeEmitter<SemanticGraph::Component> read_only_attribute_emitter (ctx, t);
+        defines.node_traverser (attribute_emitter);
+        defines.node_traverser (read_only_attribute_emitter);
+        
+        names (t, defines);
+      }
+    }
+
+    virtual void
+    post (Type& t)
+    {
+      // Namespace closer.
+      os << "}" << endl;
+    }
+  };
+  
+  struct HomeEmitter : Traversal::Home, EmitterBase
+  {
+    HomeEmitter (Context& c)
+      : EmitterBase (c)
+    {}
+    
+  // Nested classes used by this emitter.
+  private:
+    struct HomeOpExecReturnEmitter : Traversal::Type
+    {
+      HomeOpExecReturnEmitter (std::ostream& os_)
+        : os (os_)
+      {}
+      
+      virtual void
+      traverse (SemanticGraph::Type&)
+      {
+        os << "::Components::EnterpriseComponent_var _ciao_ec =" << endl
+           << "this->executor_->";
+      }
+      
+    private:
+      std::ostream& os;
+    };
+
+    struct HomeOperationEmitter : Traversal::HomeFactory,
+                                  OperationEmitter<SemanticGraph::Home>,
+                                  Traversal::Home
+    {
+      HomeOperationEmitter (Context& c, SemanticGraph::Home& home)
+        : OperationEmitter<SemanticGraph::Home> (c, home)
+      {}
+      
+      virtual void
+      returns (SemanticGraph::HomeFactory& hf)
+      {
+        ReturnTypeNameEmitter manages_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (manages_emitter);
+        
+        manages (scope_, manages_);
+        
+        os << endl;
       }
 
-      // Close the CIAO_GLUE namespace, if we opened one.
-      if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
+      virtual void
+      name (SemanticGraph::HomeFactory& hf)
       {
+        os << scope_.name () << "_Servant::" << hf.name ();
+      }
+
+      virtual void
+      receives_none (SemanticGraph::HomeFactory&)
+      {
+        os << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl;
+      }
+
+      virtual void
+      receives_pre (SemanticGraph::HomeFactory&)
+      {
+        os << " (" << endl;
+      }
+
+      virtual void
+      receives_post (SemanticGraph::HomeFactory&)
+      {
+        os << endl << STRS[ENV_HDR] << ")" << endl;
+      }
+
+      virtual void
+      raises_none (SemanticGraph::HomeFactory&)
+      {
+        os << STRS[EXCP_SNGL];
+      }
+
+      virtual void
+      raises_pre (SemanticGraph::HomeFactory&)
+      {
+        os << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl;
+      }
+
+      virtual void
+      raises_post (SemanticGraph::HomeFactory&)
+      {
+        os << "))";
+      }
+
+      virtual void
+      post (SemanticGraph::HomeFactory& hf)
+      {
+        os << "{";
+        
+        {
+          OperationExecEmitter operation_emitter (ctx);
+
+          Traversal::Receives receives;
+          Traversal::Belongs returns;
+          operation_emitter.edge_traverser (receives);
+          operation_emitter.edge_traverser (returns);
+          
+          ParameterExecEmitter<Traversal::InParameter> in_param (os);
+          ParameterExecEmitter<Traversal::InOutParameter> inout_param (os);
+          ParameterExecEmitter<Traversal::OutParameter> out_param (os);
+          receives.node_traverser (in_param);
+          receives.node_traverser (inout_param);
+          receives.node_traverser (out_param);
+          
+          HomeOpExecReturnEmitter return_emitter (os);
+          returns.node_traverser (return_emitter);
+          
+          operation_emitter.traverse (hf);
+        }
+
+        os << "ACE_CHECK_RETURN (";
+        
+        {
+          TypeNameEmitter manages_emitter (os);
+          Traversal::Manages manages_;
+          manages_.node_traverser (manages_emitter);
+          
+          manages (scope_, manages_);
+        }
+        
+        os << "::_nil ());" << endl;
+           
+        {
+          EnclosingTypeNameEmitter name_emitter (os);
+          Traversal::Manages manages_;
+          manages_.node_traverser (name_emitter);
+          
+          manages (scope_, manages_);
+        }
+        
+        os << "::CCM_";
+           
+        {
+          SimpleTypeNameEmitter name_emitter (os);
+          Traversal::Manages manages_;
+          manages_.node_traverser (name_emitter);
+          
+          manages (scope_, manages_);
+        }
+        
+        os << "_var _ciao_comp =" << endl;
+        
+        {
+          EnclosingTypeNameEmitter name_emitter (os);
+          Traversal::Manages manages_;
+          manages_.node_traverser (name_emitter);
+          
+          manages (scope_, manages_);
+        }
+        
+        os << "::CCM_";
+           
+        {
+          SimpleTypeNameEmitter name_emitter (os);
+          Traversal::Manages manages_;
+          manages_.node_traverser (name_emitter);
+          
+          manages (scope_, manages_);
+        }
+        
+        os << "::_narrow (" << endl
+           << "_ciao_ec.in ()" << endl
+           << STRS[ENV_ARG] << ");" << endl;
+        
+        os << "return this->_ciao_activate_component (" << endl
+           << "_ciao_comp.in ()" << endl
+           << STRS[ENV_ARG] << ");" << endl;
+        
         os << "}" << endl;
       }
 
-      os << endl;
-    }
-
-  };
-
-  //
-  // Generates the component home servant interface.
-  //
-  class HomeEmitter : public SourceEmitterBase,
-                      public Traversal::HomeDef,
-                      public Traversal::AttributeDecl //@@ will disappear
-  {
-  private:
-    Declarations const& declarations_;
+      virtual void
+      comma (SemanticGraph::HomeFactory&)
+      {
+        os << "," << endl;
+      }
+    };
     
-    ReturnTypeNameEmitter* return_type_name_emitter_;
-    INArgTypeNameEmitter* inarg_type_name_emitter_;
-    OUTArgTypeNameEmitter* outarg_type_name_emitter_;
-    INOUTArgTypeNameEmitter* inoutarg_type_name_emitter_;
-
   public:
-    HomeEmitter (ostream& os_,
-                 Declarations const& declarations,
-                 ReturnTypeNameEmitter* return_type_name_emitter,
-                 INArgTypeNameEmitter* inarg_type_name_emitter,
-                 OUTArgTypeNameEmitter* outarg_type_name_emitter,
-                 INOUTArgTypeNameEmitter* inoutarg_type_name_emitter)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations),
-        return_type_name_emitter_ (return_type_name_emitter),
-        inarg_type_name_emitter_ (inarg_type_name_emitter),
-        outarg_type_name_emitter_ (outarg_type_name_emitter),
-        inoutarg_type_name_emitter_ (inoutarg_type_name_emitter)
-    {
-    }
-
     virtual void
-    traverse (HomeDefPtr const& h)
+    pre (Type& t)
     {
-      if (declarations_.find (h))
-      {
-        Traversal::HomeDef::traverse (h);
-      }
-    }
-
-    virtual void
-    pre (HomeDefPtr const& h)
-    {
-      // If we are at file scope, we create a namespace anyway.
-      if (h->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << STRS[GLUE_NS] << endl
-           << "{";
-      }
-
-      os << h->name ().simple () << "_Servant::"
-         << h->name ().simple () << "_Servant (" << endl
-         << h->name ().scope () << "::CCM_" << h->name ().simple ()
+      os << STRS[GLUE_NS] 
+         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+         << "{";
+          
+      os << t.name () << "_Servant::"
+         << t.name () << "_Servant (" << endl
+         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << ": executor_ (" << h->name ().scope () << "::CCM_"
-         << h->name ().simple () << "::_duplicate (exe))," << endl
+         << ": executor_ (" << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "::_duplicate (exe))," << endl
          << "container_ (c)" << endl
          << "{"
-         << "}" << endl << endl;
+         << "}" << endl;
 
-      os << h->name ().simple () << "_Servant::~"
-         << h->name ().simple () << "_Servant (void)" << endl
+      os << t.name () << "_Servant::~"
+         << t.name () << "_Servant (void)" << endl
          << "{"
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "// Home factory and other operations." << endl << endl;
-    }
+      
+      {
+        Traversal::Defines defines;
+        HomeOperationEmitter home_operation_emitter (ctx, t);
+        defines.node_traverser (home_operation_emitter);  
 
-    virtual void
-    traverse (AttributeDeclPtr const& a)
-    {
-      // TODO
-    }
+        Traversal::Receives receives;
+        Traversal::Belongs returns;
+        Traversal::Raises raises;
+        home_operation_emitter.edge_traverser (receives);
+        home_operation_emitter.edge_traverser (returns);
+        home_operation_emitter.edge_traverser (raises);
+        
+        ParameterEmitter<Traversal::InParameter> in_param (os);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
+        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        receives.node_traverser (in_param);
+        receives.node_traverser (inout_param);
+        receives.node_traverser (out_param);
+       
+        ReturnTypeNameEmitter return_type_emitter (os);
+        TypeNameEmitter type_name_emitter (os);
+        returns.node_traverser (return_type_emitter);
+        raises.node_traverser (type_name_emitter);
+        
+        Traversal::Belongs in_belongs, inout_belongs, out_belongs;
+        in_param.edge_traverser (in_belongs);
+        inout_param.edge_traverser (inout_belongs);
+        out_param.edge_traverser (out_belongs);
+        
+        INArgTypeNameEmitter in_arg_emitter (os);        
+        INOUTArgTypeNameEmitter inout_arg_emitter (os);        
+        OUTArgTypeNameEmitter out_arg_emitter (os);
+        in_belongs.node_traverser (in_arg_emitter);
+        inout_belongs.node_traverser (inout_arg_emitter);
+        out_belongs.node_traverser (out_arg_emitter);
 
-    virtual void
-    post (HomeDefPtr const& h)
-    {
+        names (t, defines);
+      }
+      
+      // Generate operations for component attributes.
+      os << "// Home attribute operations." << endl << endl;
+      
+      {
+        Traversal::Defines defines;
+        AttributeEmitter<SemanticGraph::Home> attribute_emitter (ctx, t);
+        ReadOnlyAttributeEmitter<SemanticGraph::Home> read_only_attribute_emitter (ctx, t);
+        defines.node_traverser (attribute_emitter);
+        defines.node_traverser (read_only_attribute_emitter);
+        
+        names (t, defines);
+      }
+
       os << "// Operations for keyless home interface." << endl << endl;
 
       os << "::Components::CCMObject_ptr" << endl
-         << h->name ().simple () << "_Servant::create_component (" << endl
+         << t.name () << "_Servant::create_component (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << "::Components::CreateFailure))" << endl
          << "{"
          << "return this->create (" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "// Operations for implicit home interface." << endl << endl;
 
-      os << h->manages ()->name () << "_ptr" << endl
-         << h->name ().simple () << "_Servant::create (" << endl
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "_ptr" << endl
+         << t.name () << "_Servant::create (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
@@ -2289,79 +2692,186 @@ namespace
          << "if (this->executor_.in () == 0)" << endl
          << "{"
          << "ACE_THROW_RETURN (" << endl
-         << "::CORBA::INTERNAL ()," << endl
-         << h->manages ()->name () << "::_nil ());" << endl
-         << "}" << endl << endl
+         << "::CORBA::INTERNAL ()," << endl;
+         
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::_nil ());" << endl
+         << "}" << endl
          << "Components::EnterpriseComponent_var _ciao_ec =" << endl
          << "this->executor_->create (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK_RETURN (" << h->manages ()->name ()
-         << "::_nil ());" << endl
-         << h->manages ()->name ().scope () << "::CCM_"
-         << h->manages ()->name ().simple () << "_var _ciao_comp =" << endl
-         << h->manages ()->name ().scope () << "::CCM_"
-         << h->manages ()->name ().simple () << "::_narrow (" << endl
+         << "ACE_CHECK_RETURN (";
+         
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::_nil ());" << endl;
+      
+      {
+        EnclosingTypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::CCM_";
+      
+      {
+        SimpleTypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "_var _ciao_comp =" << endl;
+      
+      {
+        EnclosingTypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::CCM_";
+      
+      {
+        SimpleTypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::_narrow (" << endl
          << "_ciao_ec.in ()" << endl
          << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (" << h->manages ()->name ()
-         << "::_nil ());" << endl
+         << "ACE_CHECK_RETURN (";
+         
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::_nil ());" << endl
          << "return this->_ciao_activate_component (" << endl
          << "_ciao_comp.in ()" << endl
          << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "// Operations for CCMHome interface." << endl << endl;
 
       os << "::CORBA::IRObject_ptr" << endl
-         << h->name ().simple () << "_Servant::get_component_def (" << endl
+         << t.name () << "_Servant::get_component_def (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::NO_IMPLEMENT ()," << endl
          << "::CORBA::IRObject::_nil ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "::CORBA::IRObject_ptr" << endl
-         << h->name ().simple () << "_Servant::get_home_def (" << endl
+         << t.name () << "_Servant::get_home_def (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "ACE_THROW_RETURN (" << endl
          << "::CORBA::NO_IMPLEMENT ()," << endl
          << "::CORBA::IRObject::_nil ());" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "void" << endl
-         << h->name ().simple () << "_Servant::remove_component (" << endl
+         << t.name () << "_Servant::remove_component (" << endl
          << "::Components::CCMObject_ptr comp" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_RF] << "))" << endl
-         << "{"
-         << h->manages ()->name () << "_var _ciao_comp =" << endl
-         << h->manages ()->name () << "::_narrow (" << endl
+         << "{";
+         
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "_var _ciao_comp =" << endl;
+      
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::_narrow (" << endl
          << "comp" << endl
          << STRS[ENV_ARG] << ");"
          << "ACE_CHECK;" << endl
          << "if (CORBA::is_nil (_ciao_comp.in ()))" << endl
          << "{"
          << "ACE_THROW (CORBA::INTERNAL ());" << endl
-         << "}" << endl << endl
+         << "}" << endl
          << "_ciao_comp->remove (" << STRS[ENV_ARG] << ");"
          << "ACE_CHECK;" << endl
          << "this->_ciao_passivate_component (" << endl
          << "_ciao_comp.in ()" << endl
          << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "// CIAO-specific operations." << endl << endl;
 
-      os << h->manages ()->name () << "_ptr" << endl
-         << h->name ().simple ()
-         << "_Servant::_ciao_activate_component (" << endl
-         << h->manages ()->name ().scope () << "::CCM_"
-         << h->manages ()->name ().simple () << "_ptr exe" << endl
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "_ptr" << endl
+         << t.name ()
+         << "_Servant::_ciao_activate_component (" << endl;
+         
+      {
+        EnclosingTypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::CCM_";
+      
+      {
+        SimpleTypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "_ptr exe" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
@@ -2369,16 +2879,55 @@ namespace
          << "this->container_->get_objref (" << endl
          << "this" << endl
          << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (" << h->manages ()->name () << "::_nil ());"
+         << "ACE_CHECK_RETURN (";
+         
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+       os << "::_nil ());"
          << endl
          << "::Components::CCMHome_var home =" << endl
          << "::Components::CCMHome::_narrow (" << endl
          << "hobj" << endl
          << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (" << h->manages ()->name () << "::_nil ());"
-         << endl
-         << h->manages ()->name ().simple () << "_Servant *svt =" << endl
-         << "new " << h->manages ()->name ().simple () << "_Servant ("
+         << "ACE_CHECK_RETURN (";
+         
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::_nil ());"
+         << endl;
+         
+      {
+        SimpleTypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "_Servant *svt =" << endl
+         << "new ";
+         
+      {
+        SimpleTypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "_Servant ("
          << endl
          << "exe," << endl
          << "home.in ()," << endl
@@ -2390,28 +2939,85 @@ namespace
          << "svt," << endl
          << "oid.out ()" << endl
          << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (" << h->manages ()->name () << "::_nil ());"
+         << "ACE_CHECK_RETURN (";
+         
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::_nil ());"
          << endl
          << "svt->_ciao_activate (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK_RETURN (" << h->manages ()->name () << "::_nil ());"
-         << endl
-         << h->manages ()->name () << "_var ho =" << endl
-         << h->manages ()->name () << "::_narrow (" << endl
+         << "ACE_CHECK_RETURN (";
+         
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::_nil ());"
+         << endl;
+         
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "_var ho =" << endl;
+      
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::_narrow (" << endl
          << "objref.in ()" << endl
          << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (" << h->manages ()->name () << "::_nil ());"
+         << "ACE_CHECK_RETURN (";
+          
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "::_nil ());"
          << endl
          << "if (this->component_map_.bind (oid.in (), svt) == 0)" << endl
          << "{"
          << "safe._retn ();" << endl
-         << "}" << endl << endl
+         << "}" << endl
          << "return ho._retn ();" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
 
       os << "void" << endl
-         << h->name ().simple ()
-         << "_Servant::_ciao_passivate_component (" << endl
-         << h->manages ()->name () << "_ptr comp" << endl
+         << t.name ()
+         << "_Servant::_ciao_passivate_component (" << endl;
+         
+      {
+        TypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "_ptr comp" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
@@ -2420,8 +3026,17 @@ namespace
          << "comp," << endl
          << "oid.out ()" << endl
          << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK;" << endl
-         << h->manages ()->name ().simple () << "_Servant *servant = 0;"
+         << "ACE_CHECK;" << endl;
+         
+      {
+        SimpleTypeNameEmitter name_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (name_emitter);
+        
+        manages (t, manages_);
+      }
+
+      os << "_Servant *servant = 0;"
          << endl
          << "if (this->component_map_.unbind (oid.in (), servant) == 0)"
          << endl
@@ -2430,105 +3045,19 @@ namespace
          << "servant->_ciao_passivate (" << STRS[ENV_SNGL_ARG] << ");"
          << "ACE_CHECK;" << endl
          << "}" << endl
-         << "}" << endl << endl;
-
-      os << "// Supported operations." << endl << endl;
-
-      SupportedOperationEmitter supported_operation_emitter (
-          os,
-          return_type_name_emitter_,
-          inarg_type_name_emitter_,
-          outarg_type_name_emitter_,
-          inoutarg_type_name_emitter_,
-          h->name ().simple ());
-
-      // @@@ (JP) Must include ancestors' supported interfaces as well.
-      for (SyntaxTree::HomeDef::Iterator i = h->supports_begin ();
-           i != h->supports_end ();
-           i++)
-      {
-        supported_operation_emitter.dispatch (i->resolve ());
-      }
-
-      // Close the CIAO_GLUE namespace, if we opened one.
-      if (h->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << "}" << endl;
-      }
-
-      os << endl;
+         << "}" << endl;
     }
-  };
-
-
-  //
-  // Generates needed namespaces for modules
-  //
-  class NamespaceEmitter : public SourceEmitterBase,
-                           public Traversal::Module
-  {
-  private:
-    Declarations const& declarations_;
-
-  public:
-    NamespaceEmitter (ostream& os_, 
-                      Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
-    void
-    pre (ModulePtr const& m)
-    {
-      if (declarations_.contains_suborder (m->order ()))
-      {
-        os << STRS[GLUE_NS] << "_" << m->name ().simple () << endl
-           << "{";
-      }
-    }
-
-    void
-    post (ModulePtr const& m)
-    {
-      if (declarations_.contains_suborder (m->order ()))
-      {
-        os << "}" << endl << endl;
-      }
-    }
-  };
-
-
-  class ServantSourceFinalizingEmitter
-    : public SourceEmitterBase,
-      public Traversal::TranslationUnit,
-      public Traversal::TranslationRegion,
-      public Traversal::FileScope,
-      public Traversal::Module,
-      public Traversal::HomeDef
-  {
-  private:
-    string export_macro_;
-    Declarations const& declarations_;
-
-  public:
-    ServantSourceFinalizingEmitter (ostream& os_,
-                                    string export_macro,
-                                    Declarations const& declarations)
-      : SourceEmitterBase (os_),
-        export_macro_ (export_macro),
-        declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (HomeDefPtr const& h)
-    {
-      if (!declarations_.find (h)) return;
     
-      os << "extern \"C\" " << export_macro_ << " ::PortableServer::Servant"
+    virtual void
+    post (Type& t)
+    {
+      // Namespace closer.
+      os << "}" << endl;
+    
+      os << "extern \"C\" " << ctx.export_macro () 
+         << " ::PortableServer::Servant"
          << endl
-         << "create" << h->name ().simple () << "_Servant (" << endl
+         << "create" << t.name () << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
          << "CIAO::Session_Container *c" << endl
          << STRS[ENV_SRC] << ")" << endl
@@ -2536,10 +3065,10 @@ namespace
          << "if (p == 0)" << endl
          << "{"
          << "return 0;" << endl
-         << "}" << endl << endl
-         << h->name ().scope () << "::CCM_"
-         << h->name ().simple () << "_var x =" << endl
-         << h->name ().scope () << "::CCM_" << h->name ().simple ()
+         << "}" << endl
+         << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_var x =" << endl
+         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "::_narrow (" << endl
          << "p" << endl
          << STRS[ENV_ARG] << ");"
@@ -2547,48 +3076,37 @@ namespace
          << "if (::CORBA::is_nil (x.in ()))" << endl
          << "{"
          << "return 0;" << endl
-         << "}" << endl << endl
+         << "}" << endl
          << "return new" << endl;
 
-      os << servant_name (h) << " (" << endl
+      os << servant_name (t) << " (" << endl
          << "x.in ()," << endl
          << "c);" << endl
-         << "}" << endl << endl;
+         << "}" << endl;
     }
   };
 }
 
-// ===========================================================
-
-SourceEmitterBase::SourceEmitterBase (ostream& os_)
-  : os (os_)
-{
-}
-
-ServantSourceEmitter::ServantSourceEmitter (
-    ostream& os_,
-    string export_macro,
-    CommandLine const& cl,
-    Declarations const& declarations
-  )
-  : SourceEmitterBase (os_),
-    export_macro_ (export_macro),
+ServantSourceEmitter::ServantSourceEmitter (std::ostream& os_,
+                                            CommandLine const& cl,
+                                            string export_macro,
+                                            fs::path const& file)
+  : os (os_),
     cl_ (cl),
-    declarations_ (declarations)
-{
-}
+    export_macro_ (export_macro),
+    file_ (file)
+{}
 
 void
-ServantSourceEmitter::pre (TranslationUnitPtr const& u)
+ServantSourceEmitter::pre (TranslationUnit& u)
 {
   os << COPYRIGHT << endl << endl;
 
-  fs::path file_path = u->principal_translation_region ()->file_path ();
   string file_name ("");
 
-  if (! file_path.empty ())
+  if (! file_.empty ())
   {
-    file_name = file_path.leaf ();
+    file_name = file_.leaf ();
   }
 
   string file_suffix = cl_.get_value ("hdr-file-suffix",
@@ -2604,144 +3122,73 @@ ServantSourceEmitter::pre (TranslationUnitPtr const& u)
 }
 
 void
-ServantSourceEmitter::generate (TranslationUnitPtr const& u)
+ServantSourceEmitter::generate (TranslationUnit& u)
 {
-  // This method will use the ServantHeaderEmitter class itself
-  // as a entry point for the traversal of the tree
+  pre (u);
+  
+  Traversal::TranslationUnit unit;
+  
+  // Layer 1
+  //
+  Traversal::ContainsPrincipal contains_principal;
+  unit.edge_traverser (contains_principal);
 
-  ReturnTypeNameEmitter return_type_name (os);
-  INArgTypeNameEmitter inarg_type_name (os);
-  OUTArgTypeNameEmitter outarg_type_name (os);
-  INOUTArgTypeNameEmitter inoutarg_type_name (os);
+  //--
+  Traversal::TranslationRegion region;
+  contains_principal.node_traverser (region);
 
-  ArgNameEmitter arg_name (os);
+  // Layer 2
+  //
+  Traversal::ContainsRoot contains_root;
+  Traversal::Includes includes;
+  
+  region.edge_traverser (includes);
+  region.edge_traverser (contains_root);
+  
+  //--
+  Traversal::Root root;  
+  includes.node_traverser (region);
+  contains_root.node_traverser (root);
 
-  GetAttributeEmitter get_attribute_emitter (os, &return_type_name);
-  SetAttributeEmitter set_attribute_emitter (os, &inarg_type_name);
+  // Layer 3
+  //
+  Traversal::Defines defines;
+  root.edge_traverser (defines);
 
-  OperationEmitter operation_emitter (os,
-                                      &return_type_name,
-                                      &inarg_type_name,
-                                      &outarg_type_name,
-                                      &inoutarg_type_name);
-
-  FactoryEmitter factory_emitter (os, &inarg_type_name);
-
-  ServantFabricEmitter servant_fabric_emitter (os, declarations_);
-
-  NavigationEmitter navigation_emitter (os, declarations_);
-
-  FacetProvidesEmitter facet_provides_emitter (os);
-
-  ReceptaclesGenericConnectionEmitter
-    receptacles_generic_connection_emitter (os, declarations_);
-
-  ReceptaclesGenericDisconnectionEmitter
-    receptacles_generic_disconnection_emitter (os, declarations_);
-
-  ReceptaclesEmitter receptacles_emitter (os);
-
-  ConsumerGenericEmitter consumer_generic_emitter (os, declarations_);
-
-  ConsumerEmitter consumer_emitter (os);
-
-  PublishesGenericSubscribeEmitter 
-    publishes_generic_subscribe_emitter (os, declarations_);
-
-  PublishesGenericUnsubscribeEmitter 
-    publishes_generic_unsubscribe_emitter (os, declarations_);
-
-  PublishesEmitter publishes_emitter (os);
-
-  EmitsEmitter emits_emitter (os);
-
-  FacetServantEmitter facet_servant_emitter (os);
-  facet_servant_emitter.add_scope_delegate (&operation_emitter);
-
-  FacetSelector facet_selector (os, declarations_);
-  facet_selector.add_delegate (&facet_servant_emitter);
-
-  ContextEmitter context_emitter (os, declarations_);
-
-  ServantCommonFinalizingEmitter
-    servant_common_finalizing_emitter (os,
-                                       declarations_,
-                                       &return_type_name,
-                                       &inarg_type_name,
-                                       &outarg_type_name,
-                                       &inoutarg_type_name);
-                                         
-  servant_common_finalizing_emitter.add_scope_delegate (&get_attribute_emitter);
-  servant_common_finalizing_emitter.add_scope_delegate (&set_attribute_emitter);
-
-  // Discriminator for operation and factory
-  // This is needed to select always the most-derived type of traversal
-  // for any element of the scope of a Home
-  Traversal::Discriminator d;
-  d.add (&operation_emitter);
-  d.add (&factory_emitter);
-
-  HomeEmitter home_emitter (os,
-                            declarations_,
-                            &return_type_name,
-                            &inarg_type_name,
-                            &outarg_type_name,
-                            &inoutarg_type_name);
-  home_emitter.add_scope_delegate (&d);
-  home_emitter.add_scope_delegate (&get_attribute_emitter);
-  home_emitter.add_scope_delegate (&set_attribute_emitter);
-
-  SelectedComponentEmitter component (declarations_);
-  component.add_scope_delegate (&facet_provides_emitter);
-  component.add_scope_delegate (&receptacles_emitter);
-  component.add_scope_delegate (&consumer_emitter);
-  component.add_scope_delegate (&publishes_emitter);
-  component.add_scope_delegate (&emits_emitter);
-
-  Traversal::FileScope fs;
-  NamespaceEmitter m (os, declarations_);
-
-  fs.add_scope_delegate (&m);
-
-  fs.add_scope_delegate (&context_emitter);
-  fs.add_scope_delegate (&servant_fabric_emitter);
-  fs.add_scope_delegate (&navigation_emitter);
-  fs.add_scope_delegate (&component);
-  fs.add_scope_delegate (&receptacles_generic_connection_emitter);
-  fs.add_scope_delegate (&receptacles_generic_disconnection_emitter);
-  fs.add_scope_delegate (&consumer_generic_emitter);
-  fs.add_scope_delegate (&publishes_generic_subscribe_emitter);
-  fs.add_scope_delegate (&publishes_generic_unsubscribe_emitter);
-  fs.add_scope_delegate (&home_emitter);
-  fs.add_scope_delegate (&facet_selector);
-  fs.add_scope_delegate (&servant_common_finalizing_emitter);
-
-  m.add_scope_delegate (&context_emitter);
-  m.add_scope_delegate (&servant_fabric_emitter);
-  m.add_scope_delegate (&navigation_emitter);
-  m.add_scope_delegate (&component);
-  m.add_scope_delegate (&receptacles_generic_connection_emitter);
-  m.add_scope_delegate (&receptacles_generic_disconnection_emitter);
-  m.add_scope_delegate (&consumer_generic_emitter);
-  m.add_scope_delegate (&publishes_generic_subscribe_emitter);
-  m.add_scope_delegate (&publishes_generic_unsubscribe_emitter);
-  m.add_scope_delegate (&home_emitter);
-  m.add_scope_delegate (&facet_selector);
-  m.add_scope_delegate (&servant_common_finalizing_emitter);
-
-  Traversal::TranslationRegion region (&fs);
-  add_content_delegate (&region);
-
-  // Start processing
-  dispatch (u);
-
-  // Start the finalizing phase
-  ServantSourceFinalizingEmitter finalizing_emitter (os,
-                                                     export_macro_,
-                                                     declarations_);
-  finalizing_emitter.dispatch (u);
+  //--
+  Traversal::Module module;
+  Traversal::Composition composition;
+  defines.node_traverser (module);
+  defines.node_traverser (composition);
+  
+  // Layer 4
+  //
+  Traversal::Defines composition_defines;
+  composition.edge_traverser (composition_defines);
+  
+  //--
+  Traversal::ComponentExecutor component_executor;
+  Traversal::HomeExecutor home_executor;
+  composition_defines.node_traverser (component_executor);
+  composition_defines.node_traverser (home_executor);
+  
+  // Layer 5
+  //
+  Traversal::Implements implements;
+  component_executor.edge_traverser (implements);
+  home_executor.edge_traverser (implements);
+  
+  //--
+  Context c (os, export_macro_);
+  ContextEmitter context_emitter (c);
+  ServantEmitter servant_emitter (c);
+  HomeEmitter home_emitter (c);
+  implements.node_traverser (context_emitter);
+  implements.node_traverser (servant_emitter);
+  implements.node_traverser (home_emitter);
+  
+  unit.traverse (u);  
 }
-
 
 /*
  * Local Variables:

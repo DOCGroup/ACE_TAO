@@ -8,7 +8,7 @@
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 #include "CCF/CodeGenerationKit/CommandLineDescriptor.hpp"
 
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 
 class DescriptorGenerator
 {
@@ -18,7 +18,7 @@ public:
 
   void
   generate (CommandLine const&,
-            CCF::CIDL::SyntaxTree::TranslationUnitPtr const&);
+            CCF::CIDL::SemanticGraph::TranslationUnit&);
 
 private:
   fs::ofstream ofs_;

@@ -5,81 +5,86 @@
 #include "SizeTypeCalculator.hpp"
 #include "Literals.hpp"
 
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/Traversal.hpp"
 
 #include <stack>
 
 using namespace CCF::CIDL;
-using namespace SyntaxTree;
+using namespace CCF::CIDL::SemanticGraph;
 using namespace StringLiterals;
 
 namespace
 {
-  class Calculator : public Traversal::StringDecl,
-                     public Traversal::StructDef,
-                     public Traversal::MemberDecl,
-                     public Traversal::WstringDecl,
-                     public Traversal::SequenceDecl,
-                     public Traversal::InterfaceDecl
+  class Calculator : public Traversal::String,
+                     public Traversal::Struct,
+                     public Traversal::Wstring,
+                     public Traversal::UnboundedSequence,
+                     public Traversal::Interface,
+                     public Traversal::ValueType
   {
   public:
     Calculator ()
-        : Traversal::MemberDecl (this)
     {
       push (false);
     }
 
   public:
     virtual void
-    traverse (StringDeclPtr const&)
+    traverse (SemanticGraph::String&)
     {
       top () = true;
     }
 
     virtual void
-    traverse (WstringDeclPtr const&)
+    traverse (SemanticGraph::Wstring&)
     {
       top () = true;
     }
 
     virtual void
-    traverse (SequenceDeclPtr const&)
+    traverse (SemanticGraph::UnboundedSequence&)
     {
       top () = true;
     }
 
     virtual void
-    traverse (InterfaceDeclPtr const&)
+    traverse (SemanticGraph::Interface&)
     {
       top () = true;
     }
 
     virtual void
-    traverse (StructDefPtr const& s)
+    traverse (SemanticGraph::ValueType&)
     {
-      if (s->context ().count (STRS[VAR_SIZE]))
+      top () = true;
+    }
+
+    virtual void
+    traverse (SemanticGraph::Struct& s)
+    {
+      if (s.context ().count (STRS[VAR_SIZE]))
       {
-        top () = s->context ().get<bool> (STRS[VAR_SIZE]);
+        top () = s.context ().get<bool> (STRS[VAR_SIZE]);
       }
       else
       {
-        Traversal::StructDef::traverse (s);
+        Traversal::Struct::traverse (s);
       }
     }
 
     virtual void
-    pre (StructDefPtr const& s)
+    pre (SemanticGraph::Struct& s)
     {
       push (false);
     }
 
     virtual void
-    post (StructDefPtr const& s)
+    post (SemanticGraph::Struct& s)
     {
       bool r (top ());
 
-      s->context ().set (STRS[VAR_SIZE], r);
+      s.context ().set (STRS[VAR_SIZE], r);
 
       pop ();
 
@@ -112,21 +117,61 @@ namespace
 
 
 void SizeTypeCalculator::
-calculate (TranslationUnitPtr const& u)
+calculate (SemanticGraph::TranslationUnit& u)
 {
-  Calculator c;
-
-  Traversal::Module module;
-  module.add_scope_delegate (&c);
-
-  Traversal::FileScope file_scope;
-  file_scope.add_scope_delegate (&module);
-  file_scope.add_scope_delegate (&c);
-
-  Traversal::TranslationRegion region (&file_scope);
-
   Traversal::TranslationUnit unit;
-  unit.add_content_delegate (&region);
 
-  unit.dispatch (u);
+  // Layer 1
+  //
+  Traversal::ContainsPrincipal contains_principal;
+  unit.edge_traverser (contains_principal);
+
+  //--
+  Traversal::TranslationRegion region;
+  contains_principal.node_traverser (region);
+
+  // Layer 2
+  //
+  Traversal::ContainsRoot contains_root;
+  Traversal::Includes includes;
+  
+  region.edge_traverser (includes);
+  region.edge_traverser (contains_root);
+  
+  //--
+  Traversal::Root root;  
+  includes.node_traverser (region);
+  contains_root.node_traverser (root);
+
+  // Layer 3
+  //
+  Traversal::Defines defines;
+  root.edge_traverser (defines);
+
+  //--
+  Traversal::Module module;
+  Calculator calculator;
+  
+  defines.node_traverser (module);
+  defines.node_traverser (calculator);
+  
+  // Layer 4
+  //
+  Traversal::Defines struct_defines;
+  module.edge_traverser (defines);
+  calculator.edge_traverser (struct_defines);
+  
+  //--
+  Traversal::Member member;
+  struct_defines.node_traverser (member);
+  
+  // Layer 5
+  //
+  Traversal::Belongs belongs;
+  member.edge_traverser (belongs);
+  
+  //--
+  belongs.node_traverser (calculator);
+
+  unit.traverse (u);
 }
