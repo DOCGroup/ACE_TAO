@@ -87,8 +87,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
+      // get a reference to the parser.
       DOMBuilder* parser = CIAO::Config_Handler::Utils::
                            create_parser ();
+
+      // use the parser to parse the deployment plan URL and create
+      // a DOM document.
       DOMDocument* dup_doc = parser->parseURI (plan_url);
 
       if (dup_doc == NULL)
@@ -97,12 +101,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       May be the URL is wrong!!\n"));
           throw Null_Dom_Document ();
         }
+
+      // free up DOMBuilder. DOMBuilder also deletes the DOMDocument memory.
       auto_ptr<DOMBuilder> cleanup_parser (parser);
+
+      // call the Deployment Plan handler to parse the XML descriptor.
       CIAO::Config_Handler::Plan_Handler plan_handler (dup_doc,
                                                   DOMNodeFilter::SHOW_ELEMENT |
                                                   DOMNodeFilter::SHOW_TEXT);
       Deployment::DeploymentPlan plan;
       plan_handler.process_plan (plan);
+
+      // call the PackageConfiguration handler to parse the XML descriptor.
       Deployment::PackageConfiguration* pc;
       CIAO::RepositoryManager_Impl rep_impl;
       rep_impl.installPackage ("PC", package_url);
@@ -130,9 +140,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           const char* plan_name = plan.instance[l].name;
                           if (strcmp (plan_name, in_name) == 0)
                             {
-			      traverse_instance (cid.assemblyImpl[z].
+                              traverse_instance (cid.assemblyImpl[z].
                                                  instance[k],
-						 plan, l, ref_map,
+                                                 plan, l, ref_map,
                                                  primary_ref_map);
                             }
                         }
@@ -140,8 +150,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   for (CORBA::ULong m = 0; 
                        m < cid.assemblyImpl[z].connection.length (); ++m)
                     {
-	              CORBA::ULong con_length (plan.connection.length ());
-	              plan.connection.length (con_length + 1);
+                      CORBA::ULong con_length (plan.connection.length ());
+                      plan.connection.length (con_length + 1);
                       for (CORBA::ULong n = 0;
                            n < cid.assemblyImpl[z].connection[m].
                            internalEndpoint.length (); ++n)

@@ -1,3 +1,9 @@
+Thu Jun 17 13:24:01 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Added some comments onto the code.
+
 Wed Jun 16 17:12:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/ExecutionManager/ExecutionManager.mpc
