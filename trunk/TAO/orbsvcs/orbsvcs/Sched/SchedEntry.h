@@ -27,11 +27,6 @@
 // Helper Functions //
 //////////////////////
 
-// Euclid's greatest common divisor algorithm.
-u_long gcd (u_long x, u_long y);
-
-// Calculates the minimum enclosing frame size for the given periods.
-u_long minimum_frame_size (u_long period1, u_long period2);
 
 // Forward declaration of classes.
 class Task_Entry;

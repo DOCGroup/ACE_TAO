@@ -1,9 +1,17 @@
+Fri Jan 22 13:08:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * TAO/orbsvcs/orbsvcs/Sched/Sched_Entry.{cpp, h}
+          TAO/orbsvcs/orbsvcs/Sched/DynSched.cpp
+          TAO/orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp: moved gcd and
+          minimum_frame_size helper functions to class ACE as static methods,
+          removed unnecessary #includes of math.h.
+
 Fri Jan 22 11:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Simulator/DOVEBrowser/make.bat: added a
-	  "make setup" capability to set up the DOVE browser directory
-	  prior to the first build on NT.
-	
+          "make setup" capability to set up the DOVE browser directory
+          prior to the first build on NT.
+
 Fri Jan 22 08:43:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (parse_args):
