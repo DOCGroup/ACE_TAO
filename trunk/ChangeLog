@@ -1,3 +1,16 @@
+Sun Aug  1 08:15:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	  Moved subdirectory configuration above call to AC_OUTPUT.
+	  
+	* ace/OS_Memory.h:
+	  Provide ACE_nothrow and ACE_nothrow_t definitions for platforms
+	  where definitions are not handled by special cases.
+
+	* configure.ac:
+	* m4/config_h.m4:
+	  Added check for ACE_HAS_NEW_NOTHROW.
+
 Sun Aug  1 15:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/QoS/qos.mpc:
