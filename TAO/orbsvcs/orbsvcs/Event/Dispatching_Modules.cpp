@@ -72,6 +72,7 @@ ACE_ES_Dispatch_Request::execute (u_long &command_action)
 }
 
 #if 0
+// @@ Memory pools
 void *
 ACE_ES_Dispatch_Request::operator new (size_t nbytes)
 {

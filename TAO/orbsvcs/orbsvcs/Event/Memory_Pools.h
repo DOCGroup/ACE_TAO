@@ -89,12 +89,9 @@ public:
   static void delete_Event_Container (void *);
   static void *new_Dispatch_Request (void);
   static void delete_Dispatch_Request (void *);
-  static void *new_Event (size_t);
-  static void delete_Event (void *);
 
   typedef ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,ACE_SYNCH_MUTEX> Dispatch_Request_;
   typedef ACE_Singleton<ACE_ES_Event_Container_Allocator,ACE_SYNCH_MUTEX> Event_Container_;
-  typedef ACE_Singleton<ACE_ES_Event_Allocator,ACE_SYNCH_MUTEX> Event_;
 };
 
 #if defined (__ACE_INLINE__)

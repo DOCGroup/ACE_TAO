@@ -198,6 +198,7 @@ public:
   // Priority accessor.
 
 #if 0
+  // @@ Memory pools
   // @@ This cannot be done: the object would be allocated using this
   // class operator new, but it will be removed using the
   // ACE_Message_Block operator delete!
