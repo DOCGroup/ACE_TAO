@@ -1,3 +1,9 @@
+Wed Dec 26 21:20:44 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp: 
+	  orbsvcs/ImplRepo_Service/tao_imr_i.h:
+	  Fixed compile errors caused by optarg changes.
+
 Wed Dec 26 14:33:33 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Makefile.bor:
