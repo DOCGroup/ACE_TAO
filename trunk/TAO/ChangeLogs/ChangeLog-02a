@@ -1,3 +1,8 @@
+Wed Jun 20 07:55:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a warning in Win32
+	  debug builds.  
+
 Wed Jun 20 07:31:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/Big_Reply_i.cpp: Fixed a compile error on
