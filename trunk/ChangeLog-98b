@@ -1,3 +1,9 @@
+Wed May 27 07:04:42 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Service_Config.cpp: default debug_ to 1 instead
+          of 0.  And the -d option now disables debug messages,
+          instead of enabling them.
+
 Tue May 26 22:25:18 1998  Stephen Coy  <stevec@wsa.com.au>
 
         * ace/Log_Msg.{h,cpp},Service_Config.cpp: added support for
