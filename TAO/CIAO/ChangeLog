@@ -1,3 +1,9 @@
+Sun Apr  3 18:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Container_Base.h:
+        * ciao/ServerActivator_Impl.h:
+          Added missing include of ace/Hash_Map_Manager_T.h
+
 Sat Apr 02 13:12:40 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/examples/BasicSP/README.html: Brought the documentation a
@@ -6,14 +12,14 @@ Sat Apr 02 13:12:40 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 Sat Apr  2 13:06:02 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/ciao/Container_Base.cpp: Added more debug print out
-	  statements in install_home method.  
+	  statements in install_home method.
 
 Sat Apr 02 11:45:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/Plan_Launcher/Plan_Launcher.mpc:
 	* DAnCE/Plan_Launcher/Plan_Launcher.cpp: Merged from xsc_handler_1
 	  branch.  Added a missing break statement, otherwise, it will not
-	  run. 
+	  run.
 
 Thu Mar 31 20:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
