@@ -182,13 +182,15 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_head (ACE_MESSAGE
   
   ACE_Message_Block *mb;
 
+  int cur_count = this->queue_.dequeue_head (mb, timeout);
+
   // Dequeue the message.
-  if (this->queue_.dequeue_head (mb, timeout) != -1 )
+  if (cur_count != -1)
     {
       first_item = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
       // Delete the message block.
       mb->release ();
-      return 0;
+      return cur_count;
     }
   else
     return -1;
