@@ -177,11 +177,13 @@ TAO_ServantBase::_create_stub (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void TAO_ServantBase::synchronous_upcall_dispatch (
-    TAO_ServerRequest &req,
-    void *servant_upcall,
-    void *derived_this
-    TAO_ENV_ARG_DECL
-  )
+                                                   TAO_ServerRequest &req,
+                                                   void *servant_upcall,
+                                                   void *derived_this
+                                                   TAO_ENV_ARG_DECL
+                                                   )
+//CORBA::Environment &ACE_TRY_ENV
+
 {
   TAO_Skeleton skel;
   const char *opname = req.operation ();
@@ -205,6 +207,89 @@ void TAO_ServantBase::synchronous_upcall_dispatch (
   CORBA::Boolean send_reply = !req.sync_with_server ()
                               && req.response_expected ()
                               && !req.deferred_reply ();
+
+  ACE_TRY
+    {
+      // @@ Do we really need the following "callback?"  The
+      //    STANDARD receive_request_service_contexts() interception
+      //    point appears to be placed at around the same point in the
+      //    upcall, i.e. just before the upcall is dispatched.  It is
+      //    slightly earlier than this callback function().  It also
+      //    potentially provides more information than is available in
+      //    this callback.
+      //        -Ossama
+      req.orb_core ()->services_log_msg_pre_upcall (req);
+
+      // Invoke the skeleton, it will demarshal the arguments,
+      // invoke the right operation on the skeleton class
+      // (<derived_this>), and marshal any results.
+      skel (req, derived_this, servant_upcall TAO_ENV_ARG_PARAMETER); //, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // It is our job to send the already marshaled reply, but only
+      // send if it is expected and it has not already been sent
+
+      // @@ Same here...
+      //    Do we really need the following "callback?"  The
+      //    STANDARD send_reply()/send_other()/send_exception
+      //    interception points appear to do the same thing.  They
+      //    even provide more information than is available in this
+      //    callback.
+      //        -Ossama
+      // Log the message state to FT_Service Logging facility
+      req.orb_core ()->services_log_msg_post_upcall (req);
+
+      // We send the reply only if it is NOT a SYNC_WITH_SERVER, a
+      // response is expected and if the reply is not deferred.
+      if (send_reply)
+        {
+          req.tao_send_reply ();
+        }
+
+    }
+  ACE_CATCH (CORBA::Exception,ex)
+    {
+      // If an exception was raised we should marshal it and send
+      // the appropriate reply to the client
+      if (send_reply)
+        {
+          req.tao_send_reply_exception(ex);
+        }
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+
+  return;
+}
+
+void TAO_ServantBase::asynchronous_upcall_dispatch (
+                                                    TAO_ServerRequest &req,
+                                                    void *servant_upcall,
+                                                    void *derived_this
+                                                    TAO_ENV_ARG_DECL
+                                                    //  CORBA::Environment &ACE_TRY_ENV
+                                                    )
+{
+  TAO_Skeleton skel;
+  const char *opname = req.operation ();
+
+  // It seems that I might have missed s/g here.  What if
+  // it is a one way that is SYNC_WITH_SERVER.
+  // Add the following line to handle this reply send as well.
+
+  // Handle the one ways that are SYNC_WITH_SERVER
+  if (req.sync_with_server ())
+    {
+       req.send_no_exception_reply ();
+    }
+
+  // Fetch the skeleton for this operation
+  if (this->_find (opname, skel, req.operation_length()) == -1)
+    {
+      ACE_THROW (CORBA_BAD_OPERATION());
+    }
+
+  CORBA::Boolean send_reply = 0;
 
   ACE_TRY
     {
