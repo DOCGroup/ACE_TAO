@@ -290,18 +290,18 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::cre
 {
 
   T_StreamEndpoint *stream_endpoint;
-  ACE_NEW_RETURN (T_StreamEndpoint,
-                  stream_endpoint,
+  ACE_NEW_RETURN (stream_endpoint,
+                  T_StreamEndpoint,
                   -1);
 
   T_VDev *vdev;
-  ACE_NEW_RETURN (T_VDev,
-                  vdev,
+  ACE_NEW_RETURN (vdev,
+                  T_VDev,
                   -1);
 
   T_MediaCtrl *media_ctrl;
-  ACE_NEW_RETURN (T_MediaCtrl,
-                  media_ctrl,
+  ACE_NEW_RETURN (media_ctrl,
+                  T_MediaCtrl,
                   -1);
 
   this->orb_manager_.activate ("Stream_Endpoint_A",
@@ -350,13 +350,13 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::cre
                   -1);
 
   T_VDev *vdev;
-  ACE_NEW_RETURN (T_VDev,
-                  vdev,
+  ACE_NEW_RETURN (vdev,
+                  T_VDev,
                   -1);
 
   T_MediaCtrl *media_ctrl;
-  ACE_NEW_RETURN (T_MediaCtrl,
-                  media_ctrl,
+  ACE_NEW_RETURN (media_ctrl,
+                  T_MediaCtrl,
                   -1);
 
   this->orb_manager_.activate ("Stream_Endpoint_B",
