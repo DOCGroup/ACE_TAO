@@ -6,7 +6,7 @@
 
 // The following configuration file is designed to work for FreeBSD
 // platforms using GNU C++ and the POSIX (pthread) threads package
-// by John Birrell.  You must at least have 3.0-current as of 2/9/1997 to 
+// by John Birrell.  You must at least have 3.0-current as of 2/9/1997 to
 // take the advantage of latest pthread library.
 
 #if !defined (ACE_CONFIG_H)
@@ -25,8 +25,8 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_CHARPTR_DL
-#define ACE_USES_ASM_SYMBOL_IN_DLSYM	  
-#define ACE_LACKS_SIGSET  
+#define ACE_USES_ASM_SYMBOL_IN_DLSYM
+#define ACE_LACKS_SIGSET
 
 // sched.h still not fully support on FreeBSD ?
 // this is taken from /usr/src/lib/libc_r/uthread/pthread-private.h
@@ -51,7 +51,7 @@ enum schedparam_policy {
 #define ACE_HAS_SIN_LEN
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
@@ -133,7 +133,6 @@ enum schedparam_policy {
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
