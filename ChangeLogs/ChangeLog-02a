@@ -1,78 +1,122 @@
+Wed Aug  8 14:06:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/config-tru64.h:
+
+          Define ACE_HAS_NONSTATIC_OBJECT_MANAGER for all DEC Unix 4.x
+          versions.
+
+        * ace/config-cxx-common.h:
+
+          Define ACE_AUTO_PTR_LACKS_RESET if __DECCXX_VER == 60190027.
+          Thanks to Robert Burke <c-robert.burke@wcom.com> for reporting
+          this.
+
+        * include/makeinclude/platform_osf1_3.2.GNU:
+        * include/makeinclude/platform_osf1_4.0.GNU:
+        * include/makeinclude/platform_osf1_4.0_g++.GNU:
+        * include/makeinclude/platform_osf1_4.0_kcc.GNU:
+        * include/makeinclude/platform_osf1_4.0_rcc.GNU:
+
+          Removed the following files.
+
+        * include/makeinclude/platform_osf1_3.2_cxx.GNU:
+        * include/makeinclude/platform_osf1_4.x_cxx.GNU:
+        * include/makeinclude/platform_osf1_4.x_g++.GNU:
+        * include/makeinclude/platform_osf1_4.x_kcc.GNU:
+        * include/makeinclude/platform_osf1_4.x_rcc.GNU:
+
+          Added new versions of the removed files.
+
+        * include/makeinclude/platform_tru64_pre.GNU:
+        * include/makeinclude/platform_tru64_post.GNU:
+
+          Moved a lot of duplicated code into these new files.
+
+        * include/makeinclude/platform_tru64_cxx.GNU:
+        * include/makeinclude/platform_tru64_g++.GNU:
+        * include/makeinclude/platform_tru64_kcc.GNU:
+
+          Removed a lot of old *cruft* like setting up compilation with
+          cxx when gcc was asked for etc. etc. Somebody went overboard
+          with cut'n paste and copied David's changes blindly. Still not
+          completely satisfied. But it works and is better than before.
+          This also fixes Bug Id 989.
+
 Wed Aug 08 11:30:26 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Service_Config_Test.cpp (run_test):
+        * tests/Service_Config_Test.cpp (run_test):
 
-	  Don't check if "ACE_USES_WCHAR == 1" since some configurations
-	  neglect to set it an integer value.  Instead, just check if it
-	  is defined.
+          Don't check if "ACE_USES_WCHAR == 1" since some configurations
+          neglect to set it an integer value.  Instead, just check if it
+          is defined.
 
 Wed Aug  8 12:31:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/MEM_Stream_Test.cpp: Changed a ACE_DEBUG statment with an
-	  LM_WARNING  to an LM_DEBUG. 
+        * tests/MEM_Stream_Test.cpp: Changed a ACE_DEBUG statment with an
+          LM_WARNING  to an LM_DEBUG.
 
 Wed Aug 08 11:59:45 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Do not redefine ACE_IOV_MAX if it has already been
-	  defined.
+        * ace/OS.h: Do not redefine ACE_IOV_MAX if it has already been
+          defined.
 
 Wed Aug  8 06:21:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Makefile: Moved Message_Block from STREAMS_FILES to
- 	  UTILS_FILES.
+        * ace/Makefile: Moved Message_Block from STREAMS_FILES to
+          UTILS_FILES.
 
-	* ace/OS_Dirent.inl (closedir): Changed delete d->directory_name_ to
-	  delete [] d->directory_name_.  Thanks to Olivier Brunet
- 	  <obrunet@groupama-ccama.tm.fr> for reporting this.
+        * ace/OS_Dirent.inl (closedir): Changed delete d->directory_name_ to
+          delete [] d->directory_name_.  Thanks to Olivier Brunet
+          <obrunet@groupama-ccama.tm.fr> for reporting this.
 
 Tue Aug  7 21:59:42 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Svc_Handler_Test.cpp: Modified the test to dump the contents
-	  of the temporary file to the log file.
+        * tests/Svc_Handler_Test.cpp: Modified the test to dump the contents
+          of the temporary file to the log file.
 
 Tue Aug  7 19:14:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/CDR_Stream.i:
-	* ace/SOCK_Stream.h: Fixed incorrect comments.
-	  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for reporting
- 	  these.
+        * ace/CDR_Stream.i:
+        * ace/SOCK_Stream.h: Fixed incorrect comments.
+          Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for reporting
+          these.
 
 Tue Aug  7 15:19:38 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace: Changed all uses of IOV_MAX to use the new ACE_IOV_MAX.
+        * ace: Changed all uses of IOV_MAX to use the new ACE_IOV_MAX.
 
-	* ace/OS.h: Added a new ACE_IOV_MAX that makes it clear this is
-	  an ACE-level #define.  We use this in C++NP v1.
+        * ace/OS.h: Added a new ACE_IOV_MAX that makes it clear this is
+          an ACE-level #define.  We use this in C++NP v1.
 
 Tue Aug  7 14:16:57 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Svc_Handler.cpp: Reimplemented the flush() method to use
-	  the new send_n() method on the various ACE I/O classes.
+        * ace/Svc_Handler.cpp: Reimplemented the flush() method to use
+          the new send_n() method on the various ACE I/O classes.
 
-	* ace/SOCK_Stream.{h,i}:
-  	* ace/FILE_IO.{h,i}: Added a new send_n() method that sends all
-	  the <message_block>s chained through their <next> and <cont>
- 	  pointers using the underlying OS gather-write operation to
- 	  reduce the domain-crossing penalty.
+        * ace/SOCK_Stream.{h,i}:
+        * ace/FILE_IO.{h,i}: Added a new send_n() method that sends all
+          the <message_block>s chained through their <next> and <cont>
+          pointers using the underlying OS gather-write operation to
+          reduce the domain-crossing penalty.
 
 Tue Aug  7 17:27:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Collection_test.cpp: Fixed a compile error with g++. This
-	  is a patch that Johnny Willemsen sent as a part of his last
-	  checkin.
+        * tests/Collection_test.cpp: Fixed a compile error with g++. This
+          is a patch that Johnny Willemsen sent as a part of his last
+          checkin.
 
 Tue Aug 07 11:25:36 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Made the following definition
-	  valid only for pre-4.2-RELEASE.
+        * ace/config-freebsd-pthread.h: Made the following definition
+          valid only for pre-4.2-RELEASE.
 
-	  #define ACE_LACKS_GETPGID
-	  #define ACE_LACKS_SETPGID
-	  #define ACE_LACKS_SETREGID
-	  #define ACE_LACKS_SETREUID
+          #define ACE_LACKS_GETPGID
+          #define ACE_LACKS_SETPGID
+          #define ACE_LACKS_SETREGID
+          #define ACE_LACKS_SETREUID
 
-	  Thanks to Robert Burke <rburke2002@yahoo.com> for reporting
-	  this.
+          Thanks to Robert Burke <rburke2002@yahoo.com> for reporting
+          this.
 
 Tue Aug 07 16:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -85,7 +129,7 @@ Tue Aug 07 16:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Hash_Map_Manager_Test.cpp
           Extended this test to test the new const_iterator capabilities
- 	  of the hash map
+          of the hash map
 
         * ace/Unbounded_Set.cpp:
           Implemented missing operator* for the const iterator
@@ -96,74 +140,74 @@ Tue Aug 07 16:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Mon Aug  6 19:58:48 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/config-hpux-11.00.h: Added #define for ACE_HAS_TERM_IOCTLS.
-	  Thanks to Torbjorn Backstrom <torbjorn.k.backstrom@volvo.com>
- 	  for reporting this.
+        * ace/config-hpux-11.00.h: Added #define for ACE_HAS_TERM_IOCTLS.
+          Thanks to Torbjorn Backstrom <torbjorn.k.backstrom@volvo.com>
+          for reporting this.
 
-	* ace/OS.h: Added a #include for <sys/modem.h> for HP/UX.  Thanks
-	  to Torbjorn Backstrom <torbjorn.k.backstrom@volvo.com> for
- 	  reporting this.
+        * ace/OS.h: Added a #include for <sys/modem.h> for HP/UX.  Thanks
+          to Torbjorn Backstrom <torbjorn.k.backstrom@volvo.com> for
+          reporting this.
 
 Mon Aug  6 12:51:35 2001  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Synch.h (ACE_Null_Mutex>): Fixed a cut&paste error
-	  where acquire_write() should be acquire_read().  Thanks to
- 	  Russell Mora <rd.mora@router.econz.co.nz> for fixing this.
+        * ace/Synch.h (ACE_Null_Mutex>): Fixed a cut&paste error
+          where acquire_write() should be acquire_read().  Thanks to
+          Russell Mora <rd.mora@router.econz.co.nz> for fixing this.
 
 Mon Aug 06 17:17:33 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Service_Config.cpp:
+        * ace/Service_Config.cpp:
 
-	  Fixed some debugging messages that were not wrapped within an
-	  ACE_LIB_TEXT macro.
+          Fixed some debugging messages that were not wrapped within an
+          ACE_LIB_TEXT macro.
 
-	* tests/Service_Config_Test.UTF-16.conf:
+        * tests/Service_Config_Test.UTF-16.conf:
 
-	  Interim UTF-16 encoded version of the UTF-8 encoded
-	  Service_Config_Test.conf.  It was generated on a little-endian
-	  host.  Its current purpose is simply to keep our Unicode
-	  regression testing happy until the on-the-fly generation is
-	  implemented.  Once we start generating this file on-the-fly
-	  this file should disappear.
+          Interim UTF-16 encoded version of the UTF-8 encoded
+          Service_Config_Test.conf.  It was generated on a little-endian
+          host.  Its current purpose is simply to keep our Unicode
+          regression testing happy until the on-the-fly generation is
+          implemented.  Once we start generating this file on-the-fly
+          this file should disappear.
 
-	* tests/Service_Config_Test.cpp (run_test):
+        * tests/Service_Config_Test.cpp (run_test):
 
-	  When using full Unicode support, use the version of the Service
-	  Configurator file that is UTF-16 encoded (as described above).
+          When using full Unicode support, use the version of the Service
+          Configurator file that is UTF-16 encoded (as described above).
 
 Mon Aug 06 11:10:24 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_l.cpp:
 
-	  More Unicode fixes.  Flex's allocation function uses malloc() as
-	  its underlying allocator.  Since it only accepts the size in
-	  bytes, allocate "size * sizeof (ACE_TCHAR)" when allocating
-	  string buffers.  This should clear up some strange looking text
-	  "unknown character" messages emanating from the Service
-	  Configurator's underlying text scanner.
+          More Unicode fixes.  Flex's allocation function uses malloc() as
+          its underlying allocator.  Since it only accepts the size in
+          bytes, allocate "size * sizeof (ACE_TCHAR)" when allocating
+          string buffers.  This should clear up some strange looking text
+          "unknown character" messages emanating from the Service
+          Configurator's underlying text scanner.
 
-	  Note that these changes do not fix the cause of the "unknown
-	  character."  Those fixes should soon follow.
+          Note that these changes do not fix the cause of the "unknown
+          character."  Those fixes should soon follow.
 
 Mon Aug 06 09:04:04 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Svc_Conf.l:
+        * ace/Svc_Conf.l:
 
-	  Unicode updates.  Wrap debugging text within an ACE_LIB_TEXT
-	  macro.
+          Unicode updates.  Wrap debugging text within an ACE_LIB_TEXT
+          macro.
 
 Sun Aug  5 14:31:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/run_tests.lst: Ossama suggested that we dont run the
-	  Service_Config_Test in static builds.
+        * tests/run_tests.lst: Ossama suggested that we dont run the
+          Service_Config_Test in static builds.
 
 Fri Aug 04 3:33:31 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* ace/QoS/SOCK_Dgram_Mcast_QoS.h:
-	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.h:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
 
-	  Made the open method public so we can open UDP sockets for
-	  non-multicast addresses.
+          Made the open method public so we can open UDP sockets for
+          non-multicast addresses.
 
 Fri Aug 03 22:19:31 2001  Steve Huston  <shuston@riverace.com>
 
@@ -178,40 +222,40 @@ Fri Aug 03 22:15:51 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Aug  3 13:10:59 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-linux-common.h (ACE_UINT64_FORMAT_SPECIFIER,
-	  ACE_SSIZE_T_FORMAT_SPECIFIER, ACE_SIZE_T_FORMAT_SPECIFIER):
+        * ace/config-linux-common.h (ACE_UINT64_FORMAT_SPECIFIER,
+          ACE_SSIZE_T_FORMAT_SPECIFIER, ACE_SIZE_T_FORMAT_SPECIFIER):
 
-	  Removed unnecessary and some incorrect format specifiers for the
-	  32-bit platform case.  In particular, the format specifier for
-	  an unsigned 64-bit integer was incorrectly set to "%Lu."  "%L"
-	  is the format specifier for a "long double," not a "long long"
-	  integer on 32-bit platforms.  "%llu" is the correct format
-	  specifier which `ace/Basic_Types.h' already defines.
+          Removed unnecessary and some incorrect format specifiers for the
+          32-bit platform case.  In particular, the format specifier for
+          an unsigned 64-bit integer was incorrectly set to "%Lu."  "%L"
+          is the format specifier for a "long double," not a "long long"
+          integer on 32-bit platforms.  "%llu" is the correct format
+          specifier which `ace/Basic_Types.h' already defines.
 
 Fri Aug  3 09:55:38 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added the new TAO "DLL_ORB" test to the list of tests to run.
+          Added the new TAO "DLL_ORB" test to the list of tests to run.
 
 Fri Aug  3 08:26:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/RW_Process_Mutex.cpp: Added a missing comma in the
-	  constructor. This should fix Win32 compile errors.
+        * ace/RW_Process_Mutex.cpp: Added a missing comma in the
+          constructor. This should fix Win32 compile errors.
 
 Fri Aug  3 08:07:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Base.cpp: Added a check for a memory allocation failure
-	  in grow (). Thanks to Francis Paul <FranciP@navcanada.ca> for
-	  pointing this out.
+        * ace/CDR_Base.cpp: Added a check for a memory allocation failure
+          in grow (). Thanks to Francis Paul <FranciP@navcanada.ca> for
+          pointing this out.
 
 Thu Aug  2 18:37:23 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/RW_Process_Mutex.cpp: Added ACE_DEFAULT_OPEN_PERMS
-	  to the constructor call to ACE_RW_Process_Mutex so that it does
- 	  the right thing on Win32.  Thanks to Wayne Erchak
- 	  <werchak@stentor.com> for reporting this.  This fixes
-	  bugid 996.
+        * ace/RW_Process_Mutex.cpp: Added ACE_DEFAULT_OPEN_PERMS
+          to the constructor call to ACE_RW_Process_Mutex so that it does
+          the right thing on Win32.  Thanks to Wayne Erchak
+          <werchak@stentor.com> for reporting this.  This fixes
+          bugid 996.
 
 Thu Aug 02 13:04:19 2001  Steve Huston  <shuston@riverace.com>
 

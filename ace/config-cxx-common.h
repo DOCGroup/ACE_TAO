@@ -23,7 +23,7 @@
 # define ACE_HAS_CPLUSPLUS_HEADERS
 # if (__DECCXX_VER >= 60090010)
     // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
-    // are enabled by platform_osf1_4.0.GNU/wrapper_macros.GNU.
+    // are enabled by platform_osf1_4.x.GNU/wrapper_macros.GNU.
 #   if defined (ACE_HAS_EXCEPTIONS)
 #     define ACE_NEW_THROWS_EXCEPTIONS
 #   endif /* ACE_HAS_EXCEPTIONS */
@@ -66,6 +66,11 @@
       // causes warnings from ACE and/or TAO.
 #     pragma message disable intconlosbit
 #   endif /* __DECCXX_VER >= 60190029 */
+
+# if (__DECCXX_VER == 60190027)
+      // Seems that this version of cxx doesn't have reset
+#     define ACE_AUTO_PTR_LACKS_RESET
+#   endif /* __DECCXX_VER == 60190027 */
 
 #   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX >= 0x40D
       // variable "PTHREAD_THIS_CATCH_NP" was declared but never referenced
