@@ -56,10 +56,9 @@ Mon May 10 12:47:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Mon May 10 11:43:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-        * COPYING:
-
-          Made some updates suggested by Richard Stallman of the Free
-          Software Foundation (http://www.fsf.org/).
+        * COPYING: Made some updates suggested by Richard Stallman
+ 	  <rms@gnu.org> of the Free Software Foundation
+ 	  (http://www.fsf.org/).
 
 Mon May 10 08:24:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
