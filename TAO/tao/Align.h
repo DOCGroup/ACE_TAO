@@ -7,7 +7,7 @@
 //    TAO
 //
 // = FILENAME
-//    align.h
+//    Align.h
 //
 // = DESCRIPTION
 //    Pointer alignment utilities
@@ -46,16 +46,6 @@ typedef u_long long ptr_arith_t;
 // boundaries are binary powers and that we're using two's complement
 // arithmetic.
 
-#if 0
-static inline ptr_arith_t
-align_binary (const ptr_arith_t value,
-              size_t alignment)
-{
-  ptr_arith_t temp = alignment - 1;
-
-  return (value + temp) & ~temp;
-}
-#endif /* 0 */
 #define align_binary(ptr, alignment) \
     ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptr_arith_t)((alignment)-1))))
 
@@ -63,19 +53,6 @@ align_binary (const ptr_arith_t value,
 // all such boundaries are binary powers and that we're using two's
 // complement arithmetic.
 //
-// XXX Returned as "byte pointer" -- CDR module would change to be
-// seen as a "void *".  May want to change this to add XDR cleanly.
-
-// @@ Andy, do we still need this function or is the macro sufficient?
-// If the macro is sufficient can we remove the function?
-#if 0
-static inline u_char *
-ptr_align_binary (const u_char *ptr,
-                  size_t alignment)
-{
-  return (u_char *) align_binary ((ptr_arith_t) ptr, alignment);
-}
-#endif /* 0 */
 #define ptr_align_binary(ptr, alignment) \
         ((u_char *) align_binary (((ptr_arith_t) (ptr)), (alignment)))
 

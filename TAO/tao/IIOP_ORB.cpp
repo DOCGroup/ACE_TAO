@@ -34,13 +34,13 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // ORB implementations ...
 
       char *bytes;
-      // @@ Is BUFSIZ the right size here?
+      // XXXTAO Is BUFSIZ the right size here?
       char buf [BUFSIZ];
       CDR cdr (buf, sizeof buf, TAO_ENCAP_BYTE_ORDER);
 
       bytes = buf;
       // support limited oref ACE_OS::strcmp.
-      (void) ACE_OS::memset (bytes, 0, BUFSIZ);	
+      (void) ACE_OS::memset (bytes, 0, BUFSIZ);
 
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.put_char (TAO_ENCAP_BYTE_ORDER);
@@ -266,14 +266,14 @@ iiop_string_to_object (CORBA::String string,
   // Parse the object key
   TAO_POA::decode_string_to_sequence (data->profile.object_key,
                                       string);
-  
+
   // Create the CORBA level proxy.
   CORBA_Object *obj = new CORBA_Object (data);
-  
+
   // Clean up in case of error
   if (obj == 0)
     data->Release ();
-  
+
   return obj;
 }
 
