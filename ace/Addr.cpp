@@ -1,7 +1,6 @@
 // Addr.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Addr.h"
 
 ACE_RCSID(ace, Addr, "$Id$")

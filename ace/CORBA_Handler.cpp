@@ -1,7 +1,6 @@
 // CORBA_Handler.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/CORBA_Handler.h"
 
 #include "ace/Object_Manager.h"

@@ -1,7 +1,6 @@
 // MEM_IO.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/MEM_IO.h"
 #include "ace/Handle_Set.h"
 

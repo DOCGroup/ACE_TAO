@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #ifndef ACE_FUTURE_CPP
 #define ACE_FUTURE_CPP
 

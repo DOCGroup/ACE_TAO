@@ -3,7 +3,6 @@
 #if !defined (ACE_MESSAGE_QUEUE_C)
 #define ACE_MESSAGE_QUEUE_C
 
-#define ACE_BUILD_DLL
 #include "ace/Message_Queue.h"
 
 #if !defined (__ACE_INLINE__)

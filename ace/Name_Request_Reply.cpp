@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Name_Request_Reply.h"
 
 ACE_RCSID(ace, Name_Request_Reply, "$Id$")

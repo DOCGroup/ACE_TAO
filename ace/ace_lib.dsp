@@ -35,47 +35,21 @@ CFG=ACE LIB - Win32 Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug"
-# PROP BASE Intermediate_Dir "Debug"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir ".\LIB\Debug"
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
-# SUBTRACT CPP /YX
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o"ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:".\libace.lib"
-# ADD LIB32 /nologo /out:".\acesd.lib"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Release"
-# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Output_Dir "Unicode Release"
+# PROP BASE Intermediate_Dir "Unicode Release"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
-# PROP Intermediate_Dir ".\LIB\Release"
+# PROP Intermediate_Dir ".\LIB\Unicode_Release"
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /I "../" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /I "../" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409
@@ -85,7 +59,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o".\ace.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\libace-r.lib"
-# ADD LIB32 /nologo /out:".\aces.lib"
+# ADD LIB32 /nologo /out:".\acesu.lib"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
@@ -113,31 +87,27 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\libace.lib"
 # ADD LIB32 /nologo /out:".\acesud.lib"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Unicode Release"
-# PROP BASE Intermediate_Dir "Unicode Release"
+# PROP BASE Output_Dir "ACE_stat"
+# PROP BASE Intermediate_Dir "ACE_stat"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
-# PROP Intermediate_Dir ".\LIB\Unicode_Release"
+# PROP Intermediate_Dir "Lib\Release"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /I "../" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
-# SUBTRACT CPP /YX
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
+# ADD BASE CPP /Gt0 /nologo /Gt0 /W3 /GX /O1 /D "NDEBUG" /D "_WINDOWS" /FD /I "../" /D "WIN32" /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "../" /D "NDEBUG" /D "_WINDOWS" /D "WIN32" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o"ace.bsc"
+# ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:".\libace-r.lib"
-# ADD LIB32 /nologo /out:".\acesu.lib"
+# ADD BASE LIB32 /nologo /out:".\aces.lib"
+# ADD LIB32 /nologo /out:".\aces.lib"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
@@ -161,50 +131,6 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\acesd.lib"
 # ADD LIB32 /nologo /out:".\acesd.lib"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "ACE_stat"
-# PROP BASE Intermediate_Dir "ACE_stat"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Lib\Release"
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 /nologo /Gt0 /W3 /GX /O1 /D "NDEBUG" /D "_WINDOWS" /FD /I "../" /D "WIN32" /c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "../" /D "NDEBUG" /D "_WINDOWS" /D "WIN32" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o".\ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:".\aces.lib"
-# ADD LIB32 /nologo /out:".\aces.lib"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "ACE_sta0"
-# PROP BASE Intermediate_Dir "ACE_sta0"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "LIB\Unicode_Debug"
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy D "_DEBUG" D "_WINDOWS" D "UNICODE" FD I "..\\ /D " WIN32" /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D" /D "_WINDOWS" /D "UNICODE" /D "WIN32" /D ACE_HAS_DLL=0 /FD /MTd /c
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o".\ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:".\acesud.lib"
-# ADD LIB32 /nologo /out:".\acesud.lib"
-
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 # PROP BASE Use_MFC 0
@@ -227,32 +153,27 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\acesu.lib"
 # ADD LIB32 /nologo /out:".\acesu.lib"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "ACE_LIB___Win32_PharLap_ETS_Debug"
-# PROP BASE Intermediate_Dir "ACE_LIB___Win32_PharLap_ETS_Debug"
+# PROP BASE Output_Dir "ACE_sta0"
+# PROP BASE Intermediate_Dir "ACE_sta0"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
-# PROP Intermediate_Dir ".\LIB\Debug"
+# PROP Intermediate_Dir "LIB\Unicode_Debug"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MTd /W3 /GX /Z7 /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
-# SUBTRACT CPP /YX
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
+# ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy D "_DEBUG" D "_WINDOWS" D "UNICODE" FD I "..\\ /D " WIN32" /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D" /D "_WINDOWS" /D "UNICODE" /D "WIN32" /D ACE_HAS_DLL=0 /FD /MTd /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:".\acesd.lib"
-# ADD LIB32 /nologo /out:".\acesd.lib"
+# ADD BASE LIB32 /nologo /out:".\acesud.lib"
+# ADD LIB32 /nologo /out:".\acesud.lib"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
@@ -281,20 +202,99 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:".\aces.lib"
 # ADD LIB32 /nologo /out:".\aces.lib"
 
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "ACE_LIB___Win32_PharLap_ETS_Debug"
+# PROP BASE Intermediate_Dir "ACE_LIB___Win32_PharLap_ETS_Debug"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir ".\LIB\Debug"
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MTd /W3 /GX /Z7 /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
+# SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo /o".\ace.bsc"
+# ADD BSC32 /nologo /o".\ace.bsc"
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:".\acesd.lib"
+# ADD LIB32 /nologo /out:".\acesd.lib"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "Release"
+# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir ""
+# PROP Intermediate_Dir ".\LIB\Release"
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /I "../" /D ACE_HAS_DLL=0 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo /o"ace.bsc"
+# ADD BSC32 /nologo /o".\ace.bsc"
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:".\libace-r.lib"
+# ADD LIB32 /nologo /out:".\aces.lib"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Debug"
+# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir ".\LIB\Debug"
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
+# SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo /o"ace.bsc"
+# ADD BSC32 /nologo /o".\ace.bsc"
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:".\libace.lib"
+# ADD LIB32 /nologo /out:".\acesd.lib"
+
 !ENDIF 
 
 # Begin Target
 
-# Name "ACE LIB - Win32 Debug"
-# Name "ACE LIB - Win32 Release"
-# Name "ACE LIB - Win32 Unicode Debug"
 # Name "ACE LIB - Win32 Unicode Release"
-# Name "ACE LIB - Win32 Alpha Debug"
+# Name "ACE LIB - Win32 Unicode Debug"
 # Name "ACE LIB - Win32 Alpha Release"
-# Name "ACE LIB - Win32 Alpha Unicode Debug"
+# Name "ACE LIB - Win32 Alpha Debug"
 # Name "ACE LIB - Win32 Alpha Unicode Release"
-# Name "ACE LIB - Win32 PharLap ETS Debug"
+# Name "ACE LIB - Win32 Alpha Unicode Debug"
 # Name "ACE LIB - Win32 PharLap ETS Release"
+# Name "ACE LIB - Win32 PharLap ETS Debug"
+# Name "ACE LIB - Win32 Release"
+# Name "ACE LIB - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
@@ -302,25 +302,25 @@ LIB32=link.exe -lib
 
 SOURCE=.\ACE.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -329,25 +329,25 @@ SOURCE=.\ACE.cpp
 
 SOURCE=.\Activation_Queue.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -356,25 +356,25 @@ SOURCE=.\Activation_Queue.cpp
 
 SOURCE=.\Active_Map_Manager.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -383,25 +383,25 @@ SOURCE=.\Active_Map_Manager.cpp
 
 SOURCE=.\Addr.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -410,25 +410,25 @@ SOURCE=.\Addr.cpp
 
 SOURCE=.\Arg_Shifter.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -437,25 +437,25 @@ SOURCE=.\Arg_Shifter.cpp
 
 SOURCE=.\ARGV.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -464,25 +464,25 @@ SOURCE=.\ARGV.cpp
 
 SOURCE=.\Asynch_IO.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -491,25 +491,25 @@ SOURCE=.\Asynch_IO.cpp
 
 SOURCE=.\Asynch_IO_Impl.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -518,25 +518,25 @@ SOURCE=.\Asynch_IO_Impl.cpp
 
 SOURCE=.\ATM_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -545,25 +545,25 @@ SOURCE=.\ATM_Acceptor.cpp
 
 SOURCE=.\ATM_Addr.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -572,25 +572,25 @@ SOURCE=.\ATM_Addr.cpp
 
 SOURCE=.\ATM_Connector.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -599,25 +599,25 @@ SOURCE=.\ATM_Connector.cpp
 
 SOURCE=.\ATM_Params.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -626,25 +626,25 @@ SOURCE=.\ATM_Params.cpp
 
 SOURCE=.\ATM_QoS.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -653,25 +653,25 @@ SOURCE=.\ATM_QoS.cpp
 
 SOURCE=.\ATM_Stream.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -680,25 +680,25 @@ SOURCE=.\ATM_Stream.cpp
 
 SOURCE=.\Based_Pointer_Repository.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -707,25 +707,25 @@ SOURCE=.\Based_Pointer_Repository.cpp
 
 SOURCE=.\Basic_Types.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -734,25 +734,25 @@ SOURCE=.\Basic_Types.cpp
 
 SOURCE=.\Capabilities.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -761,25 +761,25 @@ SOURCE=.\Capabilities.cpp
 
 SOURCE=.\CDR_Stream.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -788,25 +788,25 @@ SOURCE=.\CDR_Stream.cpp
 
 SOURCE=.\Configuration.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -815,25 +815,25 @@ SOURCE=.\Configuration.cpp
 
 SOURCE=.\Containers.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -842,25 +842,25 @@ SOURCE=.\Containers.cpp
 
 SOURCE=.\CORBA_Handler.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -869,25 +869,25 @@ SOURCE=.\CORBA_Handler.cpp
 
 SOURCE=.\CORBA_Ref.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -896,25 +896,25 @@ SOURCE=.\CORBA_Ref.cpp
 
 SOURCE=.\Date_Time.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -923,25 +923,25 @@ SOURCE=.\Date_Time.cpp
 
 SOURCE=.\DEV.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -950,25 +950,25 @@ SOURCE=.\DEV.cpp
 
 SOURCE=.\DEV_Addr.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -977,25 +977,25 @@ SOURCE=.\DEV_Addr.cpp
 
 SOURCE=.\DEV_Connector.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1004,25 +1004,25 @@ SOURCE=.\DEV_Connector.cpp
 
 SOURCE=.\DEV_IO.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1031,25 +1031,25 @@ SOURCE=.\DEV_IO.cpp
 
 SOURCE=.\Dirent.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1058,25 +1058,25 @@ SOURCE=.\Dirent.cpp
 
 SOURCE=.\DLL.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1085,25 +1085,25 @@ SOURCE=.\DLL.cpp
 
 SOURCE=.\Dump.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1112,25 +1112,25 @@ SOURCE=.\Dump.cpp
 
 SOURCE=.\Dynamic.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1139,25 +1139,25 @@ SOURCE=.\Dynamic.cpp
 
 SOURCE=.\Dynamic_Service.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1166,25 +1166,25 @@ SOURCE=.\Dynamic_Service.cpp
 
 SOURCE=.\Event_Handler.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1193,25 +1193,25 @@ SOURCE=.\Event_Handler.cpp
 
 SOURCE=.\Event_Handler_T.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1220,25 +1220,25 @@ SOURCE=.\Event_Handler_T.cpp
 
 SOURCE=.\FIFO.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1247,25 +1247,25 @@ SOURCE=.\FIFO.cpp
 
 SOURCE=.\FIFO_Recv.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1274,25 +1274,25 @@ SOURCE=.\FIFO_Recv.cpp
 
 SOURCE=.\FIFO_Recv_Msg.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1301,25 +1301,25 @@ SOURCE=.\FIFO_Recv_Msg.cpp
 
 SOURCE=.\FIFO_Send.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1328,25 +1328,25 @@ SOURCE=.\FIFO_Send.cpp
 
 SOURCE=.\FIFO_Send_Msg.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1355,25 +1355,25 @@ SOURCE=.\FIFO_Send_Msg.cpp
 
 SOURCE=.\FILE.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1382,25 +1382,25 @@ SOURCE=.\FILE.cpp
 
 SOURCE=.\FILE_Addr.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1409,25 +1409,25 @@ SOURCE=.\FILE_Addr.cpp
 
 SOURCE=.\FILE_Connector.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1436,25 +1436,25 @@ SOURCE=.\FILE_Connector.cpp
 
 SOURCE=.\FILE_IO.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1463,25 +1463,25 @@ SOURCE=.\FILE_IO.cpp
 
 SOURCE=.\Filecache.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1490,25 +1490,25 @@ SOURCE=.\Filecache.cpp
 
 SOURCE=.\Functor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1517,25 +1517,25 @@ SOURCE=.\Functor.cpp
 
 SOURCE=.\Get_Opt.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1544,25 +1544,25 @@ SOURCE=.\Get_Opt.cpp
 
 SOURCE=.\Handle_Set.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1571,25 +1571,25 @@ SOURCE=.\Handle_Set.cpp
 
 SOURCE=.\Hash_Map_Manager.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1598,25 +1598,25 @@ SOURCE=.\Hash_Map_Manager.cpp
 
 SOURCE=.\High_Res_Timer.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1625,25 +1625,25 @@ SOURCE=.\High_Res_Timer.cpp
 
 SOURCE=.\INET_Addr.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1652,25 +1652,25 @@ SOURCE=.\INET_Addr.cpp
 
 SOURCE=.\IO_Cntl_Msg.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1679,25 +1679,25 @@ SOURCE=.\IO_Cntl_Msg.cpp
 
 SOURCE=.\IO_SAP.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1706,25 +1706,25 @@ SOURCE=.\IO_SAP.cpp
 
 SOURCE=.\IOStream.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1733,25 +1733,25 @@ SOURCE=.\IOStream.cpp
 
 SOURCE=.\IPC_SAP.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1760,25 +1760,25 @@ SOURCE=.\IPC_SAP.cpp
 
 SOURCE=.\Local_Name_Space.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1787,25 +1787,25 @@ SOURCE=.\Local_Name_Space.cpp
 
 SOURCE=.\Local_Tokens.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1814,25 +1814,25 @@ SOURCE=.\Local_Tokens.cpp
 
 SOURCE=.\Log_Msg.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1841,25 +1841,25 @@ SOURCE=.\Log_Msg.cpp
 
 SOURCE=.\Log_Record.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1868,25 +1868,25 @@ SOURCE=.\Log_Record.cpp
 
 SOURCE=.\LSOCK.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1895,25 +1895,25 @@ SOURCE=.\LSOCK.cpp
 
 SOURCE=.\LSOCK_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1922,25 +1922,25 @@ SOURCE=.\LSOCK_Acceptor.cpp
 
 SOURCE=.\LSOCK_CODgram.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1949,25 +1949,25 @@ SOURCE=.\LSOCK_CODgram.cpp
 
 SOURCE=.\LSOCK_Connector.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -1976,25 +1976,25 @@ SOURCE=.\LSOCK_Connector.cpp
 
 SOURCE=.\LSOCK_Dgram.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2003,25 +2003,25 @@ SOURCE=.\LSOCK_Dgram.cpp
 
 SOURCE=.\LSOCK_Stream.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2030,25 +2030,25 @@ SOURCE=.\LSOCK_Stream.cpp
 
 SOURCE=.\Malloc.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2057,25 +2057,25 @@ SOURCE=.\Malloc.cpp
 
 SOURCE=.\Map.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2084,25 +2084,25 @@ SOURCE=.\Map.cpp
 
 SOURCE=.\MEM_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2111,25 +2111,25 @@ SOURCE=.\MEM_Acceptor.cpp
 
 SOURCE=.\MEM_Addr.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2138,25 +2138,25 @@ SOURCE=.\MEM_Addr.cpp
 
 SOURCE=.\MEM_Connector.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2165,25 +2165,25 @@ SOURCE=.\MEM_Connector.cpp
 
 SOURCE=.\MEM_IO.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2192,25 +2192,25 @@ SOURCE=.\MEM_IO.cpp
 
 SOURCE=.\Mem_Map.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2219,25 +2219,25 @@ SOURCE=.\Mem_Map.cpp
 
 SOURCE=.\MEM_SAP.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2246,25 +2246,25 @@ SOURCE=.\MEM_SAP.cpp
 
 SOURCE=.\MEM_Stream.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2273,25 +2273,25 @@ SOURCE=.\MEM_Stream.cpp
 
 SOURCE=.\Memory_Pool.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2300,25 +2300,25 @@ SOURCE=.\Memory_Pool.cpp
 
 SOURCE=.\Message_Block.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2327,25 +2327,25 @@ SOURCE=.\Message_Block.cpp
 
 SOURCE=.\Message_Queue.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2354,25 +2354,25 @@ SOURCE=.\Message_Queue.cpp
 
 SOURCE=.\Method_Request.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2381,25 +2381,25 @@ SOURCE=.\Method_Request.cpp
 
 SOURCE=.\Msg_WFMO_Reactor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2408,25 +2408,25 @@ SOURCE=.\Msg_WFMO_Reactor.cpp
 
 SOURCE=.\Multiplexor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2435,25 +2435,25 @@ SOURCE=.\Multiplexor.cpp
 
 SOURCE=.\Name_Proxy.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2462,25 +2462,25 @@ SOURCE=.\Name_Proxy.cpp
 
 SOURCE=.\Name_Request_Reply.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2489,25 +2489,25 @@ SOURCE=.\Name_Request_Reply.cpp
 
 SOURCE=.\Name_Space.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2516,25 +2516,25 @@ SOURCE=.\Name_Space.cpp
 
 SOURCE=.\Naming_Context.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2543,25 +2543,25 @@ SOURCE=.\Naming_Context.cpp
 
 SOURCE=.\NT_Service.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2570,25 +2570,25 @@ SOURCE=.\NT_Service.cpp
 
 SOURCE=.\Object_Manager.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2597,25 +2597,25 @@ SOURCE=.\Object_Manager.cpp
 
 SOURCE=.\Obstack.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2624,25 +2624,25 @@ SOURCE=.\Obstack.cpp
 
 SOURCE=.\OS.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2651,25 +2651,25 @@ SOURCE=.\OS.cpp
 
 SOURCE=.\Pair.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2678,25 +2678,25 @@ SOURCE=.\Pair.cpp
 
 SOURCE=.\Parse_Node.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2705,25 +2705,25 @@ SOURCE=.\Parse_Node.cpp
 
 SOURCE=.\Pipe.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2732,25 +2732,25 @@ SOURCE=.\Pipe.cpp
 
 SOURCE=.\Priority_Reactor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2759,25 +2759,25 @@ SOURCE=.\Priority_Reactor.cpp
 
 SOURCE=.\Proactor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2786,25 +2786,25 @@ SOURCE=.\Proactor.cpp
 
 SOURCE=.\Process.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2813,25 +2813,25 @@ SOURCE=.\Process.cpp
 
 SOURCE=.\Process_Manager.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2840,25 +2840,25 @@ SOURCE=.\Process_Manager.cpp
 
 SOURCE=.\Profile_Timer.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2867,25 +2867,25 @@ SOURCE=.\Profile_Timer.cpp
 
 SOURCE=.\QoS_Session_Factory.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2894,25 +2894,25 @@ SOURCE=.\QoS_Session_Factory.cpp
 
 SOURCE=.\QoS_Session_Impl.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2921,25 +2921,25 @@ SOURCE=.\QoS_Session_Impl.cpp
 
 SOURCE=.\Reactor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2948,25 +2948,25 @@ SOURCE=.\Reactor.cpp
 
 SOURCE=.\Read_Buffer.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -2975,25 +2975,25 @@ SOURCE=.\Read_Buffer.cpp
 
 SOURCE=.\Registry.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3002,25 +3002,25 @@ SOURCE=.\Registry.cpp
 
 SOURCE=.\Registry_Name_Space.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3029,25 +3029,25 @@ SOURCE=.\Registry_Name_Space.cpp
 
 SOURCE=.\Remote_Name_Space.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3056,25 +3056,25 @@ SOURCE=.\Remote_Name_Space.cpp
 
 SOURCE=.\Remote_Tokens.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3083,25 +3083,25 @@ SOURCE=.\Remote_Tokens.cpp
 
 SOURCE=.\Sched_Params.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3110,25 +3110,25 @@ SOURCE=.\Sched_Params.cpp
 
 SOURCE=.\Select_Reactor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3137,25 +3137,25 @@ SOURCE=.\Select_Reactor.cpp
 
 SOURCE=.\Select_Reactor_Base.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3164,25 +3164,25 @@ SOURCE=.\Select_Reactor_Base.cpp
 
 SOURCE=.\Service_Config.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3191,25 +3191,25 @@ SOURCE=.\Service_Config.cpp
 
 SOURCE=.\Service_Manager.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3218,25 +3218,25 @@ SOURCE=.\Service_Manager.cpp
 
 SOURCE=.\Service_Object.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3245,25 +3245,25 @@ SOURCE=.\Service_Object.cpp
 
 SOURCE=.\Service_Repository.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3272,25 +3272,25 @@ SOURCE=.\Service_Repository.cpp
 
 SOURCE=.\Service_Types.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3299,25 +3299,25 @@ SOURCE=.\Service_Types.cpp
 
 SOURCE=.\Shared_Memory.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3326,25 +3326,25 @@ SOURCE=.\Shared_Memory.cpp
 
 SOURCE=.\Shared_Memory_MM.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3353,25 +3353,25 @@ SOURCE=.\Shared_Memory_MM.cpp
 
 SOURCE=.\Shared_Memory_SV.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3380,25 +3380,25 @@ SOURCE=.\Shared_Memory_SV.cpp
 
 SOURCE=.\Shared_Object.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3407,25 +3407,25 @@ SOURCE=.\Shared_Object.cpp
 
 SOURCE=.\Signal.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3434,25 +3434,25 @@ SOURCE=.\Signal.cpp
 
 SOURCE=.\SOCK.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3461,25 +3461,25 @@ SOURCE=.\SOCK.cpp
 
 SOURCE=.\SOCK_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3488,25 +3488,25 @@ SOURCE=.\SOCK_Acceptor.cpp
 
 SOURCE=.\SOCK_CODgram.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3515,25 +3515,25 @@ SOURCE=.\SOCK_CODgram.cpp
 
 SOURCE=.\SOCK_Connector.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3542,25 +3542,25 @@ SOURCE=.\SOCK_Connector.cpp
 
 SOURCE=.\SOCK_Dgram.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3569,25 +3569,25 @@ SOURCE=.\SOCK_Dgram.cpp
 
 SOURCE=.\SOCK_Dgram_Bcast.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3596,25 +3596,25 @@ SOURCE=.\SOCK_Dgram_Bcast.cpp
 
 SOURCE=.\SOCK_Dgram_Mcast.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3623,25 +3623,25 @@ SOURCE=.\SOCK_Dgram_Mcast.cpp
 
 SOURCE=.\SOCK_IO.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3650,25 +3650,25 @@ SOURCE=.\SOCK_IO.cpp
 
 SOURCE=.\SOCK_Stream.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3677,25 +3677,25 @@ SOURCE=.\SOCK_Stream.cpp
 
 SOURCE=.\SPIPE.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3704,25 +3704,25 @@ SOURCE=.\SPIPE.cpp
 
 SOURCE=.\SPIPE_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3731,25 +3731,25 @@ SOURCE=.\SPIPE_Acceptor.cpp
 
 SOURCE=.\SPIPE_Addr.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3758,25 +3758,25 @@ SOURCE=.\SPIPE_Addr.cpp
 
 SOURCE=.\SPIPE_Connector.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3785,25 +3785,25 @@ SOURCE=.\SPIPE_Connector.cpp
 
 SOURCE=.\SPIPE_Stream.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3812,25 +3812,25 @@ SOURCE=.\SPIPE_Stream.cpp
 
 SOURCE=.\SString.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3839,25 +3839,25 @@ SOURCE=.\SString.cpp
 
 SOURCE=.\Stats.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3866,25 +3866,25 @@ SOURCE=.\Stats.cpp
 
 SOURCE=.\Strategies.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3893,25 +3893,25 @@ SOURCE=.\Strategies.cpp
 
 SOURCE=.\SV_Message.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3920,25 +3920,25 @@ SOURCE=.\SV_Message.cpp
 
 SOURCE=.\SV_Message_Queue.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3947,25 +3947,25 @@ SOURCE=.\SV_Message_Queue.cpp
 
 SOURCE=.\SV_Semaphore_Complex.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -3974,25 +3974,25 @@ SOURCE=.\SV_Semaphore_Complex.cpp
 
 SOURCE=.\SV_Semaphore_Simple.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4001,25 +4001,25 @@ SOURCE=.\SV_Semaphore_Simple.cpp
 
 SOURCE=.\SV_Shared_Memory.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4028,25 +4028,25 @@ SOURCE=.\SV_Shared_Memory.cpp
 
 SOURCE=.\Svc_Conf_l.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4055,25 +4055,25 @@ SOURCE=.\Svc_Conf_l.cpp
 
 SOURCE=.\Svc_Conf_y.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4082,25 +4082,25 @@ SOURCE=.\Svc_Conf_y.cpp
 
 SOURCE=.\Svc_Handler.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4109,25 +4109,25 @@ SOURCE=.\Svc_Handler.cpp
 
 SOURCE=.\Synch.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4136,25 +4136,25 @@ SOURCE=.\Synch.cpp
 
 SOURCE=.\Synch_Options.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4163,25 +4163,25 @@ SOURCE=.\Synch_Options.cpp
 
 SOURCE=.\System_Time.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4190,25 +4190,25 @@ SOURCE=.\System_Time.cpp
 
 SOURCE=.\Task.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4217,25 +4217,25 @@ SOURCE=.\Task.cpp
 
 SOURCE=.\Template_Instantiations.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4244,25 +4244,25 @@ SOURCE=.\Template_Instantiations.cpp
 
 SOURCE=.\Thread.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4271,25 +4271,25 @@ SOURCE=.\Thread.cpp
 
 SOURCE=.\Thread_Manager.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4298,25 +4298,25 @@ SOURCE=.\Thread_Manager.cpp
 
 SOURCE=.\Time_Request_Reply.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4325,25 +4325,25 @@ SOURCE=.\Time_Request_Reply.cpp
 
 SOURCE=.\Timeprobe.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4352,25 +4352,25 @@ SOURCE=.\Timeprobe.cpp
 
 SOURCE=.\Timer_Hash.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4379,25 +4379,25 @@ SOURCE=.\Timer_Hash.cpp
 
 SOURCE=.\Timer_Heap.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4406,25 +4406,25 @@ SOURCE=.\Timer_Heap.cpp
 
 SOURCE=.\Timer_List.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4433,25 +4433,25 @@ SOURCE=.\Timer_List.cpp
 
 SOURCE=.\Timer_Queue.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4460,25 +4460,25 @@ SOURCE=.\Timer_Queue.cpp
 
 SOURCE=.\Timer_Queue_Adapters.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4487,25 +4487,25 @@ SOURCE=.\Timer_Queue_Adapters.cpp
 
 SOURCE=.\Timer_Wheel.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4514,25 +4514,25 @@ SOURCE=.\Timer_Wheel.cpp
 
 SOURCE=.\TLI.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4541,25 +4541,25 @@ SOURCE=.\TLI.cpp
 
 SOURCE=.\TLI_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4568,25 +4568,25 @@ SOURCE=.\TLI_Acceptor.cpp
 
 SOURCE=.\TLI_Connector.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4595,25 +4595,25 @@ SOURCE=.\TLI_Connector.cpp
 
 SOURCE=.\TLI_Stream.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4622,25 +4622,25 @@ SOURCE=.\TLI_Stream.cpp
 
 SOURCE=.\Token.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4649,25 +4649,25 @@ SOURCE=.\Token.cpp
 
 SOURCE=.\Token_Collection.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4676,25 +4676,25 @@ SOURCE=.\Token_Collection.cpp
 
 SOURCE=.\Token_Invariants.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4703,25 +4703,25 @@ SOURCE=.\Token_Invariants.cpp
 
 SOURCE=.\Token_Manager.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4730,25 +4730,25 @@ SOURCE=.\Token_Manager.cpp
 
 SOURCE=.\Token_Request_Reply.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4757,25 +4757,25 @@ SOURCE=.\Token_Request_Reply.cpp
 
 SOURCE=.\TP_Reactor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4784,25 +4784,25 @@ SOURCE=.\TP_Reactor.cpp
 
 SOURCE=.\Trace.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4811,25 +4811,25 @@ SOURCE=.\Trace.cpp
 
 SOURCE=.\TTY_IO.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4838,25 +4838,25 @@ SOURCE=.\TTY_IO.cpp
 
 SOURCE=.\Typed_SV_Message.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4865,25 +4865,25 @@ SOURCE=.\Typed_SV_Message.cpp
 
 SOURCE=.\Typed_SV_Message_Queue.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4892,25 +4892,25 @@ SOURCE=.\Typed_SV_Message_Queue.cpp
 
 SOURCE=.\UNIX_Addr.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4919,25 +4919,25 @@ SOURCE=.\UNIX_Addr.cpp
 
 SOURCE=.\UPIPE_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4946,25 +4946,25 @@ SOURCE=.\UPIPE_Acceptor.cpp
 
 SOURCE=.\UPIPE_Connector.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -4973,25 +4973,25 @@ SOURCE=.\UPIPE_Connector.cpp
 
 SOURCE=.\UPIPE_Stream.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -5000,25 +5000,25 @@ SOURCE=.\UPIPE_Stream.cpp
 
 SOURCE=.\WFMO_Reactor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -5027,25 +5027,25 @@ SOURCE=.\WFMO_Reactor.cpp
 
 SOURCE=.\WIN32_Asynch_IO.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -5054,25 +5054,25 @@ SOURCE=.\WIN32_Asynch_IO.cpp
 
 SOURCE=.\WIN32_Proactor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -5081,25 +5081,25 @@ SOURCE=.\WIN32_Proactor.cpp
 
 SOURCE=.\XtReactor.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -7022,25 +7022,25 @@ SOURCE=..\Version
 
 SOURCE=.\ace.rc
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 
@@ -7050,25 +7050,25 @@ SOURCE=.\ace.rc
 
 SOURCE=.\QoS_Manager.cpp
 
-!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+!IF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
 
 !ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
 
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
 !ENDIF 
 

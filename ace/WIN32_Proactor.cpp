@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 // ACE_RCSID(ace, Proactor, "$Id$")
 
 #include "ace/WIN32_Proactor.h"

@@ -4,7 +4,6 @@
 #if !defined (ACE_LOCAL_NAME_SPACE_C)
 #define ACE_LOCAL_NAME_SPACE_C
 
-#define ACE_BUILD_DLL
 #include "ace/ACE.h"
 #include "ace/Local_Name_Space.h"
 

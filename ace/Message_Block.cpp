@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Message_Block.h"
 #include "ace/Synch_T.h"
 

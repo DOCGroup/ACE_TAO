@@ -3,8 +3,6 @@
 #ifndef ACE_CONTAINERS_T_C
 #define ACE_CONTAINERS_T_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

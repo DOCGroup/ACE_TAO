@@ -77,7 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "idl.h"
 #include        "idl_extern.h"
 
-#include "ace/inc_user_config.h"
+#include "ace/config-all.h"
 
 ACE_RCSID(ast, ast_generator, "$Id$")
 

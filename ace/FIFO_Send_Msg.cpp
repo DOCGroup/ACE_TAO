@@ -3,7 +3,6 @@
 
 /* -*- C++ -*- */
 
-#define ACE_BUILD_DLL
 #include "ace/FIFO_Send_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -3,7 +3,7 @@
 // This server daemon processes SNMP Version 1 get, get-next, and set
 // commands. over the MIB II "System" group only.
 
-#include "ace/inc_user_config.h"
+#include "ace/config-all.h"
 #include "snmp_agent.h"
 
 ACE_RCSID(agent, main, "$Id$")

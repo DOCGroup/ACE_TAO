@@ -4,7 +4,6 @@ char ace_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
 #endif
 #line 2 "Svc_Conf.y"
 /* $Id$*/
-#define ACE_BUILD_DLL
 #include "ace/ARGV.h"
 #include "ace/Svc_Conf.h"
 #include "ace/Module.h"

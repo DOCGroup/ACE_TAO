@@ -3,7 +3,6 @@
 #ifndef ACE_SYNCH_T_C
 #define ACE_SYNCH_T_C
 
-#define ACE_BUILD_DLL
 #include "ace/Thread.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -1,7 +1,6 @@
 // SOCK_Acceptor.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/SOCK_Acceptor.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

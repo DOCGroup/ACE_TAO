@@ -1,7 +1,6 @@
 // SOCK_Dgram.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/SOCK_Dgram.h"
 #include "ace/Handle_Set.h"
 #include "ace/Synch.h"

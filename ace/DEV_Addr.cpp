@@ -1,7 +1,6 @@
 // DEV_Addr.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/DEV_Addr.h"
 
 #if !defined (__ACE_INLINE__)

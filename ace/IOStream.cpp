@@ -3,8 +3,6 @@
 #if !defined (ACE_IOSTREAM_C)
 #define ACE_IOSTREAM_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/IOStream.h"
 
 ACE_RCSID(ace, IOStream, "$Id$")

@@ -2,8 +2,7 @@
 
 // We need this to get the status of ACE_NTRACE...
 
-#define ACE_BUILD_DLL
-#include "ace/inc_user_config.h"
+#include "ace/config-all.h"
 
 ACE_RCSID(ace, Trace, "$Id$")
 

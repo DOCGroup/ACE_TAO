@@ -1,8 +1,6 @@
 // QoS_Session_Factory.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/QoS_Session_Factory.h"
 #include "ace/QoS_Session_Impl.h"
 

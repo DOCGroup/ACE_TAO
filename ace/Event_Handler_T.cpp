@@ -4,7 +4,6 @@
 #ifndef EVENT_HANDLER_T_C
 #define EVENT_HANDLER_T_C
 
-#define ACE_BUILD_DLL
 #include "ace/Event_Handler_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

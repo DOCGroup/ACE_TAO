@@ -1,7 +1,6 @@
 // DLL.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/DLL.h"
 
 #include "ace/ACE.h"

@@ -1,7 +1,6 @@
 // Shared_Memory_MM.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Shared_Memory_MM.h"
 
 #if !defined (__ACE_INLINE__)

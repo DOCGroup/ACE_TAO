@@ -1,7 +1,6 @@
 // $Id$
 
 // Memory_Pool.cpp
-#define ACE_BUILD_DLL
 #include "ace/Memory_Pool.h"
 
 #if !defined (__ACE_INLINE__)

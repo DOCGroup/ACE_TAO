@@ -1,7 +1,6 @@
 // Shared_Object.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Shared_Object.h"
 /* Provide the abstract base class used to access dynamic linking
    facilities */

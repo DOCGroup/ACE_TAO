@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/POSIX_Proactor.h"
 
 #if defined (ACE_HAS_AIO_CALLS)

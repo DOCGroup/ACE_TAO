@@ -1,3 +1,12 @@
+Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO/TAO_IDL/ast/ast_generator.cpp:
+        * TAO/TAO_IDL/be/be_generator.cpp:
+        * TAO/tao/Timeprobe.h:
+
+          Changed inc_user_config.h to config-all.h (see ACE's changelog
+          entry for more info).
+
 Tue Apr 18 16:56:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO_Internal.cpp:

@@ -1,5 +1,4 @@
 // $Id$
-#define ACE_BUILD_DLL
 
 #include "ace/Dirent.h"
 

@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Get_Opt.h"
 #include "ace/Service_Repository.h"
 #include "ace/Service_Config.h"

@@ -1,6 +1,5 @@
 %{
 // $Id$
-#define ACE_BUILD_DLL
 #include "ace/ARGV.h"
 #include "ace/Svc_Conf.h"
 #include "ace/Module.h"

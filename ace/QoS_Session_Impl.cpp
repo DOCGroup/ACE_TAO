@@ -1,8 +1,6 @@
 // QoS_Session_Impl.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/SOCK.h"
 #include "ace/QoS_Manager.h"
 #include "ace/QoS_Session_Impl.h"

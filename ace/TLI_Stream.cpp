@@ -3,7 +3,6 @@
 /* Defines the member functions for the base class of the ACE_TLI_Stream
    abstraction. */
 
-#define ACE_BUILD_DLL
 #include "ace/TLI_Stream.h"
 
 ACE_RCSID(ace, TLI_Stream, "$Id$")

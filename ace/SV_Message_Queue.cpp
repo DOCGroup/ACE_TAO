@@ -1,7 +1,6 @@
 // SV_Message_Queue.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/SV_Message_Queue.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

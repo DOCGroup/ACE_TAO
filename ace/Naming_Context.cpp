@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Get_Opt.h"
 #include "ace/Naming_Context.h"
 #include "ace/Remote_Name_Space.h"

@@ -1,9 +1,7 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 // We need this to get the status of ACE_NTRACE...
-#include "ace/inc_user_config.h"
+#include "ace/config-all.h"
 
 // Turn off tracing for the duration of this file.
 #if defined (ACE_NTRACE)

@@ -4,7 +4,6 @@
 #ifndef ACE_MODULE_C
 #define ACE_MODULE_C
 
-#define ACE_BUILD_DLL
 #include "ace/Module.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

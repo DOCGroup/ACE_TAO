@@ -1,7 +1,6 @@
 // LSOCK_Stream.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/LSOCK_Stream.h"
 
 ACE_RCSID(ace, LSOCK_Stream, "$Id$")

@@ -3,7 +3,6 @@
 #ifndef ACE_SINGLETON_C
 #define ACE_SINGLETON_C
 
-#define ACE_BUILD_DLL
 #include "ace/Singleton.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

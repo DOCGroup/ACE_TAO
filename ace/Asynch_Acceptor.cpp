@@ -3,7 +3,6 @@
 #ifndef ACE_ASYNCH_ACCEPTOR_C
 #define ACE_ASYNCH_ACCEPTOR_C
 
-#define ACE_BUILD_DLL
 #include "ace/Asynch_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

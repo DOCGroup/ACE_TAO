@@ -1,7 +1,6 @@
 // Token_Manager.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Token_Manager.h"
 #include "ace/Object_Manager.h"
 

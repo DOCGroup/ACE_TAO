@@ -1,7 +1,6 @@
 // SOCK_Stream.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/SOCK_Stream.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
