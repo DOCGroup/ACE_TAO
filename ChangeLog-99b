@@ -1,12 +1,17 @@
+Thu Oct 21 15:46:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.lst: disabled Process_Manager_Test, for now,
+          because it asserts on Solaris, Irix, Linux, and HP/UX.
+
 Wed Oct 21 14:05:00 1999  Ruibiao Qiu  <ruibiao@cs.wustl.edu>
 
-	* ace/examples/IPC_SAP/ATM_SAP/CPP_{client,server}.dsp: Added
-	  configurations for building static executables on NT.
+        * ace/examples/IPC_SAP/ATM_SAP/CPP_{client,server}.dsp: Added
+          configurations for building static executables on NT.
 
 Wed Oct 20 00:05:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i: Replaced 0666 wit ACE_DEFAULT_FILE_PERMS.  Thanks
-	  to Dave Delano for reporting this.
+        * ace/OS.i: Replaced 0666 wit ACE_DEFAULT_FILE_PERMS.  Thanks
+          to Dave Delano for reporting this.
 
 Tue Oct 19 13:31:15 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -16,169 +21,169 @@ Tue Oct 19 13:31:15 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Tue Oct 19 12:55:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Codeset_IBM1047.h:
+        * ace/Codeset_IBM1047.h:
 
-	  Include `ace/inc_user_config.h' before check for definition of
-	  ACE_MVS macro since otherwise ACE_MVS may not get defined.
+          Include `ace/inc_user_config.h' before check for definition of
+          ACE_MVS macro since otherwise ACE_MVS may not get defined.
 
-	* ace/Codeset_IBM1047.cpp:
+        * ace/Codeset_IBM1047.cpp:
 
-	  Moved inclusion of `ace/Codeset_IBM1047.h' ahead of ACE_MVS
-	  macro definition check, and removed inclusing of
-	  `ace/inc_user_config.h'
+          Moved inclusion of `ace/Codeset_IBM1047.h' ahead of ACE_MVS
+          macro definition check, and removed inclusing of
+          `ace/inc_user_config.h'
 
-	* ace/OS.i (llseek):
+        * ace/OS.i (llseek):
 
-	  Reenabled lseek64() on Linux.  If _LARGEFILE64_SOURCE is not
-	  defined then an external declaration for lseek64() is made in
-	  the config-linux-common.h header.
+          Reenabled lseek64() on Linux.  If _LARGEFILE64_SOURCE is not
+          defined then an external declaration for lseek64() is made in
+          the config-linux-common.h header.
 
-	* ace/config-linux-common.h:
+        * ace/config-linux-common.h:
 
-	  Minor comment update.
+          Minor comment update.
 
-	  Added extern declaration of lseek64() if _LARGEFILE64_SOURCE is
-	  not defined.
+          Added extern declaration of lseek64() if _LARGEFILE64_SOURCE is
+          not defined.
 
-	* ace/Handle_Set.cpp:
+        * ace/Handle_Set.cpp:
 
-	  Check if _XOPEN_SOURCE is #defined instead of _GNU_SOURCE to
-	  determine if the fd_set structure has an fds_bits member.
+          Check if _XOPEN_SOURCE is #defined instead of _GNU_SOURCE to
+          determine if the fd_set structure has an fds_bits member.
 
-	* ace/Makefile:
+        * ace/Makefile:
 
-	  Updated dependencies.
-	
-	* ace/Makefile.am:
+          Updated dependencies.
 
-	  Added ATM files to source lists.
+        * ace/Makefile.am:
 
-	* acconfig.h:
+          Added ATM files to source lists.
 
-	  Added entries for some additional "feature test" macros, such as
-	  _XOPEN_SOURCE.
+        * acconfig.h:
 
-	* bin/g++dep:
-	* include/makeinclude/rules.local.GNU:
+          Added entries for some additional "feature test" macros, such as
+          _XOPEN_SOURCE.
 
-	  Incorporated Jody Hagins <jody@atdesk.com> patches that get
-	  around a trailing backslash problem in generated Makefile
-	  dependencies.  Thanks Jody!
+        * bin/g++dep:
+        * include/makeinclude/rules.local.GNU:
+
+          Incorporated Jody Hagins <jody@atdesk.com> patches that get
+          around a trailing backslash problem in generated Makefile
+          dependencies.  Thanks Jody!
 
 Tue Oct 19 12:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Web_Crawler.dsp: Changed the settings to make the
-	  executable name as main.exe.
-	* examples/Web_Crawler/URL_Visitor.cpp (~URL_Validation_Visitor):
-	  Removed double deletion of the <strat_connector_> which is the 
-	  Strategy Connector.
-	
+        * examples/Web_Crawler.dsp: Changed the settings to make the
+          executable name as main.exe.
+        * examples/Web_Crawler/URL_Visitor.cpp (~URL_Validation_Visitor):
+          Removed double deletion of the <strat_connector_> which is the
+          Strategy Connector.
+
 Tue Oct 19 11:24:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: Commented out an
-	  out-dated OBJEXT definition.  If a rule requires to generated
-	  *.so, then it should specify the extension using SOEXT.  Thanks
-	  to Aniruddha Gokhale <gokhale@research.bell-labs.com> for
-	  reporting this.
+        * include/makeinclude/wrapper_macros.GNU: Commented out an
+          out-dated OBJEXT definition.  If a rule requires to generated
+          *.so, then it should specify the extension using SOEXT.  Thanks
+          to Aniruddha Gokhale <gokhale@research.bell-labs.com> for
+          reporting this.
 
 Tue Oct 19 10:27:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/run_all_list.pm:
-	  Added TAO/tests/DSI_Gateway to the list of tests
+        * bin/run_all_list.pm:
+          Added TAO/tests/DSI_Gateway to the list of tests
 
 Tue Oct 19 00:43:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32-common.h: Undefined ACE_HAS_EXCEPTIONS under
-	  WinCE.
+        * ace/config-win32-common.h: Undefined ACE_HAS_EXCEPTIONS under
+          WinCE.
 
-	The following changes are contributions from James Buck
-	  <jim@newsol.com> and Peter C. Chien <peter@newsol.com>.
+        The following changes are contributions from James Buck
+          <jim@newsol.com> and Peter C. Chien <peter@newsol.com>.
 
-	* ace/config-WinCE.h (ACE_LACKS_SOCKET_BUFSIZ): We cannot change
-	  the socket buffer size on WinCE.
+        * ace/config-WinCE.h (ACE_LACKS_SOCKET_BUFSIZ): We cannot change
+          the socket buffer size on WinCE.
 
-	* ace/OS.h:
-	* ace/OS.i:
-	* ace/OS.cpp: Added a customized TSS errno implementation for
-	  WinCE version 2.10 and above based on James and Peter's patch.
-	  ACE_Errno_Guard also had to be changed when using this
-	  implementation.  However, this code is not active by default
-	  because I don't know how to detect CE's OS and platform
-	  configuration automatically.  To use the code, define
-	  ACE_HAS_WINCE_BROKEN_ERRNO.
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS.cpp: Added a customized TSS errno implementation for
+          WinCE version 2.10 and above based on James and Peter's patch.
+          ACE_Errno_Guard also had to be changed when using this
+          implementation.  However, this code is not active by default
+          because I don't know how to detect CE's OS and platform
+          configuration automatically.  To use the code, define
+          ACE_HAS_WINCE_BROKEN_ERRNO.
 
-	* ace/OS.i(cond_wait,cond_timedwait): On WinCE, we must tweak the
-	  returning result from the semaphore if timeout occurred.
-	  Because CE uses the simulated semaphore, the returning value is
-	  not the same as that returned by a native semaphore.
+        * ace/OS.i(cond_wait,cond_timedwait): On WinCE, we must tweak the
+          returning result from the semaphore if timeout occurred.
+          Because CE uses the simulated semaphore, the returning value is
+          not the same as that returned by a native semaphore.
 
 Tue Oct 19 00:03:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU:
-	* include/makeinclude/rules.bin.GNU:
-	* include/makeinclude/rules.lib.GNU:
-	* include/makeinclude/rules.local.GNU: Chaged the following
-	  settings to be platform configurable:
+        * include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU: Chaged the following
+          settings to be platform configurable:
 
-	  OBJDIRS: Names of directories to keep obj files.  Default is
-	           '.obj' and '.shobj'.
-	  OBJEXT:  Extension name for obj files.  Default is 'o'.
-	  SOEXT:   Extension name for so files.  Default is 'so'.
-	  LIBEXT:  Extension name for lib files.  Default is 'a'.
-	  CC_OUTPUT_FLAG:
-	  LINK_OUTPUT_FLAG:
-	  SO_OUTPUT_FLAG: Flags to specify output file name for cc, linker
-	  and so_linker.  Defaults are '-o'.
+          OBJDIRS: Names of directories to keep obj files.  Default is
+                   '.obj' and '.shobj'.
+          OBJEXT:  Extension name for obj files.  Default is 'o'.
+          SOEXT:   Extension name for so files.  Default is 'so'.
+          LIBEXT:  Extension name for lib files.  Default is 'a'.
+          CC_OUTPUT_FLAG:
+          LINK_OUTPUT_FLAG:
+          SO_OUTPUT_FLAG: Flags to specify output file name for cc, linker
+          and so_linker.  Defaults are '-o'.
 
 Mon Oct 18 23:46:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Undefined ACE_HAS_PENTIUM for
-	  freebsd.  The high resolution timer doesn't seem to work on this
-	  platfrom.
+        * ace/config-freebsd-pthread.h: Undefined ACE_HAS_PENTIUM for
+          freebsd.  The high resolution timer doesn't seem to work on this
+          platfrom.
 
-	* ace/OS.i (cuserid): Added missing ACE_UNUSED_ARG (maxlen)
-	  statement.
+        * ace/OS.i (cuserid): Added missing ACE_UNUSED_ARG (maxlen)
+          statement.
 
-	* ace/Log_Msg.cpp (log): FreeBSD defines sys_nerr as a const int.
+        * ace/Log_Msg.cpp (log): FreeBSD defines sys_nerr as a const int.
 
 Mon Oct 18 23:13:55 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Web_Crawler/URL_Visitor.cpp: Updated some broken
-	  template instantiations.  Thanks to Bruce Alderson
- 	  <balderso@triant.com> for reporting this.
+        * examples/Web_Crawler/URL_Visitor.cpp: Updated some broken
+          template instantiations.  Thanks to Bruce Alderson
+          <balderso@triant.com> for reporting this.
 
 Mon Oct 18 21:32:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	Updates that remove need to use _GNU_SOURCE macro on Linux/glibc
-	systems [Bug 167]:
+        Updates that remove need to use _GNU_SOURCE macro on Linux/glibc
+        systems [Bug 167]:
 
-	* ace/OS.i:
+        * ace/OS.i:
 
-	  Return ACE_static_cast (off_t, -1), instead of just -1 in
-	  ACE_OS::lseek().  (not related to _GNU_SOURCE updates)
+          Return ACE_static_cast (off_t, -1), instead of just -1 in
+          ACE_OS::lseek().  (not related to _GNU_SOURCE updates)
 
-	  Only enable lseek64() on Linux/glibc systems if
-	  _LARGEFILE64_SOURCE is defined.
+          Only enable lseek64() on Linux/glibc systems if
+          _LARGEFILE64_SOURCE is defined.
 
-	  Don't use cuserid() on Linux/glibc systems.  It was dropped
-	  from POSIX.1 back in 1990. Instead, extract the user name from
-	  getpwuid(geteuid()), as suggested by the glibc cuserid() man
-	  pages and Stevens' Advanced programming in the UNIX
-	  Environment.
+          Don't use cuserid() on Linux/glibc systems.  It was dropped
+          from POSIX.1 back in 1990. Instead, extract the user name from
+          getpwuid(geteuid()), as suggested by the glibc cuserid() man
+          pages and Stevens' Advanced programming in the UNIX
+          Environment.
 
-	* ace/Handle_Set.cpp:
+        * ace/Handle_Set.cpp:
 
-	  XPG4.2 declares an fds_bit member in the fd_set structure.
-	  Since _GNU_SOURCE is being disabled in ACE, use the __fds_bits
-	  member.  It's not pretty, but it works.
+          XPG4.2 declares an fds_bit member in the fd_set structure.
+          Since _GNU_SOURCE is being disabled in ACE, use the __fds_bits
+          member.  It's not pretty, but it works.
 
-	* ace/config-linux-common.h:
+        * ace/config-linux-common.h:
 
-	  strptime() is an XOPEN function.  It is only enabled if
-	  _XOPEN_SOURCE or _GNU_SOURCE is defined (_GNU_SOURCE causes
-	  _XOPEN_SOURCE to be defined on Linux/glibc systems).  If
-	  _XOPEN_SOURCE is not defined, create an external declaration for
-	  it.
+          strptime() is an XOPEN function.  It is only enabled if
+          _XOPEN_SOURCE or _GNU_SOURCE is defined (_GNU_SOURCE causes
+          _XOPEN_SOURCE to be defined on Linux/glibc systems).  If
+          _XOPEN_SOURCE is not defined, create an external declaration for
+          it.
 
 Mon Oct 18 18:41:38 1999  Steve Huston  <shuston@riverace.com>
 
@@ -188,120 +193,120 @@ Mon Oct 18 18:41:38 1999  Steve Huston  <shuston@riverace.com>
 
 Mon Oct 18 15:45:08 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (event_wait): The following changes are incorrect and
-	  have been reverted:
+        * ace/OS.i (event_wait): The following changes are incorrect and
+          have been reverted:
 
-	  http://ace.cs.wustl.edu/cvsweb/ace-cvs.cgi/ACE_wrappers/ace/OS.i?r1=4.796&r2=4.797.
+          http://ace.cs.wustl.edu/cvsweb/ace-cvs.cgi/ACE_wrappers/ace/OS.i?r1=4.796&r2=4.797.
 
-	  Remember that <is_signaled_> is only turned on to remember
-	  state, i.e., when <waiting_threads_> == 0.  In the case when
-	  there are waiters, i.e., <waiting_threads_> != 0, <is_signaled_>
-	  is not turned on, and therefore breaks the wait function since
+          Remember that <is_signaled_> is only turned on to remember
+          state, i.e., when <waiting_threads_> == 0.  In the case when
+          there are waiters, i.e., <waiting_threads_> != 0, <is_signaled_>
+          is not turned on, and therefore breaks the wait function since
 
-	      while (event->is_signaled_ == 0)
+              while (event->is_signaled_ == 0)
 
-	  never becomes false.  We need a better way to protect against to
-	  guard against spurious wakeups.
+          never becomes false.  We need a better way to protect against to
+          guard against spurious wakeups.
 
 Mon Oct 18 13:42:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Added extra parentheses to avoid operator precedence
-	  mix-up.  Thanks to JM Strauss
-	  <jms97@club-internet.fr> for reporting this.
+        * ace/OS.h: Added extra parentheses to avoid operator precedence
+          mix-up.  Thanks to JM Strauss
+          <jms97@club-internet.fr> for reporting this.
 
 Mon Oct 18 13:30:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Removed a whole bunch of extra blank in ACE_DES_*FREE*
-	  macro definitions.  Thanks to JM Strauss
-	  <jms97@club-internet.fr> for pointing this out.
+        * ace/OS.h: Removed a whole bunch of extra blank in ACE_DES_*FREE*
+          macro definitions.  Thanks to JM Strauss
+          <jms97@club-internet.fr> for pointing this out.
 
 Sun Oct 17 19:08:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/QtReactor.cpp: Fixed a bug in remove_handle_i () method. I
-	  found this when I was testing the test for the QtReactor.
+        * ace/QtReactor.cpp: Fixed a bug in remove_handle_i () method. I
+          found this when I was testing the test for the QtReactor.
 
 Sun Oct 17 11:00:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU (LD): Added
-	  a fix so that SunC++ 5.0 will work correctly when it's used in
- 	  "compat" mode with SunC++ 4.2.  Thanks to Susan Liebeskind
- 	  <susan.liebeskind@gtri.gatech.edu> for reporting this fix.
+        * include/makeinclude/platform_sunos5_sunc++.GNU (LD): Added
+          a fix so that SunC++ 5.0 will work correctly when it's used in
+          "compat" mode with SunC++ 4.2.  Thanks to Susan Liebeskind
+          <susan.liebeskind@gtri.gatech.edu> for reporting this fix.
 
-	* ace/Malloc_T.cpp (remove): Need to call the destructor of
-	  ACE_Malloc_Stats explicitly in remove().  Thanks to Jean-Marc
- 	  Strauss <jms97@club-internet.fr> for reporting this.
+        * ace/Malloc_T.cpp (remove): Need to call the destructor of
+          ACE_Malloc_Stats explicitly in remove().  Thanks to Jean-Marc
+          Strauss <jms97@club-internet.fr> for reporting this.
 
-	* ace/Containers_T.i (get): ACE_DLList::get() didn't check
-	  the return value from ACE_Double_Linked_List::get() so it was
- 	  possible for the node variable to be NULL.  Now it checks for
- 	  the error case explicitly.  Thanks to Boris Sukholitko
- 	  <palisander@hotmail.com> for reporting this bug.
+        * ace/Containers_T.i (get): ACE_DLList::get() didn't check
+          the return value from ACE_Double_Linked_List::get() so it was
+          possible for the node variable to be NULL.  Now it checks for
+          the error case explicitly.  Thanks to Boris Sukholitko
+          <palisander@hotmail.com> for reporting this bug.
 
-	* ace/Containers_T.cpp (get): The ACE_Double_Linked_List::get()
-	  method should return -1 on error but it was returning 1.  Now,
- 	  the implementation matches the documentation.  Thanks to Boris
- 	  Sukholitko <palisander@hotmail.com> for reporting this bug.
+        * ace/Containers_T.cpp (get): The ACE_Double_Linked_List::get()
+          method should return -1 on error but it was returning 1.  Now,
+          the implementation matches the documentation.  Thanks to Boris
+          Sukholitko <palisander@hotmail.com> for reporting this bug.
 
 Sat Oct 16 17:10:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Makefile:
-  	* ace/Svc_Conf_l.cpp: Replace exit(1) with ACE_OS::exit(1)
-	  so that CodeWarrior doesn't get confused.  Thanks to David
- 	  Delano <delanod@agcs.com> for reporting this.
+        * ace/Makefile:
+        * ace/Svc_Conf_l.cpp: Replace exit(1) with ACE_OS::exit(1)
+          so that CodeWarrior doesn't get confused.  Thanks to David
+          Delano <delanod@agcs.com> for reporting this.
 
-	* ace/OS.cpp: Removed the '&' in front of thread_args to make
-	  CodeWarrior happier.  Thanks to David Delano <delanod@agcs.com>
- 	  for reporting this.
+        * ace/OS.cpp: Removed the '&' in front of thread_args to make
+          CodeWarrior happier.  Thanks to David Delano <delanod@agcs.com>
+          for reporting this.
 
-	* ace/OS.cpp: Removed the table_() "initialization" for
-	  ACE_TSS_Cleanup since this breaks the CodeWarrior C++ compiler.
-  	  Thanks to David Delano <delanod@agcs.com> for reporting this.
+        * ace/OS.cpp: Removed the table_() "initialization" for
+          ACE_TSS_Cleanup since this breaks the CodeWarrior C++ compiler.
+          Thanks to David Delano <delanod@agcs.com> for reporting this.
 
-	* ace/OS.i: There was a bug with the ACE_OS::truncate()
-	  emulation for Win32.  We need to check for ACE_INVALID_HANDLE
- 	  and NOT < 0!  Thanks to David Delano <delanod@agcs.com> for
- 	  reporting this.
+        * ace/OS.i: There was a bug with the ACE_OS::truncate()
+          emulation for Win32.  We need to check for ACE_INVALID_HANDLE
+          and NOT < 0!  Thanks to David Delano <delanod@agcs.com> for
+          reporting this.
 
 Sat Oct 16 11:17:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* TAO/tao/Sync_Strategies.cpp (buffering_constraints_reached):
-	  Changed the signature of
-	  TAO_Flush_Sync_Strategy::buffering_constraints_reached() to
-	  match the base class.
+        * TAO/tao/Sync_Strategies.cpp (buffering_constraints_reached):
+          Changed the signature of
+          TAO_Flush_Sync_Strategy::buffering_constraints_reached() to
+          match the base class.
 
 Fri Oct 15 17:28:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Connector.cpp (connect_i): Only close <new_sh> if we have a
-	  valid <new_sh>.  Thanks to Yury Kuznesov <yury@websci.ru> for
-	  reporting this problem.
+        * ace/Connector.cpp (connect_i): Only close <new_sh> if we have a
+          valid <new_sh>.  Thanks to Yury Kuznesov <yury@websci.ru> for
+          reporting this problem.
 
 Fri Oct 15 17:26:08 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: Added a new flag that
-	  would help conditional compilation compilation of the
-	  QtReactor.
+        * include/makeinclude/wrapper_macros.GNU: Added a new flag that
+          would help conditional compilation compilation of the
+          QtReactor.
 
-	* ace/QtReactor.cpp:
-	* ace/QtReactor.h: Files for the QtReactor. Thanks to Hamish
-	  Friedlander <ullexco@wave.co.nz> for donating this to ACE. For
-	  the sake of record, Qt is a multiplatform C++ GUI toolkit.
+        * ace/QtReactor.cpp:
+        * ace/QtReactor.h: Files for the QtReactor. Thanks to Hamish
+          Friedlander <ullexco@wave.co.nz> for donating this to ACE. For
+          the sake of record, Qt is a multiplatform C++ GUI toolkit.
 
-	* ace/Makefile: Added the above files to Makefile. Changes were
-	  also made to generate files from moc (Meta Object Compiler,
-	  that comes with Qt libraries) and include them with the build.
+        * ace/Makefile: Added the above files to Makefile. Changes were
+          also made to generate files from moc (Meta Object Compiler,
+          that comes with Qt libraries) and include them with the build.
 
 Fri Oct 15 01:03:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Activation_Queue: ACE_Activation_Queue has no methods for
-	  inspecting the size of the queue.  The solution was to add the
- 	  methods: method_count(), is_empty(), and is_full().  Thanks to
- 	  Travis Shirk <travis@pobox.com> for contributing this.
+        * ace/Activation_Queue: ACE_Activation_Queue has no methods for
+          inspecting the size of the queue.  The solution was to add the
+          methods: method_count(), is_empty(), and is_full().  Thanks to
+          Travis Shirk <travis@pobox.com> for contributing this.
 
 Fri Oct 15 00:36:35 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* tests/Process_Manager_Test.cpp (main): Replaced
-	  ACE_OS::exit(secs) with return secs so that Purify will be
- 	  happy.
+        * tests/Process_Manager_Test.cpp (main): Replaced
+          ACE_OS::exit(secs) with return secs so that Purify will be
+          happy.
 
 Thu Oct 14 14:30:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
