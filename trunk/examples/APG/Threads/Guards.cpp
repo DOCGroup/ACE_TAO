@@ -1,9 +1,11 @@
 // $Id$
 
+#include "ace/OS_main.h"
+
 #if 0
 
 // Listing 1 code/ch12
-int 
+int
 HA_Device_Repository::update_device (int device_id)
 {
   this->mutex_.acquire ();
@@ -19,10 +21,10 @@ HA_Device_Repository::update_device (int device_id)
 }
 // Listing 1
 // Listing 2 code/ch12
-int 
+int
 HA_Device_Repository::update_device (int device_id)
 {
-  // Construct a guard specifying the type of the mutex as 
+  // Construct a guard specifying the type of the mutex as
   // a template parameter and passing in the mutex to hold
   // as a parameter.
   ACE_Guard<ACE_Thread_Mutex> guard (this->mutex_);
@@ -36,7 +38,7 @@ HA_Device_Repository::update_device (int device_id)
 }
 // Listing 2
 // Listing 3 code/ch12
-int 
+int
 HA_Device_Repository::update_device (int device_id)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, mutex_, -1);
@@ -48,5 +50,5 @@ HA_Device_Repository::update_device (int device_id)
 // Listing 3
 
 #endif /* 0 */
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 { return 0; }
