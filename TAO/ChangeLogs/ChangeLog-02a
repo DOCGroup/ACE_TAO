@@ -1,3 +1,13 @@
+Mon Jun 25 10:32:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+
+          Removed code that added "ValueBase" to the lookup table, since
+          this string is now an IDL keyword. This was causing name clash
+          errors in any IDL file that included orb.idl. Thanks to Michael 
+          Kircher <Michael.Kircher@mchp.siemens.de> for reporting the 
+          problem.
+
 Mon Jun 25 07:20:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Oneways_Invoking_Twoways/client.dsp: Fixed a link error in
