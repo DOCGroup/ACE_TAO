@@ -183,7 +183,7 @@ const char * TAO::FT_FaultDetectorFactory_i::identity () const
   return this->identity_.c_str();
 }
 
-int TAO::FT_FaultDetectorFactory_i::idle (int & result)
+int TAO::FT_FaultDetectorFactory_i::idle (int & result ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_UNUSED_ARG (result);
   int quit = this->quit_requested_;
@@ -276,7 +276,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
         // register with ReplicationManager::RegistrationFactory
         PortableGroup::Criteria criteria(0);
-        this->factory_registry_ = this->replication_manager_->get_factory_registry (criteria ACE_ENV_ARG_PARAMETER)
+        this->factory_registry_ = this->replication_manager_->get_factory_registry (criteria ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         if (! CORBA::is_nil(factory_registry_.in ()))
@@ -487,12 +487,12 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
     ::PortableGroup::InvalidProperty ex;
     ex.nam.length(1);
     ex.nam[0].id = CORBA::string_dup(FT::FT_FAULT_MONITORING_INTERVAL);
-    ACE_THROW (ex);
+    ACE_THROW (::PortableGroup::InvalidProperty (ex));
   }
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::change_properties);
 }
 
-void TAO::FT_FaultDetectorFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+void TAO::FT_FaultDetectorFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -617,7 +617,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
       "Throwing 'InvalidCriteria' due to missing %s\n",
       missingParameterName
       ));
-    ACE_THROW ( PortableGroup::InvalidCriteria() );
+    ACE_THROW_RETURN ( PortableGroup::InvalidCriteria(), CORBA::Object::_nil () );
   }
 
   CORBA::ULong detectorId = allocate_id();
@@ -640,7 +640,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     ACE_ERROR ((LM_ERROR,
       "New FaultDetector_i returned NULL.  Throwing ObjectNotCreated.\n"
       ));
-    ACE_THROW ( PortableGroup::ObjectNotCreated() );
+    ACE_THROW_RETURN ( PortableGroup::ObjectNotCreated(), CORBA::Object::_nil () );
   }
   auto_ptr<TAO::Fault_Detector_i> detector(pFD);
 
@@ -652,7 +652,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
       "New factory_creation_id returned NULL.  Throwing ObjectNotCreated.\n"
       ));
 
-    ACE_THROW ( PortableGroup::ObjectNotCreated() );
+    ACE_THROW_RETURN ( PortableGroup::ObjectNotCreated(), CORBA::Object::_nil ());
   }
   (*factory_creation_id) <<= detectorId;
 
@@ -700,7 +700,7 @@ void TAO::FT_FaultDetectorFactory_i::delete_object (
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::delete_object);
 }
 
-CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::is_alive)

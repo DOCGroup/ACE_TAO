@@ -102,7 +102,7 @@ int TAO::FT_FaultConsumer::init (
   // Subscribe to the FaultNotifier.
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil ();
   this->consumer_id_ = fault_notifier_->connect_structured_fault_consumer (
-    this->consumer_ref_.in(), filter ACE_ENV_ARG_PARAMETER);
+    this->consumer_ref_.in(), filter.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (TAO_debug_level > 1)
@@ -204,7 +204,7 @@ CosNotifyComm::StructuredPushConsumer_ptr
 TAO::FT_FaultConsumer::consumer_ref ()
 {
   return CosNotifyComm::StructuredPushConsumer::_duplicate (
-      this->consumer_ref_);
+      this->consumer_ref_.in ());
 }
 
 size_t TAO::FT_FaultConsumer::notifications () const
@@ -222,7 +222,7 @@ size_t TAO::FT_FaultConsumer::notifications () const
 // we simply log the error and drop the event.
 void TAO::FT_FaultConsumer::push_structured_event (
   const CosNotification::StructuredEvent &event
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
+  ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected))
 {
@@ -274,17 +274,19 @@ void TAO::FT_FaultConsumer::push_structured_event (
 void TAO::FT_FaultConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
+  ACE_UNUSED_ARG (added);
+  ACE_UNUSED_ARG (removed);
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("TAO::FT_FaultConsumer::offer_change() call ignored.\n")
   ));
 }
 
 void TAO::FT_FaultConsumer::disconnect_structured_push_consumer (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

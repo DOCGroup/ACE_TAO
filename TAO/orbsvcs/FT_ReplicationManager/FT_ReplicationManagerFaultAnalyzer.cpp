@@ -527,7 +527,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     result = -1;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);  //@@ is this necessary?
 
   if (result == 0)
   {
@@ -792,7 +791,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::remove_failed_member (
       this->replication_manager_->remove_member (
         iogr,
         fault_event_desc.location.in()
-        ACE_ENV_ARG_DECL);
+        ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     new_iogr = temp_iogr._retn ();
   }
