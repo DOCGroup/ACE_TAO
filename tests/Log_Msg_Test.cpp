@@ -399,7 +399,7 @@ test_ostream (void)
 // Main function.
 
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Log_Msg_Test"));
 
