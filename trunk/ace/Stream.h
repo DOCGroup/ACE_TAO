@@ -150,10 +150,10 @@ private:
   // Pointer to an adjoining linked stream.
 
   // = Synchronization objects used for thread-safe streams.
-  ACE_SYNCH_MUTEX lock_;
+  ACE_SYNCH_MUTEX_T lock_;
   // Protect the stream against race conditions.
   
-  ACE_SYNCH_CONDITION final_close_;
+  ACE_SYNCH_CONDITION_T final_close_;
   // Use to tell all threads waiting on the close that we are done.
 };
 

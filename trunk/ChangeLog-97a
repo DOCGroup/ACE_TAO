@@ -1,3 +1,49 @@
+Sun Apr 27 17:44:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Synch_T.h: Added a new macro ACE_SYNCH_RW_MUTEX to
+ 	  complement the existing ACE_SYNCH_MUTEX and ACE_SYNCH_CONDITION
+ 	  macros.  This will clean up lots of code in various test
+ 	  programs.
+
+	* ace/Synch_T.h: Added two new macros, ACE_SYNCH_MUTEX and
+ 	  ACE_SYNCH_CONDITION.  These default to ACE_MT_SYNCH::MUTEX and
+ 	  ACE_MT_SYNCH::MUTEX if template typedefs are supported and
+ 	  ACE_HAS_THREADS is enabled.  If template typedefs *aren't*
+ 	  supported but ACE_HAS_THREADS is enabled these macros turn into
+ 	  ACE_Thread_Mutex and ACE_Thread_Condition.  Finally, if
+ 	  ACE_HAS_THREADS is disabled these macros turn into
+ 	  ACE_Null_Mutex and ACE_Null_Condition.  These macros make it
+ 	  possible to write code that is more portable across platforms
+ 	  and configurations.  Thanks to Carlos O'Ryan for this
+ 	  suggestion.
+
+	* ace/OS.h: Replaced all uses of ACE_SYNCH_MUTEX and
+ 	  ACE_SYNCH_CONDITION with ACE_SYNCH_MUTEX_T and
+ 	  ACE_SYNCH_CONDITION_T since (1) this usage relates to templates
+ 	  and (2) it frees up the namespace for the new ACE_SYNCH_MUTEX
+ 	  and ACE_SYNCH_CONDITION macros.
+
+	* ace/Timer_Queue.cpp: Added yet more template specializations for
+ 	  the benefit of GCC (ugh).
+
+	* ace/Timer_Wheel_T.cpp: Had to revise things just a bit to
+ 	  compile with GCC and it's lame template mechanism.  This
+ 	  required changing NODE * to ACE_Timer_Node_T<TYPE, FUNCTOR> * in
+ 	  several method definitions.
+
+	* apps/JAWS/server/HTTP_Server.h: Changed the use of ACE_WIN32 to
+ 	  ACE_HAS_THREAD_SAFE_ACCEPT since this is a more precise way to
+ 	  determine if the platform allows multiple threads to call
+ 	  accept() on the same port.  If other platforms support this
+ 	  feature please make sure to add it to their config*.h files.
+
+	* ace/config-win32-common.h: Defined ACE_HAS_THREAD_SAFE_ACCEPT,
+ 	  since Win32 allows multiple threads to call accept() on the same
+ 	  port.
+
+	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp: The mutex
+	  should be ACE_RW_Mutex, not ACE_Null_Mutex...
+
 Sun Apr 27 18:13:24 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Proactor.h: Added Timer_Wheel support.
@@ -9,16 +55,6 @@ Sun Apr 27 18:13:24 1997  Sumedh Mungee       <sumedh@cs.wustl.edu>
 
         * apps/JAWS/stress-testing: Removed unused argument warnings
           etc.
-
-Sun Apr 27 14:18:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/Timer_Queue.cpp: Added yet more template specializations for
- 	  the benefit of GCC (ugh).
-
-	* ace/Timer_Wheel_T.cpp: Had to revise things just a bit to
- 	  compile with GCC and it's lame template mechanism.  This
- 	  required changing NODE * to ACE_Timer_Node_T<TYPE, FUNCTOR> * in
- 	  several method definitions.
 
 Sun Apr 27 07:41:44 1997  David L. Levine  <levine@cs.wustl.edu>
 

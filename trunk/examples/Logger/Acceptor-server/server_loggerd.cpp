@@ -251,7 +251,6 @@ main (int argc, char *argv[])
   return 0;
 }
 
-
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Acceptor<Logging_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Message_Queue<ACE_NULL_SYNCH>;

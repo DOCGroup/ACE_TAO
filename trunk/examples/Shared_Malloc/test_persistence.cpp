@@ -1,7 +1,6 @@
-// Test the persistence capabilities of the ACE shared memory manager.
 // $Id$
 
-
+// Test the persistence capabilities of the ACE shared memory manager.
 
 #include "ace/Malloc.h"
 

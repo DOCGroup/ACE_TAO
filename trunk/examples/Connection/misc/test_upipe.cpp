@@ -1,11 +1,9 @@
-// This short program illustrates in implementation of the classic
 // $Id$
 
+// This short program illustrates in implementation of the classic
 // "bounded buffer" program using ACE_UPIPEs.  This program also shows
 // how the ACE_Connector and ACE_Acceptor patterns work when used with
 // ACE_UPIPEs.
-
-// Enable tracing
 
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"
@@ -172,12 +170,6 @@ int main (int argc, char *argv[])
   thr_mgr.wait ();
   return 0;
 }                                                       
-#else
-int
-main (void)
-{
-  ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support threads\n"), 1);
-}
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Accept_Strategy<Server_Service, ACE_UPIPE_ACCEPTOR>;
@@ -202,4 +194,10 @@ template class ACE_Thru_Task<ACE_NULL_SYNCH>;
 template class ACE_Write_Guard<ACE_Null_Mutex>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
+#else
+int
+main (void)
+{
+  ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support threads\n"), 1);
+}
 #endif /* ACE_HAS_THREADS */

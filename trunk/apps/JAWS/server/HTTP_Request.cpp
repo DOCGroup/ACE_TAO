@@ -64,7 +64,7 @@ HTTP_fix_path (char *path)
       percentcode[0] = path[++i];
       percentcode[1] = path[++i];
       percentcode[2] = '\0';
-      path[j] = ACE_OS::strtol(percentcode, (char **)0, 16);
+      path[j] = ACE_OS::strtol (percentcode, (char **)0, 16);
     }
     else path[j] = path[i];
   }
@@ -191,12 +191,12 @@ HTTP_Request::dump (void)
 		  " data string is %s,"
 		  " datalen is %d,"
 		  " status is %d, which is %s\n\n", 
-		  this->filename() ? this->filename() : "EMPTY",
-		  this->content_length(),
-		  this->data() ? this->data() : "EMPTY",
-		  this->data_length(),
-		  this->status(),
-		  this->status_string()));
+		  this->filename () ? this->filename () : "EMPTY",
+		  this->content_length (),
+		  this->data () ? this->data () : "EMPTY",
+		  this->data_length (),
+		  this->status (),
+		  this->status_string ()));
       break;
 
     case PUT :
@@ -206,12 +206,12 @@ HTTP_Request::dump (void)
 		  " data string is %s,"
 		  " datalen is %d,"
 		  " status is %d, which is %s\n\n", 
-		  this->filename() ? this->filename() : "EMPTY",
-		  this->content_length(),
-		  this->data() ? this->data() : "EMPTY",
-		  this->data_length(),
-		  this->status(),
-		  this->status_string()));
+		  this->filename () ? this->filename () : "EMPTY",
+		  this->content_length (),
+		  this->data () ? this->data () : "EMPTY",
+		  this->data_length (),
+		  this->status (),
+		  this->status_string ()));
       break;
 
     case NO_TYPE :

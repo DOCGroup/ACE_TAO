@@ -233,13 +233,13 @@ protected:
   // The notification strategy used when a new message is enqueued.
 
   // = Synchronization primitives for controlling concurrent access.
-  ACE_SYNCH_MUTEX lock_;
+  ACE_SYNCH_MUTEX_T lock_;
   // Protect queue from concurrent access.
 
-  ACE_SYNCH_CONDITION notempty_cond_;
+  ACE_SYNCH_CONDITION_T notempty_cond_;
   // Used to make threads sleep until the queue is no longer empty.
 
-  ACE_SYNCH_CONDITION notfull_cond_;
+  ACE_SYNCH_CONDITION_T notfull_cond_;
   // Used to make threads sleep until the queue is no longer full.
 };
 

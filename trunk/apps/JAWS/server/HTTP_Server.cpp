@@ -17,21 +17,21 @@ HTTP_Server::parse_args (int argc, char *argv[])
   this->port_ = 0;
   this->threads_ = 0;
 
-  ACE_Get_Opt get_opt(argc, argv, "p:n:s:");
-  while ((c = get_opt()) != -1)
+  ACE_Get_Opt get_opt (argc, argv, "p:n:s:");
+  while ((c = get_opt ()) != -1)
     switch (c) 
       {
       case 'p':
-	this->port_ = ACE_OS::atoi(get_opt.optarg);
+	this->port_ = ACE_OS::atoi (get_opt.optarg);
 	break;
       case 'n':
-	this->threads_ = ACE_OS::atoi(get_opt.optarg);
+	this->threads_ = ACE_OS::atoi (get_opt.optarg);
 	break;
       case 's':
 	// 0 -> synch thread pool
 	// 1 -> thread per request
 	// 2 -> asynch thread pool
-	this->strategy_ = ACE_OS::atoi(get_opt.optarg);
+	this->strategy_ = ACE_OS::atoi (get_opt.optarg);
 	break;
       default:
 	break;
@@ -74,7 +74,7 @@ HTTP_Server::init (int argc, char *argv[])
 int
 HTTP_Server::fini (void)
 {
-  this->tm_.close();
+  this->tm_.close ();
   return 0;
 }
 
@@ -91,12 +91,12 @@ HTTP_Server::synch_thread_pool (void)
       if (t->open () != 0) 
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Pool_Task::open"), -1);
     }      
-  this->tm_.wait();
+  this->tm_.wait ();
   return 0;
 }
 
 Synch_Thread_Pool_Task::Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor, ACE_Thread_Manager &tm)
-  : ACE_Task<ACE_NULL_SYNCH>(&tm), acceptor_(acceptor)
+  : ACE_Task<ACE_NULL_SYNCH> (&tm), acceptor_ (acceptor)
 {
 }
 
@@ -125,7 +125,7 @@ Synch_Thread_Pool_Task::svc (void)
       HTTP_Handler *handler = factory.create_http_handler ();
       handler->open (stream.get_handle (), *mb);
       mb->release ();
-      ACE_DEBUG ((LM_DEBUG, "(%t) in Synch_Thread_Pool_Task::svc, recycling\n"));
+      ACE_DEBUG ((LM_DEBUG, " (%t) in Synch_Thread_Pool_Task::svc, recycling\n"));
     }
   
   return 0;
@@ -153,7 +153,7 @@ HTTP_Server::thread_per_request (void)
 
 Thread_Per_Request_Task::Thread_Per_Request_Task (ACE_HANDLE handle,
 						  ACE_Thread_Manager &tm)
-  : ACE_Task<ACE_NULL_SYNCH>(&tm),
+  : ACE_Task<ACE_NULL_SYNCH> (&tm),
     handle_ (handle)
 {
 }
@@ -184,7 +184,7 @@ Thread_Per_Request_Task::svc (void)
 int
 Thread_Per_Request_Task::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread_Per_Request_Task::svc, dying\n"));
+  ACE_DEBUG ((LM_DEBUG, " (%t) Thread_Per_Request_Task::svc, dying\n"));
   delete this;
   return 0;
 }
@@ -203,11 +203,11 @@ HTTP_Server::asynch_thread_pool (void)
   for (int i = 0; i < this->threads_; i++) 
     {
       Asynch_Thread_Pool_Task *t;
-      ACE_NEW_RETURN (t, Asynch_Thread_Pool_Task (*ACE_Service_Config::proactor(), this->tm_), -1);
+      ACE_NEW_RETURN (t, Asynch_Thread_Pool_Task (*ACE_Service_Config::proactor (), this->tm_), -1);
       if (t->open () != 0) 
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Pool_Task::open"), -1);
     }   
-  return this->tm_.wait();
+  return this->tm_.wait ();
 #endif /* ACE_WIN32 */
   return -1;
 }
@@ -233,10 +233,9 @@ int
 Asynch_Thread_Pool_Task::svc (void)
 {
   for (;;) 
-    {
-      if (this->proactor_.handle_events () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Proactor::handle_events"), -1);	
-    }
+    if (this->proactor_.handle_events () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Proactor::handle_events"), -1);	
+
   return 0;
 }
 

@@ -12,6 +12,7 @@
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 
+#define ACE_HAS_THREAD_SAFE_ACCEPT
 #define ACE_HAS_EXCEPTIONS
 #define ACE_LACKS_SIGACTION
 #define ACE_LACKS_SIGSET

@@ -31,7 +31,7 @@ class ACE_Lock_Adapter : public ACE_Lock
   //     combine the <ACE_Lock> abstract base class (which contains
   //     pure virtual methods) with any of the other concrete ACE
   //     synchronization classes (e.g., <ACE_Mutex>, <ACE_Semaphore>,
-  //     <ACE_RW_Lock>, etc.).
+  //     <ACE_RW_Mutex>, etc.).
   //
   // = DESCRIPTION
   //     This class uses a form of the Adapter pattern.
@@ -272,10 +272,13 @@ class ACE_NULL_SYNCH
 {
 public:
   typedef ACE_Null_Mutex MUTEX;
-  // "Do-nothing" mutex type.
+  // "Do-nothing" Mutex type.
+
+  typedef ACE_Null_Mutex RW_MUTEX;
+  // "Do-nothing" RW Mutex type.
   
   typedef ACE_Null_Condition_Mutex CONDITION;
-  // "Do-nothing" condition type.
+  // "Do-nothing" Condition type.
 };
 #else /* Necessary to support broken cfront-based C++ compilers... */
 #define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition_Mutex
@@ -608,6 +611,7 @@ private:
   void operator= (const ACE_Condition<MUTEX> &);
   ACE_Condition (const ACE_Condition<MUTEX> &c): mutex_ (c.mutex_) {}
 };
+
 template <class MUTEX>
 class ACE_Thread_Condition : public ACE_Condition<MUTEX>
   // = TITLE
@@ -634,15 +638,25 @@ class ACE_MT_SYNCH
 {
 public:
   typedef ACE_Thread_Mutex MUTEX;
+  typedef ACE_RW_Thread_Mutex RW_MUTEX;
   typedef ACE_Condition_Thread_Mutex CONDITION;
 };
+#define ACE_SYNCH_MUTEX ACE_MT_SYNCH::MUTEX
+#define ACE_SYNCH_RW_MUTEX ACE_MT_SYNCH::RW_MUTEX
+#define ACE_SYNCH_CONDITION ACE_MT_SYNCH::CONDITION
 #else /* Necessary to support broken cfront-based C++ compilers... */
-#define ACE_MT_SYNCH ACE_Thread_Mutex,ACE_Condition_Thread_Mutex
+#define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Condition_Thread_Mutex
+#define ACE_SYNCH_MUTEX ACE_Thread_Mutex
+#define ACE_SYNCH_RW_MUTEX ACE_RW_Thread_Mutex
+#define ACE_SYNCH_CONDITION ACE_Thread_Condition
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 #define ACE_SYNCH ACE_MT_SYNCH
 #else
 #define ACE_SYNCH ACE_NULL_SYNCH
+#define ACE_SYNCH_MUTEX ACE_Null_Mutex
+#define ACE_SYNCH_RW_MUTEX ACE_Null_Mutex
+#define ACE_SYNCH_CONDITION ACE_Null_Condition
 #endif /* ACE_HAS_THREADS */
 
 #if defined (__ACE_INLINE__)

@@ -33,7 +33,7 @@ void
 HTTP_Handler::open (ACE_HANDLE handle, 
 		    ACE_Message_Block &initial_data)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) New connection \n"));
+  ACE_DEBUG ((LM_DEBUG, " (%t) New connection \n"));
   
   this->handle_ = handle;
   this->io_.handle (this->handle_);
@@ -126,8 +126,8 @@ HTTP_Handler::serve_error (int status_code)
   char buffer[2 * MAXPATHLEN];
   int length = sprintf (buffer, 
 			errormessage,
-			status_code, HTTP_Status_Code::instance()[status_code],
-			status_code, HTTP_Status_Code::instance()[status_code],
+			status_code, HTTP_Status_Code::instance ()[status_code],
+			status_code, HTTP_Status_Code::instance ()[status_code],
 			request_.filename ());
   
   this->io_.send_error_message (buffer, length);
@@ -137,13 +137,13 @@ void
 HTTP_Handler::serve_directory (void)
 {
   // We'll just forbid it for now.
-  this->serve_error(HTTP_Status_Code::STATUS_FORBIDDEN);
+  this->serve_error (HTTP_Status_Code::STATUS_FORBIDDEN);
 }
 
 void 
 HTTP_Handler::receive_file_complete (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) %s received successfully\n", request_.filename ()));
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s received successfully\n", request_.filename ()));
   char buffer[BUFSIZ];
   ACE_OS::sprintf (buffer, 
 		   "%s %d %s",
@@ -156,7 +156,7 @@ HTTP_Handler::receive_file_complete (void)
 void 
 HTTP_Handler::receive_file_error (int result)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) %s error in receiving file\n", request_.filename ()));
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s error in receiving file\n", request_.filename ()));
   char buffer[BUFSIZ];
   ACE_OS::sprintf (buffer, 
 		   "%s %d %s",
@@ -181,49 +181,49 @@ HTTP_Handler::error_message_complete (void)
 void 
 HTTP_Handler::transmit_file_complete (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) %s transmitted successfully\n", request_.filename ()));
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s transmitted successfully\n", request_.filename ()));
   this->done ();
 }
 
 void 
 HTTP_Handler::transmit_file_error (int result)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) %s error in transmitting file\n", request_.filename ()));
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s error in transmitting file\n", request_.filename ()));
   this->serve_error (result);
 }
 
 void 
 HTTP_Handler::read_error (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) error in reading request\n"));
+  ACE_DEBUG ((LM_DEBUG, " (%t) error in reading request\n"));
   this->done ();
 }
 
 void
 HTTP_Handler::write_error (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) %s error in writing response\n", request_.filename ()));
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s error in writing response\n", request_.filename ()));
   this->done ();
 }
 
 void 
 HTTP_Handler::timeout (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) %s error in reading request\n", request_.filename ()));
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s error in reading request\n", request_.filename ()));
   this->serve_error (HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR);
 }
 
 void 
 HTTP_Handler::request_too_long (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) request too long\n"));
+  ACE_DEBUG ((LM_DEBUG, " (%t) request too long\n"));
   this->serve_error (HTTP_Status_Code::STATUS_BAD_REQUEST);
 }
 
 void 
 HTTP_Handler::invalid_request (int error)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) invalid request\n"));
+  ACE_DEBUG ((LM_DEBUG, " (%t) invalid request\n"));
   this->serve_error (error);
 }
 

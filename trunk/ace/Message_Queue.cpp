@@ -116,7 +116,7 @@ template <ACE_SYNCH_1> int
 ACE_Message_Queue<ACE_SYNCH_2>::close (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::close");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   int res = this->deactivate_i ();
 
@@ -342,7 +342,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::peek_dequeue_head (ACE_Message_Block *&first_ite
 						   ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::peek_dequeue_head");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   if (this->deactivated_)
     {
@@ -379,7 +379,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head (ACE_Message_Block *new_item,
 					      ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   int queue_count;
   {
@@ -430,7 +430,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio (ACE_Message_Block *new_item,
   int queue_count;
 
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
     if (this->deactivated_)
       {
@@ -485,7 +485,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail (ACE_Message_Block *new_item,
 
   int queue_count;
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
     if (this->deactivated_)
       {
@@ -529,7 +529,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head (ACE_Message_Block *&first_item,
 					      ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   if (this->deactivated_)
     {
