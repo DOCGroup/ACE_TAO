@@ -30,13 +30,13 @@ Stock::Criteria_Evaluator::SeqNamedValuePair *
 Quoter_Criteria_Evaluator::getInitialization (CORBA::Environment &env)
 {
   
-  SeqNamedValuePair *sequence_ptr;
+  Stock::Criteria_Evaluator::SeqNamedValuePair *sequence_ptr;
 
-  CORBA::Any_ptr any_ptr = getCriteriaMember ("initialization");
+  const CORBA::Any_ptr any_ptr = this->getCriteriaMember ("initialization");
 
   if (any_ptr == 0)
   {
-    env.exception (new NotAvailable ("No initialization member found.\n"));      
+    env.exception (new Stock::Criteria_Evaluator::NotAvailable ("No initialization member found.\n"));      
     return 0;
   }
   //*any_ptr >>= sequence_ptr;
@@ -49,11 +49,12 @@ char *
 Quoter_Criteria_Evaluator::getFilter (CORBA::Environment &env)
 {
   CORBA::String string;
-  CORBA::Any_ptr any_ptr = getCriteriaMember ("filter");
+  CORBA::Any value;
+  CORBA::Any_ptr any_ptr = this->getCriteriaMember ("filter");
 
   if (any_ptr == 0)
   {
-    env.exception (new NotAvailable ("No filter member found.\n"));      
+    env.exception (new Stock::Criteria_Evaluator::NotAvailable ("No filter member found.\n"));      
     return 0;
   }
   *any_ptr >>= string;
@@ -61,7 +62,7 @@ Quoter_Criteria_Evaluator::getFilter (CORBA::Environment &env)
 }
 
 
-CORBA::Any_ptr
+CORBA::Any *
 Quoter_Criteria_Evaluator::getCriteriaMember (const CORBA::String member_name)
 {
   if (!ACE_OS::strcmp(member_name, "initialization") 
@@ -74,7 +75,11 @@ Quoter_Criteria_Evaluator::getCriteriaMember (const CORBA::String member_name)
   {
     if (ACE_OS::strcmp (member_name, criteria_[i].name) == 0)
     {
-      return &(criteria_[i].value);
+      CORBA::Any_ptr value_ptr;
+      ACE_NEW_RETURN (value_ptr, 
+                      CORBA::Any(criteria_[i].value), 
+                      0);
+      return value_ptr;
     }
   }
   return 0;  
