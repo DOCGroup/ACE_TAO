@@ -27,7 +27,7 @@ ACE_RCSID (PortableServer,
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-  static const char *TAO_Servant_Base_Timeprobe_Description[] =
+static const char *TAO_Servant_Base_Timeprobe_Description[] =
 {
   "Servant_Base::_find - start",
   "Servant_Base::_find - end"
@@ -45,15 +45,15 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_ServantBase::TAO_ServantBase (void)
+TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table const * optable)
   : TAO_Abstract_ServantBase ()
-    , optable_ (0)
+  , optable_ (optable)
 {
 }
 
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
   : TAO_Abstract_ServantBase ()
-    , optable_ (rhs.optable_)
+  , optable_ (rhs.optable_)
 {
 }
 
@@ -83,7 +83,7 @@ CORBA::Boolean
 TAO_ServantBase::_is_a (const char *logical_type_id
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
-  const char *id = "IDL:omg.org/CORBA/Object:1.0";
+  static char const id[] = "IDL:omg.org/CORBA/Object:1.0";
   return ACE_OS::strcmp (logical_type_id, id) == 0;
 }
 
@@ -126,7 +126,7 @@ TAO_ServantBase::_find (const char *opname,
                         const unsigned int length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-  return optable_->find (opname, skelfunc, length);
+  return this->optable_->find (opname, skelfunc, length);
 }
 
 int
@@ -136,14 +136,14 @@ TAO_ServantBase::_find (const char *opname,
                         const unsigned int length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-  return optable_->find (opname, skelfunc, st, length);
+  return this->optable_->find (opname, skelfunc, st, length);
 }
 
 /*int
 TAO_ServantBase::_bind (const char *opname,
                         const TAO_Skeleton skel_ptr)
 {
-  return optable_->bind (opname, skel_ptr);
+  return this->optable_->bind (opname, skel_ptr);
 }
 */
 TAO_Stub *

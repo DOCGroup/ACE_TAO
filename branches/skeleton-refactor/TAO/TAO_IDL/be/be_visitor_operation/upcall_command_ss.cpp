@@ -171,6 +171,14 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
       << "ACE_CHECK;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl << be_nl;
 
+  // Prevent copying/assignment and generation of default copy
+  // constructor and assignment operator.
+  *os << "private:" << be_idt_nl << be_nl
+      << class_name.c_str () << " ("
+      << class_name.c_str () << " const &);" << be_nl
+      << "void operator= (" << class_name.c_str () << " const &);"
+      << be_uidt_nl << be_nl;
+
   // Generate class attributes.
   *os << "private:" << be_idt_nl << be_nl
       << intf->full_skel_name () << " * const servant_;";

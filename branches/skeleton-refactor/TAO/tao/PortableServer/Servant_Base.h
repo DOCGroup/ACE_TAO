@@ -39,6 +39,7 @@ class TAO_PortableServer_Export TAO_ServantBase
   : public virtual TAO_Abstract_ServantBase
 {
 public:
+
   friend class TAO_POA;
   friend class TAO_Object_Adapter;
   friend class TAO_Local_ServantBase;
@@ -105,7 +106,7 @@ public:
 protected:
 
   /// Default constructor, only derived classes can be created.
-  TAO_ServantBase (void);
+  TAO_ServantBase (TAO_Operation_Table const * optable = 0);
 
   /// Copy constructor, protected so no instances can be created.
   TAO_ServantBase (const TAO_ServantBase &);
@@ -132,9 +133,11 @@ protected:
   */
 
 protected:
-  /// The operation table for this servant, it is initialized by the
+
+  /// The operation table for this servant.  It is initialized by the
   /// most derived class.
-  TAO_Operation_Table *optable_;
+  TAO_Operation_Table const * const optable_;
+
 };
 
 /**

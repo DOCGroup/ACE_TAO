@@ -57,4 +57,3 @@ TAO::Ret_Object_SArgument_T<S_ptr,S_var>::arg (void)
 {
   return this->x_.out ();
 }
-

@@ -113,12 +113,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
-      << " (void)\n";
+      << " (void)" << be_idt_nl;
 
-  // Generate optable
-  *os << "{" << be_idt_nl
-      << "this->optable_ = &tao_" << flat_name
-      << "_optable;" << be_uidt_nl
+  // Initialize optable in base member initializer list.
+  *os << ": TAO_ServantBase (&tao_"
+      << flat_name << "_optable)" << be_uidt_nl;
+
+  // Default constructor body.
+  *os << "{" << be_nl
       << "}" << be_nl << be_nl;
 
   // find if we are at the top scope or inside some module
