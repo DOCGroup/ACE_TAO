@@ -343,7 +343,7 @@ main (int argc, char *argv[])
       
       // Initialize the naming services
       TAO_Naming_Client my_name_client;
-      if (my_name_client.init (orb.in (), argc, argv) != 0)
+      if (my_name_client.init (orb.in ()) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize "
 			   "the TAO_Naming_Client. \n"),

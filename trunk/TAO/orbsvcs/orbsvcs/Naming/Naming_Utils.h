@@ -109,7 +109,6 @@ class TAO_ORBSVCS_Export TAO_Naming_Client
   //    <resolve>, etc. can be called on a <NameServer> object.
   //    This class is intended to simplify programs that want to play
   //    the role of a Naming Service clients.
-
 public:
   TAO_Naming_Client (void);
   // Default constructor.

@@ -124,7 +124,7 @@ Server::Server (void)
 // Initializes the mpeg server
 int
 Server::init (int argc,
-              char **argv,
+              char *argv[],
               CORBA::Environment& env)
 {
   int result;
@@ -144,7 +144,7 @@ Server::init (int argc,
     this->orb_manager_.child_poa ();
 
   // Initialize the naming services
-  if (my_name_client_.init (orb, argc, argv) != 0)
+  if (my_name_client_.init (orb) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       " (%P|%t) Unable to initialize "
 		       "the TAO_Naming_Client. \n"),

@@ -62,7 +62,7 @@ Command_Handler::~Command_Handler (void)
 
 int
 Command_Handler::init (int argc,
-                       char **argv)
+                       char *argv[])
 {
   TAO_TRY
     {
