@@ -40,11 +40,6 @@ public:
 
   virtual int visit_component (be_component *node);
   // set the right context and make a visitor
-
-protected:
-  void gen_unchecked_narrow (be_component *node,
-                             be_type *bt,
-                             TAO_OutStream *os);
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_CS_H_ */
