@@ -365,6 +365,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
       return -1;
     }
   ACE_ENDTRY;
+  return 0;
 }
 
 void
