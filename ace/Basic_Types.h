@@ -624,6 +624,7 @@ typedef ACE_UINT16 ACE_USHORT16;
 #    if defined (ACE_HAS_TSS_EMULATION)
        typedef u_long ACE_thread_key_t;
 #    else  /* ! ACE_HAS_TSS_EMULATION */
+#      include /**/ <pthread.h>
        typedef pthread_key_t ACE_thread_key_t;
 #    endif /* ! ACE_HAS_TSS_EMULATION */
 #  elif defined (ACE_HAS_STHREADS)
