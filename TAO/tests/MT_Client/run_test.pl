@@ -40,7 +40,8 @@ $CL = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
                        " -ORBsvcconf $client_conf "
                        . "-ORBdebuglevel $debug_level"
                        . " -k file://$iorfile "
-                       . " -n $threads -i 1000");
+                       . " -n $threads -i 1000 "
+                       . " -x");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {

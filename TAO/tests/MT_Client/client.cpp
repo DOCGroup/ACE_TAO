@@ -9,11 +9,12 @@ ACE_RCSID(MT_Client, client, "$Id$")
 const char *ior = "file://test.ior";
 int nthreads = 5;
 int niterations = 5;
+int server_shutdown = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:i:");
+  ACE_Get_Opt get_opts (argc, argv, "k:n:i:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -27,6 +28,9 @@ parse_args (int argc, char *argv[])
         break;
       case 'i':
         niterations = ACE_OS::atoi (get_opts.optarg);
+        break;
+      case 'x':
+        server_shutdown = 1;
         break;
       case '?':
       default:
@@ -105,7 +109,11 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      server->shutdown (ACE_TRY_ENV);
+      if (server_shutdown)
+        {
+          server->shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {
