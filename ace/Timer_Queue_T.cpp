@@ -314,7 +314,6 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (TIMER_QUEUE &timer_q
         handler->reactor ()->cancel_timer (handler, 0); // 0 means "call handle_close()".
       else
 #endif
-        // Upcall to the handler's handle_timeout method.
         timer_queue.cancel (handler, 0); 
     }
 
