@@ -2511,4 +2511,3 @@ TAO_IDL_Inheritance_Hierarchy_Worker::
 ~TAO_IDL_Inheritance_Hierarchy_Worker ()
 {
 }
-

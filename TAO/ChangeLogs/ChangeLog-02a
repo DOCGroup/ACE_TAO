@@ -1,3 +1,14 @@
+Wed Jan 23 12:03:01 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	  Fixed generate of the _downcast() method for AMH skeletons.  I
+	  used the new worker class to traverse inheritance graphs to do
+	  the job.
+
 Wed Jan 23 12:00:35 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp
