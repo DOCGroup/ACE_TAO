@@ -37,6 +37,12 @@ public:
 		    CORBA::Environment &_env);
   // Writes the <log_rec> to the standard output.
 
+  virtual void logv (const Logger::Log_Record &log_rec,
+		     Logger::Verbosity_Level verbosity,
+		     CORBA::Environment &_env);
+  // Writes the <log_rec> to the standard output with the given
+  // verbosity level
+  
   Logger::Verbosity_Level verbosity (void) const;
   // Gets the verbosity level
   

@@ -25,11 +25,11 @@
 
 ACE_RCSID(Naming, Naming_Utils, "$Id$")
 
-// Default constructor
+  // Default constructor
 
-TAO_Naming_Server::TAO_Naming_Server (void)
-  : ior_multicast_ (0),
-    naming_context_name_ (CORBA::string_dup ("NameService"))
+  TAO_Naming_Server::TAO_Naming_Server (void)
+    : ior_multicast_ (0),
+      naming_context_name_ (CORBA::string_dup ("NameService"))
 {
 }
 
@@ -46,14 +46,73 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                 "TAO_Naming_Server::init"));
 }
 
-// Function to initialize the name server object under the passed ORB
-// and POA.
 
+// Function to locate (or create if necessary) a name service under
+// the passed ORB and POA
 int
 TAO_Naming_Server::init (CORBA::ORB_ptr orb,
-                         PortableServer::POA_ptr child_poa,
+			 PortableServer::POA_ptr child_poa,
 			 int argc,
-                         char **argv)
+			 char **argv)
+{
+  CORBA::Object_var naming_obj =
+    orb->resolve_initial_references ("NameService");
+  
+  if (CORBA::is_nil (naming_obj.in ()))
+    {
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "\nNameService not found; calling init\n"));
+      return (this->init_new_naming
+	      (orb, child_poa, argc, argv));  
+    }
+  
+  else
+    {
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "\nNameService found!\n")); 
+      
+      if (this->naming_context_impl_.init () == -1)
+	return -1;
+      TAO_TRY
+	{
+	  this->naming_context_ =
+	    CosNaming::NamingContext::_narrow (naming_obj.in (),
+					       TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+	  CORBA::String_var str =
+	    orb->object_to_string (naming_obj.in (),
+				   TAO_TRY_ENV);
+	  
+	  TAO_CHECK_ENV;
+	      
+	  this->naming_service_ior_ = str.in ();
+	  this->naming_context_name_ = ""; // No name
+	}
+      TAO_ENDTRY;
+      
+      char* naming_ior = ACE_OS::strdup (this->naming_service_ior_.in ());
+      u_short port = TAO_ORB_Core_instance ()->orb_params ()
+	->name_service_port ();
+
+      ACE_NEW_RETURN (this->ior_multicast_,
+		      TAO_IOR_Multicast (naming_ior,
+					 port,
+					 ACE_DEFAULT_MULTICAST_ADDR,
+					 TAO_SERVICEID_NAMESERVICE),
+		      -1);
+    }
+}
+	    
+// Function to initialize the name server object under the passed ORB
+// and POA.
+int
+TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
+				    PortableServer::POA_ptr child_poa,
+				    int argc,
+				    char **argv)
 {
   // Initialize our <NS_NamingContext> instance.
   if (this->naming_context_impl_.init () == -1)
@@ -119,9 +178,9 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 	  TAO_CHECK_ENV;
 
 	  if (TAO_debug_level > 0)
-	  ACE_DEBUG ((LM_DEBUG,
-		      "NameService IOR is <%s>\n",
-		      this->naming_service_ior_.in ()));
+	    ACE_DEBUG ((LM_DEBUG,
+			"NameService IOR is <%s>\n",
+			this->naming_service_ior_.in ()));
 	  
 #if defined (ACE_HAS_IP_MULTICAST)
 	  // Get reactor instance from TAO.
@@ -167,7 +226,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 	    {
 	      if (TAO_debug_level > 0)
 		ACE_DEBUG ((LM_DEBUG,
-			"The multicast server setup is done.\n"));
+			    "The multicast server setup is done.\n"));
 	    }
 #endif /* ACE_HAS_IP_MULTICAST */
 	}
@@ -220,9 +279,9 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 	  TAO_CHECK_ENV;
 
 	  if (TAO_debug_level > 0)
-	  ACE_DEBUG ((LM_DEBUG,
-		      "NameService IOR is <%s>\n",
-		      this->naming_service_ior_.in ()));
+	    ACE_DEBUG ((LM_DEBUG,
+			"NameService IOR is <%s>\n",
+			this->naming_service_ior_.in ()));
 
 	  // Bind our context into the default name server.
 	  CosNaming::Name ctx_name (1);

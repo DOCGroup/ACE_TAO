@@ -61,10 +61,18 @@ public:
             PortableServer::POA_ptr root_poa,
 	    int argc = 0,
             char **argv = 0);
-  // Initialize the name server under the given ORB and POA.  The
-  // <argc> and <argv> commmand-line arguments are parsed to determine
-  // if this name server instance is part of a naming tree that
-  // resides under the default name server.
+  // Locate a  name server under the given ORB and POA.  If no name
+  // server can be resolved, create a new name server. 
+
+  int init_new_naming (CORBA::ORB_ptr orb,
+		       PortableServer::POA_ptr root_poa,
+		       int argc = 0,
+		       char **argv = 0);
+  // Initialize a new  name server under the given ORB and POA, even
+  // if one already exists.  The <argc> and <argv> commmand-line
+  // arguments are parsed to determine if this name server instance is
+  // part of a naming tree that resides under the default name
+  // server. 
 
   ~TAO_Naming_Server (void);
   // Destructor.
