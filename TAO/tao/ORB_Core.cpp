@@ -11,7 +11,6 @@
 #include "tao/default_server.h"
 #include "tao/default_resource.h"
 #include "tao/debug.h"
-#include "tao/IOR_LookupTable.h"
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
 #include "tao/Reactor_Registry.h"
