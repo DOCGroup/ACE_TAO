@@ -644,11 +644,25 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
   : start_ (rhs.start_.data_block ()->duplicate ()),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
-    char_translator_ (0),
-    wchar_translator_ (0)
+    char_translator_ (rhs.char_translator_),
+    wchar_translator_ (rhs.wchar_translator_)
 {
   this->start_.rd_ptr (rhs.start_.rd_ptr ());
   this->start_.wr_ptr (rhs.start_.wr_ptr ());
+}
+
+ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
+  : start_ (x.rhs_.start_.data_block ()->duplicate ()),
+    do_byte_swap_ (x.rhs_.do_byte_swap_),
+    good_bit_ (1),
+    char_translator_ (x.rhs_.char_translator_),
+    wchar_translator_ (x.rhs_.wchar_translator_)
+{
+  this->start_.rd_ptr (x.rhs_.start_.rd_ptr ());
+  this->start_.wr_ptr (x.rhs_.start_.wr_ptr ());
+
+  ACE_Data_Block* db = this->start_.data_block ()->clone_nocopy ();
+  (void) x.rhs_.start_.replace_data_block (db);
 }
 
 ACE_InputCDR&
