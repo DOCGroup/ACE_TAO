@@ -32,8 +32,10 @@
 #include "tao/Object.h"
 #include "tao/Object_KeyC.h"
 #include "tao/PolicyC.h"
-#include "tao/PollableC.h"
 #include "tao/CurrentC.h"
+#if defined(TAO_POLLER)
+#include "tao/PollableC.h"
+#endif /* TAO_POLLER */
 
 ACE_RCSID(tao, Typecode_Constants, "$Id$")
 
@@ -462,6 +464,7 @@ TAO_TypeCodes::init (void)
 
  // ****************************************************************
 
+#if defined(TAO_POLLER)
  static const CORBA::Long _oc_CORBA_Pollable[] =
  {
   TAO_ENCAP_BYTE_ORDER, // byte order
@@ -496,6 +499,8 @@ TAO_TypeCodes::init (void)
  };
  CORBA::_tc_PollableSet =
    new CORBA::TypeCode (CORBA::tk_objref, sizeof (_oc_CORBA_PollableSet), (char *) &_oc_CORBA_PollableSet, 0, sizeof (CORBA_PollableSet));
+
+#endif /* TAO_POLLER */
 
  // ****************************************************************
 

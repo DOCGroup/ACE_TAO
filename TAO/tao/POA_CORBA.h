@@ -31,9 +31,11 @@
 
 #include "tao/CurrentC.h"
 #include "tao/PolicyC.h"
-#include "tao/PollableC.h"
 #include "tao/DynAnyC.h"
 #include "tao/Servant_Base.h"
+#if defined(TAO_POLLER)
+#include "tao/PollableC.h"
+#endif /* TAO_POLLER */
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
