@@ -497,6 +497,7 @@ public:
 
   PortableServer::Servant get_servant (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::NoServant,
                      PortableServer::POA::WrongPolicy));
 
   void set_servant (PortableServer::Servant servant,
@@ -509,12 +510,15 @@ public:
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant,
                                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ServantAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
   void activate_object_with_id (const PortableServer::ObjectId &id,
                                 PortableServer::Servant p_servant,
                                 CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ServantAlreadyActive,
+                     PortableServer::POA::ObjectAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
   void deactivate_object (const PortableServer::ObjectId &oid,
@@ -723,6 +727,7 @@ protected:
 
   PortableServer::Servant get_servant_i (CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::NoServant,
                      PortableServer::POA::WrongPolicy));
 
   void set_servant_i (PortableServer::Servant servant,
@@ -764,6 +769,7 @@ protected:
                                                CORBA::Short priority,
                                                CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ServantAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
@@ -771,6 +777,8 @@ protected:
                                   CORBA::Short priority,
                                   CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ServantAlreadyActive,
+                   PortableServer::POA::ObjectAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
   void deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
