@@ -7,10 +7,10 @@
 //    TAO
 //
 // = FILENAME
-//    LSOCK_Connector.h
+//    UIOP_Connector.h
 //
 // = DESCRIPTION
-//    LSOCK specific connector processing
+//    UIOP specific connector processing
 //
 // = AUTHOR
 //    Fred Kuhns <fredk@cs.wustl.edu>
@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_LSOCK_CONNECTOR_H
-#define TAO_LSOCK_CONNECTOR_H
+#ifndef TAO_UIOP_CONNECTOR_H
+#define TAO_UIOP_CONNECTOR_H
 
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -29,18 +29,18 @@
 #include "tao/Connect.h"
 
 typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler,
-                               ACE_LSOCK_CONNECTOR> TAO_LSOCK_BASE_CONNECTOR;
+                               ACE_LSOCK_CONNECTOR> TAO_UIOP_BASE_CONNECTOR;
 
-class TAO_Export TAO_LSOCK_Connector : public TAO_Connector
+class TAO_Export TAO_UIOP_Connector : public TAO_Connector
 {
   // = TITLE
-  //   LSOCK-specific Connector bridge for pluggable protocols.
+  //   UIOP-specific Connector bridge for pluggable protocols.
   //
   // = DESCRIPTION
   //   
 public:
   // = Initialization and termination methods.
-  TAO_LSOCK_Connector (void);
+  TAO_UIOP_Connector (void);
   // Constructor.
   // @@ Do we want to pass in the tag here or should it be statically
   // defined?
@@ -67,12 +67,12 @@ public:
 
 private:
   CORBA::ULong tag_;
-  // LSOCK tag.
+  // UIOP tag.
 
-  TAO_LSOCK_BASE_CONNECTOR  base_connector_;
-  // The connector initiating connection requests for LSOCK.
+  TAO_UIOP_BASE_CONNECTOR  base_connector_;
+  // The connector initiating connection requests for UIOP.
 };
 
 # endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
-#endif  /* TAO_LSOCK_CONNECTOR_H */
+#endif  /* TAO_UIOP_CONNECTOR_H */

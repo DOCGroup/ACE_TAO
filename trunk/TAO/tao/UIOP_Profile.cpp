@@ -3,7 +3,7 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "tao/LSOCK_Profile.h"
+#include "tao/UIOP_Profile.h"
 #include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
@@ -13,20 +13,20 @@
 #include "tao/POA.h"
 #include "tao/debug.h"
 
-ACE_RCSID(tao, LSOCK_Profile, "$Id$")
+ACE_RCSID(tao, UIOP_Profile, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "tao/LSOCK_Profile.i"
+# include "tao/UIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-static const char *prefix_ = "lsock:";
+static const char *prefix_ = "uiop:";
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const ACE_UNIX_Addr& addr,
-                                      const char *object_key)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
+                                    const char *object_key)
   : rendezvous_point_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
-    version_ (DEF_LSOCK_MAJOR, DEF_LSOCK_MINOR),
+    version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
     object_addr_ (addr),
     hint_ (0),
@@ -44,12 +44,12 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const ACE_UNIX_Addr& addr,
   this->create_body ();
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const ACE_UNIX_Addr& addr,
-                                      const TAO_ObjectKey& object_key)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
+                                    const TAO_ObjectKey& object_key)
   : rendezvous_point_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
-    version_ (DEF_LSOCK_MAJOR, DEF_LSOCK_MINOR),
+    version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0),
@@ -61,9 +61,9 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const ACE_UNIX_Addr& addr,
   this->create_body ();
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const ACE_UNIX_Addr& addr,
-                                      const TAO_IOP_Version& version,
-                                      const char *object_key)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
+                                    const TAO_IOP_Version& version,
+                                    const char *object_key)
   : rendezvous_point_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
@@ -85,9 +85,9 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const ACE_UNIX_Addr& addr,
   this->create_body ();
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const ACE_UNIX_Addr& addr,
-                                      const TAO_IOP_Version& version,
-                                      const TAO_ObjectKey& object_key)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
+                                    const TAO_IOP_Version& version,
+                                    const TAO_ObjectKey& object_key)
   : rendezvous_point_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
@@ -103,12 +103,12 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const ACE_UNIX_Addr& addr,
   this->create_body ();
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const char* rendezvous_point,
-                                      const TAO_ObjectKey& object_key)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
+                                    const TAO_ObjectKey& object_key)
   : rendezvous_point_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
-    version_ (DEF_LSOCK_MAJOR, DEF_LSOCK_MINOR),
+    version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (rendezvous_point),
     hint_ (0),
@@ -127,13 +127,13 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const char* rendezvous_point,
   this->create_body ();
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const char* rendezvous_point,
-                                      const TAO_ObjectKey& object_key,
-                                      const ACE_UNIX_Addr& addr)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
+                                    const TAO_ObjectKey& object_key,
+                                    const ACE_UNIX_Addr& addr)
   : rendezvous_point_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
-    version_ (DEF_LSOCK_MAJOR, DEF_LSOCK_MINOR),
+    version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0),
@@ -152,13 +152,13 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const char* rendezvous_point,
   this->create_body ();
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const char* rendezvous_point,
-                                      const TAO_IOP_Version& version,
-                                      const TAO_ObjectKey& object_key)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
+                                    const TAO_IOP_Version& version,
+                                    const TAO_ObjectKey& object_key)
   : rendezvous_point_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
-    version_ (DEF_LSOCK_MAJOR, DEF_LSOCK_MINOR),
+    version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (rendezvous_point),
     hint_ (0),
@@ -175,7 +175,7 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const char* rendezvous_point,
   this->create_body ();
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const TAO_LSOCK_Profile *pfile)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile *pfile)
   : rendezvous_point_(0),
     tag_(pfile->tag_),
     body_(pfile->body_),
@@ -195,7 +195,7 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const TAO_LSOCK_Profile *pfile)
 
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const TAO_LSOCK_Profile &pfile)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
   : rendezvous_point_(0),
     tag_(pfile.tag_),
     body_(pfile.body_),
@@ -215,7 +215,7 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const TAO_LSOCK_Profile &pfile)
 
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const TAO_IOP_Version &version)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_IOP_Version &version)
   : rendezvous_point_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
@@ -229,12 +229,12 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const TAO_IOP_Version &version)
 {
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (const char *string,
-                                      CORBA::Environment &env)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
+                                    CORBA::Environment &env)
   : rendezvous_point_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
-    version_ (DEF_LSOCK_MAJOR, DEF_LSOCK_MINOR),
+    version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
     object_addr_ (),
     hint_ (0),
@@ -245,11 +245,11 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (const char *string,
   parse_string (string, env);
 }
 
-TAO_LSOCK_Profile::TAO_LSOCK_Profile (void)
+TAO_UIOP_Profile::TAO_UIOP_Profile (void)
   : rendezvous_point_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
-    version_ (DEF_LSOCK_MAJOR, DEF_LSOCK_MINOR),
+    version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
     object_addr_ (),
     hint_ (0),
@@ -260,7 +260,7 @@ TAO_LSOCK_Profile::TAO_LSOCK_Profile (void)
 }
 
 int
-TAO_LSOCK_Profile::set (const ACE_UNIX_Addr& addr)
+TAO_UIOP_Profile::set (const ACE_UNIX_Addr& addr)
 {
   char temp_rendezvous_point[MAXPATHLEN + 1];
   const char *temp_rendezvous_point2 = 0;
@@ -289,7 +289,7 @@ TAO_LSOCK_Profile::set (const ACE_UNIX_Addr& addr)
 
 }
 
-TAO_LSOCK_Profile::~TAO_LSOCK_Profile (void)
+TAO_UIOP_Profile::~TAO_UIOP_Profile (void)
 {
   assert (this->refcount_ == 0);
 
@@ -308,24 +308,24 @@ TAO_LSOCK_Profile::~TAO_LSOCK_Profile (void)
 //  0 -> can't understand this version
 //  1 -> success.
 int
-TAO_LSOCK_Profile::parse (TAO_InputCDR& cdr,
-                          CORBA::Boolean &continue_decoding,
-                          CORBA::Environment &env)
+TAO_UIOP_Profile::parse (TAO_InputCDR& cdr,
+                         CORBA::Boolean &continue_decoding,
+                         CORBA::Environment &env)
 {
   CORBA::ULong encap_len = cdr.length ();
 
-  // Read and verify major, minor versions, ignoring LSOCK
+  // Read and verify major, minor versions, ignoring UIOP
   // profiles whose versions we don't understand.
   // FIXME:  Version question again,  what do we do about them for this
   //         protocol?
 
   if (!(cdr.read_octet (this->version_.major)
-        && this->version_.major == TAO_LSOCK_Profile::DEF_LSOCK_MAJOR
+        && this->version_.major == TAO_UIOP_Profile::DEF_UIOP_MAJOR
         && cdr.read_octet (this->version_.minor)
-        && this->version_.minor <= TAO_LSOCK_Profile::DEF_LSOCK_MINOR))
+        && this->version_.minor <= TAO_UIOP_Profile::DEF_UIOP_MINOR))
   {
     ACE_DEBUG ((LM_DEBUG,
-                "detected new v%d.%d LSOCK profile",
+                "detected new v%d.%d UIOP profile",
                 this->version_.major,
                 this->version_.minor));
     return 0;
@@ -340,7 +340,7 @@ TAO_LSOCK_Profile::parse (TAO_InputCDR& cdr,
   // Get rendezvous_point
   if (cdr.read_string (this->rendezvous_point_) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "error decoding LSOCK rendezvous_point"));
+      ACE_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
       return -1;
     }
 
@@ -356,7 +356,7 @@ TAO_LSOCK_Profile::parse (TAO_InputCDR& cdr,
       // If there is extra data in the profile we are supposed to
       // ignore it, but print a warning just in case...
       ACE_DEBUG ((LM_DEBUG,
-                  "%d bytes out of %d left after LSOCK profile data\n",
+                  "%d bytes out of %d left after UIOP profile data\n",
                   cdr.length (),
                   encap_len));
     }
@@ -367,8 +367,8 @@ TAO_LSOCK_Profile::parse (TAO_InputCDR& cdr,
 }
 
 int
-TAO_LSOCK_Profile::parse_string (const char *string,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_UIOP_Profile::parse_string (const char *string,
+                                CORBA::Environment &ACE_TRY_ENV)
 {
   if (!string || !*string)
     return 0;
@@ -391,8 +391,8 @@ TAO_LSOCK_Profile::parse_string (const char *string,
   else
     ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
 
-  if (this->version_.major != TAO_LSOCK_Profile::DEF_LSOCK_MAJOR
-      || this->version_.minor  > TAO_LSOCK_Profile::DEF_LSOCK_MINOR)
+  if (this->version_.major != TAO_UIOP_Profile::DEF_UIOP_MAJOR
+      || this->version_.minor  > TAO_UIOP_Profile::DEF_UIOP_MINOR)
     {
       ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
     }
@@ -460,7 +460,7 @@ TAO_LSOCK_Profile::parse_string (const char *string,
 // }
 
 void
-TAO_LSOCK_Profile::create_body (void)
+TAO_UIOP_Profile::create_body (void)
 {
   TAO_OutputCDR cdr;
 }
@@ -481,16 +481,16 @@ TAO_LSOCK_Profile::create_body (void)
 // }
 
 CORBA::Boolean
-TAO_LSOCK_Profile::is_equivalent (TAO_Profile *other_profile,
-                                  CORBA::Environment &env)
+TAO_UIOP_Profile::is_equivalent (TAO_Profile *other_profile,
+                                 CORBA::Environment &env)
 {
   env.clear ();
 
   if (other_profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
     return 0;
 
-  TAO_LSOCK_Profile *op =
-    ACE_dynamic_cast (TAO_LSOCK_Profile *, other_profile);
+  TAO_UIOP_Profile *op =
+    ACE_dynamic_cast (TAO_UIOP_Profile *, other_profile);
 
   ACE_ASSERT (op->object_key_.length () < UINT_MAX);
 
@@ -500,8 +500,8 @@ TAO_LSOCK_Profile::is_equivalent (TAO_Profile *other_profile,
 }
 
 CORBA::ULong
-TAO_LSOCK_Profile::hash (CORBA::ULong max,
-                         CORBA::Environment &env)
+TAO_UIOP_Profile::hash (CORBA::ULong max,
+                        CORBA::Environment &env)
 {
   CORBA::ULong hashval;
 
@@ -526,7 +526,7 @@ TAO_LSOCK_Profile::hash (CORBA::ULong max,
 }
 
 char *
-TAO_LSOCK_Profile::addr_to_string(void)
+TAO_UIOP_Profile::addr_to_string(void)
 {
   static char s[MAXPATHLEN + MAXPATHLEN];
   ACE_OS::sprintf (s, "%s",
@@ -535,7 +535,7 @@ TAO_LSOCK_Profile::addr_to_string(void)
 }
 
 const char *
-TAO_LSOCK_Profile::rendezvous_point (const char *r)
+TAO_UIOP_Profile::rendezvous_point (const char *r)
 {
   if (this->rendezvous_point_)
     {
@@ -555,7 +555,7 @@ TAO_LSOCK_Profile::rendezvous_point (const char *r)
 }
 
 void
-TAO_LSOCK_Profile::reset_hint (void)
+TAO_UIOP_Profile::reset_hint (void)
 {
   if (this->hint_)
     {
@@ -564,8 +564,8 @@ TAO_LSOCK_Profile::reset_hint (void)
     }
 }
 
-TAO_LSOCK_Profile &
-TAO_LSOCK_Profile::operator= (const TAO_LSOCK_Profile &src)
+TAO_UIOP_Profile &
+TAO_UIOP_Profile::operator= (const TAO_UIOP_Profile &src)
 {
   this->version_ = src.version_;
 
@@ -593,7 +593,7 @@ TAO_LSOCK_Profile::operator= (const TAO_LSOCK_Profile &src)
 // Memory managment
 
 CORBA::ULong
-TAO_LSOCK_Profile::_incr_refcnt (void)
+TAO_UIOP_Profile::_incr_refcnt (void)
 {
   // OK, think I got it.  When this object is created (guard) the
   // lock is automatically acquired (refcount_lock_).  Then when
@@ -605,7 +605,7 @@ TAO_LSOCK_Profile::_incr_refcnt (void)
 }
 
 CORBA::ULong
-TAO_LSOCK_Profile::_decr_refcnt (void)
+TAO_UIOP_Profile::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
@@ -622,7 +622,7 @@ TAO_LSOCK_Profile::_decr_refcnt (void)
 
 
 void
-TAO_LSOCK_Profile::forward_to (TAO_MProfile *mprofiles)
+TAO_UIOP_Profile::forward_to (TAO_MProfile *mprofiles)
 {
   // we assume ownership of the profile list!!
   if (forward_to_)
@@ -634,7 +634,7 @@ TAO_LSOCK_Profile::forward_to (TAO_MProfile *mprofiles)
 }
 
 TAO_MProfile *
-TAO_LSOCK_Profile::forward_to (void)
+TAO_UIOP_Profile::forward_to (void)
 {
   TAO_MProfile *temp;
 
@@ -645,7 +645,7 @@ TAO_LSOCK_Profile::forward_to (void)
 }
 
 CORBA::String
-TAO_LSOCK_Profile::to_string (CORBA::Environment &env)
+TAO_UIOP_Profile::to_string (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
 
@@ -678,13 +678,13 @@ TAO_LSOCK_Profile::to_string (CORBA::Environment &env)
 }
 
 const char *
-TAO_LSOCK_Profile::prefix (void)
+TAO_UIOP_Profile::prefix (void)
 {
   return ::prefix_;
 }
 
 int
-TAO_LSOCK_Profile::encode (TAO_OutputCDR &stream) const
+TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
 {
   // UNSIGNED LONG, tag for this protocol profile;
   // @@ it seems like this is not a good separation of concerns, why
@@ -715,7 +715,7 @@ TAO_LSOCK_Profile::encode (TAO_OutputCDR &stream) const
   // CHAR describing byte order, starting the encapsulation
   stream.write_octet (TAO_ENCAP_BYTE_ORDER);
 
-  // LSOCK::TAO_IOP_Version, two characters (version 1.0) padding
+  // UIOP::TAO_IOP_Version, two characters (version 1.0) padding
   stream.write_char (this->version_.major);
   stream.write_char (this->version_.minor);
 

@@ -7,10 +7,10 @@
 //     TAO
 //
 // = FILENAME
-//     LSOCK_Profile.h
+//     UIOP_Profile.h
 //
 // = DESCRIPTION
-//     Unix Domain Socket (LSOCK) profile specific processing
+//     Unix Domain Socket (UIOP) profile specific processing
 //
 // = AUTHOR
 //     Fred Kuhns <fredk@cs.wustl.edu>
@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_LSOCK_PROFILE_H
-#define TAO_LSOCK_PROFILE_H
+#ifndef TAO_UIOP_PROFILE_H
+#define TAO_UIOP_PROFILE_H
 
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -30,78 +30,78 @@
 
 class TAO_Client_Connection_Handler;
 
-// TAO LSOCK_Profile concrete Profile definitions
-class TAO_Export TAO_LSOCK_Profile : public TAO_Profile
+// TAO UIOP_Profile concrete Profile definitions
+class TAO_Export TAO_UIOP_Profile : public TAO_Profile
 {
   // = TITLE
   //   This class defines the protocol specific attributes required
   //   for locating ORBs over a Unix Domain Sockets.
   //
   // = DESCRIPTION
-  //   This class defines the LSOCK profile.
+  //   This class defines the UIOP profile.
 public:
-  // = Currently, TAO supports LSOCK 1.0.
+  // = Currently, TAO supports UIOP 0.0.
   enum
     {
-      DEF_LSOCK_MAJOR = 0,  // FIXME:  Version numbers?
-      DEF_LSOCK_MINOR = 0
+      DEF_UIOP_MAJOR = 0,  // FIXME:  Version numbers?
+      DEF_UIOP_MINOR = 0
     };
 
   static const char *prefix (void);
   // Return the char string prefix.
 
-  TAO_LSOCK_Profile (const ACE_UNIX_Addr &addr,
-                     const char *object_key);
+  TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
+                    const char *object_key);
   // Profile constructor, the rendezvous_point field derived derived from
   // addr.
 
-  TAO_LSOCK_Profile (const ACE_UNIX_Addr &addr,
-                     const TAO_ObjectKey &object_key);
+  TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
+                    const TAO_ObjectKey &object_key);
   // Profile constructor, same as above except the object_key has
   // already been marshaled.  (actually, no marshalling for this protocol)
 
-  TAO_LSOCK_Profile (const ACE_UNIX_Addr &addr,
-                     const TAO_IOP_Version &version,
-                     const char *object_key);
+  TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
+                    const TAO_IOP_Version &version,
+                    const char *object_key);
   // Profile constructor, explicitly define the protocol version.
 
-  TAO_LSOCK_Profile (const ACE_UNIX_Addr &addr,
-                     const TAO_IOP_Version &version,
-                     const TAO_ObjectKey &object_key);
+  TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
+                    const TAO_IOP_Version &version,
+                    const TAO_ObjectKey &object_key);
   // Profile constructor, explicitly define the protocol version.
 
-  TAO_LSOCK_Profile (const char *rendezvous_point,
-                     const TAO_ObjectKey &object_key,
-                     const ACE_UNIX_Addr &addr);
+  TAO_UIOP_Profile (const char *rendezvous_point,
+                    const TAO_ObjectKey &object_key,
+                    const ACE_UNIX_Addr &addr);
   // Profile constructor
 
-  TAO_LSOCK_Profile (const char *rendevous_point,
-                     const TAO_ObjectKey &object_key);
+  TAO_UIOP_Profile (const char *rendevous_point,
+                    const TAO_ObjectKey &object_key);
   // Profile constructor
 
-  TAO_LSOCK_Profile (const char *rendezvous_point,
-                     const TAO_IOP_Version &version,
-                     const TAO_ObjectKey &object_key);
+  TAO_UIOP_Profile (const char *rendezvous_point,
+                    const TAO_IOP_Version &version,
+                    const TAO_ObjectKey &object_key);
   // Profile constructor, explicitly define the protocol version
   // FIXME:  What do we do about versions?
 
-  TAO_LSOCK_Profile (const char *string,
-                     CORBA::Environment &env);
+  TAO_UIOP_Profile (const char *string,
+                    CORBA::Environment &env);
   // Create object using a string ior.
 
-  TAO_LSOCK_Profile (const TAO_LSOCK_Profile *pfile);
+  TAO_UIOP_Profile (const TAO_UIOP_Profile *pfile);
   // Profile copy constructor
 
-  TAO_LSOCK_Profile (const TAO_LSOCK_Profile &pfile);
+  TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile);
   // Profile copy constructor
 
-  TAO_LSOCK_Profile (const TAO_IOP_Version &version);
+  TAO_UIOP_Profile (const TAO_IOP_Version &version);
   // Profile constructor, explicitly define the version.
 
-  TAO_LSOCK_Profile (void);
+  TAO_UIOP_Profile (void);
   // Profile constructor, default.
 
-  ~TAO_LSOCK_Profile (void);
+  ~TAO_UIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
   CORBA::ULong tag (void) const;
@@ -122,7 +122,7 @@ public:
   // client must deallocate memory.
 
   const TAO_opaque& body (void) const;
-  // Create LSOCK_Profile Object from marshalled data.
+  // Create UIOP_Profile Object from marshalled data.
 
   virtual int encode (TAO_OutputCDR &stream) const;
   // Encode this profile in a stream, i.e. marshal it.
@@ -184,7 +184,7 @@ public:
   TAO_Profile *_nil (void);
   // Return a null object pointer.
 
-  void operator= (const TAO_LSOCK_Profile &src);
+  void operator= (const TAO_UIOP_Profile &src);
   // Assignment operator
 
   virtual CORBA::ULong _incr_refcnt (void);
@@ -218,7 +218,7 @@ private:
   // Marshaled profile (CDR).
 
   TAO_IOP_Version version_;
-  // LSOCK version number.
+  // UIOP version number.
 
   TAO_ObjectKey object_key_;
   // object_key associated with this profile.
@@ -242,9 +242,9 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/LSOCK_Profile.i"
+# include "tao/UIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
 # endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
-#endif  /* TAO_LSOCK_PROFILE_H */
+#endif  /* TAO_UIOP_PROFILE_H */
