@@ -341,6 +341,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 }
 
 # if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+#   include "ace/OS_NS_Thread.h"
 int
 ACE_OS::netdb_acquire (void)
 {

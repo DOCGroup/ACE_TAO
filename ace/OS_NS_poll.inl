@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/Time_Value.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_INLINE int
 ACE_OS::poll (struct pollfd *pollfds,

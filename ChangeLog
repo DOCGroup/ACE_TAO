@@ -1,3 +1,22 @@
+Sun Nov  2 00:23:25 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_NS_netdb.cpp:
+          Added #include of OS_NS_Thread.h needed when
+          ACE_LACKS_NETDB_REENTRANT_FUNCTIONS is defined.
+
+        * ace/OS_NS_poll.inl:
+          Added #include of OS_NS_errno.h.
+
+        * ace/OS_NS_unistd.cpp:
+          Added #include of Guard_T.h.
+
+        * ace/Object_Manager_Base.cpp:
+          Fixed typo.
+
+        * ace/os_include/os_signal.h:
+          Fixed typo.  Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
+          for reporting this.
+
 Sat Nov  1 23:45:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/ACE_export.h:
