@@ -1,3 +1,8 @@
+Fri Jul 03 08:40:28 1998  Steve Huston  <shuston@riverace.com>
+
+	* tao/corba.h: Reordered some includes to get it to compile clean on
+	  HP-UX aCC.
+
 Fri Jul 03 02:03:23 1998  Carlos O'Ryan  <coryan@JIG>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Data.h: 
