@@ -78,6 +78,7 @@ OBJFILES = \
 	$(OBJDIR)\FILE_Parser.obj \
 	$(OBJDIR)\Flushing_Strategy.obj \
 	$(OBJDIR)\GIOP_Message_Base.obj \
+	$(OBJDIR)\GIOP_Message_Lite.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_10.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_11.obj \
