@@ -1,4 +1,6 @@
-Sat Apr 17 18:34:56 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Sat Apr 17 18:52:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp (acquire): Changed use of auto_ptr.
 
 	* ace/Auto_Ptr.i (operator=): Changed <a> to <rhs>.  Thanks to
 	  David Levine and Jean-Marc Strauss <strauss@club-internet.fr>
