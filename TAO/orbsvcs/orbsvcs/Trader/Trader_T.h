@@ -92,6 +92,9 @@ protected:
   PortableServer::ServantBase* ifs_[5];
 };
 
+template <class SEQ, class OPERAND_TYPE>
+CORBA::Boolean TAO_find (SEQ& sequence, const OPERAND_TYPE operand);
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Trader_T.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */

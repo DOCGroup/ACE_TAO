@@ -516,24 +516,6 @@ visit_property(TAO_Property_Constraint* literal)
 }
 
 
-template <class SEQ, class OPERAND_TYPE> CORBA::Boolean
-TAO_find (SEQ& sequence, const OPERAND_TYPE element)
-{
-  int length = sequence.length(),
-    return_value = 0;
-
-  for (int i = 0; i < length; i++)
-    {
-      if (sequence[i] == element)
-	{	  
-	  return_value = 1;
-	  break;
-	}
-    }
-
-  return (CORBA::Boolean) return_value;
-}
-
 CORBA::Boolean
 TAO_find_string (TAO_Sequences::StringSeq& sequence, const char* element)
 {

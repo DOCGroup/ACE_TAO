@@ -112,4 +112,22 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::lock (void)
   return this->lock_;
 }
 
+template <class SEQ, class OPERAND_TYPE> CORBA::Boolean
+TAO_find (SEQ& sequence, const OPERAND_TYPE element)
+{
+  int length = sequence.length(),
+    return_value = 0;
+
+  for (int i = 0; i < length; i++)
+    {
+      if (sequence[i] == element)
+	{	  
+	  return_value = 1;
+	  break;
+	}
+    }
+
+  return (CORBA::Boolean) return_value;
+}
+
 #endif /* TAO_TRADER_C */
