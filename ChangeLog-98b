@@ -1,3 +1,12 @@
+Thu Aug  6 14:30:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/config-irix6.x-sgic++-nothreads.h: 
+	  Use template specializations instead of pragmas if the compiler
+	  is 7.2 or better.
+
+	* ace/config-irix6.x-sgic++.h: 
+	  The <sched.h> is not necessary in IRIX 6.4
+
 Thu Aug 06 14:11:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Message_Queue_T.i (is_empty_i): Reverted the changes of
