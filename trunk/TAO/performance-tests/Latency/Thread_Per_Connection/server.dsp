@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO.lib ace.lib TAO_PortableServer.lib TAO_Strategies.lib TAO_Messaging.lib /nologo /subsystem:console /machine:I386 /libpath:"../../../../ace" /libpath:"../../../tao" /libpath:"../../../tao/PortableServer" /libpath:"../../../tao/Strategies" /libpath:"../../../tao/Messaging"
+# ADD LINK32 TAO_PortableServer.lib TAO.lib ace.lib TAO_Strategies.lib TAO_Messaging.lib TAO_Valuetype.lib /nologo /subsystem:console /machine:I386 /libpath:"../../../tao/PortableServer" /libpath:"../../../../ace" /libpath:"../../../tao" /libpath:"../../../tao/Strategies" /libpath:"../../../tao/Messaging" /libpath:"../../../tao/Valuetype"
 
 !ELSEIF  "$(CFG)" == "Thread_Per_Connection_Latency Tests Server - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib TAO_Strategiesd.lib TAO_Messagingd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"../../../../ace" /libpath:"../../../tao" /libpath:"../../../tao/PortableServer" /libpath:"../../../tao/Strategies" /libpath:"../../../tao/Messaging"
+# ADD LINK32 TAO_PortableServerd.lib TAOd.lib aced.lib TAO_Strategiesd.lib TAO_Messagingd.lib TAO_Valuetyped.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"../../../tao/PortableServer" /libpath:"../../../../ace" /libpath:"../../../tao" /libpath:"../../../tao/Strategies" /libpath:"../../../tao/Messaging" /libpath:"../../../tao/Valuetype"
 
 !ENDIF 
 
