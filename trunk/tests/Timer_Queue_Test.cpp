@@ -87,7 +87,7 @@ test_performance (ACE_Timer_Queue *tq,
 {
   Example_Handler eh;
   ACE_Profile_Timer timer;
-  size_t i;
+  int i;
 
   ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
