@@ -129,7 +129,7 @@ main (int argc, char *argv[])
 
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, sigset, 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "thr_sigsetmask"), 1);
-  else if (ACE_Thread_Manager::instance ()->spawn (sig_handler, 0, THR_DETACHED) == -1)
+  else if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) sig_handler, 0, THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
   if (child)
