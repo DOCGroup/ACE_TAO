@@ -30,7 +30,7 @@
 #include "Reconfig_Scheduler_T.i"
 #endif /* __ACE_INLINE__ */
 
-//#ifdef _DEBUG 
+//#ifdef _DEBUG
 //#define SCHEDULER_LOGGING 1
 //#endif
 
@@ -194,12 +194,12 @@ init (int config_count,
   int result = 0;
   int i = 0;
 
-/* WSOA merge - commented out 
+/* WSOA merge - commented out
   // Clear out the previous entries, if any.
   this->close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 */
-  
+
   // Re-map the RT_Info and dependency handle values if necessary.
   // Assumes that dependencies only refer to handles within the
   // current set: changing that assumption would require us to use
@@ -892,7 +892,7 @@ replace_seq (const RtecScheduler::RT_Info_Set& infos
             break;
 
             // Intentional fall-through to ignore non-volatile RT_Infos
-          case RtecScheduler::RT_INFO_NON_VOLATILE: 
+          case RtecScheduler::RT_INFO_NON_VOLATILE:
 
           default:                             // Ignore disabled RT_Infos.
             break;
@@ -1326,7 +1326,7 @@ recompute_scheduling (CORBA::Long minimum_priority,
   // If everything is already up to date, we're done.
   if (SCHED_ALL_STABLE == stability_flags_)
     {
-      
+
       // Must always provide a value for an out parameter
       ACE_NEW_THROW_EX (anomalies,
          RtecScheduler::Scheduling_Anomaly_Set (0),
@@ -1343,7 +1343,7 @@ recompute_scheduling (CORBA::Long minimum_priority,
     {
 
 #if defined (SCHEDULER_LOGGING)
-      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_, 
+      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
                                                     "1_pre_crit_traverse.txt");
 #endif
@@ -1352,9 +1352,9 @@ recompute_scheduling (CORBA::Long minimum_priority,
       // topological ordering and identifying threads.
       crit_dfs_traverse_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
 #if defined (SCHEDULER_LOGGING)
-      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_, 
+      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
                                                     "2_crit_dfs_traverse_i.txt");
 #endif
@@ -1362,25 +1362,25 @@ recompute_scheduling (CORBA::Long minimum_priority,
       // Propagate criticalities.
       propagate_criticalities_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
 #if defined (SCHEDULER_LOGGING)
-      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_, 
+      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
                                                     "3_propagate_criticalities_i.txt");
 #endif
-      
+
 #if defined (SCHEDULER_LOGGING)
-      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_, 
+      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
                                                     "4_pre_traverse.txt");
 #endif
-      
+
       // Traverse dependency graph, assigning a topological ordering and identifying threads.
       dfs_traverse_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
 #if defined (SCHEDULER_LOGGING)
-      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_, 
+      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
                                                     "5_dfs_traverse_i.txt");
 #endif
@@ -1389,29 +1389,29 @@ recompute_scheduling (CORBA::Long minimum_priority,
       // for loops using the strongly connected components algorithm.
       detect_cycles_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
 #if defined (SCHEDULER_LOGGING)
-      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_, 
+      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
-                                                    "6_detect_cycles_i.txt");                                              
+                                                    "6_detect_cycles_i.txt");
 #endif
-      
+
       // Perform admission control for task delineator rate tuples.
       perform_admission_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
 #if defined (SCHEDULER_LOGGING)
-      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_, 
+      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
                                                     "7_perform_admission_i.txt");
 #endif
-      
+
       // Propagate effective execution time and period, set total frame size.
       propagate_characteristics_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
 #if defined (SCHEDULER_LOGGING)
-      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_, 
+      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
                                                     "8_propagate_characteristics_i.txt");
 #endif
@@ -1425,13 +1425,13 @@ recompute_scheduling (CORBA::Long minimum_priority,
       // last feasible priority.
       assign_priorities_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
 #if defined (SCHEDULER_LOGGING)
-      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_, 
+      ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
                                                     "9_assign_priorities_i.txt");
-#endif 
-      
+#endif
+
     }
 
 
@@ -1514,14 +1514,14 @@ get_dependency_set (RtecScheduler::Dependency_Set_out dependencies
          dependency_iter (this->called_dependency_set_map_);
        dependency_iter.done () == 0 && i < this->dependency_count_;
        ++dependency_iter)
-    {  
+    {
       dependency_set = (*dependency_iter).int_id_;
       for (u_int j = 0;
            j < dependency_set->length () && i < this->dependency_count_;
            ++i, ++j)
         {
           (* dependencies) [i] =  (*dependency_set) [j];
-          // For two-way calls, swap the handles (stored in reverse order in the called map) 
+          // For two-way calls, swap the handles (stored in reverse order in the called map)
           if ((* dependencies) [i].dependency_type == RtecBase::TWO_WAY_CALL)
             {
               (* dependencies) [i].rt_info =  (* dependency_set) [j].rt_info_depended_on;
@@ -1652,10 +1652,10 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 get_config_infos (RtecScheduler::Config_Info_Set_out configs
-		  ACE_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   RtecScheduler::SYNCHRONIZATION_FAILURE,
-		   RtecScheduler::NOT_SCHEDULED))
+                   RtecScheduler::SYNCHRONIZATION_FAILURE,
+                   RtecScheduler::NOT_SCHEDULED))
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
@@ -1672,9 +1672,9 @@ get_config_infos (RtecScheduler::Config_Info_Set_out configs
   if (configs.ptr () == 0)
     {
       ACE_NEW_THROW_EX (configs,
-			RtecScheduler::Config_Info_Set(this->
-						       config_info_count_),
-			CORBA::NO_MEMORY ());
+                        RtecScheduler::Config_Info_Set(this->
+                                                       config_info_count_),
+                        CORBA::NO_MEMORY ());
       ACE_CHECK;
     }
   configs->length (this->config_info_count_);
@@ -1804,7 +1804,7 @@ create_i (const char *entry_point,
   new_sched_entry_ptr.release ();
 
   // Connect the entry to the RT_Info.
-  new_rt_info->volatile_token = 
+  new_rt_info->volatile_token =
     ACE_static_cast (CORBA::ULongLong,
                      ACE_reinterpret_cast (ptrdiff_t,
                                            new_sched_entry));
@@ -1892,12 +1892,12 @@ set_i (TAO_RT_Info_Ex *rt_info,
                             CORBA::NO_MEMORY ());
           ACE_CHECK;
 
-          
+
           // Make sure the new tuple is cleaned up if we exit abruptly.
           auto_ptr<TAO_RT_Info_Tuple> tuple_auto_ptr (tuple_ptr);
-  
-//          ACE_DEBUG((LM_DEBUG, "Tuple not found.  Inserting new tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n", 
-//                     rt_info->handle, 
+
+//          ACE_DEBUG((LM_DEBUG, "Tuple not found.  Inserting new tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
+//                     rt_info->handle,
 //                     rse_ptr,
 //                     tuple_ptr));
           // Add the tuple to the entry's original tuple set
@@ -2037,7 +2037,7 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                         enabled
                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      
+
       break;
 
     // In a one-way call, the called operation depends on the
@@ -2071,16 +2071,16 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
       ACE_THROW (RtecScheduler::INTERNAL ());
   }
 
- // Add the criticality dependency map entry. 
+ // Add the criticality dependency map entry.
  // If A---TW--->B and C---OW--->D, the add_dependency_calls
  // would look like this
  // add_dependency (A, B, TW)
  // add_dependency (D, C, OW)
  // Neither of the other two maps capture these dependencies
  // A depends on B and D depends on C.
- // The calling dependency map captures 
+ // The calling dependency map captures
  // A calls B and C calls D.
- // The called dependency map captures 
+ // The called dependency map captures
  // B called by A and D called by C.
 
  map_dependency_i (handle,                    // calling handle
@@ -2273,7 +2273,7 @@ map_dependency_i (RtecScheduler::handle_t key,
                   ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
                   CORBA::Long number_of_calls,
                   RtecScheduler::Dependency_Type_t dependency_type,
-                  RtecScheduler::Dependency_Enabled_Type_t enabled                  
+                  RtecScheduler::Dependency_Enabled_Type_t enabled
                   ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::INTERNAL,
@@ -2336,7 +2336,7 @@ unmap_dependency_i (RtecScheduler::handle_t key,
   RtecScheduler::Dependency_Set *dependency_set = 0;
 
   // Try to unbind the matching dependency set from the passed map
-  // and if successful, destroy the 
+  // and if successful, destroy the
   if (dependency_map.find (key, dependency_set) == 0)
     {
       if (dependency_set)
@@ -2367,7 +2367,7 @@ unmap_dependency_i (RtecScheduler::handle_t key,
           if (!found)
             {
               ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
-            } 
+            }
         }
       else
         {
@@ -2406,7 +2406,7 @@ map_dependency_enable_state_i (RtecScheduler::handle_t key,
   RtecScheduler::Dependency_Set *dependency_set = 0;
 
   // Try to unbind the matching dependency set from the passed map
-  // and if successful, destroy the 
+  // and if successful, destroy the
   if (dependency_map.find (key, dependency_set) == 0)
     {
       if (dependency_set)
@@ -2573,7 +2573,7 @@ perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
   // Traverse tuples in admission order, updating the associate tuple
   // for each thread delineator.
 #if defined (SCHEDULER_LOGGING)
-  ACE_Scheduler_Factory::log_scheduling_tuples(tuple_ptr_array_, 
+  ACE_Scheduler_Factory::log_scheduling_tuples(tuple_ptr_array_,
                                                this->rt_info_tuple_count_,
                                                "sorted_admit_tuples.txt");
 #endif
@@ -2646,11 +2646,12 @@ propagate_criticalities_i (ACE_ENV_SINGLE_ARG_DECL)
 
   // Sort the pointers to original tuples in ascending admission
   // order, according to the scheduling strategy's admission policy.
+
   ACE_OS::qsort (ACE_reinterpret_cast (void *, tuple_ptr_array_),
                  this->rt_info_tuple_count_,
                  sizeof (TAO_RT_Info_Tuple *),
                  ACE_reinterpret_cast (COMP_FUNC,
-                       RECONFIG_SCHED_STRATEGY::comp_entry_finish_times ));
+                   RECONFIG_SCHED_STRATEGY::comp_tuple_finish_times ));
 
   // Traverse entries in topological (ascending forward DFS
   // finish time) order, propagating aggregate execution
@@ -2735,7 +2736,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG, "Scheduler::entry ptr array before sorting is\n"));
   for (i = 0; i < this->rt_info_count_; ++i)
     {
-      RtecScheduler::RT_Info* rt_info_ptr = 
+      RtecScheduler::RT_Info* rt_info_ptr =
         this->entry_ptr_array_[i]->actual_rt_info ();
       ACE_DEBUG ((LM_DEBUG,
                   " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n ",
@@ -2744,7 +2745,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
                   rt_info_ptr->criticality,
                   rt_info_ptr->priority,
                   rt_info_ptr->preemption_priority,
-                  rt_info_ptr->preemption_subpriority));                  
+                  rt_info_ptr->preemption_subpriority));
     }
 #endif /* SCHEDULER_LOGGING */
 
@@ -2761,7 +2762,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG, "Scheduler::qsorted array is\n"));
   for (i = 0; i < this->rt_info_count_; ++i)
     {
-      RtecScheduler::RT_Info* rt_info_ptr = 
+      RtecScheduler::RT_Info* rt_info_ptr =
         this->entry_ptr_array_[i]->actual_rt_info ();
       ACE_DEBUG ((LM_DEBUG,
                   " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n ",
@@ -2770,7 +2771,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
                   rt_info_ptr->criticality,
                   rt_info_ptr->priority,
                   rt_info_ptr->preemption_priority,
-                  rt_info_ptr->preemption_subpriority));                  
+                  rt_info_ptr->preemption_subpriority));
     }
 #endif
 
