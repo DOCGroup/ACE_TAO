@@ -63,6 +63,8 @@ OBJFILES = \
 	$(OBJDIR)\be_visitor_context.obj \
 	$(OBJDIR)\be_visitor_decl.obj \
 	$(OBJDIR)\be_visitor_enum.obj \
+	$(OBJDIR)\be_visitor_eventtype.obj \
+	$(OBJDIR)\be_visitor_eventtype_fwd.obj \
 	$(OBJDIR)\be_visitor_exception.obj \
 	$(OBJDIR)\be_visitor_factory.obj \
 	$(OBJDIR)\be_visitor_field.obj \

@@ -82,6 +82,8 @@ FILES = be/be_array \
         be/be_visitor_context \
         be/be_visitor_decl \
         be/be_visitor_enum \
+        be_visitor_eventtype \
+	be_visitor_eventtype_fwd \
         be/be_visitor_exception \
         be/be_visitor_field \
         be/be_visitor_home \
