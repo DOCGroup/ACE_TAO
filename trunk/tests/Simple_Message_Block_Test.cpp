@@ -179,20 +179,32 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_Message_Block mb2 (ACE_OS::strlen (message) + 1);
 
     // Resize mb2 so that we mark for use less than the allocated buffer
-    if (-1 == mb2.size (ACE_OS::strlen (message) + 1 - 10))
-      ACE_ASSERT (0);
+    if (mb2.size (ACE_OS::strlen (message) + 1 - 10) == -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Resize test failed ..\n")));
+      }
 
     // We expect this to succeed
-    if (-1 == mb1.copy (message, ACE_OS::strlen (message) + 1))
-      ACE_ASSERT (0);
+    if (mb1.copy (message, ACE_OS::strlen (message) + 1) == -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Copy test failed ..\n")));
+      }
 
     // We expect this to fail
-    if (0 == mb2.copy (message, ACE_OS::strlen (message) + 1))
-      ACE_ASSERT (0);
+    if (mb2.copy (message, ACE_OS::strlen (message) + 1) != -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Copy test succeeded when it should have failed ..\n")));
+      }
 
     // We also expect this to fail
-    if (0 == mb2.copy (message))
-      ACE_ASSERT (0);
+    if (mb2.copy (message) != -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Copy test succeeded when it should have failed ..\n")));
+      }
   }
   ACE_END_TEST;
   return 0;
