@@ -19,8 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_IOPC_H_
-#define _TAO_IDL_IOPC_H_
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+
+#ifndef _TAO_IDL_ORIG_IOPC_H_
+#define _TAO_IDL_ORIG_IOPC_H_
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
@@ -32,7 +35,7 @@
 #include "tao/TAO_Export.h"
 #include "Exception.h"
 #include "Object.h"
-#include "Any.h"
+#include "Any_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -57,58 +60,84 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+
 TAO_NAMESPACE  IOP
 {
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  
   typedef CORBA::ULong ProfileId;
   typedef CORBA::ULong_out ProfileId_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProfileId;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_INTERNET_IOP;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_MULTIPLE_COMPONENTS;
+  const CORBA::ULong TAG_INTERNET_IOP = 0U;
   
-  struct TaggedProfile;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_MULTIPLE_COMPONENTS = 1U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  
   class TaggedProfile_var;
   
   struct TAO_Export TaggedProfile
   {
-    
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef TaggedProfile_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
+    
+    static void _tao_any_destructor (void *);
+    IOP::ProfileId tag;
+    
 
-    static void _tao_any_destructor (void*);
-    
-    ACE_NESTED_CLASS (IOP, ProfileId) tag;
-    
 #if !defined (_IOP_TAGGEDPROFILE__TAO_SEQ_OCTET_CH_)
 #define _IOP_TAGGEDPROFILE__TAO_SEQ_OCTET_CH_
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
     
     class _tao_seq_Octet;
     
     // *************************************************************
-    // _tao_seq_Octet
+    // IOP::TaggedProfile::_tao_seq_Octet
     // *************************************************************
     
     class TAO_Export _tao_seq_Octet : public 
+    
+    // TAO_IDL - Generated from 
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<CORBA::Octet>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
     {
     public:
-      _tao_seq_Octet (void); // default ctor
-      _tao_seq_Octet (CORBA::ULong max); // uses max size
+      _tao_seq_Octet (void);
+      _tao_seq_Octet (CORBA::ULong max);
       _tao_seq_Octet (
           CORBA::ULong max, 
           CORBA::ULong length, 
           CORBA::Octet *buffer, 
           CORBA::Boolean release = 0
         );
-      _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
+      _tao_seq_Octet (const _tao_seq_Octet &);
       ~_tao_seq_Octet (void);
+      
       static void _tao_any_destructor (void*);
+      
       
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (
@@ -117,19 +146,19 @@ TAO_NAMESPACE  IOP
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
-      
     };
-    
+
 #endif /* end #if !defined */
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:447
     
-#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _profile_data_seq;
-#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
-
     _tao_seq_Octet profile_data;
-    
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
   
   class TAO_Export TaggedProfile_var
   {
@@ -147,6 +176,7 @@ TAO_NAMESPACE  IOP
     operator const TaggedProfile &() const;
     operator TaggedProfile &();
     operator TaggedProfile &() const;
+    
     // Variable-size types only.
     operator TaggedProfile *&();
     
@@ -160,6 +190,9 @@ TAO_NAMESPACE  IOP
   private:
     TaggedProfile *ptr_;
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
   
   class TAO_Export TaggedProfile_out
   {
@@ -179,32 +212,36 @@ TAO_NAMESPACE  IOP
     void operator= (const TaggedProfile_var &);
   };
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedProfile;
   
-  struct IOR;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  
   class IOR_var;
   
   struct TAO_Export IOR
   {
-    
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef IOR_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    static void _tao_any_destructor (void*);
     
+    static void _tao_any_destructor (void *);
     TAO_String_Manager type_id;
     
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     
+    // TAO_IDL - Generated from 
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CH_
     
-    class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile
+    class TAO_Export _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile
       : public TAO_Unbounded_Base_Sequence
     {
     public:
-      // = Initialization and termination methods.
       _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (void);
       _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (CORBA::ULong maximum); 
       _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (
@@ -241,53 +278,63 @@ TAO_NAMESPACE  IOP
           CORBA::Boolean release
         );
     };
-    
+
 #endif /* end #if !defined */
-    
-    
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-    
+
 #if !defined (_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CH_)
 #define _IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CH_
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
     
     class _tao_seq_TaggedProfile;
     
     // *************************************************************
-    // _tao_seq_TaggedProfile
+    // IOP::IOR::_tao_seq_TaggedProfile
     // *************************************************************
     
     class TAO_Export _tao_seq_TaggedProfile : public 
+    
+    // TAO_IDL - Generated from 
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<ACE_NESTED_CLASS (IOP, TaggedProfile)>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
     {
     public:
-      _tao_seq_TaggedProfile (void); // default ctor
-      _tao_seq_TaggedProfile (CORBA::ULong max); // uses max size
+      _tao_seq_TaggedProfile (void);
+      _tao_seq_TaggedProfile (CORBA::ULong max);
       _tao_seq_TaggedProfile (
           CORBA::ULong max, 
           CORBA::ULong length, 
           ACE_NESTED_CLASS (IOP, TaggedProfile) *buffer, 
           CORBA::Boolean release = 0
         );
-      _tao_seq_TaggedProfile (const _tao_seq_TaggedProfile &); // copy ctor
+      _tao_seq_TaggedProfile (const _tao_seq_TaggedProfile &);
       ~_tao_seq_TaggedProfile (void);
+      
       static void _tao_any_destructor (void*);
       
+      
     };
-    
+
 #endif /* end #if !defined */
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:447
     
-#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_TaggedProfile _profiles_seq;
-#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
-
     _tao_seq_TaggedProfile profiles;
-    
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
   
   class TAO_Export IOR_var
   {
@@ -305,6 +352,7 @@ TAO_NAMESPACE  IOP
     operator const IOR &() const;
     operator IOR &();
     operator IOR &() const;
+    
     // Variable-size types only.
     operator IOR *&();
     
@@ -318,6 +366,9 @@ TAO_NAMESPACE  IOP
   private:
     IOR *ptr_;
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
   
   class TAO_Export IOR_out
   {
@@ -337,54 +388,73 @@ TAO_NAMESPACE  IOP
     void operator= (const IOR_var &);
   };
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IOR;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
   
   typedef CORBA::ULong ComponentId;
   typedef CORBA::ULong_out ComponentId_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ComponentId;
   
-  struct TaggedComponent;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  
   class TaggedComponent_var;
   
   struct TAO_Export TaggedComponent
   {
-    
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef TaggedComponent_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
+    
+    static void _tao_any_destructor (void *);
+    IOP::ComponentId tag;
+    
 
-    static void _tao_any_destructor (void*);
-    
-    ACE_NESTED_CLASS (IOP, ComponentId) tag;
-    
 #if !defined (_IOP_TAGGEDCOMPONENT__TAO_SEQ_OCTET_CH_)
 #define _IOP_TAGGEDCOMPONENT__TAO_SEQ_OCTET_CH_
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
     
     class _tao_seq_Octet;
     
     // *************************************************************
-    // _tao_seq_Octet
+    // IOP::TaggedComponent::_tao_seq_Octet
     // *************************************************************
     
     class TAO_Export _tao_seq_Octet : public 
+    
+    // TAO_IDL - Generated from 
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<CORBA::Octet>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
     {
     public:
-      _tao_seq_Octet (void); // default ctor
-      _tao_seq_Octet (CORBA::ULong max); // uses max size
+      _tao_seq_Octet (void);
+      _tao_seq_Octet (CORBA::ULong max);
       _tao_seq_Octet (
           CORBA::ULong max, 
           CORBA::ULong length, 
           CORBA::Octet *buffer, 
           CORBA::Boolean release = 0
         );
-      _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
+      _tao_seq_Octet (const _tao_seq_Octet &);
       ~_tao_seq_Octet (void);
+      
       static void _tao_any_destructor (void*);
+      
       
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (
@@ -393,19 +463,19 @@ TAO_NAMESPACE  IOP
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
-      
     };
-    
+
 #endif /* end #if !defined */
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:447
     
-#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _component_data_seq;
-#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
-
     _tao_seq_Octet component_data;
-    
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
   
   class TAO_Export TaggedComponent_var
   {
@@ -423,6 +493,7 @@ TAO_NAMESPACE  IOP
     operator const TaggedComponent &() const;
     operator TaggedComponent &();
     operator TaggedComponent &() const;
+    
     // Variable-size types only.
     operator TaggedComponent *&();
     
@@ -436,6 +507,9 @@ TAO_NAMESPACE  IOP
   private:
     TaggedComponent *ptr_;
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
   
   class TAO_Export TaggedComponent_out
   {
@@ -455,19 +529,23 @@ TAO_NAMESPACE  IOP
     void operator= (const TaggedComponent_var &);
   };
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponent;
   
-  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_MULTIPLECOMPONENTPROFILE_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_MULTIPLECOMPONENTPROFILE_CH_
   
-  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile
+  class TAO_Export _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile
     : public TAO_Unbounded_Base_Sequence
   {
   public:
-    // = Initialization and termination methods.
     _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (void);
     _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (CORBA::ULong maximum); 
     _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (
@@ -504,54 +582,60 @@ TAO_NAMESPACE  IOP
         CORBA::Boolean release
       );
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
 #if !defined (_IOP_MULTIPLECOMPONENTPROFILE_CH_)
 #define _IOP_MULTIPLECOMPONENTPROFILE_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
   
   class MultipleComponentProfile;
   class MultipleComponentProfile_var;
   
   // *************************************************************
-  // MultipleComponentProfile
+  // IOP::MultipleComponentProfile
   // *************************************************************
   
   class TAO_Export MultipleComponentProfile : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<TaggedComponent>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    MultipleComponentProfile (void); // default ctor
-    MultipleComponentProfile (CORBA::ULong max); // uses max size
+    MultipleComponentProfile (void);
+    MultipleComponentProfile (CORBA::ULong max);
     MultipleComponentProfile (
         CORBA::ULong max, 
         CORBA::ULong length, 
         TaggedComponent *buffer, 
         CORBA::Boolean release = 0
       );
-    MultipleComponentProfile (const MultipleComponentProfile &); // copy ctor
+    MultipleComponentProfile (const MultipleComponentProfile &);
     ~MultipleComponentProfile (void);
+    
     static void _tao_any_destructor (void*);
     
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef MultipleComponentProfile_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_MULTIPLECOMPONENTPROFILE___VAR_CH_)
 #define _IOP_MULTIPLECOMPONENTPROFILE___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
   
   // *************************************************************
   // class IOP::MultipleComponentProfile_var
@@ -573,7 +657,9 @@ TAO_NAMESPACE  IOP
     operator const MultipleComponentProfile &() const;
     operator MultipleComponentProfile &();
     operator MultipleComponentProfile &() const;
-    operator MultipleComponentProfile *&(); // variable-size base types only
+    
+    // Variable-size base types only.
+    operator MultipleComponentProfile *&();
     
     TaggedComponent & operator[] (CORBA::ULong index);
     const TaggedComponent & operator[] (CORBA::ULong index) const;
@@ -588,13 +674,14 @@ TAO_NAMESPACE  IOP
   private:
     MultipleComponentProfile *ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_MULTIPLECOMPONENTPROFILE___OUT_CH_)
 #define _IOP_MULTIPLECOMPONENTPROFILE___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
   
   class TAO_Export MultipleComponentProfile_out
   {
@@ -614,23 +701,26 @@ TAO_NAMESPACE  IOP
     // Assignment from T_var not allowed.
     void operator= (const MultipleComponentProfile_var &);
   };
-  
-  
+
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_MultipleComponentProfile;
   
-  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTLIST_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTLIST_CH_
   
-  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_IOP_TaggedComponentList
+  class TAO_Export _TAO_Unbounded_Sequence_IOP_TaggedComponentList
     : public TAO_Unbounded_Base_Sequence
   {
   public:
-    // = Initialization and termination methods.
     _TAO_Unbounded_Sequence_IOP_TaggedComponentList (void);
     _TAO_Unbounded_Sequence_IOP_TaggedComponentList (CORBA::ULong maximum); 
     _TAO_Unbounded_Sequence_IOP_TaggedComponentList (
@@ -667,54 +757,60 @@ TAO_NAMESPACE  IOP
         CORBA::Boolean release
       );
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
 #if !defined (_IOP_TAGGEDCOMPONENTLIST_CH_)
 #define _IOP_TAGGEDCOMPONENTLIST_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
   
   class TaggedComponentList;
   class TaggedComponentList_var;
   
   // *************************************************************
-  // TaggedComponentList
+  // IOP::TaggedComponentList
   // *************************************************************
   
   class TAO_Export TaggedComponentList : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_TaggedComponentList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<TaggedComponent>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    TaggedComponentList (void); // default ctor
-    TaggedComponentList (CORBA::ULong max); // uses max size
+    TaggedComponentList (void);
+    TaggedComponentList (CORBA::ULong max);
     TaggedComponentList (
         CORBA::ULong max, 
         CORBA::ULong length, 
         TaggedComponent *buffer, 
         CORBA::Boolean release = 0
       );
-    TaggedComponentList (const TaggedComponentList &); // copy ctor
+    TaggedComponentList (const TaggedComponentList &);
     ~TaggedComponentList (void);
+    
     static void _tao_any_destructor (void*);
     
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef TaggedComponentList_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_TAGGEDCOMPONENTLIST___VAR_CH_)
 #define _IOP_TAGGEDCOMPONENTLIST___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
   
   // *************************************************************
   // class IOP::TaggedComponentList_var
@@ -736,7 +832,9 @@ TAO_NAMESPACE  IOP
     operator const TaggedComponentList &() const;
     operator TaggedComponentList &();
     operator TaggedComponentList &() const;
-    operator TaggedComponentList *&(); // variable-size base types only
+    
+    // Variable-size base types only.
+    operator TaggedComponentList *&();
     
     TaggedComponent & operator[] (CORBA::ULong index);
     const TaggedComponent & operator[] (CORBA::ULong index) const;
@@ -751,13 +849,14 @@ TAO_NAMESPACE  IOP
   private:
     TaggedComponentList *ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_TAGGEDCOMPONENTLIST___OUT_CH_)
 #define _IOP_TAGGEDCOMPONENTLIST___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
   
   class TAO_Export TaggedComponentList_out
   {
@@ -777,23 +876,26 @@ TAO_NAMESPACE  IOP
     // Assignment from T_var not allowed.
     void operator= (const TaggedComponentList_var &);
   };
-  
-  
+
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponentList;
   
-  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CH_
   
-  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq
+  class TAO_Export _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq
     : public TAO_Unbounded_Base_Sequence
   {
   public:
-    // = Initialization and termination methods.
     _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (void);
     _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum); 
     _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (
@@ -830,54 +932,60 @@ TAO_NAMESPACE  IOP
         CORBA::Boolean release
       );
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
 #if !defined (_IOP_TAGGEDCOMPONENTSEQ_CH_)
 #define _IOP_TAGGEDCOMPONENTSEQ_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
   
   class TaggedComponentSeq;
   class TaggedComponentSeq_var;
   
   // *************************************************************
-  // TaggedComponentSeq
+  // IOP::TaggedComponentSeq
   // *************************************************************
   
   class TAO_Export TaggedComponentSeq : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<TaggedComponent>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    TaggedComponentSeq (void); // default ctor
-    TaggedComponentSeq (CORBA::ULong max); // uses max size
+    TaggedComponentSeq (void);
+    TaggedComponentSeq (CORBA::ULong max);
     TaggedComponentSeq (
         CORBA::ULong max, 
         CORBA::ULong length, 
         TaggedComponent *buffer, 
         CORBA::Boolean release = 0
       );
-    TaggedComponentSeq (const TaggedComponentSeq &); // copy ctor
+    TaggedComponentSeq (const TaggedComponentSeq &);
     ~TaggedComponentSeq (void);
+    
     static void _tao_any_destructor (void*);
     
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef TaggedComponentSeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_TAGGEDCOMPONENTSEQ___VAR_CH_)
 #define _IOP_TAGGEDCOMPONENTSEQ___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
   
   // *************************************************************
   // class IOP::TaggedComponentSeq_var
@@ -899,7 +1007,9 @@ TAO_NAMESPACE  IOP
     operator const TaggedComponentSeq &() const;
     operator TaggedComponentSeq &();
     operator TaggedComponentSeq &() const;
-    operator TaggedComponentSeq *&(); // variable-size base types only
+    
+    // Variable-size base types only.
+    operator TaggedComponentSeq *&();
     
     TaggedComponent & operator[] (CORBA::ULong index);
     const TaggedComponent & operator[] (CORBA::ULong index) const;
@@ -914,13 +1024,14 @@ TAO_NAMESPACE  IOP
   private:
     TaggedComponentSeq *ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_TAGGEDCOMPONENTSEQ___OUT_CH_)
 #define _IOP_TAGGEDCOMPONENTSEQ___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
   
   class TAO_Export TaggedComponentSeq_out
   {
@@ -940,78 +1051,126 @@ TAO_NAMESPACE  IOP
     // Assignment from T_var not allowed.
     void operator= (const TaggedComponentSeq_var &);
   };
-  
-  
+
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponentSeq;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_ORB_TYPE;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_CODE_SETS;
+  const CORBA::ULong TAG_ORB_TYPE = 0U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_POLICIES;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_ALTERNATE_IIOP_ADDRESS;
+  const CORBA::ULong TAG_CODE_SETS = 1U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_COMPLETE_OBJECT_KEY;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_ENDPOINT_ID_POSITION;
+  const CORBA::ULong TAG_POLICIES = 2U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_LOCATION_POLICY;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_DCE_STRING_BINDING;
+  const CORBA::ULong TAG_ALTERNATE_IIOP_ADDRESS = 3U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_DCE_BINDING_NAME;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_DCE_NO_PIPES;
+  const CORBA::ULong TAG_COMPLETE_OBJECT_KEY = 5U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_ENDPOINT_ID_POSITION = 6U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_LOCATION_POLICY = 12U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_DCE_STRING_BINDING = 100U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_DCE_BINDING_NAME = 101U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_DCE_NO_PIPES = 102U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
   
   typedef CORBA::ULong ServiceId;
   typedef CORBA::ULong_out ServiceId_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceId;
   
-  struct ServiceContext;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  
   class ServiceContext_var;
   
   struct TAO_Export ServiceContext
   {
-    
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef ServiceContext_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
+    
+    static void _tao_any_destructor (void *);
+    IOP::ServiceId context_id;
+    
 
-    static void _tao_any_destructor (void*);
-    
-    ACE_NESTED_CLASS (IOP, ServiceId) context_id;
-    
 #if !defined (_IOP_SERVICECONTEXT__TAO_SEQ_OCTET_CH_)
 #define _IOP_SERVICECONTEXT__TAO_SEQ_OCTET_CH_
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
     
     class _tao_seq_Octet;
     
     // *************************************************************
-    // _tao_seq_Octet
+    // IOP::ServiceContext::_tao_seq_Octet
     // *************************************************************
     
     class TAO_Export _tao_seq_Octet : public 
+    
+    // TAO_IDL - Generated from 
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<CORBA::Octet>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
     {
     public:
-      _tao_seq_Octet (void); // default ctor
-      _tao_seq_Octet (CORBA::ULong max); // uses max size
+      _tao_seq_Octet (void);
+      _tao_seq_Octet (CORBA::ULong max);
       _tao_seq_Octet (
           CORBA::ULong max, 
           CORBA::ULong length, 
           CORBA::Octet *buffer, 
           CORBA::Boolean release = 0
         );
-      _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
+      _tao_seq_Octet (const _tao_seq_Octet &);
       ~_tao_seq_Octet (void);
+      
       static void _tao_any_destructor (void*);
+      
       
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (
@@ -1020,19 +1179,19 @@ TAO_NAMESPACE  IOP
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
-      
     };
-    
+
 #endif /* end #if !defined */
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:447
     
-#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _context_data_seq;
-#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
-
     _tao_seq_Octet context_data;
-    
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
   
   class TAO_Export ServiceContext_var
   {
@@ -1050,6 +1209,7 @@ TAO_NAMESPACE  IOP
     operator const ServiceContext &() const;
     operator ServiceContext &();
     operator ServiceContext &() const;
+    
     // Variable-size types only.
     operator ServiceContext *&();
     
@@ -1063,6 +1223,9 @@ TAO_NAMESPACE  IOP
   private:
     ServiceContext *ptr_;
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
   
   class TAO_Export ServiceContext_out
   {
@@ -1082,19 +1245,23 @@ TAO_NAMESPACE  IOP
     void operator= (const ServiceContext_var &);
   };
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceContext;
   
-  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_SERVICECONTEXTLIST_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_SERVICECONTEXTLIST_CH_
   
-  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_IOP_ServiceContextList
+  class TAO_Export _TAO_Unbounded_Sequence_IOP_ServiceContextList
     : public TAO_Unbounded_Base_Sequence
   {
   public:
-    // = Initialization and termination methods.
     _TAO_Unbounded_Sequence_IOP_ServiceContextList (void);
     _TAO_Unbounded_Sequence_IOP_ServiceContextList (CORBA::ULong maximum); 
     _TAO_Unbounded_Sequence_IOP_ServiceContextList (
@@ -1131,54 +1298,60 @@ TAO_NAMESPACE  IOP
         CORBA::Boolean release
       );
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
 #if !defined (_IOP_SERVICECONTEXTLIST_CH_)
 #define _IOP_SERVICECONTEXTLIST_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
   
   class ServiceContextList;
   class ServiceContextList_var;
   
   // *************************************************************
-  // ServiceContextList
+  // IOP::ServiceContextList
   // *************************************************************
   
   class TAO_Export ServiceContextList : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_ServiceContextList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<ServiceContext>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    ServiceContextList (void); // default ctor
-    ServiceContextList (CORBA::ULong max); // uses max size
+    ServiceContextList (void);
+    ServiceContextList (CORBA::ULong max);
     ServiceContextList (
         CORBA::ULong max, 
         CORBA::ULong length, 
         ServiceContext *buffer, 
         CORBA::Boolean release = 0
       );
-    ServiceContextList (const ServiceContextList &); // copy ctor
+    ServiceContextList (const ServiceContextList &);
     ~ServiceContextList (void);
+    
     static void _tao_any_destructor (void*);
     
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef ServiceContextList_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_SERVICECONTEXTLIST___VAR_CH_)
 #define _IOP_SERVICECONTEXTLIST___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
   
   // *************************************************************
   // class IOP::ServiceContextList_var
@@ -1200,7 +1373,9 @@ TAO_NAMESPACE  IOP
     operator const ServiceContextList &() const;
     operator ServiceContextList &();
     operator ServiceContextList &() const;
-    operator ServiceContextList *&(); // variable-size base types only
+    
+    // Variable-size base types only.
+    operator ServiceContextList *&();
     
     ServiceContext & operator[] (CORBA::ULong index);
     const ServiceContext & operator[] (CORBA::ULong index) const;
@@ -1215,13 +1390,14 @@ TAO_NAMESPACE  IOP
   private:
     ServiceContextList *ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_SERVICECONTEXTLIST___OUT_CH_)
 #define _IOP_SERVICECONTEXTLIST___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
   
   class TAO_Export ServiceContextList_out
   {
@@ -1241,62 +1417,125 @@ TAO_NAMESPACE  IOP
     // Assignment from T_var not allowed.
     void operator= (const ServiceContextList_var &);
   };
-  
-  
+
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceContextList;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TransactionService;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong CodeSets;
+  const CORBA::ULong TransactionService = 0U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong ChainBypassCheck;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong ChainBypassInfo;
+  const CORBA::ULong CodeSets = 1U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong LogicalThreadId;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong BI_DIR_IIOP;
+  const CORBA::ULong ChainBypassCheck = 2U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SendingContextRunTime;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong INVOCATION_POLICIES;
+  const CORBA::ULong ChainBypassInfo = 3U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong UnknownExceptionInfo;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong RTCorbaPriority;
+  const CORBA::ULong LogicalThreadId = 4U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong RTCorbaPriorityRange;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_FT_GROUP;
+  const CORBA::ULong BI_DIR_IIOP = 5U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_FT_PRIMARY;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_FT_HEARTBEAT_ENABLED;
+  const CORBA::ULong SendingContextRunTime = 6U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong FT_GROUP_VERSION;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong FT_REQUEST;
+  const CORBA::ULong INVOCATION_POLICIES = 7U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_UIPMC;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_GROUP;
+  const CORBA::ULong UnknownExceptionInfo = 9U;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_GROUP_IIOP;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
+  const CORBA::ULong RTCorbaPriority = 10U;
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong RTCorbaPriorityRange = 11U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_FT_GROUP = 27U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_FT_PRIMARY = 28U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_FT_HEARTBEAT_ENABLED = 29U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong FT_GROUP_VERSION = 12U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong FT_REQUEST = 13U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_UIPMC = 1413566220U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_GROUP = 1413566211U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong TAG_GROUP_IIOP = 1413566212U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_IOP_CODEC___PTR_CH_)
 #define _IOP_CODEC___PTR_CH_
   
   class Codec;
   typedef Codec *Codec_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_CODEC___VAR_CH_)
 #define _IOP_CODEC___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_Export Codec_var : public TAO_Base_var
   {
@@ -1337,12 +1576,13 @@ TAO_NAMESPACE  IOP
     Codec_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_CODEC___OUT_CH_)
 #define _IOP_CODEC___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_Export Codec_out
   {
@@ -1360,29 +1600,21 @@ TAO_NAMESPACE  IOP
   private:
     Codec_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  // *************************************************************
-  // IOP::Codec
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:106
-  // *************************************************************
-  
-  
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_IOP_CODEC_CH_)
 #define _IOP_CODEC_CH_
   
   class TAO_Export Codec
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef Codec_ptr _ptr_type;
     typedef Codec_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -1403,9 +1635,11 @@ TAO_NAMESPACE  IOP
         return (Codec_ptr)0;
       }
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
     
-    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
+
 #if !defined (_IOP_CODEC_INVALIDTYPEFORENCODING_CH_)
 #define _IOP_CODEC_INVALIDTYPEFORENCODING_CH_
     
@@ -1418,9 +1652,9 @@ TAO_NAMESPACE  IOP
       ~InvalidTypeForEncoding (void);
 
       InvalidTypeForEncoding &operator= (const InvalidTypeForEncoding &);
-
-      static void _tao_any_destructor (void*);
-
+      
+      static void _tao_any_destructor (void *);
+      
       static InvalidTypeForEncoding *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -1438,16 +1672,22 @@ TAO_NAMESPACE  IOP
           ACE_ENV_ARG_DECL_NOT_USED
         );
       
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
       
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+    
+    static ::CORBA::TypeCode_ptr _tc_InvalidTypeForEncoding;
 
-static ::CORBA::TypeCode_ptr _tc_InvalidTypeForEncoding;
-    
-    
 #endif /* end #if !defined */
     
-    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
+
 #if !defined (_IOP_CODEC_FORMATMISMATCH_CH_)
 #define _IOP_CODEC_FORMATMISMATCH_CH_
     
@@ -1460,9 +1700,9 @@ static ::CORBA::TypeCode_ptr _tc_InvalidTypeForEncoding;
       ~FormatMismatch (void);
 
       FormatMismatch &operator= (const FormatMismatch &);
-
-      static void _tao_any_destructor (void*);
-
+      
+      static void _tao_any_destructor (void *);
+      
       static FormatMismatch *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -1480,16 +1720,22 @@ static ::CORBA::TypeCode_ptr _tc_InvalidTypeForEncoding;
           ACE_ENV_ARG_DECL_NOT_USED
         );
       
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
       
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+    
+    static ::CORBA::TypeCode_ptr _tc_FormatMismatch;
 
-static ::CORBA::TypeCode_ptr _tc_FormatMismatch;
-    
-    
 #endif /* end #if !defined */
     
-    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
+
 #if !defined (_IOP_CODEC_TYPEMISMATCH_CH_)
 #define _IOP_CODEC_TYPEMISMATCH_CH_
     
@@ -1502,9 +1748,9 @@ static ::CORBA::TypeCode_ptr _tc_FormatMismatch;
       ~TypeMismatch (void);
 
       TypeMismatch &operator= (const TypeMismatch &);
-
-      static void _tao_any_destructor (void*);
-
+      
+      static void _tao_any_destructor (void *);
+      
       static TypeMismatch *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -1522,14 +1768,21 @@ static ::CORBA::TypeCode_ptr _tc_FormatMismatch;
           ACE_ENV_ARG_DECL_NOT_USED
         );
       
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
       
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+    
+    static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
 
-static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
-    
-    
 #endif /* end #if !defined */
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::OctetSeq * encode (
         const CORBA::Any & data
@@ -1540,6 +1793,9 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
         , IOP::Codec::InvalidTypeForEncoding
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual CORBA::Any * decode (
         const CORBA::OctetSeq & data
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1549,6 +1805,9 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
         , IOP::Codec::FormatMismatch
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::CORBA::OctetSeq * encode_value (
         const CORBA::Any & data
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1557,6 +1816,9 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
         CORBA::SystemException
         , IOP::Codec::InvalidTypeForEncoding
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Any * decode_value (
         const CORBA::OctetSeq & data,
@@ -1569,48 +1831,63 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
         , IOP::Codec::TypeMismatch
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     Codec (void);
-    
     virtual ~Codec (void);
-  
+    
   private:
     Codec (const Codec &);
     void operator= (const Codec &);
   };
-  
-  
+
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Codec;
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  
   typedef CORBA::Short EncodingFormat;
   typedef CORBA::Short_out EncodingFormat_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EncodingFormat;
   
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short ENCODING_CDR_ENCAPS;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  struct Encoding;
+  const CORBA::Short ENCODING_CDR_ENCAPS = 0;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  
   class Encoding_var;
   
   struct TAO_Export Encoding
   {
-    
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef Encoding_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    static void _tao_any_destructor (void*);
     
-    ACE_NESTED_CLASS (IOP, EncodingFormat) format;
+    static void _tao_any_destructor (void *);
+    IOP::EncodingFormat format;
     CORBA::Octet major_version;
     CORBA::Octet minor_version;
-    
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
   
   class TAO_Export Encoding_var
   {
@@ -1624,8 +1901,10 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
     
     Encoding_var &operator= (Encoding *);
     Encoding_var &operator= (const Encoding_var &);
+    
     // Fixed-size types only.
     Encoding_var &operator= (const Encoding &);
+    
     Encoding *operator-> (void);
     const Encoding *operator-> (void) const;
     
@@ -1644,22 +1923,32 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
     Encoding *ptr_;
   };
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:105
+  
   typedef Encoding &Encoding_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Encoding;
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_IOP_CODECFACTORY___PTR_CH_)
 #define _IOP_CODECFACTORY___PTR_CH_
   
   class CodecFactory;
   typedef CodecFactory *CodecFactory_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_CODECFACTORY___VAR_CH_)
 #define _IOP_CODECFACTORY___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_Export CodecFactory_var : public TAO_Base_var
   {
@@ -1700,12 +1989,13 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
     CodecFactory_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_IOP_CODECFACTORY___OUT_CH_)
 #define _IOP_CODECFACTORY___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_Export CodecFactory_out
   {
@@ -1723,29 +2013,21 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
   private:
     CodecFactory_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  // *************************************************************
-  // IOP::CodecFactory
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:106
-  // *************************************************************
-  
-  
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_IOP_CODECFACTORY_CH_)
 #define _IOP_CODECFACTORY_CH_
   
   class TAO_Export CodecFactory
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef CodecFactory_ptr _ptr_type;
     typedef CodecFactory_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -1766,9 +2048,11 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
         return (CodecFactory_ptr)0;
       }
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
     
-    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
+
 #if !defined (_IOP_CODECFACTORY_UNKNOWNENCODING_CH_)
 #define _IOP_CODECFACTORY_UNKNOWNENCODING_CH_
     
@@ -1781,9 +2065,9 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
       ~UnknownEncoding (void);
 
       UnknownEncoding &operator= (const UnknownEncoding &);
-
-      static void _tao_any_destructor (void*);
-
+      
+      static void _tao_any_destructor (void *);
+      
       static UnknownEncoding *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -1801,14 +2085,21 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
           ACE_ENV_ARG_DECL_NOT_USED
         );
       
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
       
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+    
+    static ::CORBA::TypeCode_ptr _tc_UnknownEncoding;
 
-static ::CORBA::TypeCode_ptr _tc_UnknownEncoding;
-    
-    
 #endif /* end #if !defined */
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::IOP::Codec_ptr create_codec (
         const IOP::Encoding & enc
@@ -1819,94 +2110,171 @@ static ::CORBA::TypeCode_ptr _tc_UnknownEncoding;
         , IOP::CodecFactory::UnknownEncoding
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     CodecFactory (void);
-    
     virtual ~CodecFactory (void);
+    
+    friend class _TAO_CodecFactory_Remote_Proxy_Impl;
+    friend class _TAO_CodecFactory_ThruPOA_Proxy_Impl;
+    friend class _TAO_CodecFactory_Direct_Proxy_Impl;
   
   private:
     CodecFactory (const CodecFactory &);
     void operator= (const CodecFactory &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodecFactory;
-  
-  
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+
 }
 TAO_NAMESPACE_CLOSE // module IOP
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedProfile &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedProfile*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::TaggedProfile *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedProfile *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::IOR &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::IOR*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::IOR *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::IOR *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedComponent &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedComponent*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::TaggedComponent *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedComponent *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::MultipleComponentProfile &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::MultipleComponentProfile*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::MultipleComponentProfile *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::MultipleComponentProfile *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedComponentList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedComponentList*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::TaggedComponentList *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedComponentList *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedComponentSeq &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedComponentSeq*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::TaggedComponentSeq *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedComponentSeq *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::ServiceContext &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::ServiceContext*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::ServiceContext *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::ServiceContext *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::ServiceContextList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::ServiceContextList*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::ServiceContextList *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::ServiceContextList *&);
-// Any operators for interface IOP::Codec
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, IOP::Codec_ptr); // copying
 TAO_Export void operator<<= (CORBA::Any &, IOP::Codec_ptr *); // non-copying
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Codec_ptr &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::Codec::InvalidTypeForEncoding &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::Codec::InvalidTypeForEncoding*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Codec::InvalidTypeForEncoding *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::Codec::InvalidTypeForEncoding *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::Codec::FormatMismatch &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::Codec::FormatMismatch*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Codec::FormatMismatch *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::Codec::FormatMismatch *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::Codec::TypeMismatch &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::Codec::TypeMismatch*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Codec::TypeMismatch *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::Codec::TypeMismatch *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::Encoding &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::Encoding*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Encoding *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::Encoding *&);
-// Any operators for interface IOP::CodecFactory
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, IOP::CodecFactory_ptr); // copying
 TAO_Export void operator<<= (CORBA::Any &, IOP::CodecFactory_ptr *); // non-copying
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::CodecFactory_ptr &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
+
 TAO_Export void operator<<= (CORBA::Any &, const IOP::CodecFactory::UnknownEncoding &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::CodecFactory::UnknownEncoding*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::CodecFactory::UnknownEncoding *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::CodecFactory::UnknownEncoding *&);
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+
 #ifndef __ACE_INLINE__
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::TaggedProfile &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::TaggedProfile &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_IOP_TaggedProfile__tao_seq_Octet_H_
 #define _TAO_CDR_OP_IOP_TaggedProfile__tao_seq_Octet_H_
@@ -1922,8 +2290,14 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_IOP_TaggedProfile__tao_seq_Octet_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::IOR &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::IOR &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_H_
 #define _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_H_
@@ -1939,8 +2313,14 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::TaggedComponent &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::TaggedComponent &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_IOP_TaggedComponent__tao_seq_Octet_H_
 #define _TAO_CDR_OP_IOP_TaggedComponent__tao_seq_Octet_H_
@@ -1956,6 +2336,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_IOP_TaggedComponent__tao_seq_Octet_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_IOP_MultipleComponentProfile_H_
 #define _TAO_CDR_OP_IOP_MultipleComponentProfile_H_
@@ -1971,6 +2353,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_IOP_MultipleComponentProfile_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_IOP_TaggedComponentList_H_
 #define _TAO_CDR_OP_IOP_TaggedComponentList_H_
@@ -1986,6 +2370,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentList_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_IOP_TaggedComponentSeq_H_
 #define _TAO_CDR_OP_IOP_TaggedComponentSeq_H_
@@ -2001,8 +2387,14 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentSeq_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::ServiceContext &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::ServiceContext &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_H_
 #define _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_H_
@@ -2018,6 +2410,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_IOP_ServiceContextList_H_
 #define _TAO_CDR_OP_IOP_ServiceContextList_H_
@@ -2033,11 +2427,19 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_IOP_ServiceContextList_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::Encoding &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::Encoding &);
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
+
 #endif /* __ACE_INLINE__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "IOPC.i"
@@ -2053,3 +2455,4 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::Encoding &);
 
 #include "ace/post.h"
 #endif /* ifndef */
+
