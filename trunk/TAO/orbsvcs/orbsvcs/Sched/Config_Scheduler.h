@@ -307,10 +307,6 @@ private:
 
 };
 
-#if defined (__ACE_INLINE__)
-#include "Config_Scheduler.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_SCHEDULER_H */

@@ -31,13 +31,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__ACE_INLINE__)
-#include "Reconfig_Scheduler.i"
-#endif /* __ACE_INLINE__ */
-
 // Include the templates here.
 #include "Reconfig_Scheduler_T.h"
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_RECONFIG_SCHEDULER_H */

@@ -9,10 +9,6 @@
 
 #include "Config_Scheduler.h"
 
-#if defined (__ACE_INLINE__)
-#include "Config_Scheduler.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Sched, Config_Scheduler, "$Id$")
 
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)

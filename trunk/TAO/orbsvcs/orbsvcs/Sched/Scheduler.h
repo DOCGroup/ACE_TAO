@@ -293,10 +293,6 @@ private:
 
 typedef ACE_Scheduler Scheduler;
 
-#if defined (__ACE_INLINE__)
-#include "Scheduler.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* SCHEDULER_H */
 
