@@ -14,17 +14,18 @@ $ior2file = "theior2";
 $sleeptime = 3;
 
 $SV1 = Process::Create ("server".$Process::EXE_EXT, 
-                        "-ORBport $server1_port -o $ior1file ".
-			"-ORBobjrefstyle url");
+                        " -ORBport $server1_port -o $ior1file ".
+			" -ORBobjrefstyle url");
 
 $SV2 = Process::Create ("server".$Process::EXE_EXT, 
-                        "-ORBport $server2_port -o $ior2file ".
-			"-ORBobjrefstyle url");
+                        " -ORBport $server2_port -o $ior2file ".
+			" -ORBobjrefstyle url");
 
 sleep ($sleeptime);
 
-$status = system ("client".$Process::EXE_EXT." -ORBport $client_port ".
-		  "-f $ior1file -g $ior2file -n 2 -i 10 -s 5");
+$status = system ("client".$Process::EXE_EXT.
+		  " -ORBport $client_port ".
+		  " -f $ior1file -g $ior2file -n 2 -i 10 -s 5");
 
 $SV1->Kill ();
 $SV2->Kill ();
