@@ -1,3 +1,56 @@
+Sun Dec  8 19:00:45 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Reactor.cpp (handle_events): Updated this method to use the
+	  ACE_Countdown_Time::update method after the mutex has been
+	  acquired.
+
+	* ace/Time_Value.cpp (update): Added an ACE_Countdown_Time::update
+	  method that calls stop and start.  This is useful for methods
+	  such as ACE_Reactor::handle_events that need to update timeout
+	  values after acquiring locks, but before waiting on the
+	  demultiplexing mechanism (e.g. select).
+
+	* ace/ReactorEx.cpp (handle_events): Modularized the
+	  implementation of handle_events.  Now it uses helper functions
+ 	  to significantly simplify the implementation.  Also updated the
+ 	  header file documentation.
+
+	* ace/Timer_Queue: Added a timer_skew_ data member and accessor
+	  methods to ACE_Timer_Queue.  Also added an expire method that
+ 	  calls gettimeofday and adds the timer_skew_ for you.  These
+ 	  changes will help simplify Reactor, Proactor, and ReactorEx
+ 	  code.
+
+	* ace/Reactor : Removed timer_skew_.  This code now just calles
+	  timer_queue->expire () with no parameters.  Very clean.
+
+	* ace/ReactorEx : Removed timer_skew_ code.
+
+	* ace/Proactor : Removed timer_skew_ code.
+
+	* examples/Proactor/test_proactor.cpp: Fixed this application so
+	  that it exits when all the data has been sent and received.
+	  Previously, it used a cool timeout mechanism to "guess" when all
+	  the data had been received.  Ahh, but we can't have too much
+	  fun, or people start to get nervous.
+
+	* ace/Service_Config.cpp (run_reactorEx_event_loop (Time_Value)):
+	  Fixed the implementation of this method.  It now handles
+ 	  reactorEx events until end_reactorEx_event_loop is called, or
+ 	  the specified time value expires.  Also fixed the
+ 	  run_proactor_event_loop (Time_Value) method.
+
+	* examples/ReactorEx/test_timeout.cpp:  Added a new example
+	  application that shows how to use
+	  Service_Config::run_reactorEx_event_loop with timeouts.  Check
+	  the examples/ReactorEx/README file for more details.
+
+	* examples/Proactor/test_timeout.cpp:  Added a new example
+	  application that shows how to use
+	  Service_Config::run_proactor_event_loop with timeouts.  Yes, this
+	  screams for common dispatcher interfaces for Reactor, Proactor,
+	  and ReactorEx.
+
 Sun Dec  8 10:27:19 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/servers/main.cpp (main): Fixed several small bugs in the
