@@ -53,6 +53,8 @@ CORE_BINDIR=$(ACE_ROOT)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)
 
 MAKE_BINDIR=if not exist "$(BINDIR)" mkdir "$(BINDIR)"
 
+!ifndef OBJDIR
 OBJDIR=$(BASE_OBJDIR)\$(NAME)\$(STATIC_DIR)\$(DEBUG_DIR)
+!endif
 
 MAKE_OBJDIR=if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
