@@ -270,9 +270,6 @@ private:
   virtual int dispatch_info_i (const ACE_Time_Value &current_time,
                                ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
-  /// Factory method that frees a previously allocated node.
-  virtual void free_node (ACE_Timer_Node_T<TYPE> *);
-
   /// Reschedule an "interval" <ACE_Timer_Node>.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 

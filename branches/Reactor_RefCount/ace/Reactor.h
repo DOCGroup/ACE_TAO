@@ -722,7 +722,7 @@ public:
    * Reactor will call ACE_Event_Handler::add_reference() on the
    * handler before returning it.
    */
-  virtual ACE_Event_Handler *handler (ACE_HANDLE handle);
+  virtual ACE_Event_Handler *find_handler (ACE_HANDLE handle);
 
   /**
    * Check to see if <handle> is associated with a valid Event_Handler

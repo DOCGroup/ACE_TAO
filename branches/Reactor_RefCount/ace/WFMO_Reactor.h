@@ -406,7 +406,7 @@ public:
    * Return the Event_Handler associated with <handle>.  Return 0 if
    * <handle> is not registered.
    */
-  ACE_Event_Handler *handler (ACE_HANDLE handle);
+  ACE_Event_Handler *find_handler (ACE_HANDLE handle);
 
   /**
    * Check to see if <handle> is associated with a valid Event_Handler

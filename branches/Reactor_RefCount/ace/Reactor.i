@@ -545,9 +545,9 @@ ACE_Reactor::purge_pending_notifications (ACE_Event_Handler *eh,
 }
 
 ACE_INLINE ACE_Event_Handler *
-ACE_Reactor::handler (ACE_HANDLE handle)
+ACE_Reactor::find_handler (ACE_HANDLE handle)
 {
-  return this->implementation ()->handler (handle);
+  return this->implementation ()->find_handler (handle);
 }
 
 ACE_INLINE int

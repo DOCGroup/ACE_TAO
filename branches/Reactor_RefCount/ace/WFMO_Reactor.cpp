@@ -1531,7 +1531,7 @@ ACE_WFMO_Reactor_Handler_Repository::modify_network_events_i (ACE_HANDLE io_hand
 }
 
 ACE_Event_Handler *
-ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle)
+ACE_WFMO_Reactor_Handler_Repository::find_handler (ACE_HANDLE handle)
 {
   long existing_masks_ignored = 0;
   return this->handler (handle,

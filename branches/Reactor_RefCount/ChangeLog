@@ -1,3 +1,69 @@
+Wed May 14 17:56:13 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace/OS.i: 
+
+	  - event_timedwait(): For relative times, the <timeout> parameter
+	  was being modified.  Instead use a stack variable such that the
+	  <timeout> parameter is not modified.
+
+	* ace/Timer_Hash_T: 
+
+	  - expire(): Remove nodes from the buckets instead of simply
+	  getting them and cancelling them later.  Also, if timers were
+	  expired, find the new earliest time.
+
+	  - reschedule(): No need to cancel the timer node since it is now
+	  removed from the bucket in expire().
+
+	  - free_node(): No need for this function since nodes are removed
+	  from the bucket in expire().
+
+	  - cancel(): No need to pass <act> to bucket's cancel() since the
+	  act comes from the Hash Token.  Also, only perform upcall and
+	  related cleanup on successful bucket cancel.
+
+	  - Added asserts in the code since there is not enough error
+	  checking (and recovery) going on.
+
+        * ace/Reactor:
+        * ace/Reactor_Impl:
+        * ace/Select_Reactor_T:
+        * ace/WFMO_Reactor:
+
+	  Renamed handler() to find_handler() since ACE_HANDLE is an "int"
+	  on UNIX platforms and that causes ambiguity between
+	  handler(ACE_HANDLE) and handler(int).
+
+	* ace/Select_Reactor_Base.cpp (unbind): 
+
+	  unbind() and bind(): Minor fixes for UNIX specific code.
+
+	* ace/SOCK_SEQPACK_Association.cpp: 
+
+	  Added template instantiation for ACE_Auto_Array_Ptr<sockaddr_in>.
+
+	* ace/Connector.cpp: 
+
+	  cancel() and close(): Changed calls from Reactor::handler() to
+	  Reactor::find_handler().
+
+	* tests/MT_Reference_Counted_Notify_Test.cpp: 
+	* tests/NonBlocking_Conn_Test.cpp:
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+	* tests/Reference_Counted_Event_Handler_Test.cpp: 
+	* tests/Timer_Queue_Reference_Counting_Test.cpp:
+	
+	  Added template instantiations.
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+
+	  - main(): Added code to ingore SIGPIPE.
+
+	  - test(): Converted this into template class so that multiple
+	  instances of reactor implementation can be created.
+
+	  - Added additional asserts.
+
 Fri May 09 20:13:37 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace\Event_Handler: 
@@ -39,7 +105,7 @@ Fri May 09 20:13:37 2003  Irfan Pyarali  <irfan@oomworks.com>
 	* ace\Select_Reactor_T: 
 	* ace\WFMO_Reactor: 
 
-	  Added a new handler() method that returns the event handler
+	  Added a new find_handler() method that returns the event handler
 	  associated with a <handle>.
 
 	* ace\Select_Reactor_Base.cpp: 

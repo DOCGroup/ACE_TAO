@@ -564,7 +564,7 @@ public:
    * Return the Event_Handler associated with <handle>.  Return 0 if
    * <handle> is not registered.
    */
-  virtual ACE_Event_Handler *handler (ACE_HANDLE handle);
+  virtual ACE_Event_Handler *find_handler (ACE_HANDLE handle);
 
   /**
    * Check to see if <handle> is associated with a valid Event_Handler
@@ -642,7 +642,7 @@ protected:
   virtual int resume_i (ACE_HANDLE handle);
 
   /// Implement the public <handler> method.
-  virtual ACE_Event_Handler *handler_i (ACE_HANDLE handle);
+  virtual ACE_Event_Handler *find_handler_i (ACE_HANDLE handle);
 
   /// Implement the public <handler> method.
   virtual int handler_i (ACE_HANDLE handle,

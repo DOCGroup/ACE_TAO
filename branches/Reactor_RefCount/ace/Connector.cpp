@@ -471,7 +471,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::cancel (SVC_HANDLER *sh)
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::cancel");
 
   ACE_Event_Handler *handler =
-    this->reactor ()->handler (sh->get_handle ());
+    this->reactor ()->find_handler (sh->get_handle ());
 
   if (handler == 0)
     return -1;
@@ -654,7 +654,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
         break;
 
       ACE_Event_Handler *handler =
-        this->reactor ()->handler (handle);
+        this->reactor ()->find_handler (handle);
 
       ACE_ASSERT (handler != 0);
 

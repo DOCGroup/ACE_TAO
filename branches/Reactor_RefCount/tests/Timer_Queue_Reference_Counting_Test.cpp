@@ -678,3 +678,39 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class simple_test<ACE_Timer_Heap>;
+template class simple_test<ACE_Timer_List>;
+template class simple_test<ACE_Timer_Hash>;
+template class simple_test<ACE_Timer_Wheel>;
+template class upcall_test<ACE_Timer_Heap>;
+template class upcall_test<ACE_Timer_List>;
+template class upcall_test<ACE_Timer_Hash>;
+template class upcall_test<ACE_Timer_Wheel>;
+template class expire_test<ACE_Timer_Heap>;
+template class expire_test<ACE_Timer_List>;
+template class expire_test<ACE_Timer_Hash>;
+template class expire_test<ACE_Timer_Wheel>;
+template class cancellation_test<ACE_Timer_Heap>;
+template class cancellation_test<ACE_Timer_List>;
+template class cancellation_test<ACE_Timer_Hash>;
+template class cancellation_test<ACE_Timer_Wheel>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate simple_test<ACE_Timer_Heap>
+#pragma instantiate simple_test<ACE_Timer_List>
+#pragma instantiate simple_test<ACE_Timer_Hash>
+#pragma instantiate simple_test<ACE_Timer_Wheel>
+#pragma instantiate upcall_test<ACE_Timer_Heap>
+#pragma instantiate upcall_test<ACE_Timer_List>
+#pragma instantiate upcall_test<ACE_Timer_Hash>
+#pragma instantiate upcall_test<ACE_Timer_Wheel>
+#pragma instantiate expire_test<ACE_Timer_Heap>
+#pragma instantiate expire_test<ACE_Timer_List>
+#pragma instantiate expire_test<ACE_Timer_Hash>
+#pragma instantiate expire_test<ACE_Timer_Wheel>
+#pragma instantiate cancellation_test<ACE_Timer_Heap>
+#pragma instantiate cancellation_test<ACE_Timer_List>
+#pragma instantiate cancellation_test<ACE_Timer_Hash>
+#pragma instantiate cancellation_test<ACE_Timer_Wheel>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

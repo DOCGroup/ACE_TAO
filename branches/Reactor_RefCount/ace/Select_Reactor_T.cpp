@@ -344,12 +344,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_Event_Handler *
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::find_handler
   (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handler");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, 0));
-  return this->handler_i (handle);
+  return this->find_handler_i (handle);
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
@@ -903,7 +903,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_Event_Handler *
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::find_handler_i
   (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handler_i");

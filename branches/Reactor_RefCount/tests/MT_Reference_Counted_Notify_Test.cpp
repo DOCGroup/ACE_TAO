@@ -420,6 +420,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class test<ACE_Select_Reactor>;
+template class test<ACE_TP_Reactor>;
+#if defined (ACE_WIN32)
+template class test<ACE_WFMO_Reactor>;
+#endif /* ACE_WIN32 */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate test<ACE_Select_Reactor>
+#pragma instantiate test<ACE_TP_Reactor>
+#if defined (ACE_WIN32)
+#pragma instantiate test<ACE_WFMO_Reactor>
+#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #else /* ACE_HAS_THREADS */
 
 int

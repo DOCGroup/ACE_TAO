@@ -480,8 +480,8 @@ Connector::connect (ACE_HANDLE &client_handle,
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "New connection: server handle = %d, client handle = %d\n",
-                server_handle, client_handle));
+                "New connection: client handle = %d, server handle = %d\n",
+                client_handle, server_handle));
 
   return 0;
 }
@@ -673,7 +673,6 @@ Invocation_Thread::create_connection (void)
     connector.connect (client_handle,
                        server_handle,
                        this->run_receiver_thread_);
-
   ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
@@ -706,6 +705,7 @@ Invocation_Thread::create_connection (void)
                                      sender,
                                      ACE_Event_Handler::READ_MASK);
   ACE_ASSERT (result == 0);
+  ACE_UNUSED_ARG (result);
 
   return sender;
 }
@@ -729,7 +729,10 @@ Invocation_Thread::svc (void)
 
               // This lets the Close_Socket_Thread know that the new
               // connection has been created.
-              this->new_connection_event_.signal ();
+              int result =
+                this->new_connection_event_.signal ();
+              ACE_ASSERT (result == 0);
+              ACE_UNUSED_ARG (result);
 
               ++connection_counter;
               message_counter = 1;
@@ -802,13 +805,13 @@ public:
 
   Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
                        ACE_Reactor &reactor,
-                       ACE_Auto_Event &new_connection,
+                       ACE_Auto_Event &new_connection_event,
                        int make_invocations,
                        int run_receiver_thread);
 
   int svc (void);
 
-  ACE_Auto_Event &new_connection_;
+  ACE_Auto_Event &new_connection_event_;
 
   ACE_Reactor &reactor_;
 
@@ -820,10 +823,10 @@ public:
 
 Close_Socket_Thread::Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
                                           ACE_Reactor &reactor,
-                                          ACE_Auto_Event &new_connection,
+                                          ACE_Auto_Event &new_connection_event,
                                           int make_invocations,
                                           int run_receiver_thread)
-  : new_connection_ (new_connection),
+  : new_connection_event_ (new_connection_event),
     reactor_ (reactor),
     ACE_Task_Base (&thread_manager),
     make_invocations_ (make_invocations),
@@ -841,8 +844,11 @@ Close_Socket_Thread::svc (void)
     {
       // Wait for the new connection to be established.
       int result =
-        this->new_connection_.wait (&timeout,
-                                    0);
+        this->new_connection_event_.wait (&timeout,
+                                          0);
+      ACE_ASSERT (result == 0 ||
+                  (result == -1 && errno == ETIME));
+
       if (result == -1 &&
           errno == ETIME)
         continue;
@@ -874,6 +880,7 @@ Close_Socket_Thread::svc (void)
             ACE_DEBUG ((LM_DEBUG,
                         "Close socket thread closing client handle %d\n",
                         client_handle));
+
           ACE_OS::closesocket (client_handle);
         }
       else
@@ -883,6 +890,7 @@ Close_Socket_Thread::svc (void)
             ACE_DEBUG ((LM_DEBUG,
                         "Close socket thread closing server handle %d\n",
                         server_handle));
+
           ACE_OS::closesocket (server_handle);
         }
     }
@@ -1045,13 +1053,21 @@ testing (ACE_Reactor *reactor,
     }
 
   // Wait for threads to exit.
-  thread_manager.wait ();
+  result = thread_manager.wait ();
+  ACE_ASSERT (result == 0);
 }
 
-void
-test (ACE_Reactor_Impl *impl,
-      int ignore_nested_upcalls,
-      int require_event_loop_thread)
+template <class REACTOR_IMPL>
+class test
+{
+public:
+  test (int ignore_nested_upcalls,
+        int require_event_loop_thread);
+};
+
+template <class REACTOR_IMPL>
+test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
+                          int require_event_loop_thread)
 {
   for (int i = 0;
        i < sizeof test_configs / (sizeof (int) * number_of_options);
@@ -1074,7 +1090,7 @@ test (ACE_Reactor_Impl *impl,
           if (!test_configs[i][1] && require_event_loop_thread)
             continue;
 
-          ACE_Reactor reactor (impl,
+          ACE_Reactor reactor (new REACTOR_IMPL,
                                1);
 
           testing (&reactor,
@@ -1176,21 +1192,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (result != 0)
     return result;
 
+#if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
+  // There's really no way to deal with this in a portable manner, so
+  // we just have to suck it up and get preprocessor conditional and
+  // ugly.
+  //
+  // Impractical to have each call to the ORB protect against the
+  // implementation artifact of potential writes to dead connections,
+  // as it'd be way expensive.  Do it here; who cares about SIGPIPE in
+  // these kinds of applications, anyway?
+  (void) ACE_OS::signal (SIGPIPE, (ACE_SignalHandler) SIG_IGN);
+#endif /* SIGPIPE */
+
   int ignore_nested_upcalls = 1;
   int perform_nested_upcalls = 0;
 
   int event_loop_thread_required = 1;
   int event_loop_thread_not_required = 0;
 
-
   if (test_select_reactor)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting Select Reactor....\n\n"));
 
-      test (new ACE_Select_Reactor,
-            ignore_nested_upcalls,
-            event_loop_thread_not_required);
+      test<ACE_Select_Reactor> test (ignore_nested_upcalls,
+                                     event_loop_thread_not_required);
     }
 
   if (test_tp_reactor)
@@ -1198,9 +1224,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting TP Reactor....\n\n"));
 
-      test (new ACE_TP_Reactor,
-            perform_nested_upcalls,
-            event_loop_thread_not_required);
+      test<ACE_TP_Reactor> test (perform_nested_upcalls,
+                                 event_loop_thread_not_required);
     }
 
 #if defined (ACE_WIN32)
@@ -1210,9 +1235,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting WFMO Reactor....\n\n"));
 
-      test (new ACE_WFMO_Reactor,
-            ignore_nested_upcalls,
-            event_loop_thread_required);
+      test<ACE_WFMO_Reactor> test (ignore_nested_upcalls,
+                                   event_loop_thread_required);
     }
 
 #endif /* ACE_WIN32 */
@@ -1221,6 +1245,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class test<ACE_Select_Reactor>;
+template class test<ACE_TP_Reactor>;
+#if defined (ACE_WIN32)
+template class test<ACE_WFMO_Reactor>;
+#endif /* ACE_WIN32 */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate test<ACE_Select_Reactor>
+#pragma instantiate test<ACE_TP_Reactor>
+#if defined (ACE_WIN32)
+#pragma instantiate test<ACE_WFMO_Reactor>
+#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else /* ACE_HAS_THREADS */
 
