@@ -8,8 +8,8 @@ distrib = 0
 threads = 1
 
 ifeq ($(threads),1)
-  CFLAGS += --thread-safe
-  LDFLAGS += --thread-safe
+  CFLAGS += --thread_safe
+  LDFLAGS += --thread_safe
 endif # threads
 
 CC              = KCC
@@ -19,13 +19,14 @@ DCFLAGS         += -g
 DLD             = $(CXX)
 
 ifneq ($exceptions,0)
-#  CCFLAGS += --exexceptions
+  CCFLAGS += --exceptions
 endif # ! exceptions
 
 LD              = $(CXX)
 
 LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
 
+CPPFLAGS	+= $(CFLAGS)
 OCFLAGS         += -K2
 PIC             = -KPIC
 AR              = ar
