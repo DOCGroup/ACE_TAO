@@ -39,6 +39,7 @@
 // ============================================================================
 
 #include "tests/test_config.h"
+#include "ace/Get_Opt.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
@@ -67,9 +68,38 @@ void
 parse_arg (int argc, ASYS_TCHAR *argv[])
 {
   // @@ TODO: Support command line arguments stated above.
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("r:s:c:d:i:n:"));
 
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
+  int c;
+
+  while ((c = getopt ()) != -1)
+    {
+      switch (c)
+        {
+        case 'r':                   // hostname:port
+          rendezvous = getopt.optarg;
+          break;
+        case 's':
+          svr_thrno = ACE_OS::atoi (getopt.optarg);
+          break;
+        case 'c':
+          cli_thrno = ACE_OS::atoi (getopt.optarg);
+          break;
+        case 'd':
+          req_delay = ACE_OS::atoi (getopt.optarg);
+          break;
+        case 'i':
+          cli_conn_no = ACE_OS::atoi (getopt.optarg);
+          break;
+        case 'n':
+          cli_req_no = ACE_OS::atoi (getopt.optarg);
+          break;
+        default:
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("Invalid command line argument: %c\n"), c));
+          break;
+        }
+    }
 }
 
 class Acceptor_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
