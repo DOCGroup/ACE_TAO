@@ -48,12 +48,9 @@ Priority_Task::open (void *arg)
   this->priority_ = *(int *) arg;
 
   long flags = THR_NEW_LWP;
-#if defined (THR_SCHED_FIFO)
-  // To get FIFO scheduling with PTHREADS.  Instead of doing this,
-  // OS.h should be fixed to defined THR_SCHED_FIFO on non-PTHREADS
-  // platforms, such as Solaris with STHREADS and without PTHREADS.
+
+  // To get FIFO scheduling with PTHREADS.
   flags |= THR_SCHED_FIFO;
-#endif /* THR_SCHED_FIFO */
 
   // Become an active object.
   if (this->activate (flags, 1, 0, this->priority_) == -1)
