@@ -1,8 +1,7 @@
-/**
- * @file
- *
- * $Id$
- */
+//
+// $Id$
+//
+
 #include "Hello.h"
 #include "Server_Task.h"
 #include "tao/Utils/Servant_Var.h"

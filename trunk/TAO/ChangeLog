@@ -1,3 +1,8 @@
+Tue Jul 15 14:49:13 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* tests/Makefile.bor
+	  Added the directory Bug_1551_Regression into build directories.
+
 Tue Jul 15 19:28:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.cpp:

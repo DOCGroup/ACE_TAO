@@ -1,10 +1,10 @@
+//
+// $Id$
+//
+
 #ifndef HELLO_H
 #define HELLO_H
-/**
- * @file
- *
- * $Id$
- */
+
 #include "ace/pre.h"
 
 #include "TestS.h"
