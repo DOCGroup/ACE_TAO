@@ -60,13 +60,15 @@ typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
 // counter for connections
 static int connections = 0;
 
-// Use this to show down the process gracefully.  Note that this
-// doesn't work for the PROCESS case.
+// Use this to show down the process gracefully.
 
 static int 
 done (void)
 {
-  return connections == ACE_MAX_ITERATIONS + 1;
+  if (OPTIONS::instance ()->concurrency_type () == Options::PROCESS)
+    return connections == 1;
+  else
+    return connections == ACE_MAX_ITERATIONS + 1;
 }
 
 ACE_File_Lock &
@@ -529,18 +531,18 @@ main (int argc, char *argv[])
 	  exit (-1);
 	  /* NOTREACHED */
 	case 0:
-	  signal (SIGCHLD, SIG_IGN);
-	  server (0);
-
-	  break;
-	  /* NOTREACHED */
-	default:
 	  client (&server_addr);
 
 	  // Shutdown the server process.
 	  if (ACE_OS::kill (pid, SIGINT) == 0)
             ACE_OS::wait ();
 
+	  /* NOTREACHED */
+	default:
+	  signal (SIGCHLD, SIG_IGN);
+	  server (0);
+
+	  break;
 	  break;
 	  /* NOTREACHED */
 	}
