@@ -1,3 +1,11 @@
+Tue Dec  7 18:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORInterceptor/IORInfo.pidl:
+          Added -Sc to the options for the regeneration
+
+        * tao/IORInterceptor/IORInfoC.cpp:
+          Regenerated
+
 Mon Dec  6 23:08:12 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
