@@ -1,3 +1,8 @@
+Thu Jan 17 10:25:54 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface_strategy.h: 
+	  Fixed compile errors.
+
 Thu Jan 17 09:25:11 2002  Frank Hunleth   <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/tests/Miop/Makefile: Added.
