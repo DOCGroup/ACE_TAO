@@ -613,13 +613,14 @@ CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_d
 
 #endif /* TAO_HAS_INTERCEPTORS && TAO_HAS_INTERFACE_REPOSITORY */
 
-  CORBA_ConstructionPolicy_ptr (*_TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer) (
-      CORBA::Object_ptr obj
-    ) = 0;
-    void operator<<= (CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr _tao_elem)
-  {
-    TAO_OutputCDR stream;
-    if (stream << _tao_elem)
+CORBA_ConstructionPolicy_ptr (*_TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
+
+void operator<<= (CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr _tao_elem)
+{
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_ConstructionPolicy,
@@ -630,11 +631,11 @@ CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_d
           CORBA_ConstructionPolicy::_tao_any_destructor
         );
     }
-  }
+}
 
-  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr &_tao_elem)
-  {
-    ACE_TRY_NEW_ENV
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr &_tao_elem)
+{
+  ACE_TRY_NEW_ENV
     {
       _tao_elem = CORBA_ConstructionPolicy::_nil ();
       CORBA::TypeCode_var type = _tao_any.type ();
@@ -658,15 +659,15 @@ CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_d
         return 1;
       }
     }
-    ACE_CATCHANY
+  ACE_CATCHANY
     {
       _tao_elem = CORBA_ConstructionPolicy::_nil ();
       return 0;
     }
-    ACE_ENDTRY;
-    _tao_elem = CORBA_ConstructionPolicy::_nil ();
-    return 0;
-  }
+  ACE_ENDTRY;
+  _tao_elem = CORBA_ConstructionPolicy::_nil ();
+  return 0;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
       defined (ACE_HAS_GNU_REPO)
@@ -682,77 +683,78 @@ template class TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPol
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CS_
 
-    // The Base_Sequence functions, please see tao/Sequence.h
-    void
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_allocate_buffer (CORBA::ULong length)
+// The Base_Sequence functions, please see tao/Sequence.h
+void
+_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_allocate_buffer (CORBA::ULong length)
+{
+  CORBA_DomainManager **tmp = 0;
+  tmp = _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::allocbuf (length);
+
+  if (this->buffer_ != 0)
     {
-      CORBA_DomainManager **tmp = 0;
-      tmp = _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::allocbuf (length);
-
-      if (this->buffer_ != 0)
-      {
-        CORBA_DomainManager **old = ACE_reinterpret_cast (CORBA_DomainManager**, this->buffer_);
-        for (CORBA::ULong i = 0; i < this->length_; ++i)
-          if (!this->release_)
-            tmp[i] = CORBA_DomainManager::_duplicate (old[i]);
-          else
-            tmp[i] = old[i];
-
-        if (this->release_)
-          delete[] old;
-
-      }
-      this->buffer_ = tmp;
-    }
-
-    void
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_deallocate_buffer (void)
-    {
-      if (this->buffer_ == 0 || this->release_ == 0)
-        return;
-      CORBA_DomainManager **tmp = ACE_reinterpret_cast (CORBA_DomainManager**, this->buffer_);
+      CORBA_DomainManager **old = ACE_reinterpret_cast (CORBA_DomainManager**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = CORBA_DomainManager::_nil ();
-      }
-      _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::freebuf (tmp);
-      this->buffer_ = 0;
-    }
+        if (!this->release_)
+          tmp[i] = CORBA_DomainManager::_duplicate (old[i]);
+        else
+          tmp[i] = old[i];
 
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::~_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (void)
-    {
-      this->_deallocate_buffer ();
-    }
+      if (this->release_)
+        delete[] old;
 
-    void
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-    {
-      CORBA_DomainManager **tmp = ACE_reinterpret_cast (CORBA_DomainManager**, this->buffer_);
+    }
+  this->buffer_ = tmp;
+}
 
-      for (CORBA::ULong i = nl; i < ol; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = CORBA_DomainManager::_nil ();
-      }
-    }
-    void
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_downcast (
-        void* target,
-        CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV
-      )
+void
+_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  CORBA_DomainManager **tmp = ACE_reinterpret_cast (CORBA_DomainManager**, this->buffer_);
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      CORBA_DomainManager **tmp = ACE_static_cast (CORBA_DomainManager**, target);
-      *tmp = CORBA_DomainManager::_narrow (src, ACE_TRY_ENV);
+      CORBA::release (tmp[i]);
+      tmp[i] = CORBA_DomainManager::_nil ();
     }
+  _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::freebuf (tmp);
+  this->buffer_ = 0;
+}
 
-    CORBA_Object*
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_upcast (void *src) const
+_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::~_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (void)
+{
+  this->_deallocate_buffer ();
+}
+
+void
+_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+{
+  CORBA_DomainManager **tmp = ACE_reinterpret_cast (CORBA_DomainManager**, this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
     {
-      CORBA_DomainManager **tmp = ACE_static_cast (CORBA_DomainManager**, src);
-      return *tmp;
+      CORBA::release (tmp[i]);
+      tmp[i] = CORBA_DomainManager::_nil ();
     }
+}
+
+void
+_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_downcast (
+    void* target,
+    CORBA_Object *src,
+    CORBA_Environment &ACE_TRY_ENV
+  )
+{
+  CORBA_DomainManager **tmp = ACE_static_cast (CORBA_DomainManager**, target);
+  *tmp = CORBA_DomainManager::_narrow (src, ACE_TRY_ENV);
+}
+
+CORBA_Object*
+_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_upcast (void *src) const
+{
+  CORBA_DomainManager **tmp = ACE_static_cast (CORBA_DomainManager**, src);
+  return *tmp;
+}
 
 #endif /* end #if !defined */
 
@@ -762,57 +764,69 @@ template class TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPol
 #if !defined (_CORBA_DOMAINMANAGERLIST_CS_)
 #define _CORBA_DOMAINMANAGERLIST_CS_
 
-  // *************************************************************
-  // CORBA_DomainManagerList
-  // *************************************************************
+// *************************************************************
+// CORBA_DomainManagerList
+// *************************************************************
 
-  CORBA_DomainManagerList::CORBA_DomainManagerList (void)
-  {}
-  CORBA_DomainManagerList::CORBA_DomainManagerList (CORBA::ULong max) // uses max size
-    :
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-   (max)
-  {}
-  CORBA_DomainManagerList::CORBA_DomainManagerList (CORBA::ULong max, CORBA::ULong length, CORBA_DomainManager_ptr *buffer, CORBA::Boolean release)
-    :
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-   (max, length, buffer, release)
-  {}
-  CORBA_DomainManagerList::CORBA_DomainManagerList (const CORBA_DomainManagerList &seq) // copy ctor
-    :
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-   (seq)
-  {}
-  CORBA_DomainManagerList::~CORBA_DomainManagerList (void) // dtor
-  {}
-  void CORBA_DomainManagerList::_tao_any_destructor (void *x)
-  {
-    CORBA_DomainManagerList *tmp = ACE_static_cast (CORBA_DomainManagerList*,x);
-    delete tmp;
-  }
+CORBA_DomainManagerList::CORBA_DomainManagerList (void)
+{}
 
+CORBA_DomainManagerList::CORBA_DomainManagerList (CORBA::ULong max) // uses max size
+  :
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+  (max)
+{}
+
+CORBA_DomainManagerList::CORBA_DomainManagerList (
+    CORBA::ULong max, 
+    CORBA::ULong length, 
+    CORBA_DomainManager_ptr *buffer, 
+    CORBA::Boolean release
+  )
+  :
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+  (max, length, buffer, release)
+{}
+
+CORBA_DomainManagerList::CORBA_DomainManagerList (
+    const CORBA_DomainManagerList &seq
+  ) // copy ctor
+  :
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+  (seq)
+{}
+
+CORBA_DomainManagerList::~CORBA_DomainManagerList (void) // dtor
+{}
+
+void CORBA_DomainManagerList::_tao_any_destructor (void *x)
+{
+  CORBA_DomainManagerList *tmp = ACE_static_cast (CORBA_DomainManagerList*,x);
+  delete tmp;
+}
 
 #endif /* end #if !defined */
 
-    CORBA_DomainManager_ptr (*_TAO_collocation_CORBA_DomainManager_Stub_Factory_function_pointer) (
-      CORBA::Object_ptr obj
-    ) = 0;
-    void operator<<= (CORBA::Any &_tao_any, CORBA_DomainManager_ptr _tao_elem)
-  {
-    TAO_OutputCDR stream;
-    if (stream << _tao_elem)
+CORBA_DomainManager_ptr (*_TAO_collocation_CORBA_DomainManager_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
+
+void operator<<= (CORBA::Any &_tao_any, CORBA_DomainManager_ptr _tao_elem)
+{
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_DomainManager,
@@ -823,11 +837,11 @@ template class TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPol
           CORBA_DomainManager::_tao_any_destructor
         );
     }
-  }
+}
 
-  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr &_tao_elem)
-  {
-    ACE_TRY_NEW_ENV
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr &_tao_elem)
+{
+  ACE_TRY_NEW_ENV
     {
       _tao_elem = CORBA_DomainManager::_nil ();
       CORBA::TypeCode_var type = _tao_any.type ();
@@ -851,30 +865,30 @@ template class TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPol
         return 1;
       }
     }
-    ACE_CATCHANY
+  ACE_CATCHANY
     {
       _tao_elem = CORBA_DomainManager::_nil ();
       return 0;
     }
-    ACE_ENDTRY;
-    _tao_elem = CORBA_DomainManager::_nil ();
-    return 0;
-  }
+  ACE_ENDTRY;
+  _tao_elem = CORBA_DomainManager::_nil ();
+  return 0;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
       defined (ACE_HAS_GNU_REPO)
-      template class TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>;
-    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-    #  pragma instantiate TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
-  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+  template class TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-    void operator<<= (
-      CORBA::Any &_tao_any,
-      const CORBA_DomainManagerList &_tao_elem
-    ) // copying
-  {
-    TAO_OutputCDR stream;
-    if (stream << _tao_elem)
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CORBA_DomainManagerList &_tao_elem
+  ) // copying
+{
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_DomainManagerList,
@@ -882,34 +896,34 @@ template class TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPol
           stream.begin ()
         );
     }
-  }
+}
 
-  void operator<<= (CORBA::Any &_tao_any, CORBA_DomainManagerList *_tao_elem) // non copying
-  {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        CORBA::_tc_DomainManagerList,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        CORBA_DomainManagerList::_tao_any_destructor
-      );
-  }
+void operator<<= (CORBA::Any &_tao_any, CORBA_DomainManagerList *_tao_elem) // non copying
+{
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      CORBA::_tc_DomainManagerList,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      CORBA_DomainManagerList::_tao_any_destructor
+    );
+}
 
-  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManagerList *&_tao_elem)
-  {
-    return _tao_any >>= ACE_const_cast(
-        const CORBA_DomainManagerList*&,
-        _tao_elem
-      );
-  }
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManagerList *&_tao_elem)
+{
+  return _tao_any >>= ACE_const_cast(
+      const CORBA_DomainManagerList*&,
+      _tao_elem
+    );
+}
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_DomainManagerList *&_tao_elem)
-  {
-    _tao_elem = 0;
-    ACE_TRY_NEW_ENV
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
     {
       CORBA::TypeCode_var type = _tao_any.type ();
       if (!type->equivalent (CORBA::_tc_DomainManagerList, ACE_TRY_ENV)) // not equal
@@ -950,19 +964,19 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_DomainManage
         }
       }
     }
-    ACE_CATCHANY
+  ACE_CATCHANY
     {
     }
-    ACE_ENDTRY;
-    return 0;
-  }
+  ACE_ENDTRY;
+  return 0;
+}
 
-  CORBA::Boolean operator<< (
-      TAO_OutputCDR &strm,
-      const CORBA_DomainManagerList &_tao_sequence
-    )
-  {
-    if (strm << _tao_sequence.length ())
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const CORBA_DomainManagerList &_tao_sequence
+  )
+{
+  if (strm << _tao_sequence.length ())
     {
       // encode all elements
       CORBA::Boolean _tao_marshal_flag = 1;
@@ -972,16 +986,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_DomainManage
       }
       return _tao_marshal_flag;
     }
-    return 0; // error
-  }
+  return 0; // error
+}
 
-  CORBA::Boolean operator>> (
-      TAO_InputCDR &strm,
-      CORBA_DomainManagerList &_tao_sequence
-    )
-  {
-    CORBA::ULong _tao_seq_len;
-    if (strm >> _tao_seq_len)
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    CORBA_DomainManagerList &_tao_sequence
+  )
+{
+  CORBA::ULong _tao_seq_len;
+  if (strm >> _tao_seq_len)
     {
       // set the length of the sequence
       _tao_sequence.length (_tao_seq_len);
@@ -996,5 +1010,5 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_DomainManage
       }
       return _tao_marshal_flag;
     }
-    return 0; // error
-  }
+  return 0; // error
+}
