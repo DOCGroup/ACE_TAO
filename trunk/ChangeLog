@@ -1,3 +1,12 @@
+Sat Jan 29 00:39:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+
+	  Change --with-{acexml,qos,rmcast,ssl} to --enable-{acexml,qos,
+	  rmcast,ssl} to be consistant with standard autoconf conventions.
+	  This also paves the way for a *new* --with-ssl flag to point to
+	  the openssl install directory.
+
 Fri Jan 28 20:30:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Configuration.h:
