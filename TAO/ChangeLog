@@ -1,6 +1,6 @@
 Thu Apr 24 13:01:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_type.cpp (gen_common_tmplinst):
 
           Substituted full name for local name in generation of
           parameters for explicit template instantiation.
