@@ -94,7 +94,7 @@ protected:
 
 private:
 #if defined (ACE_HAS_SVR4_TLI)
-  // Insane TLI option management.
+  // XTI/TLI option management.
   struct t_optmgmt so_opt_req;
   struct t_optmgmt so_opt_ret;
 #endif /* ACE_HAS_SVR4_TLI */

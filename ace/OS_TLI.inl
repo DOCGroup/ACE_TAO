@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/OS_NS_errno.h"
+
 ACE_INLINE int
 ACE_OS::t_accept (ACE_HANDLE handle, 
                   ACE_HANDLE reshandle,
@@ -123,7 +125,43 @@ ACE_OS::t_getname (ACE_HANDLE handle,
                    struct netbuf *namep,
                    int type)
 {
-#if defined (ACE_HAS_SVR4_TLI)
+#if defined (ACE_HAS_XTI)
+  struct t_bind bound, peer;
+  // Depending on which address the caller wants, fill caller's values
+  // into one of the t_bind netbufs. The other is set up to ignore that
+  // address.
+  switch (type)
+    {
+    case LOCALNAME:
+      bound.addr.buf = namep->buf;
+      bound.addr.maxlen = namep->maxlen;
+      bound.addr.len = 0;
+      peer.addr.buf = 0;
+      peer.addr.maxlen = 0;
+      peer.addr.len = 0;
+      break;
+    case REMOTENAME:
+      bound.addr.buf = 0;
+      bound.addr.maxlen = 0;
+      bound.addr.len = 0;
+      peer.addr.buf = namep->buf;
+      peer.addr.maxlen = namep->maxlen;
+      peer.addr.len = 0;
+      break;
+    default:
+      ACE_OS::last_error (EINVAL);
+      return -1;
+    }
+  if (t_getprotaddr (handle, &bound, &peer) == -1)
+    return -1;
+  // Call succeeded; put the caller's desired address length in his netbuf.
+  if (type == LOCALNAME)
+    namep->len = bound.addr.len;
+  else
+    namep->len = peer.addr.len;
+  return 0;
+
+#elif defined (ACE_HAS_SVR4_TLI)
   ACE_OSCALL_RETURN (::t_getname (handle, namep, type), int, -1);
 #else
   ACE_UNUSED_ARG (handle);
