@@ -15,6 +15,8 @@
 
 #include "ace/config-g++-common.h"
 
+#undef ACE_HAS_TYPENAME_KEYWORD
+
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
 
@@ -46,11 +48,9 @@ typedef long fd_mask;
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_ALLOCA
 #define ACE_HAS_ALLOCA_H
-#define ACE_HAS_ANSI_CASTS
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
-#define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_DIRENT
 #define ACE_HAS_GETPAGESIZE
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -77,10 +77,8 @@ typedef long fd_mask;
 #define ACE_HAS_SIN_LEN
 #define ACE_HAS_SIZET_SOCKET_LEN
 #define ACE_HAS_SSIZE_T
-#define ACE_HAS_STDCPP_STL_INCLUDES
 #define ACE_HAS_STRERROR
 #define ACE_HAS_SVR4_GETTIMEOFDAY
-#define ACE_HAS_TEMPLATE_TYPEDEFS
 #define ACE_HAS_TERM_IOCTLS
 #define ACE_HAS_THREADS
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
@@ -130,7 +128,6 @@ typedef long fd_mask;
 #define ACE_MT_SAFE 1
 #define ACE_NEEDS_FUNC_DEFINITIONS
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 64000
-#define ACE_NEW_THROWS_EXCEPTIONS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
 
