@@ -7,37 +7,41 @@ main( int argc, char *argv[] )
 {
   ACE_TRY_NEW_ENV
     {
-      
-      CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "", ACE_TRY_ENV);
-      ACE_TRY_CHECK;    
 
-      CORBA::Object_var obj = orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, ""
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in(), ACE_TRY_ENV);
+
+      CORBA::Object_var obj = orb->resolve_initial_references("RootPOA"
+                                                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      PortableServer::POAManager_var man = poa->the_POAManager(ACE_TRY_ENV);
+
+      PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in()
+                                                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
+      PortableServer::POAManager_var man = poa->the_POAManager(TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       man->activate(ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       simple_i simp;
 
-      PortableServer::ObjectId_var objId = poa->activate_object(&simp, ACE_TRY_ENV);
+      PortableServer::ObjectId_var objId = poa->activate_object(&simp
+                                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run(ACE_TRY_ENV);
+      orb->run(TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  
+
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception in main():");
       return 1;
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }

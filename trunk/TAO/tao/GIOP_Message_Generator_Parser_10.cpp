@@ -124,6 +124,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   // Write the service context list.
 #if (TAO_HAS_MINIMUM_CORBA == 1)
   output << reply.service_context_notowned ();
+  TAO_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
 #else
   if (reply.is_dsi_ == 0)
     {

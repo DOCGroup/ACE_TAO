@@ -1362,7 +1362,7 @@ void
 TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV)
 {
 #if defined (ACE_HAS_EXCEPTIONS)
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 #endif
 
   // Check if a non-servant upcall is in progress.  If a non-servant

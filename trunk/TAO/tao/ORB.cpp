@@ -1297,10 +1297,8 @@ CORBA::ORB_init (int &argc,
                  const char *orbid,
                  CORBA_Environment &ACE_TRY_ENV)
 {
-  // This ugly ifdef will go away once we've merged the two ORB_init's.
-#if defined (TAO_HAS_EXCEPTIONS) && !defined (TAO_ENV_BKWD_COMPAT)
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-#endif
+  // This ugly macro will go away once we've merged the two ORB_init's.
+  TAO_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
 
   // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
   // from being called within a static object CTOR.
