@@ -2,7 +2,7 @@
 // $Id$
 
 #include "CosEventChannelFactory_i.h"
-#include "orbsvcs/CosEvent_Utilities.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Auto_Ptr.h"
 
@@ -98,64 +98,35 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId (channel_id);
 
-      CosEC_ServantBase *_ec = 0;
-
-      ACE_NEW_THROW_EX (_ec,
-                        CosEC_ServantBase (),
-                        CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
-
-      auto_ptr <CosEC_ServantBase> ec (_ec);
-      // @@ Pradeep: could we pass the POA used to activate the
-      //    EC-generated objects as an argument?  The point is that
-      //    the user must be aware that we require a POA with the
-      //    SYSTEM_ID policy....  This is not urgent, but a "wishlist"
-
-      // @@ Carlos: I'am passing the POA to activate the
-      // generated objects as an argument in <init>.
-      // Do you want the FactoryCosEventChannel_i constructor
-      // to take that?
-
       // let all those contained in FactoryEC use the default POA.
       // We only need the FactoryEC's to be unique!
       PortableServer::POA_ptr defPOA = this->_default_POA (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // @@ Pradeep: I hate to bring this up, but what happens if the
-      //    init() method raises ServantAlreadyActive or something
-      //    similar?  Do we want to convert that into
-      //    DuplicateChannel?  IMHO you should be more careful about
-      //    the exception translation.
+      TAO_CEC_EventChannel_Attributes attr (defPOA, defPOA);
 
-      // @@ Carlos: ServantAlreadyActive and ObjectAlreadyActive
-      // mean that duplicates were detected, so i thought that
-      // it made sense to translate them to DuplicateChannel.
-
-      // @@ Pradeep: right, but you want to report those only if they
-      //    are raised during the activation of the EC, the problem is
-      //    that you are raising the same error if the EC makes a
-      //    mistake and activates the same object twice.
-
-      ec->init (this->poa_.in(),
-                defPOA,
-                0,0,0,
-                ACE_TRY_ENV);
+      TAO_CEC_EventChannel *impl = 0;
+      ACE_NEW_THROW_EX (impl,
+                        TAO_CEC_EventChannel (attr, 0, 0),
+                        CORBA::NO_MEMORY ());
       ACE_TRY_CHECK;
 
-      int retval = ec->activate (channel_id,
-                                 ACE_TRY_ENV);
+      auto_ptr <TAO_CEC_EventChannel> ec (impl);
+
+      impl->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (retval == -1)
-        ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel (),
-                          ec_return._retn ());
+      this->poa_->activate_object_with_id (oid.in (),
+                                           ec.get (),
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      ec.release (); // release the ownership from the auto_ptr.
+      ec.release ();
 
       CORBA::Object_var obj =
-        this->poa_->servant_to_reference (_ec, ACE_TRY_ENV);
+        this->poa_->id_to_reference (oid.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       if (store_in_naming_service &&
           !CORBA::is_nil (this->naming_.in ()))
         {
@@ -358,12 +329,12 @@ TAO_CosEventChannelFactory_i::find_channel_id
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class auto_ptr <CosEC_ServantBase>;
-template class ACE_Auto_Basic_Ptr <CosEC_ServantBase>;
+template class auto_ptr <TAO_CEC_EventChannel>;
+template class ACE_Auto_Basic_Ptr <TAO_CEC_EventChannel>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate auto_ptr <CosEC_ServantBase>
-#pragma instantiate  ACE_Auto_Basic_Ptr <CosEC_ServantBase>
+#pragma instantiate auto_ptr <TAO_CEC_EventChannel>
+#pragma instantiate  ACE_Auto_Basic_Ptr <TAO_CEC_EventChannel>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

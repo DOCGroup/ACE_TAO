@@ -1,87 +1,185 @@
+Thu Sep 21 08:33:18 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/CosEvent_Service/Makefile.am:
+        * orbsvcs/CosEvent_Service/Makefile.bor:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.h:
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.dsp:
+        * orbsvcs/examples/CosEC/Makefile:
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+        * orbsvcs/examples/CosEC/Factory/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/README:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ConsumerAdmin_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ConsumerAdmin_i.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/EventChannel_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/EventChannel_i.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushSupplier_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushSupplier_i.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/SupplierAdmin_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/SupplierAdmin_i.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/rtec_cosec_export.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile.am:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile.bor:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/README:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/README:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Consumer.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Consumer.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Supplier.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Supplier.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/README:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/run_test.pl:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/run_test2.pl:
+        * orbsvcs/examples/CosEC/Simple/Makefile:
+        * orbsvcs/orbsvcs/Makefile.CosEvent:
+        * orbsvcs/orbsvcs/CosEvent_Utilities.h:
+        * orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp:
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp:
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/CosEC_Basic/CosECConsumer.cpp:
+        * orbsvcs/tests/CosEC_Basic/CosECConsumer.h:
+        * orbsvcs/tests/CosEC_Basic/CosECSupplier.cpp:
+        * orbsvcs/tests/CosEC_Basic/CosECSupplier.h:
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.h:
+        * orbsvcs/tests/CosEC_Basic/Makefile:
+        * orbsvcs/tests/CosEC_Basic/README:
+        * orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
+        * orbsvcs/tests/CosEC_Multiple/CosECConsumer.h:
+        * orbsvcs/tests/CosEC_Multiple/CosECSupplier.cpp:
+        * orbsvcs/tests/CosEC_Multiple/CosECSupplier.h:
+        * orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:
+        * orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.h:
+        * orbsvcs/tests/CosEC_Multiple/Makefile:
+        * orbsvcs/tests/CosEC_Multiple/README:
+        * orbsvcs/tests/CosEC_Multiple/run_test.pl:
+        * orbsvcs/tests/CosEC_Multiple/run_test2.pl:
+          Move the RtEC based COS Event Service to the examples
+          directory.  The new "native" implementation is fully featured
+          and seems to be working much better.
+
+        * tests/Native_Exceptions/Makefile:
+          Update dependencies
+
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+          Add new files.
+
 Thu Sep 21 10:11:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
 
-	  Changed a couple of ACE_THROWs to ACE_THROW_RETURN,
-	  because they occurred inside a function returning
-	  an int.
+          Changed a couple of ACE_THROWs to ACE_THROW_RETURN,
+          because they occurred inside a function returning
+          an int.
 
 Wed Sep 20 16:54:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
         * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
-        
+
           Addressed some comments that Carlos added to the code (about
           throw specs)
 
           Also checked in some code that fixes/reorganizes the logic used
           to wait for a server to finish starting up.  Added a method,
           ready_check, which contains this new logic.  [Bug 605][Bug 606]
-          
+
 
 Wed Sep 20 14:50:29 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Invocation.cpp (invoke):
+        * tao/Invocation.cpp (invoke):
 
-	  Fixed "unused variable" warning by actually using the variable
-	  (tms).
+          Fixed "unused variable" warning by actually using the variable
+          (tms).
 
 Wed Sep 20 16:04:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be.h:
-	* TAO_IDL/be_include/be_argument.h:
-	* TAO_IDL/be_include/be_array.h:
-	* TAO_IDL/be_include/be_attribute.h:
-	* TAO_IDL/be_include/be_codegen.h:
-	* TAO_IDL/be_include/be_constant.h:
-	* TAO_IDL/be_include/be_decl.h:
-	* TAO_IDL/be_include/be_enum.h:
-	* TAO_IDL/be_include/be_enum_val.h:
-	* TAO_IDL/be_include/be_exception.h:
-	* TAO_IDL/be_include/be_expression.h:
-	* TAO_IDL/be_include/be_field.h:
-	* TAO_IDL/be_include/be_generator.h:
-	* TAO_IDL/be_include/be_interface.h:
-	* TAO_IDL/be_include/be_interface_fwd.h:
-	* TAO_IDL/be_include/be_module.h:
-	* TAO_IDL/be_include/be_native.h:
-	* TAO_IDL/be_include/be_operation.h:
-	* TAO_IDL/be_include/be_predefined_type.h:
-	* TAO_IDL/be_include/be_root.h:
-	* TAO_IDL/be_include/be_scope.h:
-	* TAO_IDL/be_include/be_sequence.h:
-	* TAO_IDL/be_include/be_string.h:
-	* TAO_IDL/be_include/be_structure.h:
-	* TAO_IDL/be_include/be_type.h:
-	* TAO_IDL/be_include/be_typedef.h:
-	* TAO_IDL/be_include/be_union.h:
-	* TAO_IDL/be_include/be_union_branch.h:
-	* TAO_IDL/be_include/be_union_label.h:
-	* TAO_IDL/be_include/be_valuetype.h:
-	* TAO_IDL/be_include/be_valuetype_fwd.h:
+        * TAO_IDL/be_include/be.h:
+        * TAO_IDL/be_include/be_argument.h:
+        * TAO_IDL/be_include/be_array.h:
+        * TAO_IDL/be_include/be_attribute.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_constant.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_enum.h:
+        * TAO_IDL/be_include/be_enum_val.h:
+        * TAO_IDL/be_include/be_exception.h:
+        * TAO_IDL/be_include/be_expression.h:
+        * TAO_IDL/be_include/be_field.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_module.h:
+        * TAO_IDL/be_include/be_native.h:
+        * TAO_IDL/be_include/be_operation.h:
+        * TAO_IDL/be_include/be_predefined_type.h:
+        * TAO_IDL/be_include/be_root.h:
+        * TAO_IDL/be_include/be_scope.h:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be_include/be_string.h:
+        * TAO_IDL/be_include/be_structure.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_typedef.h:
+        * TAO_IDL/be_include/be_union.h:
+        * TAO_IDL/be_include/be_union_branch.h:
+        * TAO_IDL/be_include/be_union_label.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_valuetype_fwd.h:
 
-	  Cosmetic changes to make these files conform to the
-	  ACE style guidelines.
+          Cosmetic changes to make these files conform to the
+          ACE style guidelines.
 
 Wed Sep 20 15:17:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.h:
-	* orbsvcs/ImplRepo_Service/Options.cpp:
-	* orbsvcs/ImplRepo_Service/Repository.cpp:
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/ImplRepo_Service/Repository.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
 
-	  Modified a call to make_mprofile (and surrounding code) in 
-	  ImplRepo_i::start_server_i reflecting changes to 
-	  tao/PortableServer.
+          Modified a call to make_mprofile (and surrounding code) in
+          ImplRepo_i::start_server_i reflecting changes to
+          tao/PortableServer.
 
-	  Modified the 'servers' section in ACE_Configuration to
-	  store the activation mode enum value as an integer,
-	  rather than converting it to a string first. This 
-	  enabled elimination of two conversion functions for 
-	  this data type.
+          Modified the 'servers' section in ACE_Configuration to
+          store the activation mode enum value as an integer,
+          rather than converting it to a string first. This
+          enabled elimination of two conversion functions for
+          this data type.
 
-	  Cosmetic changes to all the above files.
+          Cosmetic changes to all the above files.
 
 Wed Sep 20 11:55:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
