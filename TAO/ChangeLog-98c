@@ -1,3 +1,11 @@
+Mon Nov 16 20:22:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/{server,client}.dsp: Added
+	  static Debug/Release version settings.
+
+	* tao/TAO_Static.dsp: A bunch of files were missing in the static
+ 	  library project.
+
 Mon Nov 16 17:54:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
