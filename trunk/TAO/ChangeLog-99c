@@ -1,3 +1,14 @@
+Mon Oct 25 08:14:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/Messaging_Policy_i.cpp (TAO_Sync_Scope_Policy and
+          TAO_RelativeRoundtripTimeoutPolicy_i):
+        * tao/Buffering_Constraint_Policy.cpp (TAO_Buffering_Constraint_Policy):
+        * tao/Client_Priority_Policy.cpp (TAO_Client_Priority_Policy):
+
+	  Finally fixed the copy constructor madness by replacing
+	  PortableServer::RefCountServantBase with
+	  TAO_RefCountServantBase. VC++ could not handle the typedef.
+
 Mon Oct 25 00:24:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
