@@ -9,6 +9,7 @@
 #include "Task_Stats.h"
 #include <sys/types.h>
 #include <sys/mman.h>
+#include "cpuload.h"
 
 #include <dsui.h>
 
@@ -103,7 +104,8 @@ main (int argc, char *argv[])
   task_stats.init (100000);
 
 //  TAO_debug_level = 1;
-  
+   CPULoad::calibrate(10);
+ 
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
