@@ -411,6 +411,10 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     trace_active_ (0),
     tracing_enabled_ (1), // On by default?
     thr_desc_ (0),
+#if defined (ACE_WIN32)
+    seh_except_selector_ (ACE_SEH_Default_Exception_Selector),
+    seh_except_handler_ (ACE_SEH_Default_Exception_Handler),
+#endif /* ACE_WIN32 */
     priority_mask_ (default_priority_mask_)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
@@ -1213,6 +1217,36 @@ ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td)
   if (td != 0)
     td->acquire_release ();
 }
+
+#if defined (ACE_WIN32)
+ACE_SEH_EXCEPT_HANDLER
+ACE_Log_Msg::seh_except_selector (void)
+{
+  return this->seh_except_selector_;
+}
+
+ACE_SEH_EXCEPT_HANDLER
+ACE_Log_Msg::seh_except_selector (ACE_SEH_EXCEPT_HANDLER n)
+{
+  ACE_SEH_EXCEPT_HANDLER retv = this->seh_except_selector_;
+  this->seh_except_selector_ = n;
+  return retv;
+}
+
+ACE_SEH_EXCEPT_HANDLER
+ACE_Log_Msg::seh_except_handler (void)
+{
+  return this->seh_except_handler_;
+}
+
+ACE_SEH_EXCEPT_HANDLER
+ACE_Log_Msg::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
+{
+  ACE_SEH_EXCEPT_HANDLER retv = this->seh_except_handler_;
+  this->seh_except_handler_ = n;
+  return retv;
+}
+#endif /* ACE_WIN32 */
 
 // Enable the tracing facility on a per-thread basis.
 

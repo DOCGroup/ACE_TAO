@@ -398,6 +398,10 @@ typedef unsigned __int64 ACE_UINT64;
         #define ACE_HAS_CANCEL_IO
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && !defined (ACE_USES_WINCE_SEMA_SIMULATION) */
 
+#if !defined (ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION)
+#define ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION EXCEPTION_CONTINUE_SEARCH
+#endif /* ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION */
+
 /* Borland C++ Builder definitions. */
 #if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
 

@@ -130,7 +130,7 @@ public:
     SILENT = 040
     // Do not print messages at all (just leave in thread-specific
     // storage for later inspection).
-  };
+ };
 
   // = Initialization and termination routines.
 
@@ -263,6 +263,16 @@ public:
   // td->acquire_release to block execution until this call
   // return.
 
+#if defined (ACE_WIN32)
+  ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
+  ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
+  // Get/Set TSS exception action.
+
+  ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
+  ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
+  // Get/Set TSS exception handler.
+#endif /* ACE_WIN32 */
+
   // = Stop/start/query tracing status on a per-thread basis...
   void stop_tracing (void);
   void start_tracing (void);
@@ -383,6 +393,13 @@ private:
   // will point to the thread descriptor adapter which holds the
   // thread descriptor of the thread.  This can be used to repidly
   // access all thread data kept in <ACE_Thread_Descriptor>.
+
+#if defined (ACE_WIN32)
+  ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
+  ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
+  // These handlers determine how a thread handles win32 structured
+  // exception.
+#endif /* ACE_WIN32 */
 
   u_long priority_mask_;
   // Keeps track of all the <ACE_Log_Priority> values that are
