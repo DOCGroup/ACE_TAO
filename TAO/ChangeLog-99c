@@ -1,3 +1,8 @@
+Thu Jun 24 17:01:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/MProfile.cpp:
+	  Fixed syntax errors, thanks to Ossama for pointing them out.
+
 Thu Jun 24 16:38:09 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* tao/Any.i:
