@@ -801,13 +801,14 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
 
   if (this->connection_cache_.find (search_addr, sh) == -1)
     {
-      ACE_NEW_RETURN(sh, SVC_HANDLER, -1);
+      ACE_NEW_RETURN (sh, SVC_HANDLER, -1);
 
-      // Actively establish the connection
+      // Actively establish the connection.  This is a timed blocking
+      // connect.
       if (ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
 	  (sh, remote_addr, timeout, local_addr, reuse_addr, flags, perms) == -1)
 	return -1;
-      // Insert the new SVC_HANDLER instance into the cache
+      // Insert the new SVC_HANDLER instance into the cache.
       else
 	{
 	  ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR, SVC_HANDLER> server_addr (remote_addr,sh);
