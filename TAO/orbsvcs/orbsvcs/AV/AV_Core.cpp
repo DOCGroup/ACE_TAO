@@ -327,13 +327,52 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
           }
         if (flow_set.size () > 0)
           {
+	    TAO_AV_FlowSpecSet tmp_flow_set (flow_set);
+	    flow_set.reset ();
+	    TAO_AV_FlowSpecSetItor end = tmp_flow_set.end ();
+            for (TAO_AV_FlowSpecSetItor start = tmp_flow_set.begin ();
+                 start != end; ++start)
+              {
+		TAO_FlowSpec_Entry *entry = *start;
+		TAO_FlowSpec_Entry *new_entry;
+		ACE_CString dir;
+		if (entry->direction () == 0)
+		  dir += "IN";
+		else if (entry->direction () == 1)
+		  dir += "OUT";
+		if (entry->get_peer_addr () != 0)
+		  {
+		    ACE_NEW_RETURN (new_entry,
+				    TAO_Forward_FlowSpec_Entry (entry->flowname (),
+								dir.c_str (),
+								entry->format (),
+								entry->flow_protocol_str (),
+								entry->carrier_protocol_str (),
+								entry->get_peer_addr (),
+								entry->control_address ()),
+				    -1);
+		  }
+		else 
+		  {
+		    ACE_NEW_RETURN (new_entry,
+				    TAO_Forward_FlowSpec_Entry (entry->flowname (),
+								dir.c_str (),
+								entry->format (),
+								entry->flow_protocol_str (),
+								entry->carrier_protocol_str (),
+								entry->address (),
+								entry->control_address ()),
+				    -1);
+		  }
+		flow_set.insert (new_entry);
+	      }
             result = this->acceptor_registry_->open (endpoint,
                                                      this,
                                                      flow_set);
             if (result == -1)
               ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Core::init_Forward_flows: Acceptor_registry open failed\n"),-1);
-            TAO_AV_FlowSpecSetItor end = address_flow_set.end ();
-            for (TAO_AV_FlowSpecSetItor start = address_flow_set.begin ();
+            end = address_flow_set.end ();
+            for (start = address_flow_set.begin ();
                  start != end; ++start)
               {
                 TAO_FlowSpec_Entry *entry = (*start);
@@ -341,21 +380,21 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                   {
                   case TAO_FlowSpec_Entry::TAO_AV_DIR_OUT:
                     {
-                    if (entry->handler () != 0)
-                      {
-                        // For IN flows on the A side we should remove the handlers from the reactor.
+		      if (entry->handler () != 0)
+			{
+			  // For IN flows on the A side we should remove the handlers from the reactor.
                         ACE_Event_Handler *event_handler = entry->handler ()->event_handler ();
                         result = event_handler->reactor ()->remove_handler (event_handler,
                                                                             ACE_Event_Handler::READ_MASK);
                         if (result < 0)
                           if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
-                      }
+			}
                     }
                   default:
                     break;
                   }
-              // Now if the address_set has been changed due to the addition of a control entry we should
-              // add that to the flow_spec_set also.
+		// Now if the address_set has been changed due to the addition of a control entry we should
+		// add that to the flow_spec_set also.
               if (flow_spec_set.find (entry) < 0)
                 {
                   // entry doesn't exist so add it.
@@ -409,7 +448,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                                                   (*connect)->carrier_protocol_str (),
                                                   local_addr,
                                                   local_control_addr);
-
+		
                 int len = new_flowspec.length ();
                 if (i == len)
                   new_flowspec.length (len+1);
