@@ -31,4 +31,14 @@
     <kind>SimplexReceptacle</kind>
   </port>
 
+  <port>
+    <name>gather_data</name>
+    <exclusiveProvider>false</exclusiveProvider>
+    <exclusiveUser>false</exclusiveUser>
+    <optional>false</optional>
+    <provider>false</provider>
+    <supportedType>IDL:BasicSP/ReadData:1.0</supportedType>
+    <specificType>IDL:BasicSP/ReadData:1.0</specificType>
+    <kind>MultiplexReceptacle</kind>
+  </port>
 </Deployment:ComponentInterfaceDescription>

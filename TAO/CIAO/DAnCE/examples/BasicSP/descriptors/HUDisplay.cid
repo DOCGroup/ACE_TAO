@@ -56,6 +56,7 @@
         <instance xmi:idref="a_GPS"/>
       </internalEndpoint>
     </connection>
+
     <connection>
       <name>Airframe_NavDisplay</name>
       <internalEndpoint>
@@ -67,6 +68,7 @@
         <instance xmi:idref="a_Airframe"/>
       </internalEndpoint>
     </connection>
+
     <connection>
       <name>NavDisplay_Airframe</name>
       <internalEndpoint>
@@ -78,5 +80,18 @@
         <instance xmi:idref="a_Airframe"/>
       </internalEndpoint>
     </connection>
+
+    <connection>
+      <name>NavDisplay_Airframe_Uses_Multiple</name>
+      <internalEndpoint>
+        <portName>gather_data</portName>
+        <instance xmi:idref="a_NavDisplay"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>dataout</portName>
+        <instance xmi:idref="a_Airframe"/>
+      </internalEndpoint>
+    </connection>
+
   </assemblyImpl>
 </Deployment:ComponentImplementationDescription>
