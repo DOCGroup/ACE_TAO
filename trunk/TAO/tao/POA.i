@@ -215,7 +215,7 @@ TAO_POA::create_POA (const char *adapter_name,
                      CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   return this->create_POA_i (adapter_name,
                              poa_manager,
@@ -229,7 +229,7 @@ TAO_POA::destroy (CORBA::Boolean etherealize_objects,
                   CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->destroy_i (etherealize_objects,
                    wait_for_completion,
@@ -254,7 +254,7 @@ ACE_INLINE PortableServer::ServantManager_ptr
 TAO_POA::get_servant_manager (CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), PortableServer::ServantManager::_nil (), ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), PortableServer::ServantManager::_nil ());
 
   return this->get_servant_manager_i (ACE_TRY_ENV);
 }
@@ -264,7 +264,7 @@ TAO_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr,
                               CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->set_servant_manager_i (imgr,
                                ACE_TRY_ENV);
@@ -274,7 +274,7 @@ ACE_INLINE PortableServer::Servant
 TAO_POA::get_servant (CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   return this->get_servant_i (ACE_TRY_ENV);
 }
@@ -284,7 +284,7 @@ TAO_POA::set_servant (PortableServer::Servant servant,
                       CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->set_servant_i (servant,
                        ACE_TRY_ENV);
@@ -297,7 +297,7 @@ TAO_POA::activate_object (PortableServer::Servant servant,
                           CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   return this->activate_object_i (servant,
                                   ACE_TRY_ENV);
@@ -309,7 +309,7 @@ TAO_POA::activate_object_with_id (const PortableServer::ObjectId &id,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->activate_object_with_id_i (id,
                                    servant,
@@ -321,7 +321,7 @@ TAO_POA::deactivate_object (const PortableServer::ObjectId &oid,
                             CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->deactivate_object_i (oid,
                              ACE_TRY_ENV);
@@ -332,7 +332,7 @@ TAO_POA::create_reference (const char *intf,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), CORBA::Object::_nil (), ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), CORBA::Object::_nil ());
 
   return this->create_reference_i (intf,
                                    ACE_TRY_ENV);
@@ -344,7 +344,7 @@ TAO_POA::create_reference_with_id (const PortableServer::ObjectId &id,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), CORBA::Object::_nil (), ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), CORBA::Object::_nil ());
 
   return this->create_reference_with_id_i (id,
                                            intf,
@@ -358,7 +358,7 @@ TAO_POA::servant_to_id (PortableServer::Servant servant,
   // If we had upgradeable locks, this would initially be a read lock
   //
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   return this->servant_to_id_i (servant,
                                 ACE_TRY_ENV);
@@ -369,7 +369,7 @@ TAO_POA::servant_to_system_id (PortableServer::Servant servant,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   return this->servant_to_system_id_i (servant,
                                        ACE_TRY_ENV);
@@ -380,7 +380,7 @@ TAO_POA::id_to_servant (const PortableServer::ObjectId &oid,
                         CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   return this->id_to_servant_i (oid,
                                 ACE_TRY_ENV);
@@ -391,7 +391,7 @@ TAO_POA::id_to_reference (const PortableServer::ObjectId &oid,
                           CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   return this->id_to_reference_i (oid, ACE_TRY_ENV);
 }
@@ -404,7 +404,7 @@ TAO_POA::forward_object (const PortableServer::ObjectId &oid,
                          CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->forward_object_i (oid,
                           forward_to,
@@ -434,7 +434,7 @@ ACE_INLINE PortableServer::AdapterActivator_ptr
 TAO_POA::the_activator (CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), PortableServer::AdapterActivator::_nil (), ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), PortableServer::AdapterActivator::_nil ());
 
   return PortableServer::AdapterActivator::_duplicate (this->adapter_activator_.in ());
 }
@@ -444,7 +444,7 @@ TAO_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator,
                         CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->adapter_activator_ = PortableServer::AdapterActivator::_duplicate (adapter_activator);
 }

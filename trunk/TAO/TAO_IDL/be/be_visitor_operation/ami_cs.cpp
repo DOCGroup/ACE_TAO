@@ -15,7 +15,7 @@
 //
 // = AUTHOR
 //    Aniruddha Gokhale and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu>  
+//    <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -42,7 +42,7 @@ be_visitor_operation_ami_cs::~be_visitor_operation_ami_cs (void)
 }
 
 // Processing to be done after every element in the scope is
-// processed.  
+// processed.
 int
 be_visitor_operation_ami_cs::post_process (be_decl *bd)
 {
@@ -65,13 +65,13 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   os->indent (); // start with the current indentation level
 
-  // Generate the return type mapping. Return type is simply void. 
+  // Generate the return type mapping. Return type is simply void.
   *os << "void" << be_nl;
-  
+
   // Generate the operation name.
 
   // Grab the scope name.
-  be_decl *parent = 
+  be_decl *parent =
     be_scope::narrow_from_scope (node->defined_in ())->decl ();
   if (parent == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,7 +79,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
                        "visit_operation - "
                        "scope name is nil\n"),
                       -1);
-  
+
   // Generate the scope::operation name.
   *os << parent->fullname ()
       << "::"
@@ -107,7 +107,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   // last argument - is always CORBA::Environment
   *os << "{" << be_idt_nl;
 
-  // Create the return type node. Return type is void. 
+  // Create the return type node. Return type is void.
   be_predefined_type *bt = 0;
   ACE_NEW_RETURN (bt,
                   be_predefined_type (AST_PredefinedType::PT_void,
@@ -667,8 +667,8 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation
       << "for (;;)" << be_nl
       << "{" << be_idt_nl;
 
-  *os << "ACE_TRY_ENV.clear ();" << be_nl
-      << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
+  // *os << "ACE_TRY_ENV.clear ();" << be_nl
+  *os << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
   // check if there is an exception
   if (this->gen_check_exception (bt) == -1)
     {
