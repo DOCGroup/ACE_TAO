@@ -62,6 +62,9 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
 
   // end of instantiation
   
+  // generate the ifdefined macro for the sequence type
+  os->gen_ifdef_macro (node->flatname ());
+
   // all we do is generate the _var and _out implementations
   if (this->gen_var_impl (node) == -1)
     {
@@ -78,6 +81,10 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
                          "visit_sequence - "
                          "codegen for _out failed\n"), -1);
     }
+
+  // generate the endif macro for the sequence type
+  os->gen_endif ();
+  node->cli_inline_gen (1);
 
   return 0;
 }
