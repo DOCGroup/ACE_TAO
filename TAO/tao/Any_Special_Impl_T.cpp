@@ -118,23 +118,23 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 
       TAO::Any_Impl *impl = any.impl ();
 
+      ACE_Message_Block *mb = impl->_tao_get_cdr ();
+
       typedef TAO::Any_Special_Impl_T<T, from_T, to_T> 
         BOUNDED_TSTRING_ANY_IMPL;
 
-      TAO::Any_Special_Impl_T<T, from_T, to_T> *narrow_impl =
-        dynamic_cast <BOUNDED_TSTRING_ANY_IMPL *> (impl);
-
-      if (narrow_impl != 0)
-        {
-          _tao_elem = narrow_impl->value_;
-          return 1;
-        }
-
-      ACE_Message_Block *mb = impl->_tao_get_cdr ();
-
       if (mb == 0)
         {
-          return 0;
+          TAO::Any_Special_Impl_T<T, from_T, to_T> *narrow_impl =
+            dynamic_cast <BOUNDED_TSTRING_ANY_IMPL *> (impl);
+
+          if (narrow_impl == 0)
+            {
+              return 0;
+            }
+
+          _tao_elem = (T *) narrow_impl->value_;
+          return 1;
         }
 
       CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
