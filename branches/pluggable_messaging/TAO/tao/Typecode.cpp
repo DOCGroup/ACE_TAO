@@ -1,6 +1,5 @@
 // $Id$
 
-
 // Typecodes essentially consist of just the CDR octets that get
 // marshaled and unmarshaled, and this code knows how to parse those
 // octets and answer questions CORBA's TypeCode APIs require.
@@ -28,16 +27,27 @@
 
 ACE_RCSID(tao, Typecode, "$Id$")
 
-
 CORBA_TypeCode::Bounds::Bounds (void)
   : CORBA_UserException (CORBA::TypeCode::_tc_Bounds)
 {
 }
 
-void
-CORBA_TypeCode::Bounds::_raise (void)
+void CORBA_TypeCode::Bounds::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_TypeCode::Bounds::_tao_encode (TAO_OutputCDR &cdr,
+                                          CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << this->_id ())
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_TypeCode::Bounds::_tao_decode (TAO_InputCDR &,
+                                          CORBA::Environment &)
+{
 }
 
 CORBA_TypeCode::Bounds*
@@ -62,10 +72,22 @@ CORBA_TypeCode::BadKind::BadKind (void)
 {
 }
 
-void
-CORBA_TypeCode::BadKind::_raise (void)
+void CORBA_TypeCode::BadKind::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_TypeCode::BadKind::_tao_encode (TAO_OutputCDR &cdr,
+                                           CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << this->_id ())
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_TypeCode::BadKind::_tao_decode (TAO_InputCDR &,
+                                           CORBA::Environment &)
+{
 }
 
 CORBA_TypeCode::BadKind*
@@ -241,8 +263,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       ACE_NEW (this->non_aligned_buffer_,
                char [this->length_ + 4 + 4 + ACE_CDR::MAX_ALIGNMENT]);
 
-      char* start = ptr_align_binary (this->non_aligned_buffer_,
-                                      ACE_CDR::MAX_ALIGNMENT);
+      char* start = ACE_ptr_align_binary (this->non_aligned_buffer_,
+                                          ACE_CDR::MAX_ALIGNMENT);
 
       (void) ACE_OS::memcpy (start, &this->kind_, 4);
       (void) ACE_OS::memcpy (start + 4, &this->length_, 4);

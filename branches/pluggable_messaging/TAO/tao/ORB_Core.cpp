@@ -230,7 +230,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   CORBA::UShort port = 0;
 
   // @@ GIOPLite should be an alternative ORB Messaging protocols, fredk
-  int giop_lite = 0;
+  // int giop_lite = 0;
 
   CORBA::Boolean use_ior = 1;
   int cdr_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF;
@@ -332,8 +332,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // @@ This will have to change since gioplite
           // will be considered as an alternate ORB
           // messaging protocols.
-          giop_lite = 1;
-
+          // giop_lite = 1;
+          ACE_DEBUG ((LM_WARNING,
+                      ASYS_TEXT ("(%P|%t) This option has been deprecated \n")
+                      ASYS_TEXT ("Please use svc.conf file to load the protcol \n")));
+          
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-ORBDebug") == 0)
@@ -1138,8 +1141,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
     this->orb_params ()->sock_sndbuf_size (snd_sock_size);
   if (cdr_tradeoff >= 0)
     this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
-
-  this->orb_params ()->use_lite_protocol (giop_lite);
 
   this->orb_params ()->std_profile_components (std_profile_components);
 

@@ -1,6 +1,5 @@
 // $Id$
 
-
 // @(#)interp.cpp       1.4 95/11/04
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -18,7 +17,6 @@
 #include "tao/Union.h"
 
 ACE_RCSID(tao, CDR_Interpreter, "$Id$")
-
 
 TAO_CDR_Interpreter::Table_Element
 TAO_CDR_Interpreter::table_[CORBA::TC_KIND_COUNT] =
@@ -556,7 +554,7 @@ TAO_CDR_Interpreter::calc_struct_and_except_attributes (TAO_InputCDR *stream,
       // adding internal padding), then update the current size to
       // handle the member's size.
 
-      size = (size_t) align_binary (size, member_alignment);
+      size = (size_t) ACE_align_binary (size, member_alignment);
       size += member_size;
 
       // Finally update the overall structure alignment requirement,
@@ -568,7 +566,7 @@ TAO_CDR_Interpreter::calc_struct_and_except_attributes (TAO_InputCDR *stream,
 
   // Round up the structure size to match its overall alignment.  This
   // adds tail padding, if needed.
-  return (size_t) align_binary (size, alignment);
+  return (size_t) ACE_align_binary (size, alignment);
 }
 
 // Calculate size and alignment for a structure.
@@ -777,7 +775,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   // Round up the discriminator's size to include padding it needs in
   // order to be followed by the value.
   discrim_and_base_size_with_pad =
-    (size_t) align_binary (discrim_and_base_size, value_alignment);
+    (size_t) ACE_align_binary (discrim_and_base_size, value_alignment);
 
   discrim_size_with_pad = discrim_and_base_size_with_pad -
     sizeof (TAO_Base_Union);
@@ -791,8 +789,9 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   if (value_alignment > overall_alignment)
     overall_alignment = value_alignment;
 
-  return (size_t) align_binary (discrim_and_base_size_with_pad + value_size,
-                                overall_alignment);
+  return (size_t) ACE_align_binary (discrim_and_base_size_with_pad
+                                    + value_size,
+                                    overall_alignment);
 }
 
 // Calculate size and alignment for a CORBA discriminated union.

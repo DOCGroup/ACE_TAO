@@ -61,9 +61,9 @@ TAO_GIOP_Twoway_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  TAO_Target_Specification spec;
+  this->target_spec_.target_specifier (this->profile_->object_key ());
   this->transport_->start_request (this->orb_core_,
-                                   spec,
+                                   this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -126,10 +126,9 @@ TAO_GIOP_DII_Deferred_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  TAO_Target_Specification spec;
-  spec.target_specifier (this->profile_->object_key ());
+  this->target_spec_.target_specifier (this->profile_->object_key ());
   this->transport_->start_request (this->orb_core_,
-                                   spec,
+                                   this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
   ACE_CHECK;
