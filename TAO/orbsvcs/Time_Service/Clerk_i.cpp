@@ -55,31 +55,31 @@ Clerk_i::read_ior (const char *filename)
     {
       // Get the IOR and insert it into the set of server IORs.
       TAO_TRY
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "iors -> %s\n",
-		      str));
-	  CORBA::Object_var objref =
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "iors -> %s\n",
+                      str));
+          CORBA::Object_var objref =
             this->orb_->string_to_object (str,
                                           TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+          TAO_CHECK_ENV;
 
-	  // Return if the server reference is nil.
-	  if (CORBA::is_nil (objref.in ()))
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "IOR for the server is Null\n"),
-			      -1);
+          // Return if the server reference is nil.
+          if (CORBA::is_nil (objref.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "IOR for the server is Null\n"),
+                              -1);
 
           CosTime::TimeService_ptr server =
             CosTime::TimeService::_narrow (objref.in (),
                                            TAO_TRY_ENV);
           TAO_CHECK_ENV;
           this->insert_server (server);
-	}
+        }
       TAO_CATCHANY
-	{
-	  TAO_TRY_ENV.print_exception ("Exception");
-	}
+        {
+          TAO_TRY_ENV.print_exception ("Exception");
+        }
       TAO_ENDTRY;
     }
   return 0;
@@ -103,11 +103,11 @@ Clerk_i::parse_args (void)
         break;
 
       case 't':  // time after which the clerk should update time.
-	this->timer_value_ = atoi (get_opts.optarg);
-	break;
+        this->timer_value_ = atoi (get_opts.optarg);
+        break;
 
-      case 'f':	 // read the server IORs from a file.
-	result = this->read_ior (get_opts.optarg);
+      case 'f':  // read the server IORs from a file.
+        result = this->read_ior (get_opts.optarg);
 
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -118,23 +118,23 @@ Clerk_i::parse_args (void)
 
      case 'o':  // output the Clerk IOR to a file.
        this->ior_output_file_ =
-	 ACE_OS::fopen (get_opts.optarg, "w");
+         ACE_OS::fopen (get_opts.optarg, "w");
 
        if (this->ior_output_file_ == 0)
-	 ACE_ERROR_RETURN ((LM_ERROR,
-			    "[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n",
-			    get_opts.optarg), -1);
+         ACE_ERROR_RETURN ((LM_ERROR,
+                            "[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n",
+                            get_opts.optarg), -1);
        break;
 
       case '?':  // display help for use of the server.
-	/* FALLTHRU */
+        /* FALLTHRU */
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "[SERVER] Process/Thread Id : (%P/%t)"
                            "usage:  %s"
                            " [-d]"
-			   " [-t] <Timer value>"
-			   " [-f] <ior_input_file>"
+                           " [-t] <Timer value>"
+                           " [-f] <ior_input_file>"
                            " [-o] <ior_output_file>"
                            "\n",
                            argv_ [0]),
@@ -161,20 +161,20 @@ Clerk_i::init_IR (void)
       this->ir_helper_->register_server ("clerk -t 5");
 
       this->ir_helper_->change_object (this->time_service_clerk_,
-				       TAO_TRY_ENV);
+                                       TAO_TRY_ENV);
 
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       // Convert the IR clerk reference to a string.
       CORBA::String_var objref_clerk =
-	this->orb_manager_.orb ()->object_to_string (this->time_service_clerk_.in (),
-						     TAO_TRY_ENV);
+        this->orb_manager_.orb ()->object_to_string (this->time_service_clerk_.in (),
+                                                     TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       // Print the IR clerk IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
-		  "[SERVER] Process/Thread Id : (%P/%t) The Time Service IREPO CLERK IOR is: <%s>\n",
-		  objref_clerk.in ()));
+                  "[SERVER] Process/Thread Id : (%P/%t) The Time Service IREPO CLERK IOR is: <%s>\n",
+                  objref_clerk.in ()));
     }
   TAO_CATCHANY
     {
@@ -210,8 +210,8 @@ Clerk_i::get_first_IOR (void)
 
       // Resolve name.
       CORBA::Object_var temp_object =
-	this->my_name_server_->resolve (server_context_name,
-					TAO_TRY_ENV);
+        this->my_name_server_->resolve (server_context_name,
+                                        TAO_TRY_ENV);
 
       TAO_CHECK_ENV;
 
@@ -221,22 +221,22 @@ Clerk_i::get_first_IOR (void)
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (server_context.in ()))
-	ACE_DEBUG ((LM_DEBUG,
-		    "TAO_Time_Service_Clerk::get_server_IORs:"
-		    "No Active Servers in the Network\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Time_Service_Clerk::get_server_IORs:"
+                    "No Active Servers in the Network\n"));
 
       // Get the first element and an iterator over the other
       // elements.
       server_context->list (1,
-			    bindings_list.out (),
-			    iter.out ());
+                            bindings_list.out (),
+                            iter.out ());
       CosNaming::Name server_name;
       server_name.length (1);
       server_name[0].id = bindings_list[0].binding_name[0].id;
 
       temp_object =
-	server_context->resolve (server_name,
-				 TAO_TRY_ENV);
+        server_context->resolve (server_name,
+                                 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       CosTime::TimeService_var obj =
@@ -245,22 +245,22 @@ Clerk_i::get_first_IOR (void)
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "[CLERK] Process/Thread Id : (%P/%t) Unable to Resolve "
-			   "Server Reference\n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "[CLERK] Process/Thread Id : (%P/%t) Unable to Resolve "
+                           "Server Reference\n"),
+                          -1);
 
       // Insert the first server IOR into the unbounded set of server
       // IORs.
 
-      this->insert_server (obj);
+      this->insert_server (obj.in ());
 
       // Iterate over the server context to get the next N IORs.
       if (next_n_IORs (iter,
                        server_context) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "[CLERK] Process/Thread Id : (%P/%t) Unable to get next N IORs "),
-			  -1);;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "[CLERK] Process/Thread Id : (%P/%t) Unable to get next N IORs "),
+                          -1);;
     }
   TAO_CATCHANY
     {
@@ -278,42 +278,42 @@ Clerk_i::get_first_IOR (void)
 
 int
 Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
-		      CosNaming::NamingContext_var server_context)
+                      CosNaming::NamingContext_var server_context)
 {
   TAO_TRY
     {
       CosNaming::Binding_var binding;
 
       if (!CORBA::is_nil (iter.in ()))
-	{
-	  while (iter->next_one (binding.out (),
-				 TAO_TRY_ENV))
-	    {
-	      TAO_CHECK_ENV;
+        {
+          while (iter->next_one (binding.out (),
+                                 TAO_TRY_ENV))
+            {
+              TAO_CHECK_ENV;
 
-	      ACE_DEBUG ((LM_DEBUG,
-			  "Getting IOR of the server: %s\n\n",
-			  binding->binding_name[0].id.in ()));
+              ACE_DEBUG ((LM_DEBUG,
+                          "Getting IOR of the server: %s\n\n",
+                          binding->binding_name[0].id.in ()));
 
-	      CosNaming::Name server_name;
-	      server_name.length (1);
-	      server_name[0].id = binding->binding_name[0].id;
+              CosNaming::Name server_name;
+              server_name.length (1);
+              server_name[0].id = binding->binding_name[0].id;
 
-	      CORBA::Object_var temp_object =
-		server_context->resolve (server_name,
-					 TAO_TRY_ENV);
-	      TAO_CHECK_ENV;
+              CORBA::Object_var temp_object =
+                server_context->resolve (server_name,
+                                         TAO_TRY_ENV);
+              TAO_CHECK_ENV;
 
               CosTime::TimeService_ptr server =
                 CosTime::TimeService::_narrow (temp_object.in (),
                                                TAO_TRY_ENV);
               TAO_CHECK_ENV;
 
-	      this->insert_server (server);
-	    }
+              this->insert_server (server);
+            }
 
-	  TAO_CHECK_ENV;
-	}
+          TAO_CHECK_ENV;
+        }
 
       TAO_CHECK_ENV;
     }
@@ -336,13 +336,13 @@ Clerk_i::init_naming_service (CORBA::Environment& env)
     {
       // Initialize the POA.
       this->orb_manager_.init_child_poa (this->argc_,
-					 this->argv_,
-					 "my_child_poa",
-					 TAO_TRY_ENV);
+                                         this->argv_,
+                                         "my_child_poa",
+                                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       PortableServer::POA_ptr child_poa
-	= this->orb_manager_.child_poa ();
+        = this->orb_manager_.child_poa ();
 
       // Initialize the Naming Server. Note the Naming Server cannot
       // be initialized with the Root POA because it has to be a
@@ -351,8 +351,8 @@ Clerk_i::init_naming_service (CORBA::Environment& env)
       // use the Root POA for the servants.
 
       if (this->my_name_server_.init (this->orb_.in (),
-				      child_poa) == -1)
-	return -1;
+                                      child_poa) == -1)
+        return -1;
     }
   TAO_CATCHANY
     {
@@ -375,32 +375,32 @@ Clerk_i::create_clerk (void)
       // Create a new clerk object. Pass it the timer value, the set
       // of server IORs and the no. of servers.
       ACE_NEW_RETURN (this->time_service_clerk_impl_,
-		      TAO_Time_Service_Clerk (this->timer_value_,
-					      this->server_),
-		      0);
+                      TAO_Time_Service_Clerk (this->timer_value_,
+                                              this->server_),
+                      0);
       // Generate IOR of the Clerk and register with POA.
       this->time_service_clerk_ =
         this->time_service_clerk_impl_->_this ();
 
       // Convert the clerk reference to a string.
       CORBA::String_var objref_clerk =
-	this->orb_->object_to_string (this->time_service_clerk_.in (),
-				      TAO_TRY_ENV);
+        this->orb_->object_to_string (this->time_service_clerk_.in (),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       // Print the clerk IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
-		  "[SERVER] Process/Thread Id : (%P/%t) The Time Service CLERK IOR is: <%s>\n",
-		  objref_clerk.in ()));
+                  "[SERVER] Process/Thread Id : (%P/%t) The Time Service CLERK IOR is: <%s>\n",
+                  objref_clerk.in ()));
 
       // Print the Time Service clerk IOR to a file.
       if (this->ior_output_file_)
-	{
-	  ACE_OS::fprintf (this->ior_output_file_,
-			   "%s",
-			   objref_clerk.in ());
-	  ACE_OS::fclose (this->ior_output_file_);
-	}
+        {
+          ACE_OS::fprintf (this->ior_output_file_,
+                           "%s",
+                           objref_clerk.in ());
+          ACE_OS::fclose (this->ior_output_file_);
+        }
 
       // Register the clerk implementation with the Interface
       // Repository.  init_IR();
@@ -430,19 +430,19 @@ Clerk_i::register_clerk (void)
       clerk_context_name[0].id = CORBA::string_dup ("ClerkContext");
 
       if (CORBA::is_nil (this->my_name_server_->resolve
-			 (clerk_context_name, TAO_TRY_ENV)))
-	    {
-	      TAO_TRY_ENV.clear ();
+                         (clerk_context_name, TAO_TRY_ENV)))
+            {
+              TAO_TRY_ENV.clear ();
 
-	      CosNaming::NamingContext_var clerk_context =
-		this->my_name_server_->new_context (TAO_TRY_ENV);
-	      TAO_CHECK_ENV;
+              CosNaming::NamingContext_var clerk_context =
+                this->my_name_server_->new_context (TAO_TRY_ENV);
+              TAO_CHECK_ENV;
 
-	      this->my_name_server_->rebind_context (clerk_context_name,
-						     clerk_context.in (),
-						     TAO_TRY_ENV);
-	      TAO_CHECK_ENV;
-	    }
+              this->my_name_server_->rebind_context (clerk_context_name,
+                                                     clerk_context.in (),
+                                                     TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+            }
 
       TAO_CHECK_ENV;
 
@@ -460,12 +460,12 @@ Clerk_i::register_clerk (void)
       clerk_name[1].id = clerk_mc_name;
 
       this->my_name_server_->rebind (clerk_name,
-				     this->time_service_clerk_.in (),
-				     TAO_TRY_ENV);
+                                     this->time_service_clerk_.in (),
+                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Context Bound\n"));
+                  "Context Bound\n"));
     }
  TAO_CATCHANY
     {
@@ -480,8 +480,8 @@ Clerk_i::register_clerk (void)
 
 int
 Clerk_i::init (int argc,
-	       char *argv[],
-	       CORBA::Environment &env)
+               char *argv[],
+               CORBA::Environment &env)
 {
   TAO_TRY
     {
@@ -496,13 +496,13 @@ Clerk_i::init (int argc,
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       if (this->orb_manager_.init_child_poa (argc,
-					     argv,
-					     "child_poa",
-					     TAO_TRY_ENV) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "%p\n",
-			   "init_child_poa"),
-			  -1);
+                                             argv,
+                                             "child_poa",
+                                             TAO_TRY_ENV) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "init_child_poa"),
+                          -1);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       // Get the ORB.
@@ -510,38 +510,38 @@ Clerk_i::init (int argc,
 
       // Parse commandline arguments.
       if (this->parse_args () !=0 )
-	return -1;
+        return -1;
 
       // If IOR file has not been specified then try the Naming
       // Service.
       if (!this->ior_fp_)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "IOR file not specified. Using the Naming Service instead\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "IOR file not specified. Using the Naming Service instead\n"));
 
-	  // Initialize the Naming Service.
-	  if (this->init_naming_service (TAO_TRY_ENV) !=0 )
-	    return -1;
+          // Initialize the Naming Service.
+          if (this->init_naming_service (TAO_TRY_ENV) !=0 )
+            return -1;
 
-	  // Set the size of the Server IOR Array.
-	  this->server_.max_size (10);
-	  this->server_.size (0);
+          // Set the size of the Server IOR Array.
+          this->server_.max_size (10);
+          this->server_.size (0);
 
-	  // Get a reference to the Server Naming context and the
-	  // first IOR.
-	  if (this->get_first_IOR () != 0)
-	    return -1;
+          // Get a reference to the Server Naming context and the
+          // first IOR.
+          if (this->get_first_IOR () != 0)
+            return -1;
 
-	}
+        }
 
       // Create an instance of the Clerk.
       if (this->create_clerk () != 0)
-	return -1;
+        return -1;
 
       // Register the clerk with the Naming Service.
       if (this->ior_fp_ == 0)
-	if (this->register_clerk () != 0)
-	  return -1;
+        if (this->register_clerk () != 0)
+          return -1;
 
       // Close the open file handler.
       ACE_OS::fclose (this->ior_fp_);
@@ -563,9 +563,9 @@ Clerk_i::run (CORBA::Environment &env)
     {
       // Run the main event loop for the ORB.
       if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "[SERVER] Process/Thread Id : (%P/%t) Clerk_i::run"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "[SERVER] Process/Thread Id : (%P/%t) Clerk_i::run"),
+                          -1);
     }
   TAO_CATCHANY
     {
