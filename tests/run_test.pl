@@ -49,6 +49,10 @@ sub check_for_more_configs ()
     if (!-x $P->Executable ()) {
         $config_list->add_one_config ('missing_netsvcs');
     }
+
+    if (defined $opt_v) {
+      $config_list->add_one_config ('VxWorks');
+    }
 }
 
 ################################################################################
@@ -72,13 +76,18 @@ sub record_resources ()
 sub check_resources ()
 {
     if ($config_list->check_config ('CHECK_RESOURCES')) {
-        $end_test_resources=`ipcs | egrep $user`;
+        if (defined $opt_v) {
+            print "memShow();\n";
+        }
+        else {
+            $end_test_resources=`ipcs | egrep $user`;
 
-        if ("$start_test_resources" ne "$end_test_resources") {
-            print STDERR "Warning: the ACE tests _may_ have leaked OS ".
-                         "resources!\n";
-            print STDERR "Warning: Before: $start_test_resources\n";
-            print STDERR "Warning: After:  $end_test_resources\n";
+            if ("$start_test_resources" ne "$end_test_resources") {
+                print STDERR "Warning: the ACE tests _may_ have leaked OS ".
+                             "resources!\n";
+                print STDERR "Warning: Before: $start_test_resources\n";
+                print STDERR "Warning: After:  $end_test_resources\n";
+            }
         }
     }
 }
@@ -118,6 +127,21 @@ sub run_program ($)
     }
 
     check_log ($program, $log);
+}
+
+################################################################################
+
+sub output_vxworks_commands ($)
+{
+  my($program) = shift;
+  my($length) = length($program) + 2;
+  if ($config_list->check_config ('CHECK_RESOURCES')) {
+    print "memShow();\n";
+  }
+  print "write(2, \"\\n$program\\n\", $length);\n" .
+        "ld < $program\n" .
+        "ace_main (0, 0);\n" .
+        "unld \"$program\"\n";
 }
 
 ################################################################################
@@ -246,7 +270,7 @@ sub delete_temp_files ()
 
 $config_list->load ("run_test.lst");
 
-if (!getopts ('dht') || $opt_h) {
+if (!getopts ('dhtv') || $opt_h) {
     print "run_test.pl [-h] [-t file1 file2 ...]\n";
     print "\n";
     print "Runs the tests listed in run_test.lst\n";
@@ -255,6 +279,7 @@ if (!getopts ('dht') || $opt_h) {
     print "    -d         Debug mode (do not run tests)\n";
     print "    -h         Display this help\n";
     print "    -t         Runs all the tests passed via the cmd line\n";
+    print "    -v         Generate run_test.vxworks\n";
     print "\n";
     print "Pass in configs using \"-Config XXXXX\"\n";
     print "\n";
@@ -294,12 +319,29 @@ if ($OSNAME eq "MSWin32") {
     $ENV{'PATH'} .= ':'.$PerlACE::Process::ExeSubDir;
 }
 
+if (defined $opt_v) {
+  print "#\n" .
+        "# ACE one-button test for VxWorks 5.x.\n" .
+        "# To use:  -> < run_test.vxworks > run_test.log\n" .
+        "#\n" .
+        "# NOTE: if you build with a shared ACE library, be sure to load\n" .
+        "# that first:\n" .
+        "#  -> ld < ../ace/libACE.so\n" .
+        "# and unld it after running the tests.\n" .
+        "#\n" .
+        "# The output logs can be checked from a Unix host:\n" .
+        "#    % ./run_tests.check log/*.log\n\n";
+}
+
 foreach $test (@tests) {
     if (defined $opt_d) {
         print "Would run test $test now\n";
     }
     elsif ($config_list->check_config ('Purify')) {
         purify_program ($test);
+    }
+    elsif (defined $opt_v) {
+        output_vxworks_commands ($test);
     }
     else {
         run_program ($test);

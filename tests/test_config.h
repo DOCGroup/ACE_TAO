@@ -123,7 +123,8 @@ const size_t ACE_MAX_THREADS = 4;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Deleting old log file %s (if any)\n\n"), temp)); \
   int fd_init_log; \
   if ((fd_init_log = ACE_OS::open (temp, \
-                                   O_WRONLY | O_CREAT, 0x644)) != ERROR) \
+                                   O_WRONLY|O_CREAT, \
+                                   S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)) != ERROR) \
     { \
       ACE_OS::close (fd_init_log); \
       ACE_OS::unlink (temp); \
@@ -224,7 +225,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // This is the only way I could figure out to avoid a console
   // warning about opening an existing file (w/o O_CREAT), or
   // attempting to unlink a non-existant one.
-  ACE_HANDLE fd = ACE_OS::open (temp, O_WRONLY | O_CREAT, 0x644);
+  ACE_HANDLE fd = ACE_OS::open (temp,
+                                O_WRONLY|O_CREAT,
+                                S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
   if (fd != ERROR)
     {
       ACE_OS::close (fd);

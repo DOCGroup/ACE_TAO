@@ -1,3 +1,30 @@
+Fri Aug 17 13:31:45 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/run_test.pl:
+
+          Added the ability to generate windsh commands to load and run
+          the ace tests.
+
+        * tests/Makefile:
+
+          Added a rule to generate run_test.vxworks, using run_test.pl,
+          which can be used to run the tests selected for the VxWorks OS.
+
+        * tests/run_test.lst:
+
+          Update this list to take into account the limitations of VxWorks.
+
+        * tests/test_config.h:
+
+          Change the permissions of the log file open (for VxWorks only) to
+          use the symbolic permission names instead of 0x644.  The
+          permissions differ from the standard UNIX modes.
+
+        * tests/run_tests.vxworks:
+
+          This file was out of date and no longer needs to be maintained.
+          So, it has been removed.
+
 Fri Aug 17 09:44:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Map_T.{h,i}: Reverted this change "Fri Aug 17 08:07:12 2001
