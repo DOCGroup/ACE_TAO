@@ -1,122 +1,130 @@
+Wed Oct 06 16:20:28 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/CDR_File_Test.cpp (run_test): when reading, ensure
+          that the message block has sufficient space to properly
+          align the 64-bit double on LynxOS and Neutrino.  Thanks
+          to Jeff for helping to track this down, and for Carlos
+          for providing the fix.
+
 Wed Oct  6 15:40:11 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/OS.i : Initialised the qos_len variable to sizeof (QOS)
-	  within the ioctl () method for ACE_SIO_GET_QOS.
- 	
-	* ACE_wrappers/examples/QOS/client.cpp: 
-        * ACE_wrappers/examples/QOS/server.cpp: Added a test for the 
-	  ACE_SIO_GET_QOS io control code. The Sending and Receiving
-	  QOS flowspec parameters are extracted and printed for both the
-	  sender and receiver using this control code.
-	
+        * ace/OS.i : Initialised the qos_len variable to sizeof (QOS)
+          within the ioctl () method for ACE_SIO_GET_QOS.
+
+        * ACE_wrappers/examples/QOS/client.cpp:
+        * ACE_wrappers/examples/QOS/server.cpp: Added a test for the
+          ACE_SIO_GET_QOS io control code. The Sending and Receiving
+          QOS flowspec parameters are extracted and printed for both the
+          sender and receiver using this control code.
+
 Wed Oct  6 08:36:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h: Changed
-  
-          #   if defined (__SUNPRO_CC < 0x500) 
-  
+        * ace/OS.h: Changed
+
+          #   if defined (__SUNPRO_CC < 0x500)
+
           to this
-  
-          #   if defined (__SUNPRO_CC < 0x500) || ((__SUNPRO_CC == 0x500 && > __SUNPRO_CC_COMPAT == 4))  
-  
+
+          #   if defined (__SUNPRO_CC < 0x500) || ((__SUNPRO_CC == 0x500 && > __SUNPRO_CC_COMPAT == 4))
+
           to work around compilation problems with Sun CC 5.0 when used in
- 	  Sun CC 4 compatibilty mode.  Thanks to Erik Koerber
- 	  <erik.koerber@siemens.at> for this fix.
+          Sun CC 4 compatibilty mode.  Thanks to Erik Koerber
+          <erik.koerber@siemens.at> for this fix.
 
-	* ace/Log_Msg.cpp (log): Added support for a %m option that
-	  behaves like strerror() rather than perror().  Thanks to Kitty
- 	  Krishnakumar <kitty@neo.shinko.co.jp> for this feature.
+        * ace/Log_Msg.cpp (log): Added support for a %m option that
+          behaves like strerror() rather than perror().  Thanks to Kitty
+          Krishnakumar <kitty@neo.shinko.co.jp> for this feature.
 
-	* ace/OS.i (event_wait): We need to put the call to
-	  ACE_OS::cond_wait() in a loop to guard against spurious wakeups.
-  	  Thanks to Sergey Nemanov <sergey.nemanov@intel.com> and Vladimir
- 	  Kondratiev <vladimir.kondratiev@intel.com> for reporting this
- 	  and suggesting a fix.
+        * ace/OS.i (event_wait): We need to put the call to
+          ACE_OS::cond_wait() in a loop to guard against spurious wakeups.
+          Thanks to Sergey Nemanov <sergey.nemanov@intel.com> and Vladimir
+          Kondratiev <vladimir.kondratiev@intel.com> for reporting this
+          and suggesting a fix.
 
-	* tests/Malloc_Test.cpp: Don't run the Malloc_Test on LynxOS.
+        * tests/Malloc_Test.cpp: Don't run the Malloc_Test on LynxOS.
 
-	* tests/MM_Shared_Memory_Test.cpp: Fixed the code so that it'll
-	  compile correctly on platforms that lack fork(), such as
- 	  VxWorks.  Thanks to David Levine for reporting this.
+        * tests/MM_Shared_Memory_Test.cpp: Fixed the code so that it'll
+          compile correctly on platforms that lack fork(), such as
+          VxWorks.  Thanks to David Levine for reporting this.
 
 Tue Oct  5 16:17:57 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/MM_Shared_Memory_Test.cpp (spawn): Make sure to 
-	  delete the synchronizer in both the parent and the child
- 	  processes since otherwise we get a memory leak!  Thanks to David
- 	  Levine for pointing this out.
+        * tests/MM_Shared_Memory_Test.cpp (spawn): Make sure to
+          delete the synchronizer in both the parent and the child
+          processes since otherwise we get a memory leak!  Thanks to David
+          Levine for pointing this out.
 
-	* tests/Task_Test.cpp (main): Make sure to delete the thread hook
-	  before exiting the process to avoid a memory leak.  Thanks to
-	  David Levine for pointing this out.
+        * tests/Task_Test.cpp (main): Make sure to delete the thread hook
+          before exiting the process to avoid a memory leak.  Thanks to
+          David Levine for pointing this out.
 
 Tue Oct  5 15:04:03 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* ace/[Active_|Hash_]Map_Manager: Modified these classes so that the
-	  find() methods are all "const".  Thanks to Jody Hagins
- 	  <jody@atdesk.com> for reporting this.
+        * ace/[Active_|Hash_]Map_Manager: Modified these classes so that the
+          find() methods are all "const".  Thanks to Jody Hagins
+          <jody@atdesk.com> for reporting this.
 
 Tue Oct 05 21:58:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-WinCE.h: Reenabled ACE_HAS_MFC.  This should be the
-	  most portable configuration.  If you insist not to use MFC at
-	  all, define ACE_HAS_MFC=0 in your config.h file.
+        * ace/config-WinCE.h: Reenabled ACE_HAS_MFC.  This should be the
+          most portable configuration.  If you insist not to use MFC at
+          all, define ACE_HAS_MFC=0 in your config.h file.
 
-	* ace/OS.h:
-	* ace/OS.cpp (set_window): Removed the MFC specific set_window
-	  method so we can use ACE in both MFC and non-MFC applications.
+        * ace/OS.h:
+        * ace/OS.cpp (set_window): Removed the MFC specific set_window
+          method so we can use ACE in both MFC and non-MFC applications.
 
-	* ace/INET_Addr.h: Applied ASYS_TEXT to several default
-	  string literals.
+        * ace/INET_Addr.h: Applied ASYS_TEXT to several default
+          string literals.
 
-	* ace/DLL.h:
-	* ace/DLL.cpp: Changed the type of <dll_name> in ctor and the open
-	  method to ASYS_TCHAR to minimize string conversion.
+        * ace/DLL.h:
+        * ace/DLL.cpp: Changed the type of <dll_name> in ctor and the open
+          method to ASYS_TCHAR to minimize string conversion.
 
-	* tests/DLL_Test.cpp: Applied ASYS_TEXT to the name of the DLL
-	  file.
+        * tests/DLL_Test.cpp: Applied ASYS_TEXT to the name of the DLL
+          file.
 
 Tue Oct  5 19:01:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/CDR_Stream.i:
-	  Changed << for bounded (w)strings to marshal only 'length'
-	  bytes, instead of 'bound' bytes. The previous method could
-	  cause an access violation if the string fits near the end
-	  of a system page, but the 'bound' extends beyond it. Thanks
-	  to Brian Wright <bwright@paladyne.com> for reporting this
-	  bug.
+        * ace/CDR_Stream.i:
+          Changed << for bounded (w)strings to marshal only 'length'
+          bytes, instead of 'bound' bytes. The previous method could
+          cause an access violation if the string fits near the end
+          of a system page, but the 'bound' extends beyond it. Thanks
+          to Brian Wright <bwright@paladyne.com> for reporting this
+          bug.
 
 Mon Oct  4 08:31:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Shared_Malloc/test_persistence.cpp: Enhanced the
- 	  list_employees() method so that it'll print the contents of
- 	  ACE_Malloc<> in FIFO and LIFO order.
+        * examples/Shared_Malloc/test_persistence.cpp: Enhanced the
+          list_employees() method so that it'll print the contents of
+          ACE_Malloc<> in FIFO and LIFO order.
 
-	* ace/Malloc[_T].{h,cpp}: Added a new iterator for ACE_Malloc<>
-	  called ACE_Malloc_FIFO_Iterator, which prints out the
- 	  ACE_Name_Node entries in FIFO order.  In addition, renamed
- 	  ACE_Malloc_Iterator to be ACE_Malloc_LIFO_Iterator because it
- 	  prints the ACE_Name_Node entries in LIFO order.  Also added a
- 	  #define of ACE_Malloc_Iterator to ACE_Malloc_LIFO_Iterator to
- 	  ensure backwards compatibility.  Thanks to Wenli Bai
- 	  <bai@gsao.med.ge.com> for this enhancements.
+        * ace/Malloc[_T].{h,cpp}: Added a new iterator for ACE_Malloc<>
+          called ACE_Malloc_FIFO_Iterator, which prints out the
+          ACE_Name_Node entries in FIFO order.  In addition, renamed
+          ACE_Malloc_Iterator to be ACE_Malloc_LIFO_Iterator because it
+          prints the ACE_Name_Node entries in LIFO order.  Also added a
+          #define of ACE_Malloc_Iterator to ACE_Malloc_LIFO_Iterator to
+          ensure backwards compatibility.  Thanks to Wenli Bai
+          <bai@gsao.med.ge.com> for this enhancements.
 
-	* tests/MM_Shared_Memory_Test.cpp: Fixed the test so that it should
-	  work correctly for platforms that use either processes or
- 	  threads.  Also, make sure to call remove() on the
- 	  ACE_Process_Semaphore so that stray semaphores aren't left
- 	  around.  Thanks to David Levine for helping to track this down.
+        * tests/MM_Shared_Memory_Test.cpp: Fixed the test so that it should
+          work correctly for platforms that use either processes or
+          threads.  Also, make sure to call remove() on the
+          ACE_Process_Semaphore so that stray semaphores aren't left
+          around.  Thanks to David Levine for helping to track this down.
 
-	* ace/Synch.h: Updated the documentation for the
-	  ACE_Process_Semaphore destructor to indicate that it doesn't
- 	  remove the semaphore.  Instead, you must call remove()
- 	  explicitly.  Thanks to David Levine for helping to track this
- 	  down.
+        * ace/Synch.h: Updated the documentation for the
+          ACE_Process_Semaphore destructor to indicate that it doesn't
+          remove the semaphore.  Instead, you must call remove()
+          explicitly.  Thanks to David Levine for helping to track this
+          down.
 
-	* ace/Malloc_T.cpp (print_stats): Added a cast for the ACE_LOCK to
-	  work around the fact that the print_stats() method is const.
-  	  Thanks to Jean-Marc Strauss <jms97@club-internet.fr> for
- 	  reporting this.
+        * ace/Malloc_T.cpp (print_stats): Added a cast for the ACE_LOCK to
+          work around the fact that the print_stats() method is const.
+          Thanks to Jean-Marc Strauss <jms97@club-internet.fr> for
+          reporting this.
 
         * ace/INET_Addr.cpp (set):  Added ACE_UNUSED_ARG
           so the compiler won't complain about the protocol paraemter in
@@ -4015,8 +4023,8 @@ Mon Aug  2 09:58:20 1999  Ossama Othman  <othman@cs.wustl.edu>
         * netsvcs/lib/TS_Clerk_Handler.cpp (init):
 
           Changed cast to ACE_SignalHandler to allow it to compile under
- 	  gcc 2.95.  Thanks to Jeffrey Franks <Jeffrey_Franks@i-o.com> for
- 	  reporting the problem.
+          gcc 2.95.  Thanks to Jeffrey Franks <Jeffrey_Franks@i-o.com> for
+          reporting the problem.
 
 Sun Aug  1 15:58:39 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
