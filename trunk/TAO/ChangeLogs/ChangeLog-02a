@@ -1,3 +1,9 @@
+Mon Jul 24 16:22:02 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	  
+	  Fixed compile warnings on KCC 3.4
+
 Mon Jul 24 16:07:25 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
         * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp: 
 	* orbsvcs/tests/Notify/Basic/Updates.cpp:
