@@ -1,3 +1,67 @@
+Tue Mar 27 09:02:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/anyop.bor
+        * tests/Param_Test/Makefile.bor
+        Added BCB makefile for the anyop test
+
+        * tests/MProfile_Forwarding/*.bor
+        * tests/Smart_Proxies/Benchmark/*.bor
+        * tests/Smart_Proxies/On_Demand/*.bor
+        * tests/Smart_Proxies/Policy/*.bor
+        * tests/Smart_Proxies/*.bor
+        * tests/LongWrites/*.bor
+        * tests/Multiple/*.bor
+        * tests/NestedUpcall/MT_Client_Test/*.bor
+        * tests/NestedUpcall/Simple/*.bor
+        * tests/NestedUpcall/Triangle_Test/*.bor
+        * tests/Object_Loader/*.bor
+        Added BCB makefiles for these tests
+
+        * tests/CDR/makefile.bor
+        * tests/makefile.bor
+        Updated this BCB makefile that it builds all tests and removed all
+        other BCB makefiles in this directory because they are not needed
+        anymore
+
+        * tests/Leader_Followers/client.bor
+        Corrected these makefiles
+
+        * tests/Makefile.bor
+        * tests/NestedUpcall/Makefile.bor
+        * performance-tests/Makefile.bor
+        * performance-tests/Cubit/Makefile.bor
+        * performance-tests/Cubit/TAO/Makefile.bor
+        * examples/Makefile.bor
+        * examples/POA/Makefile.bor
+        * examples/OBV/Makefile.bor
+        * examples/Content_Server/Makefile.bor
+        Updated or added these BCB makefiles to include new makefiles
+
+        * tests/Smart_Proxies/Collocation/*.bor
+        Updated the BCB makefiles
+
+        * performance-tests/Callback/*.bor
+        * performance-tests/Pluggable/*.bor
+        * performance-tests/POA/Object_Creation_And_Registration/*.bor
+        * performance-tests/Cubit/TAO/IDL_Cubit/*.bor
+        * performance-tests/Cubit/TAO/MT_Cubit/*.bor
+        Added BCB makefiles for these performance-tests
+
+        * examples/Simple/time-date/*.bor
+        * examples/POA/TIE/*.bor
+        * examples/POA/Forwarding/*.bor
+        * examples/POA/DSI/*.bor
+        * examples/OBV/Typed_Events/*.bor
+        * examples/Content_Server/SMI_Iterator/*.bor
+        * examples/Buffered_AMI/*.bor
+        Added BCB makefiles for these examples
+
+        * examples/Simple/bank/*.bor
+        * examples/Simple/grid/*.bor
+        * examples/Simple/time/*.bor
+        Corrected executable names so that the perl test scripts can find
+        the executables
+
 Mon Mar 26 21:34:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/DynamicAny/DynAnyFactory.h:
