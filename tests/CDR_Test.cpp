@@ -18,6 +18,7 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/CDR.h"
 
@@ -355,8 +356,10 @@ short_stream (void)
 }
 
 int 
-main (int argc, char *argv[])
+main (int argc, ASYS_TCHAR *argv[])
 {
+  ACE_START_TEST (ASYS_TEXT ("CDR_Test"));
+
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("This is ACE Version %u.%u.%u\n\n"),
               ACE::major_version (),
               ACE::minor_version(),
@@ -430,6 +433,8 @@ main (int argc, char *argv[])
       
   ACE_DEBUG ((LM_DEBUG,
               "Long stream - no errors\n\n"));
+
+  ACE_END_TEST;
 
   return 0;
 }
