@@ -3,7 +3,18 @@ Mon May 22 22:12:22 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tao/RTCORBA.pidl
 	* tao/RTPOA.pidl
 	* tao/IOP.pidl:
-	  Added all idl from RT CORBA 1.0 spec.
+	* tao/IOPC.cpp
+	* tao/RTCORBAC.cpp
+	* tao/RTCORBAC.h
+	* tao/RTCORBAC.i
+	* tao/RTCORBAS.h
+	* tao/RTCORBAS.i
+	* tao/RTCORBAS.cpp
+	* tao/RTCORBAS_T.cpp
+	* tao/RTCORBAS_T.i
+	* tao/RTCORBAS_T.h
+	  Added all idl from RT CORBA 1.0 spec and generated code for
+	  RTCORBA.pidl.
 
 	* tao/IOPC.cpp
 	* tao/IOPC.h:
