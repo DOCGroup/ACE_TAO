@@ -12,10 +12,6 @@
 
 DIRS  = TAO
 
-# These are disabled by default...
-# Orbix \
-# VisiBroker
-
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
