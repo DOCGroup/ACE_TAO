@@ -29,7 +29,12 @@ case $1 in
 		shift ;;
 	# -r allows the use of relative pathnames...
         -r)
-		REL="-e s;$TAO_ROOT;\$(TAO_ROOT);g -e s;$ACE_ROOT;\$(ACE_ROOT);g "
+		REL="-e s;$ACE_ROOT;\$(ACE_ROOT);g "
+                if [ ${TAO_ROOT:-no_tao_root} = "no_tao_root" ]
+                then :
+                else
+                    REL="-e s;$TAO_ROOT;\$(TAO_ROOT);g "$REL
+                fi
 		shift ;;
 esac
 
