@@ -32,7 +32,7 @@ class JAWS_Pipeline_Handler : public JAWS_Pipeline_Task
   //   Methods that are common to pipeline components
 {
 public:
-  JAWS_Pipeline_Handler (void)
+  JAWS_Pipeline_Handler (void);
   // ACE_Task hooks
 
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
