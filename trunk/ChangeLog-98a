@@ -61,8 +61,6 @@ Fri Dec  5 11:15:17 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 	  flags.  Thanks to John Morey <jmorey@tbi.com> for reosting
 	  this.
 
-Fri Dec  5 00:58:23 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
-
 	* ace/Dynamic.h:
 	* ace/CORBA_Ref.h:
 	* ace/Token_Invariants.h:
