@@ -12,7 +12,7 @@ use Cwd;
 
 ACE::checkForTarget(getcwd());
 
-$T = Process::Create ($EXEPREFIX."Identity".$EXE_EXT);
+$T = Process::Create ($EXEPREFIX."Identity".$EXE_EXT, "-ORBobjrefstyle url");
 
 $client = $T->TimedWait (60);
 if ($client == -1) {
