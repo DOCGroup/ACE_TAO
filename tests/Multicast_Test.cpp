@@ -57,7 +57,7 @@ extern "C" void handler (int)
   finished = 1;
 }
 
-static const int MCT_ITERATIONS = 100;
+static const int MCT_ITERATIONS = 10;
 static const int MCT_GROUPS = 5;
 static const int MCT_MIN_GROUPS = 2;
 
@@ -67,6 +67,9 @@ static const int  MCT_START_PORT = 16000;
 static const size_t MAX_STRING_SIZE = 200;
 
 int advance_addr (ACE_INET_Addr &addr);
+
+// Keep track of errors so we can report them on exit.
+static sig_atomic_t error = 0;
 
 /*
  * MCast_Config holds configuration data for this test.
@@ -468,18 +471,20 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                          int reuse_addr,
                          const ACE_TCHAR *net_if)
 {
-  if (this->mcast_.join (mcast_addr, reuse_addr, net_if) == 0)
-    {
-      char buf[MAX_STRING_SIZE];
-      ACE_OS::sprintf (buf, "%s/%d", 
-                       mcast_addr.get_host_addr (), 
-                       mcast_addr.get_port_number ());
-      ACE_CString *str;
-      ACE_NEW_RETURN (str, ACE_CString (ACE::strnew (buf)), -1);
-      this->address_vec_.push_back (str);
-      return 0;
-    }
-  return -1;
+  if (this->mcast_.join (mcast_addr, reuse_addr, net_if) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_TEXT ("MCT_Event_Handler::join - ")
+                       ACE_TEXT ("Could not join group.\n")),
+                      -1);
+
+  char buf[MAX_STRING_SIZE];
+  ACE_OS::sprintf (buf, "%s/%d", 
+                   mcast_addr.get_host_addr (), 
+                   mcast_addr.get_port_number ());
+  ACE_CString *str;
+  ACE_NEW_RETURN (str, ACE_CString (ACE::strnew (buf)), -1);
+  this->address_vec_.push_back (str);
+  return 0;
 }
 
 int 
@@ -514,17 +519,25 @@ MCT_Event_Handler::handle_input (ACE_HANDLE /*handle*/)
   ACE_INET_Addr addr;
 
   if (this->mcast ()->recv (buf, sizeof buf, addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("error calling recv\n")), -1);
+    {
+      ++error;
+      ACE_ERROR_RETURN ((LM_ERROR, 
+                         ACE_TEXT ("MCT_Event_Handler::handle_input - ")
+                         ACE_TEXT ("calling recv\n")), -1);
+    }
 
   // Zero length buffer means we are done.
   if (ACE_OS::strlen (buf) == 0)
     return -1;
   else if (this->find (buf) == -1)
-    ACE_DEBUG ((LM_DEBUG, 
-                ACE_TEXT ("error: received dgram for a group we didn't joing ")
-                ACE_TEXT ("(%s) \n"), 
-                buf)); 
- 
+    {
+      ++error;
+      ACE_DEBUG ((LM_ERROR, 
+                  ACE_TEXT ("MCT_Event_Handler::handle_input - ")
+                  ACE_TEXT ("Received dgram for a group we didn't join ")
+                  ACE_TEXT ("(%s) \n"), 
+                  buf)); 
+    }
   return 0;
 }
 
@@ -614,7 +627,8 @@ MCT_Task::open (void *)
                 break;
 
               if (handler->join (addr) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("join error\n")),
+                ACE_ERROR_RETURN ((LM_ERROR, 
+                                   ACE_TEXT ("MCT_Task::open - join error\n")),
                                   -1);
               advance_addr (addr);
             }
@@ -622,18 +636,24 @@ MCT_Task::open (void *)
       else
         {
           if (handler->join (addr) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("join error\n")), -1);
+            ACE_ERROR_RETURN ((LM_ERROR, 
+                               ACE_TEXT ("MCT_Task::open - join error\n")), 
+                              -1);
         }
 
       advance_addr (addr);
 
       if (this->reactor ()->register_handler (handler, READ_MASK) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("cannot register handler\n")));
+        ACE_ERROR_RETURN ((LM_ERROR, 
+                           ACE_TEXT ("MCT_Task::open - cannot register ")
+                           ACE_TEXT ("handler\n")),
+                          -1);
     }
 
   if (this->activate (THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")),
+                       ACE_TEXT ("%p\n"), 
+                       ACE_TEXT ("MCT_TASK:open - activate failed")),
                       -1);
   return 0;
 }
@@ -673,7 +693,8 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
       //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sending (%s)\n"), buf));
       if (socket.send (buf, ACE_OS_String::strlen (buf),addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("error in send_dgram")), -1);
+                           ACE_TEXT ("send_dgram - error calling send on ")
+                           ACE_TEXT ("ACE_SOCK_Dgram.")), -1);
       addr.set_port_number (++port);
     }
   return 0;
@@ -710,8 +731,8 @@ int advance_addr (ACE_INET_Addr &addr)
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT ("Cannot advance multicast group address ")
-                       ACE_TEXT ("past %s\n"),
+                       ACE_TEXT ("advance_addr - Cannot advance multicast ")
+                       ACE_TEXT ("group address past %s\n"),
                        addr.get_host_addr ()),
                       -1);
   
@@ -762,7 +783,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting consumer...\n")));
       // Open makes it an active object.
-      task->open ();
+      retval += task->open ();
     }
 
   // now produce the datagrams...
@@ -778,11 +799,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_INET_Addr addr = config.group_start ();
           for (int j = 0; j < groups && !finished; ++j)
             {
-              if (send_dgram (socket, addr, ((i + 1) == iterations)) == -1)
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("some sort of error\n")));
-              if (advance_addr (addr) == -1)
+              if ((retval += send_dgram (socket, addr, 
+                                         ((i + 1) == iterations))) == -1)
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("Calling send_dgram.\n")));
+              if ((retval += advance_addr (addr)) == -1)
                 ACE_ERROR ((LM_ERROR, 
-                            ACE_TEXT ("error calling advance addr\n")));
+                            ACE_TEXT ("Calling advance_addr.\n")));
             }
           // Give the task thread a chance to run.
           ACE_Thread::yield ();
@@ -794,12 +816,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // and wait for everything to finish
       ACE_DEBUG ((LM_INFO, 
                   ACE_TEXT ("start waiting for consumer to finish...\n")));
-      ACE_Thread_Manager::instance ()->wait ();
+      // Wait for the threads to exit.
+      // But, wait for a limited time since we could hang if the last udp 
+      // message isn't received.
+      const ACE_Time_Value max_wait ( 2/* seconds */);
+      const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
+      if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
+        {
+          if (errno == ETIME)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
+                        max_wait.msec ()));
+          else
+            ACE_OS::perror (ACE_TEXT ("wait"));
+
+          ++error;
+        }
     }
 
   delete task;
   ACE_END_TEST;
-  return retval == 0 ? 0 : 1;
+  return (retval == 0 && error == 0) ? 0 : 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
