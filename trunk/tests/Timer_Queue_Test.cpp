@@ -304,6 +304,8 @@ main (int argc, char *argv[])
       delete timer_queues[i].queue_;
     }
 
+  delete [] timer_ids;
+
   ACE_END_TEST;
   return 0;
 }
