@@ -227,6 +227,8 @@ TAO_MProfile::init_policy_list (CORBA::Environment &ACE_TRY_ENV)
   // for the current profile.
 
   this->get_current_profile ()->policies (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->is_policy_list_initialized_ = 1;
 }
 
