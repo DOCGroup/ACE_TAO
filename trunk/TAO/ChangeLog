@@ -1,3 +1,7 @@
+Mon May  5 02:20:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/*/Makefile: Updated dependencies.
+
 Mon May  5 01:55:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/Makefile*: Updated dependencies.
