@@ -36,9 +36,18 @@ ifndef TAO_ORBSVCS
                 Concurrency \
 		Trader \
 		Log \
-		IFR_Service \
 		AV
 
+  ifeq ($(minimum_corba),0)
+    ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+      ifneq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
+        ifeq ($(LYNXTARGET),)
+	  TAO_ORBSVCS += IFRService
+	endif # LYNXTARGET
+      endif # findstring Compilers 4.2
+    endif # ACE_HAS_GNUG_PRE_2_8
+  endif # minimum_corba
+      
   ifeq ($(minimum_corba),0)
 
     # Trader uses DynAny which is disabled when compiling with minimum
@@ -176,7 +185,7 @@ endif
 ifneq (,$(findstring  PortableGroup, $(TAO_ORBSVCS)))
   MKLIST += Makefile.PortableGroup
 endif
-ifneq (,$(findstring  IFR_Service, $(TAO_ORBSVCS)))
+ifneq (,$(findstring  IFRService, $(TAO_ORBSVCS)))
   MKLIST += Makefile.IFRService
 endif
 
