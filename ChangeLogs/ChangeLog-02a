@@ -1,4 +1,10 @@
-Fri Aug 10 11:06:23 2001  Chad Elliott  elliott_c@ociweb.com
+Fri Aug 10 11:45:03 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/nightlybuilds/builds.lst:
+
+          Added the Tru64 4.0f Compaq C++ 6.3-10 build.
+
+Fri Aug 10 11:06:23 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/drwho/CM_Client.cpp:
         * apps/drwho/CM_Server.cpp:
