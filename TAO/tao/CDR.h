@@ -107,11 +107,11 @@ public:
 
   static void mb_align (ACE_Message_Block* mb);
 
-  static int grow (ACE_Message_Block*& mb, size_t minsize);
+  static int grow (ACE_Message_Block *mb, size_t minsize);
   // Increase the capacity of mb to contain at least <minsize> bytes.
   // If <minsze> is zero the size is increased by an amount at least
-  // large enough to contain any of the basic IDL types.
-  // Return -1 on failure, 0 on success.
+  // large enough to contain any of the basic IDL types.  Return -1 on
+  // failure, 0 on success.
 };
 
 class TAO_Export TAO_OutputCDR
