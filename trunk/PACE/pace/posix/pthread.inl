@@ -15,6 +15,16 @@
 
 #include "pace/unistd.h"
 
+#if defined (PACE_HAS_CPLUSPLUS)
+PACE_INLINE
+int
+pace_pthread_atfork (pace_atfork_pf prepare,
+                     pace_atfork_pf parent,
+                     pace_atfork_pf child)
+{
+  return pthread_atfork (prepare, parent, child);
+}
+#else
 PACE_INLINE
 int
 pace_pthread_atfork (void (*prepare) (),
@@ -23,6 +33,7 @@ pace_pthread_atfork (void (*prepare) (),
 {
   return pthread_atfork (prepare, parent, child);
 }
+#endif /* PACE_HAS_CPLUSPLUS */
 
 PACE_INLINE
 int
@@ -249,6 +260,17 @@ pace_pthread_condattr_setpshared (pace_pthread_condattr_t * attr,
 #endif /* PACE_LINUX */
 }
 
+#if defined (PACE_HAS_CPLUSPLUS)
+PACE_INLINE
+int
+pace_pthread_create (pace_pthread_t * thread,
+                     const pace_pthread_attr_t * attr,
+                     pace_create_pf start_routine,
+                     void * arg)
+{
+  return pthread_create (thread, attr, start_routine, arg);
+}
+#else
 PACE_INLINE
 int
 pace_pthread_create (pace_pthread_t * thread,
@@ -258,6 +280,7 @@ pace_pthread_create (pace_pthread_t * thread,
 {
   return pthread_create (thread, attr, start_routine, arg);
 }
+#endif /* PACE_HAS_CPLUSPLUS */
 
 PACE_INLINE
 int
@@ -304,6 +327,15 @@ pace_pthread_join (pace_pthread_t thread, void ** value_ptr)
   return pthread_join (thread, value_ptr);
 }
 
+#if defined (PACE_HAS_CPLUSPLUS)
+PACE_INLINE
+int
+pace_pthread_key_create (pace_pthread_key_t * key,
+                         pace_keycreate_pf destructor)
+{
+  return pthread_key_create (key, destructor);
+}
+#else
 PACE_INLINE
 int
 pace_pthread_key_create (pace_pthread_key_t * key,
@@ -311,6 +343,7 @@ pace_pthread_key_create (pace_pthread_key_t * key,
 {
   return pthread_key_create (key, destructor);
 }
+#endif /* PACE_HAS_CPLUSPLUS */
 
 PACE_INLINE
 int
@@ -502,13 +535,23 @@ pace_pthread_mutexattr_setpshared (pace_pthread_mutexattr_t * attr,
 #endif /* PACE_LINUX */
 }
 
+#if defined (PACE_HAS_CPLUSPLUS)
 PACE_INLINE
 int
 pace_pthread_once (pace_pthread_once_t * once_control,
-                   void (*void_routine) ())
+                   pace_once_pf void_routine)
 {
   return pthread_once (once_control, void_routine);
 }
+#else
+PACE_INLINE
+int
+pace_pthread_once (pace_pthread_once_t * once_control,
+                   void (*void_routine) (void))
+{
+  return pthread_once (once_control, void_routine);
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 PACE_INLINE
 pace_pthread_t

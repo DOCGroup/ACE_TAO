@@ -50,6 +50,16 @@ pace_atol (const char * str)
   return atol (str);
 }
 
+#if defined (PACE_HAS_CPLUSPLUS)
+PACE_INLINE
+void *
+pace_bsearch (const void *key, const void *base,
+              size_t nel, size_t size,
+              pace_bsearch_pf compar)
+{
+  return bsearch (key, base, nel, size, compar);
+}
+#else
 PACE_INLINE
 void *
 pace_bsearch (const void *key, const void *base,
@@ -58,6 +68,7 @@ pace_bsearch (const void *key, const void *base,
 {
   return bsearch (key, base, nel, size, compar);
 }
+#endif /* PACE_HAS_CPLUSPLUS */
 
 PACE_INLINE
 void
@@ -74,6 +85,15 @@ pace_getenv (const char * name)
   return getenv (name);
 }
 
+#if defined (PACE_HAS_CPLUSPLUS)
+PACE_INLINE
+void
+pace_qsort (void * base, size_t nel, size_t width,
+            pace_bsearch_pf compar)
+{
+  qsort (base, nel, width, compar);
+}
+#else
 PACE_INLINE
 void
 pace_qsort (void * base, size_t nel, size_t width,
@@ -81,6 +101,7 @@ pace_qsort (void * base, size_t nel, size_t width,
 {
   qsort (base, nel, width, compar);
 }
+#endif /* PACE_HAS_CPLUSPLUS */
 
 PACE_INLINE
 int

@@ -50,6 +50,31 @@ extern "C" {
 #endif /* PACE_SCHED_PARAM */
 
 #if defined (PACE_HAS_CPLUSPLUS)
+# ifndef PACE_ATFORK_PF
+# define PACE_ATFORK_PF
+  typedef void (*pace_atfork_pf) (void);
+# endif /* PACE_ATFORK_PF */
+
+# ifndef PACE_KEYCREATE_PF
+# define PACE_KEYCREATE_PF
+  typedef void (*pace_keycreate_pf) (void*);
+# endif /* PACE_KEYCREATE_PF */
+
+# ifndef PACE_ONCE_PF
+# define PACE_ONCE_PF
+  typedef void (*pace_once_pf) (void);
+# endif /* PACE_ONCE_PF */
+
+# ifndef PACE_CREATE_PF
+# define PACE_CREATE_PF
+  typedef void* (*pace_create_pf) (void*);
+# endif /* PACE_CREATE_PF */
+
+#endif /* PACE_HAS_CPLUPLUS */
+
+
+
+#if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
