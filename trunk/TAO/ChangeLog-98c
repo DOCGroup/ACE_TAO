@@ -1,3 +1,14 @@
+Sat Sep 12 21:54:04 1998  Seth Widoff  <swidoff@sophocles.cimds.ri.cmu.edu>
+
+	* orbsvcs/orbsvcs/Trader/constraint.l:
+	* orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+	TAO_Literal_Constraint has constructors that need to distinguish
+	between CORBA::Long and CORBA::Boolean parameters. When CORBA::B_FALSE
+	and CORBA::B_TRUE in the TAO_Literal_Constraint constructors were
+	changed to 0 and 1, they were interpreted as longs and not
+	booleans. Bad things happened. So I added explicit casts. 
+
 Sat Sep 12 20:42:49 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Fixed the bugs in
