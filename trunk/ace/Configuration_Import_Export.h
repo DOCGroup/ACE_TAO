@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file: Configuration_Import_Export.h
+ * @file Configuration_Import_Export.h
  *
  *  $Id$
  *
