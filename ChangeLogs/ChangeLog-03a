@@ -1,3 +1,9 @@
+Sun Jul 09 21:38:03 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/ACE_SSL.dsp:
+
+	  Fixed library path in "Release" configuration.
+
 Sun Jul 09 14:20:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * ace/ace_wchar.h:
