@@ -1,3 +1,10 @@
+Tue Nov 17 10:15:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Map_Manager.cpp (resize_i): Made sure the new elements in
+	  resize_i get constructed properly so we can use more complex
+	  classes with it.  Thanks to Knut Johannessen <knutj@funcom.com>
+	  for providing the patch.
+
 Tue Nov 17 09:37:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: removed
