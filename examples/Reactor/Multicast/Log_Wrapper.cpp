@@ -2,11 +2,12 @@
 
 // client.C
 
+
 #include "Log_Wrapper.h"
 
 Log_Wrapper::Log_Wrapper (void)
 {
-  this->log_msg_.sequence_number = 0;
+  sequence_number_ = 0;
   this->log_msg_.app_id = ACE_OS::getpid ();
 }
 
@@ -29,17 +30,14 @@ Log_Wrapper::open (const int port, const char *mcast_addr)
     return -1;
   else 
     ACE_OS::memcpy ((char *) &this->log_msg_.host, 
-		    (char *) host_info->h_addr, 
-		    host_info->h_length);
+                    (char *) host_info->h_addr, 
+                    host_info->h_length);
 
   // This starts out initialized to all zeros!
-  ACE_INET_Addr sockdg_addr;
+  server_ = ACE_INET_Addr(port, mcast_addr);
 
-  if (this->logger_.open (sockdg_addr) == -1) 
-    return -1;
-
-  if (this->server_.set (port, mcast_addr) == -1)
-    return -1;
+  if (logger_.subscribe (server_) == -1)
+      perror("can't subscribe to multicast group"), exit(1);
 
   // success.
   return 0;
@@ -52,17 +50,20 @@ Log_Wrapper::open (const int port, const char *mcast_addr)
 int
 Log_Wrapper::log_message (ACE_Log_Priority type, char *message)
 { 
-  this->log_msg_.type = type; this->log_msg_.time = time (0);
-  this->log_msg_.msg_length = strlen(message);
-  this->log_msg_.sequence_number++;
+  sequence_number_++;
 
-  iovec	  *iovp = new iovec[2];
+  this->log_msg_.type = type;
+  this->log_msg_.time = time (0);
+  this->log_msg_.msg_length = strlen(message)+1;
+  this->log_msg_.sequence_number = htonl(sequence_number_);
+
+  iovec   *iovp = new iovec[2];
   iovp[0].iov_base = (char *) &log_msg_;
   iovp[0].iov_len = sizeof log_msg_;
   iovp[1].iov_base = message;
   iovp[1].iov_len = log_msg_.msg_length;
 
-  logger_.send (iovp, 2, server_);
+  logger_.send (iovp, 2);
 
   delete iovp;
 
