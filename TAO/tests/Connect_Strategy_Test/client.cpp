@@ -3,7 +3,9 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Hello, client, "$Id$")
+ACE_RCSID(Connect_Strategy_Test,
+          client,
+          "$Id$")
 
 const char *ior = "file://test.ior";
 int do_shutdown = 0;
