@@ -86,3 +86,15 @@ TAO_EC_SupplierAdmin::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
 
   return consumer->_this (ACE_TRY_ENV);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Unbounded_Set<TAO_EC_ProxyPushConsumer*>;
+template class ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushConsumer*>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Unbounded_Set<TAO_EC_ProxyPushConsumer*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushConsumer*>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

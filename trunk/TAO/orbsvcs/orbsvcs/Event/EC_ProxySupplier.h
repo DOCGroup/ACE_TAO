@@ -86,9 +86,9 @@ public:
   // The QoS (subscription) used to connect to the EC.
 
   virtual void connected (TAO_EC_ProxyPushConsumer* consumer,
-			  CORBA::Environment &env) = 0;
+			  CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer,
-			     CORBA::Environment &env) = 0;
+			     CORBA::Environment &env);
   // Concrete implementations can use this methods to keep track of
   // the suppliers that publish its events.
 

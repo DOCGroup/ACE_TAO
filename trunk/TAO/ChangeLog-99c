@@ -1,3 +1,29 @@
+Wed Jan 27 19:59:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i: 
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
+	* orbsvcs/orbsvcs/Event/EC_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h: 
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h: 
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i: 
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h: 
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.i: 
+	  Completed the first prototype, this version does not support
+	  filtering or real-time features, but it is useful to get
+	  baseline numbers.
+
 Wed Jan 27 13:14:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.2.53 released.

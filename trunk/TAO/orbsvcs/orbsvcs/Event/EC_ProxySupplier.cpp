@@ -33,6 +33,18 @@ TAO_EC_ProxyPushSupplier::_default_POA (CORBA::Environment&)
 }
 
 void
+TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushConsumer*,
+                                     CORBA::Environment &)
+{
+}
+
+void
+TAO_EC_ProxyPushSupplier::disconnected (TAO_EC_ProxyPushConsumer*,
+                                        CORBA::Environment &)
+{
+}
+
+void
 TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushSupplier*,
                                      CORBA::Environment &)
 {

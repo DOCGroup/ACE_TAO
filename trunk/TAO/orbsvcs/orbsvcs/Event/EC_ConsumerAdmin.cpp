@@ -31,8 +31,8 @@ void
 TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
 				 CORBA::Environment &ACE_TRY_ENV)
 {
-  SupplierSetIterator end = this->all_suppliers_.end ();
-  for (SupplierSetIterator i = this->all_suppliers_.begin ();
+  SupplierSetIterator end = this->end ();
+  for (SupplierSetIterator i = this->begin ();
        i != end;
        ++i)
     {
@@ -44,8 +44,8 @@ void
 TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
 				    CORBA::Environment &ACE_TRY_ENV)
 {
-  SupplierSetIterator end = this->all_suppliers_.end ();
-  for (SupplierSetIterator i = this->all_suppliers_.begin ();
+  SupplierSetIterator end = this->end ();
+  for (SupplierSetIterator i = this->begin ();
        i != end;
        ++i)
     {
@@ -87,3 +87,15 @@ TAO_EC_ConsumerAdmin::_default_POA (CORBA::Environment&)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*>;
+template class ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
