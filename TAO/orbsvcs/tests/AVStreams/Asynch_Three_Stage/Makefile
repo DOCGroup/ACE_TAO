@@ -33,9 +33,11 @@ BIN2 = sender distributer receiver
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # AV
+ifeq ($(corba_messaging),1)
+  ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
+    BIN = $(BIN2)
+  endif # AV
+endif # corba_messaging
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

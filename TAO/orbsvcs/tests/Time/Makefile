@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosTime -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable $(TAO_SRVR_LIBS)
+LDLIBS = -lTAO_CosTime -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_Messaging -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 PROG_SRCS = \
         client.cpp \
@@ -28,10 +28,6 @@ BIN2 = client
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Time,$(findstring Time,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Time
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -39,6 +35,11 @@ endif # Time
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+ifeq ($(corba_messaging),1)
+  ifeq (Time,$(findstring Time,$(TAO_ORBSVCS)))
+    BIN = $(BIN2)
+  endif # Time
+endif # corba_messaging
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

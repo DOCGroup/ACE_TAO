@@ -10,16 +10,13 @@ LSRC = $(DUMP_SRCS)
 SCHEDULE_OBJS = $(SCHEDULE_SRCS:.cpp=.o)
 DUMP_OBJS = $(DUMP_SRCS:.cpp=.o)
 
-LDLIBS = -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable $(TAO_SRVR_LIBS)
+LDLIBS = -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_Messaging -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 BIN2 = Sched_Conf
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Sched,$(findstring Sched,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Sched
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -28,6 +25,11 @@ endif # Sched
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+ifeq ($(corba_messaging),1)
+  ifeq (Sched,$(findstring Sched,$(TAO_ORBSVCS)))
+    BIN = $(BIN2)
+  endif # Sched
+endif # corba_messaging
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
