@@ -1,3 +1,11 @@
+Sun Jul  6 09:55:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Task.cpp: Fixed compile errors with MSVC 7.1 when
+	  ACE_HAS_ANSI_CAST  and RTTI is turned on. Thanks to Marek Brudka
+	  <M.Brudka@elka.pw.edu.pl> for providing the patch.
+
+	* THANKS: Added Marek to the hall of fame.
+
 Sat Jul  5 06:57:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * THANKS: Updated e-mail address of Serge Kolgan
