@@ -1,3 +1,13 @@
+Tue Dec 29 16:24:24 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/Service_Config.perl,auto_ptr.perl,corba-boolean.perl,
+          rename-ace.pl: use perl from user's path, so we don't have
+          to hard-code its location.
+
+        * tests/Time_Value_Test.cpp: don't test ACE_U_LongLong if
+          the platform defines ACE_LACKS_LONGLONG_T, e.g., GreenHills,
+          because it makes a big mess.
+
 Tue Dec 29 15:09:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.10 released.
