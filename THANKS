@@ -18,6 +18,7 @@ Angelo Corsaro <corsaro@cs.wustl.edu>
 Gan Deng <dengg@dre.vanderbilt.edu>
 Mayur Deshpande <mayur@ics.uci.edu>
 Eric Ding <qnd1@cs.wustl.edu>
+George Edwards <g.edwards@vanderbilt.edu>
 Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 Chris Gill <cdgill@cs.wustl.edu>
 Andrew G. Gilpin  <agg1@cs.wustl.edu>
@@ -55,7 +56,6 @@ Nagarajan Surendran <naga@cs.wustl.edu>
 Nanbor Wang <nanbor@cs.wustl.edu>
 Seth Widoff <sbw1@cs.wustl.edu>
 Torben Worm <tworm@cs.wustl.edu>
-
 
 I would also like to thank all the following people who have also
 contributed to ACE and TAO over the years:
@@ -1717,7 +1717,6 @@ Jason Cohen <jcohen@atl.lmco.com>
 Nick Kukuczka <nickk@appliedepi.com>
 Andrew Voumard <andrewv@melbpc.org.au>
 Anand <anand@iCMGworld.com>
-Gan Deng  <dengg@dre.vanderbilt.edu>
 D.J. Dwyer <dj_dwyer@yahoo.com>
 Douglas A Stuart <douglas.a.stuart@boeing.com>
 Victor N. <dreamland_skib2@mailru.com>

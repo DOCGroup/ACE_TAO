@@ -458,7 +458,7 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name,
   // pthread_init does nothing and so does no harm.
    pthread_init ();
 #endif  /*  ACE_HAS_FSU_PTHREADS && ! ACE_WIN32 */
-   if (ACE_OS::recursive_mutex_init (&this->recursive_mutex_,
+   if (ACE_OS::recursive_mutex_init (&this->lock_,
                                      name,
                                      arg) == -1)
      ACE_ERROR ((LM_ERROR,
@@ -482,7 +482,7 @@ ACE_Recursive_Thread_Mutex::remove (void)
   if (this->removed_ == 0)
     {
       this->removed_ = 1;
-      result = ACE_OS::recursive_mutex_destroy (&this->recursive_mutex_);
+      result = ACE_OS::recursive_mutex_destroy (&this->lock_);
     }
   return result;
 }
@@ -502,9 +502,9 @@ ACE_Recursive_Thread_Mutex::get_thread_id (void)
   return ACE_OS::NULL_thread;
 #else
   ACE_thread_t owner_id;
-  ACE_OS::mutex_lock (&this->recursive_mutex_.nesting_mutex_);
-  owner_id = this->recursive_mutex_.owner_id_;
-  ACE_OS::mutex_unlock (&this->recursive_mutex_.nesting_mutex_);
+  ACE_OS::mutex_lock (&this->lock_.nesting_mutex_);
+  owner_id = this->lock_.owner_id_;
+  ACE_OS::mutex_unlock (&this->lock_.nesting_mutex_);
   return owner_id;
 #endif /* ACE_WIN32 */
 }
@@ -520,18 +520,18 @@ ACE_Recursive_Thread_Mutex::get_nesting_level (void)
   // accessed directly.  It is documented to change at any time.
 # if defined (ACE_WIN64)
   // Things are different on Windows XP 64-bit
-  return this->recursive_mutex_.LockCount + 1;
+  return this->lock_.LockCount + 1;
 # elif defined (ACE_WIN32)
   // This is really a Win32-ism...
-  return this->recursive_mutex_.RecursionCount;
+  return this->lock_.RecursionCount;
 # else
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
   int nesting_level = 0;
-  ACE_OS::mutex_lock (&this->recursive_mutex_.nesting_mutex_);
-  nesting_level = this->recursive_mutex_.nesting_level_;
-  ACE_OS::mutex_unlock (&this->recursive_mutex_.nesting_mutex_);
+  ACE_OS::mutex_lock (&this->lock_.nesting_mutex_);
+  nesting_level = this->lock_.nesting_level_;
+  ACE_OS::mutex_unlock (&this->lock_.nesting_mutex_);
   return nesting_level;
 #endif /* !ACE_HAS_WINCE */
 }
@@ -543,19 +543,19 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thre
 int
 ACE_Recursive_Thread_Mutex::acquire (void)
 {
-  return ACE_OS::recursive_mutex_lock (&this->recursive_mutex_);
+  return ACE_OS::recursive_mutex_lock (&this->lock_);
 }
 
 int
 ACE_Recursive_Thread_Mutex::release (void)
 {
-  return ACE_OS::recursive_mutex_unlock (&this->recursive_mutex_);
+  return ACE_OS::recursive_mutex_unlock (&this->lock_);
 }
 
 int
 ACE_Recursive_Thread_Mutex::tryacquire (void)
 {
-  return ACE_OS::recursive_mutex_trylock (&this->recursive_mutex_);
+  return ACE_OS::recursive_mutex_trylock (&this->lock_);
 }
 
 void
