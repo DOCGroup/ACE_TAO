@@ -1,3 +1,19 @@
+Wed Jan 15 02:06:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Threads/wfmo.cpp: Added a new test program that seems
+ 	  to indicate that the Win32 WaitForMultipleObjects() function can
+ 	  be called in multiple threads, all of which wait on the same set
+ 	  of HANDLEs.  Note that the dispatching of the threads is
+ 	  relatively "fair" (i.e., everyone gets a chance to process the
+ 	  various HANDLEs as they become active).  Thanks to Ari Erev
+ 	  <Ari_Erev@comverse.com> for suggesting this and providing the
+ 	  initial code.
+
+	* ace/Thread_Manager.h: Made the spawn_i() method virtual and
+ 	  moved it into the protected section of the class so that it can
+ 	  be over-ridden by subclasses.  Thanks to Tim Harrison for
+ 	  suggesting this.
+
 Tue Jan 14 15:57:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: Changed the default size of ACE_DEFAULT_TIMERS to
