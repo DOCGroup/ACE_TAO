@@ -106,3 +106,27 @@ struct later_holder
 
 interface later {};
 
+// Previously, we could have found v if it
+// was inherited into Client, but not in
+// the case below, where it is inherited into
+// somewhere other than the scope where the
+// lookup starts.
+
+interface Begin 
+{
+  typedef long Value;
+};
+
+interface Middle : Begin
+{
+};
+
+interface End : Middle 
+{
+};
+
+interface Client 
+{
+  attribute End::Value v;
+};
+
