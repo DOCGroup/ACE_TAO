@@ -1,3 +1,23 @@
+Wed Sep 13 14:31:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+
+	  An example sent in by Francois Bernier <fbernier@gel.ulaval.ca>
+	  showed that generated code for interceptors fails to compile
+	  when an operation uses an enum that is declared in the same
+	  scope as the operation. Fixed by using the ACE_NESTED_CLASS
+	  macro in generating both the argument list in the request info
+	  class constructor declaration, and in the request info class'
+	  private member list.
+
+	  Also made cosmetic changes to the generated code for the
+	  request info class' constructor definition.
+
 Wed Sep 13 14:26:48 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Portable_Interceptors/Benchmark/server.dsp:
