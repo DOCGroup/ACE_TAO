@@ -23,6 +23,7 @@ DSTRM_EVENT     DSRT_DIRECT_DISPATCH        6       SCHEDULE_EXIT   1       "Exi
 DSTRM_EVENT     DSRT_DIRECT_DISPATCH        6       SCHEDULE_ENTER  0       "Enter Schedule_i"      print_string
 
 # DSRT CV Dispatcher (DSRT_CV_Dispatcher_Impl_T.cpp)
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       RG_EVENT_DELAYED_RELEASED_FIRE 14       "Event delayed by release guard release time on the server side" print_string
 DSTRM_EVENT	DSRT_CV_DISPATCH	5	INIT	13	"Enter DSRT_Dispatcher_Impl init"	print_string
 DSTRM_EVENT     DSRT_CV_DISPATCH        5       SHUTDOWN     12       "Enter shutdown_i function"  print_string
 DSTRM_EVENT     DSRT_CV_DISPATCH        5       CANCEL_SCHEDULE_END     11       "Exit cancel_schedule_i function"  print_string
@@ -33,7 +34,7 @@ DSTRM_EVENT     DSRT_CV_DISPATCH        5       RELEASE_GUARD_END     7       "E
 DSTRM_EVENT     DSRT_CV_DISPATCH        5       RELEASE_GUARD_START     6       "Enter release_guard_i function"  print_string
 DSTRM_EVENT     DSRT_CV_DISPATCH        5       INIT_I    5       "Initialization"        print_string
 DSTRM_EVENT     DSRT_CV_DISPATCH        5       NONRG_EVENT_RELEASED  4 "Event release time on the server side" print_string
-DSTRM_EVENT     DSRT_CV_DISPATCH        5       RG_DELAYED_EVENT_RELEASED  3       "Event delayed by release guard release time on the server side" print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        5       RG_EVENT_DELAYED_RELEASED  3       "Event delayed by release guard" print_string
 DSTRM_EVENT     DSRT_CV_DISPATCH        5       RG_EVENT_RELEASED  2       "Release guard Event release time on the server side" print_string
 DSTRM_EVENT     DSRT_CV_DISPATCH        5       SCHEDULE_EXIT   1       "Exit Schedule_i"      print_string
 DSTRM_EVENT     DSRT_CV_DISPATCH        5       SCHEDULE_ENTER  0       "Enter Schedule_i"      print_string
