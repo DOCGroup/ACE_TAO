@@ -407,4 +407,67 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
     }
 }
 
+template<class TQ> long 
+ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
+    (ACE_Event_Handler* handler,
+     const void *act,
+     const ACE_Time_Value &delay,
+     const ACE_Time_Value &interval = ACE_Time_Value::zero)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+
+  long result = this->timer_queue_.schedule (handler, act, delay, interval);
+  this->condition_.signal ();
+  return result;
+}
+
+template<class TQ> int 
+ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
+					    const void **act)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+
+  int result = this->timer_queue_.cancel (timer_id, act);
+  condition_.signal ();
+  return result;
+}
+
+template<class TQ> void 
+ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
+{
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+
+  this->active_ = 0;
+  this->condition_.signal ();
+}
+
+template<class TQ> int 
+ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+
+  while (this->active_)
+    {
+      // If the queue is empty, sleep until there is a change on it.
+      if (this->timer_queue_.is_empty ())
+	this->condition_.wait ();
+      else
+	{
+	  // Compute the remaining time, being careful not to sleep
+	  // for "negative" amounts of time.
+	  ACE_Time_Value tv = this->timer_queue_.earliest_time ();
+
+	  // ACE_DEBUG ((LM_DEBUG, "waiting until %u.%3.3u secs\n",
+	  // tv.sec(), tv.msec()));
+	  this->condition_.wait (&tv);
+	}
+
+      // Expire timers anyway, at worst this is a no-op.
+      this->timer_queue_.expire ();
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "terminating dispatching thread\n"));
+  return 0;
+}
+
 #endif /* ACE_TIMER_QUEUE_T_C*/

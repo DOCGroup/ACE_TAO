@@ -18,9 +18,9 @@
 #if !defined (ACE_TIMER_QUEUE_T_H)
 #define ACE_TIMER_QUEUE_T_H
 
-#include "ace/Signal.h"
 #include "ace/Free_List.h"
 #include "ace/Signal.h"
+#include "ace/Task.h"
 
 // This should be nested within the ACE_Timer_Queue class but some C++
 // compilers still don't like this...
@@ -31,7 +31,7 @@ class ACE_Timer_Node_T
   //     Maintains the state associated with a Timer entry.
 {
 public:
-  ACE_Timer_Node_T ();
+  ACE_Timer_Node_T (void);
   // Default constructor
 
   void set (const TYPE &type, 
@@ -403,6 +403,69 @@ private:
 
   ACE_Sig_Set mask_;
   // Mask of signals to be blocked when we're servicing <SIGALRM>.
+};
+
+template <class TQ>
+class ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base
+  // = TITLE
+  //   Adapts a Timer_Queue using a separate thread for dispatching.
+  //
+  // = DESCRIPTION
+  //   This implementation of a Timer_Queue uses a separate thread to
+  //   dispatch the timers. The base queue need not be thread safe,
+  //   this class takes all the necessary locks.
+  //
+  // = NOTE
+  //   This is a case were template parameters will be useful, but
+  //   (IMHO) the effort and portability problems discourage their
+  //   use.
+{
+public:
+  typedef TQ TIMER_QUEUE;
+
+  ACE_Thread_Timer_Queue_Adapter (void);
+  // Creates the timer queue.  Activation of the task is the user's
+  // responsibility.  
+
+  long schedule (ACE_Event_Handler* handler,
+		 const void *act,
+		 const ACE_Time_Value &delay,
+		 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+  // Schedule the timer according to the semantics of the <TQ>; wakes
+  // up the dispatching thread.
+
+  int cancel (long timer_id, const void **act = 0);
+  // Cancel the <timer_id> add return the <act> parameter if an
+  // address is passed in. Also wakes up the dispatching thread.
+
+  virtual int svc (void);
+  // Runs the dispatching thread.
+
+  virtual void deactivate (void);
+  // Inform the dispatching thread that it should terminate.
+
+  ACE_SYNCH_MUTEX &lock (void);
+  // Access the locking mechanism, useful for iteration.
+
+  TQ &timer_queue (void);
+  // Access the implementation queue, useful for iteration.
+
+private:
+  TQ timer_queue_;
+  // The underlying Timer_Queue.
+
+  ACE_SYNCH_CONDITION<ACE_SYNCH_MUTEX> condition_;
+  // The dispatching thread sleeps on this condition while waiting to
+  // dispatch the next timer; it is used to wake it up if there is a
+  // change on the timer queue.
+
+  ACE_SYNCH_MUTEX lock_;
+  // The mutual exclusion mechanism which is required to use the
+  // <condition_>.
+
+  int active_;
+  // When deactive is called this variable turns to false and the
+  // dispatching thread is signalled, to terminate its main loop.
 };
 
 #if defined (__ACE_INLINE__)

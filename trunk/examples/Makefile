@@ -23,6 +23,7 @@ DIRS  =	ASX \
 	Shared_Malloc \
 	Shared_Memory \
 	System_V_IPC \
+	Timer_Queue \
 	Threads
 
 # Makefiles TBD:
