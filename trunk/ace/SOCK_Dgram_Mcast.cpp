@@ -1014,7 +1014,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
   ACE_OS::memset (&lmreq,
                   0,
-                  sizeof (lmreq);
+                  sizeof (lmreq));
 
   if (net_if != 0)
     {
