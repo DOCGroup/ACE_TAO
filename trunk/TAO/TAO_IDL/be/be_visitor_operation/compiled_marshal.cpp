@@ -170,7 +170,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_interface (be_interface
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << "_tao_retval.inout ()";
+      *os << "_tao_safe_retval.inout ()";
     }
   else
     {
@@ -193,7 +193,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_interface_fwd (be_inter
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << "_tao_retval.inout ()";
+      *os << "_tao_safe_retval.inout ()";
     }
   else
     {
@@ -218,7 +218,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_valuetype (be_valuetype
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << "_tao_retval.inout ()";
+      *os << "_tao_safe_retval.inout ()";
     }
   else
     {
@@ -241,7 +241,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_valuetype_fwd (be_value
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << "_tao_retval.inout ()";
+      *os << "_tao_safe_retval.inout ()";
     }
   else
     {
@@ -306,10 +306,10 @@ int be_visitor_operation_rettype_compiled_marshal::visit_predefined_type (be_pre
       switch (node->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
-          *os << "_tao_retval.inout ()";
+          *os << "_tao_safe_retval.inout ()";
           break;
         case AST_PredefinedType::PT_any:
-          *os << "_tao_retval.inout ()";
+          *os << "_tao_safe_retval.inout ()";
           break;
         case AST_PredefinedType::PT_long:
         case AST_PredefinedType::PT_ulong:
@@ -363,7 +363,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_sequence (be_sequence *
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << "_tao_retval.inout ()";
+      *os << "_tao_safe_retval.inout ()";
     }
   else
     {
@@ -407,17 +407,17 @@ int be_visitor_operation_rettype_compiled_marshal::visit_string (be_string *node
       if (node->max_size ()->ev ()->u.ulval == 0)
         {
           // unbounded
-          *os << "_tao_retval.inout ()";
+          *os << "_tao_safe_retval.inout ()";
         }
       else
         {
           if (node->width () == sizeof (char))
             {
-              *os << "CORBA::Any::to_string (_tao_retval.inout (), ";
+              *os << "CORBA::Any::to_string (_tao_safe_retval.inout (), ";
             }
           else
             {
-              *os << "CORBA::Any::to_wstring (_tao_retval.inout (), ";
+              *os << "CORBA::Any::to_wstring (_tao_safe_retval.inout (), ";
             }
 
           *os << node->max_size ()->ev ()->u.ulval - 1 << ")";
@@ -448,7 +448,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_structure (be_structure
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
       if (node->size_type () == be_decl::VARIABLE)
-        *os << "_tao_retval.inout ()";
+        *os << "_tao_safe_retval.inout ()";
       else
         *os << "_tao_retval";
     }
@@ -477,7 +477,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_union (be_union *node)
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
       if (node->size_type () == be_decl::VARIABLE)
-        *os << "_tao_retval.inout ()";
+        *os << "_tao_safe_retval.inout ()";
       else
         *os << "_tao_retval";
     }
