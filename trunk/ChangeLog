@@ -1,3 +1,37 @@
+Mon Nov 10 02:44:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ACE.mwc:
+        * vc7_nightly.mwc:
+        * ACEXML/ACEXML.mwc:
+        * ACEXML/apps/apps.mwc:
+        * ACEXML/examples/examples.mwc:
+        * ACEXML/parser/parser.mwc:
+        * ASNMP/examples/examples.mwc:
+        * Kokyu/tests/tests.mwc:
+        * apps/Gateway/Gateway.mwc:
+        * apps/JAWS/JAWS.mwc:
+        * apps/JAWS/clients/clients.mwc:
+        * apps/JAWS2/JAWS2.mwc:
+        * apps/gperf/gperf.mwc:
+        * examples/ASX/ASX.mwc:
+        * examples/Connection/Connection.mwc:
+        * examples/IOStream/IOStream.mwc:
+        * examples/IPC_SAP/IPC_SAP.mwc:
+        * examples/Logger/Logger.mwc:
+        * examples/Mem_Map/Mem_Map.mwc:
+        * examples/OS/OS.mwc:
+        * examples/RMCast/RMCast.mwc:
+        * examples/Reactor/Reactor.mwc:
+        * examples/Service_Configurator/Service_Configurator.mwc:
+        * examples/System_V_IPC/System_V_IPC.mwc:
+        * netsvcs/netsvcs.mwc:
+        * netsvcs/clients/clients.mwc:
+        * netsvcs/clients/Naming/Naming.mwc:
+        * websvcs/websvcs.mwc:
+          Removed these files from the repo.  Most, if not all, of these
+          files were added to force MPC to create a makefile.  MPC has
+          since been fixed to allow this via the -hierarchy flag.
+
 Mon Nov 10 01:58:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ASNMP/examples/get/get.cpp:
