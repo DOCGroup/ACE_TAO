@@ -66,10 +66,18 @@ sequence_type (CORBA::TypeCode* type_code,
     {
       CORBA::TypeCode_var base = CORBA::TypeCode::_duplicate (type_code);
 
-      while (base->kind (ACE_TRY_ENV) == CORBA::tk_alias)
+      for (;;)
         {
-          base = base->content_type (ACE_TRY_ENV);
+          CORBA::TCKind base_kind = base->kind (ACE_TRY_ENV);
           ACE_CHECK_RETURN (return_value);
+
+          if (base_kind == CORBA::tk_alias)
+            {
+              base = base->content_type (ACE_TRY_ENV);
+              ACE_CHECK_RETURN (return_value);
+            }
+          else
+            break;
         }
 
       CORBA::TCKind base_kind = base->kind (ACE_TRY_ENV);

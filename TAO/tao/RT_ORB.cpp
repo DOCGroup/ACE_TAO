@@ -85,15 +85,14 @@ TAO_Named_RT_Mutex_Manager::create_mutex (CORBA::Environment &ACE_TRY_ENV)
   return mutex;
 }
 
+// If Named RT_Mutexes aren't enabled, this function is a nop
+// as also indicated by the comment below.
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 void
 TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex,
                                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // If Named RT_Mutexes aren't enabled, this function is a nop
-  // as indicated by the comment below.
-#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
-
   TAO_RT_Mutex *tao_mutex =
     ACE_dynamic_cast (TAO_RT_Mutex *,
                       mutex);
@@ -116,11 +115,15 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex,
       if (result != 0)
         ACE_THROW (CORBA::INTERNAL ());
     }
-#else /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
-  ACE_UNUSED_ARG (mutex);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 }
+#else /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
+void
+TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr,
+                                           CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
