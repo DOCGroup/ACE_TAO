@@ -217,9 +217,6 @@
 #endif /* ACE_NTRACE */
 // #define ACE_NLOGGING
 
-// Defines the page size of the system.
-#define ACE_PAGE_SIZE 4096
-
 // I'm pretty sure NT lacks these
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 
