@@ -1,6 +1,17 @@
 Fri May  7 19:50:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Sequence_T.i:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
 	  Fixed bug in TAO_Bounded_Sequence<T,MAX> thanks for
 	  Jim Rogers <jrogers@viasoft.com> for finding this out.
 
