@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (TPCLS_HAS_DLL)
+#  define TPCLS_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ! TPCLS_HAS_DLL */
+
 #if !defined (TPCLS_HAS_DLL)
 #  define TPCLS_HAS_DLL 1
 #endif /* ! TPCLS_HAS_DLL */
