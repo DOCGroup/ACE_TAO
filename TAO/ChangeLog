@@ -1,3 +1,9 @@
+Fri Nov  5 10:51:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Updated for new location of HTBP library.
+
 Fri Nov  5 11:50:39 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
@@ -75,9 +81,9 @@ Thu Nov  4 17:42:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
         * orbsvcs/orbsvcs/Log/PersistStore.cpp:
 
           Changed retrieve method to seek past records with non-matching
-          id's.  This avoids memory leaks and is more efficient than the
-          code it replaced.  Thanks to Gary Maxy <gary.maxey@hp.com> for
-          reporting the problem.
+	  id's.  This avoids memory leaks and is more efficient than the
+	  code it replaced.  Thanks to Gary Maxey <gary.maxey@hp.com> for
+	  reporting the problem.
 
 Thu Nov  4 13:51:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
