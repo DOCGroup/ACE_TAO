@@ -604,9 +604,17 @@ CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
                             CORBA::Boolean equiv_only,
                             CORBA::Environment &ACE_TRY_ENV) const
 {
+  // This will catch applications that haven't initialized an ORB.
+  if (CORBA::is_nil (tc))
+    {
+      return 0;
+    }
+
   // Are the two pointers the same?
   if (this == tc)
-    return 1;
+    {
+      return 1;
+    }
 
   if (equiv_only)
     {
