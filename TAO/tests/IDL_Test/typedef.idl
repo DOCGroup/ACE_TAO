@@ -23,6 +23,10 @@
 // Must keep unaliasing until all levels of typedef
 // are removed.
 
+// This is also a test of arrays of arrays. Once 
+// upon a time, the generated CDR operators of such 
+// animals wouldn't compile on all platforms.
+
 typedef char A5[5];
 
 typedef A5 C5;
@@ -30,12 +34,6 @@ typedef A5 C5;
 typedef C5 G5;
 
 typedef G5 J5;
-
-// Haven't found a way to make HP/UX compilers 
-// happy with the code generated for an array
-// containing a typedef'd array yet. There may
-// be others so, for now...
-#if 0
 
 typedef J5 M5[5];
 
@@ -45,6 +43,5 @@ typedef R5 V5;
 
 typedef V5 Z5[5];
 
-#endif /* 0 */
 
 
