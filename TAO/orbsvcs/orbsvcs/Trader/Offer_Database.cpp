@@ -315,7 +315,7 @@ TAO_Service_Offer_Iterator (const char* type,
   TAO_String_Hash_Key service_type (type);
   
   if (this->stm_.db_lock_.acquire_read () == -1)
-    ;
+    return;
 
   ACE_TYPENAME TAO_Offer_Database<LOCK_TYPE>::Offer_Map_Entry* entry = 0;
   if (this->stm_.offer_db_.find (service_type, entry) == -1)
@@ -324,7 +324,7 @@ TAO_Service_Offer_Iterator (const char* type,
     {
       this->lock_ = &entry->lock_;
       if (this->lock_->acquire_read () == -1)
-	;
+	return;
       
       ACE_NEW (offer_iter_,
 	       TAO_Offer_Map::iterator (*entry->offer_map_));
@@ -334,14 +334,11 @@ TAO_Service_Offer_Iterator (const char* type,
 template <class LOCK_TYPE>
 TAO_Service_Offer_Iterator<LOCK_TYPE>::~TAO_Service_Offer_Iterator (void)
 {  
-  if (this->stm_.db_lock_.release () == -1)
-    ;
+  this->stm_.db_lock_.release ();
   
   if (this->lock_ != 0)
     {
-      if (this->lock_->release () == -1)
-	;
-
+      this->lock_->release ();
       delete this->offer_iter_;
     }
 }
