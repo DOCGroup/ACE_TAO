@@ -22,7 +22,7 @@
 #include "tao/corba.h"
 
 ACE_RCSID(tao, request_info, "$Id$")
-
+#if (TAO_HAS_INTERCEPTORS == 1)
 TAO_ClientRequest_Info::TAO_ClientRequest_Info (const char * operation,
                                                 IOP::ServiceContextList &service_context_list ,               
                                                 CORBA::Object * target,
@@ -459,3 +459,4 @@ TAO_ServerRequest_Info::request_id (CORBA::ULong request_id)
 {
   this->request_id_ = request_id;
 }
+#endif /* TAO_HAS_INTERCEPTORS == 1 */

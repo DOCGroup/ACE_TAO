@@ -21,6 +21,7 @@
 #ifndef REQUEST_INFO_H
 #define REQUEST_INFO_H
 
+#if (TAO_HAS_INTERCEPTORS == 1)
 //#include "tao/corbafwd.h"
 #include "tao/PortableInterceptorC.h"
 
@@ -342,5 +343,5 @@ class TAO_Export TAO_ServerRequest_Info
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 #endif /* REQUEST_INFO_H */
