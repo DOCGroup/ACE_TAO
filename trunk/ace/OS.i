@@ -1065,6 +1065,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 #elif defined (VXWORKS)
   ACE_OS::sema_destroy (&cv->waiters_done_);
 #endif /* VXWORKS */
+  ACE_OS::thread_mutex_destroy (&cv->waiters_lock_);
   return ACE_OS::sema_destroy (&cv->sema_);
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -1123,7 +1124,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
   int result = 0;
   if (ACE_OS::sema_init (&cv->sema_, 0, type, name, arg) == -1)
     result = -1;
-  else if (ACE_OS::mutex_init (&cv->waiters_lock_) = -1)
+  else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
     result = -1;
 #if defined (VXWORKS)
   else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
@@ -1183,18 +1184,18 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
 #elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
   // The <external_mutex> must be locked before this call is made.
 
-  if (this->waiters_ == 0)
+  if (cv->waiters_ == 0)
     return 0; // No-op
   else // We are broadcasting, even if there is just one waiter...
     {
       int result = 0;
       // Record the fact that we are broadcasting.  This helps the
       // cond_wait() method know how to optimize itself.
-      this->was_broadcast_ = 1;
+      cv->was_broadcast_ = 1;
 
       // Wake up all the waiters.
 
-      if (ACE_OS::sema_post (&sv->sema_, this->waiters) == -1)
+      if (ACE_OS::sema_post (&cv->sema_, cv->waiters_) == -1)
 	result = -1;
 
       // Wait for all the awakened threads to acquire their part of the
@@ -1206,7 +1207,7 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
 #endif /* VXWORKS */
 	result = -1;
 
-      this->was_broadcast_ = 0;
+      cv->was_broadcast_ = 0;
       return result;
     }
 #endif /* ACE_HAS_STHREADS */
@@ -1238,7 +1239,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   // This call will automatically release the mutex and wait on the semaphore.
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (*external_mutex, cv->sema_, INFINITE, FALSE), result),
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_, cv->sema_, INFINITE, FALSE), result),
               int, -1, result);
 #else
   // We keep the lock held just long enough to increment the count of
@@ -1250,7 +1251,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   // Wait to be awakened by a ACE_OS::cond_signal() or
   // ACE_OS::cond_broadcast().
-  result = ACE_OS::sema_wait (cv->sema_);
+  result = ACE_OS::sema_wait (&cv->sema_);
 #endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
   if (result != -1)
     {
@@ -1260,20 +1261,22 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
       // to worry since there will just be 1 thread here.
       if (cv->was_broadcast_)
 	{
-	  if (ACE_OS::mutex_lock (cv->waiters_lock_) != -1)
+	  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != -1)
 	    {
 	      // By making the waiter responsible for decrementing its count we
 	      // don't have to worry about having an internal mutex.  Thanks to
 	      // Karlheinz for recognizing this optimization.
 	      cv->waiters_--;
+
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
 #if defined (VXWORKS)
-		ACE_OS::sema_post (cv->waiters_done_);
+		ACE_OS::sema_post (&cv->waiters_done_);
 #else
-		ACE_OS::event_signal (cv->waiters_done_);
+		ACE_OS::event_signal (&cv->waiters_done_);
 #endif /* VXWORKS */
-	      ACE_OS::mutex_unlock (cv->internal_mutex_);
+
+	      ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 	    }
 	}
       else
@@ -1326,7 +1329,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   // This call will automatically release the mutex and wait on the semaphore.
-  result = ::SignalObjectAndWait (*external_mutex, cv->sema_, msec_timeout, FALSE);
+  result = ::SignalObjectAndWait (external_mutex->proc_mutex_, cv->sema_, msec_timeout, FALSE);
 #else
   // We keep the lock held just long enough to increment the count of
   // waiters by one.  Note that we can't keep it held across the call
@@ -1339,8 +1342,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 #endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
   if (result != WAIT_OBJECT_0)
-    // This is a hack, we need to find an appropriate mapping...
-    error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+    {
+      // This is a hack, we need to find an appropriate mapping...
+      error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+      result = -1;
+    }
   else 
     {
       // If we are broadcasting, then we need to be smarter about
@@ -1349,20 +1355,18 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // to worry since there will just be 1 thread here.
       if (cv->was_broadcast_)
 	{
-	  if (ACE_OS::mutex_lock (cv->waiters_lock_) != -1)
+	  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != -1)
 	    {
 	      // By making the waiter responsible for decrementing its count we
 	      // don't have to worry about having an internal mutex.  Thanks to
 	      // Karlheinz for recognizing this optimization.
 	      cv->waiters_--;
+
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
-#if defined (VXWORKS)
-		ACE_OS::sema_post (cv->waiters_done_);
-#else
-		ACE_OS::event_signal (cv->waiters_done_);
-#endif /* VXWORKS */
-	      ACE_OS::mutex_unlock (cv->internal_mutex_);
+		ACE_OS::event_signal (&cv->waiters_done_);
+
+	      ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 	    }
 	}
       else
@@ -1454,8 +1458,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 
   if (result != WAIT_OBJECT_0)
-    // This is a hack, we need to find an appropriate mapping...
-    error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+    {
+      // This is a hack, we need to find an appropriate mapping...
+      error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+      result = -1;
+    }
   else 
     {
       // If we are broadcasting, then we need to be smarter about
@@ -1464,20 +1471,18 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // to worry since there will just be 1 thread here.
       if (cv->was_broadcast_)
 	{
-	  if (ACE_OS::thread_mutex_lock (cv->waiters_lock_) != -1)
+	  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != -1)
 	    {
 	      // By making the waiter responsible for decrementing its count we
 	      // don't have to worry about having an internal mutex.  Thanks to
 	      // Karlheinz for recognizing this optimization.
 	      cv->waiters_--;
+
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
-#if defined (VXWORKS)
-		ACE_OS::sema_post (cv->waiters_done_);
-#else
-		ACE_OS::event_signal (cv->waiters_done_);
-#endif /* VXWORKS */
-	      ACE_OS::thread_mutex_unlock (cv->internal_mutex_);
+		ACE_OS::event_signal (&cv->waiters_done_);
+
+	      ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 	    }
 	}
       else
@@ -1521,8 +1526,11 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   result = ::WaitForSingleObject (cv->sema_, INFINITE);
 
   if (result != WAIT_OBJECT_0)
-    // This is a hack, we need to find an appropriate mapping...
-    error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+    {
+      // This is a hack, we need to find an appropriate mapping...
+      error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+      result = -1;
+    }
   else 
     {
       // If we are broadcasting, then we need to be smarter about
@@ -1531,20 +1539,18 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
       // to worry since there will just be 1 thread here.
       if (cv->was_broadcast_)
 	{
-	  if (ACE_OS::thread_mutex_lock (cv->waiters_lock_) != -1)
+	  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != -1)
 	    {
 	      // By making the waiter responsible for decrementing its count we
 	      // don't have to worry about having an internal mutex.  Thanks to
 	      // Karlheinz for recognizing this optimization.
 	      cv->waiters_--;
+
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
-#if defined (VXWORKS)
-		ACE_OS::sema_post (cv->waiters_done_);
-#else
-		ACE_OS::event_signal (cv->waiters_done_);
-#endif /* VXWORKS */
-	      ACE_OS::thread_mutex_unlock (cv->internal_mutex_);
+		ACE_OS::event_signal (&cv->waiters_done_);
+
+	      ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 	    }
 	}
       else
@@ -3057,9 +3063,8 @@ ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
 {
 #if defined (ACE_WIN32)
   // Win32 supports this natively.
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*, release_count, 0),
-				       ace_result_),
-		     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, release_count, 0),
+				       ace_result_), int, -1);
 #else
   // On POSIX platforms we need to emulate this ourselves.
   for (size_t i = 0; i < release_count; i++)

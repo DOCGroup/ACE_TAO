@@ -76,32 +76,39 @@ ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
   for (size_t index = 0; index < this->active_handles_; index++)
     {
       if (this->handles_[index] == handle)
-	{
-	  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
-	    event_handlers_[index]->handle_close (handle,
-						  ACE_Event_Handler::NULL_MASK);
-
-	  // If there was only one handle, reset the pointer to 0.
-	  if (this->active_handles_ == 1)
-	    {
-	      // This is logically correct, but probably should never
-	      // happen.  This means that ACE_ReactorEx_Notify is
-	      // being removed!  We'll do it anyway and print out a
-	      // warning.
-	      this->active_handles_ = 0;
-	      ACE_ERROR ((LM_ERROR, "ReactorEx: ReactorEx_Notify was"
-			  "just removed!\n"));
-	    }
-	  // Otherwise, take the handle and handler from the back and
-	  // overwrite the ones being removed.
-	  else
-	    {
-	      this->handles_[index] = this->handles_[--this->active_handles_];
-	      this->event_handlers_[index] = this->event_handlers_[this->active_handles_];
-	    }
-	}
+	this->remove_handler (index, mask);
     }
   
+  return 0;
+}
+
+int 
+ACE_ReactorEx::remove_handler (int index,
+			       ACE_Reactor_Mask mask)
+{
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
+    event_handlers_[index]->handle_close (event_handlers_[index]->get_handle (),
+					  ACE_Event_Handler::NULL_MASK);
+
+  // If there was only one handle, reset the pointer to 0.
+  if (this->active_handles_ == 1)
+    {
+      // This is logically correct, but probably should never
+      // happen.  This means that ACE_ReactorEx_Notify is
+      // being removed!  We'll do it anyway and print out a
+      // warning.
+      this->active_handles_ = 0;
+      ACE_ERROR ((LM_ERROR, "ReactorEx: ReactorEx_Notify was"
+		  "just removed!\n"));
+    }
+  // Otherwise, take the handle and handler from the back and
+  // overwrite the ones being removed.
+  else
+    {
+      this->handles_[index] = this->handles_[--this->active_handles_];
+      this->event_handlers_[index] = this->event_handlers_[this->active_handles_];
+    }
+
   return 0;
 }
 
@@ -157,18 +164,14 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *max_wait_time,
   // Wait for any of handles_ to be active, or until timeout expires.
   // If wait_all is true, then wait for all handles_ to be active.
 
-  if (alertable)
-    // Allow asynchronous completion of ReadFileEx and WriteFileEx
-    // operations.
-    wait_status= ::WaitForMultipleObjectsEx (active_handles_,
-					     handles_,
-					     wait_all,
-					     timeout);
-  else
-    wait_status= ::WaitForMultipleObjects (active_handles_,
+  // Allow asynchronous completion of ReadFileEx and WriteFileEx
+  // operations.
+  wait_status= ::WaitForMultipleObjects (active_handles_,
 					   handles_,
 					   wait_all,
-					   timeout);
+					 timeout);//,
+  //					   alertable);
+
   // Expire all pending timers.
   this->timer_queue_->expire ();
 
@@ -196,10 +199,13 @@ ACE_ReactorEx::dispatch (ACE_Event_Handler *wait_all_callback)
   if (wait_all_callback != 0)
     {
       siginfo_t handles (this->handles_);
-      if (wait_call_callback->handle_signal (0, &handles) == -1)
-	// Tim, what should happen if this call fails?  Should all of
-	// the handles be removed?
-	return -1;
+      if (wait_all_callback->handle_signal (0, &handles) == -1)
+	{
+	  // Loop through all handles removing each one.
+	  while (active_handles_ > 0)
+	    this->remove_handler (0, 0);
+	  return -1;
+	}
     }
   else
     {
@@ -207,13 +213,14 @@ ACE_ReactorEx::dispatch (ACE_Event_Handler *wait_all_callback)
 
       for (int i = 0; i < this->active_handles_; i++)
 	if (this->dispatch_handler (i) == -1)
-	  result = -1;
+	  result--;
 
-      // Tim, if a result is != 0 should it contain a single -1, or
-      // perhaps the number of bad handler dispatches (negated, of
+      // Return the number of bad handler dispatches (negated, of
       // course!).
       return result;
     }
+
+  return 0;
 }
 
 // Dispatches any active handles from handles_[-index-] to
@@ -225,12 +232,10 @@ ACE_ReactorEx::dispatch (size_t index)
 {
   for (;;)
     {
-      // Tim, if this call fails is there really anything we
-      // can/should do about it? It seems that regardless of the
-      // success or failure, we should increment the index since
-      // otherwise we might just iterate endlessly!
-      this->dispatch_handler (index);
-      index++;
+      // If dispatch_handler returns -1 then a handler was removed and
+      // index alread points to the correct place.
+      if (this->dispatch_handler (index) == 0)
+	index++;
 
       // We're done.
       if (index >= this->active_handles_)
@@ -256,7 +261,7 @@ ACE_ReactorEx::dispatch (size_t index)
 	    index += wait_status - WAIT_OBJECT_0;
 	  else
 	    // Otherwise, a handle was abandoned.
-	    index += waitstatus - WAIT_ABANDONED_0;
+	    index += wait_status - WAIT_ABANDONED_0;
 	}
     }
 }

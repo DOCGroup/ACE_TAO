@@ -116,6 +116,12 @@ public:
   // <file> == 0.  If <file> != 0 it is updated (via lseek) respective to
   // the operation initiated.
 
+  virtual int cancel_io (ACE_Event_Handler *handler);
+  // Cancels all pending input and output (I/O) operations that were
+  // issued by the calling thread for the specified <handler>.  Does
+  // not cancel I/O operations issued for the <handler> by other
+  // threads.  Returns 0 on success; -1 on failure.
+
   // = Timer management. 
   virtual int schedule_timer (ACE_Event_Handler *,
 			      const void *arg,
