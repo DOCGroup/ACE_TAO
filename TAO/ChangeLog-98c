@@ -1,7 +1,13 @@
+Sun Sep 27 00:58:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Removed
+ 	  the -S1 flag to GPERF.  This is now implicit if GPERF can't
+ 	  generate a proper "lookup array" duplicate solution...
+  	  Naturally, this means that you MUST update GPERF...
+
 Sun Sep 27 00:02:57 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object_Table and POA: 
-
 	  - Added no-op destructors to all class. g++ was having problems.
 	  
 	  - Moved the Hash_Map_Manager template specialization to the .i
