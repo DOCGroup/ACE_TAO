@@ -45,7 +45,7 @@ static ATOMIC_INT capsule_no (0);
 static ATOMIC_INT methodobject_count (0);
 static ATOMIC_INT methodobject_no (0);
 
-class Scheduler : public ACE_Task<ACE_MT_SYNCH>
+class Scheduler : public ACE_Task_Base
   // = TITLE
   //     Active Object Scheduler.
 {
@@ -154,10 +154,11 @@ class Method_Object_end : public ACE_Method_Object
 public:
   Method_Object_end (Scheduler *new_scheduler): scheduler_ (new_scheduler) {}
   virtual ~Method_Object_end (void) {}
-  virtual int call (void) { this->scheduler_->close (); return -1; }
+  virtual int call (void) { return -1; }
 
 private:
   Scheduler *scheduler_;
+  // Keep track of our scheduler.
 };
 
 // Constructor.
