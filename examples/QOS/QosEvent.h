@@ -1,7 +1,55 @@
+/* -*- C++ -*- */
 //$Id$
+// ============================================================================
+//
+// = LIBRARY
+//    ACE_wrappers/examples/QOS
+//
+// = FILENAME
+//    QosEvent.h
+//
+// = AUTHOR
+//    Vishal Kachroo <vishal@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef QOSEVENT_H
 #define QOSEVENT_H
+
+// @@ Vishal, we should probably most this stuff to OS.h at some point
+// so that it'll be available to all applications that use the ACE QoS
+// wrappers.
+
+// I agree. However, if the user chooses to use other options than used
+// in this test application she might have to declare other such stuff.
+// I would suggest keeping these defines to the test program until we find
+// a more portable way of handling this. This would mean having these defines 
+// in the user applications which is not neat but it will avoid cluttering 
+// OS.h with incomplete QoS related defines.
+  
+#if !(defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+
+#define XP1_QOS_SUPPORTED        0x00002000
+#define XP1_SUPPORT_MULTIPOINT   0x00000400
+
+#define TRUE  1
+#define FALSE 0
+
+#define WSABASEERR              10000
+#define WSAENOBUFS              (WSABASEERR+55)
+
+#define FROM_PROTOCOL_INFO (-1)
+
+#define WSA_FLAG_OVERLAPPED           0x01
+#define WSA_FLAG_MULTIPOINT_C_ROOT    0x02
+#define WSA_FLAG_MULTIPOINT_C_LEAF    0x04
+#define WSA_FLAG_MULTIPOINT_D_ROOT    0x08
+#define WSA_FLAG_MULTIPOINT_D_LEAF    0x10
+
+#define QOS_NOT_SPECIFIED     0xFFFFFFFF
+
+#endif /* ACE_HAS_WINSOCK2 */
+
 
 #define MY_DEFPORT (5001)
 
@@ -157,33 +205,6 @@ ACE_Flow_Spec default_g711 (9200,
                             25,
                             1);
 
-/*
-
-FLOWSPEC default_g711 =
-    {
-    8500,
-    680,
-    17000,
-    QOS_NOT_SPECIFIED,
-    QOS_NOT_SPECIFIED,
-    SERVICETYPE_GUARANTEED,
-    340,
-    340
-    };
-
-
-FLOWSPEC default_g711 =
-    {
-    68000,
-    6800,
-    136000,
-    QOS_NOT_SPECIFIED,
-    QOS_NOT_SPECIFIED,
-    SERVICETYPE_GUARANTEED,
-    340,
-    340
-    };
-*/
 
 SOCKADDR_IN g_destaddr;
 

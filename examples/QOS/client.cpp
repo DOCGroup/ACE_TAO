@@ -1,4 +1,17 @@
+/* -*- C++ -*- */
 // $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    ACE_wrappers/examples/QOS
+//
+// = FILENAME
+//    client.cpp
+//
+// = AUTHOR
+//    Vishal Kachroo <vishal@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/OS.h"
@@ -11,20 +24,18 @@ static u_short SERVER_PORT = MY_DEFPORT;
 static const char *const SERVER_HOST = DEFAULT_MULTICASTGROUP;
 static const int MAX_ITERATIONS = 4;
 
-static BOOL ValidOptions (char *argv[],
-                          int argc,
-                          OPTIONS *pOptions);
-static VOID PrintOptions (OPTIONS *pOptions);
-static VOID Usage (CHAR *szProgramname,
+static int ValidOptions (char *argv[],
+                         int argc,
+                         OPTIONS *pOptions);
+static void PrintOptions (OPTIONS *pOptions);
+static void Usage (char *szProgramname,
                    OPTIONS *pOptions);
 
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
 // To open QOS sockets administrative access is required on the
-// machine.
- 
-// Fill in default values for QoS structure.  The default values were
-// simply choosen from existing QOS templates available via
+// machine. Fill in default values for QoS structure.  The default 
+// values were simply choosen from existing QOS templates available via
 // WSAGetQosByName.  Notice that ProviderSpecific settings are being
 // allowed when picking the "default" template but not for
 // "well-known" QOS templates.  Also notice that since data is only
@@ -32,9 +43,10 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 // depending upon whether this application is acting as a sender or
 // receiver.
 
-static VOID FillQosFlowspecDefault (QOS             *pQos, 
-                                    DWORD           *cbQosLen, 
-                                    QOS_OPTIONS     *pQosOptions)
+static void 
+FillQosFlowspecDefault (QOS *pQos, 
+                        u_long *cbQosLen, 
+                        QOS_OPTIONS *pQosOptions)
 {
   if (pQosOptions->bReceiver)
     {
@@ -46,24 +58,22 @@ static VOID FillQosFlowspecDefault (QOS             *pQos,
       pQos->SendingFlowspec   = default_g711;     
       pQos->ReceivingFlowspec = default_notraffic;
     }
-	
+
   ACE_DEBUG ((LM_DEBUG,
-              "Enabling the QOS Signalling for the sender. \n"));
+              "Enabling QOS Signalling for the sender.\n"));
 
   // Enable the QOS signalling.
-  ACE_CLR_BITS (pQos->SendingFlowspec.ServiceType,
+  ACE_CLR_BITS (pQos->ReceivingFlowspec.ServiceType,
                 SERVICE_NO_QOS_SIGNALING);
-
+    
   pQos->ProviderSpecific.len = 0;
   pQos->ProviderSpecific.buf = 0;
   *cbQosLen = sizeof (QOS) + pQos->ProviderSpecific.len;
-
-  return;
 }
 
-static VOID 
+
+static int
 fill_ace_qos_flowspec_default (ACE_QoS *pQos,
-                               DWORD *cbQosLen,
                                QOS_OPTIONS *pQosOptions)
 {
   ACE_Flow_Spec ace_default_g711 (9200,
@@ -103,27 +113,21 @@ fill_ace_qos_flowspec_default (ACE_QoS *pQos,
     }
 
   const iovec iov = {0, 0};
-
   pQos->provider_specific (iov);
-  *cbQosLen = sizeof(QOS) + pQos->provider_specific ().iov_len;
 
-  return;
+  return 0;
 }
 
-BOOL 
-SetQos (ACE_HANDLE      sd, 
-        QOS_OPTIONS     *pQosOptions,
-        BOOL            bSetQos,
-        ACE_QoS         *pQos, 
-        DWORD           *cbQosLen)
+int SetQos (QOS_OPTIONS *pQosOptions,
+            int bSetQos,
+            ACE_QoS *pQos) 
 {
-  BOOL bError = FALSE;
+  int bError = FALSE;
 
   // fill in default values
   if (ACE_OS::strcasecmp (pQosOptions->szTemplate,
                           QOS_DEFAULTNAME) == 0)
     fill_ace_qos_flowspec_default (pQos,
-                                   cbQosLen,
                                    pQosOptions);
   else 
     ACE_DEBUG ((LM_DEBUG,
@@ -132,43 +136,35 @@ SetQos (ACE_HANDLE      sd,
   return !bError;
 }
 
+// Fill up the ACE_Flow_Spec with the default_g711 values
+// as defined in the QoSEvent.h
+
 int 
 FillQoSTraffic (ACE_Flow_Spec &afc)
 {
-  afc.token_rate (default_g711.TokenRate);                    // In Bytes/sec.
-  afc.token_bucket_size (default_g711.TokenBucketSize);       // In Bytes.
-  afc.peak_bandwidth (default_g711.PeakBandwidth);            // In Bytes/sec.
-  afc.latency (default_g711.Latency);					        // In microseconds.
-  afc.delay_variation (default_g711.DelayVariation);          // In microseconds.
-  afc.service_type (default_g711.ServiceType);
-  afc.max_sdu_size (default_g711.MaxSduSize);                 // In Bytes.
-  afc.minimum_policed_size (default_g711.MinimumPolicedSize); // In Bytes.
-
+  afc = default_g711;
   return 0;
 }
+
+// Fill up the ACE_Flow_Spec with the default_notraffic values
+// as defined in the QoSEvent.h
 
 int
 FillQoSNoTraffic (ACE_Flow_Spec &afc)
 {
-  afc.token_rate (default_notraffic.TokenRate);                    // In Bytes/sec.
-  afc.token_bucket_size (default_notraffic.TokenBucketSize);       // In Bytes.
-  afc.peak_bandwidth (default_notraffic.PeakBandwidth);            // In Bytes/sec.
-  afc.latency (default_notraffic.Latency);					     // In microseconds.
-  afc.delay_variation (default_notraffic.DelayVariation);          // In microseconds.
-  afc.service_type (default_notraffic.ServiceType);
-  afc.max_sdu_size (default_notraffic.MaxSduSize);                 // In Bytes.
-  afc.minimum_policed_size (default_notraffic.MinimumPolicedSize); // In Bytes.
-
+  afc = default_notraffic;
   return 0;
 }
+
+// This function fills up the ACE_QoS_Params with the supplied 
+// iovec and ACE_QoS.
 
 int
 FillQoSParams (ACE_QoS_Params &qos_params,
                iovec* iov, 
                ACE_QoS* qos)
 {
-  //qos_params.callee_data (iov);
-  qos_params.callee_data (0);
+  qos_params.callee_data (iov);
   qos_params.caller_data (0);
   qos_params.socket_qos (qos);
   qos_params.group_socket_qos (0);
@@ -179,24 +175,20 @@ FillQoSParams (ACE_QoS_Params &qos_params,
 
 int
 main (int argc, char * argv[])
-{
-  WSADATA WSAData;
+{  
   ACE_Protocol_Info protocol_info;
 
   OPTIONS options;
+
   if (!ValidOptions (argv,
                      argc,
                      &options))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in ValidOptions\n"),
                       -1);
-
-  // @@ Vishal, ACE should do this stuff in the Object_Manager.  Can
-  // you please see if this can be removed?
-  if (WSAStartup (MAKEWORD (2,2), &WSAData) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in WSAStartup\n"),
-                      -1);
+ 
+  // This internally calls WSAStartup ().
+  ACE_OS_Object_Manager ace_object_manager;
 
   if (FindServiceProvider (options.spOptions.iProtocol,
                            options.spOptions.bQos,
@@ -205,109 +197,70 @@ main (int argc, char * argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in FindServiceProvider\n"),
                       -1);
-	
-  const int MAXCLIENTS = 4;
 
-  // encapsulate socket, events, buffers, and various flags and
-  // counters that control how/when data is received into a structure
-  typedef struct _RECV_INFO
-  {
-    ACE_HANDLE      sd[MAXCLIENTS + 1];
-    WSAEVENT        hEvents[MAXCLIENTS + 1];
-    CHAR *          recvbuf;
-    int             nTotalClients;
-  } RECV_INFO;
+  ACE_DEBUG ((LM_DEBUG,
+		      "Sender\n"));
 
-  RECV_INFO RecvInfo;
-
-  printf("Sender\n");
-
-  // initialize data structures
-  for (int i = 0; i < MAXCLIENTS + 1; i++)
-    RecvInfo.sd[i] = ACE_INVALID_HANDLE;   
-
-  ACE_QoS     qos;
-  QOS         *pQos;
-  DWORD       cbQosLen;  
-	
-  pQos = 0;
+  ACE_QoS qos;
+         
+  // By default the QOS is set as QOS_IOCTL_SET_BEFORE. 
   if (options.spOptions.bQos)
     {
       if (QOS_IOCTL_SET_BEFORE == options.qosOptions.qosIoctlSet)
         {
-          if (SetQos(RecvInfo.sd[0],
-                     &options.qosOptions,
-                     TRUE,
-                     &qos,
-                     &cbQosLen))
-            // @@ Vishal, can you please replace all the printf()s with an ACE_DEBUGs?
-            printf ("  QOS set before accept\n");
-          pQos = 0;
+          if (SetQos (&options.qosOptions,
+                      TRUE,
+                      &qos))
+            ACE_DEBUG ((LM_DEBUG,
+                        "  QOS set before accept\n"));
         }
       else if (QOS_IOCTL_SET_QOS == options.qosOptions.qosIoctlSet)
         {
-          // this one is tricky.  The intent is to send the RESV after
-          // receiving FD_QOS notification.  However, unless we
-          // somehow inform the GQOSSP that we are interested in QOS,
-          // it will not send us FD_QOS when receiving a RESV.
-          // However, we do not want to send out a RESV until we
-          // explicitedly set QOS.  We therefore do not want QOS
-          // signalling (i.e. RSVP messages) to be sent.
           options.qosOptions.bDisableSignalling = TRUE;
-          if (SetQos (RecvInfo.sd[0],
-                      &options.qosOptions,
+          if (SetQos (&options.qosOptions,
                       TRUE,
-                      &qos,
-                      &cbQosLen))
-            {
-              printf("  QOS set qos before accept - will be set again in FD_QOS\n");
-              pQos = &qos;
-            }
-          else
-            pQos = 0;
+                      &qos))
+            ACE_DEBUG ((LM_DEBUG,
+                        "  QOS set qos before accept - will be "
+                        "set again in FD_QOS\n"));
         }
     }
+
   else
-    pQos = 0;
-	
-  // Opening a new Multicast Datagram with the QoS socket opened
-  // previously.
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Use the -q:default option to enable the QOS\n"),
+                      -1);
+
+
+  // Opening a new Multicast Datagram. It is absolutely necessary 
+  // that the sender and the receiver subscribe to the same multicast 
+  // addresses to make sure the "multicast sessions" for the two are 
+  // the same. This is used to match the RESV<->PATH states.
 
   ACE_SOCK_Dgram_Mcast dgram_mcast;
 
-  // It is absolutely necessary that the sender and the receiver
-  // subscribe to the same multicast addresses to make sure the
-  // "multicast sessions" for the two are the same. This is used to
-  // match the RESV<->PATH states.
+  // The windows example code uses PF_INET for the address family.
+  // Winsock.h defines PF_INET to be AF_INET. Is there really a difference 
+  // between the protocol families and the address families ? The following
+  // code internally uses AF_INET as a default for the underlying socket.
 
-  // @@ Vishal, please use sockaddr_in.
-  SOCKADDR_IN addr;
-
-  // @@ Vishal, please replace with ACE_OS::memset().
-  ZeroMemory ((PVOID) &addr, sizeof addr);
-  addr.sin_family = PF_INET; //protocol_info.iAddressFamily;
-  // @@ Vishal, I recommend you replace these "magic numbers" with
-  // #defines that are in a common header file shared by all the
-  // related parts of this program.
-  addr.sin_addr.s_addr = inet_addr ("234.5.6.7"); // options.szHostname);
-  addr.sin_port        = htons (5001); //options.port);
-
-  ACE_INET_Addr mult_addr (&addr, 
-                           sizeof addr);
+  ACE_INET_Addr mult_addr (options.port,
+                           options.szHostname);
 
   // Fill the ACE_QoS_Params to be passed to the <ACE_OS::join_leaf>
   // through subscribe.
+
   ACE_QoS_Params qos_params;
   FillQoSParams (qos_params, 0, &qos);
 
-  // Join the multicast group if specfied.  We may also specify a
-  // given QOS structure at this time.
+  // The following call opens the Dgram_Mcast and calls the
+  // <ACE_OS::join_leaf> with the qos_params supplied here.
 
   if (dgram_mcast.subscribe (mult_addr,
                              qos_params,
                              1,
                              0,
-                             PF_INET,
+                             AF_INET,
                              FROM_PROTOCOL_INFO,
                              &protocol_info,
                              0,
@@ -320,12 +273,11 @@ main (int argc, char * argv[])
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Dgram_Mcast subscribe succeeds \n"));
-			
+
   int nIP_TTL = 25;
   char achInBuf [BUFSIZ];
-  DWORD dwBytes;
+  u_long dwBytes;
 
-  // Set IP TTL 
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
                      SIO_MULTICAST_SCOPE, // IO control code.
                      &nIP_TTL, // In buffer.
@@ -334,16 +286,15 @@ main (int argc, char * argv[])
                      BUFSIZ, // Length of Out buffer.
                      &dwBytes, // bytes returned.
                      0, // Overlapped.
-                     0) == SOCKET_ERROR) // Func.
+                     0) == -1) // Func.
     ACE_ERROR ((LM_ERROR,
                 "Error in Multicast scope ACE_OS::ioctl() \n"));
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Setting TTL with Multicast scope ACE_OS::ioctl call succeeds \n"));
 
-  BOOL bFlag = FALSE;
+  int bFlag = FALSE;
 
-  // Disable LoopBack.
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
                      SIO_MULTIPOINT_LOOPBACK, // IO control code.
                      &bFlag, // In buffer.
@@ -352,34 +303,41 @@ main (int argc, char * argv[])
                      BUFSIZ, // Length of Out buffer.
                      &dwBytes, // bytes returned.
                      0, // Overlapped.
-                     0) == SOCKET_ERROR) // Func.
+                     0) == -1) // Func.
     ACE_ERROR ((LM_ERROR,
                 "Error in Loopback ACE_OS::ioctl() \n"));
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Disable Loopback with ACE_OS::ioctl call succeeds \n"));
-		
 
-  // Enable QoS on the already opened QoS enabled socket.
-		
-  QOS win_qos;
-  FillQosFlowspecDefault (&win_qos,
-                          &cbQosLen,
-                          &options.qosOptions);		
 
+  // Fill up an ACE_QoS and pass it to the overloaded ACE_OS::ioctl ()
+  // that uses the I/O control code as SIO_SET_QOS.
+  ACE_QoS ace_qos;
+
+  // Make sure the flowspec is set in the correct direction. Since this is
+  // the sender, sending flowspec is set to g711 and receiving flowspec is 
+  // set to no traffic.
+
+  ACE_Flow_Spec sending_flowspec;
+  ACE_Flow_Spec receiving_flowspec;
+  const iovec iov = {0, 0};
+
+  FillQoSTraffic (sending_flowspec);
+  FillQoSNoTraffic (receiving_flowspec);
+
+  ace_qos.sending_flowspec (sending_flowspec);     
+  ace_qos.receiving_flowspec (receiving_flowspec);
+  ace_qos.provider_specific (iov); 
+  
+  // Set the QOS according to the supplied ACE_QoS. The I/O control
+  // code used under the hood is SIO_SET_QOS.
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
-                     SIO_SET_QOS, // IO control code.
-                     (LPVOID) &win_qos, // In buffer.
-                     cbQosLen, // Length of in buffer.
-                     0, 
-                     0,
-                     &dwBytes, // bytes returned.
-                     0, // Overlapped.
-                     0) == SOCKET_ERROR) // Func.
+                     &ace_qos, // ACE_QoS.
+                     &dwBytes) == -1) // bytes returned.
     ACE_ERROR ((LM_ERROR,
                 "Error in Qos set ACE_OS::ioctl() %d\n",
-                dwBytes));
-					   	
+                dwBytes));					   	
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Setting Default QOS with ACE_OS::ioctl succeeds \n"));
@@ -408,66 +366,87 @@ main (int argc, char * argv[])
   return 0;
 }
 
-BOOL FindServiceProvider (int                 iProtocol,
-                          BOOL                bQos,
-                          BOOL                bMulticast,
-                          ACE_Protocol_Info   *pProtocolInfo)
+int 
+FindServiceProvider(int iProtocol,
+                    int bQos,
+                    int bMulticast,
+                    ACE_Protocol_Info   *pProtocolInfo)
 {
   ACE_Protocol_Info *protocol_buffer = 0;
   u_long buffer_length = 0;
-  DWORD dwErr;
-  BOOL bProtocolFound = FALSE;
+  u_long dwErr;
+  int bProtocolFound = FALSE;
 
   // first have enum_protocols () tell us how big a buffer is needed.
   int ret_val = ACE_OS::enum_protocols (0,
                                         protocol_buffer, 
                                         &buffer_length);
   if (ret_val != -1)
-    printf("WSAEnumProtocols: should not have suceeded\n");
-  else if (WSAENOBUFS != (dwErr = WSAGetLastError()))
-    // WSAEnumProtocols failed for some reason not relating to buffer size 
-    printf("WSAEnumProtocols(1): %d\n", WSAGetLastError());
+    ACE_DEBUG ((LM_DEBUG,
+                "enum_protocols () : should not have suceeded\n"));
+
+  else if (WSAENOBUFS != (dwErr = ACE_OS::set_errno_to_wsa_last_error ()))
+    // enum_protocols () failed for some reason not relating to buffer size 
+    ACE_DEBUG ((LM_DEBUG,
+                "enum_protocols () : failed for a reason other than "
+                "inadequate buffer size : %d\n",
+                ACE_OS::set_errno_to_wsa_last_error ()));
   else
     {
-      // WSAEnumProtocols failed for the "expected" reason, allocate a
-      // buffer of the needed size
+      if (buffer_length > 0)
+	  {
+		  void *ptr = 0;
+		  ACE_NEW_RETURN (ptr,
+						  char [buffer_length],
+						  0);
+		  protocol_buffer = (ACE_Protocol_Info *) ptr;
+	  }
 
-      // @@ Vishal, can you please try to use operator new rather than
-      // malloc?!  Likewise, can you please use ACE_NEW_RETURN?
-      protocol_buffer = (ACE_Protocol_Info *)malloc(buffer_length);
+	  else
+		  ACE_ERROR_RETURN ((LM_ERROR,
+							 "Buffer length returned by enum_protocols () is"
+							 "less than or equal to zero\n"),
+							 -1);
+
       if (protocol_buffer)
         {
-          // now we can call WSAEnumProtocols again with the
+          // now we can call enum_protocols () again with the
           // expectation it will succeed because we have allocated a
           // big enough buffer.
           ret_val = ACE_OS::enum_protocols (0, 
                                             protocol_buffer, 
                                             &buffer_length);
           if (ret_val == -1)
-            printf("WSAEnumProtocols(3): %d\n", WSAGetLastError());
+            ACE_DEBUG ((LM_DEBUG,
+                        "enum_protocols () : failed even after allocating"
+                        " a big enough buffer : %d\n",
+                        ACE_OS::set_errno_to_wsa_last_error ()));
           else
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "BUFFER LENGTh = %d",
+                          "Size allocated for the Protocol Buffer = %d\n"
+                          "\nList of transport protocols "
+                          "returned by enum_protocols () : \n",
                           buffer_length));
 			  
-              // loop thru protocols, looking for a matching service
-              // provider
-              for (int i = 0;
-                   i < ret_val;
-                   i++)
+              // Loop thru protocols, looking for a matching service
+              // provider.
+              for (int i = 0; i < ret_val; i++)
                 {
-                  printf("  sp <%s>\n", protocol_buffer[i].szProtocol);
-                  if (AF_INET == protocol_buffer[i].iAddressFamily &&
-                      iProtocol == protocol_buffer[i].iProtocol)
+                  ACE_DEBUG ((LM_DEBUG,
+                              "  sp <%s>\n",
+                              protocol_buffer[i].szProtocol));
+
+                  if (AF_INET == protocol_buffer[i].iAddressFamily 
+                      && iProtocol == protocol_buffer[i].iProtocol)
                     {
                       // look for 
                       if (bQos && bMulticast)
                         {
-                          if ((XP1_QOS_SUPPORTED == (XP1_QOS_SUPPORTED 
-                                                     & protocol_buffer[i].dwServiceFlags1)) && 
-                              (XP1_SUPPORT_MULTIPOINT == (XP1_SUPPORT_MULTIPOINT 
-                                                          & protocol_buffer[i].dwServiceFlags1)))
+                          if ((XP1_QOS_SUPPORTED == ((XP1_QOS_SUPPORTED
+                                                      & protocol_buffer[i].dwServiceFlags1)))
+                              && (XP1_SUPPORT_MULTIPOINT == (XP1_SUPPORT_MULTIPOINT &
+                                                             protocol_buffer[i].dwServiceFlags1)))
                             {
                               *pProtocolInfo = protocol_buffer[i];
                               bProtocolFound = TRUE;
@@ -476,8 +455,8 @@ BOOL FindServiceProvider (int                 iProtocol,
                         }
                       else if (bQos)
                         {
-                          if ((XP1_QOS_SUPPORTED == (XP1_QOS_SUPPORTED 
-                                                     & protocol_buffer[i].dwServiceFlags1)))
+                          if (XP1_QOS_SUPPORTED == (XP1_QOS_SUPPORTED
+                                                    & protocol_buffer[i].dwServiceFlags1))
                             {
                               *pProtocolInfo = protocol_buffer[i];
                               bProtocolFound = TRUE;
@@ -486,58 +465,62 @@ BOOL FindServiceProvider (int                 iProtocol,
                         }
                       else if (bMulticast)
                         {
-                          if ((XP1_SUPPORT_MULTIPOINT == (XP1_SUPPORT_MULTIPOINT 
-                                                          & protocol_buffer[i].dwServiceFlags1)) &&
-                              (XP1_QOS_SUPPORTED != (XP1_QOS_SUPPORTED 
-                                                     & protocol_buffer[i].dwServiceFlags1)))
+                          if ((XP1_SUPPORT_MULTIPOINT == (XP1_SUPPORT_MULTIPOINT &   
+                                                          protocol_buffer[i].dwServiceFlags1)) 
+                              && (XP1_QOS_SUPPORTED != (XP1_QOS_SUPPORTED & 
+                                                        protocol_buffer[i].dwServiceFlags1)))
                             {
                               *pProtocolInfo = protocol_buffer[i];
                               bProtocolFound = TRUE;
                               break;
                             }
                         }
-                      else 
+                      else if ((XP1_QOS_SUPPORTED != (XP1_QOS_SUPPORTED 
+                                                      & protocol_buffer[i].dwServiceFlags1)))
                         {
-                          if ((XP1_QOS_SUPPORTED != (XP1_QOS_SUPPORTED 
-                                                     & protocol_buffer[i].dwServiceFlags1)))
-                            {
-                              *pProtocolInfo = protocol_buffer[i];
-                              bProtocolFound = TRUE;
-                              break;
-                            }
+                          *pProtocolInfo = protocol_buffer[i];
+                          bProtocolFound = TRUE;
+                          break;
                         }
                     } 
-                } // for    
-            } // WSAEnumProtocols
-          free(protocol_buffer);
+
+                } // for loop.
+          
+            } // ACE_OS::enum_protocols ().
+      
+		  ACE_OS::free (protocol_buffer);
+      
         } // protocol_buffer
-    } // WSAEnumProtocols
+
+    } // ACE_OS::enum_protocols ().
 
   if (bProtocolFound)
-    printf("  Using service provider <%s>\n\n", pProtocolInfo->szProtocol);
+    ACE_DEBUG ((LM_DEBUG,
+                "\n  Using service provider <%s>\n\n", 
+                pProtocolInfo->szProtocol));
 
-  return(bProtocolFound);
+  return bProtocolFound;
+
 }
 
-BOOL 
+
+int 
 ValidOptions (char *argv[],
               int argc,
               OPTIONS *pOptions)
 {
-  BOOL        bValidOptions = TRUE;
-  OSVERSIONINFO   verInfo = {0};
-
+  int bValidOptions = TRUE;
   *pOptions = default_options;
 
   for (int i = 1; i < argc; i++)
     {
       if ((argv[i][0] == '-') || (argv[i][0] == '/') ) 
         {
-          switch(tolower(argv[i][1])) 
+          switch (ACE_OS::to_lower (argv[i][1])) 
             {
             case 'b' :
               if (ACE_OS::strlen (argv[i]) > 3)
-                pOptions->nBufSize = 1024*atoi(&argv[i][3]);
+                pOptions->nBufSize = 1024 * ACE_OS::atoi (&argv[i][3]);
               break;
 
             case 'c' :
@@ -551,7 +534,7 @@ ValidOptions (char *argv[],
 
             case 'e' :
               if (ACE_OS::strlen (argv[i]) > 3)
-                pOptions->port = atoi(&argv[i][3]);
+                pOptions->port = ACE_OS::atoi (&argv[i][3]);
               break;
 
             case 'i' :
@@ -572,15 +555,17 @@ ValidOptions (char *argv[],
 
             case 'l' :
               if (ACE_OS::strlen (argv[i]) > 3)
-                pOptions->nRepeat = atoi(&argv[i][3]);
+                pOptions->nRepeat = ACE_OS::atoi (&argv[i][3]);
               break;
 
             case 'm' :
               pOptions->spOptions.bMulticast = TRUE;
               if (ACE_OS::strlen (argv[i]) > 3)
-                strcpy(pOptions->szHostname, &argv[i][3]);
+                ACE_OS::strcpy (pOptions->szHostname,
+                                &argv[i][3]);
               else
-                strcpy(pOptions->szHostname, DEFAULT_MULTICASTGROUP);
+                ACE_OS::strcpy (pOptions->szHostname,
+                                DEFAULT_MULTICASTGROUP);
               break;
 
             case 'n' : 
@@ -589,7 +574,8 @@ ValidOptions (char *argv[],
               if (!pOptions->spOptions.bMulticast)
                 {
                   if (ACE_OS::strlen (argv[i]) > 3)
-                    strcpy(pOptions->szHostname, &argv[i][3]);
+                    ACE_OS::strcpy (pOptions->szHostname,
+                                    &argv[i][3]);
                 }
               break;
 
@@ -608,7 +594,8 @@ ValidOptions (char *argv[],
             case 'q' : 
               pOptions->spOptions.bQos = TRUE; 
               if (ACE_OS::strlen (argv[i]) > 3)
-                strcpy(pOptions->qosOptions.szTemplate, &argv[i][3]);
+                ACE_OS::strcpy (pOptions->qosOptions.szTemplate,
+                                &argv[i][3]);
               break;
 
             case 'r' :
@@ -624,43 +611,52 @@ ValidOptions (char *argv[],
                     }
                   else if (ACE_OS::strcasecmp (argv[i],
                                                "-rsvp-wait") == 0
-                    || ACE_OS::strcasecmp (argv[i],
-                                           "-rsvp_wait") == 0)
+                           || ACE_OS::strcasecmp (argv[i],
+                                                  "-rsvp_wait") == 0)
                     {
                       pOptions->qosOptions.bWaitToSend = TRUE;
                       pOptions->qosOptions.bProviderSpecific = TRUE;
                     }
                   else
-                    {
-                      printf("Ignoring option <%s>\n", argv[i]);
-                    }
+                    ACE_DEBUG ((LM_DEBUG,
+                                "Ignoring option <%s>\n", 
+                                argv[i]));
                 }
               break;
 
             case 's' :
               if (ACE_OS::strlen (argv[i]) > 3)
-                pOptions->dwSleep = atoi(&argv[i][3]);
+                pOptions->dwSleep =
+                  ACE_OS::atoi (&argv[i][3]);
               break;
 
             case '?' :
-              Usage (argv[0], &default_options);
+              Usage (argv[0],
+                     &default_options);
               return FALSE;
               break;
 
             default:
-              printf("  unknown options flag %s\n", argv[i]);
-              Usage (argv[0], &default_options);
+              ACE_DEBUG ((LM_DEBUG,
+                          "  unknown options flag %s\n", 
+                          argv[i]));
+              Usage (argv[0],
+                     &default_options);
               return FALSE;
               break;
             }
         }
       else
         {
-          printf("  unknown option %s\n", argv[i]);
-          Usage (argv[0], &default_options);
+          ACE_DEBUG ((LM_DEBUG,
+                      "  unknown option %s\n", 
+                      argv[i]));
+          Usage (argv[0],
+                 &default_options);
           return FALSE;
         }
     }
+
 
   if (pOptions->qosOptions.bReceiver)
     pOptions->fillchar = 0;
@@ -692,175 +688,180 @@ ValidOptions (char *argv[],
       // not a valid sender option
 
       if (pOptions->qosOptions.bAlternateQos)
-        pOptions->nRepeat = 0;  // override repeat count to continuous mode
+        // override repeat count to continuous mode
+        pOptions->nRepeat = 0;					   
 
       if (IPPROTO_UDP == pOptions->spOptions.iProtocol
           && !pOptions->spOptions.bMulticast)
-        {
-          // using UDP, there WSAAccept will not be called, therefore
-          // do not wait to set qos
-          pOptions->qosOptions.qosIoctlSet = QOS_IOCTL_SET_BEFORE;
-        }
+        // Using UDP, there WSAAccept will not be called, therefore
+        // do not wait to set qos.
+        pOptions->qosOptions.qosIoctlSet =
+          QOS_IOCTL_SET_BEFORE;
 
-      verInfo.dwOSVersionInfoSize = sizeof verInfo;
-      GetVersionEx (&verInfo);
-      switch (verInfo.dwPlatformId)
-        {
-        case VER_PLATFORM_WIN32_NT:
-          pOptions->qosOptions.bQueryBufferSize = TRUE;
-          pOptions->qosOptions.bMustSetQosInAccept = FALSE;
-          if (verInfo.dwBuildNumber >= 1960)
-            {
-              printf("new build\n");
-              pOptions->qosOptions.bFineGrainErrorAvail = TRUE;
-              pOptions->qosOptions.bQosabilityIoctls = TRUE;
-            }
-          else
-            {
-              pOptions->qosOptions.bFineGrainErrorAvail = FALSE;
-              pOptions->qosOptions.bQosabilityIoctls = FALSE;
-            }
-          printf("running on NT\n");
-          break;
-
-        case VER_PLATFORM_WIN32_WINDOWS:
-          pOptions->qosOptions.bQueryBufferSize = FALSE;
-          pOptions->qosOptions.bMustSetQosInAccept = TRUE;
-          pOptions->qosOptions.bFineGrainErrorAvail = FALSE;
-          pOptions->qosOptions.bQosabilityIoctls = FALSE;
-          printf("running on 9x\n");
-          break;
-
-        default:
-          printf ("requires Windows NT or Windows 98\n");
-          pOptions->qosOptions.bQueryBufferSize = FALSE;
-          pOptions->qosOptions.bMustSetQosInAccept = TRUE;
-          pOptions->qosOptions.bFineGrainErrorAvail = FALSE;
-          pOptions->qosOptions.bQosabilityIoctls = FALSE;
-          break;
-        }
+      pOptions->qosOptions.bFineGrainErrorAvail = TRUE;
+      pOptions->qosOptions.bQosabilityIoctls = TRUE;
+      ACE_DEBUG ((LM_DEBUG,
+                  "running on NT\n"));
     }
 
-  // @@ Vishal, can you please use operator new rather than malloc()?!
-  // Likewise, can you please use ACE_NEW_RETURN?
-  pOptions->buf = (char *)malloc(pOptions->nBufSize);
-  if (!pOptions->buf)
+  if (pOptions->nBufSize > 0)
+	  ACE_NEW_RETURN (pOptions->buf,
+					  char[pOptions->nBufSize],
+					  0);
+
+  else 
+	  ACE_ERROR_RETURN ((LM_ERROR,
+						 "Buffer size to be allocated is less than or"
+						 "equal to zero\n"),
+						 -1);
+
+  if (pOptions->buf == 0)
     return FALSE;
   else
-    {
-      // @@ Vishal, can you please try to use ACE_OS::memset() here?
-      FillMemory (pOptions->buf,
-                  pOptions->nBufSize,
-                  pOptions->fillchar);
+    {      
+      ACE_OS::memset (pOptions->buf,
+                      pOptions->fillchar,
+                      pOptions->nBufSize);
       return TRUE;
     }
 }
 
 static 
-VOID PrintOptions (OPTIONS *pOptions)
+void PrintOptions (OPTIONS *pOptions)
 {
-  printf("Options\n");
-  printf("  Protocol %d\n", pOptions->spOptions.iProtocol);
-  printf("  Port %d\n", pOptions->port);
+  ACE_DEBUG ((LM_DEBUG,
+              "Options\n"
+              "  Protocol %d\n"
+              "  Port %d\n",
+              pOptions->spOptions.iProtocol,
+              pOptions->port));
 
   if (pOptions->qosOptions.bReceiver)
-    printf("  Act as Receiver\n");
+    ACE_DEBUG ((LM_DEBUG,
+                "  Act as Receiver\n"));
   else
     {
-      printf("  Act as sender and send to %s\n", pOptions->szHostname);
-      printf("  Sleep %d milliseconds between sends\n", pOptions->dwSleep);
-      printf("  Fill buffer with <%c>\n", pOptions->fillchar);
+      ACE_DEBUG ((LM_DEBUG,
+                  "  Act as sender and send to %s\n"
+                  "  Sleep %d milliseconds between sends\n"
+                  "  Fill buffer with <%c>\n", 
+                  pOptions->szHostname,
+                  pOptions->dwSleep,
+                  pOptions->fillchar));
+
       if (pOptions->nRepeat)
-        printf("  Repeat sending the buffer %d times\n", pOptions->nRepeat);
+        ACE_DEBUG ((LM_DEBUG,
+                    "  Repeat sending the buffer %d times\n", 
+                    pOptions->nRepeat));
       else
-        printf("  Repeat sending the buffer continually\n");
+        ACE_DEBUG ((LM_DEBUG,
+                    "  Repeat sending the buffer continually\n"));
 
     }
-
-  printf("  Bufsize %d (1K increments)\n", pOptions->nBufSize);
-  printf("  Multicast is %s\n", (pOptions->spOptions.bMulticast ? "Enabled" : "Disabled"));
+  ACE_DEBUG ((LM_DEBUG,
+              "  Bufsize %d (1K increments)\n"
+              "  Multicast is %s\n", 
+              pOptions->nBufSize,
+              (pOptions->spOptions.bMulticast ? "Enabled" : "Disabled")));
 
   if (pOptions->spOptions.bQos)
     {
-      printf("  Qos template %s\n", pOptions->qosOptions.szTemplate);
-      printf("  Qos to be set ");
-
+      ACE_DEBUG ((LM_DEBUG,
+                  "  Qos template %s\n"
+                  "  Qos to be set ", 
+                  pOptions->qosOptions.szTemplate));
+      
       switch (pOptions->qosOptions.qosIoctlSet)
         {
         case QOS_IOCTL_SET_BEFORE: 
-          printf("Before accept/connect/joinleaf\n");
+          ACE_DEBUG ((LM_DEBUG,
+                      "Before accept/connect/joinleaf\n"));
           break;
         case QOS_IOCTL_SET_AFTER:  
-          printf("After accept/connect/joinleaf\n"); 
+          ACE_DEBUG ((LM_DEBUG,
+                      "After accept/connect/joinleaf\n")); 
           break;
         case QOS_IOCTL_SET_DURING: 
-          printf("During accept/connect/joinleaf\n");
+          ACE_DEBUG ((LM_DEBUG,
+                      "During accept/connect/joinleaf\n"));
           break;
         case QOS_IOCTL_SET_QOS: 
           if (pOptions->qosOptions.bReceiver)
-            printf("During FD_QOS, implies QOS with no signaling set before accept/connect (eventually)\n");
+            ACE_DEBUG ((LM_DEBUG,
+                        "During FD_QOS, implies QOS with no "
+                        "signaling set before accept/connect "
+                        "(eventually)\n"));
           else
             {
               pOptions->qosOptions.qosIoctlSet = QOS_IOCTL_SET_BEFORE;
-              printf("Before connect\n");
+              ACE_DEBUG ((LM_DEBUG,
+                          "Before connect\n"));
             }
           break;
         }
 
-      if (pOptions->qosOptions.bConfirmResv)
-        printf("  RESV confirmation to be requested\n");
+      if (pOptions->qosOptions.bConfirmResv )
+        ACE_DEBUG ((LM_DEBUG,
+                    "  RESV confirmation to be requested\n"));
+
       if (INVALID_SEND_PRIORITY != pOptions->qosOptions.SendPriority)
-        printf("  Qos TC SendPriority to be set to %d\n", 
-               pOptions->qosOptions.SendPriority);
+        ACE_DEBUG ((LM_DEBUG,
+                    "  Qos TC SendPriority to be set to %d\n", 
+                    pOptions->qosOptions.SendPriority));
       if (!pOptions->qosOptions.bReceiver)
         {
           if (pOptions->qosOptions.bWaitToSend)
-            printf("  Wait for RESV before sending data\n");
+            ACE_DEBUG ((LM_DEBUG,
+                        "  Wait for RESV before sending data\n"));
           else
-            printf("  Do not wait for RESV to start sending data\n");
+            ACE_DEBUG ((LM_DEBUG,
+                        "  Do not wait for RESV to start sending data\n"));
         }
       else
-        printf("  Qos must be set during Accept = %s\n", 
-               (pOptions->qosOptions.bMustSetQosInAccept?"TRUE":"FALSE"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "  Qos must be set during Accept = %s\n", 
+                    (pOptions->qosOptions.bMustSetQosInAccept?"TRUE":"FALSE")));
            
-      printf("  Query for QOS buffer size: %s\n",
-             (pOptions->qosOptions.bQueryBufferSize?"TRUE":"FALSE"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "  Query for QOS buffer size: %s\n\n",
+                  (pOptions->qosOptions.bQueryBufferSize?"TRUE":"FALSE")));
     }
-  printf("\n");
   return;
 }
 
-// Abstract: Print out usage table for the program
-
-VOID 
-Usage (CHAR *szProgramname,
+//      Print out usage table for the program
+void 
+Usage (char *szProgramname,
        OPTIONS *pOptions)
 {
-  printf("usage:\n  %s -?\n\n", szProgramname);
-  printf("  %s [-b:#] [-d:c] [-e:#] [-l:#] [-m:group] [-n:host] [-s:#] [-u]\n\t[-q:template [-i:[a|b|d|q]] [-c] [-rsvp-confirm] [-rsvp-wait]]\n\n",
-         szProgramname);
-  printf("  -?\t\tDisplay this help\n");
-  printf("\n");
-  printf("  -b:bufsize\tSize of send/recv buffer; in 1K increments (Def:%d)\n",
-         pOptions->nBufSize);
-  printf("  -d:c\t\tCharacter used to fill buffer (Def:%c)\n",
-         pOptions->fillchar);
-  printf("  -e:port\tEndpoint number (port) to use (Def:%d)\n",
-         pOptions->port);
-  printf("  -l:loop\tLoop count for sending buffer (0==>continuous)\n",
-         pOptions->nRepeat);
-  printf("  -m:group\tMulticast group (IP) to join (Def:%s)\n", 
-         DEFAULT_MULTICASTGROUP);
-  printf("  -n:host\tAct as the client and connect to 'host' (Def:%s)\n",
-         pOptions->szHostname);
-  printf("  -p:protocol\tTCP or UDP (def:TCP)\n");
-  printf("  -s:#\t\tSleep # milliseconds between sends (def: 0)\n");
-  printf("\n");
-  printf("  -q:template\tEnable QoS and use 'template' to specify the name (Def:%s)\n",
-         pOptions->qosOptions.szTemplate);
-  printf("  -c\t\tCycle enabling/disabling QOS on sending socket (Def: no cycling)\n");
-  printf("  -i:[a|b|d|q]\tSet Qos After, Before, During accept/connect, or during FD_QOS\n\t\t\t(def: Before)\n");
-  printf("  -rsvp-confirm\t\tRequest RESV confirmation be sent (Def: no confirmation)\n");
-  printf("  -rsvp-wait\t\tWait for RESV from receiver before sending data\n");
+
+  ACE_DEBUG ((LM_DEBUG,
+              "usage:\n  %s -?\n\n"
+              "  %s [-b:#] [-d:c] [-e:#] [-l:#] [-m:group] "
+              "[-n:host] [-s:#] [-u]\n\t[-q:template [-i:[a|b|d|q]]"
+              "[-c] [-rsvp-confirm] [-rsvp-wait]]\n\n",
+              "  -?\t\tDisplay this help\n\n"
+              "  -b:bufsize\tSize of send/recv buffer; in 1K increments (Def:%d)\n"
+              "  -d:c\t\tCharacter used to fill buffer (Def:%c)\n"
+              "  -e:port\tEndpoint number (port) to use (Def:%d)\n"
+              "  -l:loop\tLoop count for sending buffer (0==>continuous)\n"
+              "  -m:group\tMulticast group (IP) to join (Def:%s)\n"
+              "  -n:host\tAct as the client and connect to 'host' (Def:%s)\n"
+              "  -p:protocol\tTCP or UDP (def:TCP)\n"
+              "  -s:#\t\tSleep # milliseconds between sends (def: 0)\n"
+              "  -q:template\tEnable QoS and use 'template' to specify the name (Def:%s)\n"
+              "  -c\t\tCycle enabling/disabling QOS on sending socket (Def: no cycling)\n"
+              "  -i:[a|b|d|q]\tSet Qos After, Before, During accept/connect, or during FD_QOS\n\t\t\t(def: Before)\n"
+              "  -rsvp-confirm\t\tRequest RESV confirmation be sent (Def: no confirmation)\n"
+              "  -rsvp-wait\t\tWait for RESV from receiver before sending data\n",
+              szProgramname,
+              szProgramname,
+              pOptions->nBufSize,
+              pOptions->fillchar,
+              pOptions->port,
+              pOptions->nRepeat,
+              DEFAULT_MULTICASTGROUP,
+              pOptions->szHostname,
+              pOptions->qosOptions.szTemplate));
   return;
 }

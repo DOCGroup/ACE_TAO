@@ -1,32 +1,20 @@
+/* -*- C++ -*- */
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    ACE_wrappers/examples/QOS
+//
+// = FILENAME
+//    server.cpp
+//
+// = AUTHOR
+//    Vishal Kachroo <vishal@cs.wustl.edu>
+//
+// ============================================================================
+
 #define QOSEVENT_MAIN
-
-// @@ Vishal, we should probably most this stuff to OS.h at some point
-// so that it'll be available to all applications that use the ACE QoS
-// wrappers.
-#if !(defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-
-#define XP1_QOS_SUPPORTED        0x00002000
-#define XP1_SUPPORT_MULTIPOINT   0x00000400
-
-#define TRUE  1
-#define FALSE 0
-
-#define WSABASEERR              10000
-#define WSAENOBUFS              (WSABASEERR+55)
-
-#define FROM_PROTOCOL_INFO (-1)
-
-#define WSA_FLAG_OVERLAPPED           0x01
-#define WSA_FLAG_MULTIPOINT_C_ROOT    0x02
-#define WSA_FLAG_MULTIPOINT_C_LEAF    0x04
-#define WSA_FLAG_MULTIPOINT_D_ROOT    0x08
-#define WSA_FLAG_MULTIPOINT_D_LEAF    0x10
-
-#define QOS_NOT_SPECIFIED     0xFFFFFFFF
-
-#endif /* ACE_HAS_WINSOCK2 */
 
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/OS.h"
@@ -239,10 +227,8 @@ main (int argc, char * argv[])
   ACE_SOCK_Dgram_Mcast dgram_mcast;
 
   // The windows example code uses PF_INET for the address family.
-  // Winsock.h defines PF_INET to be AF_INET. I need to figure out if
-  // there really is a difference between the protocol families and
-  // the address families.  The following code internally uses AF_INET
-  // as a default for the underlying socket.
+  // Winsock.h defines PF_INET to be AF_INET. The following
+  // code internally uses AF_INET as a default for the underlying socket.
 
   ACE_INET_Addr mult_addr (options.port,
                            options.szHostname);
@@ -389,13 +375,20 @@ FindServiceProvider(int iProtocol,
                 ACE_OS::set_errno_to_wsa_last_error ()));
   else
     {
-      // @@ Vishal, is there some reason we can't just use
-      // ACE_NEW_RETURN here?
-      ACE_New_Allocator ace_new_allocator;
-		
-      // Uses ACE_NEW_RETURN under the hood.
-      protocol_buffer = (ACE_Protocol_Info *) ace_new_allocator.malloc
-        (buffer_length);
+      if (buffer_length > 0)
+	  {
+		  void *ptr = 0;
+		  ACE_NEW_RETURN (ptr,
+						  char [buffer_length],
+						  0);
+		  protocol_buffer = (ACE_Protocol_Info *) ptr;
+	  }
+
+	  else
+		  ACE_ERROR_RETURN ((LM_ERROR,
+							 "Buffer length returned by enum_protocols () is"
+							 "less than or equal to zero\n"),
+							 -1);
 
       if (protocol_buffer)
         {
@@ -477,7 +470,7 @@ FindServiceProvider(int iProtocol,
           
             } // ACE_OS::enum_protocols ().
       
-          ace_new_allocator.free(protocol_buffer);
+		  ACE_OS::free (protocol_buffer);
       
         } // protocol_buffer
 
@@ -692,10 +685,16 @@ ValidOptions (char *argv[],
                   "running on NT\n"));
     }
 
-  // @@ Vishal, can't we just use ACE_NEW_RETURN?
-  ACE_New_Allocator ace_new_allocator;
+  if (pOptions->nBufSize > 0)
+	  ACE_NEW_RETURN (pOptions->buf,
+					  char[pOptions->nBufSize],
+					  0);
 
-  pOptions->buf = (char *) ace_new_allocator.malloc (pOptions->nBufSize);
+  else 
+	  ACE_ERROR_RETURN ((LM_ERROR,
+						 "Buffer size to be allocated is less than or"
+						 "equal to zero\n"),
+						 -1);
 
   if (pOptions->buf == 0)
     return FALSE;
