@@ -1,3 +1,9 @@
+Wed Mar 30 13:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ciao/ComponentsC.h:
+	* DAnCE/ciao/ComponentsC.h:
+          Fixed include of Typecode.h to TypeCode.h
+
 Wed Mar 30 13:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* DAnCE/Config_Handlers/DataType_Handler.cpp:
