@@ -7,6 +7,9 @@ Sun Oct 18 09:32:38 1998  David L. Levine  <levine@cs.wustl.edu>
         * examples/Callback_Quoter/Supplier_i.cpp (Supplier):
           reordered initializers to match declaration order.
 
+        * utils/IOR_Parser/ior-handler.cpp (getString,getIdlInterface):
+          declared char arrays that are used for return values as static.
+
 Sat Oct 17 13:04:50 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.30 released.
