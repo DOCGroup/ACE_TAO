@@ -1,22 +1,22 @@
 Mon May 03 15:20:00 1999 Kirthika Parameswaran  <kirthika@bambuca.cs.wustl.edu>
 
-	* examples/HTTP_1.1_Client/main.cpp:
-	* examples/HTTP_1.1_Client/Web_Crawler.{h,cpp}:
-	* examples/HTTP_1.1_Client/Cached_Connect_Strategy_T.{h,i,cpp}:
-	* examples/HTTP_1.1_Client/Caching_Strategies_T.{h,i,cpp}:
-	* examples/HTTP_1.1_Client/Command_Processor.{h,cpp}:
-	* examples/HTTP_1.1_Client/HTTP_URL.{h,cpp}:
-	* examples/HTTP_1.1_Client/Iterators.{h,cpp}:
-	* examples/HTTP_1.1_Client/Mem_Map_Stream.{h,cpp}:
-	* examples/HTTP_1.1_Client/Optimal_Cache_Map_Manager_T.{h,i,cpp}:
-	* examples/HTTP_1.1_Client/Options.{h,cpp}:
-	* examples/HTTP_1.1_Client/URL.{h,cpp}:
-	* examples/HTTP_1.1_Client/URL_Addr.{h,cpp}:
-	* examples/HTTP_1.1_Client/URL_Status.{h,cpp}:
-	* examples/HTTP_1.1_Client/URL_visitor.{h,cpp}:
-	* examples/HTTP_1.1_Client/URL_Visitor_Factory.{h,cpp}:
-	* examples/HTTP_1.1_Client/Makefile
-	* examples/HTTP_1.1_Client/README
+	* examples/Web_Crawler/main.cpp:
+	* examples/Web_Crawler/Web_Crawler.{h,cpp}:
+	* examples/Web_Crawler/Cached_Connect_Strategy_T.{h,i,cpp}:
+	* examples/Web_Crawler/Caching_Strategies_T.{h,i,cpp}:
+	* examples/Web_Crawler/Command_Processor.{h,cpp}:
+	* examples/Web_Crawler/HTTP_URL.{h,cpp}:
+	* examples/Web_Crawler/Iterators.{h,cpp}:
+	* examples/Web_Crawler/Mem_Map_Stream.{h,cpp}:
+	* examples/Web_Crawler/Optimal_Cache_Map_Manager_T.{h,i,cpp}:
+	* examples/Web_Crawler/Options.{h,cpp}:
+	* examples/Web_Crawler/URL.{h,cpp}:
+	* examples/Web_Crawler/URL_Addr.{h,cpp}:
+	* examples/Web_Crawler/URL_Status.{h,cpp}:
+	* examples/Web_Crawler/URL_visitor.{h,cpp}:
+	* examples/Web_Crawler/URL_Visitor_Factory.{h,cpp}:
+	* examples/Web_Crawler/Makefile
+	* examples/Web_Crawler/README
 
 	 This example is a HTTP client which crawls over the link provided
 	 and checks whether the links recusively are valid or not.
