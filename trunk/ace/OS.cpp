@@ -294,6 +294,26 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
   this->stop ();
 }
 
+#if defined (ACE_HAS_PENTIUM) && defined (linux)
+ACE_hrtime_t 
+ACE_OS::gethrtime (void)
+{
+  // ACE_TRACE ("ACE_OS::gethrtime");
+
+  // See comments for ACE_WIN32 version of ACE_OS::gethrtime () in OS.i.
+  //
+  // This function can't be inline because it depends on the location
+  // of the following variables on the stack.
+  unsigned long least, most;
+
+  asm ("rdtsc");
+  asm ("movl %eax, -4(%ebp)");  // least
+  asm ("movl %edx, -8(%ebp)");  // most
+
+  return (unsigned long long) most << 32  |  least;
+}
+#endif /* ACE_HAS_PENTIUM && linux */
+
 #if defined(ACE_MT_SAFE) && defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 
 int ACE_OS::netdb_mutex_inited_ = 0;
