@@ -59,12 +59,6 @@ namespace TAO
     return this->target_;
   }
 
-#if TAO_HAS_INTERCEPTORS == 1
-  ACE_INLINE char *
-  Invocation_Base::operation_name (void)
-  {
-    return ACE_const_cast (char *, this->details_.opname ());
-  }
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
+
 
 }
