@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/INET_Addr.h"
 
@@ -9,7 +8,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, SOCK_Dgram_Mcast_T, "SOCK_Dgram_Mcast_T.cpp,v 4.55 2001/02/18 01:34:39 brunsch Exp")
+ACE_RCSID (ace,
+           SOCK_Dgram_Mcast_T,
+           "$Id$")
 
 // This is a workaround for platforms with non-standard
 // definitions of the ip_mreq structure
@@ -124,7 +125,7 @@ void ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::dump (void) ACE_CONST_WHEN_MUTABL
 
 // Constructor.
 template <class ACE_SDMOPT_LOCK>
-ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::ACE_SOCK_Dgram_Mcast_Ex 
+ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::ACE_SOCK_Dgram_Mcast_Ex
   (ACE_TYPENAME ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::options bind_addr_opt,
    ACE_TYPENAME ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::options null_iface_opt,
    ACE_TYPENAME ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::options dtor_unsub_opt)
@@ -367,7 +368,7 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::subscribe_ifs (const ACE_INET_Addr
       ACE_SDM_helpers::addr_to_string (mcast_addr, sub_addr_string, 1);
       ACE_SDM_helpers::addr_to_string (this->bound_addr_,
                                        bound_addr_string, 1);
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("Subscribed address (%s) different than bound address (%s).\n"),
                   sub_addr_string,
                   bound_addr_string));
@@ -692,7 +693,7 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::make_multicast_ifaddr (ip_mreq *re
   else
     lmreq.imr_interface.s_addr = INADDR_ANY;
 
-  lmreq.IMR_MULTIADDR.s_addr = htonl (mcast_addr.get_ip_address ());
+  lmreq.IMR_MULTIADDR.s_addr = ACE_HTONL (mcast_addr.get_ip_address ());
 
   // Set return info, if requested.
   if (ret_mreq)
