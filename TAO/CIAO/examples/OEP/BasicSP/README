@@ -1,0 +1,16 @@
+/**
+
+@page BasicSP README File
+
+      The most basic of the Boeing scenarios that form part of the
+OEP. This is done to illustrate how the OEP can be implemented using
+CIAO. 
+
+      This example does not yet use MPC to generate MSVC 
+projects/workspaces/solutions or makefiles - we are still
+working on getting the execution of the CIDL compiler
+integrated into MPC. The CIDL compiler execution has
+been added to MSVC projects, which for now are checked
+into the CVS repository.
+
+*/
