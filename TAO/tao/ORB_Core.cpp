@@ -35,8 +35,6 @@ typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
 CORBA::Environment &
 TAO_default_environment ()
 {
-  // @@ This is a slight violation of layering, we should use
-  //    TAO_ORB_Core_instance(), but that breaks during startup.
   return *TAO_ORB_CORE_TSS_RESOURCES::instance ()->default_environment_;
 }
 
@@ -833,12 +831,21 @@ TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
 int
 TAO_ORB_Core::fini (void)
 {
+  if (TAO_debug_level >= 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Destroying ORB <%s>\n",
+                  this->orbid_));
+    }
+
   // Close connectors before acceptors!
   // Ask the registry to close all registered connectors.
   this->connector_registry ()->close_all ();
+  delete this->connector_registry_;
 
   // Ask the registry to close all registered acceptors.
   this->acceptor_registry ()->close_all ();
+  delete this->acceptor_registry_;
 
   TAO_Internal::close_services ();
 
@@ -1336,6 +1343,13 @@ TAO_ORB_Table::TAO_ORB_Table (void)
 
 TAO_ORB_Table::~TAO_ORB_Table (void)
 {
+  for (Iterator i = this->begin ();
+       i != this->end ();
+       i = this->begin ())
+    {
+      CORBA::release ((*i).int_id_->orb ());
+    }
+  this->table_.close ();
 }
 
 TAO_ORB_Table::Iterator
@@ -1387,8 +1401,17 @@ TAO_ORB_Table::unbind (const char* orb_id)
 TAO_Export TAO_ORB_Core *
 TAO_ORB_Core_instance (void)
 {
-  int argc = 0;
-  return CORBA::ORB_init (argc, 0, 0)->orb_core_;
+  // @@ This is a slight violation of layering, we should use
+  //    TAO_ORB_Core_instance(), but that breaks during startup.
+  TAO_ORB_Table* orb_table = TAO_ORB_Table::instance ();
+  TAO_ORB_Table::Iterator begin = orb_table->begin ();
+  TAO_ORB_Table::Iterator end = orb_table->end ();
+  if (begin == end)
+    {
+      int argc = 0;
+      return CORBA::ORB_init (argc, 0, 0)->orb_core_;
+    }
+  return (*begin).int_id_;
 }
 
 // ****************************************************************

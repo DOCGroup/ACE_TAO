@@ -1319,6 +1319,11 @@ CORBA::ORB_init (int &argc,
   // Initialize the ORB Core instance.
   int result = oc->init (argc, argv);
 
+  if (TAO_debug_level >= 3)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) created new ORB <%s>\n",
+                orbid));
+
   // Check for errors and return 0 if error.
   if (result == -1)
     {

@@ -64,13 +64,13 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      char *orb_name = "internet"; // unused by TAO
+      char *orb_name = "internet";
+      CORBA::ORB_var orb_ptr =
+        CORBA::ORB_init (argc, argv, orb_name, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       CORBA::Object_var temp; // holder for the myriad of times we get
                               // an object which we then have to narrow.
-
-      // get the underlying ORB
-      CORBA::ORB_var orb_ptr = CORBA::ORB_init (argc, argv, orb_name, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       // Get the Root POA
 
@@ -112,7 +112,9 @@ main (int argc, char *argv[])
       // adapter
 
       // Create the implementation object
-      ACE_NEW_RETURN (param_test, Param_Test_i ("unknown"), 1);
+      ACE_NEW_RETURN (param_test,
+                      Param_Test_i ("unknown",
+                                    orb_ptr.in ()), 1);
 
       // Register with GoodPOA with a specific name
       PortableServer::ObjectId_var id =
@@ -140,7 +142,7 @@ main (int argc, char *argv[])
           ACE_OS::fprintf (ior_output_file, "%s", str.in());
           ACE_OS::fclose (ior_output_file);
         }
-      
+
 
       // Make the POAs controlled by this manager active
       poa_manager->activate (ACE_TRY_ENV);
