@@ -1,4 +1,5 @@
-
+#
+# $Id$
 #
 # Makefile for building	the ACE	RMCast library with Borland C++Builder
 #
@@ -20,9 +21,9 @@ OBJFILES = \
         $(OBJDIR)\RMCast_Proxy.obj \
 	$(OBJDIR)\RMCast_Receiver_Module.obj \
 	$(OBJDIR)\RMCast_Reliable_Factory.obj \
-	$(OBJDIR)\RMCast_Reordering.obj \	
-	$(OBJDIR)\RMCast_Resend_Handler.obj \	
-	$(OBJDIR)\RMCast_Resend_Worker.obj \	
+	$(OBJDIR)\RMCast_Reordering.obj \
+	$(OBJDIR)\RMCast_Resend_Handler.obj \
+	$(OBJDIR)\RMCast_Resend_Worker.obj \
 	$(OBJDIR)\RMCast_Retransmission.obj \
 	$(OBJDIR)\RMCast_Sequencer.obj \
 	$(OBJDIR)\RMCast_Singleton_Factory.obj \
