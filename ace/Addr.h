@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Addr.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_ADDR_H
@@ -20,10 +20,10 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Export ACE_Addr 
+class ACE_Export ACE_Addr
 {
   //  = TITLE
   //     Defines the base class for the "address family independent"
@@ -32,26 +32,26 @@ public:
   // = Initialization and termination methods.
   ACE_Addr (int type = -1,
             int size = -1);
-  // Initializes instance variables. 
+  // Initializes instance variables.
 
   virtual ~ACE_Addr (void);
   // Destructor.
 
-  // = Get/set the size of the address. 
+  // = Get/set the size of the address.
 
   int get_size (void) const;
   // Return the size of the address.
 
   void set_size (int size);
-  // Sets the size of the address. 
+  // Sets the size of the address.
 
-  // = Get/set the type of the address. 
+  // = Get/set the type of the address.
 
   int get_type (void) const;
-  // Get the type of the address. 
+  // Get the type of the address.
 
   void set_type (int type);
-  // Set the type of the address. 
+  // Set the type of the address.
 
   virtual void *get_addr (void) const;
   // Return a pointer to the address.
@@ -93,10 +93,10 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  int addr_type_; 
+  int addr_type_;
   // e.g., AF_UNIX, AF_INET, AF_SPIPE, etc.
 
-  int addr_size_; 
+  int addr_size_;
   // Number of bytes in the address.
 };
 

@@ -3,10 +3,15 @@
 
 /* Defines the base class used to dynamically link in the benchmark tests */
 
-#if !defined (ACE_BENCHMARK_BASE_H)
+#ifndef ACE_BENCHMARK_BASE_H
 # define ACE_BENCHMARK_BASE_H
 
 # include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 # include "ace/Service_Repository.h"
 # include "ace/Synch.h"
 # include "ace/Service_Types.h"

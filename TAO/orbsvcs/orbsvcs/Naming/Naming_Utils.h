@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_NAMING_UTILS_H)
+#ifndef TAO_NAMING_UTILS_H
 #define TAO_NAMING_UTILS_H
 
 #include "tao/corba.h"

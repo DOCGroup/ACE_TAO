@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (PARAM_TEST_TYPECODE_H)
+#ifndef PARAM_TEST_TYPECODE_H
 #define PARAM_TEST_TYPECODE_H
 
 #include "param_testCli.h"
@@ -65,7 +65,7 @@ private:
   CORBA::TypeCode_var tc_holder_;
   // place for selected typecode to stay during time
   // between init_parameters () and reset_parameters ().
-  
+
   char *opname_;
   // operation name
 

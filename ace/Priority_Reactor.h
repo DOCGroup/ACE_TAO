@@ -18,11 +18,12 @@
 #define ACE_PRIORITY_REACTOR_H
 
 #include "ace/Containers.h"
-#include "ace/Select_Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Select_Reactor.h"
 
 class ACE_Export ACE_Priority_Reactor : public ACE_Select_Reactor
 {
@@ -37,13 +38,13 @@ public:
   // = Initialization and termination methods.
 
   ACE_Priority_Reactor (ACE_Sig_Handler * = 0,
-			ACE_Timer_Queue * = 0);
+                        ACE_Timer_Queue * = 0);
   // Initialize <ACE_Priority_Reactor> with the default size.
 
   ACE_Priority_Reactor (size_t size,
-			int restart = 0,
-			ACE_Sig_Handler * = 0,
-			ACE_Timer_Queue * = 0);
+                        int restart = 0,
+                        ACE_Sig_Handler * = 0,
+                        ACE_Timer_Queue * = 0);
   // Initialize <ACE_Priority_Reactor> with size <size>.
 
   virtual ~ACE_Priority_Reactor (void);
@@ -59,11 +60,11 @@ protected:
   // = Dispatching methods.
 
   virtual int dispatch_io_set (int number_of_active_handles,
-			       int &number_dispatched,
-			       int mask,
-			       ACE_Handle_Set &dispatch_mask,
-			       ACE_Handle_Set &ready_mask,
-			       ACE_EH_PTMF callback);
+                               int &number_dispatched,
+                               int mask,
+                               ACE_Handle_Set &dispatch_mask,
+                               ACE_Handle_Set &ready_mask,
+                               ACE_EH_PTMF callback);
   // We simply override this function to implement the priority
   // dispatching.
 

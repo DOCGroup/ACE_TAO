@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    orbsvcs
-// 
+//
 // = FILENAME
 //    Dispatching_Module
 //
@@ -58,15 +58,15 @@ public:
   // Default construction.
 
   virtual void open (ACE_ES_Consumer_Module *up,
-		     ACE_ES_Correlation_Module *down);
+                     ACE_ES_Correlation_Module *down);
   // Link to adjacent modules.
 
   virtual void connected (ACE_Push_Consumer_Proxy *consumer,
-			  CORBA::Environment &);
+                          CORBA::Environment &);
   // Forward down_.
 
   virtual void disconnecting (ACE_Push_Consumer_Proxy *consumer,
-			      CORBA::Environment &);
+                              CORBA::Environment &);
   // Forward down_.
 
   virtual void disconnected (ACE_Push_Consumer_Proxy *consumer);
@@ -77,11 +77,11 @@ public:
   // void disconnecting (ACE_Push_Supplier_Proxy *supplier);
 
   virtual void push (ACE_ES_Dispatch_Request *request,
-		     CORBA::Environment &) = 0;
+                     CORBA::Environment &) = 0;
   // Forward up_.
 
   virtual int dispatch_event (ACE_ES_Dispatch_Request *request,
-			      u_long &command_action);
+                              u_long &command_action);
   // Called by ACE_ES_Dispatch_Requests when dequeued by RT_Tasks.
 
   virtual void dispatch_queue_closed (ACE_ES_Dispatch_Queue *q);
@@ -132,32 +132,32 @@ class TAO_ORBSVCS_Export ACE_ES_Dispatch_Request : public ACE_RT_Task_Command
 public:
   ACE_ES_Dispatch_Request (void);
   // Default construction.
-  
+
   virtual ~ACE_ES_Dispatch_Request (void);
   // Default destruction.
-  
-  ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer, 
-			   RtecScheduler::handle_t rt_info);
+
+  ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
+                           RtecScheduler::handle_t rt_info);
   // All the events must be added after construction to the
   // event_set.
 
-  ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer, 
-			   const TAO_EC_Event_Array &event_set,
-			   RtecScheduler::handle_t rt_info);
+  ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
+                           const TAO_EC_Event_Array &event_set,
+                           RtecScheduler::handle_t rt_info);
   // Set consumer_ to <consumer> and copy <event_set> to event_set_.
   // <rt_info> describes the method receiving this dispatch.
 
   ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
-			   const RtecEventComm::Time &time,
-			   RtecScheduler::handle_t rt_info);
+                           const RtecEventComm::Time &time,
+                           RtecScheduler::handle_t rt_info);
   // Set consumer_ to <consumer> and sets
   // single_event_.header.creation_time to <time>.  Sets
   // use_single_event_ to 1.  <rt_info> describes the method
   // receiving this dispatch.
 
   ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
-			   const TAO_EC_Event &event,
-			   RtecScheduler::handle_t rt_info);
+                           const TAO_EC_Event &event,
+                           RtecScheduler::handle_t rt_info);
   // Sets consumer_ and the first slot of event_set_.  We use the
   // event_set_ instead of the single_event_ so that we can just carry
   // around the pointer to <event>.  <rt_info> describes the method
@@ -167,8 +167,8 @@ public:
   // Description of the method receiving this request.
 
   void set (ACE_ES_Dispatching_Base *dispatching_module,
-	    RtecScheduler::OS_Priority priority,
-	    RtecScheduler::Preemption_Subpriority sub_priority);
+            RtecScheduler::OS_Priority priority,
+            RtecScheduler::Preemption_Subpriority sub_priority);
   // For multi-threaded implementations, <dispatching_module> is
   // called back when a request is dequeued.  <priority> is the
   // dispatch priority of the event.  <sub_priority> is the enqueue
@@ -240,7 +240,7 @@ protected:
 
 #if defined (ACE_WIN32)
 class TAO_ORBSVCS_Export ACE_ES_ReactorEx_NS : public ACE_Notification_Strategy
-// = TITLE 
+// = TITLE
 //     Event Service ReactorEx Notification Strategy
 //
 // = DESCRIPTION
@@ -252,7 +252,7 @@ class TAO_ORBSVCS_Export ACE_ES_ReactorEx_NS : public ACE_Notification_Strategy
 {
 public:
   ACE_ES_ReactorEx_NS (ACE_Event_Handler *eh,
-		       TAO_EC_Timer_Module *tm);
+                       TAO_EC_Timer_Module *tm);
   // Stores away <eh> for when this->open is called.
 
   int open (void);
@@ -266,7 +266,7 @@ public:
   // point to a dispatching module.
   virtual int notify (void);
   virtual int notify (ACE_Event_Handler *,
-		      ACE_Reactor_Mask mask);
+                      ACE_Reactor_Mask mask);
 
   //  ACE_HANDLE get_handle (void);
   // Returns event_.handle ().
@@ -284,7 +284,7 @@ typedef ACE_ES_ReactorEx_NS ACE_ES_Notification_Strategy;
 #else // *******************************************************
 
 class TAO_ORBSVCS_Export ACE_ES_Reactor_NS : public ACE_Reactor_Notification_Strategy
-// = TITLE 
+// = TITLE
 //     Event Service Reactor Notification Strategy
 //
 // = DESCRIPTION
@@ -293,7 +293,7 @@ class TAO_ORBSVCS_Export ACE_ES_Reactor_NS : public ACE_Reactor_Notification_Str
 {
 public:
   ACE_ES_Reactor_NS (ACE_Event_Handler *eh,
-		     TAO_EC_Timer_Module *tm);
+                     TAO_EC_Timer_Module *tm);
   // Calls ACE_Reactor_Notification_Strategy with the ORB's reactor
   // and signal mask.
 
@@ -330,18 +330,18 @@ class TAO_ORBSVCS_Export ACE_ES_Dispatch_Queue : public ACE_RT_Task
 {
 public:
   ACE_ES_Dispatch_Queue (ACE_ES_Dispatching_Base *dispatching_module,
-			 ACE_ES_Notification_Strategy *notification_strategy);
+                         ACE_ES_Notification_Strategy *notification_strategy);
   // Stores <dispatching_module> for this->threads_closed.  Stores
   // away <notification_strategy> for this->synch_threads.
 
   int open_queue (RtecScheduler::Period &period,
-		  int threads);
+                  int threads);
   // This is a hack to get the channel to work with the new
   // scheduler.
 
 #if 0
   int open_queue (RtecScheduler::OS_Priority priority,
-		  int threads);
+                  int threads);
   // Creates a name from the <priority> and tries to find a scheduling
   // qos structure.  If one is not found, but created, qos_ is set
   // with default values.  Either way, if qos_->thread_ > 0, it calls
@@ -383,7 +383,7 @@ public:
   // Delete queues.
 
   void connected (ACE_Push_Consumer_Proxy *consumer,
-		  CORBA::Environment &);
+                  CORBA::Environment &);
   // Allocate any needed dispatching resources for this consumers
   // priority.
 
@@ -395,7 +395,7 @@ public:
   // void disconnecting (ACE_Push_Supplier_Proxy *supplier);
 
   virtual void push (ACE_ES_Dispatch_Request *request,
-		     CORBA::Environment &);
+                     CORBA::Environment &);
   // Enqueues the request on the appropriate Dispatch Queue.
 
   virtual void activate (int threads_per_queue);
@@ -465,7 +465,7 @@ public:
   // the dispatching base constructor.
 
   virtual void push (ACE_ES_Dispatch_Request *request,
-		     CORBA::Environment &);
+                     CORBA::Environment &);
   // Forward up_.
 };
 
@@ -480,16 +480,16 @@ class TAO_ORBSVCS_Export ACE_ES_RTU_Dispatching : public ACE_ES_Priority_Dispatc
 {
 public:
   ACE_ES_RTU_Dispatching (ACE_EventChannel *channel);
-  // Store <channel>.  
+  // Store <channel>.
 
   virtual int dispatch_event (ACE_ES_Dispatch_Request *request,
-			      u_long &command_action);
+                              u_long &command_action);
   // Called by ACE_Dispatch_Queues and handle_signal when an event
   // needs to be dequeued.  Implements an RTU-like delayed preemption
   // policy.
 
   virtual void push (ACE_ES_Dispatch_Request *request,
-		     CORBA::Environment &);
+                     CORBA::Environment &);
   // Calls ACE_ES_Priority_Dispatching::push and then checks if
   // preemption is necessary.
 };

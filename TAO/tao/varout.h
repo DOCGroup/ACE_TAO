@@ -37,7 +37,7 @@ class TAO_Object_Field_T : public TAO_Object_Field
   //   The downcasting to the right type must be executed by classes
   //   with compile-time knowledge of the object type.
   //   The solution addopted in TAO is to create a special manager
-  //   class for that field, 
+  //   class for that field,
 public:
   TAO_Object_Field_T (void);
   // default constructor
@@ -85,7 +85,7 @@ public:
   // TAO extension for access to the underlying pointer.
 
   virtual void _downcast (CORBA_Object* base_ptr,
-			  CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
   virtual CORBA_Object* _upcast (void);
   virtual void _release (void);
   // Implement the TAO_Object_Field methods.
@@ -703,7 +703,7 @@ public:
 private:
   T_ptr &ptr_;
 };
-#endif /* 0 */ 
+#endif /* 0 */
 
 #if defined (__ACE_INLINE__)
 #include "tao/varout.i"

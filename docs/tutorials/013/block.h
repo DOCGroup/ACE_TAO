@@ -5,6 +5,11 @@
 #define BLOCK_H
 
 #include "ace/Message_Block.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 #include "mld.h"
 #include "work.h"
@@ -16,7 +21,7 @@
    out of scope unexpectedly.  An ACE_Message_Block will be deleted as soon as
    it's release() method is called but the ACE_Data_Blocks it uses are
    reference counted and only delete when the last reference release()es the
-   block.  We use that trait to simply our object memory management. 
+   block.  We use that trait to simply our object memory management.
  */
 class Data_Block : public ACE_Data_Block
 {
@@ -49,9 +54,9 @@ public:
      ~Lock (void);
 
     // When the Data_Block is destroyed, the Message_Block is
-    // holding a lock with this object.  If we were to destroy 
+    // holding a lock with this object.  If we were to destroy
     // the Lock with the Data_Block, we would have a
-    // segfault.  Instead, the Data_Block invokes destroy() to 
+    // segfault.  Instead, the Data_Block invokes destroy() to
     // mark the object as un-needed so that when the
     // Message_Block invokes release() to drop the lock, the
     // Lock can delete itself.
@@ -65,7 +70,7 @@ protected:
 
 /*
    This simple derivative of ACE_Message_Block will construct our Data_Block
-   object to contain a unit of work. 
+   object to contain a unit of work.
  */
 class Message_Block : public ACE_Message_Block
 {

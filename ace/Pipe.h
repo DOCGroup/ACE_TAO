@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Pipe.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_PIPE_H
@@ -20,7 +20,7 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Pipe
@@ -31,7 +31,7 @@ class ACE_Export ACE_Pipe
   //
   // = DESCRIPTION
   //     Uses "name" for lookup in the ACE service repository. Obtains
-  //	 the object and returns it as the appropriate type.
+  //     the object and returns it as the appropriate type.
 public:
   // = Initialization and termination.
   ACE_Pipe (void);
@@ -61,7 +61,7 @@ public:
   // This is the "read" side of the pipe.  Note, however, that
   // processes can also write to this handle as well since pipes are
   // bi-directional.
-  
+
   ACE_HANDLE write_handle (void) const;
   // This is the "write" side of the pipe.  Note, however, that
   // processes can also read to this handle as well since pipes are

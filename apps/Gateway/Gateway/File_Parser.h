@@ -5,31 +5,35 @@
 //
 // = LIBRARY
 //    gateway
-// 
+//
 // = FILENAME
 //    File_Parser.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
-#if !defined (_FILE_PARSER)
+#ifndef _FILE_PARSER
 #define _FILE_PARSER
 
 #include "ace/OS.h"
 
-class FP 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class FP
 {
   // = TITLE
   //     This class serves as a namespace for the <Return_Type>.
 public:
-  enum Return_Type 
-  { 
+  enum Return_Type
+  {
     EOLINE,
     EOFILE,
-    SUCCESS, 
-    COMMENT, 
+    SUCCESS,
+    COMMENT,
     DEFAULT,
     PARSE_ERROR
   };
@@ -59,7 +63,7 @@ protected:
   // Read the next integer.
 
   FP::Return_Type readword (char buf[]);
-  // Read the next "word," which is demarcated by <delimiter>s.  
+  // Read the next "word," which is demarcated by <delimiter>s.
   //
   // @@ This function is inherently flawed since it doesn't take a
   // count of the size of <buf>...

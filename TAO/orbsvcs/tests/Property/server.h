@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (COSPROPERTYSERVICE_SERVER_H)
+#ifndef COSPROPERTYSERVICE_SERVER_H
 #define COSPROPERTYSERVICE_SERVER_H
 
 #include "tao/TAO.h"

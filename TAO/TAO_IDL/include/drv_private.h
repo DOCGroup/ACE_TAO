@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -68,16 +68,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _DRV_PRIVATE_DRV_PRIVATE_HH
 
 // drv_private.hh - Define data and functions which are private to
-//		    the DRV but which must be accessible througout the DRV
+//                  the DRV but which must be accessible througout the DRV
 
 // Data
 
-extern char		*DRV_files[];	// All files to be processed
-extern long		DRV_nfiles;	// How many are there?
-extern long		DRV_file_index;	// What's the file I am responsible
-					// for?
+extern char             *DRV_files[];   // All files to be processed
+extern long             DRV_nfiles;     // How many are there?
+extern long             DRV_file_index; // What's the file I am responsible
+                                        // for?
 
 // Functions
-extern	void		DRV_drive(char *);// Compiler driver for single file
+extern  void            DRV_drive(char *);// Compiler driver for single file
 
-#endif	// _DRV_PRIVATE_DRV_PRIVATE_HH
+#endif  // _DRV_PRIVATE_DRV_PRIVATE_HH

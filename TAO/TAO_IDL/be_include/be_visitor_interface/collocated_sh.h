@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_INTERFACE_COLLOCATED_SH_H_)
+#ifndef _BE_INTERFACE_COLLOCATED_SH_H_
 #define _BE_INTERFACE_COLLOCATED_SH_H_
 
 class be_visitor_interface_collocated_sh : public be_visitor_interface

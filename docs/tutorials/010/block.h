@@ -6,8 +6,12 @@
 
 #include "ace/Message_Block.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 /*
-   This simple ACE_Message_Block derivative will inform us of it's construction 
+   This simple ACE_Message_Block derivative will inform us of it's construction
    and destruction.  We'll use this to assure ourselves that we don't have any
    memory leaks.  In a real application, of course, this isn't necessary.
  */

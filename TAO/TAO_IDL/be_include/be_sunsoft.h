@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_sunsoft.h
 //
@@ -14,10 +14,10 @@
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
-#if !defined (TAO_BE_HELPER_H)
+#ifndef TAO_BE_HELPER_H
 #define TAO_BE_HELPER_H
 
 class TAO_SunSoft_OutStream : public TAO_OutStream

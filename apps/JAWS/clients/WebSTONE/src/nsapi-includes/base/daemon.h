@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * daemon.h: Things related to the accepting connections
- * 
+ *
  * Rob McCool
  */
 
@@ -76,10 +76,10 @@ extern int child_serial;
 
 /*
  * daemon_run accepts whether or not it should detach from its parent process,
- * and a daemon structure as its arguments. The daemon structure contains 
- * a port number, a root directory to chroot to (can be NULL), a filename to 
+ * and a daemon structure as its arguments. The daemon structure contains
+ * a port number, a root directory to chroot to (can be NULL), a filename to
  * log the daemon pid to (can be NULL). daemon_run never returns.
- * 
+ *
  * child_callback is a function which will be called every time a new
  * connection is recieved. Session is a new session ID.
  *

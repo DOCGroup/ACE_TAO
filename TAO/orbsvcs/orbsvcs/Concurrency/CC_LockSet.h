@@ -32,10 +32,15 @@
 //
 // ============================================================================
 
-#if !defined (_CC_LOCKSET_H)
+#ifndef _CC_LOCKSET_H
 #define _CC_LOCKSET_H
 
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Token.h"
 #include "orbsvcs/CosConcurrencyControlS.h"
 
@@ -76,21 +81,21 @@ public:
 
   // = CosConcurrencyControl methods
   virtual void lock (CosConcurrencyControl::lock_mode mode,
-		     CORBA::Environment &env);
+                     CORBA::Environment &env);
   // Acquires this lock. Blocks until lock is obtained
 
   virtual CORBA::Boolean try_lock (CosConcurrencyControl::lock_mode mode,
-				   CORBA::Environment &env);
+                                   CORBA::Environment &env);
   // Tries to acquire this lock. If it is not possible to acquire the
   // lock, false is returned
 
   virtual void unlock (CosConcurrencyControl::lock_mode mode,
-		       CORBA::Environment &env);
+                       CORBA::Environment &env);
   // Releases this lock.
 
   virtual void change_mode (CosConcurrencyControl::lock_mode held_mode,
-			    CosConcurrencyControl::lock_mode new_mode,
-			    CORBA::Environment &env);
+                            CosConcurrencyControl::lock_mode new_mode,
+                            CORBA::Environment &env);
   // Changes the mode of this lock.
 
   // = Debugging methods

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -73,12 +73,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: ast_concrete_type.hh, utl_exprlist.hh, ast_type.hh,
-**		 ast_decl.hh
+**               ast_decl.hh
 **
 ** USE: Included from ast.hh
 */
 
-class	AST_Array : public virtual AST_ConcreteType {
+class   AST_Array : public virtual AST_ConcreteType {
 public:
   // Operations
 
@@ -90,28 +90,28 @@ public:
   // Data Accessors
   unsigned long n_dims();
   AST_Expression **dims();
-  void		   set_dims(AST_Expression **, unsigned long);
-  AST_Type	  *base_type();
-  void		   set_base_type(AST_Type *nbt);
+  void             set_dims(AST_Expression **, unsigned long);
+  AST_Type        *base_type();
+  void             set_base_type(AST_Type *nbt);
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_Array, AST_ConcreteType);
   DEF_NARROW_FROM_DECL(AST_Array);
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
 private:
   // Data
-  unsigned long			pd_n_dims;	// How many dimensions?
-  AST_Expression		**pd_dims;	// Their expressions
-  AST_Type			*pd_base_type;	// Base type of array
+  unsigned long                 pd_n_dims;      // How many dimensions?
+  AST_Expression                **pd_dims;      // Their expressions
+  AST_Type                      *pd_base_type;  // Base type of array
 
   // Operations
 
   // Compute how many dimensions
-  AST_Expression	       **compute_dims(UTL_ExprList *dims,
-					     unsigned long ndims);
+  AST_Expression               **compute_dims(UTL_ExprList *dims,
+                                             unsigned long ndims);
 };
 
 #endif           // _AST_ARRAY_AST_ARRAY_HH

@@ -14,10 +14,15 @@
 //
 // ============================================================================
 
-#if !defined (_NOTIFIER_HANDLER_H)
+#ifndef _NOTIFIER_HANDLER_H
 #define _NOTIFIER_HANDLER_H
 
 #include "ace/CORBA_Handler.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Event_Comm_i.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/CosNamingC.h"

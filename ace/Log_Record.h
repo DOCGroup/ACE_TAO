@@ -17,14 +17,15 @@
 // These need to go outside of the #ifdef to avoid problems with
 // circular dependencies...
 #include "ace/ACE.h"
+
 #include "ace/Log_Priority.h"
 
-#ifndef ACE_LACKS_PRAGMA_ONCE
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#if !defined (ACE_LOG_RECORD_H)
+#ifndef ACE_LOG_RECORD_H
 #define ACE_LOG_RECORD_H
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Log_Record
 {

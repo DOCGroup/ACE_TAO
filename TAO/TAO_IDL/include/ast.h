@@ -78,43 +78,43 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from idl.hh
 */
 
-#include	"utl_scoped_name.h"	// Define UTL_ScopedName
+#include        "utl_scoped_name.h"     // Define UTL_ScopedName
 
-#include	"ast_decl.h"		// class AST_Decl
+#include        "ast_decl.h"            // class AST_Decl
 
-#include	"ast_expression.h"	// class AST_Expression
+#include        "ast_expression.h"      // class AST_Expression
 
-#include	"utl_scope.h"		// class UTL_Scope
+#include        "utl_scope.h"           // class UTL_Scope
 
-#include	"ast_type.h"		// class AST_Type
-#include	"ast_concrete_type.h"	// class AST_ConcreteType
-#include	"ast_predefined_type.h"// class AST_PredefinedType
-#include	"ast_module.h"		// class AST_Module
-#include	"ast_root.h"		// class AST_Root
-#include	"ast_interface.h"	// class AST_Interface
-#include	"ast_interface_fwd.h"	// class AST_InterfaceFwd
-#include	"ast_structure.h"	// class AST_Structure
-#include	"ast_exception.h"	// class AST_Exception
-#include	"ast_enum.h"		// class AST_Enum
-#include	"ast_operation.h"	// class AST_Operation
-#include	"ast_field.h"		// class AST_Field
-#include	"ast_argument.h"	// class AST_Argument
-#include	"ast_attribute.h"	// class AST_Attribute
-#include	"ast_union.h"		// class AST_Union
-#include	"ast_union_branch.h"	// class AST_UnionBranch
-#include	"ast_union_label.h"	// class AST_UnionLabel
-#include	"ast_constant.h"	// class AST_Constant
-#include	"ast_enum_val.h"	// class AST_EnumVal
-#include	"ast_array.h"		// class AST_Array
-#include	"ast_sequence.h"	// class AST_Sequence
-#include	"ast_string.h"		// class AST_String
-#include	"ast_typedef.h"	// class AST_Typedef
+#include        "ast_type.h"            // class AST_Type
+#include        "ast_concrete_type.h"   // class AST_ConcreteType
+#include        "ast_predefined_type.h"// class AST_PredefinedType
+#include        "ast_module.h"          // class AST_Module
+#include        "ast_root.h"            // class AST_Root
+#include        "ast_interface.h"       // class AST_Interface
+#include        "ast_interface_fwd.h"   // class AST_InterfaceFwd
+#include        "ast_structure.h"       // class AST_Structure
+#include        "ast_exception.h"       // class AST_Exception
+#include        "ast_enum.h"            // class AST_Enum
+#include        "ast_operation.h"       // class AST_Operation
+#include        "ast_field.h"           // class AST_Field
+#include        "ast_argument.h"        // class AST_Argument
+#include        "ast_attribute.h"       // class AST_Attribute
+#include        "ast_union.h"           // class AST_Union
+#include        "ast_union_branch.h"    // class AST_UnionBranch
+#include        "ast_union_label.h"     // class AST_UnionLabel
+#include        "ast_constant.h"        // class AST_Constant
+#include        "ast_enum_val.h"        // class AST_EnumVal
+#include        "ast_array.h"           // class AST_Array
+#include        "ast_sequence.h"        // class AST_Sequence
+#include        "ast_string.h"          // class AST_String
+#include        "ast_typedef.h" // class AST_Typedef
 #include        "ast_native.h"          // class AST_Native
 
-#include	"utl_list.h"		// class UTL_List
-#include	"utl_strlist.h"	// class UTL_StrList
-#include	"utl_exprlist.h"	// class UTL_ExprList
+#include        "utl_list.h"            // class UTL_List
+#include        "utl_strlist.h" // class UTL_StrList
+#include        "utl_exprlist.h"        // class UTL_ExprList
 
-#include	"ast_generator.h"	// class AST_Generator
+#include        "ast_generator.h"       // class AST_Generator
 
 #endif           // _AST_AST_HH

@@ -6,6 +6,10 @@
 
 #include "ace/Task.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 /*
   This is our basic thread-pool Task.  We have a choice of pool size
   on the open() and the usual svc() and close() methods.

@@ -15,7 +15,7 @@
 //  addresses into easy to use, safe and portable classes.
 //
 // = AUTHOR
-//    Peter E Mellquist 
+//    Peter E Mellquist
 //
 // ============================================================================
 
@@ -24,37 +24,42 @@
   Hewlett-Packard Company
 
   ATTENTION: USE OF THIS SOFTWARE IS SUBJECT TO THE FOLLOWING TERMS.
-  Permission to use, copy, modify, distribute and/or sell this software 
-  and/or its documentation is hereby granted without fee. User agrees 
-  to display the above copyright notice and this license notice in all 
-  copies of the software and any documentation of the software. User 
-  agrees to assume all liability for the use of the software; Hewlett-Packard 
-  makes no representations about the suitability of this software for any 
-  purpose. It is provided "AS-IS without warranty of any kind,either express 
-  or implied. User hereby grants a royalty-free license to any and all 
-  derivatives based upon this software code base. 
+  Permission to use, copy, modify, distribute and/or sell this software
+  and/or its documentation is hereby granted without fee. User agrees
+  to display the above copyright notice and this license notice in all
+  copies of the software and any documentation of the software. User
+  agrees to assume all liability for the use of the software; Hewlett-Packard
+  makes no representations about the suitability of this software for any
+  purpose. It is provided "AS-IS without warranty of any kind,either express
+  or implied. User hereby grants a royalty-free license to any and all
+  derivatives based upon this software code base.
 =====================================================================*/
 
 //----[ includes ]-----------------------------------------------------
 // ACE OS Adaption layer
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "asnmp/smival.h"
 #include "asnmp/octet.h"
 
-//----[ enumerated types ] --------------------------------  
+//----[ enumerated types ] --------------------------------
 enum address_lengths {
    IPV4LEN=4,
    UDPIPV4LEN=6,
    IPV6LEN=16,
    UDPIPV6LEN=18,
    IPXLEN=10,
-   IPXSOCKLEN=12, 
+   IPXSOCKLEN=12,
    NETBIOSLEN=16,
    APPLETKLEN=3,
    DECNETLEN=2,
    MACLEN=6,
    HASH0=19,
-   HASH1=13, 
+   HASH1=13,
    HASH2=7,
    MAX_ADDR_SZ=20,
    MAX_DISPLAY_SZ=MAXHOSTNAMELEN+1
@@ -74,28 +79,28 @@ enum addr_type {
   type_invalid
 };
 
-// TODO: get rest of nb service types added here 
+// TODO: get rest of nb service types added here
 enum nb_service {
   nb_workstation = 0x0, nb_server = 0x20
 };
 
 //---[ forward declarations ]-----------------------------------------
-class GenAddress; 
+class GenAddress;
 class UdpAddress;
 class IpxSockAddress;
 class NetbiosAddress;
 class SIPAddress; // aka ipv6
 
-// TODO: 
+// TODO:
 // class AtmE164Address;
 
 
 //--------------------------------------------------------------------
 //----[ Address class ]-----------------------------------------------
 //--------------------------------------------------------------------
-class  ACE_Export Address: public  SnmpSyntax 
+class  ACE_Export Address: public  SnmpSyntax
   // = TITLE
-  //     Defines the member functions for the abstract base class 
+  //     Defines the member functions for the abstract base class
   //     Address. An Address is a unique network endpoint.
 {
 
@@ -140,13 +145,13 @@ public:
    // overloaded <=, is an address less than or equal to a string?
 
    virtual operator const char *() const = 0;
-   // overloaded const char * cast 
+   // overloaded const char * cast
 
-  virtual int valid() const;            
+  virtual int valid() const;
   // verify the is the address object constructed ok
 
-  virtual void to_octet(OctetStr& octet) const = 0; 
-  // return a suitable buffer to contain the address 
+  virtual void to_octet(OctetStr& octet) const = 0;
+  // return a suitable buffer to contain the address
 
   virtual SmiUINT32 get_syntax() = 0;
   // (pure virtual) syntax type
@@ -160,7 +165,7 @@ public:
   virtual SnmpSyntax *clone() const = 0;
   // create a new instance of this Value
 
-  virtual addr_type get_type() const = 0; 
+  virtual addr_type get_type() const = 0;
   // return the type of address
 
   virtual SnmpSyntax& operator=( SnmpSyntax &val) = 0;
@@ -173,7 +178,7 @@ public:
 protected:
   int valid_flag;
   // state of constructed object (TRUE/FALSE)
-  unsigned char address_buffer[MAX_ADDR_SZ]; 
+  unsigned char address_buffer[MAX_ADDR_SZ];
   // addr internal representation
 
   virtual int parse_address( const char * inaddr) =0;
@@ -192,11 +197,11 @@ protected:
 //-----------------------------------------------------------------------
 //---------[ IPv4 Address Class ]----------------------------------------
 //-----------------------------------------------------------------------
-class ACE_Export IpAddress : public Address 
+class ACE_Export IpAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class IpAddress
   //     An IP Version 4 Address is 4 bytes long and consists of a
-  //     Network, Sub Network, and host component. 
+  //     Network, Sub Network, and host component.
 {
 public:
   IpAddress( const char *inaddr = "");
@@ -246,13 +251,13 @@ public:
   // is this the loopback address? 127.0.0.1/loopback/1.0.0.127.in-addr.arpa
 
   int is_multicast() const;
-  // determine if this is a multicast address 
+  // determine if this is a multicast address
 
   int is_broadcast() const;
-  // determine if this a broadcast address 
+  // determine if this a broadcast address
 
   int is_private() const;
-  // per RFC 1597,  private addresses are:: 10, 172.16, and 192.168.0 
+  // per RFC 1597,  private addresses are:: 10, 172.16, and 192.168.0
 
   virtual void to_octet(OctetStr& octet) const;
   // convert address into octet string format in network byte order
@@ -264,12 +269,12 @@ protected:
   // friendly name storage
 
   int  iv_friendly_name_status_;
-  // did resolver call work? some addrs won't resolve 
+  // did resolver call work? some addrs won't resolve
 
   virtual int parse_address( const char *inaddr);
   // redefined parse address
   // specific to IP addresses
-   
+
   virtual void format_output();
   // redefined format output
   // specific to IP addresses
@@ -295,7 +300,7 @@ protected:
 //--------------[ DNS Iterator Class ]------------------------------------
 //------------------------------------------------------------------------
 
-class ACE_Export Address_Iter 
+class ACE_Export Address_Iter
   // = TITLE
   //     Defines routines to obtain information on a hostname/FQDN
   //     such as multiple addresses
@@ -314,9 +319,9 @@ public:
 
 private:
   Address_Iter(const Address_Iter&);
-  int valid_;		       // ctor status
-  int count_;			// number of addresses
-  char **entry_;		// ptr to current address
+  int valid_;                  // ctor status
+  int count_;                   // number of addresses
+  char **entry_;                // ptr to current address
   struct hostent lookupResult_;
   ACE_HOSTENT_DATA buffer_;
   int query_dns(const char *hostname);
@@ -325,7 +330,7 @@ private:
 //------------------------------------------------------------------------
 //---------[ UDP/IPv4 Address Class ]-------------------------------------
 //------------------------------------------------------------------------
-class  ACE_Export UdpAddress : public IpAddress 
+class  ACE_Export UdpAddress : public IpAddress
   // = TITLE
   //     Defines the member functions for the concrete class UdpAddress
   //     A Udp Address consists of an IP Version 4 Address (IpAddress)
@@ -370,14 +375,14 @@ public:
   void set_port( const unsigned short p);
   // set the port number
 
-  unsigned short get_port() const; 
+  unsigned short get_port() const;
   // get the port number
 
   virtual addr_type get_type() const;
   // return the type
 
 protected:
-  char output_buffer[MAX_DISPLAY_SZ];           
+  char output_buffer[MAX_DISPLAY_SZ];
   // output buffer
 
   virtual int parse_address( const char *inaddr);
@@ -393,10 +398,10 @@ protected:
 //-------------------------------------------------------------------------
 //---------[ 802.3 MAC Address Class ]-------------------------------------
 //-------------------------------------------------------------------------
-class  ACE_Export MacAddress : public Address 
+class  ACE_Export MacAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class MacAddress.
-  //     A Media Access Control Address consists of 48 bits as defined 
+  //     A Media Access Control Address consists of 48 bits as defined
   //     in IEEE 802.3 specifications.
 {
 public:
@@ -410,7 +415,7 @@ public:
   // construct a MacAddress with a GenAddress
 
   ~MacAddress();
-  // destructor 
+  // destructor
 
   SmiUINT32 get_syntax();
   // syntax type
@@ -421,7 +426,7 @@ public:
   MacAddress& operator=( const MacAddress &macaddress);
   // assignment to another IpAddress object overloaded
 
-  SnmpSyntax *clone() const; 
+  SnmpSyntax *clone() const;
   // create a new instance of this Value
 
   virtual char *to_string();
@@ -437,10 +442,10 @@ public:
   // return a hash key
 
   virtual void to_octet(OctetStr& octet) const;
-  // return byte array of the mac address 
+  // return byte array of the mac address
 
 protected:
-  char output_buffer[MAX_DISPLAY_SZ];           
+  char output_buffer[MAX_DISPLAY_SZ];
   // output buffer containing string representation of object
 
   virtual int parse_address( const char *inaddr);
@@ -453,10 +458,10 @@ protected:
 //------------------------------------------------------------------------
 //---------[ Netbios Address Class ]--------------------------------------
 //------------------------------------------------------------------------
-class  ACE_Export NetbiosAddress : public Address 
+class  ACE_Export NetbiosAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class NetbiosAddress.
-  //     The IBM/Microsoft address for NETBIOS, NETBEUI protocol transport. 
+  //     The IBM/Microsoft address for NETBIOS, NETBEUI protocol transport.
 {
 public:
 
@@ -464,15 +469,15 @@ public:
    // default constructor with string arg
 
    NetbiosAddress( const char *inaddr, nb_service svc);
-   // set name and service type 
+   // set name and service type
 
-   NetbiosAddress( const NetbiosAddress& nbaddr); 
+   NetbiosAddress( const NetbiosAddress& nbaddr);
    // copy constructor
 
-   NetbiosAddress( const GenAddress& genaddr); 
+   NetbiosAddress( const GenAddress& genaddr);
    // construct with a GenAddress
-   
-   ~NetbiosAddress(); 
+
+   ~NetbiosAddress();
 
    virtual char *to_string();
 
@@ -490,20 +495,20 @@ public:
    virtual SmiUINT32 get_syntax();
    // syntax type
 
-   SnmpSyntax& operator=( SnmpSyntax &val); 
+   SnmpSyntax& operator=( SnmpSyntax &val);
    // copy an instance of this Value
 
-   SnmpSyntax *clone() const; 
+   SnmpSyntax *clone() const;
    // create a new instance of this Value
 
    virtual void to_octet(OctetStr& octet) const;
-   // output byte buffer containing netbios name 
+   // output byte buffer containing netbios name
 
 protected:
   void InitNBAddr(const char *inaddr);
-  char output_buffer[MAX_DISPLAY_SZ];           
+  char output_buffer[MAX_DISPLAY_SZ];
 
-  virtual void format_output(); 
+  virtual void format_output();
   // output buffer to hold string representation
   virtual int parse_address( const char  *inaddr);
   virtual addr_type get_type() const;
@@ -512,7 +517,7 @@ protected:
 //------------------------------------------------------------------------
 //---------[ DecNet Address Class ]---------------------------------------
 //------------------------------------------------------------------------
-class  ACE_Export DecNetAddress : public Address 
+class  ACE_Export DecNetAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class DecNetAddress.
   //     DecNet Phase ? address consists of two octets (CISCO-TC.my)
@@ -520,45 +525,45 @@ class  ACE_Export DecNetAddress : public Address
   public:
    DecNetAddress( const char *inaddr = "");
    // default constructor with string arg
- 
+
    DecNetAddress( const DecNetAddress& decaddr);
    // copy constructor
- 
+
    DecNetAddress( const GenAddress& genaddr);
    // construct with a GenAddress
- 
+
    ~DecNetAddress();
- 
+
    virtual char *to_string();
- 
+
    DecNetAddress& operator=( const DecNetAddress &decaddr);
 
    virtual void to_octet(OctetStr& octet) const;
-   // convert address into octet string format 2 bytes of decnet address 
- 
+   // convert address into octet string format 2 bytes of decnet address
+
    virtual operator const char *() const;
    // const char * operator overloaded for streaming output
- 
+
    virtual SmiUINT32 get_syntax();
    // syntax type
- 
+
    SnmpSyntax& operator=( SnmpSyntax &val);
    // copy an instance of this Value
- 
+
    SnmpSyntax *clone() const;
    // create a new instance of this Value
 
-   protected:  
+   protected:
    virtual int parse_address( const char *inaddr);
    virtual addr_type get_type() const;
    virtual void format_output();
-   char output_buffer[MAX_DISPLAY_SZ];           
+   char output_buffer[MAX_DISPLAY_SZ];
 };
 
 //------------------------------------------------------------------------
 //---------[ AppleTalk Address Class ]------------------------------------
 //------------------------------------------------------------------------
-class  ACE_Export AppleTalkAddress :  public Address 
+class  ACE_Export AppleTalkAddress :  public Address
   // = TITLE
   //     Defines the member functions for the concrete class DecNetAddress.
   //     DecNet Phase ? address consists of two octets (CISCO-TC.my)
@@ -566,21 +571,21 @@ class  ACE_Export AppleTalkAddress :  public Address
   public:
   AppleTalkAddress( const char *inaddr = "");
    // default constructor with string arg
- 
+
    AppleTalkAddress( const AppleTalkAddress& atkaddr);
    // copy constructor
- 
+
    AppleTalkAddress( const GenAddress& genaddr);
    // construct with a GenAddress
- 
+
    ~AppleTalkAddress();
- 
+
    virtual char *to_string();
- 
+
    AppleTalkAddress& operator=( const AppleTalkAddress &atkaddr);
- 
+
    virtual void to_octet(OctetStr& octet) const;
-   // convert address into octet string format 3 bytes of atk address 
+   // convert address into octet string format 3 bytes of atk address
 
    char get_host_address() const;
    // get the host part of the address
@@ -593,30 +598,30 @@ class  ACE_Export AppleTalkAddress :  public Address
 
    void set_net_address(const short atknet);
    // set the host 2 byte atk  network address
-   
+
    virtual operator const char *() const;
    // const char * operator overloaded for streaming output
- 
+
    virtual SmiUINT32 get_syntax();
    // syntax type
- 
+
    SnmpSyntax& operator=( SnmpSyntax &val);
    // copy an instance of this Value
- 
+
    SnmpSyntax *clone() const;
    // create a new instance of this Value
- 
+
    private:
    virtual int parse_address( const char *inaddr);
    virtual addr_type get_type() const;
    virtual void format_output();
-   char output_buffer[MAX_DISPLAY_SZ];           
+   char output_buffer[MAX_DISPLAY_SZ];
 };
 
 //------------------------------------------------------------------------
 //---------[ IPX Address Class ]------------------------------------------
 //------------------------------------------------------------------------
-class ACE_Export IpxAddress : public Address 
+class ACE_Export IpxAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class IpxAddress.
   //     Novell's IPX (version ?) network protocol endpoint
@@ -632,12 +637,12 @@ public:
   // construct with a GenAddress
 
   ~IpxAddress();
-  // destructor 
+  // destructor
 
   virtual SmiUINT32 get_syntax();
   // syntax type
 
-  SnmpSyntax& operator=( SnmpSyntax &val); 
+  SnmpSyntax& operator=( SnmpSyntax &val);
   // copy an instance of this Value
 
   IpxAddress& operator=( const IpxAddress &ipxaddress);
@@ -646,7 +651,7 @@ public:
   int get_hostid( MacAddress& mac);
   // get the host id portion of an ipx address
 
-  SnmpSyntax *clone() const; 
+  SnmpSyntax *clone() const;
   // create a new instance of this Value
 
   virtual char *to_string();
@@ -659,13 +664,13 @@ public:
   // return the type
 
   virtual void to_octet(OctetStr& octet) const;
-  // return byte sequence containing ipx address 
+  // return byte sequence containing ipx address
 
 protected:
   char separator;
   // ipx format separator {:,/}
 
-  char output_buffer[MAX_DISPLAY_SZ];           
+  char output_buffer[MAX_DISPLAY_SZ];
   // output buffer to hold string representation
 
   virtual int parse_address( const char  *inaddr);
@@ -681,10 +686,10 @@ protected:
 //------------------------------------------------------------------------
 //---------[ IpxSock Address Class ]--------------------------------------
 //------------------------------------------------------------------------
-class ACE_Export IpxSockAddress : public IpxAddress 
+class ACE_Export IpxSockAddress : public IpxAddress
   // = TITLE
   //     Defines the member functions for the concrete class IpxAddress.
-  //     Novell's IPX (version ?) network protocol endpoint 
+  //     Novell's IPX (version ?) network protocol endpoint
 {
 public:
   IpxSockAddress( const char *inaddr = "");
@@ -706,7 +711,7 @@ public:
   virtual SmiUINT32 get_syntax();
   // syntax type
 
-  SnmpSyntax& operator=( SnmpSyntax &val); 
+  SnmpSyntax& operator=( SnmpSyntax &val);
   // copy an instance of this Value
 
   IpxSockAddress& operator=( const IpxSockAddress &ipxaddr);
@@ -731,7 +736,7 @@ public:
   // return the type
 
 protected:
-  char output_buffer[MAX_DISPLAY_SZ];           
+  char output_buffer[MAX_DISPLAY_SZ];
   // output buffer to hold string representation of object
 
   virtual int parse_address( const char  *inaddr);
@@ -745,7 +750,7 @@ protected:
 //-------------------------------------------------------------------------
 //--------[ Generic Address ]----------------------------------------------
 //-------------------------------------------------------------------------
-class ACE_Export GenAddress : public Address 
+class ACE_Export GenAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class GenAddress.
   //     This class attempts to determine an address type given a char string.
@@ -786,12 +791,12 @@ public:
 
   virtual void to_octet(OctetStr& octet) const;
   // return the address as a octet sequence
- 
+
 protected:
   Address *address;
   // pointer to a a concrete address
 
-  char output_buffer[MAX_DISPLAY_SZ];           
+  char output_buffer[MAX_DISPLAY_SZ];
   // output buffer of objects value
 
   virtual int parse_address( const char *addr);

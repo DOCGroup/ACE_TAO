@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PM_CLIENT_H)
+#ifndef _PM_CLIENT_H
 #define _PM_CLIENT_H
 
 #include "Protocol_Manager.h"
@@ -22,7 +22,7 @@
 class PM_Client : public Protocol_Manager
 {
   // = TITLE
-  //   Provides the client side of the friend manager lookup table abstraction. 
+  //   Provides the client side of the friend manager lookup table abstraction.
 public:
   PM_Client (void);
   virtual ~PM_Client (void);

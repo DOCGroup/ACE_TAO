@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    CLASSIX_Port_Default.h
 //
@@ -18,13 +18,18 @@
 #define ACE_CLASSIX_PORT_DEFAULT_H
 
 #include "ace/Singleton.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/CLASSIX/CLASSIX_Port.h"
 
 class ACE_CLASSIX_Port_Default : public ACE_CLASSIX_Port
 {
     // = TITLE
     //    Implements the address wrapper of an actor's default port.
-    //    
+    //
     // = DESCRIPTION
     //   This corresponds to the address of an actor's default port
     //   which does not change
@@ -35,12 +40,12 @@ class ACE_CLASSIX_Port_Default : public ACE_CLASSIX_Port
     //   of this class is a singleton.  The protected constructor and the
     //   friendship with the ACE_Singleton preventys this class from being
     //   instantiated by other classes.
-    //   
+    //
     // = NOTE
     //
     // = SEE ALSO
     //   <ACE_CLASSIX_PORT>
-    //   
+    //
     friend class ACE_Singleton<ACE_CLASSIX_Port_Default, ACE_SYNCH_NULL_MUTEX>;
 
     /* -----------------------------------------------------*/
@@ -66,7 +71,7 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 /* ------------------------------------------------------------------------- */
-typedef ACE_Singleton<ACE_CLASSIX_Port_Default, ACE_SYNCH_NULL_MUTEX> 
+typedef ACE_Singleton<ACE_CLASSIX_Port_Default, ACE_SYNCH_NULL_MUTEX>
         ACE_CLASSIX_DEFAULT_PORT;
 /* ------------------------------------------------------------------------- */
 

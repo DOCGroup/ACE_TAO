@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_STRUCTURE_H)
+#ifndef BE_STRUCTURE_H
 #define BE_STRUCTURE_H
 
 /*

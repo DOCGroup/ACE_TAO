@@ -1,11 +1,15 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_HEADERS_H)
+#ifndef JAWS_HEADERS_H
 #define JAWS_HEADERS_H
 
 #include "JAWS/Export.h"
 #include "ace/Containers.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Use scenario --
 

@@ -5,6 +5,11 @@
 #define LOGGING_HANDLER_H
 
 #include "ace/INET_Addr.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Stream.h"
 #include "ace/Reactor.h"
 

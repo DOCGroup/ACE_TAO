@@ -3,7 +3,7 @@
 // $Id$
 //
 
-#if !defined (TAO_BE_VISITOR_SEQUENCE_H)
+#ifndef TAO_BE_VISITOR_SEQUENCE_H
 #define TAO_BE_VISITOR_SEQUENCE_H
 
 #include "be_visitor_decl.h"

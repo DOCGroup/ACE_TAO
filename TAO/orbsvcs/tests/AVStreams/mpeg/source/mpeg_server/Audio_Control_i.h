@@ -1,7 +1,7 @@
 /* _*_ C++ _*_ */
 //$Id$
 
-#if !defined (_AV_AUDIO_CONTROL_H)
+#ifndef _AV_AUDIO_CONTROL_H
 #define _AV_AUDIO_CONTROL_H
 
 #include "mpeg_shared/Audio_ControlS.h"
@@ -19,7 +19,7 @@ public:
 
   ~Audio_Control_i (void);
   // Default destructor
-  
+
   int create_handlers (void);
   // creates the data and sig handlers.
 
@@ -53,23 +53,23 @@ public:
   virtual void close (
       CORBA::Environment &_tao_environment
       ) ;
-  
+
   void change_state (Audio_Control_State *state);
   // Changes the state of the Audio Control object.
-  
+
   Audio_Control_State *get_state (void);
   // gets the state.
 private:
   int register_handlers (void);
-  
+
   ACE_Reactor *reactor_;
-  
+
   Audio_Control_State *state_;
-  
+
   Audio_Data_Handler *data_handler_;
-  
+
   Audio_Sig_Handler *sig_handler_;
-  
+
   ACE_SOCK_CODgram dgram_;
 
   Audio_Global *audio_global_;

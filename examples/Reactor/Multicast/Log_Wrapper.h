@@ -4,26 +4,31 @@
 // log_wrapper.h
 
 #include "ace/Profile_Timer.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
-#if !defined (_LOG_WRAPPER_H)
+#ifndef _LOG_WRAPPER_H
 #define _LOG_WRAPPER_H
 
-class Log_Wrapper 
+class Log_Wrapper
   // = TITLE
   //      Provide a wrapper around sending log messages via IP
-  //      multicast. 
+  //      multicast.
 {
 public:
   Log_Wrapper (void);
   ~Log_Wrapper (void);
 
   // = Types of logging messages.
-  enum ACE_Log_Priority 
+  enum ACE_Log_Priority
   {
     LOG_MESSAGE,
-    LOG_DEBUG, 
+    LOG_DEBUG,
     LOG_WARNING,
     LOG_ERROR,
     LOG_EMERG
@@ -31,12 +36,12 @@ public:
 
   int open (const int port, const char* mcast_addr);
   // get an object reference from an orbixd
-  
+
   int log_message (ACE_Log_Priority type, char *message);
   // send a string to the logger
 
   // = Format of the logging record.
-  struct ACE_Log_Record 
+  struct ACE_Log_Record
   {
     u_long sequence_number;
     ACE_Log_Priority type;

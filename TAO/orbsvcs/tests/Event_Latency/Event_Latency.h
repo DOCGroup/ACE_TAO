@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ACE Event Service Benchmarks
-// 
+//
 // = FILENAME
 //    Latency.h
 //
@@ -17,10 +17,15 @@
 //
 // ============================================================================
 
-#if !defined (EVENT_LATENCY_H)
+#ifndef EVENT_LATENCY_H
 #define EVENT_LATENCY_H
 
 #include "ace/SString.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 
@@ -38,7 +43,7 @@ public:
   // a "null" push routine, for measuring aggregate timing.
 
   int open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
-		     const char *my_name);
+                     const char *my_name);
   // Uses the name server to obtain a reference to the <supplier_name>
   // and registers with channel to receive notifications from the
   // supplier.  Also registers to receive shutdown messages from the
@@ -56,7 +61,7 @@ public:
 
 // (not protected to allow short-circuiting) protected:
   virtual void push (const RtecEventComm::EventSet &events,
-		     CORBA::Environment &);
+                     CORBA::Environment &);
   // If the <events>[0] is a notification, prints out the data from
   // the supplier.  If its a shutdown message, the consumer
   // disconnects from the channel.
@@ -133,7 +138,7 @@ public:
   class Consumer : public POA_RtecEventComm::PushConsumer {
   public:
     virtual void push (const RtecEventComm::EventSet &events,
-		       CORBA::Environment &);
+                       CORBA::Environment &);
     // The channel pushed some events to us.
 
     virtual void disconnect_push_consumer (CORBA::Environment &);
@@ -148,14 +153,14 @@ public:
   };
 
   Latency_Supplier (const u_int total_messages,
-		    CORBA::Long supplier_id,
+                    CORBA::Long supplier_id,
                     const int timestamp = 0);
   // Construction.  Requires the total number of messages to be
   // sent.  If the timestamp flag is enabled, then events are
   // timestamped, e.g., for use in measuring jitter.
 
   int open_supplier (RtecEventChannelAdmin::EventChannel_ptr event_channel,
-		     const char *name, int master);
+                     const char *name, int master);
   // Registers with the name server under the given <name>.  Also
   // connects to the Event Channel as a supplier of notifications and
   // shutdown messages.  If <master> != 0, then the supplier will
@@ -169,7 +174,7 @@ public:
   // The channel is disconnecting.
 
   void push (const RtecEventComm::EventSet &events,
-	     CORBA::Environment &);
+             CORBA::Environment &);
   // Takes a timestamp and then pushes event_ to all consumers, either
   // directly, or via a channel.
 

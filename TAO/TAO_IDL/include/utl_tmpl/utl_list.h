@@ -42,8 +42,8 @@
  *INDIRECT AND CONSEQUENTIAL DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGES.
  *
- *SunSoft, Inc.  
- *2550 Garcia Avenue 
+ *SunSoft, Inc.
+ *2550 Garcia Avenue
  *Mountain View, California  94043
  *
  *
@@ -69,7 +69,7 @@
 template<class L, class T> class UTL_ListActiveIterator;
 
 template<class L, class T>
-class	UTL_List
+class   UTL_List
 {
 public:
   // Operations
@@ -79,62 +79,62 @@ public:
   virtual ~UTL_List() {}
 
   // Smash last cdr pointer in "this" with l
-  void			nconc(L *l);
+  void                  nconc(L *l);
 
   // Copy the list starting at "this"
-  L			*copy();
+  L                     *copy();
 
   // Get list element
-  T			*head();
+  T                     *head();
 
   // Get next list
-  L			*tail();
+  L                     *tail();
 
   // Set the list element
-  void			set_head(T *t);
+  void                  set_head(T *t);
 
   // Set next list
-  void			set_tail(L *l);
+  void                  set_tail(L *l);
 
   // How long is this list?
-  long			length();
+  long                  length();
 
 private:
   // Data
-  T			*pd_car_data;	// The next list
-  L			*pd_cdr_data;	// The next list
+  T                     *pd_car_data;   // The next list
+  L                     *pd_cdr_data;   // The next list
 
   // Operations
-  long			list_length(long n); // How long is it?
+  long                  list_length(long n); // How long is it?
 
   // Friend class
-  friend class		UTL_ListActiveIterator<L, T>; // Friend class
+  friend class          UTL_ListActiveIterator<L, T>; // Friend class
 
 };
 
 // Active iterator for lists
 template<class L, class T>
-class	UTL_ListActiveIterator
+class   UTL_ListActiveIterator
 {
 public:
   // Operations
 
   // Constructor(s)
-  UTL_ListActiveIterator(UTL_List<L, T> *s);	
+  UTL_ListActiveIterator(UTL_List<L, T> *s);
   virtual ~UTL_ListActiveIterator() {}
 
   // Get current item
-  T			*item();
+  T                     *item();
 
   // Get next list
-  virtual void		next();
+  virtual void          next();
 
   // Are we at the end of this list?
-  virtual long		is_done();
+  virtual long          is_done();
 
 protected:
   // Data
-  UTL_List<L, T>		*source;		// On what to iterate?
+  UTL_List<L, T>                *source;                // On what to iterate?
 };
 
 #endif           // _UTL_LIST_UTL_LIST_HH

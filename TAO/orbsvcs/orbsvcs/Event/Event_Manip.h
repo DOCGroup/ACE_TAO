@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_EC_EVENT_MANIP_H)
+#ifndef TAO_EC_EVENT_MANIP_H
 #define TAO_EC_EVENT_MANIP_H
 
 #include "orbsvcs/RtecEventCommC.h"
@@ -44,7 +44,7 @@ public:
 
   ~TAO_EC_Event_Set (void);
   // destructor
-  
+
   CORBA::ULong length (void) const;
   // The length.
 
@@ -71,7 +71,7 @@ private:
 private:
   CORBA::ULong length_;
   // The length of the buffer.
-  
+
   RtecEventComm::Event* buffer_;
   // The buffer.
 
@@ -79,7 +79,7 @@ private:
   // Synchronize access to the class internals.
 
   CORBA::ULong refcnt_;
-  // The reference count.  
+  // The reference count.
 };
 
 class TAO_ORBSVCS_Export TAO_EC_Event
@@ -104,7 +104,7 @@ public:
                 CORBA::ULong index);
   // Constructor, we assume ownership (i.e. duplicate and release the
   // set)
-  
+
   ~TAO_EC_Event (void);
   // Destructor
 

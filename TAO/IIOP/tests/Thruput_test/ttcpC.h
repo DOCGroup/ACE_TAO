@@ -56,10 +56,10 @@ public:
     ShortSeq();
     ShortSeq(CORBA_ULong max);
     ShortSeq(CORBA_ULong max,
-	     CORBA_ULong length,
-	     CORBA_Short *value,
-	     CORBA_Boolean release = 0
-	     );
+             CORBA_ULong length,
+             CORBA_Short *value,
+             CORBA_Boolean release = 0
+             );
     //    ShortSeq(const ShortSeq&);
     ~ShortSeq();
     CORBA_ULong maximum() const;
@@ -81,10 +81,10 @@ public:
     LongSeq();
     LongSeq(CORBA_ULong max);
     LongSeq(CORBA_ULong max,
-	    CORBA_ULong length,
-	    CORBA_Long *value,
-	    CORBA_Boolean release = 0
-	    );
+            CORBA_ULong length,
+            CORBA_Long *value,
+            CORBA_Boolean release = 0
+            );
     //    LongSeq(const LongSeq&);
     ~LongSeq();
     CORBA_ULong maximum() const;
@@ -106,10 +106,10 @@ public:
     DoubleSeq();
     DoubleSeq(CORBA_ULong max);
     DoubleSeq(CORBA_ULong max,
-	      CORBA_ULong length,
-	      CORBA_Double *value,
-	      CORBA_Boolean release = 0
-	      );
+              CORBA_ULong length,
+              CORBA_Double *value,
+              CORBA_Boolean release = 0
+              );
     //    DoubleSeq(const DoubleSeq&);
     ~DoubleSeq();
     CORBA_ULong maximum() const;
@@ -131,10 +131,10 @@ public:
     CharSeq();
     CharSeq(CORBA_ULong max);
     CharSeq(CORBA_ULong max,
-	    CORBA_ULong length,
-	    CORBA_Char *value,
-	    CORBA_Boolean release = 0
-	    );
+            CORBA_ULong length,
+            CORBA_Char *value,
+            CORBA_Boolean release = 0
+            );
     //    CharSeq(const CharSeq&);
     ~CharSeq();
     CORBA_ULong maximum() const;
@@ -156,10 +156,10 @@ public:
     OctetSeq();
     OctetSeq(CORBA_ULong max);
     OctetSeq(CORBA_ULong max,
-	     CORBA_ULong length,
-	     CORBA_Octet *value,
-	     CORBA_Boolean release = 0
-	     );
+             CORBA_ULong length,
+             CORBA_Octet *value,
+             CORBA_Boolean release = 0
+             );
     //    OctetSeq(const OctetSeq&);
     ~OctetSeq();
     CORBA_ULong maximum() const;
@@ -181,10 +181,10 @@ public:
     StructSeq();
     StructSeq(CORBA_ULong max);
     StructSeq(CORBA_ULong max,
-	      CORBA_ULong length,
-	      PerfStruct *value,
-	      CORBA_Boolean release = 0
-	      );
+              CORBA_ULong length,
+              PerfStruct *value,
+              CORBA_Boolean release = 0
+              );
     //    StructSeq(const StructSeq&);
     ~StructSeq();
     CORBA_ULong maximum() const;

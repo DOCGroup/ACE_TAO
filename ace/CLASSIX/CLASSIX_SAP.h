@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //     ace
-// 
+//
 // = FILENAME
 //     CLASSIX_SAP.h
 //
 // = AUTHOR(S)
 //     Nokia Telecommunications
-// 
+//
 // ============================================================================
 
 #ifndef ACE_CLASSIX_SAP_H
@@ -20,28 +20,32 @@
 /* ------------------------------------------------------------------------- */
 #include "ace/CLASSIX/CLASSIX_Port.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_CLASSIX_SAP
     // = TITLE
     //   Class implementing the SAP over a Chorus port.
-    //   
+    //
     // = DESCRIPTION
     //   A SAP has a port which is referred to as the local port.
     //   This class provides methods to manipulate this port.
     //
     //   The SAP will always put the port in DISABLED state on exit.
-    //   
+    //
     //   In CLASSIX, a local SAP is always a port, a peer SAP can be
     //   a port or a group of port.  This class is for local SAP and
     //   <ACE_Peer_SAP> is for peer SAP.
     //
     // = SEE ALSO
     //   <ACE_Peer_SAP>
-    //   
+    //
 {
  public:
     enum
     {
-	DEFAULT_PRIORITY = 10
+        DEFAULT_PRIORITY = 10
     };
 
     // = INITIALIZATION
@@ -106,7 +110,7 @@ class ACE_CLASSIX_SAP
     int control(u_int, /* mode */ int /* site */ );
     // Interface for CLASSIX' send mode
 #endif
-	
+
 
     // = HELPER
     void dump(void) const;
@@ -117,7 +121,7 @@ class ACE_CLASSIX_SAP
 
  protected:
 #if 0
-    virtual set_mode_(u_int = K_BROADMODE); /* theMode */ 
+    virtual set_mode_(u_int = K_BROADMODE); /* theMode */
     // Sets the addressing mode with the current setting of coTarget
     virtual set_mode_(u_int, /* mode */ int /* site */);
     // Sets the addressing mode as well as the coTarget

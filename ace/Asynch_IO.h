@@ -30,7 +30,7 @@
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \

@@ -5,16 +5,16 @@
 //
 // = LIBRARY
 //    none
-// 
+//
 // = FILENAME
 //    URL_Array_Helper.h
 //
 // = AUTHOR
 //    Nanbor Wang
-// 
+//
 // ============================================================================
 
-#if !defined (ACE_URL_ARRAY_HELPER_H)
+#ifndef ACE_URL_ARRAY_HELPER_H
 #define ACE_URL_ARRAY_HELPER_H
 
 // ### These template functions are probably named improperly.

@@ -6,6 +6,10 @@
 
 #include "ace/Message_Block.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 /*
   We'll start by defining a basic unit of work that can be put into
   the message queue.  The threads in the pool will expect to find one
@@ -71,8 +75,8 @@ protected:
 
 /*
   We derive a Message_Block from ACE_Message_Block and teach it about
-  our Unit_Of_Work object.  When our task's svc() method pulls a block 
-  out of the queue, it can then invoke the virtual methods of the work 
+  our Unit_Of_Work object.  When our task's svc() method pulls a block
+  out of the queue, it can then invoke the virtual methods of the work
   object safely.  In this implementation we've also retained the
   original ACE_Message_Block functionallity so that we can use the
   underlying ACE_Data_Block objects to store data other than our
@@ -96,7 +100,7 @@ public:
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) Message_Block ctor 0x%x for 0x%x\n", (void *) this, data_));
         }
 
-	~Message_Block(void)
+        ~Message_Block(void)
         {
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) Message_Block dtor 0x%x for 0x%x\n", (void *) this, data_));
             delete data_;

@@ -64,8 +64,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#ifndef	_UTL_IDENTIFIER_UTL_IDENTIFIER_HH
-#define	_UTL_IDENTIFIER_UTL_IDENTIFIER_HH
+#ifndef _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
+#define _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
 
 // utl_identifier.hh
 //
@@ -77,8 +77,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-#include	"idl_fwd.h"
-#include	"utl_string.h"
+#include        "idl_fwd.h"
+#include        "utl_string.h"
 
 class Identifier
 {
@@ -94,20 +94,20 @@ public:
 
   // =Operations
 
-  char	*get_string ();
+  char  *get_string ();
   // get the underlying string
 
-  long	compare (Identifier *other);
+  long  compare (Identifier *other);
   // compare with other Identifier
 
   // =Dumping
 
-  virtual void	dump (ostream &o);
+  virtual void  dump (ostream &o);
   // dump to an ostream
 
   private:
     // Storage for data
-    char	*pv_string;
+    char        *pv_string;
 };
 
-#endif		// _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
+#endif          // _UTL_IDENTIFIER_UTL_IDENTIFIER_HH

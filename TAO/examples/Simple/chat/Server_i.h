@@ -18,7 +18,7 @@
 //
 // ===========================================================
 
-#if !defined (SERVER_I_H)
+#ifndef SERVER_I_H
 #define SERVER_I_H
 
 #include "Broadcaster_i.h"
@@ -39,8 +39,8 @@ public:
  // Destructor.
 
  int init (int argc,
-	    char *argv[],
-	    CORBA::Environment &env);
+            char *argv[],
+            CORBA::Environment &env);
  // Initialize the server.
 
  int run (CORBA::Environment &env);

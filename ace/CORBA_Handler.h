@@ -19,11 +19,12 @@
 #define ACE_CORBA_HANDLER_H
 
 #include "ace/Service_Config.h"
-#include "ace/Pipe.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Pipe.h"
 
 #if (defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)) || (defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0))
 #define EXCEPTIONS

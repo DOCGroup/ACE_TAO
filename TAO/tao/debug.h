@@ -6,7 +6,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    debug.h
 //
@@ -15,11 +15,11 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
-// 
+//
 // ============================================================================
 
 #ifndef TAO_DEBUG_H
-#define	TAO_DEBUG_H
+#define TAO_DEBUG_H
 
 // These are global to simplify is use by other code, very much in
 // particular by getopt and related argument-parsing code
@@ -28,7 +28,7 @@
 // such as process initialization.  They're treated as immutable.
 
 // 0 to ??; higher == more
-extern TAO_Export u_int TAO_debug_level;	
+extern TAO_Export u_int TAO_debug_level;
 
 // debug messages on (1) or off (0)
 extern TAO_Export u_int TAO_orbdebug;
@@ -46,35 +46,35 @@ extern TAO_Export char *TAO_debug_filter;
 #include <string.h>
 
 // 1, 2, 3 argument messages -- generic
-#define dmsg(s)		{ if (TAO_debug_level) dmsg_v (s); }
-#define dmsg1(s,a1)	{ if (TAO_debug_level) dmsg_v (s, a1); }
-#define dmsg2(s,a1,a2)	{ if (TAO_debug_level) dmsg_v (s, a1, a2); }
+#define dmsg(s)         { if (TAO_debug_level) dmsg_v (s); }
+#define dmsg1(s,a1)     { if (TAO_debug_level) dmsg_v (s, a1); }
+#define dmsg2(s,a1,a2)  { if (TAO_debug_level) dmsg_v (s, a1, a2); }
 
 // dump CORBA_Exception, if any, with id tag
-#define dexc(env,s)	{ if (TAO_debug_level && env.exception ()) \
-				_dmsg_x (env, s); }
+#define dexc(env,s)     { if (TAO_debug_level && env.exception ()) \
+                                _dmsg_x (env, s); }
 
 // dump POSIX error indication, if any, with ID tag
-#define dperror(str)	{ if (TAO_debug_level) dmsg_v ("%s: %s", \
-				str, strerror (errno)); }
+#define dperror(str)    { if (TAO_debug_level) dmsg_v ("%s: %s", \
+                                str, strerror (errno)); }
 
 // dump socket error indication, if any, with ID tag
 #if defined (_WINSOCKAPI_)
-#define	dsockerr(s) { if (TAO_debug_level) dmsg_v ("%s:  winsock error %d", \
+#define dsockerr(s) { if (TAO_debug_level) dmsg_v ("%s:  winsock error %d", \
                                                    s, WSAGetLastError()); }
 #else
-#define	dsockerr(s)	dperror(s)
+#define dsockerr(s)     dperror(s)
 #endif /* _WINSOCKAPI_ */
 
-#else	/* !DEBUG */
+#else   /* !DEBUG */
 #define dmsg(s) { }
 #define dmsg1(s,a1) { }
 #define dmsg2(s,a1,a2) { }
 
 #define dexc(env, s) { }
-#define	dperror(s) { }
-#define	dsockerr(s) { }
-#endif	/* DEBUG */
+#define dperror(s) { }
+#define dsockerr(s) { }
+#endif  /* DEBUG */
 
 // These don't compile out; you must #ifdef them.  This is done
 // intentionally since CPP macros have severe limits, and varargs _(or
@@ -94,7 +94,7 @@ extern void TAO_Export dmsg_filter (const char *filter,
 // Filter according to TAO_debug_level instead of category.  (For
 // speed, test against TAO_debug_level directly.)
 
-extern void TAO_Export dmsg_filter (u_int level, 
+extern void TAO_Export dmsg_filter (u_int level,
                                     const char *fmt,
                                     ...);
 

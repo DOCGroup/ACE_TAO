@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    FILE.h
 //
 // = AUTHOR
 //    Gerhard Lenzer
-// 
+//
 // ============================================================================
 
 #ifndef ACE_FILE_H
 #define ACE_FILE_H
 
 #include "ace/IO_SAP.h"
-#include "ace/FILE_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/FILE_Addr.h"
 
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
@@ -42,7 +43,7 @@ class ACE_Export ACE_FILE_Info
   // = TITLE
   //     Abstracts basic OS FILE information.
 public:
-  mode_t mode_;	
+  mode_t mode_;
   // mode of file
 
   nlink_t nlink_;
@@ -56,7 +57,7 @@ class ACE_Export ACE_FILE : public ACE_IO_SAP
 {
   // = TITLE
   //     Defines the member functions for the base class of the
-  //     ACE_FILE abstraction. 
+  //     ACE_FILE abstraction.
 public:
   int close (void);
   // Close down the ACE_FILE
@@ -86,7 +87,7 @@ public:
 
 protected:
   ACE_FILE (void);
-  // Ensure that this class is an abstract base class 
+  // Ensure that this class is an abstract base class
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

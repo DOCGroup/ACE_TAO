@@ -5,29 +5,30 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SPIPE_Addr.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SPIPE_ADDR_H
 #define ACE_SPIPE_ADDR_H
 
 #include "ace/Addr.h"
-#include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE.h"
 
 class ACE_Export ACE_SPIPE_Addr : public ACE_Addr
 {
   // = TITLE
-  //    Defines the SVR4 STREAM pipe address family address format. 
+  //    Defines the SVR4 STREAM pipe address family address format.
 public:
   // = Initialization methods.
   ACE_SPIPE_Addr (void);
@@ -53,14 +54,14 @@ public:
 
 #if defined (UNICODE)
   virtual int addr_to_string (wchar_t *addr, size_t) const;
-  // Transform the current address into string format. 
+  // Transform the current address into string format.
 
   virtual int string_to_addr (const wchar_t *addr);
   // Transform the string into the current addressing format.
 #endif /* UNICODE */
 
   virtual int addr_to_string (char *addr, size_t) const;
-  // Transform the current address into string format. 
+  // Transform the current address into string format.
 
   virtual int string_to_addr (const char *addr);
   // Transform the string into the current addressing format.
@@ -73,7 +74,7 @@ public:
   // Check for inequality
 
   // = SPIPE-specific address operations
-  LPCTSTR get_path_name (void) const; 
+  LPCTSTR get_path_name (void) const;
   // Pathname of rendezvous point in file system.
 
   uid_t user_id (void) const;
@@ -94,7 +95,7 @@ public:
 
 private:
   // = This struct contains security attributes.
-  struct 
+  struct
   {
     gid_t gid_;
     // Group id.

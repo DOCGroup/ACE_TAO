@@ -4,7 +4,7 @@
  *
  * Component =   PCC2 Timer Header File
  *
- * Synopsis  =   
+ * Synopsis  =
  *
  *
  ****************************************************************
@@ -35,7 +35,7 @@ pccTimer2Reset();
 void
 pccTimer2Start();
 void
-pccTimer2Stop(); 
+pccTimer2Stop();
 void
 pccTimerInit();
 
@@ -46,7 +46,7 @@ pccTimerInit();
 #define PCC2_TIMER2_START                0x10
 #define PCC2_TIMER2_STOP                 0x20
 #define PCC2_TIMER2_BPOINT                0x40
-#define PCC2_USERDATA             	0x100
+#define PCC2_USERDATA                   0x100
 
 #include <c_defs.h>
 #include <mem/chAddr_f.h>

@@ -6,26 +6,27 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Service_Manager.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SERVICE_MANAGER_H
 #define ACE_SERVICE_MANAGER_H
 
 #include "ace/SOCK_Stream.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/Service_Object.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Service_Manager : public ACE_Service_Object
 {
@@ -34,7 +35,7 @@ class ACE_Export ACE_Service_Manager : public ACE_Service_Object
   //     configured in an <ACE_Service_Repository>.
   //
   // = DESCRIPTION
-  //     This 
+  //     This
 public:
   // = Initialization and termination hooks.
   ACE_Service_Manager (void);
@@ -59,7 +60,7 @@ protected:
 
   // = Scheduling hooks.
   virtual int suspend (void);
-  virtual int resume (void);  
+  virtual int resume (void);
 
   void dump (void) const;
   // Dump the state of an object.

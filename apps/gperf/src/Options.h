@@ -21,10 +21,14 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
-#if !defined (OPTIONS_H)
+#ifndef OPTIONS_H
 #define OPTIONS_H
 
 #include "ace/Log_Msg.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_GPERF)
 
@@ -52,7 +56,7 @@ enum Option_Type
   CONSTANT     = 0400000,       // Make the generated tables readonly (const).
   CPLUSPLUS    = 01000000,      // Generate C++ code.
   C            = 02000000,      // Generate C code.
-  ENUM	       = 04000000,      // Use enum for constants.
+  ENUM         = 04000000,      // Use enum for constants.
   STRCASECMP   = 010000000,     // Use the case insensitive comparison.
   OPTIMIZE     = 020000000,     // Assume all input keywords are in the keyset.
   ADA          = 040000000,     // Generate Ada code.

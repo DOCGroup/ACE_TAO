@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -76,10 +76,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 #ifndef String
-#define String	UTL_String
-#endif	// String
+#define String  UTL_String
+#endif  // String
 
-class	UTL_String
+class   UTL_String
 {
   // =TITLE
   //  UTL_String
@@ -101,7 +101,7 @@ public:
   // construct using a pointer to UTL_String
 
   virtual ~UTL_String (void) {}
-  // destructor 
+  // destructor
 
   // =AST Dumping
 
@@ -122,21 +122,21 @@ public:
 
 private:
   // Data
-  char		*p_str;		
+  char          *p_str;
   // Storage for characters
 
-  char		*c_str;		
+  char          *c_str;
   // Canonicalized string
 
-  unsigned long	len;		
+  unsigned long len;
   // How long is string
 
-  unsigned long alloced;	
+  unsigned long alloced;
   // How much allocated
 
   // =Private helper operations
 
-  void canonicalize (void);	
+  void canonicalize (void);
   // Compute canonical representation
 };
 

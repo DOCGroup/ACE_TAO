@@ -30,7 +30,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
@@ -55,21 +55,21 @@ public:
   CORBA_DynAny_var (CORBA_DynAny_ptr);
   CORBA_DynAny_var (const CORBA_DynAny_var &); // copy constructor
   ~CORBA_DynAny_var (void); // destructor
-  
+
   CORBA_DynAny_var &operator= (CORBA_DynAny_ptr);
   CORBA_DynAny_var &operator= (const CORBA_DynAny_var &);
   CORBA_DynAny_ptr operator-> (void) const;
-  
+
   operator const CORBA_DynAny_ptr &() const;
   operator CORBA_DynAny_ptr &();
-  
+
   // These are here to satisfy g++'s way of dealing with templates.
   // These operators are not called in any TAO code but are
   // given a semi-reasonable definition anyway.
   CORBA::Boolean operator == (const CORBA_DynAny_var &);
   CORBA::Boolean operator != (const CORBA_DynAny_var &);
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   CORBA_DynAny_ptr in (void) const;
   CORBA_DynAny_ptr &inout (void);
   CORBA_DynAny_ptr &out (void);
@@ -99,7 +99,7 @@ public:
   operator CORBA_DynAny_ptr &();
   CORBA_DynAny_ptr &ptr (void);
   CORBA_DynAny_ptr operator-> (void);
-  
+
 private:
   CORBA_DynAny_ptr &ptr_;
 };
@@ -118,7 +118,7 @@ public:
   static CORBA_DynAny_ptr _duplicate (CORBA_DynAny_ptr obj);
   static CORBA_DynAny_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynAny_ptr _nil (void);
@@ -166,7 +166,7 @@ public:
 
   class InvalidValue;
   typedef InvalidValue *InvalidValue_ptr;
-  
+
 #endif /* end #if !defined */
 
 
@@ -203,7 +203,7 @@ public:
 
   class TypeMismatch;
   typedef TypeMismatch *TypeMismatch_ptr;
-  
+
 #endif /* end #if !defined */
 
 
@@ -240,7 +240,7 @@ public:
 
   class InvalidSeq;
   typedef InvalidSeq *InvalidSeq_ptr;
-  
+
 #endif /* end #if !defined */
 
 
@@ -272,202 +272,202 @@ public:
 #endif /* end #if !defined */
 
   virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
       CORBA::Environment::default_environment ()
      );
   virtual void assign (
       CORBA_DynAny_ptr dyn_any,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void from_any (
       const CORBA::Any & value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Any * to_any (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void destroy (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA_DynAny_ptr copy (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
       CORBA::Environment::default_environment ()
      );
   virtual void insert_boolean (
       CORBA::Boolean value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_octet (
       CORBA::Octet value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_char (
       CORBA::Char value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_short (
       CORBA::Short value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_ushort (
       CORBA::UShort value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_long (
       CORBA::Long value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_ulong (
       CORBA::ULong value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_float (
       CORBA::Float value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_double (
       CORBA::Double value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_string (
       const char * value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_reference (
       CORBA::Object_ptr value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_typecode (
       CORBA::TypeCode_ptr value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_longlong (
       CORBA::LongLong value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_ulonglong (
       CORBA::ULongLong value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_wchar (
       CORBA::WChar value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void insert_any (
       const CORBA::Any & value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean get_boolean (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Octet get_octet (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Char get_char (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Short get_short (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::UShort get_ushort (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Long get_long (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::ULong get_ulong (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Float get_float (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Double get_double (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual char * get_string (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Object_ptr get_reference (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::TypeCode_ptr get_typecode (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::LongLong get_longlong (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::ULongLong get_ulonglong (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::WChar get_wchar (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Any * get_any (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA_DynAny_ptr current_component (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean next (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean seek (
       CORBA::Long index,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void rewind (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynAny (void); // default constructor
-  CORBA_DynAny (STUB_Object *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  CORBA_DynAny (STUB_Object *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~CORBA_DynAny (void);
@@ -501,14 +501,14 @@ public:
   CORBA_DynEnum_var (CORBA_DynEnum_ptr);
   CORBA_DynEnum_var (const CORBA_DynEnum_var &); // copy constructor
   ~CORBA_DynEnum_var (void); // destructor
-  
+
   CORBA_DynEnum_var &operator= (CORBA_DynEnum_ptr);
   CORBA_DynEnum_var &operator= (const CORBA_DynEnum_var &);
   CORBA_DynEnum_ptr operator-> (void) const;
-  
+
   operator const CORBA_DynEnum_ptr &() const;
   operator CORBA_DynEnum_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_DynEnum_ptr in (void) const;
   CORBA_DynEnum_ptr &inout (void);
   CORBA_DynEnum_ptr &out (void);
@@ -538,7 +538,7 @@ public:
   operator CORBA_DynEnum_ptr &();
   CORBA_DynEnum_ptr &ptr (void);
   CORBA_DynEnum_ptr operator-> (void);
-  
+
 private:
   CORBA_DynEnum_ptr &ptr_;
 };
@@ -557,39 +557,39 @@ public:
   static CORBA_DynEnum_ptr _duplicate (CORBA_DynEnum_ptr obj);
   static CORBA_DynEnum_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynEnum_ptr _nil (void);
 
   virtual char * value_as_string (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void value_as_string (
       const char * value_as_string,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::ULong value_as_ulong (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void value_as_ulong (
       CORBA::ULong value_as_ulong,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynEnum (void); // default constructor
-  CORBA_DynEnum (STUB_Object *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  CORBA_DynEnum (STUB_Object *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~CORBA_DynEnum (void);
@@ -621,16 +621,16 @@ public:
   NameValuePair_var (NameValuePair *);
   NameValuePair_var (const NameValuePair_var &); // copy constructor
   ~NameValuePair_var (void); // destructor
-  
+
   NameValuePair_var &operator= (NameValuePair *);
   NameValuePair_var &operator= (const NameValuePair_var &);
   NameValuePair *operator-> (void);
   const NameValuePair *operator-> (void) const;
-  
+
   operator const NameValuePair &() const;
   operator NameValuePair &();
   operator NameValuePair &() const;
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const NameValuePair &in (void) const;
   NameValuePair &inout (void);
   NameValuePair *&out (void);
@@ -652,7 +652,7 @@ public:
   operator NameValuePair *&();
   NameValuePair *&ptr (void);
   NameValuePair *operator-> (void);
-  
+
 private:
   NameValuePair *&ptr_;
   // assignment from T_var not allowed
@@ -669,16 +669,16 @@ class _TAO_Unbounded_Sequence_NameValuePairSeq : public TAO_Unbounded_Base_Seque
 {
 public:
   // = Initialization and termination methods.
-  
+
   _TAO_Unbounded_Sequence_NameValuePairSeq (void) // Default constructor.
   {
   }
-  
+
   _TAO_Unbounded_Sequence_NameValuePairSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, allocbuf (maximum))
   {
   }
-  
+
   _TAO_Unbounded_Sequence_NameValuePairSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     NameValuePair *data,
@@ -686,26 +686,26 @@ public:
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   _TAO_Unbounded_Sequence_NameValuePairSeq (const _TAO_Unbounded_Sequence_NameValuePairSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     NameValuePair *tmp1 = allocbuf (this->maximum_);
     NameValuePair * const tmp2 = ACE_reinterpret_cast (NameValuePair * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     this->buffer_ = tmp1;
   }
-  
+
   _TAO_Unbounded_Sequence_NameValuePairSeq &operator= (const _TAO_Unbounded_Sequence_NameValuePairSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -718,23 +718,23 @@ public:
     }
     else
       this->buffer_ = allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     NameValuePair *tmp1 = ACE_reinterpret_cast (NameValuePair *, this->buffer_);
     NameValuePair * const tmp2 = ACE_reinterpret_cast (NameValuePair * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   ~_TAO_Unbounded_Sequence_NameValuePairSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
+
   // = Accessors.
   NameValuePair &operator[] (CORBA::ULong i)
   // operator []
@@ -743,7 +743,7 @@ public:
     NameValuePair* tmp = ACE_reinterpret_cast(NameValuePair*,this->buffer_);
     return tmp[i];
   }
-  
+
   const NameValuePair &operator[] (CORBA::ULong i) const
   // operator []
   {
@@ -751,51 +751,51 @@ public:
     NameValuePair * const tmp = ACE_reinterpret_cast (NameValuePair* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // = Static operations.
   static NameValuePair *allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     return new NameValuePair[size];
   }
-  
+
   static void freebuf (NameValuePair *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   virtual void _allocate_buffer (CORBA::ULong length)
   {
     NameValuePair* tmp = allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       NameValuePair *old = ACE_reinterpret_cast (NameValuePair *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   virtual void _deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     NameValuePair *tmp = ACE_reinterpret_cast (NameValuePair *,this->buffer_);
-    
+
     freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   NameValuePair *get_buffer (CORBA::Boolean orphan = 0)
   {
     NameValuePair *result = 0;
@@ -827,12 +827,12 @@ public:
     }
     return result;
   }
-  
+
   const NameValuePair *get_buffer (void) const
   {
     return ACE_reinterpret_cast(const NameValuePair * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   void replace (CORBA::ULong max,
   CORBA::ULong length,
   NameValuePair *data,
@@ -848,7 +848,7 @@ public:
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 };
 
 #endif /* end #if !defined */
@@ -861,21 +861,21 @@ public:
 // NameValuePairSeq
 // *************************************************************
 
-class  NameValuePairSeq : public 
+class  NameValuePairSeq : public
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
        || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_NameValuePairSeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<NameValuePair>
-#endif /* AHETI */ 
+#endif /* AHETI */
 {
 public:
   NameValuePairSeq (void); // default ctor
   NameValuePairSeq (CORBA::ULong max); // uses max size
   NameValuePairSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    NameValuePair *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    NameValuePair *buffer,
     CORBA::Boolean release=0
   );
   NameValuePairSeq (const NameValuePairSeq &); // copy ctor
@@ -900,17 +900,17 @@ public:
   NameValuePairSeq_var (NameValuePairSeq *);
   NameValuePairSeq_var (const NameValuePairSeq_var &); // copy constructor
   ~NameValuePairSeq_var (void); // destructor
-  
+
   NameValuePairSeq_var &operator= (NameValuePairSeq *);
   NameValuePairSeq_var &operator= (const NameValuePairSeq_var &);
   NameValuePairSeq *operator-> (void);
   const NameValuePairSeq *operator-> (void) const;
-  
+
   operator const NameValuePairSeq &() const;
   operator NameValuePairSeq &();
   operator NameValuePairSeq &() const;
   NameValuePair &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const NameValuePairSeq &in (void) const;
   NameValuePairSeq &inout (void);
   NameValuePairSeq *&out (void);
@@ -940,7 +940,7 @@ public:
   NameValuePairSeq *&ptr (void);
   NameValuePairSeq *operator-> (void);
   NameValuePair &operator[] (CORBA::ULong index);
-  
+
 private:
   NameValuePairSeq *&ptr_;
   // assignment from T_var not allowed
@@ -972,14 +972,14 @@ public:
   CORBA_DynStruct_var (CORBA_DynStruct_ptr);
   CORBA_DynStruct_var (const CORBA_DynStruct_var &); // copy constructor
   ~CORBA_DynStruct_var (void); // destructor
-  
+
   CORBA_DynStruct_var &operator= (CORBA_DynStruct_ptr);
   CORBA_DynStruct_var &operator= (const CORBA_DynStruct_var &);
   CORBA_DynStruct_ptr operator-> (void) const;
-  
+
   operator const CORBA_DynStruct_ptr &() const;
   operator CORBA_DynStruct_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_DynStruct_ptr in (void) const;
   CORBA_DynStruct_ptr &inout (void);
   CORBA_DynStruct_ptr &out (void);
@@ -1009,7 +1009,7 @@ public:
   operator CORBA_DynStruct_ptr &();
   CORBA_DynStruct_ptr &ptr (void);
   CORBA_DynStruct_ptr operator-> (void);
-  
+
 private:
   CORBA_DynStruct_ptr &ptr_;
 };
@@ -1028,38 +1028,38 @@ public:
   static CORBA_DynStruct_ptr _duplicate (CORBA_DynStruct_ptr obj);
   static CORBA_DynStruct_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynStruct_ptr _nil (void);
 
   virtual char * current_member_name (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::TCKind current_member_kind (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual NameValuePairSeq * get_members (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void set_members (
       const NameValuePairSeq & value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynStruct (void); // default constructor
-  CORBA_DynStruct (STUB_Object *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  CORBA_DynStruct (STUB_Object *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~CORBA_DynStruct (void);
@@ -1093,14 +1093,14 @@ public:
   CORBA_DynUnion_var (CORBA_DynUnion_ptr);
   CORBA_DynUnion_var (const CORBA_DynUnion_var &); // copy constructor
   ~CORBA_DynUnion_var (void); // destructor
-  
+
   CORBA_DynUnion_var &operator= (CORBA_DynUnion_ptr);
   CORBA_DynUnion_var &operator= (const CORBA_DynUnion_var &);
   CORBA_DynUnion_ptr operator-> (void) const;
-  
+
   operator const CORBA_DynUnion_ptr &() const;
   operator CORBA_DynUnion_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_DynUnion_ptr in (void) const;
   CORBA_DynUnion_ptr &inout (void);
   CORBA_DynUnion_ptr &out (void);
@@ -1130,7 +1130,7 @@ public:
   operator CORBA_DynUnion_ptr &();
   CORBA_DynUnion_ptr &ptr (void);
   CORBA_DynUnion_ptr operator-> (void);
-  
+
 private:
   CORBA_DynUnion_ptr &ptr_;
 };
@@ -1149,55 +1149,55 @@ public:
   static CORBA_DynUnion_ptr _duplicate (CORBA_DynUnion_ptr obj);
   static CORBA_DynUnion_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynUnion_ptr _nil (void);
 
   virtual CORBA::Boolean set_as_default (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void set_as_default (
       CORBA::Boolean set_as_default,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA_DynAny_ptr discriminator (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::TCKind discriminator_kind (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA_DynAny_ptr member (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual char * member_name (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void member_name (
       const char * member_name,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::TCKind member_kind (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynUnion (void); // default constructor
-  CORBA_DynUnion (STUB_Object *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  CORBA_DynUnion (STUB_Object *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~CORBA_DynUnion (void);
@@ -1219,16 +1219,16 @@ class _TAO_Unbounded_Sequence_AnySeq : public TAO_Unbounded_Base_Sequence
 {
 public:
   // = Initialization and termination methods.
-  
+
   _TAO_Unbounded_Sequence_AnySeq (void) // Default constructor.
   {
   }
-  
+
   _TAO_Unbounded_Sequence_AnySeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, allocbuf (maximum))
   {
   }
-  
+
   _TAO_Unbounded_Sequence_AnySeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::Any *data,
@@ -1236,26 +1236,26 @@ public:
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   _TAO_Unbounded_Sequence_AnySeq (const _TAO_Unbounded_Sequence_AnySeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     CORBA::Any *tmp1 = allocbuf (this->maximum_);
     CORBA::Any * const tmp2 = ACE_reinterpret_cast (CORBA::Any * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     this->buffer_ = tmp1;
   }
-  
+
   _TAO_Unbounded_Sequence_AnySeq &operator= (const _TAO_Unbounded_Sequence_AnySeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -1268,23 +1268,23 @@ public:
     }
     else
       this->buffer_ = allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     CORBA::Any *tmp1 = ACE_reinterpret_cast (CORBA::Any *, this->buffer_);
     CORBA::Any * const tmp2 = ACE_reinterpret_cast (CORBA::Any * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   ~_TAO_Unbounded_Sequence_AnySeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
+
   // = Accessors.
   CORBA::Any &operator[] (CORBA::ULong i)
   // operator []
@@ -1293,7 +1293,7 @@ public:
     CORBA::Any* tmp = ACE_reinterpret_cast(CORBA::Any*,this->buffer_);
     return tmp[i];
   }
-  
+
   const CORBA::Any &operator[] (CORBA::ULong i) const
   // operator []
   {
@@ -1301,51 +1301,51 @@ public:
     CORBA::Any * const tmp = ACE_reinterpret_cast (CORBA::Any* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // = Static operations.
   static CORBA::Any *allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     return new CORBA::Any[size];
   }
-  
+
   static void freebuf (CORBA::Any *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   virtual void _allocate_buffer (CORBA::ULong length)
   {
     CORBA::Any* tmp = allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       CORBA::Any *old = ACE_reinterpret_cast (CORBA::Any *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   virtual void _deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     CORBA::Any *tmp = ACE_reinterpret_cast (CORBA::Any *,this->buffer_);
-    
+
     freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   CORBA::Any *get_buffer (CORBA::Boolean orphan = 0)
   {
     CORBA::Any *result = 0;
@@ -1377,12 +1377,12 @@ public:
     }
     return result;
   }
-  
+
   const CORBA::Any *get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::Any * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   void replace (CORBA::ULong max,
   CORBA::ULong length,
   CORBA::Any *data,
@@ -1398,7 +1398,7 @@ public:
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 };
 
 #endif /* end #if !defined */
@@ -1411,21 +1411,21 @@ public:
 // AnySeq
 // *************************************************************
 
-class  AnySeq : public 
+class  AnySeq : public
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
        || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_AnySeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<CORBA::Any>
-#endif /* AHETI */ 
+#endif /* AHETI */
 {
 public:
   AnySeq (void); // default ctor
   AnySeq (CORBA::ULong max); // uses max size
   AnySeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    CORBA::Any *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::Any *buffer,
     CORBA::Boolean release=0
   );
   AnySeq (const AnySeq &); // copy ctor
@@ -1450,17 +1450,17 @@ public:
   AnySeq_var (AnySeq *);
   AnySeq_var (const AnySeq_var &); // copy constructor
   ~AnySeq_var (void); // destructor
-  
+
   AnySeq_var &operator= (AnySeq *);
   AnySeq_var &operator= (const AnySeq_var &);
   AnySeq *operator-> (void);
   const AnySeq *operator-> (void) const;
-  
+
   operator const AnySeq &() const;
   operator AnySeq &();
   operator AnySeq &() const;
   CORBA::Any &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const AnySeq &in (void) const;
   AnySeq &inout (void);
   AnySeq *&out (void);
@@ -1490,7 +1490,7 @@ public:
   AnySeq *&ptr (void);
   AnySeq *operator-> (void);
   CORBA::Any &operator[] (CORBA::ULong index);
-  
+
 private:
   AnySeq *&ptr_;
   // assignment from T_var not allowed
@@ -1522,14 +1522,14 @@ public:
   CORBA_DynSequence_var (CORBA_DynSequence_ptr);
   CORBA_DynSequence_var (const CORBA_DynSequence_var &); // copy constructor
   ~CORBA_DynSequence_var (void); // destructor
-  
+
   CORBA_DynSequence_var &operator= (CORBA_DynSequence_ptr);
   CORBA_DynSequence_var &operator= (const CORBA_DynSequence_var &);
   CORBA_DynSequence_ptr operator-> (void) const;
-  
+
   operator const CORBA_DynSequence_ptr &() const;
   operator CORBA_DynSequence_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_DynSequence_ptr in (void) const;
   CORBA_DynSequence_ptr &inout (void);
   CORBA_DynSequence_ptr &out (void);
@@ -1559,7 +1559,7 @@ public:
   operator CORBA_DynSequence_ptr &();
   CORBA_DynSequence_ptr &ptr (void);
   CORBA_DynSequence_ptr operator-> (void);
-  
+
 private:
   CORBA_DynSequence_ptr &ptr_;
 };
@@ -1578,39 +1578,39 @@ public:
   static CORBA_DynSequence_ptr _duplicate (CORBA_DynSequence_ptr obj);
   static CORBA_DynSequence_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynSequence_ptr _nil (void);
 
   virtual CORBA::ULong length (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void length (
       CORBA::ULong length,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual AnySeq * get_elements (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void set_elements (
       const AnySeq & value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynSequence (void); // default constructor
-  CORBA_DynSequence (STUB_Object *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  CORBA_DynSequence (STUB_Object *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~CORBA_DynSequence (void);
@@ -1644,14 +1644,14 @@ public:
   CORBA_DynArray_var (CORBA_DynArray_ptr);
   CORBA_DynArray_var (const CORBA_DynArray_var &); // copy constructor
   ~CORBA_DynArray_var (void); // destructor
-  
+
   CORBA_DynArray_var &operator= (CORBA_DynArray_ptr);
   CORBA_DynArray_var &operator= (const CORBA_DynArray_var &);
   CORBA_DynArray_ptr operator-> (void) const;
-  
+
   operator const CORBA_DynArray_ptr &() const;
   operator CORBA_DynArray_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_DynArray_ptr in (void) const;
   CORBA_DynArray_ptr &inout (void);
   CORBA_DynArray_ptr &out (void);
@@ -1681,7 +1681,7 @@ public:
   operator CORBA_DynArray_ptr &();
   CORBA_DynArray_ptr &ptr (void);
   CORBA_DynArray_ptr operator-> (void);
-  
+
 private:
   CORBA_DynArray_ptr &ptr_;
 };
@@ -1700,30 +1700,30 @@ public:
   static CORBA_DynArray_ptr _duplicate (CORBA_DynArray_ptr obj);
   static CORBA_DynArray_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynArray_ptr _nil (void);
 
   virtual AnySeq * get_elements (
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual void set_elements (
       const AnySeq & value,
-      CORBA::Environment &_tao_environment = 
+      CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynArray (void); // default constructor
-  CORBA_DynArray (STUB_Object *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  CORBA_DynArray (STUB_Object *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~CORBA_DynArray (void);

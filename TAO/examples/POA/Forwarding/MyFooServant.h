@@ -13,7 +13,7 @@
 //
 //=============================================================================
 
-#if !defined (MYFOOSERVANT_H)
+#ifndef MYFOOSERVANT_H
 #define MYFOOSERVANT_H
 
 #include "FooS.h"
@@ -29,16 +29,16 @@ public:
                      PortableServer::POA_ptr poa_ptr,
                      CORBA::Long value,
                      CORBA::Object_ptr forward_to_ptr);
-  
+
   // Destructor
   virtual ~MyFirstFooServant (void);
-  
+
   //Returns the Default POA of this Servant object
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
   // Simple doit method
   virtual CORBA::Long doit (CORBA::Environment &env);
-  
+
   // Setup forwarding
   virtual void forward (CORBA::Environment &env);
 
@@ -61,13 +61,13 @@ public:
   MySecondFooServant (CORBA::ORB_ptr orb_ptr,
                       MyFooServantLocator *locator,
                       CORBA::Long value);
-  
+
   // Destructor
   virtual ~MySecondFooServant (void);
-  
+
   // Simple doit method
   virtual CORBA::Long doit (CORBA::Environment &env);
-  
+
   // Setup forwarding
   virtual void forward (CORBA::Environment &env);
 

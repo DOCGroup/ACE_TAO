@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    IPC_SAP.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_IPC_SAP_H
@@ -20,7 +20,7 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_IPC_SAP
@@ -33,7 +33,7 @@ public:
   // Default dtor.
 
   int control (int cmd, void *) const;
-  // Interface for ioctl. 
+  // Interface for ioctl.
 
   // = Common I/O handle options related to sockets.
 
@@ -48,10 +48,10 @@ public:
   // which is passed as the <value>.
 
   ACE_HANDLE get_handle (void) const;
-  // Get the underlying handle. 
+  // Get the underlying handle.
 
   void set_handle (ACE_HANDLE handle);
-  // Set the underlying handle. 
+  // Set the underlying handle.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -69,7 +69,7 @@ private:
   // Underlying I/O handle.
 
   static pid_t pid_;
-  // Cache the process ID. 
+  // Cache the process ID.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

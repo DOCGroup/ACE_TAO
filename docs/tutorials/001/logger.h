@@ -2,7 +2,7 @@
 // $Id$
 
 
-#if !defined (_CLIENT_HANDLER_H)
+#ifndef _CLIENT_HANDLER_H
 #define _CLIENT_HANDLER_H
 
 /*
@@ -10,6 +10,10 @@
   can register with a reactor.
  */
 #include "ace/Event_Handler.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/INET_Addr.h"
 
@@ -92,7 +96,7 @@ protected:
      */
     char buf[128];
     memset(buf,0,sizeof(buf));
-    
+
     /*
       Invoke the recv() method of the ACE_SOCK_Stream to get some data.  It will
       return -1 if there is an error.  Otherwise, it will return the number of bytes
@@ -114,7 +118,7 @@ protected:
     default:
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) from client: %s",buf));
     }
-  
+
     return 0;
   }
 
@@ -139,7 +143,7 @@ protected:
       Since we know we were dynamically allocated by the acceptor, now is a good
       time to get rid of ourselves.
      */
-    delete this;    
+    delete this;
 
     return 0;
   }
@@ -149,7 +153,7 @@ protected:
   /*
     Our peer connection.
    */
-  ACE_SOCK_Stream cli_stream_; 
+  ACE_SOCK_Stream cli_stream_;
 
   /*
     Our reactor (and our acceptor's reactor).

@@ -6,46 +6,47 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Typed_SV_Message_Queue.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_TYPED_MESSAGE_QUEUE_H
 #define ACE_TYPED_MESSAGE_QUEUE_H
 
 #include "ace/SV_Message_Queue.h"
-#include "ace/Typed_SV_Message.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Typed_SV_Message.h"
+
 template <class T>
-class ACE_Typed_SV_Message_Queue 
+class ACE_Typed_SV_Message_Queue
 {
   // = TITLE
   //    Defines the header file for the C++ wrapper for message queues.
-public: 
-  enum 
+public:
+  enum
   {
-    ACE_CREATE = IPC_CREAT, 
-    ACE_OPEN = 0, 
+    ACE_CREATE = IPC_CREAT,
+    ACE_OPEN = 0,
     ACE_NOWAIT = IPC_NOWAIT
   };
 
   // = Initialization and termination operations.
   ACE_Typed_SV_Message_Queue (void);
-  ACE_Typed_SV_Message_Queue (key_t external_id, 
-			      int create = ACE_OPEN,
-			      int perms = ACE_DEFAULT_FILE_PERMS);
-  int open (key_t external_id, 
-	    int create = ACE_OPEN,
-	    int perms = ACE_DEFAULT_FILE_PERMS);
+  ACE_Typed_SV_Message_Queue (key_t external_id,
+                              int create = ACE_OPEN,
+                              int perms = ACE_DEFAULT_FILE_PERMS);
+  int open (key_t external_id,
+            int create = ACE_OPEN,
+            int perms = ACE_DEFAULT_FILE_PERMS);
   int close (void);
   int remove (void);
   ~ACE_Typed_SV_Message_Queue (void);

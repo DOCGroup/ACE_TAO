@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_HT_SERVER_H)
+#ifndef _HT_SERVER_H
 #define _HT_SERVER_H
 
 #include "Hash_Table.h"

@@ -10,10 +10,15 @@
 //
 // ============================================================================
 
-#if !defined (ECT_CONSUMER_H)
+#ifndef ECT_CONSUMER_H
 #define ECT_CONSUMER_H
 
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/High_Res_Timer.h"
 #include "orbsvcs/Channel_Clients_T.h"
 
@@ -31,10 +36,10 @@ public:
                  int n_suppliers);
 
   void connect (const char* name,
-		int event_a,
-		int event_b,
-		RtecEventChannelAdmin::EventChannel_ptr ec,
-		CORBA::Environment& _env);
+                int event_a,
+                int event_b,
+                RtecEventChannelAdmin::EventChannel_ptr ec,
+                CORBA::Environment& _env);
   // This method connects the consumer to the EC.
 
   void disconnect (CORBA::Environment &_env);
@@ -44,7 +49,7 @@ public:
   // Print out the results
 
   virtual void push (const RtecEventComm::EventSet& events,
-		     CORBA::Environment &_env);
+                     CORBA::Environment &_env);
   virtual void disconnect_push_consumer (CORBA::Environment &);
   // The skeleton methods.
 
@@ -59,7 +64,7 @@ private:
   int n_suppliers_;
   // The number of suppliers that are feeding this consumer, we
   // terminate once we receive a shutdown event from each supplier.
-  
+
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC using this proxy.
 
@@ -101,7 +106,7 @@ private:
   // parse the command line args
 
   void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-			  CORBA::Environment &_env);
+                          CORBA::Environment &_env);
   void disconnect_consumers (CORBA::Environment &_env);
   // Connect and disconnect the consumers.
 

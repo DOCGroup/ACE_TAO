@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * dll.h: Handle dynamically linked libraries
- * 
+ *
  * Rob McCool
  */
 
@@ -66,7 +66,7 @@ DLHANDLE dll_open(char *libfn);
 
 
 /*
- * dll_findsym looks for a symbol with the given name in the library 
+ * dll_findsym looks for a symbol with the given name in the library
  * pointed to by the given handle. Returns a pointer to the named function.
  */
 

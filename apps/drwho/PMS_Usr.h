@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PMS_USR_H)
+#ifndef _PMS_USR_H
 #define _PMS_USR_H
 
 #include "PM_Server.h"
@@ -22,7 +22,7 @@
 class PMS_Usr : public PM_Server
 {
   // = TITLE
-  //   Provides the client's lookup table abstraction for `Usr' users... 
+  //   Provides the client's lookup table abstraction for `Usr' users...
 
 public:
   PMS_Usr (void);

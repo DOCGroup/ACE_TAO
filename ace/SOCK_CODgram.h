@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SOCK_CODgram.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SOCK_CODGRAM_H
 #define ACE_SOCK_CODGRAM_H
 
 #include "ace/SOCK_IO.h"
-#include "ace/Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Addr.h"
 
 class ACE_Export ACE_SOCK_CODgram : public ACE_SOCK_IO
 {
@@ -34,22 +35,22 @@ public:
   ACE_SOCK_CODgram (void);
   // Default constructor.
 
-  ACE_SOCK_CODgram (const ACE_Addr &remote_sap, 
-		    const ACE_Addr &local_sap = ACE_Addr::sap_any, 
-		    int protocol_family = PF_INET, 
-		    int protocol = 0,
-		    int reuse_addr = 0);
+  ACE_SOCK_CODgram (const ACE_Addr &remote_sap,
+                    const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                    int protocol_family = PF_INET,
+                    int protocol = 0,
+                    int reuse_addr = 0);
 
   ~ACE_SOCK_CODgram (void);
   // Default dtor.
 
   // Initiate a connected dgram.
 
-  int open (const ACE_Addr &remote_sap, 
- 	    const ACE_Addr &local_sap = ACE_Addr::sap_any, 
-	    int protocol_family = PF_INET, 
-	    int protocol = 0,
-	    int reuse_addr = 0);
+  int open (const ACE_Addr &remote_sap,
+            const ACE_Addr &local_sap = ACE_Addr::sap_any,
+            int protocol_family = PF_INET,
+            int protocol = 0,
+            int reuse_addr = 0);
   // Initiate a connected dgram.
 
   void dump (void) const;

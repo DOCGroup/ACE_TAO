@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_TYPEDEF_H)
+#ifndef BE_TYPEDEF_H
 #define BE_TYPEDEF_H
 
 /*

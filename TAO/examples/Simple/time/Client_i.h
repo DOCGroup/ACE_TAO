@@ -11,7 +11,7 @@
 //
 // = DESCRIPTION
 //    This class implements a simple CORBA client that access a Time
-//    server. 
+//    server.
 //
 // = AUTHORS
 //    Darrell Brunsch <brunsch@cs.wustl.edu>

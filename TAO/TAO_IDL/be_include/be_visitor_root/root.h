@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_ROOT_ROOT_H_)
+#ifndef _BE_VISITOR_ROOT_ROOT_H_
 #define _BE_VISITOR_ROOT_ROOT_H_
 
 class be_visitor_root : public be_visitor_scope

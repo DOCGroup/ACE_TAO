@@ -1,7 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_PIPELINE_HANDLER_H)
+#ifndef JAWS_PIPELINE_HANDLER_H
 #define JAWS_PIPELINE_HANDLER_H
 
 #include "JAWS_Pipeline.h"

@@ -6,24 +6,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    TLI.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_TLI_H
 #define ACE_TLI_H
 
 #include "ace/IPC_SAP.h"
-#include "ace/Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Addr.h"
 
 #if defined (ACE_HAS_TLI)
 
@@ -38,12 +39,12 @@ class ACE_Export ACE_TLI : public ACE_IPC_SAP
 {
   // = TITLE
   //     Defines the member functions for the base class of the
-  //     ACE_TLI  abstraction. 
+  //     ACE_TLI  abstraction.
 public:
   // = Initialization and termination methods.
-  ACE_HANDLE open (const char device[], 
-		   int oflag = O_RDWR, 
-		   struct t_info *info = 0);
+  ACE_HANDLE open (const char device[],
+                   int oflag = O_RDWR,
+                   struct t_info *info = 0);
   // Initialize a TLI endpoint.
 
   int close (void);
@@ -61,7 +62,7 @@ public:
   int snddis (struct t_call * = 0) const;
   int sndrel (void) const;
   int rcvrel (void) const;
- 
+
   int get_local_addr (ACE_Addr &) const;
   // Return our local endpoint address.
 

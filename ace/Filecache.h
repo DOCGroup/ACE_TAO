@@ -19,13 +19,14 @@
 #define ACE_FILECACHE_H
 
 #include "ace/Mem_Map.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch_T.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 enum ACE_Filecache_Flag
 {

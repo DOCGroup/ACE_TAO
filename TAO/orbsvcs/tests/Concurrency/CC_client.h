@@ -19,6 +19,11 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "orbsvcs/CosNamingC.h"
@@ -27,7 +32,7 @@
 #include "CC_command.h"
 #include "CC_command.tab.h"
 
-#if !defined(_CC_CLIENT_H_)
+#ifndef _CC_CLIENT_H_
 #define _CC_CLIENT_H_
 
 // Stuff to be used by the command file parser

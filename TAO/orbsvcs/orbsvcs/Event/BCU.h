@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ace ORB
-// 
+//
 // = FILENAME
 //    Benchmark Computation Units
 //
@@ -18,10 +18,15 @@
 //    numbers.
 // ============================================================================
 
-#if !defined (ACE_BCU_H)
+#ifndef ACE_BCU_H
 #define ACE_BCU_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/orbsvcs_export.h"
 
 

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -15,7 +15,7 @@
 #define __objndx_h
 
 /* Define maximum length of object name strings */
-#define OBJNDXNAMLEN	16
+#define OBJNDXNAMLEN    16
 
 /* Functions in objndx.c */
 extern void * objndx_create(int size, void (*freefunc)(void *));

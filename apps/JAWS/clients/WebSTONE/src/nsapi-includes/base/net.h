@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * net.h: system specific networking definitions
- * 
+ *
  * Rob McCool
  */
 
@@ -161,7 +161,7 @@ char *net_find_fqdn(struct hostent *p);
  * net_ip2host transforms the given textual IP number into a FQDN. If it
  * can't find a FQDN, it will return what it can get. Otherwise, NULL.
  *
- * verify is whether or not the function should verify the hostname it 
+ * verify is whether or not the function should verify the hostname it
  * gets. This takes an extra query but is safer for use in access control.
  */
 

@@ -10,14 +10,14 @@
 //    BS_Server.h
 //
 // = DESCRIPTION
-//    Provides the server's binary search lookup table abstraction. 
+//    Provides the server's binary search lookup table abstraction.
 //
 // = AUTHOR
 //    Douglas C. Schmidt
 //
 // ============================================================================
 
-#if !defined (_BS_SERVER_H)
+#ifndef _BS_SERVER_H
 #define _BS_SERVER_H
 
 #include "Binary_Search.h"
@@ -25,7 +25,7 @@
 class BS_Server : public Binary_Search
 {
   // = TITLE
-  //    Provides the server's binary search lookup table abstraction. 
+  //    Provides the server's binary search lookup table abstraction.
 public:
   // = Initialization.
   BS_Server (const char *packet);

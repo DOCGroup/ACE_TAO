@@ -5,20 +5,25 @@
 //
 // = LIBRARY
 //    ACE
-// 
+//
 // = FILENAME
 //    Token_Handler.h
 //
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu)
 //    Tim Harrison (harrison@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
-#if !defined (ACE_TOKEN_HANDLER_H)
+#ifndef ACE_TOKEN_HANDLER_H
 #define ACE_TOKEN_HANDLER_H
 
 #include "ace/Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Collection.h"
@@ -86,11 +91,11 @@ protected:
 
   virtual int recv_request (void);
   // Receive, frame, and decode the client's request.
-  
+
   virtual int dispatch (void);
   // Dispatch the appropriate operation to handle the client's
   // request.
-  
+
   virtual int send_reply (ACE_UINT32 errnum);
   // Create and send a reply to the client.
 
@@ -110,7 +115,7 @@ private:
 
   virtual ACE_Token_Proxy *create_proxy (void);
   // Switches on the type of token_request_ and creates a new
-  // Token_Proxy. 
+  // Token_Proxy.
 
   ACE_Synch_Options request_options_;
   // Keeps track of the synchronization options (i.e., the timeout
@@ -147,7 +152,7 @@ class ACE_TS_Mutex : public ACE_Local_Mutex
 {
 public:
   ACE_TS_Mutex (const char *name,
-		ACE_Token_Handler *th);
+                ACE_Token_Handler *th);
   // Creation.
 
 protected:
@@ -177,7 +182,7 @@ class ACE_TS_RLock : public ACE_Local_RLock
 {
 public:
   ACE_TS_RLock (const char *name,
-		ACE_Token_Handler *th);
+                ACE_Token_Handler *th);
   // Creation.
 
 protected:
@@ -207,7 +212,7 @@ class ACE_TS_WLock : public ACE_Local_WLock
 {
 public:
   ACE_TS_WLock (const char *name,
-		ACE_Token_Handler *th);
+                ACE_Token_Handler *th);
   // Creation.
 
 protected:

@@ -15,16 +15,20 @@
 //
 // ============================================================================
 
-#if !defined (ACE_ID_GENERATOR_H)
+#ifndef ACE_ID_GENERATOR_H
 #define ACE_ID_GENERATOR_h
 
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #define ACE_OFFER_ID_LENGTH 21
 
 class ACE_ID_Generator
   // = TITLE
-  //     An unique ID generator.  
+  //     An unique ID generator.
   //
   // = DESCRIPTION
 
@@ -43,12 +47,12 @@ private:
 
   static ACE_SYNCH_MUTEX *get_lock (void);
   // Get the lock instance.
-  
+
   static time_t last_time_;
   // Record the time last offer ID generated.
 
   static size_t last_number_;
-  // Record serial number of last offer ID with same 
+  // Record serial number of last offer ID with same
   // generation time.
 
   static ACE_SYNCH_MUTEX *lock_;

@@ -14,6 +14,11 @@
 // ============================================================================
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corba.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
@@ -22,12 +27,12 @@
 #include "orbsvcs/Scheduler_Factory.h"
 
 
-#if !defined (DOVE_SUPPLIER_H)
+#ifndef DOVE_SUPPLIER_H
 #define DOVE_SUPPLIER_H
 
 #define SOURCE_ID 123
 
-class DOVE_Supplier 
+class DOVE_Supplier
 {
 public:
   DOVE_Supplier ();
@@ -44,11 +49,11 @@ public:
   // inherited from PushSupplier.
 
 private:
-  class Internal_DOVE_Supplier : public POA_RtecEventComm::PushSupplier 
+  class Internal_DOVE_Supplier : public POA_RtecEventComm::PushSupplier
   {
     friend class DOVE_Supplier;
   public:
-    virtual void disconnect_push_supplier (CORBA::Environment &) 
+    virtual void disconnect_push_supplier (CORBA::Environment &)
     {
     }
 
@@ -61,7 +66,7 @@ private:
 private:
   int get_EventChannel ();
   // get a reference to the event channel
-  
+
   int connect_Supplier ();
   // connect the the supplier with the event channel
 
@@ -69,7 +74,7 @@ private:
   RtecEventChannelAdmin::EventChannel_var eventChannel_var_;
   RtecEventChannelAdmin::SupplierAdmin_var supplierAdmin_var_;
   RtecEventChannelAdmin::ProxyPushConsumer_var proxyPushConsumer_var_;
-  RtecScheduler::Scheduler_var scheduler_var_; 
+  RtecScheduler::Scheduler_var scheduler_var_;
 
   Internal_DOVE_Supplier* internal_DOVE_Supplier_ptr_;
 

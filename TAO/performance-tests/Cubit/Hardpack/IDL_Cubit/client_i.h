@@ -19,6 +19,11 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Profile_Timer.h"
 #include "ace/Timeprobe.h"
 #include "gpp_header.hh"
@@ -79,10 +84,10 @@ private:
 
   void cube_long (int i);
   // calculate the cube from a long.
-  
+
   void cube_octet (int i);
   // Cube an octet.
-  
+
   void cube_short (int i);
   // Cube a short.
 

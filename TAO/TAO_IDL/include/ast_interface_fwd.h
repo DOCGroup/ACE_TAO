@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -71,12 +71,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: ast_decl.hh, ast_interface.hh, utl_scoped_name.hh,
-**		 utl_strlist.hh
+**               utl_strlist.hh
 **
 ** USE: Included from ast.hh
 */
 
-class	AST_InterfaceFwd : public virtual AST_Type
+class   AST_InterfaceFwd : public virtual AST_Type
 {
 public:
   // Operations
@@ -87,7 +87,7 @@ public:
   virtual ~AST_InterfaceFwd() {}
 
   // Data Accessors
-  AST_Interface	*full_definition();
+  AST_Interface *full_definition();
   void set_full_definition(AST_Interface *nfd);
 
   // Narrowing
@@ -95,12 +95,12 @@ public:
   DEF_NARROW_FROM_DECL(AST_InterfaceFwd);
 
   // AST Dumping
-  virtual void		dump(ostream &);
+  virtual void          dump(ostream &);
 
 private:
   // Data
-  AST_Interface		*pd_full_definition;	// The interface this is a
-						// forward declaration of
+  AST_Interface         *pd_full_definition;    // The interface this is a
+                                                // forward declaration of
 };
 
 #endif           // _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH

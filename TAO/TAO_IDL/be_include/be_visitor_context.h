@@ -23,7 +23,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_CONTEXT_H)
+#ifndef TAO_BE_VISITOR_CONTEXT_H
 #define TAO_BE_VISITOR_CONTEXT_H
 
 class be_visitor_context

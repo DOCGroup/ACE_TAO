@@ -5,14 +5,14 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Auto_Ptr.h
 //
 // = AUTHOR
-//    Doug Schmidt, based on code from Jack Reeves (jack@fx.com) and 
+//    Doug Schmidt, based on code from Jack Reeves (jack@fx.com) and
 //    Dr. Harald M. Mueller (mueller@garwein.hai.siemens.co.at)
-// 
+//
 // ============================================================================
 
 #ifndef ACE_AUTO_PTR_H
@@ -21,11 +21,11 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class X>
-class ACE_Auto_Basic_Ptr 
+class ACE_Auto_Basic_Ptr
 {
   // = TITLE
   //     Implements the draft C++ standard auto_ptr abstraction.
@@ -70,13 +70,13 @@ public:
   // = Initialization and termination methods
   /* explicit */ auto_ptr (X *p = 0);
 
-  X *operator-> () const;  
+  X *operator-> () const;
 };
 
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
 template<class X>
-class ACE_Auto_Basic_Array_Ptr 
+class ACE_Auto_Basic_Array_Ptr
 {
   // = TITLE
   //     Implements an extension to the draft C++ standard auto_ptr
@@ -88,7 +88,7 @@ public:
   ACE_Auto_Basic_Array_Ptr (const ACE_Auto_Basic_Array_Ptr<X> &ap);
   ACE_Auto_Basic_Array_Ptr<X> &operator= (const ACE_Auto_Basic_Array_Ptr<X> &rhs);
   ~ACE_Auto_Basic_Array_Ptr (void);
-  
+
   // = Accessor methods.
   X &operator* () const;
   X &operator[] (int i) const;

@@ -5,13 +5,18 @@
 #define MLD_H
 
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Singleton.h"
 
 /*
    This is a cheap memory leak detector.  Each class I want to watch over
    contains an mld object.  The mld object's ctor increments a global counter
    while the dtor decrements it.  If the counter is non-zero when the program
-   is ready to exit then there may be a leak. 
+   is ready to exit then there may be a leak.
  */
 
 class mld
@@ -30,12 +35,12 @@ protected:
 
 /*
    Just drop 'MLD' anywhere in your class definition to get cheap memory leak
-   detection for your class. 
+   detection for your class.
  */
 #define MLD            mld mld_
 
 /*
-   Use 'MLD_COUNTER' in main() to see if things are OK. 
+   Use 'MLD_COUNTER' in main() to see if things are OK.
  */
 #define MLD_COUNTER    mld::value()
 

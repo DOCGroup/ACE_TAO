@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PMC_RUSER_H)
+#ifndef _PMC_RUSER_H
 #define _PMC_RUSER_H
 
 #include "PM_Client.h"
@@ -22,7 +22,7 @@
 class PMC_Ruser : public PM_Client
 {
   // = TITLE
-  //   Provides the client's lookup table abstraction for `ruser' users... 
+  //   Provides the client's lookup table abstraction for `ruser' users...
 
 public:
   PMC_Ruser (void);

@@ -2,17 +2,17 @@
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software and its
  * documentation for any purpose, without fee, and without written agreement is
  * hereby granted, provided that the above copyright notice and the following
  * two paragraphs appear in all copies of this software.
- * 
+ *
  * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
  * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
  * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
  * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
  * AND FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE PROVIDED HEREUNDER IS
@@ -32,6 +32,10 @@
 #include "util.h"
 #include "ace/OS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 /* Code for unbound values in decoding tables */
 #define ERROR -1
 #define DCT_ERROR 63
@@ -47,7 +51,7 @@
 #define END_OF_BLOCK 62
 #define ESCAPE 61
 
-/* Structure for an entry in the decoding table of 
+/* Structure for an entry in the decoding table of
  * macroblock_address_increment */
 typedef struct {
   unsigned int value;       /* value for macroblock_address_increment */
@@ -90,10 +94,10 @@ extern coded_block_pattern_entry coded_block_pattern[512];
 /* Structure for an entry in the decoding table of motion vectors */
 typedef struct {
   int code;              /* value for motion_horizontal_forward_code,
-			  * motion_vertical_forward_code, 
-			  * motion_horizontal_backward_code, or
-			  * motion_vertical_backward_code.
-			  */
+                          * motion_vertical_forward_code,
+                          * motion_horizontal_backward_code, or
+                          * motion_vertical_backward_code.
+                          */
   int num_bits;          /* length of the Huffman code */
 } motion_vectors_entry;
 
@@ -156,127 +160,127 @@ extern unsigned short int dct_coeff_first[256];
   flush_bits(dct_dc_size_chrominance[index].num_bits);   \
 }
 
-#define DecodeDCTCoeff(dct_coeff_tbl, run, level)			\
-{									\
-  unsigned int temp, index;						\
-  unsigned int value, next32bits, flushed;				\
-									\
-  /*									\
-   * Grab the next 32 bits and use it to improve performance of		\
-   * getting the bits to parse. Thus, calls are translated as:		\
-   *									\
-   *	show_bitsX  <-->   next32bits >> (32-X)				\
-   *	get_bitsX   <-->   val = next32bits >> (32-flushed-X);		\
-   *			   flushed += X;				\
-   *			   next32bits &= bitMask[flushed];		\
-   *	flush_bitsX <-->   flushed += X;				\
-   *			   next32bits &= bitMask[flushed];		\
-   *									\
-   * I've streamlined the code a lot, so that we don't have to mask	\
-   * out the low order bits and a few of the extra adds are removed.	\
-   */									\
-  show_bits32(next32bits);						\
-									\
-  /* show_bits8(index); */						\
-  index = next32bits >> 24;						\
-									\
-  if (index > 3) {							\
-    value = dct_coeff_tbl[index];					\
-    run = value >> RUN_SHIFT;						\
-    if (run != END_OF_BLOCK) {						\
-      /* num_bits = (value & NUM_MASK) + 1; */				\
-      /* flush_bits(num_bits); */					\
-      if (run != ESCAPE) {						\
-	 /* get_bits1(value); */					\
-	 /* if (value) level = -level; */				\
-	 flushed = (value & NUM_MASK) + 2;				\
-         level = (value & LEVEL_MASK) >> LEVEL_SHIFT;			\
-	 value = next32bits >> (32-flushed);				\
-	 value &= 0x1;							\
-	 if (value) level = -level;					\
-	 /* next32bits &= ((~0) >> flushed);  last op before update */	\
-       }								\
-       else {    /* run == ESCAPE */					\
-	 /* Get the next six into run, and next 8 into temp */		\
-         /* get_bits14(temp); */					\
-	 flushed = (value & NUM_MASK) + 1;				\
-	 temp = next32bits >> (18-flushed);				\
-	 /* Normally, we'd ad 14 to flushed, but I've saved a few	\
-	  * instr by moving the add below */				\
-	 temp &= 0x3fff;						\
-	 run = temp >> 8;						\
-	 temp &= 0xff;							\
-	 if (temp == 0) {						\
-            /* get_bits8(level); */					\
-	    level = next32bits >> (10-flushed);				\
-	    level &= 0xff;						\
-	    flushed += 22;						\
- 	    assert(level >= 128);					\
-	 } else if (temp != 128) {					\
-	    /* Grab sign bit */						\
-	    flushed += 14;						\
-	    level = ((int) (temp << 24)) >> 24;				\
-	 } else {							\
-            /* get_bits8(level); */					\
-	    level = next32bits >> (10-flushed);				\
-	    level &= 0xff;						\
-	    flushed += 22;						\
-	    level = level - 256;					\
-	    assert(level <= -128 && level >= -255);			\
-	 }								\
-       }								\
-       /* Update bitstream... */					\
-       flush_bits(flushed);						\
-       assert (flushed <= 32);						\
-    }									\
-  }									\
-  else {								\
-    if (index == 2) { 							\
-      /* show_bits10(index); */						\
-      index = next32bits >> 22;						\
-      value = dct_coeff_tbl_2[index & 3];				\
-    }									\
-    else if (index == 3) { 						\
-      /* show_bits10(index); */						\
-      index = next32bits >> 22;						\
-      value = dct_coeff_tbl_3[index & 3];				\
-    }									\
-    else if (index) {	/* index == 1 */				\
-      /* show_bits12(index); */						\
-      index = next32bits >> 20;						\
-      value = dct_coeff_tbl_1[index & 15];				\
-    }									\
-    else {   /* index == 0 */						\
-      /* show_bits16(index); */						\
-      index = next32bits >> 16;						\
-      value = dct_coeff_tbl_0[index & 255];				\
-    }									\
-    run = value >> RUN_SHIFT;						\
-    level = (value & LEVEL_MASK) >> LEVEL_SHIFT;			\
-									\
-    /*									\
-     * Fold these operations together to make it fast...		\
-     */									\
-    /* num_bits = (value & NUM_MASK) + 1; */				\
-    /* flush_bits(num_bits); */						\
-    /* get_bits1(value); */						\
-    /* if (value) level = -level; */					\
-									\
-    flushed = (value & NUM_MASK) + 2;					\
-    value = next32bits >> (32-flushed);					\
-    value &= 0x1;							\
-    if (value) level = -level;						\
-									\
-    /* Update bitstream ... */						\
-    flush_bits(flushed);						\
-    assert (flushed <= 32);						\
-  }									\
+#define DecodeDCTCoeff(dct_coeff_tbl, run, level)                       \
+{                                                                       \
+  unsigned int temp, index;                                             \
+  unsigned int value, next32bits, flushed;                              \
+                                                                        \
+  /*                                                                    \
+   * Grab the next 32 bits and use it to improve performance of         \
+   * getting the bits to parse. Thus, calls are translated as:          \
+   *                                                                    \
+   *    show_bitsX  <-->   next32bits >> (32-X)                         \
+   *    get_bitsX   <-->   val = next32bits >> (32-flushed-X);          \
+   *                       flushed += X;                                \
+   *                       next32bits &= bitMask[flushed];              \
+   *    flush_bitsX <-->   flushed += X;                                \
+   *                       next32bits &= bitMask[flushed];              \
+   *                                                                    \
+   * I've streamlined the code a lot, so that we don't have to mask     \
+   * out the low order bits and a few of the extra adds are removed.    \
+   */                                                                   \
+  show_bits32(next32bits);                                              \
+                                                                        \
+  /* show_bits8(index); */                                              \
+  index = next32bits >> 24;                                             \
+                                                                        \
+  if (index > 3) {                                                      \
+    value = dct_coeff_tbl[index];                                       \
+    run = value >> RUN_SHIFT;                                           \
+    if (run != END_OF_BLOCK) {                                          \
+      /* num_bits = (value & NUM_MASK) + 1; */                          \
+      /* flush_bits(num_bits); */                                       \
+      if (run != ESCAPE) {                                              \
+         /* get_bits1(value); */                                        \
+         /* if (value) level = -level; */                               \
+         flushed = (value & NUM_MASK) + 2;                              \
+         level = (value & LEVEL_MASK) >> LEVEL_SHIFT;                   \
+         value = next32bits >> (32-flushed);                            \
+         value &= 0x1;                                                  \
+         if (value) level = -level;                                     \
+         /* next32bits &= ((~0) >> flushed);  last op before update */  \
+       }                                                                \
+       else {    /* run == ESCAPE */                                    \
+         /* Get the next six into run, and next 8 into temp */          \
+         /* get_bits14(temp); */                                        \
+         flushed = (value & NUM_MASK) + 1;                              \
+         temp = next32bits >> (18-flushed);                             \
+         /* Normally, we'd ad 14 to flushed, but I've saved a few       \
+          * instr by moving the add below */                            \
+         temp &= 0x3fff;                                                \
+         run = temp >> 8;                                               \
+         temp &= 0xff;                                                  \
+         if (temp == 0) {                                               \
+            /* get_bits8(level); */                                     \
+            level = next32bits >> (10-flushed);                         \
+            level &= 0xff;                                              \
+            flushed += 22;                                              \
+            assert(level >= 128);                                       \
+         } else if (temp != 128) {                                      \
+            /* Grab sign bit */                                         \
+            flushed += 14;                                              \
+            level = ((int) (temp << 24)) >> 24;                         \
+         } else {                                                       \
+            /* get_bits8(level); */                                     \
+            level = next32bits >> (10-flushed);                         \
+            level &= 0xff;                                              \
+            flushed += 22;                                              \
+            level = level - 256;                                        \
+            assert(level <= -128 && level >= -255);                     \
+         }                                                              \
+       }                                                                \
+       /* Update bitstream... */                                        \
+       flush_bits(flushed);                                             \
+       assert (flushed <= 32);                                          \
+    }                                                                   \
+  }                                                                     \
+  else {                                                                \
+    if (index == 2) {                                                   \
+      /* show_bits10(index); */                                         \
+      index = next32bits >> 22;                                         \
+      value = dct_coeff_tbl_2[index & 3];                               \
+    }                                                                   \
+    else if (index == 3) {                                              \
+      /* show_bits10(index); */                                         \
+      index = next32bits >> 22;                                         \
+      value = dct_coeff_tbl_3[index & 3];                               \
+    }                                                                   \
+    else if (index) {   /* index == 1 */                                \
+      /* show_bits12(index); */                                         \
+      index = next32bits >> 20;                                         \
+      value = dct_coeff_tbl_1[index & 15];                              \
+    }                                                                   \
+    else {   /* index == 0 */                                           \
+      /* show_bits16(index); */                                         \
+      index = next32bits >> 16;                                         \
+      value = dct_coeff_tbl_0[index & 255];                             \
+    }                                                                   \
+    run = value >> RUN_SHIFT;                                           \
+    level = (value & LEVEL_MASK) >> LEVEL_SHIFT;                        \
+                                                                        \
+    /*                                                                  \
+     * Fold these operations together to make it fast...                \
+     */                                                                 \
+    /* num_bits = (value & NUM_MASK) + 1; */                            \
+    /* flush_bits(num_bits); */                                         \
+    /* get_bits1(value); */                                             \
+    /* if (value) level = -level; */                                    \
+                                                                        \
+    flushed = (value & NUM_MASK) + 2;                                   \
+    value = next32bits >> (32-flushed);                                 \
+    value &= 0x1;                                                       \
+    if (value) level = -level;                                          \
+                                                                        \
+    /* Update bitstream ... */                                          \
+    flush_bits(flushed);                                                \
+    assert (flushed <= 32);                                             \
+  }                                                                     \
 }
 
 #define DecodeDCTCoeffFirst(runval, levelval)         \
 {                                                     \
   DecodeDCTCoeff(dct_coeff_first, runval, levelval);  \
-}          
+}
 
 #define DecodeDCTCoeffNext(runval, levelval)          \
 {                                                     \
@@ -302,12 +306,12 @@ extern unsigned short int dct_coeff_first[256];
  *
  *--------------------------------------------------------------
  */
-#define DecodeMBAddrInc(val)				\
-{							\
-    unsigned int index;					\
-    show_bits11(index);					\
-    val = mb_addr_inc[index].value;			\
-    flush_bits(mb_addr_inc[index].num_bits);		\
+#define DecodeMBAddrInc(val)                            \
+{                                                       \
+    unsigned int index;                                 \
+    show_bits11(index);                                 \
+    val = mb_addr_inc[index].value;                     \
+    flush_bits(mb_addr_inc[index].num_bits);            \
 }
 
 /*
@@ -332,12 +336,12 @@ extern unsigned short int dct_coeff_first[256];
  *--------------------------------------------------------------
  */
 
-#define DecodeMotionVectors(value)			\
-{							\
-  unsigned int index;					\
-  show_bits11(index);					\
-  value = motion_vectors[index].code;			\
-  flush_bits(motion_vectors[index].num_bits);		\
+#define DecodeMotionVectors(value)                      \
+{                                                       \
+  unsigned int index;                                   \
+  show_bits11(index);                                   \
+  value = motion_vectors[index].code;                   \
+  flush_bits(motion_vectors[index].num_bits);           \
 }
 /*
  *--------------------------------------------------------------
@@ -361,18 +365,18 @@ extern unsigned short int dct_coeff_first[256];
  *
  *--------------------------------------------------------------
  */
-#define DecodeMBTypeB(quant, motion_fwd, motion_bwd, pat, intra)	\
-{									\
-  unsigned int index;							\
-									\
-  show_bits6(index);							\
-									\
-  quant = mb_type_B[index].mb_quant;					\
-  motion_fwd = mb_type_B[index].mb_motion_forward;			\
-  motion_bwd = mb_type_B[index].mb_motion_backward;			\
-  pat = mb_type_B[index].mb_pattern;					\
-  intra = mb_type_B[index].mb_intra;					\
-  flush_bits(mb_type_B[index].num_bits);				\
+#define DecodeMBTypeB(quant, motion_fwd, motion_bwd, pat, intra)        \
+{                                                                       \
+  unsigned int index;                                                   \
+                                                                        \
+  show_bits6(index);                                                    \
+                                                                        \
+  quant = mb_type_B[index].mb_quant;                                    \
+  motion_fwd = mb_type_B[index].mb_motion_forward;                      \
+  motion_bwd = mb_type_B[index].mb_motion_backward;                     \
+  pat = mb_type_B[index].mb_pattern;                                    \
+  intra = mb_type_B[index].mb_intra;                                    \
+  flush_bits(mb_type_B[index].num_bits);                                \
 }
 /*
  *--------------------------------------------------------------
@@ -395,21 +399,21 @@ extern unsigned short int dct_coeff_first[256];
  *
  *--------------------------------------------------------------
  */
-#define DecodeMBTypeI(quant, motion_fwd, motion_bwd, pat, intra)	\
-{									\
-  unsigned int index;							\
-  static int quantTbl[4] = {ERROR, 1, 0, 0};				\
-									\
-  show_bits2(index);							\
-									\
-  motion_fwd = 0;							\
-  motion_bwd = 0;							\
-  pat = 0;								\
-  intra = 1;								\
-  quant = quantTbl[index];						\
-  if (index) {								\
-    flush_bits (1 + quant);						\
-  }									\
+#define DecodeMBTypeI(quant, motion_fwd, motion_bwd, pat, intra)        \
+{                                                                       \
+  unsigned int index;                                                   \
+  static int quantTbl[4] = {ERROR, 1, 0, 0};                            \
+                                                                        \
+  show_bits2(index);                                                    \
+                                                                        \
+  motion_fwd = 0;                                                       \
+  motion_bwd = 0;                                                       \
+  pat = 0;                                                              \
+  intra = 1;                                                            \
+  quant = quantTbl[index];                                              \
+  if (index) {                                                          \
+    flush_bits (1 + quant);                                             \
+  }                                                                     \
 }
 /*
  *--------------------------------------------------------------
@@ -433,19 +437,19 @@ extern unsigned short int dct_coeff_first[256];
  *
  *--------------------------------------------------------------
  */
-#define DecodeMBTypeP(quant, motion_fwd, motion_bwd, pat, intra)	\
-{									\
-  unsigned int index;							\
-									\
-  show_bits6(index);							\
-									\
-  quant = mb_type_P[index].mb_quant;					\
-  motion_fwd = mb_type_P[index].mb_motion_forward;			\
-  motion_bwd = mb_type_P[index].mb_motion_backward;			\
-  pat = mb_type_P[index].mb_pattern;					\
-  intra = mb_type_P[index].mb_intra;					\
-									\
-  flush_bits(mb_type_P[index].num_bits);				\
+#define DecodeMBTypeP(quant, motion_fwd, motion_bwd, pat, intra)        \
+{                                                                       \
+  unsigned int index;                                                   \
+                                                                        \
+  show_bits6(index);                                                    \
+                                                                        \
+  quant = mb_type_P[index].mb_quant;                                    \
+  motion_fwd = mb_type_P[index].mb_motion_forward;                      \
+  motion_bwd = mb_type_P[index].mb_motion_backward;                     \
+  pat = mb_type_P[index].mb_pattern;                                    \
+  intra = mb_type_P[index].mb_intra;                                    \
+                                                                        \
+  flush_bits(mb_type_P[index].num_bits);                                \
 }
 /*
  *--------------------------------------------------------------
@@ -466,11 +470,11 @@ extern unsigned short int dct_coeff_first[256];
  *
  *--------------------------------------------------------------
  */
-#define DecodeCBP(coded_bp)						\
-{									\
-  unsigned int index;							\
-									\
-  show_bits9(index);							\
-  coded_bp = coded_block_pattern[index].cbp;				\
-  flush_bits(coded_block_pattern[index].num_bits);			\
+#define DecodeCBP(coded_bp)                                             \
+{                                                                       \
+  unsigned int index;                                                   \
+                                                                        \
+  show_bits9(index);                                                    \
+  coded_bp = coded_block_pattern[index].cbp;                            \
+  flush_bits(coded_block_pattern[index].num_bits);                      \
 }

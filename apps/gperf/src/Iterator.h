@@ -21,14 +21,19 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#if !defined (ITERATOR_H)
+#ifndef ITERATOR_H
 #define ITERATOR_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Options.h"
 
 #if defined (ACE_HAS_GPERF)
-class Iterator 
+class Iterator
 {
   // = TITLE
   //   Provides an Iterator that expands and decodes a control string
@@ -52,23 +57,23 @@ public:
   int operator () (void);
 
 private:
-  char *str;                    
+  char *str;
   // A pointer to the string provided by the user.
 
-  int end;                    
-  // Value returned after last key is processed. 
+  int end;
+  // Value returned after last key is processed.
 
-  int end_word;               
+  int end_word;
   // A value marking the abstract ``end of word'' (usually '$').
 
-  int error_value;            
-  // Error value returned when input is syntactically erroneous. 
+  int error_value;
+  // Error value returned when input is syntactically erroneous.
 
   int hi_bound;
-  // Greatest possible value, inclusive. 
+  // Greatest possible value, inclusive.
 
   int lo_bound;
-  // Smallest possible value, inclusive. 
+  // Smallest possible value, inclusive.
 };
 
 #endif /* ACE_HAS_GPERF */

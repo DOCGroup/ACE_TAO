@@ -4,10 +4,14 @@
 // This file is generated automatically by
 // ${TAO_ROOT}/TAO_IDL/GenExportH.BAT
 // ------------------------------
-#if !defined (JAWS_EXPORT_H)
+#ifndef JAWS_EXPORT_H
 #define JAWS_EXPORT_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (JAWS_HAS_DLL)
 #  if (JAWS_HAS_DLL == 1)

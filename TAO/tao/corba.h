@@ -30,6 +30,11 @@
 
 // ACE specific includes
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Stream.h"

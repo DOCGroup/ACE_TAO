@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if ! defined (SCHEDULER_H)
+#ifndef SCHEDULER_H
 #define SCHEDULER_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Map_Manager.h"
 #include "ace/Message_Block.h"
 #include "ace/Synch.h"
@@ -142,7 +147,7 @@ public:
   // In the SUCCEEDED and UNKNOWN_TASK cases, this->register_task
   // (rtinfo, 0, handle) is called.  Returns FAILED if an error
   // occurs.
-  // 
+  //
   // One motivation for allocating RT_Info's from within the Scheduler
   // is to allow RT_Infos to persist after the tasks that use them.
   // For instance, we may want to call this->schedule right before the
@@ -151,11 +156,11 @@ public:
   // fail.
 
   virtual status_t lookup_rt_info (handle_t handle,
-				   RT_Info* &rtinfo) = 0;
+                                   RT_Info* &rtinfo) = 0;
   // Obtains an RT_Info based on its "handle".
 
   virtual status_t lookup_config_info (Preemption_Priority priority,
-				       Config_Info* &config_info) = 0;
+                                       Config_Info* &config_info) = 0;
   // Obtains a Config_Info based on its priority.
 
 
@@ -178,7 +183,7 @@ public:
   // a highest priority value of 0 to the lowest priority value, which is
   // returned by "minimum_priority_queue ()". The current and deadline times
   // are part of the scheduling service implementation interface, but may be
-  // ignored by some implementations and used by others.  
+  // ignored by some implementations and used by others.
 
   // = Access the platform-independent priority value of the lowest-priority
   //   thread.
@@ -215,7 +220,7 @@ public:
   // (debug)
 
   static int add_dependency(RT_Info* rt_info,
-			    const Dependency_Info& d);
+                            const Dependency_Info& d);
 
   static int number_of_dependencies(RT_Info* rt_info);
   static int number_of_dependencies(RT_Info& rt_info);
@@ -225,7 +230,7 @@ public:
 
   virtual int dispatch_configuration (const Preemption_Priority &p_priority,
                                       OS_Thread_Priority& priority,
-				      Dispatching_Type & d_type);
+                                      Dispatching_Type & d_type);
   // provide the thread priority and queue type for the given priority level
 
 

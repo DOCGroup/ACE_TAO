@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -79,12 +79,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: ast_decl.hh, ast_expression.hh, utl_scoped_name.hh,
-**		 utl_strlist.hh
+**               utl_strlist.hh
 **
 ** USE: Included from ast.hh
 */
 
-class	AST_Constant : public virtual AST_Decl
+class   AST_Constant : public virtual AST_Decl
 {
 public:
   // Operations
@@ -92,9 +92,9 @@ public:
   // Constructor(s)
   AST_Constant();
   AST_Constant(AST_Expression::ExprType et, AST_Decl::NodeType nt,
-	       AST_Expression *ev, UTL_ScopedName *n, UTL_StrList *p);
+               AST_Expression *ev, UTL_ScopedName *n, UTL_StrList *p);
   AST_Constant(AST_Expression::ExprType et, AST_Expression *ev,
-	       UTL_ScopedName *n, UTL_StrList *p);
+               UTL_ScopedName *n, UTL_StrList *p);
   virtual ~AST_Constant() {}
 
   // Data Accessors
@@ -106,12 +106,12 @@ public:
   DEF_NARROW_FROM_DECL(AST_Constant);
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
 private:
   // Data
-  AST_Expression		*pd_constant_value;	// The value
-  AST_Expression::ExprType	pd_et;			// Its expr type
+  AST_Expression                *pd_constant_value;     // The value
+  AST_Expression::ExprType      pd_et;                  // Its expr type
 };
 
 #endif           // _AST_CONSTANT_AST_CONSTANT_HH

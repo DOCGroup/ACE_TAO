@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO/tests/Simple
-// 
+//
 // = FILENAME
 //    simple_object_impl.h
 //
@@ -14,11 +14,11 @@
 //
 // = AUTHOR
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
-#if !defined (IR_SIMPLE_OBJECT_IMPL_H)
-#define	IR_SIMPLE_OBJECT_IMPL_H
+#ifndef IR_SIMPLE_OBJECT_IMPL_H
+#define IR_SIMPLE_OBJECT_IMPL_H
 
 #include "Impl_RepoS.h"
 
@@ -35,7 +35,7 @@ class IR_Simple_i: public POA_simple_object
   //    Simple Object Implementation
   //
   // = DESCRIPTION
-  //    Implementation of a simple object that has two methods, one that 
+  //    Implementation of a simple object that has two methods, one that
   //    returns the cube of a long, another that shuts down the server.
 public:
   IR_Simple_i (CORBA::ORB_ptr orb_ptr,

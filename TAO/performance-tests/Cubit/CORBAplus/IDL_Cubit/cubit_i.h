@@ -4,22 +4,27 @@
 //
 // = LIBRARY
 //    TAO/tests/Cubit/CORBAplus/IDL_Cubit
-// 
+//
 // = FILENAME
 //    cubit_i.h
 //
 // = AUTHOR
 //    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
-// 
+//
 // ============================================================================
 
-#if !defined (_CUBIT_I_HH)
-#define	_CUBIT_I_HH
+#ifndef _CUBIT_I_HH
+#define _CUBIT_I_HH
 
 #include <pbroker/corba/lifecycl/actvtr.h>
 #include <pbroker/corba/lifecycl/impldecl.h>
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "cubit_s.h"
 
 // Forward declarations
@@ -83,13 +88,13 @@ class Cubit_Factory_i: public Cubit_Factory_base_impl
 public:
   XPS_CAST1_DECL(Cubit_Factory_i,Cubit_Factory_base_impl)
   XPS_DEFINE_IMPLEMENTATION(Cubit_Factory_decl)
-    
-  Cubit_Factory_i (void) 
+
+  Cubit_Factory_i (void)
     {Cubit_Factory_i ("keyone", 1);}
-  
-  Cubit_Factory_i (const CORBA_ReferenceData & refData) 
+
+  Cubit_Factory_i (const CORBA_ReferenceData & refData)
     {Cubit_Factory_i ("keyone", 1);}
-  
+
   Cubit_Factory_i (const char *key, int numobjs);
   // constructor
 

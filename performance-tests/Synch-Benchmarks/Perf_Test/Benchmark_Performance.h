@@ -3,7 +3,7 @@
 
 /* Defines the class used to dynamically link in the benchmark tests */
 
-#if !defined (ACE_BENCHMARK_PERFORMANCE_H)
+#ifndef ACE_BENCHMARK_PERFORMANCE_H
 #define ACE_BENCHMARK_PERFORMANCE_H
 
 #include "../Benchmark_Base.h"

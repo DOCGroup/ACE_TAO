@@ -195,13 +195,13 @@ typedef u_int CORBA_Flags;
 
   typedef struct TAO_Leader_Follower_Info_Struct
     {
-      ACE_SYNCH_MUTEX leader_follower_lock_; 
+      ACE_SYNCH_MUTEX leader_follower_lock_;
       // do protect the access to the following three members
-  
+
       ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
       // keep a set of followers around (protected)
 
-      int leaders_; 
+      int leaders_;
       // 0 if no leader is around, 1 if there is a leader
       // > 1 if we do nested upcalls (protected)
 
@@ -508,7 +508,7 @@ public:
   typedef CORBA_ORB_var ORB_var;
   typedef CORBA_ORB_out ORB_out;
 
-  typedef CORBA_Request Request; 
+  typedef CORBA_Request Request;
   typedef Request *Request_ptr;
   typedef CORBA_Request_var Request_var;
   typedef CORBA_Request_out Request_out;
@@ -794,10 +794,10 @@ class TAO_Export CORBA_ORB
   //   as how to marshal and unmarshal them.
   //
 public:
-  
+
   // ORB_Core has special privileges
   friend class TAO_ORB_Core;
-  
+
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   // Return a duplicate of <{orb}>.  When work with this duplicate is
   // complete, it should be freed up using <CORBA::release()>.
@@ -961,7 +961,7 @@ public:
   int should_shutdown (void);
   // Get the shutdown flag value
 
-  // Forward declaration and typedefs for the exception thrown by 
+  // Forward declaration and typedefs for the exception thrown by
   // the ORB Dynamic Any factory functions.
   class CORBA_ORB_InconsistentTypeCode;
   typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;

@@ -3,10 +3,15 @@
 
 /* Handles INET datagram messages from remote hosts. */
 
-#if !defined (_HANDLE_R_DGRAM_H)
+#ifndef _HANDLE_R_DGRAM_H
 #define _HANDLE_R_DGRAM_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Types.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram.h"
@@ -34,7 +39,7 @@ extern ACE_Service_Object_Type rd;
 #define ACE_INLINE inline
 #include "Handle_R_Dgram.i"
 #else
-#define ACE_INLINE 
+#define ACE_INLINE
 #endif /*  __ACE_INLINE__ */
 
 #endif /* _HANDLE_R_DGRAM_H */

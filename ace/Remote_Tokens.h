@@ -5,29 +5,30 @@
 //
 // = LIBRARY
 //    ACE
-// 
+//
 // = FILENAME
 //    Remote_Tokens.h
 //
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu) and
 //    Tim Harrison (harrison@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
 #ifndef ACE_REMOTE_MUTEX_H
 #define ACE_REMOTE_MUTEX_H
 
 #include "ace/INET_Addr.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Synch_Options.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Request_Reply.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Remote_Token_Proxy : public ACE_Token_Proxy
 {
@@ -51,8 +52,8 @@ public:
   // Death.
 
   int open (const char *name,
-	    int ignore_deadlock = 0,
-	    int debug = 0);
+            int ignore_deadlock = 0,
+            int debug = 0);
   // Same as Token_Proxy. <name> is the string uniquely identifying
   // the token.  <ignore_deadlock> can be 1 to disable deadlock
   // notifications.  <debug> prints debug messages.
@@ -67,9 +68,9 @@ public:
   // remote tokens.
 
   virtual int acquire (int notify = 0,
-		       void (*sleep_hook)(void *) = 0,
-		       ACE_Synch_Options &options =
-		       ACE_Synch_Options::synch);
+                       void (*sleep_hook)(void *) = 0,
+                       ACE_Synch_Options &options =
+                       ACE_Synch_Options::synch);
   // Acquire the distributed token.  If notify is specified and the
   // token is already held, the owner is notified.  options contains
   // the timeout value for the acquire call.  The timer is kept at the
@@ -83,8 +84,8 @@ public:
   // EWOULDBLOCK if the token was already held.
 
   virtual int renew (int requeue_position = 0,
-		     ACE_Synch_Options &options =
-		     ACE_Synch_Options::synch);
+                     ACE_Synch_Options &options =
+                     ACE_Synch_Options::synch);
   // Renew the token by offering to release it if there are any other
   // waiters, otherwise get the token back immediately.  This renew
   // has the same semantics as ACE_Local_Mutex release.  It is
@@ -98,14 +99,14 @@ public:
   // the position in the waiter list.)
 
   virtual int release (ACE_Synch_Options &options =
-		       ACE_Synch_Options::synch);
+                       ACE_Synch_Options::synch);
   // Release the distributed token. Similar to ACE_Local_Mutex, if the
   // caller is not the owner, it is removed from the waiter list (if
   // applicable.) Returns 0 on success, -1 on failure with <errno> ==
   // problem.
 
   virtual int remove (ACE_Synch_Options &options =
-		      ACE_Synch_Options::synch);
+                      ACE_Synch_Options::synch);
   // Become interface compliant for ACE_Guard<>.  This has no
   // functionality.
 
@@ -130,7 +131,7 @@ protected:
   // if shadows report deadlock, go remote anyway
 
   int request_reply (ACE_Token_Request &request,
-		     ACE_Synch_Options &options);
+                     ACE_Synch_Options &options);
   // Perform the request and wait for the reply.
 };
 
@@ -153,8 +154,8 @@ public:
   // Null creation.  Remote_Token_Proxy::open must be called.
 
   ACE_Remote_Mutex (const char *token_name,
-		    int ignore_deadlock = 0,
-		    int debug = 0);
+                    int ignore_deadlock = 0,
+                    int debug = 0);
   // Calls Remote_Token_Proxy::open for you.
 
   void dump (void) const;
@@ -186,8 +187,8 @@ public:
   ACE_Remote_RLock (void);
 
   ACE_Remote_RLock (const char *token_name,
-		    int ignore_deadlock = 0,
-		    int debug = 0);
+                    int ignore_deadlock = 0,
+                    int debug = 0);
 
   ACE_Remote_RLock (const ACE_Remote_RLock &mutex);
 
@@ -222,8 +223,8 @@ public:
   ACE_Remote_WLock (void);
 
   ACE_Remote_WLock (const char *token_name,
-		    int ignore_deadlock = 0,
-		    int debug = 0);
+                    int ignore_deadlock = 0,
+                    int debug = 0);
 
   ACE_Remote_WLock (const ACE_Remote_WLock &mutex);
 

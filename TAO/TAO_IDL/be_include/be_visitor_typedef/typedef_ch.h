@@ -21,7 +21,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_TYPEDEF_TYPEDEF_CH_H_)
+#ifndef _BE_VISITOR_TYPEDEF_TYPEDEF_CH_H_
 #define _BE_VISITOR_TYPEDEF_TYPEDEF_CH_H_
 
 class be_visitor_typedef_ch : public be_visitor_typedef

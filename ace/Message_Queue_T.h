@@ -20,7 +20,7 @@
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (VXWORKS)
@@ -45,9 +45,9 @@ public:
   friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>;
 
   // = Traits
-  typedef ACE_Message_Queue_Iterator<ACE_SYNCH_USE> 
+  typedef ACE_Message_Queue_Iterator<ACE_SYNCH_USE>
           ITERATOR;
-  typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE> 
+  typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>
           REVERSE_ITERATOR;
 
   // = Initialization and termination methods.

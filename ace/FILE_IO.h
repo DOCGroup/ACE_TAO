@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    FILE_IO.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
-#ifndef ACE_FILE_IO_H 
+#ifndef ACE_FILE_IO_H
 #define ACE_FILE_IO_H
 
 #include "ace/FILE.h"
-#include "ace/FILE_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/FILE_Addr.h"
 
 class ACE_Export ACE_FILE_IO : public ACE_FILE
 {
@@ -41,33 +42,33 @@ public:
   ssize_t recv (void *buf, size_t n) const;
   // Recv upto <n> bytes in <buf>.
 
-  ssize_t send_n (const void *buf, size_t n) const; 
-  // Send n bytes, keep trying until n are sent. 
+  ssize_t send_n (const void *buf, size_t n) const;
+  // Send n bytes, keep trying until n are sent.
 
-  ssize_t recv_n (void *buf, size_t n) const;	      
-  // Recv n bytes, keep trying until n are received. 
+  ssize_t recv_n (void *buf, size_t n) const;
+  // Recv n bytes, keep trying until n are received.
 
 #if defined (ACE_HAS_STREAM_PIPES)
-  ssize_t send (const ACE_Str_Buf *cntl, 
-		const ACE_Str_Buf *data, 
-		int flags = 0) const;
+  ssize_t send (const ACE_Str_Buf *cntl,
+                const ACE_Str_Buf *data,
+                int flags = 0) const;
   // Send bytes via STREAM pipes.
 
-  ssize_t recv (ACE_Str_Buf *cntl, 
-		ACE_Str_Buf *data, 
-		int *flags) const;
+  ssize_t recv (ACE_Str_Buf *cntl,
+                ACE_Str_Buf *data,
+                int *flags) const;
   // Recv bytes via STREAM pipes.
 
-  ssize_t send (const ACE_Str_Buf *cntl, 
-		const ACE_Str_Buf *data, 
-		int band, 
-		int flags) const;
+  ssize_t send (const ACE_Str_Buf *cntl,
+                const ACE_Str_Buf *data,
+                int band,
+                int flags) const;
   // Send bytes via STREAM pipes using "band" mode.
 
-  ssize_t recv (ACE_Str_Buf *cntl, 
-		ACE_Str_Buf *data, 
-		int *band, 
-		int *flags) const;
+  ssize_t recv (ACE_Str_Buf *cntl,
+                ACE_Str_Buf *data,
+                int *band,
+                int *flags) const;
   // Recv bytes via STREAM pipes using "band" mode.
 
 #endif /* ACE_HAS_STREAM_PIPES */
@@ -109,7 +110,7 @@ public:
   int get_local_addr (ACE_Addr &) const;
   // Return the local endpoint address in the referenced ACE_Addr.
   // Returns 0 if successful, else -1.
- 
+
   int get_remote_addr (ACE_Addr &) const;
   // Return the address of the remotely connected peer (if there is
   // one), in the referenced ACE_Addr. Returns 0 if successful, else

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_SL_SERVER_H)
+#ifndef _SL_SERVER_H
 #define _SL_SERVER_H
 
 #include "Single_Lookup.h"
@@ -22,7 +22,7 @@
 class SL_Server : public Single_Lookup
 {
   // = TITLE
-  //   Provides the server's single user lookup table abstraction. 
+  //   Provides the server's single user lookup table abstraction.
 
 public:
   SL_Server (const char *packet);

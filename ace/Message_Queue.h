@@ -18,11 +18,12 @@
 #define ACE_MESSAGE_QUEUE_H
 
 #include "ace/Message_Block.h"
-#include "ace/IO_Cntl_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/IO_Cntl_Msg.h"
 
 // Forward decls.
 class ACE_Notification_Strategy;

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -73,12 +73,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // This cannot be an enum since more than one value may be active at
 // a given time, hence bitflags are #define'd instead
-     
-#define	IDL_CF_VERSION		(1 << 0)
-#define	IDL_CF_DUMP_AST		(1 << 1)
-#define	IDL_CF_ONLY_PREPROC	(1 << 2)
-#define	IDL_CF_ONLY_USAGE	(1 << 3)
-#define	IDL_CF_INFORMATIVE	(1 << 4)
-#define	IDL_CF_NOWARNINGS	(1 << 5)
 
-#endif	// _IDL_DEFINES_IDL_DEFINES_HH
+#define IDL_CF_VERSION          (1 << 0)
+#define IDL_CF_DUMP_AST         (1 << 1)
+#define IDL_CF_ONLY_PREPROC     (1 << 2)
+#define IDL_CF_ONLY_USAGE       (1 << 3)
+#define IDL_CF_INFORMATIVE      (1 << 4)
+#define IDL_CF_NOWARNINGS       (1 << 5)
+
+#endif  // _IDL_DEFINES_IDL_DEFINES_HH

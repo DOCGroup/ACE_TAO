@@ -18,15 +18,16 @@
 #define ACE_NAMING_CONTEXT_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Service_Object.h"
 #include "ace/Name_Proxy.h"
 #include "ace/Name_Space.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward decl
 class ACE_Name_Options;

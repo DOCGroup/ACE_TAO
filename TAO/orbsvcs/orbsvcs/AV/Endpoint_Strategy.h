@@ -6,18 +6,18 @@
 //
 // = LIBRARY
 //    cos
-// 
+//
 // = FILENAME
 //   Endpoint_Strategy.h
 //
 // = AUTHOR
 //    Sumedh Mungee <sumedh@cs.wustl.edu>
-//    
-// 
+//
+//
 // ============================================================================
 
-#if !defined (TAO_AV_ENDPOINT_STRATEGY_H)
-#define	TAO_AV_ENDPOINT_STRATEGY_H
+#ifndef TAO_AV_ENDPOINT_STRATEGY_H
+#define TAO_AV_ENDPOINT_STRATEGY_H
 
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "tao/TAO.h"
@@ -87,7 +87,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy
 
   virtual int get_vdev (CORBA::Environment &env);
   // Get the Vdev object reference for the newly created
-  // endpoint 
+  // endpoint
 
   CosNaming::NamingContext_var naming_context_;
   // Naming context
@@ -97,10 +97,10 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy
 
   char host_[MAXHOSTNAMELEN];
   // name of this host used for resolving unique names.
-  
+
   pid_t pid_;
   // My child's process id.
-};  
+};
 
 
 // ----------------------------------------------------------------------
@@ -117,7 +117,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_A
   virtual ~TAO_AV_Endpoint_Process_Strategy_A (void);
   // Destructor.
 
- protected:  
+ protected:
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev,
                         CORBA::Environment &env);
@@ -125,8 +125,8 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_A
 
   virtual int get_stream_endpoint (CORBA::Environment &env);
   // Gets the "A" type stream endpoint from the child process
-  
-};  
+
+};
 
 // ----------------------------------------------------------------------
 
@@ -147,12 +147,12 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_B
                         AVStreams::VDev_ptr &vdev,
                         CORBA::Environment &env);
   // Creates a "B" type stream endpoint, and a vdev
-  
-  
+
+
   virtual int get_stream_endpoint (CORBA::Environment &env);
   // Gets the object reference of the "B" type streamendpoint.
-  
-};  
+
+};
 
 // Include the templates here.
 #include "Endpoint_Strategy_T.h"

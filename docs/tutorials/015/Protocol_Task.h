@@ -6,6 +6,10 @@
 
 #include "ace/Task.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 /* A typical ACE_Task<> derivative that adds a few things appropriate
    to protocol stacks.
 */
@@ -20,13 +24,13 @@ public:
         // zero and let things proceed serially.  You might have a
         // need, however, for some of your tasks to have their own thread.
     Protocol_Task( int _thr_count );
-    
+
     ~Protocol_Task(void);
 
         // open() is invoked when the task is inserted into the stream.
     virtual int open(void *arg);
 
-        // close() is invoked when the stream is closed (flags will be 
+        // close() is invoked when the stream is closed (flags will be
         // set to '1') and when the svc() method exits (flags will be
         // '0').
     virtual int close(u_long flags);
@@ -36,13 +40,13 @@ public:
     virtual int put(ACE_Message_Block *message,
                     ACE_Time_Value *timeout);
 
-        // If you choose to activate the task then this method will be 
+        // If you choose to activate the task then this method will be
         // doing all of the work.
     virtual int svc(void);
 
 protected:
 
-        // Called by put() or svc() as necessary to process a block of 
+        // Called by put() or svc() as necessary to process a block of
         // data.
     int process(ACE_Message_Block * message, ACE_Time_Value *timeout);
 
@@ -57,7 +61,7 @@ protected:
         // the peer.
     virtual int send(ACE_Message_Block *message,
                      ACE_Time_Value *timeout);
-    
+
         // Tasks on the reader (upstream) side will be receiving data
         // that came from the peer.
     virtual int recv(ACE_Message_Block * message,

@@ -1,10 +1,14 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_HTTP_10_H)
+#ifndef JAWS_HTTP_10_H
 #define JAWS_HTTP_10_H
 
 #include "ace/RB_Tree.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "JAWS/Pipeline_Tasks.h"
 

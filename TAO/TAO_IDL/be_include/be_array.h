@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_ARRAY_H)
+#ifndef BE_ARRAY_H
 #define BE_ARRAY_H
 
 class TAO_OutStream;

@@ -5,6 +5,10 @@
 
 #include "ace/OS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 
@@ -60,9 +64,9 @@ public:
     // = DESCRIPTION
     //   This class provide us with a plain old data version of
     //   configuration info, which is useful for implementing static arrays
-	//   NOTE: if used in an array, the run-time scheduler requires that the
-	//   array index match the preemption priority stored in the config info
-	//   at that index: this is used to detect uninitialized/corrupted schedules
+        //   NOTE: if used in an array, the run-time scheduler requires that the
+        //   array index match the preemption priority stored in the config info
+        //   at that index: this is used to detect uninitialized/corrupted schedules
   {
     RtecScheduler::Preemption_Priority preemption_priority;
     RtecScheduler::OS_Priority thread_priority;

@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_INTERFACE_H)
+#ifndef TAO_BE_VISITOR_INTERFACE_H
 #define TAO_BE_VISITOR_INTERFACE_H
 
 #include "be_visitor_scope.h"

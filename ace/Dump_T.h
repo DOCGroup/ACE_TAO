@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Dump.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_DUMP_T_H
@@ -20,7 +20,7 @@
 #include "ace/Dump.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class Concrete>
@@ -31,7 +31,7 @@ class ACE_Dumpable_Adapter : public ACE_Dumpable
   //    class and is instantiated with the implementation of the
   //    concrete component class <class Concrete>.
   //
-  // = DESCRIPTION 
+  // = DESCRIPTION
   //    This design is similar to the Adapter and Decorator patterns
   //    from the ``Gang of Four'' book.  Note that <class Concrete>
   //    need not inherit from a common class since ACE_Dumpable

@@ -1,10 +1,14 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (CPP_ACCEPTOR_H)
+#ifndef CPP_ACCEPTOR_H
 #define CPP_ACCEPTOR_H
 
 #include "ace/Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <ACE_PEER_STREAM_1>
 class Svc_Handler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
@@ -18,7 +22,7 @@ public:
 
   virtual int open (void *);
   // Perform the work of the SVC_HANDLER.
-  
+
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   // Handle data from the client.
 
@@ -29,7 +33,7 @@ public:
   // Handles acceptor timeouts.
 
 private:
-  typedef ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH> 
+  typedef ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
           SVC_HANDLER;
 };
 
@@ -63,7 +67,7 @@ public:
   // Run the interative service.
 
 private:
-  typedef ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> 
+  typedef ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
           inherited;
 
   ACE_PEER_ACCEPTOR_ADDR server_addr_;

@@ -8,18 +8,18 @@
 //    asnmp
 //
 // = FILENAME
-//    oid.h 
+//    oid.h
 //
 // = DESCRIPTION
 // This class is fully contained and does not rely on or any other
 // SNMP libraries. This class is portable across any platform
-// which supports C++. Ported to ACE by Mike MacFaden mrm@cisco.com 
+// which supports C++. Ported to ACE by Mike MacFaden mrm@cisco.com
 // and modified for MT. Some API cleanup: collapse constructors,
-// add suboid() method remove unnecessary overload, and update a few 
-// names and types to improve clarity. 
+// add suboid() method remove unnecessary overload, and update a few
+// names and types to improve clarity.
 //
 // = AUTHOR
-//    Peter E Mellquist 
+//    Peter E Mellquist
 //
 // ============================================================================
 /*===================================================================
@@ -27,24 +27,29 @@
   Hewlett-Packard Company
 
   ATTENTION: USE OF THIS SOFTWARE IS SUBJECT TO THE FOLLOWING TERMS.
-  Permission to use, copy, modify, distribute and/or sell this software 
-  and/or its documentation is hereby granted without fee. User agrees 
-  to display the above copyright notice and this license notice in all 
-  copies of the software and any documentation of the software. User 
-  agrees to assume all liability for the use of the software; Hewlett-Packard 
-  makes no representations about the suitability of this software for any 
-  purpose. It is provided "AS-IS without warranty of any kind,either express 
-  or implied. User hereby grants a royalty-free license to any and all 
-  derivatives based upon this software code base. 
+  Permission to use, copy, modify, distribute and/or sell this software
+  and/or its documentation is hereby granted without fee. User agrees
+  to display the above copyright notice and this license notice in all
+  copies of the software and any documentation of the software. User
+  agrees to assume all liability for the use of the software; Hewlett-Packard
+  makes no representations about the suitability of this software for any
+  purpose. It is provided "AS-IS without warranty of any kind,either express
+  or implied. User hereby grants a royalty-free license to any and all
+  derivatives based upon this software code base.
 =====================================================================*/
 
 //----------[ extern C libraries Needed ]---------------------------------
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "asnmp/smival.h"                // derived class for all values
 
-class ACE_Export Oid: public  SnmpSyntax 
+class ACE_Export Oid: public  SnmpSyntax
   // = TITLE
-  //      Implement RFC 1155 Object Identifier (OID) datatype 
+  //      Implement RFC 1155 Object Identifier (OID) datatype
 {
 public:
   Oid( const char * dotted_oid_string = "", size_t size = unsigned(-1) );
@@ -94,7 +99,7 @@ public:
 
   unsigned long & operator[]( size_t position);
   // allows element access
-  
+
   SmiLPOID oidval();
   // return the WinSnmp oid part
 
@@ -103,7 +108,7 @@ public:
 
   void set_data( const unsigned long *raw_oid, const size_t oid_len);
   // reset the data from raw 4byte integer format
- 
+
   size_t length() const;
   // return the len of the oid
 
@@ -111,16 +116,16 @@ public:
   // trim off the n rightmost values of an oid
 
   int suboid(Oid& oid, size_t start = 0, size_t how_many = -1);
-  // the equivalent of a substr(new_str, 0, 1) 
+  // the equivalent of a substr(new_str, 0, 1)
 
-  int left_comparison( const unsigned long n, const Oid &o) const; 
+  int left_comparison( const unsigned long n, const Oid &o) const;
   // compare the n leftmost bytes (left-to-right)
   // returns 0, equal
   // returns -1, <
   // returns 1 , >
 
-  
-  int right_comparison( const unsigned long n, const Oid &o) const; 
+
+  int right_comparison( const unsigned long n, const Oid &o) const;
   // compare the n rightmost bytes (right-to-left)
   // returns 0, equal
   // returns -1, <
@@ -129,7 +134,7 @@ public:
   int valid() const;
   // is the Oid object valid
 
-  char *to_string(); 
+  char *to_string();
   // return dotted string value from the right
   // where the user specifies how many positions to print
 
@@ -140,7 +145,7 @@ public:
   // copy an instance of this Value
 
 protected:
-  char *iv_str;             
+  char *iv_str;
   // used for returning oid string
 
   int StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many_bytes);
@@ -153,10 +158,10 @@ protected:
   // convert an smi oid to its string representation
 
   private:
-    void set_invalid();  
-    // release memory, re-init data members 
+    void set_invalid();
+    // release memory, re-init data members
 
-    void set_null();  
+    void set_null();
     // initialize object data members
     void init_value( const SmiLPOID srcOid, size_t len);
     void init_value(const unsigned long *raw_oid, size_t oid_len);

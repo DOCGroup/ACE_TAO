@@ -5,27 +5,28 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Stream.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_STREAM_H
 #define ACE_STREAM_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/IO_Cntl_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Time_Value.h"
 #include "ace/Module.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward decls.
 template<ACE_SYNCH_DECL> class ACE_Stream_Iterator;
@@ -52,17 +53,17 @@ public:
   };
 
   // = Initializatation and termination methods.
-  ACE_Stream (void *arg = 0, 
-	      ACE_Module<ACE_SYNCH_USE> *head = 0, 
-	      ACE_Module<ACE_SYNCH_USE> *tail = 0);
+  ACE_Stream (void *arg = 0,
+              ACE_Module<ACE_SYNCH_USE> *head = 0,
+              ACE_Module<ACE_SYNCH_USE> *tail = 0);
   // Create a Stream consisting of <head> and <tail> as the Stream
   // head and Stream tail, respectively.  If these are 0 then the
   // <ACE_Stream_Head> and <ACE_Stream_Tail> are used, respectively.
   // <arg> is the value past in to the open() methods of the tasks.
 
   int open (void *arg,
-	    ACE_Module<ACE_SYNCH_USE> *head = 0, 
-	    ACE_Module<ACE_SYNCH_USE> *tail = 0);
+            ACE_Module<ACE_SYNCH_USE> *head = 0,
+            ACE_Module<ACE_SYNCH_USE> *tail = 0);
   // Create a Stream consisting of <head> and <tail> as the Stream
   // head and Stream tail, respectively.  If these are 0 then the
   // <ACE_Stream_Head> and <ACE_Stream_Tail> are used, respectively.
@@ -70,11 +71,11 @@ public:
 
   int close (int flags = M_DELETE);
   // Close down the stream and release all the resources.
-  
+
   ~ACE_Stream (void);
   // Close down the stream and release all the resources.
 
-  // = ACE_Stream plumbing operations 
+  // = ACE_Stream plumbing operations
 
   int push (ACE_Module<ACE_SYNCH_USE> *mod);
   // Add a new module <mod> right below the Stream head.
@@ -90,13 +91,13 @@ public:
   // Remove the named module <mod> from the stream.  This bypasses the
   // strict LIFO ordering of push() and pop().
 
-  ACE_Module<ACE_SYNCH_USE> *head (void);	
+  ACE_Module<ACE_SYNCH_USE> *head (void);
   // Return current stream head.
 
-  ACE_Module<ACE_SYNCH_USE> *tail (void);	
+  ACE_Module<ACE_SYNCH_USE> *tail (void);
   // Return current stream tail.
 
-  ACE_Module<ACE_SYNCH_USE> *find (const ASYS_TCHAR *mod); 
+  ACE_Module<ACE_SYNCH_USE> *find (const ASYS_TCHAR *mod);
   // Find a particular ACE_Module.
 
   int link (ACE_Stream<ACE_SYNCH_USE> &);
@@ -105,7 +106,7 @@ public:
   int unlink (void);
   // Remove a pipe formed between two Streams.
 
-  // = Blocking data transfer operations 
+  // = Blocking data transfer operations
   int put (ACE_Message_Block *mb,
            ACE_Time_Value *timeout = 0);
   // Send the message <mb> down the stream, starting at the Module
@@ -119,11 +120,11 @@ public:
   // Wait for upto <timeout> amount of time for the operation to
   // complete (or block forever if <timeout> == 0).
 
-  int control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
-	       void *args);
+  int control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
+               void *args);
   // Send control message down the stream.
 
-  int wait (void);		
+  int wait (void);
   // Synchronize with the final close of the stream.
 
   void dump (void) const;
@@ -135,15 +136,15 @@ public:
 private:
   int unlink_i (void);
   // Actually perform the unlinking of two Streams (must be called
-  // with locks held). 
+  // with locks held).
 
   int link_i (ACE_Stream<ACE_SYNCH_USE> &);
   // Actually perform the linking of two Streams (must be called with
   // locks held).
 
   int push_module (ACE_Module<ACE_SYNCH_USE> *,
-		   ACE_Module<ACE_SYNCH_USE> * = 0, 
-		   ACE_Module<ACE_SYNCH_USE> * = 0);
+                   ACE_Module<ACE_SYNCH_USE> * = 0,
+                   ACE_Module<ACE_SYNCH_USE> * = 0);
   // Must a new module onto the Stream.
 
   ACE_Module<ACE_SYNCH_USE> *stream_head_;
@@ -158,7 +159,7 @@ private:
   // = Synchronization objects used for thread-safe streams.
   ACE_SYNCH_MUTEX_T lock_;
   // Protect the stream against race conditions.
-  
+
   ACE_SYNCH_CONDITION_T final_close_;
   // Use to tell all threads waiting on the close that we are done.
 };

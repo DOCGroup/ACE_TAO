@@ -18,11 +18,12 @@
 #define ACE_STATS_H
 
 #include "ace/ACE.h"
-#include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Containers.h"
 
 class ACE_Export ACE_Stats_Value
 {

@@ -22,9 +22,9 @@
 // your first module, and a Stream_Tail behind your
 // last module.
 //
-// If your put() a message to the Stream Tail, it 
+// If your put() a message to the Stream Tail, it
 // assumes you did so in error. This simple EndTask
-// class allows you to push a message to it and just 
+// class allows you to push a message to it and just
 // have it safely Go Away.
 //
 // All this Task does is release the Message_Block
@@ -39,33 +39,33 @@ public:
   typedef Task inherited;
 
   EndTask(const char *nameOfTask) :
-    inherited(nameOfTask, 0) { 
+    inherited(nameOfTask, 0) {
 
     // when we get open()'d, it with 0 threads
     // since there is actually no processing to do.
 
-	cerr << __LINE__ << " " << __FILE__ << endl;
+        cerr << __LINE__ << " " << __FILE__ << endl;
   };
 
   virtual int open(void *)
   {
-	cerr << __LINE__ << " " << __FILE__ << endl;
-	return 0;
+        cerr << __LINE__ << " " << __FILE__ << endl;
+        return 0;
   }
 
   virtual int open(void)
   {
-	cerr << __LINE__ << " " << __FILE__ << endl;
-	return 0;
+        cerr << __LINE__ << " " << __FILE__ << endl;
+        return 0;
   }
 
   virtual ~EndTask(void) {
   };
 
   virtual int put(ACE_Message_Block *message,
-		  ACE_Time_Value *timeout) {
+                  ACE_Time_Value *timeout) {
 
-	cerr << __LINE__ << " " << __FILE__ << endl;
+        cerr << __LINE__ << " " << __FILE__ << endl;
     ACE_UNUSED_ARG(timeout);
 
     // we don't have anything to do, so

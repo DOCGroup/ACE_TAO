@@ -16,11 +16,15 @@
 //
 // ============================================================================
 
-#if !defined (RESULTS_H)
+#ifndef RESULTS_H
 #define RESULTS_H
 
 #include "tao/corba.h"
 #include "ace/Profile_Timer.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class Results
 {

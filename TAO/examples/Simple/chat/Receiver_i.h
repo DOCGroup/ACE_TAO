@@ -17,7 +17,7 @@
 //
 // ===========================================================
 
-#if !defined (RECEIVER_I_H)
+#ifndef RECEIVER_I_H
 #define RECEIVER_I_H
 
 #include "ReceiverS.h"

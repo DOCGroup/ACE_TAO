@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    LSOCK.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_LOCAL_SOCK_H
@@ -19,26 +19,26 @@
 
 #include "ace/SOCK.h"
 
-#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 class ACE_Export ACE_LSOCK
 {
   // = TITLE
   //     Create a Local ACE_SOCK, which is used for passing file
-  //     descriptors.  
+  //     descriptors.
 public:
 #if defined (ACE_HAS_MSG)
-  int send_handle (const ACE_HANDLE handle) const;	
-  // Send an open FD to another process. 
+  int send_handle (const ACE_HANDLE handle) const;
+  // Send an open FD to another process.
 
-  int recv_handle (ACE_HANDLE &handles, 
-		   char *pbuf = 0, 
-		   int *len = 0) const; 
-  // Recv an open FD from another process. 
+  int recv_handle (ACE_HANDLE &handles,
+                   char *pbuf = 0,
+                   int *len = 0) const;
+  // Recv an open FD from another process.
 #endif /* ACE_HAS_MSG */
 
   void dump (void) const;
@@ -48,7 +48,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  // = Ensure that ACE_LSOCK is an abstract base class 
+  // = Ensure that ACE_LSOCK is an abstract base class
 
   ACE_LSOCK (void);
   // Default constructor.
@@ -64,7 +64,7 @@ protected:
 
 private:
   ACE_HANDLE aux_handle_;
-  // An auxiliary handle used to avoid virtual base classes... 
+  // An auxiliary handle used to avoid virtual base classes...
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -20,7 +20,7 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class RB_Tree_Node_Base
@@ -221,7 +221,7 @@ public:
 
 private:
   // = Declare private and do not define.
-  
+
   // Explicitly prevent assignment and copy construction of iterators
   ACE_UNIMPLEMENTED_FUNC (RB_Tree_Iterator (const RB_Tree_Iterator<KEY, T> &))
   ACE_UNIMPLEMENTED_FUNC (void operator = (const RB_Tree_Iterator<KEY, T> &))

@@ -20,7 +20,7 @@
 #include "ace/Select_Reactor_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class ACE_SELECT_REACTOR_MUTEX>

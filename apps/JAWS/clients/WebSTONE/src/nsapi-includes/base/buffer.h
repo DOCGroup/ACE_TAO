@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,24 +13,24 @@
 
 /*
  * buffer.h: For performing buffered I/O on a file or socket descriptor.
- * 
+ *
  * This is an abstraction to allow I/O to be performed regardless of the
- * current system. That way, an integer file descriptor can be used under 
+ * current system. That way, an integer file descriptor can be used under
  * UNIX but a stdio FILE structure could be used on systems which don't
  * support that or don't support it as efficiently.
- * 
+ *
  * Two abstractions are defined: A file buffer, and a network buffer. A
  * distinction is made so that mmap() can be used on files (but is not
- * required). Also, the file buffer takes a file name as the object to 
+ * required). Also, the file buffer takes a file name as the object to
  * open instead of a file descriptor. A lot of the network buffering
  * is almost an exact duplicate of the non-mmap file buffering.
- * 
+ *
  * If an error occurs, system-independent means to obtain an error string
  * are also provided. However, if the underlying system is UNIX the error
  * may not be accurate in a threaded environment.
- * 
+ *
  * Rob McCool
- * 
+ *
  */
 
 
@@ -50,7 +50,7 @@
 #include "net.h"
 
 /*
- * Requires that the macro MALLOC be set to a "safe" malloc that will 
+ * Requires that the macro MALLOC be set to a "safe" malloc that will
  * exit if no memory is available. If not under MCC httpd, define MALLOC
  * to be the real malloc and play with fire, or make your own function.
  */
@@ -102,9 +102,9 @@ typedef struct {
 
 
 /*
- * netbuf_getc gets a character from the given network buffer and returns 
+ * netbuf_getc gets a character from the given network buffer and returns
  * it. (as an integer).
- * 
+ *
  * It will return (int) IO_ERROR for an error and (int) IO_EOF for
  * an error condition or EOF respectively.
  */
@@ -128,7 +128,7 @@ typedef struct {
 #define buffer_error(b) ((b)->errmsg)
 
 /*
- * buffer_flush flushes any data after the current pos to the file 
+ * buffer_flush flushes any data after the current pos to the file
  * descriptor fd. Regardless of buffer type.
  */
 
@@ -144,7 +144,7 @@ typedef struct {
  * buffer of size sz, and returns a new buffer structure which will hold
  * the data.
  *
- * If FILE_UNIX_MMAP is defined, this may return NULL. If it does, check 
+ * If FILE_UNIX_MMAP is defined, this may return NULL. If it does, check
  * system_errmsg to get a message about the error.
  */
 
@@ -181,12 +181,12 @@ void filebuf_close(filebuf *buf);
 void netbuf_close(netbuf *buf);
 
 /*
- * buffer_grab will set the buffer's inbuf array to an array of sz bytes 
- * from the buffer's associated object. It returns the number of bytes 
+ * buffer_grab will set the buffer's inbuf array to an array of sz bytes
+ * from the buffer's associated object. It returns the number of bytes
  * actually read (between 1 and sz). It returns IO_EOF upon EOF or IO_ERROR
  * upon error. The cursize entry of the structure will reflect the size
  * of the iobuf array.
- * 
+ *
  * The buffer will take care of allocation and deallocation of this array.
  */
 
@@ -204,7 +204,7 @@ int netbuf_grab(netbuf *buf, int sz);
 int netbuf_buf2sd(netbuf *buf, SYS_NETFD sd, int len);
 
 /*
- * filebuf_buf2sd assumes that nothing has been read from the filebuf, 
+ * filebuf_buf2sd assumes that nothing has been read from the filebuf,
  * and just sends the file out to the given socket. Returns IO_ERROR on error
  * and the number of bytes sent otherwise.
  *

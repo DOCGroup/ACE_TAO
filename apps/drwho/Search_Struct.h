@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_SEARCH_STRUCT_H)
+#ifndef _SEARCH_STRUCT_H
 #define _SEARCH_STRUCT_H
 
 #include "Protocol_Record.h"

@@ -4,6 +4,11 @@
 #include <fstream.h>
 
 #include "ace/SString.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Containers.h"
 #include "ace/Singleton.h"
 #include "ace/Get_Opt.h"

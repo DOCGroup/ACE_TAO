@@ -20,13 +20,14 @@
 #define ACE_LOCAL_NAME_SPACE_T_H
 
 #include "ace/Name_Space.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Naming_Context.h"
 #include "ace/SString.h"
 #include "ace/Local_Name_Space.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // A short-hand name for our set of name/value/type tuples passed back
 // to callers.

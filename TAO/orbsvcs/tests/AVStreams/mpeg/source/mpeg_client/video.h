@@ -2,17 +2,17 @@
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software and its
  * documentation for any purpose, without fee, and without written agreement is
  * hereby granted, provided that the above copyright notice and the following
  * two paragraphs appear in all copies of this software.
- * 
+ *
  * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
  * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
  * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
  * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
  * AND FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE PROVIDED HEREUNDER IS
@@ -40,7 +40,7 @@ typedef char INT8;
 typedef unsigned int UINT32;
 typedef unsigned short UINT16;
 typedef unsigned char UINT8;
- 
+
 /* Define Parsing error codes. */
 
 #define SKIP_PICTURE -10
@@ -132,7 +132,7 @@ typedef struct GoP {
   unsigned int tc_seconds;               /* Second component of time code. */
   unsigned int tc_pictures;              /* Picture counter of time code.  */
   BOOLEAN closed_gop;                    /* Indicates no pred. vectors to
-					    previous group of pictures.    */
+                                            previous group of pictures.    */
   BOOLEAN broken_link;                   /* B frame unable to be decoded.  */
   char *ext_data;                        /* Extension data.                */
   char *user_data;                       /* User data.                     */
@@ -145,11 +145,11 @@ typedef struct pict {
   unsigned int code_type;                /* Frame type: P, B, I             */
   unsigned int vbv_delay;                /* Buffer delay.                   */
   BOOLEAN full_pel_forw_vector;          /* Forw. vectors specified in full
-					    pixel values flag.              */
+                                            pixel values flag.              */
   unsigned int forw_r_size;              /* Used for vector decoding.       */
   unsigned int forw_f;                   /* Used for vector decoding.       */
-  BOOLEAN full_pel_back_vector;          /* Back vectors specified in full 
-					    pixel values flag.              */
+  BOOLEAN full_pel_back_vector;          /* Back vectors specified in full
+                                            pixel values flag.              */
   unsigned int back_r_size;              /* Used in decoding.               */
   unsigned int back_f;                   /* Used in decoding.               */
   char *extra_info;                      /* Extra bit picture info.         */
@@ -212,12 +212,12 @@ typedef struct vid_stream {
   unsigned int vbv_buffer_size;                /* Minimum buffer size.       */
   BOOLEAN const_param_flag;                    /* Contrained parameter flag. */
   unsigned char intra_quant_matrix[8][8];      /* Quantization matrix for
-						  intracoded frames.         */
-  unsigned char non_intra_quant_matrix[8][8];  /* Quanitization matrix for 
-						  non intracoded frames.     */
+                                                  intracoded frames.         */
+  unsigned char non_intra_quant_matrix[8][8];  /* Quanitization matrix for
+                                                  non intracoded frames.     */
   char *ext_data;                              /* Extension data.            */
   char *user_data;                             /* User data.                 */
-  int gopid;             		       /* id of latest group id      */
+  int gopid;                                   /* id of latest group id      */
   GoP group;                                   /* Current group of pict.     */
   Pict picture;                                /* Current picture.           */
   Slice slice;                                 /* Current slice.             */
@@ -226,7 +226,7 @@ typedef struct vid_stream {
   int state;                                   /* State of decoding.         */
   int bit_offset;                              /* Bit offset in stream.      */
   unsigned int *buffer;                        /* Pointer to next byte in
-						  buffer.                    */
+                                                  buffer.                    */
   int buf_length;                              /* Length of remaining buffer.*/
   unsigned int *buf_start;                     /* Pointer to buffer start.   */
   int max_buf_length;                          /* Max lenght of buffer.      */
@@ -234,7 +234,7 @@ typedef struct vid_stream {
   PictImage *future;                           /* Future predictive frame.   */
   PictImage *current;                          /* Current frame.             */
   PictImage *ring[RING_BUF_SIZE];              /* Ring buffer of frames.     */
-} VidStream;   
+} VidStream;
 
 /* Declaration of global pointer to current video stream. */
 
@@ -257,14 +257,14 @@ extern char *ditherFlags;
 #define CONST_BITS 13
 
 /* Misc DCT definitions */
-#define DCTSIZE		8	/* The basic DCT block is 8x8 samples */
-#define DCTSIZE2	64	/* DCTSIZE squared; # of elements in a block */
+#define DCTSIZE         8       /* The basic DCT block is 8x8 samples */
+#define DCTSIZE2        64      /* DCTSIZE squared; # of elements in a block */
 
-#define GLOBAL			/* a function referenced thru EXTERNs */
-  
+#define GLOBAL                  /* a function referenced thru EXTERNs */
+
 typedef short DCTELEM;
 typedef DCTELEM DCTBLOCK[DCTSIZE2];
- 
+
 
 #ifdef SH_MEM
 extern int gXErrorFlag;

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * sem.h: Attempt to provide multi-process semaphores across platforms
- * 
+ *
  * Rob McCool
  */
 
@@ -37,8 +37,8 @@ typedef int SEMAPHORE;
 #endif /* SEM_WIN32 */
 
 /*
- * sem_init creates a semaphore using the given name and unique 
- * identification number. filename should be a file accessible to the 
+ * sem_init creates a semaphore using the given name and unique
+ * identification number. filename should be a file accessible to the
  * process. Returns SEM_ERROR on error.
  */
 

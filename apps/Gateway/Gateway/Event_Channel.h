@@ -5,16 +5,16 @@
 //
 // = LIBRARY
 //    gateway
-// 
+//
 // = FILENAME
 //    Event_Channel.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
-#if !defined (ACE_EVENT_CHANNEL)
+#ifndef ACE_EVENT_CHANNEL
 #define ACE_EVENT_CHANNEL
 
 #include "Connection_Handler_Connector.h"
@@ -64,8 +64,8 @@ public:
                   Connection_Handler *&);
   // Locate the <Connection_Handler> with <connection_id>.
 
-  int subscribe (const Event_Key &event_addr, 
-		 Consumer_Dispatch_Set *cds);
+  int subscribe (const Event_Key &event_addr,
+                 Consumer_Dispatch_Set *cds);
   // Subscribe the <Consumer_Dispatch_Set> to receive events that
   // match <Event_Key>.
 
@@ -97,8 +97,8 @@ private:
   int compute_performance_statistics (void);
   // Perform timer-based performance profiling.
 
-  virtual int handle_timeout (const ACE_Time_Value &, 
-			      const void *arg);
+  virtual int handle_timeout (const ACE_Time_Value &,
+                              const void *arg);
   // Periodically callback to perform timer-based performance
   // profiling.
 
@@ -112,11 +112,11 @@ private:
   // Used to establish connections passively and create Consumers.
 
   // = Make life easier by defining typedefs.
-  typedef ACE_Map_Manager<CONNECTION_ID, Connection_Handler *, MAP_MUTEX> 
+  typedef ACE_Map_Manager<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>
   CONNECTION_MAP;
-  typedef ACE_Map_Iterator<CONNECTION_ID, Connection_Handler *, MAP_MUTEX> 
+  typedef ACE_Map_Iterator<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>
   CONNECTION_MAP_ITERATOR;
-  typedef ACE_Map_Entry<CONNECTION_ID, Connection_Handler *> 
+  typedef ACE_Map_Entry<CONNECTION_ID, Connection_Handler *>
   CONNECTION_MAP_ENTRY;
 
   CONNECTION_MAP connection_map_;

@@ -21,7 +21,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_SEQUENCE_ELEMTYPE_H_)
+#ifndef _BE_VISITOR_SEQUENCE_ELEMTYPE_H_
 #define _BE_VISITOR_SEQUENCE_ELEMTYPE_H_
 
 class be_visitor_sequence_elemtype : public be_visitor_decl

@@ -16,6 +16,11 @@
 // ============================================================================
 
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
@@ -42,7 +47,7 @@ class Client_i : public virtual MT_Priority
 public:
   Client_i (void);
   //constructor.
-  
+
   ~Client_i (void);
   // destructor.
 
@@ -109,7 +114,7 @@ private:
 
   ACE_High_Res_Timer timer_;
   // Timer for timing the tests.
-  
+
   MT_Priority priority_;
   // Priority helper object.
 

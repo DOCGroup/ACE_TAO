@@ -48,7 +48,7 @@
 #define ACE_BASIC_TYPES_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // A char always has 1 byte, by definition.

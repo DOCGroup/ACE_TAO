@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ACE
-// 
+//
 // = FILENAME
 //    CLASSIX_Addr.h
 //
@@ -14,10 +14,15 @@
 //
 // ============================================================================
 
-#if !defined (ACE_CLASSIX_ADDR_H)
+#ifndef ACE_CLASSIX_ADDR_H
 #define ACE_CLASSIX_ADDR_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Addr.h"
 
 #include <ipc/chIpc.h>
@@ -27,24 +32,24 @@ class ACE_Export ACE_CLASSIX_Addr : public ACE_Addr
 {
   // = TITLE
   //    Defines the ClassiX IPC address format.
-  //    
+  //
   // = DESCRIPTION
   //   This class defines basic interfaces for "ACE-like" address for
   //   Chorus port.
 public:
-  enum 
+  enum
   {
     ACE_CLASSIX_ADDR_UNKNOWN = ACE_INVALID_HANDLE, /* K_NONEPORT */
     ACE_CLASSIX_ADDR_DEFAULT = K_DEFAULTPORT,
     AF_CLASSIX               = AF_MAX + 1
   };
-    
+
   enum Addr_Type
   {
-    PORT,			// use Peer_Port
-    GROUP,			// use Peer_Group
-    STAMP,			// use peer_Stamp
-    DYNAMIC,		        // use Peer_Group
+    PORT,                       // use Peer_Port
+    GROUP,                      // use Peer_Group
+    STAMP,                      // use peer_Stamp
+    DYNAMIC,                    // use Peer_Group
     UNDEFINED
   };
 
@@ -59,11 +64,11 @@ public:
   // = Direct initialization methods (useful after the object has been
   // constructed).
   // Returns 0 on success, -1 otherwise.
-  // 
+  //
 
   /* -----------------------------------------------------*/
   // = ACCESS
-  // 
+  //
   virtual const KnUniqueId& get_id (void) const;
   // Returns a reference to the unique identifier
 

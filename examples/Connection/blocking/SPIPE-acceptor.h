@@ -1,10 +1,15 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (SP_ACCEPTOR_H)
+#ifndef SP_ACCEPTOR_H
 #define SP_ACCEPTOR_H
 
 #include "ace/Svc_Handler.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Acceptor.h"
 #include "ace/SPIPE_Stream.h"
 #include "ace/SPIPE_Acceptor.h"

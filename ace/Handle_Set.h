@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Handle_Set.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_HANDLE_SET_H
@@ -20,19 +20,19 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Export ACE_Handle_Set 
+class ACE_Export ACE_Handle_Set
 {
   // = TITLE
   //     C++ wrapper for the socket <FD_SET> abstraction.
 public:
   friend class ACE_Handle_Set_Iterator;
 
-  // = Initialization and termination. 
+  // = Initialization and termination.
 
-  enum 
+  enum
   {
     MAXSIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE
   };
@@ -128,7 +128,7 @@ private:
 class ACE_Export ACE_Handle_Set_Iterator
 {
   // = TITLE
-  //     Iterator for the <ACE_Handle_Set> abstraction. 
+  //     Iterator for the <ACE_Handle_Set> abstraction.
 public:
   ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs);
   // Constructor.
@@ -158,11 +158,11 @@ private:
   // The <Handle_Set> we are iterating through.
 
 #if defined (ACE_WIN32)
-  u_int handle_index_; 
-#elif !defined (ACE_HAS_BIG_FD_SET) 
-  int handle_index_; 
+  u_int handle_index_;
+#elif !defined (ACE_HAS_BIG_FD_SET)
+  int handle_index_;
 #elif defined (ACE_HAS_BIG_FD_SET)
-  int handle_index_; 
+  int handle_index_;
   u_long oldlsb_;
 #endif /* ACE_WIN32 */
   // Index of the bit we're examining in the current <word_num_> word.

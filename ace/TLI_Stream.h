@@ -6,31 +6,32 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    TLI_Stream.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_TLI_STREAM_H
 #define ACE_TLI_STREAM_H
 
 #include "ace/TLI.h"
-#include "ace/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/INET_Addr.h"
 
 #if defined (ACE_HAS_TLI)
 
 class ACE_Export ACE_TLI_Stream : public ACE_TLI
 {
   // = TITLE
-  //     Defines the member functions for ACE_TLI_Stream abstraction. 
+  //     Defines the member functions for ACE_TLI_Stream abstraction.
 public:
   friend class ACE_TLI_Acceptor;
   friend class ACE_TLI_Connector;
@@ -53,7 +54,7 @@ public:
   int get_remote_addr (ACE_Addr &) const;
   // Return address of remotely connected peer.
 
-  // =  timod bindings 
+  // =  timod bindings
   ssize_t send (const void *buf, size_t n, int flags) const;
   // Send an n byte buffer to the connected socket (uses t_snd(3)).
   ssize_t recv (void *buf, size_t n, int *flags) const;
@@ -64,9 +65,9 @@ public:
   ssize_t recv_n (void *buf, size_t n, int *flags) const;
   // Recv exactly n bytes from the connected socket (uses t_rcv(3)).
 
-  // = tirdwr bindings 
+  // = tirdwr bindings
   ssize_t send (const void *buf, size_t n) const;
-  // Send an n byte buffer to the connected socket (uses write(2)).  
+  // Send an n byte buffer to the connected socket (uses write(2)).
 
   ssize_t recv (void *buf, size_t n) const;
   // Recv an n byte buffer from the connected socket (uses read(2)).
@@ -87,8 +88,8 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  int rwflag_; 
-  // Indicates whether the tirdwr module should be pushed   
+  int rwflag_;
+  // Indicates whether the tirdwr module should be pushed
 
   // = Get/set rwflag
   int  get_rwflag (void);

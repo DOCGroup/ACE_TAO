@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,9 +13,9 @@
 
 /*
  * cinfo.h: Content Information for a file, i.e. its type, etc.
- * 
- * See cinfo.c for dependency information. 
- * 
+ *
+ * See cinfo.c for dependency information.
+ *
  * Rob McCool
  */
 
@@ -62,9 +62,9 @@
 
 /*
  * The ContentInfo structure.
- * 
+ *
  * Currently, we support the following attributes:
- * 
+ *
  * 1. Type: This identifies what kind of data is in the file.
  * 2. Encoding: Identifies any compression or otherwise content-independent
  *    transformation which has been applied to the file (uuencode, etc.)
@@ -72,7 +72,7 @@
  * 4. Description: A text string describing the file.
  * 5. Viewer: The program to use to view the file.
  *
- * Multiple items are separated with a comma, e.g. 
+ * Multiple items are separated with a comma, e.g.
  * encoding="x-gzip, x-uuencode"
  */
 
@@ -87,7 +87,7 @@ typedef struct {
 
 
 /*
- * cinfo_init initializes the content info system. Call this before 
+ * cinfo_init initializes the content info system. Call this before
  * cinfo_merge.
  */
 
@@ -100,7 +100,7 @@ void cinfo_init(void);
 void cinfo_terminate(void);
 
 /*
- * cinfo_merge merges the contents of the given filename with the current 
+ * cinfo_merge merges the contents of the given filename with the current
  * cinfo database. It returns NULL upon success and a string (which you
  * must deallocate) upon error.
  */
@@ -114,7 +114,7 @@ char *cinfo_merge(char *fn);
  * separated by CINFO_SEPARATOR. You may pass in a filename instead of uri.
  *
  * Returns a newly allocated cinfo structure with the information it
- * finds. The elements of this structure are coming right out of the types 
+ * finds. The elements of this structure are coming right out of the types
  * database and so if you change it or want to keep it around for long you
  * should strdup it. You should free only the structure itself when finished
  * with it.
@@ -127,7 +127,7 @@ char *cinfo_merge(char *fn);
 cinfo *cinfo_find(char *uri);
 
 /*
- * cinfo_lookup finds the information about the given content-type, and 
+ * cinfo_lookup finds the information about the given content-type, and
  * returns a cinfo structure so you can look up description and icon.
  */
 

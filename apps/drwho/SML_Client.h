@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_SML_CLIENT_H)
+#ifndef _SML_CLIENT_H
 #define _SML_CLIENT_H
 
 #include "SM_Client.h"

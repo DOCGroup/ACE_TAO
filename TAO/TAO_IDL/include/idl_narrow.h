@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -64,8 +64,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#ifndef	_IDL_NARROW_IDL_NARROW_HH
-#define	_IDL_NARROW_IDL_NARROW_HH
+#ifndef _IDL_NARROW_IDL_NARROW_HH
+#define _IDL_NARROW_IDL_NARROW_HH
 
 // idl_narrow.hh
 //
@@ -95,11 +95,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // IMPL_NARROW_METHODSn where n is 0,1,2 and 3 are provided.
 // DEF_NARROW_METHODSn where n is 0,1,2 and 3 are provided.
 
-extern	char	*type_id_to_string(long);
+extern  char    *type_id_to_string(long);
 
 #define DEF_NARROW_METHODS0(TYPE)\
-static	int	type_id(); \
-virtual	void	*narrow(long type_const)
+static  int     type_id(); \
+virtual void    *narrow(long type_const)
 
 
 #define IMPL_NARROW_METHODS0(TYPE)\
@@ -108,17 +108,17 @@ TYPE::type_id()\
 {\
   return 0;\
 }\
-void	* \
+void    * \
 TYPE::narrow(long type_const) {\
-  void	*rval = NULL; \
+  void  *rval = NULL; \
   if (type_const == (long)&TYPE::type_id) \
     rval = this; \
   return rval; \
 }
 
 #define DEF_NARROW_METHODS1(TYPE,PARENT) \
-static	int	type_id(); \
-virtual	void	*narrow(long type_const)
+static  int     type_id(); \
+virtual void    *narrow(long type_const)
 
 
 #define IMPL_NARROW_METHODS1(TYPE,PARENT) \
@@ -127,9 +127,9 @@ TYPE::type_id() \
 {\
    return 0;\
 }\
-void	* \
+void    * \
 TYPE::narrow(long type_const) {\
-  void	*rval = NULL; \
+  void  *rval = NULL; \
   if (type_const == (long)&TYPE::type_id) \
     rval = this; \
   if (rval == NULL) \
@@ -138,8 +138,8 @@ TYPE::narrow(long type_const) {\
 }
 
 #define DEF_NARROW_METHODS2(TYPE,PARENT1,PARENT2) \
-static	int	type_id(); \
-virtual	void	*narrow(long type_const)
+static  int     type_id(); \
+virtual void    *narrow(long type_const)
 
 
 #define IMPL_NARROW_METHODS2(TYPE,PARENT1,PARENT2) \
@@ -148,7 +148,7 @@ TYPE::type_id() \
 {\
    return 0;\
 }\
-void	* \
+void    * \
 TYPE::narrow(long type_const) { \
   void *rval = NULL; \
   if (type_const == (long)&TYPE::type_id) \
@@ -161,8 +161,8 @@ TYPE::narrow(long type_const) { \
 }
 
 #define DEF_NARROW_METHODS3(TYPE,PARENT1,PARENT2,PARENT3) \
-static	int	type_id(); \
-virtual	void	*narrow(long type_const)
+static  int     type_id(); \
+virtual void    *narrow(long type_const)
 
 
 #define IMPL_NARROW_METHODS3(TYPE,PARENT1,PARENT2,PARENT3) \
@@ -171,7 +171,7 @@ TYPE::type_id() \
 {\
    return 0;\
 }\
-void	* \
+void    * \
 TYPE::narrow(long type_const) {\
   void *rval = NULL; \
   if (type_const == (long)&TYPE::type_id) \
@@ -186,8 +186,8 @@ TYPE::narrow(long type_const) {\
 }
 
 #define DEF_NARROW_METHODS4(TYPE,PARENT1,PARENT2,PARENT3,PARENT4) \
-static	int	type_id(); \
-virtual	void	*narrow(long type_const)
+static  int     type_id(); \
+virtual void    *narrow(long type_const)
 
 
 #define IMPL_NARROW_METHODS4(TYPE,PARENT1,PARENT2,PARENT3,PARENT4) \
@@ -196,7 +196,7 @@ TYPE::type_id() \
 {\
    return 0;\
 }\
-void	* \
+void    * \
 TYPE::narrow(long type_const) {\
   void *rval = NULL; \
   if (type_const == (long)&TYPE::type_id) \
@@ -213,8 +213,8 @@ TYPE::narrow(long type_const) {\
 }
 
 #define DEF_NARROW_METHODS5(TYPE,PARENT1,PARENT2,PARENT3,PARENT4,PARENT5) \
-static	int	type_id(); \
-virtual	void	*narrow(long type_const)
+static  int     type_id(); \
+virtual void    *narrow(long type_const)
 
 
 #define IMPL_NARROW_METHODS5(TYPE,PARENT1,PARENT2,PARENT3,PARENT4,PARENT5) \
@@ -223,7 +223,7 @@ TYPE::type_id() \
 {\
    return 0;\
 }\
-void	* \
+void    * \
 TYPE::narrow(long type_const) {\
   void *rval = NULL; \
   if (type_const == (long)&TYPE::type_id) \
@@ -242,7 +242,7 @@ TYPE::narrow(long type_const) {\
 }
 
 #define DEF_NARROW_FROM_DECL(TYPE)\
-static	TYPE *narrow_from_decl(AST_Decl *t)
+static  TYPE *narrow_from_decl(AST_Decl *t)
 
 
 #define IMPL_NARROW_FROM_DECL(TYPE)\
@@ -252,7 +252,7 @@ TYPE::narrow_from_decl(AST_Decl *t) { \
 }
 
 #define DEF_NARROW_FROM_SCOPE(TYPE)\
-static	TYPE *narrow_from_scope(UTL_Scope *t)
+static  TYPE *narrow_from_scope(UTL_Scope *t)
 
 
 #define IMPL_NARROW_FROM_SCOPE(TYPE)\
@@ -261,4 +261,4 @@ TYPE::narrow_from_scope(UTL_Scope *t) { \
     return (TYPE *)t->narrow((long)&TYPE::type_id);\
 }
 
-#endif	// _IDL_NARROW_IDL_NARROW_HH
+#endif  // _IDL_NARROW_IDL_NARROW_HH

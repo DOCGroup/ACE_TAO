@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_INTERFACE_INTERFACE_FWD_CH_H_)
+#ifndef _BE_INTERFACE_INTERFACE_FWD_CH_H_
 #define _BE_INTERFACE_INTERFACE_FWD_CH_H_
 
 class be_visitor_interface_fwd_ch : public be_visitor_decl

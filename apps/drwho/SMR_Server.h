@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_SMR_SERVER_H)
+#ifndef _SMR_SERVER_H
 #define _SMR_SERVER_H
 
 #include "SM_Server.h"

@@ -7,7 +7,7 @@
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_COMPILE_TIMEPROBES)
@@ -31,7 +31,7 @@ class ACE_Timeprobe
   //     event description can either be an unsigned long or a string
   //     (char *). If string are used, care must be taken cause only
   //     pointer copies are done and the string data is *not* copied.
-  //     
+  //
   //     The recorded time probes can then be printed by calling
   //     print_times().  If you have used unsigned longs as event
   //     descriptions in any of your time probes, you must have
@@ -71,10 +71,10 @@ public:
   // Record event descriptions.
 
   void print_times (void);
-  // Print the time probes. 
+  // Print the time probes.
 
   void print_absolute_times (void);
-  // Print the time probes. 
+  // Print the time probes.
 
   void reset (void);
   // Reset the slots.  All old time probes will be lost.
@@ -83,11 +83,11 @@ public:
   // Not implemented (stupid MSVC won't let it be protected).
 
 protected:
-  typedef ACE_Timeprobe<ACE_LOCK> 
+  typedef ACE_Timeprobe<ACE_LOCK>
           SELF;
   // Self
 
-  typedef ACE_Unbounded_Set<ACE_Event_Descriptions> 
+  typedef ACE_Unbounded_Set<ACE_Event_Descriptions>
           EVENT_DESCRIPTIONS;
   // We can hold multiple event description tables.
 
@@ -120,14 +120,14 @@ protected:
   // Current size of timestamp table
 };
 
-template <class Timeprobe> 
-class ACE_Function_Timeprobe 
+template <class Timeprobe>
+class ACE_Function_Timeprobe
 {
   // = TITLE
   //     Auto pointer like time probes. It will record <event> on
   //     construction and <event + 1> on destruction.
 public:
-  ACE_Function_Timeprobe (Timeprobe &timeprobe, 
+  ACE_Function_Timeprobe (Timeprobe &timeprobe,
                           u_long event);
   // Constructor.
 

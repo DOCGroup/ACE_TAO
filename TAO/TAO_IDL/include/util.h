@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -69,19 +69,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // util.hh - Includes commonly used things defined in the util directory
 
-#include	"utl_stack.h"		// class fe_stack
-#include	"utl_exprlist.h"	// class UTL_ExprList
-#include	"utl_strlist.h"	// class UTL_StrList
-#include	"utl_idlist.h"		// class UTL_IdList
-#include	"utl_exceptlist.h"	// class UTL_ExceptList
-#include	"utl_namelist.h"	// class UTL_NameList
-#include	"utl_labellist.h"	// class UTL_LabelList
-#include	"utl_decllist.h"	// class UTL_DeclList
+#include        "utl_stack.h"           // class fe_stack
+#include        "utl_exprlist.h"        // class UTL_ExprList
+#include        "utl_strlist.h" // class UTL_StrList
+#include        "utl_idlist.h"          // class UTL_IdList
+#include        "utl_exceptlist.h"      // class UTL_ExceptList
+#include        "utl_namelist.h"        // class UTL_NameList
+#include        "utl_labellist.h"       // class UTL_LabelList
+#include        "utl_decllist.h"        // class UTL_DeclList
 
-#include	"idl_global.h"		// Class IDL_GlobalData
+#include        "idl_global.h"          // Class IDL_GlobalData
 
-#include	"utl_error.h"		// class UTL_Error
+#include        "utl_error.h"           // class UTL_Error
 
-#include	"utl_indenter.h"	// class UTL_Indenter
+#include        "utl_indenter.h"        // class UTL_Indenter
 
 #endif           // _UTIL_UTIL_HH

@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_MODULE_MODULE_SH_H_)
+#ifndef _BE_VISITOR_MODULE_MODULE_SH_H_
 #define _BE_VISITOR_MODULE_MODULE_SH_H_
 
 class be_visitor_module_sh : public be_visitor_module

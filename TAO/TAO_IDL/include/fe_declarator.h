@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -77,13 +77,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from fe.hh
 */
 
-class	FE_Declarator
+class   FE_Declarator
 {
 public:
   // Enum to denote types of declarators
   enum DeclaratorType {
-        FD_simple		// Simple declarator
-      , FD_complex		// Complex declarator (complex_part field used)
+        FD_simple               // Simple declarator
+      , FD_complex              // Complex declarator (complex_part field used)
   };
 
   // Operations
@@ -101,13 +101,13 @@ public:
 
   // Compose an FE_Declarator into an AST_Type once all the needed information
   // is available
-  AST_Type		*compose(AST_Decl* tc);
+  AST_Type              *compose(AST_Decl* tc);
 
 private:
   // Data
-  AST_Decl		*pd_complex_part;	// If a complex declarator
-  UTL_ScopedName	*pd_name;		// The name if complex
-  DeclaratorType	pd_decl_type;		// Whether complex or simple
+  AST_Decl              *pd_complex_part;       // If a complex declarator
+  UTL_ScopedName        *pd_name;               // The name if complex
+  DeclaratorType        pd_decl_type;           // Whether complex or simple
 };
 
 #endif           // _FE_DECLARATOR_FE_DECLARATOR_HH

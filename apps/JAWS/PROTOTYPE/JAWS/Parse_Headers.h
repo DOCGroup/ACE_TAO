@@ -1,11 +1,16 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_PARSE_HEADERS_H)
+#ifndef JAWS_PARSE_HEADERS_H
 #define JAWS_PARSE_HEADERS_H
 
 #include "JAWS/Export.h"
 #include "ace/Singleton.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Message_Block.h"
 
 #include "Headers.h"

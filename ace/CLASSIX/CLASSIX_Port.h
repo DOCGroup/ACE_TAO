@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    CLASSIX_Port.h
 //
@@ -14,10 +14,15 @@
 //
 // ============================================================================
 
-#if !defined (ACE_CLASSIX_PORT_H)
+#ifndef ACE_CLASSIX_PORT_H
 #define ACE_CLASSIX_PORT_H
 
 #include "ace/Singleton.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/CLASSIX/CLASSIX_OS.h"
 #include "ace/CLASSIX/CLASSIX_Addr.h"
 
@@ -27,13 +32,13 @@ class ACE_Export ACE_CLASSIX_Port : public ACE_CLASSIX_Addr
     // = TITLE
     //    Defines the ClassiX IPC Port address format for "ACE Socket" like
     //    interfaces
-    //    
+    //
     // = DESCRIPTION
     //   The port address contains two fields:
     //   a global unique identifier  and a local identifier.
     //   The global unique identifier is also referred to as the port address
     //   and the local identifier as the port no.
-    //   
+    //
     // = NOTE
     //   In Chorus, one can always convert from a port unique identifier to
     //   a port no and vice versa.  This class is implemented based on this
@@ -41,14 +46,14 @@ class ACE_Export ACE_CLASSIX_Port : public ACE_CLASSIX_Addr
     //
     // = SEE ALSO
     //   <ACE_CLASSIX_PORT_Default>, <ACE_CLASSIX_Port_Core>
-    //   
+    //
 public:
     /* -----------------------------------------------------*/
     // = Initialization methods.
     ACE_CLASSIX_Port ();
     // Default constructor.
     // The address corresponds to the default port of the actor.
- 
+
     ACE_CLASSIX_Port (const ACE_CLASSIX_Port &);
     // Copy constructor.
     ACE_CLASSIX_Port (const ACE_Addr &);
@@ -57,10 +62,10 @@ public:
     ACE_CLASSIX_Port (const ACE_CLASSIX_Port_Core&);
     // Creates an <ACE_CLASSIX_Port> from <ACE_CLASSIX_Port_Core>
 
-    ACE_CLASSIX_Port (const KnUniqueId& /* port_id */);  
+    ACE_CLASSIX_Port (const KnUniqueId& /* port_id */);
     // Creates an <ACE_CLASSIX_Port> from the given <port_id>
 
-    ACE_CLASSIX_Port (ACE_HANDLE /* port_no */);  
+    ACE_CLASSIX_Port (ACE_HANDLE /* port_no */);
     // Creates an <ACE_CLASSIX_Port> from the given <port_no>
 
     ACE_CLASSIX_Port (void* /* location */, int /* length */);
@@ -80,7 +85,7 @@ public:
     // Sets the <ACE_CLASSIX_Port_Basic> from a <port_id>
 
     virtual void set_addr (void * /* addr location */,
-			   int /* len */);
+                           int /* len */);
     // Set the address as the one pointed to by the location pointer.
     // The address contains <len> bytes.
     // Would prefer to return the status, but the base class uses void.
@@ -101,7 +106,7 @@ public:
 
     /* -----------------------------------------------------*/
     // = Control
-    // 
+    //
     virtual int enable(int   /* receive priority */) const;
     // Puts the port into the set of monitored ports.
     virtual int disable(void) const;
@@ -111,7 +116,7 @@ public:
 
     /* -----------------------------------------------------*/
     // = Comparison
-    // 
+    //
     int operator == (const ACE_CLASSIX_Port &) const;
     // Compare two addresses for equality.  The addresses are considered
     // equal if they have the same content in the KnUniqueId address structure.
@@ -121,10 +126,10 @@ public:
 
     /* -----------------------------------------------------*/
     // = Helper
-    // 
+    //
     void dump (void) const;
     // Dump the state of an object.
-    
+
 
     ACE_ALLOC_HOOK_DECLARE;
     // Declare the dynamic allocation hooks.
@@ -135,13 +140,13 @@ private:
     // constructed).
     // Will create/reset the port only if the port no was <ACE_CLASSIX_ANY>
     // Returns 0 on success, -1 otherwise.
-    // 
+    //
 
     int set_ (const ACE_Addr &);
     // Sets the <ACE_CLASSIX_Port_Basic> from another <ACE_CLASSIX_Port_Basic>.
 
 
- 
+
 private:
     ACE_CLASSIX_Port_Core::Addr           addr_;
 };

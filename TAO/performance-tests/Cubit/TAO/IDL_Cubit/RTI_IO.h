@@ -4,16 +4,16 @@
 //
 // = LIBRARY
 //    TAO/tests/IDL_Cubit
-// 
+//
 // = FILENAME
 //    RTI_IO.h
 //
 // = AUTHOR
 //    Dave Meyer <dmeyer@std.saic.com>
-// 
+//
 // ============================================================================
 
-#if !defined (_RTIFUNCS_H)
+#ifndef _RTIFUNCS_H
 #define _RTIFUNCS_H
 
 #include "cubitC.h"

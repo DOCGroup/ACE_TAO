@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -73,15 +73,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 //
-//	 For portability reasons we have decided to provide both this and
-//	 an implementation of the list classes in terms of templates. If
-//	 your compiler supports templates, please use the files in the
-//	 include/utl_tmpl and util/utl_tmpl directories instead of the
-//	 files by the same names in the include and util directories.
+//       For portability reasons we have decided to provide both this and
+//       an implementation of the list classes in terms of templates. If
+//       your compiler supports templates, please use the files in the
+//       include/utl_tmpl and util/utl_tmpl directories instead of the
+//       files by the same names in the include and util directories.
 
 /*
 ** DEPENDENCIES: utl_list.hh, utl_string.hh
@@ -89,7 +89,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-class	UTL_StrList : public UTL_List
+class   UTL_StrList : public UTL_List
 {
 public:
   // Operations
@@ -98,29 +98,29 @@ public:
   UTL_StrList(String *s, UTL_StrList *cdr);
 
   // AST Dumping
-  virtual void		dump(ostream &o);
+  virtual void          dump(ostream &o);
 
   // Other Operations
 
   // Copy a list of strings
-  virtual UTL_List	*copy();
+  virtual UTL_List      *copy();
 
   // Get list element
-  String		*head();
+  String                *head();
 
   // Set the list element
-  void			set_head(String *);
+  void                  set_head(String *);
 
   // Get last element in this list
-  String		*last_component();
+  String                *last_component();
 
 private:
   // Data
-  String		*pd_car_data;	// The list item
+  String                *pd_car_data;   // The list item
 };
 
 // Active iterator for  UTL_StrList
-class	UTL_StrlistActiveIterator : public UTL_ListActiveIterator
+class   UTL_StrlistActiveIterator : public UTL_ListActiveIterator
 {
 public:
   // Operations
@@ -129,7 +129,7 @@ public:
   UTL_StrlistActiveIterator(UTL_StrList *s);
 
   // Get current item
-  String		*item();
+  String                *item();
 };
 
 #endif           // _UTL_STRLIST_UTL_STRLIST_HH

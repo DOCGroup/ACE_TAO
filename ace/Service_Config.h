@@ -18,13 +18,14 @@
 #define ACE_SERVICE_CONFIG_H
 
 #include "ace/Service_Object.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Signal.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward decl.
 class ACE_Service_Repository;
@@ -71,9 +72,9 @@ public:
 };
 
 // Maintain a set of the statically linked service descriptors.
-typedef ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *> 
+typedef ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>
         ACE_STATIC_SVCS;
-typedef ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *> 
+typedef ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
         ACE_STATIC_SVCS_ITERATOR;
 
 // Maintain a queue of services to be configured from the
@@ -106,7 +107,7 @@ public:
                       int signum = SIGHUP);
   // Initialize the Service Repository.
 
-  ACE_Service_Config (const ASYS_TCHAR program_name[], 
+  ACE_Service_Config (const ASYS_TCHAR program_name[],
                       LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
   // Performs an open without parsing command-line arguments.
 

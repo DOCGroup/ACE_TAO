@@ -18,13 +18,18 @@
 //
 // ===========================================================
 
-#if !defined (CONSUMER_INPUT_HANDLER_H)
+#ifndef CONSUMER_INPUT_HANDLER_H
 #define CONSUMER_INPUT_HANDLER_H
 
 #include "ConsumerC.h"
 #include "NotifierC.h"
 #include "Consumer_i.h"
 #include "ace/Read_Buffer.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/TAO.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/CosNamingC.h"

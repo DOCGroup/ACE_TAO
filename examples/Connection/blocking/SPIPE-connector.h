@@ -1,10 +1,15 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (SP_CONNECTOR_H)
+#ifndef SP_CONNECTOR_H
 #define SP_CONNECTOR_H
 
 #include "ace/Svc_Handler.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SPIPE_Stream.h"
 #include "ace/Connector.h"
 #include "ace/SPIPE_Connector.h"
@@ -26,7 +31,7 @@ public:
   // = Demultiplexing hooks.
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+                            ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   virtual ACE_HANDLE get_handle (void) const;
 
@@ -53,7 +58,7 @@ public:
 
   virtual int svc (void);
   // Run the svc.
-  
+
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
   // Report connection errors.
 

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * systhr.h: Abstracted threading mechanisms
- * 
+ *
  * Rob McCool
  */
 
@@ -46,14 +46,14 @@ typedef sys_thread_s *SYS_THREAD;
 /*
  * systhread_start creates a thread with the given priority, will allocate
  * a stack of stksz bytes, and calls fn with arg as its argument. stksz
- * of zero will allocate a default stack size. 
- * 
+ * of zero will allocate a default stack size.
+ *
  * XXX Priorities are system dependent
  */
 
 SYS_THREAD systhread_start(int prio, int stksz, void (*fn)(void *), void *arg);
 
-/* 
+/*
  * systhread_current returns a pointer to the current thread.
  */
 #ifdef USE_NSPR
@@ -69,7 +69,7 @@ SYS_THREAD systhread_start(int prio, int stksz, void (*fn)(void *), void *arg);
 
 SYS_THREAD systhread_attach();
 
-/* 
+/*
  * systhread_terminate terminates the thread that is passed in.
  */
 void systhread_terminate(SYS_THREAD thr);
@@ -105,7 +105,7 @@ void systhread_init(char *name);
 
 /*
  * newkey allocates a new integer id for thread-private data. Use this
- * key to identify a variable which you want to appear differently 
+ * key to identify a variable which you want to appear differently
  * between threads, and then use setdata to associate a value with this
  * key for each thread.
  */
@@ -113,7 +113,7 @@ int systhread_newkey(void);
 
 /*
  * Get data that has been previously associated with key in this thread.
- * Returns NULL if setkey has not been called with this key by this 
+ * Returns NULL if setkey has not been called with this key by this
  * thread previously, or the data that was previously used with setkey
  * by this thread with this key.
  */

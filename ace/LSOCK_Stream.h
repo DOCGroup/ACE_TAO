@@ -5,32 +5,33 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    LSOCK_Stream.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_LOCAL_SOCK_STREAM_H
 #define ACE_LOCAL_SOCK_STREAM_H
 
 #include "ace/SOCK_Stream.h"
-#include "ace/UNIX_Addr.h"
-#include "ace/LSOCK.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/UNIX_Addr.h"
+#include "ace/LSOCK.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 class ACE_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK
 {
   // = TITLE
-  //     Create a Local ACE_SOCK stream. 
+  //     Create a Local ACE_SOCK stream.
 public:
   // = Send/recv methods.
   ssize_t send_msg (const iovec iov[],
@@ -46,7 +47,7 @@ public:
   ACE_HANDLE get_handle (void) const;
   // Get handle.
 
-  void set_handle (ACE_HANDLE fd); 
+  void set_handle (ACE_HANDLE fd);
   // Overrides set_handle from the base classes.
 
   // = Meta-type info
@@ -58,10 +59,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  int get_local_addr (ACE_Addr &) const; 
+  int get_local_addr (ACE_Addr &) const;
   // This method simply returns the "local" addr.
 
-  int get_remote_addr (ACE_Addr &) const; 
+  int get_remote_addr (ACE_Addr &) const;
   // This method returns the "local" addr since it's the same value
   // for UNIX domain sockets.
 };

@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Obstack.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_OBSTACK_H
@@ -20,16 +20,16 @@
 #include "ace/Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Obchunk
 {
   // = TITLE
-  //     Defines the state that represents a "chunk" of memory.  
+  //     Defines the state that represents a "chunk" of memory.
 public:
   friend class ACE_Obstack;
-  
+
   ACE_Obchunk (size_t size);
   // Constructor.
 
@@ -75,7 +75,7 @@ public:
   char *copy (const char *data,
               size_t len);
   // Copy the data into the current Obchunk.
-  
+
   void release (void);
   // "Release" the entire stack of Obchunks, putting it back on the
   // free list.

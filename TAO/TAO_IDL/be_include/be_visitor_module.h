@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_MODULE_H)
+#ifndef TAO_BE_VISITOR_MODULE_H
 #define TAO_BE_VISITOR_MODULE_H
 
 #include "be_visitor.h"

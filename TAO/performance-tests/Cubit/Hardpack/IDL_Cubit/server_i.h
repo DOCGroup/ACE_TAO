@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if !defined (_C_SERVER_H)
+#ifndef _C_SERVER_H
 #define _C_SERVER_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Log_Msg.h"
 #include "gpp_header.hh"
 #include "naming.hh"
@@ -50,7 +55,7 @@ public:
   // Initialize the Cubit_Server state - parsing arguments and ...
 
   int run (void);
-  // Run the orb 
+  // Run the orb
 
 private:
   int parse_args (void);
@@ -72,7 +77,7 @@ private:
 
   //  Cubit_Factory_i factory_impl_;
   // Implementation object of the cubit factory.
-       
+
   //Cubit_Factory_var factory;
   // Factory_var to register with NamingService.
 

@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (TESTS_H)
+#ifndef TESTS_H
 #define TESTS_H
 
 #include "any.h"

@@ -3,10 +3,15 @@
 
 
 #include "ace/Profile_Timer.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #define EXCEPTIONS
 #include "logger.hh"
 
-class logger_i 
+class logger_i
 #if defined (USE_BOA_IMPL)
   : virtual public loggerBOAImpl
 #endif /* USE_BOA_IMPL */
@@ -44,7 +49,7 @@ class profile_logger_i :
   public virtual profile_loggerBOAImpl,
   public virtual Logger_i
 #else /* USE_TIE */
-  public logger_i 
+  public logger_i
 #endif /* USE_BOA_IMPL */
   // = TITLE
   // Implementation of the profiler logger interface.
@@ -57,7 +62,7 @@ public:
   // Activate the timer.
 
   virtual void stop_timer (profile_logger::Elapsed_Time &et,
-			   CORBA::Environment &env);
+                           CORBA::Environment &env);
   // Deactivate the timer and return the elapsed time.
 
 private:
@@ -65,7 +70,7 @@ private:
   // Object that keeps track of the user and system execution time.
 };
 
-#if !defined (USE_BOA_IMPL)
+#ifndef USE_BOA_IMPL
 // Indicate that the C++ classes logger_i and profile_logger_i implement
 // the IDL interface logger and profile_logger, respectively:
 

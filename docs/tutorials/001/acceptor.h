@@ -2,7 +2,7 @@
 // $Id$
 
 
-#if !defined (_CLIENT_ACCEPTOR_H)
+#ifndef _CLIENT_ACCEPTOR_H
 #define _CLIENT_ACCEPTOR_H
 
 /*
@@ -10,6 +10,10 @@
   one of those at the heart of our Logging_Acceptor.
  */
 #include "ace/SOCK_Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /*
   An Event_Handler is what you register with ACE_Reactor.  When events occur,
@@ -72,7 +76,7 @@ public:
      */
     return _reactor->register_handler( this, ACE_Event_Handler::ACCEPT_MASK );
   }
-  
+
 private:
 
   /*
@@ -84,8 +88,8 @@ private:
     acceptor object, so that's what we provide.
    */
   ACE_HANDLE get_handle (void) const
-  { 
-    return this->peer_acceptor_.get_handle (); 
+  {
+    return this->peer_acceptor_.get_handle ();
   }
 
   /*
@@ -100,7 +104,7 @@ private:
       disconnects.
      */
     Logging_Handler *svc_handler = new Logging_Handler;
-  
+
     /*
       To complete the connection, we invoke the accept() method call on
       the acceptor object and provide it with the connection handler instance.
@@ -117,7 +121,7 @@ private:
      */
     if (svc_handler->open (reactor_) == -1)
       svc_handler->close ();
-  
+
     return 0;
   }
 
@@ -126,7 +130,7 @@ protected:
   /*
     Our acceptor object instance
    */
-  ACE_SOCK_Acceptor peer_acceptor_;     
+  ACE_SOCK_Acceptor peer_acceptor_;
 
   /*
     A place to remember our reactor pointer

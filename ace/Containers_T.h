@@ -18,11 +18,12 @@
 #define ACE_CONTAINERS_T_H
 
 #include "ace/ACE.h"
-#include "ace/Containers.h"      /* Need ACE_DLList_Node */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Containers.h"      /* Need ACE_DLList_Node */
 
 class ACE_Allocator;
 

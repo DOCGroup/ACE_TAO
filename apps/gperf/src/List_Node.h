@@ -21,18 +21,23 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
-#if !defined (LIST_NODE_H)
+#ifndef LIST_NODE_H
 #define LIST_NODE_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Options.h"
 
 #if defined (ACE_HAS_GPERF)
-class List_Node 
-{ 
+class List_Node
+{
   // = TITLE
   //   Data and function members for defining values and operations of
-  //   a list node.  
+  //   a list node.
 public:
   // = Initialization and termination methods.
   List_Node (char *key, int len);
@@ -43,32 +48,32 @@ public:
 
   static void sort (char *base, int len);
 
-  List_Node *link;              
+  List_Node *link;
   // TRUE if key has an identical KEY_SET as another key.
 
-  List_Node *next;              
-  // Points to next element on the list. 
+  List_Node *next;
+  // Points to next element on the list.
 
   char *key;
-  // Each keyword string stored here. 
+  // Each keyword string stored here.
 
-  char *rest;              
-  // Additional information for building hash function. 
+  char *rest;
+  // Additional information for building hash function.
 
-  char *keysig;          
-  // Set of characters to hash, specified by user. 
+  char *keysig;
+  // Set of characters to hash, specified by user.
 
-  int length;            
-  // Length of the key. 
+  int length;
+  // Length of the key.
 
-  int hash_value;        
-  // Hash value for the key. 
+  int hash_value;
+  // Hash value for the key.
 
-  int occurrence;        
-  // A metric for frequency of key set occurrences. 
+  int occurrence;
+  // A metric for frequency of key set occurrences.
 
   int index;
-  // Position of this node relative to other nodes. 
+  // Position of this node relative to other nodes.
 };
 
 #endif /* ACE_HAS_GPERF */

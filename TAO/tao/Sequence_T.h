@@ -36,9 +36,9 @@ public:
   // Constructor using a maximum length value.
 
   TAO_Unbounded_Sequence (CORBA::ULong max,
-			  CORBA::ULong length,
-			  T *data,
-			  CORBA::Boolean release = 0);
+                          CORBA::ULong length,
+                          T *data,
+                          CORBA::Boolean release = 0);
   // Constructor using the data and memory management flag.  Memory
   // *must* be allocated using the ::allocbuf static method, since in
   // the future this classes may use a global ACE_Allocator.
@@ -132,7 +132,7 @@ public:
 
   TAO_Bounded_Sequence (CORBA::ULong length,
                         T *data,
-			CORBA::Boolean release=0);
+                        CORBA::Boolean release=0);
   // Constructor using the data and memory management flag.
 
   TAO_Bounded_Sequence (const TAO_Bounded_Sequence<T,MAX> &);
@@ -289,13 +289,13 @@ public:
 
   const T *in (void) const;
   // for in parameter.
-  
+
   T *&inout (void);
   // for inout parameter.
-  
+
   T *&out (void);
   // for out parameter.
-  
+
   T *_retn (void);
   // for return type
 
@@ -351,9 +351,9 @@ public:
   // to 0 and the release flag to TRUE.
 
   TAO_Unbounded_Object_Sequence (CORBA::ULong maximum,
-				 CORBA::ULong length,
-				 T* *data,
-				 CORBA::Boolean release=0);
+                                 CORBA::ULong length,
+                                 T* *data,
+                                 CORBA::Boolean release=0);
   // The ``T *data'' constructor (as shown in the example above)
   // allows the length and contents of a bounded or unbounded sequence
   // to be set. For unbounded sequences, it also allows the initial
@@ -423,10 +423,10 @@ public:
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
-			       CORBA::ULong old_length);
+                               CORBA::ULong old_length);
   virtual void _downcast (void* target,
-			  CORBA_Object* src,
-			  CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                          CORBA_Object* src,
+                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
   virtual CORBA_Object* _upcast (void* src) const;
 };
 
@@ -452,8 +452,8 @@ public:
   // contents vector, so it always sets the release flag to TRUE.
 
   TAO_Bounded_Object_Sequence (CORBA::ULong length,
-			       T* *value,
-			       CORBA::Boolean release=0);
+                               T* *value,
+                               CORBA::Boolean release=0);
   // Constructor from data.
 
   TAO_Bounded_Object_Sequence (const TAO_Bounded_Object_Sequence<T,MAX> &);
@@ -479,10 +479,10 @@ public:
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
-			       CORBA::ULong old_length);
+                               CORBA::ULong old_length);
   virtual void _downcast (void* target,
-			  CORBA_Object* src,
-			  CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                          CORBA_Object* src,
+                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
   virtual CORBA_Object* _upcast (void* src) const;
 };
 
@@ -512,9 +512,9 @@ public:
   // Constructor with a "hint" for the maximum capacity.
 
   TAO_Unbounded_Pseudo_Sequence (CORBA::ULong maximum,
-				 CORBA::ULong length,
-				 T* *data,
-				 CORBA::Boolean release=0);
+                                 CORBA::ULong length,
+                                 T* *data,
+                                 CORBA::Boolean release=0);
   // Constructor with a given buffer.
 
   TAO_Unbounded_Pseudo_Sequence(const TAO_Unbounded_Pseudo_Sequence<T> &);
@@ -542,7 +542,7 @@ public:
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
-			       CORBA::ULong old_length);
+                               CORBA::ULong old_length);
 };
 
 // *************************************************************
@@ -563,8 +563,8 @@ public:
   // default ctor.
 
   TAO_Bounded_Pseudo_Sequence (CORBA::ULong length,
-			       T* *value,
-			       CORBA::Boolean release=0);
+                               T* *value,
+                               CORBA::Boolean release=0);
   // Constructor from data.
 
   TAO_Bounded_Pseudo_Sequence (const TAO_Bounded_Pseudo_Sequence<T,MAX> &);
@@ -590,7 +590,7 @@ public:
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
-			       CORBA::ULong old_length);
+                               CORBA::ULong old_length);
 };
 
 // *************************************************************
@@ -616,8 +616,8 @@ public:
   // contents vector, so it always sets the release flag to TRUE.
 
   TAO_Bounded_String_Sequence (CORBA::ULong length,
-			       char* *value,
-			       CORBA::Boolean release = 0);
+                               char* *value,
+                               CORBA::Boolean release = 0);
   // {SPEC}
   // The ``T *data'' constructor (as shown in the example above)
   // allows the length and contents of a bounded or unbounded sequence
@@ -677,7 +677,7 @@ public:
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
-			       CORBA::ULong old_length);
+                               CORBA::ULong old_length);
 };
 
 // *************************************************************

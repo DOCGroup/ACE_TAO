@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//   Svc_Handler.h 
+//   Svc_Handler.h
 //
 // = AUTHOR
 //    Doug Schmidt and Irfan Pyrarli.
-// 
+//
 // ============================================================================
 
 #ifndef ACE_SVC_HANDLER_H
@@ -21,12 +21,13 @@
 class ACE_Connection_Recycling_Strategy;
 
 #include "ace/Synch_Options.h"
-#include "ace/Task.h"
-#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Task.h"
+#include "ace/Service_Config.h"
 
 template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
 class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_USE>
@@ -47,11 +48,11 @@ class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_USE>
   //     ACE_Svc_Handler and the peer it is connected with.
 public:
   // = Initialization and termination methods.
-  ACE_Svc_Handler (ACE_Thread_Manager * = 0, 
+  ACE_Svc_Handler (ACE_Thread_Manager * = 0,
                    ACE_Message_Queue<ACE_SYNCH_USE> * = 0,
                    ACE_Reactor * = ACE_Reactor::instance ());
 
-  virtual ~ACE_Svc_Handler (void); 
+  virtual ~ACE_Svc_Handler (void);
 
   virtual int open (void * = 0);
   // Activate the client handler (called by the ACE_Acceptor or
@@ -99,7 +100,7 @@ public:
   virtual ACE_HANDLE get_handle (void) const;
   // Get the underlying handle associated with the <peer_>.
 
-  virtual void set_handle (ACE_HANDLE); 
+  virtual void set_handle (ACE_HANDLE);
   // Set the underlying handle associated with the <peer_>.
 
   ACE_PEER_STREAM &peer (void) const;
@@ -137,26 +138,26 @@ public:
   // to be public.
 
   // = Accessors to set/get the connection recycler.
-  
-  virtual void recycler (ACE_Connection_Recycling_Strategy *recycler, 
+
+  virtual void recycler (ACE_Connection_Recycling_Strategy *recycler,
                          const void *recycling_act);
   // Set the recycler and the <recycling_act> that is used during
   // purging and caching.
 
   virtual ACE_Connection_Recycling_Strategy *recycler (void) const;
   // Get the recycler.
-  
+
   virtual const void *recycling_act (void) const;
   // Get the recycling act.
-  
+
   virtual int recycle (void * = 0);
   // Upcall made by the recycler when it is about to recycle the
   // connection.  This gives the object a chance to prepare itself for
   // recycling.  Return 0 if the object is ready for recycling, -1 on
   // failures.
 
-private:  
-  ACE_PEER_STREAM peer_; 
+private:
+  ACE_PEER_STREAM peer_;
   // Maintain connection with client.
 
   int dynamic_;

@@ -5,6 +5,11 @@
 #define CLIENT_H
 
 #include "ace/SOCK_Stream.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Protocol_Stream.h"
 
 class ACE_Message_Block;
@@ -41,11 +46,11 @@ public:
     int get( ACE_Message_Block * & _response );
 
 private:
-        // Protocol_Stream hides the protocol conformance details from 
+        // Protocol_Stream hides the protocol conformance details from
         // us.
     Protocol_Stream stream_;
 
-        // We create a connection on the peer_ and then pass ownership 
+        // We create a connection on the peer_ and then pass ownership
         // of it to the protocol stream.
     ACE_SOCK_Stream peer_;
 
@@ -54,7 +59,7 @@ private:
     const char * server_;
 
         // Accessors for the complex member variables.
-    
+
     Protocol_Stream & stream(void)
         {
             return this->stream_;

@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_STRUCTURE_STRUCTURE_CS_H_)
+#ifndef _BE_VISITOR_STRUCTURE_STRUCTURE_CS_H_
 #define _BE_VISITOR_STRUCTURE_STRUCTURE_CS_H_
 
 class be_visitor_structure_cs : public be_visitor_structure
@@ -41,7 +41,7 @@ public:
   // destructor
 
   virtual int visit_structure (be_structure *node);
-  // visit structure. 
+  // visit structure.
 
 };
 
