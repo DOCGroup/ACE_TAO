@@ -1,3 +1,31 @@
+Sun Aug 19 13:25:51 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/footprint_stats.sh:
+        * bin/performance_stats.sh:
+        * bin/generate_footprint_chart.sh:
+        * bin/generate_performance_chart.sh:
+        * html/Stats/Stats.css:
+        * html/Stats/configuration.shtml:
+        * html/Stats/detailed_footprint.shtml:
+        * html/Stats/detailed_performance.shtml:
+        * html/Stats/footer.html:
+        * html/Stats/index.shtml:
+        * html/Stats/navigation.html:
+          Put the scripts and HTML documents used to generate the Stats
+          pages under CVS control.  Now it is easier for people to add
+          their own libraries and tests, as well as let our user community
+          examine the way the pages are generated.
+
+        * bin/auto_run_tests.lst:
+          Remove TAO/tests/LongUpcalls/run_ami_test.pl, the tests have
+          been incorporated into the run_test.pl script.
+
+        * bin/sandbox.cpp:
+          Minor changes to the sandbox script, actually not very useful,
+          the ACE classes to create processes start a new process group by
+          default, therefore there is no simple way to kill all the
+          subprocesses if a test fails.
+
 Sun Aug 19 08:17:14 2001  David L. Levine <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: replaced function call in

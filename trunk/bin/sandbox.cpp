@@ -106,38 +106,40 @@ child (int /* argc */, char* argv[])
             }
           if (child != 0)
             {
-              printf("sandbox: grandchild %d exits with status %d\n",
-                     child, status);
+              //printf("sandbox: grandchild %d exits with status %d\n",
+              //       child, status);
               return status;
             }
         }
     }
-  
+
   printf("sandbox: timeout for grandchild %d\n", grandchild);
 
-  // timeout, kill the progress group (that is commit suicide!)
-  killpg(getpgrp(), SIGTERM);
+  // timeout, try to kill the child
+  (void) kill(grandchild, SIGTERM);
 
-  printf("sandbox: ooops! I should be dead!\n");
-#if 0
-  // timeout kill the child...
-  (void) kill(child_pid, SIGTERM); sleep(1);
-  pid_t child = waitpid(child, &status, WNOHANG);
-  if (child == 0)
+  // Second chance, if the child does not die, then really kill it:
+  pid_t killed = waitpid(grandchild, &status, WNOHANG);
+  if (killed == 0)
     {
       // TERM did not work, use the heavy duty signal
-      (void) kill(child_pid, SIGQUIT); sleep(1);
-      child = waitpid(child, &status, WNOHANG);
+      (void) kill(grandchild, SIGQUIT); sleep(1);
+      killed = waitpid(grandchild, &status, WNOHANG);
     }
-  if (child == -1)
+  if (killed == -1)
     {
       fprintf(stderr, "No such child (%d), panic\n",
-              child_pid);
+              grandchild);
       return 1;
     }
+  sleep(1);
 
-  fprintf(stderr, "Child timeout\n");
-#endif
+  printf("sandbox: killing session %d\n", sid);
+
+  // OK, now commit suicide, kill the session ID and all their friends
+  (void) killpg(sid, SIGQUIT);
+  fprintf(stderr, "sandbox: ooops! I should be dead!\n");
+
   return 1;
 }
 
