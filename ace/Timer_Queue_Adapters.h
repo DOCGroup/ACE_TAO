@@ -146,10 +146,6 @@ public:
   /// Access the locking mechanism, useful for iteration.
   ACE_SYNCH_RECURSIVE_MUTEX &mutex (void);
 
-  /// @deprecated Access the implementation queue, useful for iteration.
-  /// Use the method that returns a pointer instead
-  TQ &timer_queue (void);
-
   /// Set a user-specified timer queue.
   int timer_queue (TQ *tq);
 
