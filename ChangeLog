@@ -1,3 +1,9 @@
+Wed May 19 12:14:21 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/Reactor_Registration_Test.cpp: Fixed string types to work
+	  for both narrow and wide chars; fixed size types to work for
+	  64-bit platforms.
+
 Wed May 19 08:57:24 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/OS_NS_Thread.inl: Fixed the ACE_OS::thr_self() call so that 
