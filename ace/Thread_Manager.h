@@ -507,7 +507,7 @@ public:
    * assumed to be an array of <n> thread_handles that will be
    * assigned the values of the thread handles being spawned.
    *
-   * Threads in Thread_Manager can be maniputated in groups based on
+   * Threads in Thread_Manager can be manipulated in groups based on
    * <grp_id> or <task> using functions such as kill_grp() or
    * cancel_task().
    *
@@ -547,7 +547,7 @@ public:
    * assumed to be an array of <n> thread_handles that will be
    * assigned the values of the thread handles being spawned.
    *
-   * Threads in Thread_Manager can be maniputated in groups based on
+   * Threads in Thread_Manager can be manipulated in groups based on
    * <grp_id> or <task> using functions such as kill_grp() or
    * cancel_task().
    *

@@ -1,7 +1,7 @@
 [Please use the form below to submit bug reports, problem
  reports, etc., to the ACE developers and interested users.
  Send to ace-bugs@cs.wustl.edu.  Please send it as plain
- ASCII test, _not_ uuencoded or as an attachment.
+ ASCII text, _not_ uuencoded or as an attachment.
 
  We prefer that all bug reports be submitted through our bug tracking
  system.  See $ACE_ROOT/docs/usage-bugzilla.html for more information

@@ -1,3 +1,9 @@
+Mon Aug 12 10:18:49 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* PROBLEM-REPORT-FORM: Fixed a typo where "ASCII text" was spelled
+	  "ASCII test".  Thanks to Eric Newton <ecn@metaslash.com> for
+	  reporting this. 
+
 Mon Aug 12 10:02:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Updated link to CCM (CIAO)'s
