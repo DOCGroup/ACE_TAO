@@ -321,7 +321,7 @@ IFR_Service::create_repository (CORBA::Environment &ACE_TRY_ENV)
       impl_tie,
       POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i> (
           impl,
-          this->repo_poa_,
+          this->repo_poa_.in (),
           1
         ),
       CORBA::NO_MEMORY ()

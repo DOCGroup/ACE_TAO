@@ -22,7 +22,7 @@ TAO_IRObject_i::int_to_string (CORBA::ULong number) const
 {
   char retval[9];
 
-  ACE_OS::sprintf (retval, "%08.8X", number);
+  ACE_OS::sprintf (retval, "%8.8X", number);
 
   return CORBA::string_dup (retval);
 }
