@@ -1,3 +1,7 @@
+Wed Oct 15 08:45:20 EDT 2003  Kevin Bryank <bryank@cs.uri.edu>
+        * bin/MakeProjectCreator/config/rtcosscheduling.mpb:
+          Adding base project for using the RTC 1.0 Scheduling Service
+
 Wed Oct 15 10:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.cpp:
