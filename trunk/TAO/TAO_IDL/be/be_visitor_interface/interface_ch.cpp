@@ -57,8 +57,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // generate the ifdefined macro for  the _ptr type
       os->gen_ifdef_macro (node->flatname (), "_ptr");
 
-      //cout<<"The flatname is "<<node->flatname ()<<endl;
-
+     
       // the following two are required to be under the ifdef macro to avoid
       // multiple declarations
 
