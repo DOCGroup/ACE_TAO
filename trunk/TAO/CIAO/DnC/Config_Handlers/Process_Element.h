@@ -60,21 +60,28 @@ typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
 typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
 typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_Null_Mutex> IDREF_MAP;
 
-// profcesses sequence - not for common elements -
+// processes sequence - not for common elements, process function is a member of "this" -
 template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
 inline bool
-process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
-                 XStr& node_name, const char* name,
-                 SEQUENCE& seq, OBJECT* obj, FUNCTION func,
-                 REF_MAP& id_map);
+process_sequence_local(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                      XStr& node_name, const char* name,
+                      SEQUENCE& seq, OBJECT* obj, FUNCTION func);
+
+// processes sequence - not for common elements, process function is not a member of "this" -
+template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
+inline bool
+process_sequence_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                        XStr& node_name, const char* name,
+                        SEQUENCE& seq, FUNCTION func,
+                        REF_MAP& id_map);
 
 // Processes sequence - common elements -
 template<typename DATA, typename SEQUENCE, typename FUNCTION>
 inline bool
-process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
-                 XStr& node_name, const char* name,
-                 SEQUENCE& seq, FUNCTION func,
-                 REF_MAP& id_map);
+process_sequence_common(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                        XStr& node_name, const char* name,
+                        SEQUENCE& seq, FUNCTION func,
+                        REF_MAP& id_map);
 
 // Processes reference sequences
 inline bool
@@ -92,16 +99,21 @@ process_reference (DOMNode* node,
                    int& index,
                    IDREF_MAP& idref_map);
 
-/*
- *  Process function for non-sequential elements
- */
-
+//  Process function for non-sequential elements
 template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
 inline bool
 process_element(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                 XStr& node_name, const char* name,
                 ELEMENT& elem, OBJECT* obj, FUNCTION func,
                 REF_MAP& id_map);
+
+// Process function for non-sequential non-local elements
+template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
+inline bool
+process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* note,
+                       XStr& node_name, const chat*name,
+                       ELEMENT& elem, OBJECT* obj, FUNCTION func,
+                       REF_MAP& id_map);
 
 #include "Process_Element.i"
 #include "Process_Element.tpp"
