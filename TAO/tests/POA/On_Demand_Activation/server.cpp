@@ -237,8 +237,9 @@ main (int argc, char **argv)
 
   // Print the ior's of first_foo and second_foo.
 
-  cout << first_foo_ior.in () << endl;
-  cout << second_foo_ior.in () << endl;
+  ACE_DEBUG((LM_DEBUG,"%s\n%s\n",
+	     first_foo_ior.in (),
+	     second_foo_ior.in ()));
 
   // Set the poa_manager state to active, ready to process requests
   poa_manager->activate (env);
