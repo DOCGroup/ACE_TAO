@@ -1,4 +1,4 @@
-project : naming {
+project : naming, minimum_corba {
   libs      += TAO_PortableGroup
   after     += PortableGroup
   comps     += PortableGroup

@@ -1,4 +1,4 @@
-project : dslogadmin {
+project : dseventlogadmin, notification, naming {
   after      += DsNotifyLogAdmin
   libs       += TAO_DsNotifyLogAdmin
 }

@@ -6,7 +6,7 @@ feature(openssl) {
   specific(borland, nmake, em3, vc6, vc7, vc71) {
     lit_libs += libeay32 ssleay32
     includes += $(SSL_ROOT)/inc32
-    libpaths += $(SSL_ROOT)/out32dll
+    libpaths += $(SSL_ROOT)/out32dll $(SSL_ROOT)/out32
   }
 
   specific(gnuace, make) {
