@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/streams.h"
 
 #include "CosNaming_i.h"
