@@ -1,8 +1,11 @@
-// -*- C++ -*-
-//
-// $Id$
-
 #include "ServerRequestInfo.h"
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+
+ACE_RCSID (TAO_PortableServer,
+           ServerRequestInfo,
+           "$Id$")
+
 #include "POA.h"
 #include "POA_Policy_Set.h"
 
@@ -10,13 +13,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/PolicyC.h"
 #include "tao/ORB_Core.h"
-
-
-ACE_RCSID (TAO_PortableServer,
-           ServerRequestInfo,
-           "$Id$")
-
-#if (TAO_HAS_INTERCEPTORS == 1)
 
 # if !defined (__ACE_INLINE__)
 #   include "ServerRequestInfo.inl"
@@ -134,7 +130,6 @@ TAO_ServerRequestInfo::response_expected (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return this->server_request_.response_expected ();
 }
 
-# if TAO_HAS_CORBA_MESSAGING == 1
 Messaging::SyncScope
 TAO_ServerRequestInfo::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -146,7 +141,6 @@ TAO_ServerRequestInfo::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
                                           CORBA::COMPLETED_NO),
                     -1);
 }
-#endif  /* TAO_HAS_CORBA_MESSAGING */
 
 PortableInterceptor::ReplyStatus
 TAO_ServerRequestInfo::reply_status (ACE_ENV_SINGLE_ARG_DECL)
@@ -328,7 +322,6 @@ PortableInterceptor::AdapterName *
 TAO_ServerRequestInfo::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
   // The adapter_name attribute defines a name for the object adapter
   // that services requests for the invoked object. In the case of the
   // POA, the adapter_name is the sequence of names from the root POA
@@ -416,9 +409,6 @@ TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Currently, it is only possible to retrieve the server policy
-  //    only during and after the receive_request() interception
-  //    point, i.e. within the skeleton.
   if (this->servant_upcall_ != 0)
     {
       TAO_POA_Policy_Set &policies =
@@ -437,7 +427,8 @@ TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type
           //    object reference!!!
           CORBA::Policy_var policy = policies.get_policy_by_index (i);
 
-          CORBA::PolicyType ptype = policy->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+          CORBA::PolicyType ptype =
+            policy->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
           if (ptype == type)

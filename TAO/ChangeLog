@@ -12,7 +12,7 @@ Tue Mar 25 16:28:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
 
-	  Moved generation of Any template specializations 
+	  Moved generation of Any template specializations
 	  to the inline file.
 
         * tao/Messaging/MessagingC.cpp:
@@ -42,6 +42,8 @@ Tue Mar 25 14:06:58 2003  Ossama Othman  <ossama@uci.edu>
 	* tao/ClientRequestInfo.cpp (sync_scope):
 	* tao/ClientRequestInfo_i.h (sync_scope):
 	* tao/ClientRequestInfo_i.cpp (sync_scope):
+	* tao/PortableServer/ServerRequestInfo.h (sync_scope):
+	* tao/PortableServer/ServerRequestInfo.cpp (sync_scope):
 
 	  Do not protect this method with a "TAO_HAS_CORBA_MESSAGING"
 	  preprocessor block.  Doing is no longer necessary since it
