@@ -1,3 +1,8 @@
+Mon Jun 15 16:14:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.{h,i} (using_collocation): Added a new method to allow
+	  turn on/off collocation optimization at run time.
+
 Sat Jun 13 13:20:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp: added explicit
