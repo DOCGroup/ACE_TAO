@@ -251,10 +251,6 @@ public:
    */
   void set_handle (ACE_HANDLE fd);
 
-  /// Notify the event handler of the given mask in the Reactor if
-  /// data is still pending in the SSL buffer.
-  int notify (ACE_Reactor_Mask mask) const;
-
   /// Return a pointer to the underlying SSL structure.
   SSL *ssl (void) const;
 
@@ -279,6 +275,10 @@ public:
   //@}
 
 protected:
+
+  /// Notify the event handler of the given mask in the Reactor if
+  /// data is still pending in the SSL buffer.
+  int notify (ACE_Reactor_Mask mask) const;
 
   /// Return the underlying ACE_SOCK_Stream which ACE_SSL runs atop of.
   ACE_SOCK_Stream & peer (void);
