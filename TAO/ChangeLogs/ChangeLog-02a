@@ -1,3 +1,30 @@
+Thu Jan 10 12:13:28 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Two_Objects/Two_Objects.idl: 
+	* tests/Two_Objects/server.cpp:
+	* tests/Two_Objects/client.cpp:
+	* tests/Two_Objects/worker.h:
+	* tests/Two_Objects/worker.cpp:
+	* tests/Two_Objects/First_i.cpp:
+	* tests/Two_Objects/First_i.h:
+	* tests/Two_Objects/Second_i.cpp:
+	* tests/Two_Objects/Second_i.h:
+	* tests/Two_Objects/Object_Factory_i.h:
+	* tests/Two_Objects/Object_Factory_i.cpp:
+	* tests/Two_Objects/Two_Objects.dsw:
+	* tests/Two_Objects/server.dsp:
+	* tests/Two_Objects/client.dsp:
+	* tests/Two_Objects/run_test.pl:
+	* tests/Two_Objects/Makefile:
+	* tests/Two_Objects/Makefile.bor:
+	* tests/Two_Objects/server.bor:
+	* tests/Two_Objects/client.bor:
+	* tests/Two_Objects/README:
+
+	Created a new test for bug fix 575. This is a test to show
+	that there can be concurrent upcalls to two objects in the 
+	same POA on the same connection. 
+
 Thu Jan 10 11:53:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP.pidl: Added come comments.
