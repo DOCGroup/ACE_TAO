@@ -32,6 +32,27 @@ TAO_Direct_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
   if (corba_priority < 0)
     return 0;
 
+#if defined (ACE_WIN32)
+
+  int current_native_priority = this->min_; 
+  int next_native_priority;
+  for (int i = 1; i <= corba_priority; ++i)
+    {
+      next_native_priority = 
+        ACE_Sched_Params::next_priority (this->policy_,
+                                         current_native_priority);
+
+      if (next_native_priority == current_native_priority)
+        return 0;
+
+      current_native_priority = next_native_priority;
+    }
+
+  native_priority = current_native_priority;
+  return 1;
+
+#else
+
   if (this->min_ < this->max_)
     {
       native_priority = corba_priority + this->min_;
@@ -54,12 +75,31 @@ TAO_Direct_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
     }
 
   return 1;
+#endif /* ACE_WIN32 */
 }
 
 CORBA::Boolean
 TAO_Direct_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
                                        RTCORBA::Priority &corba_priority)
 {
+#if defined (ACE_WIN32)
+  
+  int current_native_priority = this->min_; 
+  for (corba_priority = 0; ; ++corba_priority)
+    {
+      if (current_native_priority == native_priority)
+        return 1;
+
+      else if (current_native_priority == this->max_)
+        return 0;
+
+      else
+        current_native_priority = 
+          ACE_Sched_Params::next_priority (this->policy_,
+                                           current_native_priority);
+    }
+
+#else
   if (this->min_ < this->max_)
     {
       if (native_priority < this->min_
@@ -82,6 +122,8 @@ TAO_Direct_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
     }
 
   return 1;
+
+#endif /* ACE_WIN32 */
 }
 
 #endif /* TAO_HAS_RT_CORBA */
