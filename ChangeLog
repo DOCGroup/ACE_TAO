@@ -1,3 +1,19 @@
+Wed Sep  1 11:35:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/config_h.m4:
+
+	  Removed ACE_UINT64_FORMAT_SPECIFIER autoheader template.  It
+	  is now defined within ACE_CHECK_FORMAT_SPECIFIERS.
+
+	* m4/platforms.m4:
+
+	  Added new macro ACE_CHECK_FORMAT_SPECIFIERS, which is used to
+	  define preprocessor macros that overide the defaults provided
+	  for size_t, ssize_t, ACE_INT64, and ACE_UINT64 *printf format
+	  specifiers.  I don't think autoconf feature tests are possible,
+	  especially if we ever hope to support cross compilation, but at
+	  least this pulls everything into one place.
+
 Wed Sep  1 12:52:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
