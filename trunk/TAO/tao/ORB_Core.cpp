@@ -1764,21 +1764,35 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
                         ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC (())
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
-
-  if (this->has_shutdown () == 0)
+  ACE_TRY
     {
-      this->adapter_registry_.check_close (wait_for_completion
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      {
+        ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+
+        if (this->has_shutdown () != 0)
+          return;
+
+        // Check if we are on the right state, i.e. do not accept
+        // shutdowns with the 'wait_for_completion' flag set in the middle
+        // of an upcall (because those deadlock).
+        this->adapter_registry_.check_close (wait_for_completion
+                                             ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        // Set the 'has_shutdown' flag, so any further attempt to shutdown
+        // becomes a noop.
+        this->has_shutdown_ = 1;
+
+        // need to release the mutex, because some of the shutdown
+        // operations invoke application code, that could (and in practice
+        // does!) callback into ORB Core code.
+      }
 
       this->adapter_registry_.close (wait_for_completion
                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      // Set the shutdown flag
-      this->has_shutdown_ = 1;
+      ACE_TRY_CHECK;
 
       // Shutdown reactor.
       this->thread_lane_resources_manager ().shutdown_reactor ();
@@ -1795,7 +1809,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
 
       // Invoke Interceptor::destroy() on all registered interceptors.
       this->destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       // Explicitly destroy the object reference table since it
       // contains references to objects, which themselves may contain
@@ -1806,6 +1820,16 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
       this->pi_current_ = 0;  // For the sake of consistency.
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
+  ACE_CATCHALL
+    {
+      // Do not allow exceptions to escape.. So catch all the
+      // exceptions.
+      // @@ Not sure what to print here for the users..
+
+    }
+  ACE_ENDTRY;
+
+  return;
 }
 
 void
@@ -1841,81 +1865,95 @@ TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC (())
 {
   size_t len = 0;   // The length of the interceptor array.
   size_t ilen = 0;  // The incremental length of the interceptor array.
 
+  ACE_TRY
+    {
 #if TAO_HAS_INTERCEPTORS == 1
-  TAO_ClientRequestInterceptor_List::TYPE &client_interceptors =
-    this->client_request_interceptors_.interceptors ();
+      TAO_ClientRequestInterceptor_List::TYPE &client_interceptors =
+        this->client_request_interceptors_.interceptors ();
 
-  len = client_interceptors.size ();
-  ilen = len;
-  for (size_t i = 0; i < len; ++i)
-    {
-      // Destroy the interceptors in reverse order in case the array
-      // list is only partially destroyed and another invocation
-      // occurs afterwards.
-      --ilen;
+      len = client_interceptors.size ();
+      ilen = len;
+      for (size_t i = 0; i < len; ++i)
+        {
+          // Destroy the interceptors in reverse order in case the array
+          // list is only partially destroyed and another invocation
+          // occurs afterwards.
+          --ilen;
 
-      client_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+          client_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      // Since Interceptor::destroy() can throw an exception, decrease
-      // the size of the interceptor array incrementally since some
-      // interceptors may not have been destroyed yet.  Note that this
-      // size reduction is fast since no memory is actually
-      // deallocated.
-      client_interceptors.size (ilen);
-    }
+          // Since Interceptor::destroy() can throw an exception, decrease
+          // the size of the interceptor array incrementally since some
+          // interceptors may not have been destroyed yet.  Note that this
+          // size reduction is fast since no memory is actually
+          // deallocated.
+          client_interceptors.size (ilen);
+        }
 
-  TAO_ServerRequestInterceptor_List::TYPE &server_interceptors =
-    this->server_request_interceptors_.interceptors ();
+      TAO_ServerRequestInterceptor_List::TYPE &server_interceptors =
+        this->server_request_interceptors_.interceptors ();
 
-  len = server_interceptors.size ();
-  ilen = len;
-  for (size_t j = 0; j < len; ++j)
-    {
-      // Destroy the interceptors in reverse order in case the array
-      // list is only partially destroyed and another invocation
-      // occurs afterwards.
-      --ilen;
+      len = server_interceptors.size ();
+      ilen = len;
+      for (size_t j = 0; j < len; ++j)
+        {
+          // Destroy the interceptors in reverse order in case the array
+          // list is only partially destroyed and another invocation
+          // occurs afterwards.
+          --ilen;
 
-      server_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+          server_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      // Since Interceptor::destroy() can throw an exception, decrease
-      // the size of the interceptor array incrementally since some
-      // interceptors may not have been destroyed yet.  Note that this
-      // size reduction is fast since no memory is actually
-      // deallocated.
-      server_interceptors.size (ilen);
-    }
+          // Since Interceptor::destroy() can throw an exception, decrease
+          // the size of the interceptor array incrementally since some
+          // interceptors may not have been destroyed yet.  Note that this
+          // size reduction is fast since no memory is actually
+          // deallocated.
+          server_interceptors.size (ilen);
+        }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-  TAO_IORInterceptor_List::TYPE &ior_interceptors =
-    this->ior_interceptors_.interceptors ();
+      TAO_IORInterceptor_List::TYPE &ior_interceptors =
+        this->ior_interceptors_.interceptors ();
 
-  len = ior_interceptors.size ();
-  ilen = len;
-  for (size_t k = 0; k < len; ++k)
-    {
-      // Destroy the interceptors in reverse order in case the array
-      // list is only partially destroyed and another invocation
-      // occurs afterwards.
-      --ilen;
+      len = ior_interceptors.size ();
+      ilen = len;
+      for (size_t k = 0; k < len; ++k)
+        {
+          // Destroy the interceptors in reverse order in case the array
+          // list is only partially destroyed and another invocation
+          // occurs afterwards.
+          --ilen;
 
-      ior_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+          ior_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      // Since Interceptor::destroy() can throw an exception, decrease
-      // the size of the interceptor array incrementally since some
-      // interceptors may not have been destroyed yet.  Note that this
-      // size reduction is fast since no memory is actually
-      // deallocated.
-      ior_interceptors.size (ilen);
+          // Since Interceptor::destroy() can throw an exception, decrease
+          // the size of the interceptor array incrementally since some
+          // interceptors may not have been destroyed yet.  Note that this
+          // size reduction is fast since no memory is actually
+          // deallocated.
+          ior_interceptors.size (ilen);
+        }
     }
+  ACE_CATCHALL
+    {
+      // .. catch all the exceptions..
+      if (TAO_debug_level > 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("(%P|%t) Exception in TAO_ORB_Core::destroy_interceptors () \n")));
+    }
+  ACE_ENDTRY;
+
+  return;
 }
 
 TAO_Thread_Lane_Resources &

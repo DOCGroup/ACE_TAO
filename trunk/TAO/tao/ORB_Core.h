@@ -671,7 +671,8 @@ public:
 
   /// End the event loop
   void shutdown (CORBA::Boolean wait_for_completion
-                 ACE_ENV_ARG_DECL);
+                 ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC (());
 
   /// Get the shutdown flag value
   int has_shutdown (void);
@@ -978,8 +979,10 @@ protected:
   void services_callbacks_init (void);
 
   /// Helper method that invokes Interceptor::destroy() on all
-  /// registered interceptors when ORB::destroy() is called.
-  void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
+  /// registered interceptors when ORB::destroy() is called. Prevents
+  /// exceptions from propagating up the call chain.
+  void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC (());
 
   /// Pointer to the list of protocol loaded into this ORB instance.
   /// Helper method to hold the common code part for -ORBEndpoint and
