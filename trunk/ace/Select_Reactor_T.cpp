@@ -36,7 +36,7 @@ ACE_RCSID(ace, Select_Reactor_T, "$Id$")
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready
   (ACE_Select_Reactor_Handle_Set &wait_set)
 {
-  ACE_TRACE ("ACE_Select_Reactor_T::fill_in_ready");
+  ACE_TRACE ("ACE_Select_Reactor_T::any_ready");
 
 #if !defined (ACE_WIN32)
   // Make this call signal safe.
