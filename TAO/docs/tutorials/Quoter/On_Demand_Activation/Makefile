@@ -14,7 +14,7 @@ endif # ! TAO_ROOT
 
 IDL_FILES = Quoter
 IDL_SRC = QuoterC QuoterS
-BIN = client server
+BIN_UNCHECKED = client server
 
 LDLIBS = -lTAO_Messaging -lTAO_PortableServer -lTAO
 
@@ -32,6 +32,11 @@ TAO_IDLFLAGS=-GC -in
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(ami),1)
+BIN=$(BIN_UNCHECKED)
+endif # ami
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
