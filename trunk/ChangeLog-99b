@@ -1,24 +1,37 @@
+Thu Aug 19 14:16:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.nested.GNU: added ACE_NESTED_COMMAND
+          hook.  Users can set it to whatever they like (preferably in
+          include/makeinclude/platform_macros.GNU).  One example is
+          to set it to:
+
+            ACE_NESTED_COMMAND := || break $?
+
+          to terminate building if a build in one subdirectory fails.
+          Thanks to Lothar Werzinger <werzinger.lothar@krones.de> for
+          suggesting this addition.
+
 Thu Aug 19 13:06:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* ace/Read_Buffer.cpp: Fixed a bug in rec_read () method
-	  which prohibited reading more than 1024 bytes at once.
+        * ace/Read_Buffer.cpp: Fixed a bug in rec_read () method
+          which prohibited reading more than 1024 bytes at once.
 
 Thu Aug 19 13:03:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.h (ACE): Fixed a "cut & paste" error in the comment --
- 	  basename should have been dirname.  Thanks to Mark Hyett
- 	  <mhyett@std.saic.com> for reporting this.
+        * ace/ACE.h (ACE): Fixed a "cut & paste" error in the comment --
+          basename should have been dirname.  Thanks to Mark Hyett
+          <mhyett@std.saic.com> for reporting this.
 
-	* ace/ACE.cpp: Fixed a bug in ACE::dirname() that was causing problems
-	  if the pathname didn't have a delim character.  Thanks to Russ
- 	  Noseworthy for reporting this and providing a fix.
+        * ace/ACE.cpp: Fixed a bug in ACE::dirname() that was causing problems
+          if the pathname didn't have a delim character.  Thanks to Russ
+          Noseworthy for reporting this and providing a fix.
 
 Thu Aug 19 12:59:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Message_Block.i:
-	  Moved ACE_Message_Block::replace_data_block() down in the file
-	  because it was using inline functions that were defined after it 
-	  was. Thanks to David for pointing this out.
+        * ace/Message_Block.i:
+          Moved ACE_Message_Block::replace_data_block() down in the file
+          because it was using inline functions that were defined after it
+          was. Thanks to David for pointing this out.
 
 Thu Aug 19 10:53:50 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -46,25 +59,25 @@ Thu Aug 19 09:34:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * ace/Reactor_Impl.h,
         * ace/Reactor.h,
         * ace/Reactor.cpp:
-	  Added a pair of restart() methods that can be used to set/get
- 	  the restart_ flag, which controls whether the handle_events()
- 	  event loop is restarted automatically when select() is
- 	  interrpted.  Thanks to Erik Koerber <erik.koerber@siemens.at>
- 	  for suggesting this.
+          Added a pair of restart() methods that can be used to set/get
+          the restart_ flag, which controls whether the handle_events()
+          event loop is restarted automatically when select() is
+          interrpted.  Thanks to Erik Koerber <erik.koerber@siemens.at>
+          for suggesting this.
 
-	* ace/Service_Config: Updated the failure result comment for
-	  open() and cleaned up the return value and errno propagation for
- 	  open_i() when process_commandline_directives() fails.  Thanks to
- 	  Jerry D. De Master <jdemaste@ipdinc.com> for reporting the bug
- 	  and suggesting a fix.
+        * ace/Service_Config: Updated the failure result comment for
+          open() and cleaned up the return value and errno propagation for
+          open_i() when process_commandline_directives() fails.  Thanks to
+          Jerry D. De Master <jdemaste@ipdinc.com> for reporting the bug
+          and suggesting a fix.
 
-	* ace/Service_Config.h: Moved the process_directives() method
-	  used to parse the svc.conf files out of the protected part of
- 	  the class to the public part so that application programmers can
- 	  call this directly to reconfigure services from the svc.conf
- 	  files.  Thanks to John Mink <John.Mink@nl.origin-it.com> for
-	  suggesting this.
-	
+        * ace/Service_Config.h: Moved the process_directives() method
+          used to parse the svc.conf files out of the protected part of
+          the class to the public part so that application programmers can
+          call this directly to reconfigure services from the svc.conf
+          files.  Thanks to John Mink <John.Mink@nl.origin-it.com> for
+          suggesting this.
+
 Wed Aug 18 22:45:24 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
         * ace/WFMO_Reactor.h,
