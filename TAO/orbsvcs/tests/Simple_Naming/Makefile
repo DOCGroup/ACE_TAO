@@ -13,7 +13,6 @@ TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 LDLIBS =  -lorbsvcs -lTAO
-#TAO_IDLFLAGS 	+= -Gc
 
 IDL_SRC	= test_objectC.cpp test_objectS.cpp
 CLIENT_SRC = client.cpp

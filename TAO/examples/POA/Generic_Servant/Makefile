@@ -14,7 +14,8 @@ endif # ! TAO_ROOT
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-TAO_IDLFLAGS = -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h
+override TAO_IDLFLAGS += -Wb,export_macro=GENERIC_SERVANT_Export \
+			 -Wb,export_include=generic_servant_export.h
 
 LDLIBS = -lTAO
 
