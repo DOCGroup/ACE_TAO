@@ -1,3 +1,9 @@
+Mon Nov 24 20:05:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Kokyu_dsrt_schedulers/Makefile.Kokyu_DSRT_Schedulers:
+
+	  Provided the path to the included header files. 
+
 Mon Nov 24 19:57:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
