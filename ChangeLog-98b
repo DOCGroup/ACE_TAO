@@ -1,3 +1,23 @@
+Mon Sep  7 12:39:10 EDT 1998  James CE Johnson <jcej@lads.com>
+
+          docs/tutorials/008/page01.html
+	  docs/tutorials/008/page02.html
+	  docs/tutorials/008/page03.html
+	  docs/tutorials/008/page04.html
+	  docs/tutorials/008/page05.html
+	  docs/tutorials/009/Makefile
+	  docs/tutorials/009/broadcast_client.cpp
+	  docs/tutorials/009/directed_client.cpp
+	  docs/tutorials/009/page01.html
+	  docs/tutorials/009/page02.html
+	  docs/tutorials/009/page03.html
+	  docs/tutorials/009/page04.html
+	  docs/tutorials/009/page05.html
+	  docs/tutorials/009/server.cpp
+
+	  Cleanup on Tutorial 008 and creation of Tutorial 009 which expands
+	  008 by making the server more selective in who it responds to.
+
 Mon Sep  7 10:06:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ACE.h (ACE): Moved strnew (wchar_t *) into an ACE_WIN32
