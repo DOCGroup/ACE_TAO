@@ -1,0 +1,63 @@
+/**
+ * @file Policy_Forward.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source to forward declare some critical
+ * Policy-related types.
+ *
+ * This file is used to generate the code in
+ * Policy_ForwardC.{h,i,cpp}.
+ *
+ *   The steps to regenerate the code are as follows:
+ *
+ *   1. Run the tao_idl compiler on the patched pidl file.  The
+ *   command used for this is:
+ *
+ *     tao_idl.exe
+ *        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *          -Wb,export_macro=TAO_Export
+ *          -Wb,export_include="tao/corbafwd.h"
+ *          -Wb,pre_include="ace/pre.h"
+ *          -Wb,post_include="ace/post.h"
+ *          Policy_Forward.pidl
+ *
+ *   2. Then patch the generated code.  This patch (a) eliminates
+ *   cycles in the include dependencies.
+ *
+ *   Apply patches using the following commands:
+ *
+ *   patch < diffs/Policy_Forward.diff
+ *
+ *   Note: The diffs were generated with these commands:
+ *
+ *   for i in Policy_ForwardC.{h,i,cpp}; do
+ *     diff -wBbu orig/$i $i;
+ *   done > diffs/Policy_Forward.diff
+ */
+
+#ifndef TAO_CORBA_POLICY_FORWARD_PIDL
+#define TAO_CORBA_POLICY_FORWARD_PIDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef unsigned long PolicyType;
+
+  interface Policy;
+
+  typedef sequence<Policy> PolicyList;
+
+  typedef sequence<PolicyType> PolicyTypeSeq;
+
+  enum SetOverrideType
+  {
+    SET_OVERRIDE,
+    ADD_OVERRIDE
+  };
+};
+
+#pragma prefix ""
+
+#endif /* TAO_CORBA_POLICY_FORWARD_PIDL */

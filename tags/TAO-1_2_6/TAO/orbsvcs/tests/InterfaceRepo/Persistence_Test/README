@@ -1,0 +1,69 @@
+$Id$
+
+This test addresses the functionality of persistence in the
+Interface Repository.
+
+Ptest is a class wrapper for the test code. The class contains
+two functions: populate() and query().
+
+To build this test, the TAO library, the TypeCodeFactory
+library, the Interface Repository (the last two found in
+TAO/orbsvcs/IFR_Service), must be previously built. In addition, 
+the Interface Repository requires the TAO_Svc_Utils library in 
+TAO/orbsvcs/orbsvcs.
+
+It is far easier to run the test with the provided Perl script
+run_test.pl, but to do it by hand, first start the IFR with
+(Windows users remember to use backslashes instead):
+
+../../../IFR_Service/IFR_Service -p
+
+Then execute the test code with
+
+Persistence_Test
+
+This will populate the IFR with a few IFR objects.
+After the test finishes, stop the IFR. Then start it again
+with the same command line option. Then run the
+test code again with the query option:
+
+Persistence_Test -q
+
+You may also add the option -d to this second run of the test
+code to see the results of the IFR queries (this option will
+have the same effect if used with the Perl script).
+
+After the query run of the test code, before starting again, you must
+delete the IFR backing store file ("ifr_default_backing_store"). If you
+like you can use another persistence file by starting the IFR both times with
+the command line option '-p <filename>'. Just as with the default backing
+file, it must be deleted before starting the test over.
+
+The query run of the test code will also destroy all IFR objects that were
+created - the repository will be left empty except for the primitive kinds
+which are always there (and cannot be destroyed).
+
+If for some reason IP multicast is not available or enabled on your platform, 
+then add
+
+ -ORBInitRef InterfaceRepository=file://if_repo.ior
+
+to the client's command line. If the IFR_Service has been started with the
+command line option -o <filename> (see the README file in the IFR_Service
+directory), then instead add
+
+ -ORBInitRef InterfaceRepository=file://<filename>
+
+to the client's command line.
+
+ACE_ASSERT is used to check each result, so an incorrect result
+will cause test execution to halt immediately. If a test function
+is halted for this or any other reason, it is likely that the
+destroy() call(s) at the end of the function were not exectuted.
+Before running the test again, the Interface Repository process
+should be stopped and restarted to avoid a BAD_PARAM exception.
+
+More information about the Interface Repository can be found in 
+TAO/docs/releasenotes.index.html.
+
+-Jeff Parsons <parsons@cs.wustl.edu>

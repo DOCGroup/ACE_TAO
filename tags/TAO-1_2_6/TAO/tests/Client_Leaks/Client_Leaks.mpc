@@ -1,0 +1,25 @@
+project: server {
+  Source_Files {
+    Process_Factory.cpp
+    Startup_Callback.cpp
+    Server_Task.cpp
+    server.cpp
+  }
+}
+
+project: client {
+  Source_Files {
+    TestC.cpp
+    Client_Task.cpp
+    client.cpp
+  }
+}
+
+project(child): server {
+  exename = child
+  Source_Files {
+    Process.cpp
+    child.cpp
+  }
+}
+
