@@ -1,7 +1,13 @@
+Tue Mar 27 10:08:44 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Select_Reactor_Base.h:
+          Add missing #include for builds that define
+          ACE_HAS_REACTOR_NOTIFICATION_QUEUE.
+
 Tue Mar 27 05:35:38 2001  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * include/makeinclude/make_flags.bor:
-        Prevent PASCAL build by default with BCB5 since it is not required. 
+        Prevent PASCAL build by default with BCB5 since it is not required.
         Since both VCL and non-VCL applications share a common run-time
         library you can simply link your VCL code with a non-PASCAL build
         of the ACE+TAO libraries. This behaviour can be overridden by
@@ -126,20 +132,20 @@ Mon Mar 26 13:00:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Mar 23 12:40:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
- 	* apps/Gateway/Gateway/Event_Forwarding_Discriminator.cpp: Make sure
- 	  to delete the Consumer_Dispatch_Set * that we get back from
-  	  unbind().  Thanks to the ever vigilant Mike Winter
-  	  <mwinter@sonic.net> for reporting this.
+        * apps/Gateway/Gateway/Event_Forwarding_Discriminator.cpp: Make sure
+          to delete the Consumer_Dispatch_Set * that we get back from
+          unbind().  Thanks to the ever vigilant Mike Winter
+          <mwinter@sonic.net> for reporting this.
 
 Thu Mar 22 10:18:24 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SString.h: Make the various data members protected
-	  rather than private so subclasses can access them.  Thanks to
- 	  Martin Krumpolec <krumpo@pobox.sk> for this suggestion.
+        * ace/SString.h: Make the various data members protected
+          rather than private so subclasses can access them.  Thanks to
+          Martin Krumpolec <krumpo@pobox.sk> for this suggestion.
 
-	* tests/README: Clarified some things about the tests.
-	  Thanks to Eric Desamore <Eric.Desamore@idtv.bull.net> for
- 	  motivating this.
+        * tests/README: Clarified some things about the tests.
+          Thanks to Eric Desamore <Eric.Desamore@idtv.bull.net> for
+          motivating this.
 
 Mon Mar 26 11:03:22 2001  Balachandran  <bala@cs.wustl.edu>
 
@@ -161,9 +167,9 @@ Fri Mar 23 18:01:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Fri Mar 23 16:25:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/New_Fail_Test.cpp: Reverted the change from "Fri Mar 23
-	  06:34:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>". The
-	  change fails to comipile when exceptions are on.
+        * tests/New_Fail_Test.cpp: Reverted the change from "Fri Mar 23
+          06:34:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>". The
+          change fails to comipile when exceptions are on.
 
 Fri Mar 23 08:47:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -189,9 +195,9 @@ Thu Mar 22 21:33:37 2001  Chris Cleeland  <cleeland_c@ociweb.com>
         inet_ntoa_b to fill that in.
 
         * ace/INET_Addr.i (get_host_addr): For VxWorks only, changed this
-	to use the preferred inet_ntoa_b.  This eliminate memory leaks
-	under VxWorks.  Thanks to Erik Johannes <ejohannes@oresis.com> for
-	the suggested fix.
+        to use the preferred inet_ntoa_b.  This eliminate memory leaks
+        under VxWorks.  Thanks to Erik Johannes <ejohannes@oresis.com> for
+        the suggested fix.
 
 Wed Mar 21 19:20:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -441,9 +447,9 @@ Thu Mar 15 11:26:35 2001  Ossama Othman  <ossama@uci.edu>
         * ace/SSL/SSL_SOCK_Acceptor.i (ACE_SSL_SOCK_Acceptor):
 
           Make sure the handle is set for the ACE_SSL_SOCK_Acceptor, after
- 	  initializing the underlying ACE_SOCK_Acceptor.  This ensures
- 	  that OpenSSL has the proper handle.  Thanks to Greg McCain
- 	  <greg.mccain@veritas.com> for suggesting this fix.
+          initializing the underlying ACE_SOCK_Acceptor.  This ensures
+          that OpenSSL has the proper handle.  Thanks to Greg McCain
+          <greg.mccain@veritas.com> for suggesting this fix.
 
         * THANKS:
           Added Greg to the hall of the fame.
@@ -452,8 +458,8 @@ Thu Mar 15 05:46:59 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/FILE_Addr.cpp (ACE_FILE_Addr): Make sure to divide the size of
           the filename_ by the sizeof (ACE_TCHAR) to handle unicode
- 	  correctly.  Thanks to the ever vigilant Ivan Murphy for catching
- 	  this!
+          correctly.  Thanks to the ever vigilant Ivan Murphy for catching
+          this!
 
 Wed Mar 14 01:47:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -571,7 +577,7 @@ Sun Mar 11 18:41:08 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/CDR_Stream.h: Updated a comment to clarify that the buffer()
           method just returns a pointer to the first block in the chain.
-  	  Thanks to Johnny Willemsen for pointing this out.
+          Thanks to Johnny Willemsen for pointing this out.
 
 Sun Mar 11 17:46:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -677,7 +683,7 @@ Sat Mar 10 12:39:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
         * ace/WFMO_Reactor.h:
         * ace/Select_Reactor_T.h:
         * ace/Reactor_Impl.h:
-	  Cleaned up comment for schedule_timer()
+          Cleaned up comment for schedule_timer()
 
 Sat Mar 10 07:05:16 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -689,7 +695,7 @@ Sat Mar 10 07:05:16 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * tests/run_test.lst: Added Log_Msg_Test and
           the new Logging_Strategy_Test.
 
-        * tests/Log_Msg_Test.cpp: Added ACE_TEXT macros to all the ACE_DEBUG and 
+        * tests/Log_Msg_Test.cpp: Added ACE_TEXT macros to all the ACE_DEBUG and
           ACE_ERROR calls.
 
         * ace/Service_Manager.{h,cpp}: Refactored the request processing
@@ -759,12 +765,12 @@ Wed Mar  7 08:57:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Asynch_IO.h:
           Changed use of ACE_UNIMPLEMENTED_FUNC to just defining the
- 	  assignment operators outright.  The point here is to just
- 	  provide any implementation, since the default one is flagged as
- 	  causing infinite recursion.
+          assignment operators outright.  The point here is to just
+          provide any implementation, since the default one is flagged as
+          causing infinite recursion.
 
           Thanks to David Levine for pointing out this incorrect usage of
- 	  the macro.
+          the macro.
 
         * ace/config-win32-msvc-5.h:
         * ace/config-win32-msvc-6.h:
@@ -791,7 +797,7 @@ Wed Mar  7 08:20:01 2001  Chad Elliott  <elliott_c@ociweb.com>
         * bin/ace_ld:
 
           Added new functionality to filter out the harmless symbol size
- 	  change warnings for VxWorks 5.4.
+          change warnings for VxWorks 5.4.
 
         * examples/Shared_Malloc/test_multiple_mallocs.cpp:
         * examples/Shared_Malloc/test_persistence.cpp:
@@ -804,13 +810,13 @@ Wed Mar  7 06:11:52 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Asynch_IO.h: Removed the unnecessary/improper ';' at the
           end of the line.  Thanks to Johnny Willemsen and Chris Kohlhoff
- 	  for reporting/fixing this.
+          for reporting/fixing this.
 
         * ace/*_Connector.h: Clarified in the comments that the
           ACE_Time_Value *timeout represents the *maximum* amount of time
- 	  to wait.  If the server is not running, however, connect() can
- 	  return much sooner.  Thanks to Dipti Jain <dijain@hss.hns.com>
- 	  for motivating this.
+          to wait.  If the server is not running, however, connect() can
+          return much sooner.  Thanks to Dipti Jain <dijain@hss.hns.com>
+          for motivating this.
 
 Tue Mar  6 14:14:06 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -887,8 +893,8 @@ Tue Mar  6 10:16:31 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-win32-common.h:
           Removed old comment about ACE_HAS_WINSOCK2 being related to
- 	  ACE_HAS_WINNT4.  Thanks to Johnny Willemsen
- 	  <jwillemsen@remedy.nl> for pointing this out.
+          ACE_HAS_WINNT4.  Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing this out.
 
 Tue Mar  6 10:13:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -911,21 +917,21 @@ Mon Mar  5 19:20:45 2001  Fuzz Master D <brunsch@uci.edu>
 
         * bin/fuzz.pl:
           As Ossama pointed out, the ACE_CHECK test was seeing problems in
- 	  the tao_idl files since it has uses of ACE_TRY_ENV inside
- 	  quotes.  Made sure not to detect problems in this case.
+          the tao_idl files since it has uses of ACE_TRY_ENV inside
+          quotes.  Made sure not to detect problems in this case.
 
 Mon Mar  5 18:58:32 2001  Fuzz Master D <brunsch@uci.edu>
 
         * bin/fuzz.pl:
           Fixed some false positives in the resolve_initial_reference test
- 	  and also added an ACE_CHECK test by Carlos's request.
+          and also added an ACE_CHECK test by Carlos's request.
 
 Mon Mar  5 18:54:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/PerlACE/Process_Unix.pm:
           Updated the signal detection to not pay attention to TERM and
- 	  KILL.  Will print out better output when signals cause a process
- 	  to exit during most calls like Kill () or TerminateWaitKill ().
+          KILL.  Will print out better output when signals cause a process
+          to exit during most calls like Kill () or TerminateWaitKill ().
 
 Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -1207,11 +1213,11 @@ Sun Mar  4 19:31:16 2001  Darrell Brunsch <brunsch@uci.edu>
         * tests/version_tests/version_tests.dsw: (removed)
 
           Moved the version_tests back into the tests/*.dsp files.  The
- 	  reason they were originally moved is because it was easier to
- 	  select all the debug versions during a batch build.  But now we
- 	  have pippen.pl and msvc_auto_compile.pl, so this is no longer an
- 	  issue, while this strange setup would compilicate the nightly
- 	  builds.  Thus, it was standardized back.
+          reason they were originally moved is because it was easier to
+          select all the debug versions during a batch build.  But now we
+          have pippen.pl and msvc_auto_compile.pl, so this is no longer an
+          issue, while this strange setup would compilicate the nightly
+          builds.  Thus, it was standardized back.
 
         * bin/create_vt_dsps.pl: (removed)
 
@@ -1272,8 +1278,8 @@ Sun Mar 04 03:12:17 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
         * ace/SSL/SSL_Export.h:
         * websvcs/lib/websvcs_export.h: These files didn't check for
           ACE_AS_STATIC_LIBS to determine if they should define their
- 	  export macros for static build.  Thanks to Chris Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this.  [Bug 813]
+          export macros for static build.  Thanks to Chris Kohlhoff
+          <chris@kohlhoff.com> for reporting this.  [Bug 813]
 
 Sat Mar  3 19:07:31 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
@@ -1390,24 +1396,24 @@ Fri Mar 02 19:36:22 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (ACE_OS::send): (only non-Win32), if call fails and
           errno is EAGAIN, change it to EWOULDBLOCK. Improve portability
- 	  for platforms where EAGAIN and EWOULDBLOCK are different values
- 	  and both used, like HP-UX.  Thanks to Michael Grove
- 	  <snowymike@aol.com> for reporting this problem.
+          for platforms where EAGAIN and EWOULDBLOCK are different values
+          and both used, like HP-UX.  Thanks to Michael Grove
+          <snowymike@aol.com> for reporting this problem.
 
         * ace/ACE.i (send_i): Call ACE_OS::send, not ACE_OS::write, on HP-UX.
           This makes it pick up the EAGAIN->EWOULDBLOCK change.
 
         * tests/TSS_Test.cpp: Avoid doing ACE_Thread::keyfree on where
           ACE_HAS_PTHREADS_DRAFT4 or ACE_HAS_PTHREADS_DRAFT6 (unless
- 	  ACE_HAS_TSS_EMULATION is also defined) since ACE_Thread::keyfree
- 	  will get ENOTSUP anyway.
+          ACE_HAS_TSS_EMULATION is also defined) since ACE_Thread::keyfree
+          will get ENOTSUP anyway.
 
 Fri Mar 02 17:50:40 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
         * ace/QtReactor.cpp:
           Thanks to Stefan Scherer <stefan_scherer@sepp.de> for reporting
- 	  and fixing the problem - crashing of TAO/tests/QtTests/ client
- 	  example after moving the slider.
+          and fixing the problem - crashing of TAO/tests/QtTests/ client
+          example after moving the slider.
 
 Fri Mar 02 15:35:40 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -1429,10 +1435,10 @@ Fri Mar 02 13:17:36 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/IOStream/server/iostream_server.cpp (main): Removed the
           call to register peer_acceptor with the reactor. The
- 	  acceptor::open call already registers for ACCEPT_MASK. Prevents
- 	  leaving a hanging READ_MASK registered after the acceptor is
- 	  destroyed when main() returns. This fixes Bugzilla # 801. Thanks
- 	  to Pim Philipse <pph@rogan-medical.com> for reporting this.
+          acceptor::open call already registers for ACCEPT_MASK. Prevents
+          leaving a hanging READ_MASK registered after the acceptor is
+          destroyed when main() returns. This fixes Bugzilla # 801. Thanks
+          to Pim Philipse <pph@rogan-medical.com> for reporting this.
 
         * THANKS: Added Pim Philipse to the Hall of Fame.
 
@@ -1440,23 +1446,23 @@ Fri Mar 02 12:24:27 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-10.x-hpc++.h: If compiling without exceptions
           (+noeh) then don't set ACE_HAS_EXCEPTIONS (don't set
- 	  ACE_NEW_THROWS_EXCEPTIONS either).
+          ACE_NEW_THROWS_EXCEPTIONS either).
 
         * ace/Thread_Manager.cpp (join_thr): Moved the code for
           ACE_HAS_PTHREADS_DRAFT4 that does a pthread_detach from here to
- 	  ACE_OS::thr_join (which this function calls) so that
- 	  ACE_Thread::join also causes a pthread_detach. This is needed on
- 	  Pthreads Draft 4 (HP-UX 10.x) to properly clean up the thread
- 	  storage and avoid leaking memory. Thanks to Vladimir Kondratiev
- 	  <vladimir.kondratiev@intel.com> for reporting this and providing
- 	  excellent test cases to help resolve it quickly.
+          ACE_OS::thr_join (which this function calls) so that
+          ACE_Thread::join also causes a pthread_detach. This is needed on
+          Pthreads Draft 4 (HP-UX 10.x) to properly clean up the thread
+          storage and avoid leaking memory. Thanks to Vladimir Kondratiev
+          <vladimir.kondratiev@intel.com> for reporting this and providing
+          excellent test cases to help resolve it quickly.
 
         * ace/OS.i (ACE_OS::thr_join): Added the code that was removed from
           ACE_Thread_Manager::join_thr, above.
 
         * ace/Event_Handler.cpp (~ACE_Event_Handler): Add an ACE_Errno_Guard
           around purge_pending_notifications to prevent against an ENOTSUP
- 	  from purge_pending_notifications.
+          from purge_pending_notifications.
 
 Thu Mar  1 17:02:10 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -1464,22 +1470,22 @@ Thu Mar  1 17:02:10 2001  Darrell Brunsch <brunsch@uci.edu>
         * bin/PerlACE/Process_Win32.pm:
 
           Fixed up the Spawn code to use the Executable () instead of
- 	  {EXECUTABLE}, since that's how we get the adjusted name (with
- 	  .exe and stuff).  And also skipped the file existance with
- 	  IgnoreExeSubDir, since IgnoreExeSubDir is often used when you
- 	  need to find the program in the path.
+          {EXECUTABLE}, since that's how we get the adjusted name (with
+          .exe and stuff).  And also skipped the file existance with
+          IgnoreExeSubDir, since IgnoreExeSubDir is often used when you
+          need to find the program in the path.
 
 Thu Mar  1 15:48:10 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/fuzz.pl:
 
           Fuzz was being a bit to eager with the class matching in the
- 	  TRACE test.  It was having problems with something like:
+          TRACE test.  It was having problems with something like:
 
           char *foo::bar ()
 
           since it thought the class was "char *foo" instead of just
- 	  "foo".
+          "foo".
 
           But it is feeling muuuuuuch better now.
 
@@ -1532,8 +1538,8 @@ Thu Mar  1 10:54:23 2001  Ossama Othman  <ossama@uci.edu>
         * include/makeinclude/wrapper_macros.GNU:
 
           Fixed all incorrect uses of CFLAGS and CCFLAGS where
- 	  preprocessor macros were defined.  Preprocessor macros should be
- 	  defined in the CPPFLAGS variable.
+          preprocessor macros were defined.  Preprocessor macros should be
+          defined in the CPPFLAGS variable.
 
           Define ACE_USE_RCSID in non-debug builds (i.e. debug=0).
 
@@ -1541,7 +1547,7 @@ Thu Mar 01 07:29:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
           Fixed typos in the Service_Context_Manipulation test.  It was
- 	  running in platforms where it shouldn't.
+          running in platforms where it shouldn't.
 
 Thu Mar 01 07:07:03 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -1564,9 +1570,9 @@ Wed Feb 28 22:58:50 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * html/index.html:
           Reference */index.html directly, instead of assuming that the
- 	  web browser will use index.html as the default file, this also
- 	  works better when browsing locally.  Thanks to Alain Decamps
- 	  <Alain.Decamps@pidpa.be> for pointing this out.
+          web browser will use index.html as the default file, this also
+          works better when browsing locally.  Thanks to Alain Decamps
+          <Alain.Decamps@pidpa.be> for pointing this out.
 
 Wed Feb 28 16:41:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -1584,40 +1590,40 @@ Wed Feb 28 15:35:59 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * docs/bugzilla-build-setup.html:
           Added html file outlining steps for adding a bugzilla nightly
- 	  build.
+          build.
 
 Wed Feb 28 00:25:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/auto_run_tests.lst:
 
           The examples/POA/Adapter_Activator/run_test.pl test was being
- 	  run twice.  In fairness to all the other tests that only get to
- 	  run once, I removed the second instance.
+          run twice.  In fairness to all the other tests that only get to
+          run once, I removed the second instance.
 
 Tue Feb 27 17:31:48 2001  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU: Turn on -D_REENTRANT for
           the threads=0 build - this enables the reentrant functions which
- 	  are present, threads or not. It does not turn on threads, which
- 	  are instead enabled by -D_POSIX_C_SOURCE=199506L.
+          are present, threads or not. It does not turn on threads, which
+          are instead enabled by -D_POSIX_C_SOURCE=199506L.
 
         * ace/config-hpux-11.00.h: Added ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
         * ace/OS.i (rand_r): Added 'defined (HPUX_11)' to the ways to get to
           the POSIX.1c-conformant version of rand_r. Allows clean compile
- 	  on HP-UX 11 without thread support.  Also lined up some
- 	  misaligned #if/else/endif lines to make it easier to find one's
- 	  way through.
+          on HP-UX 11 without thread support.  Also lined up some
+          misaligned #if/else/endif lines to make it easier to find one's
+          way through.
 
         * ace/OS_Dirent.inl (readdir_r): Added 'defined (HPUX_11)' to the
           ways to get the POSIX.1c-conformant version of readdir_r. Allows
- 	  clean compile on HP-UX 11 without thread support.
+          clean compile on HP-UX 11 without thread support.
 
 Tue Feb 27 11:38:38 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * performance-tests/TCP/tcp_test.cpp (main): Zapped the
           non-existent '-f' option.  Thanks to Mike Curtis for reporting
- 	  this.
+          this.
 
         * performance-tests/TCP/tcp_test.cpp (main): Check for improper
           bufsz.  Thanks to Mike Curtis for reporting this.
@@ -1637,8 +1643,8 @@ Tue Feb 27 10:23:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * Makefile: Changed the ChangeLog listing in the CONTROLLED_FILES
           to ChangeLog*. This should help us to avoid missing ChangeLog
- 	  entries in the beta distribution, just about every time we split
- 	  and add a ChangeLog.
+          entries in the beta distribution, just about every time we split
+          and add a ChangeLog.
 
 Mon Feb 27 07:39:16 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1650,9 +1656,9 @@ Mon Feb 27 07:39:16 2001  Chad Elliott  <elliott_c@ociweb.com>
         * ace/OS.h:
         * ace/config-hpux-11.00.h:
           Modification to remove system header macro definition conflicts.
-  	  This change does not suppress the conflicts, but does an undef
- 	  of the two conflicting macros before includeing tcp.h.  Thanks
- 	  to Sam Chong <sam@i2i-inc.com> for reporting this problem.
+          This change does not suppress the conflicts, but does an undef
+          of the two conflicting macros before includeing tcp.h.  Thanks
+          to Sam Chong <sam@i2i-inc.com> for reporting this problem.
 
 Mon Feb 26 19:01:16 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -1669,9 +1675,9 @@ Mon Feb 26 18:18:38 2001  Steve Huston  <shuston@riverace.com>
           (ACE_SString::find (char c, int pos) const):
           (ACE_WString::find (const ACE_WSTRING_TYPE *s, int pos) const):
           If match is found, return index from start of string, not from
- 	  'pos'. Matches the C++ string standard, which was the model for
- 	  these classes.  Thanks to Glen Osterhout <gosterho@elronsw.com>
- 	  for this fix.
+          'pos'. Matches the C++ string standard, which was the model for
+          these classes.  Thanks to Glen Osterhout <gosterho@elronsw.com>
+          for this fix.
 
         * ace/SString.h: Clarified comments on return value for above
           functions.
@@ -1692,12 +1698,12 @@ Mon Feb 26 12:29:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/ARGV.h: Clarify that the int add (const ACE_TCHAR *next_arg)
           method assumes ownership of <next_arg>, rather than copying it.
-  	  Thanks to Steve Hespelt <shespelt@bear.com> for reporting this.
-  	  Fixes [Bug 807].
+          Thanks to Steve Hespelt <shespelt@bear.com> for reporting this.
+          Fixes [Bug 807].
 
           The generated version_tests dsp didn't work (since DLL_Test_Impl
- 	  creates a library).  Manually created the configurations in the
- 	  tests/DLL_Test_Impl.dsp version instead.
+          creates a library).  Manually created the configurations in the
+          tests/DLL_Test_Impl.dsp version instead.
 
 Mon Feb 26 15:54:33 2001  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -1722,19 +1728,19 @@ Mon Feb 26 12:29:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/ARGV.h: Clarify that the int add (const ACE_TCHAR *next_arg)
           method assumes ownership of <next_arg>, rather than copying it.
-  	  Thanks to Steve Hespelt <shespelt@bear.com> for reporting this.
-  	  Fixes [Bug 807].
+          Thanks to Steve Hespelt <shespelt@bear.com> for reporting this.
+          Fixes [Bug 807].
 
 Mon Feb 26 12:27:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR_Stream.h:
         * ace/CDR_Stream.i:
           Added method to reset the byte order in class OuputCDR.  This
- 	  will be used by a gateway to set the byte order of a reply to a
- 	  reqest it has handled to one different than the gateway's own
- 	  byte order, if necessary. It should be called while the stream
- 	  is still empty, that is, before any part of the reply, including
- 	  the header, has been marshaled.
+          will be used by a gateway to set the byte order of a reply to a
+          reqest it has handled to one different than the gateway's own
+          byte order, if necessary. It should be called while the stream
+          is still empty, that is, before any part of the reply, including
+          the header, has been marshaled.
 
 Mon Feb 26 12:07:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -1855,15 +1861,15 @@ Mon Feb 26 00:19:28 2001  Darrell Brunsch <brunsch@uci.edu>
         * tests/Upgradable_RW_Test.dsp:
 
           Removed the Alpha configurations.  I don't think we've actually
- 	  looked at these for over a year, and they are missing from a lot
- 	  of projects.  Thankfully, they are easy to recreate if they are
- 	  needed.
+          looked at these for over a year, and they are missing from a lot
+          of projects.  Thankfully, they are easy to recreate if they are
+          needed.
 
         * ACE-INSTALL.html:
 
           Changed the Windows NT Alpha section to mention that we no
- 	  longer have configurations out of the box for Win32/Alpha, they
- 	  must be recreated if needed.
+          longer have configurations out of the box for Win32/Alpha, they
+          must be recreated if needed.
 
         * WindozeCE/ACEApp.cpp: (removed)
         * WindozeCE/ACEApp.h: (removed)
@@ -2032,11 +2038,11 @@ Sat Feb 24 14:07:11 2001  Darrell Brunsch <brunsch@uci.edu>
         * tests/Thread_Pool_Reactor_Test.cpp:
 
           Did a careful study of what this test was doing in regards to
- 	  sending wide-character strings, and made it consistent.  The
- 	  most troublesome aspect was the fact that the length is encoded
- 	  in the shutdown string ("\011shutdown") which meant that I had
- 	  to send the length in characters, not in bytes.  This should
- 	  really fix [Bug 537].
+          sending wide-character strings, and made it consistent.  The
+          most troublesome aspect was the fact that the length is encoded
+          in the shutdown string ("\011shutdown") which meant that I had
+          to send the length in characters, not in bytes.  This should
+          really fix [Bug 537].
 
 Sat Feb 24 14:37:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 

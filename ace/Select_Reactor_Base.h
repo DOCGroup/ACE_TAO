@@ -28,6 +28,10 @@
 #include "ace/Pipe.h"
 #include "ace/Reactor_Impl.h"
 
+#if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+#include "ace/Unbounded_Queue.h"
+#endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
+
 // Add useful typedefs to simplify the following code.
 typedef void (ACE_Handle_Set::*ACE_FDS_PTMF) (ACE_HANDLE);
 typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
