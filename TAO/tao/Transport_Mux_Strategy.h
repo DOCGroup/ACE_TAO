@@ -62,7 +62,7 @@ public:
    * request.
    * A later reply for that request should be ignored.
    */
-  virtual void unbind_dispatcher (CORBA::ULong request_id) = 0;
+  virtual int unbind_dispatcher (CORBA::ULong request_id) = 0;
 
   /// Dispatch the reply for <request_id>, cleanup any resources
   /// allocated for that request.

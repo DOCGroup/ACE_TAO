@@ -55,7 +55,7 @@ public:
   //   class.
   virtual int bind_dispatcher (CORBA::ULong request_id,
                                TAO_Reply_Dispatcher *rh);
-  virtual void unbind_dispatcher (CORBA::ULong request_id);
+  virtual int unbind_dispatcher (CORBA::ULong request_id);
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
