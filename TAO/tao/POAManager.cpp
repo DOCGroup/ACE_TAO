@@ -41,6 +41,75 @@ TAO_POA_Manager::activate_i (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
+void
+TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
+                               CORBA::Boolean wait_for_completion,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
+  // Is the <wait_for_completion> semantics for this thread correct?
+  TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
+                                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // This operation changes the state of the POA manager to
+  // inactive. If issued while the POA manager is in the inactive
+  // state, the AdapterInactive exception is raised.  Entering the
+  // inactive state causes the associated POAs to reject requests that
+  // have not begun to be executed as well as any new requests.
+
+  if (this->state_ == PortableServer::POAManager::INACTIVE)
+    {
+      ACE_THROW (PortableServer::POAManager::AdapterInactive ());
+    }
+  else
+    {
+      this->state_ = PortableServer::POAManager::INACTIVE;
+    }
+
+  // After changing the state, if the etherealize_objects parameter is:
+  //
+  // a) TRUE - the POA manager will cause all associated POAs that
+  // have the RETAIN and USE_SERVANT_MANAGER policies to perform the
+  // etherealize operation on the associated servant manager for all
+  // active objects.
+  //
+  // b) FALSE - the etherealize operation is not called. The purpose
+  // is to provide developers with a means to shut down POAs in a
+  // crisis (for example, unrecoverable error) situation.
+
+  // If the wait_for_completion parameter is FALSE, this operation
+  // will return immediately after changing the state. If the
+  // parameter is TRUE and the current thread is not in an invocation
+  // context dispatched by some POA belonging to the same ORB as this
+  // POA, this operation does not return until there are no actively
+  // executing requests in any of the POAs associated with this POA
+  // manager (that is, all requests that were started prior to the
+  // state change have completed) and, in the case of a TRUE
+  // etherealize_objects, all invocations of etherealize have
+  // completed for POAs having the RETAIN and USE_SERVANT_MANAGER
+  // policies. If the parameter is TRUE and the current thread is in
+  // an invocation context dispatched by some POA belonging to the
+  // same ORB as this POA the BAD_INV_ORDER exception is raised and
+  // the state is not changed.
+
+  for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
+       iterator != this->poa_collection_.end ();
+       ++iterator)
+    {
+      TAO_POA *poa = *iterator;
+      poa->deactivate_all_objects_i (etherealize_objects,
+                                     wait_for_completion,
+                                     ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  // If the ORB::shutdown operation is called, it makes a call on
+  // deactivate with a TRUE etherealize_objects parameter for each POA
+  // manager known in the process; the wait_for_completion parameter
+  // to deactivate will be the same as the similarly named parameter
+  // of ORB::shutdown.
+}
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 void
@@ -149,75 +218,6 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion,
           ACE_CHECK;
         }
     }
-}
-
-void
-TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
-                               CORBA::Boolean wait_for_completion,
-                               CORBA::Environment &ACE_TRY_ENV)
-{
-  // Is the <wait_for_completion> semantics for this thread correct?
-  TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
-                                                 ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // This operation changes the state of the POA manager to
-  // inactive. If issued while the POA manager is in the inactive
-  // state, the AdapterInactive exception is raised.  Entering the
-  // inactive state causes the associated POAs to reject requests that
-  // have not begun to be executed as well as any new requests.
-
-  if (this->state_ == PortableServer::POAManager::INACTIVE)
-    {
-      ACE_THROW (PortableServer::POAManager::AdapterInactive ());
-    }
-  else
-    {
-      this->state_ = PortableServer::POAManager::INACTIVE;
-    }
-
-  // After changing the state, if the etherealize_objects parameter is:
-  //
-  // a) TRUE - the POA manager will cause all associated POAs that
-  // have the RETAIN and USE_SERVANT_MANAGER policies to perform the
-  // etherealize operation on the associated servant manager for all
-  // active objects.
-  //
-  // b) FALSE - the etherealize operation is not called. The purpose
-  // is to provide developers with a means to shut down POAs in a
-  // crisis (for example, unrecoverable error) situation.
-
-  // If the wait_for_completion parameter is FALSE, this operation
-  // will return immediately after changing the state. If the
-  // parameter is TRUE and the current thread is not in an invocation
-  // context dispatched by some POA belonging to the same ORB as this
-  // POA, this operation does not return until there are no actively
-  // executing requests in any of the POAs associated with this POA
-  // manager (that is, all requests that were started prior to the
-  // state change have completed) and, in the case of a TRUE
-  // etherealize_objects, all invocations of etherealize have
-  // completed for POAs having the RETAIN and USE_SERVANT_MANAGER
-  // policies. If the parameter is TRUE and the current thread is in
-  // an invocation context dispatched by some POA belonging to the
-  // same ORB as this POA the BAD_INV_ORDER exception is raised and
-  // the state is not changed.
-
-  for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
-       iterator != this->poa_collection_.end ();
-       ++iterator)
-    {
-      TAO_POA *poa = *iterator;
-      poa->deactivate_all_objects_i (etherealize_objects,
-                                     wait_for_completion,
-                                     ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  // If the ORB::shutdown operation is called, it makes a call on
-  // deactivate with a TRUE etherealize_objects parameter for each POA
-  // manager known in the process; the wait_for_completion parameter
-  // to deactivate will be the same as the similarly named parameter
-  // of ORB::shutdown.
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

@@ -271,9 +271,10 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 
   response_required = request.response_expected ();
 
+#if !defined (TAO_NO_IOR_TABLE)
+
   const CORBA::Octet *object_key = request.object_key ().get_buffer ();
 
-#if !defined (TAO_NO_IOR_TABLE)
   if (ACE_OS::memcmp (object_key,
                       &TAO_POA::objectkey_prefix[0],
                       TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
@@ -308,7 +309,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
       ACE_THROW_RETURN (PortableServer::ForwardRequest (dup), -1);
     }
 
-#endif
+#endif /* TAO_NO_IOR_TABLE */
 
   // So, we read a request, now handle it using something more
   // primitive than a CORBA2 ServerRequest pseudo-object.
@@ -371,39 +372,6 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   CORBA::Object_var forward_location_var;
   TAO_GIOP_LocateStatusType status;
 
-// #if !defined (TAO_NO_IOR_TABLE)
-//   if (ACE_OS::memcmp (tmp_key.get_buffer (),
-//                    &TAO_POA::objectkey_prefix[0],
-//                    TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) == 0)
-//     {
-//       ACE_DEBUG ((LM_DEBUG,
-//                "TAO Object Key Prefix found in the object key.\n"));
-
-
-//       // Do the Table Lookup. Raise a location forward exception or
-//       // a non-exist exception.
-
-//       // CORBA::Object_ptr object_reference;
-//       // int s =
-//       //     table->lookup (request.object_key (),
-//       //                    object_reference);
-//       // if (s == -1)
-//       //   {
-//       //      status = TAO_GIOP_UNKNOWN_OBJECT;
-//       //   }
-//       // else
-//       //   {
-//       //      status = TAO_GIOP_OBJECT_FORWARD;
-//       //      forward_location_var =
-//       //          CORBA::Object::_duplicate (object_reference);
-//       //    }
-//     }
-//   // else
-//   //   {
-// #endif
-
-  // this->handle_locate_i (....);
-
   GIOP_ServerRequest serverRequest (locateRequestHeader.request_id,
                                     response_required,
                                     tmp_key,
@@ -452,6 +420,9 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
     }
   else
     {
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
       // Try to narrow to ForwardRequest
       PortableServer::ForwardRequest_ptr forward_request_ptr =
         PortableServer::ForwardRequest::_narrow (env.exception ());
@@ -465,6 +436,9 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                       "handle_locate has been called: forwarding\n"));
         }
       else
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
         {
           // Normal exception, so the object is not here
           status = TAO_GIOP_UNKNOWN_OBJECT;
@@ -479,10 +453,6 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
       // Remove the exception
       env.clear ();
     }
-
-#if !defined (TAO_NO_IOR_TABLE)
-  //  }
-#endif
 
   // Create the response.
   TAO_GIOP::start_message (TAO_GIOP::LocateReply, output,
@@ -549,6 +519,8 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
           // Write the request ID
           output.write_ulong (request_id);
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
           // @@ TODO This is the place to conditionally compile
           // forwarding. It certainly seems easy to strategize too,
           // just invoke an strategy to finish marshalling the
@@ -575,6 +547,9 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
             }
           // end of the forwarding code ****************************
           else
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
             {
               // Write the exception
               CORBA::TypeCode_ptr except_tc = x->_type ();
