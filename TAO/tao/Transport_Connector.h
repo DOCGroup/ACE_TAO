@@ -52,7 +52,7 @@ namespace CORBA
  *
  * Base class for connector bridge object.
  *
- * @@TODO: Need to rename the class as TAO_Transport_Connector.
+ * @todo Need to rename the class as TAO_Transport_Connector.
  */
 class TAO_Export TAO_Connector
 {
@@ -96,7 +96,7 @@ public:
                                   ACE_ENV_ARG_DECL);
 
   /// Create a profile for this protocol and initialize it based on the
-  /// encapsulation in <cdr>
+  /// encapsulation in @a cdr
   virtual TAO_Profile *create_profile (TAO_InputCDR& cdr) = 0;
 
   /// Check that the prefix of the provided endpoint is valid for use

@@ -64,7 +64,7 @@ const CORBA::ULong TAO_ORB_TYPE = 0x54414f00U;
  *
  * Base class for the Acceptor bridge class.
  *
- * @@TODO: Need to rename the class as TAO_Transport_Acceptor.
+ * @todo Need to rename the class as TAO_Transport_Acceptor.
  */
 class TAO_Export TAO_Acceptor
 {
