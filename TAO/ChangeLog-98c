@@ -9,6 +9,9 @@ Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
           to 2.8, becase they can't handle nested classes.  Thanks to
           JM Strauss <jms97@club-internet.fr> for confirming this.
 
+        * examples/Quoter/Makefile: don't build with g++ versions prior
+          to 2.8, becase they can't handle nested classes.
+
 Mon Oct 19 15:37:53 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B): Fixed a
