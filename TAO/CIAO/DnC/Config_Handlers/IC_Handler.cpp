@@ -127,7 +127,7 @@ namespace CIAO
         {
           CORBA::ULong i (ic.connectRef.length ());
           ic.connectRef.length (i + 1);
-          ic.connectRef[i] = strtoul (XMLString::transcode (connect_ref));
+          ic.connectRef[i] = strtoul (XMLString::transcode (connect_ref), 0, 10);
         }
     }
 
@@ -139,7 +139,7 @@ namespace CIAO
         {
           CORBA::ULong i (ic.connectionRef.length ());
           ic.connectionRef.length (i + 1);
-          ic.connectionRef[i] = strtoul (XMLString::transcode (connection_ref));
+          ic.connectionRef[i] = strtoul (XMLString::transcode (connection_ref), 0, 10);
         }
     }
 

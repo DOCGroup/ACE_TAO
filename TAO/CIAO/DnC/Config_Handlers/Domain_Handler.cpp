@@ -8,9 +8,9 @@
 #include "ace/Log_Msg.h"
 
 #include "Node_Handler.h"
-#include "IC_handler.h"
-#include "SR_handler.h"
-#include "Bridge_handler.h"
+#include "IC_Handler.h"
+#include "SR_Handler.h"
+#include "Bridge_Handler.h"
 #include "Domain_Handler.h"
 
 #include <iostream>
@@ -78,8 +78,8 @@ namespace CIAO
               domain.sharedResource.length (i + 1);
 
               // delegate the populating process
-              SR_Handler::process_sr (this->iter_,
-                                      domain.sharedResource[i]);
+              SR_Handler::process_sr_with_iter (this->iter_,
+                                                domain.sharedResource[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("node")))
             {
@@ -88,8 +88,8 @@ namespace CIAO
               domain.node.length (i + 1);
 
               // delegate the populating process
-              Node_Handler::process_node (this->iter_,
-                                          domain.node[i]);
+              Node_Handler::process_node_with_iter (this->iter_,
+                                                    domain.node[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("interconnect")))
             {
@@ -98,8 +98,8 @@ namespace CIAO
               domain.interconnect.length (i + 1);
 
               // delegate the populating process
-              IC_Handler::process_ic (this->iter_,
-                                      domain.interconnect[i]);
+              IC_Handler::process_ic_with_iter (this->iter_,
+                                                domain.interconnect[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("bridge")))
             {
@@ -108,8 +108,8 @@ namespace CIAO
               domain.bridge.length (i + 1);
 
               // delegate the populating process
-              Bridge_Handler::process_bridge (this->iter_,
-                                              domain.bridge[i]);
+              Bridge_Handler::process_bridge_with_iter (this->iter_,
+                                                        domain.bridge[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("infoProperty")))
             {

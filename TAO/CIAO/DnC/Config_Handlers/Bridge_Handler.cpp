@@ -8,10 +8,10 @@
 #include "ace/Log_Msg.h"
 
 #include "Node_Handler.h"
-#include "IC_handler.h"
-#include "SR_handler.h"
-#include "Resource_handler.h"
-#include "Bridge_handler.h"
+#include "IC_Handler.h"
+#include "SR_Handler.h"
+#include "Resource_Handler.h"
+#include "Bridge_Handler.h"
 
 #include <iostream>
 
@@ -78,8 +78,8 @@ namespace CIAO
               bridge.resource.length (i + 1);
 
               // delegate the populating process
-              Resource_Handler::process_resource (this->iter_,
-                                                  bridge.resource[i]);
+              Resource_Handler::process_resource_with_iter (this->iter_,
+                                                            bridge.resource[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("connect")))
             {
@@ -124,7 +124,7 @@ namespace CIAO
         {
           CORBA::ULong i (bridge.connectRef.length ());
           bridge.connectRef.length (i + 1);
-          bridge.connectRef[i] = strtoul (XMLString::transcode (connect_ref));
+          bridge.connectRef[i] = strtoul (XMLString::transcode (connect_ref), 0, 10);
         }
     }
 
