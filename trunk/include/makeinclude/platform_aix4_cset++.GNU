@@ -29,11 +29,17 @@ CXX	    = xlC_r
 # -qextchk is handy, but produces false type mismatches when linking
 # netsvcs with 3.1.4, so it's disabled.  IBM reports this fixed in 3.6.4.
 CCFLAGS     += $(CFLAGS) -qtempinc -qinfo
-# AIX 4.3 and IBM C/C++ compilers 3.6.4 produce a bazillion warnings
-# about 0-valued preprocessor defs. The problem may be a 3.6.4 compiler thing,
-# but the only way I know of at this moment to turn the things off is to switch
-# it based on the OS minor vers (assuming AIX 4.3 is used w/ xlC 3.6.4).
-ifeq ($(AIX_MINOR_VERS),3)
+
+# IBM C/C++ compiler 3.6.x produces a bazillion warnings about 0-valued
+# preprocessor defs. Since both 3.1 and 3.4 could be installed, don't ask
+# lslpp for one or the other. Instead, compile a file and see which compiler
+# the user has set up for use. This trick was submitted by Craig Rodrigues
+# <rodrigc@mediaone.net>, originally from the vacpp compiler newsgroup.
+# It relies on the preprocessor defining __xlC__ to the proper version
+# number of the compiler.
+XLCVERSION := $(shell echo "__xlC__" > ./testAIXCompilerVersion.cpp)
+XLCVERSION := $(shell $(CXX) -E ./testAIXCompilerVersion.cpp | tail -1')
+ifeq ($(XLCVERSION),0x0306)
  CCFLAGS    += -qflag=e:e
 else
  CCFLAGS    += -qflag=w:w
