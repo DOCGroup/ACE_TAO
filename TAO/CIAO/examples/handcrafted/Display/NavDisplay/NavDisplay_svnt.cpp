@@ -771,3 +771,23 @@ CIAO_GLUE_HUDisplay::NavDisplayHome_Servant::remove_component (Components::CCMOb
   this->_ciao_passivate_component (_ciao_comp.in ()
                                    ACE_ENV_ARG_PARAMETER);
 }
+
+extern "C" NAVDISPLAY_SVNT_Export ::PortableServer::Servant
+createNavDisplayHome_Servant (::Components::HomeExecutorBase_ptr p,
+                              CIAO::Session_Container *c
+                              ACE_ENV_ARG_DECL)
+{
+  if (p == 0)
+    return 0;
+
+  HUDisplay::CCM_NavDisplayHome_var x
+    = HUDisplay::CCM_NavDisplayHome::_narrow (p
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (CORBA::is_nil (x.in ()))
+    return 0;
+
+  return new CIAO_GLUE_HUDisplay::NavDisplayHome_Servant (x.in (),
+                                                          c);
+}
