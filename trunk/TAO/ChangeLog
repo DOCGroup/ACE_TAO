@@ -1,3 +1,17 @@
+Fri Mar 12 08:47:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/default.bld:
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.bld:
+        * performance-tests/Cubit/TAO/IDL_Cubit/default.bld:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.bld:
+        * performance-tests/Cubit/TAO/MT_Cubit/clnt.bld:
+        * performance-tests/Cubit/TAO/MT_Cubit/default.bld:
+        * performance-tests/Cubit/TAO/MT_Cubit/svr.bld:
+        * tao/default.bld:
+        * tao/tao.bld:
+          Removed these files from the repo. They look to be for
+          VxWorks using GHS Builder but are not maintained for years.
+
 Fri Mar 12 06:50:00 2004  Olli Savia  <ops@iki.fi>
 
         * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
