@@ -84,6 +84,8 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_valuetype_fwd:
     case AST_Decl::NT_component:
     case AST_Decl::NT_component_fwd:
+    case AST_Decl::NT_eventtype:
+    case AST_Decl::NT_eventtype_fwd:
     case AST_Decl::NT_home:
     case AST_Decl::NT_const:
     case AST_Decl::NT_except:
