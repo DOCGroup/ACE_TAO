@@ -1008,6 +1008,7 @@ Sergey Osokin <osa@freebsd.org.ru>
 Nick Logvinov <nl@rpb.ru>
 Viatcheslav A. Batenine <slavikb@iname.com>
 Shashi Bhushan <Shashi.Bhushan@lmco.com>
+Javier Corrales <jcorrales@tcpsi.es>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
