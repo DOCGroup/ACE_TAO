@@ -45,7 +45,7 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
   TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
 
   CORBA::TCKind const k = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP)
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   switch (k)
     {

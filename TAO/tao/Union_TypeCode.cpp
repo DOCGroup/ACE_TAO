@@ -85,7 +85,7 @@ TAO::TypeCode::Union<StringType,
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::Long tc_def = tc->default_index (ACE_ENV_ARG_PARAMETER);
+  CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong const this_count = this->case_count ();
@@ -96,7 +96,7 @@ TAO::TypeCode::Union<StringType,
 
   // Check the discriminator type.
   CORBA::TypeCode_var tc_discriminator =
-    tc->discriminator_type (ACE_ENV_ARG_PARAMETER);
+    tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::Boolean const equal_discriminators =
@@ -177,7 +177,7 @@ TAO::TypeCode::Union<StringType,
         return 0;
 
       CORBA::TypeCode_var tc_discriminator =
-        tc->discriminator_type (ACE_ENV_ARG_PARAMETER);
+        tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CORBA::Boolean const equiv_discriminators =
