@@ -11,6 +11,8 @@ Fri Mar 28 11:34:38 1997  David L. Levine  <levine@cs.wustl.edu>
 	  priority logic.  Thanks to Thilo Kielmann
 	  <kielmann@informatik.uni-siegen.de> for the patch.
 
+	* ace/OS.cpp (thr_create): only support THR_SCHED_OTHER on Solaris.
+
 	* tests/Priority_Task_Test.cpp (open): added THR_SCHED_FIFO flag.
 	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
 	  for this suggestion.
