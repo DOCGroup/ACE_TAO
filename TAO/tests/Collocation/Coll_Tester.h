@@ -2,13 +2,13 @@
 
 //============================================================================
 //
-//  =FILENAME
+//  = FILENAME
 //     Collocation_Test.h
 //
-//  =DESCRIPTION
+//  = DESCRIPTION
 //     Server class to perform testing of TAO's collocation mechanism.
 //
-//  =AUTHOR
+//  = AUTHOR
 //     Nanbor Wang
 //
 //=============================================================================
