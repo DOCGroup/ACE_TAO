@@ -490,7 +490,6 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
  AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_with_gperf = Xyes])
 
- ACE_ENABLE_RMCAST
  ACE_ENABLE_QOS
  ACE_ENABLE_SSL
  ACE_ENABLE_ACEXML
@@ -855,26 +854,6 @@ dnl    fi
                 [ace_user_enable_wide_char], [ace_user_enable_wide_char=no])
  AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_enable_wide_char = Xyes])
 
-])
-
-AC_DEFUN([ACE_ENABLE_RMCAST],
-[AC_ARG_ENABLE([rmcast],
-	       AS_HELP_STRING([--enable-rmcast],
-			      [compile/use the ACE_RMCast library [[yes]]]),
-	       [case "${withval}" in
-		 yes) 
-		  ace_user_enable_rmcast=yes
-		  ;;
-		 no)
-		  ace_user_enable_rmcast=no
-		  ;;
-		 *)
-		  AC_MSG_ERROR(bad value ${withval} for --with-rmcast)
-		  ;;
-		esac])
-AC_CACHE_CHECK([whether to compile/use the ACE_RMCast library],
-               [ace_user_enable_rmcast],[ace_user_enable_rmcast=yes])
-AM_CONDITIONAL([BUILD_RMCAST], [test X$ace_user_enable_rmcast = Xyes])
 ])
 
 AC_DEFUN([ACE_ENABLE_QOS],
