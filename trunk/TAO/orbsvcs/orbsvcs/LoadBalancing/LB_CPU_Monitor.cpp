@@ -117,7 +117,8 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                         CORBA::SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
-                          errno)),
+                          errno),
+                        CORBA::COMPLETED_NO),
                       0);
 
   ACE_OS::fscanf (s, "%f", &loadavg[0]);

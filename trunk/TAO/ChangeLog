@@ -1,3 +1,12 @@
+Sat Feb  1 09:03:55 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
+
+	  Added missing completion status argument to CORBA:NO_IMPLEMENT
+	  constructor call.  Fixes compile-time problems for some
+	  compilers (e.g. egcs 1.1.2).  Thanks to Matthias Blankenhaus
+	  <matthias@ingrian.com> for reporting the problem.
+
 Fri Jan 31 17:07:20 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	Fix for crash in Notify due to race condition in the Worker Task
