@@ -107,6 +107,7 @@ Read_Handler::handle_input (ACE_HANDLE h)
 {
   // ACE_DEBUG((LM_DEBUG,
   // "(%P|%t) Read_Handler::handle_input(%d)\n", h));
+  ACE_UNUSED_ARG (h);
 
   char buf[BUFSIZ];
 
