@@ -6537,8 +6537,6 @@ dnl        the UNIX International threads library was detected.
   ACE_CPPFLAGS="$ACE_CPPFLAGS $ACE_THR_CPPFLAGS"
   if test "$ace_has_pthreads" = yes &&
      test "$ace_has_sthreads" != yes; then
-   AC_DEFINE([_POSIX_THREADS])
-   AC_DEFINE([_POSIX_THREAD_SAFE_FUNCTIONS])
    AC_DEFINE([_POSIX_PTHREAD_SEMANTICS])
   fi dnl test "$ace_has_pthreads" = yes
 
