@@ -113,10 +113,6 @@ SOURCE=.\DomainS.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\FT_CORBAS.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\ImplRepoC.i
 # End Source File
 # Begin Source File
@@ -182,10 +178,6 @@ SOURCE=.\DomainS.h
 # Begin Source File
 
 SOURCE=.\Forwarding_Servant.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\FT_CORBAS.h
 # End Source File
 # Begin Source File
 
@@ -278,10 +270,6 @@ SOURCE=.\DomainS.cpp
 # Begin Source File
 
 SOURCE=.\Forwarding_Servant.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\FT_CORBAS.cpp
 # End Source File
 # Begin Source File
 
