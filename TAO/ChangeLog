@@ -1,3 +1,21 @@
+Wed Jun 16 19:11:16 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* performance-tests\Protocols\server.cpp:
+
+	  Added ability to measure inter-arrival times of incoming frames.
+	  Also tracks which invocations were received and which were
+	  missed.
+
+	* performance-tests\Protocols\client.cpp: 
+
+	  Added ability to select protocol for test messages.  All setup
+	  and teardown messages will be using TCP while the test messages
+	  will use the specified protocol.
+
+	* performance-tests\Protocols\test.idl: 
+
+	  Separated setup, teardown, and shutdown of the test.
+
 Wed Jun 16 15:54:56 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* performance-tests/Protocols/client.cpp (run): 
