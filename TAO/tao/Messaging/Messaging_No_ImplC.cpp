@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be\be_codegen.cpp:323
 
 
 #include "Messaging_No_ImplC.h"
@@ -44,32 +44,33 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
+
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_Priority[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d657373),
-  ACE_NTOHL (0x6167696e),
-  ACE_NTOHL (0x672f5072),
-  ACE_NTOHL (0x696f7269),
-  ACE_NTOHL (0x74793a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d657373), 
+  ACE_NTOHL (0x6167696e), 
+  ACE_NTOHL (0x672f5072), 
+  ACE_NTOHL (0x696f7269), 
+  ACE_NTOHL (0x74793a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Priority:1.0
     9,
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
   ACE_NTOHL (0x0),  // name = Priority
     CORBA::tk_short,
 
@@ -90,25 +91,25 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_RebindMode[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d657373),
-  ACE_NTOHL (0x6167696e),
-  ACE_NTOHL (0x672f5265),
-  ACE_NTOHL (0x62696e64),
-  ACE_NTOHL (0x4d6f6465),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d657373), 
+  ACE_NTOHL (0x6167696e), 
+  ACE_NTOHL (0x672f5265), 
+  ACE_NTOHL (0x62696e64), 
+  ACE_NTOHL (0x4d6f6465), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Messaging/RebindMode:1.0
     11,
-  ACE_NTOHL (0x52656269),
-  ACE_NTOHL (0x6e644d6f),
+  ACE_NTOHL (0x52656269), 
+  ACE_NTOHL (0x6e644d6f), 
   ACE_NTOHL (0x64650000),  // name = RebindMode
     CORBA::tk_short,
 
@@ -129,25 +130,25 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_RoutingType[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d657373),
-  ACE_NTOHL (0x6167696e),
-  ACE_NTOHL (0x672f526f),
-  ACE_NTOHL (0x7574696e),
-  ACE_NTOHL (0x67547970),
-  ACE_NTOHL (0x653a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d657373), 
+  ACE_NTOHL (0x6167696e), 
+  ACE_NTOHL (0x672f526f), 
+  ACE_NTOHL (0x7574696e), 
+  ACE_NTOHL (0x67547970), 
+  ACE_NTOHL (0x653a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/RoutingType:1.0
     12,
-  ACE_NTOHL (0x526f7574),
-  ACE_NTOHL (0x696e6754),
+  ACE_NTOHL (0x526f7574), 
+  ACE_NTOHL (0x696e6754), 
   ACE_NTOHL (0x79706500),  // name = RoutingType
     CORBA::tk_short,
 
@@ -168,24 +169,24 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_Ordering[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d657373),
-  ACE_NTOHL (0x6167696e),
-  ACE_NTOHL (0x672f4f72),
-  ACE_NTOHL (0x64657269),
-  ACE_NTOHL (0x6e673a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d657373), 
+  ACE_NTOHL (0x6167696e), 
+  ACE_NTOHL (0x672f4f72), 
+  ACE_NTOHL (0x64657269), 
+  ACE_NTOHL (0x6e673a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Ordering:1.0
     9,
-  ACE_NTOHL (0x4f726465),
-  ACE_NTOHL (0x72696e67),
+  ACE_NTOHL (0x4f726465), 
+  ACE_NTOHL (0x72696e67), 
   ACE_NTOHL (0x0),  // name = Ordering
     CORBA::tk_ushort,
 
@@ -206,11 +207,11 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::RebindPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RebindPolicy_ptr
 TAO::Objref_Traits<Messaging::RebindPolicy>::tao_duplicate (
     Messaging::RebindPolicy_ptr p
@@ -219,7 +220,7 @@ TAO::Objref_Traits<Messaging::RebindPolicy>::tao_duplicate (
   return Messaging::RebindPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RebindPolicy>::tao_release (
     Messaging::RebindPolicy_ptr p
@@ -228,14 +229,14 @@ TAO::Objref_Traits<Messaging::RebindPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RebindPolicy_ptr
 TAO::Objref_Traits<Messaging::RebindPolicy>::tao_nil (void)
 {
   return Messaging::RebindPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RebindPolicy>::tao_marshal (
     Messaging::RebindPolicy_ptr p,
@@ -267,6 +268,23 @@ Messaging::RebindPolicy::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::RebindPolicy_ptr
 Messaging::RebindPolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return RebindPolicy::_nil ();
+    }
+  
+  RebindPolicy_ptr proxy =
+    dynamic_cast<RebindPolicy_ptr> (_tao_objref);
+  
+  return RebindPolicy::_duplicate (proxy);
+}
+
+Messaging::RebindPolicy_ptr
+Messaging::RebindPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -338,7 +356,7 @@ Messaging::RebindPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_RebindPolicy[] =
 {
@@ -376,7 +394,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_PriorityRange[] =
 {
@@ -459,7 +477,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 Messaging::PriorityRange::_tao_any_destructor (
@@ -472,11 +490,11 @@ Messaging::PriorityRange::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::RequestPriorityPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_duplicate (
     Messaging::RequestPriorityPolicy_ptr p
@@ -485,7 +503,7 @@ TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_duplicate (
   return Messaging::RequestPriorityPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_release (
     Messaging::RequestPriorityPolicy_ptr p
@@ -494,14 +512,14 @@ TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_nil (void)
 {
   return Messaging::RequestPriorityPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_marshal (
     Messaging::RequestPriorityPolicy_ptr p,
@@ -533,6 +551,23 @@ Messaging::RequestPriorityPolicy::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::RequestPriorityPolicy_ptr
 Messaging::RequestPriorityPolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return RequestPriorityPolicy::_nil ();
+    }
+  
+  RequestPriorityPolicy_ptr proxy =
+    dynamic_cast<RequestPriorityPolicy_ptr> (_tao_objref);
+  
+  return RequestPriorityPolicy::_duplicate (proxy);
+}
+
+Messaging::RequestPriorityPolicy_ptr
+Messaging::RequestPriorityPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -604,7 +639,7 @@ Messaging::RequestPriorityPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_RequestPriorityPolicy[] =
 {
@@ -646,11 +681,11 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::ReplyPriorityPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_duplicate (
     Messaging::ReplyPriorityPolicy_ptr p
@@ -659,7 +694,7 @@ TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_duplicate (
   return Messaging::ReplyPriorityPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_release (
     Messaging::ReplyPriorityPolicy_ptr p
@@ -668,14 +703,14 @@ TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_nil (void)
 {
   return Messaging::ReplyPriorityPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_marshal (
     Messaging::ReplyPriorityPolicy_ptr p,
@@ -707,6 +742,23 @@ Messaging::ReplyPriorityPolicy::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::ReplyPriorityPolicy_ptr
 Messaging::ReplyPriorityPolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return ReplyPriorityPolicy::_nil ();
+    }
+  
+  ReplyPriorityPolicy_ptr proxy =
+    dynamic_cast<ReplyPriorityPolicy_ptr> (_tao_objref);
+  
+  return ReplyPriorityPolicy::_duplicate (proxy);
+}
+
+Messaging::ReplyPriorityPolicy_ptr
+Messaging::ReplyPriorityPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -778,7 +830,7 @@ Messaging::ReplyPriorityPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_ReplyPriorityPolicy[] =
 {
@@ -819,11 +871,11 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::RequestStartTimePolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_duplicate (
     Messaging::RequestStartTimePolicy_ptr p
@@ -832,7 +884,7 @@ TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_duplicate (
   return Messaging::RequestStartTimePolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_release (
     Messaging::RequestStartTimePolicy_ptr p
@@ -841,14 +893,14 @@ TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_nil (void)
 {
   return Messaging::RequestStartTimePolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_marshal (
     Messaging::RequestStartTimePolicy_ptr p,
@@ -880,6 +932,23 @@ Messaging::RequestStartTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::RequestStartTimePolicy_ptr
 Messaging::RequestStartTimePolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return RequestStartTimePolicy::_nil ();
+    }
+  
+  RequestStartTimePolicy_ptr proxy =
+    dynamic_cast<RequestStartTimePolicy_ptr> (_tao_objref);
+  
+  return RequestStartTimePolicy::_duplicate (proxy);
+}
+
+Messaging::RequestStartTimePolicy_ptr
+Messaging::RequestStartTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -951,7 +1020,7 @@ Messaging::RequestStartTimePolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_RequestStartTimePolicy[] =
 {
@@ -994,11 +1063,11 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::RequestEndTimePolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_duplicate (
     Messaging::RequestEndTimePolicy_ptr p
@@ -1007,7 +1076,7 @@ TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_duplicate (
   return Messaging::RequestEndTimePolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_release (
     Messaging::RequestEndTimePolicy_ptr p
@@ -1016,14 +1085,14 @@ TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_nil (void)
 {
   return Messaging::RequestEndTimePolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_marshal (
     Messaging::RequestEndTimePolicy_ptr p,
@@ -1055,6 +1124,23 @@ Messaging::RequestEndTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::RequestEndTimePolicy_ptr
 Messaging::RequestEndTimePolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return RequestEndTimePolicy::_nil ();
+    }
+  
+  RequestEndTimePolicy_ptr proxy =
+    dynamic_cast<RequestEndTimePolicy_ptr> (_tao_objref);
+  
+  return RequestEndTimePolicy::_duplicate (proxy);
+}
+
+Messaging::RequestEndTimePolicy_ptr
+Messaging::RequestEndTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -1126,7 +1212,7 @@ Messaging::RequestEndTimePolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_RequestEndTimePolicy[] =
 {
@@ -1168,11 +1254,11 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::ReplyStartTimePolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_duplicate (
     Messaging::ReplyStartTimePolicy_ptr p
@@ -1181,7 +1267,7 @@ TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_duplicate (
   return Messaging::ReplyStartTimePolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_release (
     Messaging::ReplyStartTimePolicy_ptr p
@@ -1190,14 +1276,14 @@ TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_nil (void)
 {
   return Messaging::ReplyStartTimePolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_marshal (
     Messaging::ReplyStartTimePolicy_ptr p,
@@ -1229,6 +1315,23 @@ Messaging::ReplyStartTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::ReplyStartTimePolicy_ptr
 Messaging::ReplyStartTimePolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return ReplyStartTimePolicy::_nil ();
+    }
+  
+  ReplyStartTimePolicy_ptr proxy =
+    dynamic_cast<ReplyStartTimePolicy_ptr> (_tao_objref);
+  
+  return ReplyStartTimePolicy::_duplicate (proxy);
+}
+
+Messaging::ReplyStartTimePolicy_ptr
+Messaging::ReplyStartTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -1300,7 +1403,7 @@ Messaging::ReplyStartTimePolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_ReplyStartTimePolicy[] =
 {
@@ -1342,11 +1445,11 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::ReplyEndTimePolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_duplicate (
     Messaging::ReplyEndTimePolicy_ptr p
@@ -1355,7 +1458,7 @@ TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_duplicate (
   return Messaging::ReplyEndTimePolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_release (
     Messaging::ReplyEndTimePolicy_ptr p
@@ -1364,14 +1467,14 @@ TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_nil (void)
 {
   return Messaging::ReplyEndTimePolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_marshal (
     Messaging::ReplyEndTimePolicy_ptr p,
@@ -1403,6 +1506,23 @@ Messaging::ReplyEndTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::ReplyEndTimePolicy_ptr
 Messaging::ReplyEndTimePolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return ReplyEndTimePolicy::_nil ();
+    }
+  
+  ReplyEndTimePolicy_ptr proxy =
+    dynamic_cast<ReplyEndTimePolicy_ptr> (_tao_objref);
+  
+  return ReplyEndTimePolicy::_duplicate (proxy);
+}
+
+Messaging::ReplyEndTimePolicy_ptr
+Messaging::ReplyEndTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -1474,7 +1594,7 @@ Messaging::ReplyEndTimePolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_ReplyEndTimePolicy[] =
 {
@@ -1515,11 +1635,11 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::RelativeRequestTimeoutPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RelativeRequestTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_duplicate (
     Messaging::RelativeRequestTimeoutPolicy_ptr p
@@ -1528,7 +1648,7 @@ TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_duplicate (
   return Messaging::RelativeRequestTimeoutPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_release (
     Messaging::RelativeRequestTimeoutPolicy_ptr p
@@ -1537,14 +1657,14 @@ TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RelativeRequestTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_nil (void)
 {
   return Messaging::RelativeRequestTimeoutPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_marshal (
     Messaging::RelativeRequestTimeoutPolicy_ptr p,
@@ -1576,6 +1696,23 @@ Messaging::RelativeRequestTimeoutPolicy::_tao_any_destructor (void *_tao_void_po
 
 Messaging::RelativeRequestTimeoutPolicy_ptr
 Messaging::RelativeRequestTimeoutPolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return RelativeRequestTimeoutPolicy::_nil ();
+    }
+  
+  RelativeRequestTimeoutPolicy_ptr proxy =
+    dynamic_cast<RelativeRequestTimeoutPolicy_ptr> (_tao_objref);
+  
+  return RelativeRequestTimeoutPolicy::_duplicate (proxy);
+}
+
+Messaging::RelativeRequestTimeoutPolicy_ptr
+Messaging::RelativeRequestTimeoutPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -1647,7 +1784,7 @@ Messaging::RelativeRequestTimeoutPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_RelativeRequestTimeoutPolicy[] =
 {
@@ -1693,7 +1830,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_RoutingTypeRange[] =
 {
@@ -1780,7 +1917,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 Messaging::RoutingTypeRange::_tao_any_destructor (
@@ -1793,11 +1930,11 @@ Messaging::RoutingTypeRange::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::RoutingPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RoutingPolicy_ptr
 TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_duplicate (
     Messaging::RoutingPolicy_ptr p
@@ -1806,7 +1943,7 @@ TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_duplicate (
   return Messaging::RoutingPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_release (
     Messaging::RoutingPolicy_ptr p
@@ -1815,14 +1952,14 @@ TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RoutingPolicy_ptr
 TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_nil (void)
 {
   return Messaging::RoutingPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_marshal (
     Messaging::RoutingPolicy_ptr p,
@@ -1854,6 +1991,23 @@ Messaging::RoutingPolicy::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::RoutingPolicy_ptr
 Messaging::RoutingPolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return RoutingPolicy::_nil ();
+    }
+  
+  RoutingPolicy_ptr proxy =
+    dynamic_cast<RoutingPolicy_ptr> (_tao_objref);
+  
+  return RoutingPolicy::_duplicate (proxy);
+}
+
+Messaging::RoutingPolicy_ptr
+Messaging::RoutingPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -1925,7 +2079,7 @@ Messaging::RoutingPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_RoutingPolicy[] =
 {
@@ -1963,11 +2117,11 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::MaxHopsPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::MaxHopsPolicy_ptr
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_duplicate (
     Messaging::MaxHopsPolicy_ptr p
@@ -1976,7 +2130,7 @@ TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_duplicate (
   return Messaging::MaxHopsPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_release (
     Messaging::MaxHopsPolicy_ptr p
@@ -1985,14 +2139,14 @@ TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::MaxHopsPolicy_ptr
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_nil (void)
 {
   return Messaging::MaxHopsPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_marshal (
     Messaging::MaxHopsPolicy_ptr p,
@@ -2024,6 +2178,23 @@ Messaging::MaxHopsPolicy::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::MaxHopsPolicy_ptr
 Messaging::MaxHopsPolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return MaxHopsPolicy::_nil ();
+    }
+  
+  MaxHopsPolicy_ptr proxy =
+    dynamic_cast<MaxHopsPolicy_ptr> (_tao_objref);
+  
+  return MaxHopsPolicy::_duplicate (proxy);
+}
+
+Messaging::MaxHopsPolicy_ptr
+Messaging::MaxHopsPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -2095,7 +2266,7 @@ Messaging::MaxHopsPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_MaxHopsPolicy[] =
 {
@@ -2133,11 +2304,11 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::QueueOrderPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::QueueOrderPolicy_ptr
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_duplicate (
     Messaging::QueueOrderPolicy_ptr p
@@ -2146,7 +2317,7 @@ TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_duplicate (
   return Messaging::QueueOrderPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_release (
     Messaging::QueueOrderPolicy_ptr p
@@ -2155,14 +2326,14 @@ TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::QueueOrderPolicy_ptr
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_nil (void)
 {
   return Messaging::QueueOrderPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_marshal (
     Messaging::QueueOrderPolicy_ptr p,
@@ -2194,6 +2365,23 @@ Messaging::QueueOrderPolicy::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::QueueOrderPolicy_ptr
 Messaging::QueueOrderPolicy::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return QueueOrderPolicy::_nil ();
+    }
+  
+  QueueOrderPolicy_ptr proxy =
+    dynamic_cast<QueueOrderPolicy_ptr> (_tao_objref);
+  
+  return QueueOrderPolicy::_duplicate (proxy);
+}
+
+Messaging::QueueOrderPolicy_ptr
+Messaging::QueueOrderPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -2265,7 +2453,7 @@ Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_QueueOrderPolicy[] =
 {
@@ -2305,7 +2493,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -2374,7 +2562,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -2432,7 +2620,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -2501,7 +2689,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -2570,7 +2758,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -2639,7 +2827,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -2708,7 +2896,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -2777,7 +2965,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -2846,7 +3034,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -2915,7 +3103,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -2973,7 +3161,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -3042,7 +3230,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -3111,7 +3299,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -3180,7 +3368,53 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Messaging::PriorityRange &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.min) &&
+    (strm << _tao_aggregate.max);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Messaging::PriorityRange &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.min) &&
+    (strm >> _tao_aggregate.max);
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Messaging::RoutingTypeRange &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.min) &&
+    (strm << _tao_aggregate.max);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Messaging::RoutingTypeRange &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.min) &&
+    (strm >> _tao_aggregate.max);
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
