@@ -10,13 +10,15 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Generic_Servant \
-	Default_Servant \
+DIRS  = Default_Servant \
 	Explicit_Activation \
 	FindPOA \
+	Forwarding \
+	Generic_Servant \
 	NewPOA \
 	On_Demand_Activation \
 	RootPOA \
+	TIE \
 	locking \
 
 # The following test hasn't been updated yet
