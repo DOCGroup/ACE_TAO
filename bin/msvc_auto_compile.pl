@@ -224,8 +224,9 @@ sub Build_Core ()
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTime.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\DsLogAdmin.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNotification.dsp",
-		      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\PortableGroup.dsp",
-		      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLoadBalancing.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\FTORB_Utils.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\PortableGroup.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLoadBalancing.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\Naming_Service\\Naming_Service.dsp");
          } 
 
