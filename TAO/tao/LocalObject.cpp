@@ -48,7 +48,7 @@ CORBA::LocalObject::_remove_ref (void)
 // logical type ID is passed as a parameter.
 
 CORBA::Boolean
-CORBA::LocalObject::_is_a (const CORBA::Char *type_id,
+CORBA::LocalObject::_is_a (const CORBA::Char * /* type_id */,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -58,7 +58,7 @@ CORBA::LocalObject::_is_a (const CORBA::Char *type_id,
 // create hash tables.
 
 CORBA::ULong
-CORBA::LocalObject::_hash (CORBA::ULong maximum,
+CORBA::LocalObject::_hash (CORBA::ULong /* maximum */,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   // @@ We need a different hash function here.

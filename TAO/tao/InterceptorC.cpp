@@ -23,7 +23,7 @@ PortableInterceptor::Cookie_ptr PortableInterceptor::Cookie::_narrow (
 
 PortableInterceptor::Cookie_ptr PortableInterceptor::Cookie::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &
   )
 {
   if (CORBA::is_nil (obj))
@@ -43,7 +43,7 @@ PortableInterceptor::Cookie_ptr PortableInterceptor::Cookie::_unchecked_narrow (
         );
 }
 
-PortableInterceptor::Cookie_ptr 
+PortableInterceptor::Cookie_ptr
 PortableInterceptor::Cookie::_duplicate (Cookie_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -61,7 +61,7 @@ void *PortableInterceptor::Cookie::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -74,7 +74,7 @@ const char* PortableInterceptor::Cookie::_interface_repository_id (void) const
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_PORTABLEINTERCEPTOR_COOKIES_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_PORTABLEINTERCEPTOR_COOKIES_CS_
 
@@ -84,7 +84,7 @@ const char* PortableInterceptor::Cookie::_interface_repository_id (void) const
   {
     PortableInterceptor::Cookie **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       PortableInterceptor::Cookie **old = ACE_reinterpret_cast (PortableInterceptor::Cookie**, this->buffer_);
@@ -93,14 +93,14 @@ const char* PortableInterceptor::Cookie::_interface_repository_id (void) const
           tmp[i] = PortableInterceptor::Cookie::_duplicate (old[i]);
         else
           tmp[i] = old[i];
-        
+
       if (this->release_)
         delete[] old;
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::_deallocate_buffer (void)
   {
@@ -115,24 +115,24 @@ const char* PortableInterceptor::Cookie::_interface_repository_id (void) const
     _TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::freebuf (tmp);
     this->buffer_ = 0;
   }
-  
+
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::~_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies (void)
   {
     this->_deallocate_buffer ();
   }
-  
+
   void
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
     PortableInterceptor::Cookie **tmp = ACE_reinterpret_cast (PortableInterceptor::Cookie**, this->buffer_);
-    
+
     for (CORBA::ULong i = nl; i < ol; ++i)
     {
       CORBA::release (tmp[i]);
       tmp[i] = PortableInterceptor::Cookie::_nil ();
     }
   }
-  void 
+  void
   PortableInterceptor::_TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::_downcast (
       void* target,
       CORBA_Object *src,
@@ -149,11 +149,11 @@ const char* PortableInterceptor::Cookie::_interface_repository_id (void) const
     PortableInterceptor::Cookie **tmp = ACE_static_cast (PortableInterceptor::Cookie**, src);
     return *tmp;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_PORTABLEINTERCEPTOR_COOKIES_CS_)
 #define _PORTABLEINTERCEPTOR_COOKIES_CS_
@@ -165,30 +165,30 @@ const char* PortableInterceptor::Cookie::_interface_repository_id (void) const
 PortableInterceptor::Cookies::Cookies (void)
 {}
 PortableInterceptor::Cookies::Cookies (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 PortableInterceptor::Cookies::Cookies (CORBA::ULong max, CORBA::ULong length, PortableInterceptor::Cookie_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 PortableInterceptor::Cookies::Cookies (const Cookies &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 PortableInterceptor::Cookies::~Cookies (void) // dtor
@@ -212,7 +212,7 @@ PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_narrow (
 
 PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &
   )
 {
   if (CORBA::is_nil (obj))
@@ -232,7 +232,7 @@ PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_unchecke
         );
 }
 
-PortableInterceptor::Interceptor_ptr 
+PortableInterceptor::Interceptor_ptr
 PortableInterceptor::Interceptor::_duplicate (Interceptor_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -250,7 +250,7 @@ void *PortableInterceptor::Interceptor::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -271,7 +271,7 @@ PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerReq
 
 PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerRequestInterceptor::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &
   )
 {
   if (CORBA::is_nil (obj))
@@ -291,7 +291,7 @@ PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerReq
         );
 }
 
-PortableInterceptor::ServerRequestInterceptor_ptr 
+PortableInterceptor::ServerRequestInterceptor_ptr
 PortableInterceptor::ServerRequestInterceptor::_duplicate (ServerRequestInterceptor_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -321,7 +321,7 @@ void *PortableInterceptor::ServerRequestInterceptor::_tao_QueryInterface (ptr_ar
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -342,7 +342,7 @@ PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientReq
 
 PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientRequestInterceptor::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &
   )
 {
   if (CORBA::is_nil (obj))
@@ -362,7 +362,7 @@ PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientReq
         );
 }
 
-PortableInterceptor::ClientRequestInterceptor_ptr 
+PortableInterceptor::ClientRequestInterceptor_ptr
 PortableInterceptor::ClientRequestInterceptor::_duplicate (ClientRequestInterceptor_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -392,7 +392,7 @@ void *PortableInterceptor::ClientRequestInterceptor::_tao_QueryInterface (ptr_ar
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -402,4 +402,3 @@ const char* PortableInterceptor::ClientRequestInterceptor::_interface_repository
 {
   return "IDL:TAO/PortableInterceptor/ClientRequestInterceptor:1.0";
 }
-
