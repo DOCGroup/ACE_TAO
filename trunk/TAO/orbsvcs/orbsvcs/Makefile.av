@@ -2630,7 +2630,7 @@ AVSVC_COMPONENTS:
  sfpC.h \
  sfpC.i \
  AV/Policy.h AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h \
- AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/Nil.h AV/RTP.h \ \
+ AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/Nil.h AV/RTP.h \
  AV/RTCP.h \
  AV/source.h \
  AV/source.i \
