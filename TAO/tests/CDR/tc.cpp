@@ -9,6 +9,8 @@
 //    tc.cpp
 //
 // = DESCRIPTION
+//   Verify that the basic typecodes are able to interpret their CDR
+//   buffers.
 //
 // = AUTHORS
 //    Carlos O'Ryan

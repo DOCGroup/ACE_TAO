@@ -9,6 +9,8 @@
 //    basic_types.cpp
 //
 // = DESCRIPTION
+//   Test the basic funcionality of a CDR stream by encoding some
+//   basic types and then decoding them again.
 //
 // = AUTHORS
 //    Carlos O'Ryan
