@@ -88,8 +88,6 @@ INSLIB          = $(ACE_ROOT)/ace
 INSMAN          = $(ACE_ROOT)/man
 LDFLAGS         += -L$(ACE_ROOT)/ace -L./
 LEX             = flex
-OCFLAGS         += -O
-OCCFLAGS        += -O
 PCFLAGS         += #### set in platform_macros.GNU file, e.g., -p
 PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
 RM              = /bin/rm
@@ -114,8 +112,6 @@ ifeq ($(optimize),0)
 endif # optimize
 
 ifneq ($(optimize),)
-  #### Disable debug, unconditionally.
-  override debug =
   CFLAGS  += $(OCFLAGS)
   CCFLAGS += $(OCCFLAGS)
 endif # optimize
