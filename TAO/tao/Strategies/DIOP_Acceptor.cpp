@@ -210,8 +210,14 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
-      // compare the port and sin_addr (numeric host address)
-      if (endp->object_addr () == this->addrs_[i])
+      // compare the port and host name.  Please do *NOT* optimize
+      // this code by comparing the IP address instead.  That would
+      // trigger the following bug:
+      //
+      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
+      //
+      if (endp->port() == this->addrs_[i].get_port_number()
+          && ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0)
         return 1;  // Collocated
     }
 
