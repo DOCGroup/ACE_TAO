@@ -196,7 +196,7 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
-  void set_nic (const char *option_value);
+  int set_nic (const char *option_value);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
