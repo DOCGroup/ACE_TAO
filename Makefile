@@ -82,6 +82,7 @@ RELEASE_LIB_FILES = \
 		ACE_wrappers/VERSION \
 		ACE_wrappers/ace \
 		ACE_wrappers/include \
+		ACE_wrappers/netsvcs \
 		ACE_wrappers/tests
 
 #### If creating the "official" ACE release:
