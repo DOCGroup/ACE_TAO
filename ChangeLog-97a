@@ -1,3 +1,23 @@
+Wed Jan 22 09:05:31 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Local_Tokens.cpp (dump): replaced "ACE_TSS<ACE_TPQ_Entry>"
+	  with "ACE_TPQ_ENTRY" so that ACE_NO_TSS_TOKENS is supported.
+
+	* ace/config-vxworks-ghs-1.8.h: added ACE_NO_TSS_TOKENS because
+	  Green Hills 1.8.8 needs it with inlining disabled.
+
+	* apps/Gateway/Gateway/Event_Channel.cpp (open): added
+	  ACE_UNUSED_ARG (sig);.
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.h:
+	  declared a friend of class Peer_Router_Context because it
+	  has a private destructor, to eliminate compiler warning
+	  about not having any friends.
+
+	* examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp
+	  (open): added return 0 in "true" branch of if statement so
+	  that the function always returns a value.
+
 Tue Jan 21 09:19:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Reader_Writer_Test.cpp (reader): commented out unused
