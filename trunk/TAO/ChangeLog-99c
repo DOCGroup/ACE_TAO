@@ -1,3 +1,19 @@
+Thu Dec 23 18:30:19 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp (~TAO_IIOP_Transport):
+	* tao/UIOP_Transport.cpp (~TAO_UIOP_Transport):
+
+	  Only if the socket has not already been closed should we try to
+	  send the buffered messages.
+
+	  Also, since send_buffered_messages() will reset the buffer queue
+	  after sending the data, there is no need to call dequeue_all().
+	  We need to call dequeue_all() only in the case when the socket
+	  is already closed since we won't be calling
+	  send_buffered_messages().
+
+	  This fixes the shutdown crash I saw earlier on NT.
+
 Thu Dec 23 16:37:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Buffering_Constraint_Policy.h:

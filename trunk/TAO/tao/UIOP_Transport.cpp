@@ -59,12 +59,17 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
 
 TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
-  // Cannot deal with errors, and therefore they are ignored.
-  this->send_buffered_messages ();
-
-  // Note that it also doesn't matter how much of the data was
-  // actually sent.
-  this->dequeue_all ();
+  // If the socket has not already been closed.
+  if (this->handle () != ACE_INVALID_HANDLE)
+    {
+      // Cannot deal with errors, and therefore they are ignored.
+      this->send_buffered_messages ();
+    }
+  else
+    {
+      // Dequeue messages and delete message blocks.
+      this->dequeue_all ();
+    }
 }
 
 TAO_UIOP_Handler_Base *&
