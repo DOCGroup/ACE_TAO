@@ -5,15 +5,17 @@
 
 // Default Constructor
 Options::Options ()
-  : ior_output_file_ ("if_repo.ior"),
+  : ior_output_file_ (ACE_OS::strdup ("if_repo.ior")),
     persistent_ (0),
-    persistent_file_ ("ifr_default_backing_store"),
+    persistent_file_ (ACE_OS::strdup ("ifr_default_backing_store")),
     using_registry_ (0)
 {
 }
 
 Options::~Options ()
 {
+  ACE_OS::free (this->ior_output_file_);
+  ACE_OS::free (this->persistent_file_);
 }
 
 int
