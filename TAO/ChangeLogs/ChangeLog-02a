@@ -1,3 +1,68 @@
+Tue Apr  2 15:23:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_component_fwd.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_component_fwd.cpp:
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component_fwd.cpp:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_component_fwd.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * TAO_IDL/be_include/be_visitor_component_fwd.h:
+        * TAO_IDL/be_include/be_visitor_home.h:
+        * TAO_IDL/be_include/be_home.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_component_fwd.h:
+        * TAO_IDL/include/ast_home.h:
+
+	  New files representing new node classes for components,
+	  forward declared components and component homes. Also
+	  new container files for the corresponding visitors
+	  (not yet created).
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/Makefile.FE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/TAO_IDL_FE.bor:
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:
+        * TAO_IDL/ast/Makefile.am:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/Makefile.am:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_valuetype_fwd.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/Makefile.am:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/fe/fe_tmplinst.cpp:
+        * TAO_IDL/include/Makefile.am:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_valuetype_fwd.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/narrow/narrow.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+	  Changes to existing files to accommodate the new node
+	  classes.
+
 Mon Apr  1 14:42:45 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_valuetype.cpp:
