@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_CORBA_OBJECT_H
-#define TAO_CORBA_OBJECT_H
+#ifndef TAO_CORBA_LOCALOBJECT_H
+#define TAO_CORBA_LOCALOBJECT_H
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
@@ -157,7 +157,7 @@ public:
   // different ORB protocols are in use) there is no default
   // implementation.
 
-  virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj,
+  virtual CORBA::Boolean _is_equivalent (CORBA::LocalObject_ptr other_obj,
                                          CORBA_Environment &ACE_TRY_ENV =
                                              TAO_default_environment ())
     ACE_THROW_SPEC (());
@@ -248,8 +248,8 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Object.i"
+# include "tao/LocalObject.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_CORBA_OBJECT_H */
+#endif /* TAO_CORBA_LOCALOBJECT_H */

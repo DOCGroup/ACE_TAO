@@ -131,7 +131,7 @@ CORBA_IRObject_ptr
 CORBA_IRObject::_duplicate (CORBA_IRObject_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -330,7 +330,7 @@ CORBA_Contained_ptr
 CORBA_Contained::_duplicate (CORBA_Contained_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -2154,7 +2154,7 @@ CORBA_Container_ptr
 CORBA_Container::_duplicate (CORBA_Container_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -3447,7 +3447,7 @@ CORBA_IDLType_ptr
 CORBA_IDLType::_duplicate (CORBA_IDLType_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -3613,7 +3613,7 @@ CORBA_Repository_ptr
 CORBA_Repository::_duplicate (CORBA_Repository_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -4156,7 +4156,7 @@ CORBA_ModuleDef_ptr
 CORBA_ModuleDef::_duplicate (CORBA_ModuleDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -4280,7 +4280,7 @@ CORBA_ConstantDef_ptr
 CORBA_ConstantDef::_duplicate (CORBA_ConstantDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -4709,7 +4709,7 @@ CORBA_TypedefDef_ptr
 CORBA_TypedefDef::_duplicate (CORBA_TypedefDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -4836,7 +4836,7 @@ CORBA_StructDef_ptr
 CORBA_StructDef::_duplicate (CORBA_StructDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -5035,7 +5035,7 @@ CORBA_UnionDef_ptr
 CORBA_UnionDef::_duplicate (CORBA_UnionDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -5413,7 +5413,7 @@ CORBA_EnumDef_ptr
 CORBA_EnumDef::_duplicate (CORBA_EnumDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -5611,7 +5611,7 @@ CORBA_AliasDef_ptr
 CORBA_AliasDef::_duplicate (CORBA_AliasDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -5808,7 +5808,7 @@ CORBA_PrimitiveDef_ptr
 CORBA_PrimitiveDef::_duplicate (CORBA_PrimitiveDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -5942,7 +5942,7 @@ CORBA_StringDef_ptr
 CORBA_StringDef::_duplicate (CORBA_StringDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -6137,7 +6137,7 @@ CORBA_WstringDef_ptr
 CORBA_WstringDef::_duplicate (CORBA_WstringDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -6332,7 +6332,7 @@ CORBA_FixedDef_ptr
 CORBA_FixedDef::_duplicate (CORBA_FixedDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -6647,7 +6647,7 @@ CORBA_SequenceDef_ptr
 CORBA_SequenceDef::_duplicate (CORBA_SequenceDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -7021,7 +7021,7 @@ CORBA_ArrayDef_ptr
 CORBA_ArrayDef::_duplicate (CORBA_ArrayDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -7394,7 +7394,7 @@ CORBA_ExceptionDef_ptr
 CORBA_ExceptionDef::_duplicate (CORBA_ExceptionDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -7715,7 +7715,7 @@ CORBA_AttributeDef_ptr
 CORBA_AttributeDef::_duplicate (CORBA_AttributeDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -8757,7 +8757,7 @@ CORBA_OperationDef_ptr
 CORBA_OperationDef::_duplicate (CORBA_OperationDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -10214,7 +10214,7 @@ CORBA_InterfaceDef_ptr
 CORBA_InterfaceDef::_duplicate (CORBA_InterfaceDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -11360,7 +11360,7 @@ CORBA_ValueMemberDef_ptr
 CORBA_ValueMemberDef::_duplicate (CORBA_ValueMemberDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -11734,7 +11734,7 @@ CORBA_ValueDef_ptr
 CORBA_ValueDef::_duplicate (CORBA_ValueDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -13608,7 +13608,7 @@ CORBA_ValueBoxDef_ptr
 CORBA_ValueBoxDef::_duplicate (CORBA_ValueBoxDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 

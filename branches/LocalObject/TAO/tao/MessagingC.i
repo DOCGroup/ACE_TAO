@@ -27,7 +27,7 @@ ACE_INLINE Messaging::RebindPolicy_ptr
 Messaging::RebindPolicy::_duplicate (Messaging::RebindPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -218,7 +218,7 @@ ACE_INLINE Messaging::SyncScopePolicy_ptr
 Messaging::SyncScopePolicy::_duplicate (Messaging::SyncScopePolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -521,7 +521,7 @@ ACE_INLINE Messaging::RequestPriorityPolicy_ptr
 Messaging::RequestPriorityPolicy::_duplicate (Messaging::RequestPriorityPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -708,7 +708,7 @@ ACE_INLINE Messaging::ReplyPriorityPolicy_ptr
 Messaging::ReplyPriorityPolicy::_duplicate (Messaging::ReplyPriorityPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -899,7 +899,7 @@ ACE_INLINE Messaging::RequestStartTimePolicy_ptr
 Messaging::RequestStartTimePolicy::_duplicate (Messaging::RequestStartTimePolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -1090,7 +1090,7 @@ ACE_INLINE Messaging::RequestEndTimePolicy_ptr
 Messaging::RequestEndTimePolicy::_duplicate (Messaging::RequestEndTimePolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -1281,7 +1281,7 @@ ACE_INLINE Messaging::ReplyStartTimePolicy_ptr
 Messaging::ReplyStartTimePolicy::_duplicate (Messaging::ReplyStartTimePolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -1472,7 +1472,7 @@ ACE_INLINE Messaging::ReplyEndTimePolicy_ptr
 Messaging::ReplyEndTimePolicy::_duplicate (Messaging::ReplyEndTimePolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -1663,7 +1663,7 @@ ACE_INLINE Messaging::RelativeRequestTimeoutPolicy_ptr
 Messaging::RelativeRequestTimeoutPolicy::_duplicate (Messaging::RelativeRequestTimeoutPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -1854,7 +1854,7 @@ ACE_INLINE Messaging::RelativeRoundtripTimeoutPolicy_ptr
 Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (Messaging::RelativeRoundtripTimeoutPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -2157,7 +2157,7 @@ ACE_INLINE Messaging::RoutingPolicy_ptr
 Messaging::RoutingPolicy::_duplicate (Messaging::RoutingPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -2348,7 +2348,7 @@ ACE_INLINE Messaging::MaxHopsPolicy_ptr
 Messaging::MaxHopsPolicy::_duplicate (Messaging::MaxHopsPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -2539,7 +2539,7 @@ ACE_INLINE Messaging::QueueOrderPolicy_ptr
 Messaging::QueueOrderPolicy::_duplicate (Messaging::QueueOrderPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -3461,7 +3461,7 @@ ACE_INLINE Messaging::ReplyHandler_ptr
 Messaging::ReplyHandler::_duplicate (Messaging::ReplyHandler_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -3652,7 +3652,7 @@ ACE_INLINE Messaging::Poller_ptr
 Messaging::Poller::_duplicate (Messaging::Poller_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 

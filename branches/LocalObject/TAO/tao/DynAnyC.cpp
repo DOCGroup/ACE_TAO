@@ -40,7 +40,7 @@ ACE_RCSID(tao, DynAnyC, "$Id$")
 CORBA_DynAny_ptr CORBA_DynAny::_duplicate (CORBA_DynAny_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -780,7 +780,7 @@ CORBA::TypeCode_ptr _tc_CORBA_DynAny = &_tc_TAO_tc_CORBA_DynAny;
 CORBA_DynEnum_ptr CORBA_DynEnum::_duplicate (CORBA_DynEnum_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -886,7 +886,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DynEnum (CORBA::tk_objref,
 CORBA::TypeCode_ptr _tc_CORBA_DynEnum = &_tc_TAO_tc_CORBA_DynEnum;
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_NAMEVALUEPAIRSEQ_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_NAMEVALUEPAIRSEQ_CS_
 
@@ -895,43 +895,43 @@ CORBA::TypeCode_ptr _tc_CORBA_DynEnum = &_tc_TAO_tc_CORBA_DynEnum;
   {
     CORBA::NameValuePair* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       CORBA::NameValuePair *old = ACE_reinterpret_cast (CORBA::NameValuePair *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     CORBA::NameValuePair *tmp = ACE_reinterpret_cast (CORBA::NameValuePair *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::~_TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_NAME_VALUE_PAIR_SEQ_CS_)
 #define _CORBA_NAME_VALUE_PAIR_SEQ_CS_
@@ -989,7 +989,7 @@ CORBA_NameValuePairSeq::~CORBA_NameValuePairSeq (void) // dtor
 CORBA_DynStruct_ptr CORBA_DynStruct::_duplicate (CORBA_DynStruct_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1100,7 +1100,7 @@ CORBA::TypeCode_ptr _tc_CORBA_DynStruct = &_tc_TAO_tc_CORBA_DynStruct;
 CORBA_DynUnion_ptr CORBA_DynUnion::_duplicate (CORBA_DynUnion_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1291,7 +1291,7 @@ CORBA_DynSequence_ptr CORBA_DynSequence::_duplicate (
   )
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1405,7 +1405,7 @@ CORBA::TypeCode_ptr _tc_CORBA_DynSequence =
 CORBA_DynArray_ptr CORBA_DynArray::_duplicate (CORBA_DynArray_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate

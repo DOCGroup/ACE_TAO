@@ -54,7 +54,7 @@ PortableInterceptor::Cookie_ptr
 PortableInterceptor::Cookie::_duplicate (PortableInterceptor::Cookie_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -280,7 +280,7 @@ PortableInterceptor::Interceptor_ptr
 PortableInterceptor::Interceptor::_duplicate (PortableInterceptor::Interceptor_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -354,7 +354,7 @@ PortableInterceptor::ServerRequestInterceptor_ptr
 PortableInterceptor::ServerRequestInterceptor::_duplicate (PortableInterceptor::ServerRequestInterceptor_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -429,7 +429,7 @@ PortableInterceptor::ClientRequestInterceptor_ptr
 PortableInterceptor::ClientRequestInterceptor::_duplicate (PortableInterceptor::ClientRequestInterceptor_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 

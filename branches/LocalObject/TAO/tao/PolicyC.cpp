@@ -434,7 +434,7 @@ CORBA_Policy_ptr
 CORBA_Policy::_duplicate (CORBA_Policy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
