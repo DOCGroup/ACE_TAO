@@ -1,3 +1,8 @@
+Fri Aug 22 13:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+          Added #include Condition_Thread_Mutex.h
+
 Fri Aug 22 09:53:36 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
