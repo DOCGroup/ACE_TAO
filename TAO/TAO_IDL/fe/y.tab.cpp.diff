@@ -1,6 +1,6 @@
---- y.tab.cpp	Tue Oct 12 13:56:12 1999
-+++ y.tab.cpp.new	Tue Oct 12 13:53:25 1999
-@@ -916,7 +916,7 @@
+--- y.tab.cpp	Tue Dec 19 09:31:07 2000
++++ y.tab.cpp.mod	Tue Dec 19 09:28:09 2000
+@@ -951,7 +951,7 @@
  #ifdef TAO_YYMAXDEPTH
  #define TAO_YYSTACKSIZE TAO_YYMAXDEPTH
  #else
@@ -9,7 +9,7 @@
  #endif
  #endif
  int tao_yydebug;
-@@ -1111,7 +1111,7 @@
+@@ -1146,7 +1146,7 @@
      extern char *ace_foo();
  #endif
  
@@ -18,7 +18,7 @@
      {
          tao_yyn = *tao_yys;
          if (tao_yyn >= '0' && tao_yyn <= '9')
-@@ -1128,7 +1128,7 @@
+@@ -1163,7 +1163,7 @@
      *tao_yyssp = tao_yystate = 0;
  
  tao_yyloop:
@@ -27,7 +27,7 @@
      if (tao_yychar < 0)
      {
          if ((tao_yychar = tao_yylex()) < 0) tao_yychar = 0;
-@@ -1179,11 +1179,10 @@
+@@ -1213,11 +1213,10 @@
      goto tao_yynewerror;
  #endif
  
