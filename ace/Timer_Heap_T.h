@@ -260,6 +260,10 @@ private:
   /// Current size of the heap.
   size_t cur_size_;
 
+  /// Number of heap entries in transition (removed from the queue, but
+  /// not freed) and may be rescheduled or freed.
+  size_t cur_limbo_;
+
   /// Iterator used to expire timers.
   HEAP_ITERATOR *iterator_;
 

@@ -219,9 +219,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
   while (this->earliest_time () <= cur_time)
     {
       expired = this->remove_first ();
-      TYPE &type = expired->get_type ();
+      TYPE type = expired->get_type ();    // Need a copy, not a reference!
       const void *act = expired->get_act ();
-      int reclaim = 1;
 
       // Check if this is an interval timer.
       if (expired->get_interval () > ACE_Time_Value::zero)
@@ -235,15 +234,15 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
           // Since this is an interval timer, we need to reschedule
           // it.
           this->reschedule (expired);
-          reclaim = 0;
+        }
+      else
+        {
+          // Call the factory method to free up the node.
+          this->free_node (expired);
         }
 
       // call the functor
       this->upcall (type, act, cur_time);
-
-      if (reclaim)
-        // Call the factory method to free up the node.
-        this->free_node (expired);
 
       number_of_timers_expired++;
 
