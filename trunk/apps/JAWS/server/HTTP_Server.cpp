@@ -339,8 +339,7 @@ HTTP_Server::asynch_thread_pool (void)
   // Create the thread pool.
   // Register threads with the proactor and thread manager.
   Asynch_Thread_Pool_Task t (*ACE_Proactor::instance (),
-                             this->tm_,
-                             this->threads_); 
+                             this->tm_); 
 
   // The proactor threads are waiting on the I/O Completion Port.
 
@@ -359,8 +358,7 @@ Asynch_Thread_Pool_Task::Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
     proactor_ (proactor)
 {
   if (this->activate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Asynch_Thread_Pool_Task::open"),
-                      );
+    ACE_ERROR ((LM_ERROR, "%p\n", "Asynch_Thread_Pool_Task::open"));
 }
 
 int

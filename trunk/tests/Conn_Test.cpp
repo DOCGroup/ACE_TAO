@@ -23,7 +23,7 @@
 
 #include "test_config.h"
 #include "ace/SOCK_Connector.h"
-#include "ace/SOCK_Acceptor.h"
+#include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
@@ -154,7 +154,14 @@ ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
 
 // ****************************************
 
-typedef ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+#if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
+typedef ACE_SYNCH_NULL_MUTEX ACCEPTOR_LOCKING;
+#else
+typedef ACE_SYNCH_MUTEX ACCEPTOR_LOCKING;
+#endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
+
+typedef ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING> SOCK_ACCEPTOR;
+typedef ACE_Oneshot_Acceptor<Svc_Handler, SOCK_ACCEPTOR> ACCEPTOR;
 typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> STRAT_CONNECTOR;
 typedef ACE_NOOP_Creation_Strategy<Svc_Handler> NULL_CREATION_STRATEGY;
@@ -409,18 +416,12 @@ static void
 spawn_processes (ACCEPTOR *acceptor,
                  ACE_INET_Addr *server_addr)
 {
-#if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
-  const int max_servers = n_servers;
-#else
-  const int max_servers = 1;
-#endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
-
-  pid_t children[max_servers];
+  pid_t children[n_servers];
   int i;
 
   // Spawn off a number of server processes all of which will listen
   // on the same port number for clients to connect.
-  for (i = 0; i < max_servers; i++)
+  for (i = 0; i < n_servers; i++)
     {
       pid_t pid = ACE_OS::fork ("child");
       switch (pid)
@@ -447,7 +448,7 @@ spawn_processes (ACCEPTOR *acceptor,
 
   client ((void *) server_addr);
 
-  for (i = 0; i < max_servers; i++)
+  for (i = 0; i < n_servers; i++)
     // Shutdown the servers.
     if (ACE_OS::kill (children[i], SIGTERM) == -1)
       ACE_ERROR ((LM_ERROR, "(%P|%t) %p for %d\n", children[i]));
@@ -470,22 +471,12 @@ static void
 spawn_threads (ACCEPTOR *acceptor,
                ACE_INET_Addr *server_addr)
 {
-#if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
-  // The OS allows multiple threads to block in accept().
   if (ACE_Thread_Manager::instance ()->spawn_n
       (n_servers,
        ACE_THR_FUNC (server),
        (void *) acceptor,
        THR_NEW_LWP) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
-#else
-  // The OS only allow one thread to block in accept().
-  if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (server),
-       (void *) acceptor,
-       THR_NEW_LWP) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
-#endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (client),
@@ -557,6 +548,7 @@ template class ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *>;
 template class ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING> SOCK_ACCEPTOR;
 template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
@@ -578,6 +570,7 @@ template class ACE_Svc_Tuple<Svc_Handler>;
 #pragma instantiate ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING> SOCK_ACCEPTOR;
 #pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
