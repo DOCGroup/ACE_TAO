@@ -1096,11 +1096,6 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       return 0;
     }
 
-  if (index == ACE_static_cast (long, this->nmembers ()))
-    {
-      return 0;
-    }
-
   UTL_ScopeActiveIterator *i = 0;
   ACE_NEW_RETURN (i,
                   UTL_ScopeActiveIterator (this,
