@@ -171,9 +171,9 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
           TAO::Portable_Server::RequestProcessingPolicyFactory,
           ::PortableServer::RequestProcessingPolicy_ptr,
           ::PortableServer::RequestProcessingPolicyValue>::create (
-            "RequestProcessingPolicyFactory",
+            "RequestProcessingPolicyFactoryImpl",
             ACE_TEXT("dynamic RequestProcessingPolicyFactory Service_Object *")
-            ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyFactory()"),
+            ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyFactoryImpl()"),
             value);
 }
 

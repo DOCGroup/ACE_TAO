@@ -327,9 +327,9 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::RequestProcessingPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::RequestProcessingPolicyValue>::create (
-              "RequestProcessingPolicyFactory",
+              "RequestProcessingPolicyFactoryImpl",
               ACE_TEXT("dynamic RequestProcessingPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyFactoryImpl()"),
               PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY);
   policies.merge_policy (request_processing_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -99,9 +99,9 @@ TAO_PortableServer_PolicyFactory::create_policy (
             TAO::Portable_Server::RequestProcessingPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::RequestProcessingPolicyValue>::create (
-              "RequestProcessingPolicyFactory",
+              "RequestProcessingPolicyFactoryImpl",
               ACE_TEXT("dynamic RequestProcessingPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyFactoryImpl()"),
               value ACE_ENV_ARG_PARAMETER);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

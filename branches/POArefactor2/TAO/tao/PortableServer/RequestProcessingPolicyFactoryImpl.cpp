@@ -1,11 +1,11 @@
 // $Id$
 
-#include "RequestProcessingPolicyFactory.h"
+#include "RequestProcessingPolicyFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
 #include "RequestProcessingPolicy.h"
 
 ACE_RCSID (PortableServer,
-           RequestProcessingPolicyFactory,
+           RequestProcessingPolicyFactoryImpl,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -14,12 +14,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingPolicyFactory::~RequestProcessingPolicyFactory (void)
+    RequestProcessingPolicyFactoryImpl::~RequestProcessingPolicyFactoryImpl (void)
     {
     }
 
     ::PortableServer::RequestProcessingPolicy_ptr
-    RequestProcessingPolicyFactory::create (
+    RequestProcessingPolicyFactoryImpl::create (
       ::PortableServer::RequestProcessingPolicyValue value)
     {
       RequestProcessingPolicy* policy = 0;
@@ -34,7 +34,7 @@ namespace TAO
     }
 
     ::PortableServer::RequestProcessingPolicy_ptr
-    RequestProcessingPolicyFactory::create (
+    RequestProcessingPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::PolicyError))
@@ -52,23 +52,23 @@ namespace TAO
     }
 
     ACE_STATIC_SVC_DEFINE (
-        RequestProcessingPolicyFactory,
-        ACE_TEXT ("RequestProcessingPolicyFactory"),
+        RequestProcessingPolicyFactoryImpl,
+        ACE_TEXT ("RequestProcessingPolicyFactoryImpl"),
         ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (RequestProcessingPolicyFactory),
+        &ACE_SVC_NAME (RequestProcessingPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, RequestProcessingPolicyFactory)
+    ACE_FACTORY_DEFINE (TAO_PortableServer, RequestProcessingPolicyFactoryImpl)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<RequestProcessingPolicyFactory>;
+    template class ACE_Dynamic_Service<RequestProcessingPolicyFactoryImpl>;
 
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<RequestProcessingPolicyFactory>
+    #pragma instantiate ACE_Dynamic_Service<RequestProcessingPolicyFactoryImpl>
 
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
