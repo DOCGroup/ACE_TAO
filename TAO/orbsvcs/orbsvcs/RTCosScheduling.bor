@@ -5,6 +5,8 @@ NAME = TAO_RTCosScheduling
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
 
 OBJFILES = \
+   $(OBJDIR)\RTCosSchedulingC.obj \
+   $(OBJDIR)\RTCosSchedulingS.obj \
 	$(OBJDIR)\RTCosScheduling_ClientScheduler_i.obj \
 	$(OBJDIR)\RTCosScheduling_PCP_Manager.obj \
 	$(OBJDIR)\RTCosScheduling_ServerScheduler_i.obj
@@ -63,7 +65,7 @@ CFLAGS = \
 	$(LIB_FLAGS) \
 	$(DLL_FLAGS)
 
-CPPDIR = .
+CPPDIR = .;RTCosScheduling
 
 IDLDIR = .
 
