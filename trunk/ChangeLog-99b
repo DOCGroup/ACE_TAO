@@ -11,6 +11,12 @@ Tue Mar 02 21:17:19 1999  David L. Levine  <levine@cs.wustl.edu>
         * Makefile: added support for suppressing man page regeneration
           on make release command line.
 
+        * include/makeinclude/platform_osf1_4.0.GNU: added automated
+          support for warning 1136.  It's only supported by cxx 6.2.
+          Thanks to James CE Johnson <jcej@lads.com> for reporting
+          this, and to Andrew Hobson <ahobson@eng.mindspring.net> for
+          diagnosing the problem.
+
 Tue Mar 02 14:43:29 1999  Steve Huston  <shuston@riverace.com>
 
        * ace/Map_T.(h i): Qualified types inherited from template base
