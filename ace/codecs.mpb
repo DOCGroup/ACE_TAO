@@ -3,6 +3,8 @@
 
 feature(ace_codecs) {
   Source_Files(ACE_COMPONENTS) {
-    Codecs.cpp
+    Codecs {
+      Codecs.cpp
+    }
   }
 }

@@ -3,6 +3,8 @@
 
 feature(ace_filecache) {
   Source_Files(ACE_COMPONENTS) {
-    Filecache.cpp
+    Filecache {
+      Filecache.cpp
+    }
   }
 }

@@ -1,6 +1,0 @@
-$Id$
-
-Description:
-
-This performance test measures the predictable behavior achieved from
-employing different RT policies and their combinations.
