@@ -20,7 +20,6 @@
 #endif /* ! PACE_HAS_INLINE */
 
 #include <windows.h>
-#include <io.h>
 #include <stdio.h>
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
