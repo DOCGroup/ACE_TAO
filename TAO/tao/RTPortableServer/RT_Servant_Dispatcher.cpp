@@ -77,10 +77,10 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   if (req.transport ()->tag () == IOP::TAG_INTERNET_IOP)
     {
       /*
-	int send_buffer_size;
-	int recv_buffer_size;
-	int no_delay;
-	int enable_network_priority;
+        int send_buffer_size;
+        int recv_buffer_size;
+        int no_delay;
+        int enable_network_priority;
       */
       const char protocol [] = "iiop";
       const char *protocol_type = protocol;
@@ -92,29 +92,22 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
       CORBA::Policy* policy = poa.server_protocol ();
 
       int result =
-	tph->update_server_protocol_properties (
+        tph->update_server_protocol_properties (
           policy,
           iiop_transport-> connection_handler_i (),
           protocol_type);
 
       if (result != 0)
-	ACE_ERROR((LM_ERROR,
-		   "Error in getting the effective protocol properties\n"));
+        ACE_ERROR((LM_ERROR,
+                   "Error in getting the effective protocol properties\n"));
 
       /*
-	iiop_transport ()->connection_handler ()->update_protocol_properties (send_buffer_size,
-	recv_buffer_size,
-	no_delay,
-	enable_network_priority);
+        iiop_transport ()->connection_handler ()->update_protocol_properties (send_buffer_size,
+        recv_buffer_size,
+        no_delay,
+        enable_network_priority);
       */
   }
-
-  if (tph->get_thread_CORBA_and_native_priority (
-        pre_invoke_state.original_CORBA_priority_,
-        pre_invoke_state.original_native_priority_
-        ACE_ENV_ARG_PARAMETER) == -1)
-    ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                       CORBA::COMPLETED_NO));
 
   const char *priority_model;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
@@ -187,59 +180,23 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                          thread_pool->id ());
     }
 
-  // Change the priority of the current thread for the duration of
-  // request.
-  if (target_priority != TAO_INVALID_PRIORITY &&
-      target_priority != pre_invoke_state.original_CORBA_priority_)
-    {
-      if (tph->set_thread_CORBA_priority (target_priority
-                                          ACE_ENV_ARG_PARAMETER)
-          == -1)
-        ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                           CORBA::COMPLETED_NO));
-
-      pre_invoke_state.state_ =
-        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
-
-      if (TAO_debug_level > 0)
-        {
-          CORBA::Short native_priority;
-          tph->get_thread_native_priority (native_priority
-                                           ACE_ENV_ARG_PARAMETER);
-
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%s processing using %s ")
-                      ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
-                      ACE_TEXT ("temporarily changed to CORBA/native priority %d/%d\n"),
-                      priority_model,
-                      thread_pool_id,
-                      pre_invoke_state.original_CORBA_priority_,
-                      pre_invoke_state.original_native_priority_,
-                      target_priority,
-                      native_priority));
-        }
-    }
-  // No change in priority required.
-  else if (target_priority != TAO_INVALID_PRIORITY &&
-           target_priority == pre_invoke_state.original_CORBA_priority_)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%s processing using %s ")
-                      ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
-                      ACE_TEXT ("is the same as the target priority\n"),
-                      priority_model,
-                      thread_pool_id,
-                      pre_invoke_state.original_CORBA_priority_,
-                      pre_invoke_state.original_native_priority_));
-        }
-    }
   // Target priority is invalid.
-  else
+  if (target_priority == TAO_INVALID_PRIORITY)
     {
       if (TAO_debug_level > 0)
         {
+
+// If we are in a multi-threaded configuration, print out the current
+// thread priority.
+#if defined (ACE_HAS_THREADS)
+
+          if (tph->get_thread_CORBA_and_native_priority (
+                pre_invoke_state.original_CORBA_priority_,
+                pre_invoke_state.original_native_priority_
+                ACE_ENV_ARG_PARAMETER) == -1)
+            ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                               CORBA::COMPLETED_NO));
+
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("%s processing using %s ")
                       ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
@@ -248,6 +205,78 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                       thread_pool_id,
                       pre_invoke_state.original_CORBA_priority_,
                       pre_invoke_state.original_native_priority_));
+
+// If we are in a single-threaded configuration, we cannot get the
+// current thread priority.  Therefore, print out a simpler message.
+#else /* ACE_HAS_THREADS */
+
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%s processing using %s ")
+                      ACE_TEXT ("(%P|%t): original thread CORBA/native priority ")
+                      ACE_TEXT ("not changed\n"),
+                      priority_model,
+                      thread_pool_id));
+
+#endif /* ACE_HAS_THREADS */
+
+        }
+    }
+  else
+    {
+      // Get the current thread's priority.
+
+      if (tph->get_thread_CORBA_and_native_priority (
+            pre_invoke_state.original_CORBA_priority_,
+            pre_invoke_state.original_native_priority_
+            ACE_ENV_ARG_PARAMETER) == -1)
+        ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                           CORBA::COMPLETED_NO));
+
+      // Priority needs to be changed temporarily changed for the
+      // duration of request.
+      if (target_priority != pre_invoke_state.original_CORBA_priority_)
+        {
+          if (tph->set_thread_CORBA_priority (target_priority
+                                              ACE_ENV_ARG_PARAMETER)
+              == -1)
+            ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                               CORBA::COMPLETED_NO));
+
+          pre_invoke_state.state_ =
+            TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
+
+          if (TAO_debug_level > 0)
+            {
+              CORBA::Short native_priority;
+              tph->get_thread_native_priority (native_priority
+                                               ACE_ENV_ARG_PARAMETER);
+
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("%s processing using %s ")
+                          ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
+                          ACE_TEXT ("temporarily changed to CORBA/native priority %d/%d\n"),
+                          priority_model,
+                          thread_pool_id,
+                          pre_invoke_state.original_CORBA_priority_,
+                          pre_invoke_state.original_native_priority_,
+                          target_priority,
+                          native_priority));
+            }
+        }
+      // No change in priority required.
+      else
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("%s processing using %s ")
+                          ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
+                          ACE_TEXT ("is the same as the target priority\n"),
+                          priority_model,
+                          thread_pool_id,
+                          pre_invoke_state.original_CORBA_priority_,
+                          pre_invoke_state.original_native_priority_));
+            }
         }
     }
 }
