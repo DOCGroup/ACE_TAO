@@ -1,3 +1,12 @@
+Fri Apr 16 09:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Default_Constants.h:
+          Added ACE_MAX_UDP_PACKET_SIZE
+
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+          Use ACE_MAX_UDP_PACKET_SIZE instead of a hardcoded constant. Makes
+          it possible to overrule the value from the config.h file.
+
 Fri Apr 16 06:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
