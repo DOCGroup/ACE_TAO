@@ -1,3 +1,12 @@
+Tue Mar 16 08:12:54 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Thread_Manager.cpp: In thread_within(ACE_thread_t), replaced use
+          of '==' with ACE_OS::thr_equal.  In hthread_within (ACE_hthread_t),
+          replaced use of '==' with ACE_OS::thr_cmp.  Thanks very much to
+          Peter Windle <peterw@ugsolutions.com> for pointing this out.
+
+        * README: Added Peter Windle to the list of distinguished contributors.
+
 Tue Mar 16 03:05:22 1999  James Hu <jxh@entera.com>
         * ace/Cache_Hash_T.{cpp,h}:
         * ace/Cache_Heap_T.{cpp,h}:
