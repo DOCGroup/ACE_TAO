@@ -520,10 +520,11 @@ TAO_IIOP_Client_Connection_Handler::handle_cleanup (void)
       this->reactor ()->cancel_timer (this);
     }
 
-  this->peer ().close ();
-
   // Now do the decerment of the ref count
   this->decr_ref_count ();
+
+  // Close the socket
+  this->peer ().close ();
   return 0;
 }
 
