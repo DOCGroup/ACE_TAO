@@ -155,7 +155,7 @@ try to help you fix the problems.
 
       If you are using AIX 4.2.1 or later, this patch isn't needed;
       the dynamic library APIs are included in the base operating
-      system.<p> 
+      system.<p>
 
       However, another patch may be needed.  Thanks to
       Susan Liebeskind &lt;shl@janis.gtri.gatech.edu&gt; for submitting
@@ -360,9 +360,14 @@ make: *** [libACE.so] Error 8
 
   <LI><B>LynxOS</B> <P>
 
-      ACE builds and run properly on LynxOS 3.0.0.  Some of the ACE
-      tests fail; they are disabled in
-      <code>ACE_wrappers/tests/run_tests.sh</code.<p>
+      ACE builds and runs properly on LynxOS 3.0.0 for Intel targets.
+      Some of the ACE tests fail; they are disabled in
+      <code>ACE_wrappers/tests/run_tests.sh</code>.<p>
+
+      ACE builds cleanly on LynxOS 3.0.0 for PowerPC targets.  For
+      the most part, it runs properly.  But, there appears to be
+      a problem with registering signal handlers.  So, some of the
+      ACE tests seg fault when attempting to do that.<p>
 
       We actively maintain ACE on LynxOS 3.0.0.  It should build and
       run on LynxOS 2.5, but we no longer test on that OS version.<p>
@@ -759,7 +764,7 @@ the STL fixes.
   <li>If ACE will be used with MFC programs, also add the following to
       your <code>config.h</code> file.  Notice that if you want to
       spawn a new thread with CWinThread, make sure you spawn the
-      thread with THR_USE_AFX flag set.<br> 
+      thread with THR_USE_AFX flag set.<br>
       <br>
       <code>#define ACE_HAS_MFC 1</code><br>
       <br>
