@@ -64,7 +64,9 @@ bgcolor="#ffffff">
 
   <li><strong>Code Documentation</strong><p>
   <ul>
-    <li>Use comments and whitespace (:-) liberally.<p>
+    <li>Use comments and whitespace (:-) liberally.  Comments
+        should consist of complete sentences, i.e., start
+        with a captial letter and end with a period.<p>
 
     <li>Insert a CVS/RCS keyword string at the top of every source file,
         Makefile, config file, <em>etc</em>.  For C++ files, it is:
@@ -208,7 +210,27 @@ bgcolor="#ffffff">
 
         // Terminate this string.
         file_name [i] = '\0';
-        </pre>
+        </pre><p>
+
+   <li>Prefix operators are sometimes more efficient than postfix
+       operators.  Therefore, they are preferred over their postfix
+       counterparts where the expression value is not used.<p>
+
+       Therefore, use this idiom for iterators, with prefix operator
+       on the loop index:
+       <pre>
+       ACE_Ordered_MultiSet&lt;int&gt; set;
+       ACE_Ordered_MultiSet_Iterator&lt;int&gt; iter(set);
+
+       for (i = -10; i &lt; 10; ++i)
+         set.insert (2 * i + 1);
+
+       </pre>
+       rather than the postfix operator:
+       <pre>
+       for (i = -10; i &lt; 10; i++)
+         set.insert (2 * i + 1);
+       </pre><p>
 
     <li>Avoid unnecessary parenthesis.  We're not writing Lisp :-)<p>
 
