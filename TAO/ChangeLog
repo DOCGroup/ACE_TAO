@@ -1,3 +1,8 @@
+Mon Aug  2 06:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
+          Fixed compile error due to SSLIOP Transport name change
+
 Sun Aug  1 23:41:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
