@@ -100,15 +100,20 @@ main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
+      
+      Simple_Server_i *server_impl = 0;
+      
+      ACE_NEW_THROW_EX (server_impl,
+			Simple_Server_i (orb.in (),
+					 no_iterations), 
+			CORBA::NO_MEMORY ());
 
-      Simple_Server_i server_impl (orb.in (),
-                                   no_iterations);
-
+      PortableServer::ServantBase_var owner_transfer (server_impl);
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("simple_server");
 
       child_poa->activate_object_with_id (id.in (),
-                                          &server_impl,
+                                          server_impl,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

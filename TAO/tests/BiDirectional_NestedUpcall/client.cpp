@@ -118,13 +118,17 @@ main (int argc, char *argv[])
                             1);
         }
 
-
-      Callback_i callback_impl (orb.in ());
-
+      Callback_i *callback_impl = 0;
+      ACE_NEW_THROW_EX (callback_impl,
+			Callback_i (orb.in ()),
+			CORBA::NO_MEMORY ());
+      
+      PortableServer::ServantBase_var owner_transfer(callback_impl);
+      
       Callback_var callback =
-        callback_impl._this (ACE_TRY_ENV);
+        callback_impl->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       // Send the calback object to the server
       server->callback_object (callback.in (),
                                ACE_TRY_ENV);
