@@ -1,3 +1,9 @@
+Tue Apr  5 14:37:16 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/Any_Handler.cpp
+        
+        Updated Gary's fix to work in Borland 6.
+        
 Tue Apr  5 14:13:10 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/Config_Handlers/Any_Handler.cpp

@@ -62,12 +62,20 @@ namespace CIAO
       else if (value.double_p ())
         {
           toconfig <<= 
+#ifdef __BORLANDC__
+            CORBA::Double (static_cast < double &> (value.double_ ()));
+#else
             CORBA::Double (static_cast < ::XMLSchema::double_ const& > (value.double_ ()));
+#endif
         }
       else if (value.float_p ())
         {
           toconfig <<= 
+#ifdef __BORLANDC__
+            CORBA::Float (static_cast < float & > (value.float_ ()));
+#else
             CORBA::Float (static_cast < ::XMLSchema::float_ const& > (value.float_ ()));
+#endif
         }
       else if (value.string_p ())
         {
