@@ -17,8 +17,8 @@
 #ifndef CACHING_STRATEGY_UTILITY_H
 #define CACHING_STRATEGY_UTILITY_H
 
-#include "ace/OS.h"
 #include <math.h>
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
