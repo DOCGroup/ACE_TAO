@@ -121,7 +121,8 @@ CIAO::Config_Handler::Utils::create_document (const char * url)
   auto_ptr<DOMImplementation> cleanup_impl (impl);
 
   DOMBuilder* parser =
-    ((DOMImplementationLS*)impl)->createDOMBuilder(DOMImplementationLS::MODE_SYNCHRONOUS, 0);
+    ((DOMImplementationLS*)impl)->
+    createDOMBuilder(DOMImplementationLS::MODE_SYNCHRONOUS, 0);
   auto_ptr<DOMBuilder> cleanup_parser (parser);
 
   // Discard comment nodes in the document
@@ -168,26 +169,35 @@ CIAO::Config_Handler::Utils::create_document (const char * url)
 DOMNodeIterator *
 CIAO::Config_Handler::Utils::parse_href_tag (XMLURL url, DOMDocument * doc)
 {
-  const char * document_path = 0;
+  char * document_path = 0;
   if (url.isRelative ())
   {
-    ACE_TString doc_path = XMLString::transcode (doc->getDocumentURI ());
-    url.makeRelativeTo (XMLString::transcode (doc_path.c_str ()));
-    ACE_TString path = XMLString::transcode (url.getURLText ());
-    document_path = path.c_str ();
+    char * doc_path = XMLString::transcode (doc->getDocumentURI ());
+    XMLCh * temp = XMLString::transcode (doc_path);
+    url.makeRelativeTo (temp);
+    document_path = XMLString::transcode (url.getURLText ());
+
+    // Release allocated memory
+    XMLString::release (&doc_path);
+    XMLString::release (&temp);
   }
   else
   {
-    ACE_TString path = XMLString::transcode (url.getURLText ());
-    document_path = path.c_str ();
+    document_path = XMLString::transcode (url.getURLText ());
+
   }
 
   DOMDocument* href_doc =
     CIAO::Config_Handler::Utils::create_document (document_path);
+  auto_ptr<DOMDocument> cleanup_doc (href_doc);
+
   DOMDocumentTraversal* traverse (href_doc);
   DOMNode* root = (href_doc->getDocumentElement ());
   unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
                          DOMNodeFilter::SHOW_TEXT;
+
+  // release allocated memory
+  XMLString::release (&document_path);
 
   return traverse->createNodeIterator (root,
                                        filter,
