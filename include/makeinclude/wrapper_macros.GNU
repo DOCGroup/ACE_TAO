@@ -37,7 +37,8 @@
 #  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
 #                     specified by the Makefile, as in performance-tests/Misc.
 #  static_libs_only Only build static libraries.
-#  xt_reactor	    Build the XtReactor
+#  threads          Build with thread support.
+#  xt_reactor	    Build the XtReactor.
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -201,6 +202,10 @@ else
   CCFLAGS += $(DCCFLAGS)
 endif # debug
 
+ifeq ($(threads),0)
+  override threads =
+endif # threads
+
 ifeq ($(xt_reactor),0)
   override xt_reactor =
 endif # xt_reactor
@@ -209,7 +214,7 @@ ifneq ($(xt_reactor),)
   CPPFLAGS += -DACE_HAS_XT $(PLATFORM_XT_CPPFLAGS)
   LIBS += $(PLATFORM_XT_LIBS)
   LDFLAGS += $(PLATFORM_XT_LDFLAGS)
-endif # debug
+endif # xt_reactor
 
 ifdef exceptions
   CCFLAGS += -DACE_HAS_EXCEPTIONS

@@ -17,10 +17,15 @@
 # There should be no other warnings from Sun C++ when building ACE.
 
 debug = 1
+threads = 1
+
+ifeq ($(threads),1)
+  CFLAGS += -mt
+  LDFLAGS += -mt
+endif # threads
 
 CC              = cc
 CXX             = CC
-CFLAGS          += -mt
 #### -pta instantiates all template members, which makes libraries bigger.
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.
@@ -60,7 +65,7 @@ else
   LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
 endif # orbix
 
-LDFLAGS         += -mt -xildoff
+LDFLAGS         += -xildoff
 
 OCFLAGS         += -O
 PIC             = -PIC
