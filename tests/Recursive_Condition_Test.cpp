@@ -214,8 +214,6 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value timeout =
     ACE_OS::gettimeofday() + ACE_Time_Value (1, 0);
 
-  ACE_TRACE ("[%t] scheduling timer\n");
-
   int timer_id = timer_queue.schedule (&handler, &timer_queue, timeout);
 
   ACE_OS::sleep (10);
