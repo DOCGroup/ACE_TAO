@@ -809,6 +809,7 @@ AH_TEMPLATE([ACE_HAS_UNIXWARE_SVR4_SIGNAL_T],
    platforms])
 
 AH_TEMPLATE([ACE_HAS_WCHAR],[Platform/compiler supports wchar_t])
+AH_TEMPLATE([ACE_USES_WCHAR],[ACE is built to use wide characters internally])
 
 AH_TEMPLATE([ACE_HAS_TYPENAME_KEYWORD],
 [Compiler supports the C++ typename keyword])
