@@ -22,11 +22,9 @@ CFG=TAO LIB - Win32 Debug
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 CPP=cl.exe
-RSC=rc.exe
 
 !IF  "$(CFG)" == "TAO LIB - Win32 Release"
 
@@ -40,11 +38,12 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -64,10 +63,11 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "../../" /I "../" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
+RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
+# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "../../" /I "../" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -310,6 +310,10 @@ SOURCE=.\Key_Adapters.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Leader_Follower.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Managed_Types.cpp
 # End Source File
 # Begin Source File
@@ -410,11 +414,27 @@ SOURCE=.\PollableS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Pool_Per_Endpoint.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Principal.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Priority_Mapping.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Protocol_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactor_Per_Priority.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactor_Registry.cpp
 # End Source File
 # Begin Source File
 
@@ -427,6 +447,14 @@ SOURCE=.\Request.cpp
 # Begin Source File
 
 SOURCE=.\Resource_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Current.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtcorbafwd.cpp
 # End Source File
 # Begin Source File
 
@@ -447,6 +475,10 @@ SOURCE=.\Server_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Services.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Single_Reactor.cpp
 # End Source File
 # Begin Source File
 
@@ -746,6 +778,10 @@ SOURCE=.\IORS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Leader_Follower.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Managed_Types.h
 # End Source File
 # Begin Source File
@@ -862,11 +898,27 @@ SOURCE=.\PollableS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Pool_Per_Endpoint.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Priority_Mapping.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Protocol_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactor_Per_Priority.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactor_Registry.h
 # End Source File
 # Begin Source File
 
@@ -879,6 +931,14 @@ SOURCE=.\request.h
 # Begin Source File
 
 SOURCE=.\Resource_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Current.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtcorbafwd.h
 # End Source File
 # Begin Source File
 
@@ -903,6 +963,10 @@ SOURCE=.\Server_Strategy_Factory.h
 # Begin Source File
 
 SOURCE=.\Services.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Single_Reactor.h
 # End Source File
 # Begin Source File
 
@@ -1090,6 +1154,10 @@ SOURCE=.\IOPS.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Leader_Follower.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Managed_Types.i
 # End Source File
 # Begin Source File
@@ -1162,7 +1230,31 @@ SOURCE=.\PolicyC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Pool_Per_Endpoint.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactor_Per_Priority.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactor_Registry.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Request.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Current.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtcorbafwd.i
 # End Source File
 # Begin Source File
 
@@ -1179,6 +1271,10 @@ SOURCE=.\Server_Request.i
 # Begin Source File
 
 SOURCE=.\Services.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Single_Reactor.i
 # End Source File
 # Begin Source File
 
