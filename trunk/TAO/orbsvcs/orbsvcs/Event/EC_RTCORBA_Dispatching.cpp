@@ -42,10 +42,10 @@ TAO_EC_RTCORBA_Dispatching::activate (void)
       if (this->priority_mapping_->to_native (corba_priority,
                                               native_priority) != 0)
         {
-          this->tasks_[i].activate (THR_NEW_LWP | THR_JOINABLE,
-                                    nthreads,
-                                    0,
-                                    native_priority);
+          this->tasks_[i].activate (
+              THR_SCHED_FIFO | THR_NEW_LWP | THR_JOINABLE,
+              nthreads, 0,
+              native_priority);
         }
     }
 }

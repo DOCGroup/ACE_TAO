@@ -102,7 +102,9 @@ private:
  * ConsumerAdmin and Dispatching) and to provide a simpler
  * interface to the EC_Factory.
  */
-class TAO_RTEvent_Export TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin::EventChannel
+class TAO_RTEvent_Export TAO_EC_Event_Channel
+  : public POA_RtecEventChannelAdmin::EventChannel
+  , public PortableServer::RefCountServantBase
 {
 public:
   /**
