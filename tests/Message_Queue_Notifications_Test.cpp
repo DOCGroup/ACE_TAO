@@ -62,7 +62,7 @@ public:
   // = Initialization and termination.
   Message_Handler (ACE_Reactor &reactor);
   // Constructor.
-  
+
   // = Demuxing hooks.
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -78,7 +78,8 @@ private:
 class Watermark_Test : public ACE_Task<ACE_SYNCH>
 {
   // = TITLE
-  // @@ Nanbor, can you please add a comment here?
+  //     This class test the correct functioning of build-in flow
+  //     control machanism in ACE_Task.
 public:
   Watermark_Test (void);
 
