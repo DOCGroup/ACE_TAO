@@ -1,3 +1,9 @@
+Sat Oct  2 01:33:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Protocols/sender.cpp:
+
+	  Fixed a compile error in our daily builds.
+
 Fri Oct  1 23:06:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/BiDir_GIOP/BiDirPolicy_Validator.cpp:
