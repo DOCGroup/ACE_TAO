@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -225,25 +225,25 @@ DRV_pre_proc(char *myfile)
   const char* tmpdir = getenv("TMP");
   if (tmpdir != 0)
     {
-      strcat(tmp_file, tmpdir);
-      strcat(tmp_ifile, tmpdir);
+      ACE_OS::strcpy (tmp_file, tmpdir);
+      ACE_OS::strcpy (tmp_ifile, tmpdir);
     }
   else
     {
-      strcpy(tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
-      strcat(tmp_file, "tmp");
-      strcpy(tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
-      strcat(tmp_ifile, "tmp");
+      ACE_OS::strcpy (tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
+      ACE_OS::strcat (tmp_file, "tmp");
+      ACE_OS::strcpy (tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
+      ACE_OS::strcat (tmp_ifile, "tmp");
     }
 
-  strcat(tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
-  strcat(tmp_file, "idlf_XXXXXX");
+  ACE_OS::strcat (tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
+  ACE_OS::strcat (tmp_file, "idlf_XXXXXX");
 
-  strcat(tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
-  strcat(tmp_ifile, "idli_XXXXXX");
+  ACE_OS::strcat (tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
+  ACE_OS::strcat (tmp_ifile, "idli_XXXXXX");
 
-  (void) mktemp(tmp_file); strcat(tmp_file, ".cc");
-  (void) mktemp(tmp_ifile); strcat(tmp_ifile, ".cc");
+  (void) mktemp (tmp_file); ACE_OS::strcat (tmp_file, ".cc");
+  (void) mktemp (tmp_ifile); ACE_OS::strcat (tmp_ifile, ".cc");
   if (strcmp(myfile, "standard input") == 0) {
     idl_global->set_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
     idl_global->set_main_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
@@ -283,16 +283,14 @@ DRV_pre_proc(char *myfile)
     return;
   }
   cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
-  cerr << "invoking preprocessor" << endl;
   if (manager.spawn (cpp_options) == -1)
     {
-      cerr << idl_global->prog_name() 
+      cerr << idl_global->prog_name()
 	   << GTDEVEL(": spawn of ")
 	   << arglist[0]
 	   << GTDEVEL(" failed\n");
       return;
     }
-  cerr << "preprocessor running" << endl;
 
   // Close the output file on the parent process.
   if (ACE_OS::close (fd) == -1)
@@ -307,14 +305,12 @@ DRV_pre_proc(char *myfile)
   // the next file will the previous args.
   argcount -= 2;
 
-  cerr << "waiting" << endl;
   if (manager.wait () == -1)
     {
       cerr << idl_global->prog_name ()
 	   << GTDEVEL(": wait for child process failed\n");
       return;
     }
-  cerr << "joined preprocessor" << endl;
   // TODO: Manage problems in the pre-processor, in the previous
   // version the current process would exit if the pre-processor
   // returned with error.
@@ -348,7 +344,7 @@ DRV_pre_proc(char *myfile)
       close(fd);
     }
     execvp(arglist[0], arglist);
-    cerr << idl_global->prog_name() 
+    cerr << idl_global->prog_name()
          << GTDEVEL(": execvp of ")
 	 << arglist[0]
 	 << GTDEVEL(" failed\n");
