@@ -1,3 +1,9 @@
+Tue Feb 15 16:55:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          I was using the wrong macro, it is TAO_HAS_ORBSVCS_Event2, not
+          ACE_HAS_Event2.
+
 Tue Feb 15 08:23:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/CosEvent/Basic/Shutdown.cpp:
@@ -15,32 +21,32 @@ Tue Feb 15 08:19:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Feb 14 18:13:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/include/ast_module.h:
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/be/be_generator.cpp:
-	* TAO_IDL/util/utl_scope.cpp:
-	  Extension of fix below that doesn't depend on order
-	  of events inside AST_Module constructor body. Also
-	  removes static variable declared inside AST_Module
-	  constructor body.
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+          Extension of fix below that doesn't depend on order
+          of events inside AST_Module constructor body. Also
+          removes static variable declared inside AST_Module
+          constructor body.
 
 Mon Feb 14 13:01:53 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_scope.cpp:
-	  In the check for redefinition of a scope immediately
-	  inside itself, add a check for a null pointer to
-	  Identifier. This was causing seg faults on many
-	  platforms.
+        * TAO_IDL/util/utl_scope.cpp:
+          In the check for redefinition of a scope immediately
+          inside itself, add a check for a null pointer to
+          Identifier. This was causing seg faults on many
+          platforms.
 
 Mon Feb 14 10:16:15 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Acceptor_Registry.h:
+        * tao/Acceptor_Registry.h:
 
-	  Removed inclusion of extraneous headers.
+          Removed inclusion of extraneous headers.
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Feb 14 08:25:32 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -53,16 +59,16 @@ Mon Feb 14 08:25:32 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Feb 14 02:47:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Interceptors/server.cpp (main): Changed to activate the
-	  servant explicitly so it would use the right POA.  Thanks to
-	  Russell L. Carter <rcarter@consys.com> for reporting this.
+        * tests/Interceptors/server.cpp (main): Changed to activate the
+          servant explicitly so it would use the right POA.  Thanks to
+          Russell L. Carter <rcarter@consys.com> for reporting this.
 
 Sun Feb 13 11:09:41 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/TAO: Added a fini() method so that the TAO_ORB_Manager
-	  can be instructed not to try to destroy the RootPOA a second
- 	  time.  Thanks to Boris Sukholitko <boris@webglide.com> for
- 	  reporting this.
+        * tao/TAO: Added a fini() method so that the TAO_ORB_Manager
+          can be instructed not to try to destroy the RootPOA a second
+          time.  Thanks to Boris Sukholitko <boris@webglide.com> for
+          reporting this.
 
 Sat Feb 12 21:06:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -368,8 +374,8 @@ Fri Feb 11 13:48:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
           unions, valuetypes and exeptions from being
           redefined immediately inside their own scope. This
           closes out Bugzilla bug #417. Thanks to
-	  Alia Atlas <akatlas@bbn.com> for sending in an
-	  example IDL file.
+          Alia Atlas <akatlas@bbn.com> for sending in an
+          example IDL file.
 
 Fri Feb 11 10:22:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
