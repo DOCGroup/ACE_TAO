@@ -1,3 +1,10 @@
+Wed Mar  8 11:13:04 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Reverted this change.
+	  Tue Mar  7 14:21:12 CST 2000  Loren Rittle
+	  <rittle@rsch.comm.mot.com>. The change gave compile errors on
+	  EGCS. 
+		
 Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com> 
 
 	* tests/Makefile.bor: Added new test Process_Manager_Test.
