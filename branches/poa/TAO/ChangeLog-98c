@@ -1,3 +1,17 @@
+Mon Jan 19 22:03:38 1998    <coryan@MILONGA>
+
+	* tao/sequence_T.i: 
+	  Object_Manager constructor was calling _duplicate(). That is not
+	  the right semantics, and produces a crash when working on an
+	  unitialized buffer.
+
+	* tests/POA/NewPOA/NewPOA.cpp: 
+	* tests/POA/NewPOA/NewPOA.dsp: 
+	  Fixed signed/unsigned warning.
+
+	* tests/POA/NewPOA/NewPOA.dsp: 
+	  Fixed missing options to find ACE.
+
 Mon Jan 19 16:36:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/iiopobj.h: 
