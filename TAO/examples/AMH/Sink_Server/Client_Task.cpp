@@ -108,12 +108,8 @@ Client_Task::narrow_servant (void)
     }
   ACE_CATCHANY
     {
-      // @@ Mayur, what use is there in placing a space before a
-      //    newline character?
-      //
-      // Mayur: I feel the newline is easier to spot that way.
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught trying to narrow servant \n");
+                           "Exception caught trying to narrow servant\n");
       return 0;
     }
   ACE_ENDTRY;
