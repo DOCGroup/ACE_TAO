@@ -1,3 +1,10 @@
+Thu Jul 13 14:41:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ace/OS.i:
+
+	  Minor updates to PACE functions which used to use
+	  double parenthesis.
+
 Thu Jul 13 12:58:26 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/ACE_SSL.dsp:
