@@ -14,6 +14,7 @@
 #endif /* !ACE_HAS_WINCE */
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Process_Manager.h"
 
 #include "ace/Service_Config.h"
 
@@ -385,7 +386,7 @@ ACE_Service_Config::process_directives_i (void)
   if (ace_yyerrno > 0)
     {
       // This is a hack, better errors should be provided...
-      errno = EINVAL; 
+      errno = EINVAL;
       return ace_yyerrno;
     }
   else
@@ -831,6 +832,7 @@ ACE_Service_Config::close_singletons (void)
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   ACE_Thread_Manager::close_singleton ();
 #endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
+  ACE_Process_Manager::close_singleton ();
 
   return 0;
 }
