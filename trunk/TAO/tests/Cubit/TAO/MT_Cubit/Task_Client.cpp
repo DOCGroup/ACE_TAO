@@ -3,6 +3,10 @@
 #include "Task_Client.h"
 #include "ace/Stats.h"
 
+#if defined (ACE_QUANTIFY)
+#include "quantify.h"
+#endif /* ACE_QUANTIFY */
+
 Task_State::Task_State (int argc, char **argv)
   : key_ ("Cubit"),
     start_count_ (0),
@@ -100,6 +104,9 @@ Task_State::Task_State (int argc, char **argv)
                   " [-g granularity_of_timing]"
                   "\n", argv [0]));
     }
+
+  if (thread_per_rate_ == 1)
+    thread_count_ = 5;
 
   // allocate the array of character pointers.
   ACE_NEW (iors_,
@@ -524,7 +531,10 @@ Client::svc (void)
                                 ts_->datatype_,
                                 frequency);
 
-  ts_->semaphore_->release ();
+  if (ts_->thread_per_rate_ == 1 && this->id_ == (ts_->thread_count_ - 1) )
+    ts_->semaphore_->release (ts_->thread_count_ - 1);
+  else
+    ts_->semaphore_->release ();
 
   if (result == -1)
     return -1;
@@ -561,15 +571,15 @@ Client::run_tests (Cubit_ptr cb,
 
   if (id_ == 0)
     ACE_NEW_RETURN (my_jitter_array,
-                    double [(loop_count/ts_->granularity_)*3], // magic number, for now.
+                    double [(loop_count/ts_->granularity_)*10], // magic number, for now.
                     -1);
   else
     ACE_NEW_RETURN (my_jitter_array,
-                    double [loop_count/ts_->granularity_], // magic number, for now.
+                    double [loop_count/ts_->granularity_], 
                     -1);
 
   double latency = 0;
-  double sleep_time = (1 / frequency) * (1000 * 1000) * ts_->granularity_; // usec
+  double sleep_time = (1 / frequency) * ACE_ONE_SECOND_IN_USECS * ts_->granularity_; // usec
   double delta = 0;
 
 #if defined (CHORUS)
@@ -578,18 +588,20 @@ Client::run_tests (Cubit_ptr cb,
 #endif /* CHORUS */
   double real_time = 0.0;
 
-#if defined (USE_QUANTIFY)
-  quantify_stop_recording_data();
-  quantify_clear_data ();
-#endif /* USE_QUANTIFY */
-
   ACE_High_Res_Timer timer_;
 
   // Make the calls in a loop.
 
-  // if i'm the high priority client, loop forever, until all low
-  // priority clients are done.  This is implemented with a semaphore.
-  for (i = 0; i < loop_count || (id_ == 0 && ts_->thread_count_ > 1); i++)
+  for (i = 0; 
+       // keep running for loop count, OR
+       i < loop_count || 
+	 // keep running if we are the highest priority thread and at
+	 // least another lower client thread is running, OR
+	 (id_ == 0 && ts_->thread_count_ > 1) ||
+	 // keep running if test is thread_per_rate and we're not the
+	 // lowest frequency thread.
+	 (ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1)); 
+       i++)
     {
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
@@ -621,15 +633,15 @@ Client::run_tests (Cubit_ptr cb,
                 // Cube an octet.
                 CORBA::Octet arg_octet = func (i), ret_octet = 0;
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_QUANTIFY)
                 /* start recording quantify data from here */
                 quantify_start_recording_data ();
-#endif /* USE_QUANTIFY */
+#endif /* ACE_QUANTIFY */
                 ret_octet = cb->cube_octet (arg_octet, env);
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_QUANTIFY)
                 quantify_stop_recording_data();
-#endif /* USE_QUANTIFY */
+#endif /* ACE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
@@ -660,16 +672,16 @@ Client::run_tests (Cubit_ptr cb,
 
                 CORBA::Short arg_short = func (i), ret_short;
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_QUANTIFY)
                 // start recording quantify data from here.
                 quantify_start_recording_data ();
-#endif /* USE_QUANTIFY */
+#endif /* ACE_QUANTIFY */
 
                 ret_short = cb->cube_short (arg_short, env);
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_QUANTIFY)
                 quantify_stop_recording_data();
-#endif /* USE_QUANTIFY */
+#endif /* ACE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
@@ -701,16 +713,16 @@ Client::run_tests (Cubit_ptr cb,
                 CORBA::Long arg_long = func (i);
                 CORBA::Long ret_long;
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_QUANTIFY)
                 /* start recording quantify data from here */
                 quantify_start_recording_data ();
-#endif /* USE_QUANTIFY */
+#endif /* ACE_QUANTIFY */
 
                 ret_long = cb->cube_long (arg_long, env);
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_QUANTIFY)
                 quantify_stop_recording_data();
-#endif /* USE_QUANTIFY */
+#endif /* ACE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
@@ -745,16 +757,16 @@ Client::run_tests (Cubit_ptr cb,
                 arg_struct.s = func (i);
                 arg_struct.o = func (i);
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_QUANTIFY)
                 // start recording quantify data from here.
                 quantify_start_recording_data ();
-#endif /* USE_QUANTIFY */
+#endif /* ACE_QUANTIFY */
 
                 ret_struct = cb->cube_struct (arg_struct, env);
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_QUANTIFY)
                 quantify_stop_recording_data();
-#endif /* USE_QUANTIFY */
+#endif /* ACE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
@@ -785,14 +797,14 @@ Client::run_tests (Cubit_ptr cb,
       else
         {
           call_count++;
-#if defined (USE_QUANTIFY)
+#if defined (ACE_QUANTIFY)
           // start recording quantify data from here.
           quantify_start_recording_data ();
-#endif /* USE_QUANTIFY */
+#endif /* ACE_QUANTIFY */
           cb->noop (env);
-#if defined (USE_QUANTIFY)
+#if defined (ACE_QUANTIFY)
           quantify_stop_recording_data();
-#endif /* USE_QUANTIFY */
+#endif /* ACE_QUANTIFY */
           if (env.exception () != 0)
             {
               env.print_exception ("oneway call noop()\n");
@@ -841,25 +853,32 @@ Client::run_tests (Cubit_ptr cb,
 
           real_time /= ts_->granularity_;
 
-          delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
+          delta = ((0.4 * fabs (real_time * ACE_ONE_SECOND_IN_USECS)) + (0.6 * delta)); // pow(10,6)
           latency += (real_time * ts_->granularity_);
-          my_jitter_array [i/ts_->granularity_] = real_time * 1000;
+	  if (ts_->thread_per_rate_ == 0)
+	    my_jitter_array [i/ts_->granularity_] = real_time * ACE_ONE_SECOND_IN_MSECS;
 #endif /* !ACE_LACKS_FLOATING_POINT */
         }
 
-      // if We are the high priority client.
-      // if tryacquire() succeeded then a client must have done a
-      // release () on it, thus we decrement the client counter.
-       if (id_ == 0 && ts_->thread_count_ > 1)
- 	{
- 	  if (ts_->semaphore_->tryacquire () != -1)
- 	    {
- 	      low_priority_client_count --;
- 	      // if all clients are done then break out of loop.
- 	      if (low_priority_client_count <= 0)
- 		break;
- 	    }
- 	}
+      if ( ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1) )
+	{
+	  if (ts_->semaphore_->tryacquire () != -1)
+	      break;
+	}
+      else       
+	// if We are the high priority client.
+	// if tryacquire() succeeded then a client must have done a
+	// release () on it, thus we decrement the client counter.
+	if (id_ == 0 && ts_->thread_count_ > 1)
+	  {
+	    if (ts_->semaphore_->tryacquire () != -1)
+	      {
+		low_priority_client_count --;
+		// if all clients are done then break out of loop.
+		if (low_priority_client_count <= 0)
+		  break;
+	      }
+	  }
     }
 
   if (id_ == 0)
@@ -895,7 +914,7 @@ Client::run_tests (Cubit_ptr cb,
                           1 / latency));
 
               this->put_latency (my_jitter_array,
-                                 latency * 1000,
+                                 latency * ACE_ONE_SECOND_IN_MSECS,
                                  thread_id);
 #endif /* ! ACE_LACKS_FLOATING_POINT */
             }
