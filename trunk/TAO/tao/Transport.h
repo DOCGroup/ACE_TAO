@@ -52,9 +52,9 @@ public:
   int refcount (void) const;
 
 protected:
-  TAO_Synch_Refcountable (int refcount);
+  TAO_Synch_Refcountable (ACE_Lock *lock, int refcount);
 
-  TAO_SYNCH_MUTEX mutex_;
+  ACE_Lock *refcount_lock_;
 };
 
 
