@@ -61,6 +61,7 @@ DIRS  = CDR \
 	Client_Leaks \
 	Server_Leaks \
 	Muxing \
+	Muxed_GIOP_Versions \
 	Hello \
 	Cache_Growth_Test \
 	MT_Timeout \
