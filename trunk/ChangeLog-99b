@@ -1,5 +1,16 @@
 Tue Oct 12 15:05:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/ACE.cpp (format_hexdump): Replaced
+  
+          textver[i] = (c < 0x20 || c > 0x7e) ? '.' : c;
+  
+          with
+  
+          textver[i] = isprint (c) ? c : '.';
+	  
+	  since this is more portable.  Thanks to Jim Rogers
+ 	  <jrogers@viasoft.com> for reporting this.
+
 	* ace/Memory_Pool.i: Changed implementation to 
 	  round_to_chunk_size() to ACE::round_to_pagesize(), which appears
  	  to be the "Right Thing"[TM] on NT.
