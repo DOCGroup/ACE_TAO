@@ -1,3 +1,12 @@
+Wed Jul 14 12:34:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Callback_Quoter/Makefile: don't build on/for
+          LynxOS, because of ugly template instantiation problem
+          with its old g++:
+            POA.cpp: multiple definition of
+              `ACE_Hash<ACE_CString>::operator()(ACE_CString const &) const'
+           .obj/Notifier_i.o:$(ACE_ROOT)/ace/Functor_T.i:38: first defined here
+
 Wed Jul 14 11:44:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU: on WIN32 hosts, attempt to set the
