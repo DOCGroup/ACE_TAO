@@ -1,4 +1,0 @@
-set nsiorfile=%temp%\qns_ior
-REM Naming Service must have been built or else this will fail
-start "Naming Service" /K ..\..\orbsvcs\Naming_Service\Naming_Service.exe -ORBport 10042 -ORBobjrefstyle url -o %nsiorfile
-
