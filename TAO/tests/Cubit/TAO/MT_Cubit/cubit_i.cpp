@@ -41,6 +41,7 @@ Cubit_i::cube_struct (const Cubit::Many &values,
                       CORBA::Environment &)
 {
   Cubit::Many out_values;
+
   out_values.o = values.o * values.o * values.o;
   out_values.s = values.s * values.s * values.s;
   out_values.l = values.l * values.l * values.l;

@@ -14,8 +14,8 @@
 //
 // ============================================================================
 
-#if !defined (_CUBIT_I_HH)
-#define _CUBIT_I_HH
+#if !defined (_CUBIT_I_H)
+#define _CUBIT_I_H
 
 #include "cubitS.h"
 
@@ -24,6 +24,7 @@ class Cubit_i : public POA_Cubit
   // = TITLE
   //   Cubit implementation class.
 public:
+  // = Initialization and termination methods.
   Cubit_i (CORBA::ORB_ptr orb);
   ~Cubit_i (void);
    
@@ -48,4 +49,4 @@ protected:
   // Keep a pointer to the ORB so we can shut it down.
 };
 
-#endif /* _CUBIT_I_HH */
+#endif /* _CUBIT_I_H */

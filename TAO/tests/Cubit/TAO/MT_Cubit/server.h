@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (SERVER_H)
-#define SERVER_H
 // ============================================================================
 //
 // = LIBRARY
@@ -16,13 +14,17 @@
 //
 // ============================================================================
 
+#if !defined (SERVER_H)
+#define SERVER_H
+
 // ACE includes.
 
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
-#define TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS { "-ORBconcurrency", "thread-per-connection", \
+#define TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS \
+{ "-ORBconcurrency", "thread-per-connection", \
   "-ORBdemuxstrategy", "dynamic", \
   "-ORBtablesize", "128" }
-#endif
+#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
@@ -48,16 +50,7 @@ extern "C" STATUS vmeDrv (void);
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* VME_DRIVER */
 
-#if !defined (ACE_HAS_THREADS)
-class NOOP_ACE_Barrier
-{
-public:
-  NOOP_ACE_Barrier (int ) {}
-  void wait (void) {}
-};
-#define ACE_Barrier NOOP_ACE_Barrier
-#endif /* ACE_HAS_THREADS */
-
+// Make the globals a Singleton.
 typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
 
 // @@ Naga, can you please split this class into a separate file
@@ -79,6 +72,7 @@ public:
   // Active Object entry point.
 
   CORBA::String get_servant_ior (u_int index);
+  // @@ Naga, can you please comment this?
 
 protected:
   Cubit_Task (void);
@@ -89,7 +83,7 @@ private:
   // Initialize the ORB, and POA.
 
   int create_servants (void);
-  // Create the servants
+  // Create the servants.
 
   CORBA::String key_;
   // All cubit objects will have this as prefix to its key.
@@ -107,97 +101,100 @@ private:
   // Pointer to the ORB
 
   Cubit_i **servants_;
-  // Array to hold the servants
+  // Array to hold the servants.
 
   CORBA::String *servants_iors_;
-  // ior strings of the servants
+  // IOR strings of the servants.
 
   //CosNaming::NamingContext_var naming_context_;
-  // Object reference to the naming service
+  // Object reference to the naming service.
 
   u_int task_id_;
-  // id used for naming service object name.
+  // ID used for naming service object name.
 
   CosNaming::NamingContext_var mt_cubit_context_;
-  // context where all MT Cubit objects will be created.
+  // Context where all MT Cubit objects will be created.
 
   TAO_ORB_Manager orb_manager_;
-  // The TAO ORB Manager
+  // The TAO ORB Manager.
 
   TAO_Naming_Client my_name_client_;
   // An instance of the name client used for resolving the factory
   // objects.
 };
 
-class Server
-  :public virtual MT_Priority
+// @@ Naga, why do we inherit this "public virtual?"  Isn't "virtual"
+// good enough?  
+class Server : public virtual MT_Priority
 {
   // = TITLE
   //     A multithreaded cubit server class.
+  //
   // = DESCRIPTION
   //     This class encapsulates the functionality of a multi-threaded
-  //     cubit server. To use this ,call initialize and then
+  //     cubit server. To use this, call initialize and then
   //     start_servants method.
 public:
   Server (void);
-  // default constructor
+  // Default constructor.
 
   int initialize (int argc, char **argv);
-  // initialize the server state.
+  // Initialize the server state.
 
   int start_servants (ACE_Thread_Manager *serv_thr_mgr);
-  // start the high and low priority servants.
+  // Start the high and low priority servants.
 
 private:
   void prelim_args_process (void);
-  // preliminary argument processing code.
+  // Preliminary argument processing code.
 
   void init_low_priority (void);
   // sets the priority to be used for the low priority servants.
 
   void write_iors (void);
-  // writes the iors of the servants to a file
+  // Writes the iors of the servants to a file
 
   int activate_high_servant (ACE_Thread_Manager *serv_thr_mgr);
-  // activates the high priority servant.
+  // Activates the high priority servant.
 
   int activate_low_servants (ACE_Thread_Manager *serv_thr_mgr);
-  // activates the low priority servants.
+  // Activates the low priority servants.
 
   int argc_;
-  // number of arguments for the servant.
+  // Number of arguments for the servant.
 
   char **argv_;
-  // arguments for the ORB.
+  // Arguments for the ORB.
 
   CORBA::String *cubits_;
-  // array to hold pointers to the Cubit objects.
+  // Array to hold pointers to the Cubit objects.
 
   Cubit_Task *high_priority_task_;
-  // pointer to the high priority task
+  // Pointer to the high priority task
 
   Cubit_Task **low_priority_tasks_;
-  // array to hold pointers to the low priority tasks.
+  // Array to hold pointers to the low priority tasks.
 
   ACE_Sched_Priority high_priority_;
-  // priority used for the high priority servant.
+  // Priority used for the high priority servant.
 
   ACE_Sched_Priority low_priority_;
-  // priority used by the low priority servants.
+  // Priority used by the low priority servants.
 
   u_int num_low_priority_;
-  // number of low priority servants
+  // Number of low priority servants
 
   u_int num_priorities_;
-  // number of priorities used.
+  // Number of priorities used.
 
   u_int grain_;
-  // Granularity of the assignment of the priorities.  Some OSs
-  // have fewer levels of priorities than we have threads in our
-  // test, so with this mechanism we assign priorities to groups
-  // of threads when there are more threads than priorities.
+  // Granularity of the assignment of the priorities.  Some OSs have
+  // fewer levels of priorities than we have threads in our test, so
+  // with this mechanism we assign priorities to groups of threads
+  // when there are more threads than priorities.
 
   u_int counter_;
+  // @@ Naga, can you please comment this?
 
   ACE_ARGV *high_argv_;
   // argv passed to the high priority servant.
@@ -206,7 +203,9 @@ private:
   // argv passed to the low priority servants.
 
   MT_Priority priority_;
-  // priority helper object.
+  // Priority helper object.
+  // @@ Naga, why do we both inherit from MT_Priority and also define
+  // an instance of it?
 };
 
 #endif /* SERVER_H */
