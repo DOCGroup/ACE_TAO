@@ -58,6 +58,8 @@ private:
 
   char **argv_;
   // commandline arguments.
+
+  unsigned char use_LifeCycle_Service_;
 };
 
 #endif /* GENERIC_FACTORY_H */
