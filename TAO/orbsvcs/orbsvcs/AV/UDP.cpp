@@ -327,9 +327,7 @@ TAO_AV_UDP_Acceptor::~TAO_AV_UDP_Acceptor (void)
 {
   if (this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
     delete this->entry_->control_handler ();
-  else
-      delete this->entry_->handler ();
-
+  
   delete this->address_;
   delete this->control_inet_address_;
 }
@@ -568,10 +566,6 @@ TAO_AV_UDP_Connector::~TAO_AV_UDP_Connector (void)
   if (this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
     {
       delete this->entry_->control_handler ();
-    }
-  else
-    {
-      delete this->entry_->handler ();
     }
 
   delete this->control_inet_address_;

@@ -408,8 +408,8 @@ Distributer::shut_down (ACE_ENV_SINGLE_ARG_DECL)
       DISTRIBUTER::instance ()->connection_manager ().unbind_sender (this->distributer_name_,
                                                                      sender_mmdevice.in ());
 
-      DISTRIBUTER::instance ()->connection_manager ().destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+    //  DISTRIBUTER::instance ()->connection_manager ().destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+    //  ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -477,17 +477,18 @@ main (int argc,
       while (!DISTRIBUTER::instance ()->done ())
         {
           if( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) )
-	  {
+          {
             orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-	  }
+	  
           ACE_TRY_CHECK;
+          }
         }
 
       DISTRIBUTER::instance ()->shut_down (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->shutdown(1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+//      orb->shutdown(1 ACE_ENV_ARG_PARAMETER);
+//      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY

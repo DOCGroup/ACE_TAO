@@ -1,3 +1,12 @@
+Wed May  8 22:03:48 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/*:  Memory management
+	  fixes.
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
+	* orbsvcs/orbsvcs/AV/TCP.cpp:
+	  Remove delete calls in destructors Acceptor and Connector classes
+	  which where causing crashes under Windows.
+
 Tue May  7 21:00:09 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
