@@ -1,3 +1,17 @@
+Fri Sep 01 03:08:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Task.h:
+	* ace/Thread_Manager.h:
+	* ace/Thread_Manager.cpp: For some reason, the <spawn_n> method
+	  that takes a thread_id array did not take the <task> pointer.
+	  If a user "activate"'ed a task and asking for the thread_id's,
+	  these thread would not be marked as these task, which caused
+	  they unaccounted for in subsequent wast_task.  Fixed the problem
+	  by adding the <task> argument to <spawn_n> and make sure the
+	  task pointer is passed in <activate> method.  Thanks to Mervyn
+	  Quah <mquah@guoco.com> for reporting the bug.
+	  [Bug 616]
+
 Thu Aug 31 15:31:30 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* include/makeinclude/outputdir.bor: Added a comment to explain
