@@ -265,7 +265,7 @@ main (int argc,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton <Server,ACE_null_mutex>;
+template class ACE_Singleton <Server,ACE_Null_Mutex>;
 template class TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint>;
