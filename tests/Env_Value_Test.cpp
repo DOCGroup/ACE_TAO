@@ -72,12 +72,14 @@ main (int argc, char *[])
       TEST_THIS (long, "TEST_VALUE_POSITIVE", 0, 10);
       TEST_THIS (unsigned long, "TEST_VALUE_POSITIVE", 0, 10);
       TEST_THIS (short, "TEST_VALUE_POSITIVE", 0, 10);
+      TEST_THIS (unsigned short, "TEST_VALUE_POSITIVE", 0, 10);
 
       TEST_THIS (int, "TEST_VALUE_NEGATIVE", 4, -10);
       TEST_THIS (double, "TEST_VALUE_NEGATIVE", -1.0, -10.2);
       TEST_THIS (long, "TEST_VALUE_NEGATIVE", 0, -10L);
       TEST_THIS (unsigned long, "TEST_VALUE_NEGATIVE", 0, (unsigned long) -10);
       TEST_THIS (short, "TEST_VALUE_NEGATIVE", 0, -10);
+      TEST_THIS (unsigned short, "TEST_VALUE_NEGATIVE", 0, (unsigned short) -10);
 
       char* defstr = "Sarah Cleeland is Two!";
       ACE_Env_Value<char*> sval("This_Shouldnt_Be_Set_Hopefully", defstr);
