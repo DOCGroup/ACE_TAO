@@ -1,3 +1,16 @@
+Tue Mar 18 17:40:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.h:
+
+          Removed declarations of two unused, unimplemented methods.
+
+        * tao/Any_T.cpp:
+
+          Added calls to assign_translator() in the extract() method,
+          after the attempt at typed extraction fails, for some
+          additional Any_*_Impl template types - types which could
+          contain a (w)string or (w)char nested at some level.
+
 Tue Mar 18 15:31:06 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/examples/ORT/ObjectReferenceFactory.idl:
