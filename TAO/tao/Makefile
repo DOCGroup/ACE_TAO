@@ -11,8 +11,8 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 # These are headers for things which are exported and must be
 # installed.  (Currently not used).
-PUB_HDRS = Pluggable MProfile IIOP_Profile IIOP_Transport IIOP_Connector IIOP_Acceptor \
-	   GIOP Invocation IIOP_ORB Connect Params \
+PUB_HDRS = Pluggable MProfile IIOP_Profile IIOP_Transport IIOP_Connector \
+           IIOP_Acceptor GIOP Invocation IIOP_ORB Connect Params \
 	   Marshal Debug \
 	   Default_Client Default_Server \
 	   Server_Strategy_Factory Client_Strategy_Factory ORB_Core
@@ -92,7 +92,6 @@ BIN = # t-sizes
 
 DEFS    = $(addsuffix .h,$(PUB_HDRS))
 LSRC    = $(addsuffix .cpp,$(FILES))
-LSRC2   = $(addsuffix .cpp,$(TEMPLATE_FILES))
 
 LDLIBS = -lACE
 LIBS = -lACE
