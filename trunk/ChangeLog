@@ -1,3 +1,10 @@
+Thu Sep 12 17:18:43 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Synch.{h,cpp}: Only define the recursive condition support if
+	  we're running on Win32.  Hopefully, this will be generalized for
+ 	  VxWorks at some point.  Thanks to Rob Andzik
+ 	  <andzik@rtlogic.com> for reporting this.
+
 Thu Sep 12 19:29:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Atomic_Op_T.i (dump): Don't try to return a value from a
@@ -894,7 +901,8 @@ Sat Aug 24 12:01:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS.h: #undef the atop macro so that it won't break the new
 	  ACE_OS::atop() method on FreeBSD.  Thanks to Russell Carter
- 	  <rcarter@pinyon.org> for this report.
+ 	  <rcarter@pinyon.org> and Christophe Juniet
+ 	  <cjuniet@entreview.com> for this report.
 
 	* ace/config-lynxos.h: Added some #defines for LynxOS 4.0.  We'll
 	  leave these comments out for now until we figure out how to add
