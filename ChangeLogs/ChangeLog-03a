@@ -1,3 +1,8 @@
+Sun Nov  3 10:36:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/run_test.lst: Prevented SV_Shared_Memory test from running
+	  in RH_7.1 configurations. Please see BUGID 1351 for details. 
+
 Sat Nov  2 17:44:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/Select_Reactor_Base.h:
