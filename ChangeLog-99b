@@ -1,3 +1,8 @@
+Wed Aug 25 16:15:07 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-subsets.html: removed spurious LOGGING_FILES
+          text.
+
 Wed Aug 25 15:55:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp},Object_Manager.*,Signal.i (default_mask): moved
