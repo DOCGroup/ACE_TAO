@@ -43,6 +43,8 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 
+typedef void* (*a_function_pointer) (void*);
+
 static
 u_int
 check (const ASYS_TCHAR *message, u_int i, u_int j)
@@ -145,6 +147,17 @@ main (int, ASYS_TCHAR *[])
   errors += check (ASYS_TEXT ("sizeof (ACE_UINT64) is %u%s"),
                    sizeof (ACE_UINT64), 8);
 
+  // ACE assumes sizeof (long) == sizeof (void*)
+  if (sizeof (long) == sizeof (void *))
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sizeof (long) == sizeof (void*)\n")));
+  else
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("sizeof (long) != sizeof (void*)\n")));
+
+  // ACE assumes sizeof (long) >= sizeof (a_function_pointer)
+  if (sizeof (long) >= sizeof (a_function_pointer))
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sizeof (long) >= sizeof (a_function_pointer)\n")));
+  else
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("sizeof (long) < sizeof (a_function_pointer)\n")));
 
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("little endian\n")));
