@@ -1,3 +1,10 @@
+Wed Jul  7 16:14:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Sequence_T.h:
+	* tao/Sequence_T.cpp:
+	  Fixed assignment from TAO_Object_Field_T<> to
+	  TAO_Object_Manager<>.
+
 Wed Jul  7 15:50:10 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp: Removed some commented out
