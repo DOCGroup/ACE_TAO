@@ -13,6 +13,12 @@ project(*Bounded_Simple_Types) : taoexe {
   }
 }
 
+project(*Unbounded_String) : taoexe {
+  Source_Files {
+    Unbounded_String.cpp
+  }
+}
+
 project(*String_Sequence_Element): taoexe, boost_unit_test {
   Source_Files {
     string_sequence_element_ut.cpp
