@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, messaging, ami {
+  exename = blocking_server
   Source_Files {
     Manager.cpp
     blocking_server.cpp
@@ -15,7 +16,8 @@ project(*Client): messaging, taoexe, portableserver, ami {
   }
 }
 
-project(*AMI Server): messaging, taoexe, portableserver, ami {
+project(*AMI Server): taoserver, messaging, ami {
+  exename = ami_server
   Source_Files {
     AMI_Manager.cpp
     ami_server.cpp
