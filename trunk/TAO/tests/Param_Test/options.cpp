@@ -18,10 +18,6 @@
 
 #include "options.h"
 
-// @@ Naga, can you please generalize this so we don't use a fixed
-// sized constant?!
-#define MAX_IOR_SIZE 512
-
 // Constructor.p
 Options::Options (void)
   : ior_ (0),
@@ -47,9 +43,7 @@ Options::parse_args (int argc, char **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "xdn:f:i:t:k:");
   int c;
-  char temp_buf[MAX_IOR_SIZE];
-  char *result;
-  FILE *ior_file;
+  int result;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -68,18 +62,14 @@ Options::parse_args (int argc, char **argv)
         break;
 
       case 'f':
-	ior_file = ACE_OS::fopen (get_opts.optarg,"r");
-	if (ior_file == 0)
-	  ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
-	result = ACE_OS::fgets (temp_buf, MAX_IOR_SIZE, ior_file);
-	if (result == 0)
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "Unable to read cubit_factory_ior from file %s: %p\n",
-			     get_opts.optarg), -1);
-	this->ior_ = CORBA::string_copy (temp_buf);
-	ACE_OS::fclose (ior_file);
+        result = this->read_ior (get_opts.optarg);
+
+        if (result < 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to read ior from %s : %p\n",
+                             get_opts.optarg),
+                            -1);
+
 	break;
 
      case 'k':
@@ -154,6 +144,28 @@ Options::parse_args (int argc, char **argv)
       }
 
   // Indicates successful parsing of command line.
+  return 0;
+}
+
+// Get the factory IOR from the file created by the server.
+int
+Options::read_ior (char *filename)
+{
+  // Open the file for reading.
+  ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
+
+  if (f_handle == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to open %s for writing: %p\n",
+                       filename),
+                      -1);
+  ACE_Read_Buffer ior_buffer (f_handle);
+  this->ior_ = ior_buffer.read ();
+
+  if (this->ior_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to allocate memory to read ior: %p\n"),
+                      -1);
   return 0;
 }
 
