@@ -3313,7 +3313,7 @@ public:
 		      struct msghdr *msg,
 		      int flags);
   static int sendmsg (ACE_HANDLE handle,
-		      ACE_SENDMSG_TYPE *msg,
+		      const struct msghdr *msg,
 		      int flags); 
   static ssize_t write (ACE_HANDLE handle,
 			const void *buf,
