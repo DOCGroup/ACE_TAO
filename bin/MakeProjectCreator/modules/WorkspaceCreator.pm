@@ -48,10 +48,12 @@ sub new {
   my($addproj)   = shift;
   my($progress)  = shift;
   my($toplevel)  = shift;
+  my($baseprojs) = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $relative,
                                 $addtemp, $addproj,
-                                $progress, $toplevel, 'workspace');
+                                $progress, $toplevel, $baseprojs,
+                                'workspace');
   my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'} = undef;
@@ -536,17 +538,18 @@ sub project_creator {
   ## Set up values for each project creator
   ## If we have command line arguments in the workspace, then
   ## we process them before creating the project creator
-  my(%parameters) = ('global'   => $self->get_global_cfg(),
-                     'include'  => $self->get_include_path(),
-                     'template' => $self->get_template_override(),
-                     'ti'       => $self->get_ti_override(),
-                     'dynamic'  => $self->get_dynamic(),
-                     'static'   => $self->get_static(),
-                     'relative' => $self->get_relative(),
-                     'addtemp'  => $self->get_addtemp(),
-                     'addproj'  => $self->get_addproj(),
-                     'progress' => $self->get_progress_callback(),
-                     'toplevel' => 1,
+  my(%parameters) = ('global'    => $self->get_global_cfg(),
+                     'include'   => $self->get_include_path(),
+                     'template'  => $self->get_template_override(),
+                     'ti'        => $self->get_ti_override(),
+                     'dynamic'   => $self->get_dynamic(),
+                     'static'    => $self->get_static(),
+                     'relative'  => $self->get_relative(),
+                     'addtemp'   => $self->get_addtemp(),
+                     'addproj'   => $self->get_addproj(),
+                     'progress'  => $self->get_progress_callback(),
+                     'toplevel'  => 1,
+                     'baseprojs' => $self->get_baseprojs(),
                     );
 
   $self->process_cmdline(\%parameters);
@@ -562,7 +565,8 @@ sub project_creator {
                    $parameters{'addtemp'},
                    $parameters{'addproj'},
                    $parameters{'progress'},
-                   $parameters{'toplevel'});
+                   $parameters{'toplevel'},
+                   $parameters{'baseprojs'});
 }
 
 

@@ -54,6 +54,7 @@ sub options {
   my(@include)    = ();
   my(@input)      = ();
   my(@generators) = ();
+  my(@baseprojs)  = ();
   my(%ti)         = ();
   my(%relative)   = ();
   my(%addtemp)    = ();
@@ -73,28 +74,38 @@ sub options {
       print $self->completion_command($name, $types) . "\n";
       return undef;
     }
+    elsif ($arg eq '-base') {
+      $i++;
+      if (!defined $args[$i]) {
+        $self->optionError('-base requires an argument');
+      }
+      else {
+        push(@baseprojs, $args[$i]);
+      }
+    }
     elsif ($arg eq '-type') {
       $i++;
       if (!defined $args[$i]) {
         $self->optionError('-type requires an argument');
       }
-
-      my($type) = lc($args[$i]);
-      if (defined $types->{$type}) {
-        my($call)  = $types->{$type};
-        my($found) = 0;
-        foreach my $generator (@generators) {
-          if ($generator eq $call) {
-            $found = 1;
-            last;
+      else {
+        my($type) = lc($args[$i]);
+        if (defined $types->{$type}) {
+          my($call)  = $types->{$type};
+          my($found) = 0;
+          foreach my $generator (@generators) {
+            if ($generator eq $call) {
+              $found = 1;
+              last;
+            }
+          }
+          if (!$found) {
+            push(@generators, $call);
           }
         }
-        if (!$found) {
-          push(@generators, $call);
+        else {
+          $self->optionError("Invalid type: $args[$i]");
         }
-      }
-      else {
-        $self->optionError("Invalid type: $args[$i]");
       }
     }
     elsif ($arg eq '-global') {
@@ -110,7 +121,9 @@ sub options {
       if (!defined $include) {
         $self->optionError('-include requires a directory argument');
       }
-      push(@include, $include);
+      else {
+        push(@include, $include);
+      }
     }
     elsif ($arg eq '-noreldefs') {
       $reldefs = 0;
@@ -241,6 +254,7 @@ sub options {
                   'include'    => \@include,
                   'input'      => \@input,
                   'generators' => \@generators,
+                  'baseprojs'  => \@baseprojs,
                   'template'   => $template,
                   'ti'         => \%ti,
                   'dynamic'    => $dynamic,
