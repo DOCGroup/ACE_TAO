@@ -1,3 +1,56 @@
+Tue Jun 08 18:50:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+	
+	* /orbsvcs/tests/AVStreams/benchmark/svc.conf
+	* /orbsvcs/tests/AVStreams/benchmark/clnt.conf 
+	* /performance-tests/Thruput/TAO/svc.conf
+	* /MT_Client/client.conf 
+	* /NestedUpcall/MT_Client_Test/client.conf
+	* /orbsvcs/tests/ImplRepo/implrepo.conf
+	* /orbsvcs/tests/Time/implrepo.conf
+
+          Modified these files to remove redundant configuration options.
+
+	* /orbsvcs/tests/AVStreams/mpeg/source/client/svc.conf
+	* /orbsvcs/tests/AVStreams/mpeg/source/server/svc.conf 
+	* /orbsvcs/tests/ImplRepo/svc.conf
+	* /tests/Param_Test/svc.conf
+	* /examples/POA/On_Demand_Loading/svc.conf 
+	* /examples/Simulator/DOVEMIB/svc.conf 
+	* /examples/Simulator/Event_Supplier/svc.conf 
+	* /MT_Client/client.global.conf 
+
+	  Removed the *.conf files above since they contained only
+	  redundant options.
+
+	* /orbsvcs/Event_Service/svc.conf 
+	* /orbsvcs/tests/Event/Basic/svc.conf
+	* /orbsvcs/tests/EC_Mcast/svc.conf
+	* /orbsvcs/CosEvent_Service/svc.conf 
+	* /tests/FL_Cube/svc.conf 
+	* /tests/NestedUpcall/Reactor/svc.conf
+	* /examples/Simple/time-date/svc.conf 
+	* /examples/POA/Identity/svc.conf 
+	* /performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf 
+	* /performance-tests/Cubit/TAO/IDL_Cubit/svc.conf 
+	* /performance-tests/Cubit/TAO/MT_Cubit/svc.conf 
+	* /performance-tests/POA/Object_Creation_And_Registration/svc.conf
+	* /POA/Explicit_Activation/alternate.conf 
+	* /Quoter/client.conf 
+	* /Quoter/server.conf 
+	* /MT_Client/client.tss.conf
+	* /MT_Client/server.conf 
+	* /NestedUpcall/Reactor/svc.mt.conf 
+	* /orbsvcs/tests/Event/Basic/sched.conf 
+	* /orbsvcs/tests/Event/Basic/observer.conf
+	* /orbsvcs/tests/Event/Performance/ec.mt.conf
+	* /orbsvcs/tests/Event/Performance/ec.st.conf
+	* /orbsvcs/tests/EC_Throughput/ec.conf 
+	* /orbsvcs/tests/EC_Throughput/ec.mt.conf 
+
+	Retained the *.conf files above as they were originally. 
+        Thanks to Irfan, Nanbor, Naga, Carlos, David of the DOC group for
+	helping me with	this.
+	
 Tue Jun 08 18:17:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (find_POA): Must release the Object Adapter lock
