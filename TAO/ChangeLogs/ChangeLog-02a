@@ -1,8 +1,10 @@
 Thu Apr  5 09:40:11 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/TypeCode_Creation/makefile.bor
+        * tests/BiDirectional/*.bor
+        * tests/BiDirectional_NestedUpCall/*.bor
 
-          Changed makefile so that this example is correctly build
+          Changed makefiles to include the new TAO libraries
 
 Wed Apr  4 16:11:46 2001  Darrell Brunsch <brunsch@uci.edu>
 
