@@ -936,6 +936,25 @@ SOURCE=.\Exclusive_TMS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Fault_Tolerance_Service.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\FILE_Parser.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3486,6 +3505,10 @@ SOURCE=.\Exclusive_TMS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Fault_Tolerance_Service.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\FILE_Parser.h
 # End Source File
 # Begin Source File
@@ -4095,6 +4118,10 @@ SOURCE=.\Environment.i
 # Begin Source File
 
 SOURCE=.\Exception.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fault_Tolerance_Service.i
 # End Source File
 # Begin Source File
 
