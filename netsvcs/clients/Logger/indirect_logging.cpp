@@ -16,7 +16,8 @@ main (int argc, char *argv[])
 
   ACE_OS::srand ((u_int) ACE_OS::time (0));
 
-  ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::LOGGER, logger_key);
+  ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::LOGGER,
+		     ACE_WIDE_STRING (logger_key));
 
   ACE_DEBUG ((LM_STARTUP, "starting up the test\n"));
 
