@@ -1,3 +1,15 @@
+Sun May 18 18:21:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/tests.mpc:
+          Added Test_Output library and Main.cpp to all objects.
+
+        * tests/RMCAST/Makefile.bor:
+        * tests/RMCAST/tests.mpc:
+        * tests/SSL/Makefile:
+        * tests/SSL/Makefile.bor:
+        * tests/SSL/tests.mpc:
+          Added Test_Output library to all objects.
+
 Sun May 18 17:32:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Makefile.bor:
@@ -80,7 +92,7 @@ Sat May 17 19:31:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Added include of ace/Singleton.h.
 
         * tests/RMCast/Makefile:
-          Added -LTest_Output to LDLIBS.
+          Added -lTest_Output to LDLIBS.
 
         * tests/RMCast/RMCast_Fragment_Test.cpp:
         * tests/RMCast/RMCast_Membership_Test.cpp:
