@@ -1,3 +1,9 @@
+Sun Dec 02 15:13:30 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/OS.cpp:
+	  Fixed Fuzz problems, the ACE_TRACE calls in operator++/--
+	  definitions had less whitespace than the actual operators.
+
 Sun Dec 02 15:17:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (join): This method mistakenly used the
