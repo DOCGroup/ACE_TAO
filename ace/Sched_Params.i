@@ -19,8 +19,8 @@
 
 ACE_INLINE
 ACE_Scheduling_Params::ACE_Scheduling_Params (const ACE_Thread_Priority &priority,
-					      const int scope,
-					      const ACE_Time_Value &quantum) 
+                                              const int scope,
+                                              const ACE_Time_Value &quantum)
   : priority_ (priority),
     scope_ (scope),
     quantum_ (quantum)

@@ -20,10 +20,19 @@
 #if ! defined (ACE_THREAD_PRIORITY_H)
 #define ACE_THREAD_PRIORITY_H
 
-class  ACE_Export ACE_Thread_Priority
+class ACE_Export ACE_Thread_Priority
   // = TITLE
+  //    Provides OS-independent scheduling priority classes and thread
+  //    priorities.
   //
   // = DESCRIPTION
+  //    ACE_Thread_Priority provides OS-independent scheduling priority
+  //    classes and thread priority values.  Applications that use
+  //    these priority values don't have to be concerned that lower
+  //    values indicate higher thread priorities on some platforms but
+  //    lower on others.  ACE_Thread_Priorities are typically used with
+  //    ACE_Scheduling_Parameters to specify scheduling behavior to the
+  //    OS.
 {
 public:
   enum Priority_Class
@@ -33,16 +42,6 @@ public:
     ACE_HIGH_PRIORITY_CLASS,
     ACE_REALTIME_PRIORITY_CLASS
   };
-
-  // = This enum help users create OS-independent priorities.
-
-  // For applications that don't require OS- independence, they can
-  // take advantage of a greater range of thread priorities offered by
-  // their platform.  This can be done by casting the OS-dependent
-  // priority to ACE_Thread_Priority::Thread_Priority when calling the
-  // member functions that take it as an argument.  In other words,
-  // this class will not "break" if a Thread_Priority outside of
-  // [ACE_PRIORITY_MIN .. ACE_PRIORITY_MAX] is used.
 
   enum Thread_Priority
   {
@@ -56,14 +55,23 @@ public:
     ACE_PRIORITY_6,
     ACE_PRIORITY_MAX = ACE_PRIORITY_6
   };
+  // = This enum helps users create OS-independent priorities.
+  //
+  // For applications that don't require OS- independence, they can
+  // take advantage of a greater range of thread priorities offered by
+  // their platform.  This can be done by casting the OS-specific
+  // priority to ACE_Thread_Priority::Thread_Priority when calling the
+  // member functions that take it as an argument.  In other words,
+  // this class will not "break" if a Thread_Priority outside of
+  // [ACE_PRIORITY_MIN .. ACE_PRIORITY_MAX] is used.
 
   // = NOTE
-
+  //
   // the following distinct ACE_Thread_Priority combinations map to
   // identical priority class/thread priority combinations on Win32.
   // They may map to distinct priorities on other platforms.  So, if
   // OS-independent behavior is desired, applications should not
-  // depend on these having either the same or different OS
+  // depend on these having either the same or different OS-specific
   // priorities:
   //
   // * ACE_LOW_PRIORITY_CLASS/ACE_PRIORITY_0 ==
@@ -77,7 +85,7 @@ public:
   //       ACE_HIGH_PRIORITY_CLASS/ACE_PRIORITY_6
 
   ACE_Thread_Priority (Priority_Class priority_class = ACE_NORMAL_PRIORITY_CLASS,
-		       Thread_Priority default_thread_priority = ACE_PRIORITY_MIN);
+                       Thread_Priority default_thread_priority = ACE_PRIORITY_MIN);
   // There can be more than one ACE_Thread_Priority instance per
   // process, e.g., one per Solaris Lightweight Process.
 
@@ -90,10 +98,11 @@ public:
 
   // = Set/Get accessors for default thread priority.
   long default_thread_priority (const Thread_Priority);
+  // Return 0 on success and -1 on failure (and sets errno).
   Thread_Priority default_thread_priority (void) const;
 
   ACE_id_t os_priority_class (void) const;
-  // Get accessor for the OS-specific priority class
+  // Get accessor for the OS-specific priority class.
 
   ACE_pri_t os_default_thread_priority (void) const;
   // Get accessor for the numeric default thread priority value, which
@@ -101,19 +110,19 @@ public:
 
 private:
   Priority_Class priority_class_;
-  // Priority class of this thread.
+  // Priority class of this thread, OS-independent.
 
   Thread_Priority default_thread_priority_;
-  // Default thread priority for this class.
+  // Default thread priority value, OS-independent.
 
   ACE_id_t os_priority_class_;
-  // Please document me.
+  // OS-specific value of priority_class_.
 
   ACE_pri_t os_default_thread_priority_;
-  // Please document me.
+  // OS-specific value of default_thread_priority_.
 
-  long normalize (void);
-  // Convert OS-dependent priorities into OS-independent priorities.
+  long convert_to_os_priority (void);
+  // Convert OS-independent priorities into OS-specific priorities.
 };
 
 #if defined (__ACE_INLINE__)
