@@ -173,7 +173,10 @@ namespace CIAO
       Components::EventConsumerBase_ptr consumer);
 
     virtual void push_structured_event (
-      const CosNotification::StructuredEvent& event);
+      const CosNotification::StructuredEvent& event)
+      ACE_THROW_SPEC ((
+	CosEventComm::Disconnected,
+	CORBA::SystemException));
 
     virtual void disconnect_structured_push_consumer (
         ACE_ENV_SINGLE_ARG_DECL)

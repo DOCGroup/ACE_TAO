@@ -14,15 +14,15 @@
 #define CIAO_EVENTSERVICE_FACTORY_IMPL_H
 #include /**/ "ace/pre.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "CIAO_EventService_Factory.h"
 
 #include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 namespace CIAO
 {
