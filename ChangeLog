@@ -1,10 +1,32 @@
+Tue Feb 15 13:34:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+
+	  Move examples until after protocols in SUBDIRS.
+
+Tue Feb 15 13:32:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Configure moved RMCast and TMCast libraries.
+
+	* bin/MakeProjectCreator/config/rmcast.mpb:
+
+	  Removed "requires += rmcast".  The RMCast library is now built
+	  unconditionally.
+
+	* bin/MakeProjectCreator/config/rmcast.mpb:
+	* bin/MakeProjectCreator/config/tmcast.mpb:
+
+	  Append $(ACE_ROOT)/protocols to includes.
+
 Tue Feb 15 21:27:25 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
         * include/makeinclude/platform_lynxos.GNU:
           Updated. Utilize new ACE_LYNXOS_* macros, removed some ancient
           settings etc.
-        
+
         * examples/APG/ThreadPools/LF_ThreadPool.cpp:
         * examples/APG/ThreadPools/ThreadPool.cpp:
           Replaced NULL with 0.
@@ -12,7 +34,7 @@ Tue Feb 15 21:27:25 2005  Olli Savia  <ops@iki.fi>
         * tests/Reactor_Dispatch_Order_Test.cpp:
           Utilize new ACE_LYNXOS_* macros to differentiate LynxOS
           versions.
-        
+
 Tue Feb 15 10:23:39 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * examples/Service_Configurator/Misc/Timer_Service.cpp (handle_close):
