@@ -1,3 +1,10 @@
+Sat Jun  5 17:49:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	  Fixed problem on shutdown: some objects where still around even
+	  though the ORB was destroyed.
+
 Sat Jun  5 16:46:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Object_Adapter.cpp (~Servant_Upcall): Added missing
