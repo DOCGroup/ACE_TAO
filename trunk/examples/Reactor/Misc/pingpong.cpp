@@ -209,10 +209,12 @@ run_svc (ACE_HANDLE handle)
       || reactor.schedule_timer (&callback,
                                  0,
                                  SHUTDOWN_TIME) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n%a",
-                "reactor",
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "reactor"));
+      ACE_OS::exit (1);
+    }
 
   // Main event loop (one per process).
 

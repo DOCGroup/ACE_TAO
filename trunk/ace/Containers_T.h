@@ -1624,15 +1624,11 @@ private:
 /**
  * @class ACE_Ordered_MultiSet
  *
- * @brief Implement a simple ordered multiset of <T> of unbounded size.
- * This class template requires that < operator semantics be
- * defined for the parameterized type <T>, but does not impose
- * any restriction on how that ordering operator is implemented.
- *
- * This implementation of an unordered set uses a circular
- * linked list with a dummy node.  This implementation does not
- * allow duplicates, but it maintains FIFO ordering of
- * insertions.
+ * @brief Implement a simple ordered multiset of <T> of unbounded size
+ * that allows duplicates.  This class template requires that <
+ * operator semantics be defined for the parameterized type <T>, but
+ * does not impose any restriction on how that ordering operator is
+ * implemented. 
  */
 template <class T>
 class ACE_Ordered_MultiSet

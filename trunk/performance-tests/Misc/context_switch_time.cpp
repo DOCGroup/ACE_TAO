@@ -1102,7 +1102,9 @@ get_options (int argc, char *argv[])
       new_lwp = THR_NEW_LWP;
       break;
     case '?':
-      ACE_DEBUG ((LM_ERROR, "usage: %n %s\n%a", usage, 0));
+      ACE_DEBUG ((LM_ERROR, "usage: %n %s\n", usage));
+      ACE_OS::exit (1);
+      /* NOTREACHED */
       break;
     default:
       ACE_DEBUG ((LM_ERROR, "%n: unknown arg, %c\n", opt));

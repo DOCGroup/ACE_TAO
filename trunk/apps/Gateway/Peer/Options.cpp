@@ -14,7 +14,9 @@ Options *Options::instance_ = 0;
 void
 Options::print_usage_and_die (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] [-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] [-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n"));
+  ACE_OS::exit (1);
 }
 
 Options::Options (void)

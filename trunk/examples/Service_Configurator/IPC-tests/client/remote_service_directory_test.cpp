@@ -22,8 +22,8 @@ static void
 print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
-              "usage: %n [-p portnum] [-h host_name] [-r]\n%a",
-              1));
+              "usage: %n [-p portnum] [-h host_name] [-r]\n"));
+  ACE_OS::exit (1);
 }
 
 void

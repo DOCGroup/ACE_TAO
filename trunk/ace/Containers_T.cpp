@@ -2180,22 +2180,14 @@ ACE_Ordered_MultiSet<T>::remove (const T &item)
   if (node && (result == 0))
     {
       if (node->prev_)
-        {
-          node->prev_->next_ = node->next_;
-        }
+        node->prev_->next_ = node->next_;
       else
-        {
-          head_ = node->next_;
-        }
+        head_ = node->next_;
 
       if (node->next_)
-        {
-          node->next_->prev_ = node->prev_;
-        }
+        node->next_->prev_ = node->prev_;
       else
-        {
-          tail_ = node->prev_;
-        }
+        tail_ = node->prev_;
 
       this->cur_size_--;
 

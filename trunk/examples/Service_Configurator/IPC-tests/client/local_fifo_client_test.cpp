@@ -25,8 +25,9 @@ static void
 print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR, 
-              "usage: %s [-d] [-f rendezvous_fifo]\n%a", 
-	      program_name, -1));
+              "usage: %s [-d] [-f rendezvous_fifo]\n",
+	      program_name));
+  ACE_OS::exit (1);
 }
 
 static void

@@ -577,6 +577,7 @@ public:
   int remove (void);
 
   int acquire (void);
+  int acquire (ACE_Time_Value &timeout);
   int tryacquire (void);
   int release (void);
   int acquire_write (void);

@@ -65,6 +65,10 @@ public:
   ACE_EH_PTMF callback_;
 
   int dispatch_;
+
+private:
+  ACE_UNIMPLEMENTED_FUNC (ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &))
 };
 
 /**

@@ -105,7 +105,8 @@ Options::print_usage_and_die (void)
        "[-s] (use SysV shared memory rather than mmap)\n"
        "[-t number of threads or processes to spawn]\n"
        "[-T] (enable tracking)\n"
-       "[-n iteration_count]\n%a", -1));
+       "[-n iteration_count]\n"));
+  ACE_OS::exit (1);
   /* NOTREACHED */
 }
 
