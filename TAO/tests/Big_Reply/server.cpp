@@ -9,7 +9,7 @@ ACE_RCSID(Big_Reply, server, "$Id$")
 const char *ior_output_file = "test.ior";
 
 // We can change this value if wanted..
-const CORBA::ULong data_size = 7340032;
+const CORBA::ULong data_size = 4000000;
 
 int
 parse_args (int argc, char *argv[])
