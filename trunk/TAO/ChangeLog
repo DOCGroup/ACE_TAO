@@ -1,3 +1,12 @@
+Sun Nov  9 23:23:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Remote_Object_Proxy_Impl.cpp:
+	* tao/Remote_Object_Proxy_Impl.h:
+
+	  More retirements.
+
+	* tao/Makefile*: Updated dependencies.
+
 Sun Nov  9 23:06:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Asynch_Invocation.cpp:
