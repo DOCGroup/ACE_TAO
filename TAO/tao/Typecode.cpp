@@ -830,10 +830,25 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
   if (my_count != tc_count)
     return 0; // number of members don't match
 
-  // The checks below indicate that we are in the first
-  // recursion of a recursive struct.
-  if (this->parent_ != 0 && this->tc_base_ == this->root_tc_base_)
-    return 1;
+  // The checks below indicate that we have a recursive struct.
+  CORBA::TypeCode_ptr par = this->parent_;
+  if (par != 0)
+    {
+      if (this->tc_base_ == this->root_tc_base_)
+        return 1;
+
+      CORBA::TypeCode_ptr tc_par = tc->parent_;
+      if (tc_par)
+        {
+          CORBA::TypeCode_ptr gpar = par->parent_;
+          CORBA::TypeCode_ptr tc_gpar = tc_par->parent_;
+          if (gpar != 0
+              && tc_gpar != 0
+              && this->tc_base_ == gpar->tc_base_
+              && tc->tc_base_ == tc_gpar->tc_base_)
+            return 1;
+        }
+    }
 
   for (CORBA::ULong i = 0; i < my_count; i++)
     {
@@ -936,10 +951,25 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
   if (my_count != tc_count)
     return 0; // number of members don't match
 
-  // The checks below indicate that we are in the first
-  // recursion of a recursive union.
-  if (this->parent_ != 0 && this->tc_base_ == this->root_tc_base_)
-    return 1;
+  // The checks below indicate that we have a recursive union.
+  CORBA::TypeCode_ptr par = this->parent_;
+  if (par != 0)
+    {
+      if (this->tc_base_ == this->root_tc_base_)
+        return 1;
+
+      CORBA::TypeCode_ptr tc_par = tc->parent_;
+      if (tc_par)
+        {
+          CORBA::TypeCode_ptr gpar = par->parent_;
+          CORBA::TypeCode_ptr tc_gpar = tc_par->parent_;
+          if (gpar != 0
+              && tc_gpar != 0
+              && this->tc_base_ == gpar->tc_base_
+              && tc->tc_base_ == tc_gpar->tc_base_)
+            return 1;
+        }
+    }
 
   for (CORBA::ULong i=0; i < my_count; i++)
     {
