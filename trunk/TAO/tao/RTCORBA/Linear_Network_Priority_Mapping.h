@@ -31,19 +31,19 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
+/**
+ * @class TAO_Linear_Network_Priority_Mapping
+ *
+ * @brief A simple implementation of the Network_Priority_Mapping interface
+ *
+ * This implementation uses linear mapping between the range of
+ * DiffServ priorities and CORBA priorities.
+ */
 class TAO_RTCORBA_Export TAO_Linear_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
 {
-  //
-  // = TITLE
-  //   A simple implementation of the Network_Priority_Mapping interface
-  //
-  // = DESCRIPTION
-  //   This implementation uses linear mapping between the range of
-  //   DiffServ priorities and CORBA priorities.
-  //
 public:
+  /// Default constructor
   TAO_Linear_Network_Priority_Mapping (long policy);
-  // Default constructor
 
   CORBA::Boolean to_network (RTCORBA::Priority corba_priority,
                              RTCORBA::NetworkPriority &network_priority);
