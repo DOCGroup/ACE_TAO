@@ -1,3 +1,12 @@
+Mon Dec 20 13:52:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Tagged_Components.i (components):
+	* tao/Tagged_Components.h :Added a method components () that would
+	  return read/write access to the underlying
+	  IOP::MultipleComponentProfile in the TAO_Tagged_Components
+	  class. Thanks to Chris Hafey <chris@sternsoft.com> for
+	  suggesting this.
+
 Mon Dec 20 12:21:20 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/ID_Pool_T.cpp (get): 
