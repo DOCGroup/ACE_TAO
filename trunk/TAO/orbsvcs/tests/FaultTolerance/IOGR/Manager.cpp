@@ -272,7 +272,7 @@ Manager::write_to_file (void)
 CORBA::ORB_ptr
 Manager::orb (void)
 {
-  this->orb_.in ();
+  return this->orb_.in ();
 }
 
 Client_i::Client_i (CORBA::ORB_ptr orb)
@@ -312,20 +312,18 @@ Client_i::init (CORBA::Environment &ACE_TRY_ENV)
                                 0,
                                 ACE_TRY_ENV);
   ACE_CHECK;
-  cout << "String to OBJ" <<endl;
+
   CORBA::Object_var object =
     this->orb_->string_to_object (data,
                                   ACE_TRY_ENV);
   ACE_CHECK;
 
-  cout << "String to OBJ 1" <<endl;
   // Combined IOR stuff
   Simple_Server_var server =
     Simple_Server::_narrow (object.in (),
                             ACE_TRY_ENV);
   ACE_CHECK;
 
-  cout << " Narrow done " <<endl;
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
@@ -333,7 +331,6 @@ Client_i::init (CORBA::Environment &ACE_TRY_ENV)
                   data));
     }
 
-  cout << "Start test " <<endl;
   run_test (server.in (),
             ACE_TRY_ENV);
   ACE_CHECK;
@@ -346,21 +343,29 @@ Client_i::init (CORBA::Environment &ACE_TRY_ENV)
 void run_test (Simple_Server_ptr server,
                CORBA::Environment &ACE_TRY_ENV)
 {
+  // We do this twice as we know that there are only two servers.
   for (CORBA::ULong i = 0;
-       i < 10;
+       i < 2;
        i++)
     {
       ACE_TRY
         {
-          // Make a remote call
-          server->remote_call (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          for (CORBA::ULong j = 0;
+               j < 10;
+               j++)
+            {
+              // Make a remote call
+              server->remote_call (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
 
           ACE_DEBUG ((LM_DEBUG,
-                      "I am going to shutdown \n"));
+                      ACE_TEXT ("*********************************\n")));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("I am going to shutdown the server\n")));
           server->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          ACE_OS::sleep (10);
+          ACE_OS::sleep (2);
         }
       ACE_CATCH (CORBA::TRANSIENT, t)
         {
@@ -371,9 +376,9 @@ void run_test (Simple_Server_ptr server,
           else
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "The completed status %d\n", t.completed ()));
+                          ACE_TEXT ("The completed status %d\n"), t.completed ()));
               ACE_DEBUG ((LM_DEBUG,
-                          "Automagically re-issuing request on TRANSIENT\n"));
+                          ACE_TEXT ("Automagically re-issuing request on TRANSIENT\n")));
               ACE_OS::sleep (1);
             }
         }
@@ -381,7 +386,7 @@ void run_test (Simple_Server_ptr server,
         {
           ACE_PRINT_EXCEPTION (f, "A (sort of) expected COMM_FAILURE");
           ACE_DEBUG ((LM_DEBUG,
-                      "Automagically re-issuing request on COMM_FAILURE\n"));
+                      ACE_TEXT ("Automagically re-issuing request on COMM_FAILURE\n")));
         }
       ACE_CATCHANY
         {
