@@ -32,7 +32,7 @@ static void
 cleanup (void)
 {
   ACE_DEBUG ((LM_INFO,
-              "cleanup hook (%P)!\n"));
+              ACE_TEXT ("cleanup hook (%P)!\n")));
 }
 
 static void
@@ -40,7 +40,7 @@ cause_error (void)
 {
   errno = EWOULDBLOCK;
   ACE_ERROR ((LM_DEBUG,
-              "would block\n"));
+              ACE_TEXT ("would block\n")));
 }
 
 class Logger : public ACE_Log_Msg_Callback
@@ -88,7 +88,7 @@ Logger::log (ACE_Log_Record &log_record)
     {
       if (use_log_msg)
         ACE_DEBUG ((LM_DEBUG,
-                    "Logger::log->%s\n",
+                    ACE_TEXT ("Logger::log->%s\n"),
                     log_record.msg_data ()));
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
       else
@@ -108,7 +108,7 @@ Logger::log (ACE_Log_Record &log_record)
         {
           if (use_log_msg)
             ACE_DEBUG ((LM_DEBUG,
-                        "Logger::log->%s\n",
+                        ACE_TEXT ("Logger::log->%s\n"),
                         verbose_msg));
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
           else
@@ -130,20 +130,20 @@ test_callbacks (void)
 {
   // This message should show up in stderr.
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) first message\n"));
+              ACE_TEXT ("(%t) first message\n")));
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
 
   // This message should not show up anywhere.
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) second message\n"));
+              ACE_TEXT ("(%t) second message\n")));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::MSG_CALLBACK);
 
   // This message should not show up anywhere since no callback object
   // has been specified.
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) third message\n"));
+              ACE_TEXT ("(%t) third message\n")));
 
   // Create a callback object and make it "verbose".
   Logger logger;
@@ -154,28 +154,28 @@ test_callbacks (void)
 
   // This message should show up via the Logger callback.
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) forth message\n"));
+              ACE_TEXT ("(%t) forth message\n")));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   // This message should show up via the Logger callback (somewhat
   // verbosely).
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) fifth message\n"));
+              ACE_TEXT ("(%t) fifth message\n")));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE);
 
   // This message should show up via the Logger callback (really
   // verbosely).
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) sixth message\n"));
+              ACE_TEXT ("(%t) sixth message\n")));
 
   logger.verbose (0);
 
   // This message should show up via the Logger callback (not
   // verbosely).
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) seventh message\n"));
+              ACE_TEXT ("(%t) seventh message\n")));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
@@ -183,7 +183,7 @@ test_callbacks (void)
   // The one from the Logger callback will not be verbose, but the one
   // from stderr should be verbose.
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) eighth message\n"));
+              ACE_TEXT ("(%t) eighth message\n")));
   ACE_LOG_MSG->msg_callback (0);
 }
 
@@ -196,7 +196,7 @@ test_log_msg_features (const ACE_TCHAR *program)
 
   if (ACE_LOG_MSG->open (program) == -1)
     ACE_ERROR ((LM_ERROR,
-                "cannot open logger!!!\n"));
+                ACE_TEXT ("cannot open logger!!!\n")));
 
   cause_error ();
 
@@ -204,17 +204,17 @@ test_log_msg_features (const ACE_TCHAR *program)
   if (ACE_LOG_MSG->op_status () == -1
       && ACE_LOG_MSG->errnum () == EWOULDBLOCK)
     ACE_DEBUG ((LM_DEBUG,
-                "op_status and errnum work!\n"));
+                ACE_TEXT ("op_status and errnum work!\n")));
   else
     ACE_ERROR ((LM_ERROR,
-                "op_status and errnum failed!\n"));
+                ACE_TEXT ("op_status and errnum failed!\n")));
 
   const char *badname = "badname";
 
   if (ACE_OS::open (badname,
                     O_RDONLY) == ACE_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR,
-                "%n: (%x), can't open %s%r\n",
+                ACE_TEXT ("%n: (%x), can't open %s%r\n"),
                 10000,
                 badname,
                 cleanup));
@@ -222,7 +222,7 @@ test_log_msg_features (const ACE_TCHAR *program)
   // Exercise many different combinations of OSTREAM.
 
   ACE_DEBUG ((LM_INFO,
-              "%10f, %*s%s = %d\n",
+              ACE_TEXT ("%10f, %*s%s = %d\n"),
               3.1416 * counter++,
               8,
               "",
@@ -233,7 +233,7 @@ test_log_msg_features (const ACE_TCHAR *program)
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
 
   ACE_DEBUG ((LM_INFO,
-              "%10f, %*s%s = %d\n",
+              ACE_TEXT ("%10f, %*s%s = %d\n"),
               3.1416 * counter,
               8,
               "",
@@ -244,7 +244,7 @@ test_log_msg_features (const ACE_TCHAR *program)
 
   // The next two messages shouldn't print.
   ACE_DEBUG ((LM_INFO,
-              "%10f, %*s%s = %d\n",
+              ACE_TEXT ("%10f, %*s%s = %d\n"),
               3.1416 * counter,
               8,
               "",
@@ -252,7 +252,7 @@ test_log_msg_features (const ACE_TCHAR *program)
               10000 * counter++));
 
   ACE_DEBUG ((LM_INFO,
-              "%10f, %*s%s = %d\n",
+              ACE_TEXT ("%10f, %*s%s = %d\n"),
               3.1416 * counter,
               8,
               "",
@@ -261,7 +261,7 @@ test_log_msg_features (const ACE_TCHAR *program)
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
   ACE_DEBUG ((LM_INFO,
-              "%10f, %*s%s = %d\n",
+              ACE_TEXT ("%10f, %*s%s = %d\n"),
               3.1416 * counter,
               8,
               "",
@@ -284,9 +284,9 @@ test_log_msg_features (const ACE_TCHAR *program)
                               ACE_Log_Msg::PROCESS);
 
   ACE_DEBUG ((LM_INFO,
-              "This LM_INFO message should not print!\n"));
+              ACE_TEXT ("This LM_INFO message should not print!\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "This LM_DEBUG message should not print!\n"));
+              ACE_TEXT ("This LM_DEBUG message should not print!\n")));
 
   ACE_SET_BITS (priority_mask,
                 LM_INFO);
@@ -294,18 +294,18 @@ test_log_msg_features (const ACE_TCHAR *program)
                               ACE_Log_Msg::PROCESS);
 
   ACE_DEBUG ((LM_INFO,
-              "This LM_INFO message should print!\n"));
+              ACE_TEXT ("This LM_INFO message should print!\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "This LM_DEBUG message should not print!\n"));
+              ACE_TEXT ("This LM_DEBUG message should not print!\n")));
 
   ACE_CLR_BITS (priority_mask, LM_INFO);
   ACE_LOG_MSG->priority_mask (priority_mask,
                               ACE_Log_Msg::PROCESS);
 
   ACE_DEBUG ((LM_INFO,
-              "This LM_INFO message should not print!\n"));
+              ACE_TEXT ("This LM_INFO message should not print!\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "This LM_DEBUG message should not print!\n"));
+              ACE_TEXT ("This LM_DEBUG message should not print!\n")));
 }
 
 static int
@@ -313,13 +313,13 @@ test_ostream (void)
 {
   // This message should show up in the log file.
   ACE_DEBUG ((LM_DEBUG,
-              "first message\n"));
+              ACE_TEXT ("first message\n")));
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
 
   // This message should not show up anywhere.
   ACE_DEBUG ((LM_DEBUG,
-              "second message\n"));
+              ACE_TEXT ("second message\n")));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
@@ -337,7 +337,7 @@ test_ostream (void)
 
   // This message should show up in the ostream.
   ACE_DEBUG ((LM_DEBUG,
-              "fourth message\n"));
+              ACE_TEXT ("fourth message\n")));
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
@@ -345,14 +345,14 @@ test_ostream (void)
   // Open up the file.
   if (connector.connect (file,
                          ACE_FILE_Addr (filename)) == -1)
-  {
-	  // Set the ostream back to NULL to prevent "later functions using myostream".
-	  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
+    {
+      // Set the ostream back to NULL to prevent "later functions using myostream".
+      ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
       ACE_ERROR_RETURN ((LM_ERROR,
-                       "connect failed for %p\n",
-                       filename),
-                      1);
-  }
+                         ACE_TEXT ("connect failed for %p\n"),
+                         filename),
+                        1);
+    }
 
   // Unlink this file right away so that it is automatically removed
   // when the process exits.Ignore error returns in case this operation
@@ -361,14 +361,14 @@ test_ostream (void)
  
   ACE_FILE_Info info;
   if (file.get_info (info) == -1)
-  {
-	  // Set the ostream back to NULL to prevent "later functions using myostream".
-	  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
-	  ACE_ERROR_RETURN ((LM_ERROR,
-                       "get_info failed on %p\n",
-                       filename),
-                      -1);
-  }
+    {
+      // Set the ostream back to NULL to prevent "later functions using myostream".
+      ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("get_info failed on %p\n"),
+                         filename),
+                        -1);
+    }
 
   // Allocate the input buffer
   char *buffer;
@@ -382,15 +382,15 @@ test_ostream (void)
   ssize_t size = file.recv (buffer,
                             info.size_);
   if (size != info.size_)
-  {
-	// Set the ostream back to NULL to prevent "later functions using myostream".
-	ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Read %d bytes, rather than expected %d bytes\n",
-                       size,
-                       info.size_),
-                      -1);
-  }
+    {
+      // Set the ostream back to NULL to prevent "later functions using myostream".
+      ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Read %d bytes, rather than expected %d bytes\n",)
+                         size,
+                         info.size_),
+                        -1);
+    }
   // Make sure to NUL-terminate this turkey!
   buffer[size] = '\0';
 
@@ -398,7 +398,7 @@ test_ostream (void)
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s",
+              ACE_TEXT ("%s"),
               buffer));
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
@@ -406,7 +406,7 @@ test_ostream (void)
   // This message should show up in stderr and the ostream (without
   // ACE_LACKS_IOSTREAM_TOTALLY).
   ACE_DEBUG ((LM_DEBUG,
-              "fifth message\n"));
+              ACE_TEXT ("fifth message\n")));
 
   return 0;
 }
@@ -418,20 +418,20 @@ main (int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Log_Msg_Test"));
   ACE_DEBUG ((LM_DEBUG,
-              "**** running ostream test\n"));
+              ACE_TEXT ("**** running ostream test\n")));
 
   // Test the <ACE_Log_Msg> abstraction wrt writing to stderr and to a
   // file.
   test_ostream ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "**** running callback test\n"));
+              ACE_TEXT ("**** running callback test\n")));
 
   // Test the <ACE_Log_Msg> callback mechanism.
   test_callbacks ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "**** running features test\n"));
+              ACE_TEXT ("**** running features test\n")));
 
   // Test various features of the <ACE_Log_Msg>.
   test_log_msg_features (argv[0]);

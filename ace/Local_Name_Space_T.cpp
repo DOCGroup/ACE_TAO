@@ -420,16 +420,29 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   size_t length = 0;
   length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);
   ACE_OS::strncpy (lock_name_for_local_name_space,
-                   ACE_LIB_TEXT ("name_space_"),
+                   dir,
                    length);
+
+  ACE_OS::strncat (lock_name_for_local_name_space,
+                   ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_STR),
+                   length -  ACE_OS::strlen (lock_name_for_local_name_space));
+  ACE_OS::strncat (lock_name_for_local_name_space,
+                   ACE_LIB_TEXT ("name_space_"),
+                   length -  ACE_OS::strlen (lock_name_for_local_name_space));
   ACE_OS::strncat (lock_name_for_local_name_space,
                    postfix,
-                   length - ACE_OS::strlen (ACE_LIB_TEXT ("name_space_")));
+                   length -  ACE_OS::strlen (lock_name_for_local_name_space));
 
   length = sizeof lock_name_for_backing_store / sizeof (ACE_TCHAR);
   ACE_OS::strncpy (lock_name_for_backing_store,
-                   ACE_LIB_TEXT ("backing_store_"),
+                   dir,
                    length);
+  ACE_OS::strncat (lock_name_for_backing_store,
+                   ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_STR),
+                   length -  ACE_OS::strlen (lock_name_for_backing_store));
+  ACE_OS::strncat (lock_name_for_backing_store,
+                   ACE_LIB_TEXT ("backing_store_"),
+                   length -  ACE_OS::strlen (lock_name_for_backing_store));
   ACE_OS::strncat (lock_name_for_backing_store,
                    postfix,
                    length - ACE_OS::strlen (ACE_LIB_TEXT ("backing_store_")));
