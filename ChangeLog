@@ -1,3 +1,8 @@
+Thu Apr 15 07:14:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/ThreadSafety/Tokens.cpp:
+          Added include of ace/OS_NS_time.h to get ACE_OS::nanosleep
+
 Thu Apr 15 07:04:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_auto_compile.pl:
