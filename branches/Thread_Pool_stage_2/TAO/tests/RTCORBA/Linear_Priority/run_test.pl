@@ -9,23 +9,54 @@ use lib '../../../../bin';
 use PerlACE::Run_Test;
 
 $status = 0;
+$iorfile = "ior";
 
-@iorfiles = 
+@configurations = 
     (
-     "root",
-     "child",
-     "default_lane_no_bands_client_propagated",
-     "default_lane_no_bands_server_declared",
-     "no_lanes_no_bands_client_propagated",
-     "no_lanes_no_bands_server_declared",
-     "lanes_no_bands_client_propagated",
-     "lanes_no_bands_server_declared",
-     "default_lane_bands_client_propagated",
-     "default_lane_bands_server_declared",
-     "no_lanes_bands_client_propagated",
-     "no_lanes_bands_server_declared",
-     "lanes_bands_client_propagated",
-     "lanes_bands_server_declared",
+     {
+         server => "-b empty_file -l empty_file", 
+         client => "-b empty_file -p empty_file -x",
+     },
+     {
+         server => "-b bands -l empty_file", 
+         client => "-b empty_file -p empty_file -x",
+     },
+     {
+         server => "-b empty_file -l lanes", 
+         client => "-b empty_file -p empty_file -x",
+     },
+     {
+         server => "-b bands -l lanes", 
+         client => "-b empty_file -p empty_file -x",
+     },
+     {
+         server => "-b empty_file -l empty_file", 
+         client => "-b bands -p empty_file -x",
+     },
+     {
+         server => "-b empty_file -l lanes", 
+         client => "-b bands -p empty_file -x",
+     },
+     {
+         server => "-b empty_file -l empty_file", 
+         client => "-b empty_file -p invocation_priorities -x",
+     },
+     {
+         server => "-b bands -l empty_file", 
+         client => "-b empty_file -p invocation_priorities -x",
+     },
+     {
+         server => "-b bands -l lanes", 
+         client => "-b empty_file -p invocation_priorities -x",
+     },
+     {
+         server => "-b empty_file -l empty_file", 
+         client => "-b bands -p invocation_priorities -x",
+     },
+     {
+         server => "-b empty_file -l lanes", 
+         client => "-b bands -p invocation_priorities -x",
+     },
      );
 
 sub run_client
@@ -44,36 +75,38 @@ sub run_client
     }
 }
 
-for $file (@iorfiles)
+sub run_server 
 {
-    unlink $file;
-}
+    print STDERR "\n******************************************************\n";
 
-$SV = new PerlACE::Process ("server");
+    unlink $iorfile;
 
-$SV->Spawn ();
+    $SV = new PerlACE::Process ("server", @_);
 
-for $file (@iorfiles)
-{
-    if (PerlACE::waitforfile_timed ($file, 5) == -1)
+    $SV->Spawn ();
+
+    if (PerlACE::waitforfile_timed ($iorfile, 5) == -1)
     {
-        print STDERR "ERROR: cannot find ior file: $file\n";
+        print STDERR "ERROR: cannot find ior file: $iorfile\n";
         $status = 1;
         goto kill_server;
     }
-
-    print STDERR "\n******************************************************\n";
-    print STDERR "Invoking methods on servant in $file poa\n";
-    print STDERR "******************************************************\n\n";
-
-    run_client ("-k file://$file");
 }
 
-print STDERR "\n**************************\n";
-print STDERR "Shutting down the server\n";
-print STDERR "**************************\n\n";
+for $test (@configurations)
+{
+    run_server ($test->{server});
 
-run_client ("-k file://$iorfiles[0] -i 0 -x");
+    run_client ($test->{client});
+
+    $server = $SV->WaitKill (5);
+
+    if ($server != 0) 
+    {
+        print STDERR "ERROR: server returned $server\n";
+        $status = 1;
+    }
+}
 
 kill_server:
 
@@ -84,9 +117,6 @@ if ($server != 0) {
     $status = 1
 }
 
-for $file (@iorfiles)
-{
-    unlink $file;
-}
+unlink $iorfile;
 
 exit $status

@@ -5,17 +5,22 @@
 #include "testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "../check_supported_priorities.cpp"
+#include "./readers.cpp"
 
-static const char *ior = 0;
 static int iterations = 5;
 static int shutdown_server = 0;
 static RTCORBA::Priority default_thread_priority =
 RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
 
+static const char *ior = "file://ior";
+
+static const char *invocation_priorities_file = "invocation_priorities";
+static const char *bands_file = "empty_file";
+
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:x");
+  ACE_Get_Opt get_opts (argc, argv, "b:p:k:i:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -33,10 +38,20 @@ parse_args (int argc, char **argv)
         shutdown_server = 1;
         break;
 
+      case 'p':
+        invocation_priorities_file = get_opts.optarg;
+        break;
+
+      case 'b':
+        bands_file = get_opts.optarg;
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
+                           "-b <bands_file> "
+                           "-p <invocation_priorities_file> "
                            "-k ior "
                            "-i iterations "
                            "-x shutdown server "
@@ -44,11 +59,6 @@ parse_args (int argc, char **argv)
                            argv [0]),
                           -1);
       }
-
-  if (ior == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "An IOR must be specified\n"),
-                      -1);
 
   return 0;
 }
@@ -95,7 +105,7 @@ Worker_Thread::svc (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Worker Thread (%t) exception:");
+                           "Worker Thread exception:");
     }
   ACE_ENDTRY;
   return 0;
@@ -123,6 +133,16 @@ main (int argc, char **argv)
         return result;
 
       CORBA::Object_var object =
+        orb->resolve_initial_references ("RTORB",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      RTCORBA::RTORB_var rt_orb =
+        RTCORBA::RTORB::_narrow (object.in (),
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      object =
         orb->resolve_initial_references ("RTCurrent",
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -130,6 +150,20 @@ main (int argc, char **argv)
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in (),
                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      current->the_priority (default_thread_priority,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      object =
+        orb->resolve_initial_references ("ORBPolicyManager",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::PolicyManager_var policy_manager =
+        CORBA::PolicyManager::_narrow (object.in (),
+                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       object =
@@ -142,27 +176,52 @@ main (int argc, char **argv)
                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      Priorities priorities;
+      result =
+        get_priorities ("client",
+                        invocation_priorities_file,
+                        "invocation priorities",
+                        priorities);
+      if (result != 0)
+        return result;
+
+      CORBA::PolicyList policies;
+
+      result =
+        get_priority_bands ("client",
+                            bands_file,
+                            rt_orb.in (),
+                            policies,
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (result != 0)
+        return result;
+
+      policy_manager->set_policy_overrides (policies,
+                                            CORBA::SET_OVERRIDE,
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       long flags =
         THR_NEW_LWP | THR_JOINABLE;
 
-      u_long number_of_threads = 2;
       u_long i = 0;
 
       // Workers.
       Worker_Thread **workers = 0;
 
       ACE_NEW_RETURN (workers,
-                      Worker_Thread *[number_of_threads],
+                      Worker_Thread *[priorities.size ()],
                       -1);
 
       for (i = 0;
-           i < number_of_threads;
+           i < priorities.size ();
            ++i)
         {
           ACE_NEW_RETURN (workers[i],
                           Worker_Thread (test.in (),
                                          current.in (),
-                                         default_thread_priority),
+                                         priorities[i]),
                           -1);
 
           result =
@@ -174,7 +233,7 @@ main (int argc, char **argv)
       ACE_Thread_Manager::instance ()->wait ();
 
       for (i = 0;
-           i < number_of_threads;
+           i < priorities.size ();
            ++i)
         {
           delete workers[i];
