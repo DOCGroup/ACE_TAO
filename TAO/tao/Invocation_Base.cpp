@@ -2,7 +2,7 @@
 #include "Stub.h"
 #include "operation_details.h"
 #include "ORB_Core.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 #include "DynamicC.h"
 #include "SystemException.h"
 

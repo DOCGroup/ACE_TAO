@@ -30,7 +30,7 @@
 
 
 #include "ObjectIdListC.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

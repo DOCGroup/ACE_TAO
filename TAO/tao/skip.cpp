@@ -23,7 +23,7 @@
 #include "debug.h"
 #include "Valuetype_Adapter.h"
 #include "ORB_Core.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 #include "Any_Impl.h"
 #include "tao/CDR.h"
 #include "SystemException.h"

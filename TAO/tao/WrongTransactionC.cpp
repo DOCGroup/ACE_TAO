@@ -31,7 +31,7 @@
 
 #include "WrongTransactionC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 

@@ -31,7 +31,7 @@
 
 #include "CurrentC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)

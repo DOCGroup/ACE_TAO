@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/Any_Basic_Impl.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/Any.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"

@@ -8,7 +8,7 @@
 #include "Marshal.h"
 #include "CORBA_String.h"
 #include "SystemException.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"

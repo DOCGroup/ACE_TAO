@@ -41,7 +41,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Environment.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
