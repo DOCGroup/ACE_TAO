@@ -31,6 +31,7 @@
 // to the ACE config.h file.
 #if !defined (TAO_SOCK_STREAM)
 #define TAO_SOCK_STREAM ACE_SOCK_STREAM
+#define TAO_SOCK_Stream ACE_SOCK_Stream
 #endif /* TAO_SOCK_STREAM */
 
 #if !defined (TAO_SOCK_ACCEPTOR)
