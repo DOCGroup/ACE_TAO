@@ -670,7 +670,7 @@ create_images ()
   local DEST=$1
   local TYPE=$2
   local LOW=0
-  local HIGH=10000
+  local HIGH=5000
   local STEP=0
   local TMP=0
 
