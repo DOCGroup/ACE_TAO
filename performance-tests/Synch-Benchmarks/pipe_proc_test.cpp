@@ -2,11 +2,11 @@
 
 #define  ACE_BUILD_SVC_DLL
 #include "Options.h"
-#include "Benchmark.h"
+#include "Benchmark_Performance.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class ACE_Svc_Export Pipe_Proc_Test : public Benchmark
+class ACE_Svc_Export Pipe_Proc_Test : public Benchmark_Performance
 {
 public:
   int init (int, char **);
@@ -46,7 +46,7 @@ Pipe_Proc_Test::reader (ACE_HANDLE handle)
   int  ni = this->thr_id ();
   int length = options.msg_size ();
   char *to;
-  
+
   ACE_NEW (to, char[length]);
 
   while (ACE_OS::read (handle, to, length) > 0)
@@ -60,7 +60,7 @@ Pipe_Proc_Test::svc (void)
   ssize_t length = options.msg_size ();
   int ni = this->thr_id ();
   ACE_HANDLE handle = this->pipe_handles[1];
-  char *from; 
+  char *from;
 
   ACE_NEW_RETURN (from, char[length], -1);
 
@@ -69,7 +69,7 @@ Pipe_Proc_Test::svc (void)
       options.thr_work_count[ni]++;
     else
       ACE_OS::perror ("write");
-    
+
   ACE_OS::close (this->pipe_handles[0]);
   ACE_OS::close (this->pipe_handles[1]);
   return 0;

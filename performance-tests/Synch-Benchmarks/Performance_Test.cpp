@@ -1,5 +1,9 @@
 // $Id$
 
+#include "ace/Service_Repository.h"
+#include "ace/Synch.h"
+#include "Options.h"
+#include "Benchmark_Performance.h"
 #include "Performance_Test.h"
 
 Performance_Test::Performance_Test (void)
@@ -8,8 +12,23 @@ Performance_Test::Performance_Test (void)
 {
 }
 
-void
-Benchmark_Test::run_test (void)
+// Initialize and run the benchmarks tests.
+
+int
+Performance_Test::init (int argc, char **argv)
+{
+  options.parse_args (argc, argv);
+  return 0;
+}
+
+int
+Performance_Test::pre_run_test (void)
+{
+  return 0;
+}
+
+int
+Performance_Test::run_test (void)
 {
   // Tell the threads that we are not finished.
   Benchmark_Performance::done (0);
@@ -32,7 +51,7 @@ Benchmark_Test::run_test (void)
   ACE_Thread_Manager::instance ()->suspend_all ();
 
   // Tell the threads that we are finished.
-  Benchmark::done (1);
+  Benchmark_Performance::done (1);
 
   ACE_DEBUG ((LM_DEBUG, "------------------------------------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "targ 0x%x (%s, %s, %s)\n"
@@ -59,13 +78,19 @@ Benchmark_Test::run_test (void)
   // Wait for all the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
   options.init ();
-}
-
-// Initialize and run the benchmarks tests.
-
-int
-Benchmark_Test::init (int argc, char **argv)
-{
-  options.parse_args (argc, argv);
   return 0;
 }
+
+int
+Performance_Test::post_run_test (void)
+{
+  return 0;
+}
+
+int
+Performance_Test::valid_test_object (Benchmark_Base *bb)
+{
+  return (bb->benchmark_type () == Benchmark_Base::PERFORMANCE);
+}
+
+ACE_SVC_FACTORY_DEFINE (Performance_Test)

@@ -12,11 +12,14 @@ Options::count (void)
 {
   size_t total = 0;
 
+  if (options.verbose ())
+    ACE_DEBUG ((LM_DEBUG, "Thread work count size = %d\n", options.thr_wc_size));
+
   for (int i = 0; i < options.thr_wc_size; i++)
     {
       if (options.thr_work_count[i] != 0)
         {
-          if (options.verbose ())
+          //          if (options.verbose ())
             ACE_DEBUG ((LM_DEBUG, "count[%d] = %d\n", i, options.thr_work_count[i]));
           total += options.thr_work_count[i];
         }
