@@ -565,7 +565,7 @@ ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
 {
   ACE_TRACE ("ACE_OS::fcntl");
 #if defined (ACE_HAS_PACE)
-  ACE_OSCALL_RETURN (pace_fcntl (handle, cmd, arg), int, -1);
+  ACE_OSCALL_RETURN ( pace_fcntl (handle, cmd, arg), int, -1);
 # elif defined (ACE_LACKS_FCNTL)
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (cmd);
@@ -1035,7 +1035,14 @@ ACE_OS::gettimeofday (void)
 
   timeval tv;
   int result = 0;
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_PACE)
+  struct timespec ts;
+
+  ACE_OSCALL (ACE_OS::clock_gettime (CLOCK_REALTIME, &ts), int, -1, result);
+  tv.tv_sec = ts.tv_sec;
+  tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
+
+#elif defined (ACE_HAS_WINCE)
   SYSTEMTIME tsys;
   FILETIME   tfile;
   ::GetSystemTime (&tsys);
@@ -1076,7 +1083,7 @@ ACE_OS::gettimeofday (void)
 # else
   ACE_OSCALL (::gettimeofday (&tv), int, -1, result);
 # endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_PACE */
   if (result == -1)
     return -1;
   else
@@ -8170,7 +8177,7 @@ ACE_OS::access (const ACE_TCHAR *path, int amode)
   ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);
 #else
   ACE_OSCALL_RETURN (::access (path, amode), int, -1);
-#endif /* ACE_AS_PACE */
+#endif /* ACE_HAS_PACE */
 }
 
 
@@ -9760,7 +9767,7 @@ ACE_OS::execv (const char *path,
 {
   ACE_TRACE ("ACE_OS::execv");
 #if defined (ACE_HAS_PACE)
-  ACE_OSCALL_RETURN (execv (path, argv), int, -1);
+  ACE_OSCALL_RETURN (pace_execv (path, argv), int, -1);
 #elif defined (ACE_LACKS_EXEC)
   ACE_UNUSED_ARG (path);
   ACE_UNUSED_ARG (argv);
@@ -10589,7 +10596,7 @@ ACE_OS::sigaction (int signum,
   if (signum == 0)
     return 0;
 #if defined (ACE_HAS_PACE)
-  ACE_OSCALL_RETURN (sigaction (signum, nsa, osa), int, -1);
+  ACE_OSCALL_RETURN (pace_sigaction (signum, nsa, osa), int, -1);
 #elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   struct sigaction sa;
 
@@ -11188,7 +11195,7 @@ ACE_INLINE int
 ACE_OS::sigfillset (sigset_t *s)
 {
 #if defined (ACE_HAS_PACE)
-  ACE_OSCALL_RETURN (sigfillset (s), int, -1);
+  ACE_OSCALL_RETURN (pace_sigfillset (s), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL)
     {
