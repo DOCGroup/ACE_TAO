@@ -1,3 +1,14 @@
+Wed Sep  2 11:38:35 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Logger/Logging_Test_i.cpp: Now checks for the
+	  new exceptions thrown by make_logger
+
+	* orbsvcs/orbsvcs/Log/Logger_i.{h,cpp}:
+	  Logger_Factory_i::make_logger now checks the results of binding
+	  entries into the hash_map_manager and throws exceptions if that
+	  or new fails. Added new macros to Logger_i.h for eventual
+	  incorporation into OS.h. 
+
 Wed Sep  2 09:37:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Environment.cpp: 

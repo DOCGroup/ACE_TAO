@@ -81,9 +81,11 @@ public:
   // Destructor.
 
   virtual Logger_ptr make_logger (const char *name,
-                                  CORBA::Environment &_env);
-  // This function creates and returns a logger with the given <name>.
-  // <name> is used by the hash map manager to hash Logger instances
+                                  CORBA::Environment &_env)
+    TAO_THROW_SPEC ((CORBA::SystemException, Logger_Factory::MAKE_FAILURE));
+  // This function returns a logger with name <name>. If <name> is
+  // unique, a new logger is created; else, a previously created
+  // logger of name <name> is returned
 
 private:
   ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex> hash_map_;
@@ -91,5 +93,29 @@ private:
   // bind into the hash map manager if <name> is unique, else it will
   // return a previously bound entry.
 };
+
+// I'm going to define these here for testing with the intent of 
+// migration into ace/OS.h
+# if defined(ACE_NEW_THROWS_EXCEPTIONS)
+#   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
+do { try { POINTER = new CONSTRUCTOR; } \
+ catch (bad_alloc) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
+} while (0)
+  
+#   define ACE_NEW_THROW_RETURN(POINTER,CONSTRUCTOR,EXCEPTION,RET_VAL) \
+do { try { POINTER = new CONSTRUCTOR; } \
+ catch (bad_alloc) { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
+} while (0)
+# else
+#   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
+do { POINTER = new CONSTRUCTOR; \
+ if (POINTER == 0) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
+} while (0)
+#   define ACE_NEW_THROW_RETURN(POINTER,CONSTRUCTOR,EXCEPTION,RET_VAL) \
+do { POINTER = new CONSTRUCTOR; \
+ if (POINTER == 0)\
+  { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
+} while (0)
+# endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 #endif /* TAO_ORBSVCS_LOGGER_I_H */
