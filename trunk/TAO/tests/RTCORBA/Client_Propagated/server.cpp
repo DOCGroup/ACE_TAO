@@ -47,7 +47,7 @@ Test_i::test_method (CORBA::Short priority,
   ACE_CHECK;
 
   if (CORBA::is_nil (obj.in ()))
-    ACE_THROW (CORBA::INTERNAL);
+    ACE_THROW (CORBA::INTERNAL ());
 
   CORBA::Short servant_thread_priority =
     current->the_priority (ACE_TRY_ENV);
