@@ -3,6 +3,7 @@
 // Driver program that measures the performance of synchronization
 // mechanisms provided by ACE and the underlying OS.
 
+#include "ace/Log_Msg.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "Synch_Lib/Benchmark_Base.h"

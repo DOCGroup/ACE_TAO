@@ -1,6 +1,8 @@
 // $Id$
 
 #define  ACE_BUILD_SVC_DLL
+#include "ace/Guard_T.h"
+#include "ace/Log_Msg.h"
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
