@@ -250,19 +250,23 @@ int
 SFP_Decoder::decode_simple_frame (ACE_Message_Block *message)
 {
 
+  // see if the message is long enough, if not, fail
   if (message->length () < TAO_SFP_FRAME_HEADER_LEN)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) SFP_Decoder::decode_simple_frame: "
                        "Message too small to be a valid header!"),
                       -1);
 
+  // create an empty header
   SFP::frame_header header;
 
   TAO_TRY
     {
+      // create an internal CDR buffer
       this->create_cdr_buffer (message->rd_ptr (),
                                TAO_SFP_FRAME_HEADER_LEN);
 
+      // decode the frame.
       decoder_->decode (SFP::_tc_frame_header,
                         &header,
                         0,
