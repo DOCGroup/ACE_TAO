@@ -1,3 +1,10 @@
+Fri Jan  9 11:15:16 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Added a .PHONY target to stop GNU Make from trying to build
+          targets that happen to coincide with cpp files.
+
 Fri Jan  9 14:46:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Test_Output_Export.h:
@@ -20,12 +27,12 @@ Fri Jan  9 12:23:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jan  9 12:14:05 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_auto_compile.pl:
+        * bin/msvc_auto_compile.pl:
           Build FTORB_Utils before PortableGroup
 
 Fri Jan  9 10:15:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_auto_compile.pl:
+        * bin/msvc_auto_compile.pl:
           When using MPC with Static builds we don't have dependencies
           between the libraries in the generated dsw's. The build order
           is then handled in this file, but when using MPC we use generate
@@ -40,60 +47,60 @@ Fri Jan  9 08:07:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan  8 18:28:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/APG/Streams/CommandStream.h:
+        * examples/APG/Streams/CommandStream.h:
 
-	  Fixed a warning with g+++ builds that were caused by wrong
-	  initialization order of members.
+          Fixed a warning with g+++ builds that were caused by wrong
+          initialization order of members.
 
 Thu Jan  8 18:15:21 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Timers/Alarm.cpp:
-	* examples/APG/Timers/Task.cpp:
- 	* examples/APG/Timers/Upcall.cpp: Add missing template instantiations.
+        * examples/APG/Timers/Alarm.cpp:
+        * examples/APG/Timers/Task.cpp:
+        * examples/APG/Timers/Upcall.cpp: Add missing template instantiations.
 
 Thu Jan  8 15:15:49 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Streams/Answerer.cpp (RecordingStream::open): Change
-	  the signature to match the inherited ACE_Stream::open() method to
-	  allow easy configuration without forcing a EndTask module.
+        * examples/APG/Streams/Answerer.cpp (RecordingStream::open): Change
+          the signature to match the inherited ACE_Stream::open() method to
+          allow easy configuration without forcing a EndTask module.
 
-	* examples/APG/Streams/CommandStream.{h cpp}: Move the ACE_SOCK_Stream*
-	  argument from open() to the constructor, and make default ctor
-	  private to force passage of the ACE_SOCK_Stream*. Change open() to
-	  properly inherit from ACE_Stream, avoiding the "hides inherited
-	  open()" diagnostics, and making this class easier to use in
-	  different use cases.
+        * examples/APG/Streams/CommandStream.{h cpp}: Move the ACE_SOCK_Stream*
+          argument from open() to the constructor, and make default ctor
+          private to force passage of the ACE_SOCK_Stream*. Change open() to
+          properly inherit from ACE_Stream, avoiding the "hides inherited
+          open()" diagnostics, and making this class easier to use in
+          different use cases.
 
-	* examples/APG/Streams/RecordingDevice_Text.cpp: Changed usage of
-	  CommandStream class to match new API, above.
+        * examples/APG/Streams/RecordingDevice_Text.cpp: Changed usage of
+          CommandStream class to match new API, above.
 
-	* examples/APG/Streams/Command.h:
-	* examples/APG/Streams/CommandTask.cpp:
-	* examples/APG/Streams/CommandTasks.cpp:
-	* examples/APG/Streams/RecordingDevice_Text.cpp: Prepended RESULT_
-	  to the enumerators SUCCESS, PASS, FAIL; prepended CMD_ to the
-	  enumerators UNKNOWN, ANSWER_CALL, RETRIEVE_CALLER_ID, PLAY_MESSAGE,
-	  RECORD_MESSAGE. These were done to avoid clashes with commonly
-	  defined macros. Thanks to Johnny Willemsen for reporting this.
+        * examples/APG/Streams/Command.h:
+        * examples/APG/Streams/CommandTask.cpp:
+        * examples/APG/Streams/CommandTasks.cpp:
+        * examples/APG/Streams/RecordingDevice_Text.cpp: Prepended RESULT_
+          to the enumerators SUCCESS, PASS, FAIL; prepended CMD_ to the
+          enumerators UNKNOWN, ANSWER_CALL, RETRIEVE_CALLER_ID, PLAY_MESSAGE,
+          RECORD_MESSAGE. These were done to avoid clashes with commonly
+          defined macros. Thanks to Johnny Willemsen for reporting this.
 
 Thu Jan  8 20:15:09 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Reactor/Misc/test_demuxing.cpp:
-	  Made this example compiling with BCB.
+        * examples/Reactor/Misc/test_demuxing.cpp:
+          Made this example compiling with BCB.
 
 Thu Jan  8 14:05:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Misc/Makefile:
+        * performance-tests/Misc/Makefile:
 
-	  Fixed a bild error in our daily builds. Thanks to Don for
-	  helping with this. The change just involved removing
-	  shared_libs=0  from the Makefile.
+          Fixed a bild error in our daily builds. Thanks to Don for
+          helping with this. The change just involved removing
+          shared_libs=0  from the Makefile.
 
 Thu Jan  8 18:35:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/bor.mpd:
-	  Just set the four xx_DIRS we overrule always to . independent of the
-	  configuration that the we always output to the same directory
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Just set the four xx_DIRS we overrule always to . independent of the
+          configuration that the we always output to the same directory
 
 Thu Jan  8 12:20:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -106,63 +113,63 @@ Thu Jan  8 12:20:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jan  8 12:03:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Timers/TimerDispatcher.cpp:
-	* examples/APG/Timers/PTimerDispatcher.cpp: Added missing template
-	  instantiations.
+        * examples/APG/Timers/TimerDispatcher.cpp:
+        * examples/APG/Timers/PTimerDispatcher.cpp: Added missing template
+          instantiations.
 
 Thu Jan  8 17:05:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* apps/JAWS/server/HTTP_Server.{h,cpp}:
-	* apps/JAWS/server/server.mpc:
-	  Made this app compiling with CBX and MPC. Set the correct defines
-	  and use the correct export macros.
+        * apps/JAWS/server/HTTP_Server.{h,cpp}:
+        * apps/JAWS/server/server.mpc:
+          Made this app compiling with CBX and MPC. Set the correct defines
+          and use the correct export macros.
 
 Thu Jan  8 17:02:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/bor.mpd:
-	  Corrected setting of STATIC_DIR
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Corrected setting of STATIC_DIR
 
 Thu Jan  8 11:23:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Naming/Name_Binding.h:
-	* examples/APG/Naming/Temperature_Grapher.cpp:
-	* examples/APG/Naming/Temperature_Monitor.cpp:
-	* examples/APG/Naming/Temperature_Monitor2.cpp: Add missing
-	  "ace/OS_NS_*" includes.
+        * examples/APG/Naming/Name_Binding.h:
+        * examples/APG/Naming/Temperature_Grapher.cpp:
+        * examples/APG/Naming/Temperature_Monitor.cpp:
+        * examples/APG/Naming/Temperature_Monitor2.cpp: Add missing
+          "ace/OS_NS_*" includes.
 
-	* examples/APG/Naming/Graphable_Element.h: Added 'const' to the when()
-	  and operator<() methods, as well as to operator<()'s parameters,
-	  to match less<> and make CBuilderX happy. Thanks to Johnny Willemsen
-	  for reporting this.
+        * examples/APG/Naming/Graphable_Element.h: Added 'const' to the when()
+          and operator<() methods, as well as to operator<()'s parameters,
+          to match less<> and make CBuilderX happy. Thanks to Johnny Willemsen
+          for reporting this.
 
-	* examples/APG/Naming/Makefile: Moved the "RM tempinc" up before the
-	  sub-make to avoid inadvertant smashing of tempinc.
+        * examples/APG/Naming/Makefile: Moved the "RM tempinc" up before the
+          sub-make to avoid inadvertant smashing of tempinc.
 
-	* examples/APG/Proactor/HA_Proactive_Status.cpp (validate_connection):
-	  Removed the parameter names in the ACE_WIN32 case to avoid "unused
-	  parameter" warnings.
+        * examples/APG/Proactor/HA_Proactive_Status.cpp (validate_connection):
+          Removed the parameter names in the ACE_WIN32 case to avoid "unused
+          parameter" warnings.
 
 Thu Jan  8 11:05:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_sys_msg.inl:
+        * ace/OS_NS_sys_msg.inl:
 
-	  Used a const cast instead of a static cast.
+          Used a const cast instead of a static cast.
 
 Thu Jan  8 16:38:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* apps/JAWS3/jaws3/Export.h:
-	  Set the JAWS_HAS_DLL define correctly when not set. This fixes
-	  the linker errors in the CBX MPC build.
+        * apps/JAWS3/jaws3/Export.h:
+          Set the JAWS_HAS_DLL define correctly when not set. This fixes
+          the linker errors in the CBX MPC build.
 
 Thu Jan  8 16:16:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Date_Time.i:
-	  Changed the order of the methods to fix Tru64 warnings.
+        * ace/Date_Time.i:
+          Changed the order of the methods to fix Tru64 warnings.
 
 Thu Jan  8 11:07:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/SSL_Context.cpp: Added #include "ace/ACE.h" for ACE::debug()
-	  and "ace/OS_NS_string.h" for ACE_OS::strlen().
+        * ace/SSL/SSL_Context.cpp: Added #include "ace/ACE.h" for ACE::debug()
+          and "ace/OS_NS_string.h" for ACE_OS::strlen().
 
 Thu Jan  8 15:45:50 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
 

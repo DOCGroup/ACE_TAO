@@ -114,7 +114,8 @@ sub write_comps {
     ## Print out each of the individual targets
     foreach my $project (@list) {
       my($pjname) = $$pjs{$project}->[0];
-      print $fh "$crlf$pjname: all.$pjname$crlf$crlf" .
+      print $fh "$crlf$pjname: all.$pjname$crlf" .
+                ".PHONY: $pjname$crlf$crlf" .
                 "%.$pjname:";
       if (defined $targnum{$project}) {
         foreach my $number (@{$targnum{$project}}) {
