@@ -93,10 +93,10 @@ To run the tests do the following:
    b. Then run the peers in different windows as
 
       # Window 1 (Supplier)
-      % peerd -a S:10003
+      % peerd -a S:10011
 
       # Window 2 (Consumer)
-      % peerd -a C:10004
+      % peerd -a C:10012
 
       etc.  Naturally, you can also edit the svc.conf file, but that
       may be more of a pain if you've got a network filesystem and
