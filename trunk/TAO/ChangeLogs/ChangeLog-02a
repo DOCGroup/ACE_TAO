@@ -1,8 +1,22 @@
+Fri Feb 25 14:03:57 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+          Fixed warnings in deactivate() call.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+          Removed debugging messages.
+
 Fri Feb 25 10:46:52 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Updated release notes for TAO's pluggable protocol framework.
+          Updated release notes for TAO's pluggable protocol framework.
 
 Fri Feb 25 10:43:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
