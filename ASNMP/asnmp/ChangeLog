@@ -1,3 +1,9 @@
+Fri Apr 23 11:23:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* oid.cpp:
+
+	  Missed some bool return types for equality operators.
+
 Thu Apr 22 23:03:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* address.cpp:
