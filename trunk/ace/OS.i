@@ -1210,7 +1210,7 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_OS_TRACE ("ACE_OS::shm_open");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (::pace_shm_open (filename, mode, perms), ACE_HANDLE, -1);
 # elif defined (ACE_HAS_SHM_OPEN)
@@ -1226,7 +1226,7 @@ ACE_INLINE int
 ACE_OS::shm_unlink (const ACE_TCHAR *path)
 {
   ACE_OS_TRACE ("ACE_OS::shm_unlink");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_shm_unlink (path), int, -1);
 # elif defined (ACE_HAS_SHM_OPEN)
   ACE_OSCALL_RETURN (::shm_unlink (path), int, -1);
@@ -1729,7 +1729,7 @@ ACE_INLINE int
 ACE_OS::mutex_destroy (ACE_mutex_t *m)
 {
   ACE_OS_TRACE ("ACE_OS::mutex_destroy");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   int dummy_retval = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_mutex_destroy (m),
                                        dummy_retval), int, -1);
@@ -1778,7 +1778,7 @@ ACE_INLINE int
 ACE_OS::mutex_lock (ACE_mutex_t *m)
 {
   // ACE_OS_TRACE ("ACE_OS::mutex_lock");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   int dummy_retval = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_mutex_lock (m),
                                        dummy_retval), int, -1);
@@ -1881,7 +1881,7 @@ ACE_INLINE int
 ACE_OS::mutex_trylock (ACE_mutex_t *m)
 {
   ACE_OS_TRACE ("ACE_OS::mutex_trylock");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   int dummy_retval = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_mutex_trylock (m),
                                        dummy_retval), int, -1);
@@ -2114,7 +2114,7 @@ ACE_INLINE int
 ACE_OS::mutex_unlock (ACE_mutex_t *m)
 {
   ACE_OS_TRACE ("ACE_OS::mutex_unlock");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   int dummy_retval = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_mutex_unlock (m),
                                        dummy_retval), int, -1);
@@ -2363,7 +2363,7 @@ ACE_INLINE int
 ACE_OS::cond_destroy (ACE_cond_t *cv)
 {
   ACE_OS_TRACE ("ACE_OS::cond_destroy");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_cond_destroy (cv),
                                        ace_result_), int, -1);
 # elif defined (ACE_HAS_THREADS)
@@ -2390,7 +2390,7 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
                        int type)
 {
   ACE_UNUSED_ARG (type);
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   int result = -1;
 
   if (::pace_pthread_condattr_init (&attributes) == 0
@@ -2461,13 +2461,13 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
   ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (type);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_PACE */
+# endif /*  */
 }
 
 ACE_INLINE int
 ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
 {
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   return ::pace_pthread_condattr_destroy (&attributes);
 # elif defined (ACE_HAS_THREADS) && ! defined (__MACOSX__)
 #   if defined (ACE_HAS_PTHREADS)
@@ -2501,7 +2501,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
   // ACE_OS_TRACE ("ACE_OS::cond_init");
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_cond_init (cv, &attributes),
                                        ace_result_), int, -1);
 # elif defined (ACE_HAS_THREADS)
@@ -2580,7 +2580,7 @@ ACE_INLINE int
 ACE_OS::cond_signal (ACE_cond_t *cv)
 {
   ACE_OS_TRACE ("ACE_OS::cond_signal");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_pthread_cond_signal (cv), int, -1);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
@@ -2606,7 +2606,7 @@ ACE_INLINE int
 ACE_OS::cond_broadcast (ACE_cond_t *cv)
 {
   ACE_OS_TRACE ("ACE_OS::cond_broadcast");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_pthread_cond_broadcast (cv), int, -1);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
@@ -2636,7 +2636,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
                    ACE_mutex_t *external_mutex)
 {
   ACE_OS_TRACE ("ACE_OS::cond_wait");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_pthread_cond_wait (cv, external_mutex), int, -1);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
@@ -2797,7 +2797,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 ACE_INLINE int
 ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 {
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   return ::pace_pthread_equal (t1, t2);
 #elif defined (ACE_HAS_PTHREADS)
 # if defined (pthread_equal)
@@ -2819,7 +2819,7 @@ ACE_INLINE void
 ACE_OS::thr_self (ACE_hthread_t &self)
 {
   ACE_OS_TRACE ("ACE_OS::thr_self");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   self = ::pace_pthread_self ();
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
@@ -2845,7 +2845,7 @@ ACE_INLINE ACE_thread_t
 ACE_OS::thr_self (void)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_self");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   return ::pace_pthread_self ();
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
@@ -3074,7 +3074,7 @@ ACE_INLINE int
 ACE_OS::sema_destroy (ACE_sema_t *s)
 {
   ACE_OS_TRACE ("ACE_OS::sema_destroy");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   int result;
   if (s->name_)
   {
@@ -3222,7 +3222,7 @@ ACE_OS::mmap (void *addr,
               LPSECURITY_ATTRIBUTES sa)
 {
   ACE_OS_TRACE ("ACE_OS::mmap");
-#if defined (ACE_HAS_PACE) && !defined (__Lynx__)
+#if defined (ACE_HAS_PACE) && !defined (__Lynx__) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (file_mapping);
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN ((void *) ::pace_mmap (addr,
@@ -3385,7 +3385,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    LPSECURITY_ATTRIBUTES sa)
 {
   ACE_OS_TRACE ("ACE_OS::sema_init");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);
   ACE_UNUSED_ARG (sa);
@@ -3616,7 +3616,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
 {
-# if !defined (ACE_HAS_PACE) && defined (ACE_HAS_WTHREADS)
+# if defined (ACE_HAS_WTHREADS)
 #   if ! defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
@@ -3667,7 +3667,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
     }
   return result;
 #   endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-# else /* ACE_HAS_PACE && ACE_HAS_WTHREADS */
+# else /* ACE_HAS_WTHREADS */
   // Just call the normal char version.
   return ACE_OS::sema_init (s, count, type, ACE_Wide_To_Ascii (name).char_rep (), arg, max, sa);
 # endif /* ACE_HAS_PACE && ACE_HAS_WTHREADS */
@@ -3678,7 +3678,7 @@ ACE_INLINE int
 ACE_OS::sema_post (ACE_sema_t *s)
 {
   ACE_OS_TRACE ("ACE_OS::sema_post");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sem_post (s->sema_), int, -1);
 # elif defined (ACE_HAS_POSIX_SEM)
   ACE_OSCALL_RETURN (::sem_post (s->sema_), int, -1);
@@ -3742,7 +3742,7 @@ ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
 {
 #if defined (ACE_WIN32) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   // Win32 supports this natively.
-#  if defined (ACE_HAS_PACE)
+#  if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*(s->sema_),
                                           release_count, 0), ace_result_),
                                           int, -1);
@@ -3770,7 +3770,7 @@ ACE_INLINE int
 ACE_OS::sema_trywait (ACE_sema_t *s)
 {
   ACE_OS_TRACE ("ACE_OS::sema_trywait");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sem_trywait (s->sema_), int, -1);
 # elif defined (ACE_HAS_POSIX_SEM)
   // POSIX semaphores set errno to EAGAIN if trywait fails
@@ -3884,7 +3884,7 @@ ACE_INLINE int
 ACE_OS::sema_wait (ACE_sema_t *s)
 {
   ACE_OS_TRACE ("ACE_OS::sema_wait");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sem_wait (s->sema_), int, -1);
 # elif defined (ACE_HAS_POSIX_SEM)
   ACE_OSCALL_RETURN (::sem_wait (s->sema_), int, -1);
@@ -7401,7 +7401,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 ACE_INLINE int
 ACE_OS::thr_cmp (ACE_hthread_t t1, ACE_hthread_t t2)
 {
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   return ::pace_pthread_equal (t1, t2);
 #elif defined (ACE_HAS_PTHREADS)
 # if defined (pthread_equal)
@@ -7438,7 +7438,7 @@ ACE_INLINE int
 ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 {
   ACE_OS_TRACE ("ACE_OS::thr_getprio");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   struct sched_param param;
   int result;
   int policy = 0;
@@ -7516,7 +7516,7 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
   ACE_OS_TRACE ("ACE_OS::thr_getspecific");
 // If we are using TSS emulation then we shuld use ACE's implementation
 //  of it and not make any PACE calls.
-//#  if defined (ACE_HAS_PACE)
+//#  if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
 //  *data = ::pace_pthread_getspecific (key);
 //  return 0;
 //#  elif defined (ACE_HAS_THREADS)
@@ -7653,7 +7653,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
   // ACE_OS_TRACE ("ACE_OS::thr_getspecific");
   // If we are using TSS emulation then we shuld use ACE's implementation
   //  of it and not make any PACE calls.
-#if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION)
+#if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_WIN32)
   *data = ::pace_pthread_getspecific (key);
   return 0;
 #elif defined (ACE_HAS_THREADS)
@@ -7728,10 +7728,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
                   void **status)
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
-#if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)
-  int ace_result_ = 0;
-#   endif /* ACE_WIN32) */
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN ( ACE_ADAPT_RETVAL (::pace_pthread_join
                                         (thr_handle, status),
                                         ace_result_), int, -1);
@@ -7808,10 +7805,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
                   void **status)
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
-#if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)
-  int ace_result_ = 0;
-#   endif /* ACE_WIN32 */
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (thr_id);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_join
                                        (waiter_id, status),
@@ -7860,10 +7854,7 @@ ACE_INLINE int
 ACE_OS::thr_setcancelstate (int new_state, int *old_state)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setcancelstate");
-#if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)
-  int ace_result_ = 0;
-#   endif /* ACE_WIN32 */
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setcancelstate
                                        (new_state, old_state),
                                        ace_result_), int, -1);
@@ -7909,10 +7900,7 @@ ACE_INLINE int
 ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setcanceltype");
-#if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)
-  int ace_result_ = 0;
-#   endif /* ACE_WIN32 */
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setcanceltype
                                        (new_type, old_type),
                                        ace_result_), int, -1);
@@ -7950,10 +7938,7 @@ ACE_INLINE int
 ACE_OS::thr_cancel (ACE_thread_t thr_id)
 {
   ACE_OS_TRACE ("ACE_OS::thr_cancel");
-#if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)
-  int ace_result_ = 0;
-#   endif /* ACE_WIN32 */
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_cancel (thr_id),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -7982,7 +7967,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   int local_sig;
   if (sig == 0)
     sig = &local_sig;
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   errno = ::pace_sigwait (set, sig);
   return errno == 0  ?  *sig  :  -1;
 #elif defined (ACE_HAS_THREADS)
@@ -8044,7 +8029,7 @@ ACE_OS::sigtimedwait (const sigset_t *set,
                       const ACE_Time_Value *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::sigtimedwait");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   timespec ts;
   timespec *tsp;
   if (timeout !=0)
@@ -8105,10 +8090,7 @@ ACE_OS::thr_sigsetmask (int how,
                         sigset_t *osm)
 {
   ACE_OS_TRACE ("ACE_OS::thr_sigsetmask");
-#if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)
-  int ace_result_ = 0;
-#   endif /* ACE_WIN32 */
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_sigmask
                                        (how, nsm, osm),
                                        ace_result_), int, -1);
@@ -8193,10 +8175,7 @@ ACE_INLINE int
 ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
 {
   ACE_OS_TRACE ("ACE_OS::thr_kill");
-#if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)
-  int ace_result_ = 0;
-#   endif /* ACE_WIN32 */
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_kill (thr_id, signum),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -8319,7 +8298,7 @@ ACE_INLINE int
 ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setprio");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   struct sched_param param;
   int policy = 0;
   int result;
@@ -8430,7 +8409,7 @@ ACE_INLINE void
 ACE_OS::thr_yield (void)
 {
   ACE_OS_TRACE ("ACE_OS::thr_yield");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ::pace_sched_yield ();
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
@@ -9478,7 +9457,7 @@ ACE_INLINE int
 ACE_OS::munmap (void *addr, size_t len)
 {
   ACE_OS_TRACE ("ACE_OS::munmap");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_munmap (addr, len), int, -1);
 #elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (len);
@@ -11666,7 +11645,7 @@ ACE_INLINE int
 ACE_OS::sigaddset (sigset_t *s, int signum)
 {
   ACE_OS_TRACE ("ACE_OS::sigaddset");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigaddset (s, signum), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL)
@@ -11698,7 +11677,7 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
 ACE_INLINE int
 ACE_OS::sigdelset (sigset_t *s, int signum)
 {
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigdelset (s, signum), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL)
@@ -11730,7 +11709,7 @@ ACE_OS::sigdelset (sigset_t *s, int signum)
 ACE_INLINE int
 ACE_OS::sigemptyset (sigset_t *s)
 {
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigemptyset (s), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL)
@@ -11753,7 +11732,7 @@ ACE_OS::sigemptyset (sigset_t *s)
 ACE_INLINE int
 ACE_OS::sigfillset (sigset_t *s)
 {
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigfillset (s), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL)
@@ -11776,7 +11755,7 @@ ACE_OS::sigfillset (sigset_t *s)
 ACE_INLINE int
 ACE_OS::sigismember (sigset_t *s, int signum)
 {
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigismember (s, signum), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL)
@@ -11814,7 +11793,7 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 ACE_INLINE int
 ACE_OS::sigsuspend (const sigset_t *sigset)
 {
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigsuspend (sigset), int, -1);
 #elif defined (ACE_HAS_SIGSUSPEND)
   sigset_t s;
@@ -11834,7 +11813,7 @@ ACE_OS::sigsuspend (const sigset_t *sigset)
 ACE_INLINE int
 ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigprocmask (how, nsp, osp), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   ACE_UNUSED_ARG (how);
@@ -11853,10 +11832,7 @@ ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
 ACE_INLINE int
 ACE_OS::pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
-#if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)
-  int ace_result_ = 0;
-#   endif /* ACE_WIN32 */
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_sigmask (how, nsp, osp),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)

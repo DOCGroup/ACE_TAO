@@ -941,7 +941,7 @@ void
 ACE_OS::mutex_lock_cleanup (void *mutex)
 {
   ACE_OS_TRACE ("ACE_OS::mutex_lock_cleanup");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE)  && !defined (ACE_WIN32)
   pace_pthread_mutex_t *p_lock = (pace_pthread_mutex_t *) mutex;
   pace_pthread_mutex_unlock (p_lock);
 # elif defined (ACE_HAS_THREADS)
@@ -1350,7 +1350,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                       ACE_id_t id)
 {
   ACE_OS_TRACE ("ACE_OS::sched_params");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (id);
   if (sched_params.quantum () != ACE_Time_Value::zero)
   {
@@ -3647,7 +3647,7 @@ void
 ACE_OS::thr_exit (void *status)
 {
   ACE_OS_TRACE ("ACE_OS::thr_exit");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ::pace_pthread_exit (status);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
@@ -3829,10 +3829,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
   // ACE_OS_TRACE ("ACE_OS::thr_setspecific");
   // If we are using TSS emulation then we shuld use ACE's implementation
   //  of it and not make any PACE calls.
-#if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION)
-#   if defined (ACE_WIN32)
-  int ace_result_ = 0;
-#   endif /* ACE_WIN32 */
+#if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setspecific (key, data),
                                        ace_result_),
                      int, -1);
@@ -3904,7 +3901,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
   ACE_OS_TRACE ("ACE_OS::thr_keyfree");
   // If we are using TSS emulation then we shuld use ACE's implementation
   //  of it and not make any PACE calls.
-# if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION)
+# if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_WIN32)
     return ::pace_pthread_key_delete (key);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
@@ -3950,7 +3947,7 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
                        void *inst)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_keycreate");
-# if defined (ACE_HAS_PACE)
+# if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_key_create (key, dest),
                                        ace_result_),
                      int, -1);
@@ -5920,7 +5917,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #   if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   if (external_mutex->type_ == USYNC_PROCESS)
     // This call will automatically release the mutex and wait on the semaphore.
-#   if defined (ACE_HAS_PACE)
+#   if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
     ACE_WIN32CALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_,
                                                             cv->sema_.sema_, INFINITE, FALSE),
                                      result),
@@ -6047,7 +6044,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   if (external_mutex->type_ == USYNC_PROCESS)
     // This call will automatically release the mutex and wait on the
     // semaphore.
-#   if defined (ACE_HAS_PACE)
+#   if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
     result = ::SignalObjectAndWait (external_mutex->proc_mutex_,
                                     cv->sema_.sema_,
                                     msec_timeout,
@@ -6072,11 +6069,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // ACE_OS::broadcast().
 #     if defined (ACE_WIN32)
 #       if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
-#          if defined (ACE_HAS_PACE)
-      result = ::WaitForSingleObject (cv->sema_.sema_, msec_timeout);
-#          else
       result = ::WaitForSingleObject (cv->sema_, msec_timeout);
-#          endif /* ACE_HAS_PACE */
 #       else /* ACE_USES_WINCE_SEMA_SIMULATION */
       // Can't use Win32 API on our simulated semaphores.
       result = ACE_OS::sema_wait (&cv->sema_,
@@ -6250,11 +6243,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
 #     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
-#        if defined (ACE_HAS_PACE)
-  result = ::WaitForSingleObject (cv->sema_.sema_, msec_timeout);
-#        else
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
-#        endif /* ACE_HAS_PACE */
 #     else
   // Can't use Win32 API on simulated semaphores.
   result = ACE_OS::sema_wait (&cv->sema_,
@@ -6325,11 +6314,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // Wait to be awakened by a ACE_OS::cond_signal() or
   // ACE_OS::cond_broadcast().
 #     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
-#        if defined (ACE_HAS_PACE)
-  result = ::WaitForSingleObject (cv->sema_.sema_, INFINITE);
-#        else
   result = ::WaitForSingleObject (cv->sema_, INFINITE);
-#        endif /* ACE_HAS_PACE */
 #     else
   // Can't use Win32 API on simulated semaphores.
   result = ACE_OS::sema_wait (&cv->sema_);

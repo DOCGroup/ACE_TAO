@@ -1815,12 +1815,11 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
 
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
 # include /**/ "pace/semaphore.h"
 #   if !defined (SEM_FAILED)
 #     define SEM_FAILED ((pace_sem_t *) -1)
 #   endif  /* !SEM_FAILED */
-
 
 typedef struct
 {
@@ -2444,7 +2443,7 @@ typedef struct
 // Wrapper for NT Events.
 typedef HANDLE ACE_event_t;
 
-#   if !defined (ACE_HAS_PACE)
+#   if !defined (ACE_HAS_PACE) || defined (ACE_WIN32)
 // This can probably get _wider_ as more types are defined in PACE.
 // ie: see above ACE_mutex_t
 
@@ -3339,15 +3338,10 @@ PAGE_NOCACHE  */
 
 typedef OVERLAPPED ACE_OVERLAPPED;
 
-#if defined (ACE_HAS_PACE)
-typedef pace_pthread_t ACE_thread_t;
-typedef pace_pid_t pid_t;
-#else /* !ACE_HAS_PACE */
 typedef DWORD ACE_thread_t;
 typedef long pid_t;
-#endif /* ACE_HAS_PACE */
-
 typedef HANDLE ACE_hthread_t;
+
 #define ACE_INVALID_PID ((pid_t) -1)
 #   if defined (ACE_HAS_TSS_EMULATION)
       typedef DWORD ACE_OS_thread_key_t;
@@ -4094,7 +4088,7 @@ typedef fd_set ACE_FD_SET_TYPE;
 # endif /* INET6_ADDRSTRLEN */
 
 # if defined (ACE_LACKS_SIGSET)
-#    if defined (ACE_HAS_PACE)
+#    if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
 typedef pace_sigset_t sigset_t;
 #    else
 typedef u_int sigset_t;
