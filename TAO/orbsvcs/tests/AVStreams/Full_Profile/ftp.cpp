@@ -51,7 +51,12 @@ FTP_Client_Callback::handle_timeout (void *)
   int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
   if (n < 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
+      ACE_TRY_NEW_ENV
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
+          TAO_AV_CORE::instance ()->orb_manager ()->fini (ACE_TRY_ENV);
+        }
+      ACE_ENDTRY;
     }
   if (n == 0)
     {
@@ -69,6 +74,7 @@ FTP_Client_Callback::handle_timeout (void *)
               CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
               ACE_CHECK_RETURN (-1);
               TAO_AV_CORE::instance ()->stop_run ();
+              TAO_AV_CORE::instance ()->orb_manager ()->fini (ACE_TRY_ENV);
               return 0;
             }
           else
@@ -191,7 +197,8 @@ Client::Client (void)
    client_mmdevice_ (&endpoint_strategy_),
    fdev_ (0),
    fp_ (0),
-   protocol_ (ACE_OS::strdup ("UDP"))
+   protocol_ (ACE_OS::strdup ("UDP")),
+   address_ ("")
 {
 }
 
@@ -358,7 +365,13 @@ Client::run (void)
       this->streamctrl_.start (start_spec,ACE_TRY_ENV);
       ACE_TRY_CHECK;
       // Schedule a timer for the for the flow handler.
-      TAO_AV_CORE::instance ()->run ();
+      //TAO_AV_CORE::instance ()->run ();
+      ACE_Time_Value tv (10000,0);
+      if (TAO_AV_CORE::instance ()->orb_manager ()->run (tv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      
+      ACE_DEBUG ((LM_DEBUG, "Exited the TAO_AV_Core::run\n"));
     }
   ACE_CATCHANY
     {
