@@ -39,5 +39,6 @@ class Timer_Service_2 : public Timer_Service_1
 
 // Declare both static and dynamic services.
 ACE_STATIC_SVC_DECLARE (Timer_Service_1)
+ACE_SVC_FACTORY_DECLARE (Timer_Service_1)
 ACE_SVC_FACTORY_DECLARE (Timer_Service_2)
 
