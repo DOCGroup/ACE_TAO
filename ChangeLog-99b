@@ -5,6 +5,10 @@ Wed Mar 17 10:24:26 1999  David L. Levine  <levine@cs.wustl.edu>
           ace/OS.i (strenvdup): initialized temp to 0 to avoid warnings from
           VxWorks g++.  Thanks to Hans Rohnert for reporting these.
 
+        * include/makeinclude/platform_vxworks5.x_g++.GNU (RANLIB):
+          replace /bin/true with @true, to avoid build warning on
+          NT hosts.  Thanks to Hans Rohnert for reporting this.
+
 Wed Mar 17 09:58:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Svc_Conf.l (yy_delete_parse_buffer): Added a check for NULL
