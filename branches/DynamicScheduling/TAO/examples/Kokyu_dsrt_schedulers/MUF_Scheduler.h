@@ -155,20 +155,22 @@ private:
   {
     typedef RTScheduling::Current::IdType Guid_t;
 
+    typedef TimeBase::TimeT Time_t;
+    class _Now
+    {
+    public:
+      Time_t operator () ()
+      {
+        ACE_Time_Value time = ACE_OS::gettimeofday ();
+        return 10*time.usec () + 10000000*time.sec ();
+      }
+    };
+
     struct _QoSDescriptor_t
     {
       typedef long Criticality_t;
-      typedef TimeBase::TimeT Time_t;
-      class _Now
-      {
-      public:
-        Time_t operator () ()
-        {
-          ACE_Time_Value time = ACE_OS::gettimeofday ();
-          return 10*time.usec () + 10000000*time.sec ();
-        }
-      };
 
+      typedef TimeBase::TimeT Time_t;
       typedef _Now Now;
 
       Criticality_t criticality_;
