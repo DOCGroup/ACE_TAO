@@ -1,4 +1,7 @@
-Thu Feb 25 10:48:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Feb 25 11:22:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Don't remove
+	  temporary files on Win95/98.
 
 	* docs/Options.html: Added a short note about the change of
 	  -ORBdemuxstrategy.
