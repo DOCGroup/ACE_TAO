@@ -1,3 +1,9 @@
+Thu Feb 22 07:51:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/OS.i: Reverted the change "Thu Feb 22 03:31:06 2001
+	  Krishnakumar B  <kitty@ace.cs.wustl.edu> ". The beta 5.1.13 is
+	  going to be zapped. 
+
 Thu Feb 22 03:52:25 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACE version 5.1.13 released.
@@ -5,7 +11,8 @@ Thu Feb 22 03:52:25 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 Thu Feb 22 03:31:06 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 
 	* ace/OS.i (dlsym): 
-	Hopefully fixed the Win32 builds. Removed a extra ! in the #ifdef.
+  	  Hopefully fixed the Win32 builds. Removed a extra ! in the
+	  #ifdef.  
 
 Thu Feb 22 02:58:36 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 
