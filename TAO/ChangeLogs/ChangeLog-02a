@@ -1,3 +1,17 @@
+Fri Jun  1 12:37:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* tests/RTCORBA/Banded_Connections/run_test.pl:
+
+	Changed the priority bands to the correct values. This exposes a
+        bug in the increasing/lowering of priority on Tru64.
+
+	* tests/RTCORBA/Banded_Connections/client.cpp (main):
+
+        The previous band used for an invalid band falls into valid
+        priority band under Tru64.
+
+	Thanks to Irfan for pointing these.
+
 Fri Jun  1 11:28:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
@@ -11,7 +25,7 @@ Fri Jun  1 11:28:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/ast/ast_constant.cpp:
         * TAO_IDL/include/ast_constant.h:
 
-          Added a ifr_added_ flag to class AST_Constant, similar 
+          Added a ifr_added_ flag to class AST_Constant, similar
           to the one added recently to class AST_Type.
 
         * TAO_IDL/ast/ast_type.cpp:
@@ -74,7 +88,7 @@ Fri Jun  1 09:22:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
           module. Code generated from reopened_modules.idl is
           protected from compilation on platforms that don't
           support namespaces.
-          
+
         * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
 
           Fixed indentation error in generated code that was causing
@@ -212,7 +226,7 @@ Wed May 30 21:41:53 2001  Ossama Othman  <ossama@uci.edu>
 	  with the corrections to the "Dynamic" IDL module, and the new
 	  optimization for the case where more than one IDL parameter is
 	  used in a given IDL method.
-	
+
 	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp
 	  (visit_interface):
 
@@ -224,14 +238,14 @@ Wed May 30 21:41:53 2001  Ossama Othman  <ossama@uci.edu>
 	  The "context" argument is now called "servant_upcall."  A
 	  pointer to the Servant_Upcall object associated with the current
 	  request is now passed through this argument.
-	
+
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
 	  (visit_interface):
 
 	  The unused "context" argument to the "_skel" methods and the
 	  "synchronous_upcall_dispatch()" is now a pointer to the
 	  Servant_Upcall object.  Adjust the generated code accordingly.
-	
+
 	  Improved exception-safety of the generated "_this()" method.
 
 	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp
@@ -256,7 +270,7 @@ Wed May 30 21:41:53 2001  Ossama Othman  <ossama@uci.edu>
 
 	  For the skeleton, pass the pointer to the Servant_Upcall object
 	  to the per-operation ServerRequestInfo classes.  It is used to
-	  implement the ServerRequestInfo::object_id() method. 
+	  implement the ServerRequestInfo::object_id() method.
 
 	* TAO_IDL/be_include/be_visitor_operation/operation.h:
 	* TAO_IDL/be/be_visitor_operation/operation.cpp
@@ -275,13 +289,13 @@ Wed May 30 21:41:53 2001  Ossama Othman  <ossama@uci.edu>
 	  (visit_operation):
 	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
 	  (visit_operation):
-	
+
 	  Removed catch block for the PortableInterceptor::ForwardRequest
 	  exception.  That exception is now handled within the
 	  "{Client,Server}InterceptorAdapter" classes that implements the
 	  request interceptor interception points.  This change makes it
 	  impossible for application code to throw a
-	  PortableInterceptor::ForwardRequest exception with the 
+	  PortableInterceptor::ForwardRequest exception with the
 	  expectation that it will be processed as a LOCATION_FORWARD.
 	  Only interception points are supposed to throw that exception.
 	  Furthermore, this reduces the footprint.
@@ -351,7 +365,7 @@ Wed May 30 21:41:53 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Regenerated these files to pull in updates made to the generated
 	  code in the TAO_IDL compiler.
-	
+
 	* tao/Dynamic.pidl:
 
 	  Removed "Dynamic::ParameterMode" type.  The proper type is
@@ -439,7 +453,7 @@ Wed May 30 21:41:53 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Fixed broken code that ignored the ACE_TRY_ENV passed to a given
 	  method invocation, i.e. added missing ACE_CHECKs.
-	
+
 	* tao/PortableServer/Object_Adapter.cpp:
 
 	  Include the new `ServerInterceptorAdapter.h' header to pull in
@@ -463,7 +477,7 @@ Wed May 30 21:41:53 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Fixed a problem where the caught exception was not set in the
 	  ServerRequestInfo object.
-	
+
 	  Only re-throw the caught exception if the send_exception()
 	  interception point hasn't transformed it to a LOCATION_FORWARD
 	  reply.
