@@ -1,6 +1,12 @@
+Sat Nov 09 09:47:37 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/RTEventLog.dsp: The release build was not
+	  generating a different name from the debug build without
+	  following our naming convention.
+
 Fri Nov 08 19:18:58 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs\tests\Notify\Basic: 
+	* orbsvcs\tests\Notify\Basic:
 
 	  - Renamed the following file to make consistent:
 
@@ -23,13 +29,13 @@ Fri Nov 08 19:18:58 2002  Irfan Pyarali  <irfan@oomworks.com>
 	* orbsvcs\tests\Notify\performance-tests\RedGreen: Added
 	  run_test.pl so that these tests can be run in the nightly built.
 
-	* orbsvcs\tests\Notify: 
+	* orbsvcs\tests\Notify:
 
 	  Updated the following project files so that they can be included
 	  in the mega Notify test workspace:
 
-	  orbsvcs\tests\Notify\Notify_Tests.dsw	
-	
+	  orbsvcs\tests\Notify\Notify_Tests.dsw
+
 	  - Basic/ConnectDisconnect.dsp
 	  - Basic/IdAssignment.dsp
 	  - Basic/Simple.dsp
@@ -73,9 +79,9 @@ Fri Nov 08 19:18:58 2002  Irfan Pyarali  <irfan@oomworks.com>
 	* orbsvcs\tests\Notify\Basic\IdAssignment.h: Fixed filename in
 	  comments.
 
-	* orbsvcs\tests\Notify\Basic\Simple.cpp: 
-	* orbsvcs\tests\Notify\Basic\IdAssignment.cpp: 
-	* orbsvcs\tests\Notify\Basic\ConnectDisconnect.cpp: 
+	* orbsvcs\tests\Notify\Basic\Simple.cpp:
+	* orbsvcs\tests\Notify\Basic\IdAssignment.cpp:
+	* orbsvcs\tests\Notify\Basic\ConnectDisconnect.cpp:
 
 	  Reduce debugging statements.
 
