@@ -3781,16 +3781,17 @@ typedef fd_set ACE_FD_SET_TYPE;
 #   define MAXHOSTNAMELEN  256
 # endif /* MAXHOSTNAMELEN */
 
-  // Define INET string length constants if they haven't been defined
-#   if !defined (INET_ADDRSTRLEN)
-  // for IPv4 dotted-decimal
-#     define INET_ADDRSTRLEN 16
-#   endif /* INET_ADDRSTRLEN */
-
-#   if !defined (INET6_ADDRSTRLEN)
-  // for IPv6 hex string
-#     define INET6_ADDRSTRLEN 46
-#   endif /* INET6_ADDRSTRLEN */
+// Define INET string length constants if they haven't been defined
+//
+// for IPv4 dotted-decimal
+# if !defined (INET_ADDRSTRLEN)
+#   define INET_ADDRSTRLEN 16
+# endif /* INET_ADDRSTRLEN */
+//
+// for IPv6 hex string
+# if !defined (INET6_ADDRSTRLEN)
+#   define INET6_ADDRSTRLEN 46
+# endif /* INET6_ADDRSTRLEN */
 
 # if defined (ACE_LACKS_SIGSET)
 typedef u_int sigset_t;
