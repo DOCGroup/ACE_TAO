@@ -1,3 +1,27 @@
+(IPv6 changes) Tue Sep 18 17:20:51 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/INET_Addr.cpp: Clear the inet_addr_ union before setting
+          port/address on the (u_short, ACE_UNIT32) ctor. Check for
+          address type before deciding which address to check for "any"
+          in get_host_name ().  For the (u_short, const [w]char *) ctor,
+          add the needed 'encode' arg before the address family.
+          In set_port_number (), fix the case of setting an IPv4 port
+          number when IPv6 is enabled.
+
+        * ace/INET_Addr.i: Use get_type(), not sin_family, to decide
+          which fields to look at for get_port, et al.
+
+        * ace/SOCK_Acceptor.h (open): Changed the default value for
+          protocol_family from ACE_PROTOCOL_FAMILY_INET to PF_UNSPEC.
+          This allows open() to detect IPv4/6 at run-time.
+
+        * ace/SOCK_Acceptor.cpp (shared_open): For the PF_INET case, let
+          the defaults take over for calling ACE::bind_port. Avoid any
+          potential for too many byte swaps, even though it wouldn't
+          make any difference in this case (0 address).
+
+        * ace/Sock_Connect.cpp: Fixed spacing.
+
 (IPv6 changes) Fri Sep 14 18:25:39 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (getipnodebyname, getipnodebyaddr): Use __GLIBC__ for
