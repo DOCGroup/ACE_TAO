@@ -180,7 +180,11 @@ public:
                         size_t stack_size[] = 0,
                         ACE_thread_t thread_ids[] = 0);
 
-  /// Wait for all threads running in this task to exit.
+  /**
+   * Block until there are no more threads spawned by this task
+   * running .  Returns 0 on success and -1 on failure.  Note that
+   * this method will not wait on detached threads.
+   */
   virtual int wait (void);
 
   // = Suspend/resume a Task.

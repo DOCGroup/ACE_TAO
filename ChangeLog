@@ -1,3 +1,9 @@
+Mon Apr 22 01:34:32 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Task.h: Enhanced the comment for <wait> method to make it
+	  clear that it will not wait for detached thread.  Thanks to
+	  Alain Decamps <Alain.Decamps@PIDPA.be> for suggesting this.
+
 Sun Apr 21 21:23:59 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.x_cxx.GNU (SOFLAGS):
