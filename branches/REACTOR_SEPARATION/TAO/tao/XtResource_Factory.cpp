@@ -1,10 +1,12 @@
 //$Id$
 
-#include /**/ "XtResource_Factory.h"
-#include /**/ "debug.h"
-#include /**/ "ace/XtReactor.h"
+#include "XtResource_Factory.h"
+#include "debug.h"
+#include "ace/XtReactor.h"
 
-ACE_RCSID(tao, XtResource_Factory, "$Id$");
+ACE_RCSID( TAO_XtResource,
+           XtResource_Factory,
+           "$Id$");
 
 namespace TAO
 {
@@ -18,10 +20,12 @@ namespace TAO
   ACE_Reactor_Impl *
   XtResource_Factory::reactor_impl (void)
   {
+    // synchronized by external locks
     if (this->context_ == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "TAO (%P|%t) - XtAppContext is undefined. Cannot create ACE_XtReactor \n"));
+                  ACE_TEXT("TAO (%P|%t) - XtAppContext is undefined.")
+                  ACE_TEXT(" Cannot create ACE_XtReactor \n")));
       return 0;
     }
 

@@ -11,11 +11,11 @@
  */
 //=============================================================================
 
-#ifndef _TAO_XTRESOURCE_LOADER_H
-#define _TAO_XTRESOURCE_LOADER_H
+#ifndef TAO_XTRESOURCE_LOADER_H
+#define TAO_XTRESOURCE_LOADER_H
 #include /**/ "ace/pre.h"
-#include /**/ "TAO_XtResource_Export.h"
 #include /**/ <X11/Intrinsic.h>
+#include "tao/TAO_XtResource_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,22 +23,28 @@
 
 namespace TAO
 {
-  /** Loads TAO resources related with Xt.
+  /**
+   * @class XtResource_Loader
    *
-   * This class changes the default reactor implementation into ACE_XtReactor by
-   * calling TAO_ORB_Core::set_gui_resource_factory. Please notice, this class has
-   * to be created in the main Xt thread, because set_gui_resource_factory creates
-   * a variable in TSS. This way XtReactor is instantiated only in Xt event loop thread.
+   * @brief Loads TAO resources related with Xt.
    *
+   * This class changes the default reactor implementation into
+   * ACE_XtReactor one by calling TAO_ORB_Core::set_gui_resource_factory.
+   * User should create an instance of this class before ORB_init
+   * when the TAO server has has to be integrated within Xt event loop.
+   *
+   * Please notice, this class has to be created in the main Xt thread,
+   * because set_gui_resource_factory creates a variable in TSS. This way
+   * XtReactor is instantiated only in Xt event loop thread.
    */
   class TAO_XtResource_Export XtResource_Loader
   {
 
   public:
     XtResource_Loader  (XtAppContext context);
-    virtual ~XtResource_Loader ();
 
+    virtual ~XtResource_Loader ();
   };
 }
 #include /**/ "ace/post.h"
-#endif /* _TAO_XTRESOURCE_LOADER_H */
+#endif /* TAO_XTRESOURCE_LOADER_H */

@@ -3,7 +3,9 @@
 #include "ORB_Core.h"
 #include "QtResource_Factory.h"
 
-ACE_RCSID(tao, QtResource_Loader, "$Id$");
+ACE_RCSID( TAO_QtResource,
+           QtResource_Loader,
+           "$Id$");
 
 namespace TAO
 {

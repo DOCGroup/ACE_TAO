@@ -10,12 +10,12 @@
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
 //=============================================================================
-#ifndef _TAO_TKRESOURCE_FACTORY_H
-#define _TAO_TKRESOURCE_FACTORY_H
+#ifndef TAO_TKRESOURCE_FACTORY_H
+#define TAO_TKRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
-#include /**/ "ace/TkReactor.h"
-#include /**/ "TAO_TkResource_Export.h"
-#include /**/ "GUIResource_Factory.h"
+#include "ace/TkReactor.h"
+#include "tao/TAO_TkResource_Export.h"
+#include "tao/GUIResource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,17 +24,24 @@
 namespace TAO
 {
 
-  /** TAO_GUI_Resource_Factory for creating TkReactor.
+  /**
+   * @class TkResource_Factory
    *
-   * This factory is intended for creating TkReactor for ORB. This factory can be
-   * feed into ORB using TAO_ORB_Core::set_gui_resource_factory method which is
-   * usually done by TAO_TkResource_Loader.
+   * @brief TAO_GUI_Resource_Factory for creating TkReactor.
+   *
+   * This factory is intended for creating TkReactor for ORB. This
+   * factory can be feed into ORB using
+   * TAO_ORB_Core::set_gui_resource_factory method which is usually
+   * done by TAO_TkResource_Loader.
    */
 
   class TAO_TkResource_Export TkResource_Factory : public GUIResource_Factory
   {
   public:
+
     TkResource_Factory ();
+
+  protected:
 
     /// Create or obtain current reactor implementation
     virtual ACE_Reactor_Impl *reactor_impl (void);
@@ -43,7 +50,10 @@ namespace TAO
 
     /// Reactor created by this factory.
     ACE_TkReactor *reactor_impl_;
+
+    /// for internal locking.
+    TAO_SYNCH_MUTEX lock_;
   };
 }
 #include /**/ "ace/post.h"
-#endif /* _TAO_TKRESOURCE_FACTORY_H */
+#endif /* TAO_TKRESOURCE_FACTORY_H */

@@ -21,12 +21,16 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <qapplication.h>
+#include "ace/QtReactor.h"
 #include "tao/GUIResource_Factory.h"
 
 namespace TAO
 {
 
-  /** TAO_GUI_Resource_Factory for creating QtReactor.
+  /**
+   * @class QtResource_Factory
+   *
+   * @brief TAO_GUI_Resource_Factory for creating QtReactor.
    *
    * This factory is intended for creating QtReactor for ORB. This
    * factory can be feed into ORB using
@@ -36,7 +40,10 @@ namespace TAO
   class TAO_QtResource_Export QtResource_Factory : public GUIResource_Factory
   {
   public:
+
     QtResource_Factory (QApplication *qapp_);
+
+  protected:
 
     /// Create or obtain current reactor implementation
     virtual ACE_Reactor_Impl *reactor_impl (void);
@@ -48,6 +55,9 @@ namespace TAO
 
     /// QApplication running reactor
     QApplication *qapp_;
+
+    /// for internal locking.
+    TAO_SYNCH_MUTEX lock_;
   };
 }
 
