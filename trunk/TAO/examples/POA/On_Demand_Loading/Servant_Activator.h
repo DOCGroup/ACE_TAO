@@ -1,3 +1,4 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 //=================================================================================
@@ -9,8 +10,9 @@
 //     Servant_Activator.h
 //
 // = DESCRIPTION
-//     Defines a ServantActivator_i class, an Servant_Manager interface which
-//     activates a servant by loading it and associates it with an object on demand.
+//     Defines a <ServantActivator_i> class, which uses a
+//     Servant_Manager to activate a servant by loading it and
+//     associates it with an object on-demand.
 //
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
@@ -42,14 +44,10 @@ public:
   // MyFooServant object that is not currently active. When an servant
   // pointer corresponding to objectId is not found in the Active
   // Object Map, the POA hands over the job of obtaining the servant
-  // to the Servant Manager. Depending upon whether the POA is created 
+  // to the Servant Manager. Depending upon whether the POA is created
   // with RETAIN or NON_RETAIN as the servant_retention policy, the
   // Servant Activator or the Servant Locator interface is invoked
   // respectively.
-
-  // @@ *done*Kirthika, please explain briefly what THIS method does
-  // whenever it is invoked, i.e., explain the use of the
-  // ServantManager stuff...
 
   virtual void etherealize (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr adapter,
@@ -64,10 +62,6 @@ public:
   // that call the  ServantActivator invokes this method which will
   // destroy the servant associated with the object.
 
-  // @@ *done*Kirthika, please explain briefly what THIS method does
-  // whenever it is invoked, i.e., explain the use of the
-  // ServantManager stuff...
-
   PortableServer::ObjectId_var create_dll_object_id (const char *dllname,
                                                      const char *factory_function);
   // Returns an ObjectId when given a DLL name and the factory
@@ -75,13 +69,10 @@ public:
 
 private:
   ServantManager_i servant_manager_;
-  // An ServantManager object that provides utility methods.
-  // The methods include obtaining the servant using an ACE_DLL
-  // object, destroying the servant and extracting the dllname and
-  // factory function from the ObjectId.
-  
-  // @@*done* Kirthika, briefly summarize what these methods accomplish (in
-  // general).
+  // An ServantManager object that provides utility methods.  The
+  // methods include obtaining the servant using an ACE_DLL object,
+  // destroying the servant and extracting the dllname and factory
+  // function from the ObjectId.
 };
 
 #endif /* SERVANT_ACTIVATOR_H */

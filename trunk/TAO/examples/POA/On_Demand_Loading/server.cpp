@@ -22,6 +22,10 @@ main (int argc, char **argv)
 {
   Server_i server;
   
+  // @@ Kirthika, I don't think the error-handling logic is quite
+  // correct yet.  Can you please make sure that you check for error
+  // returns from these methods and bail out of main() if you do,
+  // rather than fall through to other methods?
   server.init (argc, argv);
   
   // This POA is used to test the Servant Activator interface and

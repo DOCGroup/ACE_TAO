@@ -131,11 +131,8 @@ Server_i::init (int argc, char **argv)
                                                 TAO_TRY_ENV);  
       TAO_CHECK_ENV;
   
-   
       // Get the POAManager of RootPOA
-
       poa_manager_ = root_poa_->the_POAManager (TAO_TRY_ENV);
-  
       TAO_CHECK_ENV;
     
     }
