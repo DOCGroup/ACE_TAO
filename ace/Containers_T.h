@@ -44,9 +44,9 @@ class ACE_Allocator;
  * @brief Implement a generic LIFO abstract data type.
  *
  * This implementation of a Stack uses a bounded array
- * that is allocated dynamically.  The Stack interface 
- * provides the standard constant time push, pop, and top 
- * operations. 
+ * that is allocated dynamically.  The Stack interface
+ * provides the standard constant time push, pop, and top
+ * operations.
  */
 template <class T>
 class ACE_Bounded_Stack
@@ -57,14 +57,14 @@ public:
   /// Initialize a new empty stack with the provided size..
   /**
    * Initialize and allocate space for a new Bounded_Stack with the provided
-   * size. 
+   * size.
    */
   ACE_Bounded_Stack (size_t size);
 
-  /// Initialize the stack to be a copy of the stack provided. 
+  /// Initialize the stack to be a copy of the stack provided.
   /**
    * Initialize the stack to be an exact copy of the Bounded_Stack provided
-   * as a parameter.  
+   * as a parameter.
    */
   ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
 
@@ -72,19 +72,19 @@ public:
   /**
    * Perform a deep copy operation using the Bounded_Stack parameter.  If the capacity
    * of the lhs isn't sufficient for the rhs, then the underlying data structure will
-   * be reallocated to accomadate the larger number of elements. 
+   * be reallocated to accomadate the larger number of elements.
    */
   void operator= (const ACE_Bounded_Stack<T> &s);
 
   /// Perform actions needed when stack goes out of scope.
-  /** 
-   * Deallocate the memory used by the Bounded_Stack. 
+  /**
+   * Deallocate the memory used by the Bounded_Stack.
    */
   ~ACE_Bounded_Stack (void);
 
   // = Classic Stack operations.
 
-  ///Add an element to the top of the stack. 
+  ///Add an element to the top of the stack.
   /**
    * Place a new item on top of the stack.  Returns -1 if the stack
    * is already full, 0 if the stack is not already full, and -1 if
@@ -100,7 +100,7 @@ public:
    */
   int pop (T &item);
 
-  ///Examine the contents of the top of stack. 
+  ///Examine the contents of the top of stack.
   /**
    * Return top stack item without removing it.  Returns -1 if the
    * stack is already empty, 0 if the stack is not already empty, and
@@ -112,19 +112,19 @@ public:
 
   /// Returns 1 if the container is empty, otherwise returns 0.
   /**
-   * Performs constant time check to determine if the stack is empty. 
+   * Performs constant time check to determine if the stack is empty.
    */
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
   /**
-   * Performs constant time check to determine if the stack is at capacity. 
+   * Performs constant time check to determine if the stack is at capacity.
    */
   int is_full (void) const;
 
   /// The number of items in the stack.
   /**
-   * Return the number of items currently in the stack. 
+   * Return the number of items currently in the stack.
    */
   size_t size (void) const;
 
@@ -163,13 +163,13 @@ public:
   // = Initialization, assignment, and termination methods.
   /// Initialize a new stack so that it is empty.
   /**
-   * Initialize an empty stack. 
+   * Initialize an empty stack.
    */
   ACE_Fixed_Stack (void);
 
   /// The copy constructor (performs initialization).
   /**
-   * Initialize the stack and copy the provided stack into the current stack. 
+   * Initialize the stack and copy the provided stack into the current stack.
    */
   ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
 
@@ -181,13 +181,13 @@ public:
 
   /// Perform actions needed when stack goes out of scope.
   /**
-   * Destroy the stack. 
+   * Destroy the stack.
    */
   ~ACE_Fixed_Stack (void);
 
   // = Classic Stack operations.
-  
-  ///Constant time placement of element on top of stack. 
+
+  ///Constant time placement of element on top of stack.
   /**
    * Place a new item on top of the stack.  Returns -1 if the stack
    * is already full, 0 if the stack is not already full, and -1 if
@@ -195,7 +195,7 @@ public:
    */
   int push (const T &new_item);
 
-  ///Constant time removal of top of stack. 
+  ///Constant time removal of top of stack.
   /**
    * Remove and return the top stack item.  Returns -1 if the stack is
    * already empty, 0 if the stack is not already empty, and -1 if
@@ -203,7 +203,7 @@ public:
    */
   int pop (T &item);
 
-  ///Constant time examination of top of stack. 
+  ///Constant time examination of top of stack.
   /**
    * Return top stack item without removing it.  Returns -1 if the
    * stack is already empty, 0 if the stack is not already empty, and
@@ -220,14 +220,14 @@ public:
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
-  /** 
-   * Performs constant time check to see if stack is full. 
+  /**
+   * Performs constant time check to see if stack is full.
    */
   int is_full (void) const;
 
   /// The number of items in the stack.
   /**
-   * Constant time access to the current size of the stack. 
+   * Constant time access to the current size of the stack.
    */
   size_t size (void) const;
 
@@ -298,7 +298,7 @@ private:
  * in mind that duplicate entries aren't allowed.  In general,
  * therefore, you should avoid the use of these methods since
  * they aren't really part of the ADT stack.  The stack is implemented
- * as a doubly linked list. 
+ * as a doubly linked list.
  */
 template <class T>
 class ACE_Unbounded_Stack
@@ -313,8 +313,8 @@ public:
   /// Initialize a new stack so that it is empty.  Use user defined
   /// allocation strategy if specified.
   /**
-   * Initialize an empty stack using the user specified allocation strategy 
-   * if provided. 
+   * Initialize an empty stack using the user specified allocation strategy
+   * if provided.
    */
   ACE_Unbounded_Stack (ACE_Allocator *alloc = 0);
 
@@ -326,20 +326,20 @@ public:
 
   /// Assignment operator (performs assignment).
   /**
-   * Perform a deep copy of the rhs into the lhs. 
+   * Perform a deep copy of the rhs into the lhs.
    */
   void operator= (const ACE_Unbounded_Stack<T> &s);
 
   /// Perform actions needed when stack goes out of scope.
   /**
-   * Destroy the underlying list for the stack. 
+   * Destroy the underlying list for the stack.
    */
   ~ACE_Unbounded_Stack (void);
 
   // = Classic Stack operations.
 
 
-  ///Push an element onto the top of stack. 
+  ///Push an element onto the top of stack.
   /**
    * Place a new item on top of the stack.  Returns -1 if the stack
    * is already full, 0 if the stack is not already full, and -1 if
@@ -347,7 +347,7 @@ public:
    */
   int push (const T &new_item);
 
-  ///Pop the top element of the stack. 
+  ///Pop the top element of the stack.
   /**
    * Remove and return the top stack item.  Returns -1 if the stack is
    * already empty, 0 if the stack is not already empty, and -1 if
@@ -355,7 +355,7 @@ public:
    */
   int pop (T &item);
 
-  ///Examine the top of the stack. 
+  ///Examine the top of the stack.
   /**
    * Return top stack item without removing it.  Returns -1 if the
    * stack is already empty, 0 if the stack is not already empty, and
@@ -367,19 +367,19 @@ public:
 
   /// Returns 1 if the container is empty, otherwise returns 0.
   /**
-   * Constant time check to see if the stack is empty. 
+   * Constant time check to see if the stack is empty.
    */
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
   /**
-   * Always resturns 0 since the stack is unbounded. 
+   * Always resturns 0 since the stack is unbounded.
    */
   int is_full (void) const;
 
   // = Auxiliary methods (not strictly part of the Stack ADT).
 
-  ///Linear Insert of an item. 
+  ///Linear Insert of an item.
   /**
    * Insert <new_item> into the Stack at the head (but doesn't allow
    * duplicates).  Returns -1 if failures occur, 1 if item is already
@@ -390,19 +390,19 @@ public:
   /// Remove <item> from the Stack.  Returns 0 if it removes the item,
   /// -1 if it can't find the item, and -1 if a failure occurs.
   /**
-   * Linear remove operation. 
+   * Linear remove operation.
    */
   int remove (const T &item);
 
   /// Finds if <item> occurs the set.  Returns 0 if finds, else -1.
   /**
-   * Linear find operation. 
+   * Linear find operation.
    */
   int find (const T &item) const;
 
   /// The number of items in the stack.
   /**
-   * Constant time access to the current stack size. 
+   * Constant time access to the current stack size.
    */
   size_t size (void) const;
 
@@ -574,7 +574,7 @@ protected:
  *
  * Iterate thru the double-linked list.  This class provides
  * an interface that let users access the internal element
- * addresses directly. Notice <class T> must delcare
+ * addresses directly. Notice <class T> must declare
  * ACE_Double_Linked_List<T>,
  * ACE_Double_Linked_List_Iterator_Base <T> and
  * ACE_Double_Linked_List_Iterator as friend classes and class T
@@ -643,7 +643,7 @@ public:
  * Iterate backwards over the double-linked list.  This class
  * provide an interface that let users access the internal
  * element addresses directly, which seems to break the
- * encapsulation.  Notice <class T> must delcare
+ * encapsulation.  Notice <class T> must declare
  * ACE_Double_Linked_List<T>,
  * ACE_Double_Linked_List_Iterator_Base <T> and
  * ACE_Double_Linked_List_Iterator as friend classes and class T
@@ -723,8 +723,8 @@ public:
  * rules of using double-linked lists to maintaining the list
  * integrity.
  * If you need a double linked container class, use the DLList
- * class which is a container but delegates to the Double_Linked_List 
- * class. 
+ * class which is a container but delegates to the Double_Linked_List
+ * class.
  */
 template <class T>
 class ACE_Double_Linked_List
@@ -742,42 +742,42 @@ public:
   /// construction.  Use user specified allocation strategy
   /// if specified.
   /**
-   * Initialize an empy list using the allocation strategy specified by the user. 
-   * If none is specified, then use default allocation strategy. 
+   * Initialize an empy list using the allocation strategy specified by the user.
+   * If none is specified, then use default allocation strategy.
    */
   ACE_Double_Linked_List (ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
   /**
-   * Create a double linked list that is a copy of the provided 
-   * parameter.  
+   * Create a double linked list that is a copy of the provided
+   * parameter.
    */
   ACE_Double_Linked_List (const ACE_Double_Linked_List<T> &);
 
   /// Assignment operator.
   /**
-   * Perform a deep copy of the provided list by first deleting the nodes of the 
-   * lhs and then copying the nodes of the rhs. 
+   * Perform a deep copy of the provided list by first deleting the nodes of the
+   * lhs and then copying the nodes of the rhs.
    */
   void operator= (const ACE_Double_Linked_List<T> &);
 
   /// Destructor.
   /**
-   * Clean up the memory allocated for the nodes of the list. 
+   * Clean up the memory allocated for the nodes of the list.
    */
   ~ACE_Double_Linked_List (void);
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, 0 otherwise. 
-  /** 
-   * Performs constant time check to determine if the list is empty. 
+  /// Returns 1 if the container is empty, 0 otherwise.
+  /**
+   * Performs constant time check to determine if the list is empty.
    */
   int is_empty (void) const;
 
-  /// The list is unbounded, so this always returns 0. 
+  /// The list is unbounded, so this always returns 0.
   /**
-   * Since the list is unbounded, the method simply returns 0. 
+   * Since the list is unbounded, the method simply returns 0.
    */
   int is_full (void) const;
 
@@ -786,18 +786,18 @@ public:
   /// Adds <new_item> to the tail of the list. Returns the new item
   /// that was inserted.
   /**
-   * Provides constant time insertion at the end of the list structure. 
+   * Provides constant time insertion at the end of the list structure.
    */
   T *insert_tail (T *new_item);
 
   /// Adds <new_item> to the head of the list.Returns the new item that
   /// was inserted.
   /**
-   * Provides constant time insertion at the head of the list. 
+   * Provides constant time insertion at the head of the list.
    */
   T *insert_head (T *new_item);
 
-  ///Removes the head of the list and returns a pointer to that item. 
+  ///Removes the head of the list and returns a pointer to that item.
   /**
    * Removes and returns the first <item> in the list.  Returns
    * internal node's address on success, 0 if the queue was empty.
@@ -805,7 +805,7 @@ public:
    */
   T* delete_head (void);
 
-  ///Removes the tail of the list and returns a pointer to that item. 
+  ///Removes the tail of the list and returns a pointer to that item.
   /**
    * Removes and returns the last <item> in the list.  Returns
    * internal nodes's address on success, 0 if the queue was
@@ -815,7 +815,7 @@ public:
 
   // = Additional utility methods.
 
-  ///Empty the list. 
+  ///Empty the list.
   /**
    * Reset the <ACE_Double_Linked_List> to be empty.
    * Notice that since no one is interested in the items within,
@@ -827,13 +827,13 @@ public:
   /// isn't in the range {0..<size> - 1}, else 0.
   /**
    * Iterates through the list to the desired index and assigns the provides pointer
-   * with the address of the node occupying that index. 
+   * with the address of the node occupying that index.
    */
   int get (T *&item, size_t slot = 0);
 
   /// The number of items in the queue.
   /**
-   * Constant time call to return the current size of the list. 
+   * Constant time call to return the current size of the list.
    */
   size_t size (void) const;
 
@@ -842,7 +842,7 @@ public:
 
   /// Use DNode address directly.
   /**
-   * Constant time removal of an item from the list using it's address. 
+   * Constant time removal of an item from the list using it's address.
    */
   int remove (T *n);
 
@@ -852,33 +852,33 @@ public:
 protected:
   /// Delete all the nodes in the list.
   /**
-   * Removes and deallocates memory for all of the list nodes. 
+   * Removes and deallocates memory for all of the list nodes.
    */
   void delete_nodes (void);
 
   /// Copy nodes from <rhs> into this list.
   /**
    * Copy the elements of the provided list by allocated new nodes and assigning
-   * them with the proper data. 
+   * them with the proper data.
    */
   void copy_nodes (const ACE_Double_Linked_List<T> &rhs);
 
   /// Setup header pointer.  Called after we create the head node in ctor.
   /**
-   * Initialize the head pointer so that the list has a dummy node. 
+   * Initialize the head pointer so that the list has a dummy node.
    */
   void init_head (void);
 
-  ///Constant time insert a new item into the list structure. 
+  ///Constant time insert a new item into the list structure.
   /**
    * Insert a <new_element> into the list.  It will be added before
    * or after <old_item>.  Default is to insert the new item *after*
-   * <head_>.  Return 0 if succeed, -1 if error occured.  
+   * <head_>.  Return 0 if succeed, -1 if error occured.
    */
   int insert_element (T *new_item,
                       int before = 0,
                       T *old_item = 0);
-  ///Constant time delete an item from the list structure. 
+  ///Constant time delete an item from the list structure.
   /**
    * Remove an <item> from the list.  Return 0 if succeed, -1 otherwise.
    * Notice that this function checks if item is <head_> and either its
@@ -1204,7 +1204,7 @@ private:
  *
  * This implementation of an unordered set uses a fixed array.
  * It does not allow duplicate members.  The set provides linear insertion/deletion
- * operations.  
+ * operations.
  */
 template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set
@@ -1220,25 +1220,25 @@ public:
   // = Initialization and termination methods.
   /// Default Constructor.
   /**
-   * Creates an empy set 
+   * Creates an empy set
    */
   ACE_Fixed_Set (void);
 
   /// Copy constructor.
   /**
-   * Initializes a set to be a copy of the set parameter. 
+   * Initializes a set to be a copy of the set parameter.
    */
   ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &);
 
   /// Assignment operator.
   /**
-   * Deep copy of one set to another. 
+   * Deep copy of one set to another.
    */
   void operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
 
   /// Destructor.
-  /** 
-   * Destroys a set. 
+  /**
+   * Destroys a set.
    */
   ~ACE_Fixed_Set (void);
 
@@ -1246,19 +1246,19 @@ public:
 
   /// Returns 1 if the container is empty, otherwise returns 0.
   /**
-   * Performs constant time check to determine if a set is empty. 
+   * Performs constant time check to determine if a set is empty.
    */
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
   /**
-   * Performs a constant time check to see if the set is full. 
+   * Performs a constant time check to see if the set is full.
    */
   int is_full (void) const;
 
   // = Classic unordered set operations.
 
-  ///Linear time insertion of an item unique to the set. 
+  ///Linear time insertion of an item unique to the set.
   /**
    * Insert <new_item> into the set (doesn't allow duplicates).
    * Returns -1 if failures occur, 1 if item is already present, else
@@ -1266,7 +1266,7 @@ public:
    */
   int insert (const T &new_item);
 
-  ///Linear time removal operation of an item. 
+  ///Linear time removal operation of an item.
   /**
    * Remove first occurrence of <item> from the set.  Returns 0 if
    * it removes the item, -1 if it can't find the item, and -1 if a
@@ -1276,13 +1276,13 @@ public:
 
   /// Finds if <item> occurs in the set.  Returns 0 if finds, else -1.
   /**
-   * Performs a linear find operation for the specified <item>. 
+   * Performs a linear find operation for the specified <item>.
    */
   int find (const T &item) const;
 
   /// Size of the set.
   /**
-   * Returns the current size of the set. 
+   * Returns the current size of the set.
    */
   size_t size (void) const;
 
@@ -1369,7 +1369,7 @@ private:
  *
  * This implementation of an unordered set uses a Bounded array.
  * This implementation does not allow duplicates.  It provides
- * linear insert/remove/find operations.  Insertion/removal does not 
+ * linear insert/remove/find operations.  Insertion/removal does not
  * invalidate iterators, but caution should be taken to ensure
  * expected behavior.  Once initialized, the object has a maximum size
  * which can only be increased by the assignment of another larger Bounded_Set.
@@ -1391,36 +1391,36 @@ public:
   // = Initialization and termination methods.
   /// Construct a Bounded_Set using the default size.
   /**
-   * The default constructor initializes the Bounded_Set to a maximum size 
-   * specified by the DEFAULT_SIZE.  
-   */ 
+   * The default constructor initializes the Bounded_Set to a maximum size
+   * specified by the DEFAULT_SIZE.
+   */
   ACE_Bounded_Set (void);
 
   /// Construct a Bounded_Set with the provided sizeB.
   /**
    * Initialize the Bounded_Set to have a maximum size equal to the size parameter
-   * specified. 
+   * specified.
    */
   ACE_Bounded_Set (size_t size);
 
   /// Construct a Bounded_Set that is a copy of the provides Bounded_Set.
   /**
-   * Initialize the Bounded_Set to be a copy of the Bounded_Set parameter. 
+   * Initialize the Bounded_Set to be a copy of the Bounded_Set parameter.
    */
   ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
 
   /// Assignment operator.
   /**
-   * The assignment will make a deep copy of the Bounded_Set provided.  If the 
-   * rhs has more elements than the capacity of the lhs, then the lhs will be 
-   * deleted and reallocated to accomadate the larger number of elements. 
+   * The assignment will make a deep copy of the Bounded_Set provided.  If the
+   * rhs has more elements than the capacity of the lhs, then the lhs will be
+   * deleted and reallocated to accomadate the larger number of elements.
    */
   void operator= (const ACE_Bounded_Set<T> &);
 
   /// Destructor
-  /** 
+  /**
    * Clean up the underlying dynamically allocated memory that is used by
-   * the Bounded_Set. 
+   * the Bounded_Set.
    */
   ~ACE_Bounded_Set (void);
 
@@ -1433,27 +1433,27 @@ public:
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
-  /** 
-   * Performs a constant time check to determine if the Bounded_Set is at capacity. 
+  /**
+   * Performs a constant time check to determine if the Bounded_Set is at capacity.
    */
   int is_full (void) const;
 
   // = Classic unordered set operations.
 
-  ///Inserts a new element unique to the set. 
+  ///Inserts a new element unique to the set.
   /**
    * Insert <new_item> into the set (doesn't allow duplicates) in linear
-   * time.  
+   * time.
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
   int insert (const T &new_item);
 
-  ///Finds the specified element and removes it from the set. 
+  ///Finds the specified element and removes it from the set.
   /**
    * Remove first occurrence of <item> from the set.  Returns 0 if it
    * removes the item, -1 if it can't find the item, and -1 if a
-   * failure occurs.  The linear remove operation does not reclaim the 
+   * failure occurs.  The linear remove operation does not reclaim the
    * memory associated with the removed item.
    */
   int remove (const T &item);
@@ -1461,13 +1461,13 @@ public:
   /// Finds if <item> occurs in the set.  Returns 0 if finds, else -1.
   /**
    * find preforms a linear search for <item> and returns 0 on successful
-   * find and -1 otherwise.  
+   * find and -1 otherwise.
    */
   int find (const T &item) const;
 
   /// Size of the set.
   /**
-   * Returns a size_t representing the current size of the set. 
+   * Returns a size_t representing the current size of the set.
    */
   size_t size (void) const;
 
@@ -1565,7 +1565,7 @@ private:
  * that allows duplicates.  This class template requires that <
  * operator semantics be defined for the parameterized type <T>, but
  * does not impose any restriction on how that ordering operator is
- * implemented.  The set is implemented as a linked list.  
+ * implemented.  The set is implemented as a linked list.
  */
 template <class T>
 class ACE_Ordered_MultiSet
@@ -1580,26 +1580,26 @@ public:
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
   /**
-   * Initialize the set using the allocation strategy specified.  If none, use the 
-   * default strategy. 
+   * Initialize the set using the allocation strategy specified.  If none, use the
+   * default strategy.
    */
   ACE_Ordered_MultiSet (ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
   /**
-   * Initialize the set to be a copy of the provided set. 
+   * Initialize the set to be a copy of the provided set.
    */
   ACE_Ordered_MultiSet (const ACE_Ordered_MultiSet<T> &);
 
   /// Destructor.
   /**
-   * Delete the nodes of the set. 
+   * Delete the nodes of the set.
    */
   ~ACE_Ordered_MultiSet (void);
 
   /// Assignment operator.
   /**
-   * Delete the nodes in lhs, and copy the nodes from the rhs. 
+   * Delete the nodes in lhs, and copy the nodes from the rhs.
    */
   void operator= (const ACE_Ordered_MultiSet<T> &);
 
@@ -1607,13 +1607,13 @@ public:
 
   /// Returns 1 if the container is empty, otherwise returns 0.
   /**
-   * Constant time check to determine if the set is empty. 
+   * Constant time check to determine if the set is empty.
    */
   int is_empty (void) const;
 
   /// Size of the set.
   /**
-   * Constant time check to determine the size of the set. 
+   * Constant time check to determine the size of the set.
    */
   size_t size (void) const;
 
@@ -1622,11 +1622,11 @@ public:
   /// Insert <new_item> into the ordered multiset.
   /// Returns -1 if failures occur, else 0.
   /**
-   * Linear time, order preserving insert into the set beginning at the head. 
+   * Linear time, order preserving insert into the set beginning at the head.
    */
   int insert (const T &new_item);
 
-  ///Linear time insert beginning at the point specified by the provided iterator. 
+  ///Linear time insert beginning at the point specified by the provided iterator.
   /**
    * Insert <new_item> into the ordered multiset, starting its search at
    * the node pointed to by the iterator, and if insertion was successful,
@@ -1642,7 +1642,7 @@ public:
    */
   int remove (const T &item);
 
-  ///Linear find operation. 
+  ///Linear find operation.
   /**
    * Finds first occurrence of <item> in the multiset, using the iterator's
    * current position as a hint to improve performance. If find succeeds,
@@ -1653,7 +1653,7 @@ public:
 
   /// Reset the <ACE_Ordered_MultiSet> to be empty.
   /**
-   * Delete the nodes inside the set. 
+   * Delete the nodes inside the set.
    */
   void reset (void);
 
@@ -1757,20 +1757,20 @@ public:
   /// Dynamically create an uninitialized array.
   /**
    * Initialize an empty array of the specified size using the provided
-   * allocation strategy. 
+   * allocation strategy.
    */
   ACE_Array (size_t size = 0,
              ACE_Allocator* alloc = 0);
 
   /// Dynamically initialize the entire array to the <default_value>.
   /**
-   * Initialize an array the given size placing the default_value in each index. 
+   * Initialize an array the given size placing the default_value in each index.
    */
   ACE_Array (size_t size,
              const T &default_value,
              ACE_Allocator* alloc = 0);
 
-  ///Copy constructor. 
+  ///Copy constructor.
   /**
    * The copy constructor performs initialization by making an exact
    * copy of the contents of parameter <s>, i.e., *this == s will
@@ -1799,7 +1799,7 @@ public:
    */
   int operator== (const ACE_Array<T> &s) const;
 
-  ///Inequality comparison operator. 
+  ///Inequality comparison operator.
   /**
    * Compare this array with <s> for inequality such that <*this> !=
    * <s> is always the complement of the boolean return value of
