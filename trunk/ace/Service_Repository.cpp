@@ -131,13 +131,6 @@ ACE_Service_Repository::close (void)
           delete (ACE_Service_Type *)this->service_vector_[i];
         }
 
-      for (int i = this->current_size_ - 1; i >= 0; i--)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "shutting down %s\n", 
-		     this->service_vector_[i]->name ()));
-	  delete (ACE_Service_Type *) this->service_vector_[i];
-	}
-      
       delete [] this->service_vector_;
       this->service_vector_ = 0;
       this->current_size_  = 0;

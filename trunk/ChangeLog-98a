@@ -1,3 +1,9 @@
+Wed Jan  7 13:38:28 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Service_Repository.cpp (close): Removed a fragment of
+ 	  redundant code.  Thanks to Eric Newton <ecn@smart.net> and Alex
+ 	  Chan <Alex.Chan@Aspect.com> for reporting this.
+
 Tue Jan 06 17:19:13 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Containers.{h,cpp} (ACE_Unbounded_Set[_Iterator]):  Added
