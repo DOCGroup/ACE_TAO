@@ -1,7 +1,7 @@
 // $Id$
 
 // Stress testing thread creation and thread cancellation using
-// ACE_Task.  
+// ACE_Task.
 //
 // Author: Detlef Becker <Detlef.Becker@med.siemens.de>
 
@@ -10,6 +10,12 @@
 #include "ace/Task.h"
 
 static const int DEFAULT_TASKS = 1000;
+static size_t stack_size =      // Default stack size
+#if defined (ACE_WIN32)
+    0;
+#else
+    8192;
+#endif
 
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -32,7 +38,15 @@ Test_Task::Test_Task (ACE_Thread_Manager *thrmgr)
 int
 Test_Task::open (void *)
 {
-   return this->activate ();
+  return this->activate (0,
+                         1,
+                         0,
+                         ACE_DEFAULT_THREAD_PRIORITY,
+                         -1,
+                         0,
+                         0,
+                         0,
+                         &stack_size);
 }
 
 int
@@ -67,7 +81,8 @@ Test_Task::synch (void)
 int
 main (int argc, char *argv[])
 {
-  const int n_tasks = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_TASKS;
+  size_t stack_size = argc > 1 ? ACE_OS::atoi (argv[1]) : stack_size;
+  const int n_tasks = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_TASKS;
   u_int loop_count = 0;
   u_int error_count = 0;
 
