@@ -65,6 +65,9 @@ endif
 ifeq ($(PACE_SYSNAME),LynxOS)
   VPATH :=.:posix:$(VPATH)
   CFLAGS += -DPACE_LYNXOS=$(PACE_SYSVER)
+  ifeq ($(PACE_SYSVER),0x300)
+    CFLAGS += -D_POSIX_THREADS_CALLS
+  endif # ($(PACE_SYSVER),0x300)
 endif
 
 ifeq ($(PACE_SYSNAME),OSF1)
