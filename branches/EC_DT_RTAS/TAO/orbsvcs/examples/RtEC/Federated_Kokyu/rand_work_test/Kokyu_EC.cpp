@@ -94,9 +94,17 @@ Kokyu_EC::~Kokyu_EC(void)
       for(size_t i=0; i<timer_handles_.size(); ++i) {
         this->reactor_->cancel_timer(timer_handles_[i]);
       }
-      for(size_t i=0; i<timeout_handlers_.size(); ++i) {
-        delete timeout_handlers_[i];
+      this->timer_handles_.clear();
+      for(size_t i=0; i<task_triggers_.size(); ++i) {
+        delete this->task_triggers_[i].handler;
       }
+      this->task_triggers_.clear();
+      /*
+      for(size_t i=0; i<timeout_handlers_.size(); ++i) {
+        delete this->timeout_handlers_[i];
+      }
+      this->timeout_handlers_.clear();
+      */
     }
 }
 
@@ -290,7 +298,22 @@ Kokyu_EC::start (ACE_ENV_SINGLE_ARG_DECL)
 
   //@BT: EC activated is roughly equivalent to having the DT scheduler ready to run
   //DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_STARTED, 1, 0, NULL);
-  ACE_DEBUG((LM_DEBUG,"Kokyu_EC thread %t SCHEDULER_STARTED at %u\n",ACE_OS::gettimeofday().msec()));
+  ACE_DEBUG((LM_DEBUG,"Kokyu_EC (%P|%t) SCHEDULER_STARTED at %u\n",ACE_OS::gettimeofday().msec()));
+
+  //now we go through all the timeout_handlers and schedule them
+  for(size_t i=0; i<this->task_triggers_.size(); ++i)
+    {
+      if (this->reactor_ != 0)
+        {
+          long timer_handle = this->reactor_->schedule_timer(this->task_triggers_[i].handler,
+                                                             0, //arg
+                                                             this->task_triggers_[i].phase, //delay
+                                                             this->task_triggers_[i].period //period
+                                                             );
+          this->timer_handles_.push_back(timer_handle);
+          ACE_DEBUG((LM_DEBUG,"Kokyu_EC (%P|%t) scheduled timeout %d with delay %isec %iusec\n",timer_handle,this->task_triggers_[i].phase.sec(),this->task_triggers_[i].phase.usec()));
+        }
+    }
 
   this->started_ = true;
 }
@@ -361,95 +384,15 @@ Kokyu_EC::add_supplier_with_timeout(
                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (this->reactor_ != 0)
-    {
-      long timer_handle = this->reactor_->schedule_timer(timeout_handler_impl,
-                                                         0, //arg
-                                                         phase, //delay
-                                                         period //period
-                                                         );
-      this->timer_handles_.push_back(timer_handle);
-      this->timeout_handlers_.push_back(timeout_handler_impl);
-    }
+  //We can't schedule the timer here because we want the phase to be from when the reactor loop starts, not now!
+  task_trigger_t trigger;
+  trigger.handler = timeout_handler_impl;
+  trigger.period = period;
+  trigger.phase = phase;
+  this->task_triggers_.push_back(trigger);
+
 } //add_supplier_with_timeout()
-/*
-///Takes ownership of Supplier and Timeout_Consumer
-void
-Kokyu_EC::add_supplier_with_timeout(
-                                    Supplier * supplier_impl,
-                                    const char * supp_entry_point,
-                                    RtecEventComm::EventType supp_type,
-                                    Timeout_Consumer * timeout_consumer_impl,
-                                    const char * timeout_entry_point,
-                                    ACE_Time_Value period,
-                                    RtecScheduler::Criticality_t crit,
-                                    RtecScheduler::Importance_t imp
-                                    ACE_ENV_ARG_DECL
-                                    )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , RtecScheduler::UNKNOWN_TASK
-                   , RtecScheduler::INTERNAL
-                   , RtecScheduler::SYNCHRONIZATION_FAILURE
-                   ))
-{
-  add_supplier(supplier_impl,supp_entry_point,supp_type ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  add_timeout_consumer(supplier_impl,timeout_consumer_impl,timeout_entry_point,period,crit,imp ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}
 
-///Takes ownership of Timeout_Consumer
-void
-Kokyu_EC::add_timeout_consumer(
-                               Supplier * supplier_impl,
-                               Timeout_Consumer * timeout_consumer_impl,
-                               const char * timeout_entry_point,
-                               ACE_Time_Value period,
-                               RtecScheduler::Criticality_t crit,
-                               RtecScheduler::Importance_t imp
-                               ACE_ENV_ARG_DECL
-                               )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , RtecScheduler::UNKNOWN_TASK
-                   , RtecScheduler::INTERNAL
-                   , RtecScheduler::SYNCHRONIZATION_FAILURE
-                   ))
-{
-  RtecEventChannelAdmin::ProxyPushSupplier_var timeout_supplier_proxy;
-  RtecEventComm::PushConsumer_var safe_timeout_consumer;
-
-  safe_timeout_consumer= timeout_consumer_impl->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  RtEventChannelAdmin::SchedInfo info;
-  info.criticality = crit;
-  info.period = time_val_to_period (period);
-  info.importance = imp;
-  info.threads = 0;
-  info.info_type = RtecScheduler::OPERATION;
-
-  RtecScheduler::handle_t supplier_timeout_consumer_rt_info =
-    this->register_consumer(timeout_entry_point,
-                            info,
-                            ACE_ES_EVENT_INTERVAL_TIMEOUT,
-                            safe_timeout_consumer.in(),
-                            timeout_supplier_proxy.out()
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  //don't need to save supplier_timeout_consumer_rt_info because only used to set dependency here:
-
-  this->add_dependency (supplier_timeout_consumer_rt_info,
-                        supplier_impl->rt_info(),
-                        1,
-                        RtecBase::TWO_WAY_CALL
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->timeout_consumers_.push_back(timeout_consumer_impl);
-} //add_supplier_with_timeout()
-*/
 ///Takes ownership of Supplier
 void
 Kokyu_EC::add_supplier(

@@ -220,17 +220,20 @@ main (int argc, char* argv[])
                      Gateway_Initializer(),-1);
       ginit->init(orb,poa,&supplier_ec,ior_output_filename,ior_input_files);
       ACE_Time_Value gateway_delay(5,000000);
+      /*
       long timer_id = rt.reactor()->schedule_timer(ginit,0,gateway_delay);
       if (timer_id < 0)
         {
           ACE_DEBUG((LM_DEBUG,"Node1_EC (%t) could not schedule Gateway_Initializer timer\n"));
         }
+      */
+      ginit->handle_timeout(gateway_delay,0); //TEST initializing orbs immediately!
 
 #ifdef ACE_HAS_DSUI
       //@BT
       //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
       ACE_Time_Value now(ACE_OS::gettimeofday());
-      ACE_OS::printf("Node1_EC (%P|%t) START at %isec %iusec\n",now.sec(),now.usec());
+      ACE_OS::printf("Node1_EC START at %isec %iusec\n",now.sec(),now.usec());
       DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
 #endif //ACE_HAS_DSUI
 
