@@ -101,7 +101,7 @@ TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Protocols_Hooks,
-                       ACE_TEXT ("Protocol_Hooks"),
+                       ACE_TEXT ("Protocols_Hooks"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Protocols_Hooks),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

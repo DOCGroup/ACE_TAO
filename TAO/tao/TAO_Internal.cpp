@@ -22,6 +22,7 @@
 
 #include "Default_Stub_Factory.h"
 #include "Default_Endpoint_Selector_Factory.h"
+#include "Default_Protocols_Hooks.h"
 
 ACE_RCSID (tao,
            TAO_Internal,
@@ -215,6 +216,8 @@ TAO_Internal::open_services_i (int &argc,
         insert (&ace_svc_desc_TAO_Default_Stub_Factory);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_Default_Protocols_Hooks);
 
       int result = 0;
 
