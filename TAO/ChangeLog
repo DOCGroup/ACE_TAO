@@ -399,8 +399,8 @@ Wed Jan 12 15:57:30 2005 Huang-Ming Huang <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTRT_Group_Manager.cpp
 
-        Fixed unused variable warning. Thanks to Johnny Willemsen
-        <jwillemsen@remedy.nl> for pointing out.
+          Fixed unused variable warning. Thanks to Johnny Willemsen 
+	  <jwillemsen@remedy.nl> for pointing out.
 
 Tue Jan 11 23:19:33 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
