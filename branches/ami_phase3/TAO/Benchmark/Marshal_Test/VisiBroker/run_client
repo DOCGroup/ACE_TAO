@@ -1,0 +1,23 @@
+echo "********* Static Invocation Interface **********"
+client -i 1 -h mambo -R s -P S -o marshal -T s
+client -i 1 -h mambo -R s -P S -o marshal -T l
+client -i 1 -h mambo -R s -P S -o marshal -T o
+client -i 1 -h mambo -R s -P S -o marshal -T c
+client -i 1 -h mambo -R s -P S -o marshal -T d
+client -i 1 -h mambo -R s -P S -o marshal -T S
+client -i 1 -h mambo -R s -P S -o marshal -T U
+client -i 1 -h mambo -R s -P S -o marshal -T A
+client -i 1 -h mambo -R s -P S -o marshal -T Q
+#client -i 1 -h mambo -R s -P S -o marshal -T R
+#
+echo "********* Dynamic Invocation Interface **********"
+client -i 1 -h mambo -R s -P D -o marshal -T s
+client -i 1 -h mambo -R s -P D -o marshal -T l
+client -i 1 -h mambo -R s -P D -o marshal -T o
+client -i 1 -h mambo -R s -P D -o marshal -T c
+client -i 1 -h mambo -R s -P D -o marshal -T d
+client -i 1 -h mambo -R s -P D -o marshal -T S
+client -i 1 -h mambo -R s -P D -o marshal -T U
+client -i 1 -h mambo -R s -P D -o marshal -T A
+client -i 1 -h mambo -R s -P D -o marshal -T Q
+

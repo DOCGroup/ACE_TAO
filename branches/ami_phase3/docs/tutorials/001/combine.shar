@@ -1,0 +1,574 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1999-01-17 14:14 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/001'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    524 -rw-rw-r-- hdr
+#     38 -rw-rw-r-- bodies
+#   4034 -rw-rw-r-- page01.pre
+#   2188 -rw-rw-r-- page02.pre
+#    553 -rw-rw-r-- page03.pre
+#     79 -rw-rw-r-- page04.pre
+#   1149 -rw-rw-r-- page05.pre
+#    478 -rw-rw-r-- page02.pst
+#   1434 -rw-rw-r-- page03.pst
+#    279 -rw-rw-r-- page04.pst
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh00080; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hdr ==============
+if test -f 'hdr' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hdr' '(file already exists)'
+else
+  $echo 'x -' extracting 'hdr' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hdr' &&
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+X   <TITLE>ACE Tutorial 001</TITLE>
+X   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+X   <META NAME="Author" CONTENT="James CE Johnson">
+X   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+</HEAD>
+<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+X
+X
+<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 001<BR>
+A Beginners Guide to Using the ACE&nbsp;Toolkit</FONT></B></P></CENTER>
+X
+<hr>
+SHAR_EOF
+  $shar_touch -am 0117141099 'hdr' &&
+  chmod 0664 'hdr' ||
+  $echo 'restore of' 'hdr' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hdr:' 'MD5 check failed'
+1d643c1c0995e071a0a9e3662d7a440b  hdr
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hdr'`"
+    test 524 -eq "$shar_count" ||
+    $echo 'hdr:' 'original size' '524,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= bodies ==============
+if test -f 'bodies' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'bodies' '(file already exists)'
+else
+  $echo 'x -' extracting 'bodies' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'bodies' &&
+PAGE=2
+server.cpp
+acceptor.h
+logger.h
+SHAR_EOF
+  $shar_touch -am 0117140699 'bodies' &&
+  chmod 0664 'bodies' ||
+  $echo 'restore of' 'bodies' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'bodies:' 'MD5 check failed'
+20ddb6c1ff71a6481ce0956f1a70a612  bodies
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
+    test 38 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '38,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page01.pre ==============
+if test -f 'page01.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page01.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page01.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page01.pre' &&
+<P>The purpose of this tutorial is to show you how to create a very simple
+server capable of handling multiple client connections. Unlike a &quot;traditional&quot;
+server application, this one handles all requests in one process. Issues
+of multi-processing and multi-threading will be handled in later tutorials.</P>
+X
+<P>
+<HR WIDTH="100%"></P>
+X
+<P>What do you need to create a server?</P>
+X
+<OL>
+<LI>Something which accepts connections from clients</LI>
+X
+<LI>Something which handles established connections</LI>
+X
+<LI>A main program loop that handles it all</LI>
+</OL>
+X
+<P>The ACE&nbsp;Acceptor provides a solution for our first requirement.
+This class is given a TCP/IP&nbsp;port number on which it will listen for
+incoming connections. When a connection is attempted, the acceptor will
+create a new object (the handler) to deal with the client connection while
+the acceptor goes back to listening for other connections.</P>
+X
+<P>The ACE&nbsp;EventHandler solves our second requirement. This doesn't
+seem obvious now but as we progress through this tutorial it will become
+more clear.</P>
+X
+<P>Finally, a simple <I>main()</I> function will provide our program loop.
+After any program initialization, it will enter an infinite loop which
+waits for connection attempts to the Acceptor or data &quot;events&quot;
+on the EventHandler.</P>
+X
+<P>
+<HR WIDTH="100%"></P>
+X
+<P>Before we continue, I need to introduce one more ACE concept: the Reactor.
+</P>
+X
+<P>I don't want to go into great detail at this time on what the Reactor
+is, what it does and how it does it but it is necessary for you to understand
+the basic function of a reactor because it is going to be in the first
+piece of code you see.  The figure below depicts the interrelationships
+between the Reactor, the Acceptor and the application handler.</P>
+<P> <center> <img src="simple.gif" align=center> </center>
+X
+<P>Briefly:<BR>
+The reactor is an object which reacts when things happen to other objects.
+These things are called <I>events</I>. The <I>other objects</I> are communications
+objects which you have <I>registered</I> with the reactor. At the time
+of registration, you also specify which events you are interested in. The
+reactor is notified by the operating system when the events of interest
+occur within the registered objects. The reactor then uses member functions
+of the registered object to process the event. Notice that the reactor
+doesn't care what happens because of the event. It is the object's responsibility
+to process the event correctly. The reactor simply notifies the object
+of the event.</P>
+X
+<P>Why use the reactor?</P>
+X
+<P>That will become clear as the tutorial progresses. For now, however,
+a brief answer would be this: it allows multiple simultaneous client connections
+to be processed efficiently by a single-threaded server. </P>
+X
+<P>Servers have traditionally created a separate thread or process for
+each client served. For large-volume services (such as telnet and ftp)
+this is appropriate. However, for small-volume services the overhead of
+process creation far outweighs the actual work being done. So... folks
+begin using threads instead of processes to handle the clients. This is
+good also but still, in some cases, the overhead is too much to bear. Instead,
+why not have a single thread handle several clients and use a more intelligent
+load-balancing methodology than one-thread-or-process-per-client?
+<i>Caveat:  Handling all requests in one thread of one process is really
+only good when the requests can be handled almost instantaneously.</i>
+</P>
+X
+<P>This is where the reactor's power and flexibility come into play. The
+developer can create a simple, single-threaded application that is later
+modified to thread-per-client, process-per-client or thread-pool solution.
+<P>
+If all of this is gibberish and makes you think that ACE is way to hard to
+learn, don't worry.  We'll go into all the details and explain as we go.
+I only went into all of this so that it can kick around in the back of your
+mind until you need it later.
+<P>
+SHAR_EOF
+  $shar_touch -am 0117140899 'page01.pre' &&
+  chmod 0664 'page01.pre' ||
+  $echo 'restore of' 'page01.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page01.pre:' 'MD5 check failed'
+58b12a93efda94c99be5d0b38c3096a5  page01.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
+    test 4034 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '4034,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page02.pre ==============
+if test -f 'page02.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page02.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page02.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page02.pre' &&
+<P>From here, we to move on to the main program loop. In a way, we're
+starting at the final product when we do this, but it is a very simple
+piece of code and a good place to start.
+X
+<P>The <A HREF="server.cpp">main</A>
+program is really quite simple. The real work is done in the ACE derived
+classes.
+X
+<P>
+Kirthika Parameswaran offers this abstract of Tutorial 1:
+<UL>
+<P>
+This is a simple logging server example.
+The Reactor is used to handle more than one client request using a
+single thread of execution instead of one thread per client. The Reactor
+reactes to events and demultiplexes the events to the appropriate
+Event_Handler registered with it, using the "callback" technique. The
+reactor runs in an infinte event loop handling all the incoming events.
+<P>
+The Logging_Acceptor listens at a SERVER PORT address and passively
+waits for requests to arrive. The Acceptor is also an Event_Handler and
+is registered with the Reactor. This way it is simply yet another
+Event_Handler for the Reactor and hence no special processing is needed
+for it.
+<P>
+Once a connection request occurs, the Acceptor accepts it and
+a connection is established. The reactor instance is passed to the
+handler so that it can register with the Reactor. It does so with an
+ACE_Event_Handler::ACCEPT_MASK.
+<P>
+The Logging_Client is another Event_Handler which actually handles the
+client requests in its handle_input() method. It is also registered
+with the Reactor with the ACE_Event_Handler::READ_MASK.
+<P>
+The Event_Handlers can be unregistered from the Reactor using
+handle_close() methods 
+or explicitly calling the remove_handler() methods. 
+<P>
+This server application builds and executes succesfully waiting for
+client requests to arrive.
+<P>
+</UL>
+FYI (from Doug):
+<UL>
+The ACCEPT_MASK is defined in the ACE_Event_Handler class.  It's used
+to inform the Reactor that you want to register an event handler to
+"accept" a connection passively.  Not surprisingly, the ACE_Acceptor
+component uses this.
+<P>
+The READ_MASK is also defined in the ACE_Event_Handler class.  It's
+used to inform the Reactor that you want to register an event handler
+to "read" data from an established connection.
+</UL>
+<hr>
+SHAR_EOF
+  $shar_touch -am 0117140999 'page02.pre' &&
+  chmod 0664 'page02.pre' ||
+  $echo 'restore of' 'page02.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page02.pre:' 'MD5 check failed'
+5e23294cf842366a9ca1b14867856359  page02.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
+    test 2188 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '2188,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page03.pre ==============
+if test -f 'page03.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page03.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page03.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page03.pre' &&
+<P>Now we begin to look at the <A HREF="acceptor.h">acceptor</A> object.
+X
+<P>
+Kirthika has this analogy:
+<P>
+<UL>
+Consider an office:
+<P>
+Reactor: Receptionist
+<P>
+Event_Handlers: various Departments catering to specific needs.
+<P>
+SERVER_PORT: door
+<P>
+Acceptor: Doorkeeper
+<P>
+Thus when a needy person (client) enters the open door (port)
+maintained by the doorkeeper (acceptor waiting for connection
+request), the receptionist(reactor) directs the person towards the
+appropriate section (event_handler) which would cater to his needs.
+</UL>
+<P>
+<HR>
+SHAR_EOF
+  $shar_touch -am 0117140999 'page03.pre' &&
+  chmod 0664 'page03.pre' ||
+  $echo 'restore of' 'page03.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page03.pre:' 'MD5 check failed'
+b1eca88136f15c2c1156a2602daaff7e  page03.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
+    test 553 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '553,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page04.pre ==============
+if test -f 'page04.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page04.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page04.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page04.pre' &&
+<P>Now we begin to look at the <A HREF="logger.h">logger</A>
+object.
+X
+<P>
+<HR>
+SHAR_EOF
+  $shar_touch -am 0117140999 'page04.pre' &&
+  chmod 0664 'page04.pre' ||
+  $echo 'restore of' 'page04.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page04.pre:' 'MD5 check failed'
+ea4861a868e3dce3607602f1ce35b7fa  page04.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
+    test 79 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '79,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page05.pre ==============
+if test -f 'page05.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page05.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page05.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page05.pre' &&
+<P>This concludes the first tutorial on using ACE. We've learned how to
+create a simple server without knowing very much about network programming.
+X
+<P>The code used in this tutorial is for illustration purposes. That means
+it may or may not work.&nbsp;&nbsp; Actually, it <I>does</I> work but the
+astute reader will notice a number of places for potential memory leaks.&nbsp;
+We'll work on cleaning those up in future tutorials but if you find one
+feel free to send me a fix and I'll integrate it into the tutorial.
+X
+<UL>
+<LI>
+<A HREF="00SetEnv">Environment
+Settings</A></LI>
+X
+<LI>
+<A HREF="Makefile">Makefile</A></LI>
+X
+<LI>
+<A HREF="server.cpp">main
+program</A></LI>
+X
+<LI>
+<A HREF="acceptor.h">acceptor
+object</A></LI>
+X
+<LI>
+<A HREF="logger.h">connection
+handler</A></LI>
+</UL>
+X
+<P>
+To read more about the patterns used in this example (as well as
+quite a few which aren't!), you should check out
+<A HREF="http://www.cs.wustl.edu/~schmidt/patterns-ace.html">http://www.cs.wustl.edu/~schmidt/patterns-ace.html.</A>
+In fact, it's probably safe to say that the concepts found there will keep
+coming back to haunt you as these tutorials continue.
+<P>
+SHAR_EOF
+  $shar_touch -am 0117141399 'page05.pre' &&
+  chmod 0664 'page05.pre' ||
+  $echo 'restore of' 'page05.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page05.pre:' 'MD5 check failed'
+7d00b8c59c4f7210634bc5fdb75dfbcc  page05.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
+    test 1149 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '1149,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page02.pst ==============
+if test -f 'page02.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page02.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page02.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page02.pst' &&
+<HR WIDTH="100%">
+X
+<P>As I said, the main program is really quite simple:
+<UL>
+<LI>
+Create an address for the <I>port</I> we want to listen to</LI>
+X
+<LI>
+Create an acceptor which listens on that address</LI>
+X
+<LI>
+Register the acceptor with a reactor to respond to the connection requests</LI>
+X
+<LI>
+Enter an infinite loop to let the reactor handle the events</LI>
+</UL>
+On the next page, we will take a look at the acceptor and how it responds
+to new connection requests.
+X
+<P>
+SHAR_EOF
+  $shar_touch -am 0117141299 'page02.pst' &&
+  chmod 0664 'page02.pst' ||
+  $echo 'restore of' 'page02.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page02.pst:' 'MD5 check failed'
+51b1f08eabda5789182b566fdb7756fe  page02.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pst'`"
+    test 478 -eq "$shar_count" ||
+    $echo 'page02.pst:' 'original size' '478,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page03.pst ==============
+if test -f 'page03.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page03.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page03.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page03.pst' &&
+<HR WIDTH="100%"></PRE>
+It is important to notice here that we have done very little application-specifc
+code in developing this object. In fact, if we take out the progress information,
+the only app-specific code is when we create the new <I>Logging_Handler</I>
+object to give to the <I>accept</I> function. You may begin to wonder why
+there isn't a C++ template that does all of this coding for you. Actually,
+the ACE toolkit happens to have one handy:
+<UL>typedef ACE_Acceptor &lt;<I>YourHandlerClass</I>, ACE_SOCK_ACCEPTOR>
+<I>YourAcceptorClass</I>;</UL>
+We would have used it like this:
+<UL>typedef ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR> Client_Acceptor;</UL>
+This will create a piece of code similar to what I've shown above. The
+primary difference is that the <I>handle_input </I>function created by
+the template does NOT register the handler with the reactor. In the long-run,
+that is good for us because we can then move that logic into the <I>open</I>
+function of the <I>Logging_Handler</I> and use a completely-generic acceptor.
+X
+<P>Now that we know how to accept a connection request, let's move on to
+the next page where we learn how to handle the actual connection. Even
+though we just learned about this cool template thing, we will continue
+to use the "hand-written" acceptor developed above. As I mentioned, the
+only difference will be in the <I>open</I> function of the connection handler
+anyway.
+X
+<P>
+SHAR_EOF
+  $shar_touch -am 0117141299 'page03.pst' &&
+  chmod 0664 'page03.pst' ||
+  $echo 'restore of' 'page03.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page03.pst:' 'MD5 check failed'
+7a18def18c6a83a1015e08f63b5868be  page03.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pst'`"
+    test 1434 -eq "$shar_count" ||
+    $echo 'page03.pst:' 'original size' '1434,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page04.pst ==============
+if test -f 'page04.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page04.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page04.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page04.pst' &&
+<HR WIDTH="100%">
+X
+<P>
+The comments really should tell the story.  The really
+interesting stuff is in <i>handle_input()</i>.  Everything
+else is just housekeeping.
+In the future, we'll learn about ACE_Svc_Handler&lt;>
+which will take care of most of the housekeeping for us.
+<P>
+SHAR_EOF
+  $shar_touch -am 0117141299 'page04.pst' &&
+  chmod 0664 'page04.pst' ||
+  $echo 'restore of' 'page04.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page04.pst:' 'MD5 check failed'
+5baa295de79c6c978bae3e496e32854e  page04.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pst'`"
+    test 279 -eq "$shar_count" ||
+    $echo 'page04.pst:' 'original size' '279,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh00080
+exit 0
