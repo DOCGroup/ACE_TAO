@@ -1,3 +1,11 @@
+Wed Aug 27 21:45:59 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Big_Oneways/Session.h: 
+	* tests/Big_Twoways/Session.h:
+
+	  Include "ace/Null_Barrier.h" in the single-threaded case to pull
+	  in ACE_Null_Barrier class declaration.
+
 Thu Aug 28 04:24:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/.depend.Makefile.RT_Notification:

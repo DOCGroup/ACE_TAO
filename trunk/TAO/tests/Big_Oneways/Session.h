@@ -9,7 +9,12 @@
 
 #include "TestS.h"
 #include "Session_Task.h"
-#include "ace/Barrier.h"
+
+#if defined(ACE_HAS_THREADS)
+# include "ace/Barrier.h"
+#else
+# include "ace/Null_Barrier.h"
+#endif  /* ACE_HAS_THREADS */
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
