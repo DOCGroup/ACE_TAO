@@ -564,11 +564,17 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   // OCTET SEQUENCE for object key
   encap << this->object_key_;
 
+#if (TAO_HAS_RT_CORBA == 1)
+  // For now, use/transfer multiple endpoints per profile only with
+  // RTCORBA. 
+
   // Encode profile endpoints.
   TAO_IIOP_Profile *p =
     ACE_const_cast (TAO_IIOP_Profile *, this);
   if (!endpoints_encoded_)
     p->encode_endpoints ();
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   if (this->version_.major > 1
       || this->version_.minor > 0)
