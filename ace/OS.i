@@ -2079,7 +2079,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // passed as a parameter) and relative time (which is what the
       // Draft 4 POSIX 1003.4a pthread_cond_timedwait expects).
 
-      struct timespec_t relative_time = *timeout - ACE_OS::gettimeofday ();
+      timespec_t relative_time = *timeout - ACE_OS::gettimeofday ();
 
       ACE_OSCALL (::pthread_cond_timedwait (cv, external_mutex,
                                             &relative_time),
