@@ -57,6 +57,5 @@
 #include "tao/stub.h"
 #include "tao/svrrqst.h"
 #include "tao/typecode.h"
-#include "tao/xdr.h"
 
 #endif
