@@ -1,3 +1,12 @@
+Thu Mar 20 12:25:30 1997    <harrison@samba.cs.wustl.edu>
+
+	* ace/config-win32-msvc4.x.h:
+	* ace/config-win32-msvc2.0.h:
+	* ace/config-winnt-4.0-msvc4.x.h: Only define ACE_HAS_PENTIUM when
+	  _M_IX86 == 500.  Projects must specify Pentium in
+	  Build->Settings->Code Generation->Processor to use the RDTSC
+	  instruction in ACE_OS::gethrtime.
+
 Thu Mar 20 05:23:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Moved the ACE_LACKS_SIGACTION block so that it will
