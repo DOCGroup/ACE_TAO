@@ -12,7 +12,7 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+$SV = new PerlACE::Process ("server", "-o $iorfile -ORBdebuglevel 10");
 $CL = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $SV->Spawn ();

@@ -133,6 +133,25 @@ const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 #define TAO_MAXBUFSIZE 1024
 #endif /* TAO_MAXBUFSIZE */
 
+/*!
+
+  The number of times the transport will try to re-read before
+  returning control to the reactor when it has an uncompleted
+  message (see TAO_Transport::handle_input_i()).
+
+  The idea behind re-reading is that more data may have arrived
+  while the transport was busy deciding what to do with the bytes
+  it got, so we should probably try to re-read.
+
+  This value shouldn't be too large, lest the transport starve
+  out other transports while trying to complete its message.
+
+  When choosing a value, think of the type of this as 'unsigned int'.
+ */
+#if !defined(TAO_MAX_TRANSPORT_REREAD_ATTEMPTS)
+#define TAO_MAX_TRANSPORT_REREAD_ATTEMPTS 2
+#endif
+
 // This controls the alignment for TAO structs.  It supports built-in
 // types up to and including 16 bytes (128 bits) in size.
 #if !defined (TAO_MAXIMUM_NATIVE_TYPE_SIZE)

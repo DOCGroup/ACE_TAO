@@ -244,9 +244,9 @@ public:
   enum Queued_Data_State
   {
     INVALID = -1,               //!< The queued data is in an invalid/uninitialized state, and no data should be trusted.
-    COMPLETED = 0,              //!< Message is complete; \a missing_data_ should be zero.
-    WAITING_TO_COMPLETE_HEADER, //!< Value in \a missing_data_ indicates part of header is missing.
-    WAITING_TO_COMPLETE_PAYLOAD //!< Value in \a missing_data_ indicates part of payload is missing.
+    COMPLETED = 0,              //!< Message is complete; \a missing_data_bytes_ should be zero.
+    WAITING_TO_COMPLETE_HEADER, //!< Value in \a missing_data_bytes_ indicates part of header is missing.
+    WAITING_TO_COMPLETE_PAYLOAD //!< Value in \a missing_data_bytes_ indicates part of payload is missing.
   };
 
   /*!
