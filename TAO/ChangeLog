@@ -1,3 +1,14 @@
+Tue Feb 24 19:41:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Sequence_Latency/DSI/DSI.mpc:
+	  Removed after and IDL_Files from client project, just let MPC do its
+	  job.
+
+	* performance-tests/Sequence_Latency/AMH/Single_Threaded/Single_Threaded.mpc:
+	  Removed after and IDL_Files from client project, just let MPC do its
+	  job. Instead of requiring ami and adding idlflags, just add amh as base
+	  project.
+
 Tue Feb 24 19:20:05 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
