@@ -1,5 +1,13 @@
 Sun Nov 16 13:34:29 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
+	* ace/SPIPE_Addr.cpp (set): Fixed a problem where we were
+ 	  potentially writing into character constants.  Thanks to Darrell
+ 	  Brunsch for finding this.
+
+	* ace/Get_Opt.cpp (operator): We need to make sure that all uses
+ 	  of ACE_OS::strchr() are consistent with respect to const
+ 	  correctness.  Thanks to Darrell Brunsch for finding this.
+
 	* ace/config-win32-common.h: Added a few minor changes for Borland
  	  C++.  Thanks to Valik Solrzano Barboza <valik@xs4all.nl> for
  	  this.
