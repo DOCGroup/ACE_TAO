@@ -1,12 +1,18 @@
+Mon Nov  2 18:18:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Reactor/Dgram/CODgram.cpp,
+	  examples/Reactor/Dgram/Dgram.cpp:
+	  Fixed these programs so that they will work across
+	  processes/machines, as well as within the same process.  Thanks
+ 	  to Larry <larry@paradigmsim.com> for reporting this.
+
+	* Added a "site map" for ACE.  Thanks to Rainer Blome
+ 	  <rainer_blome@de.ibm.com> for contributing this.
+
 Mon Nov  2 18:13:29 EST 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/ACE-FMM.html
 	  Updated from Bob's <bob@netwrench.com> latest.
-
-Mon Nov  2 18:18:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* Added a "site map" for ACE.  Thanks to Rainer Blome
- 	  <rainer_blome@de.ibm.com> for contributing this.
 
 Mon Nov 02 11:22:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
