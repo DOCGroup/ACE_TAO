@@ -28,7 +28,7 @@ Sun Apr 22 16:27:20 2001  Ossama Othman  <ossama@uci.edu>
 	  managing the operation name string.  This removes one heap
 	  allocation from the criticial path (i.e. zero allocations in the
 	  common case (no character set translator) and one allocation in
-	  the case where a character set translator is used. [Bug 870]
+	  the case where a character set translator is used). [Bug 870]
 
 	* tao/LocalObject.cpp:
 
