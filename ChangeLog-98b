@@ -6,6 +6,9 @@ Sun Sep 20 11:25:52 1998  David L. Levine  <levine@cs.wustl.edu>
           in trouble if we try on one that uses u_long.  In that case,
           we could try u_short, or added an ACE_HAS.
 
+        * ace/Thread_Manager.i (register_as_terminated): neutered on VxWorks,
+          so that it will compiled.
+
 Sat Sep 19 14:29:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS.i (fstat): Removed the "::" in front of the fstat() call
