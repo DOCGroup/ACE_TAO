@@ -1,5 +1,5 @@
 --- orig/MessagingC.cpp	Wed Apr 25 00:17:25 2001
-+++ MessagingC.cpp	Tue Apr 24 13:44:40 2001
++++ MessagingC.cpp	Thu Apr 26 14:33:42 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -1015,8 +1015,19 @@
      // retrieve all the elements
      CORBA::Boolean _tao_marshal_flag = 1;
      for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
-@@ -6131,3 +5585,4 @@
+@@ -6095,6 +5549,8 @@
+   return 0; // error
+ }
+ 
++#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
++
+ CORBA::Boolean operator<< (
+     TAO_OutputCDR &strm,
+     const Messaging::ReplyHandler_ptr _tao_objref
+@@ -6131,3 +5587,6 @@
    return 0;
  }
  
++#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
++
 +#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
