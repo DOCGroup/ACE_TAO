@@ -117,10 +117,6 @@ SOURCE=.\Consumer.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\MCast.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Supplier.h
 # End Source File
 # End Group

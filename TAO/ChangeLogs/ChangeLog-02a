@@ -1,12 +1,19 @@
+Thu Jan 25 10:40:33 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/examples/RtEC/MCast/MCast.h:
+        * orbsvcs/examples/RtEC/MCast/MCast.dsp:
+          Removed MCast.h, the file was no longer used, thanks to Richard
+          Eperjesi <reperjesi@yahoo.com> for pointing this out.
+
 Thu Jan 25 10:14:01 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tao/PortableServer/ORB_Manager.h: Changed "servant_name" to
-	  "object_name" for activate_under_child_poa().  Thanks to
- 	  Jean-Francois Daune <Daune@IBA.be> for reporting this
- 	  discrepancy.
-  
+        * tao/PortableServer/ORB_Manager.h: Changed "servant_name" to
+          "object_name" for activate_under_child_poa().  Thanks to
+          Jean-Francois Daune <Daune@IBA.be> for reporting this
+          discrepancy.
+
         * THANKS: We recently added our 1,100 contributor to ACE+TAO!
-	
+
 Thu Jan 25 10:15:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/DII_Cubit/client.dsp:
@@ -16,29 +23,29 @@ Thu Jan 25 10:15:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Jan 24 17:00:52 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Transport.h:
-	  Document the design for the new treatment of outgoing data,
-	  basically it should support non-blocking (reactive) I/O, queued
-	  messages, urgent data, per-message timeouts and multiple threads
-	  waiting on outgoing messages (ala Leader/Followers).
+        * tao/Transport.h:
+          Document the design for the new treatment of outgoing data,
+          basically it should support non-blocking (reactive) I/O, queued
+          messages, urgent data, per-message timeouts and multiple threads
+          waiting on outgoing messages (ala Leader/Followers).
 
-	* tao/Transport.h:
-	* tao/Transport.cpp:
-	* tao/IIOP_Transport.h:
-	* tao/IIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Transport.h:
-	* tao/Strategies/UIOP_Transport.cpp:
-	* tao/Strategies/SHMIOP_Transport.h:
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	  Factored out common code into the TAO_Transport class.
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          Factored out common code into the TAO_Transport class.
 
-	* tao/things_that_needs:
-	  Removed spurious file
+        * tao/things_that_needs:
+          Removed spurious file
 
-	* docs/pluggable_protocols/index.html:
-	  Fixed my homepage.
+        * docs/pluggable_protocols/index.html:
+          Fixed my homepage.
 
 Wed Jan 24 18:09:12 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -59,7 +66,7 @@ Wed Jan 24 14:34:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Added IDL compiler capability to recognize a line of
           the form '#pragma ident <some string>' in an IDL file
-          and put '#ident <some string>' each generated file. 
+          and put '#ident <some string>' each generated file.
           Suggested by Jody Hagins <jody@atdesk.com>.
 
 Wed Jan 24 09:44:24 2001  Carlos O'Ryan  <coryan@uci.edu>
