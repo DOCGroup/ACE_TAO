@@ -276,8 +276,8 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
       this->current_size_++;
       return 0;
     }
-  else
-    return -1;
+
+  return -1;
 }
 
 // Re-resume a service that was previously suspended.
@@ -332,19 +332,18 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[])
 
   if (i == -1)
     return -1;
-  else
-    {
-      ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
-                                            this->service_vector_[i]);
-      delete s;
 
-      --this->current_size_;
+  ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
+                                        this->service_vector_[i]);
+  delete s;
 
-      if (this->current_size_ >= 1)
-        this->service_vector_[i]
-          = this->service_vector_[this->current_size_];
-      return 0;
-    }
+  --this->current_size_;
+
+  if (this->current_size_ >= 1)
+    this->service_vector_[i]
+      = this->service_vector_[this->current_size_];
+
+  return 0;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository_Iterator)
