@@ -1,3 +1,12 @@
+Thu Dec 13 22:50:10 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CORBALOC_Parser.cpp (assign_key_string):
+
+	  Fixed erroneous check for TCP port in a "corbaloc:iiop:..."
+	  IOR.  Only add the default corbaloc port "2809" if and only if
+	  the protocol is "iiop."  Fixes a problem where corbaloc URLs did
+	  not work for protocols other an "iiop."
+
 Thu Dec 13 21:17:09 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Callback/client_i.h (client_i):
