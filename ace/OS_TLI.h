@@ -237,7 +237,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_unbind (ACE_HANDLE fildes);
 
-}; /* namespace ACE_OS */
+} /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

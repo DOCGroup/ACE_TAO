@@ -60,7 +60,7 @@ namespace ACE_OS {
                  const char *strptr,
                  void *addrptr);
 
-}; /* namespace ACE_OS */
+} /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

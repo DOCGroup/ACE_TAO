@@ -369,7 +369,7 @@ namespace ACE_OS
   // = A set of wrappers for miscellaneous operations.
 
 
-};  /* namespace ACE_OS */
+}  /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -479,7 +479,7 @@ namespace ACE_Utils
     return prev_lock;
   }
 
-};
+}
 
 
 
