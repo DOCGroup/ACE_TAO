@@ -946,8 +946,8 @@ CORBA_ORB::resolve_policy_current (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
-CORBA_Object_ptr
-CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id
+CORBA::Object_ptr
+CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
                             TAO_ENV_ARG_DECL)
 {
   const char *env_service_ior [] =

@@ -1,5 +1,3 @@
-// $Id$
-
 
 #include "tao/params.h"
 
@@ -8,7 +6,9 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID(tao, params, "$Id$")
+ACE_RCSID (tao,
+           params,
+           "$Id$")
 
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
@@ -26,7 +26,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     sched_policy_ (THR_SCHED_DEFAULT),
     scope_policy_ (THR_SCOPE_PROCESS)
 {
-  for (int i=0; i<= NO_OF_MCAST_SERVICES; i++)
+  for (int i = 0; i <= TAO_NO_OF_MCAST_SERVICES; ++i)
     this->service_port_[i] = 0;
 }
 
