@@ -9,6 +9,10 @@
  * @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 
+#include "ace/Condition_Thread_Mutex.h"
+
+#if defined (ACE_HAS_THREADS)
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Condition_Thread_Mutex.inl"
 #endif /* __ACE_INLINE__ */
@@ -127,3 +131,4 @@ ACE_Condition_Thread_Mutex::broadcast (void)
   return ACE_OS::cond_broadcast (&this->cond_);
 }
 
+#endif /* ACE_HAS_THREADS */

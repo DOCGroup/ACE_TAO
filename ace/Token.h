@@ -23,10 +23,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Null_Mutex.h"
+
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/OS.h"
-#include "ace/Null_Mutex.h"
 
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
 #  include "ace/Semaphore.h"
@@ -311,6 +312,19 @@ private:
   int queueing_strategy_;
 };
 
+#else
+class ACE_Export ACE_Token
+{
+public:
+  int queueing_strategy (void) { ACE_NOTSUP_RETURN (-1); }
+  void queueing_strategy (int /*queueing_strategy*/) { }
+  int acquire (ACE_Time_Value * = 0) { ACE_NOTSUP_RETURN (-1); }
+  int tryacquire (void) { ACE_NOTSUP_RETURN (-1); }
+  int remove (void) { ACE_NOTSUP_RETURN (-1); }
+  int release (void) { ACE_NOTSUP_RETURN (-1); }
+};
+#endif /* ACE_HAS_THREADS */
+
 class ACE_Export ACE_Noop_Token : public ACE_Null_Mutex
 {
 public:
@@ -340,17 +354,6 @@ public:
 #include "ace/Token.i"
 #endif /* __ACE_INLINE__ */
 
-#else
-class ACE_Export ACE_Token
-{
-public:
-  int queueing_strategy (void) { ACE_NOTSUP_RETURN (-1); }
-  void queueing_strategy (int /*queueing_strategy*/) { }
-  int acquire (ACE_Time_Value * = 0) { ACE_NOTSUP_RETURN (-1); }
-  int tryacquire (void) { ACE_NOTSUP_RETURN (-1); }
-  int remove (void) { ACE_NOTSUP_RETURN (-1); }
-  int release (void) { ACE_NOTSUP_RETURN (-1); }
-};
-#endif /* ACE_HAS_THREADS */
+
 #include /**/ "ace/post.h"
 #endif /* ACE_TOKEN_H */

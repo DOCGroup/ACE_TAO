@@ -1,3 +1,17 @@
+Mon Aug  4 04:28:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Condition_Recursive_Thread_Mutex.cpp:
+        * ace/Condition_Thread_Mutex.cpp:
+        * ace/TSS_T.{cpp,h}:
+        * ace/Thread_Mutex.h:
+        * ace/Token.{h,i}:
+          Added or adjusted placement of #ifdef ACE_HAS_THREADS in order
+          to fix compile errors on single threaded builds.
+
+        * ace/DLL_Manager.h:
+          Added #include ace/os_include/os_dlfcn.h needed for single
+          threaded builds.
+
 Mon Aug  4 03:26:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Auto_Event.{h,cpp,inl}:
