@@ -1,3 +1,17 @@
+Wed May  5 16:34:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/CDR_Base.h (ACE_CDR):
+
+	  Improved doxygen documentation of basic CDR/IDL types.
+
+	  (ACE_CDR::Boolean):
+
+	  Versions of GNU G++ less than version 3.0 defined a pre-C99 bool
+	  type that was an enumeration.  In some cases the enumeration
+	  could be promoted to an int, causing a potential problem where a
+	  4 byte integer (for example) could be selected when attempting
+	  to send a boolean over a CDR stream.
+
 Wed May  5 18:10:32 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp: Change #include
