@@ -321,7 +321,12 @@ private:
 #endif /* 0 */
 
 #if defined (__ACE_INLINE__)
-#include "tao/Managed_Types.i"
+// We are unable to include this here because we use methods such as
+// CORBA::string_free and others that are defined after their usage. Thus, we
+// are forced to include this inline file in ORB.h after we have included
+// ORB.i. 
+
+/* #include "tao/Managed_Types.i" */
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_MANAGED_TYPES_H */

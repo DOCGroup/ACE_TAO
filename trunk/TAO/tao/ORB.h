@@ -784,12 +784,12 @@ private:
   // Points to the "default ORB."
 };  // end of class (namespace) CORBA
 
+#include "tao/Exception.h"
 #include "tao/Managed_Types.h"
 #include "tao/Sequence.h"
 #include "tao/Sequence_T.h"
 #include "tao/Object_KeyC.h"
 #include "tao/Union.h"
-#include "tao/Exception.h"
 
 class STUB_Object;
 // Forward declarations.
@@ -1138,6 +1138,8 @@ private:
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"
+// We are forced to include this file here to satisfy some dependencies
+#include "tao/Managed_Types.i"
 #endif /* __ACE_INLINE__ */
 
 #if  defined (_MSC_VER)
