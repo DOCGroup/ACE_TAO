@@ -9,19 +9,19 @@ Thu Jul  1 20:01:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/include/utl_scope.h:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Changed the method of processing multiple file in a single
           execution from forking off separate processes for each
           file to simply iterating over the files in a single
           process. Unique temporary filenames are now created using
           random numbers instead of process ids as before.
-          
+
         * orbsvcs/IFR_Service/be_produce.cpp:
-        
+
           Removed the deletion of pointers to the global data classes,
           since these pointers are now reused for each file processed.
           The final deletion of these pointers now occurs in the main()
-          loop of the executable. A similar change was made to 
+          loop of the executable. A similar change was made to
           TAO_IDL/be/be_produce.cpp as part of the changes above.
 
 Thu Jul  1 08:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -775,19 +775,19 @@ Thu Jun 17 12:51:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jun 16 19:11:16 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests\Protocols\server.cpp:
+	* performance-tests/Protocols/server.cpp:
 
 	  Added ability to measure inter-arrival times of incoming frames.
 	  Also tracks which invocations were received and which were
 	  missed.
 
-	* performance-tests\Protocols\client.cpp:
+	* performance-tests/Protocols/client.cpp:
 
 	  Added ability to select protocol for test messages.  All setup
 	  and teardown messages will be using TCP while the test messages
 	  will use the specified protocol.
 
-	* performance-tests\Protocols\test.idl:
+	* performance-tests/Protocols/test.idl:
 
 	  Separated setup, teardown, and shutdown of the test.
 
@@ -799,9 +799,9 @@ Wed Jun 16 15:54:56 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 Wed Jun 16 13:54:56 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests\Protocols\client.cpp:
-	* performance-tests\Protocols\server.cpp:
-	* performance-tests\Protocols\test.idl:
+	* performance-tests/Protocols/client.cpp:
+	* performance-tests/Protocols/server.cpp:
+	* performance-tests/Protocols/test.idl:
 
 	  Added ability to send messages of arbitrary size.
 
