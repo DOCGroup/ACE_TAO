@@ -1,3 +1,11 @@
+Mon Jul 07 07:00:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simple/echo/Echo_Client.bor:
+        * examples/Simple/echo/Echo_Server.bor:
+          Corrected the names of the executables generated. The perl script
+          expects certain names and borland generated other filenames
+          resulting in the fact that the perl script didn't run.
+
 Mon Jul 07 06:06:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTScheduling/RTScheduler.h:
