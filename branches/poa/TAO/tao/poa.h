@@ -138,13 +138,13 @@ public:
   // are returned in <env>.
 
   virtual int bind (const CORBA::OctetSeq &key, 
-		    CORBA::Object_ptr obj);
+		    PortableServer::Servant obj);
   // Registers a CORBA::Object into the object table and associates the
   // key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
   virtual int find (const CORBA::OctetSeq &key, 
-		    CORBA::Object_ptr &obj);
+		    PortableServer::Servant &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.
 
@@ -222,74 +222,69 @@ struct TAO_Dispatch_Context
   // NOTE!!!  This type MUST match that used for POA_Handler!
 };
 
-class PortableServer
+class TAO_Export TAO_ServantBase
 {
   // = TITLE
-  //   Portable Server (POA) name space.
+  //   Base class for skeletons and servants.
+  //
+  // = DESCRIPTION
+  //   The POA spec requires that all servants inherit from this
+  //   class.
+  //
 public:
-  
-  class ServantBase
-  {
-    // = TITLE
-    //   Base class for skeletons and servants.
-    //
-    // = DESCRIPTION
-    //   The POA spec requires that all servants inherit from this
-    //   class.
-    //
-  public:
-    virtual ~ServantBase (void);
-    // destructor
+  virtual ~TAO_ServantBase (void);
+  // destructor
 
-    ServantBase& operator=(const ServantBase&);
-    // assignment operator.
+  TAO_ServantBase& operator=(const TAO_ServantBase&);
+  // assignment operator.
 
-    virtual CORBA_POA *_default_POA (void);
+  virtual CORBA_POA *_default_POA (void);
 
-    virtual void dispatch (CORBA::ServerRequest &_tao_request,
-			   void *_tao_context,
-			   CORBA::Environment &_tao_environment);
-    // Dispatches a request to the object: find the operation, cast
-    // the type to the most derived type, demarshall all the
-    // parameters from the request and finally invokes the operation,
-    // storing the results and out parameters (if any) or the
-    // exceptions thrown into <_tao_request>.
-    // @@ TODO use a conformant name; since it is an
-    // internal (implementation) method its name should start with '_'
+  virtual void dispatch (CORBA::ServerRequest &_tao_request,
+			 void *_tao_context,
+			 CORBA::Environment &_tao_environment);
+  // Dispatches a request to the object: find the operation, cast
+  // the type to the most derived type, demarshall all the
+  // parameters from the request and finally invokes the operation,
+  // storing the results and out parameters (if any) or the
+  // exceptions thrown into <_tao_request>.
+  // @@ TODO use a conformant name; since it is an
+  // internal (implementation) method its name should start with '_'
 
-    virtual int find (const CORBA::String &opname,
-		      TAO_Skeleton &skelfunc);
-    // Find an operation in the operation table.
-    // @@ TODO use a conformant name; since it is an
-    // internal (implementation) method its name should start with '_'
+  virtual int find (const CORBA::String &opname,
+		    TAO_Skeleton &skelfunc);
+  // Find an operation in the operation table.
+  // @@ TODO use a conformant name; since it is an
+  // internal (implementation) method its name should start with '_'
 
-    virtual int bind (const CORBA::String &opname,
-		      const TAO_Skeleton skel_ptr);
-    // Register a CORBA IDL operation name.
-    // @@ TODO use a conformant name; since it is an
-    // internal (implementation) method its name should start with '_'
+  virtual int bind (const CORBA::String &opname,
+		    const TAO_Skeleton skel_ptr);
+  // Register a CORBA IDL operation name.
+  // @@ TODO use a conformant name; since it is an
+  // internal (implementation) method its name should start with '_'
 
-  protected:
-    ServantBase (void);
-    // Default constructor, only derived classes can be created.
+  TAO_IUnknown *get_parent (void) const;
+  // Get the "parent" in the QueryInterface hierarchy.
 
-    ServantBase (const ServantBase&);
-    // Copy constructor, protected so no instances can be created.
+protected:
+  TAO_ServantBase (void);
+  // Default constructor, only derived classes can be created.
 
-    void set_parent (TAO_IUnknown *p);
-    // Set the most derived class pointer.
-    // @@ TODO use a conformant name; since it is an
-    // internal (implementation) method its name should start with '_'
+  TAO_ServantBase (const TAO_ServantBase&);
+  // Copy constructor, protected so no instances can be created.
 
-  protected:
-    TAO_Operation_Table *optable_;
-    // The operation table for this servant, it is initialized by the
-    // most derived class.
+  void set_parent (TAO_IUnknown *p);
+  // Set the "parent" in the QueryInterface hierarchy.
+  // @@ TODO use a conformant name; since it is an
+  // internal (implementation) method its name should start with '_'
 
-    TAO_IUnknown *parent_;
-    // @@ TODO find out why is this here....
-  };
-  typedef ServantBase *Servant;
+protected:
+  TAO_Operation_Table *optable_;
+  // The operation table for this servant, it is initialized by the
+  // most derived class.
+
+  TAO_IUnknown *parent_;
+  // @@ TODO find out why is this here....
 };
 
 #endif	/* TAO_POA_H */

@@ -8,7 +8,7 @@
 #if !defined (_TAO_IDL_OBJKEYC_H_)
 #define _TAO_IDL_OBJKEYC_H_
 
-class TAO{
+class TAO_Export TAO{
 public:
 
 #if !defined (_TAO__TAO_SEQ_OCTET_CH_)
@@ -18,7 +18,7 @@ public:
   // class _tao_seq_Octet
   // *************************************************************
   
-  class _tao_seq_Octet
+  class TAO_Export _tao_seq_Octet
   {
   public:
     _tao_seq_Octet (void); // default constructor
@@ -55,7 +55,7 @@ public:
   // class TAO::_tao_seq_Octet_var
   // *************************************************************
 
-  class _tao_seq_Octet_var
+  class TAO_Export _tao_seq_Octet_var
   {
   public:
     _tao_seq_Octet_var (void); // default constructor
@@ -90,7 +90,7 @@ public:
 #if !defined (_TAO__TAO_SEQ_OCTET___OUT_CH_)
 #define _TAO__TAO_SEQ_OCTET___OUT_CH_
 
-  class _tao_seq_Octet_out
+  class TAO_Export _tao_seq_Octet_out
   {
   public:
     _tao_seq_Octet_out (_tao_seq_Octet *&);

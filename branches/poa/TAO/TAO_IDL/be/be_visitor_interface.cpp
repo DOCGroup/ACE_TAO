@@ -131,7 +131,11 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
   ss->incr_indent ();
   *ss << ": servant_ (servant)\n";
   ss->decr_indent ();
-  *ss << "{}\n\n";
+  *ss << "{\n";
+  ss->incr_indent ();
+  *ss << "this->set_parent (servant->get_parent ());\n";
+  ss->decr_indent ();
+  *ss << "}\n\n";
 
   if (node->nmembers () > 0)
     {

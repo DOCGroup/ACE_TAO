@@ -56,13 +56,20 @@ Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
 {
   for (size_t i = 0; i < this->numobjs_; i++)
     {
-      auto_ptr<TAO::ObjectKey> the_key = this->my_cubit_[i]->key (env);
+      Cubit_ptr cubit = this->my_cubit_[i]->_this (env);
+      if (env.exception () != 0)
+	{
+	  env.print_exception ("my_cubit::_this");
+	  return Cubit::_nil ();
+	}
+      auto_ptr<TAO::ObjectKey> the_key = cubit->key (env);
       
       const char *obj_str = (char *) &((*the_key)[0]);
 
       // Keys matched.
       if (ACE_OS::memcmp (obj_str, key, the_key->length()) == 0)
-        return Cubit::_duplicate (this->my_cubit_ [i]);
+        return cubit;
+      CORBA::release (cubit);
     }
 
   return Cubit::_nil ();
@@ -138,16 +145,16 @@ Cubit_i::cube_union (const Cubit::oneof &values,
   ACE_UNUSED_ARG (env);
   switch (values._d ())
     {
-    case e_0th:
+    case Cubit::e_0th:
       temp.o (values.o () * values.o () * values.o ());
       break;
-    case e_1st:
+    case Cubit::e_1st:
       temp.s (values.s () * values.s () * values.s ());
       break;
-    case e_2nd:
+    case Cubit::e_2nd:
       temp.l (values.l () * values.l () * values.l ());
       break;
-    case e_3rd:
+    case Cubit::e_3rd:
     default:
       temp._d (values._d ()); // set the discriminant
       // use the read/write accessor

@@ -78,7 +78,7 @@ main (int argc, char *argv[])
   parse_args (argc, argv);
 
   // create a factory implementation
-  Cubit_Factory_ptr factory;
+  POA_Cubit_Factory_ptr factory;
 
   ACE_NEW_RETURN (factory, Cubit_Factory_i ("factory", num_of_objs), 1);
 
@@ -88,9 +88,15 @@ main (int argc, char *argv[])
       // stdout.  Someone will take that string and give it to a
       // client.  Then release the object.
 
-      CORBA::String str;
-
-      str = orb_ptr->object_to_string (factory, env);
+      CORBA::Object_ptr obj = factory->_this (env);
+      if (env.exception () != 0)
+        {
+          env.print_exception ("factory::_this()");
+          return 1;
+        }
+      
+      CORBA::String str = orb_ptr->object_to_string (obj, env);
+      CORBA::release (obj);
 
       if (env.exception () != 0)
         {

@@ -1,3 +1,29 @@
+Thu Jan 01 15:43:43 1998    <coryan@MILONGA>
+
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	  Generated code for collocations setup the "parent_" field
+	  properly.
+
+	* tao/objkeyC.h: 
+	* tao/corbacom.h: 
+	  Added export macros.
+
+	* tao/objtable.cpp: 
+	* tao/objtable.h: 
+	* tao/poa.cpp: 
+	* tao/poa.h: 
+	  Object table is based on servants now.
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/server.dsp: 
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	  Fixed to use the new POA mapping.
+	  
+	* TAO_IDL/tao_idl.dsp: 
+	* tao/TAO.dsp: 
+	  Added the new files to the MSVC++ project.
+
 Tue Dec 30 16:38:42 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* More advances in code generation, it compiles and links now, but

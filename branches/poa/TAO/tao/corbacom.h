@@ -137,8 +137,26 @@ class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
 struct CDR;
 
+// The new (POA) base class for servants.
+class TAO_ServantBase;
+class PortableServer
+{
+  // = TITLE
+  //   Portable Server (POA) name space.
+public:
+  
+  typedef TAO_ServantBase ServantBase;
+  typedef ServantBase *Servant;
+};
+
 // enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags;
+
+#  if	SIZEOF_BOOL != 0
+  typedef bool			CORBA_Boolean;
+#  else	/* "bool" not builtin to this compiler */
+  typedef int			CORBA_Boolean;
+#  endif /* "bool" not builtin */
 
 template <class T>
 struct CORBA_SEQUENCE
@@ -156,7 +174,7 @@ struct CORBA_SEQUENCE
   u_int length;
 #endif /* SIZEOF_LONG */
   T *buffer;
-  Boolean release; // Only here to make it compliant with IDL-generated layout
+  CORBA_Boolean release; // Only here to make it compliant with IDL-generated layout
   
 
   CORBA_SEQUENCE (void)
@@ -176,15 +194,13 @@ class TAO_Export CORBA
 {
 public:
 #  if	SIZEOF_BOOL != 0
-  typedef bool			Boolean;
 #    define B_FALSE false
 #    define B_TRUE true
-
 #  else	/* "bool" not builtin to this compiler */
-  typedef int			Boolean;
   enum { B_FALSE = 0, B_TRUE = 1 };
 #  endif /* "bool" not builtin */
 
+  typedef CORBA_Boolean Boolean;
   typedef Boolean &Boolean_out; // out type for boolean
 
   typedef u_char Octet;

@@ -23,13 +23,13 @@ class TAO_Object_Table
 {
 public:
   virtual int find (const CORBA::OctetSeq &key, 
-		    CORBA::Object_ptr &obj) = 0;
+		    PortableServer::Servant &obj) = 0;
   // Find object associated with <{key}>, setting <{obj}> to the
   // pointer and returning a non-negative integer.  If not found,
   // <{obj}> is unchanged and the value <-1> is returned.
 
   virtual int bind (const CORBA::OctetSeq &key, 
-		    CORBA::Object_ptr obj) = 0;
+		    PortableServer::Servant obj) = 0;
   // Associated <{key}> with <{obj}>, returning 0 if object is
   // registered successfully, 1 if it's already registered, and -1 if
   // a failure occurs during registration.
@@ -39,7 +39,7 @@ public:
 };
 
 // Dynamic Hashing scheme using template specialization for char*
-typedef ACE_Hash_Map_Manager<const char*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX> 
+typedef ACE_Hash_Map_Manager<const char*, PortableServer::Servant, ACE_SYNCH_RW_MUTEX> 
         OBJ_MAP_MANAGER;
 
 class TAO_Dynamic_Hash_ObjTable : public TAO_Object_Table
@@ -55,13 +55,13 @@ public:
   // destructor
 
   virtual int bind (const CORBA::OctetSeq &key, 
-		    CORBA::Object_ptr obj);
+		    PortableServer::Servant obj);
   // Registers a CORBA::Object into the object table and associates
   // the key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
   virtual int find (const CORBA::OctetSeq &key, 
-		    CORBA::Object_ptr &obj);
+		    PortableServer::Servant &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.
 
@@ -78,7 +78,7 @@ struct TAO_Linear_ObjTable_Entry
   CORBA::String opname_;
   // Stores the object key.
 
-  CORBA::Object_ptr obj_;
+  PortableServer::Servant obj_;
   // Holds the CORBA::Object pointer corresponding to the object key.
 
   TAO_Linear_ObjTable_Entry (void);
@@ -99,13 +99,13 @@ public:
   ~TAO_Linear_ObjTable (void);
 
   virtual int bind (const CORBA::OctetSeq &key,
-		    CORBA::Object_ptr obj);
+		    PortableServer::Servant obj);
   // Registers a CORBA::Object into the object table and associates the
   // key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
   virtual int find (const CORBA::OctetSeq &key, 
-		    CORBA::Object_ptr &obj);
+		    PortableServer::Servant &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.
 
@@ -119,7 +119,7 @@ struct TAO_Active_Demux_ObjTable_Entry
 {
   // = TITLE
   //   Active Demux lookup table entry.
-  CORBA::Object_ptr obj_;
+  PortableServer::Servant obj_;
   // CORBA::Object pointer corresponding to the key
 
   TAO_Active_Demux_ObjTable_Entry (void);
@@ -140,13 +140,13 @@ public:
   ~TAO_Active_Demux_ObjTable (void);
 
   virtual int bind (const CORBA::OctetSeq &key,
-		    CORBA::Object_ptr obj);
+		    PortableServer::Servant obj);
   // Registers a CORBA::Object into the object table and associates
   // the key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
   virtual int find (const CORBA::OctetSeq &key,
-		    CORBA::Object_ptr &obj);
+		    PortableServer::Servant &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.
 

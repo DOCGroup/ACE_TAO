@@ -7,7 +7,7 @@ TAO_Object_Table::~TAO_Object_Table (void)
 
 // Template Specialization for char*. Needed for the dynamic hash lookup
 int 
-ACE_Hash_Map_Manager<const char *, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>::equal (const char *const &id1,
+ACE_Hash_Map_Manager<const char *, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>::equal (const char *const &id1,
 										 const char *const &id2)
 {
   // do a string compare
@@ -16,7 +16,7 @@ ACE_Hash_Map_Manager<const char *, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>::equal
 
 // Template Specialization for char *
 u_long
-ACE_Hash_Map_Manager<const char *, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>::hash (const char *const &ext_id)
+ACE_Hash_Map_Manager<const char *, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>::hash (const char *const &ext_id)
 {
   // Use the hash_pjw hash function available in the ACE library
   return ACE::hash_pjw (ext_id);
@@ -48,7 +48,7 @@ TAO_Dynamic_Hash_ObjTable::~TAO_Dynamic_Hash_ObjTable (void)
 
 int
 TAO_Dynamic_Hash_ObjTable::bind (const CORBA::OctetSeq &key,
-				 CORBA::Object_ptr obj)
+				 PortableServer::Servant obj)
 {
   // the key is an octet sequence. Hence, we cannot simply cast the buffer to a
   // char* as it may result in an arbitrary name. Hence we must first convert
@@ -59,7 +59,7 @@ TAO_Dynamic_Hash_ObjTable::bind (const CORBA::OctetSeq &key,
 
 int
 TAO_Dynamic_Hash_ObjTable::find (const CORBA::OctetSeq &key,
-				 CORBA::Object_ptr &obj)
+				 PortableServer::Servant &obj)
 {
   // the key is an octet sequence. Hence, we cannot simply cast the buffer to a
   // char* as it may result in an arbitrary name due to absence of a NULL
@@ -84,7 +84,7 @@ TAO_Linear_ObjTable::~TAO_Linear_ObjTable (void)
 
 int
 TAO_Linear_ObjTable::bind (const CORBA::OctetSeq &key,
-			   CORBA::Object_ptr obj)
+			   PortableServer::Servant obj)
 {
   CORBA::ULong i = this->next_;
 
@@ -106,7 +106,7 @@ TAO_Linear_ObjTable::bind (const CORBA::OctetSeq &key,
 // find if the key exists
 int
 TAO_Linear_ObjTable::find (const CORBA::OctetSeq &key,
-			   CORBA::Object_ptr &obj)
+			   PortableServer::Servant &obj)
 {
   ACE_ASSERT (this->next_ <= this->tablesize_);
 
@@ -156,7 +156,7 @@ TAO_Active_Demux_ObjTable::~TAO_Active_Demux_ObjTable ()
 // bind the object based on the key
 int
 TAO_Active_Demux_ObjTable::bind (const CORBA::OctetSeq &key,
-				 CORBA::Object_ptr obj)
+				 PortableServer::Servant obj)
 {
   // The active demux strategy works on the assumption that the key is a
   // stringified form of an index into the table
@@ -181,7 +181,7 @@ TAO_Active_Demux_ObjTable::bind (const CORBA::OctetSeq &key,
 
 int
 TAO_Active_Demux_ObjTable::find (const CORBA::OctetSeq &key,
-				 CORBA::Object_ptr& obj)
+				 PortableServer::Servant& obj)
 {
   ACE_CString objkey ((char *)key.buffer, key.length);
   CORBA::ULong i = ACE_OS::atoi (objkey.rep ());
@@ -202,11 +202,11 @@ TAO_Active_Demux_ObjTable_Entry::~TAO_Active_Demux_ObjTable_Entry (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Iterator<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Entry<char const*, CORBA::Object_ptr>;
+template class ACE_Hash_Map_Iterator<char const*, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Manager<char const*, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Entry<char const*, PortableServer::Servant>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Iterator<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<char const*, CORBA::Object_ptr>
+#pragma instantiate ACE_Hash_Map_Iterator<char const*, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<char const*, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<char const*, PortableServer::Servant>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

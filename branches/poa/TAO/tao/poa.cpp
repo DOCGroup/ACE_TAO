@@ -213,7 +213,7 @@ CORBA_POA::dispatch (CORBA::OctetSeq &key,
   ACE_UNUSED_ARG(context);
 
   TAO_Skeleton skel;  // pointer to function pointer for the operation
-  CORBA::Object_ptr obj;  // object that will be looked up based on the key
+  PortableServer::Servant obj;  // object that will be looked up based on the key
   CORBA::String  opname;
 
   // Get the skeleton
@@ -260,14 +260,14 @@ CORBA_POA::dispatch (CORBA::OctetSeq &key,
 
 int
 CORBA_POA::find (const CORBA::OctetSeq &key,
-		 CORBA::Object_ptr &obj)
+		 PortableServer::Servant &obj)
 {
   return objtable_->find (key, obj);
 }
 
 int
 CORBA_POA::bind (const CORBA::OctetSeq &key,
-		 CORBA::Object_ptr obj)
+		 PortableServer::Servant obj)
 {
   return objtable_->bind (key, obj);
 }
@@ -312,26 +312,26 @@ CORBA_POA::QueryInterface (REFIID riid,
   return TAO_NOERROR;
 }
 
-PortableServer::ServantBase::ServantBase (void)
+TAO_ServantBase::TAO_ServantBase (void)
 {
 }
 
-PortableServer::ServantBase::ServantBase (const ServantBase&)
+TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase&)
 {
 }
 
-PortableServer::ServantBase&
-PortableServer::ServantBase::operator= (const ServantBase&)
+TAO_ServantBase&
+TAO_ServantBase::operator= (const TAO_ServantBase&)
 {
   return *this;
 }
 
-PortableServer::ServantBase::~ServantBase (void)
+TAO_ServantBase::~TAO_ServantBase (void)
 {
 }
 
 CORBA_POA*
-PortableServer::ServantBase::_default_POA (void)
+TAO_ServantBase::_default_POA (void)
 {
   CORBA_Object_ptr root_poa = 
     TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("RootPOA");
@@ -339,30 +339,35 @@ PortableServer::ServantBase::_default_POA (void)
 }
 
 void
-PortableServer::ServantBase::set_parent (TAO_IUnknown *p)
+TAO_ServantBase::set_parent (TAO_IUnknown *p)
 {
   this->parent_ = p;
   assert (this->parent_ != 0);
 }
 
+TAO_IUnknown *TAO_ServantBase::get_parent (void) const
+{
+  return this->parent_;
+}
+
 int
-PortableServer::ServantBase::find (const CORBA::String& opname,
-				   TAO_Skeleton& skelfunc)
+TAO_ServantBase::find (const CORBA::String& opname,
+				  TAO_Skeleton& skelfunc)
 {
   return optable_->find (opname, skelfunc);
 }
 
 int
-PortableServer::ServantBase::bind (const CORBA::String& opname,
-				   const TAO_Skeleton skel_ptr)
+TAO_ServantBase::bind (const CORBA::String& opname,
+		       const TAO_Skeleton skel_ptr)
 {
   return optable_->bind (opname, skel_ptr);
 }
 
 void
-PortableServer::ServantBase::dispatch (CORBA::ServerRequest &req,
-				       void *context,
-				       CORBA::Environment &env)
+TAO_ServantBase::dispatch (CORBA::ServerRequest &req,
+			   void *context,
+			   CORBA::Environment &env)
 {
   // XXXASG - we should check here if the call was for _non_existant, else
   // issue an error. For the time being we issue an error
