@@ -274,8 +274,8 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
   if ("$tao_tag") {
     &ex ("$cvs -q export -r$tao_tag -kv ACE_wrappers/TAO > /dev/null")  &&
       die "$0: failed cvs export of $tao_tag in $stage_dir\n";
-    &ex ("cd ACE_wrappers/TAO  &&  $make INSTALL orbsvcs/README")  &&
-      die "$0: failed make INSTALL TAO/orbsvcs/README in " .
+    &ex ("cd ACE_wrappers/TAO  &&  $make INSTALL")  &&
+      die "$0: failed make INSTALL in " .
           "$stage_dir/ACE_wrappers/TAO\n";
   }
   if ("$ciao_tag") {
