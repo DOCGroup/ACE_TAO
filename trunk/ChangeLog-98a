@@ -28,6 +28,10 @@ Tue Mar 31 07:22:09 1998  David L. Levine  <levine@cs.wustl.edu>
           TSS).  That shouldn't happen, but it looks like it does on
           Linux, LynxOS, and Digital Unix.
 
+        * examples/Threads/task_five.cpp (main): wrapped return statement
+          at end with ACE_NOTREACHED.  This will prevent compiler warnings
+          from Green Hills and DEC CXX, and maybe SGI cc.
+
 Fri Mar 27 23:04:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: added ACE_DEFAULT_MAX_SOCKET_BUFSIZ
