@@ -34,8 +34,7 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 LSRC    = $(addsuffix .cpp,$(FILES))
-LIBS    = -lorbsvcs -lTAO
-LDLIBS  = -lTTest $(LIBS)
+LDLIBS  = -lTTest -lorbsvcs -lTAO
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 #----------------------------------------------------------------------------

@@ -1,3 +1,17 @@
+Thu Aug  6 21:49:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Trading/Makefile: Changed
+
+	  LIBS    = -lorbsvcs -lTAO
+	  LDLIBS  = -lTTest $(LIBS)
+
+	  to 
+
+	  LDLIBS = -lTTest -lorbsvcs -lTAO
+
+	  to work around weirdo bugs with the HP/UX GNU make...  Thanks to
+ 	  John Mulhern <9107@mn3.lawson.lawson.com> for reporting this.
+
 Thu Aug  6 18:27:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/TAO_Tests.dsw: Added the Multiple Inheritance client

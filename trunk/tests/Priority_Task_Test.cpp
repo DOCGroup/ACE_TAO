@@ -103,10 +103,18 @@ Priority_Task::open (void *arg)
       this->priority_ = fallback_priority;
 
       if (this->activate (flags, 1, 1, this->priority_) == -1)
-        ACE_DEBUG ((LM_ERROR, ASYS_TEXT ("(%t) task activation at priority %d failed, ")
-                              ASYS_TEXT ("exiting!\n%a"),
-                    this->priority_,
-                    -1));
+        {
+          if (ACE_OS::last_error () == EPERM)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ASYS_TEXT ("Insufficient privilege to run this test.\n")),
+                              -1);
+          else
+            ACE_DEBUG ((LM_ERROR,
+                        ASYS_TEXT ("(%t) task activation at priority %d failed, ")
+                        ASYS_TEXT ("exiting!\n%a"),
+                        this->priority_,
+                        -1));
+        }
     }
   return 0;
 }
@@ -176,7 +184,8 @@ main (int argc, ASYS_TCHAR *argv[])
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
       int p = priority.priority ();
-      tasks[i].open ((void *) &p);
+      if (tasks[i].open ((void *) &p) == -1)
+        break; // Out of enclosing loop.
 
       // If there are more priorities get the next one...
       if (priority.more ())
