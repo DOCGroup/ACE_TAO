@@ -1,3 +1,11 @@
+Fri Nov  1 09:44:43 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+
+          Fixed a project setting I overlooked in
+
+          Thu Oct 31 16:46:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
 Fri Nov  1 07:25:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/MProfile_Connection_Timeout/README:

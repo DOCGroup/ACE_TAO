@@ -199,7 +199,7 @@ BuildCmds= \
 
 # PROP Intermediate_Dir "DLL\Debug\DsNotifyLogAdmin"
 # PROP Ignore_Default_Tool 1
-USERDEP__DSNOT="..\..\..\bin\tao_idl"	
+USERDEP__DSNOT="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\DsNotifyLogAdmin.idl
 InputName=DsNotifyLogAdmin
