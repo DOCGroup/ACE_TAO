@@ -7,6 +7,9 @@ Thu Jul 16 08:55:48 1998  David L. Levine  <levine@cs.wustl.edu>
         * STL,Makefile: removed STL from ACE, for good this time.  There
           are no more STL dependencies in TAO's AVStreams.
 
+        * ACE-INSTALL.html: added note on enabling multicast on Linux for
+          TAO's NameService.
+
 Wed Jul 15 19:00:33 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Dynamic_Service.cpp (instance): Made the error reporting
