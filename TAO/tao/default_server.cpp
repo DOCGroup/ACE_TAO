@@ -66,7 +66,6 @@ TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
       TAO_CHECKANDSET (THR_DAEMON);
       TAO_ENDCHECK;
     }
-  
 }
 
 int
