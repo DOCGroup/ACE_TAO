@@ -1,3 +1,13 @@
+Wed Jul 14 17:03:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	  Cosmetic changes.
+
+	* TAO_IDL/be/be_visitor_structure/cdr_op_ci.cpp:
+	  Fixed be_visitor_structure_cdr_op_ci::post_process() to skip the
+	  generation of "&&\n" if the node argument is an enum value,
+	  since the just-completed visit to that node generated no code.
+
 Wed Jul 14 16:23:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Reply_Dispatcher.cpp:
