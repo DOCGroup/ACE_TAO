@@ -53,12 +53,29 @@ namespace CIAO {
       static char * parse_string (DOMNodeIterator * iter);
       // Parse string type
 
-      static CORBA::ULong parse_long (DOMNodeIterator * iter);
+      static CORBA::ULong parse_ulong (DOMNodeIterator * iter);
+      // Parse ulong type
+
+      static CORBA::Long parse_long (DOMNodeIterator * iter);
       // Parse long type
+
+      static CORBA::Short parse_short (DOMNodeIterator * iter);
+      // Parse short type
+
+      static CORBA::Float parse_float (DOMNodeIterator * iter);
+      // Parse float type
+
+      static CORBA::Double parse_double (DOMNodeIterator * iter);
+      // Parse double type
 
       static CORBA::Boolean parse_bool (DOMNodeIterator * iter);
       // Parse bool type
 
+      static CORBA::Char parse_char (DOMNodeIterator * iter);
+      // Parse char type
+
+      static CORBA::Octet parse_octet (DOMNodeIterator * iter);
+      // Parse octect type
     };
   }
 
