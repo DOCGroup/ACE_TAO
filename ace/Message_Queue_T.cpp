@@ -54,12 +54,9 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex (siz
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex");
 
-  ACE_NEW (this->queue_,
-           ACE_Message_Queue<ACE_SYNCH>);
-
-  if (this->open (hwm, lwm, ns) == -1)
+  if (this->queue_.open (hwm, lwm, ns) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("open")));
+                ACE_TEXT ("ACE_Message_Queue_Ex")));
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
@@ -75,7 +72,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::open (size_t hwm,
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::open");
 
-  return this->queue_.open (hwm, lwm, hs);
+  return this->queue_.open (hwm, lwm, ns);
 }
 
 // Clean up the queue if we have not already done so!
