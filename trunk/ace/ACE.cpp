@@ -1116,7 +1116,8 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   int n = ACE_OS::select (int (h) + 1,
                           rd_handles,
                           wr_handles,
-                          0, timeout);
+                          0,
+			  timeout);
 #endif /* ACE_WIN32 */
 
   // If we failed to connect within the time period allocated by the
@@ -1124,7 +1125,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   // busy to accept our call).
   if (n <= 0)
     {
-      if (n == 0)
+      if (n == 0 && timeout != 0)
         errno = ETIME;
       return ACE_INVALID_HANDLE;
     }
@@ -1133,7 +1134,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   // ready for writing, which may indicate a problem.  But we need to
   // make sure...
 #if defined (ACE_WIN32)
-  need_to_check = (rd_handles.is_set (h) || ex_handles.is_set (h));
+  need_to_check = rd_handles.is_set (h) || ex_handles.is_set (h);
 #elif defined (VXWORKS)
   ACE_UNUSED_ARG (is_tli);
 
@@ -1143,7 +1144,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   need_to_check = 1;
 #else
   if (is_tli)
-    need_to_check = (rd_handles.is_set (h) && !wr_handles.is_set (h));
+    need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
   else
     need_to_check = rd_handles.is_set (h);
 #endif /* ACE_WIN32 */
@@ -1188,7 +1189,7 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
           && (errno == EWOULDBLOCK
               && (timeout->sec () > 0 || timeout->usec () > 0)))
         // This expression checks if we were polling.
-        errno = ETIMEDOUT;
+        errno = ETIME;
 
       return handle;
     }
@@ -1230,7 +1231,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
           if (timeout != 0 && timeout->sec() == 0 && timeout->usec() == 0)
             errno = EWOULDBLOCK;
           else
-            errno = ETIMEDOUT;
+            errno = ETIME;
           return -1;
           /* NOTREACHED */
         case 1:

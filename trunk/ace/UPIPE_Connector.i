@@ -17,7 +17,7 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
   ACE_TRACE ("ACE_UPIPE_Connector::ACE_UPIPE_Connector");
   if (this->connect (new_stream, addr, timeout, local_sap, 
 		     reuse_addr, flags, perms) == -1
-      && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIMEDOUT))
+      && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR, "address %s, %p\n", 
 	       addr.get_path_name (), "ACE_UPIPE_Connector"));
 }

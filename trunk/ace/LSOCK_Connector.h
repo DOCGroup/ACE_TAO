@@ -51,10 +51,10 @@ public:
   // the connection can't be made immediately the value of -1 is
   // returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
   // this is the amount of time to wait before timing out.  If the
-  // time expires before the connection is made <errno == ETIMEDOUT>.
-  // The <local_sap> is the value of local address to bind to.  If
-  // it's the default value of <ACE_Addr::sap_any> then the user is
-  // letting the OS do the binding.  If <reuse_addr> == 1 then the
+  // time expires before the connection is made <errno == ETIME>.  The
+  // <local_sap> is the value of local address to bind to.  If it's
+  // the default value of <ACE_Addr::sap_any> then the user is letting
+  // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   int connect (ACE_LSOCK_Stream &new_stream, 
@@ -74,10 +74,10 @@ public:
   // the connection can't be made immediately the value of -1 is
   // returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
   // this is the amount of time to wait before timing out.  If the
-  // time expires before the connection is made <errno == ETIMEDOUT>.
-  // The <local_sap> is the value of local address to bind to.  If
-  // it's the default value of <ACE_Addr::sap_any> then the user is
-  // letting the OS do the binding.  If <reuse_addr> == 1 then the
+  // time expires before the connection is made <errno == ETIME>.  The
+  // <local_sap> is the value of local address to bind to.  If it's
+  // the default value of <ACE_Addr::sap_any> then the user is letting
+  // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   // = Meta-type info

@@ -17,7 +17,7 @@ ACE_DEV_Connector::ACE_DEV_Connector (ACE_DEV_IO &new_io,
   ACE_TRACE ("ACE_DEV_Connector::ACE_DEV_Connector");
   if (this->connect (new_io, remote_sap, timeout, local_sap, 
 		     reuse_addr, flags, perms) == ACE_IO_SAP::INVALID_HANDLE
-      && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIMEDOUT))
+      && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR, "address %s, %p\n", 
 	       remote_sap.get_path_name (), "ACE_DEV_IO"));
 }

@@ -100,8 +100,8 @@ fail_no_listener_nonblocking (void)
 	}
       else if (errno != ECONNREFUSED && errno != ENOTCONN)
 	{
-	  ACE_DEBUG ((LM_DEBUG, "%p, but expected ECONNREFUSED or ENOTCONN\n",
-		      "Failed with"));
+	  ACE_DEBUG ((LM_DEBUG, "%p at errno %d, but expected ECONNREFUSED or ENOTCONN\n",
+		      "Failed with", errno));
 	  status = -1;
 	}
       else 
