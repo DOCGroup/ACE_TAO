@@ -30,20 +30,17 @@
 class UTL_StrList;
 class be_visitor;
 
-// BE_Module
-
 class be_module : public virtual AST_Module,
                   public virtual be_scope,
                   public virtual be_decl
 {
 public:
-  // =Operations
-
   be_module (void);
-  // default constructor
+  // Default constructor.
 
-  be_module (UTL_ScopedName *n, UTL_StrList *p);
-  // constructor
+  be_module (UTL_ScopedName *n, 
+             UTL_StrList *p);
+  // Constructor.
 
   virtual void destroy (void);
   // Cleanup method.
@@ -51,14 +48,14 @@ public:
   // Visiting
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS3 (be_module, AST_Module, be_scope, be_decl);
   DEF_NARROW_FROM_DECL (be_module);
   DEF_NARROW_FROM_SCOPE (be_module);
 
 protected:
   virtual int compute_size_type (void);
-  // compute the size type if it is unknown
+  // Compute the size type if it is unknown.
 };
 
 #endif

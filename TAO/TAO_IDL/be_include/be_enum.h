@@ -30,50 +30,43 @@
 class UTL_StrList;
 class be_visitor;
 
-/*
- * BE_Enum
- */
 class be_enum : public virtual AST_Enum,
                 public virtual be_scope,
                 public virtual be_type
 {
 public:
-  // Operations
-
   be_enum (void);
-  // default constructor
+  // Default constructor.
 
   be_enum (UTL_ScopedName *n,
            UTL_StrList *p,
            idl_bool local,
            idl_bool abstract);
-  // constructor
+  // Constructor.
 
   virtual int member_count (void);
-  // return the count of members
+  // Return the count of members
 
   // Convert a numeric value to the enum's string name for it.
-  virtual UTL_ScopedName        *value_to_name (const unsigned long v);
+  virtual UTL_ScopedName *value_to_name (const unsigned long v);
 
   virtual void destroy (void);
   // Cleanup method.
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS3 (be_enum, AST_Enum, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_enum);
   DEF_NARROW_FROM_SCOPE (be_enum);
 
 private:
-  //=helper
-
   int compute_member_count (void);
-  // count the number of members
+  // Count the number of members.
 
   int member_count_;
-  // number of members
+  // Number of members.
 };
 
 #endif

@@ -34,9 +34,6 @@ class TAO_OutStream;
 // Forward declaration of the strategy
 class be_interface_strategy;
 
-/*
- * BE_Interface
- */
 class be_interface : public virtual AST_Interface,
                      public virtual be_scope,
                      public virtual be_type
@@ -47,17 +44,19 @@ class be_interface : public virtual AST_Interface,
   // = DESCRIPTION
   //
 public:
-  enum {
+  enum 
+  {
     THRU_POA = 0,
     DIRECT = 1
   };
 
-  // used to pass functions to the template method
-  typedef int (*tao_code_emitter) (be_interface *, be_interface *, TAO_OutStream *);
+  // Used to pass functions to the template method.
+  typedef int (*tao_code_emitter) (be_interface *, 
+                                   be_interface *, 
+                                   TAO_OutStream *);
 
-  // Operations
   be_interface (void);
-  // Default constructor
+  // Default constructor.
 
   be_interface (UTL_ScopedName *n,
                 AST_Interface **ih,
@@ -68,53 +67,55 @@ public:
                 idl_bool local,
                 idl_bool abstract);
   // Constructor that sets its scoped name <n>, a list of inherited interfaces
-  // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>
+  // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>.
 
   ~be_interface (void);
-  // dtor
+  // Destructor.
 
   be_interface_strategy *set_strategy (be_interface_strategy *new_strategy);
-  // Set the strategy to generate the names
+  // Set the strategy to generate the names.
 
-  // Methods, which access the strategy
+  // Methods, which access the strategy.
 
   const char *local_name (void) const;
-  // return the local name
+  // Return the local name.
 
   const char *full_name (void) const;
-  // return the stringified full name
+  // Return the stringified full name.
 
   const char *flat_name (void) const;
-  // return the flattened full scoped name.
+  // Return the flattened full scoped name.
 
   const char *repoID (void) const;
-  // retrieve the repository ID.
+  // Retrieve the repository ID.
 
   const char *full_skel_name (void) const;
-  // retrieve the fully scoped skel class name.
+  // Retrieve the fully scoped skel class name.
 
   const char *full_coll_name (int) const;
-  // retrieve the fully qualified collocated class name
+  // Retrieve the fully qualified collocated class name.
 
   const char *local_coll_name (int) const;
-  // retrieve the fully qualified collocated class name.
+  // Retrieve the fully qualified collocated class name.
 
   const char *relative_skel_name (const char *skel_name);
-  // relative skeleton name
+  // Retrieve skeleton name.
 
-  void compute_full_skel_name (const char *prefix,char *&skel_name);
-  // Build up the skeleton name
+  void compute_full_skel_name (const char *prefix,
+                               char *&skel_name);
+  // Build up the skeleton name.
 
-  static const char *relative_name (const char *localname, const char *othername);
+  static const char *relative_name (const char *localname, 
+                                    const char *othername);
 
   virtual void gen_def_ctors (TAO_OutStream* os);
-  //call the default constructors of all the base classes
+  // Call the default constructors of all the base classes.
 
   virtual void gen_copy_ctors (TAO_OutStream* os);
-  //call the copy constructors of all the base classes
+  // Call the copy constructors of all the base classes.
 
   virtual int gen_var_defn (char *interface_name = 0);
-  // generate the var definition. If <interface_name> is not 0, generate
+  // Generate the var definition. If <interface_name> is not 0, generate
   // the var defn for that name. Otherwise, do it for the interface you
   // are visiting (this).
 
@@ -148,105 +149,109 @@ public:
 
   virtual int traverse_inheritance_graph (tao_code_emitter gen,
                                           TAO_OutStream *os);
-  // template method using breadth first traversal of inheritance graph
+  // Template method using breadth first traversal of inheritance graph
 
   int in_mult_inheritance (void);
-  // am I in some form of multiple inheritance
+  // Am I in some form of multiple inheritance
   // -1 => error
   // 0 => no
   // 1 => yes
 
   void in_mult_inheritance (int mi);
-  // set a new value
+  // Set a new value.
 
   virtual void destroy (void);
   // Cleanup function.
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_interface);
   DEF_NARROW_FROM_SCOPE (be_interface);
 
-  static int is_a_helper (be_interface *, be_interface *, TAO_OutStream *os);
-  // helper method passed to the template method that generates code for the
-  // is_a method
+  static int is_a_helper (be_interface *, 
+                          be_interface *, 
+                          TAO_OutStream *os);
+  // Helper method passed to the template method that generates code for the
+  // is_a method.
 
   static int queryinterface_helper (be_interface *,
                                     be_interface *,
                                     TAO_OutStream *os);
-  // helper method passed to the template method that generates code for the
-  // _tao_QueryInterface method
+  // Helper method passed to the template method that generates code for the
+  // _tao_QueryInterface method.
 
   static int downcast_helper (be_interface *,
                               be_interface *,
                               TAO_OutStream *os);
-  // helper method passed to the template method that generates code for the
+  // Helper method passed to the template method that generates code for the
   // downcast.
 
   static int gen_optable_helper (be_interface *,
                                  be_interface *,
                                  TAO_OutStream *os);
-  // helper method passed to the template method to generate code for the
-  // operation table
+  // Helper method passed to the template method to generate code for the
+  // operation table.
 
   static int ami_handler_gen_optable_helper (be_interface *,
                                              be_interface *,
                                              TAO_OutStream *os);
-  // helper method passed to the template method to generate code for the
-  // operation table
+  // Helper method passed to the template method to generate code for the
+  // operation table.
 
   static int gen_skel_helper (be_interface *,
                               be_interface *,
                               TAO_OutStream *os);
-  // helper method passed to the template method to generate code for the
-  // skeletons in the inline file
+  // Helper method passed to the template method to generate code for the
+  // skeletons in the inline file.
 
   static int copy_ctor_helper (be_interface *,
                                be_interface *,
                                TAO_OutStream *os);
-  // helper method passed to the template method to invoke ctors of all the
+  // Helper method passed to the template method to invoke ctors of all the
   // base classes.
 
   static int in_mult_inheritance_helper (be_interface *,
                                          be_interface *,
                                          TAO_OutStream *os);
-  // helper method to determine if the interface node is involved in some kind
-  // of multiple inheritance or not. Required on the skeleton side
+  // Helper method to determine if the interface node is involved in some kind
+  // of multiple inheritance or not. Required on the skeleton side.
 
   static int gen_def_ctors_helper (be_interface* node,
                                    be_interface* base,
                                    TAO_OutStream *os);
 
-  //helper method to generate a call to the default constructors of all the base classes
+  // Helper method to generate a call to the default 
+  // constructors of all the base classes.
 
   static int gen_copy_ctors_helper (be_interface* node,
                                    be_interface* base,
                                    TAO_OutStream *os);
 
-  //helper method to generate a call to the copy constructors of all the base classes
+  // Helper method to generate a call to the copy 
+  // constructors of all the base classes.
 
 
   int gen_operation_table (void);
-  // generate the operation table including entries for inherited interfaces
+  // Generate the operation table including entries for inherited interfaces.
 
   int gen_optable_entries (be_interface *);
   // generate the operation table entries.
 
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
-  // find the next state, used to hide differences between variants of
+  // Find the next state, used to hide differences between variants of
   // interfaces.
 
   int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
   // Returns 1 if additional code needs to be generated, the behavior
-  // is driven by the strategy connected with this interface
+  // is driven by the strategy connected with this interface.
 
   void original_interface (be_interface *original_interface);
   // Sets the original interface from which this one was created,
-  // applies only to implied IDL
+  // applies only to implied IDL.
 
   be_interface *original_interface ();
   // Returns the original interface from which this one was created,
@@ -295,11 +300,11 @@ private:
   // Number of static skeletons in the operation table.
 
   int in_mult_inheritance_;
-  // am I directly or indirectly involved in a multiple inheritance. If the
+  // Am I directly or indirectly involved in a multiple inheritance. If the
   // value is -1 => not computed yet.
 
   be_interface_strategy *strategy_;
-  // Member for holding the strategy for generating names
+  // Member for holding the strategy for generating names.
 
   be_interface *original_interface_;
 };

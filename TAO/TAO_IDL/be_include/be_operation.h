@@ -32,17 +32,13 @@ class UTL_StrList;
 class be_visitor;
 class be_argument;
 
-// BE_Operation
-
 class be_operation : public virtual AST_Operation,
                      public virtual be_scope,
                      public virtual be_decl
 {
 public:
-  // =Operations
-
   be_operation (void);
-  // default constructor
+  // Default constructor.
 
   be_operation (AST_Type *rt,
                 AST_Operation::Flags fl,
@@ -50,16 +46,16 @@ public:
                 UTL_StrList *p,
                 idl_bool local,
                 idl_bool abstract);
-  // constructor
+  // Constructor
 
   ~be_operation ();
-  // destructor
+  // Destructor.
 
   int void_return_type ();
   // Returns 1 if the operation has a void return type.
 
   virtual int argument_count (void);
-  // return the count of members
+  // Return the count of members.
 
   virtual int has_native (void);
   // Any of the arguments or the return value is a <native> type.
@@ -67,30 +63,30 @@ public:
   // generated for the stubs.
 
   be_argument *add_argument_to_scope (be_argument *arg);
-  // add an argument to the scope
+  // Add an argument to the scope.
 
   virtual void destroy (void);
   // Cleanup method.
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 
   be_operation_strategy *set_strategy (be_operation_strategy *new_strategy);
 
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
-  // decide on the next state
+  // Decide on the next state.
 
   int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // returns true if we have to genrate extra code.
+  // Returns true if we have to genrate extra code.
 
   be_operation *marshaling ();
   // returns the operation containing special marshaling information,
   // this makes sense if not all arguments get marshaled, e.g. AMI
-  // sendc_ operations
+  // sendc_ operations.
 
   be_operation *arguments ();
-  // returns a customized arguments list, e.g. AMI sendc_ operations
+  // Returns a customized arguments list, e.g. AMI sendc_ operations
   // only use the in and inout arguments but not the out arguments,
   // also the first argument is the reply handler.
 
@@ -100,15 +96,14 @@ public:
   DEF_NARROW_FROM_SCOPE (be_operation);
 
 protected:
-  //=helper
   int compute_size_type (void);
-  // compute the size type if it is unknown
+  // Compute the size type if it is unknown.
 
   int compute_argument_attr (void);
-  // count the number of arguments
+  // Count the number of arguments.
 
   int argument_count_;
-  // number of arguments
+  // Number of arguments.
 
   int has_native_;
   // Is any argument of type native.

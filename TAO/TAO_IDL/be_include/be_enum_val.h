@@ -29,20 +29,17 @@
 class UTL_StrList;
 class be_visitor;
 
-/*
- * BE_EnumVal
- */
 class be_enum_val : public virtual AST_EnumVal,
                     public virtual be_decl
 {
 public:
-  // =Operations
-
   be_enum_val (void);
-  // default constructor
+  // Default constructor.
 
-  be_enum_val (unsigned long v, UTL_ScopedName *n, UTL_StrList *p);
-  // constructor
+  be_enum_val (unsigned long v, 
+               UTL_ScopedName *n, 
+               UTL_StrList *p);
+  // Constructor.
 
   // Visiting
   virtual int accept (be_visitor *visitor);
@@ -54,7 +51,7 @@ public:
 protected:
   virtual int compute_size_type (void);
   // Trivial implementation, but it avoids a switch statement
-  // in be_decl::size_type()
+  // in be_decl::size_type().
 };
 
 #endif

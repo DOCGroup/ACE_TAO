@@ -29,40 +29,31 @@
 class UTL_StrList;
 class be_visitor;
 
-// be_classes.hh
-//
-// Defines all classes for dummy BE
-
-/*
- * BE_PredefinedType
- */
 class be_predefined_type : public virtual AST_PredefinedType,
                            public virtual be_type
 {
 public:
-  // =Operations
-
   be_predefined_type (void);
-  // default constructor
+  // Default constructor.
 
   be_predefined_type (AST_PredefinedType::PredefinedType t,
                       UTL_ScopedName *n,
                       UTL_StrList *p);
-  // constructor
+  // Constructor.
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor* visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS2 (be_predefined_type, AST_PredefinedType, be_type);
   DEF_NARROW_FROM_DECL (be_predefined_type);
 
 protected:
   virtual int compute_size_type (void);
-  // compute the size type if it is unknown
+  // Compute the size type if it is unknown.
 
   virtual void compute_tc_name (void);
-  // overridden method
+  // Overridden method.
 
   virtual UTL_ScopedName * compute_tc_name (const char *prefix,
                                             const char *suffix);
