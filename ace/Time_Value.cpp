@@ -194,7 +194,7 @@ ACE_Time_Value::normalize (void)
       this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
     }
 // tv_sec in qnxnto is unsigned
-#if defined( __QNXNTO__)
+#if !defined( __QNXNTO__)
   else if (this->tv_.tv_sec < 0 && this->tv_.tv_usec > 0)
     {
       this->tv_.tv_sec++;
