@@ -502,7 +502,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
   // And add the new elements to the end of the "freelist".
   for (size_t i = this->max_size_; i < new_size; i++)
-    this->timer_ids_[i] = -(i + 1);
+    this->timer_ids_[i] = -(ACE_static_cast (ssize_t, i) + 1);
 
    // Grow the preallocation array (if using preallocation)
   if (this->preallocated_nodes_ != 0)
