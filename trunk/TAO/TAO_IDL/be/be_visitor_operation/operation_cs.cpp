@@ -332,7 +332,9 @@ be_visitor_operation_cs::gen_raise_interceptor_exception (be_type *bt,
   if (this->void_return_type (bt))
     {
       *os << "TAO_INTERCEPTOR_THROW ("
-          << excep << " (" << completion_status << "));\n";
+          << excep << " ("
+          << completion_status << ")"
+          << ");";
     }
   else
     {
@@ -802,8 +804,9 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     }
 
   // Invoke preinvoke interceptor
-  *os << be_nl << "TAO_INTERCEPTOR ("
-      << "_tao_vfr.preinvoke (_tao_call.request_id (),";
+  *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl
+      << "_tao_vfr.preinvoke (" << be_idt << be_idt_nl
+      << "_tao_call.request_id ()," << be_nl;
   switch (node->flags ())
     {
     case AST_Operation::OP_oneway:
@@ -812,9 +815,12 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     default:
       *os << "1";
     }
-  *os << ", this, " << this->compute_operation_name (node)
-      << ", _tao_call.service_info (), _tao_interceptor_args.inout (), "
-      << "_tao_cookies, ACE_TRY_ENV));\n";
+  *os << "," << be_nl << "this," << be_nl 
+      << this->compute_operation_name (node)
+      << "," << be_nl << "_tao_call.service_info ()," << be_nl
+      << "_tao_interceptor_args.inout ()," << be_nl
+      << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl << ");\n" << be_uidt;
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -1058,8 +1064,9 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     }
 
   // Invoke postinvoke interceptor
-  *os << be_nl << "TAO_INTERCEPTOR ("
-      << "_tao_vfr.postinvoke (_tao_call.request_id (),";
+  *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl
+      << "_tao_vfr.postinvoke (" << be_idt << be_idt_nl
+      << "_tao_call.request_id ()," << be_nl;
   switch (node->flags ())
     {
     case AST_Operation::OP_oneway:
@@ -1068,9 +1075,12 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     default:
       *os << "1";
     }
-  *os << ", this, " << this->compute_operation_name (node)
-      << ", _tao_call.service_info (), _tao_interceptor_args.inout (), "
-      << "_tao_cookies, ACE_TRY_ENV));\n";
+  *os << "," << be_nl << "this," << be_nl 
+      << this->compute_operation_name (node)
+      << "," << be_nl << "_tao_call.service_info ()," << be_nl
+      << "_tao_interceptor_args.inout ()," << be_nl
+      << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl << ");\n" << be_uidt;
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -1090,7 +1100,8 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       << be_uidt_nl << "}" << be_uidt_nl
       << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl
-      << "_tao_vfr.exception_occurred (_tao_call.request_id (), ";
+      << "_tao_vfr.exception_occurred (" << be_idt << be_idt_nl
+      << "_tao_call.request_id ()," << be_nl;
   switch (node->flags ())
     {
     case AST_Operation::OP_oneway:
@@ -1099,9 +1110,11 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     default:
       *os << "1";
     }
-  *os << ", this, " << this->compute_operation_name (node)
-      << ", " // _tao_call.service_info (), "
-      << "_tao_cookies, ACE_TRY_ENV);" << be_nl
+  *os << "," << be_nl << "this," << be_nl 
+      << this->compute_operation_name (node)
+      << "," << be_nl // _tao_call.service_info (), "
+      << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
       << "ACE_RETHROW;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "ACE_ENDTRY;\n";
