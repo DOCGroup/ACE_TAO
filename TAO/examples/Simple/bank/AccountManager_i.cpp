@@ -55,7 +55,7 @@ AccountManager_i::open (const char *name,
       if (hash_map_.find (name, result) != 0)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
-		      "(%P|%t) Opening a new Account for %s with balance %f\n",
+		      "[SERVER] Process/Thread Id : (%P/%t) Opening Account (%s,%8.2f)\n",
 		      name,
 		      initial_balance));
 
@@ -80,7 +80,7 @@ AccountManager_i::open (const char *name,
       else
 	if (TAO_debug_level > 0)
 	  ACE_DEBUG ((LM_DEBUG,
-		      "\nAccount already exists for %s\n",
+		      "[SERVER] Process/Thread Id : (%P/%t) Account already exists for %s\n",
 		      name));
       // Generate an IOR for the result object and register it with
       // the POA.  In case the object already exists then the
@@ -117,7 +117,7 @@ AccountManager_i::close (Bank::Account_ptr account,
 	}
       else if (TAO_debug_level > 0)
 	ACE_DEBUG((LM_DEBUG,
-		   "Closing Account for %s\n",
+		   "[SERVER] Process/Thread Id : (%P/%t) Closing Account for %s\n",
 		   (char *) name));
 
        }
@@ -132,7 +132,7 @@ void
 AccountManager_i::shutdown (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
+              "\n[SERVER] Process/Thread Id : (%P/%t) %s\n",
               "AccountManager_i is shutting down"));
 
   // Instruct the ORB to shutdown.

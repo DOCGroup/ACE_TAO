@@ -1,11 +1,19 @@
 $Id$
 
 This is a simple CORBA example that has a module Bank with two
-interfaces Account and AccountManager.  The Account interface has a
-method to return the balance in that account.  The AccountManager
-interface has a method to create a new Account and return the IOR of
-this to the client.  The two interfaces also have methods to shutdown
-the server.
+interfaces Account and AccountManager.
+
+The Account interface has operations for balance, deposit and withdraw. It has a readonly attribute for the Account Holder's name. It also has a user defined exception which is raised for withdrawing more moneythen the current balance.
+
+The AccountManager interface has methods to create and close Accounts.
+It also has a method to shutdown the server.
+
+run_test.pl : This is a perl script to run the server and client as :
+
+	      server
+	      client  -x -b 100 -y Vishal -z Kachroo
+
+	      There are other command line options available for the server and client which are explained as below.
 
 server:
 -------
@@ -45,4 +53,10 @@ Options:
 -k    Read IOR from the command line
 -f    Read IOR from the specified file
 
+The client executes the following tests :
 
+1. Creating accounts with the same name to make sure the Account is created only once and he gets back the same object reference each time. This is confirmed by the server printing the message for Creation of an account only once.
+
+2. Creating accounts with different name to make sure a different Account is created and a different IOR returned each time.
+
+3. Creating an Account with some initial balance and then withdrawing more than the current balance. The server throws an exception which is passed to the client and the client displays the reason for the exception.
