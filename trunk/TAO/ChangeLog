@@ -1,3 +1,10 @@
+Wed Aug 14 21:32:36 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h (get_location):
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
+
+	  Removed unused object group parameter from the parameter list.
+
 Wed Aug 14 21:22:29 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:

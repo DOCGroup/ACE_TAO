@@ -173,8 +173,7 @@ TAO_LB_LeastLoaded::next_member (
 
   PortableGroup::Location location;
   CORBA::Boolean found_location =
-    this->get_location (object_group,
-                        load_manager,
+    this->get_location (load_manager,
                         locations.in (),
                         location
                         ACE_ENV_ARG_PARAMETER);
@@ -196,7 +195,6 @@ TAO_LB_LeastLoaded::next_member (
 
 CORBA::Boolean
 TAO_LB_LeastLoaded::get_location (
-  PortableGroup::ObjectGroup_ptr object_group,
   CosLoadBalancing::LoadManager_ptr load_manager,
   const PortableGroup::Locations & locations,
   PortableGroup::Location & location
