@@ -1,3 +1,21 @@
+Sat Nov 27 22:06:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp: Defined ACE_ENDTHREADEX and ACE_BEGINTHREADEX to use
+	  ExitThread and BeginThread for WinCE 2.11 and above.  Thanks to
+	  Peter C. Chien <peter@newsol.com> for the tip.
+
+	* ace/ace_ce_dll.dsp: Reworked for WinCE 2.11.  More
+	  configurations are added.
+
+	* ace/OS.{h,cpp}: WinCE 2.11 and above does implement exit method
+	  so we don't need to provide our own for them.
+
+	* ace/config-WinCE.h: Updated configuration settings for WinCE
+	  2.11.
+
+	* ace/Memory_Pool.{h,i}: Added the <base_addr> method for
+	  accessing the base address information of the memory pool.
+
 Sat Nov 27 18:36:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Priority_Buffer_Test.cpp (consumer): Revised the test
@@ -1184,7 +1202,7 @@ Tue Oct 19 00:43:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
           WinCE.
 
         The following changes are contributions from James Buck
-          <jim@newsol.com> and Peter C. Chien <peter@newsol.com>.
+          <jim@newsol.com> and Peter C. Chien <peter@newsol.com> .
 
         * ace/config-WinCE.h (ACE_LACKS_SOCKET_BUFSIZ): We cannot change
           the socket buffer size on WinCE.

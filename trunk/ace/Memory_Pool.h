@@ -421,6 +421,10 @@ public:
   // mapping) and our process now incurs a fault because our mapping
   // isn't in range (yet).
 
+
+  virtual void *base_addr (void) const;
+  // Return the base address of this memory pool.
+
   virtual void dump (void) const;
   // Dump the state of an object.
 
@@ -521,7 +525,7 @@ public:
   // Initialization method.
   ACE_Pagefile_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_PAGEFILE_POOL_BASE,
                                     size_t max_size = ACE_DEFAULT_PAGEFILE_POOL_SIZE);
-  
+
   void *base_addr_;
   // Base address of the memory-mapped backing store.
 
@@ -542,9 +546,9 @@ public:
   // Initialize the pool.
 
   void *init_acquire (size_t nbytes,
-                      size_t &rounded_bytes, 
+                      size_t &rounded_bytes,
                       int &first_time);
-  // Ask system for initial chunk of shared memory. 
+  // Ask system for initial chunk of shared memory.
 
   void *acquire (size_t nbytes,
                  size_t &rounded_bytes);
@@ -594,30 +598,30 @@ private:
     // = TITLE
     //   Attributes that are meaningful in local storage only.
   public:
-    void *req_base_; 
-    // required base address 
+    void *req_base_;
+    // required base address
 
-    void *mapped_base_;        
+    void *mapped_base_;
     // Base address returned from system call
 
-    class Shared_Control_Block 
+    class Shared_Control_Block
     {
       // = TITLE
       //   Pool statistics
     public:
-      size_t max_size_;            
+      size_t max_size_;
       // Maximum size the pool may grow
 
-      int mapped_size_;         
+      int mapped_size_;
       // Size of mapped shared memory segment
 
-      int free_offset_;         
+      int free_offset_;
       // Offset to mapped but not yet acquired address space
 
-      int free_size_;           
+      int free_size_;
       // Size of mapped but not yet acquired address space
     };
-    
+
     Shared_Control_Block sh_;
   };
 
@@ -625,16 +629,16 @@ private:
   // free to select any address to map the file, otherwise this value
   // is what the OS must try to use to mmap the file.
 
-  Control_Block local_cb_;      
+  Control_Block local_cb_;
   // Description of what our process mapped.
 
-  Control_Block *shared_cb_;     
+  Control_Block *shared_cb_;
   // Shared memory pool statistics.
 
-  ACE_HANDLE object_handle_; 
+  ACE_HANDLE object_handle_;
   // File mapping handle.
 
-  size_t page_size_; 
+  size_t page_size_;
   // System page size.
 
   TCHAR backing_store_name_[MAXPATHLEN];
