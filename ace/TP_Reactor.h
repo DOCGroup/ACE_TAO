@@ -75,7 +75,7 @@ private:
 /**
  * @class ACE_TP_Token_Guard
  *
- * @brief A helper class that helps grabbing, releasing  and waiting
+ * @brief A helper class that helps grabbing, releasing and waiting
  * on tokens for a thread that tries calling handle_events ().
  *
  * In short, this class will be owned by one thread by creating on the
@@ -103,10 +103,11 @@ public:
 
   /// A helper method that grabs the token for us, after which the
   /// thread that owns that can do some actual work.
-  /// @@todo: Should probably be called acquire_read_token ()
+  /// @todo Should probably be called acquire_read_token ()
   int grab_token (ACE_Time_Value *max_wait_time = 0);
 
-  /* A helper method that grabs the token for us, after which the
+  /**
+   * A helper method that grabs the token for us, after which the
    * thread that owns that can do some actual work. This differs from
    * grab_token () as it uses acquire () to get the token instead of
    * acquire_read ()
@@ -241,7 +242,7 @@ public:
   virtual int remove_handler (const ACE_Handle_Set &handle_set,
                               ACE_Reactor_Mask);
 
-  /* @todo: The following methods are not supported. Support for
+  /* @todo The following methods are not supported. Support for
    * signals is not available in the TP_Reactor. These methods will be
    * supported once signal handling is supported. We have to include
    * these two methods in the  TP_Reactor to keep some compilers

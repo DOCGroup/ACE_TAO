@@ -28,57 +28,59 @@ ACE_RCSID(ace, Proactor, "$Id$")
 #include "ace/Proactor.i"
 #endif /* __ACE_INLINE__ */
 
-// Process-wide ACE_Proactor.
+/// Process-wide ACE_Proactor.
 ACE_Proactor *ACE_Proactor::proactor_ = 0;
 
-// Controls whether the Proactor is deleted when we shut down (we can
-// only delete it safely if we created it!)
+/// Controls whether the Proactor is deleted when we shut down (we can
+/// only delete it safely if we created it!)
 int ACE_Proactor::delete_proactor_ = 0;
 
+/**
+ * @class ACE_Proactor_Timer_Handler
+ *
+ * @brief A Handler for timer. It helps in the management of timers
+ * registered with the Proactor.
+ *
+ * This object has a thread that will wait on the earliest time
+ * in a list of timers and an event. When a timer expires, the
+ * thread will post a completion event on the port and go back
+ * to waiting on the timer queue and event. If the event is
+ * signaled, the thread will refresh the time it is currently
+ * waiting on (in case the earliest time has changed).
+ */
 class ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
 {
-  // = TITLE
-  //     A Handler for timer. It helps in the management of timers
-  //     registered with the Proactor.
-  //
-  // = DESCRIPTION
-  //     This object has a thread that will wait on the earliest time
-  //     in a list of timers and an event. When a timer expires, the
-  //     thread will post a completion event on the port and go back
-  //     to waiting on the timer queue and event. If the event is
-  //     signaled, the thread will refresh the time it is currently
-  //     waiting on (in case the earliest time has changed).
 
+  /// Proactor has special privileges
+  /// Access needed to: timer_event_
   friend class ACE_Proactor;
-  // Proactor has special privileges
-  // Access needed to: timer_event_
 
 public:
+  /// Constructor.
   ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_Proactor_Timer_Handler (void);
-  // Destructor.
 
+  /// Proactor calls this to shut down the timer handler
+  /// gracefully. Just calling the destructor alone doesnt do what
+  /// <destroy> does. <destroy> make sure the thread exits properly.
   int destroy (void);
-  // Proactor calls this to shut down the timer handler
-  // gracefully. Just calling the destructor alone doesnt do what
-  // <destroy> does. <destroy> make sure the thread exits properly.
 
 protected:
+  /// Run by a daemon thread to handle deferred processing. In other
+  /// words, this method will do the waiting on the earliest timer and
+  /// event.
   virtual int svc (void);
-  // Run by a daemon thread to handle deferred processing. In other
-  // words, this method will do the waiting on the earliest timer and
-  // event.
 
+  /// Event to wait on.
   ACE_Auto_Event timer_event_;
-  // Event to wait on.
 
+  /// Proactor.
   ACE_Proactor &proactor_;
-  // Proactor.
 
+  /// Flag used to indicate when we are shutting down.
   int shutting_down_;
-  // Flag used to indicate when we are shutting down.
 };
 
 ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
@@ -346,7 +348,7 @@ ACE_Proactor::close_singleton (void)
 
   if (ACE_Proactor::delete_proactor_)
     {
-      
+
       delete ACE_Proactor::proactor_;
       ACE_Proactor::proactor_ = 0;
       ACE_Proactor::delete_proactor_ = 0;
@@ -747,7 +749,7 @@ ACE_Proactor::create_asynch_read_dgram (void)
 {
   return this->implementation ()->create_asynch_read_dgram ();
 }
- 
+
 ACE_Asynch_Write_Dgram_Impl *
 ACE_Proactor::create_asynch_write_dgram (void)
 {
@@ -909,7 +911,7 @@ ACE_Proactor::create_asynch_write_dgram_result (ACE_Handler &handler,
                                                 const void* act,
                                                 ACE_HANDLE event,
                                                 int priority,
-                                                int signal_number) 
+                                                int signal_number)
 {
   return this->implementation()->create_asynch_write_dgram_result (handler,
                                                                    handle,

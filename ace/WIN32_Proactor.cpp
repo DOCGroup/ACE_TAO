@@ -10,30 +10,32 @@
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
 
+/**
+ * @class ACE_WIN32_Wakeup_Completion
+ *
+ * This is result object is used by the <end_event_loop> of the
+ * ACE_Proactor interface to wake up all the threads blocking
+ * for completions.
+ */
 class ACE_Export ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 {
-  // = TITLE
-  //     This is result object is used by the <end_event_loop> of the
-  //     ACE_Proactor interface to wake up all the threads blocking
-  //     for completions.
 
 public:
+  /// Constructor.
   ACE_WIN32_Wakeup_Completion (ACE_Handler &handler,
                                const void *act = 0,
                                ACE_HANDLE event = ACE_INVALID_HANDLE,
                                int priority = 0,
                                int signal_number = ACE_SIGRTMIN);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_WIN32_Wakeup_Completion (void);
-  // Destructor.
 
-
+  /// This method calls the <handler>'s <handle_wakeup> method.
   virtual void complete (u_long bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = 0,
                          u_long error = 0);
-  // This method calls the <handler>'s <handle_wakeup> method.
 };
 
 ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
@@ -596,15 +598,15 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
       //     during shared_read/shared_write.
       //     The real error code is already stored in "errno",
       //     so copy "errno" value to the "result_err"
-      //     and pass this "result_err" code 
+      //     and pass this "result_err" code
       //     to the application_specific_code ()
-      // else 
+      // else
       //    "result_err" non zero
       //     it means we have "post_completed" result
-      //     so pass this "result_err" code 
+      //     so pass this "result_err" code
       //     to the application_specific_code ()
 
-      if ( result_err == 0 ) 
+      if ( result_err == 0 )
         result_err = errno ;
 
       this->application_specific_code (asynch_result,
@@ -649,9 +651,9 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
       handle != 0)
     ACE_OS::event_signal (&handle);
 
-  // pass 
+  // pass
   //   bytes_transferred
-  //   completion_key 
+  //   completion_key
   // to the ::PostQueuedCompletionStatus()
   //   error will be extracted later in handle_events()
 

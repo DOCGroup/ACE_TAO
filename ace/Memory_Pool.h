@@ -124,7 +124,7 @@ protected:
 class ACE_Export ACE_Shared_Memory_Pool_Options
 {
 public:
-  // = Initialization method.
+  /// Initialization method.
   ACE_Shared_Memory_Pool_Options (const char *base_addr = ACE_DEFAULT_BASE_ADDR,
                                   size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
                                   size_t file_perms = ACE_DEFAULT_FILE_PERMS,
@@ -229,7 +229,7 @@ protected:
   virtual int commit_backing_store_name (size_t rounded_bytes,
                                     off_t &offset);
 
-  // = Keeps track of all the segments being used.
+  /// Keeps track of all the segments being used.
   struct SHM_TABLE
   {
     /// Shared memory segment key.
@@ -265,7 +265,7 @@ protected:
   /// Base shared memory key for the segment.
   key_t base_shm_key_;
 
-  /// find the segment that contains the searchPtr
+  /// Find the segment that contains the @a searchPtr
   virtual int find_seg (const void *const searchPtr,
                         off_t &offset,
                         size_t &counter);
@@ -378,10 +378,10 @@ protected:
   /// List of memory that we have allocated.
   ACE_Unbounded_Set<char *> allocated_chunks_;
 
+  /// Implement the algorithm for rounding up the request to an
+  /// appropriate chunksize.
   virtual size_t round_up (size_t nbytes);
 
-  // Implement the algorithm for rounding up the request to an
-  // appropriate chunksize.
 };
 
 /**
@@ -397,8 +397,24 @@ class ACE_Export ACE_MMAP_Memory_Pool_Options
 public:
   enum
   {
+    /**
+     * The base address from the first call to mmap will be used for subsequent
+     * calls to mmap.
+     */
     FIRSTCALL_FIXED = 0,
+
+    /**
+     * The base address specified in base_addr will be used in all calls to
+     * mmap.
+     */
     ALWAYS_FIXED = 1,
+
+    /**
+     * The base address will be selected by the OS for each call to mmap.
+     * Caution should be used with this mode since a call that requires the
+     * backing store to grow may change pointers that are cached by the
+     * application.
+     */
     NEVER_FIXED = 2
   };
 
@@ -414,17 +430,18 @@ public:
   /// Base address of the memory-mapped backing store.
   const void *base_addr_;
 
-  /** Determines whether we set <base_addr_> or if mmap(2) selects it
-  * FIRSTCALL_FIXED The base address from the first call to mmap
-  *                 will be used for subsequent calls to mmap
-  * ALWAYS_FIXED    The base address specified in base_addr will be
-  *                 used in all calls to mmap.
-  * NEVER_FIXED     The base address will be selected by the OS for
-  *                 each call to mmap. Caution should be used with
-  *                 this mode since a call that requires the backing
-  *                 store to grow may change pointers that are
-  *                 cached by the application.
-  */
+  /**
+   * Determines whether we set <base_addr_> or if mmap(2) selects it
+   * FIRSTCALL_FIXED The base address from the first call to mmap
+   *                 will be used for subsequent calls to mmap
+   * ALWAYS_FIXED    The base address specified in base_addr will be
+   *                 used in all calls to mmap.
+   * NEVER_FIXED     The base address will be selected by the OS for
+   *                 each call to mmap. Caution should be used with
+   *                 this mode since a call that requires the backing
+   *                 store to grow may change pointers that are
+   *                 cached by the application.
+   */
   int use_fixed_addr_;
 
   /// Should each page be written eagerly to avoid surprises later
@@ -466,6 +483,7 @@ public:
   ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                         const OPTIONS *options = 0);
 
+  /// Destructor.
   virtual ~ACE_MMAP_Memory_Pool (void);
 
   /// Ask system for initial chunk of shared memory.
@@ -534,9 +552,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Implement the algorithm for rounding up the request to an
-  // appropriate chunksize.
-
+  /// Implement the algorithm for rounding up the request to an
+  /// appropriate chunksize.
   virtual size_t round_up (size_t nbytes);
 
   /// Compute the new <map_size> of the backing store and commit the
@@ -607,12 +624,11 @@ protected:
 class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 {
 public:
-  // = Initialization and termination methods.
-
   /// Initialize the pool.
   ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                              const OPTIONS *options = 0);
 
+  /// Destructor.
   virtual ~ACE_Lite_MMAP_Memory_Pool (void);
 
   /// Overwrite the default sync behavior with no-op
@@ -635,7 +651,7 @@ public:
 class ACE_Export ACE_Pagefile_Memory_Pool_Options
 {
 public:
-  // Initialization method.
+  /// Initialization method.
   ACE_Pagefile_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_PAGEFILE_POOL_BASE,
                                     size_t max_size = ACE_DEFAULT_PAGEFILE_POOL_SIZE);
 
@@ -733,7 +749,7 @@ private:
   class Control_Block
   {
   public:
-    /// required base address
+    /// Required base address
     void *req_base_;
 
     /// Base address returned from system call

@@ -190,7 +190,7 @@ ACE_POSIX_Asynch_Operation::cancel (void)
     case ACE_POSIX_Proactor::PROACTOR_AIOCB:
     case ACE_POSIX_Proactor::PROACTOR_SIG:
       return posix_aiocb_proactor_->cancel_aio (this->handle_);
-      
+
     default:
       break;
   }
@@ -1273,7 +1273,7 @@ ACE_POSIX_Asynch_Accept::ACE_POSIX_Asynch_Accept (ACE_POSIX_AIOCB_Proactor * pos
 
 ACE_POSIX_Asynch_Accept::~ACE_POSIX_Asynch_Accept (void)
 {
-  this->close ();  
+  this->close ();
   this->reactor(0); // to avoid purge_pending_notifications
 }
 
@@ -1310,7 +1310,7 @@ ACE_POSIX_Asynch_Accept::open (ACE_Handler &handler,
 
   // if we are already opened,
   // we could not create a new handler without closing the previous
-  
+
   if (this->flg_open_ != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::open:")
@@ -1332,7 +1332,7 @@ ACE_POSIX_Asynch_Accept::open (ACE_Handler &handler,
   // so we can lock task's token with our lock_ locked.
   // In all other cases we should release our lock_ before
   // calling task's methods to avoid deadlock
-  ACE_Asynch_Pseudo_Task & task = 
+  ACE_Asynch_Pseudo_Task & task =
     this->posix_proactor()->get_asynch_pseudo_task();
 
   result = task.register_io_handler (this->get_handle(),
@@ -1380,7 +1380,7 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
     size_t space_needed = bytes_to_read + 2 * address_size;
 
     if (available_space < space_needed)
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("Buffer too small\n")),
                         -1);
 
@@ -1419,9 +1419,9 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
   // If this is the only item, then it means there the set was empty
   // before. So enable the <handle> in the reactor.
 
-  ACE_Asynch_Pseudo_Task & task = 
+  ACE_Asynch_Pseudo_Task & task =
     this->posix_proactor ()->get_asynch_pseudo_task ();
- 
+
   int rc_task = task.resume_io_handler (this->get_handle());
 
   {
@@ -1442,7 +1442,7 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
 //@@ New method cancel_uncompleted
 // It performs cancellation of all pending requests
 //
-// Parameter flg_notify can be 
+// Parameter flg_notify can be
 //     0  - don't send notifications about canceled accepts
 //    !0  - notify user about canceled accepts
 //          according POSIX standards we should receive notifications
@@ -1450,7 +1450,7 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
 //
 //  Return value : number of cancelled requests
 //
-  
+
 int
 ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
 {
@@ -1467,7 +1467,7 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
       if (result == 0)
         break;
 
-      if (this->flg_open_ == 0 || flg_notify == 0) //if we should not notify 
+      if (this->flg_open_ == 0 || flg_notify == 0) //if we should not notify
         delete result ;                            // we have to delete result
       else                                 //else notify as any cancelled AIO
         {
@@ -1486,7 +1486,7 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
     }
   return retval;
 }
-    
+
 int
 ACE_POSIX_Asynch_Accept::cancel (void)
 {
@@ -1494,7 +1494,7 @@ ACE_POSIX_Asynch_Accept::cancel (void)
 
   //We are not really ACE_POSIX_Asynch_Operation
   //so we could not call ::aiocancel ()
-  // or just write   
+  // or just write
   //return ACE_POSIX_Asynch_Operation::cancel ();
   //We delegate real cancelation to cancel_uncompleted (1)
 
@@ -1542,13 +1542,13 @@ ACE_POSIX_Asynch_Accept::close ()
   // 2. Removes itself from Reactor ( ACE_Asynch_Pseudo_Task)
   // 3. close the socket
   //
-  //  Parameter flg_notify can be 
+  //  Parameter flg_notify can be
   //     0  - don't send notifications about canceled accepts
   //    !0  - notify user about canceled accepts
   //          according POSIX standards we should receive notifications
   //          on canceled AIO requests
   //
-  //  Return codes : 0 - OK , 
+  //  Return codes : 0 - OK ,
   //                -1 - Errors
 
   {
@@ -1571,7 +1571,7 @@ ACE_POSIX_Asynch_Accept::close ()
 
   ACE_Asynch_Pseudo_Task & task =
     this->posix_proactor ()->get_asynch_pseudo_task ();
- 
+
   int rc_task = task.remove_io_handler (this->get_handle ());
 
   {
@@ -1594,12 +1594,12 @@ ACE_POSIX_Asynch_Accept::close ()
   return 0;
 }
 
-int 
-ACE_POSIX_Asynch_Accept::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) 
+int
+ACE_POSIX_Asynch_Accept::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask)
 {
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (close_mask);
- 
+
   ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_close\n"));
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
@@ -1831,7 +1831,7 @@ ACE_POSIX_Asynch_Connect::ACE_POSIX_Asynch_Connect (ACE_POSIX_AIOCB_Proactor * p
 
 ACE_POSIX_Asynch_Connect::~ACE_POSIX_Asynch_Connect (void)
 {
-  this->close ();  
+  this->close ();
   this->reactor(0); // to avoid purge_pending_notifications
 }
 
@@ -1844,7 +1844,7 @@ ACE_POSIX_Asynch_Connect::proactor (void) const
 ACE_HANDLE
 ACE_POSIX_Asynch_Connect::get_handle (void) const
 {
-   
+
   ACE_ASSERT (0);
   return  ACE_INVALID_HANDLE;
 }
@@ -1872,15 +1872,15 @@ ACE_POSIX_Asynch_Connect::open (ACE_Handler &handler,
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::open:")
                        ACE_LIB_TEXT("connector already open \n")),
-                      -1);  
+                      -1);
 
-  //int result = 
+  //int result =
   ACE_POSIX_Asynch_Operation::open (handler,
                                     handle,
                                     completion_key,
                                     proactor);
 
-  // Ignore result as we pass ACE_INVALID_HANDLE 
+  // Ignore result as we pass ACE_INVALID_HANDLE
   //if (result == -1)
   //  return result;
 
@@ -1921,7 +1921,7 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                                                     signal_number),
                   -1);
 
-    int rc = connect_i (result, 
+    int rc = connect_i (result,
                         remote_sap,
                         local_sap,
                         reuse_addr);
@@ -2030,7 +2030,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
       int protocol_family = remote_sap.get_type ();
 
       handle = ACE_OS::socket (protocol_family,
-                               SOCK_STREAM, 
+                               SOCK_STREAM,
                                0);
       // save it
       result->connect_handle (handle);
@@ -2081,7 +2081,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
         }
     }
 
-  // set non blocking mode 
+  // set non blocking mode
   if (ACE::set_flags (handle, ACE_NONBLOCK) != 0)
     {
       result->set_error (errno);
@@ -2098,7 +2098,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
                                 ACE_reinterpret_cast (sockaddr *,
                                                       remote_sap.get_addr ()),
                                 remote_sap.get_size ());
-      if (rc < 0)  // failure 
+      if (rc < 0)  // failure
         {
           if (errno == EWOULDBLOCK || errno == EINPROGRESS)
             return 0; // connect started
@@ -2109,7 +2109,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
           result->set_error (errno);
         }
 
-      return 1 ;  // connect finished 
+      return 1 ;  // connect finished
     }
 
   ACE_NOTREACHED (return 0);
@@ -2119,7 +2119,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
 //@@ New method cancel_uncompleted
 // It performs cancellation of all pending requests
 //
-// Parameter flg_notify can be 
+// Parameter flg_notify can be
 //     0  - don't send notifications about canceled accepts
 //    !0  - notify user about canceled accepts
 //          according POSIX standards we should receive notifications
@@ -2127,7 +2127,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
 //
 //  Return value : number of cancelled requests
 //
-  
+
 int
 ACE_POSIX_Asynch_Connect::cancel_uncompleted (int flg_notify,
                                               ACE_Handle_Set & set)
@@ -2165,7 +2165,7 @@ ACE_POSIX_Asynch_Connect::cancel (void)
 
   //We are not really ACE_POSIX_Asynch_Operation
   //so we could not call ::aiocancel ()
-  // or just write   
+  // or just write
   //return ACE_POSIX_Asynch_Operation::cancel ();
   //We delegate real cancelation to cancel_uncompleted (1)
 
@@ -2270,7 +2270,7 @@ ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
 
   ACE_POSIX_Asynch_Connect_Result* result = 0;
 
-  if (this->result_map_.unbind (fd, result) != 0) // not found 
+  if (this->result_map_.unbind (fd, result) != 0) // not found
     return -1;
 
   int sockerror  = 0 ;
@@ -2288,7 +2288,7 @@ ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
 
   return -1;
 
-  //ACE_Asynch_Pseudo_Task & task = 
+  //ACE_Asynch_Pseudo_Task & task =
   //       this->posix_proactor()->get_asynch_pseudo_task();
 
   //task.remove_io_handler ( fd );
@@ -2297,8 +2297,8 @@ ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
 }
 
 
-int 
-ACE_POSIX_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask) 
+int
+ACE_POSIX_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_TRACE (ACE_LIB_TEXT ("ACE_POSIX_Asynch_Connect::handle_close\n"));
 
@@ -2326,11 +2326,11 @@ ACE_POSIX_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 
   // remove_io_handler() contains flag DONT_CALL
   // so it is save
-  task.remove_io_handler (fd);      
+  task.remove_io_handler (fd);
 
   ACE_POSIX_Asynch_Connect_Result* result = 0;
 
-  if (this->result_map_.unbind (fd, result) != 0 ) // not found 
+  if (this->result_map_.unbind (fd, result) != 0 ) // not found
     return -1;
 
   result->set_bytes_transferred (0);
@@ -2513,41 +2513,39 @@ ACE_POSIX_Asynch_Transmit_File_Result::post_completion (ACE_Proactor_Impl *proac
 
 // *********************************************************************
 
+/**
+ * @class ACE_POSIX_Asynch_Transmit_Handler
+ *
+ * @brief Auxillary handler for doing <Asynch_Transmit_File> in
+ * Unix. <ACE_POSIX_Asynch_Transmit_File> internally uses this.
+ *
+ * This is a helper class for implementing
+ * <ACE_POSIX_Asynch_Transmit_File> in Unix systems.
+ */
 class ACE_Export ACE_POSIX_Asynch_Transmit_Handler : public ACE_Handler
 {
-  // = TITLE
-  //
-  //     Auxillary handler for doing <Asynch_Transmit_File> in
-  //     Unix. <ACE_POSIX_Asynch_Transmit_File> internally uses this.
-  //
-  // = DESCRIPTION
-  //
-  //     This is a helper class for implementing
-  //     <ACE_POSIX_Asynch_Transmit_File> in Unix systems.
-  //
-
 public:
+  /// Constructor. Result pointer will have all the information to do
+  /// the file transmission (socket, file, application handler, bytes
+  /// to write).
   ACE_POSIX_Asynch_Transmit_Handler (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor,
                                      ACE_POSIX_Asynch_Transmit_File_Result *result);
-  // Constructor. Result pointer will have all the information to do
-  // the file transmission (socket, file, application handler, bytes
-  // to write).
 
+  /// Destructor.
   virtual ~ACE_POSIX_Asynch_Transmit_Handler (void);
-  // Destructor.
 
+  /// Do the transmission. All the info to do the transmission is in
+  /// the <result> member.
   int transmit (void);
-  // Do the transmission. All the info to do the transmission is in
-  // the <result> member.
 
 protected:
 
+  /// The asynch result pointer made from the initial transmit file
+  /// request.
   ACE_POSIX_Asynch_Transmit_File_Result *result_;
-  // The asynch result pointer made from the initial transmit file
-  // request.
 
+  /// Message bloack used to do the transmission.
   ACE_Message_Block *mb_;
-  // Message bloack used to do the transmission.
 
   enum ACT
   {
@@ -2556,40 +2554,44 @@ protected:
     TRAILER_ACT = 3
   };
 
+  /// ACT to transmit header.
   ACT header_act_;
+
+  /// ACT to transmit data.
   ACT data_act_;
+
+  /// ACT to transmit trailer.
   ACT trailer_act_;
-  // ACT to transmit header, data and trailer.
 
+  /// Current offset of the file being transmitted.
   size_t file_offset_;
-  // Current offset of the file being transmitted.
 
+  /// Total size of the file.
   size_t file_size_;
-  // Total size of the file.
 
+  /// Number of bytes transferred on the stream.
   size_t bytes_transferred_;
-  // Number of bytes transferred on the stream.
 
+  /// This is called when asynchronous writes from the socket complete.
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  // This is called when asynchronous writes from the socket complete.
 
+  /// This is called when asynchronous reads from the file complete.
   virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
-  // This is called when asynchronous reads from the file complete.
 
+  /// Issue asynch read from  the file.
   int initiate_read_file (void);
-  // Issue asynch read from  the file.
 
+  /// To read from the file to be transmitted.
   ACE_POSIX_Asynch_Read_File rf_;
-  // To read from the file to be transmitted.
 
+  /// Write stream to write the header, trailer and the data.
   ACE_POSIX_Asynch_Write_Stream ws_;
-  // Write stream to write the header, trailer and the data.
 };
 
 // ************************************************************
 
 // Constructor.
-ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler 
+ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
       (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor,
        ACE_POSIX_Asynch_Transmit_File_Result *result)
   : result_ (result),
@@ -3088,7 +3090,7 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result (ACE_Hand
     handle_ (handle)
 {
   ACE_UNUSED_ARG (protocol_family);
-  this->aio_fildes = handle;	
+  this->aio_fildes = handle;
   this->aio_nbytes = bytes_to_read;
   ACE_NEW (this->remote_address_, ACE_INET_Addr);
 }
@@ -3107,12 +3109,12 @@ ACE_POSIX_Asynch_Read_Dgram_Result::complete (u_long bytes_transferred,
 
   // <errno> is available in the aiocb.
   ACE_UNUSED_ARG (error);
-  
+
  this->remote_address_->set_size(this->addr_len_);
 
   // Create the interface result class.
   ACE_Asynch_Read_Dgram::Result result (this);
-  
+
   // Call the application handler.
   this->handler_.handle_read_dgram (result);
 }
@@ -3230,11 +3232,11 @@ ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result (ACE_Ha
     message_block_ (message_block),
     flags_ (flags),
     handle_ (handle)
-	
+
 {
-	this->aio_fildes = handle;	
+	this->aio_fildes = handle;
 	this->aio_nbytes = bytes_to_write;
-	
+
 }
 
 void
@@ -3251,13 +3253,13 @@ ACE_POSIX_Asynch_Write_Dgram_Result::complete (u_long bytes_transferred,
 
   // <errno> is available in the aiocb.
   ACE_UNUSED_ARG (error);
-  
+
   // Appropriately move the pointers in the message block.
   //this->message_block_.wr_ptr (bytes_transferred);
-  
+
   // Create the interface result class.
   ACE_Asynch_Write_Dgram::Result result (this);
-  
+
   // Call the application handler.
   this->handler_.handle_write_dgram (result);
 }

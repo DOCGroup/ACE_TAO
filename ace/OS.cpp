@@ -50,34 +50,36 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
 #  endif /* ACE_OS_HAS_DLL && ACE_OS_HAS_DLL == 1 */
 # endif /* ACE_WIN32 */
 
+/**
+ * @class ACE_OS_Thread_Mutex_Guard
+ *
+ * This data structure is meant to be used within an ACE_OS
+ * function.  It performs automatic aquisition and release of
+ * an ACE_thread_mutex_t.
+ *
+ * For internal use only by ACE_OS.
+ */
 class ACE_OS_Thread_Mutex_Guard
 {
-  // = TITLE
-  //     This data structure is meant to be used within an ACE_OS
-  //     function.  It performs automatic aquisition and release of
-  //     an ACE_thread_mutex_t.
-  //
-  // = DESCRIPTION
-  //     For internal use only by ACE_OS.
 public:
+  /// Implicitly and automatically acquire the lock.
   ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m);
-  // Implicitly and automatically acquire the lock.
 
+  /// Implicitly release the lock.
   ~ACE_OS_Thread_Mutex_Guard (void);
-  // Implicitly release the lock.
 
+  /// Explicitly acquire the lock.
   int acquire (void);
-  // Explicitly acquire the lock.
 
+  /// Explicitly release the lock.
   int release (void);
-  // Explicitly release the lock.
 
 protected:
+  /// Reference to the mutex.
   ACE_thread_mutex_t &lock_;
-  // Reference to the mutex.
 
+  /// Keeps track of whether we acquired the lock or failed.
   int owner_;
-  // Keeps track of whether we acquired the lock or failed.
 
   // = Prevent assignment and initialization.
   ACE_OS_Thread_Mutex_Guard &operator= (const ACE_OS_Thread_Mutex_Guard &);
@@ -122,34 +124,36 @@ ACE_OS_Thread_Mutex_Guard::~ACE_OS_Thread_Mutex_Guard ()
   release ();
 }
 
+/**
+ * @class ACE_OS_Recursive_Thread_Mutex_Guard
+ *
+ * @brief For internal use only by ACE_OS.
+ *
+ * This data structure is meant to be used within an ACE_OS
+ * function.  It performs automatic aquisition and release of
+ * an ACE_recursive_thread_mutex_t.
+ */
 class ACE_OS_Recursive_Thread_Mutex_Guard
 {
-  // = TITLE
-  //     This data structure is meant to be used within an ACE_OS
-  //     function.  It performs automatic aquisition and release of
-  //     an ACE_recursive_thread_mutex_t.
-  //
-  // = DESCRIPTION
-  //     For internal use only by ACE_OS.
 public:
+  /// Implicitly and automatically acquire the lock.
   ACE_OS_Recursive_Thread_Mutex_Guard (ACE_recursive_thread_mutex_t &m);
-  // Implicitly and automatically acquire the lock.
 
+  /// Implicitly release the lock.
   ~ACE_OS_Recursive_Thread_Mutex_Guard (void);
-  // Implicitly release the lock.
 
+  /// Explicitly acquire the lock.
   int acquire (void);
-  // Explicitly acquire the lock.
 
+  /// Explicitly release the lock.
   int release (void);
-  // Explicitly release the lock.
 
 protected:
+  /// Reference to the mutex.
   ACE_recursive_thread_mutex_t &lock_;
-  // Reference to the mutex.
 
+  /// Keeps track of whether we acquired the lock or failed.
   int owner_;
-  // Keeps track of whether we acquired the lock or failed.
 
   // = Prevent assignment and initialization.
   ACE_OS_Recursive_Thread_Mutex_Guard &operator= (
@@ -254,13 +258,15 @@ ACE_Cleanup_Info::operator!= (const ACE_Cleanup_Info &o) const
   return !(*this == o);
 }
 
+/**
+ * @class ACE_Cleanup_Info_Node
+ *
+ * @brief For maintaining a list of ACE_Cleanup_Info items.
+ *
+ * For internal use by ACE_Object_Manager.
+ */
 class ACE_Cleanup_Info_Node
 {
-  // = TITLE
-  //     For maintaining a list of ACE_Cleanup_Info items.
-  //
-  // = DESCRIPTION
-  //     For internal use by ACE_Object_Manager.
 public:
   ACE_Cleanup_Info_Node (void);
   ACE_Cleanup_Info_Node (const ACE_Cleanup_Info &new_info,
@@ -1651,73 +1657,75 @@ ACE_TSS_Keys::is_set (const ACE_thread_key_t key) const
 }
 
 
+/**
+ * @class ACE_TSS_Cleanup
+ *
+ * @brief Singleton that knows how to clean up all the thread-specific
+ * resources for Win32.
+ *
+ * All this nonsense is required since Win32 doesn't
+ * automatically cleanup thread-specific storage on thread exit,
+ * unlike real operating systems... ;-)
+ */
 class ACE_TSS_Cleanup
-  // = TITLE
-  //     Singleton that knows how to clean up all the thread-specific
-  //     resources for Win32.
-  //
-  // = DESCRIPTION
-  //     All this nonsense is required since Win32 doesn't
-  //     automatically cleanup thread-specific storage on thread exit,
-  //     unlike real operating systems... ;-)
 {
 public:
   static ACE_TSS_Cleanup *instance (void);
 
   ~ACE_TSS_Cleanup (void);
 
+  /// Cleanup the thread-specific objects.  Does _NOT_ exit the thread.
   void exit (void *status);
-  // Cleanup the thread-specific objects.  Does _NOT_ exit the thread.
 
+  /// Insert a <key, destructor> tuple into the table.
   int insert (ACE_thread_key_t key, void (*destructor)(void *), void *inst);
-  // Insert a <key, destructor> tuple into the table.
 
+  /// Remove a <key, destructor> tuple from the table.
   int remove (ACE_thread_key_t key);
-  // Remove a <key, destructor> tuple from the table.
 
+  /// Detaches a tss_instance from its key.
   int detach (void *inst);
-  // Detaches a tss_instance from its key.
 
+  /// Mark a key as being used by this thread.
   void key_used (ACE_thread_key_t key);
-  // Mark a key as being used by this thread.
 
+  /// Free all keys left in the table before destruction.
   int free_all_keys_left (void);
-  // Free all keys left in the table before destruction.
 
+  /// Indication of whether the ACE_TSS_CLEANUP_LOCK is usable, and
+  /// therefore whether we are in static constructor/destructor phase
+  /// or not.
   static int lockable () { return instance_ != 0; }
-  // Indication of whether the ACE_TSS_CLEANUP_LOCK is usable, and
-  // therefore whether we are in static constructor/destructor phase
-  // or not.
 
 protected:
   void dump (void);
 
+  /// Ensure singleton.
   ACE_TSS_Cleanup (void);
-  // Ensure singleton.
 
 private:
   // Array of <ACE_TSS_Info> objects.
   typedef ACE_TSS_Info ACE_TSS_TABLE[ACE_DEFAULT_THREAD_KEYS];
   typedef ACE_TSS_Info *ACE_TSS_TABLE_ITERATOR;
 
+  /// Table of <ACE_TSS_Info>'s.
   ACE_TSS_TABLE table_;
-  // Table of <ACE_TSS_Info>'s.
 
+  /// Key for the thread-specific array of whether each TSS key is in use.
   ACE_thread_key_t in_use_;
-  // Key for the thread-specific array of whether each TSS key is in use.
 
+  /// Accessor for this threads ACE_TSS_Keys instance.
   ACE_TSS_Keys *tss_keys ();
-  // Accessor for this threads ACE_TSS_Keys instance.
 
 #if defined (ACE_HAS_TSS_EMULATION)
+  /// Key that is used by in_use_.  We save this key so that we know
+  /// not to call its destructor in free_all_keys_left ().
   ACE_thread_key_t in_use_key_;
-  // Key that is used by in_use_.  We save this key so that we know
-  // not to call its destructor in free_all_keys_left ().
 #endif /* ACE_HAS_TSS_EMULATION */
 
   // = Static data.
+  /// Pointer to the singleton instance.
   static ACE_TSS_Cleanup *instance_;
-  // Pointer to the singleton instance.
 };
 
 // = Static object initialization.
@@ -4176,7 +4184,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
       if (*cp != '\0')
         argc++;
 
-      while (*cp != '\0' && !ACE_OS::ace_isspace (*cp)) 
+      while (*cp != '\0' && !ACE_OS::ace_isspace (*cp))
         {
           // Grok quotes....
           if (*cp == '\'' || *cp == '"')
@@ -4231,14 +4239,14 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
         if (*ptr == '\'' || *ptr == '"')
           {
             ACE_TCHAR quote = *ptr++;
-            
-            while (*ptr != '\0' && *ptr != quote) 
+
+            while (*ptr != '\0' && *ptr != quote)
               *cp++ = *ptr++;
 
             if (*ptr == quote)
               ptr++;
           }
-        else 
+        else
           *cp++ = *ptr++;
 
       *cp = '\0';
@@ -4248,7 +4256,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
       if (substitute_env_args) {
           argv[i] = ACE_OS::strenvdup(argp);
 
-          if (argv[i] == 0) 
+          if (argv[i] == 0)
             {
               if (argp != arg)
                 delete [] argp;
@@ -4261,7 +4269,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
         {
           argv[i] = ACE_OS::strdup(argp);
 
-          if (argv[i] == 0) 
+          if (argv[i] == 0)
             {
               if (argp != arg)
                 delete [] argp;
@@ -4725,7 +4733,7 @@ static void
 add_to_argv (int& argc, char** argv, int max_args, char* string)
 {
   char indouble   = 0;
-  size_t previous = 0; 
+  size_t previous = 0;
   size_t length   = ACE_OS_String::strlen (string);
 
   // We use <= to make sure that we get the last argument
@@ -4735,7 +4743,7 @@ add_to_argv (int& argc, char** argv, int max_args, char* string)
       if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))
         {
           indouble ^= 1;
-          if (indouble) 
+          if (indouble)
             {
               // We have just entered a double quoted string, so
               // save the starting position of the contents.
@@ -7104,23 +7112,28 @@ ACE_OS_Object_Manager::shutting_down (void)
 }
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+/**
+ * @class ACE_OS_Object_Manager_Manager
+ *
+ * @brief Ensure that the <ACE_OS_Object_Manager> gets initialized at
+ * program startup, and destroyed at program termination.
+ *
+ * Without ACE_HAS_NONSTATIC_OBJECT_MANAGER, a static instance of this
+ * class is created.  Therefore, it gets created before main ()
+ * is called.  And it gets destroyed after main () returns.
+ */
 class ACE_OS_Object_Manager_Manager
-  // = TITLE
-  //    Ensure that the <ACE_OS_Object_Manager> gets initialized at
-  //    program startup, and destroyed at program termination.
-  //
-  // = DESCRIPTION
-  //    Without ACE_HAS_NONSTATIC_OBJECT_MANAGER, a static instance of this
-  //    class is created.  Therefore, it gets created before main ()
-  //    is called.  And it gets destroyed after main () returns.
 {
 public:
+  /// Constructor.
   ACE_OS_Object_Manager_Manager (void);
+
+  /// Destructor.
   ~ACE_OS_Object_Manager_Manager (void);
 
 private:
+  /// Save the main thread ID, so that destruction can be suppressed.
   ACE_thread_t saved_main_thread_id_;
-  // Save the main thread ID, so that destruction can be suppressed.
 };
 
 ACE_OS_Object_Manager_Manager::ACE_OS_Object_Manager_Manager (void)

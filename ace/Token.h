@@ -197,9 +197,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = The following structure implements a LIFO/FIFO queue of waiter threads
-  // that are asleep waiting to obtain the token.
-
+  /// The following structure implements a LIFO/FIFO queue of waiter threads
+  /// that are asleep waiting to obtain the token.
   struct ACE_Token_Queue_Entry
   {
     /// Constructor

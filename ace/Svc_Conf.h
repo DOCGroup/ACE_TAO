@@ -103,7 +103,6 @@ public:
 
   union
   {
-
     /// FILE stream from which directives will be scanned and parsed.
     FILE *file;
 
@@ -112,7 +111,7 @@ public:
 
   } source;
 
-  // Discriminant use to determine which union member to use.
+  /// Discriminant use to determine which union member to use.
   SVC_CONF_PARAM_TYPE type;
 
   /// Keeps track of the number of errors encountered so far.

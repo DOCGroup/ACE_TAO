@@ -92,7 +92,7 @@ public:
                    ACE_HANDLE std_out = ACE_INVALID_HANDLE,
                    ACE_HANDLE std_err = ACE_INVALID_HANDLE);
 
-  /// release the standard handles previously set with set_handles;
+  /// Felease the standard handles previously set with set_handles;
   void release_handles (void);
 
   /// <format> must be of the form "VARIABLE=VALUE".  There can not be
@@ -159,8 +159,9 @@ public:
 
   // = Set/get creation flags.
   /// Get the creation flags.
-  /// Set the creation flags.
   u_long creation_flags (void) const;
+
+  /// Set the creation flags.
   void creation_flags (u_long);
 
   // = <ACE_Process> uses these operations to retrieve option values.
@@ -197,9 +198,12 @@ public:
   ACE_TCHAR *env_buf (void);
 
   // = Get/set process group.
-  /// On UNIX, these methods are used by the <ACE_Process_Manager> to
-  /// manage groups of processes.
+  /// Get the process group.  On UNIX, these methods are used by the
+  /// <ACE_Process_Manager> to manage groups of processes.
   pid_t getgroup (void) const;
+
+  /// Set the process group.  On UNIX, these methods are used by the
+  /// <ACE_Process_Manager> to manage groups of processes.
   pid_t setgroup (pid_t pgrp);
 
   /// Default is TRUE.
@@ -287,9 +291,13 @@ public:
   uid_t getegid (void) const;
 
   /**
-   * Get/Set the inherit_environment flag.
+   * Get the inherit_environment flag.
    */
   int inherit_environment (void) const;
+
+  /**
+   * Set the inherit_environment flag.
+   */
   void inherit_environment (int);
 #endif /* ACE_WIN32 */
 protected:
@@ -395,6 +403,7 @@ protected:
 
   /// Set of handles that were passed in pass_handle ().
   ACE_Handle_Set handles_passed_;
+
   /// Results of duplicating handles passed in pass_handle ().
   ACE_Handle_Set dup_handles_;
 
