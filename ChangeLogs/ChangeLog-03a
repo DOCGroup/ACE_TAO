@@ -1,6 +1,16 @@
+Fri Oct 18 11:51:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * bin/PerlACE/Run_Test.pm: Created a new variable
+          $PerlACE::svcconf_ext which defines the canonical
+          svc.conf file extention used by various run_test scripts.  By
+	  default, this is defined to ".conf".  It can be overwritten
+	  using the environment variable ACE_RUNTEST_SVCCONF_EXT.  For
+	  example, you can define ACE_RUNTEST_SVCCONF_EXT to ".conf.xml"
+	  if you have built your ACE with XML-based service configurator.
+
 Fri Oct 18 10:43:40 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* examples/Reactor/Misc/test_timer_queue.cpp (test_functionality): 
+	* examples/Reactor/Misc/test_timer_queue.cpp (test_functionality):
 	  Fixed the test so that it passes dynamically allocated memory
  	  rather that values via the "act" parameter to
  	  ACE_Timer_Queue::schedule().  This ensures the test will work
@@ -29,12 +39,12 @@ Fri Oct 18 11:39:29 2002  Steve Huston  <shuston@riverace.com>
 
 Fri Oct 18 03:55:51 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 	                      Bill Fulton <Bill_A_Fulton@raytheon.com>
-                           
+
 	* ace/SOCK_Dgram_Mcast.{h,i,cpp}:
 
 	  Enhanced support for join()'ing multiple multicast groups. Ctor
 	  now offers finer control over a bind()'ing to an address or
-	  interface.  Appropriate default behavior has been specified, 
+	  interface.  Appropriate default behavior has been specified,
 	  but note that due to issues on Linux, portable code should not
 	  join() more than one multicast group per instance.
 
@@ -43,15 +53,15 @@ Fri Oct 18 03:55:51 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 	  will bind() the address if the OPT_BINDADDR_YES options was
 	  specified in the ctor.
 
-	  Error handling has also been enhanced.  For instance, if 
-	  OPT_BINDADDR_YES has been specified (the default on Linux), 
+	  Error handling has also been enhanced.  For instance, if
+	  OPT_BINDADDR_YES has been specified (the default on Linux),
 	  additional join()'s will fail since the socket gets bound on
 	  the first call to open() or join().  Previously, subsequent
 	  calls to join() would silently fail, i.e., the call succeeded
-	  but only datagrams sent to the first, bound address where 
+	  but only datagrams sent to the first, bound address where
 	  actually delivered.
 
-	  If ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined, a list of all 
+	  If ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined, a list of all
 	  subscribed groups is maintained and can be dump()'ed, although
 	  access to this list is not public.
 
@@ -61,8 +71,8 @@ Fri Oct 18 03:55:51 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 	  methods have been deprecated and are now implemented in terms
 	  of join()/leave() respectively.
 
-	  The unsubscribe(void) method has also been deprecated.  It was 
-	  designed to allow the caller to unsubscribe/leave() all 
+	  The unsubscribe(void) method has also been deprecated.  It was
+	  designed to allow the caller to unsubscribe/leave() all
 	  groups at once, but since a list was never kept (and still
 	  isn't unless ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined) only
 	  the last group join()'ed was ever left.  A better way would
