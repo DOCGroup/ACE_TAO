@@ -1,3 +1,27 @@
+Tue Dec  8 02:09:47 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/server.cpp (main): Changed the 
+	  ObjectID format.
+
+	* examples/POA/On_Demand_Loading/client.cpp (main): Added the
+	  end_note() request call on the object.
+
+	* examples/POA/On_Demand_Loading/Servant_Activator.h: Changed the
+	  dll object pointer from a pointer object to simply an
+	  instantiation of ACE_DLL. 
+
+	* examples/POA/On_Demand_Loading/Servant_Activator.cpp (incarnate): 
+	  Added an dll object open() call explicitly which was done
+	  implicitly before along with the dll object creation.
+
+	* examples/POA/On_Demand_Loading/Servant_Activator.cpp (parse_string):
+	  Updated the ObjectID format to dllname:factory_method.
+
+	* examples/POA/On_Demand_Loading/Dir_Service_i.cpp: Added some ACE_DEBUG
+	  statements to make the output clearer.
+
+	* examples/POA/On_Demand_Loading/README: Added it to the repository.
+	
 Tue Dec  8 00:49:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/CDR.i: Applied more exception handling macros.

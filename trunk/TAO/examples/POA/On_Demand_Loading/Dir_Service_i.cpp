@@ -76,9 +76,9 @@ Dir_Service_i::area_codes_info (CORBA::Environment &env)
   ACE_UNUSED_ARG (env);
   ACE_DEBUG ((LM_DEBUG,
               "Some area_codes:\n"
-              " Indianapolis  812\n"
-               "St.Louis  314\n"
-               "Sunnyvale  408\n"));
+              "Indianapolis  812\n"
+              "St.Louis  314\n"
+              "Sunnyvale  408\n"));
 
 }
 
