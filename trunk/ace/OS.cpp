@@ -2581,7 +2581,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     stacksize = ACE_CHORUS_DEFAULT_MIN_STACK_SIZE;
 #     endif /*CHORUS */
 
+# if defined (ACE_HAS_PTHREAD_SETSTACK)
+  if ((stacksize != 0) && (stack != 0))
+# else
   if (stacksize != 0)
+# endif /* ACE_HAS_PTHREAD_SETSTACK */
     {
       size_t size = stacksize;
 
@@ -2592,7 +2596,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #     if !defined (ACE_LACKS_THREAD_STACK_SIZE)      // JCEJ 12/17/96
 #       if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+#         if !defined (ACE_HAS_PTHREAD_SETSTACK)
+      if (::pthread_attr_setstack (&attr, stack, size) != 0)
+#         else
       if (::pthread_attr_setstacksize (&attr, size) != 0)
+#         endif /* ACE_HAS_PTHREAD_SETSTACK */
 #       else
         if (ACE_ADAPT_RETVAL(pthread_attr_setstacksize (&attr, size), result) == -1)
 #       endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
@@ -2610,6 +2618,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     }
 
   // *** Set Stack Address
+#     if !defined (ACE_HAS_PTHREAD_SETSTACK)
 #     if !defined (ACE_LACKS_THREAD_STACK_ADDR)
   if (stack != 0)
     {
@@ -2626,6 +2635,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     else
   ACE_UNUSED_ARG (stack);
 #     endif /* !ACE_LACKS_THREAD_STACK_ADDR */
+#     endif /* ACE_HAS_PTHREAD_SETSTACK */
 
   // *** Deal with various attributes
   if (flags != 0)

@@ -1,3 +1,15 @@
+Thu Jan 16 19:06:19 2003  Stephen Torri <storri@cse.wustl.edu>
+
+        * ace/OS.cpp:
+        * ace/config-linux-common.h:
+        * ace/config-freebsd.h:
+        * ace/README:
+
+          Added a new macro called ACE_HAS_PTHREAD_SETSTACK for
+          systems that use the newer glibc (2.3+). Eliminates
+          linker warning about not using the pthread function
+          called pthread_setstack.
+
 Thu Jan 16 16:25:45 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Added a TAO/orbsvcs/tests/EC_MT_Mcast
