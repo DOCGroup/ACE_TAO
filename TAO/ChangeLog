@@ -1,3 +1,12 @@
+Mon Dec 23 15:16:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/RTPortableServer/RT_Object_Adapter_Factory.cpp: Moved the
+	  setting of the <collocation_resolver_name_> from the constructor 
+	  to create (), since it is not required immediately on loading
+	  the RT_PortableServer. This should fix a problem with GCC 2.95
+	  builds on Solaris where the static initializations are all
+	  messed up! Surprising that other tests even work.
+
 Mon Dec 23 10:44:19 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
