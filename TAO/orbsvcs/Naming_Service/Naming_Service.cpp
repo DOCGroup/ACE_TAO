@@ -121,8 +121,15 @@ main (int argc, char ** argv)
   // Stringify the objref we'll be implementing, and print it to
   // stdout.  Someone will take that string and give it to a
   // client.  Then release the object.
+  CosNaming::NamingContext_ptr obj =
+	  naming_context->_this (env);
+  if (env.exception () != 0)
+  {
+	env.print_exception ("_this");
+	return 1;
+  }
   CORBA::String str;
-  str = ACE_OS::strdup (orb_ptr->object_to_string (naming_context, env));
+  str = ACE_OS::strdup (orb_ptr->object_to_string (obj, env));
 
   if (env.exception () != 0)
     {
@@ -131,6 +138,7 @@ main (int argc, char ** argv)
     }
 
   ACE_DEBUG ((LM_DEBUG, "listening as object '%s'\n", str));
+  CORBA::release (obj);
 
 #if defined (ACE_HAS_IP_MULTICAST)
   // get reactor instance from TAO
