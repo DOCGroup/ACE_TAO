@@ -1,3 +1,10 @@
+Sun Feb 07 13:55:15 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: added
+          comment about possibly needed -compat=4 with Sun CC 5.0.
+          Thanks to Sush Bankapura <Sush.Bankapura@sylantro.com> for
+          reporting success with it.
+
 Sun Feb  7 00:43:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * ace/CDR_Stream.cpp:
@@ -12,10 +19,10 @@ Sat Feb  6 22:38:40 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sat Feb  6 22:21:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.h: 
-	* ace/CDR_Stream.cpp: 
-	  Fixed the write_boolean_array() method; it only needs a const
-	  array of booleans.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+          Fixed the write_boolean_array() method; it only needs a const
+          array of booleans.
 
 Sat Feb  6 22:07:45 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
