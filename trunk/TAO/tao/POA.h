@@ -615,7 +615,7 @@ protected:
 
   virtual TAO_POA_Policies &policies (void);
 
-  virtual TAO_Object_Table &active_object_map (void);
+  virtual TAO_Object_Table &active_object_map (void) const;
 
   virtual void delete_child (const String &child,
                              CORBA_Environment &_env = CORBA_Environment::default_environment ());
@@ -639,6 +639,8 @@ protected:
                                                       CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
   virtual TAO_ObjectKey *create_object_key (const PortableServer::ObjectId &id);
+
+  virtual CORBA::ULong system_id_size (void) const;
 
   virtual int is_poa_generated_id (const PortableServer::ObjectId &id);
 

@@ -164,14 +164,13 @@ private:
   // For selecting a address notation
 };
 
-typedef enum
+enum TAO_Demux_Strategy
 {
-  TAO_NONE,
   TAO_LINEAR,
   TAO_DYNAMIC_HASH,
   TAO_ACTIVE_DEMUX,
   TAO_USER_DEFINED
-} TAO_Demux_Strategy;
+};
 
 class TAO_Export TAO_OA_Parameters
   // = TITLE

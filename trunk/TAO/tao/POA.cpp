@@ -887,19 +887,10 @@ TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
 void
 TAO_POA::create_active_object_map (void)
 {
-  if (this->system_id ())
-    {
-      // find the correct size
-      u_long size = TAO_ORB_Core_instance ()->server_factory ()->object_table_size ();
-      // Create the correct table
-      this->active_object_map_ = 
-        new TAO_Object_Table (new TAO_Active_Demux_ObjTable (size), 1);
-    }
-  else
-    {
-      // Create the default table
-      this->active_object_map_ = new TAO_Object_Table;
-    }
+  int user_id_policy = !this->system_id ();
+
+  // Create the active_object_map
+  this->active_object_map_ = new TAO_Object_Table (user_id_policy);
 }
 
 void
@@ -1178,7 +1169,6 @@ TAO_POA::find_POA_i_optimized (const TAO_POA::String &adapter_name,
   // Not the leaf POA name
   else
     {
-      // Find the topmost name
       // Find the topmost name
       TAO_POA::String topmost_poa_name;
       TAO_POA::String tail_poa_name;
@@ -2027,7 +2017,7 @@ int
 TAO_POA::locate_servant (const TAO_ObjectKey &key,
                          CORBA::Environment &env)
 {
-  // Lock access to the POAManager for the duration of this transaction
+  // Lock access to the POA for the duration of this transaction
   TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), -1, env);
 
   PortableServer::Servant servant = 0;
@@ -2052,7 +2042,7 @@ PortableServer::Servant
 TAO_POA::find_servant (const TAO_ObjectKey &key,
                        CORBA::Environment &env)
 {
-  // Lock access to the POAManager for the duration of this transaction
+  // Lock access to the POA for the duration of this transaction
   TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
 
   PortableServer::Servant servant = 0;
@@ -2318,7 +2308,7 @@ TAO_POA::dispatch_servant (const TAO_ObjectKey &key,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_POA_DISPATCH_SERVANT_START);
 
-  // Lock access to the POAManager for the duration of this transaction
+  // Lock access to the POA for the duration of this transaction
   TAO_POA_READ_GUARD (ACE_Lock, monitor, this->lock (), env);
 
   this->dispatch_servant_i (key, req, context, orb_core, env);
@@ -2445,7 +2435,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   if (system_id)
     // The minus one is because we want <last_token_position> to point
     // to the separator
-    last_token_position = key.length () - (2 * sizeof (CORBA::ULong)) - 1;
+    last_token_position = key.length () - this->system_id_size () - 1;
   else
     last_token_position = this->rfind (key, TAO_POA::name_separator ());
 

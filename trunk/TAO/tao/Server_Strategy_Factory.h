@@ -62,8 +62,10 @@ public:
   virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
   // Return the scheduling strategy used.
 
-  virtual TAO_Object_Table_Impl *create_object_table (void);
-  // Return a new key-->object table
+  virtual TAO_Object_Table_Impl *create_object_table (int user_id_policy);
+  // Return a new id-->object table.  If <user_id_policy> is true, the
+  // request is being made for a POA with USER ID policy. Otherwise,
+  // the SYSTEM_ID policy is being used.
 
   virtual ACE_Lock *create_poa_lock (void);
   // Return a new lock for use in locking the POA.

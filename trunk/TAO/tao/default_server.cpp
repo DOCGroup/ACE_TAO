@@ -12,7 +12,8 @@ ACE_RCSID(tao, default_server, "$Id$")
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (0),
     object_table_size_ (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE),
-    object_lookup_strategy_ (TAO_DYNAMIC_HASH),
+    object_lookup_strategy_for_user_id_policy_ (TAO_DYNAMIC_HASH),
+    object_lookup_strategy_for_system_id_policy_ (TAO_ACTIVE_DEMUX),
     poa_lock_type_ (TAO_THREAD_LOCK),
     poa_mgr_lock_type_ (TAO_THREAD_LOCK),
     event_loop_lock_type_ (TAO_NULL_LOCK),
@@ -168,13 +169,34 @@ TAO_Default_Server_Strategy_Factory::create_cached_connector_lock (void)
 }
 
 TAO_Object_Table_Impl *
-TAO_Default_Server_Strategy_Factory::create_object_table (void)
+TAO_Default_Server_Strategy_Factory::create_object_table (int user_id_policy)
+{
+  if (user_id_policy)
+    return this->create_user_id_policy_object_table ();
+  else
+    return this->create_system_id_policy_object_table ();
+}
+
+TAO_Object_Table_Impl *
+TAO_Default_Server_Strategy_Factory::create_user_id_policy_object_table (void)
+{
+  return this->create_object_table_i (this->object_lookup_strategy_for_user_id_policy_);
+}
+
+TAO_Object_Table_Impl *
+TAO_Default_Server_Strategy_Factory::create_system_id_policy_object_table (void)
+{
+  return this->create_object_table_i (this->object_lookup_strategy_for_system_id_policy_);
+}
+
+TAO_Object_Table_Impl *
+TAO_Default_Server_Strategy_Factory::create_object_table_i (TAO_Demux_Strategy table_type)
 {
   // Create the appropriate-sized object table based on passed
   // arguments.
   TAO_Object_Table_Impl *objtable = 0;
 
-  switch (this->object_lookup_strategy_)
+  switch (table_type)
     {
     case TAO_LINEAR:
       ACE_NEW_RETURN (objtable,
@@ -202,8 +224,6 @@ TAO_Default_Server_Strategy_Factory::create_object_table (void)
                       0);
       break;
     case TAO_DYNAMIC_HASH:
-    case TAO_NONE:
-    default:
       ACE_NEW_RETURN (objtable,
                       TAO_Dynamic_Hash_ObjTable (this->object_table_size_),
                       0);
@@ -285,7 +305,23 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
         if (curarg < argc)
           this->object_table_size_ = ACE_OS::strtoul (argv[curarg], 0, 10);
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBuseridpolicydemuxstrategy") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            // Active demux not supported with user id policy
+            if (ACE_OS::strcasecmp (name, "dynamic") == 0)
+              this->object_lookup_strategy_for_user_id_policy_ = TAO_DYNAMIC_HASH;
+            else if (ACE_OS::strcasecmp (name, "linear") == 0)
+              this->object_lookup_strategy_for_user_id_policy_ = TAO_LINEAR;
+            else if (ACE_OS::strcasecmp (name, "user") == 0)
+              this->object_lookup_strategy_for_user_id_policy_ = TAO_USER_DEFINED;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBsystemidpolicydemuxstrategy") == 0)
       {
         curarg++;
         if (curarg < argc)
@@ -293,13 +329,13 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name, "dynamic") == 0)
-              this->object_lookup_strategy_ = TAO_DYNAMIC_HASH;
+              this->object_lookup_strategy_for_system_id_policy_ = TAO_DYNAMIC_HASH;
             else if (ACE_OS::strcasecmp (name, "linear") == 0)
-              this->object_lookup_strategy_ = TAO_LINEAR;
+              this->object_lookup_strategy_for_system_id_policy_ = TAO_LINEAR;
             else if (ACE_OS::strcasecmp (name, "active") == 0)
-              this->object_lookup_strategy_ = TAO_ACTIVE_DEMUX;
+              this->object_lookup_strategy_for_system_id_policy_ = TAO_ACTIVE_DEMUX;
             else if (ACE_OS::strcasecmp (name, "user") == 0)
-              this->object_lookup_strategy_ = TAO_USER_DEFINED;
+              this->object_lookup_strategy_for_system_id_policy_ = TAO_USER_DEFINED;
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBpoalock") == 0)
