@@ -1,3 +1,9 @@
+Tue Jul 20 17:41:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Future_Set.cpp (next_readable): Removed extra code that was
+	  left behind from a debugging stage.  Thanks to author John
+	  Tucker <jtucker@infoglide.com> for helping with this.
+
 Tue Jul 20 12:02:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Threads/task_five.cpp (main): removed

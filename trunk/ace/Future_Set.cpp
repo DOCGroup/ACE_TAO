@@ -106,12 +106,6 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
   ACE_Message_Block *mb = 0;
   FUTURE_REP *future_rep = 0;
 
-  // These variables are currently unused.
-  //   int isd =
-  //     this->future_notification_queue_->deactivated ();
-  //   int ise =
-  //     this->future_notification_queue_->is_empty ();
-
   // Wait for a "readable future" signal from the message queue.
   if (this->future_notification_queue_->dequeue_head (mb,
                                                       tv) != -1)
