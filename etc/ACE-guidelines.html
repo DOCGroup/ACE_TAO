@@ -148,6 +148,8 @@ to Graham for providing the OSE tools!<p>
         a space after the ``<strong>if</strong>'', and no spaces just after
         the opening parenthesis and just before the closing parenthesis.<p>
 
+    <li>Avoid unnecessary parenthesis.  We're not writing Lisp :-)<p>
+
     <li>Put inline member functions in a <strong><code>.i</code></strong>
         file.  That file is conditionally included by both the
         <strong><code>.h</code></strong> file, for example:<p>
@@ -233,53 +235,34 @@ to Graham for providing the OSE tools!<p>
         machines.  ACE_UINT32 is always 4 bytes, and ACE_hrtime_t is
         always 8 bytes.  (We should/may/will add an ACE_UINT64, soon.)<p>
 
-   <li>Constructor initializers must appear in the same order as
-       the data members are declared in the class header.  This avoids
-       subtle errors, because initialization takes place in the order
-       of member declaration.<p>
+    <li>Constructor initializers must appear in the same order as
+        the data members are declared in the class header.  This avoids
+        subtle errors, because initialization takes place in the order
+        of member declaration.<p>
 
-   <li>Initialization is usually cleaner than assignment, especially
-       in a conditional.  So, instead of writing code like this:
+    <li>Initialization is usually cleaner than assignment, especially
+        in a conditional.  So, instead of writing code like this:
 
-       <pre>
-       ssize_t n_bytes;
+        <pre>
+        ssize_t n_bytes;
 
-       // Send multicast of one byte, enough to wake up server.
-       if ((n_bytes = multicast.send ((char *) &reply_port, sizeof reply_port)) == -1)
-       </pre>
+        // Send multicast of one byte, enough to wake up server.
+        if ((n_bytes = multicast.send ((char *) &reply_port, sizeof reply_port)) == -1)
+        </pre>
 
-       Write it like this:
+        Write it like this:
 
-       <pre>
-       ssize_t n_bytes = multicast.send ((char *) &reply_port, sizeof reply_port)
+        <pre>
+        ssize_t n_bytes = multicast.send ((char *) &reply_port, sizeof reply_port)
 
-       // Send multicast of one byte, enough to wake up server.
-       if (n_bytes == -1)
-       </pre><p>
+        // Send multicast of one byte, enough to wake up server.
+        if (n_bytes == -1)
+        </pre><p>
 
-       But, beware if the initialization is of a static variable.
-       A static variable is only initialized the first time its
-       declaration is seen.  Of course, we should avoid using
-       static variables at all.<p>
-
-   <li>Because ACE does not use exception handling, dealing with
-       failures requires a bit of care.  This is especially true
-       in constructors.  Consider the following approach:
-
-       <pre>
-       ACE_NEW_RETURN (this-&gt;name_space_, LOCAL_NAME_SPACE, -1);
-
-       if (ACE_LOG_MSG-&gt;op_status () != 0)
-       ....
-       </pre>
-
-       This snip of code is from
-       <a href="../ace/Naming_Context.cpp"><code>ACE_Naming_Context</code></a>.
-       All failed constructors in ACE (should) call ACE_ERROR.  This sets
-       the thread specific <strong>op_status</strong>, which can be checked
-       by the caller.  This mechanism allows the caller to check for a failed
-       constructor without the requiring the constructor to throw
-       exceptions.<p>
+        But, beware if the initialization is of a static variable.
+        A static variable is only initialized the first time its
+        declaration is seen.  Of course, we should avoid using
+        static variables at all.<p>
   </ul>
 
   <li><strong>I/O</strong><p>
@@ -329,6 +312,25 @@ to Graham for providing the OSE tools!<p>
 
   <li>Do not use exception handling.  Some platforms do not support it.
       And, it imposes an execution speed penalty.<p>
+
+  <li>Because ACE does not use exception handling, dealing with
+      failures requires a bit of care.  This is especially true
+      in constructors.  Consider the following approach:
+
+      <pre>
+      ACE_NEW_RETURN (this-&gt;name_space_, LOCAL_NAME_SPACE, -1);
+
+      if (ACE_LOG_MSG-&gt;op_status () != 0)
+      ....
+      </pre>
+
+      This snip of code is from
+      <a href="../ace/Naming_Context.cpp"><code>ACE_Naming_Context</code></a>.
+      All failed constructors in ACE (should) call ACE_ERROR.  This sets
+      the thread specific <strong>op_status</strong>, which can be checked
+      by the caller.  This mechanism allows the caller to check for a failed
+      constructor without the requiring the constructor to throw
+      exceptions.<p>
 
   <li>Avoid using the C++ Standard Template Library (STL) in our
       applications.  Some platforms do not support it yet.<p>
