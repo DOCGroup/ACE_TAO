@@ -1,7 +1,16 @@
 Fri Apr  9 13:28:06 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	  Updated the following .dsp files to incorporate the recent file
-	  name changes for Time service server and clerk.
+	Added the following .xls files :
+
+	* TAO/performance-tests/Demux/operation_demux2d.xls
+	* TAO/performance-tests/Demux/operation_demux3d.xls
+	* TAO/performance-tests/Demux/servant_dispatch2d.xls
+	* TAO/performance-tests/Demux/servant_dispatch3d.xls
+	* TAO/performance-tests/Demux/poa_lookup2d.xls
+	* TAO/performance-tests/Demux/poa_lookup3d.xls
+
+	Updated the following .dsp files to incorporate the recent file
+	name changes for Time service server and clerk.
 	
         * Time_Service_{Server,Clerk}.dsp
 
