@@ -1442,6 +1442,23 @@ ACE_Thread_Adapter::invoke (void)
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 }
 
+ACE_Cleanup::~ACE_Cleanup ()
+{
+}
+
+void
+ACE_Cleanup::cleanup (void *)
+{
+  delete this;
+}
+
+extern "C"
+void
+ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
+{
+  object->cleanup (param);
+}
+
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
 
