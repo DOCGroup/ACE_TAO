@@ -14,6 +14,10 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
   // implementation classes could benefit from this same technique.
 
   // ?? Tried to initialise the structure here. Failed.
+
+  // @@ Vishal, you'll need to add a CONSTRUCTOR for the structure and
+  // then initialize this.  Please let me know if you have any
+  // questions about how to do that.
 {
   this->attr_utc_time_.time = time;
   this->attr_utc_time_.inacchi = inaccuracy / 2;
@@ -28,6 +32,7 @@ TAO_UTO::~TAO_UTO (void)
 }
 
 // Get Method for the readonly attribute time.
+
 TimeBase::TimeT
 TAO_UTO::time (CORBA::Environment &env)
 {
@@ -58,9 +63,8 @@ TAO_UTO::utc_time (CORBA::Environment &env)
   return attr_utc_time_;
 }
 
-// Absolute time = Relative time + Base time.
-// ?? Find out more about the Base Time, UTC and
-// Distributed Time Sync. Algos. [3].
+// Absolute time = Relative time + Base time.  ?? Find out more about
+// the Base Time, UTC and Distributed Time Sync. Algos. [3].
 
 CosTime::UTO_ptr
 TAO_UTO::absolute_time (CORBA::Environment &env)
@@ -85,32 +89,25 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
       else
 	return CosTime::TCLessThan;
     }
+  else if (this->time (env) == uto->time (env))
+    {
+      if (this->inaccuracy (env) == 0 && uto->inaccuracy (env) == 0)
+        return CosTime::TCEqualTo;
+    }
   else
     {
-      if (this->time (env) == uto->time (env))
-	{
-	  if (this->inaccuracy (env) == 0 && uto->inaccuracy (env) == 0)
-	    return CosTime::TCEqualTo;
-	}
-      else
-	{
-	  if (this->time (env) > uto->time (env))
-	    {
-	      if (this->time (env) - this->inaccuracy (env)
-		  > uto->time (env) - uto->inaccuracy (env))
-		return CosTime::TCGreaterThan;
-	    }
-	  else
-	    {
-	      if (this->time (env) + this->inaccuracy (env)
-		  < uto->time (env) - uto->inaccuracy (env))
-		return CosTime::TCLessThan;
-	    }
-	}
+      if (this->time (env) > uto->time (env))
+        {
+          if (this->time (env) - this->inaccuracy (env)
+              > uto->time (env) - uto->inaccuracy (env))
+            return CosTime::TCGreaterThan;
+        }
+      else if (this->time (env) + this->inaccuracy (env)
+               < uto->time (env) - uto->inaccuracy (env))
+        return CosTime::TCLessThan;
     }
 
   return CosTime::TCIndeterminate;
-
 }
 
 // Returns a TIO representing the time interval between the time in
@@ -121,6 +118,8 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 
 CosTime::TIO_ptr
 TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
+// @@ Vishal, please don't use _env, use TAO_TRY_ENV instead.  Please
+// apply this fix to ALL of your code.
 			   CORBA::Environment &_env)
 {
   TAO_TIO *tio = 0;
@@ -148,14 +147,15 @@ TAO_UTO::interval (CORBA::Environment &_env)
 {
   TAO_TIO *tio = 0;
 
-  TimeBase::TimeT lower = this->time (_env) - this->inaccuracy (_env);
-  TimeBase::TimeT upper = this->time (_env) + this->inaccuracy (_env);
+  TimeBase::TimeT lower =
+    this->time (_env) - this->inaccuracy (_env);
+  TimeBase::TimeT upper =
+    this->time (_env) + this->inaccuracy (_env);
 
   ACE_NEW_THROW_RETURN (tio,
 			TAO_TIO (lower,
 				 upper),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			CosTime::TIO::_nil ()
-			);
+			CosTime::TIO::_nil ());
   return tio->_this ();
 };
