@@ -1,3 +1,15 @@
+Thu May 18 09:49:12 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/Configuration.h:
+	* ace/Configuration.cpp:
+	  Chris Hafey's <chafey@stentorsoft.com> bug fixes and
+	  enhancements to ACE_Configuration. Set_string_value
+	  and set_integer_value now work when the value already
+	  exists, memory leaks have been plugged, and a new
+	  function added called find_value, which checks for the
+	  existence in a section of a field by name, and returns
+	  the data type stored there if it is found.
+
 Wed May 17 20:37:49 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile.am:
