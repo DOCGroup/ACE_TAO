@@ -545,7 +545,7 @@ ACE_Ini_ImpExp::string_has_white_space (const ACE_TCHAR *string_value)
   while ((!rc) && (*string_value != '\0'))
     {
       if ((*string_value == ' ') || (*string_value == '\t'))
-        rc = true;
+        rc = 1;
 
       string_value++;
     }

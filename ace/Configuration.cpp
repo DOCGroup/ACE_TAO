@@ -228,7 +228,7 @@ ACE_Configuration::validate_name (const ACE_TCHAR* name)
 
 
 const ACE_Configuration_Section_Key&
-ACE_Configuration::root_section (void)
+ACE_Configuration::root_section (void) const
 {
   return root_;
 }
@@ -240,36 +240,38 @@ ACE_Configuration::root_section (void)
  */
 int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
 {
-  int         rc           = true;
-  int         sectionIndex = 0;
-  ACE_TString sectionName;
+  int                rc           = 1;
+  int                sectionIndex = 0;
+  ACE_TString        sectionName;
+  ACE_Configuration *nonconst_this = ACE_const_cast (ACE_Configuration*, this);
+  ACE_Configuration &nonconst_rhs  = ACE_const_cast (ACE_Configuration&, rhs);
 
-  const ACE_Configuration_Section_Key& rhsRoot = const_cast<ACE_Configuration&> (rhs).root_section ();
+  const ACE_Configuration_Section_Key& rhsRoot = rhs.root_section ();
   ACE_Configuration_Section_Key rhsSection;
   ACE_Configuration_Section_Key thisSection;
 
   // loop through each section in this object
-  while ((rc) &&
- (!const_cast<ACE_Configuration*> (this)->enumerate_sections (this->root_, 
-                                                                    sectionIndex, 
-                                                                    sectionName)) )
+  while ((rc) && nonconst_this->enumerate_sections (this->root_, 
+                                                    sectionIndex,
+                                                    sectionName))
     {
       // find that section in the rhs object
-      if (const_cast<ACE_Configuration&> (rhs).open_section (rhsRoot,
-                                                           sectionName.c_str (),
-                                                           0,
-                                                           rhsSection) != 0)
+      if (nonconst_rhs.open_section (rhsRoot,
+                                     sectionName.c_str (),
+                                     0,
+                                     rhsSection) != 0)
         {
-          // If the rhs object does not contain the section then we are not equal.
-          rc = false;
+          // If the rhs object does not contain the section then we are
+          // not equal.
+          rc = 0;
         }
-      else if (const_cast<ACE_Configuration*> (this)->open_section (this->root_, 
-                                                                 sectionName.c_str (), 
-                                                                 0, 
-                                                                 thisSection) != 0)
+      else if (nonconst_this->open_section (this->root_, 
+                                            sectionName.c_str (), 
+                                            0, 
+                                            thisSection) != 0)
         {
           // if there is some error opening the section in this object
-          rc = false;
+          rc = 0;
         }
       else
         {
@@ -280,25 +282,24 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
           VALUETYPE   rhsType;
 
           // Enumerate each value in this section
-          while ((rc) &&
- (!const_cast<ACE_Configuration*> (this)->enumerate_values (thisSection, 
-                                                                         valueIndex,
-                                                                         valueName,
-                                                                         valueType)))
+          while ((rc) && nonconst_this->enumerate_values (thisSection, 
+                                                          valueIndex,
+                                                          valueName,
+                                                          valueType))
             {
               // look for the same value in the rhs section
-              if (const_cast<ACE_Configuration&> (rhs).find_value (rhsSection,
-                                                                valueName.c_str (),
-                                                                rhsType) != 0)
+              if (nonconst_rhs.find_value (rhsSection,
+                                           valueName.c_str (),
+                                           rhsType) != 0)
                 {
                   // We're not equal if the same value cannot 
                   // be found in the rhs object.
-                  rc = false;
+                  rc = 0;
                 }
               else if (valueType != rhsType)
                 {
                   // we're not equal if the types do not match.
-                  rc = false;
+                  rc = 0;
                 }
               else
                 {
@@ -306,62 +307,61 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                   if (valueType == STRING)
                     {
                       ACE_TString thisString, rhsString;
-                      if (const_cast<ACE_Configuration*> (this)->get_string_value (thisSection,
-                                                                                valueName.c_str (),
-                                                                                thisString) != 0)
+                      if (nonconst_this->get_string_value (thisSection,
+                                                           valueName.c_str (),
+                                                           thisString) != 0)
                         {
                           // we're not equal if we cannot get this string
-                          rc = false;
+                          rc = 0;
                         }
-                      else if (const_cast<ACE_Configuration&> (rhs).get_string_value (rhsSection,
-                                                                                   valueName.c_str (),
-                                                                                   rhsString) != 0)
+                      else if (nonconst_rhs.get_string_value (rhsSection,
+                                                              valueName.c_str (),
+                                                              rhsString) != 0)
                         {
                           // we're not equal if we cannot get rhs string
-                          rc = false;
+                          rc = 0;
                         }
                       rc = thisString == rhsString;
                     }
                   else if (valueType == INTEGER)
                     {
                       u_int thisInt, rhsInt;
-                      if (const_cast<ACE_Configuration*> (this)->get_integer_value (thisSection,
-                                                                                 valueName.c_str (),
-                                                                                 thisInt) != 0)
+                      if (nonconst_this->get_integer_value (thisSection,
+                                                            valueName.c_str (),
+                                                            thisInt) != 0)
                         {
                           // we're not equal if we cannot get this int
-                          rc = false;
+                          rc = 0;
                         }
-                      else if (const_cast<ACE_Configuration&> (rhs).get_integer_value (rhsSection,
-                                                                                    valueName.c_str (),
-                                                                                    rhsInt) != 0)
+                      else if (nonconst_rhs.get_integer_value (rhsSection,
+                                                               valueName.c_str (),
+                                                               rhsInt) != 0)
                         {
                           // we're not equal if we cannot get rhs int
-                          rc = false;
+                          rc = 0;
                         }
                       rc = thisInt == rhsInt;
                     }
                   else if (valueType == BINARY)
                     {
-
                       void* thisData;
                       void* rhsData;
                       u_int thisLength, rhsLength;
-                      if (const_cast<ACE_Configuration*> (this)->get_binary_value (thisSection,
-                                                                                valueName.c_str (),
-                                                                                thisData,
-                                                                                thisLength) != 0)
+                      if (nonconst_this->get_binary_value (thisSection,
+                                                           valueName.c_str (),
+                                                           thisData,
+                                                           thisLength) != 0)
                         {
                           // we're not equal if we cannot get this data
-                          rc = false;
+                          rc = 0;
                         }
-                      else if (const_cast<ACE_Configuration&> (rhs).get_binary_value (rhsSection,
-                                                                                   valueName.c_str (),
-                                                                                   rhsData,
-                                                                                   rhsLength) != 0)
+                      else if (nonconst_rhs.get_binary_value (rhsSection,
+                                                              valueName.c_str (),
+                                                              rhsData,
+                                                              rhsLength) != 0)
                         {
                           // we're not equal if we cannot get this data
-                          rc = false;
+                          rc = 0;
                         }
 
                       rc = thisLength == rhsLength;
@@ -372,7 +372,9 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                           unsigned char* thisCharData = (unsigned char*)thisData;
                           unsigned char* rhsCharData = (unsigned char*)rhsData;
                           // yes, then check each element
-                          for (u_int count = 0; (rc) && (count < thisLength); count++)
+                          for (u_int count = 0;
+                               (rc) && (count < thisLength);
+                               count++)
                             {
                               rc = (* (thisCharData + count) == * (rhsCharData + count));
                             }
@@ -392,19 +394,19 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
           // look in the rhs for values not in this
           valueIndex = 0;
           while ((rc) &&
- (!const_cast<ACE_Configuration&> (rhs).enumerate_values (rhsSection,
-                                                                       valueIndex,
-                                                                       valueName,
-                                                                       rhsType)))
+                 (!nonconst_rhs.enumerate_values (rhsSection,
+                                                  valueIndex,
+                                                  valueName,
+                                                  rhsType)))
             {
               // look for the same value in this section
-              if (const_cast<ACE_Configuration*> (this)->find_value (thisSection,
-                                                                  valueName.c_str (),
-                                                                  valueType) != 0)
+              if (nonconst_this->find_value (thisSection,
+                                             valueName.c_str (),
+                                             valueType) != 0)
                 {
                   // We're not equal if the same value cannot 
                   // be found in the rhs object.
-                  rc = false;
+                  rc = 0;
                 }
               valueIndex++;
             }// end while for rhs values not in this.
@@ -415,29 +417,31 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
 
     }// end section while loop
 
-  // Finally, make sure that there are no sections in rhs that do not exist in this
+  // Finally, make sure that there are no sections in rhs that do not
+  // exist in this
   sectionIndex = 0;
   while ((rc) &&
- (!const_cast<ACE_Configuration&> (rhs).enumerate_sections (rhsRoot, 
-                                                                  sectionIndex, 
-                                                                  sectionName)) )
+         (!nonconst_rhs.enumerate_sections (rhsRoot, 
+                                            sectionIndex, 
+                                            sectionName)))
     {
       // find the section in this
-      if (const_cast<ACE_Configuration*> (this)->open_section (this->root_, 
-                                                            sectionName.c_str (), 
-                                                            0, 
-                                                            thisSection) != 0)
+      if (nonconst_this->open_section (this->root_, 
+                                       sectionName.c_str (), 
+                                       0, 
+                                       thisSection) != 0)
         {
           // if there is some error opening the section in this object
-          rc = false;
+          rc = 0;
         }
-      else if (const_cast<ACE_Configuration&> (rhs).open_section (rhsRoot,
-                                                               sectionName.c_str (),
-                                                               0,
-                                                               rhsSection) != 0)
+      else if (nonconst_rhs.open_section (rhsRoot,
+                                          sectionName.c_str (),
+                                          0,
+                                          rhsSection) != 0)
         {
-          // If the rhs object does not contain the section then we are not equal.
-          rc = false;
+          // If the rhs object does not contain the section then we
+          // are not equal.
+          rc = 0;
         }
       sectionIndex++;
     }

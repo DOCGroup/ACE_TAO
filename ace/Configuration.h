@@ -132,7 +132,7 @@ public:
   virtual ~ACE_Configuration (void);
 
   /// Returns the root section of this configuration.
-  virtual const ACE_Configuration_Section_Key& root_section (void);
+  virtual const ACE_Configuration_Section_Key& root_section (void) const;
 
   /**
    * Finds a <sub_section> in <base> and places the resulting key in
