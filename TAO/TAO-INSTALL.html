@@ -240,22 +240,6 @@ example, ACE will be built automatically when TAO is built.  An easy
 way to compile everything is to just compile the debug or release
 version of the Naming Service.</P>
 
-<H4>Visual C++ 4.x</H4>
-
-<OL>
-  <LI>In Tools|Options, go to the Directories page and make sure that
-      include files paths includes ACE_wrappers\ and the root directory of
-      TAO (which can be <CODE>ACE_wrappers\TAO</CODE> if installed there).
-      The library files paths should include <CODE>ACE_wrappers\ace</CODE>.<P>
-
-  <LI>Load the project file <CODE>tao\TAO.mdp</CODE> and build the TAO
-      library.<P>
-
-  <LI>To build the Cubit test, load the project file
-      <CODE>tests\Cubit\TAO\test.mdp</CODE> and build both client and
-      server.<P>
-</OL>
-
 <H4>Upgrading From Older Releases</H4>
 
 <P>When a newer version of ACE/TAO is installed, rebuild all should be
@@ -299,13 +283,14 @@ adding an IDL file named foobar.idl into a VC project.
       non-IDL generated files into both client and server projects.</LI>
 
   <LI>Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i, and
-      foobarS.cpp into both server and client projects.</LI>
+      foobarS.cpp into server project and foobarC.h, foobarC.i,
+      foobarC.cpp into client projects.</LI>
 
   <LI>Now open the project setting window (Project -&gt; Setting... or just
       press Alt-F7.) Select the IDL files in both client and server projects.
-          Choose to set the setting for "All Configuration." Make sure the
-          "Always use custom build step" is checked and "Exclude from build" is
-          unchecked.</LI>
+      Choose to set the setting for "All Configuration." Make sure the
+      "Always use custom build step" is checked and "Exclude from build" is
+      unchecked.</LI>
 
   <LI>Click on the "Custom Build" tab. Add this entry as the build command
       for IDL files:<BR><BR>
@@ -330,12 +315,12 @@ adding an IDL file named foobar.idl into a VC project.
 
   <LI>You might also want to add the TAO_IDL compiler in as a dependency here
       if you update TAO often.  That way, if the compiler is changed, the
-          IDL files are recompiled automatically in the next build.</LI>
+      IDL files are recompiled automatically in the next build.</LI>
 
   <LI>We are all set. Click OK.</LI>
 
-  <LI>Add foobarC.cpp and foobarS.cpp to both the client and server
-      project.</LI>
+  <LI>Add foobarC.cpp and foobarS.cpp to the server project and
+      foobarC.cpp into the client project.</LI>
 </OL>
 
 <p>Notice that these procedures only setup the IDL compiler to perform
