@@ -183,71 +183,11 @@ DRV_get_line (FILE *f)
     return I_TRUE;
 }
 
-// Store include paths from the environment variable, if any.
-void
-DRV_store_env_include_paths (void)
-{
-  ACE_Env_Value<char*> incl_paths ("INCLUDE",
-                                   (char *) 0);
-  const char *aggr_str = incl_paths;
-
-  if (aggr_str != 0)
-    {
-      char separator;
-#if defined (ACE_WIN32)
-      separator = ';';
-#else
-      separator = ':';
-#endif
-      ACE_CString aggr_cstr (aggr_str);
-      ssize_t pos;
-
-      do
-        {
-          pos = aggr_cstr.find (separator);
-          idl_global->add_include_path (aggr_cstr.substr (0, pos).fast_rep ());
-          aggr_cstr = aggr_cstr.substr (pos + 1);
-        } while (pos != ACE_String_Base_Const::npos);
-    }
-}
-
 // Initialize the cpp argument list.
 void
 DRV_cpp_init (void)
 {
-  const char *cpp_loc, *cpp_args;
-
-  // See if TAO_IDL_PREPROCESSOR is defined.
-  ACE_Env_Value<char*> preprocessor ("TAO_IDL_PREPROCESSOR",
-                                     (char *) 0);
-
-  // Set cpp_loc to the built in location, unless it has been overriden by
-  // environment variables.
-  if (preprocessor != 0)
-    {
-      cpp_loc = preprocessor;
-    }
-  else
-    {
-      // Check for the deprecated CPP_LOCATION environment variable
-      ACE_Env_Value<char*> cpp_path ("CPP_LOCATION",
-                                     (char *) 0);
-
-      if (cpp_path != 0)
-        {
-          ACE_ERROR ((LM_WARNING,
-                      "WARNING: The environment variable "
-                      "CPP_LOCATION has been deprecated.\n"
-                      "         Please use TAO_IDL_PREPROCESSOR "
-                      "instead.\n"));
-
-          cpp_loc = cpp_path;
-        }
-      else
-        {
-          cpp_loc = idl_global->cpp_location ();
-        }
-    }
+  const char *cpp_loc = FE_get_cpp_loc_from_env ();
 
   DRV_cpp_putarg (cpp_loc);
 
@@ -264,106 +204,81 @@ DRV_cpp_init (void)
 
   DRV_cpp_putarg ("-I.");
 
-  // Added some customizable preprocessor options
-  ACE_Env_Value<char*> args1 ("TAO_IDL_PREPROCESSOR_ARGS",
-                              (char *) 0);
+  const char *cpp_args = FE_get_cpp_args_from_env ();
 
-  if (args1 != 0)
+  if (cpp_args == 0)
     {
-      cpp_args = args1;
-    }
-  else
-    {
-      // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment
-      // variable.
-      ACE_Env_Value<char*> args2 ("TAO_IDL_DEFAULT_CPP_FLAGS",
-                                  (char *) 0);
+      // If no cpp flag was defined by the user, we define some
+      // platform specific flags here.
+      char option[BUFSIZ];
 
-      if (args2 != 0)
+#if defined (TAO_IDL_PREPROCESSOR_ARGS)
+      cpp_args = TAO_IDL_PREPROCESSOR_ARGS;
+#elif defined (ACE_CC_PREPROCESSOR_ARGS)
+      cpp_args = ACE_CC_PREPROCESSOR_ARGS;
+#else
+      cpp_args = "-E";
+#endif /* TAO_IDL_PREPROCESSOR_ARGS */
+
+      // So we can find OMG IDL files, such as `orb.idl'.
+      ACE_OS::strcpy (option, "-I");
+
+#if defined (TAO_IDL_INCLUDE_DIR)
+      // TAO_IDL_INCLUDE_DIR should be in quotes,
+      // e.g. "/usr/local/include/tao"
+
+      ACE_OS::strcat (option,
+                      TAO_IDL_INCLUDE_DIR);
+#else
+      char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
+      size_t len = 0;
+
+      if (TAO_ROOT != 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "Warning: The environment variable "
-                      "TAO_IDL_DEFAULT_CPP_FLAGS has been "
-                      "deprecated.\n"
-                      "         Please use "
-                      "TAO_IDL_PREPROCESSOR_ARGS instead.\n"));
+          len = ACE_OS::strlen (TAO_ROOT);
 
-          cpp_args = args2;
+          // Some compilers choke on "//" separators.
+          if (TAO_ROOT[len - 1] == '/')
+            {
+              TAO_ROOT[len - 1] = '\0';
+            }
+
+          ACE_OS::strcat (option, TAO_ROOT);
+          ACE_OS::strcat (option, "/tao");
         }
       else
         {
-          // If no cpp flag was defined by the user, we define some
-          // platform specific flags here.
-          char option[BUFSIZ];
+          char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
 
-#if defined (TAO_IDL_PREPROCESSOR_ARGS)
-          cpp_args = TAO_IDL_PREPROCESSOR_ARGS;
-#elif defined (ACE_CC_PREPROCESSOR_ARGS)
-          cpp_args = ACE_CC_PREPROCESSOR_ARGS;
-#else
-          cpp_args = "-E";
-#endif /* TAO_IDL_PREPROCESSOR_ARGS */
-
-          // So we can find OMG IDL files, such as `orb.idl'.
-          ACE_OS::strcpy (option, "-I");
-
-#if defined (TAO_IDL_INCLUDE_DIR)
-          // TAO_IDL_INCLUDE_DIR should be in quotes,
-          // e.g. "/usr/local/include/tao"
-
-          ACE_OS::strcat (option,
-                          TAO_IDL_INCLUDE_DIR);
-#else
-          char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
-          size_t len = 0;
-
-          if (TAO_ROOT != 0)
+          if (ACE_ROOT != 0)
             {
-              len = ACE_OS::strlen (TAO_ROOT);
+              len = ACE_OS::strlen (ACE_ROOT);
 
               // Some compilers choke on "//" separators.
-              if (TAO_ROOT[len - 1] == '/')
+              if (ACE_ROOT[len - 1] == '/')
                 {
-                  TAO_ROOT[len - 1] = '\0';
+                  ACE_ROOT[len - 1] = '\0';
                 }
 
-              ACE_OS::strcat (option, TAO_ROOT);
-              ACE_OS::strcat (option, "/tao");
+              ACE_OS::strcat (option, ACE_ROOT);
+              ACE_OS::strcat (option, "/TAO/tao");
             }
           else
             {
-              char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
+              ACE_ERROR ((LM_WARNING,
+                          "NOTE: The environment variables "
+                          "TAO_ROOT and ACE_ROOT are not defined.\n"
+                          "      TAO_IDL may not be able to "
+                          "locate orb.idl\n"));
 
-              if (ACE_ROOT != 0)
-                {
-                  len = ACE_OS::strlen (ACE_ROOT);
-
-                  // Some compilers choke on "//" separators.
-                  if (ACE_ROOT[len - 1] == '/')
-                    {
-                      ACE_ROOT[len - 1] = '\0';
-                    }
-
-                  ACE_OS::strcat (option, ACE_ROOT);
-                  ACE_OS::strcat (option, "/TAO/tao");
-                }
-              else
-                {
-                  ACE_ERROR ((LM_WARNING,
-                              "NOTE: The environment variables "
-                              "TAO_ROOT and ACE_ROOT are not defined.\n"
-                              "      TAO_IDL may not be able to "
-                              "locate orb.idl\n"));
-
-                  ACE_OS::strcat (option, ".");
-                }
+              ACE_OS::strcat (option, ".");
             }
+        }
 #endif  /* TAO_IDL_INCLUDE_DIR */
 
-          DRV_cpp_putarg (option);
-          idl_global->add_include_path (ACE::strnew (option + 2));
-          idl_global->tao_root (option + 2);
-        }
+      DRV_cpp_putarg (option);
+      idl_global->add_include_path (ACE::strnew (option + 2));
+      idl_global->tao_root (option + 2);
     }
 
   // Add any flags in cpp_args to cpp's arglist.
@@ -997,8 +912,3 @@ DRV_pre_proc (const char *myfile)
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Env_Value<char*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate  ACE_Env_Value<char*>
-#endif

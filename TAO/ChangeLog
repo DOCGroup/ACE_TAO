@@ -1,3 +1,19 @@
+Fri Jul  2 15:39:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/include/fe_extern.h:
+        
+          Moved bits of code that instantiate ACE_Env_Value<char*> into
+          new methods created in the front end library. Having them in
+          the executable was causing a problem for Tru64 builds, since
+          the executable is compiled in multiple builds linking to
+          different backend libraries. The Tru64 compiler deals with
+          templates differently than other compilers, and the VPATH
+          solution for g++ that allowed the same object files to be
+          linked in different builds does not work for cxx.
+
 Fri Jul  2 13:20:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp:
