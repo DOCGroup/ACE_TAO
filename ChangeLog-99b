@@ -1,3 +1,16 @@
+Fri Dec 10 15:55:53 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Configuration.cpp:
+
+	  Changed ACE_Thread_Mutex template instantiation arguments to
+	  ACE_SYNCH_MUTEX.  This matches the typedef declaration in
+	  ace/Configuration.h, and allows us to remove the "#ifdef
+	  ACE_HAS_THREADS" conditional in the template instantiations.
+
+	* m4/compilers.m4:
+
+	  Added missing flags that fix Sun C++ 5.0 weirdness.
+
 Fri Dec 10 14:35:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* acconfig.h (_RWSTD_NO_EXCEPTIONS):
