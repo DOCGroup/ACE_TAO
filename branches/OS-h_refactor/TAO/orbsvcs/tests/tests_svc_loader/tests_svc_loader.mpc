@@ -1,0 +1,3 @@
+project(tests svc loader): taoexe, minimum_corba {
+  exename = tests_svc_loader
+}

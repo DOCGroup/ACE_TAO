@@ -1,0 +1,4 @@
+project : taolib {
+  depends += TAO_IDL_EXE
+  idlflags = -Ge 1 -Sc
+}

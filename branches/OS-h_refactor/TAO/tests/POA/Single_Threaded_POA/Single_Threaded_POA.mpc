@@ -1,0 +1,3 @@
+project(Single Threaded POA): server, minimum_corba {
+  exename = Single_Threaded_POA
+}

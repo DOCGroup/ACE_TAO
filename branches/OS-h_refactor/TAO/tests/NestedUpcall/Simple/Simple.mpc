@@ -1,0 +1,16 @@
+project: server {
+  Source_Files {
+    server_i.cpp
+    server.cpp
+  }
+}
+
+project(client): server {
+  exename = client
+
+  Source_Files {
+    client_i.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,7 @@
+#
+# Makefile for building the avstreams component_switching test
+#
+
+MAKEFILES = receiver.bor sender.bor distributer.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,3 @@
+project(Identity): server {
+  exename = Identity
+}

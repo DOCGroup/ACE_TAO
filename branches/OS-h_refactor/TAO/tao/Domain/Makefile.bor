@@ -1,0 +1,31 @@
+#
+# Makefile for building the TAO Domain library
+#
+
+NAME = TAO_Domain
+
+OBJFILES = \
+	$(OBJDIR)\DomainS.obj
+
+RESOURCE = $(OBJDIR)\TAO_Domain.res
+
+!ifdef STATIC
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DOMAIN_CFLAGS)
+!else
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DOMAIN_CFLAGS) \
+	-DTAO_DOMAIN_BUILD_DLL
+!endif
+
+CPPDIR = .
+
+INCDIR_NAME = tao\Domain
+INCLUDES = \
+	*.h *.i
+
+LIBFILES = \
+        $(TAO_IFR_CLIENT_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+	$(TAO_LIB) \
+	$(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
