@@ -8,6 +8,7 @@
 #define _TP_LOGGING_SERVER_H
 
 #include "ace/OS.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
@@ -111,7 +112,7 @@ public:
     ACE_NEW_NORETURN
       (logging_dispatcher_,
        TP_Logging_Server::LOGGING_DISPATCHER
-       (i, char_argv, ACE_Reactor::instance ()), -1);
+       (i, char_argv.get (), ACE_Reactor::instance ()));
     for (i = 0; i < argc; ++i) ACE::strdelete (char_argv[i]);
     if (logging_dispatcher_ == 0) return -1;
     else return TP_LOGGING_TASK::instance ()->open ();

@@ -1,3 +1,20 @@
+Thu Jul 11 16:15:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/SR_Configurable_Logging_Server.dsp:
+        * examples/TPCLS.dsp:
+        * examples/TPLS.dsp:
+        * examples/C++NPv2/examples.dsw: Added SR_Configurable_Logging_Server,
+          TPCLS, and TPLS projects.
+
+        * examples/C++NPv2/TPC_Logging_Server.h: Use ACE traits macros to
+          allow build on Win32.
+        * examples/C++NPv2/TPC_Logging_Server.cpp: Fix build problems on
+          Win32.
+
+        * examples/TP_Logging_Server.h (init): Added #include "ace/Auto_Ptr.h"
+          and corrected use of ACE_NEW_NORETURN; use ACE_Auto_Ptr::get() to get
+          the argv pointer.
+
 Thu Jul 11 15:03:47 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace_dll64.mak: TEMPORARILY added /wd4267 to disable the
