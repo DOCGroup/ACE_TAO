@@ -1,3 +1,9 @@
+Thu Sep 20 14:44:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.cpp (ACE_Process_Options ctor): Moved acoid_zombies_
+          initialization outside the !Win32 section. Thanks to Johnny
+          Willemsen <johnny.willemsen@meco.nl> for this fix.
+
 Thu Sep 20 06:28:50 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-hpux-11.00.h:
