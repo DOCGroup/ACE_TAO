@@ -777,18 +777,15 @@ static ACE_Object_Manager_Manager ACE_Object_Manager_Manager_instance;
 
 // This is global so that it doesn't have to be declared in the header
 // file.  That would cause nasty circular include problems.
+typedef ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>
+  ACE_Static_Object_Lock_Type;
+static ACE_Static_Object_Lock_Type *
+  ACE_Static_Object_Lock_lock = 0;
+
 // ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK isn't (currently) used by ACE.
 // But, applications may find it useful for avoiding recursive calls
 // if they have overridden operator new.  Thanks to Jody Hagins
 // <jody@atdesk.com> for contributing it.
-# if defined(ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK)
-    typedef ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>
-      ACE_Static_Object_Lock_Type;
-    ACE_Static_Object_Lock_Type *
-# else  /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
-    static ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *
-# endif /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
-      ACE_Static_Object_Lock_lock = 0;
 
 ACE_Recursive_Thread_Mutex *
 ACE_Static_Object_Lock::instance (void)
