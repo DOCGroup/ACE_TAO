@@ -2,6 +2,10 @@
 #include "ace/Configuration.h"
 #include "ace/Auto_Ptr.h"
 
+// Can remove this when import_config and export_config are removed from
+// ACE_Configuration. They're deprecated at ACE 5.2.
+#include "ace/Configuration_Import_Export.h"
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #if defined (ACE_HAS_THREADS)
@@ -189,6 +193,22 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
 
   return 0;
 
+}
+
+// import_config and export_config are here for backward compatibility,
+// and have been deprecated.
+int
+ACE_Configuration::export_config (const ACE_TCHAR* filename)
+{
+  ACE_Ini_ImpExp exporter (*this);
+  return exporter.export_config (filename);
+}
+
+int
+ACE_Configuration::import_config (const ACE_TCHAR* filename)
+{
+  ACE_Ini_ImpExp importer (*this);
+  return importer.import_config (filename);
 }
 
 int
