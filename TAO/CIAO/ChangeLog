@@ -1,3 +1,10 @@
+Tue Jun 15 10:48:08 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        *  DnC/RepositoryManager/Repository_Manager.cpp:
+
+           Let the object reference narrow down to ExecutionManager
+           instead of ExecutionManagerDameon.
+
 Mon Jun 14 15:01:08 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         *  DnC/RepositoryManager/Repository_Manager.cpp:
