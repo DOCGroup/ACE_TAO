@@ -382,13 +382,16 @@ TAO_AV_Core::init_transport_factories (void)
   TAO_AV_TransportFactorySetItor end = this->transport_factories_.end ();
   TAO_AV_TransportFactorySetItor factory = this->transport_factories_.begin ();
 
+  const char* foo = "UDP_Factory";
+      const char * bar = "TCP_Factory";
+
   if (factory == end)
     {
       TAO_AV_Transport_Factory *udp_factory = 0;
       TAO_AV_Transport_Item *udp_item = 0;
 
-      udp_factory = 
-        ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance ("UDP_Factory");
+      udp_factory =
+        ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (foo);
       if (udp_factory == 0)
         {
           if (TAO_debug_level)
@@ -410,8 +413,8 @@ TAO_AV_Core::init_transport_factories (void)
       TAO_AV_Transport_Factory *tcp_factory = 0;
       TAO_AV_Transport_Item *tcp_item = 0;
 
-      tcp_factory = 
-        ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance ("TCP_Factory");
+      tcp_factory =
+        ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (bar);
       if (tcp_factory == 0)
         {
           if (TAO_debug_level)
@@ -441,13 +444,18 @@ TAO_AV_Core::init_flow_protocol_factories (void)
   TAO_AV_Flow_ProtocolFactorySetItor end = this->flow_protocol_factories_.end ();
   TAO_AV_Flow_ProtocolFactorySetItor factory = this->flow_protocol_factories_.begin ();
 
+  const char *udp_flow = "UDP_Flow_Factory";
+  const char *tcp_flow = "TCP_Flow_Factory";
+  const char *rtp_flow = "RTP_Flow_Factory";
+  const char *rtcp_flow = "RTCP_Flow_Factory";
+  const char *sfp_flow = "SFP_Flow_Factory";
   if (factory == end)
     {
       TAO_AV_Flow_Protocol_Factory *udp_flow_factory = 0;
       TAO_AV_Flow_Protocol_Item *udp_item = 0;
 
-      udp_flow_factory = 
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance ("UDP_Flow_Factory");
+      udp_flow_factory =
+        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (udp_flow);
       if (udp_flow_factory == 0)
         {
           if (TAO_debug_level)
@@ -469,8 +477,8 @@ TAO_AV_Core::init_flow_protocol_factories (void)
       TAO_AV_Flow_Protocol_Factory *tcp_flow_factory = 0;
       TAO_AV_Flow_Protocol_Item *tcp_item = 0;
 
-      tcp_flow_factory = 
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance ("TCP_Flow_Factory");
+      tcp_flow_factory =
+        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (tcp_flow);
       if (tcp_flow_factory == 0)
         {
           if (TAO_debug_level)
@@ -492,8 +500,8 @@ TAO_AV_Core::init_flow_protocol_factories (void)
       TAO_AV_Flow_Protocol_Factory *rtp_flow_factory = 0;
       TAO_AV_Flow_Protocol_Item *rtp_item = 0;
 
-      rtp_flow_factory = 
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance ("RTP_Flow_Factory");
+      rtp_flow_factory =
+        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (rtp_flow);
       if (rtp_flow_factory == 0)
         {
           if (TAO_debug_level)
@@ -515,8 +523,8 @@ TAO_AV_Core::init_flow_protocol_factories (void)
       TAO_AV_Flow_Protocol_Factory *rtcp_flow_factory = 0;
       TAO_AV_Flow_Protocol_Item *rtcp_item = 0;
 
-      rtcp_flow_factory = 
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance ("RTCP_Flow_Factory");
+      rtcp_flow_factory =
+        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (rtcp_flow);
       if (rtcp_flow_factory == 0)
         {
           if (TAO_debug_level)
@@ -538,8 +546,8 @@ TAO_AV_Core::init_flow_protocol_factories (void)
       TAO_AV_Flow_Protocol_Factory *sfp_flow_factory = 0;
       TAO_AV_Flow_Protocol_Item *sfp_item = 0;
 
-      sfp_flow_factory = 
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance ("SFP_Flow_Factory");
+      sfp_flow_factory =
+        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (sfp_flow);
       if (sfp_flow_factory == 0)
         {
           if (TAO_debug_level)
@@ -668,7 +676,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                   // Now check if the flow factory has a control flow factory.
                   const char *control_factory_name
                     = (*flow_factory)->factory ()->control_flow_factory ();
-               
+
                   if (control_factory_name != 0)
                     {
                       TAO_AV_Flow_ProtocolFactorySetItor control_factory_end =
@@ -703,7 +711,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                                                           entry->flow_protocol_str (),
                                                                           control_addr),
                                               -1);
-                              // Add the control entry to the flow_spec_set that's passed so that the control entry 
+                              // Add the control entry to the flow_spec_set that's passed so that the control entry
                               // will also be called during flow starts and stops. except that if the user specifies
                               // a flowspec in start then the control entry may not be in that but it has to be started
                               // if the flowspec has the associated data flow entry. @@ We'll leave this matter for now.
@@ -905,7 +913,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                                                           entry->flow_protocol_str (),
                                                                           control_addr),
                                               -1);
-                              // Add the control entry to the flow_spec_set that's passed so that the control entry 
+                              // Add the control entry to the flow_spec_set that's passed so that the control entry
                               // will also be called during flow starts and stops. except that if the user specifies
                               // a flowspec in start then the control entry may not be in that but it has to be started
                               //   if the flowspec has the associated data flow entry. @@ We'll leave this matter for now.
@@ -1015,7 +1023,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                                     flow_protocol));
                       continue;
                     }
-            
+
 
 
                   // got it, make an acceptor
