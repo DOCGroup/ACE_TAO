@@ -331,8 +331,11 @@ int
 TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &reactor_registered,
                                       TAO_EventHandlerSet &unregistered)
 {
+  HASH_MAP_ITER end_iter =
+    this->cache_map_.end ();
+
   for (HASH_MAP_ITER iter = this->cache_map_.begin ();
-       iter != this->cache_map_.end ();
+       iter != end_iter;
        ++iter)
     {
       // First we look through whether we have an entry that has already
