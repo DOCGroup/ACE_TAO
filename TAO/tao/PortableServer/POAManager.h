@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    POAManager.h
-//
-// = DESCRIPTION
-//     POAManager
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    POAManager.h
+ *
+ *  $Id$
+ *
+ *   POAManager
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #ifndef TAO_POAMANAGER_H
 #define TAO_POAMANAGER_H
@@ -34,9 +31,9 @@
 
 #include "tao/PortableInterceptorC.h"
 
+// Forward decl.
 class TAO_POA;
 class TAO_Object_Adapter;
-// Forward decl.
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -130,8 +127,8 @@ protected:
 
   int register_poa (TAO_POA *poa);
 
-  /// Generate an AdapterManagerId for this POAManager.
   /**
+   * Generate an AdapterManagerId for this POAManager.
    * @return A value that uniquely identifies the POAManager within a
    *         given process.
    */

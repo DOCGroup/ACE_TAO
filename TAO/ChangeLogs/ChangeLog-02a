@@ -1,3 +1,23 @@
+Tue May 28 08:03:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.h:
+        * tao/PortableServer/Collocated_Object.h:
+        * tao/PortableServer/Default_Acceptor_Filter.h:
+        * tao/PortableServer/Direct_Object_Proxy_Impl.h:
+        * tao/PortableServer/Key_Adapters.h:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Operation_Table.h:
+        * tao/PortableServer/POA_Cached_Policies.h:
+        * tao/PortableServer/POA_Policies.h:
+        * tao/PortableServer/POA_Policy_Set.h:
+        * tao/PortableServer/POAManager.h:
+        * tao/PortableServer/PortableServer.cpp:
+        * tao/PortableServer/PortableServer.h:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.h:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
+          Converted old style documentation to doxygen style documentation
+
 Tue May 28 07:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/BCU.h:

@@ -1,22 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    PortableServer
-//
-// = FILENAME
-//    Default_Acceptor_Filter.h
-//
-// = DESCRIPTION
-//     Default strategy for populating mprofile
-//
-// = AUTHOR
-//     Marina Spivak <marina@cs.wustl.edu>
-//     Carlos O'Ryan <coryan@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Default_Acceptor_Filter.h
+ *
+ *  $Id$
+ *
+ *   Default strategy for populating mprofile
+ *
+ *
+ *  @author  Marina Spivak <marina@cs.wustl.edu>  Carlos O'Ryan <coryan@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DEFAULT_ACCEPTOR_FILTER_H
 #define TAO_DEFAULT_ACCEPTOR_FILTER_H
@@ -40,15 +36,16 @@
 
 class TAO_Acceptor;
 
+/**
+ * @class TAO_Default_Acceptor_Filter
+ *
+ * @brief Default Acceptor_Filter.
+ *
+ * Default strategy for populating mprofile: all available
+ * endpoints are included.
+ */
 class TAO_PortableServer_Export TAO_Default_Acceptor_Filter : public TAO_Acceptor_Filter
 {
-  // = TITLE
-  //   Default Acceptor_Filter.
-  //
-  // = DESCRIPTION
-  //   Default strategy for populating mprofile: all available
-  //   endpoints are included.
-  //
 public:
   TAO_Default_Acceptor_Filter (void);
 

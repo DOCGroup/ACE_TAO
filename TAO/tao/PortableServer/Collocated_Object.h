@@ -1,17 +1,16 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Collocated_Object.h
-//
-// = DESCRIPTION
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Collocated_Object.h
+ *
+ *  $Id$
+ *
+ *  @brief
+ *
+ */
+//=============================================================================
+
 
 #ifndef TAO_COLLOCATED_OBJECT_H
 #define TAO_COLLOCATED_OBJECT_H
@@ -31,21 +30,22 @@
 class TAO_PortableServer_Export TAO_Collocated_Object : public virtual CORBA_Object
 {
 public:
+  /// Constructor.
   TAO_Collocated_Object (TAO_Stub *p = 0,
                          CORBA::Boolean collocated = 0,
                          TAO_ServantBase *servant = 0);
-  // constructor
 
+  /// Destructor.
   virtual ~TAO_Collocated_Object (void);
-  // destructor
+
 /*
+  /// return the associated servant (if one exists)
   virtual TAO_ServantBase *_servant (void) const;
-  // return the associated servant (if one exists)
 */
 
+  /// Downcast operation
   static TAO_Collocated_Object *_narrow (CORBA::Object_ptr object
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  // Downcast operation
 
   // = The CORBA_Object methods, check the tao/Object.h file for details
   virtual CORBA::Boolean _is_a (const CORBA::Char *logical_type_id
@@ -68,8 +68,8 @@ private:
   /*
 
 private:
+  /// Servant pointer.  It is 0 except for collocated objects.
   TAO_ServantBase *servant_;
-  // Servant pointer.  It is 0 except for collocated objects.
 
   */
 };

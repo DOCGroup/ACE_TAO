@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
 
-// $Id$
 
-// =========================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Portableserver.h
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@uci.edu>
-//
-// =========================================================================
+//=============================================================================
+/**
+ *  @file    Portableserver.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan <coryan@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_PORTABLESERVER_H
 #define TAO_PORTABLESERVER_H
@@ -29,8 +26,8 @@
 class TAO_PortableServer_Export TAO_POA_Initializer
 {
 public:
+  /// Used to force the initialization of the ORB code.
   static int init (void);
-  // Used to force the initialization of the ORB code.
 };
 
 #if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)

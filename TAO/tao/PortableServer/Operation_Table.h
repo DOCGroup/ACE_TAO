@@ -1,18 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Operation_Table.h
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Operation_Table.h
+ *
+ *  $Id$
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_OPTABLE_H
 #define TAO_OPTABLE_H
@@ -29,65 +26,79 @@
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager.h"
 
+/**
+ * @class TAO_operation_db_entry
+ *
+ * @brief Define a table entry that holds an operation name and its
+ * corresponding skeleton.  A table of such entries is used to
+ * initialize the different lookup strategies.
+ */
 class TAO_operation_db_entry
 {
-  // = TITLE
-  //   Define a table entry that holds an operation name and its
-  //   corresponding skeleton.  A table of such entries is used to
-  //   initialize the different lookup strategies.
 public:
+  /// Operation name
   const char* opname_;
-  // operation name
 
+  /// Skeleton pointer
   TAO_Skeleton skel_ptr_;
-  // skeleton pointer
 };
 
+/**
+ * @class TAO_Operation_Table
+ *
+ * @brief Abstract class for maintaining and lookup of CORBA IDL
+ * operation names.
+ */
 class TAO_PortableServer_Export TAO_Operation_Table
 {
-  // = TITLE
-  //     Abstract class for maintaining and lookup of CORBA IDL
-  //     operation names.
 public:
+  /**
+   * Uses <{opname}> to look up the skeleton function and pass it back
+   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
+   * on failure.
+   */
   virtual int find (const char *opname,
                     TAO_Skeleton &skelfunc,
                     const unsigned int length = 0) = 0;
-  // Uses <{opname}> to look up the skeleton function and pass it back
-  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
-  // on failure.
 
+  /// Associate the skeleton <{skel_ptr}> with an operation named
+  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
   virtual int bind (const char *opname,
                     const TAO_Skeleton skel_ptr) = 0;
-  // Associate the skeleton <{skel_ptr}> with an operation named
-  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
   virtual ~TAO_Operation_Table (void);
 };
 
+/**
+ * @class TAO_Operation_Table_Factory
+ *
+ * @brief Factory for producing operation table lookup objects based on
+ * the enumerated value of strategy held by the parameters.
+ */
 class TAO_PortableServer_Export TAO_Operation_Table_Factory
 {
-  // = TITLE
-  //   Factory for producing operation table lookup objects based on
-  //   the enumerated value of strategy held by the parameters.
 public:
+  /// Return an instance of the specified lookup strategy
   TAO_Operation_Table *opname_lookup_strategy (void);
-  // return an instance of the specified lookup strategy
 
+  /// Constructor
   TAO_Operation_Table_Factory (void);
-  // constructor
 
+  /// Destructor
   ~TAO_Operation_Table_Factory (void);
-  // destructor
 };
 
+/**
+ * @class TAO_Operation_Table_Parameters
+ *
+ * @brief Parameters used to create the operation table.
+ */
 class TAO_PortableServer_Export TAO_Operation_Table_Parameters
 {
-  // = TITLE
-  //    Parameters used to create the operation table.
 public:
+  /// various lookup strategies
   enum DEMUX_STRATEGY
   {
-    // various lookup strategies
     TAO_LINEAR_SEARCH,
     TAO_DYNAMIC_HASH,
     TAO_PERFECT_HASH,
@@ -96,64 +107,71 @@ public:
     TAO_USER_DEFINED
   };
 
+  /// Set the lookup strategy from the list of enumerated values
   void lookup_strategy (DEMUX_STRATEGY s);
-  // set the lookup strategy from the list of enumerated values
 
+  /// Return the enumerated value for the lookup strategy. Default is
+  /// Dynamic Hashing.
   DEMUX_STRATEGY lookup_strategy (void) const;
-  // Return the enumerated value for the lookup strategy. Default is
-  // Dynamic Hashing.
 
+  /// Provide a data structure that will do the lookup. This is useful
+  /// for user-defined lookup strategies.
   void concrete_strategy (TAO_Operation_Table *ot);
-  // Provide a data structure that will do the lookup. This is useful
-  // for user-defined lookup strategies.
 
+  /// Return the operation table that is being used to do the lookup.
   TAO_Operation_Table *concrete_strategy (void);
-  // Return the operation table that is being used to do the lookup.
 
+  /// Constructor.
   TAO_Operation_Table_Parameters (void);
-  // constructor.
 
+  /// Destructor
   ~TAO_Operation_Table_Parameters (void);
-  // destructor
 private:
+  /// Pointer to the object that implements a lookup strategy
   TAO_Operation_Table *strategy_;
-  // pointer to the object that implements a lookup strategy
 
+  /// The enumerated value indicating the lookup strategy
   DEMUX_STRATEGY type_;
-  // the enumerated value indicating the lookup strategy
 };
 
+/**
+ * @class TAO_Dynamic_Hash_OpTable
+ *
+ * @brief Dynamic Hashing scheme for CORBA IDL operation name lookup.
+ */
 class TAO_PortableServer_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
 {
-  // = TITLE
-  //     Dynamic Hashing scheme for CORBA IDL operation name lookup.
 public:
   // = Initialization and termination methods.
+  /**
+   * Initialize the dynamic hash operation table with a database of
+   * operation names. The hash table size may be different from the
+   * size of the database. Hence we use the third argument to specify
+   * the size of the internal hash table.  The <alloc> argument is
+   * used to determine where the memory comes from (usually from
+   * <ACE_Static_Allocator_Base>).
+   */
   TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db,
                             CORBA::ULong dbsize,
                             CORBA::ULong hashtblsize,
                             ACE_Allocator *alloc);
-  // Initialize the dynamic hash operation table with a database of
-  // operation names. The hash table size may be different from the
-  // size of the database. Hence we use the third argument to specify
-  // the size of the internal hash table.  The <alloc> argument is
-  // used to determine where the memory comes from (usually from
-  // <ACE_Static_Allocator_Base>).
 
+  /// Destructor
   ~TAO_Dynamic_Hash_OpTable (void);
-  // destructor
 
+  /// Associate the skeleton <{skel_ptr}> with an operation named
+  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
   virtual int bind (const char *opname,
                     const TAO_Skeleton skel_ptr);
-  // Associate the skeleton <{skel_ptr}> with an operation named
-  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
+  /**
+   * Uses <{opname}> to look up the skeleton function and pass it back
+   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
+   * on failure.
+   */
   virtual int find (const char *opname,
                     TAO_Skeleton &skelfunc,
                     const unsigned int length = 0);
-  // Uses <{opname}> to look up the skeleton function and pass it back
-  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
-  // on failure.
 
 private:
   typedef ACE_Hash_Map_Manager_Ex<const char *,
@@ -163,34 +181,39 @@ private:
                                   ACE_Null_Mutex>
         OP_MAP_MANAGER;
 
+  /// The hash table data structure.
   OP_MAP_MANAGER hash_;
-  // The hash table data structure.
 };
 
+/**
+ * @class TAO_Linear_Search_OpTable
+ *
+ * @brief Operation table lookup strategy based on
+ * linear search.  Not efficient, but it works.
+ */
 class TAO_PortableServer_Export TAO_Linear_Search_OpTable : public TAO_Operation_Table
 {
-  // = TITLE
-  //    Operation table lookup strategy based on
-  //    linear search.  Not efficient, but it works.
 public:
   // = Initialization and termination methods.
+  /// Default constructor.
   TAO_Linear_Search_OpTable (void);
-  // Default constructor.
 
+  /// Destructor.
   ~TAO_Linear_Search_OpTable (void);
-  // Destructor.
 
+  /**
+   * Uses <{opname}> to look up the skeleton function and pass it back
+   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
+   * on failure.
+   */
   virtual int find (const char *opname,
                     TAO_Skeleton &skel_ptr,
                     const unsigned int length = 0);
-  // Uses <{opname}> to look up the skeleton function and pass it back
-  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
-  // on failure.
 
+  /// Associate the skeleton <{skel_ptr}> with an operation named
+  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
   virtual int bind (const char *opname,
                     const TAO_Skeleton skelptr);
-  // Associate the skeleton <{skel_ptr}> with an operation named
-  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
 private:
   // = Method that should defined by the subclasses. GPERF program
@@ -198,88 +221,100 @@ private:
   virtual const TAO_operation_db_entry* lookup (const char *str) = 0;
 };
 
+/**
+ * @class TAO_Active_Demux_OpTable_Entry
+ *
+ * @brief Active Demux lookup table entry.
+ */
 class TAO_PortableServer_Export TAO_Active_Demux_OpTable_Entry
 {
-  // = TITLE
-  //   Active Demux lookup table entry.
 public:
   // = Initialization and termination methods.
+  /// Constructor
   TAO_Active_Demux_OpTable_Entry (void);
-  // constructor
 
+  /// Destructor
   ~TAO_Active_Demux_OpTable_Entry (void);
-  // destructor
 
+  /// Skeleton pointer corresponding to the index.
   TAO_Skeleton skel_ptr_;
-  // Skeleton pointer corresponding to the index.
 };
 
+/**
+ * @class TAO_Active_Demux_OpTable
+ *
+ * @brief Implements the active demultiplexed lookup strategy. The key is
+ * assumed to provide an index directly into the internal table.
+ */
 class TAO_PortableServer_Export TAO_Active_Demux_OpTable : public TAO_Operation_Table
 {
-  // = TITLE
-  //   Implements the active demultiplexed lookup strategy. The key is
-  //   assumed to provide an index directly into the internal table.
 public:
   // = Initialization and termination methods.
+  /// Initializes the internal table with the database of operations
   TAO_Active_Demux_OpTable (const TAO_operation_db_entry *db, CORBA::ULong dbsize);
-  // Initializes the internal table with the database of operations
 
+  /// Destructor.
   ~TAO_Active_Demux_OpTable (void);
-  // destructor.
 
+  /**
+   * Uses <{opname}> to look up the skeleton function and pass it back
+   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
+   * on failure.
+   */
   virtual int find (const char *opname,
                     TAO_Skeleton &skel_ptr,
                     const unsigned int length = 0);
-  // Uses <{opname}> to look up the skeleton function and pass it back
-  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
-  // on failure.
 
+  /// Associate the skeleton <{skel_ptr}> with an operation named
+  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
   virtual int bind (const char *opname,
                     const TAO_Skeleton skelptr);
-  // Associate the skeleton <{skel_ptr}> with an operation named
-  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
 private:
+  /// The next available free slot
   CORBA::ULong next_;
-  // the next available free slot
 
+  /// Size of the internal table
   CORBA::ULong tablesize_;
-  // size of the internal table
 
+  /// Internal lookup table
   TAO_Active_Demux_OpTable_Entry *tbl_;
-  // internal lookup table
 };
 
+/**
+ * @class TAO_Perfect_Hash_OpTable
+ *
+ * @brief Helper class  for use of perfect hashing operation lookup
+ * strategy.
+ *
+ * This class declares pure virtual methods called 'lookup ()'
+ * and 'hash ()' which will be generated by the GPERF
+ * program. These methods are used by 'bind ()' and 'find ()'
+ * methods. Subclasses will define the lookup and hash
+ * functions.
+ */
 class TAO_PortableServer_Export TAO_Perfect_Hash_OpTable : public TAO_Operation_Table
 {
-  // = TITLE
-  //     Helper class  for use of perfect hashing operation lookup
-  //     strategy.
-  //
-  // = DESCRIPTION
-  //     This class declares pure virtual methods called 'lookup ()'
-  //     and 'hash ()' which will be generated by the GPERF
-  //     program. These methods are used by 'bind ()' and 'find ()'
-  //     methods. Subclasses will define the lookup and hash
-  //     functions.
 public:
+  /// Do nothing constructor.
   TAO_Perfect_Hash_OpTable (void);
-  // Do nothing constructor.
 
+  /// Do nothing destrctor.
   virtual ~TAO_Perfect_Hash_OpTable (void);
-  // Do nothing destrctor.
 
+  /**
+   * Uses <{opname}> to look up the skeleton function and pass it back
+   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
+   * on failure.
+   */
   virtual int find (const char *opname,
                     TAO_Skeleton &skelfunc,
                     const unsigned int length = 0);
-  // Uses <{opname}> to look up the skeleton function and pass it back
-  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
-  // on failure.
 
+  /// Associate the skeleton <{skel_ptr}> with an operation named
+  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
   virtual int bind (const char *opname,
                     const TAO_Skeleton skel_ptr);
-  // Associate the skeleton <{skel_ptr}> with an operation named
-  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
 private:
   // = Methods that should defined by the subclasses. GPERF program
@@ -290,35 +325,39 @@ private:
   virtual const TAO_operation_db_entry* lookup (const char *str, unsigned int len) = 0;
 };
 
+/**
+ * @class TAO_Binary_Search_OpTable
+ *
+ * @brief Helper class for using binary search operatin lookup strategy
+ * in the server skeletons.
+ *
+ * This class declares pure virtual method called 'lookup ()'
+ * which will be generated by the GPERF program. This method is
+ * used by 'bind ()' and 'find ()' methods. Subclasses will
+ * define the lookup method.
+ */
 class TAO_PortableServer_Export TAO_Binary_Search_OpTable : public TAO_Operation_Table
 {
-  // = TITLE
-  //     Helper class for using binary search operatin lookup strategy
-  //     in the server skeletons.
-  //
-  // = DESCRIPTION
-  //     This class declares pure virtual method called 'lookup ()'
-  //     which will be generated by the GPERF program. This method is
-  //     used by 'bind ()' and 'find ()' methods. Subclasses will
-  //     define the lookup method.
 public:
+  /// Do nothing constructor.
   TAO_Binary_Search_OpTable (void);
-  // Do nothing constructor.
 
+  /// Do nothing destrctor.
   virtual ~TAO_Binary_Search_OpTable (void);
-  // Do nothing destrctor.
 
+  /**
+   * Uses <{opname}> to look up the skeleton function and pass it back
+   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
+   * on failure.
+   */
   virtual int find (const char *opname,
                     TAO_Skeleton &skelfunc,
                     const unsigned int length = 0);
-  // Uses <{opname}> to look up the skeleton function and pass it back
-  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
-  // on failure.
 
+  /// Associate the skeleton <{skel_ptr}> with an operation named
+  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
   virtual int bind (const char *opname,
                     const TAO_Skeleton skel_ptr);
-  // Associate the skeleton <{skel_ptr}> with an operation named
-  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
 private:
   // = Method that should defined by the subclasses. GPERF program
