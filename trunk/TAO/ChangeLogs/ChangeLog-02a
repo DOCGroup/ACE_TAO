@@ -1,3 +1,15 @@
+Wed Jun 28 10:36:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao.IORC.h:
+	* tao/IORC.i:
+	  Added missing TAO_Export macros that I had left out of
+	  recent regeneration, and removed the ostream operators
+	  for the exceptions, since they had also been removed 
+	  from the previous regeneration. Thanks to Aniruddha 
+	  Gokhale <gokhale@research.bell-labs.com>, Rudynell 
+	  Millian <rmillian@lucent.com> et al for pointing out
+	  the missing macros.
+
 Tue Jun 27 23:27:46 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/RT_Current.h:
