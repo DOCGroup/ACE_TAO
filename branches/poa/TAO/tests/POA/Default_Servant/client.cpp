@@ -37,12 +37,12 @@ parse_args (int argc, char **argv)
   if (ior == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant"), -1);
-    
+
   // Indicates successful parsing of command line.
   return 0;
 }
 
-int 
+int
 main (int argc, char **argv)
 {
   CORBA::Environment env;
@@ -70,39 +70,39 @@ main (int argc, char **argv)
       return -1;
     }
 
-  File::Descriptor_var fd = file_system->open (filename, _O_CREAT | O_RDWR, env);
+  File::Descriptor_var fd = file_system->open (filename, O_CREAT | O_RDWR, env);
   if (env.exception () != 0)
     {
       env.print_exception ("File::System::open");
       return -1;
     }
-  
+
   int message_length = ACE_OS::strlen (message) + 1;
   CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (message_length);
   ACE_OS::strcpy ((char *) buffer, message);
   File::Descriptor::DataBuffer data_sent (message_length, message_length, buffer, CORBA::B_TRUE);
-  
+
   fd->write (data_sent, env);
   if (env.exception () != 0)
     {
       env.print_exception ("File::Descriptor::write");
       return -1;
     }
-  
+
   fd->lseek (0, SEEK_SET, env);
   if (env.exception () != 0)
     {
       env.print_exception ("File::Descriptor::lseek");
       return -1;
     }
-  
+
   File::Descriptor::DataBuffer_var data_received = fd->read (message_length, env);
   if (env.exception () != 0)
     {
       env.print_exception ("File::Descriptor::read");
       return -1;
     }
-  
+
   char *result = (char *) &data_received[0];
   cout << result << endl;
 
@@ -112,7 +112,6 @@ main (int argc, char **argv)
       env.print_exception ("File::Descriptor::destroy");
       return -1;
     }
-  
+
   return 0;
 }
-
