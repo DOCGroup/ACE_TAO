@@ -1,3 +1,9 @@
+Sat Jul 26 13:25:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          When linking with mingw, also link netapi32 because this is now
+          needed because of the ACE_OS::getmacaddress() addition
+
 Fri Jul 25 22:01:14 2003  Venkita Subramonian  <venkita@cse.wustl.edu>
 	* Kokyu/Kokyu.dsp:
 	* Kokyu/Kokyu_DLL.dsp:
@@ -22,7 +28,7 @@ Fri Jul 25 17:41:08 2003  Venkita Subramonian  <venkita@cse.wustl.edu>
 	* Kokyu/Kokyu_dsrt.{cpp,h,i}
 
 	  Added new files to implement dynamic scheduling schedulers.
-	
+
 	* Kokyu/Kokyu.dsp:
 	* Kokyu/Kokyu.mwc:
 	* Kokyu/Kokyu.mpc:
@@ -34,7 +40,7 @@ Fri Jul 25 17:41:08 2003  Venkita Subramonian  <venkita@cse.wustl.edu>
 	* Kokyu/Makefile:
 
 	  Created MPC file for Kokyu and generated project files from MPC.
-	 
+
 	* Kokyu/Kokyu_defs.{cpp,h,i}
 	* Kokyu/Default_Dispatcher_Impl.{cpp,h,i}
 	* Kokyu/Dispatcher_Impl.{h,cpp,i}
@@ -43,11 +49,11 @@ Fri Jul 25 17:41:08 2003  Venkita Subramonian  <venkita@cse.wustl.edu>
 	* Kokyu/kokyu_export.h
 
 	  Reorganized files and updated comments and doxygen documentation.
-	
+
 	* Kokyu/tests/DSRT_MIF/MIF.cpp
 
 	  Modified example to reflect new Kokyu dispatcher class.
-	
+
 Thu Jul 24 14:23:44 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Future.{h,cpp}: Removed the operator new/delete/& so
