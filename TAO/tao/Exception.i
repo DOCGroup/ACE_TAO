@@ -1,13 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-ACE_INLINE void *
-CORBA_Exception::operator new (size_t,
-                               const void *p)
-{
-  return (void *) p;
-}
-
 ACE_INLINE
 CORBA_UserException::CORBA_UserException (const CORBA_UserException &src)
   : CORBA_Exception (src)
