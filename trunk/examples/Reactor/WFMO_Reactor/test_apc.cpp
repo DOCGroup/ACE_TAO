@@ -59,7 +59,7 @@ queue_apc (void)
 }
 
 int
-Event_Handler::handle_signal (int signum,
+Event_Handler::handle_signal (int,
                               siginfo_t *,
                               ucontext_t *)
 {
@@ -72,8 +72,8 @@ Event_Handler::handle_signal (int signum,
 }
 
 int
-Event_Handler::handle_timeout (const ACE_Time_Value &tv,
-                               const void *arg)
+Event_Handler::handle_timeout (const ACE_Time_Value &,
+                               const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) timeout occured @ %T\n"));
@@ -82,7 +82,7 @@ Event_Handler::handle_timeout (const ACE_Time_Value &tv,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Event_Handler event_handler;
   event_handler.iterations_ = 5;

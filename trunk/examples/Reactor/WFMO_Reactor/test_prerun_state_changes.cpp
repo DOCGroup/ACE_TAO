@@ -40,7 +40,7 @@ public:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_HANDLE handle = (ACE_HANDLE) ::socket (PF_INET, SOCK_STREAM, 0);
 

@@ -35,7 +35,7 @@ public:
 };
 
 int
-Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
+Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   --this->iterations_;
 
@@ -48,9 +48,9 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 static Event_Handler *global_event_handler;
 
 void WINAPI
-timer_callback (HWND hwnd,
-                UINT uMsg,
-                UINT idEvent,
+timer_callback (HWND,
+                UINT,
+                UINT,
                 DWORD dwTime)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) timeout occured @ %u\n", dwTime));
@@ -59,7 +59,7 @@ timer_callback (HWND hwnd,
 }
 
 int
-main (int argc, char** argv)
+ACE_TMAIN (int, ACE_TCHAR*[])
 {
   // Manage memory automagically.
   // Note that ordering here is important.
