@@ -24,7 +24,6 @@ Clerk_i::~Clerk_i (void)
   // no-op.
 }
 
-
 // Reads the Time Service Server iors from a file instead of using a
 // naming service.
 
@@ -59,9 +58,10 @@ Clerk_i::read_ior (const char *filename)
           ACE_DEBUG ((LM_DEBUG,
                       "iors -> %s\n",
                       str));
+
           CORBA::Object_var objref =
             this->orb_->string_to_object (str,
-                                          TAO_TRY_ENV);
+					  TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           // Return if the server reference is nil.
@@ -74,7 +74,8 @@ Clerk_i::read_ior (const char *filename)
             CosTime::TimeService::_narrow (objref.in (),
                                            TAO_TRY_ENV);
           TAO_CHECK_ENV;
-          this->insert_server (server);
+
+	  this->insert_server (server);
         }
       TAO_CATCHANY
         {
@@ -122,7 +123,7 @@ Clerk_i::parse_args (void)
 
        if (this->ior_output_file_ == 0)
          ACE_ERROR_RETURN ((LM_ERROR,
-                            "[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n",
+                            "[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %\n",
                             get_opts.optarg), -1);
        break;
 
@@ -144,47 +145,6 @@ Clerk_i::parse_args (void)
   // Indicates successful parsing of command line.
   return 0;
 }
-
-// Yet to be integrated and tested.
-/*
-int
-Clerk_i::init_IR (void)
-{
-  TAO_TRY
-    {
-
-    ACE_NEW_RETURN (this->ir_helper_, IR_Helper ( "my_child_poa",
-    this->orb_manager_.child_poa (),
-    this->orb_manager_.orb (),
-    TAO_debug_level),
-    -1);
-      this->ir_helper_->register_server ("clerk -t 5");
-
-      this->ir_helper_->change_object (this->time_service_clerk_,
-                                       TAO_TRY_ENV);
-
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
-
-      // Convert the IR clerk reference to a string.
-      CORBA::String_var objref_clerk =
-        this->orb_manager_.orb ()->object_to_string (this->time_service_clerk_.in (),
-                                                     TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
-
-      // Print the IR clerk IOR on the console.
-      ACE_DEBUG ((LM_DEBUG,
-                  "[SERVER] Process/Thread Id : (%P/%t) The Time Service IREPO CLERK IOR is: <%s>\n",
-                  objref_clerk.in ()));
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Exception:");
-    }
-  TAO_ENDTRY;
-
-  return 0;
-}
-*/
 
 // Get a reference to the Server Naming context and the first IOR.
 // The iterator returned from this is used to get the next n IORs.
@@ -376,6 +336,7 @@ Clerk_i::create_clerk (void)
                       TAO_Time_Service_Clerk (this->timer_value_,
                                               this->server_),
                       0);
+
       // Generate IOR of the Clerk and register with POA.
       this->time_service_clerk_ =
         this->time_service_clerk_impl_->_this ();
@@ -504,15 +465,18 @@ Clerk_i::init (int argc,
       this->argc_ = argc;
       this->argv_ = argv;
 
-	  // Set the size of the Server IOR Array.
+      // Set the size of the Server IOR Array.
       this->server_.max_size (10);
       this->server_.size (0);
 
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
+
+
       this->orb_manager_.init (argc,
                                argv,
                                TAO_TRY_ENV);
+
       TAO_CHECK_ENV;
 
       if (this->orb_manager_.init_child_poa (argc,
@@ -523,7 +487,7 @@ Clerk_i::init (int argc,
                            "%p\n",
                            "init_child_poa"),
                           -1);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+      TAO_CHECK_ENV;
 
       // Get the ORB.
       this->orb_ = this->orb_manager_.orb ();
@@ -534,6 +498,7 @@ Clerk_i::init (int argc,
 
       // If IOR file has not been specified then try the Naming
       // Service.
+
       if (!this->ior_fp_)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -554,10 +519,13 @@ Clerk_i::init (int argc,
       if (this->create_clerk () != 0)
         return -1;
 
+
       // Register the clerk with the Naming Service.
       if (this->ior_fp_ == 0)
-        if (this->register_clerk () != 0)
-          return -1;
+	{
+	  if (this->register_clerk () != 0)
+	    return -1;
+	}
 
       // Close the open file handler.
       // ACE_OS::fclose (this->ior_fp_);
@@ -606,4 +574,5 @@ Clerk_i::insert_server (CosTime::TimeService_ptr server)
     }
   this->server_[s] = CosTime::TimeService::_duplicate (server);
   this->server_.size (s + 1);
+
 }
