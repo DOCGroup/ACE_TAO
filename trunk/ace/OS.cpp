@@ -1441,8 +1441,7 @@ ACE_Cleanup::cleanup (void *)
   delete this;
 }
 
-extern "C" ACE_Export
-void
+extern "C" void
 ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
 {
   object->cleanup (param);
