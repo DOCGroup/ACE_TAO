@@ -1,3 +1,28 @@
+Thu Jul 29 16:16:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Connect.cpp:
+	* tao/UIOP_Connect.h:
+	* tao/UIOP_Connect.cpp:
+	  Added reference counting to the server-side Svc_Handlers, this
+	  fixes the problem reported in [BUGID:172]
+
+	* tests/Faults/Makefile:
+	* tests/Faults/client.cpp:
+	* tests/Faults/middle.cpp:
+	* tests/Faults/run_test.pl:
+	* tests/Faults/server.cpp:
+	* tests/Faults/test_i.h:
+	* tests/Faults/test_i.i:
+	* tests/Faults/test_i.cpp:
+	  Added new scenario to the test to check that the server does not 
+	  crash if the client dies before the server can send back the
+	  Reply. This was specially problematic if the server used the
+	  Reactor in the process, because it would call handle_close()
+	  Thanks to Geisler Andreas <Andreas.Geisler@erls.siemens.de> for
+	  pointing out this problem and breaking through our thick skulls
+	  with it.
+
 Thu Jul 29 14:54:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Event_Comm/Event_Comm_i.cpp:

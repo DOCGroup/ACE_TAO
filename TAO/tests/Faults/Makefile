@@ -15,12 +15,13 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO
 
 IDLFILES = testC testS
-BIN = client server
+BIN = client server middle
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
 
 CLIENT_OBJS = client.o test_i.o $(addsuffix .o, $(IDLFILES))
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
+MIDDLE_OBJS = middle.o test_i.o $(addsuffix .o, $(IDLFILES))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -41,10 +42,13 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
+client: $(addprefix $(VDIR),$(CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-client: $(addprefix $(VDIR),$(CLIENT_OBJS))
+middle: $(addprefix $(VDIR),$(MIDDLE_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
