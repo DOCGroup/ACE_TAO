@@ -14,7 +14,7 @@
 
 #ifndef TAO_CORBALOC_PARSER_H
 #define TAO_CORBALOC_PARSER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/IOR_Parser.h"
 
@@ -22,12 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Profile.h"
 #include "ace/Service_Config.h"
 #include "ace/Array.h"
+#include "tao/Profile.h"
 #include "ace/SString.h"
 
 class TAO_MProfile;
+
 
 /**
  * @class TAO_CORBALOC_Parser
@@ -83,8 +84,8 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   struct parsed_endpoint {
-    parsed_endpoint () : profile_ (0) {}
-    ~parsed_endpoint () { delete this->profile_; }
+    parsed_endpoint ();
+    ~parsed_endpoint ();
     TAO_Profile *profile_;
     char obj_key_sep_;
     ACE_CString prot_addr_;
@@ -98,5 +99,5 @@ private:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBALOC_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_CORBALOC_Parser)
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_CORBALOC_PARSER_H */

@@ -8,7 +8,6 @@
 #include "tao/debug.h"
 #include "ace/Vector_T.h"
 #include "ace/INET_Addr.h"
-#include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
 #include "CORBALOC_Parser.i"
@@ -169,8 +168,9 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
       {
         if (TAO_debug_level)
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) TAO_CORBALOC_Parser::parse_string "
-                      "could not parse from %s",ior));
+                      ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
+                      ACE_TEXT("could not parse from %s"),
+                      ACE_TEXT_CHAR_TO_TCHAR(ior)));
         ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
                                             CORBA::COMPLETED_NO),
                           CORBA::Object::_nil ());
@@ -195,8 +195,9 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
     // anything else is a violation.
     if (TAO_debug_level)
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) TAO_CORBALOC_Parser::parse_string "
-                  "could not parse from %s",ior));
+                  ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
+                  ACE_TEXT("could not parse from %s"),
+                  ACE_TEXT_CHAR_TO_TCHAR(ior)));
     ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
                                         CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
@@ -215,10 +216,25 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
         endpoints[i].obj_key_sep_ +
         obj_key;
       const char * str = full_ep.c_str();
-      endpoints[i].profile_->parse_string (str
-                                                  ACE_ENV_ARG_PARAMETER);
-      if (mprofile.add_profile(endpoints[i].profile_) != -1)
+      endpoints[i].profile_->parse_string (str ACE_ENV_ARG_PARAMETER);
+      if (mprofile.give_profile(endpoints[i].profile_) != -1)
         endpoints[i].profile_ = 0;
+      else
+        {
+          // Although this ought never happen, we want to make some
+          // indication back to the caller, more as an audit trail than
+          // anything else. The only failure possible is that there was
+          // insufficient heap to allocate the mprofile, hence the
+          // mprofile's size is 0, and give_profile fails.
+          if (TAO_debug_level)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
+                        ACE_TEXT("mprofile.give_profile failed for i = %d\n"),
+                        i));
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
+                                              CORBA::COMPLETED_NO),
+                            CORBA::Object::_nil ());
+        }
     }
 
   CORBA::Object_ptr object = CORBA::Object::_nil ();
@@ -299,7 +315,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
 
           ACE_THROW (CORBA::INV_OBJREF
                      (CORBA::SystemException::_tao_minor_code
-                      (0, EINVAL),
+                      (TAO_DEFAULT_MINOR_CODE, EINVAL),
                       CORBA::COMPLETED_NO));
         }
       else
