@@ -86,6 +86,9 @@ public:
   void disconnect (CORBA::Environment &ACE_TRY_ENV);
   // Disconnect from the EC, also deactivates the object
 
+  void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  // Disconnect from the EC, also deactivates the object
+
   virtual void dump_results (const char* name);
   // Dump the results...
 
@@ -129,6 +132,9 @@ private:
 
   RtecEventChannelAdmin::SupplierQOS qos_;
   // The publications, used to select the events.
+
+  int is_active_;
+  // Is the supplier active in the POA?
 };
 
 // ****************************************************************

@@ -67,6 +67,9 @@ public:
   // The application can invoke this method to disconnect from the EC
   // and deactivate this class.
 
+  void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  // The application is shutting down, deactivate the consumer.
+
   void accumulate (EC_Driver::Throughput_Stats& throughput,
                    EC_Driver::Latency_Stats& latency) const;
   // Accumulate our statistics to the totals.
@@ -108,6 +111,9 @@ private:
 
   int shutdown_event_type_;
   // The type used to indicate shutdown
+
+  int is_active_;
+  // Is the consumer active in the POA?
 };
 
 #endif /* ECT_CONSUMER_H */

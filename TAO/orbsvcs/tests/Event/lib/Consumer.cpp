@@ -11,7 +11,8 @@ EC_Consumer::EC_Consumer (EC_Driver *driver,
   : driver_ (driver),
     cookie_ (cookie),
     push_count_ (0),
-    shutdown_event_type_ (ACE_ES_EVENT_SHUTDOWN)
+    shutdown_event_type_ (ACE_ES_EVENT_SHUTDOWN),
+    is_active_ (0)
 {
 }
 
@@ -42,6 +43,7 @@ EC_Consumer::connect (
 
   RtecEventComm::PushConsumer_var objref = this->_this (ACE_TRY_ENV);
   ACE_CHECK;
+  this->is_active_ = 1;
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos,
@@ -66,6 +68,13 @@ EC_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
+}
+
+void
+EC_Consumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
+{
+  if (!this->is_active_)
+    return;
 
   // Deactivate the servant
   PortableServer::POA_var poa =
@@ -76,6 +85,7 @@ EC_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
   poa->deactivate_object (id.in (), ACE_TRY_ENV);
   ACE_CHECK;
+  this->is_active_ = 0;
 }
 
 void

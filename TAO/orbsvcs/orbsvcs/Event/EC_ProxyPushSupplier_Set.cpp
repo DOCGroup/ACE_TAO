@@ -27,7 +27,7 @@ TAO_EC_ProxyPushSupplier_Set::connected_i (
       TAO_EC_ProxyPushSupplier *supplier,
       CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->all_suppliers_.insert (supplier) != 0)
+  if (this->all_suppliers_.insert (supplier) == -1)
     ACE_THROW (CORBA::NO_MEMORY ());
 }
 
