@@ -13,7 +13,7 @@
 #include "Stub.h"
 #include "Reactor_Registry.h"
 #include "Leader_Follower.h"
-
+#include "Connection_Purging_Strategy.h"
 #include "Connector_Registry.h"
 #include "Acceptor_Registry.h"
 
@@ -165,7 +165,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     ior_interceptors_ (),
     parser_registry_ (),
-    transport_cache_ (),
+    purging_strategy_ (0),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0)
   , flushing_strategy_ (0)
@@ -220,6 +220,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 TAO_ORB_Core::~TAO_ORB_Core (void)
 {
   delete this->flushing_strategy_;
+  delete this->purging_strategy_;
 
   ACE_OS::free (this->orbid_);
 
@@ -1032,6 +1033,20 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // Initialize the flushing strategy
   this->flushing_strategy_ = trf->create_flushing_strategy ();
 
+  // Create the purging strategy
+  this->purging_strategy_ = trf->create_purging_strategy ();
+
+  // We were unable to load the correct purging strategy
+  if (this->purging_strategy_ == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INITIALIZE (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_ORB_CORE_INIT_LOCATION_CODE,
+                            0),
+                          CORBA::COMPLETED_NO),
+                        -1);
+
+    }
   // Now that we have a complete list of available protocols and their
   // related factory objects, set default policies and initialize the
   // registries!
@@ -1064,7 +1079,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // Open the Transport Cache
   // @@ This seems to be a nice place to configure the transport
   // cache for the number of allowed entries
-  this->transport_cache_.open (this);
+  this->purging_strategy_->open_cache (this);
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.
@@ -1205,7 +1220,10 @@ TAO_ORB_Core::fini (void)
 
   // Close the transport cache and return the handle set that needs
   // to be de-registered from the reactor.
-  this->transport_cache_.close (handle_set, unregistered);
+  if (this->purging_strategy_ != 0)
+    {
+      this->purging_strategy_->close_cache (handle_set, unregistered);
+    }
 
   // Shutdown all open connections that are registered with the ORB
   // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
@@ -3027,7 +3045,7 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
     output_cdr_msgblock_allocator_ (0),
     input_cdr_dblock_allocator_ (0),
     input_cdr_buffer_allocator_ (0),
-    transport_cache_ (0),
+    purging_strategy_ (0),
     event_loop_thread_ (0),
     client_leader_thread_ (0),
     leader_follower_condition_variable_ (0),
@@ -3060,8 +3078,8 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
     this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
 
-  // UNIMPLEMENTED delete this->transport_cache_;
-  this->transport_cache_ = 0;
+  // UNIMPLEMENTED delete this->purging_strategy__;
+  this->purging_strategy_ = 0;
 
   delete this->leader_follower_condition_variable_;
   this->leader_follower_condition_variable_ = 0;

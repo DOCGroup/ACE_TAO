@@ -102,6 +102,10 @@ SOURCE=.\Direct_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FIFO_Connection_Purging_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_NonReactive_Base.cpp
 # End Source File
 # Begin Source File
@@ -111,6 +115,14 @@ SOURCE=.\GIOP_Message_NonReactive_Handler.cpp
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LFU_Connection_Purging_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\NULL_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
 

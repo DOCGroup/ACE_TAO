@@ -91,10 +91,12 @@ public:
   virtual int init_protocol_factories (void);
 
   virtual TAO_Resource_Factory::Caching_Strategy connection_caching_strategy_type (void) const;
-  virtual double purge_percentage (void) const;
+  virtual int cache_maximum (void) const;
+  virtual int purge_percentage (void) const;
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
   virtual ACE_Lock *create_cached_connection_lock (void);
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
+  virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
   virtual TAO_LF_Strategy *create_lf_strategy (void);
 
 protected:
@@ -128,9 +130,13 @@ protected:
   /// connection management.
   TAO_Resource_Factory::Caching_Strategy connection_caching_type_;
 
+  /// Specifies the maximum number of connections which should get cached
+  /// in the ORB.
+  int cache_maximum_;
+
   /// Specifies the percentage of entries which should get purged on
   /// demand.
-  double purge_percentage_;
+  int purge_percentage_;
 
   /// If <0> then we create reactors with signal handling disabled.
   int reactor_mask_signals_;

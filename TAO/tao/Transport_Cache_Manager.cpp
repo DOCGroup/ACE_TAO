@@ -300,13 +300,8 @@ TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &reactor_registered,
 int
 TAO_Transport_Cache_Manager::purge_entry_i (HASH_MAP_ENTRY *&entry)
 {
-  int retval = 0;
-
-  if (entry)
-    {
-      // Remove the enrty from the Map
-     retval =  this->cache_map_.unbind (entry);
-    }
+  // Remove the enrty from the Map
+  int retval =  this->cache_map_.unbind (entry);
 
   // Set the entry pointer to zero
   entry = 0;

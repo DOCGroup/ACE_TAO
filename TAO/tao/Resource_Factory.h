@@ -33,6 +33,7 @@ class TAO_Reactor_Registry;
 class TAO_Priority_Mapping;
 
 class TAO_Flushing_Strategy;
+class TAO_Connection_Purging_Strategy;
 class TAO_LF_Strategy;
 
 // ****************************************************************
@@ -174,9 +175,12 @@ public:
   /// purging of unused entries from the connection cache on demnad.
   virtual Caching_Strategy connection_caching_strategy_type (void) const;
 
+  /// This denotes the maximum number of connections that can be cached.
+  virtual int cache_maximum (void) const;
+
   /// This denotes the amount of entries to remove from the connection
   /// cache.
-  virtual double purge_percentage (void) const;
+  virtual int purge_percentage (void) const;
 
   /// Configure the priority mapping for the ORB
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
@@ -190,6 +194,9 @@ public:
   /// Creates the flushing strategy.  The new instance is owned by the
   /// caller.
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void) = 0;
+
+  /// Creates the connection purging strategy.
+  virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void) = 0;
 
   /// Creates the leader followers strategy.  The new instance is owned by the
   /// caller.

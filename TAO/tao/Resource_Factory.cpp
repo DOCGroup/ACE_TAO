@@ -143,7 +143,13 @@ TAO_Resource_Factory::connection_caching_strategy_type (void) const
   return TAO_Resource_Factory::NOOP;
 }
 
-double
+int
+TAO_Resource_Factory::cache_maximum (void) const
+{
+  return TAO_CONNECTION_CACHE_MAXIMUM;
+}
+
+int
 TAO_Resource_Factory::purge_percentage (void) const
 {
   return 0;

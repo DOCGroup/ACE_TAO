@@ -12,9 +12,13 @@
 #include "Reactor_Per_Priority.h"
 #include "Direct_Priority_Mapping.h"
 #include "Linear_Priority_Mapping.h"
+#include "LFU_Connection_Purging_Strategy.h"
+#include "FIFO_Connection_Purging_Strategy.h"
+#include "NULL_Connection_Purging_Strategy.h"
 
 #include "tao/debug.h"
 #include "tao/Single_Reactor.h"
+#include "tao/LRU_Connection_Purging_Strategy.h"
 #include "tao/Leader_Follower.h"
 
 #include "ace/Auto_Ptr.h"
@@ -574,6 +578,43 @@ int
 TAO_Advanced_Resource_Factory::input_cdr_allocator_type_locked (void)
 {
   return this->cdr_allocator_type_ == TAO_ALLOCATOR_NULL_LOCK ? 0 : 1;
+}
+
+TAO_Connection_Purging_Strategy *
+TAO_Advanced_Resource_Factory::create_purging_strategy (void)
+{
+  TAO_Connection_Purging_Strategy *strategy = 0;
+
+  switch(this->connection_caching_type_)
+    {
+    case TAO_Resource_Factory::LFU:
+      ACE_NEW_RETURN (strategy,
+                      TAO_LFU_Connection_Purging_Strategy (this),
+                      0);
+      break;
+    case TAO_Resource_Factory::FIFO:
+      ACE_NEW_RETURN (strategy,
+                      TAO_FIFO_Connection_Purging_Strategy (this),
+                      0);
+      break;
+    case TAO_Resource_Factory::NOOP:
+      ACE_NEW_RETURN (strategy,
+                      TAO_NULL_Connection_Purging_Strategy (this),
+                      0);
+      break;
+    case TAO_Resource_Factory::LRU:
+      ACE_NEW_RETURN (strategy,
+                      TAO_LRU_Connection_Purging_Strategy (this),
+                      0);
+      break;
+    default:
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - ")
+                  ACE_TEXT ("Unknown connection purging strategy ")
+                  ACE_TEXT ("type was found.\n")));
+    }
+
+  return strategy;
 }
 
 TAO_LF_Strategy *

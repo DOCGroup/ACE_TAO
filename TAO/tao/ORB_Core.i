@@ -22,10 +22,10 @@ TAO_ORB_Core::_decr_refcnt (void)
   return 0;
 }
 
-ACE_INLINE TAO_Transport_Cache_Manager &
-TAO_ORB_Core::transport_cache (void)
+ACE_INLINE TAO_Connection_Purging_Strategy *
+TAO_ORB_Core::purging_strategy (void)
 {
-  return this->transport_cache_;
+  return this->purging_strategy_;
 }
 
 

@@ -10,7 +10,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Endpoint.h"
-#include "tao/Transport_Cache_Manager.h"
+#include "tao/Connection_Purging_Strategy.h"
 #include "tao/Base_Transport_Property.h"
 
 #if !defined (__ACE_INLINE__)
@@ -267,8 +267,8 @@ TAO_IIOP_Connection_Handler::add_transport_to_cache (void)
   TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->transport_cache ().cache_transport (&prop,
-                                                                this->transport ());
+  return this->orb_core ()->purging_strategy ()->add_to_cache (&prop,
+                                                               this->transport ());
 }
 
 int

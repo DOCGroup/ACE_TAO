@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="POA Connection Purging" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Connection Purging Server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=POA Connection Purging - Win32 Debug
+CFG=Connection Purging Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Connection_Purging.mak".
+!MESSAGE NMAKE /f "server.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Connection_Purging.mak" CFG="POA Connection Purging - Win32 Debug"
+!MESSAGE NMAKE /f "server.mak" CFG="Connection Purging Server - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "POA Connection Purging - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "POA Connection Purging - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Connection Purging Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Connection Purging Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=POA Connection Purging - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "POA Connection Purging - Win32 Release"
+!IF  "$(CFG)" == "Connection Purging Server - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\.." /I "..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -50,10 +50,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib tao.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
 
-!ELSEIF  "$(CFG)" == "POA Connection Purging - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Connection Purging Server - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../" /I "../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -75,21 +75,25 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "POA Connection Purging - Win32 Release"
-# Name "POA Connection Purging - Win32 Debug"
+# Name "Connection Purging Server - Win32 Release"
+# Name "Connection Purging Server - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# PROP Default_Filter ".cpp"
 # Begin Source File
 
-SOURCE=.\Connection_Purging.cpp
+SOURCE=.\test_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
@@ -102,27 +106,24 @@ SOURCE=.\testS.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# PROP Default_Filter ".h"
 # Begin Source File
 
-SOURCE=.\testC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\testS.h
+SOURCE=.\test_i.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
 
-# PROP Default_Filter "idl"
+# PROP Default_Filter ".idl"
 # Begin Source File
 
 SOURCE=.\test.idl
 
-!IF  "$(CFG)" == "POA Connection Purging - Win32 Release"
+!IF  "$(CFG)" == "Connection Purging Server - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test
 
@@ -157,10 +158,10 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "POA Connection Purging - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Connection Purging Server - Win32 Debug"
 
-USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
+USERDEP__TEST_="f:\users\chad\transport\ACE_wrappers\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test
 
@@ -197,6 +198,18 @@ BuildCmds= \
 
 !ENDIF 
 
+# End Source File
+# End Group
+# Begin Group "Inline Files"
+
+# PROP Default_Filter ".i"
+# Begin Source File
+
+SOURCE=.\testC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\testS.i
 # End Source File
 # End Group
 # End Target
