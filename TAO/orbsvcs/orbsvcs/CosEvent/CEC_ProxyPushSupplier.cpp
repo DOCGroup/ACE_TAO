@@ -33,7 +33,7 @@ TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier (void)
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_CEC_ProxyPushSupplier::activate (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPushSupplier_var result;
   ACE_TRY
@@ -51,7 +51,7 @@ TAO_CEC_ProxyPushSupplier::activate (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_CEC_ProxyPushSupplier::deactivate (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {

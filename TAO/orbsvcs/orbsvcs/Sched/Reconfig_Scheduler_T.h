@@ -46,7 +46,7 @@ class TAO_Reconfig_Scheduler :
 public:
 
   typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
-	                              RtecScheduler::RT_Info*,
+                                      RtecScheduler::RT_Info*,
                                   ACE_Hash<RtecScheduler::handle_t>,
                                   ACE_Equal_To<RtecScheduler::handle_t>,
                                   ACE_LOCK> RT_INFO_MAP;
@@ -384,7 +384,7 @@ protected:
   // Compute utilization, set last feasible priority.
 
   static void init_rt_info (RtecScheduler::RT_Info &rt_info)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Helper method to give an RT_Info some reasonable default values
 
 
