@@ -1,3 +1,13 @@
+Mon Sep 27 15:41:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/DomainApplicationManager/Deployment_Configuration.h:
+
+	  Export the class out for Win32 builds. 
+	
+	* DAnCE/ExecutionManager/ExecutionManager.mpc:
+
+	  Removed a strange character frm the mpc file.
+
 Mon Sep 27 15:26:46 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
