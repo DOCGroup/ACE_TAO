@@ -207,7 +207,7 @@ TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
   TAO_Transport *base_transport = 0;
 
   // Check the Cache first for connections
-  if (this->orb_core ()->transport_cache ()->cache_transport (desc,
+  if (this->orb_core ()->transport_cache ()->find_transport (desc,
                                                               base_transport) == 0)
     {
       if (TAO_debug_level > 5)
