@@ -1060,9 +1060,12 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
         entry.actual_rt_info ()->criticality;
       RtecScheduler::Criticality_t succ_crit = 
         successor.actual_rt_info ()->criticality;
+      RtecScheduler::Criticality_t max_crit = entry_crit;
+      
+      if (max_crit < succ_crit)
+        max_crit = succ_crit;
 
-      successor.actual_rt_info ()->criticality =
-        ace_max (entry_crit, succ_crit);
+      successor.actual_rt_info ()->criticality = max_crit;
 
       ACE_DEBUG ((LM_DEBUG, 
                   "Successor's new criticality is %d\n",
