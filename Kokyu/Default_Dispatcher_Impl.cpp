@@ -43,7 +43,12 @@ Default_Dispatcher_Impl::init_i (const ConfigInfoSet& config_info_set)
       ACE_DEBUG ((LM_DEBUG, "iter = %d\n", i));
       Dispatcher_Task* task=0;
       ACE_NEW_RETURN (task, Dispatcher_Task (*config), -1);
-      tasks_[i++].reset (task);
+      auto_ptr<Dispatcher_Task> tmp_task_auto_ptr (task);
+      tasks_[i++] = tmp_task_auto_ptr;
+      //I couldn't use reset because MSVC++ auto_ptr does not have reset method.
+      //So in configurations where the auto_ptr maps to the std::auto_ptr instead
+      //of ACE auto_ptr, this would be a problem.
+      //tasks_[i++].reset (task);
     }
 
   this->activate ();
