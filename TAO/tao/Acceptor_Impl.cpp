@@ -1,5 +1,7 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -28,6 +30,7 @@
 #include "ORB_Core.h"
 #include "Transport_Cache_Manager.h"
 #include "Thread_Lane_Resources.h"
+#include "Transport.h"
 #include "debug.h"
 
 #if !defined(__ACE_INLINE__)
@@ -38,12 +41,13 @@ ACE_RCSID (tao,
            Acceptor_Impl,
            "$Id$")
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>
-TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
-                                                           void *arg,
-                                                           CORBA::Boolean flag)
+TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (
+  TAO_ORB_Core *orb_core,
+  void *arg,
+  CORBA::Boolean flag)
   : ACE_Creation_Strategy<SVC_HANDLER> (0, orb_core->reactor()),
     orb_core_ (orb_core),
     arg_ (arg),
@@ -69,7 +73,7 @@ TAO_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>
 TAO_Concurrency_Strategy<SVC_HANDLER>::TAO_Concurrency_Strategy (TAO_ORB_Core *orb_core)
@@ -189,7 +193,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
   return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::TAO_Accept_Strategy (TAO_ORB_Core *orb_core)

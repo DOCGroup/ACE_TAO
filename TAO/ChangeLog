@@ -1,3 +1,10 @@
+Thu Aug 19 23:28:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Acceptor_Impl.cpp:
+
+	  Include "Transport.h" to pull in "TAO_SERVER_ROLE" enumeration
+	  member definition.
+
 Thu Aug 19 22:00:39 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/MT_IIOP_SSL.mpc:
