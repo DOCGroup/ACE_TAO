@@ -7,9 +7,10 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 
+#include "CompPkgDesc_Handler.h"
 #include "Property_Handler.h"
 #include "PCI_Handler.h"
-#include "CompIntfDesc_Handler.h"
+#include "CompIntrDesc_Handler.h"
 
 #include <iostream>
 
@@ -21,10 +22,10 @@ namespace CIAO
   namespace Config_Handler
   {
     CompPkgDesc_Handler::CompPkgDesc_Handler (DOMDocument* doc, unsigned long filter)
-      : traverse_ (doc),
+      : doc_ (doc),
         root_ (doc->getDocumentElement()),
         filter_ (filter),
-        iter_ (traverse_->createNodeIterator (this->root_,
+        iter_ (doc_->createNodeIterator (this->root_,
                                               this->filter_,
                                               0,
                                               true)),
@@ -32,7 +33,7 @@ namespace CIAO
     {}
 
     CompPkgDesc_Handler::CompPkgDesc_Handler (DOMNodeIterator* iter, bool release)
-      : traverse_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
+      : doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
     {}
 
 
@@ -91,10 +92,10 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("realizes")))
             {
               // fetch the component package reference handler
-              CompIntfDesc_Handler compintfdesc_handler (iter_, false);
+              CompIntrDesc_Handler compintrdesc_handler (iter_, false);
 
               // delegate the populating process
-              compintfdesc_handler.process_ComponentInterfaceDescription (comppkgdesc.realizes);
+              compintrdesc_handler.process_ComponentInterfaceDescription (comppkgdesc.realizes);
             }
           else if (node_name == XStr (ACE_TEXT ("implementation")))
             {
