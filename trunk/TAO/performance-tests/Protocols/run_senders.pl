@@ -68,7 +68,7 @@ for ($message_size = $min_message_size, $i = 1;
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") 
     {
-        print STDERR "\nusage:  run_clients.pl\n";
+        print STDERR "\nusage:  run_senders.pl\n";
 
         print STDERR "\t-h shows options menu\n";
 
@@ -99,11 +99,11 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 
         print STDERR "\n";
 
-        $CL = new PerlACE::Process ("client", "-h");
+        $CL = new PerlACE::Process ("sender", "-h");
         $CL->Spawn ();
         $CL->WaitKill (5);
         
-        $SV = new PerlACE::Process ("server", "-h");
+        $SV = new PerlACE::Process ("receiver", "-h");
         $SV->Spawn ();
         $SV->WaitKill (5);
 
@@ -193,7 +193,7 @@ if ($test_type eq "PACED")
 {
     $test = 0;
 
-    # Client-side stats are not interesting when pacing
+    # Sender-side stats are not interesting when pacing
     $print_statistics = 0;
 }
 elsif ($test_type eq "THROUGHPUT")
@@ -210,7 +210,7 @@ elsif ($test_type eq "LATENCY")
 
 for $config (@configs)
 {
-    $command = "./client -a $test -t $print_statistics $config $extra_args";
+    $command = "./sender -a $test -t $print_statistics $config $extra_args";
     print  "$command \n";
     system ($command);
 }
