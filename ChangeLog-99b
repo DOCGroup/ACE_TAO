@@ -1,3 +1,9 @@
+Fri Feb 26 17:48:32 1999  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Added OCFLAGS
+          value for optimize=1 builds; added support for distrib=1
+          builds to build for off-site distribution.
+
 Fri Feb 26 12:38:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp: added #include "ace/Thread_Manager.h" on
