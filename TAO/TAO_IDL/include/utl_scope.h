@@ -201,10 +201,12 @@ protected:
   // If pos is not -1 it will be inserted at the the given position
   void                          add_to_referenced(AST_Decl *e,
                                                   idl_bool recursive,
+                                                  Identifier *id,
                                                   AST_Decl *ex = 0);
 
   // Has this node been referenced here already?
-  idl_bool                      referenced(AST_Decl *e);
+  idl_bool                      referenced(AST_Decl *e,
+                                           Identifier *id = 0);
 
   // Look up a scoped name in the inherited interfaces of an
   // interface
@@ -238,6 +240,13 @@ private:
   AST_Decl                      **pd_referenced;        // Store references
   long                          pd_referenced_allocated;// How many allocated?
   long                          pd_referenced_used;     // How many used?
+
+  // Storage for identifiers used in this scope. CORBA 2.3 introduced
+  // stricter rules for clashes during name resolution, and the information
+  // in pd_referenced is not enough to catch them all.
+  Identifier              **pd_name_referenced;         // Store name references
+  long                    pd_name_referenced_allocated; // How many allocated?
+  long                    pd_name_referenced_used;      // How many used?
 
   // Friend class UTL_ScopeActiveIterator defines active iterator for
   // UTL_Scope. Definition follows below.

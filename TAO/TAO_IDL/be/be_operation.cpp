@@ -132,7 +132,7 @@ be_argument *
 be_operation::add_argument_to_scope (be_argument *arg)
 {
   this->add_to_scope (arg);
-  this->add_to_referenced (arg, 0);
+  this->add_to_referenced (arg, 0, 0);
   return arg;
 }
 
