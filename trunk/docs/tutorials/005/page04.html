@@ -36,7 +36,7 @@ the definition where all of the real work of the application takes place.
    hierarchy.  This is a requirement of the ACE_Reactor because it maintains
    ACE_Event_Handler pointers for each registered event handler.  You could
    derive our Client_Handler directly from ACE_Event_Handler but you still have
-   to have an ACE_SOCK_Stream for the actually connection.  With a direct
+   to have an ACE_SOCK_Stream for the actual connection.  With a direct
    derivative of ACE_Event_Handler, you'll have to contain and maintain an
    ACE_SOCK_Stream instance yourself.  With ACE_Svc_Handler (which is a
    derivative of ACE_Event_Handler) some of those details are handled for you.
@@ -122,7 +122,7 @@ protected:
      function which I will call from handle_input().  That allows me to
      introduce concurrencly in later tutorials with a no changes to the worker
      function.  You can think of process() as application-level code and
-     everything elase as application-framework code.
+     everything else as application-framework code.
    */
   int process (char *_rdbuf, int _rdbuf_len);
 

@@ -1,3 +1,27 @@
+Sun Jan 17 13:50:16 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/002/handler.h: 
+	* docs/tutorials/002/handler.h:
+	* docs/tutorials/002/page03.html:
+	* docs/tutorials/003/client.cpp:
+	* docs/tutorials/003/page01.html:
+	* docs/tutorials/004/page01.html:
+	* docs/tutorials/005/client_handler.h:
+	* docs/tutorials/005/page02.html:
+	* docs/tutorials/005/page04.html:
+	* docs/tutorials/005/page05.html:
+	* docs/tutorials/005/server.cpp:
+
+	  More improvements from Doug's class (and Ossama).  Each "page2"
+	  includes an abstract by Kirthika.
+	  
+	  Reviewers to date:
+	  Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+	  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+	  Balachandran Natarajan <bala@cs.wustl.edu>
+	  Pradeep Gore <pradeep@cs.wustl.edu>
+	  Ossama Othman <othman@cs.wustl.edu>
+	
 Sat Jan 16 19:08:12 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/High_Res_Timer.cpp: Added #ifdef so high-res timers work

@@ -49,7 +49,7 @@ int main (int argc, char *argv[])
   /*
     So, we feed the Addr object and the Stream object to the connector's connect() member
     function. Given this information, it will establish the network connection to the
-    server and attacht that connection to the server object. 
+    server and attach that connection to the server object. 
    */
   if (connector.connect (server, addr) == -1)
   {
@@ -74,7 +74,7 @@ int main (int argc, char *argv[])
       all of the data. That is due to network buffer availability and such. If the send()
       doesn't send all of the data, it is up to you to program things such that it will
       keep trying until all of the data is sent or simply give up. The send_n() function
-      already does the "keep tyring" option for us, so we use it. 
+      already does the "keep trying" option for us, so we use it. 
 
 			Like the send() method used in the servers we've seen, there are two additional
 			parameters you can use on the send() and send_n() method calls.  The timeout

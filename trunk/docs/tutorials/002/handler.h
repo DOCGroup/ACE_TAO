@@ -100,7 +100,7 @@ public:
   }
 
   /*
-    If somebody doesn't like us, the will close() us.  Actually, if our open() method
+    If somebody doesn't like us, they will close() us.  Actually, if our open() method
     returns -1, the Acceptor<> will invoke close() on us for cleanup.
    */
   virtual int close (u_long _flags = 0)

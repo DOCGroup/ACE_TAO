@@ -21,8 +21,15 @@ that can send a chunk of data.  A cooler thing to do is to overload
 the C++ put operator (&lt;&lt;) to put some data for us.  That's what
 we're going to do this time.  (This tutorial is actually where ACE_IOStream
 was born.)
-
 <P>
+Kirthika says:
+<UL>
+The cool thing about this "cooler" client is how we use a C++ trick for
+streaming incoming data by using the operator<<() metod. Also the
+Connector portion is wrapped in the open() method which now takes in the 
+server hostname and port. The result is a cleaner-looking client which
+successfully interacts with the server, when connection is established.
+</UL>
 <HR WIDTH="100%">
 <PRE>/*
   We need the connector object &amp; we also bring in a simple string class.
