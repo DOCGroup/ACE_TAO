@@ -212,10 +212,9 @@ TAO_Connection_Handler::handle_input_eh (
     {
       if (TAO_debug_level > 6)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Connection_Handler[%d] - not going to handle_input "
-                    "on Transport %d "
+                    "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
+                    "not going to handle_input on transport "
                     "because upcalls temporarily suspended on this thread\n",
-                    this->transport()->id(),
                     this->transport()->id()));
       return 0;
     }
