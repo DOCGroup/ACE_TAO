@@ -1369,6 +1369,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid, void **status)
 
   ACE_Thread_Descriptor_Base tdb;
   int found = 0;
+
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
@@ -1404,12 +1405,12 @@ ACE_Thread_Manager::join (ACE_thread_t tid, void **status)
            || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
         {
           tdb = *iter.next ();
-          ACE_SET_BITS (tdb.thr_state_, ACE_THR_JOINING);
+          ACE_SET_BITS (iter.next ()->thr_state_, ACE_THR_JOINING);
           found = 1;
           break;
         }
 
-    if (!found)
+    if (found == 0)
       return -1;
     // Didn't find the thread we want or the thread is not joinable.
   }
