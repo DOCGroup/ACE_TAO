@@ -17,7 +17,7 @@
 #define PACE_UTIME_H_WIN32
 
 #include "pace/sys/types.h"
-#include <utime.h>
+#include <sys/utime.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
@@ -25,7 +25,7 @@ extern "C" {
 
 #ifndef PACE_UTIMBUF
 #define PACE_UTIMBUF
-typedef struct utimbuf pace_utimbuf;
+  typedef struct _utimbuf pace_utimbuf;
 #endif /* PACE_UTIMBUF */
 
 #if defined (PACE_HAS_CPLUSPLUS)
