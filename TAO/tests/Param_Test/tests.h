@@ -23,6 +23,7 @@
 #include "bd_long_seq.h"
 #include "bd_short_seq.h"
 #include "bd_str_seq.h"
+#include "bd_string.h"
 #include "bd_struct_seq.h"
 #include "fixed_array.h"
 #include "fixed_struct.h"

@@ -177,8 +177,12 @@ public:
   CORBA_Boolean write_float (CORBA::Float x);
   CORBA_Boolean write_double (const CORBA::Double &x);
   CORBA_Boolean write_longdouble (const CORBA::LongDouble &x);
+
   CORBA_Boolean write_string (const CORBA::Char *x);
+  CORBA_Boolean write_string (CORBA::ULong length, const CORBA::Char *x);
   CORBA_Boolean write_wstring (const CORBA::WChar *x);
+  CORBA_Boolean write_wstring (CORBA::ULong length, const CORBA::WChar *x);
+  // For string we offer methods that accept a precomputed length.
 
   // = We add one method to write arrays of basic IDL types.
   // Note: the portion written starts at <x> and ends at <x + length>.

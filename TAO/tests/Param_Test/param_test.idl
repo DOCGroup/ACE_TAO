@@ -45,6 +45,11 @@ interface Param_Test
                                 inout string s2,
                                 out string s3);
 
+  typedef string<128> short_string;
+  short_string test_bounded_string (in short_string s1,
+				    inout short_string s2,
+				    out short_string s3);
+
   // structures (fixed size)
   struct Fixed_Struct
   {
