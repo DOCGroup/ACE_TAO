@@ -1,7 +1,7 @@
 # $Id$
 #
 # Platform macros for building on AIX 4.x with g++.  This has been tested on
-# AIX 4.3 with gcc 3.1
+# AIX 4.3 with gcc 3.2
 #
 # Original contributed by Ian Wright <I.Wright@elsevier.co.uk>. Updated for
 # AIX 4 and egcs by Steve Huston <shuston@riverace.com>.
@@ -21,6 +21,9 @@ ifeq (,$(threads))
 endif
 ifeq (,$(exceptions))
   exceptions = 0
+endif
+ifeq (,$(with_ld))
+  with_ld = aix
 endif
 
 # Yes, believe it or not...
@@ -79,8 +82,7 @@ SOFLAGS        += -shared -Wl,-bexpall # -Wl,-bloadmap:lib.map
 LIBS           += -ltli_r -ldl
 ARFLAGS         = cruv
 RANLIB          = ranlib
-SONAME		=
-SOVERSION	=
+
 # On AIX, shared libraries are not generally left in .so form to link against.
 # To do so requires the run-time linker and that is an unnecessary evil.
 # So build the .so as usual, but then put in an archive library to link
