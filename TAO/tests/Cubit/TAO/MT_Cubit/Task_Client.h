@@ -31,6 +31,7 @@
 #include "cubitC.h"
 #include "cubit_i.h"
 #include "Globals.h"
+#include "Timer.h"
 
 #if defined (CHORUS)
 #include "pccTimer.h"
@@ -38,8 +39,6 @@
 
 #include <math.h>
 
-// @@ Should we put this into a more general file, e.g., OS.h?
-//
 // I will integrate this, together with the sqrt() function when
 // the implementation is complete.  --Sergio.
 #if defined (ACE_LACKS_FLOATING_POINT)
@@ -62,17 +61,6 @@ quantify_clear_data ();
 #define CLEAR_QUANTIFY
 #endif /* !NO_ACE_QUANTIFY */
 
-// @@ Naga, I think this function should be moved into a class as a
-// static member function, rather than having it at "file scope."
-
-// Arbitrary generator used by the client to create the numbers to be
-// cubed.
-
-static inline int
-func (u_int i)
-{
-  return i - 117;
-}
 
 enum Cubit_Datatypes
 {
@@ -166,7 +154,7 @@ public:
   // of two-way.
 
   char *one_ior_;
-  // @@ Naga, can you please add a comment here?
+  // Ior array used if utilization test is run.
 
   u_int use_name_service_;
   // Flag that say if we are using the or not the name service.
@@ -267,16 +255,32 @@ public:
   ACE_timer_t get_jitter (u_int id);
   // Accessors to get the various measured quantities.
 
+
+  static int func (u_int i);
+  // Arbitrary generator used by the client to create the numbers to be
+  // cubed.
+
 private:
-  int run_tests (Cubit_ptr,
-                 u_int,
-                 u_int,
-                 Cubit_Datatypes,
-                 ACE_timer_t frequency);
+  int init_orb (void);
+  // initialize the ORB.
+
+  int get_cubit_from_naming (void);
+  // initialize the naming service.
+
+  void read_ior (void);
+  // reads the cubit ior from a file.
+
+  int get_cubit (void);
+  // gets the cubit object.
+
+  int run_tests (void);
   // Run the various tests.
 
-  int make_calls (void);
-  // make calls depending on the datatype.
+  int make_request (void);
+  // make a CORBA request depending on the datatype.
+
+  int do_test (void);
+  // makes the corba requests.
 
   int cube_octet (void);
   // call cube_octet method on the cubit object.
@@ -290,6 +294,9 @@ private:
   int cube_struct (void);
   // call cube struct on the cubit object.
 
+  void print_stats (void);
+  // prints the latency stats.
+
   void put_latency (ACE_timer_t *jitter,
                     ACE_timer_t latency,
                     u_int thread_id,
@@ -298,6 +305,10 @@ private:
 
   int parse_args (int, char **);
   // Parses the arguments.
+
+  void find_frequency (void);
+  // determines the frequency at which to make calls depending on the
+  // id of the thread.
 
   Cubit_ptr cubit_;
   // pointer to the cubit object.
@@ -325,6 +336,24 @@ private:
 
   TAO_Naming_Client my_name_client_;
   // Naming Client intermediary to naming service stuff.
+
+  ACE_timer_t *my_jitter_array_;
+  // Array holding the jitter values for the latencies.
+
+  MT_Cubit_Timer *timer_;
+  // Timer using pccTimer for chorus and ACE_Timer for other platforms.
+
+  ACE_timer_t frequency_;
+  // frequency of CORBA requests.
+
+  CORBA::ORB_var orb_;
+  // ORB pointer.
+  
+  u_int naming_success_;
+  // flag indicating the success of naming service.
+
+  ACE_timer_t latency_;
+  // aggregate latency of the requests.
 };
 
 #endif /* !defined (TASK_CLIENT_H) */

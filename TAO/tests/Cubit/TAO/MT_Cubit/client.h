@@ -49,17 +49,23 @@ public:
   void run (void);
   // Run the tests.
 
-  // @@ Naga, can you please add comments for these methods?
   int do_priority_inversion_test (ACE_Thread_Manager *thread_manager);
+  // Performs the priority inversion test.
 
   int do_thread_per_rate_test (ACE_Thread_Manager *thread_manager);
+  // Performs the test with 4 threads each sending requests at rates
+  // of 20,10,5 and 1Hz.
 
-  int start_servant (Task_State *ts, ACE_Thread_Manager &thread_manager);
+  int start_servant (Task_State *ts, ACE_Thread_Manager
+                     &thread_manager);
+  // Starts the client utilization thread.
 
   void output_latency (Task_State *ts);
+  // output the latency results for the requests.
 
 #if defined (VXWORKS)
   void output_taskinfo (void);
+  // Outputs the details of this task to a file taskinfo.txt.
 #endif /* VXWORKS */
 
 private:
@@ -89,6 +95,9 @@ private:
 
   void print_latency_stats (void);
   // Prints the latency and jitter results.
+
+  void get_context_switches (void);
+  // gets the number of context switches.
 
   Client *high_priority_client_;
   // Pointer to the high priority client object.
@@ -133,7 +142,7 @@ private:
   // when there are more threads than priorities.
 
   u_int counter_;
-  // @@ Naga, can you please add a comment here?
+  // counter of the number of priorities used within a grain.
 
   char *task_id_;
   // Set a task_id string starting with "@", so we are able to
@@ -143,10 +152,10 @@ private:
   // elapsed time for the latency tests.
 
   int argc_;
-  // @@ Naga, can you please add a comment here?
+  // number of command line arguments.
 
   char **argv_;
-  // @@ Naga, can you please add a comment here?
+  // command line argument array.
 
   ACE_Thread_Manager client_thread_manager_;
   // Create a separate manager for the client.  This allows the use of
@@ -154,13 +163,13 @@ private:
   // server's (global) thread manager.
 
   ACE_timer_t total_latency_;
-  // @@ Naga, can you please add a comment here?
+  // total latency time for all the threads.
 
   ACE_timer_t total_latency_high_;
-  // @@ Naga, can you please add a comment here?
+  // latency time threads other than utilisation.
 
   ACE_timer_t total_util_task_duration_;
-  // @@ Naga, can you please add a comment here?
+  // time taken by the utilization task.
 
   u_int context_switch_;
   // Stores the total number of context switches incurred by the

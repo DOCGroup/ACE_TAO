@@ -42,9 +42,7 @@ typedef struct
   INSTR *pc;
 } task_info;
 
-// @@ Naga, does this really need to be a #define?  Can it be a const
-// int instead?!
-#define SWITCHES 25000
+const int SWITCHES=25000;
 task_info tInfo[SWITCHES];
 
 extern "C"
@@ -60,7 +58,7 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
     {
       ACE_OS::strncpy (tInfo[ct].name,
                        pNewTcb->name,
-                       14); // @@ Naga, can you please fix this "magic number" 14?!
+                       TASKNAME_LEN);
       tInfo[ct].tcb = pNewTcb;
       tInfo[ct].pc  = pNewTcb->regs.pc;
       ct++;
@@ -197,7 +195,7 @@ Client_i::output_taskinfo (void)
   FILE *file_handle = ACE_OS::fopen ("taskinfo.txt", "w");
 
   if (file_handle == 0)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_ERROR ((LM_ERROR, 
                 "%p\n",
                 "open"));
 
@@ -208,16 +206,42 @@ Client_i::output_taskinfo (void)
   // clients.
 
   for (u_int j = 0; j < SWITCHES; j ++)
-    ACE_DEBUG ((LM_DEBUG,
-                file_handle,
-                "\tname= %s\ttcb= %p\tpc= %p\n",
-                tInfo[j].name,
-                tInfo[j].tcb,
-                tInfo[j].pc));
+    ACE_OS::fprintf(file_handle,
+                    "\tname= %s\ttcb= %p\tpc= %p\n",
+                    tInfo[j].name,
+                    tInfo[j].tcb,
+                    tInfo[j].pc);
 
   ACE_OS::fclose (file_handle);
 }
 #endif /* VXWORKS */
+
+void
+Client_i::get_context_switches (void)
+{
+#if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
+
+  if (this->ts_->context_switch_test_ == 1)
+    {
+      this->timer_for_context_switch.start ();
+      this->timer_for_context_switch.get_rusage (this->usage);
+# if defined (ACE_HAS_PRUSAGE_T)
+      this->context_switch_ = this->usage.pr_vctx + this->usage.pr_ictx;
+# else  /* ACE_HAS_PRUSAGE_T */
+      this->context_switch_ = this->usage.ru_nvcsw + this->usage.ru_nivcsw;
+# endif /* ACE_HAS_GETRUSAGE */
+    }
+#endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
+
+#if defined (VXWORKS)
+  if (this->ts_->context_switch_test_ == 1)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Adding the context switch hook!\n"));
+      taskSwitchHookAdd ((FUNCPTR) &switchHook);
+    }
+#endif /* VXWORKS */
+}
 
 void
 Client_i::output_latency (Task_State *ts)
@@ -675,9 +699,7 @@ Client_i::do_priority_inversion_test (ACE_Thread_Manager *thread_manager)
 #if defined (VXWORKS)
   ctx = 0;
   ACE_NEW_RETURN (this->task_id_,
-                  // @@ Naga, can you please replace the magic number
-                  // 32 with a symbolic constant?
-                  char[32],
+                  char[TASK_ID_LEN],
                   -1);
 #endif /* VXWORKS */
   ACE_DEBUG ((LM_DEBUG,
@@ -705,7 +727,7 @@ Client_i::do_priority_inversion_test (ACE_Thread_Manager *thread_manager)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, this->ts_->ready_mtx_,-1));
 
-  // @@ Naga, can you please add a comment here explaining what this loop is doing?!
+  // wait on the condition variable until the high priority thread wakes us up.
   while (!this->ts_->ready_)
     this->ts_->ready_cnd_.wait ();
 
@@ -728,31 +750,8 @@ Client_i::do_priority_inversion_test (ACE_Thread_Manager *thread_manager)
   STOP_QUANTIFY;
   CLEAR_QUANTIFY;
 
-  // @@ Naga, can you please factor the following bunch of #ifdefs
-  // into a separate function?!  This is too messy!
-
-#if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
-
-  if (this->ts_->context_switch_test_ == 1)
-    {
-      this->timer_for_context_switch.start ();
-      this->timer_for_context_switch.get_rusage (this->usage);
-# if defined (ACE_HAS_PRUSAGE_T)
-      this->context_switch_ = this->usage.pr_vctx + this->usage.pr_ictx;
-# else  /* ACE_HAS_PRUSAGE_T */
-      this->context_switch_ = this->usage.ru_nvcsw + this->usage.ru_nivcsw;
-# endif /* ACE_HAS_GETRUSAGE */
-    }
-#endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
-
-#if defined (VXWORKS)
-  if (this->ts_->context_switch_test_ == 1)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Adding the context switch hook!\n"));
-      taskSwitchHookAdd ((FUNCPTR) &switchHook);
-    }
-#endif /* VXWORKS */
+  // collect the context switch data.
+  this->get_context_switches ();
 
   // Wait for all the client threads to exit (except the utilization
   // thread).
@@ -826,7 +825,7 @@ Client_i::do_thread_per_rate_test (ACE_Thread_Manager *thread_manager)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, this->ts_->ready_mtx_,-1));
 
-  // @@ Naga, can you please document what this loop is doing?!
+  // wait on the condition variable until the high priority thread wakes us up.
   while (!this->ts_->ready_)
     this->ts_->ready_cnd_.wait ();
 
