@@ -1,3 +1,12 @@
+Thu Jul  1 14:42:36 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* etc/ciao_assembly_deployer.doxygen:
+	* etc/ciao_componentserver.doxygen:
+	* etc/ciao_daemon.doxygen:
+
+	  Fixed some reference error. Thanks to Johnny Willemsen
+	  <jwillemsen@remedy.nl> for reporting these bugs.
+
 Thu Jul  1 14:00:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/default.rel:
