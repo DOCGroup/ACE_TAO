@@ -1958,7 +1958,13 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   int r2 = ACE_OS::cond_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
 #elif defined (ACE_HAS_WTHREADS)
+#  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
+#  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  int r1 = ACE_OS::mutex_destroy (&s->lock_);
+  int r2 = ACE_OS::cond_destroy (&s->count_nonzero_);
+  return r1 != 0 || r2 != 0 ? -1 : 0;
+#  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #elif defined (VXWORKS)
   int result;
   ACE_OSCALL (ACE_ADAPT_RETVAL (::semDelete (s->sema_), result), int, -1, result);
@@ -1978,8 +1984,12 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 }
 
 ACE_INLINE int
-ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
-                   LPCTSTR name, void *arg, int max,
+ACE_OS::sema_init (ACE_sema_t *s,
+                   u_int count,
+                   int type,
+                   LPCTSTR name,
+                   void *arg,
+                   int max,
                    LPSECURITY_ATTRIBUTES sa)
 {
   // ACE_TRACE ("ACE_OS::sema_init");
@@ -2036,6 +2046,7 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
     }
   return result;
 #elif defined (ACE_HAS_WTHREADS)
+#  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
   // Create the semaphore with its value initialized to <count> and
@@ -2047,6 +2058,26 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
   /* NOTREACHED */
   else
     return 0;
+#  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  int result = -1;
+
+  if (ACE_OS::mutex_init (&s->lock_, type, name, arg, sa) == 0
+      && ACE_OS::event_init (&s->count_nonzero_, 1, 1, type, name, arg, sa) == 0
+      && ACE_OS::mutex_lock (&s->lock_) == 0)
+    {
+      s->count_ = count;
+
+      if (ACE_OS::mutex_unlock (&s->lock_) == 0)
+        result = 0;
+    }
+
+  if (result == -1)
+    {
+      ACE_OS::mutex_destroy (&s->lock_);
+      ACE_OS::event_destroy (&s->count_nonzero_);
+    }
+  return result;
+#  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #elif defined (VXWORKS)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (name);
@@ -2106,9 +2137,26 @@ ACE_OS::sema_post (ACE_sema_t *s)
     }
   return result;
 #elif defined (ACE_HAS_WTHREADS)
+#  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, 1, 0),
                                           ace_result_),
                         int, -1);
+#  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  int result = -1;
+
+  if (ACE_OS::mutex_lock (&s->lock_) == 0)
+    {
+      // Check the original state of event object.
+      // We don't need to set it everytime.
+      if (s->count_++ <= 0)
+        result = ACE_OS::event_signal (&s->count_nonzero_);
+      else
+        result = 0;
+
+      ACE_OS::mutex_unlock (&s->lock_);
+    }
+  return result;
+#  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semGive (s->sema_), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
@@ -2126,7 +2174,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
 ACE_INLINE int
 ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   // Win32 supports this natively.
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, release_count, 0),
                                           ace_result_), int, -1);
@@ -2172,6 +2220,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
     }
   return result;
 #elif defined (ACE_HAS_WTHREADS)
+#  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   int result = ::WaitForSingleObject (*s, 0);
 
   if (result == WAIT_OBJECT_0)
@@ -2182,7 +2231,30 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
       // This is a hack, we need to find an appropriate mapping...
       return -1;
     }
+#  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  int result = ::WaitForSingleObject (s->count_nonzero_, 0);
 
+  if (result == WAIT_OBJECT_0)
+    {
+      ACE_OS::mutex_lock (&s->lock_);
+
+      // Need to double check if the semaphore is still available.
+      result = ::WaitForSingleObject (s->count_nonzero_, 0);
+      if (result == WAIT_OBJECT_0)
+        {
+          s->count_--;
+          if (s->count_ <= 0)
+            ACE_OS::event_reset (s->count_nonzero_);
+          return 0;
+        }
+
+      ACE_OS::mutex_unlock (&s->lock_);
+    }
+
+  errno = result == WAIT_TIMEOUT ? EBUSY : ::GetLastError ();
+  // This is taken from the hack above. ;)
+  return -1;
+#  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #elif defined (VXWORKS)
   if (::semTake (s->sema_, NO_WAIT) == ERROR)
     if (errno == S_objLib_OBJ_TIMEOUT)
@@ -2253,6 +2325,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   return result < 0 ? -1 : result;
 
 #elif defined (ACE_HAS_WTHREADS)
+#  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   switch (::WaitForSingleObject (*s, INFINITE))
     {
     case WAIT_OBJECT_0:
@@ -2263,6 +2336,31 @@ ACE_OS::sema_wait (ACE_sema_t *s)
       return -1;
     }
   /* NOTREACHED */
+#  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  while (1)
+    switch (::WaitForSingleObject (s->count_nonzero_, INFINITE))
+      {
+      case WAIT_OBJECT_0:
+        ACE_OS::mutex_lock (&s->lock_);
+
+        // Need to double check if the semaphore is still available.
+        if (::WaitForSingleObject (s->count_nonzero_, 0) == WAIT_OBJECT_0)
+          {
+            s->count_--;
+            if (s->count_ <= 0)
+              ACE_OS::event_reset (s->count_nonzero_);
+            return 0;
+          }
+
+        ACE_OS::mutex_unlock (&s->lock_);
+        break;
+      default:
+        errno = ::GetLastError ();
+        // This is taken from the hack above. ;)
+        return -1;
+      }
+  /* NOTREACHED */
+#  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, WAIT_FOREVER), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
@@ -2328,6 +2426,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   errno = error;
   return result < 0 ? -1 : result;
 #elif defined (ACE_HAS_WTHREADS)
+#  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   switch (::WaitForSingleObject (*s, tv.sec () * 1000 + tv.usec () / 1000))
     {
     case WAIT_OBJECT_0:
@@ -2341,6 +2440,42 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       return -1;
     }
   /* NOTREACHED */
+#  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  ACE_Time_Value start_time = ACE_OS::gettimeofday ();
+  ACE_Time_Value relative_time = tv;
+
+  while (relative_time > ACE_Time_Value::zero)
+    {
+      switch (::WaitForSingleObject (s->count_nonzero_, relative_time.msec ()))
+        {
+        case WAIT_OBJECT_0:
+          ACE_OS::mutex_lock (&s->lock_);
+
+          // Need to double check if the semaphore is still available.
+          if (::WaitForSingleObject (s->count_nonzero_, 0) == WAIT_OBJECT_0)
+            {
+              s->count_--;
+              if (s->count_ <= 0)
+                ACE_OS::event_reset (s->count_nonzero_);
+              return 0;
+            }
+
+          ACE_OS::mutex_unlock (&s->lock_);
+          break;
+        case WAIT_TIMEOUT:
+          errno = ETIME;
+          return -1;
+        default:
+          errno = ::GetLastError ();
+          // This is taken from the hack above. ;)
+          return -1;
+        };
+      relative_time = tv - (ACE_OS::gettimeofday () - start_time);
+    }
+
+  errno = ETIME;
+  return -1;
+#  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #elif defined (VXWORKS)
   int ticks_per_sec = ::sysClkRateGet ();
   int ticks = tv.sec() * ticks_per_sec +
