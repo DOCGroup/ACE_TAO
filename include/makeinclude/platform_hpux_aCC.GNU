@@ -21,7 +21,8 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
 CXX		= /opt/aCC/bin/aCC
-# Suppres warning 829 (string literal to char * is deprecated)
+# Suppress warning 829 (string literal to char * is deprecated)
+# Suppress warning 302 ((...) parameter list is a non-portable feature)
 CCFLAGS		+= $(CFLAGS) -D_THREAD_SAFE -D_REENTRANT -DHPUX_VERS=$(HPUX_VERS) +W829,302
 DCFLAGS		+= -g
 DLD		= $(CXX) $(CCFLAGS)
@@ -39,7 +40,7 @@ SOEXT		= sl
 # on.  If on HP-UX 10.x and not using DCE threads, remove -lcma.
 #
 ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-LIBS		= -lxti -lpthread -lrt -ldld
+LIBS		+= -lxti -lpthread -lrt -ldld
 else
-LIBS		= -lxti -ldld -lcma
+LIBS		+= -lxti -ldld -lcma
 endif
