@@ -50,8 +50,9 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 
 .obj/DomainS.o .obj/DomainS.so .shobj/DomainS.o .shobj/DomainS.so: DomainS.cpp DomainS.h \
- $(ACE_ROOT)/ace/pre.h \
- domain_export.h \
+ $(ACE_ROOT)/ace/pre.h domain_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -382,8 +383,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/IFR_Client/InterfaceC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifrfwd.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
- $(TAO_ROOT)/tao/IFR_Client/IFR_Client_Adapter_Impl.h \
- $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
  $(TAO_ROOT)/tao/IFR_Client/InterfaceC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
  $(TAO_ROOT)/tao/Tagged_Profile.h \

@@ -1,6 +1,24 @@
+Mon Feb 19 20:19:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Lite.cpp: 
+	* tao/GIOP_Message_Locate_Header.cpp:
+	* tao/GIOP_Message_Generator_Parser_10.cpp: Corrected the wrong
+	  inclusions.  
+	
+	* tao/Makefile:
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/SmartProxies/Makefile:
+	* tao/Strategies/Makefile: Updated dependencies.
+
 Mon Feb 19 19:59:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Locate_Header.h: Changed the wrog inclusion of
+	* tao/GIOP_Message_Locate_Header.h: Changed the wrong inclusion of
 	  .i file.  
 
 Mon Feb 19 19:15:11 2001  Jeff Parsons <parsons@cs.wustl.edu>

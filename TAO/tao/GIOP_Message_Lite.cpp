@@ -7,7 +7,7 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/operation_details.h"
 #include "tao/TAO_Server_Request.h"
-#include "tao/GIOP_Message_Headers.h"
+#include "tao/GIOP_Message_Locate_Header.h"
 #include "tao/target_specification.h"
 #include "tao/Leader_Follower.h"
 #include "Transport.h"
