@@ -73,12 +73,14 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 # pccTimer will eventually get integrated into ACE.  It is specific for ClassiX on VME
 ifdef CHORUS
+  ifndef CHORUS_4
         PCCTIMER_DIR = /project/doc/mvme
         LSRC += $(PCCTIMER_DIR)/pccTimer.cpp
         CPPFLAGS += -I$(PCCTIMER_DIR)
         CUBIT_CLIENT_OBJS += pccTimer.o
         CUBIT_SVR_OBJS += pccTimer.o
         #### For miniCOOL, I think.  Should it be -lOrb-mt?  LDLIBS += -lOrb
+  endif
 endif
 
 .PRECIOUS: cubitC.h cubitC.i cubitC.cpp cubitS.h cubitS.i cubitS.cpp
