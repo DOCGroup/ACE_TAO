@@ -1,4 +1,8 @@
-Thu Apr 01 20:46:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu Apr 01 21:09:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* Sequence.h (TAO_Base_Sequence): Made the copy constructor and
+	  the assignment operator public since making them protected was
+	  breaking some compilers.
 
 	* ace/Filecache.cpp (ACE_Filecache_Object): Fixed typo: <lock_>
 	  should be <lock>.
