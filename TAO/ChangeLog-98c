@@ -1,3 +1,21 @@
+Fri Jun 12 16:53:49 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_decl.cpp (gen_name2long): Michael found out that
+	the TAO_IDL compiler was generating non-portable code for the
+	TypeCode arrays of longs for the RepoID and the name. After
+	discussions with Doug and Irfan, we have decided to always
+	generate the arrays in network order (big endian) and add an
+	ACE_NTOHL macro as the static array is initialized. This way there
+	won't be any run-time penalty. At the same time, the code will be
+	portable.
+
+	* TAO_IDL/{be_enum, be_exception, be_interface, be_structure,
+	be_typedef, be_union}.cpp: Added the call to ACE_NTOHL macro for
+	the arrays of long that are generated for TypeCodes.
+
+	* tests/Param_Test/params.idl: Added interface definition for
+	tests for arrays. This is still not working at this time.
+
 Fri Jun 12 15:39:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Generic_Servant: Added oneway calls.

@@ -659,7 +659,7 @@ be_union::gen_encapsulation (void)
   (void)this->tc_name2long (this->repoID (), arr, arrlen);
   for (i=0; i < arrlen; i++)
     {
-      cs->print ("0x%x, ", arr[i]);
+      cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
     }
   *cs << " // repository ID = " << this->repoID () << nl;
   // generate name
@@ -667,7 +667,7 @@ be_union::gen_encapsulation (void)
   (void)this->tc_name2long(this->local_name ()->get_string (), arr, arrlen);
   for (i=0; i < arrlen; i++)
     {
-      cs->print ("0x%x, ", arr[i]);
+      cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
     }
   *cs << " // name = " << this->local_name () << ",\n";
 
