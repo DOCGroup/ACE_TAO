@@ -1,3 +1,9 @@
+Fri Aug 15 00:37:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/tests.mpc:
+          Added missing Recursive_Condition_Bug_Test and
+          Unbounded_Set_Test_Ex projects.
+
 Thu Aug 14 18:31:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Message_Queue.h:
