@@ -313,12 +313,12 @@ public:
   ACE_Mailto_Addr (void);
   // Constructor
 
-  ACE_Mailto_Addr (LPCTSTR name,
+  ACE_Mailto_Addr (LPCTSTR user,
                    LPCTSTR hostname,
                    LPCTSTR headers = 0);
   // Construct an FTP URL from the host, path and headers.
 
-  int set (LPCTSTR name,
+  int set (LPCTSTR user,
            LPCTSTR hostname,
            LPCTSTR headers = 0);
   // Essentially the constructor above.
@@ -332,8 +332,11 @@ public:
   virtual ~ACE_Mailto_Addr (void);
   // Destructor
 
+  LPCTSTR get_user (void) const;
+  // Get the username component in the URL
+
   LPCTSTR get_hostname (void) const;
-  // Get the path component in the URL
+  // Get the hostname component in the URL
 
   LPCTSTR get_headers (void) const;
   // Get the headers as a single string
@@ -350,7 +353,15 @@ public:
   virtual int accept (ACE_URL_Addr_Visitor* visitor);
 
 private:
-  LPTSTR name_;
+  size_t url_size (int flags = 0) const;
+  // Compute the size required to store the URL in a string
+  // representation.
+
+  void clear (void);
+  // Helper method to cleanup resources
+
+private:
+  LPTSTR user_;
   LPTSTR hostname_;
   LPTSTR headers_;
 };
