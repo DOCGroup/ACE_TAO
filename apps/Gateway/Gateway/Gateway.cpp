@@ -193,7 +193,7 @@ Gateway::init (int argc, char *argv[])
   // shutdown the Gateway gracefully.
   if (ACE::register_stdin_handler (this,
 				   ACE_Reactor::instance (),
-				   ACE_Thread_Manager::instance () ()) == -1)
+				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_stdin_handler"), -1);
 
   // If this->performance_window_ > 0 start a timer.
