@@ -81,11 +81,11 @@ protected:
   const char* rt_service_name;
   // The name of the Real Time Event Service.
 
-  PortableServer::POA_var poa_;
-  // Reference to the root poa.
-
   CORBA::ORB_var orb_;
   // The ORB that we use.
+
+  PortableServer::POA_var poa_;
+  // Reference to the root poa.
 
   CosNaming::NamingContext_var naming_;
   // A naming context.
