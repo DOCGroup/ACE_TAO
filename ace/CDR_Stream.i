@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "ace/OS_NS_string.h"
+
 // ****************************************************************
 
 // implementing the special types
