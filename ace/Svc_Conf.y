@@ -140,19 +140,6 @@ module
       ACE_ARGV args ($<static_node_>1->parameters ());
       ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1);
 
-      // Make sure that the Module has the same name as the
-      // Module_Type object from the svc.conf file.
-      const char *module_type_name = $<static_node_>1->name ();
-      ACE_Module<ACE_SYNCH> *mp = (ACE_Module<ACE_SYNCH> *) mt->object ();
-
-      if (ACE_OS::strcmp (mp->name (), module_type_name) != 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "warning: assigning Module_Type name %s to Module %s since names differ\n",
-		      module_type_name, mp->name ()));
-	  mp->name (module_type_name);
-	}
-
       if (mt->init (args.argc (), args.argv ()) == -1
 	  || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
 	{
@@ -164,19 +151,6 @@ module
   | static  
     { 
       ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
-
-      // Make sure that the Module has the same name as the
-      // Module_Type object from the svc.conf file.
-      const char *module_type_name = $<static_node_>1->name ();
-      ACE_Module<ACE_SYNCH> *mp = (ACE_Module<ACE_SYNCH> *) mt->object ();
-
-      if (ACE_OS::strcmp (mp->name (), module_type_name) != 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "warning: assigning Module_Type name %s to Module %s since names differ\n",
-		      module_type_name, mp->name ()));
-	  mp->name (module_type_name);
-	}
 
       if (((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
 	yyerrno++;
@@ -311,6 +285,7 @@ get_module (ACE_Static_Node *str_rec, const char *svc_name)
 		 svc_name, str_rec->name ()));
       yyerrno++;
     }
+
   return mt;
 }
 
@@ -327,9 +302,23 @@ get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR, "cannot locate Module_Type %s or STREAM_Type %s\n",
-		 svc_type->name (), str_rec->name ()));
+		  svc_type->name (), str_rec->name ()));
       yyerrno++;
     }
+
+  // Make sure that the Module has the same name as the
+  // Module_Type object from the svc.conf file.
+  const char *module_type_name = svc_type->name ();
+  ACE_Module<ACE_SYNCH> *mp = (ACE_Module<ACE_SYNCH> *) mt->object ();
+
+  if (ACE_OS::strcmp (mp->name (), module_type_name) != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "warning: assigning Module_Type name %s to Module %s since names differ\n",
+		  module_type_name, mp->name ()));
+      mp->name (module_type_name);
+    }
+
   return mt;
 }
 
