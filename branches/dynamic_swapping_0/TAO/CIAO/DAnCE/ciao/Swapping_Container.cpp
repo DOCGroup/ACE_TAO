@@ -39,7 +39,6 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
 
-    ACE_DEBUG ((LM_DEBUG, "swap container init \n"));
     char buffer[MAXPATHLEN];
 
     if (name == 0)
@@ -65,7 +64,6 @@ namespace CIAO
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
-    ACE_DEBUG ((LM_DEBUG, "create servant POA\n"));
 
     this->create_servant_POA (name,
                               more_policies,
@@ -73,16 +71,13 @@ namespace CIAO
                               ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
-    ACE_DEBUG ((LM_DEBUG, "created servant POA\n"));
 
-    ACE_DEBUG ((LM_DEBUG, "create home servant POA\n"));
 
     this->create_home_servant_POA ("home servant POA",
                                    more_policies,
                                    root_poa.in ()
                                    ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
-    ACE_DEBUG ((LM_DEBUG, "created home servant POA\n"));
 
     this->create_connections_POA (root_poa.in ()
                            ACE_ENV_ARG_PARAMETER);
@@ -122,7 +117,6 @@ namespace CIAO
       root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "about to create home servant POA\n"));
 
     this->home_servant_poa_ =
       root->create_POA (name,
@@ -130,7 +124,6 @@ namespace CIAO
                         policies
                         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    ACE_DEBUG ((LM_DEBUG, "created home servant POA\n"));
   }
 
   void
@@ -242,13 +235,11 @@ namespace CIAO
                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "i am inside install servant \n"));
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
     {
       tmp = this->home_servant_poa_.in ();
-      ACE_DEBUG ((LM_DEBUG, "i am inside identifying the home servant POA \n"));
     }
     else
       tmp = this->facet_cons_poa_.in ();
@@ -257,13 +248,11 @@ namespace CIAO
       = tmp->activate_object (p
                               ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
-    ACE_DEBUG ((LM_DEBUG, "activate object \n"));
     
     CORBA::Object_var objref
       = tmp->id_to_reference (oid.in ()
                               ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
-    ACE_DEBUG ((LM_DEBUG, "create ref \n"));
 
     return objref._retn ();
   }
