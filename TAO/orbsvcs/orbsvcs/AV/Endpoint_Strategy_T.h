@@ -34,7 +34,7 @@ class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy
 protected:
   // Constructor
 
-  TAO_AV_Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
+  TAO_AV_Endpoint_Reactive_Strategy (void);
   // Constructor
 
   virtual ~TAO_AV_Endpoint_Reactive_Strategy (void);
@@ -69,7 +69,7 @@ protected:
 
   char* activate_with_poa (PortableServer::Servant servant, CORBA::Environment &env);
   
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
   
   PortableServer::POA_var poa_;
 
@@ -85,7 +85,9 @@ class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy_A
 
 public:
 
-  TAO_AV_Endpoint_Reactive_Strategy_A (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
+  TAO_AV_Endpoint_Reactive_Strategy_A (void);
+
+  int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
   // Constructor
 
   virtual ~TAO_AV_Endpoint_Reactive_Strategy_A (void);
@@ -111,11 +113,13 @@ class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy_B
   //    Reactive strategy
 public:
 
-  TAO_AV_Endpoint_Reactive_Strategy_B (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
+  TAO_AV_Endpoint_Reactive_Strategy_B (void);
   // Constructor
 
   virtual ~TAO_AV_Endpoint_Reactive_Strategy_B (void);
   // Destructor.
+
+  int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   virtual int activate_stream_endpoint (CORBA::Environment &env);
   // Overrides the base class stream_endpoint activator, to activate
