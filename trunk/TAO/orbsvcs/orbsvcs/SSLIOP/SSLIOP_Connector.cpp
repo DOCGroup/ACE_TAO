@@ -131,9 +131,9 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                                ACE_ENV_ARG_DECL)
 {
   return this->connect (invocation,
-		  	desc,
-			0
-			ACE_ENV_ARG_PARAMETER);
+                        desc,
+                        0
+                        ACE_ENV_ARG_PARAMETER);
 }
 
 int
@@ -563,6 +563,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                           ACE_TEXT ("errno")));
             }
 
+          (void) this->active_connect_strategy_->post_failed_connect (svc_handler);
           return -1;
         }
 

@@ -1,3 +1,11 @@
+Fri Nov 29 19:42:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp: Replicated the changes
+	  in IIOP to the above protocols. Need to refactor this code. 
+
 Fri Nov 29 19:30:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connect_Strategy.h:
