@@ -118,5 +118,5 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Current_ptr &_tao_
       return 0;
     }
   ACE_ENDTRY;
-  return 0; // failure
+  ACE_CHECK_RETURN (0);
 }
