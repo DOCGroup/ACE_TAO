@@ -152,6 +152,12 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
     be_interface *bf = be_interface::narrow_from_decl (pt);
     if (bf != 0)
       is_valuetype = bf->is_valuetype ();
+    else
+      {
+        be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
+        if (bff != 0)
+          is_valuetype = bff->is_valuetype ();
+      }
   }
 
   if (is_valuetype)
