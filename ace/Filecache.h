@@ -316,12 +316,6 @@ public:
   };
 
 private:
-  ACE_Filecache_Object (const ACE_Filecache_Object &);
-  ACE_Filecache_Object & operator= (const ACE_Filecache_Object & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
-
   char *tempname_;
   char filename_[MAXPATHLEN + 1];
   // The temporary file name and the real file name.  The real file is
