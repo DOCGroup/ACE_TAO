@@ -38,8 +38,19 @@ Thu Sep 11 08:52:36 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Log_Msg.cpp (~ACE_Log_Msg): release guard before calling
 	  ACE_Log_Msg_Manager::close (), because that deletes the lock.
 
-	* include/makeinclude/wrapper_macros.GNU: ignored shared_libs_only
-	  in modules that only build a static lib.
+	* include/makeinclude/wrapper_macros.GNU: ignore shared_libs_only
+	  in modules that only build a static lib.  Fixed shared_libs_only
+	  by removing OBJDIRS, unless BIN is undefined, and VDIR.  Removed
+	  SHOBJ from both shared_libs_only and static_libs_only because
+	  they're unused.
+
+	* include/makeinclude/rules.local.GNU: added lib*.*_pure* to
+	  clean.local target, to remove Purified libraries.
+
+	* examples/Connection/non_blocking/Makefile,
+	  examples/Service_Configurator/IPC-tests/server/Makefile:
+	  removed -L./ from LDFLAGS because it's redundant:
+	  wrapper_macros.GNU adds it.
 
 Thu Sep 11 00:24:04 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
