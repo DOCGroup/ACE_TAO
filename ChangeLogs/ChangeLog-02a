@@ -1,3 +1,18 @@
+Fri May 26 09:16:21 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_Dirent.cpp:
+
+          I shall not put ACE_INLINE's in a .cpp file.
+          I shall not put ACE_INLINE's in a .cpp file.
+          I shall not put ACE_INLINE's in a .cpp file.
+          I shall not put ACE_INLINE's in a .cpp file.
+          I shall not put ACE_INLINE's in a .cpp file.
+          I shall not put ACE_INLINE's in a .cpp file.
+          I shall not put ACE_INLINE's in a .cpp file.
+          I shall not put ACE_INLINE's in a .cpp file.
+          I shall not put ACE_INLINE's in a .cpp file.
+          I shall not put ACE_INLINE's in a .cpp file.
+
 Thu May 25 20:23:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/Process_Win32.pm:
