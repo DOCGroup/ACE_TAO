@@ -32,14 +32,15 @@ extern char 	*optarg;	// missing on some platforms
 #endif
 
 //
-// Skeleton code ... just a macro for a bunch of DSI-based method code,
-// in lieu of having an IDL compmiler generate static skeletons.  Static
-// skeletons would be more efficient; most mallocation could go away.
+// Skeleton code ... just a macro for a bunch of DSI-based method
+// code, in lieu of having an IDL compmiler generate static skeletons.
+// Static skeletons would be more efficient; most mallocation could go
+// away.
 //
-// Use by:  defining OPERATION macro, call DEFINE_SKEL3 as needed, then
+// Use by: defining OPERATION macro, call DEFINE_SKEL3 as needed, then
 // undef OPERATION.
 //
-// NOTE:  "v1_copy" below is needed to work around a bug with the
+// NOTE: "v1_copy" below is needed to work around a bug with the
 // HP9000 G++ 2.6.3 compiler, with "LongLong".
 //
 // XXX this could probably be a template ... or could even be merged
@@ -49,8 +50,9 @@ extern char 	*optarg;	// missing on some platforms
 // by the parameters must be deallocated by the ORB.  When we get an
 // updated version of DSI which provides "send it now" semantics,
 // these should preallocate the values and not use IN_COPY_VALUE.  A
-// net decrease in malloc overhead can be had that way.  (NVList should
-// also get a public constructor, and a way to provide the buffer.)
+// net decrease in malloc overhead can be had that way.  (NVList
+// should also get a public constructor, and a way to provide the
+// buffer.)
 //
 #define	DEFINE_SKEL3(name,truetype,truetypename) \
     static void \
@@ -135,11 +137,11 @@ _test1_test_void (CORBA_ServerRequest &req,
 template <class Type>
 Type cube (Type arg)
 {
-    Type temp = arg;
+  Type temp = arg;
 
-    temp = temp * arg;
-    temp = temp * arg;
-    return temp;
+  temp = temp * arg;
+  temp = temp * arg;
+  return temp;
 }
 
 #define	OPERATION(n)	cube(n)
@@ -361,12 +363,10 @@ static const TAO_Skel_Entry test1_operations [] = {
 // compiler is a public, supported API.
 //
 static void
-level1_skeleton (
-    CORBA_OctetSeq		&key,
-    CORBA_ServerRequest		&req,
-    void			*context,
-    CORBA_Environment		&env
-)
+level1_skeleton (CORBA_OctetSeq &key,
+		 CORBA_ServerRequest &req,
+		 void *context,
+		 CORBA_Environment &env)
 {
   //
   // Verify that the target object and "this" object have the
@@ -442,11 +442,11 @@ level1_skeleton (
   //
   if (strcmp ((char *) opname, "please_exit") == 0)
     {
-    dmsg ("I've been asked to shut down...");
-    req.oa ()->please_shutdown (env);
-    dexc (env, "please_exit, please_shutdown");
-    return;
-  }
+      dmsg ("I've been asked to shut down...");
+      req.oa ()->please_shutdown (env);
+      dexc (env, "please_exit, please_shutdown");
+      return;
+    }
 
   //
   // No match.  Operation not implemented; say so.
@@ -601,7 +601,7 @@ main (int    argc, char   *argv[])
   //
   // Parse the command line, get options
   //
-  ACE_Get_Opt get_opt (argc, argv, "dln:O:x");
+  ACE_Get_Opt get_opt (argc, argv, "di:ln:O:x");
   int			c;
 
   while ((c = get_opt ()) != -1)
@@ -660,11 +660,32 @@ main (int    argc, char   *argv[])
   // The BOA may or may not actually be named ...
   //
   oa_ptr = CORBA_BOA::get_named_boa (orb_ptr, oa_name, env);
-  if (env.exception () != 0) {
-    print_exception (env.exception (), "OA init");
-    return 1;
-  }
+  if (env.exception () != 0) 
+    {
+      print_exception (env.exception (), "OA init");
+      return 1;
+    }
 
   return OA_listen (orb_ptr, oa_ptr, key, idle);
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template CORBA_Octet cube(CORBA_Octet);
+template CORBA_Short cube(CORBA_Short);
+template CORBA_UShort cube(CORBA_UShort);
+template CORBA_Long cube(CORBA_Long);
+template CORBA_ULong cube(CORBA_ULong);
+#if	!defined (NONNATIVE_LONGLONG)
+	// don't try this on platforms that don't support
+	// math on longlongs ...
+template CORBA_LongLong cube(CORBA_LongLong);
+template CORBA_ULongLong cube(CORBA_ULongLong);
+#endif	// !NONNATIVE_LONGLONG
+template CORBA_Float cube(CORBA_Float);
+template CORBA_Double cube(CORBA_Double);
+#if	!defined (NONNATIVE_LONGDOUBLE)
+	// don't try this on platforms that don't support
+	// math on long doubles ...
+template CORBA_LongDouble cube(CORBA_LongDouble);
+#endif	// !NONNATIVE_LONGDOUBLE
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
