@@ -33,7 +33,8 @@ module Control
 
     /// Run the test using the prescribed number of iterations
     Samples run_experiment (in long experiment_id,
-                            in long iterations);
+                            in long iterations,
+                            out long gsf);
 
     /// Shutdown the peer
     void shutdown ();
