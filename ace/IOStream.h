@@ -17,12 +17,13 @@
 #if !defined (ACE_IOSTREAM_H)
 #define ACE_IOSTREAM_H
 
-#include "ace/config.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #include "ace/INET_Addr.h"
 #include "ace/Handle_Set.h"
+#include "ace/streams.h"
 
 #if defined (ACE_HAS_STRING_CLASS)
 #if defined (ACE_WIN32)

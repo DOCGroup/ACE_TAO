@@ -22,9 +22,9 @@
 #if !defined (ACE_IOSTREAM_T_H)
 #define ACE_IOSTREAM_T_H
 
-#if !defined (ACE_LACKS_ACE_IOSTREAM)
 #include "ace/IOStream.h"
-#include "ace/stdcpp.h" // for iomanip[.h]
+
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #if defined (ACE_HAS_STRING_CLASS)
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);

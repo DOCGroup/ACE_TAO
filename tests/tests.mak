@@ -3187,7 +3187,7 @@ CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
 
 SOURCE=.\Handle_Set_Test.cpp
 DEP_CPP_HANDL=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -3209,6 +3209,7 @@ DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
 	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -3267,7 +3268,7 @@ DEP_CPP_HANDL=\
 
 SOURCE=.\Mem_Map_Test.cpp
 DEP_CPP_MEM_M=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
@@ -3276,6 +3277,7 @@ DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -3311,7 +3313,7 @@ DEP_CPP_MEM_M=\
 
 SOURCE=.\Naming_Test.cpp
 DEP_CPP_NAMIN=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -3337,6 +3339,7 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -3424,7 +3427,7 @@ DEP_CPP_NAMIN=\
 
 SOURCE=.\Reactor_Timer_Test.cpp
 DEP_CPP_REACT=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -3444,6 +3447,7 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -3506,7 +3510,7 @@ DEP_CPP_REACT=\
 
 SOURCE=.\Reactors_Test.cpp
 DEP_CPP_REACTO=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -3529,6 +3533,7 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -3624,7 +3629,7 @@ DEP_CPP_REACTO=\
 
 SOURCE=.\SString_Test.cpp
 DEP_CPP_SSTRI=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
@@ -3633,6 +3638,7 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -3666,7 +3672,7 @@ DEP_CPP_SSTRI=\
 
 SOURCE=.\Time_Value_Test.cpp
 DEP_CPP_TIME_=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
@@ -3675,6 +3681,7 @@ DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -3708,7 +3715,7 @@ DEP_CPP_TIME_=\
 
 SOURCE=.\Timer_Queue_Test.cpp
 DEP_CPP_TIMER=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -3728,6 +3735,7 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
 	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -3802,7 +3810,7 @@ DEP_CPP_TIMER=\
 
 SOURCE=.\UPIPE_SAP_Test.cpp
 DEP_CPP_UPIPE=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -3827,6 +3835,7 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -3942,7 +3951,7 @@ DEP_CPP_UPIPE=\
 
 SOURCE=.\Priority_Buffer_Test.cpp
 DEP_CPP_PRIOR=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -3965,6 +3974,7 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -4049,7 +4059,7 @@ DEP_CPP_PRIOR=\
 
 SOURCE=.\Time_Service_Test.cpp
 DEP_CPP_TIME_S=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
@@ -4058,6 +4068,7 @@ DEP_CPP_TIME_S=\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -4093,7 +4104,7 @@ DEP_CPP_TIME_S=\
 
 SOURCE=.\SPIPE_Test.cpp
 DEP_CPP_SPIPE=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -4113,6 +4124,7 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -4181,7 +4193,7 @@ DEP_CPP_SPIPE=\
 
 SOURCE=.\Buffer_Stream_Test.cpp
 DEP_CPP_BUFFE=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -4204,6 +4216,7 @@ DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -4303,7 +4316,7 @@ DEP_CPP_BUFFE=\
 
 SOURCE=.\Barrier_Test.cpp
 DEP_CPP_BARRI=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -4321,6 +4334,7 @@ DEP_CPP_BARRI=\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -4378,7 +4392,7 @@ DEP_CPP_BARRI=\
 
 SOURCE=.\Reader_Writer_Test.cpp
 DEP_CPP_READE=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -4398,6 +4412,7 @@ DEP_CPP_READE=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -4455,7 +4470,7 @@ DEP_CPP_READE=\
 
 SOURCE=.\Recursive_Mutex_Test.cpp
 DEP_CPP_RECUR=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -4475,6 +4490,7 @@ DEP_CPP_RECUR=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -4532,7 +4548,7 @@ DEP_CPP_RECUR=\
 
 SOURCE=.\Task_Test.cpp
 DEP_CPP_TASK_=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -4555,6 +4571,7 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -4650,8 +4667,8 @@ DEP_CPP_TASK_=\
 
 SOURCE=.\Thread_Manager_Test.cpp
 DEP_CPP_THREA=\
-	".\test_config.h"\
 	".\Thread_Manager_Test.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -4669,6 +4686,7 @@ DEP_CPP_THREA=\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -4726,8 +4744,8 @@ DEP_CPP_THREA=\
 
 SOURCE=.\TSS_Test.cpp
 DEP_CPP_TSS_T=\
-	".\test_config.h"\
 	".\TSS_Test_Errno.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -4745,6 +4763,7 @@ DEP_CPP_TSS_T=\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -4802,7 +4821,7 @@ DEP_CPP_TSS_T=\
 
 SOURCE=.\Thread_Pool_Test.cpp
 DEP_CPP_THREAD=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -4825,6 +4844,7 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -4920,7 +4940,7 @@ DEP_CPP_THREAD=\
 
 SOURCE=.\Future_Test.cpp
 DEP_CPP_FUTUR=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Activation_Queue.h"\
@@ -4946,6 +4966,7 @@ DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -5042,7 +5063,7 @@ DEP_CPP_FUTUR=\
 
 SOURCE=.\Tokens_Test.cpp
 DEP_CPP_TOKEN=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -5068,6 +5089,7 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Local_Tokens.h"\
@@ -5166,7 +5188,7 @@ DEP_CPP_TOKEN=\
 
 SOURCE=.\Message_Queue_Test.cpp
 DEP_CPP_MESSA=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -5189,6 +5211,7 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -5273,7 +5296,7 @@ DEP_CPP_MESSA=\
 
 SOURCE=.\Map_Manager_Test.cpp
 DEP_CPP_MAP_M=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -5297,6 +5320,7 @@ DEP_CPP_MAP_M=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
 	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -5372,7 +5396,7 @@ DEP_CPP_MAP_M=\
 
 SOURCE=.\Pipe_Test.cpp
 DEP_CPP_PIPE_=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
@@ -5383,6 +5407,7 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -5420,7 +5445,7 @@ DEP_CPP_PIPE_=\
 
 SOURCE=.\Process_Mutex_Test.cpp
 DEP_CPP_PROCE=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -5434,6 +5459,7 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -5480,7 +5506,7 @@ DEP_CPP_PROCE=\
 
 SOURCE=.\SV_Shared_Memory_Test.cpp
 DEP_CPP_SV_SH=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -5498,6 +5524,7 @@ DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -5553,7 +5580,7 @@ DEP_CPP_SV_SH=\
 
 SOURCE=.\MM_Shared_Memory_Test.cpp
 DEP_CPP_MM_SH=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -5571,6 +5598,7 @@ DEP_CPP_MM_SH=\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -5631,7 +5659,7 @@ DEP_CPP_MM_SH=\
 
 SOURCE=.\Service_Config_Test.cpp
 DEP_CPP_SERVI=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -5651,6 +5679,7 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -5720,7 +5749,7 @@ DEP_CPP_SERVI=\
 
 SOURCE=.\SOCK_Test.cpp
 DEP_CPP_SOCK_=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -5744,6 +5773,7 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -5814,7 +5844,7 @@ DEP_CPP_SOCK_=\
 
 SOURCE=.\Message_Block_Test.cpp
 DEP_CPP_MESSAG=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -5839,6 +5869,7 @@ DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
 	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -5937,7 +5968,7 @@ DEP_CPP_MESSAG=\
 
 SOURCE=.\Reactor_Notify_Test.cpp
 DEP_CPP_REACTOR=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -5960,6 +5991,7 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -6057,7 +6089,7 @@ DEP_CPP_REACTOR=\
 
 SOURCE=.\IOStream_Test.cpp
 DEP_CPP_IOSTR=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -6089,6 +6121,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IOStream.h"\
 	{$(INCLUDE)}"\ace\IOStream_T.cpp"\
 	{$(INCLUDE)}"\ace\IOStream_T.h"\
@@ -6158,6 +6191,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -6208,7 +6242,7 @@ DEP_CPP_IOSTR=\
 SOURCE=.\Process_Strategy_Test.cpp
 DEP_CPP_PROCES=\
 	".\Process_Strategy_Test.h"\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -6242,6 +6276,7 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -6358,7 +6393,7 @@ SOURCE=.\Conn_Test.cpp
 DEP_CPP_CONN_=\
 	"..\ace\LOCK_SOCK_Acceptor.cpp"\
 	".\Conn_Test.h"\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -6395,6 +6430,7 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\LOCK_SOCK_Acceptor.h"\
@@ -6513,7 +6549,7 @@ DEP_CPP_CONN_=\
 
 SOURCE=.\Simple_Message_Block_Test.cpp
 DEP_CPP_SIMPL=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -6531,6 +6567,7 @@ DEP_CPP_SIMPL=\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -6589,7 +6626,7 @@ DEP_CPP_SIMPL=\
 
 SOURCE=.\Reactor_Exceptions_Test.cpp
 DEP_CPP_REACTOR_=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -6613,6 +6650,7 @@ DEP_CPP_REACTOR_=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -6684,7 +6722,7 @@ DEP_CPP_REACTOR_=\
 
 SOURCE=.\Priority_Task_Test.cpp
 DEP_CPP_PRIORI=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -6707,6 +6745,7 @@ DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -6804,7 +6843,7 @@ DEP_CPP_PRIORI=\
 
 SOURCE=.\Sigset_Ops_Test.cpp
 DEP_CPP_SIGSE=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
@@ -6813,6 +6852,7 @@ DEP_CPP_SIGSE=\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -6846,7 +6886,7 @@ DEP_CPP_SIGSE=\
 
 SOURCE=.\Message_Queue_Notifications_Test.cpp
 DEP_CPP_MESSAGE=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -6869,6 +6909,7 @@ DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -6965,7 +7006,7 @@ DEP_CPP_MESSAGE=\
 
 SOURCE=.\Enum_Interfaces_Test.cpp
 DEP_CPP_ENUM_=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -6978,6 +7019,7 @@ DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -7012,7 +7054,7 @@ DEP_CPP_ENUM_=\
 SOURCE=.\Hash_Map_Manager_Test.cpp
 DEP_CPP_HASH_=\
 	".\Hash_Map_Manager_Test.h"\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -7034,6 +7076,7 @@ DEP_CPP_HASH_=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -7103,7 +7146,7 @@ DEP_CPP_HASH_=\
 
 SOURCE=.\Semaphore_Test.cpp
 DEP_CPP_SEMAP=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -7123,6 +7166,7 @@ DEP_CPP_SEMAP=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -7180,7 +7224,7 @@ DEP_CPP_SEMAP=\
 
 SOURCE=.\Atomic_Op_Test.cpp
 DEP_CPP_ATOMI=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -7192,6 +7236,7 @@ DEP_CPP_ATOMI=\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -7236,7 +7281,7 @@ DEP_CPP_ATOMI=\
 
 SOURCE=.\MT_SOCK_Test.cpp
 DEP_CPP_MT_SO=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -7260,6 +7305,7 @@ DEP_CPP_MT_SO=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -7331,7 +7377,7 @@ DEP_CPP_MT_SO=\
 SOURCE=.\Priority_Reactor_Test.cpp
 DEP_CPP_PRIORIT=\
 	".\Priority_Reactor_Test.h"\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -7368,6 +7414,7 @@ DEP_CPP_PRIORIT=\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Local_Tokens.h"\
@@ -7497,7 +7544,7 @@ DEP_CPP_PRIORIT=\
 SOURCE=.\Reactor_Performance_Test.cpp
 DEP_CPP_REACTOR_P=\
 	".\Reactor_Performance_Test.h"\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -7531,9 +7578,12 @@ DEP_CPP_REACTOR_P=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Local_Tokens.h"\
@@ -7572,6 +7622,7 @@ DEP_CPP_REACTOR_P=\
 	{$(INCLUDE)}"\ace\Pipe.h"\
 	{$(INCLUDE)}"\ace\Pipe.i"\
 	{$(INCLUDE)}"\ace\Profile_Timer.h"\
+	{$(INCLUDE)}"\ace\Profile_Timer.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
 	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
@@ -7661,7 +7712,7 @@ DEP_CPP_REACTOR_P=\
 
 SOURCE=.\Notify_Performance_Test.cpp
 DEP_CPP_NOTIF=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -7688,6 +7739,7 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
 	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Local_Tokens.h"\
 	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -7787,7 +7839,7 @@ DEP_CPP_NOTIF=\
 
 SOURCE=.\Thread_Mutex_Test.cpp
 DEP_CPP_THREAD_=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
@@ -7805,6 +7857,7 @@ DEP_CPP_THREAD_=\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -7862,7 +7915,7 @@ DEP_CPP_THREAD_=\
 
 SOURCE=.\SOCK_Connector_Test.cpp
 DEP_CPP_SOCK_C=\
-	".\test_config.h"\
+	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -7875,6 +7928,7 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\

@@ -17,11 +17,10 @@
 // This first #undef protects against command-line definitions.
 #undef ACE_NDEBUG
 #include "ace/OS.h"
+#include "ace/streams.h"
 
 // The second #undef protects against being reset in a config.h file.
 #undef ACE_NDEBUG
-
-#include "ace/stdcpp.h"
 
 #if !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 class KEY

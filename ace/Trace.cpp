@@ -4,7 +4,10 @@
 // We need this to get the status of ACE_NTRACE...
 
 #define ACE_BUILD_DLL
+#if !defined (ACE_USER_CONFIG_H)
+#define ACE_USER_CONFIG_H
 #include "ace/config.h"
+#endif /* ACE_USER_CONFIG_H */
 
 // Turn off tracing for the duration of this file.
 #if defined (ACE_NTRACE)
