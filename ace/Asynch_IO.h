@@ -30,7 +30,7 @@
 //
 // ============================================================================
 
-#ifndef ACE_ASYNCH_IO_H
+#if !defined (ACE_ASYNCH_IO_H)
 #define ACE_ASYNCH_IO_H
 
 #include "ace/OS.h"

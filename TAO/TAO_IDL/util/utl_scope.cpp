@@ -166,7 +166,7 @@ iter_lookup_by_name_local (AST_Decl *d,
           return NULL;
         }
 
-      d = sc->lookup_by_name_local (s, 0);
+      d = sc->lookup_by_name_local (s);
     }
 
   delete i;
@@ -274,7 +274,7 @@ UTL_Scope::lookup_for_add(AST_Decl *d, idl_bool)
 {
   if (d == NULL)
     return NULL;
-  return lookup_by_name_local(d->local_name(), 0);
+  return lookup_by_name_local(d->local_name());
 }
 
 /*
@@ -834,8 +834,7 @@ UTL_Scope::look_in_inherited (UTL_ScopedName *e,
 
 // Look up a String * in local scope only
 AST_Decl *
-UTL_Scope::lookup_by_name_local (Identifier *e,
-                                 long index)
+UTL_Scope::lookup_by_name_local (Identifier *e)
 {
   // Temporary hack to disallow 'fixed' without 
   // implementing all the classes for it.
@@ -864,29 +863,17 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
 
       if (e->case_compare (item_name)) 
         {
-          if (index == 0)
-            {
-              delete i;
+          delete i;
 
-              // Special case for forward declared interfaces. 
-              // Look through the forward declaration and retrieve 
-              // the full definition.
-              if (d->node_type () == AST_Decl::NT_interface_fwd) 
-                {
-                  d = AST_InterfaceFwd::narrow_from_decl (d)->full_definition ();
-                }
-
-              return d;
-            }
-          else
-          // This is an instance of a reopened modules that matches the
-          // input indentifier, but the rest of the scoped name didn't
-          // match.
+          // Special case for forward declared interfaces. 
+          // Look through the forward declaration and retrieve 
+          // the full definition.
+          if (d->node_type () == AST_Decl::NT_interface_fwd) 
             {
-              index--;
-              i->next ();
-              continue;
+              d = AST_InterfaceFwd::narrow_from_decl (d)->full_definition ();
             }
+
+          return d;
         }
 
       i->next ();
@@ -908,7 +895,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 {
   AST_Decl *d;
   UTL_Scope *t = NULL;
-  long index = 0;
 
   // Empty name? error
   if (e == NULL) 
@@ -964,7 +950,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
   while (1) 
     {
-      d = lookup_by_name_local (e->head (), 0);
+      d = lookup_by_name_local (e->head ());
 
       if (d == NULL) 
         {
@@ -1060,33 +1046,8 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
       // OK, start of name is defined. Now loop doing local lookups
       // of subsequent elements of the name.
-      AST_Decl::NodeType nt = d->node_type ();
-
       d = iter_lookup_by_name_local (d, 
                                      e);
-
-      if (nt == AST_Decl::NT_module)
-        {
-          // If local lookup matched identifier, but the rest
-          // of the scoped name failed to match, maybe the
-          // module is reopened later in the scope and we'll
-          // get another chance.
-          while (d == NULL)
-            {
-              // Incrementing index will skip the previous
-              // identifier matches.
-              d = this->lookup_by_name_local (e->head (),
-                                              ++index);
-
-              // Entire local scope was searched - no match.
-              if (d == NULL)
-                break;
-
-              // Try again to match the whole scoped name.
-              d = iter_lookup_by_name_local (d,
-                                             e);
-            }
-        }
 
       // If treat_as_ref is true and d is not NULL, add d to
       // set of nodes referenced here

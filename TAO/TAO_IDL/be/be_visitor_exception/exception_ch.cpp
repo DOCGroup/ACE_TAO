@@ -54,6 +54,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
       os->indent ();
       *os << "class " << node->local_name () << ";" << be_nl;
+      // generate the _ptr declaration
+      *os << "typedef " << node->local_name () << " *"
+                << node->local_name () << "_ptr;" << be_nl;
       os->gen_endif ();
 
       os->gen_ifdef_macro (node->flat_name ());
@@ -64,6 +67,13 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
                 << " : public CORBA::UserException" << be_nl;
       *os << "{" << be_nl
                 << "public:\n\n";
+
+      // generate the _ptr_type and _var_type typedefs
+      // but we must protect against certain versions of g++
+      *os << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)\n";
+      os->incr_indent ();
+      *os << "typedef " << node->local_name () << "_ptr _ptr_type;\n"
+          << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n\n";
 
       // generate code for field members
       if (this->visit_scope (node) == -1)
@@ -80,7 +90,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       *os << node->local_name () << " (void); // default ctor" << be_nl;
       *os << node->local_name () << " (const " << node->local_name ()
           << " &); // copy ctor" << be_nl;
-      *os << "~" << node->local_name () << " (void); // dtor" << be_nl;
+      *os << "~" << node->local_name () << " (void);" << be_nl;
+
+      *os << "static void _tao_any_destructor (void*);" << be_nl;
 
       // assignment operator
       *os << node->local_name () << " &operator= (const "

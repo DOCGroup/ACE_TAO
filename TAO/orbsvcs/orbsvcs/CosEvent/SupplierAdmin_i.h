@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#ifndef SUPPLIER_ADMIN_I_H
+#if !defined (SUPPLIER_ADMIN_I_H)
 #define SUPPLIER_ADMIN_I_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"

@@ -1,719 +1,586 @@
-Thu Mar 16 15:26:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+Thu Mar 16 17:16:53 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp (parse_reply): 
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Connectors.cpp: More warning fixes. These were
-	  in Digital Unix. Thanks to Jeff Parsons <parsons@cs.wustl.edu>
-	  for reporting this.
+	* tao/Any.cpp:
+	  Fixed some code to work in platforms without exceptions.
 
-Thu Mar 16 13:22:02 2000  Ossama Othman  <ossama@uci.edu>
+	* tao/orb.idl:
+	  Added a missing #pragma prefix ""
 
-	* tao/IIOP_Acceptor.cpp (open_default):
+	* tests/Param_Test/anyop.cpp:
+	  Fixed so the Object Reference test works on any host.  Not very
+	  elegant or portable, but it does the job.
 
-	  Do not return with error if ACE::get_ip_interfaces() sets errno
-	  to ENOTSUP.  Simply use the default interface instead,
-	  since ACE::get_ip_interfaces() is not supported on some
-	  platforms.  This should correct a problem experienced on
-	  VxWorks.
+Mon Mar 13 15:37:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-Thu Mar 16 14:20:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Removed the deep_free.cpp file from the projects.
 
-	* TAO_IDL/be/be_codegen.cpp:
-	  When generating implementation files (-GI option), the
-	  implementation header file had the inclusion of the
-	  skeleton header file and the '#pragma once' in the
-	  wrong order. Thanks to Byron Harris <harris_b@ociweb.com>
-	  for pointing this out. This closes out Bugzilla #478.
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	  Corrected indentation.
 
-Thu Mar 16 13:57:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+Mon Mar 13 14:19:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/target_identifier.h (class TAO_Target_Specification): 
-	* tao/target_identifier.i: Fixed a warning from Digital Unix
-	  compiler (cxx). Thanks to Jeff Parsons <parsons@cs.wsutl.edu>
-	  for reporting this.
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	  There are two versions of the >>= operators:
 
-Thu Mar 16 13:53:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+	  CORBA::Boolean >>= (const Any&, T*&)
+	  CORBA::Boolean >>= (const Any&, const T*&)
 
-	* TAO_IDL/ast/ast_interface.cpp:
-	  Fixed an inheritance problem when a module is
-	  reopened by inclusion. Thanks to Brian Wright
-	  <bwright@paladyne.com> for reporting this bug.
+	  the first one is deprecated, but we still support it. Jeff
+	  Parsons pointed out that the first version can be implemented
+	  using the second version as follows:
+	      return any >>= ACE_const_cast(const T*&,x);
+	  i also simplified the implementation of the second version.
 
-	* TAO_IDL/include/utl_scope.h:
-	* TAO_IDL/util/utl_scope.cpp:
-	* TAO_IDL/ast/ast_operation.cpp:
-	   Another inheritance problem when a module is
-	   reopened by inclusion. To fix this bug, changes
-	   were also made to ast_interface.cpp listed above.
-	   Thanks to Michael Kircher <Michael.Kircher@mchp.siemens.de>
-	   for reporting this one.
-
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	   Disabled the exclusion (for all data types) of the repository
-	   id from optimized typecodes (it was already disabled for interfaces,
-	   valuetypes and exceptions, as required by the spec). It proved to
-	   be an unpopular feature, causing performace slowdowns 
-	   disproportionate to its value in decreasing typecode size. Thanks
-	   to Hugh Arnold <harnold@bebe.culver.itginc.com> for pointing
-	   this out.
-
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
 	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
-	   Removed generation of 'typedef foo *foo_ptr' and
-	   'typedef foo_ptr _ptr_type' for these types. This has
-	   already been removed to structs - these typedefs should
-	   be there only for interfaces and valuetypes. Thanks to
-	   Chris Cleeland <cleeland@ociweb.com> for pointing this
-	   out.
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  Had to revert Jeff fix for the _tao_any_destructor functions
+	  declared in deeply nested modules.  GCC gets utterly confused by
+	  this declaration:
+	     void ::Foo::Bar::_tao_any_destructor (void *) ....
+	  it tolerates this one:
+	     void Foo::Bar::_tao_any_destructor (void *) ....
+	  but fails with this one:
+	     void Foo::Bar::Foo::_tao_any_destructor (void *) ....
 
-Thu Mar 16 13:26:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: Forgot to
-	  checkin the run_test.pl. This will now use the service
-	  configurator file instead of the -ORBGIOPlite command line
-	  option. 
-
-Thu Mar 16 13:22:43 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* utils/catior/Makefile:
-	* utils/nslist/Makefile: Some more Makefile updates.
-
-Thu Mar 16 13:02:45 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* orbsvcs/Naming_Service/Makefile:
-	* orbsvcs/Scheduling_Service/Makefile: 
-	* orbsvcs/Event_Service/Makefile:
-	* orbsvcs/Dump_Schedule/Makefile:
-	* orbsvcs/Time_Service/Makefile:
-	* orbsvcs/CosEvent_Service/Makefile: 
-	* orbsvcs/ImplRepo_Service/Makefile: 
-	* orbsvcs/LifeCycle_Service/Makefile: 
-	* orbsvcs/Logging_Service/Makefile:
-	* orbsvcs/Trading_Service/Makefile:
-	* examples/Callback_Quoter/Makefile: 
-	* examples/Simple/time-date/Makefile: 
-	* examples/Load_Balancing/Makefile:
-	* examples/Buffered_Oneways/Makefile: 
-	* performance-tests/Cubit/TAO/MT_Cubit/Makefile: 
-	* performance-tests/Cubit/TAO/DII_Cubit/Makefile: 
-	* performance-tests/POA/Object_Creation_And_Registration/Makefile:
-	* performance-tests/Pluggable/Makefile:
-	* performance-tests/Thruput/TAO/Makefile: 
-	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
-	* performance-tests/Latency/Makefile:
-	* tests/InterOp-Naming/Makefile: Updated these Makefiles. Thanks
-	  to our daily builds that catches things better than a human.
-
-Thu Mar 16 12:34:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
-
-	* tao/InterfaceS.h:
-	* tao/InterfaceS.i:
-	* tao/InterfaceS.cpp:
-	* POA_CORBA.h:
-	* Makefile:
-	* Makefile.am:
-	* makefile.bor:
-	* TAO.dsp:
-	* TAO_static.dsp:
-	  Server-side interface repository files and related
-	  changes. I didn't want to add these to TAO, but the
-	  Interface Repository IDL isn't inside its own 
-	  module - it's all in the CORBA namespace. The added
-	  files are large but, like InterfaceC.*, they will not
-	  build unless TAO_HAS_INTERFACE_REPOSITORY == 1.
-
-Thu Mar 16 11:40:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/GIOP_Message_Base.h: Cosmetic changes.
-	* tao/GIOP_Utils.h: Fixed a compilation error that arises if
-	  compiled with interface_repo=1. Thanks to Jeff Parsons
-	  <parsons@cs.wustl.edu> for reporting this.
-
-Thu Mar 16 11:23:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* docs/pluggable_messaging.html: Documentation for the
-	  Pluggable_Messaging framework.
-
-Thu Mar 16 09:19:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/GIOP_Message_Lite.cpp: Added an include file to fix
-	  compilation errors in Linux, MINIMUM_CORBA build. The surprising
-	  part was that the regular build never caught this error.
-
-Thu Mar 16 09:15:02 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/target_identifier.h (class TAO_Target_Specification):
-	  Removed the return type qualifier const for the method iop_ior
-	  (). IRIX & KAI compilers complained about this.
-
-Wed Mar 15 23:56:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* tao/IIOP_Transport.cpp:
-	* tao/UIOP_Transport.cpp: Fixed some minor warnings on NT.  The
-	  string "*/*" confused NT.  BTW, UIOP is not compiled under NT.
-	  ;-)
-
-Wed Mar 15 22:02:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* performance-tests/Cubit/TAO/IDL_Cubit/iiop_lite.conf:
-	* performance-tests/Cubit/TAO/IDL_Cubit/uiop_lite.conf: Added
-	  these new service configurator files.
-
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: Changed the
-	  script for using GIOPlite.
-
-Wed Mar 15 21:50:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/TAO.dsp: Added new files to the project. Many thanks to
-	  Angelo Corsaro <corsaro@cs.wustl.edu> who helped me with this.
-
-Wed Mar 15 20:26:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* examples/AMI/FL_Callback/Makefile:
-	* examples/Buffered_AMI/Makefile:
-	* examples/Callback_Quoter/Makefile:
-	* examples/Event_Comm/Makefile:
-	* examples/Load_Balancing/Makefile:
-	* examples/Load_Balancing_persistent/Makefile:
-	* examples/Logging/Makefile:
-	* examples/OBV/Typed_Events/Makefile:
-	* examples/POA/Generic_Servant/Makefile:
-	* examples/POA/Adapter_Activator/Makefile:
-	* examples/POA/DSI/Makefile:
-	* examples/POA/Default_Servant/Makefile:
-	* examples/POA/Explicit_Activation/Makefile:
-	* examples/POA/FindPOA/Makefile:
-	* examples/POA/Forwarding/Makefile:
-	* examples/POA/Generic_Servant/Makefile:
-	* examples/POA/Loader/Makefile:
-	* examples/POA/NewPOA/Makefile:
-	* examples/POA/On_Demand_Activation/Makefile:
-	* examples/POA/On_Demand_Loading/Makefile:
-	* examples/POA/Reference_Counted_Servant/Makefile:
-	* examples/POA/RootPOA/Makefile:
-	* examples/POA/TIE/Makefile: Updated all these Makefiles.
-
-
-Wed Mar 15 19:49:35 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tests/OctetSeq/Makefile:
-	* tests/Param_Test/Makefile:
-	* tests/AMI/Makefile:
-	* tests/CDR/Makefile:
-	* tests/Connection_Purging/Makefile:
-	* tests/DSI_Gateway/Makefile:
-	* tests/DynAny_Test/Makefile:
-	* tests/Endpoint_Per_Priority/Makefile:
-	* tests/Explicit_Event_Loop/Makefile:
-	* tests/Faults/Makefile:
-	* tests/IDL_Test/Makefile:
-	* tests/IORManipulation/Makefile:
-	* tests/Interceptors/Makefile:
-	* tests/Leader_Followers/Makefile:
-	* tests/MProfile/Makefile:
-	* tests/MProfile_Forwarding/Makefile:
-	* tests/MT_Client/Makefile:
-	* tests/MT_Server/Makefile:
-	* tests/Multiple_Inheritance/Makefile:
-	* tests/NestedUpcall/MT_Client_Test/Makefile:
-	* tests/NestedUpcall/Triangle_Test/Makefile:
-	* tests/NestedUpcall/Simple/Makefile:
-	* tests/Nested_Event_Loop/Makefile:
-	* tests/ORB_init/Makefile:
-	* tests/POA/Deactivation/Makefile:
-	* tests/POA/Destruction/Makefile:
-	* tests/POA/Identity/Makefile:
-	* tests/FL_Cube/Makefile:
-	* tests/Smart_Proxies/Makefile:
-	* tests/Smart_Proxies/On_Demand/Makefile:
-	* tests/Timed_Buffered_Oneways/Makefile:
-	* tests/Timeout/Makefile:
-	* tests/Xt_Stopwatch/Makefile: Updated all these Makefiles to
-	  change the dependency on GIOP.h.
-
-Wed Mar 15 19:46:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/GIOP.cpp:
-	* tao/GIOP.h:
-	* tao/GIOP.i: Removed these files from the repository.
-
-Wed Mar 15 19:39:20 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/Makefile: Upadted the Makefile.
-
-Wed Mar 15 19:20:17 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/Acceptor_Registry.cpp:
-	* tao/Active_Object_Map.cpp:
-	* tao/Asynch_Invocation.h:
-	* tao/BoundsC.cpp:
-	* tao/Buffering_Constraint_Policy.cpp:
-	* tao/Buffering_Constraint_Policy.i:
-	* tao/CDR.cpp:
-	* tao/CDR.h:
-	* tao/CONV_FRAMEC.h:
-	* tao/Client_Priority_Policy.cpp:
-	* tao/Client_Priority_Policy.i:
-	* tao/Connector_Registry.i:
-	* tao/CurrentC.cpp:
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/DomainS.cpp:
-	* tao/DynEnum_i.cpp:
-	* tao/DynStruct_i.cpp:
-	* tao/DynUnion_i.cpp:
-	* tao/Environment.cpp:
-	* tao/IOPC.cpp:
-	* tao/IOPC.h:
-	* tao/IORC.cpp:
-	* tao/IORC.h:
-	* tao/IOR_LookupTable.cpp: Picky cvs conflict resolution. No major
-	  changes but for removing the conflicts. Conflicts were not in
-	  the code at all.
-
-Wed Mar 15 19:10:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/Acceptor_Impl.h (TAO_ACCEPTOR_IMPL_H):
-	* tao/Acceptor_Impl.i:
-	* tao/Acceptor_Impl.cpp:Added an argument to the constructor of
-	  TAO_Creation_Strategy.
-
-Wed Mar 15 19:05:53 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/Protocol_Factory.h:
-       	* tao/Transport_Mux_Strategy.h:
-	* tao/ORB.cpp:
-       	* tao/ORB.h:
-	* tao/skip.cpp:
-	* tao/decode.cpp:
-	* tao/append.cpp:
-	* tao/SHMIOP_Profile.h:
-	* tao/SHMIOP_Profile.cpp:
-	* tao/UIOP_Profile.cpp:
-	* tao/Object.cpp:
-	* tao/Stub.cpp:
-	* tao/corba.h:
-	* tao/Server_Request.h:
-	* tao/Typecode_Constants.cpp: Removed the header file GIOP.h from
-	  these files. GIOP.h would be retired now.
-
-Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+	* tao/Makefile:
+	* tao/deep_free.cpp:
+	* tao/Marshal.h:
+	* tao/Marshal.i:
+	  Removed (finally!) the deep_free methods.  Now we only need to
+	  remove the support classes to finally get rid of all the
+	  interpretive marshaling code.
 
 	* tao/GIOPC.cpp:
-	* tao/GIOPC.i:
-	* tao/GIOPC.h: Removed some generated code for
-	  sequence<octet>. TAO has this in abundance and it would be
-	  better to reuse them.
+	* tao/IOPC.cpp:
+	* tao/ImplRepoC.h:
+	* tao/ImplRepoC.i:
+	* tao/ImplRepoC.cpp:
+	* tao/ImplRepoS.h:
+	* tao/ImplRepoS.i:
+	* tao/ImplRepoS.cpp:
+	* tao/ImplRepoS_T.h:
+	* tao/ImplRepoS_T.i:
+	* tao/ImplRepoS_T.cpp:
+	* tao/InterceptorC.cpp:
+	* tao/POAC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/TAOC.cpp:
+	  Fix the hand-crafted files with respect to the two versions of
+	  the >>= operators.
 
-	* tao/GIOP_Server_Request.cpp:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.i: Removed the header parsing code from
-	  the class. It has now been moved to the right version dependant
-	  acceptor side code which will do the right parse and store the
-	  info in this class. To facilitate the holding the parsed
-	  information in this class, new methods have been added.
+	* TAO_IDL/Makefile:
+	  Updated dependencies
 
-	* tao/IIOP_Acceptor.cpp
-	* tao/IIOP_Acceptor.h
-	* tao/IIOP_Connect.cpp
-	* tao/IIOP_Connect.h
-	* tao/IIOP_Connector.cpp
-	* tao/IIOP_Connector.h
-	* tao/IIOP_Factory.cpp
-	* tao/IIOP_Factory.h
-	* tao/IIOP_Profile.cpp
-	* tao/IIOP_Profile.h
-	* tao/IIOP_Profile.i
-	* tao/IIOP_Transport.cpp
-	* tao/IIOP_Transport.h
-	* tao/Invocation.cpp
-	* tao/Invocation.h
-	* tao/Invocation.i
-	* tao/Async_Invocation.cpp
-	* tao/SHMIOP_Acceptor.cpp
-	* tao/SHMIOP_Acceptor.h
-	* tao/SHMIOP_Connect.cpp
-	* tao/SHMIOP_Acceptor.i
-	* tao/SHMIOP_Connect.h
-	* tao/SHMIOP_Connect.i
-	* tao/SHMIOP_Connector.cpp
-	* tao/SHMIOP_Connector.h
-	* tao/SHMIOP_Factory.cpp
-	* tao/SHMIOP_Factory.h
-	* tao/SHMIOP_Transport.cpp
-	* tao/SHMIOP_Transport.h
-	* tao/UIOP_Transport.h
-	* tao/UIOP_Transport.cpp
-	* tao/UIOP_Profile.cpp
-	* tao/UIOP_Connector.h
-	* tao/UIOP_Connector.cpp
-	* tao/UIOP_Connect.cpp
-	* tao/UIOP_Connect.h
-	* tao/UIOP_Connect.i
-	* tao/UIOP_Acceptor.h
-	* tao/UIOP_Acceptor.cpp
-	* tao/Request.cpp
-	* tao/Pluggable.h
-	* tao/Pluggable.i
-	* tao/Pluggable.cpp: Changed the way GIOP code is handled by these
-	  classes. GIOP code was completely reentrant and so static calls
-	  were made to the GIOP code. But now the calls would be routed
-	  through a common interface. Further, changes were also made to
-	  remove the GIOP specific code from these files.
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	  Cosmetic fixes.
 
+Mon Mar 13 08:23:23 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/params.cpp
-	* tao/params.h
-	* tao/params.i
-	* tao/ORB_Core.i
-	* tao/ORB_Core.h
-	* tao/ORB_Core.cpp: Removed the command line option support for
-	  GIOPlite. The ORB's can be initilaised to use GIOPlite by
-	  loading the IIOP_Lite or UIOP_Lite factory from their service
-	  configurator file. Please see
-	  $TAO_ROOT/performance-tests/Cubit/TAO/IDL_Cubit for an example
-	  of how this is done. There is one problem however. ORB's can be
-	  initialised now with either IIOP or IIOP_Lite and not both. In
-	  other words, the user shouldn't try to load TCP/IP mapping of
-	  GIOP & GIOPlite for the same ORB. The same applies to the UNIX
-	  domain sockets mapping of GIOP & GIOPlite.
+        * tao/Any.h:
+        * tao/Any.cpp:
+          The _tao_replace() functions do not require an ACE_TRY_ENV
+          argument.
+          Any _tao_replace() function that requires a void* also requires
+          the destructor function.
 
-	* tao/Reply_Dispatcher.h
-	* tao/Reply_Dispatcher.i
-	* tao/Reply_Dispatcher.cpp: Removed GIOP_Version info.  theyhave
-	  just been commented out. At a later stage we should be removing
-	  them. We shouldn't be doing any GIOP version specific processing
-	  in this piece of code.
-
-Wed Mar 15 17:34:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* tao/Pluggable_Messaging.cpp
-	* tao/Pluggable_Messaging.h
-	* tao/Pluggable_Messaging.i
-	* tao/Pluggable_Messaging_Utils.h
-	* tao/Pluggable_Messaging_Utils.cpp:
-	* tao/Pluggable_Messaging_Utils.i:
-	* tao/target_identifier.cpp:
-	* tao/target_identifier.h:
-	* tao/target_identifier.i
-	* tao/operation_details.cpp
-	* tao/operation_details.h
-	* tao/operation_details.i
-	* tao/GIOP_Assorted_Headers.cpp
-	* tao/GIOP_Assorted_Headers.h
-	* tao/GIOP_Assorted_Headers.i
-	* tao/GIOP_Message_Accept_State.cpp
-	* tao/GIOP_Message_Accept_State.h
-	* tao/GIOP_Message_Accept_State.i
-	* tao/GIOP_Message_Acceptors.cpp
-	* tao/GIOP_Message_Acceptors.h
-	* tao/GIOP_Message_Acceptors.i
-	* tao/GIOP_Message_Base.cpp
-	* tao/GIOP_Message_Base.h
-	* tao/GIOP_Message_Base.i
-	* tao/GIOP_Message_Connectors.cpp
-	* tao/GIOP_Message_Connectors.h
-	* tao/GIOP_Message_Connectors.i
-	* tao/GIOP_Message_Lite.cpp
-	* tao/GIOP_Message_Lite.h
-	* tao/GIOP_Message_Lite.i
-	* tao/IIOP_Lite_Factory.cpp
-	* tao/IIOP_Lite_Factory.h
-	* tao/GIOP_Utils.cpp
-	* tao/GIOP_Utils.h
-	* tao/GIOP_Utils.i
-	* tao/IIOP_Transport.i
-	* tao/IOP_Defns.h
-	* tao/SHMIOP_Transport.i
-	* tao/UIOP_Transport.i
-	* tao/UIOP_Lite_Factory.cpp
-	* tao/UIOP_Lite_Factory.h: Added these new files for the pluggable
-	  messaging framework. The above files contain the interfaces and
-	  a concrete implementation for GIOP & GIOPlite. Please see the
-	  documentation at $TAO_ROOT/docs/pluggable_messaging.html for more
-	  info.
-
-Wed Mar 15 17:32:51 2000  Balachandran  <bala@cs.wustl.edu>
-
-        * TAO version 1.1 released.
-
-Wed Mar 15 10:04:33 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
-
-	* orbsvcs/examples/Notify/README:
-	* orbsvcs/examples/Notify/Subscribe/README:
-	  Added README files.
-	* orbsvcs/orbsvcs/Notify/README:
-	  Updated to reflect recent changes.
-
-Wed Mar 15 09:36:46 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * examples/Simple/time/README: reverted the note added by
-          Tue Mar 14 14:37:58 2000  David L. Levine  <levine@cs.wustl.edu>,
-          because the following two changes of Jeff and Nanbor solved
-          the problem.
-
-Tue Mar 14 17:48:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
-
+        * tao/BoundsC.h:
+        * tao/BoundsC.cpp:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CurrentC.cpp:
+        * tao/DomainC.cpp:
+        * tao/DynAnyC.h:
+        * tao/DynAny_i.cpp:
+        * tao/GIOPC.cpp:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IORC.h:
+        * tao/IORC.cpp:
+        * tao/ImplRepoC.h:
+        * tao/ImplRepoC.i:
+        * tao/ImplRepoC.cpp:
+        * tao/ImplRepoS.cpp:
+        * tao/ImplRepoS.h:
+        * tao/ImplRepoS.i:
+        * tao/ImplRepoS_T.h:
+        * tao/ImplRepoS_T.i:
+        * tao/ImplRepoS_T.cpp:
+        * tao/InterceptorC.h:
+        * tao/InterceptorC.cpp:
+        * tao/InterfaceC.h:
+        * tao/InterfaceC.cpp:
+        * tao/MessagingC.h:
+        * tao/MessagingC.cpp:
+        * tao/MessagingS.cpp:
+        * tao/NVList.cpp:
+        * tao/ObjectIDList.h:
+        * tao/ObjectIDList.cpp:
         * tao/POAC.h:
-        * tao/POAC.i:
-          #if !defined guards around PortableServer::ForwardRequest
-          and its Any and CDR operators were not consistent. Thanks
-          to Darrell for pointing this out.
+        * tao/POAC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.cpp:
+        * tao/Sequence.h:
+        * tao/Sequence.cpp:
+        * tao/Services.h:
+        * tao/Services.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.cpp:
+          Changed all the hand-crafted files to use the new _tao_replace
+          style functions.
 
-Tue Mar 14 16:26:27 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          The _tao_replace() functions do not require the ACE_TRY_ENV
+          argument anymore.  This let us simplify many of the
+          implementations for >>= and <<= operators.  We also identified
+          some cases of duplicated code and removed as much as possible of
+          that.
 
-        * tao/POAC.cpp: The typecode for _tc_Current was not properly
-          defined using TAO_NAMESPACE_blah macros.  Applied those macros.
-          Thanks to Pradeep and Darrell for noticing this.
+        * tests/Param_Test/Param_Test.dsw:
+        * tests/Param_Test/anyop.dsp:
+        * tests/Param_Test/anyop.cpp:
+          Added the anyop test to the NT project files.
 
-Tue Mar 14 14:37:58 2000  David L. Levine  <levine@cs.wustl.edu>
+Fri Mar 10 19:06:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * examples/Simple/time/README: added note that this example
-          will not work with -DTAO_HAS_MINIMUM_CORBA.  Thanks to
-          Dave Hall <David.Hall@grc.nasa.gov> for this suggestion.
+        * tao/DynAnyC.h:
+        * tao/DynAnyC.cpp:
+          Removed some unnecessary _ptr_type typedefs.
 
-Mon Mar 13 22:20:11 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+Fri Mar 10 14:54:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tests/Smart_Proxies/On_Demand/svc.conf: Added a comment before
-          $Id. Thanks to Bala <bala@cs.wustl.edu> of the DOC group for
-          trying out this test.
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          In the definition of the static function
+          _tao_any_destructor, prepending the global "::"
+          to the scoped name of the class or struct keeps
+          gcc happy. Thanks to Carlos for pointing this out.
 
-Mon Mar 13 18:20:11 2000  Darrell Brunsch  <brunsch@uci.edu>
+Fri Mar 10 12:24:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-        * orbsvcs/orbscvs/orbsvcs.dsp:
-        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
-          The CR/LF's were missing from the files.  Redid Pradeeps
-          changes.
+        * examples/POA/DSI/Database_i.cpp:
+        * orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * tests/CDR/basic_types.cpp:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/objref.h:
+        * utils/catior/catior.cpp:
+          Fixed uses of encode(), decode(), replace(), the void*
+          constructor for Any and obsolete >>= or <<= operators.
 
-Mon Mar 13 17:48:23 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+        * */Makefile:
+          Updated dependencies
 
-        * orbsvcs/tests/AVStreams/Pluggable/server.h:
-        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
-        * orbsvcs/tests/AVStreams/Multicast/server.h:
-        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
-        * orbsvcs/tests/AVStreams/Full_Profile/server.h:
-        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
-        * orbsvcs/tests/AVStreams/Multicas_Full_Profilet/server.h:
-        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
-          Replaced SERVER with FTP_SERVER as SERVER was reserved. Thanks
-          to Norbert Krain <krain@lineone.net> for pointing this out and
-          Bala <bala@cs.wustl.edu> for helping me debug this.
-
-Mon Mar 13 17:20:51 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
-          Initialize the TTL field for the Gateway tests. Thanks to Bala
-          for reporting this problem.
-
-Mon Mar 13 13:52:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+Fri Mar 10 11:28:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Any.cpp:
-          Inverted the logic of a boolean return value in the case
-          where we do a CDR stream extraction in the >>= (to_object)
-          operator. We were returning the negation of the success of
-          the stream extraction. Thanks to Boris Sukholitko
-          <boris@webglide.com> for pointing this out.
+          The >>= operator for 'const Any*' was not working properly,
+          thanks to Jeff for letting me know.
 
-Mon Mar 13 12:55:14 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+        * tao/GIOPC.h:
+        * tao/GIOPC.cpp:
+          Another pair of files updated.
 
-        * tests/Faults/run_test.pl: Removed the core file that gets
-          generated in the test. The client is crashed to test the
-          robustness of the server.
+Fri Mar 10 12:49:21 2000  Jeff Paraons  <parsons@cs.wustl.edu>
 
-Mon Mar 13 10:19:08 2000  Bala  <bala@cs.wustl.edu>
+        * TAO_IDL/be/be_codegen.cpp
+        * TAO_IDL/be/be_visitor_argument.cpp
+        * TAO_IDL/be/be_visitor_factory.cpp
+        * TAO_IDL/be/be_visitor_operation.cpp
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/argument.cpp
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp
+        * TAO_IDL/be_include/be_codegen.h
+        * TAO_IDL/be_include/be_visitor_argument.h
+        * TAO_IDL/be_include/be_visitor_factory.h
+        * TAO_IDL/be_include/be_visitor_operation.h
+        * TAO_IDL/be_include/be_visitor_argument/marshal_ss.h
+        * TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h
+        * TAO_IDL/be_include/be_visitor_argument/pre_invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/operation_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/operation_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_marshal_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_upcall_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_pre_invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h
+        * TAO_IDL/be_include/be_visitor_union/any_op_cs.h
+        * TAO_IDL/driver/drv_args.cpp
+        * TAO_IDL/include/idl_global.h
+        * TAO_IDL/util/utl_global.cpp
+          Changes to remove the generation of code using interpretive
+          marshaling.
 
-        * TAO version 1.0.16 released.
+        * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_post_invoke_cs.cpp
+        * TAO_IDL/be_include/be_visitor_argument/invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/post_invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_invoke_cs.h
+          Files added or renamed from other files removed below.
 
-Sun Mar 12 21:10:13 2000  David L. Levine  <levine@cs.wustl.edu>
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/docall_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/pre_upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp
+        * TAO_IDL/be_include/be_visitor_argument/compiled_marshal_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/compiled_marshal_ss.h
+        * TAO_IDL/be_include/be_visitor_argument/docall_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/post_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/pre_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/pre_upcall_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/compiled_marshal.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_pre_docall_cs.h
+          Files removed.
 
-        * many Makefiles: updated dependencies.
+Fri Mar 10 09:49:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-Sun Mar 12 19:13:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+        * tao/Any.h:
+        * tao/Any.cpp:
+          More memory management fixes for the >>= and <<= operators.
+          Moved some static _tao_any_destructor functions to the Any
+          class, it is easier to maintain it that way.
 
-        * tao/GIOP_Server_Request.cpp: Initialized the variable
-          sync_with_server_ in the constructors for the class
-          TAO_GIOP_Server_Request. This was creating a problem for
-          Endpoint_Per_Priority test which uses LOCATE_REQUEST to validate
-          connections. The bug was actually nailed down by Marina Spivak
-          <marina@cs.wustl.edu>. It was an awesome detective work by her
-          to have nailed it down to the uninitialized variable in the
-          class.
+        * tao/Object.h:
+        * tao/Object.cpp:
+          Add the _tao_any_destructor helper function.
 
-Sun Mar 12 18:42:26 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+        * tao/DomainC.h:
+        * tao/DomainC.cpp:
+          Changed to use the new _tao_any_destructors in the right places.
 
-        * orbsvcs/orbscvs/orbsvcs.dsp:
-        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
-          Updated Notify files.
+        * tao/DynAny_i.cpp:
+          It is better just to return 0 than to cast away const.
 
-Sun Mar 12 10:23:21 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+Fri Mar 10 11:28:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Notify/Notify_Types.cpp:
-          changed comment with multiple ???'s to fix vxworks compile warning.
+        * tao/TAO.dsp:
+        * tao/TAO_static.dsp:
+          Added BoundsC.cpp to these projects.
 
-Sat Mar 11 14:32:34 2000  Pradeep Gore  <pradeep@siesta.cs.wustl.edu>
+        * tao/DynAny_i,cpp:
+          In get_string() cast away the constness of the internal
+          char* pointer in the ACE_THROW_RETURN statement.
 
-        * Notify_SequenceProxyPushSupplier_i.cpp:
-          Commented out unused parameters.
+Thu Mar  9 21:02:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-Sat Mar 11 09:33:18 2000  Christopher Kohlhoff <chris@kohlhoff.com>
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
 
-        * orbsvcs/orbsvcs/Makefile.bor: updated to reflect current
-          Notify service file configuration.
+          Fixed typo.
 
-Sat Mar 11 09:28:31 2000  David L. Levine  <levine@cs.wustl.edu>
+Thu Mar  9 18:50:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-        * orbsvcs/orbsvcs/Makefile: updated dependencies.
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
+          The <<= and >>= operators must set a function to cleanup the
+          objects stored by the Any.  The function usually just casts from
+          void* to the real type and invokes 'delete' or CORBA::release().
+          This is far more efficient, type safe and maintainable than the
+          deep_free approach.
+          The function is provided in the _tao_replace() method. For the
+          time beign (until the hand-crafted code is fixed), we maintain
+          both versions.
 
-Fri Mar 10 18:56:25 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Modified to:
+          - Generate an _tao_any_destructor() function to destroy the
+            object stored into an any.  For sequences, structures, unions
+            and interfaces the function is an static function of the
+            corresponding class.  For arrays it is a static member of the
+            T_forany class.
+          - The generated <<= and >>= operators have been modified to pass
+            the _tao_any_destructor. Thus the generated code no longer
+            depends on deep_free!
+            Furthermore the implementations of the <<= operators have been
+            optimized.  It makes no sense to pre-allocate the object,
+            because sometimes the >>= operator is never invoked. In other
+            word: eager evaluation only makes sense when the result is
+            used all the time, and this is not the case for the <<=
+            operators.
 
-        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h,cpp}:
-          Events no longer propogate through the ConsumerAdmin to reach
-          proxy suppliers.Added register methods by which proxy suppliers
-          register with the Consumer Admin which in turn subscribes them
-          for the appropriate event types.
-          Changes to create the sequence proxy supplier.
-        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
-          Changes to create the sequence proxy consumer.
-        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h.cpp}:
-          Changed incorrect usage of ._retn to .in.
-        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
-          Changed incorrect usage of ._retn to .in.
-          get_channel uses TAO_TRY_THROW now.
-        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.{h, cpp}:
-          Changed public functions to reflect the introduction of the
-          TAIO_Notify_Event type.
-        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.{h,cpp}:
-          removed ITERATOR typedef and its usage.
-        * orbsvcs/orbsvcs/Notify/Notify_Listeners.h:
-          added the ACE_TRY_ENV arg to dispatch_update.
-        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.{h,cpp}:
-          ProxyConsumer derives from TAO_Notify_Proxy.
-          Removed the Filter and QoS methods.
-          Added support for obtain_subscription_types.
-        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
-          Added the TAO_Notify_CosEC_ProxyPushConsumer_i type to support
-          backward compatibility with the CosEC spec.
-        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.{h.cpp}:
-          Added the TAO_Notify_CosEC_ProxyPushSupplier_i type to support
-          backward compatibility with the CosEC spec.
-        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.{h.cpp}:
-          ProxyConsumer derives from TAO_Notify_Proxy.
-          Removed the Filter and QoS methods.
-          Added support for suspend/resume connections.
-          Added support for obtain_offered_types.
-        * orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.{h,cpp}:
-          Added new option to determine if all new born ConsumerAdmins should
-          be subscribed by default to receive all events.
-          Added methods to create the new sequence consumer/supplier objects.
-        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.{h,cpp}:
-        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.{h.cpp}:
-          Minor changes to support updates.
-        * orbsvcs/orbsvcs/Notify/Notify_Types.{h,cpp}:
-          Introduced the TAO_Notify_Event abstract type. This allows uniform
-          handling of Any and Structured types.Anys are handled as the
-          TAO_Notify_Any type and StructuredEvent as TAO_Notify_StructuredEvent
-        * orbsvcs/orbsvcs/Makefile: updates dependencies.
+        * tao/BoundsC.cpp:
+        * tao/BoundsC.h:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+          Updated to use the new _tao_replace() methods.
 
-         Added Files:
-        * orbsvcs/orbsvcs/Notify/Notify_Proxy_T.{h, cpp}:
-          Base class for all Proxys, pushed all Filter and QoS methods here.
-        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.{h,cpp}:
-        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.{h,cpp}:
-          New proxy consumer and proxy supplier types that support pushing
-          the EventBatch type (a sequence of Structured Event).
+        * tao/DynAny_i.cpp:
+          The >>=(char*&) operators have been removed from the Any class,
+          they were a TAO extension.
 
-         Removed files:
-        * ID_Pool_T.{h,cpp,i}:
-          Moved to Notify_ID_Pool_T.* to be consistent with file naming.
-        * Notify_Dispatcher.{h,cpp}:
-        * NotifySubscribe_i.{h,cpp}:
-        * NotifyPublish_i.{h,cpp}:
-        * Notify_ProxySupplier_i.{h,cpp}:
-        * Notify_ProxyConsumer_i.{h,cpp}:
-          Obsoleted by design changes.
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/anyop.cpp:
+          Updated dependencies.
 
-Fri Mar 10 12:50:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/bd_wstring.cpp:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/recursive_union.cpp:
+        * tests/Param_Test/typecode.cpp:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_wstring.cpp:
+          Fix a few memory management problems and some glaring bugs.
+          With this round of changes all the DII and SII tests pass!
+          We still have to look for memory leaks.
 
-        * orbsvcs/Naming_Service/NT_Naming_Service.cpp: Added the capability
-          to extract the Naming Service options from the NT Registry.
-          Thanks to Tim Sim <tim_sim@optusnet.com.au> for contributing
-          this.
-
-Fri Mar 10 17:44:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
-
-        * TAO_IDL/ast/ast_interface.cpp: When a forward declared interface
-          is defined, the forward declaration must be looked up for
-          redefinition. If this happened in a module that was reopened
-          from one included from another IDL file, the lookup was
-          failing. Thanks to Brian Wright <bwright@paladyne.com> for
-          sending in the IDL file that uncovered this bug.
-
-Fri Mar 10 12:50:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * utils/nslist/nslist.cpp (show_chunk): Make sure to handle the
-          case where the "kind" field has a value.  Also, removed some
-          redundant code.  Thanks to Paul Calabrese
-          <calabrese_p@ociweb.com> for reporting this.
-
-Fri Mar 10 11:33:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tests/Smart_Proxies/On_Demand/Smart_Test_Factory.cpp: Fixed a
-          typo that was preventing compilation.
-        * tests/Smart_Proxies/On_Demand/run_test.pl: Made the run_test.pl
-          to look in to the right directory for ACEutils.
-
-          DISCLAIMER:The above fixes does not mean that the test actually
-          works. I feel the test is broken.
-
-Thu Mar 09 22:55:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * tao/Servant_Base.cpp (_create_stub): We must not use the stub
-          object until it is created.
-
-Thu Mar 09 18:25:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
-
-        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.h:
-        * TAO/orbsvcs/orbsvcs/AV/AV_export.h:
-        * TAO/orbsvcs/orbsvcs/AV/sfp.h:
-        * TAO/orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
-        * TAO/orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
-        * TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
-        * TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
-        * TAO/orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
-        * TAO/orbsvcs/orbsvcs/AV/Transport.h: These files were using the
-          #if !defined (WHATEVER) as multiple inclusion guard instead of
-          #ifndef WHATEVER. Thanks to Paul Calabrese
-          <calabrese_p@ociweb.com> for reporting that.
-
-        * TAO/orbsvcs/orbsvcs/AV/TCP.h:
-        * TAO/orbsvcs/orbsvcs/Event/Debug_Macros.h:
-        * TAO/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h: While this file
-          were missing multiple inclusion guard. Thanks to Paul Calabrese
-          <calabrese_p@ociweb.com> for reporting that.
-
-Thu Mar 09 16:22:10 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * tao/Servant_Base.cpp (_create_stub): Awesome detective work by
-          Paul Calabrese <calabrese_p@ociweb.com> lead to a bug in this
-          function.  The <servant_orb> was incorrectly assigned to be the
-          ORB in the POA Current even when the servant in the POA Current
-          did not match the servant calling this function.  This solves
-          bug 471.
-
-Thu Mar  9 08:13:04 2000  Carlos O'Ryan  <coryan@uci.edu>
-
-        * orbsvcs/tests/Event/Basic/Gateway.cpp:
-          Fixed compilation problems.  I was using ACE_CHECK instead of
-          ACE_TRY_CHECK, unfortunately my builds with exceptions enabled
-          did not detect that.
-
-Wed Mar  8 20:24:03 2000  Carlos O'Ryan  <coryan@uci.edu>
-
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
         * tao/decode.cpp:
         * tao/encode.cpp:
-          Files were removed by accident, adding them back into the repo.
+          These files were not commited in the last change.
+
+Wed Mar  8 19:18:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/Marshal.h:
+        * tao/decode.cpp:
+        * tao/encode.cpp:
+          I have started the work to remove the interpretive engine.
+          The first step was to remove the the encode() and decode()
+          methods.  We have re-implemented all the other components in the
+          ORB to use compiled marshaling instead.
+
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
+          All the methods taking void* are deprecated (unfortunately due
+          to an editorial mistake this resolution didn't make it into the
+          text of the CORBA 2.3 mapping).  There is no portable way to use
+          them anyway.
+          For the time beign we have commented them out, to check that no
+          portion of TAO invokes them, eventually we will make them
+          visible again, but they will raise the CORBA::NO_IMPLEMENT
+          exception.
+          Re-implement all the basic <<= and >>= operators using
+          _tao_replace() instead of replace().
+          The extraction operators for the CORBA::Any::to_string,
+          CORBA::Any::to_wstring and CORBA::Any::to_object classes were
+          not implemented properly.  First they did not unalias the types,
+          and next they used equivalent() with the wrong TypeCode.
+          Implement the CDR operators for Any using compiled marshaling.
+
+        * tao/Makefile:
+        * tao/BoundsC.h:
+        * tao/BoundsC.cpp:
+          BoundsC was not compiled, though this is the right exception to
+          raise from certain NVList operations.
+          Updated to use _tao_replace() in the >>= and <<= operators.
+
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+          Remove the decode() and encode() methods
+
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/Server_Request.h:
+          Remove the support for interpretive marshaling.
+
+        * tao/Invocation.h:
+        * tao/Invocation.cpp:
+          Removed old comments about interpretive marshaling.
+
+        * tao/NVList.cpp:
+          It was raising CORBA::TypeCode::Bounds to signal an error, but
+          the correct exception is CORBA::Bounds.
+
+        * tao/Exception.cpp:
+
+        * tao/DynAny_i.cpp:
+        * tao/Forwarding_Servant.cpp:
+        * tao/MessagingS.cpp:
+        * tao/ObjectIDList.cpp:
+        * tao/ObjectIDList.h:
+        * tao/POAS.cpp:
+        * tao/PolicyS.cpp:
+        * tao/PollableS.cpp:
+        * tao/Services.cpp:
+        * tao/Services.h:
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
+        * tao/append.cpp:
+        * tao/skip.cpp:
+          Re-implemented several stubs using compiled marshaling.
+          Use _tao_replace() in <<= and >>= operators.
+
+
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+          Use _tao_encode() and _tao_decode() to marshal and demarshal
+          exceptions.  Those methods are implemented using compiled
+          marshaling.
+
+        * tao/POAC.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Cosmetic changes.
+
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/anyop.cpp:
+          New test to verify that the <<= and >>= operators work
+          correctly.
+
+        * tests/Param_Test/param_test.idl:
+
+        * tests/Param_Test/client.cpp:
+        * tests/Param_Test/any.h:
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/bd_array_seq.h:
+        * tests/Param_Test/bd_array_seq.cpp:
+        * tests/Param_Test/bd_long_seq.h:
+        * tests/Param_Test/bd_long_seq.cpp:
+        * tests/Param_Test/bd_short_seq.h:
+        * tests/Param_Test/bd_short_seq.cpp:
+        * tests/Param_Test/bd_str_seq.h:
+        * tests/Param_Test/bd_str_seq.cpp:
+        * tests/Param_Test/bd_string.h:
+        * tests/Param_Test/bd_string.cpp:
+        * tests/Param_Test/bd_struct_seq.h:
+        * tests/Param_Test/bd_struct_seq.cpp:
+        * tests/Param_Test/bd_wstr_seq.h:
+        * tests/Param_Test/bd_wstr_seq.cpp:
+        * tests/Param_Test/bd_wstring.h:
+        * tests/Param_Test/bd_wstring.cpp:
+        * tests/Param_Test/big_union.h:
+        * tests/Param_Test/big_union.cpp:
+        * tests/Param_Test/complex_any.h:
+        * tests/Param_Test/complex_any.cpp:
+        * tests/Param_Test/except.h:
+        * tests/Param_Test/except.cpp:
+        * tests/Param_Test/fixed_array.h:
+        * tests/Param_Test/fixed_array.cpp:
+        * tests/Param_Test/fixed_struct.h:
+        * tests/Param_Test/fixed_struct.cpp:
+        * tests/Param_Test/multdim_array.h:
+        * tests/Param_Test/multdim_array.cpp:
+        * tests/Param_Test/nested_struct.h:
+        * tests/Param_Test/nested_struct.cpp:
+        * tests/Param_Test/objref.h:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/objref_struct.h:
+        * tests/Param_Test/objref_struct.cpp:
+        * tests/Param_Test/recursive_struct.h:
+        * tests/Param_Test/recursive_struct.cpp:
+        * tests/Param_Test/recursive_union.h:
+        * tests/Param_Test/recursive_union.cpp:
+        * tests/Param_Test/short.h:
+        * tests/Param_Test/short.cpp:
+        * tests/Param_Test/typecode.h:
+        * tests/Param_Test/typecode.cpp:
+        * tests/Param_Test/ub_any_seq.h:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_array_seq.h:
+        * tests/Param_Test/ub_array_seq.cpp:
+        * tests/Param_Test/ub_long_seq.h:
+        * tests/Param_Test/ub_long_seq.cpp:
+        * tests/Param_Test/ub_objref_seq.h:
+        * tests/Param_Test/ub_objref_seq.cpp:
+        * tests/Param_Test/ub_short_seq.h:
+        * tests/Param_Test/ub_short_seq.cpp:
+        * tests/Param_Test/ub_str_seq.h:
+        * tests/Param_Test/ub_str_seq.cpp:
+        * tests/Param_Test/ub_string.h:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_struct_seq.h:
+        * tests/Param_Test/ub_struct_seq.cpp:
+        * tests/Param_Test/ub_wstr_seq.h:
+        * tests/Param_Test/ub_wstr_seq.cpp:
+        * tests/Param_Test/ub_wstring.h:
+        * tests/Param_Test/ub_wstring.cpp:
+        * tests/Param_Test/ulonglong.h:
+        * tests/Param_Test/ulonglong.cpp:
+        * tests/Param_Test/var_array.h:
+        * tests/Param_Test/var_array.cpp:
+        * tests/Param_Test/var_struct.h:
+        * tests/Param_Test/var_struct.cpp:
+          We now use the standard <<= and >>= operators to test DII. We
+          also use the add_in_arg(), add_out_arg() and add_inout_arg()
+          helper methods.
+          The add_args() method was removed because it relied on the
+          non-portable, deprecated and ugly replace() operation in
+          CORBA::Any.
+          The SII tests are all passing, most of the DII tests pass too,
+          but these changes uncovered several problems with the
+          implementation of deep_free(), since deep_free has to be
+          removed we better wait for those changes instead of trying to
+          support the current scheme.
+
+        * tao/IIOP_Profile.cpp:
+        * tao/SHMIOP_Profile.cpp:
+        * tao/UIOP_Profile.cpp:
+          Cosmetic fixes.
 
 Wed Mar  8 17:22:32 2000  Ossama Othman  <ossama@uci.edu>
 

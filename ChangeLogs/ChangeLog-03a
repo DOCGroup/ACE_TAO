@@ -1,249 +1,28 @@
-Thu Mar 16 11:51:49 2000  Darrell Brunsch <brunsch@uci.edu>
-
-        * ace/MEM_SAP.i:
-        * ace/Malloc_T.cpp:
-
-          The ACE_TRACE macros were incompatible with SEH.  Conditionally
-          compiled the ACE_TRACE statements in places where this was a 
-          problem.  Thanks to Edan Ayal <edanayal@yahoo.com> for reporting
-          this.
-
-Thu Mar 16 13:40:53 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/config-sunos5.5.h: just #define ACE_USES_OLD_IOSTREAMS,
-          don't #define it explicitly to 1.  This removes a source
-          of confusion:  changing the 1 to 0 didn't disable the feature.
-          Thanks to Charles Scott <Charles.P.Scott@jpl.nasa.gov> for
-          reporting this.
-
-Thu Mar 16 13:01:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ACE-INSTALL.html: Clarified some of the installation instructions for
-	  building ACE.  Thanks to Jeff Graham <jgraham@lincom-asg.com> for
-	  contributing these.
-
-	* ace/Event_Handler.h: Clarified the comments for handle_timeout().
-	  Thanks to Jonathan Reis <reis@stentorsoft.com> for this
- 	  suggestion.
-
-Thu Mar 16 12:47:01 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/OS.cpp (thr_create): check for stacksize <
-          ACE_HAS_HUGE_THREAD_STACKSIZE on all platforms,
-          not just those with PTHREADS.  Thanks to
-          Richard L. Johnson <Richard.L.Johnson@jpl.nasa.gov>
-          for reporting this.
-
-Wed Mar 15 23:21:04 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * ace/Configuration.cpp: Changed from using ACE_TString::rep() to
-          ACE_TString::fast_rep() to avoid memory leaks.  Thanks to for
-          reporting this and suggesting the fix.
-
-          Also removed  a call to add_ref() from the constructor of
-          ACE_Section_Key_Win32.  It was causing another memory leak.
-
-Wed Mar 15 21:18:19 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * include/makeinclude/platform_lynxos.GNU: set
-          ACE_HAS_GNUG_PRE_2_8 to 1 for LynxOS 2.5.0, because
-          its g++ doesn't support -fno-exceptions.
-
-Wed Mar 15 20:51:21 2000  Chad Elliott <elliott_c@ociweb.com>
-
-        * ace/OS.h,ace/ACE.cpp,ace/config-chorus.h,
-          include/makeinclude/platform_chorus4.x_g++.GNU:
-          added Chorus 4.0 support.
-
-Wed Mar 15 20:47:12 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/ACE.h: moved #include of OS.h inside the #ifndef ACE_ACE_H
-          protection.  OS.h no longer depends on ACE.h, so there's no
-          circular include problem.  Thanks to Espen Harlinn
-          <espen.harlinn@seamos.no> for reporting this.
-
-Wed Mar 15 20:43:14 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/OS.cpp (thr_keycreate): rearranged ::pthread_keycreate ()
-          calls so that ACE_HAS_STDARG_THR_DEST is only used with
-          ACE_HAS_PTHREADS_DRAFT4.
-
-Wed Mar 15 17:30:57 2000  Balachandran  <bala@cs.wustl.edu>
-
-        * ACE version 5.1 released.
-
-Wed Mar 15 15:17:19 2000  Charles Scott <Charles.P.Scott@jpl.nasa.gov>
-
-        * include/makeinclude/platform_vxworks5.x_ghs.GNU: added
-          --stdle --exceptions to CCFLAGS if exceptions are enabled.
-
-Tue Mar 14 15:01:46 2000  Steve Huston  <shuston@riverace.com>
-
-        * tests/Malloc_Test.cpp: Disable mapping the file into different
-          address ranges for HP-UX because the PA-RISC architecture does not
-          allow it. See the DEPENDENCIES section of the mmap man page for
-          all the details.
-
-Mon Mar 13 22:18:20 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * bin/create_ace_build: default $directory_mode to 0777,
-          because it gets modified by the umask anyways.  Thanks
-          to Dave Meyer <dmeyer@std.saic.com> for suggesting this.
-
-Mon Mar 13 10:16:53 2000  Bala  <bala@cs.wustl.edu>
-
-        * ACE version 5.0.16 released.
-
-Sun Mar 12 21:10:13 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * many Makefiles: updated dependencies.
-
-Fri Mar 10 00:17:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * netsvcs/ACE-netsvcs.html: Updated this document.  Thanks to
-          Charles Meier <cmeier@concentus-tech.com> for contributing this.
-
-        * ace/WIN32_Proactor.cpp (ACE_WIN32_Proactor): Replaced
-          this->completion_port_ with 0 in the call to
-          CreateIoCompletionPort() to make it more clear what's going on.
-
-        * ace/SPIPE_Acceptor.cpp: Very minor reformatting of the code to
-          conform to ACE guidelines.
-
-Thu Mar 09 23:12:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * ace/OS.i (flock_init): On Win32, the hEvent in strut overlapped
-          should initialized to NULL.  This was causing Naming_Test to
-          fail on Windows 2000.  Thanks to <cody.dean@mindspring.com> for
-          pointing this out. [Bug 485]
-
-Thu Mar  9 19:49:00 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Reactor.h: Clarified that ACE_Reactor::end_event_loop() should
-          only be used for the "singleton reactor" and not for user defined
-          reactors.  Thanks to Adrian Miranda <ade@psg.com> for motivating
-          this.
-
-Thu Mar 09 18:20:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
-
-        * ace/Asynch_IO.h:
-        * ace/Asynch_IO_Impl.h:
-        * ace/POSIX_Asynch_IO.h:
-        * ace/POSIX_Proactor.h:
-        * ace/Proactor.h:
-        * ace/Proactor_Impl.h:
-        * ace/WIN32_Asynch_IO.h:
-        * ace/WIN32_Proactor.h:
-        * ace/config-aix-4.1.x.h:
-        * ace/config-aix-4.2.x.h:
-        * ace/config-aix-4.3.x.h:
-
-          These files were using the  #if !defined (WHATEVER) as multiple
-          inclusion guard instead of  #ifndef WHATEVER. Thanks to Paul
-          Calabrese <calabrese_p@ociweb.com> for reporting that.
-
-        * ace/config-visualage.h:
-        * ace/CLASSIX/CLASSIX_Port_Default.h:
-        * ace/Svc_Conf_Tokens.h:
-
-          While this file were missing multiple inclusion guard. Thanks to
-          Paul Calabrese <calabrese_p@ociweb.com> for reporting that.
-
-Thu Mar 09 18:06:52 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/config-hpux-11.00.h: Added ACE_HAS_SIGTIMEDWAIT and the
-          ACE_PI_CONTROL_BLOCK_ALIGN_LONGS that Nanbor did for
-          config-hpux-10.x.h Wed Mar 8. There is still an assert failure
-          in Malloc_Test, so something is wrong there.
-
-Thu Mar 09 17:47:41 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/config-aix-4.x.h: Added ACE_HAS_SIGTIMEDWAIT.
-
-Thu Mar 09 17:35:31 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/Log_Msg.cpp (log): Related to Tue Mar 7 and Wed Mar 8; change the
-          static cast to a C-style cast and put in comments explaining that
-          depending on the underlying type of thread ID, sometimes a static
-          cast is needed, and sometimes a reinterpret cast, so we dropped
-          back and punted to a C-style cast. Thanks to Loren Rittle and
-          Bala for working this stuff out.
-
-Thu Mar 09 17:01:23 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/Naming_Context.cpp (ACE_Name_Options ctor): When allocating
-          space for the temp dir path, take the size of a char into account
-          to get enough for Unicode characters. Fixes Bugzilla #480.
-
-Thu Mar 09 15:30:41 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/ACE.h (init, fini): added comments that these methods
-          can only be called once per program invocation.  Thanks to
-          Chris Hafey <chris@stentorsoft.com> for reporting that an
-          init ()/fini ()/init () sequence fails.
-
-Thu Mar 09 12:57:14 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * tests/Time_Service_Test.cpp (main): Fixed several UNICODE
-          related problems.  Thanks to Steve H. for reporting this.
-
-Thu Mar  9 09:23:10 2000  Ossama Othman  <ossama@uci.edu>
-
-        * bin/make_release (create_kit):
-
-          Change to the destination directory prior to invoking `md5sum'
-          on the file for which an MD5 checksum is being generated.  This
-          was necessary to prevent the absolute path of the file from
-          being used as part of the checksum.
-
-          In any case, MD5 checksum generation is now working.  [Bug 48]
-
-          (tag):
-
-          Confirmed that the missing Makefile templates now get installed
-          in the ACE betas/releases (no changes, just confirmation).
-          [Bug 408]
-
-Thu Mar  9 11:01:34 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Configuration.h: Changed export_config()/import_config() to
-          be virtual methods so users can change how the config files are
-          implemented.  Thanks to Damien Dufour
-          <damien.dufour@horoquartz.fr> for reporting this.
-
-Thu Mar 09 10:41:24 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/NT_Service.(h cpp): Added !defined(ACE_HAS_PHARLAP) to the
-          if defined (ACE_HAS_WIN32) to prevent this feature from being
-          built on PharLap. Thanks to David Hauck <davidh@realtimeint.com>
-          for reporting this and suggesting a fix.
-
-Wed Mar 08 22:19:26 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * include/makeinclude/platform_vxworks5.x_g++.GNU:
-          moved VxWorks 5.4 (Tornado II) auto detection to
-          before CCFLAGS definition, so that it gets set
-          properly.  Thanks to Thomas Lockhart
-          <Thomas.Lockhart@jpl.nasa.gov> for reporting this. [Bug 481]
+Fri Mar 10 11:27:04 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/CDR_Stream.i:
+	  Fixed the << operators for ACE_OutputCDR::from_string and
+	  ACE_OutputCDR::from_wstring. They did not work with null
+	  strings.
 
 Wed Mar  8 19:16:56 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * tests/Time_Service_Test.cpp (main): Added the ASYS_TEXT macro
-          to the "ace-malloc-XXXXXX" string to avoid an error when
-          compiled with Unicode.  Thanks to Steve Huston
-          <shuston@riverace.com> for reporting this.  This fixes BUGID
-          479.
+	* tests/Time_Service_Test.cpp (main): Added the ASYS_TEXT macro
+	  to the "ace-malloc-XXXXXX" string to avoid an error when
+ 	  compiled with Unicode.  Thanks to Steve Huston
+ 	  <shuston@riverace.com> for reporting this.  This fixes BUGID
+ 	  479.
 
 Wed Mar  8 19:19:46 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * ace/config-irix6.x-common.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
-          to 2.
+	* ace/config-irix6.x-common.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
+	  to 2.
 
 Wed Mar  8 15:59:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * ace/config-hpux-10.x.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
-          to 2.  The alignment computing macros didn't work in this case.
-          Thanks to Steve H. for reporting this.
+	* ace/config-hpux-10.x.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
+	  to 2.  The alignment computing macros didn't work in this case.
+	  Thanks to Steve H. for reporting this.
 
 Wed Mar 08 15:26:31 2000  Steve Huston  <shuston@riverace.com>
 
@@ -267,20 +46,20 @@ Wed Mar 08 14:46:52 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Mar  8 11:13:04 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * ace/Log_Msg.cpp (log): Reverted this change.
-          Tue Mar  7 14:21:12 CST 2000  Loren Rittle
-          <rittle@rsch.comm.mot.com>. The change gave compile errors on
-          EGCS.
+	* ace/Log_Msg.cpp (log): Reverted this change.
+	  Tue Mar  7 14:21:12 CST 2000  Loren Rittle
+	  <rittle@rsch.comm.mot.com>. The change gave compile errors on
+	  EGCS.
 
 Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
-        * tests/Makefile.bor: Added new test Process_Manager_Test.
+	* tests/Makefile.bor: Added new test Process_Manager_Test.
 
         * include/makeinclude/compiler.bor, make_flags.bor: Added support
-          for BCB's codeguard memory checking tool.
+	  for BCB's codeguard memory checking tool.
 
         * include/makeinclude/outputdir.bor: Allow a different directory
-          creation tool to be substituted for "mkdir" on Win9x.
+	  creation tool to be substituted for "mkdir" on Win9x.
 
 Tue Mar 07 18:37:26 2000  Tom Ziomek <tomz@cc701.comm.mot.com>
 

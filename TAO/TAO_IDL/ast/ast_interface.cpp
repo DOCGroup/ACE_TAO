@@ -881,13 +881,12 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                                         UTL_Scope *s,
                                         UTL_StrList *p)
 {
-  // Fwd redefinition should be in the same scope, so local
-  // lookup is all that's needed.
-  AST_Decl *d = s->lookup_by_name_local (i->local_name (), 0);
-
+  AST_Decl *d = NULL;
   AST_Interface *fd = NULL;
 
-  if (i != NULL && d != NULL) 
+  if (i != NULL && (d = s->lookup_by_name (i->name (), 
+                                           I_FALSE)) 
+      != NULL) 
     {
       // See if we're defining a forward declared interface.
       if (d->node_type () == AST_Decl::NT_interface) 

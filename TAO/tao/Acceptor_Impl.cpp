@@ -39,10 +39,8 @@ ACE_RCSID(tao, Acceptor_Impl, "$Id$")
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>
-TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
-                                                           CORBA::Boolean flag)
-  : orb_core_ (orb_core),
-    lite_flag_ (flag)
+TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core)
+  : orb_core_ (orb_core)
 {
 }
 
@@ -51,8 +49,7 @@ TAO_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
   if (sh == 0)
     ACE_NEW_RETURN (sh,
-                    SVC_HANDLER (this->orb_core_,
-                                 this->lite_flag_),
+                    SVC_HANDLER (this->orb_core_),
                     -1);
 
   return 0;

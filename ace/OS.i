@@ -740,8 +740,8 @@ extern "C" {
 # if defined (_AIX) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 extern "C" {
   extern int _posix_getpwnam_r(const char *, struct passwd *, char *,
-                               int, struct passwd **);
-           }
+			       int, struct passwd **);
+	   }
 #endif /* AIX and VAC++ 4 */
 
 ACE_INLINE int
@@ -9659,7 +9659,7 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
   lock->overlapped_.Internal = 0;
   lock->overlapped_.InternalHigh = 0;
   lock->overlapped_.OffsetHigh = 0;
-  lock->overlapped_.hEvent = NULL;
+  lock->overlapped_.hEvent = INVALID_HANDLE_VALUE;
 #endif /* ACE_WIN32 */
   lock->handle_ = ACE_INVALID_HANDLE;
   lock->lockname_ = 0;

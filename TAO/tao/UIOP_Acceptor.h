@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -23,7 +22,6 @@
 #define TAO_UIOP_ACCEPTOR_H
 
 #include "tao/Pluggable.h"
-#include "tao/GIOP_Utils.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,7 +47,7 @@ public:
   // TAO_UIOP_Acceptor (ACE_UNIX_Addr &addr);
   // Create Acceptor object using addr.
 
-  TAO_UIOP_Acceptor (CORBA::Boolean flag = 0);
+  TAO_UIOP_Acceptor (void);
   // Create Acceptor object using addr.
 
   virtual ~TAO_UIOP_Acceptor (void);
@@ -105,9 +103,6 @@ private:
   // Flag that determines whether or not the rendezvous point should
   // be unlinked on close.  This is really only used when an error
   // occurs.
-  
-  CORBA::Boolean lite_flag_;
-  // Should we use GIOP lite??
 };
 
 # endif /* TAO_HAS_UIOP == 1 */

@@ -3093,7 +3093,7 @@ PortableServer::Current_out::operator-> (void)
 
 // ****************************************************************
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ForwardRequest &_tao_aggregate)
 {
@@ -3123,7 +3123,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,PortableServer::Forward
     return 0;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POAManager::AdapterInactive &_tao_aggregate)
 {

@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 #include "ace/Dynamic_Service.h"
 
 ACE_INLINE ACE_Thread_Manager *

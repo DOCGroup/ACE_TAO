@@ -96,11 +96,11 @@ main (int argc, char* argv[])
 
       RtecEventChannelAdmin::Observer_var obs =
         gateway._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       RtecEventChannelAdmin::Observer_Handle h =
         event_channel_2->append_observer (obs.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       gateway.observer_handle (h);
 
@@ -206,7 +206,7 @@ main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       gateway.shutdown (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       // ****************************************************************
 

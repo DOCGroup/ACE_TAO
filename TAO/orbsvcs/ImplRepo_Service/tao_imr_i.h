@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#ifndef TAO_IMR_I_H
+#if !defined (TAO_IMR_I_H)
 #define TAO_IMR_I_H
 
 #include "tao/corba.h"

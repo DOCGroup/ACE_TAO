@@ -31,6 +31,8 @@
 class TAO_Notify_EventChannelFactory_i;
 class TAO_Notify_Resource_Manager;
 
+// @@ Pradeep, where is this code coming from?!
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -45,8 +47,7 @@ class TAO_ORBSVCS_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotif
   //   TAO_Notify_EventChannel_i
   //
   // = DESCRIPTION
-  //   This class handles all the object factory functionality.All the event
-  //   routing is handled by its contained Event Manager class.
+  //
   //
  public:
   TAO_Notify_EventChannel_i (CosNotifyChannelAdmin::EventChannelFactory_ptr my_factory, TAO_Notify_Resource_Manager* resource_manager);

@@ -6,13 +6,13 @@
 ACE_INLINE IOP::ServiceContextList &
 TAO_GIOP_Invocation::service_info (void)
 {
-  return this->op_details_.service_info ();
+  return this->service_info_;
 }
 
 ACE_INLINE CORBA::ULong
 TAO_GIOP_Invocation::request_id (void)
 {
-  return this->op_details_.request_id ();
+  return this->request_id_;
 }
 
 ACE_INLINE TAO_OutputCDR &
@@ -30,7 +30,7 @@ TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
 			    CORBA::ULong opname_len,
                             TAO_ORB_Core *orb_core)
   : TAO_GIOP_Invocation (stub, operation, opname_len, orb_core),
-    rd_ (orb_core, this->op_details_.service_info ())
+    rd_ (orb_core, this->service_info_)
 {
 }
 
@@ -55,7 +55,7 @@ TAO_GIOP_Locate_Request_Invocation::
 TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
                                     TAO_ORB_Core *orb_core)
   : TAO_GIOP_Invocation (stub, 0, 0, orb_core),
-    rd_ (orb_core, this->op_details_.service_info ())
+    rd_ (orb_core, this->service_info_)
 {
 }
 

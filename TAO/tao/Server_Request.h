@@ -22,83 +22,17 @@
 #define TAO_SERVER_REQUEST_H
 
 #include "tao/corbafwd.h"
-#include "tao/IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Object_KeyC.h"
+#include "tao/GIOP.h"
 #include "tao/Object.h"
 
 class TAO_POA;
 class TAO_ORB_Core;
-class TAO_Transport;
-class TAO_Param_Data_Skel
-{
-  // = TITLE
-  //   Description of a single parameter.
-  //
-  // = DESCRIPTION
-  //
-  //   If value_size is nonzero for OUT, INOUT, or RETURN parameters,
-  //   it's (a) an indicator that the ORB returns a pointer-to-value
-  //   for this parameter, and also (b) is the size of the top-level
-  //   of the value that's returned (e.g. ignoring nested sequence
-  //   buffers).  That is, it moves CPU cycles from runtime -- some
-  //   calls to tc->size() -- to compile time where they're
-  //   cheap/free.
-  //
-  //   It _must_ only be set for cases where the ORB allocates the
-  //   return value, which must then be ORB::free()d ... e.g. where
-  //   the value is a pointer to data such as a struct, sequence, or
-  //   union.  (The CORBA C++ mapping doesn't require that for all
-  //   "out" structs; only those of "variable size".)  If this value
-  //   is nonzero, the value passed to do_static_call() must be the address
-  //   of a pointer.
-public:
-  CORBA::TypeCode_ptr tc;
-  // Type of param.
-
-  CORBA::ULong mode;
-  // Its mode.
-
-  CORBA::Boolean own;
-  // whether we own it or not
-};
-
-class TAO_Call_Data_Skel
-{
-  // = TITLE
-  //   Descriptions of operations, as used by the stub interpreter.
-  //   Only interpretive marshaling/unmarshaling is used, and the
-  //   stubs don't know what particular on-the-wire protocol is being
-  //   used.
-  //
-  // = DESCRIPTION
-  //   When using C++ exceptions, many C++ compilers will require the
-  //   use of compiled code throw the exception.  As binary standards
-  //   for exception throwing evolve, it may become practical to
-  //   interpretively throw exceptions.
-public:
-  const char *opname;
-  // Operation name.
-
-  CORBA::Boolean is_roundtrip;
-  // !oneway
-
-  // When constructing tables of parameters, put them in the same
-  // order they appear in the IDL spec: return value, then parameters
-  // left to right.  Other orders may produce illegal IIOP protocol
-  // messages.
-
-  CORBA::ULong param_count;
-  // # parameters.
-
-  const TAO_Param_Data_Skel *params;
-  // Their descriptions.
-
-};
 
 class TAO_Export CORBA_ServerRequest
 {
@@ -191,17 +125,6 @@ public:
 
   virtual CORBA::ORB_ptr  orb (void) = 0;
   // get the underlying ORB
-
-  virtual void demarshal (CORBA_Environment &ACE_TRY_ENV,
-                          const TAO_Call_Data_Skel *info,
-                          ...) = 0;
-  // demarshal incoming parameters
-
-  virtual void marshal (CORBA_Environment &ACE_TRY_ENV,
-                        //                        CORBA_Environment &skel_env,
-                        const TAO_Call_Data_Skel *info,
-                        ...) = 0;
-  // marshal outgoing parameters
 
   virtual TAO_InputCDR &incoming (void) = 0;
   // Retrieve the incoming stream.

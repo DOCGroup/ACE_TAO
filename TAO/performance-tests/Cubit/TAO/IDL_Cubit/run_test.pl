@@ -22,9 +22,7 @@ $svnsflags = " -f $iorfile";
 $clnsflags = " -f $iorfile";
 $clflags = "";
 $svflags = "";
-$liteflag = "";
-$svliteflag = "";
-$clliteflag = "";
+
 # Parse the arguments
 
 for ($i = 0; $i <= $#ARGV; $i++)
@@ -69,7 +67,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
     }
     if ($ARGV[$i] eq "-orblite")
     {
-      $liteflag = "uselite";
+      $clflags .= " -ORBGIOPlite";
+      $svflags .= " -ORBGIOPlite";
       last SWITCH;
     }
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
@@ -86,16 +85,8 @@ sleep 2;
 
 print stderr "\nRunning IDL_Cubit with the default ORB protocol.\n\n";
 
-if ($liteflag eq "uselite")
-{
-    $svliteflag = "-ORBSvcConf iiop_lite.conf";
-    $clliteflag = "-ORBSvcConf iiop_lite.conf";
-    print stderr "\nRunning IDL_Cubit with the a lite ORB protocol.\n\n";
-}
-
 $SV = Process::Create ($exepref."server".$EXE_EXT,
                        $svflags.
-                       $svliteflag.
                        $svnsflags);
 
 if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
@@ -105,7 +96,7 @@ if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
 }
 
 $CL = Process::Create ($exepref . "client".$EXE_EXT,
-                       " $clflags $clnsflags $clliteflag -x");
+                       " $clflags $clnsflags -x");
 
 $client = $CL->TimedWait (120);
 if ($client == -1) {
@@ -145,12 +136,6 @@ if ($OSNAME ne "MSWin32")
   sleep 2;
 
   print stderr "\nRunning IDL_Cubit with the UIOP protocol.\n\n";
-  if ($liteflag eq "uselite")
-  {
-      $svliteflag = "-ORBSvcConf uiop_lite.conf";
-      $clliteflag = "-ORBSvcConf uiop_lite.conf";
-      print stderr "\nRunning IDL_Cubit with the a UIOP lite ORB protocol.\n\n";
-  }
 
   # Save the original server flags.
   $save_svflags = $svflags;
@@ -159,7 +144,6 @@ if ($OSNAME ne "MSWin32")
 
   $SV = Process::Create ($exepref."server".$EXE_EXT,
                          $svflags.
-                         $svliteflag.
                          $svnsflags);
 
   if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
@@ -169,7 +153,7 @@ if ($OSNAME ne "MSWin32")
   }
 
   $CL = Process::Create ($exepref . "client".$EXE_EXT,
-                         " $clflags $clnsflags $clliteflag -x");
+                         " $clflags $clnsflags -x");
 
   $client = $CL->TimedWait (120);
   if ($client == -1) {

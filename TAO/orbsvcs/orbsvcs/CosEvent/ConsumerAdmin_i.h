@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#ifndef CONSUMERADMIN_I_H
+#if !defined (CONSUMERADMIN_I_H)
 #define CONSUMERADMIN_I_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"

@@ -2763,12 +2763,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 # if defined (ACE_HAS_THREADS)
 
-  // *** Set Stack Size
-#   if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
-      if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
-        stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
-#   endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
-
 #   if !defined (VXWORKS)
   // On VxWorks, the OS will provide a task name if the user doesn't.
   // So, we don't need to create a tmp_thr.  If the caller of this
@@ -2794,6 +2788,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (::pthread_attr_init (&attr) != 0)
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
       return -1;
+
+  // *** Set Stack Size
+#     if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+  if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+    stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
+#     endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
 #     if defined (CHORUS)
   // If it is a super actor, we can't set stacksize.  But for the time
@@ -3865,19 +3865,17 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
     ACE_UNUSED_ARG (inst);
 
 
-#       if defined (ACE_HAS_PTHREADS_DRAFT4)
-#         if defined (ACE_HAS_STDARG_THR_DEST)
+#       if defined (ACE_HAS_STDARG_THR_DEST)
     ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
-#         else  /* ! ACE_HAS_STDARG_THR_DEST */
+#       elif defined (ACE_HAS_PTHREADS_DRAFT4)
     ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
-#         endif /* ! ACE_HAS_STDARG_THR_DEST */
 #       elif defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
 #       else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
                                          ace_result_),
                        int, -1);
-#       endif /* ACE_HAS_PTHREADS_DRAFT4 */
+#       endif /* ACE_HAS_STDARG_THR_DEST */
 #     elif defined (ACE_HAS_STHREADS)
     ACE_UNUSED_ARG (inst);
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
@@ -3933,19 +3931,17 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 #   elif defined (ACE_HAS_PTHREADS)
     ACE_UNUSED_ARG (inst);
 
-#     if defined (ACE_HAS_PTHREADS_DRAFT4)
-#       if defined (ACE_HAS_STDARG_THR_DEST)
+#     if defined (ACE_HAS_STDARG_THR_DEST)
     ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
-#       else  /* ! ACE_HAS_STDARG_THR_DEST */
+#     elif defined (ACE_HAS_PTHREADS_DRAFT4)
     ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
-#       endif /* ! ACE_HAS_STDARG_THR_DEST */
 #     elif defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
 #     else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
                                          ace_result_),
                        int, -1);
-#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
+#     endif /* ACE_HAS_STDARG_THR_DEST */
 
 #   elif defined (ACE_HAS_STHREADS)
     ACE_UNUSED_ARG (inst);

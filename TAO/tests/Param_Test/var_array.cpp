@@ -48,7 +48,31 @@ void
 Test_Var_Array::dii_req_invoke (CORBA::Request *req,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
+  req->add_in_arg ("s1") <<= Param_Test::Var_Array_forany (this->in_);
+  req->add_inout_arg ("s2") <<= Param_Test::Var_Array_forany (this->inout_);
+  req->add_out_arg ("s3") <<= Param_Test::Var_Array_forany (this->out_.inout ());
+
+  req->set_return_type (Param_Test::_tc_Var_Array);
+
   req->invoke (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  Param_Test::Var_Array_forany forany;
+
+  req->return_value () >>= forany;
+  this->ret_ = Param_Test::Var_Array_dup (forany.in ());
+
+  CORBA::NamedValue_ptr o2 =
+    req->arguments ()->item (1, ACE_TRY_ENV);
+  ACE_CHECK;
+  *o2->value () >>= forany;
+  Param_Test::Var_Array_copy (this->inout_, forany.in ());
+
+  CORBA::NamedValue_ptr o3 =
+    req->arguments ()->item (2, ACE_TRY_ENV);
+  ACE_CHECK;
+  *o3->value () >>= forany;
+  this->out_ = Param_Test::Var_Array_dup (forany.in ());
 }
 
 int
@@ -97,66 +121,6 @@ Test_Var_Array::run_sii_test (Param_Test_ptr objref,
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_Var_Array::run_sii_test\n");
-
-    }
-  ACE_ENDTRY;
-  return -1;
-}
-
-int
-Test_Var_Array::add_args (CORBA::NVList_ptr param_list,
-			  CORBA::NVList_ptr retval,
-			  CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      CORBA::Any in_arg (Param_Test::_tc_Var_Array,
-                         this->in_,
-                         0);
-
-      CORBA::Any inout_arg (Param_Test::_tc_Var_Array,
-                            this->inout_,
-                            0);
-
-      CORBA::Any out_arg (Param_Test::_tc_Var_Array,
-                          this->out_.inout (), // .out () causes crash
-                          0);
-
-      // add parameters
-      param_list->add_value ("v1",
-                             in_arg,
-                             CORBA::ARG_IN,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("v2",
-                             inout_arg,
-                             CORBA::ARG_INOUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("v3",
-                             out_arg,
-                             CORBA::ARG_OUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::NamedValue *item = retval->item (0,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      item->value ()->replace (Param_Test::_tc_Var_Array,
-                               this->ret_.in (),
-                               0, // does not own
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Var_Array::add_args\n");
 
     }
   ACE_ENDTRY;

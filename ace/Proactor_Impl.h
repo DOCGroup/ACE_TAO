@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#ifndef ACE_PROACTOR_IMPL_H
+#if !defined (ACE_PROACTOR_IMPL_H)
 #define ACE_PROACTOR_IMPL_H
 
 #include "ace/OS.h"

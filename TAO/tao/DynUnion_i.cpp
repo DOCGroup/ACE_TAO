@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 #include "tao/DynAny_i.h"
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)

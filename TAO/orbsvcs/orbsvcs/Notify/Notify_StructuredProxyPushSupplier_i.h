@@ -37,7 +37,7 @@ class TAO_ORBSVCS_Export TAO_Notify_StructuredProxyPushSupplier_i : public TAO_N
   //   TAO_Notify_StructuredProxyPushSupplier_i
   //
   // = DESCRIPTION
-  //   Implements POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier
+  //
   //
 
  public:
@@ -46,6 +46,16 @@ class TAO_ORBSVCS_Export TAO_Notify_StructuredProxyPushSupplier_i : public TAO_N
 
   virtual ~TAO_Notify_StructuredProxyPushSupplier_i (void);
   // Destructor
+
+  // = Notify_Event_Listener methods
+  void dispatch_event (const CORBA::Any & data, CORBA::Environment &ACE_TRY_ENV);
+  void dispatch_event (const CosNotification::StructuredEvent & notification,
+                       CORBA::Environment &ACE_TRY_ENV);
+  // Dispatch event to consumer.
+
+  // = Update Listener method
+  void dispatch_update (EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed);
+  // The event manager invokes this to send publication updates
 
   virtual void connect_structured_push_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
@@ -66,17 +76,10 @@ virtual void disconnect_structured_push_supplier (
 
  protected:
 // = Helper methods
-  virtual void dispatch_event_i (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
-  // Deliver the event to the consumer.
-
-  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
-  // Deliver the update to the consumer.
-
  virtual void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
  // Cleanup all resources used by this object.
 
  CosNotifyComm::StructuredPushConsumer_var push_consumer_;
- // The consumer that we're connect to.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

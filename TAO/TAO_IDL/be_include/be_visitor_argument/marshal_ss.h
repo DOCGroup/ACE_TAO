@@ -32,7 +32,7 @@ class be_visitor_args_marshal_ss : public be_visitor_args
   //   be_visitor_args_marshal_ss
   //
   // = DESCRIPTION
-  //   Visitor for passing argument to the marshaling/demarshaling routine
+  //   Code to be generated when making the invocation
   //
 public:
   be_visitor_args_marshal_ss (be_visitor_context *ctx);
@@ -58,6 +58,14 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward
 
+#ifdef IDL_HAS_VALUETYPE
+  virtual int visit_valuetype (be_valuetype *node);
+  // visit valuetype
+
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  // visit valuetype forward
+#endif /* IDL_HAS_VALUETYPE */
+
   virtual int visit_predefined_type (be_predefined_type *node);
   // visit predefined type
 
@@ -75,7 +83,6 @@ public:
 
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef type
-
 };
 
 #endif  /* _BE_VISITOR_ARGUMENT_MARSHAL_SS_H_ */

@@ -418,8 +418,7 @@ ACE_Name_Options::ACE_Name_Options (void)
 #if defined (ACE_DEFAULT_NAMESPACE_DIR)
   this->namespace_dir_ = ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR);
 #else /* ACE_DEFAULT_NAMESPACE_DIR */
-  size_t pathsize = (MAXPATHLEN + 1) * sizeof (TCHAR);
-  this->namespace_dir_ = ACE_static_cast (TCHAR *, ACE_OS::malloc (pathsize));
+  this->namespace_dir_ = ACE_static_cast (TCHAR *, ACE_OS::malloc (MAXPATHLEN + 1));
   
   if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1) 
     {

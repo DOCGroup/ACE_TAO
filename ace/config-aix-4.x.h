@@ -153,7 +153,6 @@
 #  define ACE_LACKS_SIGINFO_H
 #endif /* ACE_AIX_MINOR_VERS >=2 */
 #define ACE_HAS_SIGWAIT
-#define ACE_HAS_SIGTIMEDWAIT
 
 #define ACE_HAS_SIN_LEN
 #define ACE_HAS_STRBUF_T

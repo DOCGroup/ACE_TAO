@@ -12,7 +12,7 @@ require ACEutils;
 
 $iorfile = "mtcubit.ior";
 $sleeptime = 3;
-$gioplite = '-ORBSvcConf iiop_lite.conf';
+$gioplite = '-ORBGIOPlite';
 $iterations = 1000;
 $low_priority_threads = 1;
 $thread_per_rate = '';

@@ -59,7 +59,6 @@ OBJFILES = \
 	$(OBJDIR)\InterceptorC.obj \
 	$(OBJDIR)\InterceptorS.obj \
 	$(OBJDIR)\InterfaceC.obj \
-	$(OBJDIR)\InterfaceS.obj \
 	$(OBJDIR)\Invocation.obj \
 	$(OBJDIR)\IOPC.obj \
 	$(OBJDIR)\IOPS.obj \

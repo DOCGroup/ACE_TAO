@@ -106,12 +106,13 @@ ACE_SOCK::open (int type,
   return 0;
 }
 
-// Adds the given session to the list of session objects joined by
-// this socket.
+// Adds the given session to the list of session objects 
+// joined by this socket.
 
 int 
 ACE_SOCK::join_qos_session (ACE_QoS_Session *qos_session)
 {
+  
   if (this->qos_session_set ().insert (qos_session) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in adding a new session to the "
@@ -121,7 +122,6 @@ ACE_SOCK::join_qos_session (ACE_QoS_Session *qos_session)
 }
 
 // Returns the QoS session set for this socket.
-
 ACE_Unbounded_Set <ACE_QoS_Session *>
 ACE_SOCK::qos_session_set (void)
 {

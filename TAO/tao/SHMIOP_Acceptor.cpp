@@ -9,6 +9,7 @@
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "tao/GIOP.h"
 #include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
@@ -43,7 +44,7 @@ template class TAO_Accept_Strategy<TAO_SHMIOP_Server_Connection_Handler, ACE_MEM
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor (CORBA::Boolean flag)
+TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor (void)
   : TAO_Acceptor (TAO_TAG_SHMEM_PROFILE),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
@@ -52,8 +53,7 @@ TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor (CORBA::Boolean flag)
     concurrency_strategy_ (0),
     accept_strategy_ (0),
     mmap_file_prefix_ (0),
-    mmap_size_ (1024 * 1024),
-    lite_flag_ (flag)
+    mmap_size_ (1024 * 1024)
 {
 }
 
@@ -176,8 +176,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
   this->orb_core_ = orb_core;
 
   ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_SHMIOP_CREATION_STRATEGY (this->orb_core_,
-                                                this->lite_flag_),
+                  TAO_SHMIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,

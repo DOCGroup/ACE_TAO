@@ -3,20 +3,6 @@
 
 // Insertion from special types.
 
-ACE_INLINE
-void
-CORBA_Any::replace (CORBA::TypeCode_ptr type,
-                    const void *value,
-                    CORBA::Environment &ACE_TRY_ENV)
-{
-  // Invoke the first form of the replace method and pass the default
-  // value (FALSE) for the "any_owns_data" parameter
-  this->replace (type,
-                 value,
-                 0,
-                 ACE_TRY_ENV);
-}
-
 ACE_INLINE CORBA::Boolean
 CORBA_Any::any_owns_data (void) const
 {
@@ -289,7 +275,13 @@ operator >>= (CORBA_Any_var lhs, CORBA::TypeCode_ptr &rhs)
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA_Any_var lhs, char* &rhs)
+operator >>= (CORBA_Any_var lhs, const char *&rhs)
+{
+  return lhs.inout () >>= rhs;
+}
+
+ACE_INLINE CORBA::Boolean
+operator >>= (CORBA_Any_var lhs, const CORBA::WChar *&rhs)
 {
   return lhs.inout () >>= rhs;
 }

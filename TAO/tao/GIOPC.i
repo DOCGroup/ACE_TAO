@@ -224,28 +224,215 @@ GIOP::TargetAddress::_d (void) const
 }
 
 
+#if !defined (_GIOP_TARGETADDRESS__TAO_SEQ_OCTET_CI_)
+#define _GIOP_TARGETADDRESS__TAO_SEQ_OCTET_CI_
+
+// *************************************************************
+// Inline operations for class GIOP::TargetAddress::_tao_seq_Octet_var
+// *************************************************************
+
+ACE_INLINE
+GIOP::TargetAddress::_tao_seq_Octet_var::_tao_seq_Octet_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+GIOP::TargetAddress::_tao_seq_Octet_var::_tao_seq_Octet_var (GIOP::TargetAddress::_tao_seq_Octet *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+GIOP::TargetAddress::_tao_seq_Octet_var::_tao_seq_Octet_var (const GIOP::TargetAddress::_tao_seq_Octet_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, GIOP::TargetAddress::_tao_seq_Octet (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+GIOP::TargetAddress::_tao_seq_Octet_var::~_tao_seq_Octet_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet_var &
+GIOP::TargetAddress::_tao_seq_Octet_var::operator= (GIOP::TargetAddress::_tao_seq_Octet *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet_var &
+GIOP::TargetAddress::_tao_seq_Octet_var::operator= (const GIOP::TargetAddress::_tao_seq_Octet_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, GIOP::TargetAddress::_tao_seq_Octet (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const GIOP::TargetAddress::_tao_seq_Octet *
+GIOP::TargetAddress::_tao_seq_Octet_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet *
+GIOP::TargetAddress::_tao_seq_Octet_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+GIOP::TargetAddress::_tao_seq_Octet_var::operator const GIOP::TargetAddress::_tao_seq_Octet &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+GIOP::TargetAddress::_tao_seq_Octet_var::operator GIOP::TargetAddress::_tao_seq_Octet &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+GIOP::TargetAddress::_tao_seq_Octet_var::operator GIOP::TargetAddress::_tao_seq_Octet &() const// cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE CORBA::Octet &
+GIOP::TargetAddress::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const GIOP::TargetAddress::_tao_seq_Octet &
+GIOP::TargetAddress::_tao_seq_Octet_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet &
+GIOP::TargetAddress::_tao_seq_Octet_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet *&
+GIOP::TargetAddress::_tao_seq_Octet_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet *
+GIOP::TargetAddress::_tao_seq_Octet_var::_retn (void)
+{
+  GIOP::TargetAddress::_tao_seq_Octet *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet *
+GIOP::TargetAddress::_tao_seq_Octet_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class GIOP::TargetAddress::_tao_seq_Octet_out
+// *************************************************************
+
+ACE_INLINE
+GIOP::TargetAddress::_tao_seq_Octet_out::_tao_seq_Octet_out (GIOP::TargetAddress::_tao_seq_Octet *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+GIOP::TargetAddress::_tao_seq_Octet_out::_tao_seq_Octet_out (GIOP::TargetAddress::_tao_seq_Octet_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+GIOP::TargetAddress::_tao_seq_Octet_out::_tao_seq_Octet_out (const GIOP::TargetAddress::_tao_seq_Octet_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (GIOP::TargetAddress::_tao_seq_Octet_out&,p).ptr_)
+{}
+
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet_out &
+GIOP::TargetAddress::_tao_seq_Octet_out::operator= (const GIOP::TargetAddress::_tao_seq_Octet_out &p)
+{
+  this->ptr_ = ACE_const_cast (GIOP::TargetAddress::_tao_seq_Octet_out&,p).ptr_;
+  return *this;
+}
+
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet_out &
+GIOP::TargetAddress::_tao_seq_Octet_out::operator= (GIOP::TargetAddress::_tao_seq_Octet *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+GIOP::TargetAddress::_tao_seq_Octet_out::operator GIOP::TargetAddress::_tao_seq_Octet *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet *&
+GIOP::TargetAddress::_tao_seq_Octet_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet *
+GIOP::TargetAddress::_tao_seq_Octet_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::Octet &
+GIOP::TargetAddress::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
 // accessor to set the member
 ACE_INLINE void
-GIOP::TargetAddress::object_key (const TAO_ObjectKey &val)
+GIOP::TargetAddress::object_key (const GIOP::TargetAddress::_tao_seq_Octet &val)
 {
   // set the discriminant val
   this->_reset (0, 0);
   this->disc_ = 0;
   ACE_NEW (
       this->u_.object_key_,
-      TAO_ObjectKey (val)
+      GIOP::TargetAddress::_tao_seq_Octet (val)
     );
 }
 
 // readonly get method 
-ACE_INLINE const TAO_ObjectKey &
+ACE_INLINE const GIOP::TargetAddress::_tao_seq_Octet &
 GIOP::TargetAddress::object_key (void) const
 {
   return *this->u_.object_key_;
 }
 
 // read/write get method 
-ACE_INLINE TAO_ObjectKey &
+ACE_INLINE GIOP::TargetAddress::_tao_seq_Octet &
 GIOP::TargetAddress::object_key (void)
 {
   return *this->u_.object_key_;
@@ -514,6 +701,20 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, GIOP::IORAddressingInf
 }
 
 
+#if !defined _TAO_CDR_OP_GIOP_TargetAddress__tao_seq_Octet_I_
+#define _TAO_CDR_OP_GIOP_TargetAddress__tao_seq_Octet_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const GIOP::TargetAddress::_tao_seq_Octet &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    GIOP::TargetAddress::_tao_seq_Octet &
+  );
+
+#endif /* _TAO_CDR_OP_GIOP_TargetAddress__tao_seq_Octet_I_ */
+
 ACE_INLINE CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const GIOP::TargetAddress &_tao_union
@@ -562,7 +763,7 @@ ACE_INLINE CORBA::Boolean operator>> (
   {
     case 0:
       {
-        TAO_ObjectKey _tao_union_tmp;
+        GIOP::TargetAddress::_tao_seq_Octet _tao_union_tmp;
         result = strm >> _tao_union_tmp;
         if (result)
           _tao_union.object_key (_tao_union_tmp);

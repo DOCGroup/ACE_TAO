@@ -1,6 +1,5 @@
 // $Id$
 
-
 // Portions of this file are:
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -43,7 +42,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, CDR, "$Id$")
-
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -126,27 +124,6 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
 }
 
 CORBA::TypeCode::traverse_status
-TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
-                       const void *data,
-                       const void *data2,
-                       CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object
-    (tc, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  if (!mobj)
-    return CORBA::TypeCode::TRAVERSE_STOP;
-
-  return mobj->encode (tc,
-                       data,
-                       data2,
-                       this,
-                       ACE_TRY_ENV);
-}
-
-CORBA::TypeCode::traverse_status
 TAO_OutputCDR::append (CORBA::TypeCode_ptr tc,
                        TAO_InputCDR *src,
                        CORBA::Environment &ACE_TRY_ENV)
@@ -189,28 +166,6 @@ TAO_InputCDR::init_translators (void)
       this->char_translator_ = this->orb_core_->from_iso8859 ();
       this->wchar_translator_ = this->orb_core_->from_unicode ();
     }
-}
-
-CORBA::TypeCode::traverse_status
-TAO_InputCDR::decode (CORBA::TypeCode_ptr tc,
-                      const void *data,
-                      const void *data2,
-                      CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object
-    (tc, ACE_TRY_ENV);
-
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  if (!mobj)
-    return CORBA::TypeCode::TRAVERSE_STOP;
-
-  return mobj->decode (tc,
-                       data,
-                       data2,
-                       this,
-                       ACE_TRY_ENV);
 }
 
 CORBA::TypeCode::traverse_status

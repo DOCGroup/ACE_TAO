@@ -1,5 +1,4 @@
-/* -*- C++ -*- */
-// $Id$ */
+/* -*- C++ -*- $Id$ */
 
 #include "Notify_StructuredProxyPushConsumer_i.h"
 #include "Notify_Event_Manager.h"
@@ -44,19 +43,9 @@ TAO_Notify_StructuredProxyPushConsumer_i::connect_structured_push_supplier (CosN
 }
 
 void
-TAO_Notify_StructuredProxyPushConsumer_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_StructuredProxyPushConsumer_i::dispatch_update (EVENTTYPE_LIST& /*added*/, EVENTTYPE_LIST& /*removed*/)
 {
-  ACE_TRY
-    {
-      this->push_supplier_->subscription_change (added, removed,
-                                                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHALL
-    {
-      // misbehaving client, ignore for now.
-    }
-  ACE_ENDTRY;
+  // TODO:
 }
 
 void
@@ -69,13 +58,7 @@ TAO_Notify_StructuredProxyPushConsumer_i::push_structured_event (const CosNotifi
   if (this->is_connected_ == 0)
     ACE_THROW (CosEventComm::Disconnected ());
 
-  TAO_Notify_StructuredEvent notify_event (notification);
-
-  CORBA::Boolean bval = this->check_filters_i (notify_event, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  if (bval == 1)
-    this->event_manager_->push (notify_event, ACE_TRY_ENV);
+  this->event_manager_->push (notification, ACE_TRY_ENV);
 }
 
 void
@@ -94,13 +77,9 @@ TAO_Notify_StructuredProxyPushConsumer_i::disconnect_structured_push_consumer (C
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 template class TAO_Notify_ProxyConsumer<POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>;
-template class TAO_Notify_Proxy<POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate TAO_Notify_ProxyConsumer<POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
-#pragma instantiate TAO_Notify_Proxy<POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

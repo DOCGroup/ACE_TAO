@@ -11,6 +11,7 @@
 #include "tao/Servant_Base.h"
 #include "tao/Request.h"
 #include "tao/varout.h"
+#include "tao/GIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 #include "tao/Connector_Registry.h"
@@ -19,7 +20,6 @@
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 #include "tao/InterfaceC.h"
 #endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
-
 
 #include "ace/Auto_Ptr.h"
 
@@ -47,6 +47,13 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
   // Notice that the refcount_ above is initialized to 1 because
   // the semantics of CORBA Objects are such that obtaining one
   // implicitly takes a reference.
+}
+
+void
+CORBA_Object::_tao_any_destructor (void *x)
+{
+  CORBA_Object_ptr tmp = ACE_static_cast(CORBA_Object_ptr,x);
+  CORBA::release (tmp);
 }
 
 // IS_A ... ask the object if it's an instance of the type whose

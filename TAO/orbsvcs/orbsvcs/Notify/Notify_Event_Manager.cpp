@@ -3,7 +3,9 @@
 #include "Notify_EventChannel_i.h"
 
 TAO_Notify_Event_Manager::TAO_Notify_Event_Manager (TAO_Notify_EventChannel_i* event_channel)
-  :event_channel_ (event_channel)
+  :event_channel_ (event_channel),
+   default_event_type_ ("*", "*"),
+   default_subscription_list_ (0)
 {
   // No-Op.
 }
@@ -14,68 +16,65 @@ TAO_Notify_Event_Manager::~TAO_Notify_Event_Manager ()
 }
 
 void
-TAO_Notify_Event_Manager::init (CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_Event_Manager::init (CORBA::Environment &ACE_TRY_ENV)
 {
-  // No-Op.
+  // create the default list.
+  ACE_NEW_THROW_EX (this->default_subscription_list_,
+                    EVENT_LISTENER_LIST (),
+                    CORBA::NO_MEMORY ());
+  // add the list to the recipient map.
+  this->event_recipient_map_.bind (this->default_event_type_,
+                                   this->default_subscription_list_);
 }
 
 void
-TAO_Notify_Event_Manager::subscribe_for_events (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST* current, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::subscribe_for_default_events (TAO_Notify_Event_Listener* event_listener, CORBA::Environment &/*ACE_TRY_ENV*/)
 {
-  EVENTTYPE_LIST added_update, removed_update;
+  this->default_subscription_list_->insert (event_listener);
+}
 
-  this->subscribe_for_events_i (event_listener, current, added_update,
-                                added, ACE_TRY_ENV);
+void
+TAO_Notify_Event_Manager::subscribe_for_events (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST& initial, CORBA::Environment &ACE_TRY_ENV)
+{
+  EVENTTYPE_LIST added_ret, removed_ret;
+
+  this->process_added_list_i (event_listener, initial, added_ret, ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->unsubscribe_from_events_i (event_listener, current, removed_update,
-                                   removed, ACE_TRY_ENV);
-  ACE_CHECK;
+  // if the returned list is *not* empty, send updates
+  if (added_ret.is_empty () == 0)
+    this->dispatch_updates_i (this->subscription_change_listeners_,
+                              added_ret, removed_ret, ACE_TRY_ENV);
+}
+
+void
+TAO_Notify_Event_Manager::update_subscription_for_events (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed, CORBA::Environment &ACE_TRY_ENV)
+{
+  EVENTTYPE_LIST added_ret, removed_ret;
+
+  this->process_added_list_i (event_listener, added, added_ret, ACE_TRY_ENV);
+  this->process_removed_list_i (event_listener, removed, removed_ret,
+                                ACE_TRY_ENV);
 
   // if either of the lists are *not* empty, send updates
-  if (added_update.is_empty () == 0 || removed_update.is_empty () == 0)
+  if (added_ret.is_empty () == 0 || removed_ret.is_empty () == 0)
     this->dispatch_updates_i (this->subscription_change_listeners_,
-                              added_update, removed_update, ACE_TRY_ENV);
+                              added_ret, removed_ret, ACE_TRY_ENV);
 }
 
 void
-TAO_Notify_Event_Manager::subscribe_for_events (EVENT_LISTENER_LIST& event_listener_list, EVENTTYPE_LIST* current, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
-{
-  EVENTTYPE_LIST added_update, removed_update;
-
-  this->subscribe_for_events_i (event_listener_list, current, added_update,
-                                added, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->unsubscribe_from_events_i (event_listener_list, current,
-                                   removed_update, removed, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // if either of the lists are *not* empty, send updates
-  if (added_update.is_empty () == 0 || removed_update.is_empty () == 0)
-    this->dispatch_updates_i (this->subscription_change_listeners_,
-                              added_update, removed_update, ACE_TRY_ENV);
-}
-
-void
-TAO_Notify_Event_Manager::subscribe_for_events_i (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST* current, EVENTTYPE_LIST& update, const CosNotification::EventTypeSeq & added, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::process_added_list_i (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST& added, EVENTTYPE_LIST& added_ret, CORBA::Environment &ACE_TRY_ENV)
 {
   EVENT_LISTENER_LIST* event_listener_list;
-  TAO_Notify_EventType event_type;
+  TAO_Notify_EventType* event_type;
 
-  for (CORBA::ULong index = 0; index < added.length (); index++)
+  // iterate over the <added> list first.
+  EVENTTYPE_LIST_ITER iter (added);
+
+  for (iter.first (); iter.next (event_type) == 1; iter.advance ())
     {
-      event_type = added[index];
-#if 0
-      ACE_DEBUG ((LM_DEBUG, "subscribing %x for event: %s, %s\n",
-                 event_listener,
-                  event_type.event_type_.domain_name.in (),
-                  event_type.event_type_.type_name.in ()));
-#endif
-      if (event_type.is_special ())
-        event_listener_list = &default_subscription_list_;
-      else if (this->event_recipient_map_.find (event_type,
-                                                event_listener_list) == -1)
+      if (this->event_recipient_map_.find (*event_type,
+                                           event_listener_list) == -1)
         {
           // create the list.
           EVENT_LISTENER_LIST* new_list;
@@ -84,97 +83,39 @@ TAO_Notify_Event_Manager::subscribe_for_events_i (TAO_Notify_Event_Listener* eve
                             EVENT_LISTENER_LIST (),
                             CORBA::NO_MEMORY ());
 
-          // add the list to the recipient map.
-          this->event_recipient_map_.bind (event_type, new_list);
-          event_listener_list = new_list;
-        }
+          // insert the listener in the list
+          new_list->insert (event_listener);
 
-      event_listener_list->insert (event_listener);
+          // add the list to the recipient map.
+          this->event_recipient_map_.bind (*event_type, new_list);
+        }
+      else
+        event_listener_list->insert (event_listener);
 
       // mirror changes in the subscription list
-      if (this->subscription_list_.insert (event_type) == 0)
-        update.insert (event_type);
-
-      // update the caller's current subscription list
-      if (current != 0)
-        current->insert (event_type);
-    }
+      if (this->subscription_list_.insert (*event_type) == 0)
+        added_ret.insert (*event_type);
+    } // for
 }
 
 void
-TAO_Notify_Event_Manager::subscribe_for_events_i (EVENT_LISTENER_LIST& list_to_add, EVENTTYPE_LIST* current, EVENTTYPE_LIST& update, const CosNotification::EventTypeSeq & added, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::process_removed_list_i (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST& removed, EVENTTYPE_LIST& removed_ret, CORBA::Environment &/*ACE_TRY_ENV*/)
 {
   EVENT_LISTENER_LIST* event_listener_list;
-  TAO_Notify_EventType event_type;
+  TAO_Notify_EventType* event_type;
 
-  for (CORBA::ULong index = 0; index < added.length (); index++)
+  // iterate over the <removed> list first.
+  EVENTTYPE_LIST_ITER iter (removed);
+
+  for (iter.first (); iter.next (event_type) == 1; iter.advance ())
     {
-      event_type = added[index];
-
-      if (event_type.is_special ())
-        event_listener_list = &default_subscription_list_;
-      else if (this->event_recipient_map_.find (event_type,
-                                                event_listener_list) == -1)
-        {
-          // create the list.
-          EVENT_LISTENER_LIST* new_list;
-
-          ACE_NEW_THROW_EX (new_list,
-                            EVENT_LISTENER_LIST (),
-                            CORBA::NO_MEMORY ());
-
-          // add the list to the recipient map.
-          this->event_recipient_map_.bind (event_type, new_list);
-          event_listener_list = new_list;
-        }
-
-      EVENT_LISTENER_LIST::ITERATOR iter (list_to_add);
-
-      TAO_Notify_Event_Listener** event_listener;
-
-      for (iter.first (); iter.next (event_listener); iter.advance ())
-        {
-#if 0
-          ACE_DEBUG ((LM_DEBUG, "subscribing %x for event: %s, %s\n",
-                      *event_listener,
-                      event_type.event_type_.domain_name.in (),
-                      event_type.event_type_.type_name.in ()));
-#endif
-          ACE_ASSERT (*event_listener != 0);
-          event_listener_list->insert (*event_listener);
-        }
-
-      // mirror changes in the subscription list
-      if (this->subscription_list_.insert (event_type) == 0)
-        update.insert (event_type);
-
-      // update the caller's current subscription list
-      if (current != 0)
-        current->insert (event_type);
-    }
-}
-
-void
-TAO_Notify_Event_Manager::unsubscribe_from_events_i (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST* current, EVENTTYPE_LIST &update, const CosNotification::EventTypeSeq & removed, CORBA::Environment &/*ACE_TRY_ENV*/)
-{
-  EVENT_LISTENER_LIST* event_listener_list;
-  TAO_Notify_EventType event_type;
-
-  for (CORBA::ULong index = 0; index < removed.length (); index++)
-    {
-      event_type = removed[index];
-
       // find out if there is a event listener list for this event type.
-      if (event_type.is_special ())
-        event_listener_list = &this->default_subscription_list_;
-      else if (this->event_recipient_map_.find (event_type,
-                                                event_listener_list) == -1)
+      if (this->event_recipient_map_.find (*event_type,
+                                           event_listener_list) == -1)
         continue;
 
       // remove <event_listener> from the list.
-
       event_listener_list->remove (event_listener);
-
       // If this was the last entry in the list then we should remove
       // the corrsponding event_type from the recipient_map.
       // However i'm going to leave the blank entries based on the assumption
@@ -186,105 +127,108 @@ TAO_Notify_Event_Manager::unsubscribe_from_events_i (TAO_Notify_Event_Listener* 
       // the map has grown too big and prune it. (lazy evaluation).
 
       // mirror changes in the subscription list
-      if (this->subscription_list_.remove (event_type) == 0)
-        update.insert (event_type); // modify the update list.
-
-      if (current != 0)
-        current->remove (event_type);
+      if (this->subscription_list_.remove (*event_type) == 0)
+        removed_ret.insert (*event_type);
     }
 }
 
 void
-TAO_Notify_Event_Manager::unsubscribe_from_events_i (EVENT_LISTENER_LIST& list_to_add, EVENTTYPE_LIST* current, EVENTTYPE_LIST &update, const CosNotification::EventTypeSeq & removed, CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_Event_Manager::unsubscribe_from_events (TAO_Notify_Event_Listener* event_listener, CORBA::Environment &ACE_TRY_ENV)
 {
-  EVENT_LISTENER_LIST* event_listener_list;
-  TAO_Notify_EventType event_type;
+  // Go through all the lists in the <recipient_map_> and remove
+  // <event_listener> from each list.
+  // TODO: keep a reverse map to tell which lists we belong to.?
 
-  for (CORBA::ULong index = 0; index < removed.length (); index++)
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, event_recipient_map_.mutex ());
+  ACE_CHECK;
+
+  // Create an iterator
+  EVENT_RECIPIENT_MAP::ITERATOR iter (event_recipient_map_);
+
+  // Iterate over and populate the list.
+  EVENT_RECIPIENT_MAP::ENTRY *hash_entry;
+
+  CORBA::ULong len = event_recipient_map_.current_size ();
+
+    for (CORBA::ULong i = 0; i < len; i++)
     {
-      event_type = removed[index];
+      if (iter.next (hash_entry) == 1)
+        hash_entry->int_id_->remove (event_listener);
 
-      // find out if there is a event listener list for this event type.
-      if (event_type.is_special ())
-        event_listener_list = &this->default_subscription_list_;
-      else if (this->event_recipient_map_.find (event_type,
-                                                event_listener_list) == -1)
-        continue;
-
-      EVENT_LISTENER_LIST::ITERATOR iter (list_to_add);
-
-      TAO_Notify_Event_Listener** event_listener;
-
-      for (iter.first (); iter.next (event_listener); iter.advance ())
-        {
-          ACE_ASSERT (*event_listener != 0);
-          // remove <event_listener> from the list.
-          event_listener_list->remove (*event_listener);
-        }
-
-      // mirror changes in the subscription list
-      if (this->subscription_list_.remove (event_type) == 0)
-        update.insert (event_type); // modify the update list.
-
-      if (current != 0)
-        current->remove (event_type);
+      iter.advance ();
     }
 }
 
 void
-TAO_Notify_Event_Manager::push (TAO_Notify_Event& event, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::push (const CORBA::Any & data, CORBA::Environment &ACE_TRY_ENV)
 {
-  // If the event is *not* the special event
-  // send it to the list that matches it.
-  // In any case send it to the default list.
-#if 0
-  ACE_DEBUG ((LM_DEBUG, "finding a match for event: %s, %s\n",
-              event.event_type ().event_type_.domain_name.in (),
-              event.event_type ().event_type_.type_name.in ()));
-#endif
-  if (!event.is_special_event_type ())
+  if (this->default_subscription_list_->is_empty () == 0)
     {
-      EVENT_LISTENER_LIST* subscription_list;
-      // find the subscription list for <event_type>
-      if (this->event_recipient_map_.find (event.event_type (),
-                                           subscription_list) == 0)
-        {
-          this->dispatch_event_i (event, subscription_list, ACE_TRY_ENV);
-        }
-    }
-  // Those subscribed for the default events get everything.
-  if (this->default_subscription_list_.is_empty () == 0)
-    {
-      this->dispatch_event_i (event,
-                              &default_subscription_list_, ACE_TRY_ENV);
+      this->dispatch_event (data,
+                            default_subscription_list_, ACE_TRY_ENV);
       ACE_CHECK;
     }
 }
 
 void
-TAO_Notify_Event_Manager::dispatch_event_i (TAO_Notify_Event &event, EVENT_LISTENER_LIST* proxy_list, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::push (const CosNotification::StructuredEvent & notification, CORBA::Environment &ACE_TRY_ENV)
 {
-  EVENT_LISTENER_LIST::ITERATOR iter (*proxy_list);
+  TAO_Notify_EventType event_type;
+  event_type = notification.header.fixed_header.event_type;
 
-  TAO_Notify_Event_Listener** event_listener;
-
-  for (iter.first (); iter.next (event_listener); iter.advance ())
+  EVENT_LISTENER_LIST* subscription_list;
+  // find the subscription list for <event_type>
+  if (this->event_recipient_map_.find (event_type,
+                                       subscription_list) == 0)
     {
-      ACE_ASSERT (*event_listener != 0);
-      (*event_listener)->dispatch_event (event, ACE_TRY_ENV);
+      this->dispatch_event (notification, subscription_list, ACE_TRY_ENV);
+    }
+
+  // Those subscribed for the default events get everything.
+  if (this->default_subscription_list_->is_empty () == 0)
+    {
+      this->dispatch_event (notification,
+                            default_subscription_list_, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
 void
-TAO_Notify_Event_Manager::dispatch_updates_i (UPDATE_LISTENER_LIST& update_listener_list, EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::dispatch_event (const CORBA::Any & data, EVENT_LISTENER_LIST* proxy_list, CORBA::Environment &ACE_TRY_ENV)
 {
-  UPDATE_LISTENER_LIST::ITERATOR iter (update_listener_list);
+  EVENT_LISTENER_LIST_ITER iter (*proxy_list);
+
+  TAO_Notify_Event_Listener** event_listener; // don't be afraid...
+
+  for (iter.first (); iter.next (event_listener); iter.advance ())
+    {
+      (*event_listener)->dispatch_event (data, ACE_TRY_ENV);
+    }
+}
+
+void
+TAO_Notify_Event_Manager::dispatch_event (const CosNotification::StructuredEvent & notification, EVENT_LISTENER_LIST* proxy_list, CORBA::Environment &ACE_TRY_ENV)
+{
+  EVENT_LISTENER_LIST_ITER iter (*proxy_list);
+
+  TAO_Notify_Event_Listener** event_listener; // don't be afraid...
+
+  for (iter.first (); iter.next (event_listener); iter.advance ())
+    {
+      (*event_listener)->dispatch_event (notification, ACE_TRY_ENV);
+    }
+}
+
+void
+TAO_Notify_Event_Manager::dispatch_updates_i (UPDATE_LISTENER_LIST& update_listener_list, EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed, CORBA::Environment &/*ACE_TRY_ENV*/)
+{
+  UPDATE_LISTENER_LIST_ITER iter (update_listener_list);
 
   TAO_Notify_Update_Listener** update_listener;
 
   for (iter.first (); iter.next (update_listener); iter.advance ())
     {
-      (*update_listener)->dispatch_update (added, removed, ACE_TRY_ENV);
+      (*update_listener)->dispatch_update (added, removed);//, ACE_TRY_ENV);
     }
 }
 
@@ -312,34 +256,6 @@ TAO_Notify_Event_Manager::unregister_from_publication_updates (TAO_Notify_Update
   this->publication_change_listeners_.remove (update_listener);
 }
 
-CosNotification::EventTypeSeq*
-TAO_Notify_Event_Manager::obtain_offered_types (void)
-{
-  CosNotification::EventTypeSeq* event_type_seq;
-
-  ACE_NEW_RETURN (event_type_seq,
-                  CosNotification::EventTypeSeq(this->publication_list_.size ()),
-                  0);
-
-  this->publication_list_.populate (*event_type_seq);
-
-  return event_type_seq;
-}
-
-CosNotification::EventTypeSeq*
-TAO_Notify_Event_Manager::obtain_subscription_types (void)
-{
-  CosNotification::EventTypeSeq* event_type_seq;
-
-  ACE_NEW_RETURN (event_type_seq,
-                  CosNotification::EventTypeSeq(this->subscription_list_.size ()),
-                  0);
-
-  this->subscription_list_.populate (*event_type_seq);
-
-  return event_type_seq;
-}
-
 void
 TAO_Notify_Event_Manager::update_publication_list (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
 {
@@ -363,7 +279,7 @@ TAO_Notify_Event_Manager::update_publication_list (const CosNotification::EventT
   for (i = 0; i < len; i++)
     {
       event_type = added[i];
-      if (this->publication_list_.insert (event_type) == 0)
+      if (this->subscription_list_.insert (event_type) == 0)
         {
           added_list.insert (event_type);
         }

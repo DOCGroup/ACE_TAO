@@ -184,11 +184,7 @@ ACE::terminate_process (pid_t pid)
   KnCap cap_;
 
   // Use the pid to find out the actor's capability, then kill it.
-# if defined(CHORUS_4)
-  if (::acap (pid, &cap_) == 0)
-# else
   if (::acap (AM_MYSITE, pid, &cap_) == 0)
-# endif
     return ::akill (&cap_);
   else
     return -1;

@@ -1,8 +1,4 @@
 // $Id$
-
-#ifndef SVC_CONF_TOKENS_H
-#define SVC_CONF_TOKENS_H
-
 #define ACE_DYNAMIC 257
 #define ACE_STATIC 258
 #define ACE_SUSPEND 259
@@ -23,5 +19,3 @@
 #define ACE_RBRACE 274
 #define ACE_STAR 275
 #define ACE_COLON 276
-
-#endif //SVC_CONF_TOKENS_H

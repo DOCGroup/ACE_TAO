@@ -1,11 +1,11 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 #include "tao/UIOP_Profile.h"
 
 #if TAO_HAS_UIOP == 1
 
+#include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
@@ -15,7 +15,6 @@
 
 ACE_RCSID(tao, UIOP_Profile, "$Id$")
 
-
 #if !defined (__ACE_INLINE__)
 # include "tao/UIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
@@ -24,7 +23,7 @@ static const char prefix_[] = "uiop";
 
 const char TAO_UIOP_Profile::object_key_delimiter_ = '|';
 
-char 
+char
 TAO_UIOP_Profile::object_key_delimiter (void) const
 {
   return TAO_UIOP_Profile::object_key_delimiter_;
@@ -316,7 +315,7 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
 
   if (minor <= TAO_DEF_GIOP_MINOR)
     this->version_.minor = minor;
-  
+
   char *rendezvous = 0;
 
   // Get rendezvous_point
@@ -325,7 +324,7 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
       ACE_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
       return -1;
     }
-  
+
   if (this->object_addr_.set (rendezvous) == -1)
     {
       if (TAO_debug_level > 0)

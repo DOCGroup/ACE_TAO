@@ -870,15 +870,15 @@ TAO_CodeGen::start_implementation_header (const char *fname)
             }
 #endif
 
-      const char* server_hdr =
-        IDL_GlobalData::be_get_server_hdr_fname (1);
-
-      *this->implementation_header_<< "#include \""<<server_hdr<<"\"\n\n";
-
       *this->implementation_header_
         << "#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
         << "#pragma once\n"
         << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
+
+      const char* server_hdr =
+        IDL_GlobalData::be_get_server_hdr_fname (1);
+
+      *this->implementation_header_<< "#include \""<<server_hdr<<"\"\n\n";
 
       return 0;
     }
@@ -1145,13 +1145,9 @@ TAO_CodeGen::node (void)
 void
 TAO_CodeGen::config_visitor_factory (void)
 {
-  // What strategy are we interested in? Interpreted or Compiled Marshaling?
-  // This is the top level distinction we make and strategize our visitor
-  // factory object accordingly
-  if (idl_global->compiled_marshaling ())
-    this->visitor_factory_ = TAO_COMPILED_VISITOR_FACTORY::instance ();
-  else
-    this->visitor_factory_ = TAO_INTERPRETIVE_VISITOR_FACTORY::instance ();
+  // We have removed interpreted marshaling from TAO, so
+  // TAO_INTERPRETIVE_VISITOR_FACTORY is no more.
+  this->visitor_factory_ = TAO_COMPILED_VISITOR_FACTORY::instance ();
 }
 
 void

@@ -86,40 +86,4 @@ public:
 
 };
 
-// ************************************************************
-// class be_compiled_visitor_args_vardecl_ss
-// ************************************************************
-class be_compiled_visitor_args_vardecl_ss : public be_visitor_args_vardecl_ss
-{
-  //
-  // = TITLE
-  //   be_compiled_visitor_args_vardecl_ss
-  //
-  // = DESCRIPTION
-  //   Visitor for variable declaration for argument for compiled marshaling
-  //   skeletons
-  //
-public:
-  be_compiled_visitor_args_vardecl_ss (be_visitor_context *ctx);
-  // constructor
-
-  virtual ~be_compiled_visitor_args_vardecl_ss (void);
-  // destructor
-
-  virtual int visit_interface (be_interface *node);
-  // visit interface
-
-  virtual int visit_interface_fwd (be_interface_fwd *node);
-  // visit interface forward
-
-#ifdef IDL_HAS_VALUETYPE
-  virtual int visit_valuetype (be_valuetype *node);
-  // visit valuetype
-
-  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
-  // visit valuetype forward
-#endif /* IDL_HAS_VALUETYPE */
-
-};
-
 #endif /* _BE_VISITOR_ARGUMENT_VARDECL_SS_H_ */

@@ -28,6 +28,7 @@
 
 #include "tao/Typecode.h"
 #include "tao/ORB.h"
+#include "tao/GIOP.h"
 #include "tao/Object.h"
 #include "tao/Object_KeyC.h"
 #include "tao/PolicyC.h"

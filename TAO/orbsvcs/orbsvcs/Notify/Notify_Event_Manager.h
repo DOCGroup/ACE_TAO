@@ -45,56 +45,52 @@ class TAO_Notify_Event_Manager
   // Init
 
   // = Publish/Subscribe management
-  // = Subscription
-  void subscribe_for_events (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST* current, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV);
-  // Subscribes <event_listener> for events <added>.
-  // Unsubscribes <event_listener> for events <removed>.
-  // Updates the <current> subscription.
+  void subscribe_for_default_events (TAO_Notify_Event_Listener* event_listener, CORBA::Environment &ACE_TRY_ENV);
+  // Listeners that subscribe for default events get all events that are either
+  // Any's (in which case they don't have the event_type) field or they are
+  // Structured events that match the <default_event_type_>.
 
-  void subscribe_for_events (EVENT_LISTENER_LIST& event_listener_list, EVENTTYPE_LIST* current, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV);
-  // Subscribes the whole group.
+  void update_subscription_for_events (TAO_Notify_Event_Listener* event_consumer, EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed, CORBA::Environment &ACE_TRY_ENV);
+  // Subscribes listeners to the appropriate subscription list in the
+  // <event_recepient_map_>.
 
-  // = Publications
+  void subscribe_for_events (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST & initial, CORBA::Environment &ACE_TRY_ENV);
+  // Same as <update_subscription_for_events> but does not have a <removed>
+  // list.
+
   void update_publication_list (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV);
   // Suppliers can send anonymous requests to the Event Manager to indicate
   // what kind of events they expect to produce.
 
-  // = Updates
-  void unregister_from_subscription_updates (TAO_Notify_Update_Listener* update_listener, CORBA::Environment &ACE_TRY_ENV);
-  // Unregister from subscription updates.
+  void register_for_publication_updates (TAO_Notify_Update_Listener* update_listener, CORBA::Environment &ACE_TRY_ENV);
+  // Registers the publication update listener with the Event Manager.
 
   void register_for_subscription_updates (TAO_Notify_Update_Listener* update_listener, CORBA::Environment &ACE_TRY_ENV);
   // Registers the subscription update listener with the Event Manager.
 
-  void register_for_publication_updates (TAO_Notify_Update_Listener* update_listener, CORBA::Environment &ACE_TRY_ENV);
-  // Registers the publication update listener with the Event Manager.
-
+  void unsubscribe_from_events (TAO_Notify_Event_Listener* event_listener, CORBA::Environment &ACE_TRY_ENV);
+  void unregister_from_subscription_updates (TAO_Notify_Update_Listener* update_listener, CORBA::Environment &ACE_TRY_ENV);
   void unregister_from_publication_updates (TAO_Notify_Update_Listener* update_listener, CORBA::Environment &ACE_TRY_ENV);
-  // Unregister from publication updates.
-
-  CosNotification::EventTypeSeq* obtain_offered_types(void);
-  // Obtain the publication list.
-
-  CosNotification::EventTypeSeq* obtain_subscription_types (void);
-  // Obtain the subscription list.
+  // Remove listeners
 
   // = Event forwarding methods.
-  void push (TAO_Notify_Event& event, CORBA::Environment &ACE_TRY_ENV);
-  // Delivers the event to listeners subscribed for <event>
+  void push (const CORBA::Any & data, CORBA::Environment &ACE_TRY_ENV);
+  void push (const CosNotification::StructuredEvent & notification, CORBA::Environment &ACE_TRY_ENV);
+  // These methods are to be used by clients of the Event Manager to send
+  // events to interested listeners.
+
+  // = Event and updates dispatching methods.
+  void dispatch_event (const CORBA::Any & data, EVENT_LISTENER_LIST* event_listener_list, CORBA::Environment &ACE_TRY_ENV);
+  void dispatch_event (const CosNotification::StructuredEvent & notification, EVENT_LISTENER_LIST* event_listener_list, CORBA::Environment &ACE_TRY_ENV);
+  // Dispatch the event to the entire event_listener_list.
 
  protected:
   // = Helpers
-  void subscribe_for_events_i (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST* current, EVENTTYPE_LIST& update, const CosNotification::EventTypeSeq & added, CORBA::Environment &ACE_TRY_ENV);
+  void process_added_list_i (TAO_Notify_Event_Listener* event_consumer, EVENTTYPE_LIST& added, EVENTTYPE_LIST& added_ret, CORBA::Environment &ACE_TRY_ENV);
+  // Merge the addded list to the <event_type_map>.
 
-  void subscribe_for_events_i (EVENT_LISTENER_LIST& event_listener_list, EVENTTYPE_LIST* current, EVENTTYPE_LIST& update, const CosNotification::EventTypeSeq & added, CORBA::Environment &ACE_TRY_ENV);
-
-  void unsubscribe_from_events_i (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST* current, EVENTTYPE_LIST &update, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV);
-
-  void unsubscribe_from_events_i (EVENT_LISTENER_LIST& event_listener_list, EVENTTYPE_LIST* current, EVENTTYPE_LIST &update, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV);
-
-  // = Event and updates dispatching methods.
-  void dispatch_event_i (TAO_Notify_Event& event, EVENT_LISTENER_LIST* event_listener_list, CORBA::Environment &ACE_TRY_ENV);
-  // Dispatches <event> to the list.
+  void process_removed_list_i (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST& removed, EVENTTYPE_LIST& removed_ret, CORBA::Environment &ACE_TRY_ENV);
+  // Merge the removed list to the <event_type_map>.
 
   void dispatch_updates_i (UPDATE_LISTENER_LIST& update_listener_list, EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed, CORBA::Environment &ACE_TRY_ENV);
   // Dispatch the updates to the <update_listener_list>
@@ -106,12 +102,15 @@ class TAO_Notify_Event_Manager
   TAO_Notify_EventChannel_i* event_channel_;
   // The Event Channel that we're managing for.
 
+  const TAO_Notify_EventType default_event_type_;
+  // The event type that matches everything.
+
   EVENT_RECIPIENT_MAP event_recipient_map_;
   // A Map of event types and the groups of event listeners interested in them.
   // The keys of the map are a list of events that consumers have currently
   // subscribed for.
 
-  EVENT_LISTENER_LIST default_subscription_list_;
+  EVENT_LISTENER_LIST* default_subscription_list_;
   // Save a reference to the default list, we don't want to spend time
   // looking for it in the <event_recipient_map>.
 

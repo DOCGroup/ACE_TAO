@@ -27,10 +27,8 @@ class TAO_Notify_FilterFactory_i;
 class TAO_Notify_ConsumerAdmin_i;
 class TAO_Notify_SupplierAdmin_i;
 class TAO_Notify_StructuredProxyPushSupplier_i;
-class TAO_Notify_SequenceProxyPushSupplier_i;
 class TAO_Notify_ProxyPushSupplier_i;
 class TAO_Notify_StructuredProxyPushConsumer_i;
-class TAO_Notify_SequenceProxyPushConsumer_i;
 class TAO_Notify_ProxyPushConsumer_i;
 class TAO_Notify_Event_Manager;
 
@@ -82,17 +80,11 @@ class TAO_Notify_Resource_Manager
   TAO_Notify_StructuredProxyPushSupplier_i* create_struct_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent, CORBA::Environment &ACE_TRY_ENV);
   // Create a Structured ProxyPushSupplier.
 
-  TAO_Notify_SequenceProxyPushSupplier_i* create_seq_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent, CORBA::Environment &ACE_TRY_ENV);
-  // Create a Sequence ProxyPushSupplier.
-
   TAO_Notify_ProxyPushSupplier_i* create_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent, CORBA::Environment &ACE_TRY_ENV);
   // Create a ProxyPushSupplier.
 
   TAO_Notify_StructuredProxyPushConsumer_i* create_struct_proxy_pushconsumer (TAO_Notify_SupplierAdmin_i* parent, CORBA::Environment &ACE_TRY_ENV);
   // Create a Structured ProxyPushConsumer.
-
-  TAO_Notify_SequenceProxyPushConsumer_i* create_seq_proxy_pushconsumer (TAO_Notify_SupplierAdmin_i* parent, CORBA::Environment &ACE_TRY_ENV);
-  // Create a Sequence ProxyPushConsumer.
 
   TAO_Notify_ProxyPushConsumer_i* create_proxy_pushconsumer (TAO_Notify_SupplierAdmin_i* parent, CORBA::Environment &ACE_TRY_ENV);
   // Create a ProxyPushConsumer.
@@ -133,10 +125,6 @@ class TAO_Notify_Resource_Manager
 
   void deactivate_object (PortableServer::Servant servant, PortableServer::POA_ptr, CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Deactivate the object.
-
-  // = Options
-  CORBA::Boolean default_subscription_enabled (void);
-  // True if new born event listeners should be subscribed for all the events.
 
  protected:
   // = Helper methods

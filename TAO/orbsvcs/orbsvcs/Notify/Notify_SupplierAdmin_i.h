@@ -41,7 +41,7 @@ class TAO_ORBSVCS_Export TAO_Notify_SupplierAdmin_i : public POA_CosNotifyChanne
   //   TAO_Notify_SupplierAdmin_i
   //
   // = DESCRIPTION
-  //   Implements the CosNotifyChannelAdmin::SupplierAdmin interface.
+  //
   //
 
 public:
@@ -57,9 +57,6 @@ public:
              PortableServer::POA_ptr my_POA,
              CORBA::Environment &ACE_TRY_ENV);
   //Initialize the Supplier Admin.
-
-  TAO_Notify_FilterAdmin_i& get_filter_admin (void);
-  // Get our filter admin.
 
   void deactivate_proxy_pushconsumer (PortableServer::Servant servant, CORBA::Environment &ACE_TRY_ENV);
   // Deactivate servant from <proxy_pushconsumer_POA_>.
@@ -237,14 +234,11 @@ protected:
  void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Cleanup all resources used by this object.
 
-  CORBA::Object_ptr obtain_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Object_ptr obtain_struct_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
   // Obtain a proxy pushconsumer object
 
-  CORBA::Object_ptr obtain_struct_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Object_ptr obtain_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
   // Obtain a structured proxy pushconsumer object.
-
-  CORBA::Object_ptr obtain_sequence_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
-  // Obtain a sequence pushconsumer object
 
  // = Data members
   TAO_Notify_EventChannel_i* my_channel_;

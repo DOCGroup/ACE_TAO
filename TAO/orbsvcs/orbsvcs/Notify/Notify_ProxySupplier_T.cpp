@@ -9,11 +9,15 @@
 
 template <class SERVANT_TYPE>
 TAO_Notify_ProxySupplier<SERVANT_TYPE>::TAO_Notify_ProxySupplier (TAO_Notify_ConsumerAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager)
-  :TAO_Notify_Proxy<SERVANT_TYPE> (resource_manager),
-  myadmin_ (consumeradmin),
-  is_suspended_ (0)
+  :mytype_ (CosNotifyChannelAdmin::PUSH_ANY),
+   myadmin_ (consumeradmin),
+   event_manager_ (consumeradmin->get_event_manager ()),
+   resource_manager_ (resource_manager),
+   is_connected_ (0),
+   is_suspended_ (0),
+   is_destroyed_ (0)
 {
-  event_manager_ = consumeradmin->get_event_manager ();
+  // No-Op.
 }
 
 // Implementation skeleton destructor
@@ -33,57 +37,10 @@ template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier<SERVANT_TYPE>::cleanup_i (CORBA::Environment& ACE_TRY_ENV)
 {
   this->is_destroyed_ = 1;
+  this->event_manager_->unsubscribe_from_events (this, ACE_TRY_ENV);
+  this->myadmin_->unsubscribe_from_events (this);
   this->event_manager_->unregister_from_publication_updates (this,
                                                              ACE_TRY_ENV);
-
-  // unsubscribe it to our current subscriptions.
-  CosNotification::EventTypeSeq added (0);
-  CosNotification::EventTypeSeq removed (this->subscription_list_.size ());
-
-  this->subscription_list_.populate (removed);
-  added.length (0);
-
-  this->event_manager_->subscribe_for_events (this,
-                                              0,
-                                              added, removed, ACE_TRY_ENV);
-}
-
-template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier<SERVANT_TYPE>::dispatch_event (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV)
-{
-  if (this->is_connected_ == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,"%t, %p",
-                  "dispatch_event to disconnected proxy supplier from EC\n"));
-      return;
-    }
-
-  // check if it passes the parent filter.
-  CORBA::Boolean bval =
-    this->myadmin_->get_filter_admin ().match (event,
-                                               ACE_TRY_ENV);
-  ACE_CHECK;
-
-  if (bval == 0) // If the filter did not match, don't send the event.
-    return;
-
-  // Do we need to check our filter too.
-  if (myadmin_->MyOperator (ACE_TRY_ENV) == CosNotifyChannelAdmin::AND_OP)
-    {
-      bval = this->filter_admin_.match (event,
-                                        ACE_TRY_ENV);
-      ACE_CHECK;
-
-      if (bval == 0) // If the filter did not match, don't send the event.
-        return;
-    }
-
-  if (this->is_suspended_ == 1)
-    {
-      this->event_list_.enqueue_tail (event.clone ());
-    }
-  else
-    this->dispatch_event_i (event, ACE_TRY_ENV);
 }
 
 template <class SERVANT_TYPE> void
@@ -93,39 +50,68 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::subscription_change (const CosNotificati
                    CosNotifyComm::InvalidEventType
                    ))
 {
+  EVENTTYPE_LIST added_ret;
+  EVENTTYPE_LIST removed_ret;
+
+  this->update_subscription_list_i (added, removed, added_ret, removed_ret,
+                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (this->is_connected_ == 1)
+    this->event_manager_->
+      update_subscription_for_events (this,
+                                      added_ret, removed_ret,
+                                      ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+template <class SERVANT_TYPE> void
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::update_subscription_list_i (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, EVENTTYPE_LIST& added_ret, EVENTTYPE_LIST& removed_ret, CORBA::Environment &/*ACE_TRY_ENV*/)
+{
+  TAO_Notify_EventType event_type;
+
+  CORBA::ULong len = removed.length ();
+  CORBA::ULong i = 0;
+  for (; i < len; ++i)
     {
-      this->event_manager_->subscribe_for_events (this,
-                                                  &this->subscription_list_,
-                                                  added, removed, ACE_TRY_ENV);
+      event_type = removed[i];
+
+      if (this->subscription_list_.remove (event_type) == 0)
+        {
+          removed_ret.insert (event_type);
+        }
     }
-  else // simply update our subscription list.
+
+  const EVENTTYPE_LIST& ca_subscription_list =
+    this->myadmin_->get_subscription_list ();
+
+  len = added.length ();
+  for (i = 0; i < len; ++i)
     {
-      this->subscription_list_.insert_seq (added);
-      this->subscription_list_.remove_seq (removed);
+      event_type = added[i];
+
+      // insert into our list only if we don't already get the event via
+      // the CA.
+      if (ca_subscription_list.find (event_type) == -1 &&
+          this->subscription_list_.insert (event_type) == 0)
+        {
+          added_ret.insert (event_type);
+        }
     }
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier<SERVANT_TYPE>::on_connected (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::subscribe_for_events_i (CORBA::Environment &ACE_TRY_ENV)
 {
-  // register with CA
-  this->myadmin_->register_listener (this, ACE_TRY_ENV);
-  ACE_CHECK;
+  // Subscribe to the CA for all the events that it receives.
+  this->myadmin_->subscribe_for_events (this);
 
-  // subscribe it to our current subscriptions.
-  CosNotification::EventTypeSeq added (this->subscription_list_.size ());
-  CosNotification::EventTypeSeq removed (0);
-
-  this->subscription_list_.populate (added);
-  removed.length (0);
-
-  this->event_manager_->subscribe_for_events (this,
-                                              0,
-                                              added, removed, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->event_manager_->register_for_publication_updates (this, ACE_TRY_ENV);
+  if (!this->subscription_list_.is_empty ())
+    {
+      this->event_manager_->subscribe_for_events (this,
+                                                  this->subscription_list_,
+                                                  ACE_TRY_ENV);
+    }
 }
 
 template <class SERVANT_TYPE> void
@@ -136,26 +122,29 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::suspend_connection (CORBA::Environment &
                    CosNotifyChannelAdmin::NotConnected
                    ))
 {
-  this->is_suspended_ = 1;
+  // TODO:
+  //Add your implementation here
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier<SERVANT_TYPE>::resume_connection (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::resume_connection (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyChannelAdmin::ConnectionAlreadyActive,
                    CosNotifyChannelAdmin::NotConnected
                    ))
 {
-  TAO_Notify_Event* event;
+  // TODO:
+  //Add your implementation here
+}
 
-  while (this->event_list_.dequeue_head (event) == 0)
-    {
-      this->dispatch_event_i (*event, ACE_TRY_ENV);
-      delete event;
-    }
-
-  this->is_suspended_ = 0;
+template <class SERVANT_TYPE> CosNotifyChannelAdmin::ProxyType
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::MyType (CORBA::Environment &/*ACE_TRY_ENV*/)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
+{
+  return mytype_;
 }
 
 template <class SERVANT_TYPE> CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -206,35 +195,106 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::lifetime_filter (CosNotifyFilter::Mappin
 }
 
 template <class SERVANT_TYPE> CosNotification::EventTypeSeq*
-TAO_Notify_ProxySupplier<SERVANT_TYPE>::obtain_offered_types (CosNotifyChannelAdmin::ObtainInfoMode mode, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::obtain_offered_types (CosNotifyChannelAdmin::ObtainInfoMode /*mode*/, CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  CosNotification::EventTypeSeq* event_type_seq = 0;
+  // TODO:
+  return 0;
+}
 
-  if (mode == CosNotifyChannelAdmin::ALL_NOW_UPDATES_OFF ||
-      mode == CosNotifyChannelAdmin::ALL_NOW_UPDATES_ON)
-    {
-      event_type_seq = this->event_manager_->obtain_offered_types ();
-    }
+template <class SERVANT_TYPE> void
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::validate_event_qos (const CosNotification::QoSProperties & /*required_qos*/, CosNotification::NamedPropertyRangeSeq_out /*available_qos*/, CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotification::UnsupportedQoS
+                   ))
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+}
 
-  if (mode == CosNotifyChannelAdmin::NONE_NOW_UPDATES_ON ||
-      mode == CosNotifyChannelAdmin::ALL_NOW_UPDATES_ON)
-    {
-      // if updates are currently off, switch them on.
-      if (this->updates_on_ == 0)
-        this->event_manager_->register_for_publication_updates (this,
-                                                                ACE_TRY_ENV);
-    }
-  else
-    {
-      // if updates are currently on, switch them off.
-      if (this->updates_on_ == 1)
-        this->event_manager_->unregister_from_publication_updates (this,
-                                                                   ACE_TRY_ENV);
-    }
-  return event_type_seq;
+template <class SERVANT_TYPE> CosNotification::QoSProperties*
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::get_qos (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
+{
+  return this->qos_admin_.get_qos (ACE_TRY_ENV);
+}
+
+template <class SERVANT_TYPE> void
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::set_qos (const CosNotification::QoSProperties & qos, CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotification::UnsupportedQoS
+                   ))
+{
+  this->qos_admin_.set_qos (qos, ACE_TRY_ENV);
+}
+
+template <class SERVANT_TYPE> void
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::validate_qos (
+    const CosNotification::QoSProperties & required_qos,
+    CosNotification::NamedPropertyRangeSeq_out available_qos,
+    CORBA::Environment &ACE_TRY_ENV
+    )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotification::UnsupportedQoS
+                   ))
+{
+  this->qos_admin_.validate_qos (required_qos, available_qos, ACE_TRY_ENV);
+}
+
+template <class SERVANT_TYPE> CosNotifyFilter::FilterID
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::add_filter (CosNotifyFilter::Filter_ptr new_filter, CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
+{
+  return this->filter_admin_.add_filter (new_filter, ACE_TRY_ENV);
+}
+
+template <class SERVANT_TYPE> void
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::remove_filter (
+    CosNotifyFilter::FilterID filter,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyFilter::FilterNotFound
+                   ))
+{
+  this->filter_admin_.remove_filter (filter, ACE_TRY_ENV);
+}
+
+template <class SERVANT_TYPE> CosNotifyFilter::Filter_ptr
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::get_filter (CosNotifyFilter::FilterID filter, CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyFilter::FilterNotFound
+                   ))
+{
+  return this->filter_admin_.get_filter (filter, ACE_TRY_ENV);
+}
+
+template <class SERVANT_TYPE> CosNotifyFilter::FilterIDSeq*
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::get_all_filters (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
+{
+  return this->filter_admin_.get_all_filters (ACE_TRY_ENV);
+}
+
+template <class SERVANT_TYPE> void
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::remove_all_filters (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
+{
+  this->filter_admin_.remove_all_filters (ACE_TRY_ENV);
 }
 
 #endif /* TAO_NOTIFY_PROXYSUPPLIER_T_C */

@@ -9,7 +9,7 @@
 //   TAO_Notify_StructuredProxyPushConsumer_i.h
 //
 // = DESCRIPTION
-//   Implements the CosNotifyChannelAdmin::StructuredProxyPushConsumer
+//   Implements the POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer
 //   interface.
 //
 // = AUTHOR
@@ -39,7 +39,7 @@ class TAO_ORBSVCS_Export TAO_Notify_StructuredProxyPushConsumer_i : public TAO_N
   //   TAO_Notify_StructuredProxyPushConsumer_i
   //
   // = DESCRIPTION
-  //   Implements CosNotifyChannelAdmin::StructuredProxyPushConsumer
+  //
   //
 
 public:
@@ -48,6 +48,10 @@ public:
 
   virtual ~TAO_Notify_StructuredProxyPushConsumer_i (void);
   // Destructor
+
+  // = Update_Listener method
+  void dispatch_update (EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed);
+  // Dispatch the update to the supplier.
 
   // = interface methods
   virtual void connect_structured_push_supplier (
@@ -77,15 +81,11 @@ virtual void push_structured_event (
 
 protected:
   // = Helper methods
- virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
-  // dispatch updates to the supplier.
-
   void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Cleanup all resources used by this object.
 
   // = Data members
   CosNotifyComm::StructuredPushSupplier_ptr push_supplier_;
-  // The supplier that we're connected to.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -283,12 +283,10 @@ make: *** [libACE.so] Error 8
       Intel, Alpha, and PowerPC platforms.  If you use a RedHat 5.x
       distribution, it's best to use RedHat 5.1 or later.  ACE works
       without any modifications on RedHat 5.1 and later, and on
-      Debian 2.1 on both Intel and Alpha.  Make <A
-      HREF="#unix">symbolic links</A> to the
-      <code>include/makeinclude/platform_linux_lxpthread.GNU</code>
-      and <code>ace/config-linux-lxpthreads.h</code> as your
-      platform_macros.GNU and config.h files, respectively.  The same
-      files can be used on PowerPC, with LinuxPPC 
+      Debian 2.1 on both Intel and Alpha; use the
+      <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
+      and <code>ace/config-linux-lxpthreads.h</code> platform/config
+      files.  The same files can be used on PowerPC, with LinuxPPC
       1999 (R5), with glibc 2.1.1.<p>
 
       If you run out of memory, it's easy to add virtual memory on
@@ -436,7 +434,7 @@ make: *** [libACE.so] Error 8
 
       Notice that on older FreeBSD, <code>ld.so</code> only looks for
       so libraries with <b>version number</b> appended.  ACE makefiles
-      create symlinks for most shared libraries if
+      create symlink for most shared libraries if
       <code>versioned_so</code> is defined to 1 in
       <code>$ACE_ROOT/ace</code> with appropriate ACE version.
       However, this does not work for libACE.so itself so you have to
@@ -973,14 +971,9 @@ need to do:<P>
       however that you can normally skip this step because the
       defaults are typically fine for most systems. <P>
 
-  <LI>Create (via <code>ln -s</CODE> or <CODE>cp</CODE>) a
-      <code>$ACE_ROOT/ace/config.h</code>
-      file that contains the appropriate platform/compiler-specific
-      header configurations, e.g., 
-<PRE><CODE>
-% ln -s config-sunos5-sunc++-4.x.h config.h
-</PRE></CODE>
-      This file
+  <LI>Create a <code>$ACE_ROOT/ace/config.h</code> file that includes
+      the appropriate platform/compiler-specific header configurations
+      (such as <code>config-sunos5-sunc++-4.x.h</code>).  This file
       contains the #defines that are used throughout ACE to indicate
       which features your system supports (see the
       <code>$ACE_ROOT/ace/OS.h</code> file for many examples of how
@@ -995,14 +988,9 @@ need to do:<P>
       email if you get it working so I can add it to the master ACE
       release.<P>
 
-  <LI>Create (via <code>ln -s</CODE> or <CODE>cp</CODE>) a
-      $ACE_ROOT/include/makeinclude/platform_macros.GNU file 
-      that contains the appropriate platform/compiler-specific
-      Makefile configurations, e.g., 
-<PRE><CODE>
-% ln -s platform_sunos5_sunc++.GNU platform_macros.GNU
-</PRE></CODE>
- This file
+  <LI>Set the $ACE_ROOT/include/makeinclude/platform_macros.GNU file
+      to point to the appropriate platform/compiler-specific Makefile
+      configurations, e.g., platform_sunos5_sunc++.GNU.  This file
       contains the compiler and Makefile directives that are
       platform/compiler-specific<P>
 

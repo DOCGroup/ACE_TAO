@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#ifndef ACE_WIN32_PROACTOR_H
+#if !defined (ACE_WIN32_PROACTOR_H)
 #define ACE_WIN32_PROACTOR_H
 
 #include "ace/OS.h"

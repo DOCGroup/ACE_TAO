@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -21,10 +20,8 @@
 #ifndef TAO_REPLY_DISPATCHER_H
 #define TAO_REPLY_DISPATCHER_H
 
+#include "tao/GIOP.h"
 #include "tao/Request.h"
-
-#include "tao/GIOP_Utils.h"
-// This should not be here. Please see below for reasons
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -124,16 +121,12 @@ private:
   CORBA::ULong reply_status_;
   // Reply or LocateReply status.
 
-  // TAO_GIOP_Version version_;
+  TAO_GIOP_Version version_;
   // The version
 
   TAO_GIOP_Message_State message_state_;
   // All the state required to receive the input...
-  // @@ Having members of type TAO_GIOP* indicates that we
-  // (Reply_despatcher) are aware of the underlying messaging
-  // protocol. But for the present let us close our eyes till we are
-  // able to iterate on a use case - Bala.
-  
+
   int reply_received_;
   // Flag that indicates the reply  has been received.
 
@@ -201,7 +194,7 @@ private:
   CORBA::ULong reply_status_;
   // Reply or LocateReply status.
 
-  //  TAO_GIOP_Version version_;
+  TAO_GIOP_Version version_;
   // The version
 
   TAO_GIOP_Message_State *message_state_;
@@ -276,7 +269,7 @@ private:
   CORBA::ULong reply_status_;
   // Reply or LocateReply status.
 
-  //TAO_GIOP_Version version_;
+  TAO_GIOP_Version version_;
   // The version
 
   TAO_GIOP_Message_State *message_state_;

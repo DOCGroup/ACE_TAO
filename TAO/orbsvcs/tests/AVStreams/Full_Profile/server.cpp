@@ -3,7 +3,7 @@
 #include "server.h"
 
 FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
-  :TAO_FlowConsumer ("Data",FTP_SERVER::instance ()->protocols (),FTP_SERVER::instance ()->format ())
+  :TAO_FlowConsumer ("Data",SERVER::instance ()->protocols (),SERVER::instance ()->format ())
 {
   AVStreams::protocolSpec protocols (2);
   protocols.length (3);
@@ -40,7 +40,7 @@ int
 FTP_Server_Callback::handle_stop (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop"));
-  ACE_OS::fclose (FTP_SERVER::instance ()->file ());
+  ACE_OS::fclose (SERVER::instance ()->file ());
   return 0;
 }
 
@@ -55,7 +55,7 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
       int result = ACE_OS::fwrite (frame->rd_ptr (),
                                    frame->length (),
                                    1,
-                                   FTP_SERVER::instance ()->file ());
+                                   SERVER::instance ()->file ());
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::fwrite failed\n"),-1);
       frame = frame->cont ();
@@ -256,16 +256,16 @@ main (int argc,
       char **argv)
 {
   int result = 0;
-  result = FTP_SERVER::instance ()->init (argc,argv);
+  result = SERVER::instance ()->init (argc,argv);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::init failed\n"),1);
-  result = FTP_SERVER::instance ()->run ();
+    ACE_ERROR_RETURN ((LM_ERROR,"SERVER::init failed\n"),1);
+  result = SERVER::instance ()->run ();
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::run failed\n"),1);
+    ACE_ERROR_RETURN ((LM_ERROR,"SERVER::run failed\n"),1);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton <Server,ACE_null_mutex>;
+template class ACE_Singleton <Server,ACE_Null_Mutex>;
 template class TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint>;

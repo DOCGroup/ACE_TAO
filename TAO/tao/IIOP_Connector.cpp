@@ -3,6 +3,7 @@
 
 #include "tao/IIOP_Connector.h"
 #include "tao/IIOP_Profile.h"
+#include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
@@ -308,11 +309,9 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 TAO_IIOP_Connect_Creation_Strategy::
   TAO_IIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t,
-                                      TAO_ORB_Core *orb_core,
-                                      CORBA::Boolean flag)
+                                      TAO_ORB_Core *orb_core)
     :  ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler> (t),
-       orb_core_ (orb_core),
-       lite_flag_ (flag)
+       orb_core_ (orb_core)
 {
 }
 
@@ -324,8 +323,7 @@ TAO_IIOP_Connect_Creation_Strategy::make_svc_handler
     ACE_NEW_RETURN (sh,
                     TAO_IIOP_Client_Connection_Handler
                     (this->orb_core_->thr_mgr (),
-                     this->orb_core_,
-                     this->lite_flag_),
+                     this->orb_core_),
                     -1);
   return 0;
 }
@@ -339,13 +337,10 @@ typedef ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler,
         TAO_CACHED_CONNECT_STRATEGY;
 #endif /* ! TAO_USES_ROBUST_CONNECTION_MGMT */
 
-
-TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
+TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : TAO_Connector (TAO_TAG_IIOP_PROFILE),
-
     orb_core_ (0),
-    base_connector_ (),
-    lite_flag_ (flag)
+    base_connector_ ()
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
     ,
     cached_connect_strategy_ (0),
@@ -369,8 +364,7 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_IIOP_Connect_Creation_Strategy
                   (this->orb_core_->thr_mgr (),
-                   this->orb_core_,
-                   this->lite_flag_),
+                   this->orb_core_),
                   -1);
 
   auto_ptr<TAO_IIOP_Connect_Creation_Strategy>
@@ -511,22 +505,6 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
     }
 
   transport = svc_handler->transport ();
-
-  // Now that we have the client connection handler object we need to
-  // set the right messaging protocol for in the client side transport.
-  const TAO_GIOP_Version& version = iiop_profile->version ();
-  int ret_val = transport->messaging_init (version.major,
-                                           version.minor);
-  if (ret_val == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
-        }
-      return -1;
-    }
-  
   return 0;
 }
 
@@ -695,7 +673,7 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
       pfile->_decr_refcnt ();
       pfile = 0;
     }
-  
+
   return pfile;
 }
 
@@ -716,8 +694,7 @@ TAO_IIOP_Connector::make_profile (const char *endpoint,
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK;
-
-  }
+}
 
 int
 TAO_IIOP_Connector::check_prefix (const char *endpoint)

@@ -18,7 +18,7 @@
 //
 // ================================================================
 
-#ifndef _PROXYPUSHCONSUMER_I_H
+#if !defined (_PROXYPUSHCONSUMER_I_H)
 #define _PROXYPUSHCONSUMER_I_H
 
 #include "orbsvcs/RtecEventChannelAdminS.h"

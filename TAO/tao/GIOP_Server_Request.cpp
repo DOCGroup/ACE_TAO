@@ -1,6 +1,5 @@
 // $Id$
 
-
 // Implementation of the Dynamic Server Skeleton Interface  (for GIOP)
 
 #include "tao/GIOP_Server_Request.h"
@@ -44,43 +43,196 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_GIOP_ServerRequest::
-    TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging_Interface *mesg_base,
-                            TAO_InputCDR &input,
+    TAO_GIOP_ServerRequest (TAO_InputCDR &input,
                             TAO_OutputCDR &output,
                             TAO_ORB_Core *orb_core,
-                            const TAO_GIOP_Version &version)
-      :mesg_base_ (mesg_base), 
-       incoming_ (&input),
-       outgoing_ (&output),
-       response_expected_ (0),
-       sync_with_server_ (0),
-       lazy_evaluation_ (0),
-       
+                            const TAO_GIOP_Version &version,
+                            int &parse_error)
+  : incoming_ (&input),
+    outgoing_ (&output),
+    response_expected_ (0),
+    lazy_evaluation_ (0),
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-      
-       params_ (0),
-       
+
+    params_ (0),
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
-       
-       retval_ (0),
-       exception_ (0),
-       exception_type_ (TAO_GIOP_NO_EXCEPTION),
-       orb_core_ (orb_core),
-       version_ (version),
-       service_info_ (),
-       request_id_ (0),
-       object_key_ (),
-       requesting_principal_ (0)
+
+    retval_ (0),
+    exception_ (0),
+    exception_type_ (TAO_GIOP_NO_EXCEPTION),
+    orb_core_ (orb_core),
+    version_ (version),
+    service_info_ (),
+    request_id_ (0),
+    object_key_ (),
+    requesting_principal_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
-  //no-op
+
+  parse_error = this->parse_header ();
+}
+
+int
+TAO_GIOP_ServerRequest::parse_header_std (void)
+{
+  // Tear out the service context ... we currently ignore it, but it
+  // should probably be passed to each ORB service as appropriate
+  // (e.g. transactions, security).
+  //
+  // NOTE: As security support kicks in, this is a good place to
+  // verify a digital signature, if that is required in this security
+  // environment.  It may be required even when using IPSEC security
+  // infrastructure.
+
+  TAO_InputCDR& input = *this->incoming_;
+
+  input >> this->service_info_;
+  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+
+  // Get the rest of the request header ...
+
+  hdr_status = hdr_status && input.read_ulong (this->request_id_);
+
+  CORBA::Octet response_flags;
+  hdr_status = hdr_status && input.read_octet (response_flags);
+  this->response_expected_ = (response_flags != 0);
+
+  // The high bit of the octet has been set if the SyncScope policy
+  // value is SYNC_WITH_SERVER. This is a temporary hack until all
+  // of GIOP 1.2 is in place. Then we can check the version in the
+  // message header instead.
+  this->sync_with_server_ = (response_flags == 129);
+
+  // We use ad-hoc demarshalling here: there is no need to increase
+  // the reference count on the CDR message block, because this key
+  // will not outlive the request (or the message block).
+
+  CORBA::Long key_length = 0;
+  hdr_status = hdr_status && input.read_long (key_length);
+  if (hdr_status)
+    {
+      this->object_key_.replace (key_length, key_length,
+                                 (CORBA::Octet*)input.rd_ptr (),
+                                 0);
+      input.skip_bytes (key_length);
+    }
+
+  if (input.char_translator () == 0)
+    {
+      CORBA::ULong length = 0;
+      hdr_status = hdr_status && input.read_ulong (length);
+      if (hdr_status)
+        {
+          // Do not include NULL character at the end.
+          // @@ This is not getting demarshaled using the codeset
+          //    translators!
+          this->operation_.set (input.rd_ptr (),
+                                length - 1,
+                                0);
+          hdr_status = input.skip_bytes (length);
+        }
+    }
+  else
+    {
+      // @@ We could optimize for this case too, i.e. do in-place
+      //    demarshaling of the string... But there is an issue
+      //    pending on the OMG as to whether the operation should be
+      //    sent in the connection negotiated codeset or always in
+      //    ISO8859-1.
+      CORBA::String_var tmp;
+      hdr_status = hdr_status && input.read_string (tmp.inout ());
+      this->operation_.set (tmp._retn (), 1);
+    }
+
+  if (hdr_status)
+    {
+      input >> this->requesting_principal_.out ();
+      hdr_status = (CORBA::Boolean) input.good_bit ();
+    }
+
+  return hdr_status ? 0 : -1;
+}
+
+int
+TAO_GIOP_ServerRequest::parse_header_lite (void)
+{
+  TAO_InputCDR& input = *this->incoming_;
+
+  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+
+  // Get the rest of the request header ...
+
+  hdr_status = hdr_status && input.read_ulong (this->request_id_);
+
+  CORBA::Octet response_flags;
+  hdr_status = hdr_status && input.read_octet (response_flags);
+  this->response_expected_ = (response_flags != 0);
+
+  // The high bit of the octet has been set if the SyncScope policy
+  // value is SYNC_WITH_SERVER. This is a temporary hack until all
+  // of GIOP 1.2 is in place. Then we can check the version in the
+  // message header instead.
+  this->sync_with_server_ = (response_flags == 129);
+
+  // We use ad-hoc demarshalling here: there is no need to increase
+  // the reference count on the CDR message block, because this key
+  // will not outlive the request (or the message block).
+
+  CORBA::Long key_length = 0;
+  hdr_status = hdr_status && input.read_long (key_length);
+  if (hdr_status)
+    {
+      this->object_key_.replace (key_length, key_length,
+                                 (CORBA::Octet*)input.rd_ptr (),
+                                 0);
+      input.skip_bytes (key_length);
+    }
+
+  if (input.char_translator () == 0)
+    {
+      CORBA::ULong length = 0;
+      hdr_status = hdr_status && input.read_ulong (length);
+      if (hdr_status)
+        {
+          // Do not include NULL character at the end.
+          // @@ This is not getting demarshaled using the codeset
+          //    translators!
+          this->operation_.set (input.rd_ptr (),
+                                length - 1,
+                                0);
+          hdr_status = input.skip_bytes (length);
+        }
+    }
+  else
+    {
+      // @@ We could optimize for this case too, i.e. do in-place
+      //    demarshaling of the string... But there is an issue
+      //    pending on the OMG as to whether the operation should be
+      //    sent in the connection negotiated codeset or always in
+      //    ISO8859-1.
+      CORBA::String_var tmp;
+      hdr_status = hdr_status && input.read_string (tmp.inout ());
+      this->operation_.set (tmp._retn (), 1);
+    }
+
+  return hdr_status ? 0 : -1;
+}
+
+int
+TAO_GIOP_ServerRequest::parse_header (void)
+{
+  if (this->orb_core_->orb_params ()->use_lite_protocol ())
+    return this->parse_header_lite ();
+  else
+    return this->parse_header_std ();
 }
 
 // This constructor is used, by the locate request code
 
 TAO_GIOP_ServerRequest::
-    TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging_Interface *mesg_base,
-                            CORBA::ULong &request_id,
+    TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
                             CORBA::Boolean &response_expected,
                             TAO_ObjectKey &object_key,
                             const ACE_CString &operation,
@@ -88,29 +240,27 @@ TAO_GIOP_ServerRequest::
                             TAO_ORB_Core *orb_core,
                             const TAO_GIOP_Version &version,
                             int &parse_error)
-      : mesg_base_ (mesg_base),
-        operation_ (operation),
-        incoming_ (0),
-        outgoing_ (&output),
-        response_expected_ (response_expected),
-        sync_with_server_ (0),
-        lazy_evaluation_ (0),
-        
+  : operation_ (operation),
+    incoming_ (0),
+    outgoing_ (&output),
+    response_expected_ (response_expected),
+    lazy_evaluation_ (0),
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-        
-        params_ (0),
-        
+
+    params_ (0),
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
-        
-        retval_ (0),
-        exception_ (0),
-        exception_type_ (TAO_GIOP_NO_EXCEPTION),
-        orb_core_ (orb_core),
-        version_ (version),
-        service_info_ (),
-        request_id_ (request_id),
-        object_key_ (object_key),
-        requesting_principal_ (0)
+
+    retval_ (0),
+    exception_ (0),
+    exception_type_ (TAO_GIOP_NO_EXCEPTION),
+    orb_core_ (orb_core),
+    version_ (version),
+    service_info_ (),
+    request_id_ (request_id),
+    object_key_ (object_key),
+    requesting_principal_ (0)
 {
   parse_error = 0;
 }
@@ -219,7 +369,6 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
                           CORBA::Any (value),
                           CORBA::NO_MEMORY ());
         ACE_CHECK;
-
         this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
 
         if (value.value ())
@@ -264,9 +413,9 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
           CORBA::TypeCode_var tc = this->retval_->type ();
                 if (this->retval_->any_owns_data ())
             {
-              (void) this->outgoing_->encode (tc.in (),
-                                              retval_->value (),
-                                              0, ACE_TRY_ENV);
+              this->retval_->_tao_encode (*this->outgoing_,
+                                          this->orb_core_,
+                                          ACE_TRY_ENV);
               ACE_CHECK;
             }
           else
@@ -293,138 +442,14 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-// Extension
-void
-TAO_GIOP_ServerRequest::demarshal (CORBA::Environment &ACE_TRY_ENV,
-                                   // ORB related exception reporting
-                                   const TAO_Call_Data_Skel *info,
-                                   // call description
-                                   ...)
-{
-  CORBA::ULong i;
-  const TAO_Param_Data_Skel *pdp;
-  va_list param_vector;
-  va_start (param_vector, info);
-
-  for (i = 0, pdp = info->params;
-       i < info->param_count;
-       i++, pdp++)
-    {
-      void *ptr = va_arg (param_vector, void *);
-
-      if ((pdp->mode == CORBA::ARG_IN)
-          || (pdp->mode == CORBA::ARG_INOUT))
-        {
-          // Then just unmarshal the value.
-          (void) incoming_->decode (pdp->tc, ptr, 0, ACE_TRY_ENV);
-          ACE_CHECK;
-        }
-    }
-  va_end (param_vector);
-}
-
-// Extension
-
-void
-TAO_GIOP_ServerRequest::marshal (CORBA::Environment &ACE_TRY_ENV,
-                                 // ORB related exception reporting
-                                 //                             CORBA::Environment &skel_env,
-                                 // skeleton related exception reporting
-                                 const TAO_Call_Data_Skel *info,
-                                 // call description
-                                 ...)
-{
-  // what is "ACE_TRY_ENV" and "skel_env"?
-  // "skel_env" holds the exception that got raised inside the operation
-  // implementation (upcall)
-  //
-  // "orb_env" is the exception that may have been raised due to things going
-  // wrong in the entire dispatch process. These are always system exceptions.
-
-  // check if we are inside with an exception. This may have happened
-  // since the upcall could have set some exception
-#if 0 /* ASG */
-  if (skel_env.exception ())
-    {
-      // We must increase the "refcnt" on the exception, because it is
-      // "owned" by both <skel_env> and (eventually) by the
-      // Server_Request.
-      CORBA::Exception_ptr exception = skel_env.exception ();
-      exception->_incr_refcnt ();
-
-      // The Any does not own the because ultimately it will be owned
-      // by the Server_Request via the call to "set_exception"
-      CORBA::Any any (skel_env.exception ()->_type (), exception);
-      this->set_exception (any, ACE_TRY_ENV);
-    }
-#endif
-
-  // Setup a Reply message so that we can marshal all the outgoing parameters
-  // into it. If an exception was set, then that gets marshaled into the reply
-  // message and we don't do anything after that
-  this->init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
-
-#if 0 /* ASG */
-  // exception? nothing to do after this
-  if (orb_env.exception () || skel_env.exception ())
-    return;
-  ACE_CHECK;
-#endif
-
-  CORBA::ULong i;
-  const TAO_Param_Data_Skel *pdp;
-  va_list param_vector;
-  va_start (param_vector, info);
-
-  ACE_TRY
-    {
-      for (i = 0, pdp = info->params;
-           i < info->param_count;
-           i++, pdp++)
-        {
-          void *ptr = va_arg (param_vector, void *);
-
-          if (pdp->mode == 0)
-            {
-              // check if the return type is not void
-              CORBA::TCKind result = pdp->tc->kind (ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-              if (result != CORBA::tk_void)
-                {
-                  // Then just marshal the value.
-                  (void) this->outgoing_->encode (pdp->tc, ptr, 0,
-                                                  ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-                }
-            }
-          else if ((pdp->mode == CORBA::ARG_INOUT)
-                   || (pdp->mode == CORBA::ARG_OUT))
-            {
-              // Then just marshal the value.
-              (void) this->outgoing_->encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO_GIOP_ServerRequest::marshal - parameter encode failed");
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-
-  va_end (param_vector);
-}
-
 void
 TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
 {
   // Construct a REPLY header.
-  this->mesg_base_->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
-                                           *this->outgoing_);
+  TAO_GIOP::start_message (this->version_,
+                           TAO_GIOP::Reply,
+                           *this->outgoing_,
+                           this->orb_core_);
 
 #if defined (TAO_HAS_MINIMUM_CORBA)
   *this->outgoing_ << this->service_info_;
@@ -584,8 +609,10 @@ TAO_GIOP_ServerRequest::exception_type (void)
 void
 TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
 {
-  this->mesg_base_->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
-                                           *this->outgoing_);
+  TAO_GIOP::start_message (this->version_,
+                           TAO_GIOP::Reply,
+                           *this->outgoing_,
+                           this->orb_core_);
 
   IOP::ServiceContextList resp_ctx;
   resp_ctx.length (0);
@@ -594,10 +621,9 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
   this->outgoing_->write_ulong (this->request_id_);
   this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
 
-  int result = this->mesg_base_->send_message (transport,
-                                               *this->outgoing_);
-
-                                       
+  int result = TAO_GIOP::send_message (transport,
+                                       *this->outgoing_,
+                                       this->orb_core_);
 
   if (result == -1)
     {

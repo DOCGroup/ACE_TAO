@@ -160,7 +160,7 @@ TAO_Notify_EventChannel_i::create_default_filter_factory_i (CORBA::Environment& 
                      ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
 
-  return CosNotifyFilter::FilterFactory::_narrow (obj.in ());
+  return CosNotifyFilter::FilterFactory::_narrow (obj._retn ());
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
@@ -227,7 +227,7 @@ TAO_Notify_EventChannel_i::new_for_consumers (CosNotifyChannelAdmin::InterFilter
 
   this->consumer_admin_ids_.next ();
 
-  return CosNotifyChannelAdmin::ConsumerAdmin::_narrow (obj.in ());
+  return CosNotifyChannelAdmin::ConsumerAdmin::_narrow (obj._retn ());
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
@@ -256,7 +256,7 @@ TAO_Notify_EventChannel_i::new_for_suppliers (CosNotifyChannelAdmin::InterFilter
 
   supplier_admin_ids_.next ();
 
-  return CosNotifyChannelAdmin::SupplierAdmin::_narrow (obj.in ());
+  return CosNotifyChannelAdmin::SupplierAdmin::_narrow (obj._retn ());
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -271,7 +271,7 @@ TAO_Notify_EventChannel_i::get_consumeradmin (CosNotifyChannelAdmin::AdminID id,
                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::ConsumerAdmin::_nil ());
 
-  return CosNotifyChannelAdmin::ConsumerAdmin::_narrow (obj.in ());
+  return CosNotifyChannelAdmin::ConsumerAdmin::_narrow (obj._retn ());
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
@@ -286,7 +286,7 @@ TAO_Notify_EventChannel_i::get_supplieradmin (CosNotifyChannelAdmin::AdminID id,
                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::SupplierAdmin::_nil ());
 
-  return CosNotifyChannelAdmin::SupplierAdmin::_narrow (obj.in ());
+  return CosNotifyChannelAdmin::SupplierAdmin::_narrow (obj._retn ());
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
@@ -396,33 +396,22 @@ TAO_Notify_EventChannel_i::set_admin (const CosNotification::AdminProperties & a
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_Notify_EventChannel_i::for_consumers (CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_EventChannel_i::for_consumers (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  // There is not no way to destroy CosEventChannelAdmin::ConsumerAdmins
-  // so we just return the default Consumer Admin here.
-  // TODO: find a way to disable the destroy method in the default Admin.
-
-  CORBA::Object_var obj =
-    this->get_consumeradmin (this->default_id_, ACE_TRY_ENV);
-
-  return CosEventChannelAdmin::ConsumerAdmin::_narrow (obj.in (),
-                                                       ACE_TRY_ENV);
+  // TODO:
+  return 0;
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_Notify_EventChannel_i::for_suppliers (CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_EventChannel_i::for_suppliers (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  CORBA::Object_var obj =
-    this->get_supplieradmin (this->default_id_, ACE_TRY_ENV);
-
-  return CosEventChannelAdmin::SupplierAdmin::_narrow (obj.in (),
-                                                       ACE_TRY_ENV);
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

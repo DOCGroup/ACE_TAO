@@ -10,7 +10,7 @@
 #ifndef _TAO_IDL_IMPLREPOS_H_
 #define _TAO_IDL_IMPLREPOS_H_
 
-#include "tao/ImplRepoC.h"
+#include "ImplRepoC.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -71,7 +71,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
           TAO_default_environment ()
       );
 
-    ImplementationRepository::ServerObject *_this (
+    ::ImplementationRepository::ServerObject *_this (
         CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
@@ -117,7 +117,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___THRU_POA_COLLOCATED_SH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___THRU_POA_COLLOCATED_SH_
 
-  class TAO_Export _tao_thru_poa_collocated_ServerObject     : public virtual ImplementationRepository::ServerObject
+  class TAO_Export _tao_thru_poa_collocated_ServerObject     : public virtual ::ImplementationRepository::ServerObject
   {
   public:
     _tao_thru_poa_collocated_ServerObject (
@@ -261,7 +261,7 @@ private:
           TAO_default_environment ()
       );
 
-    ImplementationRepository::Administration *_this (
+    ::ImplementationRepository::Administration *_this (
         CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
@@ -443,7 +443,7 @@ private:
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___THRU_POA_COLLOCATED_SH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___THRU_POA_COLLOCATED_SH_
 
-  class TAO_Export _tao_thru_poa_collocated_Administration     : public virtual ImplementationRepository::Administration
+  class TAO_Export _tao_thru_poa_collocated_Administration     : public virtual ::ImplementationRepository::Administration
   {
   public:
     _tao_thru_poa_collocated_Administration (
@@ -747,7 +747,7 @@ private:
           TAO_default_environment ()
       );
 
-    ImplementationRepository::ServerInformationIterator *_this (
+    ::ImplementationRepository::ServerInformationIterator *_this (
         CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
@@ -795,7 +795,7 @@ private:
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___THRU_POA_COLLOCATED_SH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___THRU_POA_COLLOCATED_SH_
 
-  class TAO_Export _tao_thru_poa_collocated_ServerInformationIterator     : public virtual ImplementationRepository::ServerInformationIterator
+  class TAO_Export _tao_thru_poa_collocated_ServerInformationIterator     : public virtual ::ImplementationRepository::ServerInformationIterator
   {
   public:
     _tao_thru_poa_collocated_ServerInformationIterator (

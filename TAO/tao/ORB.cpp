@@ -27,6 +27,7 @@
 #include "tao/CDR.h"
 #include "tao/Marshal.h"
 #include "tao/IOR_LookupTable.h"
+#include "tao/GIOP.h"
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
 #include "tao/Request.h"
@@ -64,7 +65,6 @@ using std::set_unexpected;
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"
 #endif /* ! __ACE_INLINE__ */
-
 
 ACE_RCSID(tao, ORB, "$Id$")
 
@@ -1353,6 +1353,7 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
       //
       // NOTE:  we still "just" assume that native floating point is
       // IEEE.
+
       if (sizeof (CORBA::Short) != 2
           || sizeof (CORBA::Long) != 4
           || sizeof (CORBA::LongLong) != 8
@@ -1676,7 +1677,6 @@ CORBA_ORB::string_to_object (const char *str,
                           CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
-  
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)
@@ -1771,6 +1771,7 @@ CORBA_ORB::ior_string_to_object (const char *str,
   ACE_CDR::mb_align (&mb);
 
   char *buffer = mb.rd_ptr ();
+
   const char *tmp = str;
   size_t len = 0;
 
@@ -1796,7 +1797,7 @@ CORBA_ORB::ior_string_to_object (const char *str,
 
   // Create deencapsulation stream ... then unmarshal objref from that
   // stream.
-  
+
   int byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);
@@ -1804,6 +1805,7 @@ CORBA_ORB::ior_string_to_object (const char *str,
 
   CORBA::Object_ptr objref = CORBA::Object::_nil ();
   stream >> objref;
+
   return objref;
 }
 

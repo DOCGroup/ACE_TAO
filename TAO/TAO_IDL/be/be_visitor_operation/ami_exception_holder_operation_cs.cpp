@@ -101,10 +101,10 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
         *os << "get_";
     }
   *os << node->local_name () << "(";
-  
+
   if (!idl_global->exception_support ())
     *os << "CORBA::Environment &ACE_TRY_ENV";
-  
+
   *os << ")" << be_uidt;
 
   // now generate the throw specs
@@ -175,7 +175,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
 
 
 
-  *os << "// we have the is_system_exception boolean" << be_nl 
+  *os << "// we have the is_system_exception boolean" << be_nl
       << "// the byte_order boolean and" << be_nl
       << "// the marshaled_exception sequence of octet" << be_nl
       << " TAO_InputCDR _tao_in ((const char*) "
@@ -221,7 +221,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       << "// We can not use ACE_THROW here." << be_nl
       << "return;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl;
-  
+
   if (node->exceptions())
     {
       *os << be_idt_nl
@@ -242,20 +242,18 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
 
           << "if (ACE_OS::strcmp (type_id.in (), except_id) != 0)" << be_idt_nl
           << "continue;" << be_uidt_nl << be_nl
- 
+
           << "// match" << be_nl
-          << "CORBA::Exception_ptr exception = exceptions_data[i].alloc ();" 
+          << "CORBA::Exception_ptr exception = exceptions_data[i].alloc ();"
           << be_nl << be_nl
 
           << "if (exception == 0)" << be_idt_nl
           << "ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE," << be_nl
           << "                             CORBA::COMPLETED_YES));" << be_uidt_nl
 
-          << "_tao_in.decode (exception->_type ()," << be_nl
-          << "                exception," << be_nl
-          << "                0," << be_nl
-          << "                ACE_TRY_ENV);" << be_nl << be_nl;
-          
+          << "exception->_tao_decode (_tao_in, ACE_TRY_ENV);"
+          << be_nl << be_nl;
+
       *os << "// @@ There should be a better way to raise this exception!" << be_nl
           << "//    This code works for both native and emulated exceptions," << be_nl
           << "//    but it is ugly." << be_nl
@@ -273,8 +271,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
           << "                           CORBA::COMPLETED_YES));" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl;
     }
-          
-  *os << "};\n\n"; 
+
+  *os << "};\n\n";
   return 0;
 }
-

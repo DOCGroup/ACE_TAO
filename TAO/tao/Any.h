@@ -74,9 +74,9 @@ public:
   // Default constructor.
 
   CORBA_Any (CORBA::TypeCode_ptr type,
-             void *value = 0,
-             CORBA::Boolean any_owns_data = 0);
-  // Constructor. The any_owns_data flag determines if the Any owns the value
+             CORBA::Environment &ACE_TRY_ENV
+                 = TAO_default_environment ());
+  // Constructor.
 
   // = TAO extension
   CORBA_Any (CORBA::TypeCode_ptr type,
@@ -187,11 +187,9 @@ public:
   CORBA::Boolean operator>>= (CORBA::TypeCode_ptr&) const;
   // extract a TypeCode
 
-  CORBA::Boolean operator>>= (char*&) const; // deperecated
   CORBA::Boolean operator>>= (const char*&) const;
   // extract an unbounded string
 
-  CORBA::Boolean operator>>= (CORBA::WChar*&) const; // deprecated
   CORBA::Boolean operator>>= (const CORBA::WChar*&) const;
   // extract an unbounded wide string
 
@@ -278,20 +276,31 @@ public:
   // ORBOS/90-01-11, pg 672: For C++ mapping using the CORBA_Environment
   // parameter, two forms of the replace method are provided.
 
+#if 0
+  CORBA_Any (CORBA::TypeCode_ptr type,
+             void *value,
+             CORBA::Boolean any_owns_data,
+             CORBA::Environment &ACE_TRY_ENV
+                 = TAO_default_environment ());
+  CORBA_Any (CORBA::TypeCode_ptr type,
+             void *value,
+             CORBA::Environment &ACE_TRY_ENV
+                = TAO_default_environment ());
+  // Obsolete. Raises CORBA::NO_IMPLEMENT.
+
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
                 CORBA::Boolean any_owns_data,
                 CORBA_Environment &ACE_TRY_ENV =
                   TAO_default_environment ());
-  // Replace the current typecode and data with the specified one -
-  // unsafe.
+  // Obsolete. Raises CORBA::NO_IMPLEMENT.
 
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
                 CORBA_Environment &ACE_TRY_ENV =
                   TAO_default_environment ());
-  // Replace the current typecode and data with the specified one -
-  // unsafe. This uses a default value for the "any_owns_data" parameter
+  // Obsolete. Raises CORBA::NO_IMPLEMENT.
+#endif
 
   CORBA::TypeCode_ptr type (void) const;
   // Return TypeCode of the element stored in the Any.
@@ -321,10 +330,13 @@ public:
   int _tao_byte_order (void) const;
   // Get the byte order inside the CDR stream.
 
+  typedef void (*_tao_destructor)(void*);
+  // Generated data types define a 'destructor' function that
+  // correctly destroys an object stored in the Any.
+
   void _tao_replace (CORBA::TypeCode_ptr,
                      int byte_order,
-                     const ACE_Message_Block *mb,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     const ACE_Message_Block *mb);
   // Replace via message block instead of <value_>.
 
   void _tao_replace (CORBA::TypeCode_ptr type,
@@ -332,13 +344,13 @@ public:
                      const ACE_Message_Block *mb,
                      CORBA::Boolean any_owns_data,
                      void* value,
-                     CORBA::Environment &ACE_TRY_EN);
+                     CORBA::Any::_tao_destructor destructor);
   // Replace all the contents of the any, used in the <<= operators.
 
   void _tao_replace (CORBA::TypeCode_ptr type,
                      CORBA::Boolean any_owns_data,
                      void* value,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Any::_tao_destructor destructor);
   // Replace the value of the Any, used in the >>= operators.
 
   void _tao_encode (TAO_OutputCDR &cdr,
@@ -356,16 +368,19 @@ public:
 #endif /* __GNUC__ */
   // Useful for template programming.
 
+  static void _tao_any_destructor (void*);
+  static void _tao_any_string_destructor (void*);
+  static void _tao_any_wstring_destructor (void*);
+  static void _tao_any_tc_destructor (void*);
+  // Used to release Anys contained into anys.
+
 protected:
-  void free_value (CORBA::Environment &ACE_TRY_ENV);
+  void free_value (void);
   // Release the <value_>.
 
 private:
   CORBA::TypeCode_ptr type_;
   // Typecode for the <Any>.
-
-  void *value_;
-  // Value for the <Any>.
 
   int byte_order_;
   ACE_Message_Block *cdr_;
@@ -373,6 +388,12 @@ private:
 
   CORBA::Boolean any_owns_data_;
   // Flag that indicates the ORB is responsible for deleting the data.
+
+  void *value_;
+  // Value for the <Any>.
+
+  CORBA::Any::_tao_destructor destructor_;
+  // If not zero this is the function used to destroy objects.
 
   // 94-9-14 hides unsigned char insert/extract
   void operator<<= (unsigned char);
@@ -551,7 +572,9 @@ TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
 TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
                                        CORBA::TypeCode_ptr&);
 TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
-                                       char*&);
+                                       const char*&);
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+                                       const CORBA::WChar*&);
 TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
                                        CORBA::Any::to_boolean);
 TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,

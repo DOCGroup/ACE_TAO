@@ -96,7 +96,7 @@ private:
   CORBA_DynAny_ptr &ptr_;
 };
 
-class TAO_Export CORBA_DynAny : public virtual ACE_CORBA_1 (Object)
+class TAO_Export CORBA_DynAny : public virtual CORBA_Object
 {
 public:
   #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -114,7 +114,6 @@ public:
   static CORBA_DynAny_ptr _nil (void);
 
   class Invalid;
-  typedef Invalid *Invalid_ptr;
 
   class TAO_Export Invalid : public CORBA::UserException
   {
@@ -138,17 +137,11 @@ public:
     // = TAO extension
     static CORBA::Exception *_alloc (void);
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef Invalid_ptr _ptr_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
-
   }; // exception CORBA_DynAny::Invalid
 
     static CORBA::TypeCode_ptr _tc_Invalid;
 
   class InvalidValue;
-  typedef InvalidValue *InvalidValue_ptr;
 
   class TAO_Export InvalidValue : public CORBA::UserException
   {
@@ -172,17 +165,11 @@ public:
     // = TAO extension
     static CORBA::Exception *_alloc (void);
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef InvalidValue_ptr _ptr_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
-
   }; // exception CORBA_DynAny::InvalidValue
 
     static CORBA::TypeCode_ptr _tc_InvalidValue;
 
   class TypeMismatch;
-  typedef TypeMismatch *TypeMismatch_ptr;
 
   class TAO_Export TypeMismatch : public CORBA::UserException
   {
@@ -206,17 +193,11 @@ public:
     // = TAO extension
     static CORBA::Exception *_alloc (void);
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef TypeMismatch_ptr _ptr_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
-
-  }; // exception CORBA_DynAny::TypeMismatch
+ }; // exception CORBA_DynAny::TypeMismatch
 
     static CORBA::TypeCode_ptr _tc_TypeMismatch;
 
   class InvalidSeq;
-  typedef InvalidSeq *InvalidSeq_ptr;
 
   class TAO_Export InvalidSeq : public CORBA::UserException
   {
@@ -239,11 +220,6 @@ public:
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
-
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef InvalidSeq_ptr _ptr_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
 
   }; // exception CORBA_DynAny::InvalidSeq
 
@@ -610,7 +586,6 @@ struct TAO_Export CORBA_NameValuePair
   CORBA::Any value;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA_NameValuePair_ptr _ptr_type;
   typedef CORBA_NameValuePair_var _var_type;
 #endif /* __GNUC__ */
   // Useful for template programming.
@@ -879,7 +854,6 @@ public:
   ~CORBA_NameValuePairSeq (void); // dtor
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA_NameValuePairSeq_ptr _ptr_type;
   typedef CORBA_NameValuePairSeq_var _var_type;
 #endif /* __GNUC__ */
   // Useful for template programming.
@@ -1364,7 +1338,6 @@ public:
   ~CORBA_AnySeq (void); // dtor
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA_AnySeq_ptr _ptr_type;
   typedef CORBA_AnySeq_var _var_type;
 #endif /* __GNUC__ */
 

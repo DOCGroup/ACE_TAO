@@ -865,13 +865,8 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
             property_names [i];
 
           // Make an any value with tk_void type.
-          // @@ Using replace method, <<= operator does not exist yet
-          // for this.
-          nproperties [i].property_value.replace (CORBA::_tc_void,
-                                                  0,
-                                                  0,
-                                                  ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
+          nproperties [i].property_value =
+            CORBA::Any (CORBA::_tc_void);
         }
     }
 
@@ -881,9 +876,9 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
 
 void
 TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
-                                         CosPropertyService::Properties_out nproperties,
-                                         CosPropertyService::PropertiesIterator_out rest,
-                                         CORBA::Environment &ACE_TRY_ENV)
+                                     CosPropertyService::Properties_out nproperties,
+                                     CosPropertyService::PropertiesIterator_out rest,
+                                     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Allocate memory for the out parameter.

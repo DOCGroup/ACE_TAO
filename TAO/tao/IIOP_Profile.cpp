@@ -2,8 +2,10 @@
 // $Id$
 
 
+
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Connect.h"
+#include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
@@ -26,7 +28,6 @@ TAO_IIOP_Profile::object_key_delimiter (void) const
 {
   return TAO_IIOP_Profile::object_key_delimiter_;
 }
-
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
@@ -182,7 +183,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       return -1;
     }
 
-  if (this->object_addr_.set (this->port_, 
+  if (this->object_addr_.set (this->port_,
                               this->host_.in ()) == -1)
     {
       if (TAO_debug_level > 0)
@@ -311,7 +312,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   this->host_ = tmp._retn ();
 
-  if (this->object_addr_.set (this->port_, 
+  if (this->object_addr_.set (this->port_,
                               this->host_.in ()) == -1)
     {
       if (TAO_debug_level > 0)
@@ -409,7 +410,7 @@ TAO_IIOP_Profile::operator= (const TAO_IIOP_Profile &src)
   this->version_ = src.version_;
 
   this->object_key_ = src.object_key_;
-  
+
   this->object_addr_.set (src.object_addr_);
 
   this->port_ = src.port_;

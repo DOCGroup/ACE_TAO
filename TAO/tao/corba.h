@@ -66,7 +66,7 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Active_Object_Map.h"
-//#include "tao/GIOP.h"
+#include "tao/GIOP.h"
 #include "tao/Invocation.h"
 
 // Dynamic Any includes

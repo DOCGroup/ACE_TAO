@@ -280,7 +280,7 @@ Michael McKnight <mcknight@signalsoftcorp.com>
 Huiying Shen <shen@environ.org>
 Alex Chan <Alex.Chan@Aspect.com>
 Aaron Valdivia <avaldivia@hns.com>
-Edan Ayal <edanayal@yahoo.com>
+Edan Ayal <EdanA@cti2.com>
 Jeffrey Peterson <jpeterson@fallschurch.esys.com>
 Neil Lavelle <nlavelle@imcl.com>
 Steven Wohlever <wohlever@mitre.org>
@@ -914,20 +914,8 @@ David O'Farrell <eeidofl@eei.ericsson.se>
 Bob Bouterse <BBouterse@escient.com>
 Malcolm Spence <spence_m@ociweb.com>
 Dong-Yueh Liu <dyliu@ms1.hinet.net>
-Craig Ball <Craig.Ball@megasys.com>
+Craig Ball <Craig.Ball@megasys.com> 
 Norbert Krain <krain@lineone.net>
-Adrian Miranda <ade@psg.com>
-Cody Dean <cody.dean@mindspring.com>
-Hans Scharkowitz <hanssch@my-deja.com>
-Charles Meier <cmeier@concentus-tech.com>
-Tim Sim <tim_sim@optusnet.com.au>
-Shalabh Bhatnagar <shalabh_b@hotmail.com>
-Charles Scott <Charles.P.Scott@jpl.nasa.gov>
-Espen Harlinn <espen.harlinn@seamos.no>
-mulder <mul@iitb.fhg.de>
-Richard L. Johnson <Richard.L.Johnson@jpl.nasa.gov>
-Tam Nguyen <tnguyen@viasat.com>
-Jeff Graham <jgraham@lincom-asg.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

@@ -19,15 +19,14 @@
 #define NOTIFY_FILTERADMIN_H
 
 #include "Notify_ID_Pool_T.h"
-#include "Notify_Types.h"
 #include "orbsvcs/CosNotifyFilterS.h"
 #include "ace/Hash_Map_Manager.h"
 
-class TAO_ORBSVCS_Export TAO_Notify_FilterAdmin_i
+class TAO_ORBSVCS_Export TAO_Notify_FilterAdmin_i /*:
+                                                    public virtual POA_CosNotifyFilter::FilterAdmin */
 {
   // = TITLE
   //   TAO_Notify_FilterAdmin_i
-  //
   // = DESCRIPTION
   //
   //
@@ -40,11 +39,23 @@ public:
   // Destructor
 
   // = match operation on all the filters
-  CORBA::Boolean match (const TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::UnsupportedFilterableData
-                     ));
+  CORBA::Boolean match (
+    const CORBA::Any & filterable_data,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyFilter::UnsupportedFilterableData
+  ));
+
+  CORBA::Boolean match_structured (
+    const CosNotification::StructuredEvent & filterable_data,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyFilter::UnsupportedFilterableData
+  ));
   // see if any of the filters match.
 
   virtual CosNotifyFilter::FilterID add_filter (
@@ -88,9 +99,21 @@ public:
   ));
 
 private:
-  typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_MUTEX> FILTER_LIST;
-  FILTER_LIST filter_list_;
+  ACE_Hash_Map_Manager <CosNotifyFilter::FilterID,
+                                         CosNotifyFilter::Filter_var,
+                                                          ACE_SYNCH_MUTEX>
+  filter_list_;
   // List of filters
+
+  typedef
+  ACE_Hash_Map_Iterator <CosNotifyFilter::FilterID,
+                                          CosNotifyFilter::Filter_var,
+                                                           ACE_SYNCH_MUTEX>
+  FILTER_LIST_ITER;
+
+  typedef ACE_Hash_Map_Entry<CosNotifyFilter::FilterID,
+                                              CosNotifyFilter::Filter_var>
+  FILTER_ENTRY;
 
   TAO_Notify_ID_Pool<CosNotifyFilter::FilterID> filter_ids_;
   // Id generator for proxy suppliers

@@ -147,34 +147,23 @@ CORBA::Exception *PortableServer::ForwardRequest::_alloc (void)
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::ForwardRequest &_tao_elem) // copying
 {
-  PortableServer::ForwardRequest *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::ForwardRequest (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::_tc_ForwardRequest,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::ForwardRequest::_tao_any_destructor (void *x)
+{
+  PortableServer::ForwardRequest *tmp = ACE_static_cast(PortableServer::ForwardRequest*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::ForwardRequest *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -183,16 +172,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::ForwardRequest *_tao_ele
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::ForwardRequest::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ForwardRequest *&_tao_elem)
@@ -224,9 +205,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ForwardR
             PortableServer::_tc_ForwardRequest,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            PortableServer::ForwardRequest::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -275,9 +255,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Fo
             PortableServer::_tc_ForwardRequest,
             1,
             ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::ForwardRequest *&, _tao_elem)),
-            ACE_TRY_ENV
+            PortableServer::ForwardRequest::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -3170,10 +3149,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_Current (CORBA::tk_objref, size
                                                        (_oc_PortableServer_Current), (char *) &_oc_PortableServer_Current,
                                                        0,
                                                        sizeof (PortableServer::Current));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (PortableServer)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Current, &_tc_TAO_tc_PortableServer_Current)
-TAO_NAMESPACE_END
+CORBA::TypeCode_ptr PortableServer::_tc_Current = &_tc_TAO_tc_PortableServer_Current;
 
 char *
 PortableServer::ObjectId_to_string (const PortableServer::ObjectId &id)
@@ -3204,40 +3180,19 @@ void operator<<= (
     const PortableServer::ObjectId &_tao_elem
   ) // copying
 {
-  PortableServer::ObjectId *_tao_any_val;
-  ACE_NEW (_tao_any_val, PortableServer::ObjectId (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_ObjectId,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::ObjectId *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -3246,16 +3201,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::ObjectId *_tao_elem) // 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::ObjectId::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ObjectId *&_tao_elem)
@@ -3287,9 +3234,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ObjectId
             PortableServer::_tc_ObjectId,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            PortableServer::ObjectId::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -3338,9 +3284,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Ob
             PortableServer::_tc_ObjectId,
             1,
             ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::ObjectId *&, _tao_elem)),
-            ACE_TRY_ENV
+            PortableServer::ObjectId::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -3364,29 +3309,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Ob
 
 void operator<<= (CORBA::Any & _tao_any, PortableServer::ThreadPolicyValue _tao_elem)
 {
-  PortableServer::ThreadPolicyValue *_tao_any_val;
-  ACE_NEW (_tao_any_val, PortableServer::ThreadPolicyValue (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::_tc_ThreadPolicyValue,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ThreadPolicyValue &_tao_elem)
@@ -3418,47 +3347,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ThreadPo
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::ThreadPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::ThreadPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_ThreadPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::ThreadPolicy::_tao_any_destructor (void *x)
+{
+  PortableServer::ThreadPolicy *tmp = ACE_static_cast(PortableServer::ThreadPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ThreadPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::ThreadPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_ThreadPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -3471,24 +3384,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ThreadPo
     {
       _tao_elem = PortableServer::ThreadPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_ThreadPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::ThreadPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::ThreadPolicy::_nil ();
     return 0;
   }
@@ -3501,29 +3407,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ThreadPo
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::LifespanPolicyValue _tao_elem)
 {
-  PortableServer::LifespanPolicyValue *_tao_any_val;
-  ACE_NEW (_tao_any_val, PortableServer::LifespanPolicyValue (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::_tc_LifespanPolicyValue,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::LifespanPolicyValue &_tao_elem)
@@ -3555,47 +3445,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Lifespan
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::LifespanPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::LifespanPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_LifespanPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::LifespanPolicy::_tao_any_destructor (void *x)
+{
+  PortableServer::LifespanPolicy *tmp = ACE_static_cast(PortableServer::LifespanPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::LifespanPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::LifespanPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_LifespanPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -3608,24 +3482,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Lifespan
     {
       _tao_elem = PortableServer::LifespanPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_LifespanPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::LifespanPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::LifespanPolicy::_nil ();
     return 0;
   }
@@ -3636,29 +3503,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Lifespan
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::IdUniquenessPolicyValue _tao_elem)
 {
-  PortableServer::IdUniquenessPolicyValue *_tao_any_val;
-  ACE_NEW (_tao_any_val, PortableServer::IdUniquenessPolicyValue (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::_tc_IdUniquenessPolicyValue,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdUniquenessPolicyValue &_tao_elem)
@@ -3690,47 +3541,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdUnique
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::IdUniquenessPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::IdUniquenessPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_IdUniquenessPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::IdUniquenessPolicy::_tao_any_destructor (void *x)
+{
+  PortableServer::IdUniquenessPolicy *tmp = ACE_static_cast(PortableServer::IdUniquenessPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdUniquenessPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::IdUniquenessPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_IdUniquenessPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -3743,24 +3578,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdUnique
     {
       _tao_elem = PortableServer::IdUniquenessPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_IdUniquenessPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::IdUniquenessPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::IdUniquenessPolicy::_nil ();
     return 0;
   }
@@ -3771,29 +3599,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdUnique
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::IdAssignmentPolicyValue _tao_elem)
 {
-  PortableServer::IdAssignmentPolicyValue *_tao_any_val;
-  ACE_NEW (_tao_any_val, PortableServer::IdAssignmentPolicyValue (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::_tc_IdAssignmentPolicyValue,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdAssignmentPolicyValue &_tao_elem)
@@ -3825,47 +3637,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdAssign
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::IdAssignmentPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::IdAssignmentPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_IdAssignmentPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::IdAssignmentPolicy::_tao_any_destructor (void *x)
+{
+  PortableServer::IdAssignmentPolicy *tmp = ACE_static_cast(PortableServer::IdAssignmentPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdAssignmentPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::IdAssignmentPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_IdAssignmentPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -3878,24 +3674,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdAssign
     {
       _tao_elem = PortableServer::IdAssignmentPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_IdAssignmentPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::IdAssignmentPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::IdAssignmentPolicy::_nil ();
     return 0;
   }
@@ -3908,29 +3697,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdAssign
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::ImplicitActivationPolicyValue _tao_elem)
 {
-  PortableServer::ImplicitActivationPolicyValue *_tao_any_val;
-  ACE_NEW (_tao_any_val, PortableServer::ImplicitActivationPolicyValue (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::_tc_ImplicitActivationPolicyValue,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ImplicitActivationPolicyValue &_tao_elem)
@@ -3962,47 +3735,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Implicit
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::ImplicitActivationPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::ImplicitActivationPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_ImplicitActivationPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::ImplicitActivationPolicy::_tao_any_destructor (void *x)
+{
+  PortableServer::ImplicitActivationPolicy *tmp = ACE_static_cast(PortableServer::ImplicitActivationPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ImplicitActivationPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::ImplicitActivationPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_ImplicitActivationPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -4015,24 +3772,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Implicit
     {
       _tao_elem = PortableServer::ImplicitActivationPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_ImplicitActivationPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::ImplicitActivationPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::ImplicitActivationPolicy::_nil ();
     return 0;
   }
@@ -4043,29 +3793,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Implicit
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::ServantRetentionPolicyValue _tao_elem)
 {
-  PortableServer::ServantRetentionPolicyValue *_tao_any_val;
-  ACE_NEW (_tao_any_val, PortableServer::ServantRetentionPolicyValue (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::_tc_ServantRetentionPolicyValue,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantRetentionPolicyValue &_tao_elem)
@@ -4097,47 +3831,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantR
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::ServantRetentionPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::ServantRetentionPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_ServantRetentionPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::ServantRetentionPolicy::_tao_any_destructor (void *x)
+{
+  PortableServer::ServantRetentionPolicy *tmp = ACE_static_cast(PortableServer::ServantRetentionPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantRetentionPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::ServantRetentionPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_ServantRetentionPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -4150,24 +3868,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantR
     {
       _tao_elem = PortableServer::ServantRetentionPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_ServantRetentionPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::ServantRetentionPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::ServantRetentionPolicy::_nil ();
     return 0;
   }
@@ -4178,29 +3889,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantR
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::RequestProcessingPolicyValue _tao_elem)
 {
-  PortableServer::RequestProcessingPolicyValue *_tao_any_val;
-  ACE_NEW (_tao_any_val, PortableServer::RequestProcessingPolicyValue (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::_tc_RequestProcessingPolicyValue,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::RequestProcessingPolicyValue &_tao_elem)
@@ -4232,47 +3927,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::RequestP
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::RequestProcessingPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::RequestProcessingPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_RequestProcessingPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::RequestProcessingPolicy::_tao_any_destructor (void *x)
+{
+  PortableServer::RequestProcessingPolicy *tmp = ACE_static_cast(PortableServer::RequestProcessingPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::RequestProcessingPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::RequestProcessingPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_RequestProcessingPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -4285,24 +3964,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::RequestP
     {
       _tao_elem = PortableServer::RequestProcessingPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_RequestProcessingPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::RequestProcessingPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::RequestProcessingPolicy::_nil ();
     return 0;
   }
@@ -4315,34 +3987,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::RequestP
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::AdapterAlreadyExists &_tao_elem) // copying
 {
-  PortableServer::POA::AdapterAlreadyExists *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::AdapterAlreadyExists (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_AdapterAlreadyExists,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::AdapterAlreadyExists::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::AdapterAlreadyExists *tmp = ACE_static_cast(PortableServer::POA::AdapterAlreadyExists*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::AdapterAlreadyExists *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -4351,16 +4012,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::AdapterAlreadyExist
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::AdapterAlreadyExists::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::AdapterAlreadyExists *&_tao_elem)
@@ -4392,9 +4045,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ada
             PortableServer::POA::_tc_AdapterAlreadyExists,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            PortableServer::POA::AdapterAlreadyExists::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -4443,9 +4095,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
             PortableServer::POA::_tc_AdapterAlreadyExists,
             1,
             ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::AdapterAlreadyExists *&, _tao_elem)),
-            ACE_TRY_ENV
+            PortableServer::POA::AdapterAlreadyExists::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -4469,34 +4120,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::AdapterInactive &_tao_elem) // copying
 {
-  PortableServer::POA::AdapterInactive *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::AdapterInactive (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_AdapterInactive,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::AdapterInactive::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::AdapterInactive *tmp = ACE_static_cast(PortableServer::POA::AdapterInactive*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::AdapterInactive *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -4505,16 +4145,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::AdapterInactive *_t
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::AdapterInactive::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::AdapterInactive *&_tao_elem)
@@ -4546,9 +4178,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ada
             PortableServer::POA::_tc_AdapterInactive,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            PortableServer::POA::AdapterInactive::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -4597,9 +4228,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
             PortableServer::POA::_tc_AdapterInactive,
             1,
             ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::AdapterInactive *&, _tao_elem)),
-            ACE_TRY_ENV
+            PortableServer::POA::AdapterInactive::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -4623,34 +4253,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::AdapterNonExistent &_tao_elem) // copying
 {
-  PortableServer::POA::AdapterNonExistent *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::AdapterNonExistent (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_AdapterNonExistent,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::AdapterNonExistent::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::AdapterNonExistent *tmp = ACE_static_cast(PortableServer::POA::AdapterNonExistent*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::AdapterNonExistent *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -4659,16 +4278,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::AdapterNonExistent 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::AdapterNonExistent::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::AdapterNonExistent *&_tao_elem)
@@ -4700,9 +4311,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ada
             PortableServer::POA::_tc_AdapterNonExistent,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            PortableServer::POA::AdapterNonExistent::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -4751,9 +4361,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
             PortableServer::POA::_tc_AdapterNonExistent,
             1,
             ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::AdapterNonExistent *&, _tao_elem)),
-            ACE_TRY_ENV
+            PortableServer::POA::AdapterNonExistent::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -4775,34 +4384,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::InvalidPolicy &_tao_elem) // copying
 {
-  PortableServer::POA::InvalidPolicy *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::InvalidPolicy (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_InvalidPolicy,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::InvalidPolicy::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::InvalidPolicy *tmp = ACE_static_cast(PortableServer::POA::InvalidPolicy*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::InvalidPolicy *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -4811,16 +4409,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::InvalidPolicy *_tao
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::InvalidPolicy::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::InvalidPolicy *&_tao_elem)
@@ -4852,9 +4442,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Inv
             PortableServer::POA::_tc_InvalidPolicy,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            PortableServer::POA::InvalidPolicy::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -4903,9 +4492,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
             PortableServer::POA::_tc_InvalidPolicy,
             1,
             ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::InvalidPolicy *&, _tao_elem)),
-            ACE_TRY_ENV
+            PortableServer::POA::InvalidPolicy::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -4929,34 +4517,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::NoServant &_tao_elem) // copying
 {
-  PortableServer::POA::NoServant *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::NoServant (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_NoServant,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::NoServant::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::NoServant *tmp = ACE_static_cast(PortableServer::POA::NoServant*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::NoServant *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -4965,16 +4542,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::NoServant *_tao_ele
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::NoServant::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::NoServant *&_tao_elem)
@@ -5006,9 +4575,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::NoS
             PortableServer::POA::_tc_NoServant,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            PortableServer::POA::NoServant::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -5057,9 +4625,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
             PortableServer::POA::_tc_NoServant,
             1,
             ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::NoServant *&, _tao_elem)),
-            ACE_TRY_ENV
+            PortableServer::POA::NoServant::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -5083,34 +4650,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::ObjectAlreadyActive &_tao_elem) // copying
 {
-  PortableServer::POA::ObjectAlreadyActive *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::ObjectAlreadyActive (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_ObjectAlreadyActive,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::ObjectAlreadyActive::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::ObjectAlreadyActive *tmp = ACE_static_cast(PortableServer::POA::ObjectAlreadyActive*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ObjectAlreadyActive *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -5119,77 +4675,23 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ObjectAlreadyActive
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::ObjectAlreadyActive::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::ObjectAlreadyActive *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::POA::_tc_ObjectAlreadyActive, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (PortableServer::POA::ObjectAlreadyActive *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ObjectAlreadyActive, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            PortableServer::POA::_tc_ObjectAlreadyActive,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete _tao_elem;
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(const PortableServer::POA::ObjectAlreadyActive *&,_tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::POA::ObjectAlreadyActive *&_tao_elem)
 {
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::POA::_tc_ObjectAlreadyActive, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -5200,34 +4702,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ObjectAlreadyActive, 0);
+      PortableServer::POA::ObjectAlreadyActive *tmp;
+      ACE_NEW_RETURN (tmp, PortableServer::POA::ObjectAlreadyActive, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *(PortableServer::POA::ObjectAlreadyActive *)_tao_elem)
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             PortableServer::POA::_tc_ObjectAlreadyActive,
             1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::ObjectAlreadyActive *&, _tao_elem)),
-            ACE_TRY_ENV
+            ACE_reinterpret_cast (void *, tmp),
+            PortableServer::POA::ObjectAlreadyActive::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete ACE_const_cast (PortableServer::POA::ObjectAlreadyActive *&, _tao_elem);
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete ACE_const_cast (PortableServer::POA::ObjectAlreadyActive *&, _tao_elem);
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -5235,34 +4734,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::ObjectNotActive &_tao_elem) // copying
 {
-  PortableServer::POA::ObjectNotActive *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::ObjectNotActive (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_ObjectNotActive,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::ObjectNotActive::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::ObjectNotActive *tmp = ACE_static_cast(PortableServer::POA::ObjectNotActive*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ObjectNotActive *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -5271,77 +4759,23 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ObjectNotActive *_t
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::ObjectNotActive::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::ObjectNotActive *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::POA::_tc_ObjectNotActive, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (PortableServer::POA::ObjectNotActive *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ObjectNotActive, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            PortableServer::POA::_tc_ObjectNotActive,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete _tao_elem;
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(const PortableServer::POA::ObjectNotActive *&,_tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::POA::ObjectNotActive *&_tao_elem)
 {
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::POA::_tc_ObjectNotActive, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -5352,34 +4786,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ObjectNotActive, 0);
+      PortableServer::POA::ObjectNotActive *tmp;
+      ACE_NEW_RETURN (tmp, PortableServer::POA::ObjectNotActive, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *(PortableServer::POA::ObjectNotActive *)_tao_elem)
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             PortableServer::POA::_tc_ObjectNotActive,
             1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::ObjectNotActive *&, _tao_elem)),
-            ACE_TRY_ENV
+            ACE_reinterpret_cast (void *, tmp),
+            PortableServer::POA::ObjectNotActive::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete ACE_const_cast (PortableServer::POA::ObjectNotActive *&, _tao_elem);
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete ACE_const_cast (PortableServer::POA::ObjectNotActive *&, _tao_elem);
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -5387,34 +4818,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::ServantAlreadyActive &_tao_elem) // copying
 {
-  PortableServer::POA::ServantAlreadyActive *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::ServantAlreadyActive (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_ServantAlreadyActive,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::ServantAlreadyActive::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::ServantAlreadyActive *tmp = ACE_static_cast(PortableServer::POA::ServantAlreadyActive*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ServantAlreadyActive *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -5423,77 +4843,23 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ServantAlreadyActiv
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::ServantAlreadyActive::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::ServantAlreadyActive *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::POA::_tc_ServantAlreadyActive, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (PortableServer::POA::ServantAlreadyActive *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ServantAlreadyActive, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            PortableServer::POA::_tc_ServantAlreadyActive,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete _tao_elem;
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(const PortableServer::POA::ServantAlreadyActive *&,_tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::POA::ServantAlreadyActive *&_tao_elem)
 {
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::POA::_tc_ServantAlreadyActive, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -5504,34 +4870,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ServantAlreadyActive, 0);
+      PortableServer::POA::ServantAlreadyActive *tmp;
+      ACE_NEW_RETURN (tmp, PortableServer::POA::ServantAlreadyActive, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *(PortableServer::POA::ServantAlreadyActive *)_tao_elem)
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             PortableServer::POA::_tc_ServantAlreadyActive,
             1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::ServantAlreadyActive *&, _tao_elem)),
-            ACE_TRY_ENV
+            ACE_reinterpret_cast (void *, tmp),
+            PortableServer::POA::ServantAlreadyActive::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete ACE_const_cast (PortableServer::POA::ServantAlreadyActive *&, _tao_elem);
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete ACE_const_cast (PortableServer::POA::ServantAlreadyActive *&, _tao_elem);
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -5539,34 +4902,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::ServantNotActive &_tao_elem) // copying
 {
-  PortableServer::POA::ServantNotActive *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::ServantNotActive (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_ServantNotActive,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::ServantNotActive::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::ServantNotActive *tmp = ACE_static_cast(PortableServer::POA::ServantNotActive*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ServantNotActive *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -5575,77 +4927,23 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ServantNotActive *_
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::ServantNotActive::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::ServantNotActive *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::POA::_tc_ServantNotActive, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (PortableServer::POA::ServantNotActive *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ServantNotActive, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            PortableServer::POA::_tc_ServantNotActive,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete _tao_elem;
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(const PortableServer::POA::ServantNotActive *&,_tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::POA::ServantNotActive *&_tao_elem)
 {
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::POA::_tc_ServantNotActive, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -5656,34 +4954,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ServantNotActive, 0);
+      PortableServer::POA::ServantNotActive *tmp;
+      ACE_NEW_RETURN (tmp, PortableServer::POA::ServantNotActive, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *(PortableServer::POA::ServantNotActive *)_tao_elem)
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             PortableServer::POA::_tc_ServantNotActive,
             1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::ServantNotActive *&, _tao_elem)),
-            ACE_TRY_ENV
+            ACE_reinterpret_cast (void *, tmp),
+            PortableServer::POA::ServantNotActive::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete ACE_const_cast (PortableServer::POA::ServantNotActive *&, _tao_elem);
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete ACE_const_cast (PortableServer::POA::ServantNotActive *&, _tao_elem);
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -5691,34 +4986,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::WrongAdapter &_tao_elem) // copying
 {
-  PortableServer::POA::WrongAdapter *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::WrongAdapter (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_WrongAdapter,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::WrongAdapter::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::WrongAdapter *tmp = ACE_static_cast(PortableServer::POA::WrongAdapter*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::WrongAdapter *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -5727,77 +5011,23 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::WrongAdapter *_tao_
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::WrongAdapter::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::WrongAdapter *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::POA::_tc_WrongAdapter, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (PortableServer::POA::WrongAdapter *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::WrongAdapter, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            PortableServer::POA::_tc_WrongAdapter,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete _tao_elem;
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(const PortableServer::POA::WrongAdapter *&,_tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::POA::WrongAdapter *&_tao_elem)
 {
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::POA::_tc_WrongAdapter, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -5808,34 +5038,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::WrongAdapter, 0);
+      PortableServer::POA::WrongAdapter *tmp;
+      ACE_NEW_RETURN (tmp, PortableServer::POA::WrongAdapter, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *(PortableServer::POA::WrongAdapter *)_tao_elem)
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             PortableServer::POA::_tc_WrongAdapter,
             1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::WrongAdapter *&, _tao_elem)),
-            ACE_TRY_ENV
+            ACE_reinterpret_cast (void *, tmp),
+            PortableServer::POA::WrongAdapter::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete ACE_const_cast (PortableServer::POA::WrongAdapter *&, _tao_elem);
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete ACE_const_cast (PortableServer::POA::WrongAdapter *&, _tao_elem);
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -5843,34 +5070,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POA::WrongPolicy &_tao_elem) // copying
 {
-  PortableServer::POA::WrongPolicy *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POA::WrongPolicy (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POA::_tc_WrongPolicy,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::WrongPolicy::_tao_any_destructor (void *x)
+{
+  PortableServer::POA::WrongPolicy *tmp = ACE_static_cast(PortableServer::POA::WrongPolicy*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::WrongPolicy *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -5879,77 +5095,23 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::WrongPolicy *_tao_e
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POA::WrongPolicy::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::WrongPolicy *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::POA::_tc_WrongPolicy, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (PortableServer::POA::WrongPolicy *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::WrongPolicy, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            PortableServer::POA::_tc_WrongPolicy,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete _tao_elem;
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(const PortableServer::POA::WrongPolicy *&,_tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::POA::WrongPolicy *&_tao_elem)
 {
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::POA::_tc_WrongPolicy, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -5960,34 +5122,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POA::WrongPolicy, 0);
+      PortableServer::POA::WrongPolicy *tmp;
+      ACE_NEW_RETURN (tmp, PortableServer::POA::WrongPolicy, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *(PortableServer::POA::WrongPolicy *)_tao_elem)
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             PortableServer::POA::_tc_WrongPolicy,
             1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POA::WrongPolicy *&, _tao_elem)),
-            ACE_TRY_ENV
+            ACE_reinterpret_cast (void *, tmp),
+            PortableServer::POA::WrongPolicy::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete ACE_const_cast (PortableServer::POA::WrongPolicy *&, _tao_elem);
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete ACE_const_cast (PortableServer::POA::WrongPolicy *&, _tao_elem);
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -5995,34 +5154,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::Current::NoContext &_tao_elem) // copying
 {
-  PortableServer::Current::NoContext *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::Current::NoContext (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::Current::_tc_NoContext,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::Current::NoContext::_tao_any_destructor (void *x)
+{
+  PortableServer::Current::NoContext *tmp = ACE_static_cast(PortableServer::Current::NoContext*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::Current::NoContext *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -6031,77 +5179,23 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::Current::NoContext *_tao
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::Current::NoContext::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Current::NoContext *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::Current::_tc_NoContext, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (PortableServer::Current::NoContext *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::Current::NoContext, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            PortableServer::Current::_tc_NoContext,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete _tao_elem;
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(const PortableServer::Current::NoContext *&,_tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Current::NoContext *&_tao_elem)
 {
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::Current::_tc_NoContext, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -6112,34 +5206,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Cu
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::Current::NoContext, 0);
+      PortableServer::Current::NoContext *tmp;
+      ACE_NEW_RETURN (tmp, PortableServer::Current::NoContext, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *(PortableServer::Current::NoContext *)_tao_elem)
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             PortableServer::Current::_tc_NoContext,
             1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::Current::NoContext *&, _tao_elem)),
-            ACE_TRY_ENV
+            ACE_reinterpret_cast (void *, tmp),
+            PortableServer::Current::NoContext::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete ACE_const_cast (PortableServer::Current::NoContext *&, _tao_elem);
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete ACE_const_cast (PortableServer::Current::NoContext *&, _tao_elem);
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -6147,47 +5238,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Cu
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::Current_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::Current::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_Current,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::Current::_tao_any_destructor (void *x)
+{
+  PortableServer::Current *tmp = ACE_static_cast(PortableServer::Current*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Current_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::Current::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_Current, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -6200,24 +5275,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Current_
     {
       _tao_elem = PortableServer::Current::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_Current,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::Current::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::Current::_nil ();
     return 0;
   }
@@ -6228,47 +5296,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Current_
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POAManager_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::POAManager::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_POAManager,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POAManager::_tao_any_destructor (void *x)
+{
+  PortableServer::POAManager *tmp = ACE_static_cast(PortableServer::POAManager*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POAManager_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::POAManager::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_POAManager, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -6281,24 +5333,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POAManag
     {
       _tao_elem = PortableServer::POAManager::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_POAManager,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::POAManager::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::POAManager::_nil ();
     return 0;
   }
@@ -6309,29 +5354,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POAManag
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POAManager::State _tao_elem)
 {
-  PortableServer::POAManager::State *_tao_any_val;
-  ACE_NEW (_tao_any_val, PortableServer::POAManager::State (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POAManager::_tc_State,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POAManager::State &_tao_elem)
@@ -6363,34 +5392,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POAManag
 
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::POAManager::AdapterInactive &_tao_elem) // copying
 {
-  PortableServer::POAManager::AdapterInactive *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val, PortableServer::POAManager::AdapterInactive (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         PortableServer::POAManager::_tc_AdapterInactive,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
-      );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+        stream.begin ()
+        );
+}
+
+void PortableServer::POAManager::AdapterInactive::_tao_any_destructor (void *x)
+{
+  PortableServer::POAManager::AdapterInactive *tmp = ACE_static_cast(PortableServer::POAManager::AdapterInactive*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POAManager::AdapterInactive *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -6399,77 +5417,23 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POAManager::AdapterInact
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableServer::POAManager::AdapterInactive::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POAManager::AdapterInactive *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::POAManager::_tc_AdapterInactive, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (PortableServer::POAManager::AdapterInactive *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POAManager::AdapterInactive, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            PortableServer::POAManager::_tc_AdapterInactive,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete _tao_elem;
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(const PortableServer::POAManager::AdapterInactive *&,_tao_elem);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::POAManager::AdapterInactive *&_tao_elem)
 {
+  _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::POAManager::_tc_AdapterInactive, ACE_TRY_ENV)) // not equal
       {
-        _tao_elem = 0;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -6480,34 +5444,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, PortableServer::POAManager::AdapterInactive, 0);
+      PortableServer::POAManager::AdapterInactive *tmp;
+      ACE_NEW_RETURN (tmp, PortableServer::POAManager::AdapterInactive, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      if (stream >> *(PortableServer::POAManager::AdapterInactive *)_tao_elem)
+      if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             PortableServer::POAManager::_tc_AdapterInactive,
             1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (PortableServer::POAManager::AdapterInactive *&, _tao_elem)),
-            ACE_TRY_ENV
+            ACE_reinterpret_cast (void *, tmp),
+            PortableServer::POAManager::AdapterInactive::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
+        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete ACE_const_cast (PortableServer::POAManager::AdapterInactive *&, _tao_elem);
-        _tao_elem = 0;
+        delete tmp;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete ACE_const_cast (PortableServer::POAManager::AdapterInactive *&, _tao_elem);
-    _tao_elem = 0;
-    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -6517,47 +5478,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::PO
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::AdapterActivator_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::AdapterActivator::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_AdapterActivator,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::AdapterActivator::_tao_any_destructor (void *x)
+{
+  PortableServer::AdapterActivator *tmp = ACE_static_cast(PortableServer::AdapterActivator*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::AdapterActivator_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::AdapterActivator::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_AdapterActivator, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -6570,24 +5515,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::AdapterA
     {
       _tao_elem = PortableServer::AdapterActivator::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_AdapterActivator,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::AdapterActivator::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::AdapterActivator::_nil ();
     return 0;
   }
@@ -6598,47 +5536,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::AdapterA
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::ServantLocator_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::ServantLocator::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_ServantLocator,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::ServantLocator::_tao_any_destructor (void *x)
+{
+  PortableServer::ServantLocator *tmp = ACE_static_cast(PortableServer::ServantLocator*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantLocator_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::ServantLocator::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_ServantLocator, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -6651,24 +5573,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantL
     {
       _tao_elem = PortableServer::ServantLocator::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_ServantLocator,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::ServantLocator::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::ServantLocator::_nil ();
     return 0;
   }
@@ -6679,47 +5594,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantL
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::ServantManager_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::ServantManager::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_ServantManager,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::ServantManager::_tao_any_destructor (void *x)
+{
+  PortableServer::ServantManager *tmp = ACE_static_cast(PortableServer::ServantManager*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantManager_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::ServantManager::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_ServantManager, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -6732,24 +5631,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantM
     {
       _tao_elem = PortableServer::ServantManager::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_ServantManager,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::ServantManager::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::ServantManager::_nil ();
     return 0;
   }
@@ -6760,47 +5652,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantM
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::ServantActivator_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::ServantActivator::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_ServantActivator,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::ServantActivator::_tao_any_destructor (void *x)
+{
+  PortableServer::ServantActivator *tmp = ACE_static_cast(PortableServer::ServantActivator*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantActivator_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::ServantActivator::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_ServantActivator, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -6813,24 +5689,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantA
     {
       _tao_elem = PortableServer::ServantActivator::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_ServantActivator,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::ServantActivator::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::ServantActivator::_nil ();
     return 0;
   }
@@ -6843,47 +5712,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantA
 
 void operator<<= (CORBA::Any &_tao_any, PortableServer::POA_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableServer::POA::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableServer::_tc_POA,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void PortableServer::POA::_tao_any_destructor (void *x)
+{
+  PortableServer::POA *tmp = ACE_static_cast(PortableServer::POA*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableServer::POA::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableServer::_tc_POA, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -6896,24 +5749,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA_ptr 
     {
       _tao_elem = PortableServer::POA::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableServer::_tc_POA,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableServer::POA::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableServer::POA::_nil ();
     return 0;
   }

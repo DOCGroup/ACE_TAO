@@ -179,11 +179,9 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       // marshal a modified version of the header, but the payload is
       // marshal without any extra copies.
       cdr.write_ulong (1);
-      cdr.encode (RtecEventComm::_tc_EventHeader, &header, 0, ACE_TRY_ENV);
-      ACE_CHECK;
-
-      cdr.encode (RtecEventComm::_tc_EventData, &e.data, 0, ACE_TRY_ENV);
-      ACE_CHECK;
+      if (!(cdr << header)
+          || !(cdr << e.data))
+        ACE_THROW (CORBA::MARSHAL ());
 
 #if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
       const int TAO_WRITEV_MAX = IOV_MAX - 1;
@@ -620,7 +618,8 @@ TAO_ECG_UDP_Request_Entry::decode (RtecEventComm::EventSet& event,
 {
   TAO_InputCDR cdr (&this->payload_,
                     ACE_static_cast(int,this->byte_order_));
-  cdr.decode (RtecEventComm::_tc_EventSet, &event, 0, ACE_TRY_ENV);
+  if (!(cdr >> event))
+    ACE_THROW (CORBA::MARSHAL ());
 }
 
 // ****************************************************************

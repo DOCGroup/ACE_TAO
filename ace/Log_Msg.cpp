@@ -1107,13 +1107,8 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   ACE_OS::sprintf (bp, ASYS_TEXT ("%u"),
                                    pthread_getunique_np(&t_id));
 #  else
-                  // Yes, this is an ugly C-style cast, but the correct
-                  // C++ cast is different depending on whether the t_id
-                  // is an integral type or a pointer type. FreeBSD uses
-                  // a pointer type, but doesn't have a _np function to
-                  // get an integral type, like the OSes above.
                   ACE_OS::sprintf (bp, ASYS_TEXT ("%lu"),
-                                   (unsigned long)t_id);
+                                   ACE_static_cast (unsigned long, t_id));
 #  endif /* ACE_HAS_PTHREADS_DRAFT4 && HPUX_10 */
 
 #endif /* ACE_WIN32 */

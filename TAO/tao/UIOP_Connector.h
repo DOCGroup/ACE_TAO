@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -61,8 +60,7 @@ class TAO_Export TAO_UIOP_Connect_Creation_Strategy : public ACE_Creation_Strate
   //
 public:
   TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                      TAO_ORB_Core* orb_core = 0,
-                                      CORBA::Boolean flag = 0);
+                                      TAO_ORB_Core* orb_core = 0);
 
   virtual int make_svc_handler (TAO_UIOP_Client_Connection_Handler *&sh);
   // Makes TAO_UIOP_Client_Connection_Handlers
@@ -70,9 +68,6 @@ public:
 private:
   TAO_ORB_Core* orb_core_;
   // The ORB
-  
-  CORBA::Boolean lite_flag_;
-  // Are we using lite?
 };
 
 // ****************************************************************
@@ -86,7 +81,7 @@ class TAO_Export TAO_UIOP_Connector : public TAO_Connector
   //
 public:
   // = Initialization and termination methods.
-  TAO_UIOP_Connector (CORBA::Boolean flag = 0);
+  TAO_UIOP_Connector (void);
   // Constructor.
   // @@ Do we want to pass in the tag here or should it be statically
   // defined?
@@ -197,9 +192,6 @@ private:
   TAO_ORB_Core *orb_core_;
   // ORB Core.
 
-  CORBA::Boolean lite_flag_;
-  // Do we need to use a GIOP_Lite for sending messages?
-  
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
   // Cached connect strategy.

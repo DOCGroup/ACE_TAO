@@ -62,7 +62,9 @@ int be_visitor_union_ch::visit_union (be_union *node)
       os->indent (); // start with the current indentation level
 
       *os << "class " << node->local_name () << ";" << be_nl;
-      *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
+      *os << "class " << node->local_name () << "_var;" << be_nl;
+      *os << "typedef " << node->local_name () << "* "
+          << node->local_name () << "_ptr;" << be_nl << be_nl;
 
       *os << "class " << idl_global->stub_export_macro () << " "
           << node->local_name () << ": public TAO_Base_Union " << be_nl
@@ -70,14 +72,15 @@ int be_visitor_union_ch::visit_union (be_union *node)
           << "public:" << be_idt_nl
 
         // generate default and copy constructors
-          << node->local_name () << " (void); // default constructor" << be_nl
+          << node->local_name () << " (void);" << be_nl
           << node->local_name () << " (const " << node->local_name ()
-          << " &); // copy constructor" << be_nl
+          << " &);" << be_nl
         // generate destructor
-          << "~" << node->local_name () << " (void); // destructor" << be_nl
+          << "~" << node->local_name () << " (void);" << be_nl
+          << "static void _tao_any_destructor (void*);\n" << be_nl
         // generate assignment operator
           << node->local_name () << " &operator= (const "
-          << node->local_name () << " &); // copy constructor\n\n";
+          << node->local_name () << " &);\n\n";
 
       // retrieve the disriminant type
       bt = be_type::narrow_from_decl (node->disc_type ());
@@ -116,7 +119,8 @@ int be_visitor_union_ch::visit_union (be_union *node)
       // but we must protect against certain versions of g++
       *os << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)\n";
       os->indent ();
-      *os << "typedef " << node->local_name () << "_var _var_type;\n"
+      *os << "typedef " << node->local_name () << "_ptr _ptr_type;" << be_nl
+          << "typedef " << node->local_name () << "_var _var_type;\n"
           << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n";
 
       // now generate the public defn for the union branch members. For this,

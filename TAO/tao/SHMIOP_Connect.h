@@ -63,8 +63,7 @@ class TAO_Export TAO_SHMIOP_Client_Connection_Handler : public TAO_SHMIOP_Handle
 public:
   // = Intialization method.
   TAO_SHMIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0,
-                                        TAO_ORB_Core* orb_core = 0,
-                                        CORBA::Boolean flag = 0);
+                                        TAO_ORB_Core* orb_core = 0);
 
   virtual ~TAO_SHMIOP_Client_Connection_Handler (void);
 
@@ -104,12 +103,6 @@ protected:
 
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
-  
-  TAO_Pluggable_Messaging_Interface *mesg_factory_;
-  // The Connector messaging factory
-  
-  CORBA::Boolean lite_flag_;
-  // Are we using lite?
 };
 
 // ****************************************************************
@@ -121,8 +114,7 @@ class TAO_Export TAO_SHMIOP_Server_Connection_Handler : public TAO_SHMIOP_Handle
 
 public:
   TAO_SHMIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
-  TAO_SHMIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean flag);
+  TAO_SHMIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core);
   ~TAO_SHMIOP_Server_Connection_Handler (void);
   // Constructor.
 
@@ -171,9 +163,6 @@ protected:
   TAO_SHMIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
-  TAO_Pluggable_Messaging_Interface *acceptor_factory_;
-  // Messaging acceptor factory
-
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
 
@@ -182,9 +171,6 @@ protected:
 
   u_long refcount_;
   // Reference count, to avoid early deletes...
-  
-  CORBA::Boolean lite_flag_;
-  // Should we use GIOP or GIOPlite
 };
 
 #if defined (__ACE_INLINE__)

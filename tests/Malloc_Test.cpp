@@ -58,12 +58,8 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 // If the platform supports position-independent malloc, choose
 // another base address that's 1M higher so that <ACE_Malloc> will be
 // mapped into a different address in the child's virtual memory.
-// Note that on HP-UX on PA-RISC hardware, a single range of a file cannot
-// be mapped into multiple virtual address ranges, even across processes.
-// So, though the whole PI pointer thing is tested here, it isn't actually
-// using multiple address ranges.
 static const void *CHILD_BASE_ADDR =
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 && !defined (HPUX))
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
        1024 * 1024 +
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
        ACE_DEFAULT_BASE_ADDR;

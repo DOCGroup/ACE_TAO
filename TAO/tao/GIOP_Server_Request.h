@@ -22,8 +22,6 @@
 #define TAO_GIOP_SERVER_REQUEST_H
 
 #include "tao/corbafwd.h"
-//#include "tao/GIOP_Utils.h"
-#include "tao/GIOP_Message_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,15 +37,13 @@ class TAO_Export TAO_GIOP_ServerRequest : public CORBA_ServerRequest
   //    Class representing an GIOP ServerRequest object.
 public:
   // = Initialization and termination methods.
-  TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging_Interface *mesg_base,
-                          TAO_InputCDR &input,
+  TAO_GIOP_ServerRequest (TAO_InputCDR &input,
                           TAO_OutputCDR &output,
                           TAO_ORB_Core *orb_core,
-                          const TAO_GIOP_Version &version);
-                          
+                          const TAO_GIOP_Version &version,
+                          int &parse_error);
   // Constructor
-  TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging_Interface *mesg_base,
-                          CORBA::ULong &request_id,
+  TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
                           CORBA::Boolean &response_expected,
                           TAO_ObjectKey &object_key,
                           const ACE_CString &operation,
@@ -86,14 +82,6 @@ public:
   const char *operation (void) const;
   // return the operation name
 
-  void operation (ACE_CString &operation);
-  // set the operation name
-
-  void operation (const char * name,
-                  int release);
-  // set the operation name
-  
-  
   unsigned int operation_length (void) const;
   // return the legnth of the operation
 
@@ -113,19 +101,6 @@ public:
   // meant to be used internally.
   //
 
-  virtual void demarshal (CORBA_Environment &ACE_TRY_ENV,
-                          const TAO_Call_Data_Skel *info,
-                          ...);
-  // demarshal incoming parameters. Used by the SII skeleton (i.e., the IDL
-  // compiler generated skeleton)
-
-  virtual void marshal (CORBA_Environment &ACE_TRY_ENV,
-                        //                        CORBA_Environment &skel_env,
-                        const TAO_Call_Data_Skel *info,
-                        ...);
-  // marshal outgoing parameters and return value. This is used by the SSI
-  // i.e., by the IDL compiler generated skeletons.
-
   virtual void init_reply (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
   // start a Reply message
@@ -139,14 +114,8 @@ public:
   virtual CORBA::Boolean response_expected (void) const;
   // Is the response expected?
 
-  virtual void response_expected (CORBA::Boolean response);
-  // Set the response expected flag
-
   virtual CORBA::Boolean sync_with_server (void) const;
   // Should we return before dispatching the servant?
-
-  virtual void sync_with_server (CORBA::Boolean sync_flag);
-  // Set the sync_with_server flag
 
   virtual void _tao_lazy_evaluation (int lazy_evaluation);
   // Set the lazy evaluation flag
@@ -156,14 +125,13 @@ public:
 
   virtual CORBA::Principal_ptr principal (void) const;
 
-  virtual TAO_ObjectKey &object_key (void);
+  virtual const TAO_ObjectKey &object_key (void) const;
 
   virtual CORBA::Object_ptr objref (CORBA_Environment &ACE_TRY_ENV =
                                       TAO_default_environment ());
   // Return the object reference of the request.
 
   virtual IOP::ServiceContextList &service_info (void);
-  virtual void service_info (IOP::ServiceContextList &service_info);
 
   // The pseudo object methods, not really needed because the class is
   // not in the spec, but we add them for the sake of completeness.
@@ -174,7 +142,6 @@ public:
   // a method returning the request_id_ is needed.
 
   virtual CORBA::ULong request_id (void);
-  virtual void request_id (CORBA::ULong req);
 
   CORBA::Object_ptr forward_location (void);
   // get the forward_location
@@ -182,16 +149,19 @@ public:
   CORBA::ULong exception_type (void);
   // get the exception type
 
-  void requesting_principal (CORBA_Principal_ptr principal);
-  // set the requesting principal
+private:
+  int parse_header (void);
+  // Parse the request header and store the result on this object.
 
-  void header_length (size_t len);
+  int parse_header_std (void);
+  // Parse the standard GIOP request header and store the result on
+  // this object.
 
-  void message_size_offset (size_t len);
+  int parse_header_lite (void);
+  // Parse the lightweight version of the GIOP request header and
+  // store the result on this object.
 
 private:
-  TAO_Pluggable_Messaging_Interface *mesg_base_;
-  
   ACE_CString operation_;
   // Operation name.
 

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -109,9 +108,8 @@ public:
   // octet sequence is small enough and there is room in the current
   // message block it is more efficient just to copy the buffer.
 
-  // @@Deprecated. Will not be used. - Bala
-  // int use_lite_protocol (void) const;
-  // void use_lite_protocol (int);
+  int use_lite_protocol (void) const;
+  void use_lite_protocol (int);
   // The ORB will use a modified version of GIOP that minimizes the
   // header size. By default we use the standard GIOP protocol.
 

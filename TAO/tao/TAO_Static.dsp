@@ -106,6 +106,10 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BoundsC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Buffering_Constraint_Policy.cpp
 # End Source File
 # Begin Source File
@@ -155,14 +159,6 @@ SOURCE=.\CurrentS.cpp
 # Begin Source File
 
 SOURCE=.\debug.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\decode.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\deep_free.cpp
 # End Source File
 # Begin Source File
 
@@ -222,10 +218,6 @@ SOURCE=.\DynUnion_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\encode.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Environment.cpp
 # End Source File
 # Begin Source File
@@ -238,35 +230,11 @@ SOURCE=.\Forwarding_Servant.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Assorted_Headers.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Accept_State.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Base.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Connectors.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Lite.cpp
+SOURCE=.\GIOP.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Server_Request.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Utils.cpp
 # End Source File
 # Begin Source File
 
@@ -287,10 +255,6 @@ SOURCE=.\IIOP_Connector.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IIOP_Lite_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -331,10 +295,6 @@ SOURCE=.\InterceptorS.cpp
 # Begin Source File
 
 SOURCE=.\InterfaceC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.cpp
 # End Source File
 # Begin Source File
 
@@ -422,10 +382,6 @@ SOURCE=.\ObjectIDList.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\operation_details.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Operation_Table.cpp
 # End Source File
 # Begin Source File
@@ -443,14 +399,6 @@ SOURCE=.\params.cpp
 # Begin Source File
 
 SOURCE=.\Pluggable.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pluggable_Messaging.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pluggable_Messaging_Utils.cpp
 # End Source File
 # Begin Source File
 
@@ -618,10 +566,6 @@ SOURCE=.\TAOS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\target_identifier.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\TimeBaseC.cpp
 # End Source File
 # Begin Source File
@@ -655,10 +599,6 @@ SOURCE=.\UIOP_Connector.cpp
 # Begin Source File
 
 SOURCE=.\UIOP_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Lite_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -715,6 +655,10 @@ SOURCE=.\arg_shifter.h
 # Begin Source File
 
 SOURCE=.\Asynch_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BoundsC.h
 # End Source File
 # Begin Source File
 
@@ -899,10 +843,6 @@ SOURCE=.\InterceptorS.h
 # Begin Source File
 
 SOURCE=.\InterfaceC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.h
 # End Source File
 # Begin Source File
 
@@ -1266,6 +1206,10 @@ SOURCE=.\Asynch_Invocation.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\BoundsC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Buffering_Constraint_Policy.i
 # End Source File
 # Begin Source File
@@ -1371,10 +1315,6 @@ SOURCE=.\InterceptorC.i
 # Begin Source File
 
 SOURCE=.\InterfaceC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.i
 # End Source File
 # Begin Source File
 

@@ -4,7 +4,7 @@
 // This file is generated automatically by
 // ${ACE_ROOT}/GenExportH.BAT
 // ------------------------------
-#ifndef TAO_AV_EXPORT_H
+#if !defined (TAO_AV_EXPORT_H)
 #define TAO_AV_EXPORT_H
 
 #include "ace/OS.h"

@@ -116,7 +116,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
               if (inherited->is_nested ())
                 {
                   // inherited node is used in the scope of "node" node
-                  scope = 
+                  scope =
                     be_scope::narrow_from_scope (node->defined_in ())->decl ();
                 }
 
@@ -179,8 +179,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << be_idt_nl << "{" << be_idt_nl
           << "return (" << node->local_name ()
           << "_ptr)0;" << be_uidt_nl
-          << "}" << be_uidt << "\n\n";
+          << "}" << be_uidt << "\n" << be_nl;
 
+      *os << "static void _tao_any_destructor (void*);\n\n";
 
       // generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
@@ -194,7 +195,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                              "codegen for scope failed\n"), -1);
         }
       // the _is_a method
-      os->indent ();  
+      os->indent ();
       *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
           << "const CORBA::Char *type_id, " << be_nl
           << "CORBA::Environment &env = " << be_idt_nl
@@ -241,9 +242,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         }
       delete visitor;
       visitor = 0;
-      
+
       os->gen_endif ();
-      
+
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be
       // based on the command line options. This is still TO-DO

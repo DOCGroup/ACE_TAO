@@ -1,8 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
-
 // ============================================================================
 //
 // = LIBRARY
@@ -22,9 +20,7 @@
 #ifndef TAO_TRANSPORT_MUX_STRATEGY_H
 #define TAO_TRANSPORT_MUX_STRATEGY_H
 
-// BALA should not be here But for the time being
-#include "tao/GIOP_Utils.h"
-/////////
+#include "tao/GIOP.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -167,11 +163,6 @@ protected:
 
   TAO_GIOP_Message_State message_state_;
   // Message state to read the incoming message.
-  
-  // @@ Having members of type TAO_GIOP* indicates that we
-  // (Transport_Mux_Strategy) are aware of the underlying messaging
-  // protocol. But for the present let us close our eyes till we are
-  // able to iterate on a use case - Bala.
 };
 
 // *********************************************************************
@@ -253,11 +244,6 @@ protected:
   // is created at start of each incoming message. When that message
   // is read, the message is processed and for the next message a new
   // message state is created.
-
-  // @@ Having members of type TAO_GIOP* indicates that we
-  // (Transport_Mux_Strategy) are aware of the underlying messaging
-  // protocol. But for the present let us close our eyes till we are
-  // able to iterate on a use case - Bala.
 };
 
 // *********************************************************************

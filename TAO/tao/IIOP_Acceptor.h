@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 //============================================================================
 //
 // = LIBRARY
@@ -44,7 +43,7 @@ class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
   //   The IIOP-specific bridge class for the concrete acceptor.
   //
 public:
-  TAO_IIOP_Acceptor (CORBA::Boolean flag = 0);
+  TAO_IIOP_Acceptor (void);
   // Constructor.
 
   ~TAO_IIOP_Acceptor (void);
@@ -114,9 +113,6 @@ private:
   TAO_IIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
   TAO_IIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
-  
-  CORBA::Boolean lite_flag_;
-  // Should we use GIOP lite??
 
 };
 

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 //
 // $Id$
-
 //
 // ================================================================
 //
@@ -53,6 +52,8 @@ TAO_NAMESPACE  IOP
 
   struct TAO_Export TaggedProfile
   {
+    static void _tao_any_destructor (void*);
+
     ProfileId tag;
 
     class TAO_Export _tao_seq_Octet : public TAO_Unbounded_Sequence<CORBA::Octet>
@@ -131,6 +132,8 @@ TAO_NAMESPACE  IOP
 
   struct TAO_Export IOR
   {
+    static void _tao_any_destructor (void*);
+
     TAO_String_Manager type_id;
 
 
@@ -210,6 +213,8 @@ TAO_NAMESPACE  IOP
 
   struct TAO_Export TaggedComponent
   {
+    static void _tao_any_destructor (void*);
+
     ComponentId tag;
 
     class TAO_Export _tao_seq_Octet : public TAO_Unbounded_Sequence<CORBA::Octet>
@@ -300,6 +305,8 @@ TAO_NAMESPACE  IOP
     );
     MultipleComponentProfile (const MultipleComponentProfile &); // copy ctor
     ~MultipleComponentProfile (void); // dtor
+
+    static void _tao_any_destructor (void*);
   };
   typedef MultipleComponentProfile *MultipleComponentProfile_ptr;
 
@@ -404,6 +411,8 @@ TAO_NAMESPACE  IOP
 
   struct TAO_Export ServiceContext
   {
+    static void _tao_any_destructor (void*);
+
     ServiceId context_id;
 
     // *************************************************************
@@ -498,6 +507,8 @@ TAO_NAMESPACE  IOP
     );
     ServiceContextList (const ServiceContextList &); // copy ctor
     ~ServiceContextList (void); // dtor
+
+    static void _tao_any_destructor (void*);
   };
   typedef ServiceContextList *ServiceContextList_ptr;
 
@@ -575,55 +586,54 @@ TAO_NAMESPACE  IOP
 }
 TAO_NAMESPACE_CLOSE // module IOP
 
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const IOP::TaggedProfile &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              IOP::TaggedProfile*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        IOP::TaggedProfile *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const IOP::TaggedProfile *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const IOP::IOR &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              IOP::IOR*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        IOP::IOR *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const IOP::IOR *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const IOP::TaggedComponent &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              IOP::TaggedComponent*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        IOP::TaggedComponent *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const IOP::TaggedComponent *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const IOP::MultipleComponentProfile &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              IOP::MultipleComponentProfile*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        IOP::MultipleComponentProfile *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const IOP::MultipleComponentProfile *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const IOP::ServiceContext &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              IOP::ServiceContext*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        IOP::ServiceContext *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const IOP::ServiceContext *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const IOP::ServiceContextList &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              IOP::ServiceContextList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        IOP::ServiceContextList *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const IOP::ServiceContextList *&);
-
 
 #ifndef __ACE_INLINE__
 

@@ -10,8 +10,7 @@
 //   POA_CORBA.h
 //
 //   This file is created by merging the CurrentS.h, PolicyS.h,
-//   PollableS.h, DomainS.h, DynAnyS.h and InterfaceS.h files which 
-//   have been removed.
+//   PollableS.h, DomainC.h and DynAnyS.h files which have been removed.
 //
 // = AUTHOR
 //
@@ -43,9 +42,6 @@
 #if (TAO_HAS_AMI_POLLER == 1)
 #include "tao/PollableC.h"
 #endif /* TAO_HAS_AMI_POLLER == 1 */
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-#include "tao/InterfaceC.h"
-#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -61,7 +57,7 @@ public:
 
   class Current;
   typedef Current *Current_ptr;
-  class  Current : public virtual TAO_Local_ServantBase
+  class  Current :  public virtual TAO_Local_ServantBase
   {
   protected:
     Current (void);
@@ -84,7 +80,7 @@ public:
 
   };
 
-  class  _tao_collocated_Current : public virtual CORBA_Current
+  class  _tao_collocated_Current     : public virtual CORBA_Current
   {
   public:
     _tao_collocated_Current (void) {} // Needed by the IBM VisualAge C++ compiler.
@@ -198,7 +194,7 @@ public:
 
   };
 
-  class TAO_Export  _tao_collocated_Policy : public virtual CORBA_Policy
+  class TAO_Export  _tao_collocated_Policy     : public virtual CORBA_Policy
   {
   public:
     _tao_collocated_Policy (
@@ -228,7 +224,7 @@ public:
 
   class PolicyManager;
   typedef PolicyManager *PolicyManager_ptr;
-  class TAO_Export PolicyManager : public virtual TAO_Local_ServantBase
+  class TAO_Export PolicyManager :  public virtual TAO_Local_ServantBase
   {
   protected:
     PolicyManager (void);
@@ -261,7 +257,7 @@ public:
     virtual const char* _interface_repository_id (void) const;
   };
 
-  class TAO_Export _tao_collocated_PolicyManager : public virtual CORBA::PolicyManager
+  class TAO_Export _tao_collocated_PolicyManager     : public virtual CORBA::PolicyManager
   {
   public:
     _tao_collocated_PolicyManager (
@@ -294,8 +290,7 @@ public:
 
   class PolicyCurrent;
   typedef PolicyCurrent *PolicyCurrent_ptr;
-  class TAO_Export PolicyCurrent : public virtual PolicyManager, 
-                                   public virtual Current
+  class TAO_Export PolicyCurrent : public virtual PolicyManager, public virtual Current
   {
   protected:
     PolicyCurrent (void);
@@ -345,7 +340,7 @@ public:
 
   class DomainManager;
   typedef DomainManager *DomainManager_ptr;
-  class  DomainManager : public virtual PortableServer::ServantBase
+  class  DomainManager :  public virtual PortableServer::ServantBase
   {
   protected:
     DomainManager (void);
@@ -433,7 +428,7 @@ public:
 
   class Pollable;
   typedef Pollable *Pollable_ptr;
-  class TAO_Export Pollable : public virtual PortableServer::ServantBase
+  class TAO_Export Pollable :  public virtual PortableServer::ServantBase
   {
   protected:
     Pollable (void);
@@ -503,7 +498,7 @@ public:
     virtual const char* _interface_repository_id (void) const;
   };
 
-  class TAO_Export _tao_collocated_Pollable : public virtual CORBA::Pollable
+  class TAO_Export _tao_collocated_Pollable     : public virtual CORBA::Pollable
   {
   public:
     _tao_collocated_Pollable (
@@ -597,7 +592,7 @@ public:
     virtual const char* _interface_repository_id (void) const;
   };
 
-  class TAO_Export _tao_collocated_DIIPollable : public virtual CORBA::DIIPollable,
+  class TAO_Export _tao_collocated_DIIPollable     : public virtual CORBA::DIIPollable,
       public virtual _tao_collocated_Pollable
   {
   public:
@@ -620,7 +615,7 @@ public:
 
   class PollableSet;
   typedef PollableSet *PollableSet_ptr;
-  class TAO_Export PollableSet : public virtual PortableServer::ServantBase
+  class TAO_Export PollableSet :  public virtual PortableServer::ServantBase
   {
   protected:
     PollableSet (void);
@@ -774,944 +769,936 @@ public:
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  class DynAny;
-  typedef DynAny *DynAny_ptr;
-  class TAO_Export DynAny : public virtual TAO_Local_ServantBase
-  {
-  protected:
-    DynAny (void);
-  public:
-    DynAny (DynAny& rhs);
-    virtual ~DynAny (void);
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+class DynAny;
+typedef DynAny *DynAny_ptr;
+class TAO_Export DynAny : public virtual TAO_Local_ServantBase
+{
+protected:
+  DynAny (void);
+public:
+  DynAny (DynAny& rhs);
+  virtual ~DynAny (void);
+  virtual CORBA::Boolean _is_a (
+      const char* logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual void* _downcast (
+      const char* logical_type_id
+    );
+  virtual CORBA::TypeCode_ptr type (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual void assign (
-        CORBA_DynAny_ptr dyn_any,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void assign (
+      CORBA_DynAny_ptr dyn_any,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual void from_any (
-        const CORBA::Any & value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void from_any (
+      const CORBA::Any & value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual CORBA::Any * to_any (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Any * to_any (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual void destroy (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void destroy (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual CORBA_DynAny_ptr copy (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA_DynAny_ptr copy (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual void insert_boolean (
-        CORBA::Boolean value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_boolean (
+      CORBA::Boolean value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual void insert_octet (
-        CORBA::Octet value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_octet (
+      CORBA::Octet value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-	  virtual void insert_char (
-			  CORBA::Char value,
-			  CORBA::Environment &ACE_TRY_ENV =
-				  CORBA::Environment::default_environment ()
-		  ) = 0;
+  virtual void insert_char (
+      CORBA::Char value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_short (
-        CORBA::Short value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_short (
+      CORBA::Short value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_ushort (
-        CORBA::UShort value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_ushort (
+      CORBA::UShort value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_long (
-        CORBA::Long value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_long (
+      CORBA::Long value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_ulong (
-        CORBA::ULong value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_ulong (
+      CORBA::ULong value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_float (
-        CORBA::Float value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_float (
+      CORBA::Float value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_double (
-        CORBA::Double value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_double (
+      CORBA::Double value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_string (
-        const char * value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_string (
+      const char * value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_reference (
-        CORBA::Object_ptr value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_reference (
+      CORBA::Object_ptr value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_typecode (
-        CORBA::TypeCode_ptr value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_typecode (
+      CORBA::TypeCode_ptr value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_longlong (
-        CORBA::LongLong value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_longlong (
+      CORBA::LongLong value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_ulonglong (
-        CORBA::ULongLong value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_ulonglong (
+      CORBA::ULongLong value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_wchar (
-        CORBA::WChar value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_wchar (
+      CORBA::WChar value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void insert_any (
-        const CORBA::Any & value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void insert_any (
+      const CORBA::Any & value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::Boolean get_boolean (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Boolean get_boolean (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual CORBA::Octet get_octet (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Octet get_octet (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::Char get_char (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Char get_char (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::Short get_short (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Short get_short (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::UShort get_ushort (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::UShort get_ushort (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::Long get_long (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Long get_long (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::ULong get_ulong (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::ULong get_ulong (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::Float get_float (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Float get_float (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::Double get_double (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Double get_double (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual char * get_string (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual char * get_string (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::Object_ptr get_reference (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Object_ptr get_reference (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::TypeCode_ptr get_typecode (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::TypeCode_ptr get_typecode (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::LongLong get_longlong (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::LongLong get_longlong (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::ULongLong get_ulonglong (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::ULongLong get_ulonglong (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::WChar get_wchar (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::WChar get_wchar (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::Any * get_any (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Any * get_any (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA_DynAny_ptr current_component (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA_DynAny_ptr current_component (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual CORBA::Boolean next (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Boolean next (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual CORBA::Boolean seek (
-        CORBA::Long slot,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::Boolean seek (
+      CORBA::Long slot,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    virtual void rewind (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void rewind (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+        ) = 0;
 
-    CORBA_DynAny *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef DynAny_ptr _ptr_type;
-#endif /* __GNUC__ */
-    // Useful for template programming.
-
-  };
-
-  class  _tao_collocated_DynAny : public virtual CORBA_DynAny
-  {
-  public:
-    _tao_collocated_DynAny (
-        DynAny_ptr  servant,
-        TAO_Stub *stub
-      );
-    DynAny_ptr _get_servant (void) const;
-    virtual CORBA::Boolean _is_a (
-        const char *logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void assign (
-        CORBA_DynAny_ptr CORBA_Dyn_any,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void from_any (
-        const CORBA::Any & value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Any * to_any (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void destroy (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA_DynAny_ptr copy (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_boolean (
-        CORBA::Boolean value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_octet (
-        CORBA::Octet value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_char (
-        CORBA::Char value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_short (
-        CORBA::Short value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_ushort (
-        CORBA::UShort value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_long (
-        CORBA::Long value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_ulong (
-        CORBA::ULong value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_float (
-        CORBA::Float value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_double (
-        CORBA::Double value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_string (
-        const char * value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_reference (
-        CORBA::Object_ptr value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_typecode (
-        CORBA::TypeCode_ptr value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_longlong (
-        CORBA::LongLong value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_ulonglong (
-        CORBA::ULongLong value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_wchar (
-        CORBA::WChar value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void insert_any (
-        const CORBA::Any & value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Boolean get_boolean (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Octet get_octet (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Char get_char (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Short get_short (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::UShort get_ushort (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Long get_long (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::ULong get_ulong (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Float get_float (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Double get_double (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual char * get_string (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Object_ptr get_reference (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::TypeCode_ptr get_typecode (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::LongLong get_longlong (
-        CORBA::Environment &ACE_TRY_ENV =
-         CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::ULongLong get_ulonglong (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::WChar get_wchar (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Any * get_any (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA_DynAny_ptr current_component (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Boolean next (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Boolean seek (
-        CORBA::Long slot,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void rewind (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-
-  private:
-    DynAny_ptr servant_;
-  };
-
-  class DynEnum;
-  typedef DynEnum *DynEnum_ptr;
-  class TAO_Export DynEnum : public virtual DynAny
-  {
-  protected:
-    DynEnum (void);
-  public:
-    DynEnum (DynEnum& rhs);
-    virtual ~DynEnum (void);
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    virtual char * value_as_string (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
-
-    virtual void value_as_string (
-        const char * value_as_string,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
-
-    virtual CORBA::ULong value_as_ulong (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
-
-    virtual void value_as_ulong (
-        CORBA::ULong value_as_ulong,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
-
-    CORBA_DynEnum *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
+  CORBA_DynAny *_this (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef DynEnum_ptr _ptr_type;
+  typedef DynAny_ptr _ptr_type;
 #endif /* __GNUC__ */
-    // Useful for template programming.
+  // Useful for template programming.
 
-  };
+};
 
-  class  _tao_collocated_DynEnum : public virtual CORBA_DynEnum,
-                                   public virtual _tao_collocated_DynAny
-  {
-  public:
-    _tao_collocated_DynEnum (
-        DynEnum_ptr  servant,
-        TAO_Stub *stub
-      );
-    DynEnum_ptr _get_servant (void) const;
-    virtual CORBA::Boolean _is_a (
-        const char *logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual char * value_as_string (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void value_as_string (
-        const char * value_as_string,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::ULong value_as_ulong (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void value_as_ulong (
-        CORBA::ULong value_as_ulong,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+class  _tao_collocated_DynAny : public virtual CORBA_DynAny
+{
+public:
+  _tao_collocated_DynAny (
+      DynAny_ptr  servant,
+      TAO_Stub *stub
+     );
+  DynAny_ptr _get_servant (void) const;
+  virtual CORBA::Boolean _is_a (
+      const char *logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual CORBA::TypeCode_ptr type (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual void assign (
+      CORBA_DynAny_ptr CORBA_Dyn_any,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void from_any (
+      const CORBA::Any & value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Any * to_any (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void destroy (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA_DynAny_ptr copy (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_boolean (
+      CORBA::Boolean value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_octet (
+      CORBA::Octet value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_char (
+      CORBA::Char value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_short (
+      CORBA::Short value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_ushort (
+      CORBA::UShort value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_long (
+      CORBA::Long value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_ulong (
+      CORBA::ULong value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_float (
+      CORBA::Float value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_double (
+      CORBA::Double value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_string (
+      const char * value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_reference (
+      CORBA::Object_ptr value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_typecode (
+      CORBA::TypeCode_ptr value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_longlong (
+      CORBA::LongLong value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_ulonglong (
+      CORBA::ULongLong value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_wchar (
+      CORBA::WChar value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void insert_any (
+      const CORBA::Any & value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Boolean get_boolean (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Octet get_octet (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Char get_char (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Short get_short (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::UShort get_ushort (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Long get_long (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::ULong get_ulong (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Float get_float (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Double get_double (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual char * get_string (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Object_ptr get_reference (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::TypeCode_ptr get_typecode (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::LongLong get_longlong (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::ULongLong get_ulonglong (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::WChar get_wchar (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Any * get_any (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA_DynAny_ptr current_component (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Boolean next (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::Boolean seek (
+      CORBA::Long slot,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void rewind (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
 
-  private:
-    DynEnum_ptr servant_;
-  };
+private:
+  DynAny_ptr servant_;
+};
 
-  class DynStruct;
-  typedef DynStruct *DynStruct_ptr;
-  class TAO_Export DynStruct : public virtual DynAny
-  {
-  protected:
-    DynStruct (void);
-  public:
-    DynStruct (DynStruct& rhs);
-    virtual ~DynStruct (void);
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    virtual char * current_member_name (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+class DynEnum;
+typedef DynEnum *DynEnum_ptr;
+class TAO_Export DynEnum : public virtual DynAny
+{
+protected:
+  DynEnum (void);
+public:
+  DynEnum (DynEnum& rhs);
+  virtual ~DynEnum (void);
+  virtual CORBA::Boolean _is_a (
+      const char* logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual void* _downcast (
+      const char* logical_type_id
+    );
+  virtual char * value_as_string (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::TCKind current_member_kind (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void value_as_string (
+      const char * value_as_string,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::NameValuePairSeq * get_members (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::ULong value_as_ulong (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void set_members (
-        const CORBA::NameValuePairSeq & value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void value_as_ulong (
+      CORBA::ULong value_as_ulong,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    CORBA_DynStruct *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
+  CORBA_DynEnum *_this (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef DynStruct_ptr _ptr_type;
+  typedef DynEnum_ptr _ptr_type;
 #endif /* __GNUC__ */
-    // Useful for template programming.
+  // Useful for template programming.
 
-  };
+};
 
-  class  _tao_collocated_DynStruct : public virtual CORBA_DynStruct,
-                                     public virtual _tao_collocated_DynAny
-  {
-  public:
-    _tao_collocated_DynStruct (
-        DynStruct_ptr  servant,
-        TAO_Stub *stub
-      );
-    DynStruct_ptr _get_servant (void) const;
-    virtual CORBA::Boolean _is_a (
-        const char *logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual char * current_member_name (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::TCKind current_member_kind (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::NameValuePairSeq * get_members (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void set_members (
-        const CORBA::NameValuePairSeq & value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+class  _tao_collocated_DynEnum : public virtual CORBA_DynEnum,
+    public virtual _tao_collocated_DynAny
+{
+public:
+  _tao_collocated_DynEnum (
+      DynEnum_ptr  servant,
+      TAO_Stub *stub
+    );
+  DynEnum_ptr _get_servant (void) const;
+  virtual CORBA::Boolean _is_a (
+      const char *logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual char * value_as_string (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void value_as_string (
+      const char * value_as_string,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::ULong value_as_ulong (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void value_as_ulong (
+      CORBA::ULong value_as_ulong,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
 
-  private:
-    DynStruct_ptr servant_;
-  };
+private:
+  DynEnum_ptr servant_;
+};
 
-  class DynUnion;
-  typedef DynUnion *DynUnion_ptr;
-  class TAO_Export DynUnion : public virtual DynAny
-  {
-  protected:
-    DynUnion (void);
-  public:
-    DynUnion (DynUnion& rhs);
-    virtual ~DynUnion (void);
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    virtual CORBA::Boolean set_as_default (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+class DynStruct;
+typedef DynStruct *DynStruct_ptr;
+class TAO_Export DynStruct : public virtual DynAny
+{
+protected:
+  DynStruct (void);
+public:
+  DynStruct (DynStruct& rhs);
+  virtual ~DynStruct (void);
+  virtual CORBA::Boolean _is_a (
+      const char* logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual void* _downcast (
+      const char* logical_type_id
+    );
+  virtual char * current_member_name (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void set_as_default (
-        CORBA::Boolean set_as_default,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::TCKind current_member_kind (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA_DynAny_ptr discriminator (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::NameValuePairSeq * get_members (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA::TCKind discriminator_kind (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void set_members (
+      const CORBA::NameValuePairSeq & value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA_DynAny_ptr member (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
-
-    virtual char * member_name (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
-
-    virtual void member_name (
-        const char * member_name,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
-
-    virtual CORBA::TCKind member_kind (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
-
-    CORBA_DynUnion *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
+  CORBA_DynStruct *_this (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef DynUnion_ptr _ptr_type;
+  typedef DynStruct_ptr _ptr_type;
 #endif /* __GNUC__ */
-    // Useful for template programming.
+  // Useful for template programming.
 
-  };
+};
 
-  class  _tao_collocated_DynUnion : public virtual CORBA_DynUnion,
-                                    public virtual _tao_collocated_DynAny
-  {
-  public:
-    _tao_collocated_DynUnion (
-        DynUnion_ptr  servant,
-        TAO_Stub *stub
-      );
-    DynUnion_ptr _get_servant (void) const;
-    virtual CORBA::Boolean _is_a (
-        const char *logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::Boolean set_as_default (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void set_as_default (
-        CORBA::Boolean set_as_default,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA_DynAny_ptr discriminator (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::TCKind discriminator_kind (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA_DynAny_ptr member (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual char * member_name (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void member_name (
-        const char * member_name,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::TCKind member_kind (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+class  _tao_collocated_DynStruct : public virtual CORBA_DynStruct,
+    public virtual _tao_collocated_DynAny
+{
+public:
+  _tao_collocated_DynStruct (
+      DynStruct_ptr  servant,
+      TAO_Stub *stub
+    );
+  DynStruct_ptr _get_servant (void) const;
+  virtual CORBA::Boolean _is_a (
+      const char *logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual char * current_member_name (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::TCKind current_member_kind (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::NameValuePairSeq * get_members (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void set_members (
+      const CORBA::NameValuePairSeq & value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
 
-  private:
-    DynUnion_ptr servant_;
-  };
+private:
+  DynStruct_ptr servant_;
+};
 
-  class DynSequence;
-  typedef DynSequence *DynSequence_ptr;
-  class TAO_Export DynSequence : public virtual DynAny
-  {
-  protected:
-    DynSequence (void);
-  public:
-    DynSequence (DynSequence& rhs);
-    virtual ~DynSequence (void);
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    virtual CORBA::ULong length (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+class DynUnion;
+typedef DynUnion *DynUnion_ptr;
+class TAO_Export DynUnion : public virtual DynAny
+{
+protected:
+  DynUnion (void);
+public:
+  DynUnion (DynUnion& rhs);
+  virtual ~DynUnion (void);
+  virtual CORBA::Boolean _is_a (
+      const char* logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual void* _downcast (
+      const char* logical_type_id
+    );
+  virtual CORBA::Boolean set_as_default (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void length (
-        CORBA::ULong length,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void set_as_default (
+      CORBA::Boolean set_as_default,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual CORBA_AnySeq * get_elements (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA_DynAny_ptr discriminator (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void set_elements (
-        const CORBA_AnySeq & value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual CORBA::TCKind discriminator_kind (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    static void type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+  virtual CORBA_DynAny_ptr member (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    CORBA_DynSequence *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+  virtual char * member_name (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual const char* _interface_repository_id (void) const;
+  virtual void member_name (
+      const char * member_name,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
+
+  virtual CORBA::TCKind member_kind (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
+
+  CORBA_DynUnion *_this (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef DynSequence_ptr _ptr_type;
+  typedef DynUnion_ptr _ptr_type;
 #endif /* __GNUC__ */
-    // Useful for template programming.
+  // Useful for template programming.
 
-  };
+};
 
-  class  _tao_collocated_DynSequence : public virtual CORBA_DynSequence,
-                                       public virtual _tao_collocated_DynAny
-  {
-  public:
-    _tao_collocated_DynSequence (
-        DynSequence_ptr  servant,
-        TAO_Stub *stub
-      );
-    DynSequence_ptr _get_servant (void) const;
-    virtual CORBA::Boolean _is_a (
-        const char *logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA::ULong length (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void length (
-        CORBA::ULong length,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA_AnySeq * get_elements (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void set_elements (
-        const CORBA_AnySeq & value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+class  _tao_collocated_DynUnion : public virtual CORBA_DynUnion,
+    public virtual _tao_collocated_DynAny
+{
+public:
+  _tao_collocated_DynUnion (
+      DynUnion_ptr  servant,
+      TAO_Stub *stub
+    );
+  DynUnion_ptr _get_servant (void) const;
+  virtual CORBA::Boolean _is_a (
+      const char *logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual CORBA::Boolean set_as_default (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void set_as_default (
+      CORBA::Boolean set_as_default,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA_DynAny_ptr discriminator (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::TCKind discriminator_kind (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA_DynAny_ptr member (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual char * member_name (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void member_name (
+      const char * member_name,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA::TCKind member_kind (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
 
-  private:
-    DynSequence_ptr servant_;
-  };
+private:
+  DynUnion_ptr servant_;
+};
 
-  class DynArray;
-  typedef DynArray *DynArray_ptr;
-  class TAO_Export DynArray : public virtual DynAny
-  {
-  protected:
-    DynArray (void);
-  public:
-    DynArray (DynArray& rhs);
-    virtual ~DynArray (void);
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-   virtual CORBA_AnySeq * get_elements (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+class DynSequence;
+typedef DynSequence *DynSequence_ptr;
+class TAO_Export DynSequence : public virtual DynAny
+{
+protected:
+  DynSequence (void);
+public:
+  DynSequence (DynSequence& rhs);
+  virtual ~DynSequence (void);
+  virtual CORBA::Boolean _is_a (
+      const char* logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual void* _downcast (
+      const char* logical_type_id
+    );
+  virtual CORBA::ULong length (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual void set_elements (
-        const CORBA_AnySeq & value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+  virtual void length (
+      CORBA::ULong length,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    CORBA_DynArray *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+  virtual CORBA_AnySeq * get_elements (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
 
-    virtual const char* _interface_repository_id (void) const;
+  virtual void set_elements (
+      const CORBA_AnySeq & value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
+
+  static void type_skel (
+      CORBA::ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+
+  CORBA_DynSequence *_this (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef DynArray_ptr _ptr_type;
+  typedef DynSequence_ptr _ptr_type;
 #endif /* __GNUC__ */
-    // Useful for template programming.
+  // Useful for template programming.
 
-  };
+};
 
-  class  _tao_collocated_DynArray : public virtual CORBA_DynArray,
-                                    public virtual _tao_collocated_DynAny
-  {
-  public:
-    _tao_collocated_DynArray (
-        DynArray_ptr  servant,
-        TAO_Stub *stub
-      );
-    DynArray_ptr _get_servant (void) const;
-    virtual CORBA::Boolean _is_a (
-        const char *logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual CORBA_AnySeq * get_elements (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual void set_elements (
-        const CORBA_AnySeq & value,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+class  _tao_collocated_DynSequence : public virtual CORBA_DynSequence,
+    public virtual _tao_collocated_DynAny
+{
+public:
+  _tao_collocated_DynSequence (
+      DynSequence_ptr  servant,
+      TAO_Stub *stub
+    );
+  DynSequence_ptr _get_servant (void) const;
+  virtual CORBA::Boolean _is_a (
+      const char *logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual CORBA::ULong length (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void length (
+      CORBA::ULong length,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual CORBA_AnySeq * get_elements (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void set_elements (
+      const CORBA_AnySeq & value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
 
-  private:
-    DynArray_ptr servant_;
-  };
+private:
+  DynSequence_ptr servant_;
+};
 
-  // ****************************************************************
+class DynArray;
+typedef DynArray *DynArray_ptr;
+class TAO_Export DynArray : public virtual DynAny
+{
+protected:
+  DynArray (void);
+public:
+  DynArray (DynArray& rhs);
+  virtual ~DynArray (void);
+  virtual CORBA::Boolean _is_a (
+      const char* logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual void* _downcast (
+      const char* logical_type_id
+    );
+  virtual CORBA_AnySeq * get_elements (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
+
+  virtual void set_elements (
+      const CORBA_AnySeq & value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     ) = 0;
+
+  CORBA_DynArray *_this (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual const char* _interface_repository_id (void) const;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef DynArray_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
+};
+
+class  _tao_collocated_DynArray : public virtual CORBA_DynArray,
+    public virtual _tao_collocated_DynAny
+{
+public:
+  _tao_collocated_DynArray (
+      DynArray_ptr  servant,
+      TAO_Stub *stub
+    );
+  DynArray_ptr _get_servant (void) const;
+  virtual CORBA::Boolean _is_a (
+      const char *logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+    );
+  virtual CORBA_AnySeq * get_elements (
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+  virtual void set_elements (
+      const CORBA_AnySeq & value,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment::default_environment ()
+     );
+
+private:
+  DynArray_ptr servant_;
+};
 
   class ConstructionPolicy;
   typedef ConstructionPolicy *ConstructionPolicy_ptr;
@@ -1806,7365 +1793,6 @@ public:
   };
 
 #endif /* ! defined TAO_HAS_MINIMUM_CORBA */
-
-  // ****************************************************************
-
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-
-  class IRObject;
-  typedef IRObject *IRObject_ptr;
-  class TAO_Export IRObject :  public virtual PortableServer::ServantBase
-  {
-  protected:
-    IRObject (void);
-
-  public:
-    IRObject (const IRObject& rhs);
-    virtual ~IRObject (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::IRObject *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::DefinitionKind def_kind (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void destroy (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void destroy_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_IRObject : public virtual ::CORBA::IRObject
-  {
-  public:
-    _tao_thru_poa_collocated_IRObject (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::DefinitionKind def_kind (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void destroy (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class Contained;
-  typedef Contained *Contained_ptr;
-  class TAO_Export Contained : public virtual IRObject
-  {
-  protected:
-    Contained (void);
-
-  public:
-    Contained (const Contained& rhs);
-    virtual ~Contained (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::Contained *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual char * id (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void id (
-        const char * id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual char * name (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void name (
-        const char * name,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual char * version (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void version (
-        const char * version,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Container_ptr defined_in (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual char * absolute_name (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Repository_ptr containing_repository (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Contained::Description * describe (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void describe_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void move (
-        CORBA::Container_ptr new_container,
-        const char * new_name,
-        const char * new_version,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void move_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_Contained : public virtual ::CORBA::Contained,
-      public virtual _tao_thru_poa_collocated_IRObject
-  {
-  public:
-    _tao_thru_poa_collocated_Contained (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual char * id (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void id (
-        const char * id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual char * name (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void name (
-        const char * name,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual char * version (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void version (
-        const char * version,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Container_ptr defined_in (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual char * absolute_name (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Repository_ptr containing_repository (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Contained::Description * describe (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void move (
-        CORBA::Container_ptr new_container,
-        const char * new_name,
-        const char * new_version,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class Container;
-  typedef Container *Container_ptr;
-  class TAO_Export Container : public virtual IRObject
-  {
-  protected:
-    Container (void);
-
-  public:
-    Container (const Container& rhs);
-    virtual ~Container (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::Container *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::Contained_ptr lookup (
-        const char * search_name,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void lookup_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ContainedSeq * contents (
-        CORBA::DefinitionKind limit_type,
-        CORBA::Boolean exclude_inherited,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void contents_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ContainedSeq * lookup_name (
-        const char * search_name,
-        CORBA::Long levels_to_search,
-        CORBA::DefinitionKind limit_type,
-        CORBA::Boolean exclude_inherited,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void lookup_name_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Container::DescriptionSeq * describe_contents (
-        CORBA::DefinitionKind limit_type,
-        CORBA::Boolean exclude_inherited,
-        CORBA::Long max_returned_objs,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void describe_contents_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ModuleDef_ptr create_module (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_module_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ConstantDef_ptr create_constant (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr type,
-        const CORBA::Any & value,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_constant_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::StructDef_ptr create_struct (
-        const char * id,
-        const char * name,
-        const char * version,
-        const CORBA::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_struct_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::UnionDef_ptr create_union (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr discriminator_type,
-        const CORBA::UnionMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_union_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::EnumDef_ptr create_enum (
-        const char * id,
-        const char * name,
-        const char * version,
-        const CORBA::EnumMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_enum_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::AliasDef_ptr create_alias (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr original_type,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_alias_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::InterfaceDef_ptr create_interface (
-        const char * id,
-        const char * name,
-        const char * version,
-        const CORBA::InterfaceDefSeq & base_interfaces,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_interface_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ValueDef_ptr create_value (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::Boolean is_custom,
-        CORBA::Boolean is_abstract,
-        CORBA::ValueDef_ptr base_value,
-        CORBA::Boolean is_truncatable,
-        const CORBA::ValueDefSeq & abstract_base_values,
-        CORBA::InterfaceDef_ptr supported_interface,
-        const CORBA::InitializerSeq & initializers,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_value_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ValueBoxDef_ptr create_value_box (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr original_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_value_box_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ExceptionDef_ptr create_exception (
-        const char * id,
-        const char * name,
-        const char * version,
-        const CORBA::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_exception_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_Container : public virtual ::CORBA::Container,
-      public virtual _tao_thru_poa_collocated_IRObject
-  {
-  public:
-    _tao_thru_poa_collocated_Container (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::Contained_ptr lookup (
-        const char * search_name,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ContainedSeq * contents (
-        CORBA::DefinitionKind limit_type,
-        CORBA::Boolean exclude_inherited,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ContainedSeq * lookup_name (
-        const char * search_name,
-        CORBA::Long levels_to_search,
-        CORBA::DefinitionKind limit_type,
-        CORBA::Boolean exclude_inherited,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Container::DescriptionSeq * describe_contents (
-        CORBA::DefinitionKind limit_type,
-        CORBA::Boolean exclude_inherited,
-        CORBA::Long max_returned_objs,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ModuleDef_ptr create_module (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ConstantDef_ptr create_constant (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr type,
-        const CORBA::Any & value,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::StructDef_ptr create_struct (
-        const char * id,
-        const char * name,
-        const char * version,
-        const CORBA::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::UnionDef_ptr create_union (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr discriminator_type,
-        const CORBA::UnionMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::EnumDef_ptr create_enum (
-        const char * id,
-        const char * name,
-        const char * version,
-        const CORBA::EnumMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::AliasDef_ptr create_alias (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr original_type,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::InterfaceDef_ptr create_interface (
-        const char * id,
-        const char * name,
-        const char * version,
-        const CORBA::InterfaceDefSeq & base_interfaces,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ValueDef_ptr create_value (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::Boolean is_custom,
-        CORBA::Boolean is_abstract,
-        CORBA::ValueDef_ptr base_value,
-        CORBA::Boolean is_truncatable,
-        const CORBA::ValueDefSeq & abstract_base_values,
-        CORBA::InterfaceDef_ptr supported_interface,
-        const CORBA::InitializerSeq & initializers,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ValueBoxDef_ptr create_value_box (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr original_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ExceptionDef_ptr create_exception (
-        const char * id,
-        const char * name,
-        const char * version,
-        const CORBA::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class IDLType;
-  typedef IDLType *IDLType_ptr;
-  class TAO_Export IDLType : public virtual IRObject
-  {
-  protected:
-    IDLType (void);
-
-  public:
-    IDLType (const IDLType& rhs);
-    virtual ~IDLType (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::IDLType *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_IDLType : public virtual ::CORBA::IDLType,
-      public virtual _tao_thru_poa_collocated_IRObject
-  {
-  public:
-    _tao_thru_poa_collocated_IDLType (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class Repository;
-  typedef Repository *Repository_ptr;
-  class TAO_Export Repository : public virtual Container
-  {
-  protected:
-    Repository (void);
-
-  public:
-    Repository (const Repository& rhs);
-    virtual ~Repository (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::Repository *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::Contained_ptr lookup_id (
-        const char * search_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void lookup_id_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::PrimitiveDef_ptr get_primitive (
-        CORBA::PrimitiveKind kind,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void get_primitive_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::StringDef_ptr create_string (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_string_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::WstringDef_ptr create_wstring (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_wstring_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::SequenceDef_ptr create_sequence (
-        CORBA::ULong bound,
-        CORBA::IDLType_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_sequence_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ArrayDef_ptr create_array (
-        CORBA::ULong length,
-        CORBA::IDLType_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_array_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::FixedDef_ptr create_fixed (
-        CORBA::UShort digits,
-        CORBA::Short scale,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_fixed_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void lookup_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void lookup_name_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_module_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_constant_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_struct_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_union_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_enum_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_alias_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_interface_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_box_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_exception_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_Repository : public virtual ::CORBA::Repository,
-      public virtual _tao_thru_poa_collocated_Container
-  {
-  public:
-    _tao_thru_poa_collocated_Repository (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::Contained_ptr lookup_id (
-        const char * search_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::PrimitiveDef_ptr get_primitive (
-        CORBA::PrimitiveKind kind,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::StringDef_ptr create_string (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::WstringDef_ptr create_wstring (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::SequenceDef_ptr create_sequence (
-        CORBA::ULong bound,
-        CORBA::IDLType_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ArrayDef_ptr create_array (
-        CORBA::ULong length,
-        CORBA::IDLType_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::FixedDef_ptr create_fixed (
-        CORBA::UShort digits,
-        CORBA::Short scale,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class ModuleDef;
-  typedef ModuleDef *ModuleDef_ptr;
-  class TAO_Export ModuleDef : public virtual Container, 
-                               public virtual Contained
-  {
-  protected:
-    ModuleDef (void);
-
-  public:
-    ModuleDef (const ModuleDef& rhs);
-    virtual ~ModuleDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::ModuleDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    static void lookup_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void lookup_name_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_module_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_constant_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_struct_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_union_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_enum_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_alias_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_interface_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_box_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_exception_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_ModuleDef : public virtual ::CORBA::ModuleDef,
-      public virtual _tao_thru_poa_collocated_Container,
-      public virtual _tao_thru_poa_collocated_Contained
-  {
-  public:
-    _tao_thru_poa_collocated_ModuleDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );    
-  };
-
-  class ConstantDef;
-  typedef ConstantDef *ConstantDef_ptr;
-  class TAO_Export ConstantDef : public virtual Contained
-  {
-  protected:
-    ConstantDef (void);
-
-  public:
-    ConstantDef (const ConstantDef& rhs);
-    virtual ~ConstantDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::ConstantDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::IDLType_ptr type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void type_def (
-        CORBA::IDLType_ptr type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Any * value (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_value_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void value (
-        const CORBA::Any & value,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_value_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_ConstantDef : public virtual ::CORBA::ConstantDef,
-      public virtual _tao_thru_poa_collocated_Contained
-  {
-  public:
-    _tao_thru_poa_collocated_ConstantDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::IDLType_ptr type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void type_def (
-        CORBA::IDLType_ptr type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Any * value (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void value (
-        const CORBA::Any & value,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class TypedefDef;
-  typedef TypedefDef *TypedefDef_ptr;
-  class TAO_Export TypedefDef : public virtual Contained, 
-                                public virtual IDLType
-  {
-  protected:
-    TypedefDef (void);
-
-  public:
-    TypedefDef (const TypedefDef& rhs);
-    virtual ~TypedefDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::TypedefDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_TypedefDef : public virtual ::CORBA::TypedefDef,
-      public virtual _tao_thru_poa_collocated_Contained,
-      public virtual _tao_thru_poa_collocated_IDLType
-  {
-  public:
-    _tao_thru_poa_collocated_TypedefDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );    
-  };
-
-  class StructDef;
-  typedef StructDef *StructDef_ptr;
-  class TAO_Export StructDef : public virtual TypedefDef, 
-                               public virtual Container
-  {
-  protected:
-    StructDef (void);
-
-  public:
-    StructDef (const StructDef& rhs);
-    virtual ~StructDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::StructDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::StructMemberSeq * members (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_members_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void members (
-        const CORBA::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_members_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void lookup_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void lookup_name_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_module_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_constant_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_struct_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_union_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_enum_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_alias_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_interface_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_box_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_exception_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_StructDef : public virtual ::CORBA::StructDef,
-      public virtual _tao_thru_poa_collocated_TypedefDef,
-      public virtual _tao_thru_poa_collocated_Container
-  {
-  public:
-    _tao_thru_poa_collocated_StructDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::StructMemberSeq * members (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void members (
-        const CORBA::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class UnionDef;
-  typedef UnionDef *UnionDef_ptr;
-  class TAO_Export UnionDef : public virtual TypedefDef, 
-                              public virtual Container
-  {
-  protected:
-    UnionDef (void);
-
-  public:
-    UnionDef (const UnionDef& rhs);
-    virtual ~UnionDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::UnionDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::TypeCode_ptr discriminator_type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_discriminator_type_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::IDLType_ptr discriminator_type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_discriminator_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void discriminator_type_def (
-        CORBA::IDLType_ptr discriminator_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_discriminator_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::UnionMemberSeq * members (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_members_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void members (
-        const CORBA::UnionMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_members_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void lookup_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void lookup_name_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_module_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_constant_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_struct_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_union_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_enum_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_alias_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_interface_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_box_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_exception_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_UnionDef : public virtual ::CORBA::UnionDef,
-      public virtual _tao_thru_poa_collocated_TypedefDef,
-      public virtual _tao_thru_poa_collocated_Container
-  {
-  public:
-    _tao_thru_poa_collocated_UnionDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::TypeCode_ptr discriminator_type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::IDLType_ptr discriminator_type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void discriminator_type_def (
-        CORBA::IDLType_ptr discriminator_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::UnionMemberSeq * members (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void members (
-        const CORBA::UnionMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class EnumDef;
-  typedef EnumDef *EnumDef_ptr;
-  class TAO_Export EnumDef : public virtual TypedefDef
-  {
-  protected:
-    EnumDef (void);
-
-  public:
-    EnumDef (const EnumDef& rhs);
-    virtual ~EnumDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::EnumDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::EnumMemberSeq * members (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_members_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void members (
-        const CORBA::EnumMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_members_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_EnumDef : public virtual ::CORBA::EnumDef,
-      public virtual _tao_thru_poa_collocated_TypedefDef
-  {
-  public:
-    _tao_thru_poa_collocated_EnumDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::EnumMemberSeq * members (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void members (
-        const CORBA::EnumMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class AliasDef;
-  typedef AliasDef *AliasDef_ptr;
-  class TAO_Export AliasDef : public virtual TypedefDef
-  {
-  protected:
-    AliasDef (void);
-
-  public:
-    AliasDef (const AliasDef& rhs);
-    virtual ~AliasDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::AliasDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::IDLType_ptr original_type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_original_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void original_type_def (
-        CORBA::IDLType_ptr original_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_original_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_AliasDef : public virtual ::CORBA::AliasDef,
-      public virtual _tao_thru_poa_collocated_TypedefDef
-  {
-  public:
-    _tao_thru_poa_collocated_AliasDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::IDLType_ptr original_type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void original_type_def (
-        CORBA::IDLType_ptr original_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-  };
-
-  class PrimitiveDef;
-  typedef PrimitiveDef *PrimitiveDef_ptr;
-  class TAO_Export PrimitiveDef : public virtual IDLType
-  {
-  protected:
-    PrimitiveDef (void);
-
-  public:
-    PrimitiveDef (const PrimitiveDef& rhs);
-    virtual ~PrimitiveDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::PrimitiveDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::PrimitiveKind kind (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_kind_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_PrimitiveDef : public virtual ::CORBA::PrimitiveDef,
-      public virtual _tao_thru_poa_collocated_IDLType
-  {
-  public:
-    _tao_thru_poa_collocated_PrimitiveDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::PrimitiveKind kind (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class StringDef;
-  typedef StringDef *StringDef_ptr;
-  class TAO_Export StringDef : public virtual IDLType
-  {
-  protected:
-    StringDef (void);
-
-  public:
-    StringDef (const StringDef& rhs);
-    virtual ~StringDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::StringDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::ULong bound (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_bound_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void bound (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_bound_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_StringDef : public virtual ::CORBA::StringDef,
-      public virtual _tao_thru_poa_collocated_IDLType
-  {
-  public:
-    _tao_thru_poa_collocated_StringDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::ULong bound (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void bound (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class WstringDef;
-  typedef WstringDef *WstringDef_ptr;
-  class TAO_Export WstringDef : public virtual IDLType
-  {
-  protected:
-    WstringDef (void);
-
-  public:
-    WstringDef (const WstringDef& rhs);
-    virtual ~WstringDef (void);
-
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::WstringDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::ULong bound (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_bound_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void bound (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_bound_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_WstringDef : public virtual ::CORBA::WstringDef,
-      public virtual _tao_thru_poa_collocated_IDLType
-  {
-  public:
-    _tao_thru_poa_collocated_WstringDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::ULong bound (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void bound (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class FixedDef;
-  typedef FixedDef *FixedDef_ptr;
-  class TAO_Export FixedDef : public virtual IDLType
-  {
-  protected:
-    FixedDef (void);
-
-  public:
-    FixedDef (const FixedDef& rhs);
-    virtual ~FixedDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::FixedDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::UShort digits (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_digits_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void digits (
-        CORBA::UShort digits,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_digits_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Short scale (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_scale_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void scale (
-        CORBA::Short scale,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_scale_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_FixedDef : public virtual ::CORBA::FixedDef,
-      public virtual _tao_thru_poa_collocated_IDLType
-  {
-  public:
-    _tao_thru_poa_collocated_FixedDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::UShort digits (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void digits (
-        CORBA::UShort digits,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Short scale (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void scale (
-        CORBA::Short scale,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class SequenceDef;
-  typedef SequenceDef *SequenceDef_ptr;
-  class TAO_Export SequenceDef : public virtual IDLType
-  {
-  protected:
-    SequenceDef (void);
-
-  public:
-    SequenceDef (const SequenceDef& rhs);
-    virtual ~SequenceDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::SequenceDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::ULong bound (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_bound_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void bound (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_bound_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::TypeCode_ptr element_type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_element_type_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::IDLType_ptr element_type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_element_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void element_type_def (
-        CORBA::IDLType_ptr element_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_element_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_SequenceDef : public virtual ::CORBA::SequenceDef,
-      public virtual _tao_thru_poa_collocated_IDLType
-  {
-  public:
-    _tao_thru_poa_collocated_SequenceDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::ULong bound (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void bound (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::TypeCode_ptr element_type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::IDLType_ptr element_type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void element_type_def (
-        CORBA::IDLType_ptr element_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class ArrayDef;
-  typedef ArrayDef *ArrayDef_ptr;
-  class TAO_Export ArrayDef : public virtual IDLType
-  {
-  protected:
-    ArrayDef (void);
-
-  public:
-    ArrayDef (const ArrayDef& rhs);
-    virtual ~ArrayDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::ArrayDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::ULong length (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_length_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void length (
-        CORBA::ULong length,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_length_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::TypeCode_ptr element_type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_element_type_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::IDLType_ptr element_type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_element_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void element_type_def (
-        CORBA::IDLType_ptr element_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_element_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_ArrayDef : public virtual ::CORBA::ArrayDef,
-      public virtual _tao_thru_poa_collocated_IDLType
-  {
-  public:
-    _tao_thru_poa_collocated_ArrayDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::ULong length (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void length (
-        CORBA::ULong length,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::TypeCode_ptr element_type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::IDLType_ptr element_type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void element_type_def (
-        CORBA::IDLType_ptr element_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class ExceptionDef;
-  typedef ExceptionDef *ExceptionDef_ptr;
-  class TAO_Export ExceptionDef : public virtual Contained, 
-                                  public virtual Container
-  {
-  protected:
-    ExceptionDef (void);
-
-  public:
-    ExceptionDef (const ExceptionDef& rhs);
-    virtual ~ExceptionDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::ExceptionDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::StructMemberSeq * members (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_members_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void members (
-        const CORBA::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_members_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void lookup_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void lookup_name_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_module_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_constant_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_struct_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_union_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_enum_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_alias_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_interface_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_box_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_exception_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_ExceptionDef : public virtual ::CORBA::ExceptionDef,
-      public virtual _tao_thru_poa_collocated_Contained,
-      public virtual _tao_thru_poa_collocated_Container
-  {
-  public:
-    _tao_thru_poa_collocated_ExceptionDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::StructMemberSeq * members (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void members (
-        const CORBA::StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class AttributeDef;
-  typedef AttributeDef *AttributeDef_ptr;
-  class TAO_Export AttributeDef : public virtual Contained
-  {
-  protected:
-    AttributeDef (void);
-
-  public:
-    AttributeDef (const AttributeDef& rhs);
-    virtual ~AttributeDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::AttributeDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::IDLType_ptr type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void type_def (
-        CORBA::IDLType_ptr type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::AttributeMode mode (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_mode_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void mode (
-        CORBA::AttributeMode mode,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_mode_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_AttributeDef : public virtual ::CORBA::AttributeDef,
-      public virtual _tao_thru_poa_collocated_Contained
-  {
-  public:
-    _tao_thru_poa_collocated_AttributeDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::IDLType_ptr type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void type_def (
-        CORBA::IDLType_ptr type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::AttributeMode mode (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void mode (
-        CORBA::AttributeMode mode,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class OperationDef;
-  typedef OperationDef *OperationDef_ptr;
-  class TAO_Export OperationDef : public virtual Contained
-  {
-  protected:
-    OperationDef (void);
-
-  public:
-    OperationDef (const OperationDef& rhs);
-    virtual ~OperationDef (void);
-
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::OperationDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::TypeCode_ptr result (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_result_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::IDLType_ptr result_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_result_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void result_def (
-        CORBA::IDLType_ptr result_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_result_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ParDescriptionSeq * params (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_params_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void params (
-        const CORBA::ParDescriptionSeq & params,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_params_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::OperationMode mode (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_mode_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void mode (
-        CORBA::OperationMode mode,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_mode_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ContextIdSeq * contexts (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_contexts_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void contexts (
-        const CORBA::ContextIdSeq & contexts,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_contexts_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ExceptionDefSeq * exceptions (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_exceptions_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void exceptions (
-        const CORBA::ExceptionDefSeq & exceptions,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_exceptions_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_OperationDef : public virtual ::CORBA::OperationDef,
-      public virtual _tao_thru_poa_collocated_Contained
-  {
-  public:
-    _tao_thru_poa_collocated_OperationDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::TypeCode_ptr result (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::IDLType_ptr result_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void result_def (
-        CORBA::IDLType_ptr result_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ParDescriptionSeq * params (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void params (
-        const CORBA::ParDescriptionSeq & params,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::OperationMode mode (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void mode (
-        CORBA::OperationMode mode,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ContextIdSeq * contexts (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void contexts (
-        const CORBA::ContextIdSeq & contexts,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ExceptionDefSeq * exceptions (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void exceptions (
-        const CORBA::ExceptionDefSeq & exceptions,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class InterfaceDef;
-  typedef InterfaceDef *InterfaceDef_ptr;
-  class TAO_Export InterfaceDef : public virtual Container, 
-                                  public virtual Contained, 
-                                  public virtual IDLType
-  {
-  protected:
-    InterfaceDef (void);
-
-  public:
-    InterfaceDef (const InterfaceDef& rhs);
-    virtual ~InterfaceDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::InterfaceDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::InterfaceDefSeq * base_interfaces (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_base_interfaces_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void base_interfaces (
-        const CORBA::InterfaceDefSeq & base_interfaces,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_base_interfaces_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Boolean is_a (
-        const char * interface_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void is_a_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::InterfaceDef::FullInterfaceDescription * describe_interface (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void describe_interface_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::AttributeDef_ptr create_attribute (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr type,
-        CORBA::AttributeMode mode,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_attribute_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::OperationDef_ptr create_operation (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr result,
-        CORBA::OperationMode mode,
-        const CORBA::ParDescriptionSeq & params,
-        const CORBA::ExceptionDefSeq & exceptions,
-        const CORBA::ContextIdSeq & contexts,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_operation_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void lookup_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void lookup_name_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_module_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_constant_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_struct_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_union_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_enum_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_alias_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_interface_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_box_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_exception_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_InterfaceDef : public virtual ::CORBA::InterfaceDef,
-      public virtual _tao_thru_poa_collocated_Container,
-      public virtual _tao_thru_poa_collocated_Contained,
-      public virtual _tao_thru_poa_collocated_IDLType
-  {
-  public:
-    _tao_thru_poa_collocated_InterfaceDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::InterfaceDefSeq * base_interfaces (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void base_interfaces (
-        const CORBA::InterfaceDefSeq & base_interfaces,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Boolean is_a (
-        const char * interface_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::InterfaceDef::FullInterfaceDescription * describe_interface (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::AttributeDef_ptr create_attribute (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr type,
-        CORBA::AttributeMode mode,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::OperationDef_ptr create_operation (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr result,
-        CORBA::OperationMode mode,
-        const CORBA::ParDescriptionSeq & params,
-        const CORBA::ExceptionDefSeq & exceptions,
-        const CORBA::ContextIdSeq & contexts,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class ValueMemberDef;
-  typedef ValueMemberDef *ValueMemberDef_ptr;
-  class TAO_Export ValueMemberDef : public virtual Contained
-  {
-  protected:
-    ValueMemberDef (void);
-
-  public:
-    ValueMemberDef (const ValueMemberDef& rhs);
-    virtual ~ValueMemberDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::ValueMemberDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::IDLType_ptr type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void type_def (
-        CORBA::IDLType_ptr type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Visibility access (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_access_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void access (
-        CORBA::Visibility access,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_access_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_ValueMemberDef : public virtual ::CORBA::ValueMemberDef,
-      public virtual _tao_thru_poa_collocated_Contained
-  {
-  public:
-    _tao_thru_poa_collocated_ValueMemberDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::TypeCode_ptr type (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::IDLType_ptr type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void type_def (
-        CORBA::IDLType_ptr type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Visibility access (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void access (
-        CORBA::Visibility access,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class ValueDef;
-  typedef ValueDef *ValueDef_ptr;
-  class TAO_Export ValueDef : public virtual Container, 
-                              public virtual Contained, 
-                              public virtual IDLType
-  {
-  protected:
-    ValueDef (void);
-
-  public:
-    ValueDef (const ValueDef& rhs);
-    virtual ~ValueDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::ValueDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::InterfaceDef_ptr supported_interface (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_supported_interface_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void supported_interface (
-        CORBA::InterfaceDef_ptr supported_interface,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_supported_interface_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::InitializerSeq * initializers (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_initializers_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void initializers (
-        const CORBA::InitializerSeq & initializers,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_initializers_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ValueDef_ptr base_value (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_base_value_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void base_value (
-        CORBA::ValueDef_ptr base_value,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_base_value_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ValueDefSeq * abstract_base_values (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_abstract_base_values_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void abstract_base_values (
-        const CORBA::ValueDefSeq & abstract_base_values,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_abstract_base_values_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Boolean is_abstract (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_is_abstract_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void is_abstract (
-        CORBA::Boolean is_abstract,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_is_abstract_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Boolean is_custom (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_is_custom_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void is_custom (
-        CORBA::Boolean is_custom,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_is_custom_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Boolean is_truncatable (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_is_truncatable_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void is_truncatable (
-        CORBA::Boolean is_truncatable,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_is_truncatable_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::Boolean is_a (
-        const char * value_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void is_a_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ValueDef::FullValueDescription * describe_value (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void describe_value_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::ValueMemberDef_ptr create_value_member (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr type,
-        CORBA::Visibility access,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_value_member_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::AttributeDef_ptr create_attribute (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr type,
-        CORBA::AttributeMode mode,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_attribute_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual CORBA::OperationDef_ptr create_operation (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr result,
-        CORBA::OperationMode mode,
-        const CORBA::ParDescriptionSeq & params,
-        const CORBA::ExceptionDefSeq & exceptions,
-        const CORBA::ContextIdSeq & contexts,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void create_operation_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void lookup_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void lookup_name_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_contents_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_module_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_constant_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_struct_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_union_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_enum_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_alias_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_interface_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_value_box_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void create_exception_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_id_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _set_version_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env = 
-          TAO_default_environment ()
-      );
-
-    static void _get_defined_in_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_absolute_name_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_containing_repository_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void describe_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void move_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_ValueDef : public virtual ::CORBA::ValueDef,
-      public virtual _tao_thru_poa_collocated_Container,
-      public virtual _tao_thru_poa_collocated_Contained,
-      public virtual _tao_thru_poa_collocated_IDLType
-  {
-  public:
-    _tao_thru_poa_collocated_ValueDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::InterfaceDef_ptr supported_interface (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void supported_interface (
-        CORBA::InterfaceDef_ptr supported_interface,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::InitializerSeq * initializers (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void initializers (
-        const CORBA::InitializerSeq & initializers,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ValueDef_ptr base_value (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void base_value (
-        CORBA::ValueDef_ptr base_value,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ValueDefSeq * abstract_base_values (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void abstract_base_values (
-        const CORBA::ValueDefSeq & abstract_base_values,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Boolean is_abstract (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void is_abstract (
-        CORBA::Boolean is_abstract,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Boolean is_custom (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void is_custom (
-        CORBA::Boolean is_custom,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Boolean is_truncatable (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void is_truncatable (
-        CORBA::Boolean is_truncatable,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Boolean is_a (
-        const char * value_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ValueDef::FullValueDescription * describe_value (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ValueMemberDef_ptr create_value_member (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr type,
-        CORBA::Visibility access,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::AttributeDef_ptr create_attribute (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr type,
-        CORBA::AttributeMode mode,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::OperationDef_ptr create_operation (
-        const char * id,
-        const char * name,
-        const char * version,
-        CORBA::IDLType_ptr result,
-        CORBA::OperationMode mode,
-        const CORBA::ParDescriptionSeq & params,
-        const CORBA::ExceptionDefSeq & exceptions,
-        const CORBA::ContextIdSeq & contexts,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-  class ValueBoxDef;
-  typedef ValueBoxDef *ValueBoxDef_ptr;
-  class TAO_Export ValueBoxDef : public virtual IDLType
-  {
-  protected:
-    ValueBoxDef (void);
-
-  public:
-    ValueBoxDef (const ValueBoxDef& rhs);
-    virtual ~ValueBoxDef (void);
-
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    ::CORBA::ValueBoxDef *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual const char* _interface_repository_id (void) const;
-
-    virtual CORBA::IDLType_ptr original_type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _get_original_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    virtual void original_type_def (
-        CORBA::IDLType_ptr original_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    static void _set_original_type_def_skel (
-        CORBA::ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-
-    static void _get_type_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void _get_def_kind_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-
-    static void destroy_skel (
-        CORBA::ServerRequest &req, 
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-  };
-
-  class  _tao_thru_poa_collocated_ValueBoxDef : public virtual ::CORBA::ValueBoxDef,
-      public virtual _tao_thru_poa_collocated_IDLType
-  {
-  public:
-    _tao_thru_poa_collocated_ValueBoxDef (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-    
-        virtual CORBA::IDLType_ptr original_type_def (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual void original_type_def (
-        CORBA::IDLType_ptr original_type_def,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-
-#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

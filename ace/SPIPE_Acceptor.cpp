@@ -27,7 +27,7 @@ ACE_SPIPE_Acceptor::remove (void)
 #endif
 }
 
-ACE_ALLOC_HOOK_DEFINE (ACE_SPIPE_Acceptor)
+ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Acceptor)
 
 void
 ACE_SPIPE_Acceptor::dump (void) const
@@ -76,15 +76,15 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
   this->set_handle (spipe[1]);
   return 0;
 
-#elif (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+#elif (defined (ACE_WIN32) && defined(ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 
   // Create a new instance of the Named Pipe (WIN32).  A new instance
   // of the named pipe must be created for every client process.  If
   // an instance of the named pipe that is already connected to a
   // client process is reused with a new client process,
-  // ::ConnectNamedPipe () would fail.
+  // ::ConnectNamedPipe() would fail.
 
-  ACE_UNUSED_ARG (perms);
+  ACE_UNUSED_ARG(perms);
   ACE_TRACE ("ACE_SPIPE_Acceptor::create_new_instance");
   int status;
 
@@ -104,29 +104,29 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
     }
   else
     {
-      // Start the Connect (analogous to listen () for a socket).  Completion
+      // Start the Connect (analogous to listen() for a socket).  Completion
       // is noted by the event being signalled.  If a client connects
       // before this call, the error status will be ERROR_PIPE_CONNECTED, in
       // which case that fact is remembered via already_connected_ and noted
-      // when the user calls accept ().
+      // when the user calls accept().
       // Else the error status should be ERROR_IO_PENDING and the OS will
       // signal the event when it's done.
       this->already_connected_ = FALSE;
       this->set_handle (handle);
-      this->overlapped_.hEvent = this->event_.handle ();
-      this->event_.reset ();
+      this->overlapped_.hEvent = this->event_.handle();
+      this->event_.reset();
 
       BOOL result = ::ConnectNamedPipe (handle, &this->overlapped_);
-      ACE_ASSERT (result == FALSE);
+      ACE_ASSERT(result == FALSE);
       ACE_UNUSED_ARG (result);
 
-      status = ::GetLastError ();
+      status = ::GetLastError();
       if (status == ERROR_PIPE_CONNECTED)
 	this->already_connected_ = TRUE;
       else if (status != ERROR_IO_PENDING)
-	this->close ();        // Sets handle to ACE_INVALID_HANDLE
+	this->close();        // Sets handle to ACE_INVALID_HANDLE
     }
-  return (this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0);
+  return (this->get_handle() == ACE_INVALID_HANDLE ? -1 : 0);
 #else
   ACE_UNUSED_ARG (perms);
   ACE_NOTSUP_RETURN (-1);
@@ -155,9 +155,7 @@ ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
 
   if (this->open (local_sap, reuse_addr, perms) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_SPIPE_Acceptor")));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_SPIPE_Acceptor")));
 }
 
 // General purpose routine for accepting new connections.
@@ -176,17 +174,13 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
   strrecvfd r_handle;
 
   // Note that if THIS->MILLI_SECOND_DELAY == -1 we block on
-  // ACE_OS::ioctl (). Otherwise, we will wait for the desired number
+  // ACE_OS::ioctl(). Otherwise, we will wait for the desired number
   // of milli seconds using ACE_OS::poll.
 
   if (timeout != 0 && 
-      ACE::handle_timed_accept (this->get_handle (),
-                                timeout,
-                                restart) == -1)
+      ACE::handle_timed_accept (this->get_handle (), timeout, restart) == -1)
     return -1;
-  else if (ACE_OS::ioctl (this->get_handle (),
-                          I_RECVFD,
-                          &r_handle) == -1)
+  else if (ACE_OS::ioctl (this->get_handle (), I_RECVFD, &r_handle) == -1)
     return -1;
 
   new_io.set_handle (r_handle.fd);
@@ -201,7 +195,7 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
     *remote_addr = new_io.remote_addr_;
 
   return 0;
-#elif (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+#elif (defined (ACE_WIN32) && defined(ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   ACE_UNUSED_ARG (restart);
   ACE_UNUSED_ARG (remote_addr);
 
@@ -209,24 +203,24 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
   if (this->get_handle () == ACE_INVALID_HANDLE)
     return -1;
 
-  // open () started the Connect in asynchronous mode.  Wait for the event
+  // open() started the Connect in asynchronous mode.  Wait for the event
   // in the OVERLAPPED structure to be signalled, then grab the status.
   if (this->already_connected_ == FALSE)
     {
       if (timeout != 0)
 	{
-	  ACE_Time_Value abstime (ACE_OS::gettimeofday () + *timeout);
+	  ACE_Time_Value abstime (ACE_OS::gettimeofday() + *timeout);
 	  if (this->event_.wait (&abstime) == -1)
 	    return -1;
 	}
       else
-	if (this->event_.wait () == -1)
+	if (this->event_.wait() == -1)
 	  return -1;
 
       // Should be here with the ConnectNamedPipe operation complete.
       // Steal the already_connected_ flag to record the results.
       DWORD unused;
-      this->already_connected_ = ::GetOverlappedResult (this->get_handle (),
+      this->already_connected_ = ::GetOverlappedResult(this->get_handle(),
 						       &this->overlapped_,
 						       &unused,
 						       FALSE);
@@ -235,7 +229,7 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
   if (this->already_connected_)
     {
       new_io.set_handle (this->get_handle ());
-      this->set_handle (ACE_INVALID_HANDLE);
+      this->set_handle(ACE_INVALID_HANDLE);
       new_io.local_addr_ = this->local_addr_;
 
       // Create a new instance of the pipe for the next connection.

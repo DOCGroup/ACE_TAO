@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
 
 #include "ace/Service_Object.h"
 #include "ace/Synch.h"
@@ -360,6 +360,6 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc, LPTSTR *lpszArgv);
 #include "ace/NT_Service.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 
 #endif /* ACE_SERVICE_OBJECT_H */

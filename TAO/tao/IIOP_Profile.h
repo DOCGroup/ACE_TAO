@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -22,13 +21,14 @@
 #define TAO_IIOP_PROFILE_H
 
 #include "tao/Profile.h"
-#include "tao/GIOP_Utils.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
+#include "tao/GIOP.h"
 
 #include "ace/Synch.h"
 #include "ace/INET_Addr.h"

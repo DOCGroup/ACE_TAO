@@ -618,7 +618,6 @@ sub create_kit () {
   my $checksum = $install  ?  "$md5sum"  :  'echo';
   my $cksum_ext = 'md5';
   my $redirect = $install  ?  '>'  :  '\>';
-  my $shell_cd = $install  ?  'cd'  :  'echo cd';
 
   # These files don't get LF->CRLF conversions done when making the zip.
   my $bin_files =
@@ -693,10 +692,10 @@ sub create_kit () {
   # being installed in the FTP directory since it will expand to
   # `created/ACE.tar.gz', for example.  No big deal, I guess.
   my $checksum_command =
-    "$shell_cd $dest; " .
-      "for p in $archives; do " .
+    "for p in $archives; do " .
       "$rm \${p}.${cksum_ext}; " .
-      "$checksum \$p $redirect \${p}.${cksum_ext}; " .
+      "$checksum $dest/\$p $redirect \${p}.${cksum_ext}; " .
+      "$dispose \${p}.${cksum_ext} $dest; " .
       "done";
 
   &ex ($build_command);

@@ -51,7 +51,7 @@ ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
 {
   // Create the completion port.
   this->completion_port_ = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,
-                                                     0,
+                                                     this->completion_port_,
                                                      0,
                                                      this->number_of_threads_);
   if (this->completion_port_ == 0)

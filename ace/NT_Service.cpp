@@ -3,7 +3,7 @@
 // NT_Service.cpp
 
 #include "ace/inc_user_config.h"
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
 
 #define ACE_BUILD_DLL
 #include "ace/NT_Service.h"
@@ -475,4 +475,4 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
                       &this->svc_status_);
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */

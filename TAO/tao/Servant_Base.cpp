@@ -123,11 +123,12 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
 
   CORBA::ORB_ptr servant_orb = 0;
 
+  if (poa_current_impl != 0)
+    servant_orb = poa_current_impl->orb_core ().orb () ;
+
   if (poa_current_impl != 0 &&
       this == poa_current_impl->servant ())
     {
-      servant_orb = poa_current_impl->orb_core ().orb () ;
-
       stub = servant_orb->create_stub_object (poa_current_impl->object_key (),
                                               this->_interface_repository_id (),
                                               ACE_TRY_ENV);
@@ -147,10 +148,10 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
       // Increment the reference count since <object> will zap its
       // stub object on deletion.
       stub->_incr_refcnt ();
-
-      servant_orb = stub->orb_core ()->orb ();
     }
 
+  if (servant_orb == 0)
+    servant_orb = stub->orb_core ()->orb ();
   stub->servant_orb (servant_orb);
   return stub;
 }
