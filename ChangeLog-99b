@@ -1,3 +1,13 @@
+Thu Apr 29 13:41:52 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/{OS.cpp Object_Manager.cpp}: Fixed leaking ACE_Object_Manager
+          when config has #define ACE_HAS_NONSTATIC_OBJECT_MANAGER 0.  Now
+          both ACE_OS_Object_Manager and ACE_Object_Manager remember if they
+          were dynamically allocated whether the above #define is used or not
+          and correctly clean up and track the singleton properly.
+          Thanks to David and Irfan for identifying this and helping with the
+          solution.
+
 Wed Apr 28 20:21:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Synch_T.h (class ACE_Anti_*_Guard): I had accidentally
