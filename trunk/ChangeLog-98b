@@ -1,3 +1,10 @@
+Mon Oct 12 12:14:45 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Parse_Node.cpp (ACE_Stream_Node): In error cases, the strops
+ 	  parameter can be NULL.  Therefore, we need to protect against
+ 	  this case.  Thanks to David O'Farrell <dave@virgo.aersoft.ie>
+ 	  for reporting this.
+
 Mon Oct 12 10:43:09 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/Asynch_IO.cpp (ACE_Asynch_Result): Fixed a double deletion
