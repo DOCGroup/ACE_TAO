@@ -18,6 +18,9 @@ SHLIB_UNCHECKED = lib<%sharedname%>.$(SOEXT)
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
+ifndef CIAO_ROOT
+  CIAO_ROOT = $(TAO_ROOT)/CIAO
+endif
 <%endif%>
 <%if(idl_files)%>
 
@@ -269,7 +272,7 @@ TAO_IDLFLAGS += <%idlflags%>
 <%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%>  =<%foreach(libs)%> -l<%lib%><%endfor%><%if(sharedname)%> $(ACELIB)<%endif%>
 <%endif%>
 <%if(lit_libs)%>
-<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%> 
+<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
 <%endif%>
 <%if(ssl)%>
 <%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>
