@@ -31,10 +31,54 @@ ACE_High_Res_Timer::reset (void)
 }
 
 void
+ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv)
+{
+  if (scale_factor_ > 0) {
+    tv.sec ((this->end_ - this->start_) / 1000000L / scale_factor_);
+    tv.usec ((this->end_ - this->start_) % 1000000L / scale_factor_);
+  } else {
+    tv.sec ((this->end_ - this->start_) / 1000000L);
+    tv.usec ((this->end_ - this->start_) % 1000000L);
+  }
+}
+
+#if defined (ACE_HAS_POSIX_TIME)
+void
+ACE_High_Res_Timer::elapsed_time (timespec_t &elapsed_time)
+{
+  if (scale_factor_ > 0) {
+    elapsed_time.tv_sec = (this->end_ - this->start_) / (1000 * 1000 * 1000) /
+                          scale_factor_;
+    elapsed_time.tv_nsec = (this->end_ - this->start_) % (1000 * 1000 * 1000) /
+                          scale_factor_;
+  } else {
+    elapsed_time.tv_sec = (this->end_ - this->start_) / (1000 * 1000 * 1000);
+    elapsed_time.tv_nsec = (this->end_ - this->start_) % (1000 * 1000 * 1000);
+  }
+}
+#endif /* ACE_HAS_POSIX_TIME */
+
+void
+ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv)
+{
+  if (scale_factor_ > 0) {
+    tv.sec (this->total_ / 1000000L / scale_factor_);
+    tv.usec (this->total_ % 1000000L / scale_factor_);
+  } else {
+    tv.sec (this->total_ / 1000000L);
+    tv.usec (this->total_ % 1000000L);
+  }
+}
+
+void
 ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_ave");
-  ACE_hrtime_t total       = this->end_ - this->start_;
+  ACE_hrtime_t total;
+  if (scale_factor_ > 0)
+    total = (this->end_ - this->start_) /scale_factor_;
+  else
+    total = this->end_ - this->start_;
   ACE_hrtime_t total_secs  = total / (1000 * 1000 * 1000);
   u_long extra_nsecs = total % (1000 * 1000 * 1000);
 
@@ -58,7 +102,11 @@ void
 ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_total");
-  ACE_hrtime_t total_secs  = this->total_ / (1000 * 1000 * 1000);
+  ACE_hrtime_t total_secs;
+  if (scale_factor_ > 0)
+    total_secs = this->total_ / (1000 * 1000 * 1000) / scale_factor_;
+  else
+    total_secs = this->total_ / (1000 * 1000 * 1000);
   u_long extra_nsecs = this->total_ % (1000 * 1000 * 1000);
 
   char buf[100];
