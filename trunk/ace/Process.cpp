@@ -75,24 +75,19 @@ ACE_Process::spawn (ACE_Process_Options &options)
                                       options.command_line_argv ());
   else
     {
-      // Added the new environment variables.
+      // Add the new environment variables to the environment context
+      // of the context before doing an <execvp>.
       for (char **user_env = options.env_argv ();
            *user_env != 0;
            user_env++)
-        ACE_OS::putenv (*user_env);
+        if (ACE_OS::putenv (*user_env) != 0)
+          return -1;
 
       // Now the forked process has both inherited variables and the
       // user's supplied variables.
       this->child_id_ = ACE_OS::execvp (options.command_line_argv ()[0],
                                         options.command_line_argv ());
     }
-
-#if 0
-            // command-line args and environment variables
-            result = ACE_OS::execve (options.command_line_argv ()[0],
-                                     options.command_line_argv (),
-                                     options.env_argv ());
-#endif
 
   return this->child_id_;
 #else /* ACE_WIN32 */
@@ -145,16 +140,18 @@ ACE_Process::spawn (ACE_Process_Options &options)
             // anyways.
             ACE_NOTSUP_RETURN (-1);
 #else
-            // Added the new environment variables.
+            // Add the new environment variables to the environment context
+            // of the context before doing an <execvp>.
             for (char *const *user_env = options.env_argv ();
                  *user_env != 0;
                  user_env++)
-              ACE_OS::putenv (*user_env);
+              if (ACE_OS::putenv (*user_env) != 0)
+                return -1;
 
-            // Now the forked process has both inherited variables and the
-            // user's supplied variables.
-            this->child_id_ = ACE_OS::execvp (options.command_line_argv ()[0],
-                                              options.command_line_argv ());
+            // Now the forked process has both inherited variables and
+            // the user's supplied variables.
+            result = ACE_OS::execvp (options.command_line_argv ()[0],
+                                     options.command_line_argv ());
 #endif /* ghs */
           }
 
@@ -169,7 +166,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
         return 0;
       }
-
     default:
       // Server process.  The fork succeeded.
       return this->child_id_;
