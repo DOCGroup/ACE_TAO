@@ -1756,9 +1756,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
   size_t mb_length = 0;
   new_item->total_size_and_length (mb_bytes,
                                    mb_length);
-  // Subtract off all of the bytes associated with this message.
-  this->cur_bytes_ -= mb_bytes;
-  this->cur_length_ -= mb_length;
+  this->cur_bytes_ += mb_bytes;
+  this->cur_length_ += mb_length;
   this->cur_count_++;
 
   if (this->signal_dequeue_waiters () == -1)
