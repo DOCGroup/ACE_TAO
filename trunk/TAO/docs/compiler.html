@@ -37,18 +37,25 @@ appending the following suffixes (see the list of TAO's IDL compiler
 these files:) <P>
 
 <UL>
-  <LI> <EM>Client stubs</EM>, <EM>i.e.</EM>, <tt>*C.h</tt>, <tt>*C.i</tt>, and <tt>*C.cpp</tt>
-  <LI> <EM>Server skeletons</EM>, <EM>i.e.</EM>,  <tt>*S.h</tt>, <tt>*S.i</tt>, and
-      <tt>*S.cpp</tt>
-  <LI> <EM>Server skeleton templates</EM>, <EM>i.e.</EM>, <tt>*S_T.h</tt>, <tt>S_T.i</tt>,
-      and <tt>*S_T.cpp</tt>
+  <LI> <B><EM>Client stubs</EM></B>, <EM>i.e.</EM>, <tt>*C.h</tt>,
+      <tt>*C.i</tt>, and <tt>*C.cpp</tt>.  Pure client applications
+      only need to <code>#include</code> and link with these files.
+  <LI> <B><EM>Server skeletons</EM></B>, <EM>i.e.</EM>,  <tt>*S.h</tt>, <tt>*S.i</tt>, and
+      <tt>*S.cpp</tt>.  Servers need to <code>#include</code> and link
+      with these files.
+  <LI> <B><EM>Server skeleton templates</EM></B>, <EM>i.e.</EM>, <tt>*S_T.h</tt>, <tt>S_T.i</tt>,
+      and <tt>*S_T.cpp</tt>.  Some C++ compilers do not like template
+      and non-template code in the same files, so TAO's IDL compiler
+      generates these files separately.
 </UL>
 
 TAO's IDL compiler creates separate <TT>*.i</TT> and <TT>*S_T.*</TT>
-files to improve the performance of the generated code.  Fortunately,
-you only need to <CODE>#include</CODE> the client stubs declared in
-the <tt>*C.h</tt> file and the skeletons in the <tt>*S.h</tt> file in
-your code. <P>
+files to improve the performance of the generated code.  For example,
+the <TT>*.i</TT> files enable you to compile with inlining enabled or
+not, which is useful for trading-off compile-time and run-time
+performance.  Fortunately, you only need to <CODE>#include</CODE> the
+client stubs declared in the <tt>*C.h</tt> file and the skeletons in
+the <tt>*S.h</tt> file in your code. <P>
 
 <HR><P>
 <a name="idl_env"><h3>Environment Variables</h3></a>
