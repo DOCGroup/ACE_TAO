@@ -7440,7 +7440,7 @@ ACE_OS::mmap (void *addr,
                                          ACE_OS::default_win32_security_attributes (sa),
                                          prot,
                                          0,
-                                         len,
+                                         0,
                                          0);
   if (*file_mapping == 0)
     ACE_FAIL_RETURN (MAP_FAILED);
@@ -8725,6 +8725,18 @@ ACE_OS::getpagesize (void)
 #else
   // Use the default set in config.h
   return ACE_PAGE_SIZE;
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int
+ACE_OS::allocation_granularity (void)
+{
+#if defined (ACE_WIN32)
+  SYSTEM_INFO sys_info;
+  ::GetSystemInfo (&sys_info);
+  return (int) sys_info.dwAllocationGranularity;
+#else
+  return ACE_OS::getpagesize ();
 #endif /* ACE_WIN32 */
 }
 

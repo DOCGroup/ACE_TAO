@@ -1,12 +1,36 @@
+Fri Oct 09 00:44:21 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (mmap): CreateFileMapping must be created with a length
+ 	  of 0 (which will get translated to the size of the file).  This
+ 	  must not be <len> since <len> only deals with the mapping of the
+ 	  view and not with the file mapping object.  It is ok to use 0
+	  since we are trying to emulate UNIX's mmap.
+
+	* ace/ACE.cpp (round_to_allocation_granularity):
+	  ace/OS.i (allocation_granularity):
+
+	  New methods.  We need allocation granularity when rounding off
+ 	  the offset in mmap and not the page size.  Only on Win32,
+	  allocation granularity is different from pagesize.
+
+	* ace/High_Res_Timer.cpp: Added the inclusion of Object_Manager.h.
+  	  Otherwise, NT was picking up the definition of
+ 	  ACE_Static_Object_Lock.
+
+	* ace/Mem_Map.cpp (map_it): Fixed the problem where a requested
+ 	  length of less than the filesize was being ignored.  Also,
+ 	  changed round_to_pagesize() to round_to_allocation_granularity().  
+	  Thanks to Jonathan Reis <reis@minniemouse.cemax.com> for
+ 	  pointing this bug out.
+
 Fri Oct 09 00:02:01 1998  Alexander Babu Arulanthu <alex@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp: Another problem with doing multiple
-	Asynch_Accepts have been fixed. Thanks very much James Hu for
-	reporting this. I was calling reactor's resume_handlers and
-	suspend_handlers instead of only for one handle. Thanks very much
-	Irfan! for pointing this out. 
+	* ace/Asynch_IO.cpp: The YET another problem with doing multiple
+ 	  Asynch_Accepts have been fixed. Thanks very much James Hu for
+ 	  reporting this. I was calling reactor's resume_handlers and
+ 	  suspend_handlers instead of only for one handle. Thanks very
+ 	  much Irfan! for pointing this out.
  
-
 Thu Oct 08 23:06:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * config-linux-common.h: on Alpha only, added ACE_POLL_IS_BROKEN.

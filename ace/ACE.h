@@ -546,6 +546,9 @@ public:
   static size_t round_to_pagesize (off_t length);
   // Rounds the request to a multiple of the page size.
 
+  static size_t round_to_allocation_granularity (off_t len);
+  // Rounds the request to a multiple of the allocation granularity.
+
   static int format_hexdump (const char *buffer, int size,
                              ASYS_TCHAR *obuf, int obuf_sz);
   // Format buffer into printable format.  This is useful for
@@ -646,6 +649,9 @@ private:
 
   static size_t pagesize_;
   // Size of a VM page.
+
+  static size_t allocation_granularity_;
+  // Size of allocation granularity.
 
   static u_long crc_table_[];
   // CRC table.
