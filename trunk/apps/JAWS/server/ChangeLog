@@ -1,3 +1,9 @@
+Sat Jun 28 11:55:38 1997  James C Hu <jxh@tango.cs.wustl.edu>
+
+	* HTTP_Handler.cpp (open): fixed a typo
+
+	* HTTP_Handler.cpp (cgi): fixed a bug, strdup fails on NULL
+
 Sat Jun 28 16:14:38 1997  Sumedh Mungee  <sumedh@cumbia.cs.wustl.edu>
 
 	* HTTP_Handler.cpp (open): Changed socket send-buffer to 64k

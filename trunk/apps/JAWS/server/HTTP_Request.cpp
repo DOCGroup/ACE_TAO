@@ -385,7 +385,9 @@ HTTP_Request::cgi (char *uri_string)
   // (1) the file has a CGI extension.
   // (2) the file resides in a CGI bin directory.
 
-  char *cgi_path = ACE_OS::strdup (HTTP_Config::instance ()->cgi_path ());
+  char *cgi_path = (HTTP_Config::instance ()->cgi_path ()
+                    ? ACE_OS::strdup (HTTP_Config::instance ()->cgi_path ())
+                    : ACE_OS::strdup (""));
   char *cgi_path_next, *lasts;
   char *extra_path_info = 0;
 
