@@ -50,7 +50,7 @@ ACE_Test_Output::~ACE_Test_Output (void)
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_PSOS)
   ACE_OSTREAM_TYPE *log_msg_stream =  ACE_LOG_MSG->msg_ostream ();
 
-  ACE_LOG_MSG->msg_ostream (&cerr);
+  ACE_LOG_MSG->msg_ostream (&cerr, 0);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY && ! ACE_PSOS */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
@@ -177,7 +177,7 @@ ACE_Test_Output::close (void)
     this->output_file_->close ();
     delete this->output_file_;
     this->output_file_=0;
-    ACE_LOG_MSG->msg_ostream (this->output_file_);
+    ACE_LOG_MSG->msg_ostream (this->output_file_, 0);
   }
   // else something else changed the stream and hence should
   // have closed and deleted the output_file_ 
