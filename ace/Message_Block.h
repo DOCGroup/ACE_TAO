@@ -304,6 +304,9 @@ private:
 		     ACE_Data_Block *db);
   // Perform the actual initialization.
 
+  ACE_Message_Block *release_i (ACE_Lock *lock);
+  // Internal release implementation
+
   int init_i (size_t size, 
 	      ACE_Message_Type type,
 	      ACE_Message_Block *cont,
@@ -410,7 +413,7 @@ public:
   ACE_Data_Block *duplicate (void);
   // Return a "shallow" copy that increments our reference count by 1.
 
-  ACE_Data_Block *release (void);
+  ACE_Data_Block *release (ACE_Lock *lock = 0);
   // Decrease the shared reference count by 1.  If the reference count
   // is > 0 then return this; else if reference count == 0 then delete
   // <this> and <mb> and return 0.  Behavior is undefined if reference
@@ -438,6 +441,9 @@ public:
   // Dump the state of an object.
 
 private:
+  ACE_Data_Block *release_i (void);
+  // Internal release implementation
+  
   ACE_Message_Block::ACE_Message_Type type_;		
   // Type of message.
 
