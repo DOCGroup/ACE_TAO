@@ -1,19 +1,58 @@
+Fri Aug 25 16:15:50 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS.cpp:
+        * ace/Thread_Adapter.h:
+        * ace/Thread_Adapter.inl:
+        * ace/Thread_Adapter.cpp:
+        * ace/Thread_Control.h:
+        * ace/Thread_Control.inl:
+        * ace/Thread_Control.cpp:
+        * ace/Thread_Exit.h:
+        * ace/Thread_Exit.cpp:
+        * ace/Thread_Hook.h:
+        * ace/Thread_Hook.cpp:
+        * ace/Thread_Manager.h:
+        * ace/Thread_Manager.i:
+        * ace/Thread_Manager.cpp:
+          Move ACE_Thread_Adapter and its friends to a new directory.
+          This was important to discover why OS.o depends on
+          Thread_Manager.o and how we can break that dependency.
+          I'm commiting the change because it will help the compiler when
+          linking static libraries and it is easier to maintain this way.
+
+        * ace/OS_String.cpp:
+          Cosmetic changes.
+
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+        * ace/ace.icc:
+          Add all the new files to the system.
+
+        * tests/Task_Test.cpp:
+          We must #include the Thread_Hook.h file directly
+
+        * */Makefile:
+          Updated all the dependencies for ace.
+
 Fri Aug 25 15:15:27 2000  Ossama Othman  <ossama@uci.edu>
 
-	* Makefile.am (EXTRA_DIST):
+        * Makefile.am (EXTRA_DIST):
 
-	  Added libtool shell script fragments `ltcf-c.sh' and
-	  `ltcf-cxx.sh' to the list of additional files to be packaged
-	  with the distribution.
+          Added libtool shell script fragments `ltcf-c.sh' and
+          `ltcf-cxx.sh' to the list of additional files to be packaged
+          with the distribution.
 
-	* ace/Makefile (TEMPLATE_FILES):
+        * ace/Makefile (TEMPLATE_FILES):
 
-	  Added `Hash_Map_With_Allocator_T' to the list of template
-	  source files.  It was missing.
+          Added `Hash_Map_With_Allocator_T' to the list of template
+          source files.  It was missing.
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Updated to include all newly added source files.
+          Updated to include all newly added source files.
 
 Fri Aug 25 16:29:51 2000  Steve Huston  <shuston@riverace.com>
 

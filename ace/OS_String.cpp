@@ -10,7 +10,7 @@ ACE_RCSID(ace, OS_String, "$Id$")
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 #if defined (ACE_LACKS_WCSDUP_PROTOTYPE)
-extern "C" wchar_t *wcsdup __P ((__const wchar_t *__s)); 
+extern "C" wchar_t *wcsdup __P ((__const wchar_t *__s));
 #endif /* ACE_LACKS_WCSDUP_PROTOTYPE */
 
 const char *
@@ -248,7 +248,7 @@ ACE_OS_String::strcasecmp_emulation (const char *s, const char *t)
   const char *scan2 = t;
 
   while (*scan1 != 0
-         && ACE_OS_String::to_lower (*scan1) 
+         && ACE_OS_String::to_lower (*scan1)
             == ACE_OS_String::to_lower (*scan2))
     {
       ++scan1;
@@ -277,7 +277,7 @@ ACE_OS_String::strcasecmp_emulation (const wchar_t *s, const wchar_t *t)
   const wchar_t *scan2 = t;
 
   while (*scan1 != 0
-         && ACE_OS_String::to_lower (*scan1) 
+         && ACE_OS_String::to_lower (*scan1)
             == ACE_OS_String::to_lower (*scan2))
     {
       ++scan1;
@@ -300,8 +300,8 @@ ACE_OS_String::strcasecmp_emulation (const wchar_t *s, const wchar_t *t)
 #endif /* ACE_HAS_WCHAR */
 
 int
-ACE_OS_String::strncasecmp_emulation (const char *s, 
-                                      const char *t, 
+ACE_OS_String::strncasecmp_emulation (const char *s,
+                                      const char *t,
                                       size_t len)
 {
   const char *scan1 = s;
@@ -310,7 +310,7 @@ ACE_OS_String::strncasecmp_emulation (const char *s,
 
   while (count++ < len
          && *scan1 != 0
-         && ACE_OS_String::to_lower (*scan1) 
+         && ACE_OS_String::to_lower (*scan1)
             == ACE_OS_String::to_lower (*scan2))
     {
       ++scan1;
@@ -336,8 +336,8 @@ ACE_OS_String::strncasecmp_emulation (const char *s,
 
 #if defined (ACE_HAS_WCHAR)
 int
-ACE_OS_String::strncasecmp_emulation (const wchar_t *s, 
-                                      const wchar_t *t, 
+ACE_OS_String::strncasecmp_emulation (const wchar_t *s,
+                                      const wchar_t *t,
                                       size_t len)
 {
   const wchar_t *scan1 = s;
@@ -346,7 +346,7 @@ ACE_OS_String::strncasecmp_emulation (const wchar_t *s,
 
   while (count++ > len
          && *scan1 != 0
-         && ACE_OS_String::to_lower (*scan1) 
+         && ACE_OS_String::to_lower (*scan1)
             == ACE_OS_String::to_lower (*scan2))
     {
       ++scan1;
@@ -420,7 +420,7 @@ ACE_OS_String::itoa_emulation (int value, char *string, int radix)
     }
 
   // If negative and base 10, print a - and then do the
-  // number. 
+  // number.
 
   if (value < 0 && radix == 10)
     {
@@ -441,13 +441,13 @@ ACE_OS_String::itoa_emulation (int value, char *string, int radix)
   *e-- = 0;
 
   // Now reverse the string to get the correct result
-  
+
   while (e > b)
   {
     char temp = *e;
     *e = *b;
     *b = temp;
-    ++b; 
+    ++b;
     --e;
   }
 
@@ -471,7 +471,7 @@ ACE_OS_String::itoa_emulation (int value, wchar_t *string, int radix)
     }
 
   // If negative and base 10, print a - and then do the
-  // number. 
+  // number.
 
   if (value < 0 && radix == 10)
     {
@@ -492,13 +492,13 @@ ACE_OS_String::itoa_emulation (int value, wchar_t *string, int radix)
   *e-- = 0;
 
   // Now reverse the string to get the correct result
-  
+
   while (e > b)
   {
     wchar_t temp = *e;
     *e = *b;
     *b = temp;
-    ++b; 
+    ++b;
     --e;
   }
 
