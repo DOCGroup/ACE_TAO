@@ -535,13 +535,13 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_UNUSED_ARG (argv);
   ACE_UNUSED_ARG (optstring);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (__Lynx__)
+#elif defined (ACE_LACKS_GETOPT_PROTO)
   ACE_OSCALL_RETURN (::getopt (argc, (char**) argv, optstring), int, -1);
-#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
+#elif defined (ACE_LACKS_SOME_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::getopt (argc, (const char* const *) argv, optstring), int, -1);
 #else
   ACE_OSCALL_RETURN (::getopt (argc, argv, optstring), int, -1);
-#endif /* ACE_LACKS_POSIX_PROTOTYPES */
+#endif /* VXWORKS */
 }
 
 ACE_INLINE uid_t
@@ -5490,7 +5490,7 @@ ACE_OS::msgrcv (int int_id, void *buf, size_t len,
 {
   // ACE_TRACE ("ACE_OS::msgrcv");
 #if defined (ACE_HAS_SYSV_IPC)
-#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_LACKS_SOME_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::msgrcv (int_id, (msgbuf *) buf, len, type, flags),
                      int, -1);
 #else
@@ -5513,7 +5513,7 @@ ACE_OS::msgsnd (int int_id, const void *buf, size_t len, int flags)
 {
   // ACE_TRACE ("ACE_OS::msgsnd");
 #if defined (ACE_HAS_SYSV_IPC)
-#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_NONCONST_MSGSND) || defined (ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_NONCONST_MSGSND) || defined (ACE_LACKS_POSIX_SOME_PROTOTYPES)
   ACE_OSCALL_RETURN (::msgsnd (int_id, (msgbuf *) buf, len, flags), int, -1);
 #else
   ACE_OSCALL_RETURN (::msgsnd (int_id, buf, len, flags), int, -1);
@@ -6156,7 +6156,7 @@ ACE_OS::shmat (int int_id, void *shmaddr, int shmflg)
 {
   // ACE_TRACE ("ACE_OS::shmat");
 #if defined (ACE_HAS_SYSV_IPC)
-#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_LACKS_SOME_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::shmat (int_id, (char *)shmaddr, shmflg), void *, (void *) -1);
 #else
   ACE_OSCALL_RETURN (::shmat (int_id, shmaddr, shmflg), void *, (void *) -1);
@@ -7211,7 +7211,7 @@ ACE_OS::sigaction (int signum,
   return osa->sa_handler == SIG_ERR ? -1 : 0;
 #elif defined (CHORUS)
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_LACKS_POSIX_PROTOTYPES) || defined(ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS)
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES) || defined(ACE_LACKS_SOME_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::sigaction (signum, (struct sigaction*) nsa, osa), int, -1);
 #else
   ACE_OSCALL_RETURN (::sigaction (signum, nsa, osa), int, -1);

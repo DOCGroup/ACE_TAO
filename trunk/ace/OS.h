@@ -2903,7 +2903,11 @@ typedef void *(*ACE_THR_FUNC)(void *);
 extern "C" {
 typedef void (*ACE_THR_C_DEST)(void *);
 }
+#if defined (ACE_HAS_STDARG_THR_DEST)
+typedef void (*ACE_THR_DEST)(...);
+#else
 typedef void (*ACE_THR_DEST)(void *);
+#endif /* ACE_HAS_STDARG_THR_DEST */
 
 extern "C"
 {
