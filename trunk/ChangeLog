@@ -1,3 +1,16 @@
+Wed Apr 14 16:18:10 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\Cached_Connect_Strategy_T.cpp: 
+
+	  In ACE_Cached_Connect_Strategy_Ex::connect_svc_handler_i(), the
+	  reference counter of the entry in the hashtable
+	  (ACE_Refcounted_Hash_Recyclable) was being incremented in all
+	  cases.  It should only incremented if the hint passed to
+	  connect_svc_handler_i() is not used.
+
+	  Thanks to Torsten Kuepper <torsten.kuepper@nokia.com> for
+	  reporting this bug.  This closes bug 1781.
+
 Wed Apr 14 16:14:59 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Basic_Types.h: Add _M_AMD64 (Opteron) as a known little-endian
