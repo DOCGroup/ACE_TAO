@@ -1,12 +1,20 @@
+Thu Mar  6 11:03:02 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+        Fix the generation of environment checking code following the call
+        to TAO_[In|Out]putCDR::throw_stub_exception() so it doesn't break on
+        non-native exception builds.
+
 Wed Mar  5 16:09:19 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* tao/Codeset_Manager.h:
-	* tao/Codeset_Translaotr_Factory.h:
-	* tao/Codeset_Translator_Factory_T.h: 
-	* tests/CodeSets/simple/server.cpp:
+        * tao/Codeset_Manager.h:
+        * tao/Codeset_Translaotr_Factory.h:
+        * tao/Codeset_Translator_Factory_T.h:
+        * tests/CodeSets/simple/server.cpp:
 
-	Fix fuzz errors
-	
+        Fix fuzz errors
+        
 Wed Mar  5 12:53:22 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO.dsp:
