@@ -39,9 +39,10 @@ RSC=rc.exe
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /I "..\..\..\\" /I "..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -50,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao"
+# ADD LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /out:"Release/main.exe" /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
@@ -66,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../" /I "../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -430,7 +431,7 @@ SOURCE=.\anonymous.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__ANONY="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\anonymous.idl
 InputName=anonymous
 
@@ -515,7 +516,7 @@ SOURCE=.\array.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__ARRAY="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\array.idl
 InputName=array
 
@@ -600,7 +601,7 @@ SOURCE=.\constants.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__CONST="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\constants.idl
 InputName=constants
 
@@ -685,7 +686,7 @@ SOURCE=.\enum_in_struct.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__ENUM_="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\enum_in_struct.idl
 InputName=enum_in_struct
 
@@ -770,7 +771,7 @@ SOURCE=.\generic_object.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__GENER="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\generic_object.idl
 InputName=generic_object
 
@@ -855,7 +856,7 @@ SOURCE=.\included.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__INCLU="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\included.idl
 InputName=included
 
@@ -940,7 +941,7 @@ SOURCE=.\including.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__INCLUD="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\including.idl
 InputName=including
 
@@ -1025,7 +1026,7 @@ SOURCE=.\interface.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__INTER="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\interface.idl
 InputName=interface
 
@@ -1110,7 +1111,7 @@ SOURCE=.\keywords.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__KEYWO="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\keywords.idl
 InputName=keywords
 
@@ -1193,6 +1194,43 @@ SOURCE=.\nested_scope.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
+USERDEP__NESTE="..\..\..\bin\release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\nested_scope.idl
+InputName=nested_scope
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
 USERDEP__NESTE="..\..\..\bin\tao_idl.exe"	
@@ -1200,9 +1238,35 @@ USERDEP__NESTE="..\..\..\bin\tao_idl.exe"
 InputPath=.\nested_scope.idl
 InputName=nested_scope
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 # End Custom Build
 
 !ENDIF 
@@ -1214,6 +1278,43 @@ SOURCE=.\params.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
+USERDEP__PARAM="..\..\..\bin\release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\params.idl
+InputName=params
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
 USERDEP__PARAM="..\..\..\bin\tao_idl.exe"	
@@ -1221,9 +1322,35 @@ USERDEP__PARAM="..\..\..\bin\tao_idl.exe"
 InputPath=.\params.idl
 InputName=params
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 # End Custom Build
 
 !ENDIF 
@@ -1234,6 +1361,43 @@ InputName=params
 SOURCE=.\pragma.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__PRAGM="..\..\..\bin\release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\pragma.idl
+InputName=pragma
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
@@ -1284,7 +1448,7 @@ SOURCE=.\reopened_modules.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__REOPE="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\reopened_modules.idl
 InputName=reopened_modules
 
@@ -1369,7 +1533,7 @@ SOURCE=.\sequence.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__SEQUE="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\sequence.idl
 InputName=sequence
 
@@ -1454,7 +1618,7 @@ SOURCE=.\typedef.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__TYPED="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\typedef.idl
 InputName=typedef
 
@@ -1539,7 +1703,7 @@ SOURCE=.\union.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__UNION="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\union.idl
 InputName=union
 
