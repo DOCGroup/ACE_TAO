@@ -1,3 +1,9 @@
+Tue Feb 15 18:45:26 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/POSIX_Asynch_IO.{h cpp}:
+	* ace/POSIX_Proactor.cpp: Fixed compile errors resulting from
+	  Proxy_Ptr changes, below.
+
 Tue Feb 15 18:19:25 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Asynch_IO.{h cpp}:
@@ -51,6 +57,13 @@ Tue Feb 15 14:33:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* examples/TMCast/Member/Member.mpc:
 
 	  Add exename definition so executable is actually built.
+
+Tue Feb 15 16:15:28 2005  Steve Huston  <shuston@riverace.com>
+
+	* examples/RMCast/Receiver.cpp:
+	* examples/RMCast/Sender.cpp:
+	* examples/TMCast/Member/member.cpp: Corrected location of includes
+	  after they moved.
 
 Tue Feb 15 13:34:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
