@@ -91,23 +91,43 @@ TAO_SCIOP_Connection_Handler::open (void*)
   TAO_SCIOP_Protocol_Properties protocol_properties;
 
   // Initialize values from ORB params.
-  protocol_properties.send_buffer_size_ = 
+  protocol_properties.send_buffer_size_ =
     this->orb_core ()->orb_params ()->sock_sndbuf_size ();
-  protocol_properties.recv_buffer_size_ = 
+  protocol_properties.recv_buffer_size_ =
     this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
-  protocol_properties.no_delay_ = 
+  protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
 
   TAO_Protocols_Hooks *tph =
     this->orb_core ()->get_protocols_hooks ();
 
   // @@ fix me
-  int client = 0;
+  bool client = 0;
 
-  if (client)
-    tph->client_protocol_properties_at_orb_level (protocol_properties);  
-  else
-    tph->server_protocol_properties_at_orb_level (protocol_properties);  
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      if (client)
+        {
+          tph->client_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          tph->server_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
@@ -328,10 +348,10 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
     {
       TAO_Protocols_Hooks *tph =
         this->orb_core ()->get_protocols_hooks ();
-      
+
       CORBA::Long codepoint =
         tph->get_dscp_codepoint ();
-      
+
       tos = (int)(codepoint) << 2;
     }
 
@@ -341,7 +361,7 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
                                              IP_TOS,
                                              (int *) &tos ,
                                              (int) sizeof (tos));
-      
+
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -351,7 +371,7 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
                       result,
                       result == -1 ? "try running as superuser" : ""));
         }
-      
+
       // On successful setting of TOS field.
       if (result == 0)
         this->dscp_codepoint_ = tos;

@@ -250,18 +250,21 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
         }
     }
 
-  CORBA::Policy_var policy = 
-    poa.policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
+  CORBA::Policy_var policy =
+    poa.policies ().get_cached_policy (
+      TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
+      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   CORBA::Boolean set_server_network_priority =
     tph->set_server_network_priority (req.transport ()->tag (),
                                       policy.in ()
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-    
+
   TAO_Connection_Handler *connection_handler =
     req.transport ()->connection_handler ();
-  
+
   connection_handler->set_dscp_codepoint (set_server_network_priority);
 }
 
