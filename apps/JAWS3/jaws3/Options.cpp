@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdlib.h"
 
 #ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL

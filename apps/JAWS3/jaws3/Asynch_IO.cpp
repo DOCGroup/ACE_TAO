@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/OS.h"
-
 #ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
 #endif /*JAWS_BUILD_DLL*/
+
+#include "ace/config-lite.h"
 
 #include "jaws3/IO.h"
 #include "jaws3/Asynch_IO.h"

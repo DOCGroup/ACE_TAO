@@ -5,7 +5,8 @@
  * Copyright 2003 Addison-Wesley. All Rights Reserved.
  */
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Configuration.h"
 #include "ace/Configuration_Import_Export.h"
 #include "ace/Get_Opt.h"
@@ -22,14 +23,14 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
     return -1;
   int option;
   ACE_TCHAR config_file[MAXPATHLEN];
-  ACE_OS_String::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
+  ACE_OS::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
   while ((option = cmd_opts ()) != EOF)
     switch (option)
       {
       case 'f':
-        ACE_OS_String::strncpy (config_file,
-                                cmd_opts.opt_arg (),
-                                MAXPATHLEN);
+        ACE_OS::strncpy (config_file,
+                         cmd_opts.opt_arg (),
+                         MAXPATHLEN);
         break;
       case ':':
         ACE_ERROR_RETURN
@@ -99,7 +100,7 @@ HA_Status::info (ACE_TCHAR **str, size_t len) const
     if (*str == 0)
       *str = ACE::strnew (buf);
     else
-      ACE_OS_String::strncpy (*str, buf, len);
+      ACE_OS::strncpy (*str, buf, len);
     return ACE_static_cast (int, ACE_OS::strlen (*str));
   }
 // Listing 3

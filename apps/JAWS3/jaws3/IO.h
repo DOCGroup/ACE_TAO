@@ -4,7 +4,6 @@
 #ifndef JAWS_IO_H
 #define JAWS_IO_H
 
-#include "ace/OS.h"
 #include "ace/Message_Block.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
