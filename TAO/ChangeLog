@@ -1,3 +1,15 @@
+Mon Jul  7 11:14:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp (visit_enum):
+
+	  Fixed a cut and paste error that was causing the code generation
+	  for the any operators in the stub source file to be skipped. Thanks
+	  to <dyafe@itgil.com> for reporting the bug.
+
+	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+
+	  Fixed cut and paste error in the explicit template instantiation.
+
 Mon Jul 07 07:46:00 2003  Justin Michel  <michel_j@ociweb.com>
 	
 	* examples/RTCORBA/Activity/Activity.cpp

@@ -88,8 +88,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
       << "# pragma instantiate TAO::Any_Basic_Impl_T<" 
-      << node->name () << " \\"
-      << ">" << be_nl
+      << node->name () << ">" << be_nl
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 
   node->cli_stub_any_op_gen (1);
