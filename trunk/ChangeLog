@@ -1,3 +1,26 @@
+Tue Feb  1 13:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc:
+        * ace/ace_flreactor.mpc:
+        * ace/ace_qtreactor.mpc:
+        * ace/ace_tkreactor.mpc:
+        * ace/ace_xtreactor.mpc:
+        * bin/MakeProjectCreator/config/aceexe.mpb:
+        * bin/MakeProjectCreator/config/acelib.mpb:
+        * bin/MakeProjectCreator/config/ciao_client.mpb:
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/taoexe.mpb:
+        * bin/MakeProjectCreator/config/taolib.mpb:
+          Removed version as base project. This will be removed because it
+          results in the fact that each generated GNU makefile will get the
+          version number generated. We want that the GNU make rules get the
+          version number from Version.h
+
+        * bin/MakeProjectCreator/config/aceversion.mpb:
+        * bin/MakeProjectCreator/config/ciaoversion.mpb:
+        * bin/MakeProjectCreator/config/taoversion.mpb:
+          Removed these files.
+
 Tue Feb 1 12:42:37 2005  Martin Corino  <mcorino@remedy.nl>
 
 	* tests/Dirent_Test.cpp:
