@@ -23,7 +23,7 @@ LSRC = $(IDL_SRC) $(PROG_SRCS)
 LOBJ = $(LSRC:%.cpp=$(VDIR)%.o)
 
 
-BIN = server
+BIN = ImplRepo_Service
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -48,8 +48,8 @@ LDFLAGS += -L$(TAO_ROOT)/tao
 
 .PRECIOUS: PingC.cpp PingS.cpp PingC.h PingS.h ImplRepoC.cpp ImplRepoS.cpp ImplRepoC.h ImplRepoS.h
 
-server:	$(LOBJ)
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+ImplRepo_Service:	$(LOBJ)
+			$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
 	-/bin/rm -rf PingC* PingS* ImplRepoC* ImplRepoS*
