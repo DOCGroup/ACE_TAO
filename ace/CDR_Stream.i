@@ -140,6 +140,24 @@ ACE_InputCDR::to_string::to_string (ACE_CDR::Char *&s,
 {
 }
 
+ACE_INLINE
+ACE_OutputCDR::from_wstring::from_wstring (ACE_CDR::WChar *ws,
+                                           ACE_CDR::ULong b,
+					   ACE_CDR::Boolean nocopy)
+  : val_ (ws),
+    bound_ (b),
+    nocopy_ (nocopy)
+{
+}
+
+ACE_INLINE
+ACE_InputCDR::to_wstring::to_wstring (ACE_CDR::WChar *&ws,
+                                      ACE_CDR::ULong b)
+  : val_ (ws),
+    bound_ (b)
+{
+}
+
 // ****************************************************************
 
 ACE_INLINE
@@ -939,6 +957,13 @@ operator<< (ACE_OutputCDR &os, const ACE_CDR::Char *x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, const ACE_CDR::WChar *x)
+{
+  os.write_wstring (x);
+  return os.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const ACE_CString &x)
 {
   os.write_string (x);
@@ -978,6 +1003,13 @@ ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
 {
   os.write_string (x.bound_, x.val_);
+  return os.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
+{
+  os.write_wstring (x.bound_, x.val_);
   return os.good_bit ();
 }
 
@@ -1054,6 +1086,13 @@ operator>> (ACE_InputCDR &is, ACE_CDR::Char *&x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_CDR::WChar *&x)
+{
+  is.read_wstring (x);
+  return is.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CString &x)
 {
   is.read_string (x);
@@ -1096,6 +1135,15 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_string x)
   // check if the bounds are satisfied
   return (is.good_bit () &&
           (ACE_OS::strlen (x.val_) <= x.bound_));
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_InputCDR::to_wstring x)
+{
+  is.read_wstring (x.val_);
+  // check if the bounds are satisfied
+  return (is.good_bit () &&
+          (ACE_OS::wslen (x.val_) <= x.bound_));
 }
 
 // ***************************************************************************
