@@ -11,7 +11,7 @@ CFG=Param_Test Anyop - Win32 Debug
 !MESSAGE NMAKE /f "anyop.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
-!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
 !MESSAGE NMAKE /f "anyop.mak" CFG="Param_Test Anyop - Win32 Debug"
 !MESSAGE 
@@ -117,8 +117,9 @@ SOURCE=.\param_test.idl
 
 !IF  "$(CFG)" == "Param_Test Anyop - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__PARAM="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler
 InputPath=.\param_test.idl
 InputName=param_test
 
@@ -155,8 +156,9 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Param_Test Anyop - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__PARAM="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler
 InputPath=.\param_test.idl
 InputName=param_test
 
