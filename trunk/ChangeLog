@@ -1,9 +1,14 @@
+Tue Nov 23 07:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.cpp:
+          Fixed compile problems in unicode builds
+
 Tue Nov 23 00:37:14 2004  Olli Savia  <ops@iki.fi>
 
         * examples/APG/ThreadPools/Futures.cpp:
           Removed unnecesary type cast in CompletionCallBack::update().
           Replaced NULL with 0 in Manager::shut_down().
-        
+
         * examples/Export/dll.cpp:
           Added explicit static template member instantiation.
 

@@ -33,7 +33,7 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL (const ACE_DLL &)");
 
-  if (rhs.dll_name_ 
+  if (rhs.dll_name_
       // This will automatically up the refcount.
       && this->open (rhs.dll_name_,
                      rhs.open_mode_,
@@ -112,7 +112,8 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
       if (ACE::debug ())
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
-                    this->dll_name_ == 0 ? "(null)" : this->dll_name_));
+                    this->dll_name_ == 0 ? ACE_LIB_TEXT ("(null)")
+                                         : this->dll_name_));
       return -1;
     }
 
@@ -175,8 +176,8 @@ ACE_DLL::close (void)
 
   int retval = 0;
 
-  if (this->close_handle_on_destruction_ 
-      && this->dll_name_ 
+  if (this->close_handle_on_destruction_
+      && this->dll_name_
       && (retval = ACE_DLL_Manager::instance ()->close_dll (this->dll_name_)) != 0)
     this->error_ = 1;
 
