@@ -1,4 +1,5 @@
-// $Id$
+//* $Id$ */
+// Kokyu_dsrt.cpp,v 1.3 2003/10/08 02:23:39 venkita Exp
 
 #include "Kokyu_dsrt.h"
 
@@ -10,7 +11,11 @@
 #include "Kokyu_dsrt.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Kokyu, Kokyu, "$Id$")
+#include "kokyu_config.h"
+#include "kokyu_dsui_families.h"
+#include <dsui.h>
+
+ACE_RCSID(Kokyu, Kokyu, "Kokyu_dsrt.cpp,v 1.3 2003/10/08 02:23:39 venkita Exp")
 
 namespace Kokyu
 {
@@ -27,7 +32,15 @@ template <class DSRT_Scheduler_Traits>
 int
 DSRT_Dispatcher<DSRT_Scheduler_Traits>::schedule (Guid_t guid, const DSRT_QoSDescriptor& qos)
 {
+  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, SCHEDULE, 0, 0, NULL);
   return dispatcher_impl_->schedule (guid, qos);
+}
+
+template <class DSRT_Scheduler_Traits>
+int
+DSRT_Dispatcher<DSRT_Scheduler_Traits>::release_guard (Guid_t guid, const DSRT_QoSDescriptor& qos)
+{
+  return dispatcher_impl_->release_guard (guid, qos);
 }
 
 template <class DSRT_Scheduler_Traits>
@@ -63,6 +76,7 @@ DSRT_Dispatcher_Factory<DSRT_Scheduler_Traits>::
 create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
 {
   ACE_UNUSED_ARG ((config_info));
+  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, CREATE_DSRT_DISPATCH_SCHED_START, 0, 0, NULL);
 
   DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>* tmp;
   DSRT_Dispatcher<DSRT_Scheduler_Traits>* disp;
@@ -78,28 +92,31 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
   switch (config_info.impl_type_)
     {
     case DSRT_OS_BASED:
-      ACE_NEW_RETURN (tmp, 
+      ACE_NEW_RETURN (tmp,
                       DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits> (
-                      config_info.sched_policy_, 
-                      config_info.sched_scope_), 
+                      config_info.sched_policy_,
+                      config_info.sched_scope_),
                       nil_ptr);
       break;
 
     case DSRT_CV_BASED:
     default:
-      ACE_NEW_RETURN (tmp, 
+      ACE_NEW_RETURN (tmp,
                       DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>(
-                      config_info.sched_policy_, 
-                      config_info.sched_scope_), 
+                      config_info.sched_policy_,
+                      config_info.sched_scope_),
                       nil_ptr);
       break;
     }
-    
+
   ACE_ASSERT (tmp != 0);
   ACE_NEW_RETURN (disp, DSRT_Dispatcher<DSRT_Scheduler_Traits>, nil_ptr);
   DSRT_Dispatcher_Auto_Ptr disp_auto_ptr(disp);
   disp->implementation (tmp);
   tmp->init (config_info);
+
+  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, CREATE_DSRT_DISPATCH_SCHED_END, 0, 0, NULL);
+
   return disp_auto_ptr;
 }
 
@@ -132,6 +149,27 @@ operator ()(const QoSDescriptor_t& qos1,
       return 1;
     }
   else if (laxity1 == laxity2)
+    {
+      return 0;
+    }
+  else
+    {
+      return -1;
+    }
+}
+
+template <class QoSDescriptor_t>
+int EDF_Comparator<QoSDescriptor_t>::
+operator ()(const QoSDescriptor_t& qos1,
+            const QoSDescriptor_t& qos2)
+{
+  Time_t deadline1 = qos1.deadline_;
+  Time_t deadline2 = qos2.deadline_;
+  if (deadline1 < deadline2)
+    {
+      return 1;
+    }
+  else if (deadline1 == deadline2)
     {
       return 0;
     }

@@ -32,15 +32,32 @@
 class TAO_RTSchedEvent_Export TAO_EC_Gateway_Sched : public TAO_EC_Gateway_IIOP
 {
 public:
+  /**
+   * @brief Constructor
+   */
   TAO_EC_Gateway_Sched (void);
+
+  /**
+   * @brief Destructor
+   */
   ~TAO_EC_Gateway_Sched (void);
 
   /**
+   * @brief Initialize the gateway.
+   *
    * To do its job this class requires to know the local and remote
    * ECs it will connect to; furthermore it also requires to build
    * RT_Infos for the local and remote schedulers.
+   *
    * @todo part of the RT_Info is hardcoded, we need to make it
    * parametric.
+   *
+   * @param supplier_ec Reference to the Supplier event channel
+   * @param consumer_ec Reference to the Consumer event channel
+   * @param supplier_sched Reference to the Supplier scheduler
+   * @param consumer_sched Reference to the Consumer scheduler
+   * @param consumer_name String representation of consumer name
+   * @param supplier_name String representation of supplier name
    */
   void init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
              RtecEventChannelAdmin::EventChannel_ptr consumer_ec,

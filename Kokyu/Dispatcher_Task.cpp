@@ -11,7 +11,7 @@
 
 ACE_RCSID(Kokyu, Dispatcher_Task, "$Id$")
 
-namespace 
+namespace
 //anonymous namespace - use this to avoid polluting the global namespace
 {
   const int ALLOC_POOL_CHUNKS = 200;
@@ -20,7 +20,7 @@ namespace
 namespace Kokyu
 {
 
-typedef ACE_Cached_Allocator<Dispatch_Queue_Item, ACE_SYNCH_MUTEX> 
+typedef ACE_Cached_Allocator<Dispatch_Queue_Item, ACE_SYNCH_MUTEX>
 Dispatch_Queue_Item_Allocator;
 
 int
@@ -67,6 +67,13 @@ Dispatcher_Task::initialize ()
       own_allocator_ = 1;
     }
 
+#ifdef KOKYU_HAS_RELEASE_GUARD
+  this->deferrer_attr_.task_ = this;
+  this->deferrer_.init(this->deferrer_attr_);
+
+  this->releases_.open();
+#endif //KOKYU_HAS_RELEASE_GUARD
+
   return 0;
 }
 
@@ -105,6 +112,8 @@ Dispatcher_Task::svc (void)
         else
           ACE_ERROR ((LM_ERROR,
                       "EC (%P|%t) getq error in Dispatching Queue\n"));
+      //@BT INSTRUMENT with event ID: EVENT_DEQUEUED Measure time
+      //between event released (enqueued) and dispatched
 
       //ACE_DEBUG ((LM_DEBUG, "(%t) : next command got from queue\n"));
 
@@ -120,7 +129,11 @@ Dispatcher_Task::svc (void)
       Dispatch_Command* command = qitem->command ();
 
       ACE_ASSERT(command != 0);
+      //@BT INSTRUMENT with event ID: EVENT_START_DISPATCHING Measure
+      //time to actually dispatch event
       int result = command->execute ();
+      //@BT INSTRUMENT with event ID: EVENT_FINISHED_DISPATCHING
+      //Measure time to actually dispatch event
 
       if (command->can_be_deleted ())
         command->destroy ();
@@ -137,20 +150,56 @@ int
 Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
                           const QoSDescriptor& qos_info)
 {
+  //Subclasses which override this function should now be overriding
+  //enqueue(ACE_Message_Block*) because that is where the main
+  //behavior is defined. This might invalidate those classes, but the
+  //decision seemed reasonable since it allows Dispatch_Deferrer to
+  //use the same Dispatch_Queue_Item as Dispatcher_Task without any
+  //more memory allocation and it doesn't break the interface.
+
   void* buf = this->allocator_->malloc (sizeof (Dispatch_Queue_Item));
 
   if (buf == 0)
     return -1;
 
-  ACE_Message_Block *mb =
+  Dispatch_Queue_Item *qitem =
     new (buf) Dispatch_Queue_Item (cmd,
                                    qos_info,
                                    &(this->data_block_),
                                    ACE_Message_Block::DONT_DELETE,
                                    this->allocator_);
 
-  this->putq (mb);
-  
+#ifdef KOKYU_HAS_RELEASE_GUARD
+  //if current release time < last release time + period then defer dispatch
+  ACE_Time_Value now(ACE_OS::gettimeofday());
+  long rel_msec;
+  if (this->releases_.find(qos_info,rel_msec) < 0)
+    {
+      //new QosDescriptor, so just set last release to zero
+      rel_msec = 0;
+    }
+  ACE_Time_Value release;
+  release.msec(rel_msec);
+  release += qos_info.deadline_;
+
+  if (now < release)
+    {
+      //defer until last release time + period
+      this->deferrer_.dispatch(qitem);
+      //@BT INSTRUMENT with event ID: EVENT_DEFERRED Measure delay
+      //between original dispatch and dispatch because of RG
+    }
+  else
+    {
+      //release!
+#endif //KOKYU_HAS_RELEASE_GUARD
+
+      this->enqueue (qitem);
+
+#ifdef KOKYU_HAS_RELEASE_GUARD
+    } //else now >= release
+#endif //KOKYU_HAS_RELEASE_GUARD
+
   return 0;
 }
 

@@ -31,6 +31,8 @@ namespace Kokyu
   typedef long Priority_t;
   typedef ACE_Time_Value Deadline_t; //absolute deadline
   typedef ACE_Time_Value Execution_Time_t; //execution time
+  typedef ACE_Time_Value Period_t;
+  typedef int Task_Id_t;
   //typedef int Guid_t;
 
   enum Dispatching_Type_t
@@ -119,6 +121,8 @@ namespace Kokyu
   {
     Priority_t preemption_priority_;
     Deadline_t deadline_;
+    Period_t period_;
+    Task_Id_t task_id_;
     Execution_Time_t execution_time_;
     Importance_t importance_;
   };
@@ -157,6 +161,7 @@ namespace Kokyu
     {
       DSRT_FP,
       DSRT_MUF,
+      DSRT_EDF,
       DSRT_MIF
     };
 
@@ -180,10 +185,26 @@ namespace Kokyu
     DSRT_ConfigInfo ();
   };
 
+
+#ifdef KOKYU_HAS_RELEASE_GUARD
+  class Dispatcher_Task; //forward declaration
+
+  class Dispatch_Deferrer_Attributes
+  {
+  public:
+    Dispatcher_Task* task_;
+    
+    Dispatch_Deferrer_Attributes();
+  };
+#endif //KOKYU_HAS_RELEASE_GUARD
+
 } //end of namespace
 
 //to satisfy ACE_Array<ConfigInfo>
 ACE_INLINE int operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInfo& rhs);
+
+//to satisfy ACE_Map_Manager<QoSDescriptor>
+ACE_INLINE int operator == (const Kokyu::QoSDescriptor& lhs, const Kokyu::QoSDescriptor& rhs);
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_defs.i"

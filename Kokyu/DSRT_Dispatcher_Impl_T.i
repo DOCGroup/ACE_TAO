@@ -8,6 +8,7 @@ ACE_INLINE int
 DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 init (const DSRT_ConfigInfo& config_info)
 {
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, INIT2, 0, 0, NULL);
   return this->init_i (config_info);
 }
 
@@ -18,6 +19,15 @@ schedule (Guid_t guid,
           const DSRT_QoSDescriptor& qos)
 {
   return this->schedule_i (guid, qos);
+}
+
+template <class DSRT_Scheduler_Traits>
+ACE_INLINE int
+DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::
+release_guard (Guid_t guid,
+          const DSRT_QoSDescriptor& qos)
+{
+  return this->release_guard_i (guid, qos);
 }
 
 template <class DSRT_Scheduler_Traits>

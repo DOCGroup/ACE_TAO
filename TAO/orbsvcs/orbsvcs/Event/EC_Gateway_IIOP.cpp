@@ -10,30 +10,30 @@
 
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (Event, 
-           EC_Gateway_IIOP, 
+ACE_RCSID (Event,
+           EC_Gateway_IIOP,
            "$Id$")
 
-TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
-  :  busy_count_ (0),
-     update_posted_ (0),
-     cleanup_posted_ (0),
-     supplier_ec_suspended_ (0),
-     supplier_info_ (0),
-     consumer_info_ (0),
-     consumer_ (this),
-     consumer_is_active_ (0),
-     supplier_ (this),
-     supplier_is_active_ (0),
-     ec_control_ (0),
-     factory_ (0),
-     use_ttl_ (1),
-     use_consumer_proxy_map_ (1)
+  TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
+    :  busy_count_ (0),
+       update_posted_ (0),
+       cleanup_posted_ (0),
+       supplier_ec_suspended_ (0),
+       supplier_info_ (0),
+       consumer_info_ (0),
+       consumer_ (this),
+       consumer_is_active_ (0),
+       supplier_ (this),
+       supplier_is_active_ (0),
+       ec_control_ (0),
+       factory_ (0),
+       use_ttl_ (1),
+       use_consumer_proxy_map_ (1)
 {
   if (this->factory_ == 0)
     {
       this->factory_ =
-             ACE_Dynamic_Service<TAO_EC_Gateway_IIOP_Factory>::instance ("EC_Gateway_IIOP_Factory");
+        ACE_Dynamic_Service<TAO_EC_Gateway_IIOP_Factory>::instance ("EC_Gateway_IIOP_Factory");
 
       if (this->factory_ == 0)
         {
@@ -53,8 +53,8 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
 
 TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP (void)
 {
-   delete ec_control_;
-   ec_control_ = 0;
+  delete ec_control_;
+  ec_control_ = 0;
 }
 
 int
@@ -63,7 +63,7 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
                            ACE_ENV_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
-
+  ACE_DEBUG ((LM_DEBUG, "ECG (%t) Init gateway\n"));
   return this->init_i (supplier_ec, consumer_ec ACE_ENV_ARG_PARAMETER);
 }
 
@@ -72,21 +72,22 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec
                              RtecEventChannelAdmin::EventChannel_ptr consumer_ec
                              ACE_ENV_ARG_DECL_NOT_USED)
 {
+  ACE_DEBUG ((LM_DEBUG, "ECG (%t) Init_i gateway\n"));
   if (CORBA::is_nil (this->supplier_ec_.in ()) && CORBA::is_nil (this->consumer_ec_.in ()))
-  {
-    this->supplier_ec_ =
-      RtecEventChannelAdmin::EventChannel::_duplicate (supplier_ec);
-    this->consumer_ec_ =
-      RtecEventChannelAdmin::EventChannel::_duplicate (consumer_ec);
+    {
+      this->supplier_ec_ =
+        RtecEventChannelAdmin::EventChannel::_duplicate (supplier_ec);
+      this->consumer_ec_ =
+        RtecEventChannelAdmin::EventChannel::_duplicate (consumer_ec);
 
-	if (ec_control_ == 0)
-     {
-        ec_control_ = factory_->create_consumerec_control(this);
-        ec_control_->activate();
-     }
+      if (ec_control_ == 0)
+        {
+          ec_control_ = factory_->create_consumerec_control(this);
+          ec_control_->activate();
+        }
 
-    return 0;
-  }
+      return 0;
+    }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO_EC_Gateway_IIOP - init_i "
@@ -120,7 +121,7 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_EC_Gateway_IIOP::close_i (ACE_ENV_SINGLE_ARG_DECL)
 {
-  // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
+  ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
   this->disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -142,6 +143,8 @@ TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL)
             continue;
           ACE_TRY
             {
+              ACE_DEBUG ((LM_DEBUG, "ECG (%t) "));
+              printf ("disconnecting push consumer (%p)\n", consumer);
               consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
@@ -158,6 +161,8 @@ TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL)
 
   if (!CORBA::is_nil (this->default_consumer_proxy_.in ()))
     {
+      ACE_DEBUG ((LM_DEBUG, "ECG (%t) "));
+      printf ("disconnecting push consumer (%p)\n", this->default_consumer_proxy_.in());
       this->default_consumer_proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -171,6 +176,9 @@ TAO_EC_Gateway_IIOP::disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
+      ACE_DEBUG ((LM_DEBUG, "ECG (%t) "));
+      printf ("disconnecting push supplier (%p)\n", this->supplier_proxy_.in());
+
       this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -195,9 +203,9 @@ TAO_EC_Gateway_IIOP::reconnect_consumer_ec(ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_EC_Gateway_IIOP::update_consumer (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos
-    ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+                                      const RtecEventChannelAdmin::ConsumerQOS& c_qos
+                                      ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (c_qos.dependencies.length () == 0)
     return;
@@ -244,8 +252,8 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USE
 
 void
 TAO_EC_Gateway_IIOP::update_consumer_i (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos
-    ACE_ENV_ARG_DECL)
+                                        const RtecEventChannelAdmin::ConsumerQOS& c_qos
+                                        ACE_ENV_ARG_DECL)
 {
   this->close_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -254,7 +262,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
       || CORBA::is_nil (this->supplier_ec_.in ()))
     return;
 
-  // ACE_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i \n"));
+  ACE_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i \n"));
 
   this->open_i (c_qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -262,8 +270,8 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
 void
 TAO_EC_Gateway_IIOP::open_i (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos
-    ACE_ENV_ARG_DECL)
+                             const RtecEventChannelAdmin::ConsumerQOS& c_qos
+                             ACE_ENV_ARG_DECL)
 {
   // = Connect as a supplier to the consumer EC
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
@@ -281,10 +289,10 @@ TAO_EC_Gateway_IIOP::open_i (
       sub.dependencies[i].rt_info = this->supplier_info_;
 
       RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = 0;
-      const RtecEventComm::EventHeader &h =
+      const RtecEventComm::EventHeader &hdr =
         sub.dependencies[i].event.header;
 
-      RtecEventComm::EventSourceID sid = h.source;
+      RtecEventComm::EventSourceID sid = hdr.source;
 
       //ACE_DEBUG ((LM_DEBUG,
       //            "ECG (%t)    trying (%d,%d)\n",
@@ -293,17 +301,19 @@ TAO_EC_Gateway_IIOP::open_i (
       // Skip all subscriptions that do not require an specific source
       // id or skip all subscriptions when we don't need to use the consumer
       // proxy map.
-      if (sid == ACE_ES_EVENT_SOURCE_ANY || this->use_consumer_proxy_map_ == 0)
+      if (sid == ACE_ES_EVENT_SOURCE_ANY || this->use_consumer_proxy_map_ == 0) {
         continue;
+      }
 
       // Skip all the magic event types.
-      if (ACE_ES_EVENT_ANY < h.type && h.type < ACE_ES_EVENT_UNDEFINED)
+      if (ACE_ES_EVENT_ANY < hdr.type && hdr.type < ACE_ES_EVENT_UNDEFINED) {
         continue;
+      }
 
       if (this->consumer_proxy_map_.find (sid, proxy) == -1)
         {
           //ACE_DEBUG ((LM_DEBUG,
-          //            "ECG (%t)    binding source %d\n",
+          //           "ECG (%t)    binding source %d\n",
           //            sid));
           proxy = supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
@@ -339,28 +349,28 @@ TAO_EC_Gateway_IIOP::open_i (
           RtecEventComm::EventSourceID sid = (*j).ext_id_;
           for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
             {
-              const RtecEventComm::EventHeader& h =
+              const RtecEventComm::EventHeader& hdr =
                 sub.dependencies[k].event.header;
-              if (h.source != sid
-                  || (ACE_ES_EVENT_ANY < h.type
-                      && h.type < ACE_ES_EVENT_UNDEFINED))
+              if (hdr.source != sid
+                  || (ACE_ES_EVENT_ANY < hdr.type
+                      && hdr.type < ACE_ES_EVENT_UNDEFINED))
                 continue;
-              pub.publications[c].event.header = h;
+              pub.publications[c].event.header = hdr;
               pub.publications[c].dependency_info.dependency_type =
                 RtecBase::TWO_WAY_CALL;
               pub.publications[c].dependency_info.number_of_calls = 1;
               pub.publications[c].dependency_info.rt_info = this->consumer_info_;
               c++;
             }
-          //ACE_DEBUG ((LM_DEBUG,
-          //            "ECG (%t) supplier id %d has %d elements\n",
-          //            sid, c));
+          ACE_DEBUG ((LM_DEBUG,
+                      "ECG (%t) supplier id %d has %d elements\n",
+                      sid, c));
           if (c == 0)
             continue;
 
           pub.publications.length (c);
 
-          // ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Supplier "));
+          ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Supplier "));
           // ACE_SupplierQOS_Factory::debug (pub);
           (*j).int_id_->connect_push_supplier (supplier_ref.in (),
                                                pub
@@ -378,19 +388,27 @@ TAO_EC_Gateway_IIOP::open_i (
   int c = 0;
   for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
     {
-      const RtecEventComm::EventHeader& h =
+      const RtecEventComm::EventHeader& hdr =
         sub.dependencies[k].event.header;
-      RtecEventComm::EventSourceID sid = h.source;
+      RtecEventComm::EventSourceID sid = hdr.source;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "ECG (%t)    trying (%d,%d)\n",
+                  sid, hdr.type));
 
       // Skip all subscriptions with a specific source when we use the map
-      if (sid != ACE_ES_EVENT_SOURCE_ANY && this->use_consumer_proxy_map_ == 1)
+      if (sid != ACE_ES_EVENT_SOURCE_ANY && this->use_consumer_proxy_map_ == 1) {
+        ACE_DEBUG ((LM_DEBUG, "ECG (%t)  Skipping subscription: (%d)\n", sid));
         continue;
+      }
 
       // Skip all the magic event types.
-      if (ACE_ES_EVENT_ANY < h.type && h.type < ACE_ES_EVENT_UNDEFINED)
+      if (ACE_ES_EVENT_ANY < hdr.type && hdr.type < ACE_ES_EVENT_UNDEFINED) {
+        ACE_DEBUG ((LM_DEBUG, "ECG (%t)  Skipping magic event type (%d)\n", hdr.type));
         continue;
+      }
 
-      pub.publications[c].event.header = h;
+      pub.publications[c].event.header = hdr;
       pub.publications[c].event.header.creation_time = ORBSVCS_Time::zero ();
       pub.publications[c].dependency_info.dependency_type =
         RtecBase::TWO_WAY_CALL;
@@ -411,10 +429,14 @@ TAO_EC_Gateway_IIOP::open_i (
       // Obtain the consumer....
       this->default_consumer_proxy_ =
         supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_DEBUG((LM_DEBUG, "ECG (%t) "));
+      printf("Gateway (supplier mode) (%p) ---> push_consumer (%p)\n",
+             this,
+             this->default_consumer_proxy_.in());
       ACE_CHECK;
 
       pub.publications.length (c);
-      // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Supplier "));
+      ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway (supplier mode): connect push supplier\n"));
       // ACE_SupplierQOS_Factory::debug (pub);
       this->default_consumer_proxy_->connect_push_supplier (supplier_ref.in (),
                                                             pub
@@ -424,10 +446,16 @@ TAO_EC_Gateway_IIOP::open_i (
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->supplier_ec_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+
   ACE_CHECK;
 
   this->supplier_proxy_ =
     consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_DEBUG((LM_DEBUG, "ECG (%t) "));
+  printf("Gateway (consumer mode) (%p) ---> push_supplier (%p)\n",
+         this,
+         this->supplier_proxy_.in());
+
   ACE_CHECK;
 
   this->consumer_is_active_ = 1;
@@ -435,7 +463,7 @@ TAO_EC_Gateway_IIOP::open_i (
     this->consumer_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  // ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Consumer "));
+  ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Consumer - connect push consumer\n"));
   // ACE_ConsumerQOS_Factory::debug (sub);
 
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
@@ -446,9 +474,9 @@ TAO_EC_Gateway_IIOP::open_i (
 
 void
 TAO_EC_Gateway_IIOP::update_supplier (
-    const RtecEventChannelAdmin::SupplierQOS&
-    ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+                                      const RtecEventChannelAdmin::SupplierQOS&
+                                      ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing...
 }
@@ -456,28 +484,28 @@ TAO_EC_Gateway_IIOP::update_supplier (
 void
 TAO_EC_Gateway_IIOP::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  // ACE_DEBUG ((LM_DEBUG,
-  //             "ECG (%t): Supplier-consumer received "
-  //            "disconnect from channel.\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "ECG (%t): Supplier-consumer received "
+              "disconnect from channel.\n"));
 }
 
 void
 TAO_EC_Gateway_IIOP::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  // ACE_DEBUG ((LM_DEBUG,
-  //            "ECG (%t): Supplier received "
-  //            "disconnect from channel.\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "ECG (%t): Supplier received "
+              "disconnect from channel.\n"));
 }
 
 void
 TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
                            ACE_ENV_ARG_DECL)
 {
-  // ACE_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) - \n"));
+  ACE_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) - \n"));
 
   if (events.length () == 0)
     {
-      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
+      ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
 
@@ -487,7 +515,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
     this->busy_count_++;
   }
 
-  // ACE_DEBUG ((LM_DEBUG, "ECG: %d event(s)\n", events.length ()));
+  ACE_DEBUG ((LM_DEBUG, "ECG: %d event(s)\n", events.length ()));
 
   // @@ TODO, there is an extra data copy here, we should do the event
   // modification without it and only compact the necessary events.
@@ -519,7 +547,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
       if (this->use_ttl_ == 1)
         out[0].header.ttl--;
 
-      // ACE_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
+      ACE_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
       this->push_to_consumer(proxy, out ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -547,9 +575,9 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
 
 void
 TAO_EC_Gateway_IIOP::push_to_consumer (
-    RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-    const RtecEventComm::EventSet& event
-    ACE_ENV_ARG_DECL)
+                                       RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
+                                       const RtecEventComm::EventSet& event
+                                       ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -659,14 +687,14 @@ TAO_EC_Gateway_IIOP::is_consumer_ec_connected_i (void) const
 
 CORBA::Boolean
 TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
-      CORBA::Boolean_out disconnected
-      ACE_ENV_ARG_DECL)
+                                               CORBA::Boolean_out disconnected
+                                               ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var consumer_ec;
   {
     ACE_GUARD_THROW_EX (
-        TAO_SYNCH_MUTEX, ace_mon, this->lock_,
-        CORBA::INTERNAL ());
+                        TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                        CORBA::INTERNAL ());
     ACE_CHECK_RETURN (0);
 
     disconnected = 0;

@@ -17,9 +17,11 @@ $(TARGETS_NESTED):
 	@$(MAKE) -C fp_example $(@);
 	@$(MAKE) -C mif_example $(@);
 	@$(MAKE) -C muf_example $(@);
+	@$(MAKE) -C edf_example $(@);
 
 reverseclean:
 	@$(MAKE) -f Makefile.Kokyu_DSRT_Schedulers realclean
 	@$(MAKE) -C fp_example realclean;
 	@$(MAKE) -C mif_example realclean;
 	@$(MAKE) -C muf_example realclean;
+	@$(MAKE) -C edf_example $(@);
