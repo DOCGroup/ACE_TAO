@@ -266,7 +266,7 @@ ACE_RT_Task::open_task (const char* name)
         ACE_Scheduler_Factory::server()->create (tempname,
                                                  ACE_TRY_ENV);
 #endif
-      ACE_TRY_ENV;
+      ACE_TRY_CHECK;
       // @@ TODO: We do no initialization of the new rt_info, the
       // caller does, this is (IMnsHO) very error prone.
     }

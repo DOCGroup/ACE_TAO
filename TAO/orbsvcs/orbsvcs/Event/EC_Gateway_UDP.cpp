@@ -1065,7 +1065,7 @@ TAO_ECG_Mcast_EH::close (CORBA::Environment& ACE_TRY_ENV)
   if (this->handle_ == 0)
     return 0;
 
-  ACE_HANDLE h = this->handle_;
+  RtecEventChannelAdmin::Observer_Handle h = this->handle_;
   this->handle_ = 0;
   this->ec_->remove_observer (h, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
