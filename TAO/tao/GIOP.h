@@ -335,6 +335,21 @@ public:
                                        TAO_ORB_Core* orb_core);
   // Build the header for a message of type <t> into stream <msg>.
 
+  static CORBA::Boolean write_request_header (const TAO_GIOP_ServiceContextList& svc_ctx,
+                                              CORBA::ULong request_id,
+                                              CORBA::Boolean is_roundtrip,
+                                              const TAO_opaque& key,
+                                              const char* opname,
+                                              CORBA::Principal_ptr principal,
+                                              TAO_OutputCDR &msg,
+                                              TAO_ORB_Core *orb_core);
+  // Write the GIOP request header.
+  
+  static CORBA::Boolean write_locate_request_header (CORBA::ULong request_id,
+                                                     const TAO_opaque &key,
+                                                     TAO_OutputCDR &msg);
+  // Write the GIOP locate request header.
+
   static CORBA::Boolean send_message (TAO_Transport *transport,
                                       TAO_OutputCDR &stream,
                                       TAO_ORB_Core* orb_core);
@@ -423,24 +438,46 @@ public:
   // resulted in some kind of exception.
 
 private:
-  static CORBA::Boolean start_message_lite (TAO_GIOP::Message_Type t,
-                                            TAO_OutputCDR &msg);
-  // Build the lightweight header for a message of type <t> into
-  // stream <msg>.
-
   static CORBA::Boolean start_message_std (TAO_GIOP::Message_Type t,
                                            TAO_OutputCDR &msg);
   // Build the standard header for a message of type <t> into
   // stream <msg>.
 
-  static int parse_header_std (ACE_Message_Block *payload,
-                               TAO_GIOP_MessageHeader& header);
-  static int parse_header_lite (ACE_Message_Block *payload,
-                                TAO_GIOP_MessageHeader& header);
+  static CORBA::Boolean start_message_lite (TAO_GIOP::Message_Type t,
+                                            TAO_OutputCDR &msg);
+  // Build the lightweight header for a message of type <t> into
+  // stream <msg>.
+
+  static CORBA::Boolean write_request_header_std (const TAO_GIOP_ServiceContextList& svc_ctx,
+                                                  CORBA::ULong request_id,
+                                                  CORBA::Boolean is_roundtrip,
+                                                  const TAO_opaque& key,
+                                                  const char* opname,
+                                                  CORBA::Principal_ptr principal,
+                                                  TAO_OutputCDR &msg);
+  // Encode the standard header for the Request, assuming that the
+  // GIOP header is already there. 
+  
+  static CORBA::Boolean write_request_header_lite (const TAO_GIOP_ServiceContextList& svc_ctx,
+                                                   CORBA::ULong request_id,
+                                                   CORBA::Boolean is_roundtrip,
+                                                   const TAO_opaque& key,
+                                                   const char* opname,
+                                                   CORBA::Principal_ptr principal,
+                                                   TAO_OutputCDR &msg);
+  // Encode the light weight header for the Request, assuming that the
+  // GIOP header is already there.
+
   static int parse_header (TAO_ORB_Core *orb_core,
                            ACE_Message_Block *payload,
                            TAO_GIOP_MessageHeader& header);
   // Parse the header, extracting all the relevant info.
+
+  static int parse_header_std (ACE_Message_Block *payload,
+                               TAO_GIOP_MessageHeader& header);
+  
+  static int parse_header_lite (ACE_Message_Block *payload,
+                                TAO_GIOP_MessageHeader& header);
 };
 
 #if defined (__ACE_INLINE__)
