@@ -1,3 +1,18 @@
+Thu Nov 14 14:33:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport.h: 
+	* tao/Transport.cpp: Changed the semantics of one of the arguments
+	  in the call close_connection_shared (). The argument was called
+	  "disable_purge" and was used in exactly the opposite manner. The
+	  condition that was used to purge the entry from the cache was
+	  also topsy-turvy. 
+
+	  This was fixed the following way
+
+	    - the argument is now called "purge".
+	    - a value of 1 will purge the entry from the cache manager and
+	      a value of 0 otherwise.
+	    
 Thu Nov 14 14:04:27 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/AV.dsp:

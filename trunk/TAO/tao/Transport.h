@@ -885,7 +885,7 @@ private:
 
   /// Close the underlying connection, implements the code shared by
   /// all the close_connection_* variants.
-  void close_connection_shared (int disable_purge,
+  void close_connection_shared (int purge,
                                 TAO_Connection_Handler * eh);
 
   /// Prohibited
