@@ -1,3 +1,13 @@
+Mon Oct 27 11:17:03 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        * SOCK_SEQPACK_clt.cpp:
+          Fixed a previously made change that was using sizes for tests as
+          n**2 rather than 2**n!
+          SOCK_STREAM_clt.cpp:
+          Fixed a previously made change that was using sizes for tests as
+          n**2 rather than 2**n!
+
+
 Sat Oct 25 10:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h: Fixed compile problem in this file
