@@ -45,6 +45,8 @@ namespace {
 
     //@BT: Decided on which kind of scheduling to do, same as DT SCHEDULE SETUP
     //DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULE_SETUP, 1, strlen (policy), policy);
+    ACE_Time_Value tv = ACE_OS::gettimeofday();
+    ACE_DEBUG((LM_DEBUG,"Kokyu_EC thread %t SCHEDULE_SETUP at %u\n",tv.msec()));
     return sched_impl;
   }
 }
@@ -224,6 +226,8 @@ void Kokyu_EC::start (ACE_ENV_SINGLE_ARG_DECL)
 
       //@BT: EC activated is roughly equivalent to having the DT scheduler ready to run
       //DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_STARTED, 1, 0, NULL);
+      ACE_Time_Value tv = ACE_OS::gettimeofday();
+      ACE_DEBUG((LM_DEBUG,"Kokyu_EC thread %t SCHEDULER_STARTED at %u\n",tv.msec()));
 }
 
 ::RtecEventChannelAdmin::EventChannel_ptr
