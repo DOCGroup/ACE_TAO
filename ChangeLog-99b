@@ -1,3 +1,13 @@
+Mon Jul 12 09:26:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Makefile: don't build libDLL_Test.so if not building
+          shared libraries.  This simplifies the build on static-libs
+          only platforms, and can be used by run_tests.sh, below.
+          [Bug 62]
+
+        * tests/run_tests.sh: don't run DLL_Test if libDLL_Test.so
+          was not built.
+
 Mon Jul 12 07:48:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: updated guideline under CVS
