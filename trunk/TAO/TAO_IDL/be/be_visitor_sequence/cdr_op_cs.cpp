@@ -250,7 +250,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                 << "ACE_Message_Block::DONT_DELETE))" << be_nl
                 << "{" << be_idt_nl
                 << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
-                << "  ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, "
+                << "  ACE_reinterpret_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, "
                 << "&_tao_sequence);" << be_nl;
             *os << "oseq->replace (_tao_seq_len, strm.start ());"
                 << be_nl
@@ -269,7 +269,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
           {
             *os << "{" << be_idt_nl
                 << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
-                << "  ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, "
+                << "  ACE_reinterpret_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, "
                 << "(" << sequence->name () << " *)&_tao_sequence);" << be_nl;
             *os << "if (oseq->mb ())" << be_idt_nl
                 << "return strm.write_octet_array_mb (oseq->mb ());"
