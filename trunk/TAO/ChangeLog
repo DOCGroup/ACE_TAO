@@ -1,3 +1,10 @@
+Mon Jul  8 10:59:41 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation):
+	  Fixed generation of ACE exception macro for AMHExceptionHolder
+	  raise operation. The raise operation are *always* parameter-less
+	  so generate ACE_ENV_SINGLE_ARG_DECL_NOT_USED for these.
+
 Sun Jul  7 22:03:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile:

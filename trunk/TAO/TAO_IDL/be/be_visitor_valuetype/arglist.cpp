@@ -95,20 +95,33 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
   // Generate the ACE_ENV_ARG_DECL parameter for the alternative mapping.
   if (!be_global->exception_support ())
     {
-      // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
-      // whether the operation node has parameters.
-      char const * env_decl = "ACE_ENV_ARG_DECL";
-
-      if (node->argument_count() == 0)
+      /***********************************************************/
+      // If it ian an AMHExceptionHolder we are going to generate the
+      // function definition "in-place" right here.  Also all
+      // AMHExceptionHolder 'raise' methods do not take any
+      // parameters.  So always declare
+      // ACE_ENV_SINGLE_ARG_DECL_NOT_USED when generating argument
+      // list for AMHExceptioHolders
+      /***********************************************************/
+      if (is_amh_exception_holder (node))
         {
-          env_decl = "ACE_ENV_SINGLE_ARG_DECL";
+          *os << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED";
         }
+      /***********************************************************/
       else
         {
-          *os << be_nl;
-        }
-
-      *os << env_decl;
+          // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
+          // whether the operation node has parameters.
+          
+          if (node->argument_count() == 0)
+            {
+              *os << " ACE_ENV_SINGLE_ARG_DECL";
+            }
+          else
+            {
+              *os << " ACE_ENV_ARG_DECL";
+            }
+        } 
 
       if (!amh_valuetype)
         {
