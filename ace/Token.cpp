@@ -94,7 +94,8 @@ ACE_Token::ACE_Token (LPCTSTR name, void *any)
   : lock_ (name, any),
     in_use_ (0),
     waiters_ (0),
-    nesting_level_ (0)
+    nesting_level_ (0),
+    signal_all_threads_ (0)
 {
 //  ACE_TRACE ("ACE_Token::ACE_Token");
 }
@@ -202,7 +203,10 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
           cerr << '(' << ACE_Thread::self () << ')'
                << " acquire (UNBLOCKED)" << endl;
 #endif /* DEBUGGING */
-          return ret;
+          if (this->signal_all_threads_ != 0)
+            return 2;
+          else
+            return ret;
         }
     }
   else
@@ -366,7 +370,7 @@ ACE_Token::release (void)
   else
     {
       if (this->writers_.head_ == 0 && this->readers_.head_ == 0)
-        this->in_use_ = 0; // No more waiters...
+        this->signal_all_threads_ = this->in_use_ = 0; // No more waiters...
       else
         {
           ACE_Token_Queue *queue;
@@ -397,6 +401,17 @@ ACE_Token::release (void)
         }
     }
   return 0;
+}
+
+int
+ACE_Token::signal_all_threads (void)
+{
+  ACE_TRACE ("ACE_Token::release");
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+
+  if (this->waiters_ != 0)
+      this->signal_all_threads_ = 1;
+  return this->waiters_;
 }
 
 #endif /* ACE_HAS_THREADS */
