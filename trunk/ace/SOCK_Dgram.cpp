@@ -127,7 +127,36 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
 
   if (this->shared_open (local, protocol_family) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("ACE_SOCK_Dgram")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_SOCK_Dgram")));
+}
+
+ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local, 
+                                const ACE_Connect_QoS_Params &qos_params,
+                                int protocol_family, 
+                                int protocol,
+                                int reuse_addr)
+  : ACE_SOCK (SOCK_DGRAM, protocol_family, protocol, reuse_addr)
+{
+  ACE_UNUSED_ARG (qos_params);
+}
+
+int
+ACE_SOCK_Dgram::open (const ACE_Addr &local, 
+                      const ACE_Connect_QoS_Params &qos_params,
+                      int protocol_family, 
+                      int protocol,
+                      int reuse_addr)
+{
+  ACE_UNUSED_ARG (local);
+  ACE_UNUSED_ARG (qos_params);
+  ACE_UNUSED_ARG (protocol_family);
+  ACE_UNUSED_ARG (protocol);
+  ACE_UNUSED_ARG (reuse_addr);
+
+  // Under construction...
+  ACE_NOTSUP_RETURN (-1);
 }
 
 // Here's the general-purpose open routine.
@@ -139,11 +168,14 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::open");
-  if (ACE_SOCK::open (SOCK_DGRAM, protocol_family, 
-                      protocol, reuse_addr) == -1)
+  if (ACE_SOCK::open (SOCK_DGRAM,
+                      protocol_family, 
+                      protocol,
+                      reuse_addr) == -1)
     return -1;
   else
-    return this->shared_open (local, protocol_family);
+    return this->shared_open (local,
+                              protocol_family);
 }
 
 #if defined (ACE_HAS_MSG)
@@ -177,7 +209,9 @@ ACE_SOCK_Dgram::send (const iovec iov[],
   send_msg.msg_accrightslen = 0;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
-  return ACE_OS::sendmsg (this->get_handle (), &send_msg, flags);
+  return ACE_OS::sendmsg (this->get_handle (),
+                          &send_msg,
+                          flags);
 }
 
 // Recv an iovec of size N to ADDR as a datagram (connectionless
@@ -210,7 +244,8 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   ssize_t status = ACE_OS::recvmsg (this->get_handle (), 
-                                    &recv_msg, flags);
+                                    &recv_msg,
+                                    flags);
   addr.set_size (recv_msg.msg_namelen);
   return status;
 }

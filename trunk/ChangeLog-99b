@@ -1,13 +1,22 @@
+Fri Jun 18 12:12:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SOCK_Dgram: Added the first set of hooks to support
+ 	  QoS-enabled data grams for Win2K GQoS.
+
 Fri Jun 18 11:37:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* *.{mdp,mak}: Removed all MSVC 4 workspaces and makefiles.
+	* *.{mdp,mak}: Removed all MSVC++ 4.x workspaces and makefiles.
+  	  We are no longer supporting this version of MSVC++.  If you need
+ 	  support for MSVC++ 4.x please contact Steve Huston
+ 	  <shuston@riverace.com> of Riverace to arrange a support
+ 	  contract.
 
 Fri Jun 18 12:19:42 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* tests/DLList_Test.cpp
-	  Removeed unnecessary explicit template instantiation that
-	  mirrored ones in ace/Containers.cpp to fix compile errors on
-	  VxWorks. Why this _ever_ worked, I don't know...
+	* tests/DLList_Test.cpp: Removeed unnecessary explicit template
+ 	  instantiation that mirrored ones in ace/Containers.cpp to fix
+ 	  compile errors on VxWorks. Why this _ever_ worked, I don't
+ 	  know...
 
 Fri Jun 18 11:37:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 

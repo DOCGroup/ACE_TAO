@@ -1,9 +1,13 @@
 Fri Jun 18 12:17:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* *.{mdp,mak}: Removed all MSVC 4 workspaces and makefiles.
+	* *.{mdp,mak}: Removed all MSVC 4 workspaces and makefiles.  We
+ 	  are no longer supporting this version of MSVC++.  If you need
+ 	  support for MSVC++ 4.x please contact Steve Huston
+ 	  <shuston@riverace.com> of Riverace to arrange a support
+ 	  contract.
 
 	* tests/Native_Exceptions/client.cpp (main): Caught exception
-	  <fail> is not used.
+ 	  <fail> is not used.
 
 	* tests/Native_Exceptions/Native_Exception.dsw:
 	* tests/Native_Exceptions/client.dsp:

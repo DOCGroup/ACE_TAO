@@ -50,8 +50,8 @@ public:
                  const ASYS_TCHAR *net_if = 0,
                  int protocol_family = PF_INET,
                  int protocol = 0);
-  // This is a BSD-style method for joining a multicast group (i.e.,
-  // no QoS).  The network interface device driver is instructed to
+  // This is a BSD-style method (i.e., no QoS) for joining a multicast
+  // group.  The network interface device driver is instructed to
   // accept datagrams with <mcast_addr> multicast addresses.  If the
   // socket has already been opened, <subscribe> closes the socket and
   // opens a new socket bound to the <mcast_addr>.
