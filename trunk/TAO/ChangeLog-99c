@@ -7,7 +7,8 @@ Mon May 10 11:43:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Mon May 10 08:24:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * TAO/orbsvcs/orbsvcs/Makefile,examples/Callback_Quoter/Makefile:
+        * TAO/orbsvcs/orbsvcs/Makefile,examples/Callback_Quoter/Makefile,
+          tests/MT_Client/Makefile:
           ran make depend to fix dependencies.  Thanks to Andy for reporting
           that they were missing.
 
