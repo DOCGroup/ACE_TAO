@@ -1,3 +1,12 @@
+Thu Aug 27 01:22:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Explicit_Activation/alternate.conf: 
+	* tests/POA/Explicit_Activation/Alternate_Resource_Factory/Resource_Factory.cpp:
+	  tests/POA/Explicit_Activation/Alternate_Resource_Factory/Resource_Factory.h:
+	  tests/POA/Explicit_Activation/Alternate_Resource_Factory/Alt_Resource_Factory.h:
+ 	  
+	  Fixed Nanbor's changes.
+
 Wed Aug 26 23:57:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.6 released.
