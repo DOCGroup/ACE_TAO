@@ -1,3 +1,11 @@
+Thu Dec  7 03:01:02 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:
+        * TAO_IDL/tao_idl_static.dsp:
+
+          Disabled precompiled headers
+
 Thu Dec  7 03:04:51 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/MT_Client_Protocol_Priority/README
