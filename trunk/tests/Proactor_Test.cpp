@@ -990,6 +990,7 @@ private:
   ACE_SYNCH_MUTEX lock_;
 
   long io_count_;
+  int stop_writing_;           // Writes are shut down; just read.
   int flg_cancel_;
   size_t total_snd_;
   size_t total_rcv_;
@@ -1195,15 +1196,16 @@ Connector::start (const ACE_INET_Addr& addr, int num)
 
 
 Sender::Sender (Connector * connector, int index)
-  : index_     (index),
-    connector_ (connector),
-    handle_    (ACE_INVALID_HANDLE),
-    io_count_  (0),
-    flg_cancel_(0),
-    total_snd_ (0),
-    total_rcv_ (0),
-    total_w_   (0),
-    total_r_   (0)
+  : index_        (index),
+    connector_    (connector),
+    handle_       (ACE_INVALID_HANDLE),
+    io_count_     (0),
+    stop_writing_ (0),
+    flg_cancel_   (0),
+    total_snd_    (0),
+    total_rcv_    (0),
+    total_w_      (0),
+    total_r_      (0)
 {
   if (this->connector_ != 0)
     this->connector_->on_new_sender (*this);
@@ -1273,10 +1275,10 @@ Sender::close ()
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Closing Sender %d; %d I/O outstanding\n"),
+              ACE_TEXT ("(%t) Closing Sender %d writes; %d I/O outstanding\n"),
               this->index_, this->io_count_));
-  ACE_OS::closesocket (this->handle_);
-  this->handle_ = ACE_INVALID_HANDLE;
+  ACE_OS::shutdown (this->handle_, ACE_SHUTDOWN_WRITE);
+  this->stop_writing_ = 1;
   return;
 }
 
@@ -1341,7 +1343,9 @@ Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
 int
 Sender::initiate_write_stream (void)
 {
-  if (this->flg_cancel_ != 0 || this->handle_ == ACE_INVALID_HANDLE)
+  if (this->flg_cancel_ != 0 ||
+      this->stop_writing_ ||
+      this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
   static const size_t complete_message_length = ACE_OS::strlen (complete_message);
