@@ -27,6 +27,10 @@ Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
         * ace/OS.cpp (spa [VxWorks only]): use ::taskSpawn () instead
           of ::sp () so that the task name, ace_main, can be specified.
 
+        * ACE-INSTALL.html: added note about not linked the ACE library
+          into every VxWorks executable.  It should work when running
+          multiple ACE executables on a target, though I haven't tried it.
+
 Wed Jan 21 21:37:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (close_i): Removed the HPUX_11
