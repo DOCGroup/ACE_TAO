@@ -135,6 +135,59 @@ be built automatically when TAO is built.</P>
        and build both client and server. <P>
 </OL>
 
+<HR>
+<H3>
+<A NAME="#VC"></A>How to add IDL files into your Visual C++ projects</H3>
+Point of contact: <A HREF="mailto:nw1@cs.wustl.edu">Nanbor Wang</A>.
+
+<P>Each IDL file generates .h, .i and .cpp files. Here is an example of
+adding an IDL file named foobar.idl into a VC project.
+<OL>
+<LI>
+Create/open the workspace. Create server project and client project if
+you haven't had them ready. Add the IDL file &lt;foobar.idl> and other
+non-IDL generated files into both client and server projects.</LI>
+
+<LI>
+Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i, and foobarS.cpp
+into the server project and foobarC.h, foobarC.i, and foobarC.cpp into
+the client project.</LI>
+
+<LI>
+Now open the project setting window (Project -> Setting... or just press
+Alt-F7.) Select the IDL files in both client and server projects. Choose
+to set the setting for "All Configuration." Make sure the "Exclude from
+build" under the "General" tab is unchecked.</LI>
+
+<LI>
+Click on the "Custom Build" tab. Add this entry as the build command for
+IDL files:</LI>
+
+<PRE>..\..\..\TAO_IDL\tao_idl $(InputName).idl</PRE>
+Notice that your absolute path to TAO_IDL may vary.
+<LI>
+Now add the following entries as "Output file(s)."</LI>
+
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.h
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.i
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.cpp
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.h
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.i
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.cpp</PRE>
+Add only one entry in each line.
+<LI>
+We are all set. Click OK.</LI>
+
+<LI>
+Add foobarC.cpp to client project and foobarC.cpp and foobarS.cpp to server
+project.</LI>
+</OL>
+Notice that these procedures only setup the IDL compiler to perform correctly.
+
+<P>p.s. If anyone knows how to set a default setting in VC so we don't
+need to perform these procedures every time a new project gets set up,
+please let us know. Thanks.
+
 <P>
 <HR>
 <P>
