@@ -45,7 +45,7 @@ namespace CIAO
     }
 
     /// handle the monolithic deployment description and populate it
-    void MDD_Handler::process_MonolithicDeploymentDescription 
+    void MDD_Handler::process_MonolithicDeploymentDescription
     (::Deployment::MonolithicDeploymentDescription &mdd)
     {
       // This is bogus and should be replaced later.
@@ -78,8 +78,9 @@ namespace CIAO
 
               // delegate the populating process
               // @@ need to avoid this copy, possible memory leak @@
-              mdd.execParameter[i] = 
-                *Property_Handler::process_Property (this->iter_);
+              // Arvind: Addressed
+              Property_Handler::process_Property (this->iter_,
+                                                  mdd.execParameter[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("deployRequirement")))
             {
@@ -89,14 +90,14 @@ namespace CIAO
 
               // delegate the populating process
               // @@ need to avoid this copy, possible memory leak @@
-              mdd.deployRequirement[i] = 
+              mdd.deployRequirement[i] =
                 *Requirement_Handler::process_Requirement (this->iter_);
             }
           else if (node_name == XStr (ACE_TEXT ("artifact")))
             {
               // @@Issue 5957@@
               // fetch the artifact deployment description handler
-              ADD_Handler add_handler (iter_, false); 
+              ADD_Handler add_handler (iter_, false);
 
               // increase the length of the sequence
               CORBA::ULong i (mdd.artifact.length ());
@@ -115,7 +116,7 @@ namespace CIAO
     }
 
     /// handle name attribute
-    void MDD_Handler::process_name (const XMLCh* name, 
+    void MDD_Handler::process_name (const XMLCh* name,
                                     ::Deployment::MonolithicDeploymentDescription &mdd)
     {
       if (name)
@@ -125,7 +126,7 @@ namespace CIAO
     }
 
     /// handle source attribute
-    void MDD_Handler::process_source (const XMLCh* source, 
+    void MDD_Handler::process_source (const XMLCh* source,
                                       ::Deployment::MonolithicDeploymentDescription &mdd)
     {
       if (source)
@@ -142,4 +143,3 @@ namespace CIAO
 }
 
 #endif /* MDD_HANDLER_C */
-

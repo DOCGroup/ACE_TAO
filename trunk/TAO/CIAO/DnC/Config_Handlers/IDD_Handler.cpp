@@ -46,7 +46,7 @@ namespace CIAO
     }
 
     /// handle the instance deployment description and populate it
-    void IDD_Handler::process_InstanceDeploymentDescription 
+    void IDD_Handler::process_InstanceDeploymentDescription
     (::Deployment::InstanceDeploymentDescription &idd)
     {
       // This is bogus and should be replaced later.
@@ -86,14 +86,15 @@ namespace CIAO
 
               // delegate the populating process
               // @@ need to avoid this copy, possible memory leak @@
-              idd.configProperty[i] = 
-                *Property_Handler::process_Property (this->iter_);
+              // Arvind: Addressed
+              Property_Handler::process_Property (this->iter_,
+                                                  idd.configProperty[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("implementation")))
             {
               // fetch the MonolithicDeploymentDescription handler
               MDD_Handler mdd_handler (this->iter_, false);
-              
+
               // delegate the populating process
               mdd_handler.process_MonolithicDeploymentDescription (idd.implementation);
             }
@@ -106,7 +107,7 @@ namespace CIAO
               // fetch the InstanceResourceDeployment Description
               // handler
               IRDD_Handler irdd_handler (this->iter_, false);
-              
+
               // delegate the populating process
               irdd_handler.process_InstanceResourceDeploymentDescription (idd.deployedResource[i]);
             }
@@ -119,7 +120,7 @@ namespace CIAO
               // fetch the InstanceResourceDeployment Description
               // handler
               IRDD_Handler irdd_handler (this->iter_, false);
-              
+
               // delegate the populating process
               irdd_handler.process_InstanceResourceDeploymentDescription (idd.deployedSharedResource[i]);
             }
@@ -133,7 +134,7 @@ namespace CIAO
     }
 
     /// handle name attribute
-    void IDD_Handler::process_name (const XMLCh* name, 
+    void IDD_Handler::process_name (const XMLCh* name,
                                     ::Deployment::InstanceDeploymentDescription &idd)
     {
       if (name)
@@ -143,7 +144,7 @@ namespace CIAO
     }
 
     /// handle node attribute
-    void IDD_Handler::process_node (const XMLCh* node, 
+    void IDD_Handler::process_node (const XMLCh* node,
                                     ::Deployment::InstanceDeploymentDescription &idd)
     {
       if (node)
@@ -153,7 +154,7 @@ namespace CIAO
     }
 
     /// handle source attribute
-    void IDD_Handler::process_source (const XMLCh* source, 
+    void IDD_Handler::process_source (const XMLCh* source,
                                       ::Deployment::InstanceDeploymentDescription &idd)
     {
       if (source)
@@ -170,4 +171,3 @@ namespace CIAO
 }
 
 #endif /* IDD_HANDLER_C */
-

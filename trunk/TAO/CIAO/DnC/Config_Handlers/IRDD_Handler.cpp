@@ -16,7 +16,7 @@ using std::cerr;
 using std::endl;
 
 
-namespace CIAO 
+namespace CIAO
 {
   namespace Config_Handler
   {
@@ -43,7 +43,7 @@ namespace CIAO
     }
 
     /// handle the instance resource deployment description and populate it
-    void IRDD_Handler::process_InstanceResourceDeploymentDescription 
+    void IRDD_Handler::process_InstanceResourceDeploymentDescription
     (::Deployment::InstanceResourceDeploymentDescription &irdd)
     {
       // This is bogus and should be replaced later.
@@ -79,7 +79,8 @@ namespace CIAO
             {
               // delegate the populating process
               // @@should avoid this copy - Andy @@
-              irdd.resourceValue = Any_Handler::process_Any (this->iter_);
+              // Arvind: Resolved
+              Any_Handler::process_Any (this->iter_, irdd.resourceValue);
             }
           else
             {
@@ -91,25 +92,25 @@ namespace CIAO
     }
 
     /// handle resource usage attribute
-    void IRDD_Handler::process_resourceUsage (const XMLCh* val, 
+    void IRDD_Handler::process_resourceUsage (const XMLCh* val,
                                               ::Deployment::InstanceResourceDeploymentDescription &irdd)
     {
       if (val)
         {
           // we need to convert the string to an enum
           CORBA::String_var temp = XMLString::transcode (val);
-          CORBA::Short sval = ACE_static_cast (CORBA::Short, 
+          CORBA::Short sval = ACE_static_cast (CORBA::Short,
                                               ACE_OS::strtol (temp.in
                                               (), 0, 10));
           // now cast it to enum
-          irdd.resourceUsage = 
+          irdd.resourceUsage =
             ACE_static_cast (::Deployment::ResourceUsageKind,
                              sval);
         }
     }
 
     /// handle requirement name attribute
-    void IRDD_Handler::process_requirementName (const XMLCh* name, 
+    void IRDD_Handler::process_requirementName (const XMLCh* name,
                                                ::Deployment::InstanceResourceDeploymentDescription &irdd)
     {
       if (name)
@@ -119,7 +120,7 @@ namespace CIAO
     }
 
     /// handle resource name attribute
-    void IRDD_Handler::process_resourceName (const XMLCh* name, 
+    void IRDD_Handler::process_resourceName (const XMLCh* name,
                                             ::Deployment::InstanceResourceDeploymentDescription &irdd)
     {
       if (name)
@@ -133,4 +134,3 @@ namespace CIAO
 }
 
 #endif /* IRDD_HANDLER_C */
-

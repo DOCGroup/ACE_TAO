@@ -2,7 +2,7 @@
 /**
  *  @file  SPK_Handler.h
  *
- *  $Id$ 
+ *  $Id$
  *
  *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
@@ -42,8 +42,8 @@ namespace CIAO
     class Config_Handler_Export SPK_Handler
     {
     public:
-      static Deployment::SatisfierPropertyKind 
-        process_SatisfierPropertyKind (DOMNodeIterator * iter);
+      static void process_SatisfierPropertyKind (DOMNodeIterator * iter,
+                                                 Deployment::SatisfierPropertyKind &kind);
       // process elements of type SatisfierPropertyKind definitions in
       // the descriptor files
 

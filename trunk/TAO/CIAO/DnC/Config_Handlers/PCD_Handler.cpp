@@ -47,7 +47,7 @@ namespace CIAO
     }
 
     /// handle the plan connection description and populate it
-    void PCD_Handler::process_PlanConnectionDescription 
+    void PCD_Handler::process_PlanConnectionDescription
     (::Deployment::PlanConnectionDescription &pcd)
     {
       // This is bogus and should be replaced later.
@@ -80,7 +80,7 @@ namespace CIAO
 
               // delegate the populating process
               // @@ need to avoid this copy, possible memory leak @@
-              pcd.deployRequirement[i] = 
+              pcd.deployRequirement[i] =
                 *Requirement_Handler::process_Requirement (this->iter_);
             }
           else if (node_name == XStr (ACE_TEXT ("deployedResource")))
@@ -92,7 +92,7 @@ namespace CIAO
               // fetch the ConnectionResourceDeployment Description
               // handler
               CRDD_Handler crdd_handler (this->iter_, false);
-              
+
               // delegate the populating process
               crdd_handler.process_ConnectionResourceDeploymentDescription (pcd.deployedResource[i]);
             }
@@ -104,7 +104,7 @@ namespace CIAO
 
               // fetch the PlanSubcomponentPortEndpoint handler
               PSPE_Handler pspe_handler (this->iter_, false);
-              
+
               // delegate the populating process
               pspe_handler.process_PlanSubcomponentPortEndpoint (pcd.internalEndpoint[i]);
             }
@@ -117,9 +117,9 @@ namespace CIAO
               // fetch the ExternalReferenceEndpoint handler and
               // delegate to it
               // @@ need to avoid this copy, possible memory leak @@
-              pcd.externalReference[i] = 
+              pcd.externalReference[i] =
                 *ERE_Handler::process_ExternalReferenceEndpoint (this->iter_);
-              
+
             }
           else if (node_name == XStr (ACE_TEXT ("externalEndpoint")))
             {
@@ -130,9 +130,11 @@ namespace CIAO
               // fetch the ComponentExternalPortEndpoint handler and
               // delegate to it
               // @@ need to avoid this copy, possible memory leak @@
-              pcd.externalEndpoint[i] = 
-                *CEPE_Handler::process_ComponentExternalPortEndpoint (this->iter_);
-              
+              // Arvind: Addressed
+              CEPE_Handler::
+                process_ComponentExternalPortEndpoint
+                (this->iter_, pcd.externalEndpoint[i]);
+
             }
           else
             {
@@ -144,7 +146,7 @@ namespace CIAO
     }
 
     /// handle name attribute
-    void PCD_Handler::process_name (const XMLCh* name, 
+    void PCD_Handler::process_name (const XMLCh* name,
                                     ::Deployment::PlanConnectionDescription &pcd)
     {
       if (name)
@@ -154,7 +156,7 @@ namespace CIAO
     }
 
     /// handle source attribute
-    void PCD_Handler::process_source (const XMLCh* source, 
+    void PCD_Handler::process_source (const XMLCh* source,
                                       ::Deployment::PlanConnectionDescription &pcd)
     {
       if (source)
@@ -171,4 +173,3 @@ namespace CIAO
 }
 
 #endif /* PCD_HANDLER_C */
-

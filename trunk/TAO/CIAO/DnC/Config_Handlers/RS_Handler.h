@@ -42,8 +42,9 @@ namespace CIAO
     class Config_Handler_Export RS_Handler
     {
     public:
-      static Deployment::RequirementSatisfier *
-        process_RequirementSatisfier (DOMNodeIterator * iter);
+      static void
+        process_RequirementSatisfier (DOMNodeIterator * iter,
+                                      Deployment::RequirementSatisfier &ret_struct);
       // process elements of type RequirementSatisfier definitions in
       // the descriptor files
 
