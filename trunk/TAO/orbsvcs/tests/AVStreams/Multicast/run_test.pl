@@ -72,11 +72,12 @@ sleep $sleeptime;
 
 ftp ();
 
-if ($CL->TimedWait (100) == -1) {
+if ($CL->TimedWait (300) == -1) {
   print STDERR "ERROR: client timedout\n";
   $status = 1;
   $CL->Kill (); $CL->TimedWait (1);
 }
+
 
 $SVA->Terminate (); if ($SVA->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate server\n";

@@ -3,6 +3,7 @@
 //------------------------------------------------------------
 // TAO_FlowSpec_Entry
 //------------------------------------------------------------
+
 #include "FlowSpec_Entry.h"
 #include "tao/PortableServer/ORB_Manager.h"
 
@@ -140,14 +141,20 @@ TAO_FlowSpec_Entry::set_protocol (void)
           return -1;
         }
     }
+
   if (this->address_ != 0)
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::set_protocol address is not 0\n"));
       ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->address_);
       char buf[BUFSIZ];
       inet_addr->addr_to_string (buf,BUFSIZ);
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_FlowSpec_Entry::set_protocol:%s\n",buf));
+      if (TAO_debug_level > 0) 
+        ACE_DEBUG ((LM_DEBUG,"TAO_FlowSpec_Entry::set_protocol:%s %x\n",buf, inet_addr->get_ip_address ()));
       if (IN_CLASSD (inet_addr->get_ip_address ()))
         {
+
+
           this->is_multicast_ = 1;
           switch (this->protocol_)
             {
@@ -171,6 +178,7 @@ TAO_FlowSpec_Entry::set_protocol (void)
 int
 TAO_FlowSpec_Entry::parse_address (char *address)
 {
+	
   if (address == 0)
     return 0;
   if (ACE_OS::strcmp (address,"") == 0)
@@ -201,8 +209,14 @@ TAO_FlowSpec_Entry::parse_address (char *address)
                             ACE_INET_Addr (addr),
                             -1);
             this->address_ = inet_addr;
+            if (TAO_debug_level > 0)
+              ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address %s %x\n", address,inet_addr->get_ip_address () ));
+	      
             if (IN_CLASSD (inet_addr->get_ip_address ()))
               {
+                if (TAO_debug_level > 0)
+                  ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
+			    
                 this->is_multicast_ = 1;
                 switch (this->protocol_)
                   {

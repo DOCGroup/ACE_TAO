@@ -316,7 +316,6 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
             local_addr = (*connect)->get_local_addr ();
             if (result == 0)
               {
-                ACE_DEBUG ((LM_DEBUG, "Reverse Flow Spec is Created First\n"));
                 TAO_Reverse_FlowSpec_Entry entry ((*connect)->flowname (),
                                                   (*connect)->direction_str (),
                                                   (*connect)->format (),
@@ -328,7 +327,8 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                 if (i == len)
                   new_flowspec.length (len+1);
                 new_flowspec [i++] = entry.entry_to_string ();
-                ACE_DEBUG ((LM_DEBUG, "reverse Flow Spec Is %s\n", entry.entry_to_string ()));
+                if (TAO_debug_level > 0)
+                  ACE_DEBUG ((LM_DEBUG, "reverse Flow Spec Is %s\n", entry.entry_to_string ()));
               }
           }
         connect_end = flow_set.end ();
@@ -340,7 +340,6 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
             if (result == 0)
               {
 
-                ACE_DEBUG ((LM_DEBUG, "Reverse Flow Spec is Created Second\n"));
                 TAO_Reverse_FlowSpec_Entry entry ((*connect)->flowname (),
                                                   (*connect)->direction_str (),
                                                   (*connect)->format (),
