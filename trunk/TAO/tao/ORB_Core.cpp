@@ -125,6 +125,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
+    protocols_hooks_checked_ (false),
     lock_ (),
     thread_lane_resources_manager_ (0),
     collocation_resolver_ (0),
@@ -1323,26 +1324,42 @@ TAO_ORB_Core::endpoint_selector_factory (void)
 void
 TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks_name)
 {
+  // Is synchronization necessary?
   TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_ =
     protocols_hooks_name;
+
+  // Probably we need to reset the
+  // TAO_ORB_Core::protocols_hooks_checked_ flag. Not sure how to do
+  // it though.
 }
 
 TAO_Protocols_Hooks *
 TAO_ORB_Core::get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Check if there is a cached reference.
-  if (this->protocols_hooks_ != 0)
-    return this->protocols_hooks_;
+  if (this->protocols_hooks_ != 0 &&
+      this->protocols_hooks_checked_ == false)
+    {
+      // We need synchronization here since this is called in the
+      // critical path where more than one thread could be active on
+      // different handlers.
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        ace_mon,
+                        this->lock_,
+                        0);
 
-  // If not, look in the service repository for an instance.
-  this->protocols_hooks_ =
-    ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
-    (TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_.c_str());
+      // If not, look in the service repository for an instance.
+      this->protocols_hooks_ =
+        ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
+        (TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_.c_str());
 
-  // Initialize the protocols hooks instance.
-  this->protocols_hooks_->init_hooks (this
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+      // Initialize the protocols hooks instance.
+      this->protocols_hooks_->init_hooks (this
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      this->protocols_hooks_checked_ = true;
+    }
 
   return this->protocols_hooks_;
 }

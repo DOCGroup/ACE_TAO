@@ -1,3 +1,65 @@
+Sat Jun  7 14:14:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp (get_protocol_hooks): This method needed
+	  synchronization that was missing. This method is called from the
+	  the *IOP_Transport::send_request () method. Multiple threads
+	  could be calling the same method from various handlers and there
+	  could be a race during initialization.
+
+	  Since we now have a lock in the get_protocol_hooks () method and
+	  since the method goes to the ACE_Dynamic_Service singleton,
+	  there was need to optimize things a bit. This necessitated a flag
+	  that will keep track whether the get_protocol_hooks () has been
+	  called or not. If called, the method wold be more or like a
+	  no-op. Sad that we cannot inline this method to squeeze things
+	  out a bit more. 
+
+	* tao/Protocols_Hooks.h: Changed the signatures of the methods
+	  update_client_protocol_properties () and
+	  update_server_protocol_properties (). These methods will now use
+	  a transport instead of the connection handler. Please see below
+	  for the actual reason.
+	  
+	* tao/Default_Protocols_Hooks.h:
+	* tao/Default_Protocols_Hooks.cpp: Changes necessitated by the
+	  above change. 
+	
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h: Added a methoid update_protocol_properties
+	  () which would serve as a bridge for a similar call on the
+	  connection handler. This method holds the transport lock and
+	  checks for the sanity of the connection handler before it calls
+	  update_protocol_properties () on the connection handler. 
+	
+	* tao/Stub.cpp: Removed a call to reset_hint () on the endpoint. 
+
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp
+	* tao/RTCORBA/RT_Protocols_Hooks.h: Changed the signatures of
+	  update_client_protocol_properties () and
+	  update_server_protocol_properties () to be in sync with the
+	  above change. 
+	
+	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp: The nucleus of
+	  the problem was here. The object adapter during the invocation
+	  path makes a call to pre_invoke_remote_request (). Since the
+	  call is on the server side, only the transport object can be
+	  used to do anything since there is a possibility that the
+	  connection handlers could have been deleted. This goes back to
+	  how the TP_Reactor works and how things are implemented in TAO.
+
+	  The transport object is capable of running some consistency
+	  checks on the connection handlers before invoking any method on
+	  the connection handler. We have now restructured the code in
+	  such a manner that the Protocols_Hooks will make a call on the
+	  transport object which will delegate to the connection handler
+	  after a couple of consistency checks. We got rid of a dynamic
+	  cast on the critical path by this restructuring.
+
+	  Thanks to Andrew <andrewv@melbpc.org.au> for reporting the
+	  problem and providing lots of stack traces that pointed out the
+	  source of the problem.
+	
 Sat Jun  7 13:45:38 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/PortableServer/Operation_Table.cpp: 

@@ -92,16 +92,6 @@ TAO_Stub::~TAO_Stub (void)
 
   if (this->profile_in_use_ != 0)
     {
-      if (this->orb_->orb_core () != 0)
-        {
-          // The hint in the profile is a hint for a client connection
-          // handler.  If the ORB core doesn't exist, perhaps due to
-          // it being destroy()ed, then no connectors exist so do not
-          // reset the hint in case it points to non-existent
-          // connection handler.
-          TAO_Endpoint* ep = this->profile_in_use_->endpoint ();
-        }
-
       // decrease reference count on profile
       this->profile_in_use_->_decr_refcnt ();
       this->profile_in_use_ = 0;

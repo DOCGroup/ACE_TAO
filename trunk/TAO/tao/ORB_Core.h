@@ -648,6 +648,10 @@ public:
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
 
+  /// Flag to check whether the protocols hooks have been checked or
+  /// not.
+  bool protocols_hooks_checked_;
+
   /// Obtain the TSS resources of this orb.
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
 
