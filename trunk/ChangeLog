@@ -1,3 +1,10 @@
+Fri Jun 22 07:33:45 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS_TLI.{h,inl}: Changed the signature of the t_open() and
+	  t_accept() wrappers to use ACE_HANDLE rather than int.  Thanks
+ 	  to Steffen Hieber <Steffen.Hieber@erl9.siemens.de> for reporting
+ 	  this.
+
 Fri Jun 22 09:31:04 2001  Ossama Othman  <ossama@uci.edu>
 
 	* html/index.html:
