@@ -1,3 +1,10 @@
+Tue Jan 22 13:19:52 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (operator==):
+
+	  Fixed problem where a const variable was passed as a non-const
+	  parameter.
+
 Tue Jan 22 12:42:13 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tests/OBV/Forward/Makefile:
