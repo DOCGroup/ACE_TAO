@@ -73,11 +73,16 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
     Container_Base.cpp
     NodeApplication_Impl.cpp
     Server_init.cpp
+    Servant_Impl_Base.cpp
   }
 
   Header_Files {
     CIAO_Server_Export.h
     CIAO_common.h
+  }
+  
+  Template_Files {
+    Servant_Impl_T.cpp
   }
 }
 
