@@ -42,10 +42,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name HUDisplay_svnt DLL
+    Project_Dep_Name GPS_stub DLL
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name GPS_stub DLL
+    Project_Dep_Name HUDisplay_svnt DLL
     End Project Dependency
 }}}
 
@@ -101,6 +101,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name NavDisplay_svnt DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -162,7 +165,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name RateGen_stub DLL
+    Project_Dep_Name RateGen_exec DLL
     End Project Dependency
 }}}
 

@@ -45,7 +45,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib BMClosedED_stub.lib BasicSP_stub.lib BasicSP_svnt.lib CIAO_Server.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Security.lib CIAO_Container.lib TAO.lib TAO_IFR_Client.lib TAO_Valuetype.lib CIAO_Client.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\..\..\..\bin\BMClosedED_svnt.pdb" /machine:I386 /out:"..\..\..\..\..\..\bin\BMClosedED_svnt.dll" /libpath:".." /libpath:"..\..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\ciao" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\..\ace" /version:1.3.1
+# ADD LINK32 BMClosedED_stub.lib BasicSP_stub.lib BasicSP_svnt.lib CIAO_Server.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Security.lib CIAO_Container.lib TAO.lib TAO_IFR_Client.lib TAO_Valuetype.lib CIAO_Client.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\..\..\..\bin\BMClosedED_svnt.pdb" /machine:I386 /out:"..\..\..\..\..\..\bin\BMClosedED_svnt.dll" /libpath:".." /libpath:"..\..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\ciao" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\..\ace" /version:1.3.1
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "BMClosedED_svnt DLL - Win32 Debug"
@@ -64,7 +64,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib BMClosedED_stubd.lib BasicSP_stubd.lib BasicSP_svntd.lib CIAO_Serverd.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_ObjRefTemplated.lib TAO_Securityd.lib CIAO_Containerd.lib TAOd.lib TAO_IFR_Clientd.lib TAO_Valuetyped.lib CIAO_Clientd.lib ACEd.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\..\..\..\..\bin\BMClosedED_svntd.pdb" /debug /machine:I386 /out:"..\..\..\..\..\..\bin\BMClosedED_svntd.dll" /libpath:".." /libpath:"..\..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\ciao" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\..\ace" /version:1.3.1
+# ADD LINK32 BMClosedED_stubd.lib BasicSP_stubd.lib BasicSP_svntd.lib CIAO_Serverd.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_ObjRefTemplated.lib TAO_Securityd.lib CIAO_Containerd.lib TAOd.lib TAO_IFR_Clientd.lib TAO_Valuetyped.lib CIAO_Clientd.lib ACEd.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\..\..\..\..\bin\BMClosedED_svntd.pdb" /debug /machine:I386 /out:"..\..\..\..\..\..\bin\BMClosedED_svntd.dll" /libpath:".." /libpath:"..\..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\ciao" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\..\ace" /version:1.3.1
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -126,6 +126,24 @@ SOURCE=.\BMClosedED.cidl
 
 !IF  "$(CFG)" == "BMClosedED_svnt DLL - Win32 Release"
 
+USERDEP__BMCLO="..\..\..\..\..\..\bin\cidlc.exe"	
+# Begin Custom Build - Invoking CIAO CIDL Compiler on $(InputPath)
+InputPath=.\BMClosedED.cidl
+InputName=BMClosedED
+
+BuildCmds= \
+	..\..\..\..\bin\cidlc --lem-file-suffix "E.idl" -- $(InputName).cidl
+
+"$(InputName)E.idl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)_svnt.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)_svnt.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "BMClosedED_svnt DLL - Win32 Debug"
 
 USERDEP__BMCLO="..\..\..\..\..\..\bin\cidlc.exe"	
@@ -156,59 +174,27 @@ SOURCE=.\BMClosedEDE.idl
 !IF  "$(CFG)" == "BMClosedED_svnt DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking IDL Compiler on $(InputPath)
+USERDEP__BMCLOS="..\..\..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
 InputPath=.\BMClosedEDE.idl
 InputName=BMClosedEDE
 
-BuildCmds= \
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	..\..\..\..\..\..\bin\tao_idl -o . -Wb,export_macro=BMCLOSEDED_SVNT_Export -Wb,export_include=BMClosedED_svnt_export.h -I..\..\..\..\.. -I..\..\..\..\..\CIAO\ciao -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I ..\..\..\.. -I ..\..\..\..\.. -I ..\..\..\..\..\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
 
-".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-".\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-".\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-".\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-".\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "BMClosedED_svnt DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking IDL Compiler on $(InputPath)
+USERDEP__BMCLOS="..\..\..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
 InputPath=.\BMClosedEDE.idl
 InputName=BMClosedEDE
 
-BuildCmds= \
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	..\..\..\..\..\..\bin\tao_idl -o . -Wb,export_macro=BMCLOSEDED_SVNT_Export -Wb,export_include=BMClosedED_svnt_export.h -I..\..\..\..\.. -I..\..\..\..\..\CIAO\ciao -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I ..\..\..\.. -I ..\..\..\..\.. -I ..\..\..\..\..\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
 
-".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-".\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-".\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-".\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-".\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
 # End Custom Build
 
 !ENDIF 

@@ -3,214 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "EC_stub DLL"=EC\EC_stub.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_stub DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "EC_svnt DLL"=EC\EC_svnt.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_svnt DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name EC_stub DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "EC_exec DLL"=EC\EC_exec.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name EC_svnt DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "EC_client EXE"=EC\EC_client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name EC_stub DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "controller EXE"=EC\controller.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name EC_stub DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BMDisplay_stub DLL"=BMDisplay\BMDisplay_stub.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_stub DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BMDisplay_svnt DLL"=BMDisplay\BMDisplay_svnt.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_svnt DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name BMDisplay_stub DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BMDisplay_exec DLL"=BMDisplay\BMDisplay_exec.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name BMDisplay_svnt DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BMDevice_stub DLL"=BMDevice\BMDevice_stub.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_stub DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BMDevice_svnt DLL"=BMDevice\BMDevice_svnt.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name BMDevice_stub DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_stub DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BMDevice_exec DLL"=BMDevice\BMDevice_exec.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name BMDevice_svnt DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BMClosedED_stub DLL"=BMClosedED\BMClosedED_stub.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_stub DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BMClosedED_svnt DLL"=BMClosedED\BMClosedED_svnt.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name BasicSP_svnt DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name BMClosedED_stub DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BMClosedED_exec DLL"=BMClosedED\BMClosedED_exec.dsp - Package Owner=<4>
+Project: "BMClosedED_exec DLL"=.\BMClosedED\BMClosedED_exec.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -225,7 +18,136 @@ Package=<4>
 
 ###############################################################################
 
-Project: "BasicSP_stub DLL"=BasicSP_stub.dsp - Package Owner=<4>
+Project: "BMClosedED_stub DLL"=.\BMClosedED\BMClosedED_stub.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name BasicSP_stub DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BMClosedED_svnt DLL"=.\BMClosedED\BMClosedED_svnt.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name BMClosedED_stub DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name BasicSP_svnt DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BMDevice_exec DLL"=.\BMDevice\BMDevice_exec.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name BMDevice_svnt DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BMDevice_stub DLL"=.\BMDevice\BMDevice_stub.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name BasicSP_stub DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BMDevice_svnt DLL"=.\BMDevice\BMDevice_svnt.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name BMDevice_stub DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name BasicSP_svnt DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BMDisplay_exec DLL"=.\BMDisplay\BMDisplay_exec.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name BMDisplay_svnt DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BMDisplay_stub DLL"=.\BMDisplay\BMDisplay_stub.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name BasicSP_stub DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BMDisplay_svnt DLL"=.\BMDisplay\BMDisplay_svnt.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name BMDisplay_stub DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name BasicSP_svnt DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BasicSP_stub DLL"=.\BasicSP_stub.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -237,7 +159,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "BasicSP_svnt DLL"=BasicSP_svnt.dsp - Package Owner=<4>
+Project: "BasicSP_svnt DLL"=.\BasicSP_svnt.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -247,6 +169,84 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name BasicSP_stub DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "EC_client EXE"=.\EC\EC_client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name EC_exec DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "EC_exec DLL"=.\EC\EC_exec.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name EC_svnt DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "EC_stub DLL"=.\EC\EC_stub.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name BasicSP_stub DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "EC_svnt DLL"=.\EC\EC_svnt.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name EC_stub DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name BasicSP_svnt DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "controller EXE"=.\EC\controller.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name EC_exec DLL
     End Project Dependency
 }}}
 

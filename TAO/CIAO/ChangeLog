@@ -1,3 +1,43 @@
+Mon Jun  2 02:00:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BasicSP.dsw:
+        * examples/OEP/BasicSP/BasicSP_stub.dsp:
+        * examples/OEP/BasicSP/BasicSP_svnt.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_stub.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt.dsp:
+        * examples/OEP/BasicSP/EC/EC_client.dsp:
+        * examples/OEP/BasicSP/EC/EC_exec.dsp:
+        * examples/OEP/BasicSP/EC/EC_stub.dsp:
+        * examples/OEP/BasicSP/EC/EC_svnt.dsp:
+        * examples/OEP/BasicSP/EC/controller.dsp:
+        * examples/OEP/Display/Display.dsw:
+        * examples/OEP/Display/HUDisplay_stub.dsp:
+        * examples/OEP/Display/HUDisplay_svnt.dsp:
+        * examples/OEP/Display/GPS/GPS_exec.dsp:
+        * examples/OEP/Display/GPS/GPS_stub.dsp:
+        * examples/OEP/Display/GPS/GPS_svnt.dsp:
+        * examples/OEP/Display/GPS/GPS_tracing_exec.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_stub.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.dsp:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.dsp:
+        * examples/OEP/Display/NavDisplayGUI_exec/README
+        * examples/OEP/Display/RateGen/RateGen_client.dsp:
+        * examples/OEP/Display/RateGen/RateGen_exec.dsp:
+        * examples/OEP/Display/RateGen/RateGen_stub.dsp:
+        * examples/OEP/Display/RateGen/RateGen_svnt.dsp:
+        * examples/OEP/Display/RateGen/controller.dsp:
+
+	  Fixed project and workspace settings for the generated
+	  version of the HUDisplay and BasicSP examples.
+
 Sun Jun  1 23:00:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile: Added the path to the RELEASE_FILES
