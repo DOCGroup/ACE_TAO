@@ -35,6 +35,7 @@ tao_idl.exe -o orig -Ge 1 -GT -GA -Wb,export_macro=TAO_Export -Wb,export_include
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao IIOP.pidl
 tao_idl.exe -o orig -Ge 1 -St -Sp -GA -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao IOP.pidl
 tao_idl.exe -o orig -Ge 1 -GA -GT -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao Services.pidl
+tao_idl.exe -o orig -Ge 1 -St -Gp -Gd -Sc -GT -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao Object_Key.pidl
 
 copy orig\*A.cpp .
 copy orig\*C.cpp .
@@ -54,3 +55,4 @@ patch < diffs/OctetSeq.diff
 patch < diffs/CONV_FRAME.diff
 patch < diffs/IOP.diff
 patch < diffs/Policy_Forward.diff
+patch < diffs/Object_Key.diff

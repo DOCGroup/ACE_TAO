@@ -35,3 +35,7 @@ unix2dos diffs\CONV_FRAME.diff
 
 diff -wub orig/IOPS.h IOPS.h > diffs/IOP.diff
 unix2dos diffs\IOP.diff
+
+diff -wub orig/Object_KeyC.cpp Object_KeyC.cpp > diffs/Object_Key.diff
+diff -wub orig/Object_KeyC.h Object_KeyC.h >> diffs/Object_Key.diff
+unix2dos diffs\Object_Key.diff
