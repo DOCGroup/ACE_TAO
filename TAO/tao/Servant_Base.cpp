@@ -36,12 +36,16 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_ServantBase::TAO_ServantBase (void)
-  : optable_ (0)
+  : optable_ (0),
+    single_threaded_poa_lock_ (0),
+    single_threaded_poa_lock_count_ (0)
 {
 }
 
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
-  : optable_ (rhs.optable_)
+  : optable_ (rhs.optable_),
+    single_threaded_poa_lock_ (0),
+    single_threaded_poa_lock_count_ (0)
 {
 }
 
@@ -140,6 +144,38 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
     }
 
   return stub;
+}
+
+ACE_SYNCH_MUTEX &
+TAO_ServantBase::_single_threaded_poa_lock (void)
+{
+  return *this->single_threaded_poa_lock_;
+}
+
+void
+TAO_ServantBase::_increment_single_threaded_poa_lock_count (void)
+{
+  // Only one thread at a time through this code (guarantee provided
+  // by the POA).
+  u_long current_count = this->single_threaded_poa_lock_count_++;
+  if (current_count == 0)
+    {
+      ACE_NEW (this->single_threaded_poa_lock_,
+               ACE_SYNCH_MUTEX);
+    }
+}
+
+void
+TAO_ServantBase::_decrement_single_threaded_poa_lock_count (void)
+{
+  // Only one thread at a time through this code (guarantee provided
+  // by the POA).
+  u_long current_count = --this->single_threaded_poa_lock_count_;
+  if (current_count == 0)
+    {
+      delete this->single_threaded_poa_lock_;
+      this->single_threaded_poa_lock_ = 0;
+    }
 }
 
 TAO_RefCountServantBase::~TAO_RefCountServantBase (void)
