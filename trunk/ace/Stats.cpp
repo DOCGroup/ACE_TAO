@@ -421,19 +421,17 @@ ACE_Stats::square_root (const ACE_UINT64 n,
 // ****************************************************************
 
 ACE_Throughput_Stats::ACE_Throughput_Stats (void)
-  :  samples_count_ (0),
-     latency_min_ (0),
-     latency_min_at_ (0),
-     latency_max_ (0),
-     latency_max_at_ (0),
-     latency_sum_ (0),
-     latency_sum2_ (0),
-     throughput_last_ (0),
-     throughput_sum_x_ (0),
-     throughput_sum_x2_ (0),
-     throughput_sum_y_ (0),
-     throughput_sum_y2_ (0),
-     throughput_sum_xy_ (0)
+  : ACE_Basic_Stats ()
+  , throughput_last_ (0)
+#if 0
+  // @@TODO: This is what I really wanted to compute, but it just
+  // does not work.
+  , throughput_sum_x_ (0)
+  , throughput_sum_x2_ (0)
+  , throughput_sum_y_ (0)
+  , throughput_sum_y2_ (0)
+  , throughput_sum_xy_ (0)
+#endif /* 0 */
 {
 }
 
@@ -441,23 +439,15 @@ void
 ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
                               ACE_UINT64 latency)
 {
-  ++this->samples_count_;
+  this->ACE_Basic_Stats::sample (latency);
 
-  if (this->samples_count_ == 1u)
+  if (this->samples_count () == 1u)
     {
-      this->latency_min_ = latency;
-      this->latency_min_at_ = ACE_U64_TO_U32 (this->samples_count_);
-      this->latency_max_ = latency;
-      this->latency_max_at_ = ACE_U64_TO_U32 (this->samples_count_);
-      this->latency_sum_ = latency;
-#if defined ACE_LACKS_LONGLONG_T
-      this->latency_sum2_ = latency * ACE_U64_TO_U32 (latency);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-      this->latency_sum2_ = latency * latency;
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
       this->throughput_last_   = throughput;
 #if 0
+      // @@TODO: This is what I really wanted to compute, but it just
+      // does not work.
       this->throughput_sum_y_  = this->samples_count_;
       this->throughput_sum_y2_ = this->samples_count_ * this->samples_count_;
       this->throughput_sum_x_  = throughput;
@@ -469,27 +459,11 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
     }
   else
     {
-      if (this->latency_min_ > latency)
-        {
-          this->latency_min_ = latency;
-          this->latency_min_at_ = ACE_U64_TO_U32 (this->samples_count_);
-        }
-      if (this->latency_max_ < latency)
-        {
-          this->latency_max_ = latency;
-          this->latency_max_at_ = ACE_U64_TO_U32 (this->samples_count_);
-        }
-
-      this->latency_sum_  += latency;
-#if defined ACE_LACKS_LONGLONG_T
-      this->latency_sum2_ += latency * ACE_U64_TO_U32 (latency);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-      this->latency_sum2_ += latency * latency;
-#endif /* ! ACE_LACKS_LONGLONG_T */
-
       this->throughput_last_ = throughput;
 
 #if 0
+      // @@TODO: This is what I really wanted to compute, but it just
+      // does not work.
       this->throughput_sum_y_  += this->samples_count_;
       this->throughput_sum_y2_ += this->samples_count_ * this->samples_count_;
       this->throughput_sum_x_  += throughput;
@@ -504,20 +478,17 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
 void
 ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
 {
-  if (rhs.samples_count_ == 0)
+  if (rhs.samples_count () == 0)
     return;
 
-  if (this->samples_count_ == 0u)
+  this->ACE_Basic_Stats::accumulate (rhs);
+
+  if (this->samples_count () == 0u)
     {
-      this->samples_count_ = rhs.samples_count_;
-
-      this->latency_min_  = rhs.latency_min_;
-      this->latency_max_  = rhs.latency_max_;
-      this->latency_sum_  = rhs.latency_sum_;
-      this->latency_sum2_ = rhs.latency_sum2_;
-
       this->throughput_last_   = rhs.throughput_last_;
 #if 0
+      // @@TODO: This is what I really wanted to compute, but it just
+      // does not work.
       this->throughput_sum_x_  = rhs.throughput_sum_x_;
       this->throughput_sum_x2_ = rhs.throughput_sum_x2_;
       this->throughput_sum_y_  = rhs.throughput_sum_y_;
@@ -528,20 +499,13 @@ ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
       return;
     }
 
-  this->samples_count_ += rhs.samples_count_;
-
-  if (this->latency_min_ > rhs.latency_min_)
-    this->latency_min_ = rhs.latency_min_;
-  if (this->latency_max_ < rhs.latency_max_)
-    this->latency_max_ = rhs.latency_max_;
-
-  this->latency_sum_  += rhs.latency_sum_;
-  this->latency_sum2_ += rhs.latency_sum2_;
 
   if (this->throughput_last_ < rhs.throughput_last_)
     this->throughput_last_ = rhs.throughput_last_;
 
 #if 0
+  // @@TODO: This is what I really wanted to compute, but it just
+  // does not work.
   this->throughput_sum_x_  += rhs.throughput_sum_x_;
   this->throughput_sum_x2_ += rhs.throughput_sum_x2_;
   this->throughput_sum_y_  += rhs.throughput_sum_y_;
@@ -554,56 +518,22 @@ void
 ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
                                     ACE_UINT32 sf)
 {
-  if (this->samples_count_ == 0u)
+  if (this->samples_count () == 0u)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("%s : no data collected\n"), msg));
       return;
     }
 
-  ACE_UINT64 latency_avg = this->latency_sum_ /
-#if defined ACE_LACKS_LONGLONG_T
-    ACE_U64_TO_U32 (this->samples_count_);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-    this->samples_count_;
-#endif /* ! ACE_LACKS_LONGLONG_T */
-  ACE_UINT64 latency_dev =
-#if defined ACE_LACKS_LONGLONG_T
-    ACE_static_cast (ACE_U_LongLong,
-      this->latency_sum2_ / ACE_U64_TO_U32(this->samples_count_)) -
-    latency_avg * ACE_U64_TO_U32(latency_avg);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-    this->latency_sum2_ / this->samples_count_ - latency_avg * latency_avg;
-#endif /* ! ACE_LACKS_LONGLONG_T */
+  this->ACE_Basic_Stats::dump_results (msg, sf);
 
-  double l_min = ACE_CU64_TO_CU32 (this->latency_min_) / sf;
-  double l_max = ACE_CU64_TO_CU32 (this->latency_max_) / sf;
-  double l_avg = ACE_CU64_TO_CU32 (latency_avg) / sf;
-  double l_dev = ACE_CU64_TO_CU32 (latency_dev) / (sf * sf);
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("%s latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
-              msg,
-              l_min, this->latency_min_at_,
-              l_avg,
-              l_max, this->latency_max_at_,
-              l_dev));
-
-  double seconds =
-#if defined ACE_LACKS_LONGLONG_T
-    this->throughput_last_ / sf;
-#else  /* ! ACE_LACKS_LONGLONG_T */
-    ACE_static_cast (double,
-                     ACE_UINT64_DBLCAST_ADAPTER(this->throughput_last_ / sf));
-#endif /* ! ACE_LACKS_LONGLONG_T */
-  seconds /= 1000000.0;
-  double t_avg = ACE_CU64_TO_CU32 (this->samples_count_) / seconds;
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("%s throughput: %.2f (events/second)\n"),
-              msg, t_avg));
+  ACE_Throughput_Stats::dump_throughput (msg, sf,
+                                         this->throughput_last_,
+                                         this->samples_count ());
 
 #if 0
+  // @@TODO: This is what I really wanted to generate, but it just
+  // doesn't work.
   double t_sum_x =
     ACE_CU64_TO_CU32 (this->throughput_sum_x_);// / sf);
   //t_sum_x /= 1000000.0;
@@ -618,24 +548,24 @@ ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
   double t_sum_xy =
     ACE_CU64_TO_CU32 (this->throughput_sum_xy_);// / sf);
   //t_sum_xy /= 1000000.0;
-  double t_avgx = t_sum_x / this->samples_count_;
-  double t_avgy = t_sum_y / this->samples_count_;
+  double t_avgx = t_sum_x / this->samples_count ();
+  double t_avgy = t_sum_y / this->samples_count ();
 
   double t_a =
-    (this->samples_count_ * t_sum_xy - t_sum_x * t_sum_y)
-    / (this->samples_count_ * t_sum_x2 - t_sum_x * t_sum_x);
+    (this->samples_count () * t_sum_xy - t_sum_x * t_sum_y)
+    / (this->samples_count () * t_sum_x2 - t_sum_x * t_sum_x);
   double t_b = (t_avgy - t_a * t_avgx);
 
   t_a *= 1000000.0;
 
   double d_r =
     (t_sum_xy - t_avgx * t_sum_y - t_avgy * t_sum_x
-     + this->samples_count_ * t_avgx * t_avgy);
+     + this->samples_count () * t_avgx * t_avgy);
   double n_r =
     (t_sum_x2
-     - this->samples_count_ * t_avgx * t_avgx)
+     - this->samples_count () * t_avgx * t_avgx)
     * (t_sum_y2
-       - this->samples_count_ * t_avgy * t_avgy);
+       - this->samples_count () * t_avgy * t_avgy);
   double t_r = d_r * d_r / n_r;
 
   //  ACE_DEBUG ((LM_DEBUG,
@@ -645,6 +575,27 @@ ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
   //              "%s        data: %.2f/%.2f/%.2f/%.6f/%.2f (x/x2/y/y2/xy)\n",
   //              msg, t_sum_x, t_sum_x2, t_sum_y, t_sum_y2, t_sum_xy));
 #endif
+}
+
+void
+ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
+                                       ACE_UINT32 sf,
+                                       ACE_UINT64 elapsed_time,
+                                       ACE_UINT32 samples_count)
+{
+  double seconds =
+#if defined ACE_LACKS_LONGLONG_T
+    elapsed_time / sf;
+#else  /* ! ACE_LACKS_LONGLONG_T */
+    ACE_static_cast (double,
+                     ACE_UINT64_DBLCAST_ADAPTER(elapsed_time / sf));
+#endif /* ! ACE_LACKS_LONGLONG_T */
+  seconds /= 1000000.0;
+  double t_avg = ACE_CU64_TO_CU32 (samples_count) / seconds;
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("%s throughput: %.2f (events/second)\n"),
+              msg, t_avg));
 }
 
 // ****************************************************************
