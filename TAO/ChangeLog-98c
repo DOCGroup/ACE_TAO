@@ -1,3 +1,8 @@
+Fri Sep 18 16:44:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* utils: Added the latest and greatest IOR parser.  Thanks to
+ 	  Priya Narasimhan <priya@lambda.ece.ucsb.edu> for this.
+
 Fri Sep 18 11:27:00 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.{h,cpp}: Moved all the
