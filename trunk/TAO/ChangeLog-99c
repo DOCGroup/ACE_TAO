@@ -112,12 +112,12 @@ Sun Jun 13 23:38:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 Sun Jun 13 23:29:22 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.{h,cpp}
-	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.{h,cpp}
-	Added the above files.
+	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.{h,cpp}: Added the
+ 	  above files.
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Bindings_Map.{h,cpp}
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.{h,cpp}
-	Removed the above files.
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.{h,cpp}:
+	  Removed the above files.
 
 	* orbsvcs/orbsvcs/Naming/Naming_Context.{h,cpp}
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.{h,cpp}
@@ -125,19 +125,17 @@ Sun Jun 13 23:29:22 1999  Marina Spivak  <marina@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.{h,cpp}
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}
 	* orbsvcs/orbsvcs/Naming/Entries.{h,cpp}
-	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h,cpp}
-	Modified the above files.
-
-	Restructured the implementation of NamingContext to factor out the
-	common code between persistent and nonpersistent implementations
-	through the Template method pattern (added
-	TAO_Transient_Naming_Context, TAO_Bindings_Map,
-	TAO_Transient_Bindings_Map classes and modified others).  Made
-	TAO_Persistent_Context_Index a non-template class, and
-	TAO_Bindings_Iterator a template class.  Made a pass through some
-	files for code review - added comments.  Got rid of the use of
-	<create_servant_lock> method, and changed lock pointers to lock
-	references.  Many other minor adjustments...
+	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h,cpp}:
+	  Modified the above files.  Restructured the implementation of
+ 	  NamingContext to factor out the common code between persistent
+ 	  and nonpersistent implementations through the Template method
+ 	  pattern (added TAO_Transient_Naming_Context, TAO_Bindings_Map,
+ 	  TAO_Transient_Bindings_Map classes and modified others).  Made
+ 	  TAO_Persistent_Context_Index a non-template class, and
+ 	  TAO_Bindings_Iterator a template class.  Made a pass through
+ 	  some files for code review - added comments.  Got rid of the use
+ 	  of <create_servant_lock> method, and changed lock pointers to
+ 	  lock references.  Many other minor adjustments...
 
 Sun Jun 13 22:39:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
