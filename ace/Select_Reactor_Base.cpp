@@ -819,7 +819,6 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   // pointer we've been passed.
   if (buffer.eh_ != 0)
     {
-      int result = 0;
 
       switch (buffer.mask_)
         {
