@@ -53,6 +53,7 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   event[0].header.eid.tid = oid.tid;
   event[0].header.eid.pid = oid.pid; 
   event[0].header.eid.queue_id = oid.queue_id;
+  oid.type = event[0].header.type;
 
   //@BT INSTRUMENT with event ID: EVENT_PUSH Measure time
   //when event is pushed by client.
@@ -111,6 +112,7 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   oid.id = events[0].header.eid.id;
   oid.tid = events[0].header.eid.tid;
   oid.queue_id = events[0].header.eid.queue_id;
+  oit.type = events[0].header.type;
 
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 
