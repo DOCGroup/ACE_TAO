@@ -246,7 +246,12 @@ _TAO_IRObject_Proxy_Broker_Factory_Initializer (long _dummy_)
 }
 
 static int _TAO_IRObject_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
-  _TAO_IRObject_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_IRObject_Proxy_Broker_Factory_Initializer));
+  _TAO_IRObject_Proxy_Broker_Factory_Initializer (
+      ACE_reinterpret_cast (
+          long, 
+          _TAO_IRObject_Proxy_Broker_Factory_Initializer
+        )
+    );
 
 
 ///////////////////////////////////////////////////////////////////////
