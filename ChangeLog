@@ -1,3 +1,9 @@
+Tue Aug  3 06:19:06 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+
+          Added macros in a specific section for the bmake project type.
+
 Tue Aug  3 07:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
@@ -9,70 +15,70 @@ Tue Aug  3 07:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Aug  2 15:33:27 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Containers_T.cpp (ACE_Fixed_Set_Iterator::remove()): Had to
-	  qualify 'iterated_items_' with 'this->' to make it visible in this
-	  class now that iterated_items_ is in an inherited class. This per
-	  HP-UX aC++, citing [temp.dep], 14.6.2(3) in the C++ Standard.
+        * ace/Containers_T.cpp (ACE_Fixed_Set_Iterator::remove()): Had to
+          qualify 'iterated_items_' with 'this->' to make it visible in this
+          class now that iterated_items_ is in an inherited class. This per
+          HP-UX aC++, citing [temp.dep], 14.6.2(3) in the C++ Standard.
 
 Mon Aug  2 15:20:37 2004  Steve Huston  <shuston@riverace.com>
 
-	* apps/JAWS3/jaws3/Event_Result.h: Added #include
-	  "ace/os_include/os_stddef.h" to pick up size_t for platforms where
-	  it's not defined by the compiler, such as Cygwin. Thanks to
-	  Johnny Willemsen for reporting this.
+        * apps/JAWS3/jaws3/Event_Result.h: Added #include
+          "ace/os_include/os_stddef.h" to pick up size_t for platforms where
+          it's not defined by the compiler, such as Cygwin. Thanks to
+          Johnny Willemsen for reporting this.
 
 Mon Aug  2 08:55:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Containers_T.h: The class ACE_Fixed_Set had some bugs in
-	  it's interface declaration and also some in it's implementation:
-	  1) typedef the wrong class for is constant iterator and
-	  2) its method size() misbehave in certain circumstances where
-	     elements were randomly deleted from a set object.
+        * ace/Containers_T.h: The class ACE_Fixed_Set had some bugs in
+          it's interface declaration and also some in it's implementation:
+          1) typedef the wrong class for is constant iterator and
+          2) its method size() misbehave in certain circumstances where
+             elements were randomly deleted from a set object.
           Moreover, the iterators of ACE_Fixed_Set has a lot of code in
-	  common so the can be refactored to have a common abstract
-	  ancestor with all the shared code.  Therefore, refactored the
-	  three classes and fixed the bug on the size() method.  Thanks
-	  to J. Abelardo Gutierrez <jabelardo@cantv.net> for these fixes.
+          common so the can be refactored to have a common abstract
+          ancestor with all the shared code.  Therefore, refactored the
+          three classes and fixed the bug on the size() method.  Thanks
+          to J. Abelardo Gutierrez <jabelardo@cantv.net> for these fixes.
 
 Mon Aug  2 09:06:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/os_include/os_signal.h: Removed the #include os_time.h - it's
-	  not needed for anything in this header, and for some reason, it
-	  introduces a type oddity on HP-UX - aC++ gets the idea there's a
-	  tentative struct sigaction and doesn't match the real one, causing
-	  compile errors in ACE_OS::sigaction().
+        * ace/os_include/os_signal.h: Removed the #include os_time.h - it's
+          not needed for anything in this header, and for some reason, it
+          introduces a type oddity on HP-UX - aC++ gets the idea there's a
+          tentative struct sigaction and doesn't match the real one, causing
+          compile errors in ACE_OS::sigaction().
 
-	* ace/OS_TLI.h: Removed stray '#'.
+        * ace/OS_TLI.h: Removed stray '#'.
 
-	* ace/Signal.{h inl}: Removed the hack typedef ACE_SIGACTION that
-	  was allegedly put in for an HP-UX C++ bug. It's not needed and is
-	  causing further problems. #include "ace/os_include/os_signal.h"
-	  to get the needed signal-related types.
+        * ace/Signal.{h inl}: Removed the hack typedef ACE_SIGACTION that
+          was allegedly put in for an HP-UX C++ bug. It's not needed and is
+          causing further problems. #include "ace/os_include/os_signal.h"
+          to get the needed signal-related types.
 
-	* apps/JAWS3/jaws3/Event_Result.h: Changed #include "ace/OS.h" to
-	  "ace/OS_NS_errno.h". Removing the "big hammer" OS.h stuff. This
-	  fixes a compile error in OS_TLI.inl on HP-UX w/ aC++. Why? I
-	  have no idea... there's something odd still about orders of
-	  includes and/or preprocessor defs or something. This odd compile
-	  error creeps up every once in a while and is always related to
-	  fudging something somewhere (see fix above for signal...) but
-	  this one doesn't have an apparant cause.
+        * apps/JAWS3/jaws3/Event_Result.h: Changed #include "ace/OS.h" to
+          "ace/OS_NS_errno.h". Removing the "big hammer" OS.h stuff. This
+          fixes a compile error in OS_TLI.inl on HP-UX w/ aC++. Why? I
+          have no idea... there's something odd still about orders of
+          includes and/or preprocessor defs or something. This odd compile
+          error creeps up every once in a while and is always related to
+          fudging something somewhere (see fix above for signal...) but
+          this one doesn't have an apparant cause.
 
-	* include/makeinclude/platform_hpux_aCC.GNU: Removed AREXTRA. It
-	  was breaking static lib builds.
+        * include/makeinclude/platform_hpux_aCC.GNU: Removed AREXTRA. It
+          was breaking static lib builds.
 
 Sun Aug  1 08:15:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	  Moved subdirectory configuration above call to AC_OUTPUT.
+        * configure.ac:
+          Moved subdirectory configuration above call to AC_OUTPUT.
 
-	* ace/OS_Memory.h:
-	  Provide ACE_nothrow and ACE_nothrow_t definitions for platforms
-	  where definitions are not handled by special cases.
+        * ace/OS_Memory.h:
+          Provide ACE_nothrow and ACE_nothrow_t definitions for platforms
+          where definitions are not handled by special cases.
 
-	* configure.ac:
-	* m4/config_h.m4:
-	  Added check for ACE_HAS_NEW_NOTHROW.
+        * configure.ac:
+        * m4/config_h.m4:
+          Added check for ACE_HAS_NEW_NOTHROW.
 
 Sun Aug  1 15:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -95,16 +101,16 @@ Sun Aug  1 15:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Aug  1 09:07:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ChangeLogs/ChangeLog-04a:
+        * ChangeLogs/ChangeLog-04a:
 
-	  Moved contents from this file to a new file.
+          Moved contents from this file to a new file.
 
 Sat Jul 31 17:01:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/generate_rel_manpages:
+        * bin/generate_rel_manpages:
 
-	  This is now executed at tao.dre for generating doxygen
-	  documentation. The files are then scp'ed to the main website.
+          This is now executed at tao.dre for generating doxygen
+          documentation. The files are then scp'ed to the main website.
 
 Sat Jul 31 11:13:20 2004  Ossama  <ossama@dre.vanderbilt.edu>
 
