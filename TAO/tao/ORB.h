@@ -32,9 +32,6 @@
 #include "tao/Services.h"
 #include "tao/CORBA_String.h"
 
-// Interceptor definitions.
-#include "tao/PortableInterceptor.h"
-
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
 
@@ -155,31 +152,6 @@ public:
          CORBA_Environment &ACE_TRY_ENV =
              TAO_default_environment () );
 #endif /* TAO_HAS_VALUETYPE */
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-  // = Interceptor registration routine
-  //   Currently, we only support one interceptor per-ORB.
-
-  PortableInterceptor::ClientRequestInterceptor_ptr _register_client_interceptor
-  (PortableInterceptor::ClientRequestInterceptor_ptr ci,
-   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Registerring the client-side request interceptor.  Unregister it with
-  // a null interceptor.
-
-  PortableInterceptor::ServerRequestInterceptor_ptr _register_server_interceptor
-  (PortableInterceptor::ServerRequestInterceptor_ptr ci,
-   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Registerring the server-side request interceptor.  Unregister it with
-  // a null interceptor.
-
-  PortableInterceptor::ClientRequestInterceptor_ptr _get_client_interceptor
-    (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // accessor to the client-side interceptor.  You get a duplicate.
-
-  PortableInterceptor::ServerRequestInterceptor_ptr _get_server_interceptor
-    (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // accessor to the server-side interceptor.  You get a duplicate.
-#endif /* TAO_HAS_INTERCEPTORS */
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -330,14 +302,10 @@ public:
   // Returns a sequence of ObjectIds that lists which objects have
   // references available via the initial references mechanism.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any& val,
                                    CORBA_Environment &ACE_TRY_ENV =
                                        TAO_default_environment ());
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   // ----------------------------------------------------------------
   // = TAO-specific extensions to the CORBA specification.
@@ -467,12 +435,6 @@ private:
   TAO_ValueFactory_Map *valuetype_factory_map_;
   // If non-0 then this is the Factory for OBV unmarshaling
 #endif /* TAO_HAS_VALUETYPE */
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-  PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
-  PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
-  // Interceptor registries.
-#endif /* TAO_HAS_INTERCEPTORS */
 
   CORBA::Boolean use_omg_ior_format_;
   // Decides whether to use the URL notation or to use IOR notation.

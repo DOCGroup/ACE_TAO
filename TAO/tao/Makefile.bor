@@ -21,6 +21,7 @@ OBJFILES = \
 	$(OBJDIR)\CDR.obj \
 	$(OBJDIR)\Client_Priority_Policy.obj \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
+	$(OBJDIR)\ClientRequestInfo.obj \
 	$(OBJDIR)\Connector_Registry.obj \
 	$(OBJDIR)\Context.obj \
 	$(OBJDIR)\CONV_FRAMEC.obj \
@@ -65,6 +66,7 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Lite_Factory.obj \
 	$(OBJDIR)\IIOP_Profile.obj \
 	$(OBJDIR)\IIOP_Transport.obj \
+	$(OBJDIR)\Interceptor_List.obj \
 	$(OBJDIR)\InterfaceC.obj \
 	$(OBJDIR)\Invocation.obj \
 	$(OBJDIR)\Invocation_Endpoint_Selectors.obj \
@@ -76,7 +78,9 @@ OBJFILES = \
 	$(OBJDIR)\LocalObject.obj \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
+	$(OBJDIR)\Messaging_ORBInitializer.obj \
 	$(OBJDIR)\Messaging_Policy_i.obj \
+	$(OBJDIR)\Messaging_PolicyFactory.obj \
 	$(OBJDIR)\MessagingC.obj \
 	$(OBJDIR)\MProfile.obj \
 	$(OBJDIR)\Muxed_TMS.obj \
@@ -89,12 +93,14 @@ OBJFILES = \
 	$(OBJDIR)\Object_Proxy_Impl.obj \
 	$(OBJDIR)\operation_details.obj \
 	$(OBJDIR)\ORB.obj \
+	$(OBJDIR)\ORBInitInfo.obj \
+	$(OBJDIR)\ORBInitializer_Registry.obj \
 	$(OBJDIR)\operation_details.obj \
 	$(OBJDIR)\PortableInterceptor.obj \
 	$(OBJDIR)\PortableInterceptorC.obj \
 	$(OBJDIR)\DynamicC.obj \
 	$(OBJDIR)\OctetSeqC.obj \
-	$(OBJDIR)\StringSeq.obj \
+	$(OBJDIR)\StringSeqC.obj \
 	$(OBJDIR)\Smart_Proxies.obj \
 	$(OBJDIR)\ORB_Core.obj \
 	$(OBJDIR)\ORB_Table.obj \
@@ -106,9 +112,9 @@ OBJFILES = \
 	$(OBJDIR)\Pluggable.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
-	$(OBJDIR)\Policy_Factory.obj \
 	$(OBJDIR)\Policy_Manager.obj \
 	$(OBJDIR)\PolicyC.obj \
+	$(OBJDIR)\PolicyFactory_Registry.obj \
 	$(OBJDIR)\PollableC.obj \
 	$(OBJDIR)\PollableS.obj \
 	$(OBJDIR)\Pool_Per_Endpoint.obj \
@@ -125,12 +131,13 @@ OBJFILES = \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
 	$(OBJDIR)\Request.obj \
-	$(OBJDIR)\Request_Info.obj \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\RT_Current.obj \
 	$(OBJDIR)\RT_Mutex.obj \
 	$(OBJDIR)\RT_ORB.obj \
 	$(OBJDIR)\RT_Policy_i.obj \
+	$(OBJDIR)\RT_ORBInitializer.obj \
+	$(OBJDIR)\RT_PolicyFactory.obj \
 	$(OBJDIR)\RTCORBAC.obj \
 	$(OBJDIR)\RTCORBAS.obj \
 	$(OBJDIR)\Sequence.obj \

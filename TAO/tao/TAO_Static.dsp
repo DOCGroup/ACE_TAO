@@ -147,6 +147,10 @@ SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ClientRequestInfo.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
@@ -315,6 +319,10 @@ SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Interceptor_List.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
@@ -363,7 +371,15 @@ SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_ORBInitializer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_Policy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_PolicyFactory.h
 # End Source File
 # Begin Source File
 
@@ -443,6 +459,14 @@ SOURCE=.\orbconf.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORBInitializer_Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORBInitInfo.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\params.h
 # End Source File
 # Begin Source File
@@ -476,6 +500,10 @@ SOURCE=.\Policy_Manager.h
 # Begin Source File
 
 SOURCE=.\PolicyC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PolicyFactory_Registry.h
 # End Source File
 # Begin Source File
 
@@ -563,7 +591,15 @@ SOURCE=.\RT_ORB.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_ORBInitializer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Policy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_PolicyFactory.h
 # End Source File
 # Begin Source File
 
@@ -651,7 +687,7 @@ SOURCE=.\Smart_Proxies.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\StringSeq.h
+SOURCE=.\StringSeqC.h
 # End Source File
 # Begin Source File
 
@@ -788,7 +824,15 @@ SOURCE=.\WrongTransactionC.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter "i,inl"
+# Begin Group "Template Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\TAO_Singleton.cpp
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=.\Acceptor_Filter.i
@@ -951,6 +995,10 @@ SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Interceptor_List.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\InterfaceC.i
 # End Source File
 # Begin Source File
@@ -1044,6 +1092,10 @@ SOURCE=.\ORB_Strategies_T.i
 # Begin Source File
 
 SOURCE=.\ORB_Table.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORBInitializer_Registry.inl
 # End Source File
 # Begin Source File
 
@@ -1179,6 +1231,14 @@ SOURCE=.\Smart_Proxies.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\StringSeq.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringSeqC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\stub.i
 # End Source File
 # Begin Source File
@@ -1262,14 +1322,6 @@ SOURCE=.\ValueFactory_Map.i
 SOURCE=.\tao.rc
 # End Source File
 # End Group
-# Begin Group "Template Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\TAO_Singleton.cpp
-# End Source File
-# End Group
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp"
@@ -1328,6 +1380,10 @@ SOURCE=.\Client_Priority_Policy.cpp
 # Begin Source File
 
 SOURCE=.\Client_Strategy_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInfo.cpp
 # End Source File
 # Begin Source File
 
@@ -1511,6 +1567,10 @@ SOURCE=.\IIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Interceptor_List.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\InterfaceC.cpp
 # End Source File
 # Begin Source File
@@ -1555,7 +1615,15 @@ SOURCE=.\Marshal.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_Policy_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_PolicyFactory.cpp
 # End Source File
 # Begin Source File
 
@@ -1619,6 +1687,14 @@ SOURCE=.\ORB_Table.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORBInitializer_Registry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORBInitInfo.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\params.cpp
 # End Source File
 # Begin Source File
@@ -1639,15 +1715,15 @@ SOURCE=.\Pluggable_Messaging_Utils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Policy_Factory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Policy_Manager.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\PolicyC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PolicyFactory_Registry.cpp
 # End Source File
 # Begin Source File
 
@@ -1715,10 +1791,6 @@ SOURCE=.\Request.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request_Info.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Resource_Factory.cpp
 # End Source File
 # Begin Source File
@@ -1735,7 +1807,15 @@ SOURCE=.\RT_ORB.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Policy_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_PolicyFactory.cpp
 # End Source File
 # Begin Source File
 
@@ -1815,7 +1895,7 @@ SOURCE=.\Smart_Proxies.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\StringSeq.cpp
+SOURCE=.\StringSeqC.cpp
 # End Source File
 # Begin Source File
 
@@ -1950,9 +2030,5 @@ SOURCE=.\Wait_Strategy.cpp
 SOURCE=.\WrongTransactionC.cpp
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\StringSeq.inl
-# End Source File
 # End Target
 # End Project

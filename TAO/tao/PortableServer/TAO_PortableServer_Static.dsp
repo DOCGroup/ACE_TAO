@@ -98,7 +98,7 @@ SOURCE=.\MessagingS_T.cpp
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter "i,inl"
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.i
@@ -269,6 +269,10 @@ SOURCE=.\Servant_Base.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServerRequestInfo.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Strategized_Object_Proxy_Broker.h
 # End Source File
 # Begin Source File
@@ -362,6 +366,10 @@ SOURCE=.\RTPortableServerC.cpp
 # Begin Source File
 
 SOURCE=.\Servant_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerRequestInfo.cpp
 # End Source File
 # Begin Source File
 

@@ -18,6 +18,9 @@
 #include "DomainC.i"
 #endif /* !defined INLINE */
 
+#if TAO_HAS_INTERCEPTORS == 1
+#include "PortableInterceptor.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 // default constructor
 CORBA_DomainManager::CORBA_DomainManager (void)
@@ -123,13 +126,14 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
 
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
-      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
-    ACE_CHECK_RETURN (0);
-        CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy  ri ("get_domain_policy",
-_tao_call.service_info (),
-    this        ,    policy_type        ,
-        ACE_TRY_ENV);
-    ACE_CHECK_RETURN (0);
+      _tao_vfr (istub->orb_core ()->client_request_interceptors ());
+
+    CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy
+      ri ("get_domain_policy",
+          _tao_call.service_info (),
+          this,
+          policy_type);
+
   ACE_TRY
     {
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -252,10 +256,8 @@ CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_polic
     const char *_tao_operation,
     IOP::ServiceContextList &_tao_service_context_list,
     CORBA::Object *_tao_target,
-    CORBA::PolicyType &policy_type,
-    CORBA::Environment &
-  )
-  : TAO_ClientRequest_Info (
+    CORBA::PolicyType &policy_type)
+  : TAO_ClientRequestInfo (
         _tao_operation, 
         _tao_service_context_list, 
         _tao_target

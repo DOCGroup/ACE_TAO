@@ -24,6 +24,7 @@ OBJFILES = \
 	$(OBJDIR)\PortableServer.obj \
 	$(OBJDIR)\PortableServerC.obj \
 	$(OBJDIR)\Servant_Base.obj \
+	$(OBJDIR)\ServerRequestInfo.obj \
 	$(OBJDIR)\RT_Acceptor_Filters.obj \
 	$(OBJDIR)\RTPortableServerC.obj \
 	$(OBJDIR)\Strategized_Object_Proxy_Broker.obj \

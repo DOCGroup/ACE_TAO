@@ -1,7 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$: 
 
-// ============================================================================
+// ========================================================================
 //
 // = LIBRARY
 //    TAO
@@ -18,21 +18,20 @@
 //     These macros allows us to disable/enable support of interceptors
 //     easily.
 //
-//     I also put some default no-op implementation of the interceptor
-//     servants.
 //
 // = AUTHOR
 //     Nanbor Wang <nanbor@cs.wustl.edu>
 //     Kirthika PArameswaran  <kirthika@cs.wustl.edu>
-// ============================================================================
+//     Ossama Othman <ossama@uci.edu>
+//
+// ========================================================================
 
 #ifndef TAO_PORTABLE_INTERCEPTOR_H
 #define TAO_PORTABLE_INTERCEPTOR_H
+
 #include "ace/pre.h"
 
-//#if (TAO_HAS_INTERCEPTORS == 1)
-#include "tao/Request_Info.h"
-//#endif /* TAO_HAS_INTERCEPTORS == 1 */
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -53,28 +52,25 @@
 #endif /* TAO_HAS_INTERCEPTORS */
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+
+#include "tao/PortableInterceptorC.h"
+#include "tao/Interceptor_List.h"
+
 class TAO_Export TAO_ClientRequestInterceptor_Adapter
 {
   // = TITLE
   //   TAO_ClientRequestInterceptor_Adapter
   //
   // = DESCRIPTION
-  //   A convenient helper class to invoke the client-side request
-  //   interceptor(s) in tao_idl generated code.  Currently, TAO only
-  //   supports registerring of one interceptor.  The class will only
-  //   invoke the interceptor if there's one.
-  //
-  //   In the future, when we extend TAO's interceptor registering
-  //   mechanism, this class will be modified to invoke several
-  //   interceptors in series.
+  //   A convenient helper class to invoke registered client request
+  //   interceptor(s) in tao_idl generated code.
+
 public:
-  TAO_ClientRequestInterceptor_Adapter
-    (PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
+
+  TAO_ClientRequestInterceptor_Adapter (
+    TAO_ClientRequestInterceptor_List::TYPE &interceptors);
 
   ~TAO_ClientRequestInterceptor_Adapter (void);
-
-  CORBA::Boolean valid (void) const;
-  // Check if we have a valid interceptor.
 
   void send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
                      CORBA::Environment &);
@@ -83,8 +79,16 @@ public:
                       CORBA::Environment &);
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
                           CORBA::Environment &);
+
 private:
-  PortableInterceptor::ClientRequestInterceptor_var interceptor_;
+
+  TAO_ClientRequestInterceptor_List::TYPE &interceptors_;
+  ///< Reference to the list of registered interceptors.
+
+  size_t len_;
+  ///< Cache the length of the interceptor list so that we don't have
+  ///< to compute it at each stage of the current interception.
+
 };
 
 class TAO_Export TAO_ServerRequestInterceptor_Adapter
@@ -93,22 +97,15 @@ class TAO_Export TAO_ServerRequestInterceptor_Adapter
   //   TAO_ServerRequestInterceptor_Adapter
   //
   // = DESCRIPTION
-  //   A convenient helper class to invoke the server-side request
-  //   interceptor(s) in tao_idl generated code.  Currently, TAO only
-  //   supports registerring of one interceptor.  The class will only
-  //   invoke the interceptor if there's one.
-  //
-  //   In the future, when we extend TAO's interceptor registering
-  //   mechanism, this class will be modified to invoke several
-  //   interceptors in series.
+  //   A convenient helper class to invoke registered server request
+  //   interceptor(s) in tao_idl generated code.
+
 public:
-  TAO_ServerRequestInterceptor_Adapter
-    (PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
+
+  TAO_ServerRequestInterceptor_Adapter (
+    TAO_ServerRequestInterceptor_List::TYPE &interceptors);
 
   ~TAO_ServerRequestInterceptor_Adapter (void);
-
-  CORBA::Boolean valid (void) const;
-  // Check if we have a valid interceptor.
 
   void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                         CORBA::Environment &);
@@ -118,10 +115,20 @@ public:
 
   void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
                        CORBA::Environment &);
+
 private:
-  PortableInterceptor::ServerRequestInterceptor_var interceptor_;
+
+  TAO_ServerRequestInterceptor_List::TYPE &interceptors_;
+  ///< Reference to the list of registered interceptors.
+
+  size_t len_;
+  ///< Cache the length of the interceptor list so that we don't have
+  ///< to compute it at each stage of the current interception.
+
 };
+
 #endif /* TAO_HAS_INTERCEPTORS */
+
 #if defined (__ACE_INLINE__)
 #include "tao/PortableInterceptor.i"
 #endif /* defined INLINE */

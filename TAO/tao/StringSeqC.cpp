@@ -19,18 +19,16 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "StringSeq.h"
+#include "StringSeqC.h"
 
 #if !defined (__ACE_INLINE__)
-#include "StringSeq.inl"
+#include "StringSeqC.i"
 #endif /* !defined INLINE */
 
-#include "tao/CDR.h"
-#include "tao/Typecode.h"
 #include "tao/Any.h"
 
-#if !defined (_CORBA_STRINGSEQ_CS_)
-#define _CORBA_STRINGSEQ_CS_
+#if !defined (_STRINGSEQ_CS_)
+#define _STRINGSEQ_CS_
 
 // *************************************************************
 // CORBA_StringSeq
@@ -79,7 +77,7 @@ void CORBA_StringSeq::_tao_any_destructor (void *x)
 static const CORBA::Long _oc_CORBA_StringSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  24, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5374), ACE_NTOHL (0x72696e67), ACE_NTOHL (0x5365713a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:CORBA/StringSeq:1.0
+  18, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x53747269), ACE_NTOHL (0x6e675365), ACE_NTOHL (0x713a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:CORBA_StringSeq:1.0
   10, ACE_NTOHL (0x53747269), ACE_NTOHL (0x6e675365), ACE_NTOHL (0x71000000),  // name = CORBA_StringSeq
   CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
@@ -90,13 +88,11 @@ static const CORBA::Long _oc_CORBA_StringSeq[] =
 
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_StringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_StringSeq), (char *) &_oc_CORBA_StringSeq, 0, sizeof (CORBA_StringSeq));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_StringSeq, &_tc_TAO_tc_CORBA_StringSeq)
-TAO_NAMESPACE_END
+CORBA::TypeCode_ptr _tc_CORBA_StringSeq = &_tc_TAO_tc_CORBA_StringSeq;
 
-#if !defined (_CORBA_WSTRINGSEQ_CS_)
-#define _CORBA_WSTRINGSEQ_CS_
+
+#if !defined (_WSTRINGSEQ_CS_)
+#define _WSTRINGSEQ_CS_
 
 // *************************************************************
 // CORBA_WStringSeq
@@ -145,7 +141,7 @@ void CORBA_WStringSeq::_tao_any_destructor (void *x)
 static const CORBA::Long _oc_CORBA_WStringSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  25, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5753), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x67536571), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:CORBA/WStringSeq:1.0
+  19, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x57537472), ACE_NTOHL (0x696e6753), ACE_NTOHL (0x65713a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:CORBA_WStringSeq:1.0
   11, ACE_NTOHL (0x57537472), ACE_NTOHL (0x696e6753), ACE_NTOHL (0x65710000),  // name = CORBA_WStringSeq
   CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
@@ -156,10 +152,8 @@ static const CORBA::Long _oc_CORBA_WStringSeq[] =
 
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_WStringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_WStringSeq), (char *) &_oc_CORBA_WStringSeq, 0, sizeof (CORBA_WStringSeq));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_WStringSeq, &_tc_TAO_tc_CORBA_WStringSeq)
-TAO_NAMESPACE_END
+CORBA::TypeCode_ptr _tc_CORBA_WStringSeq = &_tc_TAO_tc_CORBA_WStringSeq;
+
 void operator<<= (
     CORBA::Any &_tao_any,
     const CORBA_StringSeq &_tao_elem
@@ -169,7 +163,7 @@ void operator<<= (
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        CORBA::_tc_StringSeq,
+        _tc_CORBA_StringSeq,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin ()
       );
@@ -181,7 +175,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_StringSeq *_tao_elem) // non copyi
   TAO_OutputCDR stream;
   stream << *_tao_elem;
   _tao_any._tao_replace (
-      CORBA::_tc_StringSeq,
+      _tc_CORBA_StringSeq,
       TAO_ENCAP_BYTE_ORDER,
       stream.begin (),
       1,
@@ -204,7 +198,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_StringSeq *&
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_StringSeq, ACE_TRY_ENV)) // not equal
+    if (!type->equivalent (_tc_CORBA_StringSeq, ACE_TRY_ENV)) // not equal
       {
         return 0;
       }
@@ -228,7 +222,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_StringSeq *&
       if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_StringSeq,
+            _tc_CORBA_StringSeq,
             1,
             ACE_static_cast (void *, tmp),
             CORBA_StringSeq::_tao_any_destructor
@@ -258,7 +252,7 @@ void operator<<= (
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        CORBA::_tc_WStringSeq,
+        _tc_CORBA_WStringSeq,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin ()
       );
@@ -270,7 +264,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_WStringSeq *_tao_elem) // non copy
   TAO_OutputCDR stream;
   stream << *_tao_elem;
   _tao_any._tao_replace (
-      CORBA::_tc_WStringSeq,
+      _tc_CORBA_WStringSeq,
       TAO_ENCAP_BYTE_ORDER,
       stream.begin (),
       1,
@@ -293,7 +287,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_WStringSeq *
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_WStringSeq, ACE_TRY_ENV)) // not equal
+    if (!type->equivalent (_tc_CORBA_WStringSeq, ACE_TRY_ENV)) // not equal
       {
         return 0;
       }
@@ -317,7 +311,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_WStringSeq *
       if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_WStringSeq,
+            _tc_CORBA_WStringSeq,
             1,
             ACE_static_cast (void *, tmp),
             CORBA_WStringSeq::_tao_any_destructor

@@ -31,13 +31,21 @@
 #include "tao/Priority_Mapping_Manager.h"
 #include "tao/RT_Current.h"
 
+# include "tao/ORBInitInfo.h"
+# include "tao/ORBInitializer_Registry.h" 
+
+#if TAO_HAS_RTCORBA == 1
+# include "tao/RT_ORBInitializer.h"         // @@ This should go away!
+#endif  /* TAO_HAS_RTCORBA == 1 */
+
+#if TAO_HAS_CORBA_MESSAGING == 1
+# include "tao/Messaging_ORBInitializer.h"  // @@ This should go away!
+#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+
 #if defined (TAO_HAS_VALUETYPE)
 #  include "tao/ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
 
-#include "tao/Messaging_Policy_i.h"
-#include "tao/Client_Priority_Policy.h"
-#include "tao/Buffering_Constraint_Policy.h"
 #include "Object_KeyC.h"
 
 #if defined (ACE_HAS_EXCEPTIONS)
@@ -157,10 +165,6 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
 # if defined (TAO_HAS_VALUETYPE)
     valuetype_factory_map_ (0),
 # endif /* TAO_HAS_VALUETYPE */
-# if (TAO_HAS_INTERCEPTORS == 1)
-    client_interceptor_ (),
-    server_interceptor_ (),
-# endif /* TAO_HAS_INTERCEPTORS */
     use_omg_ior_format_ (1)
 {
 }
@@ -1184,13 +1188,107 @@ CORBA::ORB_init (int &argc,
 
   TAO_ORB_Core_Auto_Ptr safe_oc (oc);
 
+  // #if TAO_HAS_INTERCEPTORS == 1
+
+  // -------------------------------------------------------------
+  // @@ These ORB initializer instantiations should go away.  They
+  //    should be registered via the service configurator, for
+  //    example.
+
+#if TAO_HAS_RTCORBA == 1 || TAO_HAS_CORBA_MESSAGING == 1
+  PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
+    PortableInterceptor::ORBInitializer::_nil ();
+  PortableInterceptor::ORBInitializer_var orb_initializer;
+#endif  /* TAO_HAS_RTCORBA == 1 || TAO_HAS_CORBA_MESSAGING == 1 */
+
+#if TAO_HAS_RTCORBA == 1
+  /// Register the RTCORBA ORBInitializer.
+  ACE_NEW_THROW_EX (temp_orb_initializer,
+                    TAO_RT_ORBInitializer,
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  orb_initializer = temp_orb_initializer;
+
+  PortableInterceptor::register_orb_initializer (orb_initializer.in (),
+                                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+
+  /// Transfer ownership to the ORBInitializer registry.
+  (void) orb_initializer._retn ();
+#endif  /* TAO_HAS_RTCORBA == 1 */
+
+#if TAO_HAS_CORBA_MESSAGING == 1
+  /// Register the Messaging ORBInitializer.
+  ACE_NEW_THROW_EX (temp_orb_initializer,
+                    TAO_Messaging_ORBInitializer,
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  orb_initializer = temp_orb_initializer;
+
+  PortableInterceptor::register_orb_initializer (orb_initializer.in (),
+                                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+
+  /// Transfer ownership to the ORBInitializer registry.
+  (void) orb_initializer._retn ();
+#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+  // -------------------------------------------------------------
+
+  PortableInterceptor::ORBInitInfo_ptr orb_init_info_temp;
+  ACE_NEW_THROW_EX (orb_init_info_temp,
+                    TAO_ORBInitInfo (safe_oc.get (),
+                                     argc,
+                                     argv),
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+
+  // @@ TODO: We need to make sure this reference is no longer valid
+  //          after the ORB is fully initialized.  According to the
+  //          portable interceptor spec, we should throw a
+  //          CORBA::OBJECT_NOT_EXIST() exception during subsequent
+  //          attempts to access this instance.
+  PortableInterceptor::ORBInitInfo_var orb_init_info =
+    orb_init_info_temp;
+
+  /// Call the ORBInitializer::pre_init() on each registered ORB
+  /// initializer.
+  TAO_ORBInitializer_Registry::instance ()->pre_init (orb_init_info.in (),
+                                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  // #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
   // Initialize the ORB Core instance.
   int result = safe_oc->init (argc, argv, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
-  // Check for errors and return 0 if error.
+  // Check for errors and return nil pseudo-reference on error.
   if (result == -1)
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::ORB::_nil ());
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO),
+                        CORBA::ORB::_nil ());
+
+  // #if TAO_HAS_INTERCEPTORS == 1
+  /// Call the ORBInitializer::post_init() on each registered ORB
+  /// initializer.
+  TAO_ORBInitializer_Registry::instance ()->post_init (orb_init_info.in (),
+                                                       ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  // #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
@@ -1375,8 +1473,6 @@ CORBA_ORB::string_to_object (const char *str,
 
 // ****************************************************************
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
 CORBA::Policy_ptr
 CORBA_ORB::create_policy (CORBA::PolicyType type,
                           const CORBA::Any& val,
@@ -1385,67 +1481,12 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  switch (type)
-    {
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-    case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
-      return TAO_RelativeRoundtripTimeoutPolicy::create (val,
-                                                         ACE_TRY_ENV);
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-    case TAO_CLIENT_PRIORITY_POLICY_TYPE:
-      return TAO_Client_Priority_Policy::create (val,
-                                                 ACE_TRY_ENV);
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-    case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
-      return TAO_Sync_Scope_Policy::create (val,
-                                            ACE_TRY_ENV);
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-    case TAO_BUFFERING_CONSTRAINT_POLICY_TYPE:
-      return TAO_Buffering_Constraint_Policy::create (val,
-                                                      ACE_TRY_ENV);
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-    case TAO_MESSAGING_REBIND_POLICY_TYPE:
-    case TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE:
-    case TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE:
-    case TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE:
-    case TAO_MESSAGING_REQUEST_END_TIME_POLICY_TYPE:
-    case TAO_MESSAGING_REPLY_START_TIME_POLICY_TYPE:
-    case TAO_MESSAGING_REPLY_END_TIME_POLICY_TYPE:
-    case TAO_MESSAGING_RELATIVE_REQ_TIMEOUT_POLICY_TYPE:
-    case TAO_MESSAGING_ROUTING_POLICY_TYPE:
-    case TAO_MESSAGING_MAX_HOPS_POLICY_TYPE:
-    case TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE:
-      ACE_THROW_RETURN (CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY),
-                        CORBA::Policy::_nil ());
-
-    default:
-      break;
-    }
-
-  // Call up the loaded services through the ORB_Core to see whether
-  // they can create the Policy object for the type we have.
-  return this->orb_core_->service_create_policy (type,
-                                                 val,
-                                                 ACE_TRY_ENV);
+  /// Attempt to obtain the policy from the policy factory registry.
+  return
+    this->orb_core_->policy_factory_registry ()->create_policy (type,
+                                                                val,
+                                                                ACE_TRY_ENV);
 }
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 // ****************************************************************
 

@@ -96,7 +96,7 @@ module PortableInterceptor {
     readonly attribute IOP::TaggedProfile effective_profile;
     readonly attribute any received_exception;
     readonly attribute CORBA::RepositoryId received_exception_id;
-   IOP::TaggedComponent get_effective_component (in IOP::ComponentId id);
+    IOP::TaggedComponent get_effective_component (in IOP::ComponentId id);
 
     // Removed it for starters
     // IOP_N::TaggedComponentSeq get_effective_components (in IOP::ComponentId id);

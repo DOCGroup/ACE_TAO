@@ -240,6 +240,10 @@ SOURCE=.\Servant_Base.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServerRequestInfo.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Strategized_Object_Proxy_Broker.cpp
 # End Source File
 # Begin Source File
@@ -349,6 +353,10 @@ SOURCE=.\RTPortableServerC.h
 # Begin Source File
 
 SOURCE=.\Servant_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerRequestInfo.h
 # End Source File
 # Begin Source File
 

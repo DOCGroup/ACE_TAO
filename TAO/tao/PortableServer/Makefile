@@ -39,7 +39,8 @@ CPP_SRCS += \
   Collocated_Object \
   DomainS \
   PolicyS \
-  ORB_Manager
+  ORB_Manager \
+  ServerRequestInfo
 
 ifeq ($(minimum_corba),0)
 
