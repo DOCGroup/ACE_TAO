@@ -18,7 +18,7 @@ int
 ACE_Shared_Object::init (int, ASYS_TCHAR *[])
 {
   ACE_TRACE ("ACE_Shared_Object::init");
-  return -1;
+  return 0;
 }
 
 // Terminates object when dynamic unlinking occurs.
@@ -27,7 +27,7 @@ int
 ACE_Shared_Object::fini (void)
 {
   ACE_TRACE ("ACE_Shared_Object::fini");
-  return -1;
+  return 0;
 }
 
 // Returns information on active object.
@@ -36,7 +36,7 @@ int
 ACE_Shared_Object::info (ASYS_TCHAR **, size_t) const
 {
   ACE_TRACE ("ACE_Shared_Object::info");
-  return -1;
+  return 0;
 }
 
 // Need to give a default implementation.
