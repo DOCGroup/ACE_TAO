@@ -1,3 +1,33 @@
+Wed Jul 29 12:32:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Param_Test/run_test.pl: 
+	* tests/NestedUpcall/Triangle_Test/run_test.pl: 
+	* tests/NestedUpcall/MT_Client_Test/run_test.pl: 
+	* tests/Simple/run_test.pl: 
+	* tests/Cubit/TAO/IDL_Cubit/run_test.pl: 
+	* tests/Cubit/TAO/DII_Cubit/run_test.pl: 
+	  Use unlink instead of system("rm") or system("del").
+
+	* tests/Cubit/TAO/Makefile: 
+	* tests/Cubit/TAO/DII_Cubit/Makefile: 
+	  Added DII_Cubit to the default compilation.
+
+	* tests/Cubit/TAO/MT_Cubit/run_test.pl: 
+	  Added a one-button test.
+
+	* tests/NestedUpcall/MT_Client_Test/client.h: 
+	* tests/NestedUpcall/MT_Client_Test/client.cpp: 
+	  Instead of using the thread id to decide which server we use
+	  each client thread is assigned a number, even threads choose the
+	  first server, odd threads the second one.  The thread id
+	  approach was non-portable.
+
+	* tests/POA/RootPOA/README: 
+	* tests/POA/FindPOA/README: 
+	* tests/POA/NewPOA/README: 
+	  Updated this files, the tests don't print warning messages about
+	  the svc.conf file anymore (actually the ORB doesn't).
+
 Wed Jul 29 08:58:01 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_field/{field_ci, field_cs}.cpp: Added code

@@ -1,4 +1,5 @@
 #$Id$
+# -*- perl-mode -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
@@ -6,7 +7,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../../bin';
 require Process;
 
-$client_port = 0;
 $server1_port = 0;
 $server2_port = 0;
 $ior1file = "theior1";
@@ -21,25 +21,17 @@ $SV2 = Process::Create ("server".$Process::EXE_EXT,
                         " -ORBport $server2_port -o $ior2file ".
 			" -ORBobjrefstyle url");
 
-sleep ($sleeptime);
+sleep $sleeptime;
 
 $status = system ("client".$Process::EXE_EXT.
 		  " -ORBport $client_port ".
 		  " -f $ior1file -g $ior2file -n 2 -i 10 -s 5");
 
-$SV1->Kill ();
-$SV2->Kill ();
+$SV1->Kill (); $SV1->Wait ();
+$SV2->Kill (); $SV2->Wait ();
 
-if ($^O eq "MSWin32")
-{
-  system ("del ".$ior1file);
-  system ("del ".$ior2file);
-}
-else
-{
-  system ("rm ".$ior1file);
-  system ("rm ".$ior2file);
-}
+unlink $ior1file;
+unlink $ior2file;
 
 # @@ Capture any errors from the server too.
 exit $status;

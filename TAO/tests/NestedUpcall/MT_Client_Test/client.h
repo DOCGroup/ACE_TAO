@@ -44,7 +44,8 @@ public:
   // Execute client example code.
 
   int init (int argc, 
-            char **argv);
+            char **argv,
+	    int client_number);
   // Initialize the client communication endpoint with server.
 
 private:
@@ -72,8 +73,8 @@ private:
   CORBA::ORB_var orb_var_;
   // Remember our orb.
 
-  unsigned long thread_ID_;
-  // thread ID :-)
+  int client_number_;
+  // This is used to choose the server...
 
   unsigned long iterations_;
   // number of loops
@@ -88,8 +89,7 @@ class MT_Client_Task : public ACE_Task<ACE_SYNCH>
   // = DESCRIPTION
   //    No big purpose, just wrapping
 public:
-  MT_Client_Task (int argc, 
-                  char **argv);
+  MT_Client_Task (int argc, char **argv, int client_number);
 
   virtual int svc (void);
 
@@ -97,6 +97,9 @@ private:
   MT_Client mT_Client_;
   int argc_;
   char **argv_;
+
+  int client_number_;
+  // To determine if we use the first or the second server.
 };
 
 #endif /* MT_CLIENT_H */
