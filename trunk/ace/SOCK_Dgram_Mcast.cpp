@@ -174,7 +174,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 
 int
 ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
-				 ACE_Connect_QoS_Params qos_params,
+				 const ACE_Connect_QoS_Params &qos_params,
                                  int reuse_addr,
                                  const ASYS_TCHAR *net_if,
                                  int protocol_family,
