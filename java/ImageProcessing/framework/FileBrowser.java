@@ -83,8 +83,12 @@ class BrowserPanel extends Panel
 
     try
       {
-	Icon dirIcon = new Icon (this.parent_.getCodeBase () + "file03.gif", (Applet) this.parent_);
-	System.out.println (this.parent_.getCodeBase () + "file03.gif");
+	Icon dirIcon = new Icon (this.parent_.getCodeBase () + 
+				 "../ImageProcessing/framework/" +
+				 "file03.gif", (Applet) this.parent_);
+	System.out.println (this.parent_.getCodeBase () + 
+			    "../ImageProcessing/framework/" +
+			    "file03.gif");
 	this.root_ = new FileNode (pString,
 				   dirIcon, true, this.parent_);
       }
