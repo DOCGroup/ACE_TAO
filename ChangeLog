@@ -4,7 +4,7 @@ Fri Jan 23 14:04:31 2004  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
 
           Changed the defaulting rules for implicitly adding source files
-          when IDL_Files (or any other custom type) is specified. 
+          when IDL_Files (or any other custom type) is specified.
           Previously, generated source files would only be added to the
           Source_Files section only if IDL_Files was not specified and no
           generated source files were already listed in Source_Files.  Now,
@@ -21,15 +21,14 @@ Fri Jan 23 19:09:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jan 23 10:04:00 2004  Gary Maxey <gary.maxey@hp.com>
 
-        * ace/OS_NS_stdlib.inl
-        * ace/OS_NS_sys_wait.inl:
+        Fix for BUGID 1722, for Tandem NSK platform.
+	* ace/OS_NS_stdlib.inl:
 
-          Fix for BUGID 1722, for Tandem NSK platform
+	  Need to use spt_system() instead of system().
 
-          In OS_NS_stdlib.inl
-             Need to use spt_system() instead of system()
-          In OS_NS_sys_wait.inl
-             Need to use spt_waitpid() instead of waitpid()
+	* ace/OS_NS_sys_wait.inl:
+
+	  Need to use spt_waitpid() instead of waitpid()
 
 Fri Jan 23 09:49:00 2004  Gary Maxey <gary.maxey@hp.com>
 
@@ -11849,7 +11848,7 @@ Mon Aug  4 09:31:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           care because of the strange VxWorks implementation. Thanks to
           Marc Walrave <marc.walrave@meco.nl> for creating this.
 
-Mon Aug  4 23:47:33 2003  <Ossama Othman <ossama@dre.vanderbilt.edu>
+Mon Aug  4 23:47:33 2003  Ossama Othman <ossama@dre.vanderbilt.edu>
 
         * ace/Array_Base.cpp:
 
@@ -11857,7 +11856,7 @@ Mon Aug  4 23:47:33 2003  <Ossama Othman <ossama@dre.vanderbilt.edu>
           placement new() operator prototype.  Addresses template
           instantiation errors.
 
-Mon Aug  4 22:41:24 2003  <Ossama Othman <ossama@dre.vanderbilt.edu>
+Mon Aug  4 22:41:24 2003  Ossama Othman <ossama@dre.vanderbilt.edu>
 
         * ace/DLL_Manager.cpp:
 
