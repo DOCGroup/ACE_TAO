@@ -21,9 +21,9 @@
 
 ACE_RCSID(On_Demand_Activation, Servant_Manager, "$Id$")
 
-// Initialization.
-ServantManager_i::ServantManager_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
+  // Initialization.
+  ServantManager_i::ServantManager_i (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -54,30 +54,36 @@ ServantManager_i::obtain_servant (const char *str,
 
   // Obtain the ObjectId from the string argument.
 
-   PortableServer::ObjectId_var oid =
-     PortableServer::string_to_ObjectId (str);
+  PortableServer::ObjectId_var oid =
+    PortableServer::string_to_ObjectId (str);
 
-   ACE_DEBUG ((LM_DEBUG,
-               "before bind\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "before bind\n"));
   // Make an HASH_MAP entry by binding the object_id and the DLL
   // object associated with it together.
-   if (this->servant_map_.bind (oid.in (),
-                                dll) == -1)
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "%p\n",
-                        "Bind failed"),
-                       0);
-   // Now that the dll name is available we open the dll.
-   if (dll->open (dllname_.c_str ()) == -1)
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "%p",
-                        dll->error ()),
-                       0);
+  if (this->servant_map_.bind (oid.in (),
+                               dll) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "Bind failed"),
+                      0);
+  // Now that the dll name is available we open the dll.
+  if (dll->open (dllname_.c_str ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p",
+                       dll->error ()),
+                      0);
 
-   // The next step is to obtain the symbol for the function that will
+  // The next step is to obtain the symbol for the function that will
   // create the servant object and return it.
+
+  // Cannot go from void* to function pointer directly. Cast the void*
+  // to long first.
+  void *symbol = dll->symbol (create_symbol_.c_str ());
+  long function = ACE_reinterpret_cast (long, symbol);
+
   SERVANT_FACTORY servant_creator =
-    (SERVANT_FACTORY) dll->symbol (create_symbol_.c_str ());
+    ACE_reinterpret_cast (SERVANT_FACTORY, function);
 
   // Checking whether it is possible to create the servant.
   if (servant_creator == 0)
@@ -85,6 +91,7 @@ ServantManager_i::obtain_servant (const char *str,
                        "%p",
                        dll->error ()),
                       0);
+
   // Now create and return the servant using the <servant_creator>
   // factory function.
   return (*servant_creator) (this->orb_.in (),
