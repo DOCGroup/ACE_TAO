@@ -1,3 +1,14 @@
+Thu Mar 12 15:00:47 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_exception.cpp: In those cases where object
+	references or strings were assigned, the g++ compiler failed to do
+	implicit conversion to assign a _var to a _ptr type. This is now
+	fixed by using the _var.in () method.
+
+	* TAO_IDL/be/be_visitor_typedef.cpp: Fixed a bug that was
+	generating typecode information for data types that were imported
+	resulting in a multiply defined symbol error at link time.
+
 Thu Mar 12 09:01:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/Makefile: added -Wno-unused to g++ CCFLAGS to

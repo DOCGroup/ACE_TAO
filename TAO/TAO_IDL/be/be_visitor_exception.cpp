@@ -749,7 +749,7 @@ int be_visitor_exception_ctor_assign::visit_interface (be_interface *node)
   else
     {
       *os << "this->" << bd->local_name () << " = " << node->name ()
-          << "::_duplicate (_tao_excp." << bd->local_name () << ");\n";
+          << "::_duplicate (_tao_excp." << bd->local_name () << ".in ());\n";
     }
   return 0;
 }
@@ -768,7 +768,7 @@ int be_visitor_exception_ctor_assign::visit_interface_fwd (be_interface_fwd *nod
   else
     {
       *os << "this->" << bd->local_name () << " = " << node->name ()
-          << "::_duplicate (_tao_excp." << bd->local_name () << ");\n";
+          << "::_duplicate (_tao_excp." << bd->local_name () << ".in ());\n";
     }
   return 0;
 }
@@ -806,7 +806,7 @@ int be_visitor_exception_ctor_assign::visit_predefined_type (be_predefined_type 
         {
           *os << "this->" << bd->local_name () << " = "
               << node->name () << "::_duplicate (_tao_excp."
-              << bd->local_name () << ");\n";
+              << bd->local_name () << ".in ());\n";
         }
     } // end else if
   else // simple predefined types
@@ -860,7 +860,7 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *)
     {
       *os << "this->" << bd->local_name ()
           << " = CORBA::string_dup (_tao_excp." << bd->local_name ()
-          << ");\n";
+          << ".in ());\n";
     }
   return 0;
 }
