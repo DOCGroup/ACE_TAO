@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Filecache.h
 //
 // = AUTHOR
 //    James Hu
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_FILECACHE_H)
@@ -24,15 +24,16 @@
 #include "ace/SString.h"
 
 // = Forward declarations.
-class ACE_Filecache;
+ACE_DECLARE_EXPORT(class, ACE_Filecache);
+ACE_DECLARE_EXPORT(class, ACE_Filecache_Handle);
 class ACE_Filecache_Object;
 
 
-class ACE_Export ACE_Filecache_Handle
+class ACE_Filecache_Handle
   // = TITLE
   //     Abstraction over a real file.  This is meant to be the entry
   //     point into the Cached Virtual Filesystem.
-  // 
+  //
   // = DESCRIPTION
   // This is a cached filesystem implementation based loosely on the
   // implementation of JAWS_File.  The interfaces will be nearly the
@@ -84,12 +85,11 @@ class ACE_Export ACE_Filecache_Handle
 {
 public:
 
-  ACE_Filecache_Handle (const char *filename);
+  ACE_Filecache_Handle (const char *filename, int mapit = 1);
   // Query cache for file, and acquire it.  Assumes the file is being
   // opened for reading.
 
-  ACE_Filecache_Handle (const char *filename,
-                        int size);
+  ACE_Filecache_Handle (const char *filename, int size, int mapit = 1);
   // Create new entry, and acquire it.  Presence of SIZE assumes the
   // file is being opened for writing.
 
@@ -119,7 +119,7 @@ protected:
 public:
 
   // These come from ACE_Filecache_Object, which is an internal class.
-  enum 
+  enum
   {
     SUCCESS = 0,
     ACCESS_FAILED,
@@ -127,7 +127,7 @@ public:
     COPY_FAILED,
     STAT_FAILED,
     MEMMAP_FAILED,
-    WRITE_FAILED 
+    WRITE_FAILED
   };
 
 private:
@@ -136,6 +136,8 @@ private:
 
   ACE_HANDLE handle_;
   // A dup()'d version of the one from this->file_.
+
+  int mapit_;
 };
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
@@ -152,7 +154,7 @@ typedef ACE_Hash_Map_Manager<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex
         ACE_Filecache_Hash;
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
-class ACE_Export ACE_Filecache
+class ACE_Filecache
   // = TITLE
   //     A hash table holding the information about entry point into
   //     the Cached Virtual Filesystem. On insertion, the reference
@@ -169,7 +171,7 @@ public:
   // Returns 0 if the file associated with ``filename'' is in the cache,
   // or -1 if not.
 
-  ACE_Filecache_Object *fetch (const char *filename);
+  ACE_Filecache_Object *fetch (const char *filename, int mapit = 1);
   // Return the file associated with ``filename'' if it is in the cache,
   // or create if not.
 
@@ -184,9 +186,13 @@ public:
   // was deleted.
 
 protected:
-  ACE_Filecache_Object *insert_i (const char *filename, ACE_SYNCH_RW_MUTEX &);
+  ACE_Filecache_Object *insert_i (const char *filename,
+                                  ACE_SYNCH_RW_MUTEX &filelock,
+                                  int mapit);
   ACE_Filecache_Object *remove_i (const char *filename);
-  ACE_Filecache_Object *update_i (const char *filename, ACE_SYNCH_RW_MUTEX &);
+  ACE_Filecache_Object *update_i (const char *filename,
+                                  ACE_SYNCH_RW_MUTEX &filelock,
+                                  int mapit);
 
 public:
 
@@ -231,6 +237,7 @@ class ACE_Filecache_Object
 public:
   ACE_Filecache_Object (const char *filename,
                         ACE_SYNCH_RW_MUTEX &lock,
+                        int mapit = 1,
                         LPSECURITY_ATTRIBUTES sa = 0);
   // Creates a file for reading.
 
@@ -297,7 +304,7 @@ public:
     COPY_FAILED,
     STAT_FAILED,
     MEMMAP_FAILED,
-    WRITE_FAILED 
+    WRITE_FAILED
   };
 
 private:
@@ -323,7 +330,7 @@ private:
   // If set to 1, means the object is flagged for removal.
 
   LPSECURITY_ATTRIBUTES sa_;
-  // Security attribute object. 
+  // Security attribute object.
 
   ACE_SYNCH_RW_MUTEX junklock_;
   ACE_SYNCH_RW_MUTEX &lock_;

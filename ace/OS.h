@@ -892,6 +892,18 @@ private:
 #  define ACE_SVC_SINGLETON_INSTANTIATION(T)
 #endif /* ACE_HAS_SVC_DLL */
 
+// This is a whim of mine -- that instead of annotating a class with
+// ACE_Export in its declaration, we make the declaration near the TOP
+// of the file with ACE_DECLARE_EXPORT.
+#define ACE_DECLARE_EXPORT(TS,ID) TS ACE_Export ID
+// TS = type specifier (e.g., class, struct, int, etc.)
+// ID = identifier
+// So, how do you use it?  Most of the time, just use ...
+// ACE_DECLARE_EXPORT(class, someobject);
+// If there are global functions to be exported, then use ...
+// ACE_DECLARE_EXPORT(void, globalfunction) (int, ...);
+// Someday, when template libraries are supported, we made need ...
+// ACE_DECLARE_EXPORT(template class, sometemplate) <class TYPE, class LOCK>;
 
 // This needs to go here *first* to avoid problems with AIX.
 // Just to be safe we'll do it with pthreads, too -- jwr
