@@ -1,3 +1,10 @@
+Fri Oct 23 10:25:49 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp : Fixed the
+	problem with getting the suffix for a #include'd idl file. Use
+	strstr instead of strrchr. Thanks to Ron Barack
+	<r.barack@inobis.de> for tracking this down.  
+
 Fri Oct 23 00:40:14 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.33 released.
