@@ -2,6 +2,8 @@
 
 # Irix 6.[234] with SGI C++ in -32 (aka -o32) mode
 
+debug = 1
+
 # Note that -32 mode doesn't have exceptions enabled by default, and 
 # that the man-page cautions against it's use (you may not be able to
 # mix code compiled with and without exceptions for example!)
