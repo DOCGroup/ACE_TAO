@@ -2,6 +2,7 @@
 
 #include "ciao/CIAO_common.h"
 #include "BMClosedED_exec.h"
+#include "ace/SString.h"
 
 #include "ace/OS_NS_string.h"
 
