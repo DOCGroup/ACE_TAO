@@ -1,3 +1,8 @@
+Fri Mar 30 11:30:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+          And we need to patch dependencies yet another time.
+
 Wed Jan 24 13:44:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
