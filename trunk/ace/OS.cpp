@@ -747,7 +747,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
 // as structures...
 ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
-ACE_thread_key_t ACE_OS::NULL_key = 0;
+ACE_thread_key_t ACE_OS::NULL_key;
 
 ACE_OS::ACE_OS (void)
 {

@@ -21,32 +21,46 @@
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
 
-#define VARIETIES 3
+static const int VARIETIES = 3;
 
-u_int error = 0;
+static u_int error = 0;
 
-// This should be a template class, with singleton instantiations.
-// But to avoid having to deal with compilers that want template
-// declarations in separate files, it's just a plain class.  The
-// instance argument differentiates the "singleton" instances.
-// It also demonstrates the use of the param arg to the cleanup ()
-// function.
 class Test_Singleton
+  // = TITLE
+  //   Test the Singleton
+  //
+  // = DESCRIPTION
+  //   This should be a template class, with singleton instantiations.
+  //   But to avoid having to deal with compilers that want template
+  //   declarations in separate files, it's just a plain class.  The
+  //   instance argument differentiates the "singleton" instances.  It
+  //   also demonstrates the use of the param arg to the cleanup ()
+  //   function.
 {
 public:
   static Test_Singleton *instance (u_short variety);
-  static void cleanup (void *, void *);
+  ~Test_Singleton (void);
+
 private:
   u_short variety_;
   static u_short current_;
 
   Test_Singleton (u_short variety);
-  ~Test_Singleton (void);
 
   friend class misspelled_verbase_friend_declaration_to_avoid_compiler_warning_with_private_ctor;
 };
 
 u_short Test_Singleton::current_ = 0;
+
+extern "C" void
+test_singleton_cleanup (void *object, void *param)
+{
+  // We can't reliably use ACE_Log_Msg in a cleanup hook.  Yet.
+  ACE_UNUSED_ARG (param);
+  /* ACE_DEBUG ((LM_DEBUG, "cleanup %d\n", (u_short) param)); */
+
+  delete (Test_Singleton *) object;
+}
 
 Test_Singleton *
 Test_Singleton::instance (u_short variety)
@@ -54,23 +68,12 @@ Test_Singleton::instance (u_short variety)
   static Test_Singleton *instances[VARIETIES] = { 0 };
 
   if (instances[variety] == 0)
-    {
-      ACE_NEW_RETURN (instances[variety], Test_Singleton (variety), 0);
-    }
+    ACE_NEW_RETURN (instances[variety], Test_Singleton (variety), 0);
 
-  ACE_Object_Manager::at_exit (instances[variety], cleanup, (void *) variety);
-
+  ACE_Object_Manager::at_exit (instances[variety],
+			       test_singleton_cleanup,
+			       (void *) variety);
   return instances[variety];
-}
-
-void
-Test_Singleton::cleanup (void *object, void *param)
-{
-  // We can't reliably use ACE_Log_Msg in a cleanup hook.  Yet.
-  ACE_UNUSED_ARG (param);
-  /* ACE_DEBUG ((LM_DEBUG, "cleanup %d\n", (u_short) param)); */
-
-  delete (Test_Singleton *) object;
 }
 
 Test_Singleton::Test_Singleton (u_short variety)
