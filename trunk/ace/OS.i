@@ -680,19 +680,6 @@ ACE_OS::umask (mode_t cmask)
   case ERROR_NOT_ENOUGH_MEMORY: errno = ENOMEM; break; \
   } \
   return RESULT; } while (0)
-#define ACE_OSCALL_RETURN(X,TYPE,FAILVALUE) \
-  do { \
-    TYPE ace_result_ = (TYPE) X; \
-    if (ace_result_ == FAILVALUE) \
-      errno = ::GetLastError (); \
-    return ace_result_; \
-  } while (0)
-#define ACE_OSCALL(X,TYPE,FAILVALUE,RESULT) \
-  do { \
-    RESULT = (TYPE) X; \
-    if (RESULT == FAILVALUE) \
-      errno = ::GetLastError (); \
-  } while (0)
 
 ACE_INLINE int 
 ACE_OS::chdir (const char *path)

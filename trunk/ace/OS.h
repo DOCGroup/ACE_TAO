@@ -3469,6 +3469,20 @@ private:
     while (ace_result_ == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ()); \
     return ace_result_; \
   } while (0)
+#elif defined (ACE_WIN32)
+#define ACE_OSCALL_RETURN(X,TYPE,FAILVALUE) \
+  do { \
+    TYPE ace_result_ = (TYPE) X; \
+    if (ace_result_ == FAILVALUE) \
+      errno = ::GetLastError (); \
+    return ace_result_; \
+  } while (0)
+#define ACE_OSCALL(X,TYPE,FAILVALUE,RESULT) \
+  do { \
+    RESULT = (TYPE) X; \
+    if (RESULT == FAILVALUE) \
+      errno = ::GetLastError (); \
+  } while (0)
 #else
 #define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)
 #define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)

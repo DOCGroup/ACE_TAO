@@ -3,6 +3,12 @@ Wed Jun 25 02:36:05 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 	* ace/OS.h: Moved definition of ACE_SHLIB_HANDLE typedef and
  	  ACE_DEFAULT_SHLIB_MODE global variable for Win32 to where it
  	  belongs.
+	  
+	* ace/OS.i: Changed the return type of dlopen() when ACE_HAS_UNICODE to
+ 	  ACE_SHLIB_HANDLE.
+	
+	* ace/OS.{h,i}: Moved ACE_OSCALL and ACE_OSCALL_RETURN for WIN32
+ 	  from OS.i to OS.h.
 
 Wed Jun 25 01:23:58 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
