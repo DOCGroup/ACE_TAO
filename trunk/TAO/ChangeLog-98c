@@ -1,237 +1,249 @@
+Mon Sep 21 21:44:39 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/CDR.i,tao/Connect.cpp,
+          performance-tests/Cubit/CORBAplus/MT_Cubit/server/Makefile
+          performance-tests/Cubit/TAO/MT_Cubit/Makefile
+          performance-tests/Thruput/COOL/ttcp_i.cpp
+          performance-tests/Thruput/CORBAplus/ttcp_i.cpp
+          performance-tests/Thruput/TAO/ttcp_i.cpp:
+          use ACE_HAS_PURIFY instead of ACE_PURIFY.  And, removed
+          purify settings from Makefiles now that they're in ACE's
+          wrapper_macros.GNU.
+
 Mon Sep 21 21:32:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp,
-	  Removed the extra args after init().
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp,
+          Removed the extra args after init().
 
 Mon Sep 21 18:20:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): Added compile time option
- 	  TAO_USE_DOTTED_DECIMAL_ADDRESSES that makes the use of dotted
- 	  decimal addresses the default.  Also changed the
- 	  -ORBdotteddecimaladdresses option to take an argument (0 or 1).
+        * tao/ORB_Core.cpp (init): Added compile time option
+          TAO_USE_DOTTED_DECIMAL_ADDRESSES that makes the use of dotted
+          decimal addresses the default.  Also changed the
+          -ORBdotteddecimaladdresses option to take an argument (0 or 1).
 
-	* tao/ORB.cpp: 
-	* tao/Connect.cpp: 
+        * tao/ORB.cpp:
+        * tao/Connect.cpp:
 
-	  g++ cannot gork templates typedefs.
+          g++ cannot gork templates typedefs.
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (new_context and list):
- 	  Cannot call _this() directly since the POA has the USER_ID
- 	  policy.  Therefore, added a simple scheme for producing names
-	  based on a counter value.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (new_context and list):
+          Cannot call _this() directly since the POA has the USER_ID
+          policy.  Therefore, added a simple scheme for producing names
+          based on a counter value.
 
 Mon Sep 21 18:15:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.cpp: 
-	* tao/Connect.cpp: 
-	  Fixed template instantiations, thanks to Irfan for his help
-	  tracking this down.
+        * tao/ORB.cpp:
+        * tao/Connect.cpp:
+          Fixed template instantiations, thanks to Irfan for his help
+          tracking this down.
 
 Mon Sep 21 01:38:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/DII_Cubit/client.cpp (init_naming_service): 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
- 	  (init_naming_service): Fixed initialization of Naming_Server.
+        * performance-tests/Cubit/TAO/DII_Cubit/client.cpp (init_naming_service):
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+          (init_naming_service): Fixed initialization of Naming_Server.
 
-	* orbsvcs/orbsvcs/IOR_Multicast.h (TAO_IOR_Multicast): Changed
-	  char * to const char *.
+        * orbsvcs/orbsvcs/IOR_Multicast.h (TAO_IOR_Multicast): Changed
+          char * to const char *.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h (TAO_Naming_Server):
- 	  Complete revamp of Naming_Server and Naming_Client. New
- 	  implementation is better with respect to functionality, memory
- 	  management and other indescribable things ;-)
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h (TAO_Naming_Server):
+          Complete revamp of Naming_Server and Naming_Client. New
+          implementation is better with respect to functionality, memory
+          management and other indescribable things ;-)
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext):
- 	  Deprecated init(). Also fixed some other simple stuff.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext):
+          Deprecated init(). Also fixed some other simple stuff.
 
-	* tao/IIOP_Object.cpp (IIOP_Object): Fixed initialization for
- 	  this->fwd_profile_lock_ptr_.
+        * tao/IIOP_Object.cpp (IIOP_Object): Fixed initialization for
+          this->fwd_profile_lock_ptr_.
 
-	* tao/IIOP_Object.i (reset_handler) and (~IIOP_Object): Added code
- 	  to cleanup hint svc_handler.
+        * tao/IIOP_Object.i (reset_handler) and (~IIOP_Object): Added code
+          to cleanup hint svc_handler.
 
-	* tao/ORB.cpp: Fixed template instantiations.
+        * tao/ORB.cpp: Fixed template instantiations.
 
-	* tao/GIOP: 
-	* tao/Invocation.cpp
+        * tao/GIOP:
+        * tao/Invocation.cpp
 
-	  Changed close to handle_close.
+          Changed close to handle_close.
 
-	* tao/Environment.cpp (print_exception): Check for zero exception
- 	  before printing.
+        * tao/Environment.cpp (print_exception): Check for zero exception
+          before printing.
 
-	* tao/Connect.cpp (handle_close): Close socket but don't delete
- 	  instance.  Instance will be deleted when all "hints" are
- 	  removed. Instance is deleted in close().
+        * tao/Connect.cpp (handle_close): Close socket but don't delete
+          instance.  Instance will be deleted when all "hints" are
+          removed. Instance is deleted in close().
 
 Sun Sep 20 23:30:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB: It is now possible to give an ACE_Time_Value to the
- 	  ORB's resolve_initial_references() method in order to bound the
- 	  amount of time spent waiting for a service to be resolved via
- 	  multicast.
+        * tao/ORB: It is now possible to give an ACE_Time_Value to the
+          ORB's resolve_initial_references() method in order to bound the
+          amount of time spent waiting for a service to be resolved via
+          multicast.
 
-	* tao/orbconf.h: Renamed TAO_DEFAULT_NAME_SERVER_TIMEOUT to
- 	  TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT, which is more
- 	  descriptive.
+        * tao/orbconf.h: Renamed TAO_DEFAULT_NAME_SERVER_TIMEOUT to
+          TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT, which is more
+          descriptive.
 
 Sun Sep 20 22:57:28 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
-	* TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.h,
-	  TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
-	  updated servants to keep a reference to their POA (which might be
-	  different from the root POA).
+        * TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.h,
+          TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
+          updated servants to keep a reference to their POA (which might be
+          different from the root POA).
 
 Sun Sep 20 22:41:02 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Simple/echo/Echo_i.cpp:
-	  changes in Echo::echo() made.
+        * examples/Simple/echo/Echo_i.cpp:
+          changes in Echo::echo() made.
 
 Sun Sep 20 22:39:52 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
 
-	* ChangeLog, orbsvcs/orbsvcs/AVStreams.idl: *** empty log message ***
+        * ChangeLog, orbsvcs/orbsvcs/AVStreams.idl: *** empty log message ***
 
 Sun Sep 20 22:32:03 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ChangeLog, examples/Simple/echo/README: *** empty log message ***
-	  file added.
-	
+        * ChangeLog, examples/Simple/echo/README: *** empty log message ***
+          file added.
+
 Sun Sep 20 21:54:24 1998  Marina Igorevna Spivak  <marina@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.h, ChangeLog, orbsvcs/orbsvcs/Naming/Naming_Utils.h, orbsvcs/orbsvcs/Naming/Naming_Utils.cpp, orbsvcs/orbsvcs/Naming/Entries.h, orbsvcs/orbsvcs/Naming/Entries.cpp, orbsvcs/orbsvcs/Naming/CosNaming_i.cpp, orbsvcs/orbsvcs/CosNaming.idl:
-	*** empty log message ***
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.h, ChangeLog, orbsvcs/orbsvcs/Naming/Naming_Utils.h, orbsvcs/orbsvcs/Naming/Naming_Utils.cpp, orbsvcs/orbsvcs/Naming/Entries.h, orbsvcs/orbsvcs/Naming/Entries.cpp, orbsvcs/orbsvcs/Naming/CosNaming_i.cpp, orbsvcs/orbsvcs/CosNaming.idl:
+        *** empty log message ***
 
 Sun Sep 20 20:59:38 1998  Vishal Kachroo  <vishal@waltz.cs.wustl.edu>
 
-	* ChangeLog: *** empty log message ***
+        * ChangeLog: *** empty log message ***
 
 Sun Sep 20 20:42:29 1998  Marina Igorevna Spivak  <marina@waltz.cs.wustl.edu>
 
-	* ChangeLog, tao/corba.h: *** empty log message ***
+        * ChangeLog, tao/corba.h: *** empty log message ***
 
 Sun Sep 20 20:36:32 1998  Vishal Kachroo  <vishal@waltz.cs.wustl.edu>
 
-	* examples/Simple/bank/AccountManager_i.cpp, examples/Simple/bank/Bank.idl, examples/Simple/bank/Client_i.cpp, examples/Simple/bank/Client_i.h, examples/Simple/bank/README, examples/Simple/bank/Server_i.cpp, examples/Simple/bank/run_test.pl:
-	*** empty log message ***
+        * examples/Simple/bank/AccountManager_i.cpp, examples/Simple/bank/Bank.idl, examples/Simple/bank/Client_i.cpp, examples/Simple/bank/Client_i.h, examples/Simple/bank/README, examples/Simple/bank/Server_i.cpp, examples/Simple/bank/run_test.pl:
+        *** empty log message ***
 
 Sun Sep 20 01:21:07 1998  Darrell E. Brunsch  <brunsch@waltz.cs.wustl.edu>
 
-	* ChangeLog: IIOP_Object changes.
+        * ChangeLog: IIOP_Object changes.
 
-	* tao/IIOP_Object.cpp, tao/IIOP_Object.h, tao/IIOP_Object.i:
-	Fixed the static call to revert back to the original profile when the
-	forwarded profile fails.
+        * tao/IIOP_Object.cpp, tao/IIOP_Object.h, tao/IIOP_Object.i:
+        Fixed the static call to revert back to the original profile when the
+        forwarded profile fails.
 
 1998-09-20  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Simple/echo/Echo_i.cpp: 
-	changes in method Echo::echo.
+        * examples/Simple/echo/Echo_i.cpp:
+        changes in method Echo::echo.
 
 Sun Sep 20 21:20:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
-	* TAO/orbsvcs/orbsvcs/CosNaming.idl: added comments.
+        * TAO/orbsvcs/orbsvcs/CosNaming.idl: added comments.
 
-	* TAO/orbsvcs/orbsvcs/Naming/*: 
-	renamed all classes NS_* to be TAO_*
+        * TAO/orbsvcs/orbsvcs/Naming/*:
+        renamed all classes NS_* to be TAO_*
 
-	* TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.*:
-	modified implementation to support C++ exception via use of TAO's
-	portable exception macros. Updated destroy methods.  Created
-	<root_> flag, which can be set in the constructor to identify a
-	root context.
+        * TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.*:
+        modified implementation to support C++ exception via use of TAO's
+        portable exception macros. Updated destroy methods.  Created
+        <root_> flag, which can be set in the constructor to identify a
+        root context.
 
-	* tao/corba.h: added TAO_TRY_THROW macro, which should be used
-	inside  a TAO_TRY block, and caught by the following TAO_CATCH...
+        * tao/corba.h: added TAO_TRY_THROW macro, which should be used
+        inside  a TAO_TRY block, and caught by the following TAO_CATCH...
 
 Sun Sep 20 20:20:20 1998 Vishal Kachroo <vishal@merengue.cs.wustl.edu>
 
-	* TAO/tests/Simple/bank : Checked in the final versions of the following files :
-        	/Account_i.cpp
-		/Account_i.h
-        	/AccountManager_i.cpp
-        	/AccountManager_i.h
-        	/Server_i.cpp
-        	/Server_i.h
-        	/Client_i.cpp
-        	/Client_i.h
-        	/server.cpp
-        	/client.cpp
-        	/Bank.idl
+        * TAO/tests/Simple/bank : Checked in the final versions of the following files :
+                /Account_i.cpp
+                /Account_i.h
+                /AccountManager_i.cpp
+                /AccountManager_i.h
+                /Server_i.cpp
+                /Server_i.h
+                /Client_i.cpp
+                /Client_i.h
+                /server.cpp
+                /client.cpp
+                /Bank.idl
 
 Sun Sep 20 01:19:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/IIOP_Object.{cpp,i,h}: Fixed the static call to 
-	  revert back to the original profile when the forwarded
-	  profile fails.
+        * tao/IIOP_Object.{cpp,i,h}: Fixed the static call to
+          revert back to the original profile when the forwarded
+          profile fails.
 
 Sat Sep 19 21:35:28 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/Simple_Naming/client.dsp:
-	* tests/Trading/TradingLib.dsp:
-	  More projects that need to be changed because of the
-	  TAO_IDL's move.
+        * tests/Simple_Naming/client.dsp:
+        * tests/Trading/TradingLib.dsp:
+          More projects that need to be changed because of the
+          TAO_IDL's move.
 
 Sat Sep 19 21:27:38 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/GIOP.cpp: Fixed a signed/unsigned comparison in 
-	  writev_n.
+        * tao/GIOP.cpp: Fixed a signed/unsigned comparison in
+          writev_n.
 
 Sat Sep 19 14:26:54 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* examples/TAO_Examples.dsw:
-	* performance-tests/TAO_Perf_Tests.dsw:
-	* tests/TAO_Tests.dsw:
-	  Split up the workspaces to work with the new structure
-	  of examples, performance-tests, and tests.
-		
-	* TAO_IDL/tao_idl.dsp:
-	* tao/tao.dsp:
-	* examples/POA/Generic_Servant/server.dsp:
-	  Changed behavior of all DLL projects and utilities (like
-	  tao_idl) to put the dll and executables in $ACE_ROOT/bin.
+        * examples/TAO_Examples.dsw:
+        * performance-tests/TAO_Perf_Tests.dsw:
+        * tests/TAO_Tests.dsw:
+          Split up the workspaces to work with the new structure
+          of examples, performance-tests, and tests.
 
-	* examples/POA/DSI/client.dsp:
-	* examples/POA/Forwarding/client.dsp:
-	* examples/POA/Forwarding/server.dsp:
-	* examples/POA/Generic_Servant/client.dsp:
-	* examples/POA/TIE/client.dsp:
-	* examples/POA/TIE/server.dsp:
-	* examples/Quoter/Factory_Finder.dsp:
-	* examples/Quoter/Generic_Factory.dsp:
-	* examples/Quoter/client.dsp:
-	* examples/Quoter/server.dsp:
-	* examples/Simple/time/client.dsp:
-	* examples/Simple/time/server.dsp:
-	* orbsvcs/Naming_Service/Naming_Service.dsp:
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
-	* performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
-	* performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
-	* tests/Multiple_Inheritance/client.dsp:
-	* tests/Multiple_Inheritance/server.dsp:
-	* tests/NestedUpcall/MT_Client_Test/client.dsp:
-	* tests/NestedUpcall/MT_Client_Test/server.dsp:
-	* tests/NestedUpcall/Reactor/client.dsp:
-	* tests/NestedUpcall/Reactor/server.dsp:
-	* tests/NestedUpcall/Triangle_Test/initiator.dsp:
-	* tests/NestedUpcall/Triangle_Test/server_A.dsp:
-	* tests/NestedUpcall/Triangle_Test/server_B.dsp:
-	* tests/OctetSeq/OctetSeq.dsp:
-	* tests/Param_Test/client.dsp:
-	* tests/Param_Test/server.dsp:
-	  Had to update projects that compile IDL files since tao_idl
-	  was moved to $ACE_ROOT/bin.
+        * TAO_IDL/tao_idl.dsp:
+        * tao/tao.dsp:
+        * examples/POA/Generic_Servant/server.dsp:
+          Changed behavior of all DLL projects and utilities (like
+          tao_idl) to put the dll and executables in $ACE_ROOT/bin.
 
-	* TAO-INSTALL.html
-	  Updated the instructions for all this.
+        * examples/POA/DSI/client.dsp:
+        * examples/POA/Forwarding/client.dsp:
+        * examples/POA/Forwarding/server.dsp:
+        * examples/POA/Generic_Servant/client.dsp:
+        * examples/POA/TIE/client.dsp:
+        * examples/POA/TIE/server.dsp:
+        * examples/Quoter/Factory_Finder.dsp:
+        * examples/Quoter/Generic_Factory.dsp:
+        * examples/Quoter/client.dsp:
+        * examples/Quoter/server.dsp:
+        * examples/Simple/time/client.dsp:
+        * examples/Simple/time/server.dsp:
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
+        * tests/Multiple_Inheritance/client.dsp:
+        * tests/Multiple_Inheritance/server.dsp:
+        * tests/NestedUpcall/MT_Client_Test/client.dsp:
+        * tests/NestedUpcall/MT_Client_Test/server.dsp:
+        * tests/NestedUpcall/Reactor/client.dsp:
+        * tests/NestedUpcall/Reactor/server.dsp:
+        * tests/NestedUpcall/Triangle_Test/initiator.dsp:
+        * tests/NestedUpcall/Triangle_Test/server_A.dsp:
+        * tests/NestedUpcall/Triangle_Test/server_B.dsp:
+        * tests/OctetSeq/OctetSeq.dsp:
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/server.dsp:
+          Had to update projects that compile IDL files since tao_idl
+          was moved to $ACE_ROOT/bin.
+
+        * TAO-INSTALL.html
+          Updated the instructions for all this.
 
 Sat Sep 19 14:03:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Explicit_Activation/alternate.conf: Fixed service
- 	  config directive since directory name of the alternate resource
- 	  factory was changed.
+        * examples/POA/Explicit_Activation/alternate.conf: Fixed service
+          config directive since directory name of the alternate resource
+          factory was changed.
 
 Sat Sep 19 13:13:46 1998  David L. Levine  <levine@cs.wustl.edu>
 
