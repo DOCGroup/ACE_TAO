@@ -1,3 +1,10 @@
+Mon Sep 29 21:28:02 1997    <irfan@TWOSTEP>
+
+	* ace/Synch (ACE_Recursive_Thread_Mutex): Methods were added to
+ 	  ACE_Recursive_Thread_Mutex so that it has a consistent interface
+ 	  with other locking mechanisms.  Thanks to Phil Logan
+ 	  <phill@in.ot.com.au> for submitting these changes.
+
 Mon Sep 29 13:28:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i (thr_setconcurrency): added support on Irix 6.x, using
@@ -41,7 +48,7 @@ Sat Sep 27 17:04:48 1997    <irfan@TWOSTEP>
  	  application. Also both the methods are virtual, and user can
  	  subclass to change their behavior. The internal code of the
  	  reactor also changed to now use these methods exclusively rather
- 	  than the the raw data variables.	
+ 	  than the the raw data variables.
 
 	* ace/Acceptor.cpp (handle_input): When using the WFMO_Reactor, we
  	  need to reset the event association for the newly created
