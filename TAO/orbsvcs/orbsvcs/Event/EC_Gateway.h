@@ -66,8 +66,6 @@ public:
   // The gateway must disconnect from all the relevant event channels,
   // or any other communication media (such as multicast groups).
 
-private:
-  friend class ACE_EventChannel;
   void observer_handle (RtecEventChannelAdmin::Observer_Handle h);
   RtecEventChannelAdmin::Observer_Handle observer_handle (void) const;
   // Obtain and modify the observer handle.

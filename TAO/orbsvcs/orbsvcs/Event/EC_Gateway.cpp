@@ -46,50 +46,58 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                            RtecScheduler::Scheduler_ptr lcl_sched,
                            const char* lcl_name,
                            const char* rmt_name,
-                           CORBA::Environment &TAO_IN_ENV)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   this->rmt_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (rmt_ec);
   this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
 
-  this->rmt_info_ =
-    rmt_sched->create (rmt_name, TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+  if (!CORBA::is_nil (rmt_sched))
+    {
+      this->rmt_info_ =
+        rmt_sched->create (rmt_name, ACE_TRY_ENV);
+      ACE_CHECK;
 
-  // @@ TODO Many things are hard-coded in the RT_Info here.
+      // @@ TODO Many things are hard-coded in the RT_Info here.
 
-  // The worst case execution time is far less than 500 usecs, but
-  // that is a safe estimate....
-  ACE_Time_Value tv (0, 500);
-  TimeBase::TimeT time;
-  ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  rmt_sched->set (this->rmt_info_,
-                  RtecScheduler::VERY_HIGH_CRITICALITY,
-                  time, time, time,
-                  25000 * 10,
-                  RtecScheduler::VERY_LOW_IMPORTANCE,
-                  time,
-                  0,
-                  RtecScheduler::OPERATION,
-                  TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+      // The worst case execution time is far less than 500 usecs, but
+      // that is a safe estimate....
+      ACE_Time_Value tv (0, 500);
+      TimeBase::TimeT time;
+      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
+      rmt_sched->set (this->rmt_info_,
+                      RtecScheduler::VERY_HIGH_CRITICALITY,
+                      time, time, time,
+                      25000 * 10,
+                      RtecScheduler::VERY_LOW_IMPORTANCE,
+                      time,
+                      0,
+                      RtecScheduler::OPERATION,
+                      ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 
-  this->lcl_info_ =
-    lcl_sched->create (lcl_name, TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+  if (!CORBA::is_nil (lcl_sched))
+    {
+      this->lcl_info_ =
+        lcl_sched->create (lcl_name, ACE_TRY_ENV);
+      ACE_CHECK;
 
-  lcl_sched->set (this->lcl_info_,
-                  RtecScheduler::VERY_HIGH_CRITICALITY,
-                  time, time, time,
-                  25000 * 10,
-                  RtecScheduler::VERY_LOW_IMPORTANCE,
-                  time,
-                  1,
-                  RtecScheduler::REMOTE_DEPENDANT,
-                  TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
-
+      ACE_Time_Value tv (0, 500);
+      TimeBase::TimeT time;
+      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
+      lcl_sched->set (this->lcl_info_,
+                      RtecScheduler::VERY_HIGH_CRITICALITY,
+                      time, time, time,
+                      25000 * 10,
+                      RtecScheduler::VERY_LOW_IMPORTANCE,
+                      time,
+                      1,
+                      RtecScheduler::REMOTE_DEPENDANT,
+                      ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 }
 
 void

@@ -65,38 +65,7 @@ EC_Driver::run (int argc, char* argv[])
       // test.
       ACE_High_Res_Timer::calibrate ();
 
-      this->initialize_orb_and_poa (argc, argv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (this->parse_args (argc, argv))
-        return 1;
-
-      if (this->verbose ())
-        this->print_args ();
-
-      if (this->pid_file_name_ != 0)
-        {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
-          if (pid != 0)
-            {
-              ACE_OS::fprintf (pid, "%d\n", ACE_OS::getpid ());
-              ACE_OS::fclose (pid);
-            }
-        }
-
-      if (this->move_to_rt_class () == -1)
-        return -1;
-
-      this->initialize_ec_impl (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (this->allocate_consumers () == -1)
-        return 1;
-
-      if (this->allocate_suppliers () == -1)
-        return 1;
-
-      this->connect_clients (ACE_TRY_ENV);
+      this->run_init (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       this->execute_test (ACE_TRY_ENV);
@@ -104,25 +73,8 @@ EC_Driver::run (int argc, char* argv[])
 
       this->dump_results ();
 
-      this->disconnect_clients (ACE_TRY_ENV);
+      this->run_cleanup (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      this->destroy_ec (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (this->verbose ())
-        ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) channel destroyed\n"));
-
-      this->deactivate_ec (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (this->verbose ())
-        ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) channel deactivated\n"));
-
-      this->cleanup_tasks ();
-      this->cleanup_suppliers ();
-      this->cleanup_consumers ();
-      this->cleanup_ec ();
     }
   ACE_CATCHANY
     {
@@ -134,6 +86,73 @@ EC_Driver::run (int argc, char* argv[])
     }
   ACE_ENDTRY;
   return 0;
+}
+
+void
+EC_Driver::run_init (int &argc, char* argv[],
+                     CORBA::Environment& ACE_TRY_ENV)
+{
+  this->initialize_orb_and_poa (argc, argv, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (this->parse_args (argc, argv))
+    ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                CORBA::COMPLETED_NO));
+
+  if (this->verbose ())
+    this->print_args ();
+
+  if (this->pid_file_name_ != 0)
+    {
+      FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+      if (pid != 0)
+        {
+          ACE_OS::fprintf (pid, "%d\n", ACE_OS::getpid ());
+          ACE_OS::fclose (pid);
+        }
+    }
+
+  if (this->move_to_rt_class () == -1)
+    ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                CORBA::COMPLETED_NO));
+
+  this->initialize_ec_impl (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (this->allocate_consumers () == -1)
+    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                 CORBA::COMPLETED_NO));
+
+  if (this->allocate_suppliers () == -1)
+    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                 CORBA::COMPLETED_NO));
+
+  this->connect_clients (ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+EC_Driver::run_cleanup (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->disconnect_clients (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->destroy_ec (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) channel destroyed\n"));
+
+  this->deactivate_ec (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) channel deactivated\n"));
+
+  this->cleanup_tasks ();
+  this->cleanup_suppliers ();
+  this->cleanup_consumers ();
+  this->cleanup_ec ();
 }
 
 void
@@ -994,6 +1013,18 @@ EC_Driver::cleanup_ec (void)
 #if !defined(EC_DISABLE_OLD_EC)
   delete this->module_factory_;
 #endif
+}
+
+int
+EC_Driver::decode_consumer_cookie (void* cookie) const
+{
+  return ACE_static_cast(EC_Consumer**,cookie) - this->consumers_;
+}
+
+int
+EC_Driver::decode_supplier_cookie (void* cookie) const
+{
+  return ACE_static_cast(EC_Supplier**,cookie) - this->suppliers_;
 }
 
 void
