@@ -133,6 +133,8 @@ DRV_cpp_init()
   DRV_cpp_putarg ("-E");
   DRV_cpp_putarg("-DIDL");
   DRV_cpp_putarg ("-I.");
+
+  // So we can find the required orb.idl file.
   DRV_cpp_putarg (ACE_OS::strcat (ACE_OS::strcat ("-I",
                                                   ACE_OS::getenv ("TAO_ROOT")),
                                   "/tao"));
