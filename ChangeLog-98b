@@ -1,35 +1,40 @@
+Fri Jul 24 21:42:39 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Message_Queue_Test.cpp: rearranged declarations so
+          that the test will build without ACE_HAS_THREADS.
+
 Fri Jul 24 15:15:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Updated the manual pages to reflect recent changes.
+        * Updated the manual pages to reflect recent changes.
 
-	* ace/Svc_Conf.h: Change from yyerror (char *) to yyerror (const
-	  char *).
+        * ace/Svc_Conf.h: Change from yyerror (char *) to yyerror (const
+          char *).
 
 Fri Jul 24 14:36:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/OS.{cpp, h} (ACE_Time_Value): Added ACE_Time_Value::max,
-	  for the value at the other end of the time spectrum that can
-	  be represented as a normalized ACE_Time_Value (LONG_MAX seconds, 
-	  ACE_ONE_SEC_IN_USECS - 1 microseconds).
+          for the value at the other end of the time spectrum that can
+          be represented as a normalized ACE_Time_Value (LONG_MAX seconds,
+          ACE_ONE_SEC_IN_USECS - 1 microseconds).
 
-	* ace/Message_Block.{cpp, h} (ACE_Message_Block): Changed default
-	  parameters so message deadlines default to ACE_Time_Value::max
-	  instead of ACE_Time_Value::zero - this ensures the assigned
-	  static priority order is preserved in a dynamic message queue
-	  if deadlines are not set.
+        * ace/Message_Block.{cpp, h} (ACE_Message_Block): Changed default
+          parameters so message deadlines default to ACE_Time_Value::max
+          instead of ACE_Time_Value::zero - this ensures the assigned
+          static priority order is preserved in a dynamic message queue
+          if deadlines are not set.
 
-        * ace/Message_Queue_T.{cpp, h} (ACE_Dynamic_Message_Queue): Changed 
-	  enqueue_tail and enqueue_head to call overloaded enqueue_prio 
-	  instead of static message queue base class methods (fixes bug
-	  EC_Multiple_Test uncovered where a tail-enqueued zero length 
-	  message is still seen in the queue by the base class, but the
-	  derived dynamic message queue class thinks the queue is empty)
+        * ace/Message_Queue_T.{cpp, h} (ACE_Dynamic_Message_Queue): Changed
+          enqueue_tail and enqueue_head to call overloaded enqueue_prio
+          instead of static message queue base class methods (fixes bug
+          EC_Multiple_Test uncovered where a tail-enqueued zero length
+          message is still seen in the queue by the base class, but the
+          derived dynamic message queue class thinks the queue is empty)
 
-	* DOC-way.html: added one on chess and sleep
+        * DOC-way.html: added one on chess and sleep
 
 Fri Jul 24 12:35:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Token.{h,cpp}: Fixed warnings from gcc and SunCC.
+        * ace/Token.{h,cpp}: Fixed warnings from gcc and SunCC.
 
 Fri Jul 24 09:05:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
