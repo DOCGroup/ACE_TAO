@@ -36,7 +36,7 @@ ACE_CString::ACE_CString (const char *s,
   else
     length = 0;
 
-  this->set (length, s, release);
+  this->set (s, length, release);
 }
 
 ACE_INLINE
@@ -49,7 +49,7 @@ ACE_CString::ACE_CString (char c,
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
-  this->set (1, &c, 1);
+  this->set (&c, 1, 1);
 }
 
 // Constructor that actually copies memory.
@@ -66,7 +66,7 @@ ACE_CString::ACE_CString (const char *s,
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
-  this->set (len, s, release);
+  this->set (s, len, release);
 }
 
 // Copy constructor.
@@ -80,7 +80,7 @@ ACE_CString::ACE_CString (const ACE_CString &s)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
-  this->set (s.len_, s.rep_, 1);
+  this->set (s.rep_, s.len_, 1);
 }
 
 ACE_INLINE
@@ -106,7 +106,7 @@ ACE_CString::operator= (const ACE_CString &s)
 
   // Check for identify.
   if (this != &s)
-    this->set (s.len_, s.rep_, 1);
+    this->set (s.rep_, s.len_, 1);
 
   return *this;
 }
@@ -120,7 +120,7 @@ ACE_CString::set (const char *s, int release)
   else
     length = 0;
 
-  this->set (length, s, release);
+  this->set (s, length, release);
 }
 
 ACE_INLINE size_t

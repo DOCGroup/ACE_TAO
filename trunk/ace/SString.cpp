@@ -272,8 +272,8 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s,
 }
 
 void
-ACE_CString::set (size_t len,
-                  const char *s,
+ACE_CString::set (const char *s,
+                  size_t len,
                   int release)
 {
   // Free memory if necessary
@@ -781,7 +781,7 @@ ACE_WString::operator= (const ACE_WString &s)
   // Check for identify.
 
   if (this != &s)
-    this->set (s.len_, s.rep_);
+    this->set (s.rep_, s.len_);
 
   return *this;
 }
@@ -793,7 +793,7 @@ ACE_WString::set (const ACE_USHORT16 *s)
 }
 
 void
-ACE_WString::set (size_t len, const ACE_USHORT16 *s)
+ACE_WString::set (const ACE_USHORT16 *s, size_t len)
 {
   // Only reallocate if we don't have enough space...
   if (this->len_ < len)
