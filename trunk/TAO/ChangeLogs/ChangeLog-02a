@@ -1,3 +1,9 @@
+Fri Nov 23 10:34:39 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp (main): 
+	  Missed one of the transformations from "OBJECT" to
+ 	  "OBJECT_LEVEL".  Thanks to Craig for reporting this.
+
 Thu Nov 22 04:01:13 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	Fixes and new test supplied by Yamuna Krishnamurthy <yamuna@cs.wustl.edu>:

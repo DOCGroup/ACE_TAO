@@ -140,12 +140,18 @@ Method_Request_print::Method_Request_print (Scheduler *new_scheduler,
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_print created\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Printer reference count: %d\n"),
+              printer_.count ()));
 }
 
 Method_Request_print::~Method_Request_print (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_print will be deleted.\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Printer reference count: %d\n"),
+              printer_.count ()));
 }
 
 int

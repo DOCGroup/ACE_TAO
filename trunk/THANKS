@@ -586,7 +586,7 @@ Frank Buschmann <Frank.Buschmann@mchp.siemens.de>
 Eric Eide <eeide@cs.utah.edu>
 Don Busch <busch_d@ociweb.com>
 Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov>
-David Hauck <davidh@realtimeint.com>
+David Hauck <davidh@netacquire.com>
 Joe Hoffert  <joeh@tango.cs.wustl.edu>
 Keith Rohrer <KRohrer@hnv.com>
 Tim Rose <trose@bridgewatersys.com>
@@ -1371,7 +1371,7 @@ David Yongqiang Wang <davidyw@avaya.com>
 Andrew Foster <awf@prismtechnologies.com>
 C Chan <CChan@md.aacisd.com>
 Alexey Chalimov <alexey@allcharge.com>
-David Hauck <davidh@netacquire.com>
+Andrea Bernicchia <a.bernicchia@acsys.it>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

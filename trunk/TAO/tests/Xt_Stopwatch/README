@@ -20,13 +20,14 @@ X11.
 
 ---------------------------------------------------------------------
 Technical Description:
+
 In addition to specifying the resources that the ORB needs to allocate
 for an Xt event loop, the ORB also needs the information about the
 XtAppContext in which the user application is initialised. To provide
 these information TAO provides a class by name
 "TAO_XT_Resource_Factory" that inherits from the
 TAO_Default_Resource_factory. This provides the user with a static
-method through which he can set the XtAppContext. 
+method through which he can set the XtAppContext.
 
 To make TAO understand that the user is in fact wants to use the
 TAO_XT_Resource_Factory and not the default resource factory, the

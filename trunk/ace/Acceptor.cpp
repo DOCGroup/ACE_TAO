@@ -250,7 +250,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handler (SVC_HANDLER *&
                     -1);
 
   // Set the reactor of the newly created <SVC_HANDLER> to the same
-  // reactor that this <Acceptor> is using.
+  // reactor that this <ACE_Acceptor> is using.
   if (this->reactor ())
     sh->reactor (this->reactor ());
 
@@ -274,12 +274,12 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
   // associations.
   int reset_new_handle = this->reactor ()->uses_event_associations ();
 
-  if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
-                                   0, // remote address
-                                   0, // timeout
-                                   1, // restart
-                                   reset_new_handle  // reset new handler
-                                   ) == -1)
+  if (this->acceptor ().accept (svc_handler->peer (), // stream
+                                0, // remote address
+                                0, // timeout
+                                1, // restart
+                                reset_new_handle  // reset new handler
+                                ) == -1)
     {
       // Close down handler to avoid memory leaks.
       svc_handler->close (0);
