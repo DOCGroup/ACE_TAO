@@ -1,3 +1,10 @@
+Thu Nov 27 18:33:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Container_T.cpp:
+
+	  Re-ordered includes to prevent compile errors. This shoudl
+	  prevent compilel errors in static_core build.
+
 Thu Nov 27 18:07:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp (root_poa): 

@@ -5,12 +5,12 @@
 
 #include "Container_T.h"
 
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
-#include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
-
 #include "Properties.h"
 #include "Factory.h"
 #include "POA_Helper.h"
+
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Container_T.inl"
