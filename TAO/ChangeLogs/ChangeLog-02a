@@ -1,3 +1,10 @@
+Thu May  2 16:53:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* utils/catior/catior.cpp (main): An file with an IOR and a "\n"
+	  confused the "catior" into thinking that there is one more IOR
+	  in this file. Fix to rectify this. Thanks to Gautam Thaker
+	  <gthaker@atl.lmco.com> for the fix.
+
 Thu May  2 07:56:24 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Queued_Message_Test/Queued_Message_Test.cpp:

@@ -448,6 +448,7 @@ main (int argc, char *argv[])
                 return -1;
               }
 
+            int have_some_input = 0;
             while (!ifstr.eof())
               {
                 char ch;
@@ -459,8 +460,10 @@ main (int argc, char *argv[])
                     if (ch == '\n' || ifstr.eof ())
                       break;
                     aString += ch;
+                    have_some_input = 1;
                   }
-
+                if (have_some_input == 0)
+                  break;
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",
                             aString.rep ()));
