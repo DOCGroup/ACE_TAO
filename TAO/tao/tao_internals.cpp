@@ -18,6 +18,7 @@ int TAO_Internal::service_open_count_ = 0;
 int
 TAO_Internal::fake_service_entries_i (void)
 {
+#if defined(TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
 #define FAKE_SVC_ENTRY(svcname, svctype, argc, argv) \
   do \
     { \
@@ -38,16 +39,17 @@ TAO_Internal::fake_service_entries_i (void)
                   TAO_Default_Client_Strategy_Factory,
                   0, client_args);
   
-char* server_args[] = {
+  char* server_args[] = {
 #if ! defined(TAO_HAS_TSS_ORBCORE)
-  "-T",
+    "-T",
 #else
-  "-R",
-#endif  
-  "-L", "dynamic", "-o", "128", 0 };
-FAKE_SVC_ENTRY ("Server_Strategy_Factory",
+    "-R",
+#endif  /* ! TAO_HAS_TSS_ORBCORE */
+    "-L", "dynamic", "-o", "128", 0 };
+  FAKE_SVC_ENTRY ("Server_Strategy_Factory",
                   TAO_Default_Server_Strategy_Factory,
                   sizeof(server_args)/sizeof(server_args[0]), server_args);
+#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
   return 0;
 }
