@@ -6,7 +6,7 @@
  * @brief Pre-compiled IDL source for the CORBA::Domain related
  * classes.
  *
- *   This file was used to generate the code in DomainC.{h,i,cpp}.
+ *   This file was used to generate the code in DomainC.{h,inl,cpp}.
  *
  *   The steps to regenerate the code are as follows:
  *

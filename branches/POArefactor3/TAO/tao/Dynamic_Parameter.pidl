@@ -17,8 +17,6 @@
  *          -Wb,post_include="ace/post.h"
  *          Dynamic_Parameter.pidl
  *
- *   Patches for changes to the generated code are available in the
- *   `diffs' directory.
  */
 // ================================================================
 

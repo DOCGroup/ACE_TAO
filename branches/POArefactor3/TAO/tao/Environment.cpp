@@ -1,6 +1,7 @@
 #include "Environment.h"
 #include "ORB_Core.h"
 #include "SystemException.h"
+#include "default_environment.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -18,7 +19,6 @@ CORBA::Environment::Environment (void)
   : exception_ (0)
   , previous_ (0)
 {
-  //  TAO_ORB_Core_instance ()->default_environment (this);
 }
 
 CORBA::Environment::Environment (const CORBA::Environment& rhs)
@@ -122,7 +122,7 @@ CORBA::Environment::default_environment ()
   TAO_ORB_Core_instance ()->default_environment ()->clear ();
 #endif /* TAO_HAS_EXCEPTIONS */
 
-  return CORBA::default_environment ();
+  return TAO_default_environment ();;
 }
 
 // Convenience -- say if the exception is a system exception or not.
