@@ -59,7 +59,6 @@ be_interface::be_interface (void)
     strategy_ (0),
     original_interface_ (0),
     has_mixed_parentage_ (-1)
-
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
