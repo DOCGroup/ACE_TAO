@@ -1,3 +1,8 @@
+Sun Mar 30 15:03:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Param_Test/server.dsp: Enabled RTTI on a few files to
+	  prevent warnings.
+
 Sun Mar 30 20:30:04 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor: Added new IOP_CodecC and IOP_IORC files.
