@@ -39,10 +39,11 @@ ACE_SPIPE_Acceptor::dump (void) const
 
 int
 ACE_SPIPE_Acceptor::open (const ACE_SPIPE_Addr &local_sap, 
-			  int /* reuse_addr */,
+			  int reuse_addr,
 			  int perms)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::open");
+  ACE_UNUSED_ARG (reuse_addr);
 
   this->local_addr_ = local_sap;
   this->set_handle (ACE_INVALID_HANDLE);
@@ -120,7 +121,7 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
       // when the user calls accept ().
       // Else the error status should be ERROR_IO_PENDING and the OS will
       // signal the event when it's done.
-      this->already_connected_ = FALSE;
+      this->already_connected_ = 0;
       this->set_handle (handle);
       this->overlapped_.hEvent = this->event_.handle ();
       this->event_.reset ();
@@ -131,7 +132,7 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
 
       status = ::GetLastError ();
       if (status == ERROR_PIPE_CONNECTED)
-	this->already_connected_ = TRUE;
+	this->already_connected_ = 1;
       else if (status != ERROR_IO_PENDING)
 	this->close ();        // Sets handle to ACE_INVALID_HANDLE
     }
@@ -220,7 +221,7 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
 
   // open () started the Connect in asynchronous mode.  Wait for the event
   // in the OVERLAPPED structure to be signalled, then grab the status.
-  if (this->already_connected_ == FALSE)
+  if (this->already_connected_ == 0)
     {
       if (timeout != 0)
 	{

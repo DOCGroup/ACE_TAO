@@ -226,8 +226,10 @@ ACE_TTY_IO::control (Control_Mode cmd,
     case SETPARAMS:
       DCB dcb;
       dcb.DCBlength = sizeof dcb;
-      ::GetCommState (this->get_handle (), &dcb);
-
+      // SadreevAA ::GetCommState (this->get_handle (), &dcb);
+      if (!::GetCommState (this->get_handle (), &dcb)) //  SadreevAA
+        return -1; 
+/*SadreevAA
       switch (arg->baudrate)
         {
         case   300: dcb.BaudRate = CBR_300; break;
@@ -245,7 +247,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
 //          case  256000: dcb.BaudRate = CBR_256000; break;
         default:  return -1;
         }
-
+*/  
+      dcb.BaudRate = arg->baudrate;
       switch (arg->databits)
         {
         case 4:
@@ -302,6 +305,12 @@ ACE_TTY_IO::control (Control_Mode cmd,
       else
         dcb.fOutxCtsFlow = FALSE;
 
+            // SadreevAA
+      if (arg->dsrenb) // enable DSR protocol.
+        dcb.fOutxDsrFlow = TRUE;
+      else
+        dcb.fOutxDsrFlow = FALSE;
+
       // 6/22/00 MLS add  great flexibility for win32
       //                     pulled rts out of ctsenb
       switch (arg->rtsenb) // enable RTS protocol.
@@ -321,9 +330,9 @@ ACE_TTY_IO::control (Control_Mode cmd,
 
       // 6/22/00 MLS add enable xon/xoff
       if (arg->xinenb) // enable XON/XOFF for reception
-        dcb.fOutX = TRUE;
+        dcb.fInX = TRUE; // Fixed by SadreevAA
       else
-        dcb.fOutX = FALSE;
+        dcb.fInX = FALSE; // Fixed by SadreevAA
 
       if (arg->xoutenb) // enable XON/XOFF for transmission
         dcb.fOutX = TRUE;
@@ -338,18 +347,26 @@ ACE_TTY_IO::control (Control_Mode cmd,
         dcb.XoffLim  = arg->xofflim;
 
       dcb.fDtrControl = DTR_CONTROL_ENABLE;
+      dcb.fAbortOnError = FALSE; // Added by SadreevAA
+      dcb.fErrorChar = FALSE; // Added by SadreevAA
+      dcb.fNull = FALSE; // Added by SadreevAA
       dcb.fBinary = TRUE;
-      ::SetCommState (this->get_handle (), &dcb);
+//SadreevAA      ::SetCommState (this->get_handle (), &dcb);
+      if (!::SetCommState (this->get_handle (), &dcb))
+        return -1; //  SadreevAA
 
       // 2/13/97 BWF added drop out timer
       // modified time out to operate correctly with when delay
       // is requested or no delay is requestes
       COMMTIMEOUTS timeouts;
-      ::GetCommTimeouts (this->get_handle(), &timeouts) ;
+      // SadreevAA ::GetCommTimeouts (this->get_handle(), &timeouts) ;
+      if (!::GetCommTimeouts (this->get_handle(), &timeouts))
+        return -1; //  SadreevAA
+
       if(arg->readtimeoutmsec == 0)
       {
         // return immediately if no data in the input buffer
-        timeouts.ReadIntervalTimeout = MAXDWORD;
+        timeouts.ReadIntervalTimeout = 0; // MAXDWORD; SadreevAA
         timeouts.ReadTotalTimeoutMultiplier = 0;
         timeouts.ReadTotalTimeoutConstant   = 0 ;
       }
@@ -371,7 +388,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
             timeouts.ReadTotalTimeoutConstant   = MAXDWORD;
         }
 
-      return ::SetCommTimeouts (this->get_handle (), &timeouts) ;
+      //return ::SetCommTimeouts (this->get_handle (), &timeouts) ;
+      return ::SetCommTimeouts (this->get_handle (), &timeouts) ? 0 : -1; // SadreevAA
 
     case GETPARAMS:
       ACE_NOTSUP_RETURN (-1); // Not yet implemented.

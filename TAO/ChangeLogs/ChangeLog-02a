@@ -1,3 +1,9 @@
+Fri Sep 28 06:17:27 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Improved the installation instructions for BCB 4/5.
+	  Thanks to Chris Kohloff for contributing this and to Jan Kalin
+ 	  <jan.kalin@zag.si> for motivating this.
+	
 Fri Sep 28 06:40:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed a
