@@ -337,7 +337,7 @@ private:
   // internal list of typecodes
 };
 
-#if !defined (ACE_NDEBUG)
+#if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
 class TAO_Export TAO_DONT_CATCH
 // This class is only used internally in TAO as an exception
 // that never gets thrown.  Never use this class anywhere.
@@ -345,7 +345,7 @@ class TAO_Export TAO_DONT_CATCH
 public:
   TAO_DONT_CATCH ();
 };
-#endif /* ! ACE_NDEBUG */
+#endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
 
 #if defined (__ACE_INLINE__)
 # include "tao/Exception.i"

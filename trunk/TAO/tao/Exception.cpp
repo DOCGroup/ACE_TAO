@@ -606,10 +606,10 @@ CORBA_ExceptionList::remove (CORBA::ULong index, CORBA::Environment &env)
   env.clear ();
 }
 
-#if !defined (ACE_NDEBUG)
+#if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
 TAO_DONT_CATCH::TAO_DONT_CATCH ()
 {}
-#endif /* ! ACE_NDEBUG */
+#endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node<CORBA::TypeCode_ptr>;
