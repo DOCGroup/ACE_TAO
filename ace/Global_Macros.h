@@ -26,16 +26,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-// Start Global definitions
+// Start Global Macros
 # define ACE_BEGIN_DUMP ACE_LIB_TEXT ("\n====\n(%P|%t|%x)")
 # define ACE_END_DUMP ACE_LIB_TEXT ("====\n")
 
-// A free list which create more elements when there aren't enough
-// elements.
-# define ACE_FREE_LIST_WITH_POOL 1
 
-// A simple free list which doen't allocate/deallocate elements.
-# define ACE_PURE_FREE_LIST 2
 
 # if defined (ACE_NDEBUG)
 #   define ACE_DB(X)
@@ -48,14 +43,6 @@
 // block is left. The old state will then be restored Only used for
 // Win32 (in the moment).
 # if defined (ACE_WIN32)
-
-#define ACE_MAX_USERID 32
-
-// This is necessary to work around bugs with Win32 non-blocking
-// connects...
-#   if !defined (ACE_NON_BLOCKING_BUG_DELAY)
-#     define ACE_NON_BLOCKING_BUG_DELAY 35000
-#   endif /* ACE_NON_BLOCKING_BUG_DELAY */
 
 #   if defined (_DEBUG) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
 # include /**/ <crtdbg.h>
@@ -76,7 +63,6 @@ private:
 #   endif /* _DEBUG */
 # else /* !ACE_WIN32 */
 #   define ACE_NO_HEAP_CHECK
-#define ACE_MAX_USERID L_cuserid
 # endif /* ACE_WIN32 */
 
 // Turn a number into a string.
