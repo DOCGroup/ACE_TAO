@@ -12,4 +12,5 @@ AR		= CC
 ARFLAGS		= -xar -o
 RANLIB		= echo
 SOFLAGS		= -G $(CPPFLAGS)
-SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<
+SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
+		  ln -s $*.o $@
