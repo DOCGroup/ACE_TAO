@@ -1,3 +1,15 @@
+Mon Jan 31 19:32:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/Bitmask.dsp:
+        * orbsvcs/tests/Event/Basic/Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Negation.dsp:
+        * orbsvcs/tests/Event/Basic/Timeout.dsp:
+        * orbsvcs/tests/Event/Basic/Wildcard.dsp:
+          Updated the project files and workspaces, included the new
+          project for the bitmask test.
+
 Mon Jan 31 19:02:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.h:

@@ -93,10 +93,6 @@ SOURCE=.\Wildcard.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter ".h"
-# Begin Source File
-
-SOURCE=.\Wildcard.h
-# End Source File
 # End Group
 # End Target
 # End Project
