@@ -225,17 +225,10 @@ int
 TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
                                                 ACE_Time_Value *max_wait_time)
 {
-  // When we multiplex several invocations over a connection we need
-  // to allocate the CDR stream *here*, but when there is a single
-  // request over a connection the CDR stream can be pre-allocated on
-  // the stack of the thread that sent the request!
-  // Can we preserve this optimization on the new architecture?
-  //
-  // here is how:
-  //
-  // Use an "factory" to obtain the CDR stream, in the Muxed case the
-  // factory simply allocates a new one, in the Exclusive case the
-  // factory returns a pointer to the pre-allocated CDR.
+
+  // Notice that the message_state is only modified in one thread at a 
+  // time because the reactor does not call handle_input() for the
+  // same Event_Handler in two threads at the same time.
 
   // Get the message state from the Transport Mux Strategy. 
   TAO_GIOP_Message_State* message_state =
@@ -321,6 +314,8 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
 int
 TAO_IIOP_Client_Transport::register_handler (void)
 {
+  // @@ It seems like this method should go away, the right reactor is 
+  //    picked at object creation time.
   ACE_Reactor *r = this->orb_core ()->reactor ();
   if (r == this->client_handler ()->reactor ())
     return 0;
@@ -332,6 +327,8 @@ TAO_IIOP_Client_Transport::register_handler (void)
 int
 TAO_IIOP_Client_Transport::check_unexpected_data (void)
 {
+  // @@ It seems like this method should go away, all the error
+  //    detection code is in GIOP::handle_input() now.
   // @@ Alex: This should *not* be part of the client connection
   //    handler, we should treat any incoming data as a GIOP message.
   //    The server can always send the "CloseConnection" message and
@@ -392,6 +389,9 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk,
                           ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
+
+  // @@ This code should be refactored into ACE.cpp or something
+  // similar!
 
   // For the most part this was copied from GIOP::send_request and
   // friends.

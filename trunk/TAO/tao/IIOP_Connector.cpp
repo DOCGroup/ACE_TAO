@@ -62,6 +62,7 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
   if (result == -1)
     return -1;
 
+  // @@ We should use ACE_NEW here
   this->cached_connect_strategy_ =
     new CACHED_CONNECT_STRATEGY (*this->caching_strategy_,
         new TAO_IIOP_Connect_Creation_Strategy (this->orb_core_->thr_mgr (),
