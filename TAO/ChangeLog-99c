@@ -1,3 +1,20 @@
+Tue Jun 29 19:48:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/OBV/Simple_util.cpp:
+	* examples/OBV/Typed_Events/server.cpp:
+	* examples/Simple/Simple_util.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* performance-tests/Thruput/TAO/client.cpp:
+	* performance-tests/Thruput/TAO/server.cpp:
+	  Fixed several problems with exception handling.
+
+	* orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/tests/Makefile:
+	  Removed the Concurrency service from the library, it is not
+	  required by default now.
+
 Tue Jun 29 19:44:45 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Simple/Simple_util.cpp: Fixed exception macros.

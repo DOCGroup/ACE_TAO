@@ -15,7 +15,6 @@ DIRS  =	Simple_Naming \
 	EC_Mcast \
 	EC_Custom_Marshal \
 	EC_Basic \
-	Concurrency \
 	Trading \
 	Property \
 	CosEC_Basic \
@@ -26,6 +25,9 @@ DIRS  =	Simple_Naming \
 	Event \
 	AVStreams
 
+# Not compiled by default
+#	Concurrency \
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
@@ -35,4 +37,3 @@ include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
-
