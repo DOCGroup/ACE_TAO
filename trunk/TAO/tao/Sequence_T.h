@@ -281,7 +281,7 @@ public:
   TAO_Object_Manager<T,T_var> &operator= (T *);
   // Assignment from T *.
 
-  TAO_Object_Manager<T,T_var> &operator= (T_var);
+  TAO_Object_Manager<T,T_var> &operator= (T_var &);
   // Assignment from T *.
 
   T * operator-> (void) const;
