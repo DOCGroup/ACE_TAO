@@ -26,7 +26,7 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-class EC_Consumer : public POA_RtecEventComm::PushConsumer
+class EC_Test_Export EC_Consumer : public POA_RtecEventComm::PushConsumer
 {
   // = TITLE
   //   Simple consumer object to implement EC tests.
