@@ -1,3 +1,19 @@
+Thu Oct  7 05:04:11 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Iterator_i.{h.cpp}:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.{h.cpp}:
+	* orbsvcs/orbsvcs/Log/Log_i.{h.cpp}:
+	  Added implementation of the many query methods in the Log
+	  interface.
+	  Methods that now lack implementation in Log are: setting the max.
+	  record life, log duration, weekly scheduling and copy.
+	  Methods to be completed in LogMgr is "list_logs_by_id"
+
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.{h.cpp}:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.{h.cpp}:
+	  Added these 2 files to use with the Trader's TCL query
+	  interpreter files.
+
 Thu Oct  7 04:48:28 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
