@@ -1990,7 +1990,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         }
     }
 
-  if (ACE_BIT_ENABLED (actual_events, FD_CLOSE))
+  if (ACE_BIT_ENABLED (actual_events, FD_CLOSE)
       && ACE_BIT_DISABLED (problems, ACE_Event_Handler::READ_MASK))
     {
       action = event_handler->handle_input (io_handle);
