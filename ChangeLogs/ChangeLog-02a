@@ -1,3 +1,11 @@
+Fri Aug 10 11:06:23 2001  Chad Elliott  elliott_c@ociweb.com
+
+        * apps/drwho/CM_Client.cpp:
+        * apps/drwho/CM_Server.cpp:
+        * apps/drwho/server.cpp:
+
+          Changes to avoid warnings on HP-UX with aCC.
+
 Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager_T.i:
@@ -7,7 +15,7 @@ Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  to the liking of SunCC 4.2. Looks like we had to change a bunch
 	  of static cast sprayed in these two files to a C style cast as
 	  4.2 doesnt like them. Compilers like Borland handle these
-	  better, but not 4.2.    
+	  better, but not 4.2.
 
 Thu Aug  9 11:51:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
