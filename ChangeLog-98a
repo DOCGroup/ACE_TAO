@@ -1,3 +1,8 @@
+Thu Mar 12 17:25:28 1998  James C Hu  <jxh@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Added a table to Supported Platforms and
+	  Compilers.
+
 Thu Mar 12 15:37:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Read_Buffer.* (read): null terminate the result buffer.
@@ -14,7 +19,7 @@ Thu Mar 12 02:19:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
  	  Select_Reactor clears the READ_MASK bit.
 
 	  In the WFMO_Reactor, if any handler returns a -1, then it clears
- 	  ALL of the mask bits for the event handler. 
+ 	  ALL of the mask bits for the event handler.
 
 	  So, fixed WFMO_Reactor so that it works like Select_Reactor in
  	  this regard.
@@ -24,7 +29,7 @@ Thu Mar 12 02:19:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp (dispatch_handles): The correct range check is
           {WAIT_OBJECT_0,WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 () - index}
-          and not 
+          and not
 	  {WAIT_OBJECT_0,WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 ()}
 
 	  Thanks to Evgeny Beskrovny evgeny_beskrovny@icomverse.com for
@@ -36,11 +41,11 @@ Wed Mar 11 15:20:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  explain the unusual step of saving errno across calls to
  	  TlsGetValue() on Win32.  Thanks to Tim Harrison for clarifying
  	  this.
-  
+
 Wed Mar 11 00:39:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* CE-status: A temporary file to trace the progress of the CE
-	  port. 
+	  port.
 
 	* ace/ace_ce_dll.dsp: Added more .cpp files.
 
@@ -59,11 +64,11 @@ Wed Mar 11 00:39:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  close the handle by yourself under CE.  Perhaps we shouldn't
 	  even try to pass this info back. ???
 	  Applied regular CE porting tricks.
-	  
+
 	* ace/SOCK_Dgram_Mcast.{h,cpp}:
 	* ace/SOCK_Dgram_Bcast.{h,cpp}: Changed some function signatures
 	  to use wchar on CE.  Applied regular CE porting tricks.
-	
+
 	* ace/IO_SAP.cpp:
 	* ace/SOCK_CODgram.cpp:
 	* ace/SOCK_Dgram.cpp:
@@ -79,7 +84,7 @@ Tue Mar 10 20:27:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 Tue Mar 10 15:07:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Svc_Handler.cpp,
-	  ace/Module.cpp: 
+	  ace/Module.cpp:
 	  Fixed some problems where Svc_Handlers in Modules were being
  	  deleted prematurely.  Thanks to Steve Coy <stevec@magna.com.au>
  	  for reporting this.
@@ -98,7 +103,7 @@ Tue Mar 10 15:57:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/Handle_Set.cpp (dump):  Cast mask_.fd_count to size_t.
 	  Depend on whether you are using standard C++ library, the type
 	  of fd_count count be size_t or ssize_t.  Thanks to Darrell for
-	  discovering this.	
+	  discovering this.
 
 Tue Mar 10 13:22:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
