@@ -15,7 +15,9 @@ Wed Nov  5 19:02:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  and in addition could potentially (which is the destination)
 	  could be aligned on a 4 byte boundary. This made the destination
 	  buffer to get aligned on a 8 byte boundary and loose 4 bytes of 
-	  space which lead to improper copying of the source buffer. 
+	  space which lead to improper copying of the source
+	  buffer. Thanks to Jian Chen  <jchen@huawei.com> for reporting
+	  the problem.
 
 	  The above problem now been fixed by doing an additional size
 	  increment on the cloned datablock. We have also added a small
@@ -23,8 +25,12 @@ Wed Nov  5 19:02:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  if the size of the source buffer is larger than the size of the
 	  destination buffer. This should lead to a small increase in
 	  performance since we are avoiding an allocation along the
-	  critical path.
+	  critical path. 
 
+	  I haven't received a response yet from Jian on whether this
+	  patch solves his problem. But I am positive that this would
+	  help. 
+	  
 Wed Nov  5 18:52:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/OS_NS_sys_socket.h:
