@@ -1,3 +1,8 @@
+Thu Nov 28 03:07:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests/Pipe_Test.cpp: Add more instances of ACE_Pipes to the test
+ 	  and also added an option to close down the pipe.
+
 Thu Nov 28 00:53:16 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
 	* ace/Pipe.cpp (close): Arrgh!  Fixed a total braino where we
