@@ -447,6 +447,10 @@ bgcolor="#ffffff">
         of <strong>NULL</strong> is implementation dependent, so it is
         difficult to use portably without casting.<p>
 
+    <li>Never use TRUE, true, or anything else other than 1 to indicate
+        true.  Never use FALSE, false, or anything else other than 0 to
+        indicate false.<p>
+
     <li>Never cast a pointer to or from an <strong><code>int</code></strong>.
         On all currently supported ACE platforms, it is safe to cast
         a pointer to or from a <strong><code>long</code></strong>.<p>
