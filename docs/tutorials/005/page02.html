@@ -1,178 +1,201 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-   <TITLE>ACE Tutorial 005</TITLE>
-   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="Billy Quinn">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 005</TITLE>
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 005</FONT></B></CENTER>
 
-<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 005<BR>
-Creating a MultiThreaded Server </FONT></B></P></CENTER>
+<CENTER><B><FONT SIZE=+2>On the road to a multithreaded server</FONT></B></CENTER>
+
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
-<P>The program is actually small enough to fit into a single source file.
-To make things a little easier to follow, though, I've broken it up into
-four parts: <TT>main, acceptor , subclassed reactor and handler</TT>. Each
-is presented with line numbers and description. Because it is a single
-file, you won't see <I>#include</I> directives you may expect. Wait 'till
-the final page and see the whole thing put together before you worry about
-things like that.</P>
+<P>We begin with <I><A HREF="server.cpp">server.cpp</A></I>.
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
-<P>We begin by looking at the main portion program:</P>
+<P><FONT FACE="Arial,Helvetica">// $Id: server.cpp,v 1.5 1998/08/29 21:57:32
+jcej Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<UL>
-<PRE>             
-1.      ACE_Reactor * g_reactor;        
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; We try to keep main() very
+simple.&nbsp; One of the ways we do that is to push</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; much of the complicated stuff
+into worker objects.&nbsp; In this case, we only</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; need to include the acceptor
+header in our main source file.&nbsp; We let it</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; worry about the "real work".</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-2.      static sig_atomic_t finished = 0;
+<P><FONT FACE="Arial,Helvetica">#include "client_acceptor.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-3.      class Logging_Handler;
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; As before, we create a simple
+signal handler that will set our finished</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; flag.&nbsp; There are, of
+course, more elegant ways to handle program shutdown</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; requests but that isn't really
+our focus right now, so we'll just do the</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; easiest thing.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-        
-4.      extern &quot;C&quot; void handler (int) { finished = 1; }
+<P><FONT FACE="Arial,Helvetica">static sig_atomic_t finished = 0;</FONT>
+<BR><FONT FACE="Arial,Helvetica">extern "C" void handler (int)</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; finished = 1;</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-5.      static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; A server has to listen for
+clients at a known TCP/IP port.&nbsp; The default ACE</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; port is 10002 (at least on
+my system) and that's good enough for what&nbsp; we</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; want to do here.&nbsp; Obviously,
+a more robust application would take a command</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; line parameter or read from
+a configuration file or do some other&nbsp; clever</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; thing.&nbsp; Just like the
+signal handler above, though, that's what we want to</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; focus on, so we're taking
+the easy way out.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-        
-6.      int main (int argc, char *argv[])
-        {
-7.        g_reactor = new ACE_Reactor;        
+<P><FONT FACE="Arial,Helvetica">static const u_short PORT = ACE_DEFAULT_SERVER_PORT;</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-8.        Logging_Acceptor peer_acceptor;
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Finally, we get to main.&nbsp;
+Some C++ compilers will complain loudly if your</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; function signature doesn't
+match the prototype.&nbsp; Even though we're not</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; going to use the parameters,
+we still&nbsp; have to specify them.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-9.       if (peer_acceptor.open (ACE_INET_Addr (PORT)) == -1)
-10.         ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;open&quot;), -1);
+<P><FONT FACE="Arial,Helvetica">int main (int argc, char *argv[])</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In our earlier servers, we
+used a global pointer to get to the reactor. I've</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; never really liked that idea,
+so I've moved it into main() this time. When</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; we&nbsp; get to the Client_Handler
+object you'll see how we manage to get a</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; pointer back to this reactor.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_Reactor reactor;</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-11.       else if (g_reactor-&gt;register_handler (&amp;peer_acceptor, ACE_Event_Handler::READ_MASK) == -1)
-12.         ACE_ERROR_RETURN ((LM_ERROR, &quot;registering service with ACE_Reactor\n&quot;), -1);
-</PRE>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; The acceptor
+will take care of letting clients connect to us.&nbsp; It will</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; also arrange
+for a&nbsp; Client_Handler to be created for each new client.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Since we're only
+going to listen at one&nbsp; TCP/IP port, we only need one</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; acceptor.&nbsp;
+If we wanted, though, we could create several of these&nbsp; and</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; listen at several
+ports.&nbsp; (That's what we would do if we wanted to rewrite</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; inetd for&nbsp;
+instance.)</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; Client_Acceptor peer_acceptor;</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<PRE>13.       ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Create an ACE_INET_Addr
+that represents our endpoint of a connection. We</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; then open our
+acceptor object with that Addr.&nbsp; Doing so tells the acceptor</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; where to listen
+for connections.&nbsp; Servers generally listen at "well known"</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; addresses.&nbsp;
+If not, there must be some mechanism by which the client is</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; informed of the
+server's address.</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-14.       ACE_DEBUG ((LM_DEBUG, &quot;(%P|%t) starting up server logging daemon\n&quot;));
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Note how ACE_ERROR_RETURN
+is used if we fail to open the acceptor.&nbsp; This</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; technique is
+used over and over again in our tutorials.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; if (peer_acceptor.open (ACE_INET_Addr
+(PORT), &amp;reactor) == -1)</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR,
+"%p\n", "open"), -1);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-15.       while ( !finished )
-16.         g_reactor-&gt;handle_events ();
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Here, we know
+that the open was successful.&nbsp; If it had failed, we would</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; have exited above.&nbsp;
+A nice side-effect of the open() is that we're already</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; registered with
+the reactor we provided it.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-        
-17.       ACE_DEBUG ((LM_DEBUG, &quot;(%P|%t) shutting down server logging daemon\n&quot;));</PRE>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Install our signal
+handler.&nbsp; You can actually register signal handlers</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; with the reactor.&nbsp;
+You might do that when the signal handler is</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; responsible for
+performing "real" work.&nbsp; Our simple flag-setter doesn't</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; justify deriving
+from ACE_Event_Handler and providing a callback function</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; though.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_Sig_Action sa ((ACE_SignalHandler)
+handler, SIGINT);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<PRE>18.       return 0;
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Like ACE_ERROR_RETURN,
+the ACE_DEBUG macro gets used quite a bit.&nbsp; It's a</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; handy way to
+generate uniform debug output from your program.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t)
+starting up server daemon\n"));</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-        }
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; This will loop
+"forever" invoking the handle_events() method of our</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; reactor. handle_events()
+watches for activity on any registered handlers</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; and invokes their
+appropriate callbacks when necessary.&nbsp; Callback-driven</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; programming is
+a big thing in ACE, you should get used to it. If the</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; signal handler
+catches something, the finished flag will be set and we'll</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; exit.&nbsp; Conveniently
+enough, handle_events() is also interrupted by signals</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; and will exit
+back to the while() loop.&nbsp; (If you want your event loop to</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; not be interrupted
+by signals, checkout the &lt;i>restart&lt;/i> flag on the</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; open() method
+of ACE_Reactor if you're interested.)</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; while (!finished)</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; reactor.handle_events
+();</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
+<P><FONT FACE="Arial,Helvetica">&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutting
+down server daemon\n"));</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-
-</PRE>
-</UL>
+<P><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
 
 <P>
-<HR></P>
-
-<OL>
-<LI>To keep things simple, we again have a global reactor object. This
-time, however, we are keeping a pointer to it. Since C++&nbsp;isn't too
-clear about initialization of global/static objects I chose to dynamically
-create the object in <I>main</I> rather than having it global.</LI>
-
-<LI><I>finished</I> is an atomic data type which we will use to tell us
-the server should exit. It will be set when the program receives an <I>interrupt</I>
-signal.</LI>
-
-<LI>Declare the class Logging_Handler, so that we can declare it as a friend
-class in our <I>Derived_Reactor</I> object. This is necessary because we need
-access to the counter in the derived reactors private variable space.</LI>
-
-<LI>This &quot;C&quot; function will process the <I>interrupt</I> signal
-if it is received by the program. All that it needs to do is set the <I>finished</I>
-flag which our main loop will look at as an indication to exit.</LI>
-
-<LI>The simple variable <I>PORT</I> is statically initialized to a default
-value. This is where the server will listen for new client connection requests.</LI>
-
-<LI>A typical <I>main</I> signature. Although we give ourselves access
-to the command-line arguments, we won't be using them. A more robust example
-might allow specifying the port number or other information via the command-line.</LI>
-
-<LI>The global reactor pointer is now initialized. We could have just as
-easily have chosen to create it on the stack and set <I>g_reactor</I> to
-point to the stack variable. Either way, it gives us more control than
-declaring it outside of <I>main</I>.</LI>
-
-<LI>Now, we create the object which will accept new client requests. Unlike
-the reactor, we did create this one on the stack. In the long run it really
-doesn't matter since Unix is very nice about cleaning up allocated memory
-when the program exits.</LI>
-
-<LI>We now use the acceptor's <I>open</I> member function to get it up
-and running. We create the object of type <I>ACE_INET_ADDR</I> with the port number
-as the argument and pass this object into the open function. ACE wrapper
-now take care of the low level details of preparing the port for incoming
-data , and we are now ready to register the acceptor object with the reactor
-to start accepting requests.</LI>
-
-<LI>We use <I>ACE_ERROR_RETURN</I> to get ourselves out if the <I>open</I>
-call fails. This is a handy and consistent method for reporting nasty things.</LI>
-
-<LI>If the <I>open</I> was successful we will get to here. It is now time
-to register the acceptor with the reactor so that the acceptor's member
-functions will be called when there is activity to be dealt with. Notice
-that we have to pass the address of the acceptor since we created the object
-on the stack instead of with <I>new</I>. Also notice that we're asking
-the reactor to only respond to <I>READ</I> type events. These will be client
-connection requests.</LI>
-
-<LI>Another call to <I>ACE_ERROR_RETURN</I> if the registration failed.</LI>
-
-<LI>An <I>ACE_Sig_Action</I> object is created and given the address of
-the <I>handle</I> &quot;C&quot;&nbsp;function declared above. With that
-function is associated the signal <I>SIGINT</I>. If the program receives
-this signal at any time, the <I>handle</I> function will be called. This
-is our way to cleanly exit the program. There is a much cleaner way to
-do this by creating an object which is registered with the reactor. However,
-I&nbsp;don't want to get into reactor-registered signal handlers at this
-time, so we're going with the easy-out.</LI>
-
-<LI><I>ACE_DEBUG</I> is another function like <I>ACE_ERROR_RETURN</I> that
-we can use to provide consistent messages to the user. Here, we just want
-to report that the program has started.</LI>
-
-<LI>Loop forever unless <I>finished</I> gets a non-zero value. Since the
-only way that can happen is by receipt of an <I>interrupt</I> signal, we
-will keep running until somebody <I>kill</I>s us with that (<I>kill -SIGINT&nbsp;process-id</I>).</LI>
-
-<LI>As always, allow the reactor to handle any events that are generated
-on it's registered event handlers.</LI>
-
-<LI>Announce our departure.</LI>
-
-<LI>Return a successful exit value to the operating system.</LI>
-</OL>
-
-<P>We got a little sloppy by not <I>delete</I>ing the reactor we dynamically
-allocated at the beginning of <I>main</I>. We really should do that for
-sake of completeness and neat programming. Even if we forget though, Unix
-is good about freeing up a program's memory (automatic and dynamically
-allocated)&nbsp;when the program exits.</P>
-
-<P>When compared with our last tutorial, this <TT>main</TT> portion of
-the server has changed very little in our conversion to a multi threaded
-server. Next, we will create our <I>Logging_Handler</I> class which is
-used in <TT>main.</TT></P>
-
-<P>
-<HR WIDTH="100%"></P>
-
-<CENTER><P>[<A HREF="../../Tutorial">Tutorial Index</A>] [<A HREF="page01.html">Previous
-Page</A>] [<A HREF="page03.html">Continue This Tutorial</A>] </P></CENTER>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page03.html">Continue
+This Tutorial</A>]</CENTER>
 
 </BODY>
 </HTML>
