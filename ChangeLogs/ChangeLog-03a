@@ -5,10 +5,11 @@ Sun Jan 20 12:38:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Sun Jan 20 12:25:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Framework_Component.h: Removed the the definition of the
+	* ace/Framework_Component.h: Removed the definition of the
 	  default constructor (in ACE_UNIMPLEMENTED_FUNC definition). The
 	  other private constructor with a default argument tends towards
-	  a default constructor. Not sure how g++ didnt signal this one. 
+	  a default constructor and VC++ signals a multiple definition
+	  error. Not sure how g++ didnt signal this one. 
 	
 	* ace/Framework_Component_T.h: #include'd Framework_Component.h 
 	* ace/Framework_Component_T.cpp: Added a #ifndef around the file. 
