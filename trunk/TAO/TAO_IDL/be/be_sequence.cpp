@@ -444,7 +444,7 @@ be_sequence::gen_client_stubs (void)
           *cs << "return;\n";
           cs->decr_indent ();
 
-          *cs << "for (int i = 0; i < this->length_; ++i)" << nl;
+          *cs << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << nl;
           *cs << "{\n";
           cs->incr_indent ();
           *cs << "tmp[i] = this->buffer_[i];\n";

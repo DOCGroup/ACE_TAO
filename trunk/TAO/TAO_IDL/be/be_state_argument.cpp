@@ -1002,7 +1002,11 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
                 {
                     // declare a variable
-                  *os << "char *" << arg->local_name () << ";" <<
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->name ();
+                  else
+                    *os << "char *";
+                  *os << " " << arg->local_name () << ";" <<
                     nl;
                     // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
@@ -1044,10 +1048,24 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  *os << "const ";
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->nested_type_name (bif);
+                  else
+                    *os << "char *";
+                  *os << " " << arg->local_name () << ", ";
+                }
+                break;
               case TAO_CodeGen::TAO_ARGUMENT_SH:
               case TAO_CodeGen::TAO_ARGUMENT_CS:
                 {
-                  *os << "const char *" << arg->local_name () << ", ";
+                  *os << "const ";
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->name ();
+                  else
+                    *os << "char *";
+                  *os << " " << arg->local_name () << ", ";
                 }
                 break;
               default:
@@ -1063,7 +1081,11 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
                 {
                     // declare a variable
-                  *os << "char *" << arg->local_name () << ";" <<
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->name ();
+                  else
+                    *os << "char *";
+                  *os << " " << arg->local_name () << ";" <<
                     nl;
                     // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
@@ -1105,10 +1127,22 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->nested_type_name (bif);
+                  else
+                    *os << "char *";
+                  *os << " " << arg->local_name () << ", ";
+                }
+                break;
               case TAO_CodeGen::TAO_ARGUMENT_SH:
               case TAO_CodeGen::TAO_ARGUMENT_CS:
                 {
-                  *os << "char *&" << arg->local_name () << ", ";
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->name ();
+                  else
+                    *os << "char *";
+                  *os << " " << arg->local_name () << ", ";
                 }
                 break;
               default:
@@ -1124,21 +1158,39 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
                 {
                   // declare a variable
-                  *os << "char *" << arg->local_name () << ";" <<
-                    nl;
-                    // now define a NamedValue_ptr
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->name ();
+                  else
+                    *os << "char *";
+                  *os << arg->local_name () << ";" << nl;
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->name () << "_out";
+                  else
+                    *os << "CORBA::String_out";
+                  *os << " " << arg->local_name () << "_out (" <<
+                    arg->local_name () << ");" << nl;
+                  // we also declare a corresponding char*
+                  // passed to the decoder
+                  *os << "char **_tao_base_" << arg->local_name ()
+                      << " = new char*;" << nl;
+                  // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
-                    // declare an Any
+                  // declare an Any
                   *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                    bt->tc_name () << ", &" << arg->local_name () <<
+                    bt->tc_name () << ", _tao_base_" << arg->local_name () <<
                     ", 1); // ORB owns" << nl;
+
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
                   // declare a string variable
-                  *os << "char *_tao_base_" << arg->local_name () << ";" << nl;
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->name ();
+                  else
+                    *os << "char *";
+                  *os << " _tao_base_" << arg->local_name () << ";" << nl;
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
@@ -1156,7 +1208,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
                 {
-                  *os << arg->local_name () << ", ";
+                  *os << arg->local_name () << "_out, ";
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
@@ -1166,19 +1218,28 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
                 {
-                  // nothing
+                  // out parameter is cast
+                  *os << "*_tao_base_" << arg->local_name () << " = " <<
+                    arg->local_name () << "_out;" << nl;
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
                 {
-                  *os << bt->nested_type_name (bif, "_out") << " " <<
-                    arg->local_name () << ", ";
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->nested_type_name (bif, "_out");
+                  else
+                    *os << "CORBA::String_out";
+                  *os << " " << arg->local_name () << ", ";
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
-                  *os << bt->name () << "_out " << arg->local_name () << ", ";
+                  if (bt->node_type () == AST_Decl::NT_typedef)
+                    *os << bt->name () << "_out";
+                  else
+                    *os << "CORBA::String_out";
+                  *os << " " << arg->local_name () << ", ";
                 }
                 break;
               default:
@@ -1705,7 +1766,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
                 {
-                  // nothing
+                  *os << ", &" << arg->local_name ();
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
@@ -1774,7 +1835,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
                 {
-                  // nothing
+                  *os << ", &" << arg->local_name ();
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
@@ -1843,7 +1904,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
                 {
-                  // nothing
+                  *os << ", &" << arg->local_name ();
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:

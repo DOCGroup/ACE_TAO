@@ -106,11 +106,32 @@ TAO_CodeGen::make_state (void)
     case TAO_SEQUENCE_BODY_CS:
     case TAO_SEQUENCE_BODY_CI:
       return TAO_BE_STATE_SEQUENCE::instance ();
+    case TAO_ATTRIBUTE_RETURN_TYPE_CH:
+    case TAO_ATTRIBUTE_INPARAM_TYPE_CH:
+    case TAO_ATTRIBUTE_RETURN_TYPE_CS:
+    case TAO_ATTRIBUTE_RETVAL_DECL_CS:
+    case TAO_ATTRIBUTE_RETVAL_EXCEPTION_CS:
+    case TAO_ATTRIBUTE_RETVAL_RETURN_CS:
+    case TAO_ATTRIBUTE_INPARAM_TYPE_CS:
+    case TAO_ATTRIBUTE_PRE_DOCALL_CS:
+    case TAO_ATTRIBUTE_DOCALL_CS:
+    case TAO_ATTRIBUTE_POST_DOCALL_CS:
+    case TAO_ATTRIBUTE_RETURN_TYPE_SH:
+    case TAO_ATTRIBUTE_INPARAM_TYPE_SH:
+    case TAO_ATTRIBUTE_RETVAL_DECL_SS:
+    case TAO_ATTRIBUTE_RETVAL_ASSIGN_SS:
+    case TAO_ATTRIBUTE_RESULT_SS:
+    case TAO_ATTRIBUTE_INPARAM_TYPE_SS:
+    case TAO_ATTRIBUTE_PRE_UPCALL_SS:
+    case TAO_ATTRIBUTE_UPCALL_SS:
+    case TAO_ATTRIBUTE_POST_UPCALL_SS:
+      return TAO_BE_STATE_ATTRIBUTE::instance ();
     default:
       return 0;
     }
 }
 
+// change the string to all upcase
 const char *
 TAO_CodeGen::upcase (const char *str)
 {

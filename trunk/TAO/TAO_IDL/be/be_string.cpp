@@ -74,9 +74,6 @@ be_string::gen_client_header (void)
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
-
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
