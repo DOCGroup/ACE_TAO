@@ -9,11 +9,11 @@ ORBELINEDIR = /project/waltz/Orbeline2.0
 
 STL_DIR = /project/flamenco/irfan/STL/work-in-progress/Solaris-port.STL/Microsoft/STL
 
-ORBCC = $(ORBELINEDIR)/bin/orbeline -v _c -m _s
+ORBCC = $(ORBELINEDIR)/bin/orbeline -v _c -m _s -S exceptions
 
 CCINCLUDES = -I. -I$(ORBELINEDIR)/include -I$(STL_DIR) -I$(ACE_DIR)
 
-CCFLAGS = -g $(CCINCLUDES) $(DEBUG)
+CCFLAGS = -g  $(CCINCLUDES) $(DEBUG)
 
 LIBPATH = -L$(ORBELINEDIR)/lib -L$(ACE_DIR)/ace
 
