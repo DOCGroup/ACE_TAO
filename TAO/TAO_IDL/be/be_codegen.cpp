@@ -281,12 +281,6 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   *this->client_stubs_ << "#include \"" <<
     idl_global->be_get_server_hdr_fname (1) << "\"\n\n";
 
-  // Some compilers don't optimize the #ifndef header include
-  // protection, but do optimize based on #pragma once.
-  *this->client_stubs_ << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-                       << "# pragma once\n"
-                       << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
-
   // generate the code that includes the inline file if not included in the
   // header file
   *this->client_stubs_ << "#if !defined (__ACE_INLINE__)\n";
@@ -512,12 +506,6 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   // generate the include statement for the server header
   *this->server_skeletons_ << "#include \"" <<
     idl_global->be_get_server_hdr_fname (1) << "\"\n\n";
-
-  // Some compilers don't optimize the #ifndef header include
-  // protection, but do optimize based on #pragma once.
-  *this->server_skeletons_ << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-                           << "# pragma once\n"
-                           << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
   // generate the code that includes the inline file if not included in the
   // header file
