@@ -4,8 +4,8 @@
 
 ACE_INLINE int
 ACE_ConsumerQOS_Factory::insert (RtecEventComm::EventSourceID source,
-				 RtecEventComm::EventType type,
-				 RtecScheduler::handle_t rt_info)
+                                 RtecEventComm::EventType type,
+                                 RtecScheduler::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != 0)
@@ -20,8 +20,46 @@ ACE_ConsumerQOS_Factory::insert (RtecEventComm::EventSourceID source,
 }
 
 ACE_INLINE int
+ACE_ConsumerQOS_Factory::insert_bitmasked_value (CORBA::ULong source_mask,
+                                                 CORBA::ULong type_mask,
+                                                 CORBA::ULong source_value,
+                                                 CORBA::ULong type_value)
+
+{
+  RtecEventChannelAdmin::Dependency dependency;
+  if (this->event_initializer_ != 0)
+    (*this->event_initializer_) (dependency.event);
+  dependency.event.header.type = ACE_ES_MASKED_TYPE_DESIGNATOR;
+  dependency.event.header.source = 0;
+  //dependency.event.header.creation_time = 0;
+  //dependency.event.header.ec_recv_time = 0;
+  //dependency.event.header.ec_send_time = 0;
+  dependency.rt_info = 0;
+  this->insert (dependency);
+
+  dependency.event.header.source = source_mask;
+  dependency.event.header.type = type_mask;
+  this->insert (dependency);
+
+  dependency.event.header.source = source_value;
+  dependency.event.header.type = type_value;
+  return this->insert (dependency);
+}
+
+ACE_INLINE int
+ACE_ConsumerQOS_Factory::insert_null_terminator (void)
+{
+  RtecEventChannelAdmin::Dependency dependency;
+  if (this->event_initializer_ != 0)
+    (*this->event_initializer_) (dependency.event);
+  dependency.event.header.type = ACE_ES_NULL_DESIGNATOR;
+  dependency.event.header.source = 0;
+  return this->insert (dependency);
+}
+
+ACE_INLINE int
 ACE_ConsumerQOS_Factory::insert_type (RtecEventComm::EventType type,
-				      RtecScheduler::handle_t rt_info)
+                                      RtecScheduler::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != 0)
@@ -37,7 +75,7 @@ ACE_ConsumerQOS_Factory::insert_type (RtecEventComm::EventType type,
 
 ACE_INLINE int
 ACE_ConsumerQOS_Factory::insert_source (RtecEventComm::EventSourceID source,
-					RtecScheduler::handle_t rt_info)
+                                        RtecScheduler::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != 0)
@@ -53,8 +91,8 @@ ACE_ConsumerQOS_Factory::insert_source (RtecEventComm::EventSourceID source,
 
 ACE_INLINE int
 ACE_ConsumerQOS_Factory::insert_time (RtecEventComm::EventType type,
-				      RtecEventComm::Time interval,
-				      RtecScheduler::handle_t rt_info)
+                                      RtecEventComm::Time interval,
+                                      RtecScheduler::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != 0)

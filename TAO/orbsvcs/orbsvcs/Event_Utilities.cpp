@@ -60,6 +60,28 @@ ACE_ConsumerQOS_Factory::start_negation (void)
 }
 
 int
+ACE_ConsumerQOS_Factory::start_bitmask (CORBA::ULong source_mask,
+                                        CORBA::ULong type_mask)
+{
+  int l = qos_.dependencies.length ();
+  qos_.dependencies.length (l + 2);
+  if (this->event_initializer_ != 0)
+    {
+      (*this->event_initializer_) (qos_.dependencies[l].event);
+      (*this->event_initializer_) (qos_.dependencies[l + 1].event);
+    }
+  qos_.dependencies[l].event.header.type = ACE_ES_BITMASK_DESIGNATOR;
+  qos_.dependencies[l].rt_info = 0;
+
+  qos_.dependencies[l+1].event.header.source = source_mask;
+  qos_.dependencies[l+1].event.header.type = type_mask;
+  qos_.dependencies[l+1].rt_info = 0;
+
+  this->designator_set_ = 1;
+  return 0;
+}
+
+int
 ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscribe)
 {
   RtecScheduler::RT_Info dummy;

@@ -59,8 +59,10 @@ endif
 
 
 .obj/Throughput.o .obj/Throughput.so .shobj/Throughput.o .shobj/Throughput.so: Throughput.cpp Throughput.h ../lib/Driver.h \
- ../lib/ectest_export.h $(ACE_ROOT)/ace/OS.h \
+ ../lib/ectest_export.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -370,8 +372,8 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  $(ACE_ROOT)/ace/Stats.h \
- $(ACE_ROOT)/ace/Stats.i ../lib/Driver.i \
- ../lib/Consumer.h ../lib/Supplier.h \
+ $(ACE_ROOT)/ace/Stats.i \
+ ../lib/Driver.i ../lib/Consumer.h ../lib/Supplier.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -392,8 +394,10 @@ endif
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/Connect.o .obj/Connect.so .shobj/Connect.o .shobj/Connect.so: Connect.cpp Connect.h ../lib/Consumer.h ../lib/Driver.h \
- ../lib/ectest_export.h $(ACE_ROOT)/ace/OS.h \
+ ../lib/ectest_export.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -703,8 +707,9 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  $(ACE_ROOT)/ace/Stats.h \
- $(ACE_ROOT)/ace/Stats.i ../lib/Driver.i \
- ../lib/Supplier.h $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Stats.i \
+ ../lib/Driver.i ../lib/Supplier.h \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \

@@ -135,6 +135,23 @@ public:
   // The consumer wants all the events *except* the group that
   // follows.
 
+  int start_bitmask (CORBA::ULong source_mask,
+                     CORBA::ULong type_mask);
+  // Insert a bitmask filter, this acts as a quick rejection mechanism
+  // for the subsequent filters.
+
+  int insert_bitmasked_value (CORBA::ULong source_mask,
+                              CORBA::ULong type_mask,
+                              CORBA::ULong source_value,
+                              CORBA::ULong type_value);
+  // Inser a new filter that only accepts events with the following
+  // properties:
+  // (event.header.type & type_mask) == type_value
+  // (event.header.source & source_mask) == source_value
+
+  int insert_null_terminator (void);
+  // Insert a node that accepts any event, useful for bitmask filters.
+
   // = Insert operations add to the current conjunction or disjunction
   // group.  These return 0 on success, -1 on failure.  Before insert
   // is called, a start_XX_group method should be called.  If a
