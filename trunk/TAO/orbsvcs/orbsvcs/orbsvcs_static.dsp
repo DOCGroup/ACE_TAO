@@ -402,6 +402,10 @@ SOURCE=.\IOR_Multicast.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IR_Helper.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LifeCycleServiceC.cpp
 # End Source File
 # Begin Source File
@@ -411,18 +415,6 @@ SOURCE=.\LifeCycleServiceS.cpp
 # Begin Source File
 
 SOURCE=.\Event\Local_ESTypes.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Log\Logger_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LoggerC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LoggerS.cpp
 # End Source File
 # Begin Source File
 
@@ -463,14 +455,6 @@ SOURCE=.\Naming\Persistent_Entries.cpp
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Naming_Context.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingS.cpp
 # End Source File
 # Begin Source File
 
@@ -954,6 +938,10 @@ SOURCE=.\IOR_Multicast.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IR_Helper.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LifeCycleServiceC.h
 # End Source File
 # Begin Source File
@@ -967,14 +955,6 @@ SOURCE=.\Event\Local_ESTypes.h
 # Begin Source File
 
 SOURCE=.\Trader\Locking.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LoggerC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LoggerS.h
 # End Source File
 # Begin Source File
 
@@ -1015,18 +995,6 @@ SOURCE=.\Naming\Persistent_Entries.h
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Naming_Context.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingS_T.h
 # End Source File
 # Begin Source File
 
@@ -1306,18 +1274,6 @@ SOURCE=.\Event\Memory_Pools.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\PingC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Sched\SchedEntry.i
 # End Source File
 # Begin Source File
@@ -1351,7 +1307,7 @@ SOURCE=.\AVStreams.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTR="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__AVSTR="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\AVStreams.idl
 InputName=AVStreams
@@ -1390,7 +1346,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AVSTR="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__AVSTR="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\AVStreams.idl
 InputName=AVStreams
@@ -1436,7 +1392,7 @@ SOURCE=.\CosEventChannelAdmin.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEV="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSEV="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
@@ -1475,7 +1431,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEV="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSEV="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
@@ -1521,7 +1477,7 @@ SOURCE=.\CosEventComm.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEVE="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSEVE="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosEventComm.idl
 InputName=CosEventComm
@@ -1560,7 +1516,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEVE="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSEVE="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosEventComm.idl
 InputName=CosEventComm
@@ -1606,7 +1562,7 @@ SOURCE=.\CosLifeCycle.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSLI="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSLI="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
@@ -1645,7 +1601,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSLI="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSLI="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
@@ -1691,7 +1647,7 @@ SOURCE=.\CosNaming.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSNA="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSNA="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosNaming.idl
 InputName=CosNaming
@@ -1730,7 +1686,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSNA="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSNA="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosNaming.idl
 InputName=CosNaming
@@ -1776,7 +1732,7 @@ SOURCE=.\CosPropertyService.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSPR="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSPR="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
@@ -1815,7 +1771,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSPR="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSPR="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
@@ -1861,7 +1817,7 @@ SOURCE=.\CosTrading.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTR="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSTR="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosTrading.idl
 InputName=CosTrading
@@ -1900,7 +1856,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTR="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSTR="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosTrading.idl
 InputName=CosTrading
@@ -1946,7 +1902,7 @@ SOURCE=.\CosTradingDynamic.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRA="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSTRA="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
@@ -1985,7 +1941,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRA="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSTRA="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
@@ -2031,7 +1987,7 @@ SOURCE=.\CosTradingRepos.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRAD="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSTRAD="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
@@ -2070,7 +2026,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSTRAD="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__COSTRAD="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
@@ -2116,7 +2072,7 @@ SOURCE=.\ImplRepo.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__IMPLR="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\ImplRepo.idl
 InputName=ImplRepo
@@ -2155,7 +2111,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__IMPLR="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\ImplRepo.idl
 InputName=ImplRepo
@@ -2201,7 +2157,7 @@ SOURCE=.\LifeCycleService.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__LIFEC="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__LIFEC="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
@@ -2240,95 +2196,10 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__LIFEC="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__LIFEC="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
-
-BuildCmds= \
-	..\..\..\bin\tao_idl_static -Ge 1  -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export         -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Logger.idl
-
-!IF  "$(CFG)" == "ORB Services Static - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__LOGGE="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\Logger.idl
-InputName=Logger
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -Ge 1  -I../../   -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h         $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__LOGGE="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\Logger.idl
-InputName=Logger
 
 BuildCmds= \
 	..\..\..\bin\tao_idl_static -Ge 1  -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export         -Wb,export_include=orbsvcs_export.h $(InputName).idl
@@ -2371,7 +2242,7 @@ SOURCE=.\Null_MediaCtrl.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__NULL_="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
@@ -2410,95 +2281,10 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__NULL_="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
-
-BuildCmds= \
-	..\..\..\bin\tao_idl_static -Ge 1  -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export         -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Ping.idl
-
-!IF  "$(CFG)" == "ORB Services Static - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__PING_="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\Ping.idl
-InputName=Ping
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -Ge 1  -I../../   -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h         $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__PING_="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\Ping.idl
-InputName=Ping
 
 BuildCmds= \
 	..\..\..\bin\tao_idl_static -Ge 1  -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export         -Wb,export_include=orbsvcs_export.h $(InputName).idl
@@ -2541,7 +2327,7 @@ SOURCE=.\RtecEventChannelAdmin.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECE="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__RTECE="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -2580,7 +2366,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECE="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__RTECE="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -2626,7 +2412,7 @@ SOURCE=.\RtecEventComm.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEV="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__RTECEV="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -2665,7 +2451,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEV="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__RTECEV="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -2711,7 +2497,7 @@ SOURCE=.\RtecScheduler.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECS="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__RTECS="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
@@ -2750,7 +2536,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECS="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__RTECS="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
@@ -2796,7 +2582,7 @@ SOURCE=.\RtecUDPAdmin.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__RTECU="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
@@ -2835,7 +2621,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__RTECU="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
@@ -2881,7 +2667,7 @@ SOURCE=.\sfp.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SFP_I="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__SFP_I="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\sfp.idl
 InputName=sfp
@@ -2920,7 +2706,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SFP_I="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__SFP_I="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\sfp.idl
 InputName=sfp
@@ -2966,7 +2752,7 @@ SOURCE=.\TimeBase.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMEB="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__TIMEB="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\TimeBase.idl
 InputName=TimeBase
@@ -3005,7 +2791,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMEB="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__TIMEB="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\TimeBase.idl
 InputName=TimeBase
@@ -3051,7 +2837,7 @@ SOURCE=.\TimeService.idl
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMES="..\..\..\bin\Release\tao_idl_static -Ge 1 .exe"	
+USERDEP__TIMES="..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\TimeService.idl
 InputName=TimeService
@@ -3090,7 +2876,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIMES="..\..\..\bin\tao_idl_static -Ge 1 .exe"	
+USERDEP__TIMES="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL
 InputPath=.\TimeService.idl
 InputName=TimeService
@@ -3135,10 +2921,6 @@ BuildCmds= \
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Naming\Bindings_Iterator_T.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\CosPropertyServiceS_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
@@ -3165,11 +2947,6 @@ SOURCE=.\Trader\Offer_Database.cpp
 # Begin Source File
 
 SOURCE=.\Trader\Offer_Iterators_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingS_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
