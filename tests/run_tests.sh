@@ -84,12 +84,14 @@ if [ -x /bin/uname -a `uname -s` = 'LynxOS' ]; then
   LynxOS=1
 fi
 
+ace_version=`head -1 ../VERSION | sed 's/.*version \([0-9.]*\).*/\1/'`
+
 if [ ! "$chorus" ]; then
   user=${LOGNAME:-`whoami`}
   start_test_resources=`ipcs | egrep $user`
 fi # ! chorus
 
-echo "Starting ACE tests . . ."
+echo "Starting ACE version $ace_version tests . . ."
 
 mv -f "$compilation_log" "$compilation_log.bak" > /dev/null 2>&1
 
@@ -166,7 +168,7 @@ run Enum_Interfaces_Test                # tests ACE_ACE::get_ip_interfaces()
 test $chorus || run Upgradable_RW_Test  # tests ACE_RW locks
 test $chorus || run Conn_Test           # tests ACE_Thread_Manager, ACE_Acceptor/ACE_Connector, ACE_SOCK_SAP
 
-echo "Finished ACE tests."
+echo "Finished ACE version $ace_version tests."
 
 /bin/rm -f ace_pipe_name pattern \
            $tmp/ace_temp_file* \
