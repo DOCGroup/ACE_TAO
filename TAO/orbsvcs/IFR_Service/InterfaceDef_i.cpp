@@ -788,7 +788,9 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
   ACE_CHECK_RETURN (CORBA_OperationDef::_nil ());
 
   if (bad_params)
-    return CORBA_OperationDef::_nil ();
+    {
+      return CORBA_OperationDef::_nil ();
+    }
 
   ACE_Configuration_Section_Key ops_key;
 
@@ -808,6 +810,19 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
                                           version,
                                           "ops\\",
                                           CORBA::dk_Operation);
+
+  CORBA::TypeCode_var rettype = result->type (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA_OperationDef::_nil ());
+  CORBA::TCKind kind = rettype->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA_OperationDef::_nil ());
+
+  // Oneway operations cannot have a non-void return type.
+  if (mode == CORBA::OP_ONEWAY && kind != CORBA::tk_void)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (31,
+                                          CORBA::COMPLETED_NO),
+                        CORBA_OperationDef::_nil ());
+    }
 
   // Get the path to our return type and store it.
   PortableServer::ObjectId_var oid =
@@ -847,6 +862,14 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
 
       for (i = 0; i < length; ++i)
         {
+          // Oneway operations cannot have INOUT or OUT parameters.
+          if (mode == CORBA::OP_ONEWAY && params[i].mode != CORBA::PARAM_IN)
+            {
+              ACE_THROW_RETURN (CORBA::BAD_PARAM (31,
+                                                  CORBA::COMPLETED_NO),
+                                CORBA_OperationDef::_nil ());
+            }
+
           ACE_Configuration_Section_Key param_key;
           CORBA::String_var section_name = this->int_to_string (i);
 
@@ -882,6 +905,14 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
 
   if (length > 0)
     {
+      // Oneway operations cannot throw any user exceptions.
+      if (mode == CORBA::OP_ONEWAY)
+        {
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (31,
+                                              CORBA::COMPLETED_NO),
+                            CORBA_OperationDef::_nil ());
+        }
+
       ACE_Configuration_Section_Key excepts_key;
 
       this->repo_->config ()->open_section (new_key,
