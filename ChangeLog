@@ -1,3 +1,10 @@
+Mon Nov 11 20:37:18 2002  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added Jai's application-controlled membership load balancing
+	  test to the list of regression tests to be run.
+
 Mon Nov 11 17:57:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:
