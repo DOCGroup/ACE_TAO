@@ -7,15 +7,15 @@
 //    TAO
 //
 // = FILENAME
-//    Connect.h
+//   IIOP_Connect.h
 //
 // = AUTHOR
-//     Chris Cleeland
+//   Chris Cleeland
 //
 // ============================================================================
 
-#ifndef TAO_CONNECT_H
-#define TAO_CONNECT_H
+#ifndef TAO_IIOP_CONNECT_H
+#define TAO_IIOP_CONNECT_H
 
 #  include "ace/Reactor.h"
 
@@ -94,15 +94,15 @@ protected:
 
 // ****************************************************************
 
-class TAO_Export TAO_Server_Connection_Handler : public TAO_IIOP_Handler_Base
+class TAO_Export TAO_IIOP_Server_Connection_Handler : public TAO_IIOP_Handler_Base
 {
   // = TITLE
   //   Handles requests on a single connection in a server.
 
 public:
-  TAO_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
-  TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core);
-  ~TAO_Server_Connection_Handler (void);
+  TAO_IIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
+  TAO_IIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core);
+  ~TAO_IIOP_Server_Connection_Handler (void);
   // Constructor.
 
   virtual int open (void *);
@@ -181,7 +181,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Connect.i"
+# include "tao/IIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_CONNECT_H */
+#endif /* TAO_IIOP_CONNECT_H */

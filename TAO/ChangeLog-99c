@@ -1,3 +1,34 @@
+Wed Jun  2 17:27:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.cpp:
+	* tao/Connect.h:
+	* tao/Connect.i:
+	* tao/IIOP_Connect.cpp:
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Connect.i:
+	  Renamed Connect.{h,i,cpp} to IIOP_Connect.{h,i,cpp}
+
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Acceptor.h:
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Profile.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h:
+	  Updated to include "tao/IIOP_Connect.h"
+
+	* tao/params.h:
+	  Removed unused forward declaration of
+	  TAO_Server_Connection_Handler
+
+	* examples/Simple/time-date/Time_Date.h:
+	  Added missing header file
+
+	* examples/Simple/time-date/Time_Date.cpp:
+	  Added missing template instantiations
+
+	* */Makefile:
+	  Updated dependencies
+
 Wed Jun  2 17:14:33 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tests/NestedUpcall/Reactor/README:

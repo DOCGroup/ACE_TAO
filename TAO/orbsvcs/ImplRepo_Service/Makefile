@@ -611,7 +611,7 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(TAO_ROOT)/tao/IIOP_Profile.i \
  $(TAO_ROOT)/tao/IIOP_Acceptor.h \
- $(TAO_ROOT)/tao/Connect.h \
+ $(TAO_ROOT)/tao/IIOP_Connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -642,7 +642,7 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(TAO_ROOT)/tao/Connect.i \
+ $(TAO_ROOT)/tao/IIOP_Connect.i \
  $(TAO_ROOT)/tao/Acceptor_Impl.h \
  $(TAO_ROOT)/tao/Acceptor_Impl.i \
  $(TAO_ROOT)/tao/Acceptor_Impl.cpp \

@@ -176,12 +176,12 @@ TAO_IIOP_Acceptor::endpoint_count (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
-template class TAO_Acceptor_Impl<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<TAO_IIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
+template class TAO_Acceptor_Impl<TAO_IIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
-#pragma instantiate TAO_Acceptor_Impl<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<TAO_IIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
+#pragma instantiate TAO_Acceptor_Impl<TAO_IIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

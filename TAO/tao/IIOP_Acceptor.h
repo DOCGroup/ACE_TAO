@@ -21,7 +21,7 @@
 #define TAO_IIOP_ACCEPTOR_H
 
 #include "tao/Pluggable.h"
-#include "tao/Connect.h"
+#include "tao/IIOP_Connect.h"
 #include "tao/Acceptor_Impl.h"
 
 #include "ace/Acceptor.h"
@@ -71,7 +71,7 @@ public:
   // @@ Helper method for the implementation repository, should go
   //    away
 
-  typedef TAO_Acceptor_Impl<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
+  typedef TAO_Acceptor_Impl<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
 
 private:
   int open_i (TAO_ORB_Core* orb_core,
