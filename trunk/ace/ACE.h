@@ -332,7 +332,8 @@ public:
   static size_t	round_to_pagesize (off_t length);
   // Rounds the request to a multiple of the page size.
 
-  static int format_hexdump (char *buffer, int size, char *obuf, int obuf_sz);
+  static int format_hexdump (const char *buffer, int size, char *obuf,
+                             int obuf_sz);
   // Format buffer into printable format.  This is useful for
   // debugging.
 
