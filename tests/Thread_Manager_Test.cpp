@@ -49,11 +49,9 @@ handler (int signum)
 {
   if (signal_catcher)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) received signal %d, signaled = %d\n"),
-                  signum,
-                  (*signal_catcher)->signaled ()));
-      (*signal_catcher)->signaled (1);
+      // No printout here, to be safe.  Signal handlers must
+      // not acquire locks, etc.
+      (*signal_catcher)->signaled (ACE_static_cast (sig_atomic_t, signum));
     }
 }
 
@@ -100,15 +98,22 @@ worker (int iterations)
       if ((i % 1000) == 0)
         {
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-          if (my_signal_catcher->signaled () > 0  &&
-              // Only test for cancellation after we've been signaled,
-              // to avoid race conditions for suspend() and resume().
-              thr_mgr->testcancel (ACE_Thread::self ()) != 0)
+          if (my_signal_catcher->signaled () > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("(%t) has been cancelled before iteration %d!\n"),
-                          i));
-              break;
+                          ASYS_TEXT ("(%t) had received signal %d\n"),
+                          (*signal_catcher)->signaled ()));
+
+              // Only test for cancellation after we've been signaled,
+              // to avoid race conditions for suspend() and resume().
+              if (thr_mgr->testcancel (ACE_Thread::self ()) != 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ASYS_TEXT ("(%t) has been cancelled "
+                                         "before iteration %d!\n"),
+                              i));
+                  break;
+                }
             }
 #endif /* ! ACE_LACKS_UNIX_SIGNAL */
           ACE_OS::sleep (1);
