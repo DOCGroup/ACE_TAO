@@ -1,3 +1,13 @@
+Tue Apr 20 23:21:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode.cpp:
+	  Removed a superfluous duplication of an ACE_Message_Block
+	  in private_member_label(). In general, it's never necessary
+	  to duplicate a message block before calling the Any
+	  constructor that takes a message block or either of the
+	  Any::_tao_replace() functions. All of these duplicate the
+	  message block themselves.
+
 Tue Apr 20 22:57:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
