@@ -1,10 +1,13 @@
 Tue Jan 29 13:09:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Makefile.bor:
-          Added Blocking directory
+          Added Blocking and Discarding directory
 
         * orbsvcs/tests/Notify/Blocking/*.bor:
-          Added new BCB makefiles to build these test
+          Added new BCB makefiles to build this test
+
+        * orbsvcs/tests/Notify/Discarding/*.bor:
+          Added new BCB makefiles to build this test
 
 Tue Jan 29 11:20:36 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
