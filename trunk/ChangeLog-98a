@@ -6,6 +6,12 @@ Mon Feb 16 10:51:28 1998  Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
         * ace/config-osf1-4.0.h: added ACE_LACKS_SIGNED_CHAR to
           RATIONAL section.
 
+        * ace/OS.h: added __rational__ to list of users of long
+          ACE_UNUSED_ARG.
+
+        * ace/OS.i (gethostbyname_r): added some ACE_UNUSED_ARGs for
+          Digital Unix.
+
 Sun Feb 15 16:32:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* netsvcs/clients/Naming/Client/svc.conf: Removed "-s" flag, which
