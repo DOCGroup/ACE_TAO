@@ -138,10 +138,12 @@ public:
 
 protected:
 
+#if defined (ACE_WIN32)
   static u_long get_registry_scale_factor (void);
   // This is used to find out the Mhz of the machine for the scale
   // factor.  If there are any problems getting it, we just return 1
   // (the default).
+#endif /* ACE_WIN32 */
 
 private:
   static void hrtime_to_tv (ACE_Time_Value &tv,
