@@ -216,14 +216,7 @@ int
 ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 {
   if (this->logging_output_ == ACE_STDERR)
-    {
-      log_record.print ("<localhost>", 0, stderr);
-      ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
-      if (orig_ostream)
-        log_record.print ("<localhost>",
-                          0,
-                          *orig_ostream);
-    }
+    log_record.print ("<localhost>", 0, stderr);
   else
     {
       long len = log_record.length ();
@@ -238,6 +231,13 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 	// reconnect to the logging server.
 	this->logging_output_ = ACE_STDERR;
     }
+
+  ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
+
+  if (orig_ostream)
+    log_record.print ("<localhost>",
+                      0,
+                      *orig_ostream);
   return 0;
 }
 

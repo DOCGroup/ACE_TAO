@@ -1,5 +1,9 @@
 Tue Mar 23 12:57:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* netsvcs/lib/Client_Logging_Handler.cpp: Split off the logging to
+ 	  an ostream from the logging for STDERR.  Thanks to Bill Rizzi
+          (rizzi@softserv.com) for pointing out this problem.
+
 	* netsvcs/lib/Client_Logging_Handler.cpp: Changed the default from
  	  ACE_STDOUT to ACE_STDERR to be consistent.  Thanks to Bill Rizzi
           (rizzi@softserv.com) for pointing out the problem.
