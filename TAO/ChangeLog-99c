@@ -1,3 +1,16 @@
+Tue May  4 17:45:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tao/orb.idl:
+	  Added this file as required by CORBA spec. Contains only
+	  empty interface defs for ORB, TypeCode and Object, inside
+	  module CORBA, so the IDL compiler can recognize 'CORBA::'
+	  scoped versions of the above. Interface defs suggested by
+	  Carlos, who also says we may need to add to them later.
+
+	* TAO_IDL/driver/drv_preproc.cpp:
+	  Added a line to include the $TAO_ROOT/tao directory in the
+	  preprocessor invocation, so it can find orb.idl.
+
 Tue May  4 14:11:43 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV/sfp.cpp: Fixed the misinterpretation of the
