@@ -1,9 +1,13 @@
+Tue Jun 22 13:40:22 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/tutorials/*/Makefile: replace rm -f with $(RM).
+
 Tue Jun 22 13:07:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Message_Block_Test.cpp:
-	* websvcs/lib/URL_Addr.i:
-	* websvcs/lib/URL_Addr.cpp:
-	  Removed more g++ -W warnings
+        * tests/Message_Block_Test.cpp:
+        * websvcs/lib/URL_Addr.i:
+        * websvcs/lib/URL_Addr.cpp:
+          Removed more g++ -W warnings
 
 Tue Jun 22 11:12:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
