@@ -49,7 +49,7 @@ public:
   ACE_ReactorEx_Handler_Repository (ACE_ReactorEx &reactorEx);
   // Constructor.
 
-  ~ACE_ReactorEx_Handler_Repository (void);
+  virtual ~ACE_ReactorEx_Handler_Repository (void);
   // Destructor.
 
   int open (size_t size);
@@ -205,7 +205,7 @@ private:
   // An auto event is used so that we can <signal> it to wakeup one
   // thread up (e.g., when the <notify> method is called).
 
-#if defined (ACE_WIN32)  // because SunOS can't cope with this declaration:
+#if defined (ACE_WIN32)  // because Sun C++ 4.1 can't cope with this declaration:
   ACE_Message_Queue<ACE_MT_SYNCH> message_queue_;
 #endif /* ACE_WIN32 */
   // Message queue that keeps track of pending <ACE_Event_Handlers>.
