@@ -1,3 +1,12 @@
+Wed May 24 19:23:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+	  Add templates instantiation, it used to be instantiated in one
+	  of the libraries, but we don't use the library anymore.
+
+	* orbsvcs/tests/EC_Mcast/Makefile:
+	  Updated dependencies
+
 Wed May 24 20:48:51 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile: 
