@@ -1,3 +1,17 @@
+Sun Jan 31 20:32:54 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* docs/compiler.html: 
+	* tao_idl.1
+ 	* idl_global.h
+	* drv_args.cpp
+	* be_codegen.cpp
+	Added these two options to the tao_idl compiler.
+	-in To generate #include statements with <>'s for the standard include
+    	files (e.g. tao/corba.h) indicating them as non-changing files
+
+	-ic To generate #include statements with ""s for changing standard
+    	include files (e.g. tao/corba.h). 
+
 Sat Jan 30 18:30:50 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* docs/compiler.html: 
