@@ -1,12 +1,13 @@
 Wed Jul 01 07:08:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/Message_Queue.i (VxWorks only): removed args from a
-          couple of unsupported functions to avoid compiler warnings.
+        * ace/Message_Queue.i,cpp (VxWorks only): removed args from a
+          couple of unsupported functions, and added ACE_UNUSED_ARGS
+          to others, to avoid compiler warnings.
 
 Tue Jun 30 23:48:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Message_Queue.h: Added /**/ between #include and <> to
-	  prevent warnings from MSVC.
+        * ace/Message_Queue.h: Added /**/ between #include and <> to
+          prevent warnings from MSVC.
 
 Tue Jun 30 22:05:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
