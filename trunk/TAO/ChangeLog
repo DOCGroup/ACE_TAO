@@ -1,3 +1,14 @@
+Wed Dec 10 10:08:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Logging/Logger.idl:
+        * examples/Logging/Logger_i.cpp:
+        * examples/Logging/Logger_i.h:
+        * examples/Logging/Logging_Test_i.cpp:
+          Changed log2 to log_twoway and logv2 to logv_twoway. On Cygwin
+          log2 is a macro and using this macro name in IDL gives a lot
+          of errors in the Cygwin build. Just renaming the methods is the
+          way to fix this.
+
 Wed Dec 10 09:41:41 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Makefile:
