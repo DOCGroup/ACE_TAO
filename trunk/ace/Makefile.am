@@ -222,6 +222,7 @@ libACE_Sockets_la_SOURCES = \
 
 libACE_IPC_la_SOURCES = \
         Addr.cpp \
+	ATM_Addr.cpp \
         DEV.cpp \
         DEV_Addr.cpp \
         DEV_Connector.cpp \
@@ -325,6 +326,11 @@ libACE_la_SOURCES = \
 	$(libACE_Token_la_SOURCES) \
 	$(libACE_Other_la_SOURCES)
 
+# We only want `gethrtime.cpp' if building on Pentium(tm) so we need
+# to let Automake know that `gethrtime.cpp' is conditionally built.
+EXTRA_libACE_la_SOURCES = gethrtime.cpp
+
+
 ## The following is an excerpt from the "libtool" manual, written by
 ## Gordon Matzigkeit:
 ##
@@ -394,6 +400,7 @@ ACE_TEMPLATE_FILES = \
         Message_Block_T.cpp \
         Message_Queue_T.cpp \
         Module.cpp \
+	Pair_T.cpp \
         RB_Tree.cpp \
         Select_Reactor_T.cpp \
         Singleton.cpp \
@@ -428,6 +435,8 @@ pkginclude_HEADERS = \
         ACE.i \
         ARGV.h \
         ARGV.i \
+	ATM_Addr.h \
+	ATM_Addr.i \
         Acceptor.h \
         Acceptor.i \
         Activation_Queue.h \
