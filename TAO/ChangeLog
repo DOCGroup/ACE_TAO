@@ -1,3 +1,10 @@
+Mon Jan 12 01:20:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
+
+	  Fixed a simple problem with the way we used extraction operators
+	  that caused link errors on VC71.
+
 Sun Jan 11 08:43:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.mpc:
