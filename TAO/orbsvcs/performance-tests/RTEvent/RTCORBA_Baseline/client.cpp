@@ -3,9 +3,7 @@
 #include "RT_Class.h"
 #include "ORB_Holder.h"
 #include "RIR_Narrow.h"
-#include "RTServer_Setup.h"
-#include "Send_Task.h"
-#include "Low_Priority_Setup.h"
+#include "RTClient_Setup.h"
 #include "TestC.h"
 
 #include "tao/Messaging/Messaging.h"
@@ -17,6 +15,7 @@
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"
 #include "ace/Stats.h"
+#include "ace/Task.h"
 
 ACE_RCSID(TAO_RTEC_PERF_RTCORBA_Baseline, client, "$Id$")
 
@@ -243,7 +242,7 @@ int main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      RTServer_Setup rtserver_setup (use_rt_corba,
+      RTClient_Setup rtclient_setup (use_rt_corba,
                                      orb,
                                      rt_class,
                                      nthreads

@@ -147,13 +147,8 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var supplier_poa (root_poa);
-      PortableServer::POA_var consumer_poa (root_poa);
-      if (use_rt_corba != 0)
-        {
-          supplier_poa = rtserver_setup.poa ();
-          consumer_poa = rtserver_setup.poa ();
-        }
+      PortableServer::POA_var supplier_poa (rtserver_setup.poa ());
+      PortableServer::POA_var consumer_poa (rtserver_setup.poa ());
 
       ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 

@@ -4,15 +4,8 @@
 #include "ORB_Holder.h"
 #include "Servant_var.h"
 #include "RIR_Narrow.h"
-#include "RTEC_Initializer.h"
 #include "RTServer_Setup.h"
-#include "Loopback_Pair.h"
-#include "Auto_Disconnect.h"
-
-#include "orbsvcs/Event_Service_Constants.h"
-
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "Control.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
@@ -24,13 +17,16 @@
 ACE_RCSID(TAO_PERF_RTEC_Federated_Roundtrip, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
+int iterations = 10000;
+int nthreads   = 1;
+int peer_count = 2;
+int do_dump_history = 0;
 int use_rt_corba = 0;
-int nthreads = 1;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:r");
+  ACE_Get_Opt get_opts (argc, argv, "o:i:p:n:rd");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -44,8 +40,20 @@ parse_args (int argc, char *argv[])
         nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
+      case 'i':
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
+      case 'p':
+        peer_count = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
       case 'r':
         use_rt_corba = 1;
+        break;
+
+      case 'd':
+        do_dump_history = 1;
         break;
 
       case '?':
@@ -54,7 +62,10 @@ parse_args (int argc, char *argv[])
                            "usage:  %s "
                            "-o <iorfile> "
                            "-n nthreads "
+                           "-i iterations "
+                           "-p peer_count "
                            "-r (use RT-CORBA) "
+                           "-d (dump full history) "
                            "\n",
                            argv [0]),
                           -1);
@@ -65,10 +76,6 @@ parse_args (int argc, char *argv[])
 
 int main (int argc, char *argv[])
 {
-  const CORBA::Long experiment_id = 1;
-
-  TAO_EC_Default_Factory::init_svcs ();
-
   RT_Class rt_class;
 
   ACE_TRY_NEW_ENV
@@ -100,37 +107,21 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var ec_poa (root_poa);
-      if (use_rt_corba != 0)
-        {
-          ec_poa = rtserver_setup.poa ();
-        }
-      Servant_var<TAO_EC_Event_Channel> ec_impl (
-        RTEC_Initializer::create (ec_poa.in (),
-                                  ec_poa.in (),
-                                  rtserver_setup.rtcorba_setup ()
-                                  ACE_ENV_ARG_PARAMETER));
-      ACE_TRY_CHECK;
+      PortableServer::POA_var control_poa (rtserver_setup.poa ());
+      Servant_var<Control> control_impl (
+        new Control (peer_count,
+                     iterations,
+                     do_dump_history,
+                     orb,
+                     control_poa.in ())
+        );
 
-      ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      PortableServer::ObjectId_var ec_id =
-        ec_poa->activate_object (ec_impl.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CORBA::Object_var ec_object =
-        ec_poa->id_to_reference (ec_id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+      Federated_Test::Control_var control =
+        control_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (control.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Output the ior to the <ior_output_file>
@@ -146,29 +137,8 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Loopback_Pair high_priority_pair;
-      high_priority_pair.init (experiment_id,
-                               ACE_ES_EVENT_UNDEFINED,
-                               ec_poa.in (), ec_poa.in ());
-      high_priority_pair.connect (ec.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+      orb->run (ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      Auto_Disconnect<Loopback_Pair> high_priority_disconnect (&high_priority_pair);
-
-      Loopback_Pair low_priority_pair;
-      low_priority_pair.init (experiment_id,
-                              ACE_ES_EVENT_UNDEFINED + 2,
-                              ec_poa.in (), ec_poa.in ());
-      low_priority_pair.connect (ec.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      Auto_Disconnect<Loopback_Pair> low_priority_disconnect (&low_priority_pair);
-
-      do {
-        ACE_Time_Value tv (1, 0);
-        orb->run (tv ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-      } while (ec_impl->destroyed () == 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
     }

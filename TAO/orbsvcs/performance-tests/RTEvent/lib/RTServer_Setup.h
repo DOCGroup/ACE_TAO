@@ -8,18 +8,14 @@
 
 #ifndef TAO_PERF_RTEC_RTSERVER_SETUP_H
 #define TAO_PERF_RTEC_RTSERVER_SETUP_H
+#include "ace/pre.h"
 
-#include "RTCORBA_Setup.h"
+#include "RTClient_Setup.h"
 #include "RTPOA_Setup.h"
-#include "PriorityBand_Setup.h"
-#include "SyncScope_Setup.h"
-#include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-class RT_Class;
 
 /**
  * @class RTServer_Setup
@@ -27,7 +23,7 @@ class RT_Class;
  * @brief Simplify the initialization of performance tests.
  *
  */
-class TAO_RTEC_Perf_Export RTServer_Setup
+class TAO_RTEC_Perf_Export RTServer_Setup : public RTClient_Setup
 {
 public:
   /// Constructor
@@ -40,18 +36,15 @@ public:
   /// Return the POA configured by the RTPOA_Setup
   PortableServer::POA_ptr poa (void);
 
-  /// Return the underlying RTCORBA_Setup pointer
-  RTCORBA_Setup *rtcorba_setup (void);
-
 private:
-  auto_ptr<RTCORBA_Setup> rtcorba_setup_;
+  PortableServer::POA_var poa_;
+
   auto_ptr<RTPOA_Setup> rtpoa_setup_;
-  auto_ptr<PriorityBand_Setup> priorityband_setup_;
-  SyncScope_Setup syncscope_setup_;
 };
 
 #if defined(__ACE_INLINE__)
 #include "RTServer_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_PERF_RTEC_RTSERVER_SETUP_H */

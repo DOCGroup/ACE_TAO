@@ -7,6 +7,7 @@
  */
 
 #include "Loopback_Consumer.h"
+#include "Implicit_Deactivator.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
 ACE_RCSID(PERF_RTEC, Loopback_Consumer, "$Id$")
@@ -75,20 +76,16 @@ Loopback_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
     proxy = this->proxy_supplier_._retn ();
   }
 
+  Implicit_Deactivator deactivator (this
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   ACE_TRY
     {
       proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY {} ACE_ENDTRY;
-
-  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  PortableServer::ObjectId_var id = poa->servant_to_id (this
-                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void

@@ -59,4 +59,3 @@ PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
 PriorityBand_Setup::~PriorityBand_Setup (void)
 {
 }
-

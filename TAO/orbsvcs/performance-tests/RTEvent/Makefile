@@ -10,6 +10,7 @@
 
 DIRS  = \
   lib \
+  RTCORBA_Baseline \
   Roundtrip \
   Federated_Roundtrip
 

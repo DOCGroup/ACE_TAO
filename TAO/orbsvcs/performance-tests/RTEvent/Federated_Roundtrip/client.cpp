@@ -5,13 +5,11 @@
 #include "Servant_var.h"
 #include "RIR_Narrow.h"
 #include "RTServer_Setup.h"
-#include "Send_Task.h"
-#include "Client_Pair.h"
-#include "ORB_Task.h"
-#include "ORB_Task_Activator.h"
+#include "Peer_Base.h"
 #include "Auto_Disconnect.h"
-#include "Low_Priority_Setup.h"
-#include "EC_Destroyer.h"
+#include "Send_Task.h"
+#include "Task_Activator.h"
+#include "Client_Pair.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 
@@ -31,9 +29,7 @@
 ACE_RCSID(TAO_RTEC_PERF_Roundtrip, client, "$Id$")
 
 const char *ior = "file://test.ior";
-int iterations = 10000;
 int nthreads   = 0;
-int do_dump_history = 0;
 int high_priority_period = 0;
 int high_priority_workload = 0;
 int low_priority_period  = 0;
@@ -41,10 +37,37 @@ int low_priority_workload = 0;
 int disable_low_priority = 0;
 int use_rt_corba = 0;
 
+class Roundtrip_Peer : public Peer_Base
+{
+public:
+  Roundtrip_Peer (CORBA::ORB_ptr orb,
+                  RTServer_Setup &rtserver_setup,
+                  RT_Class &rt_class
+                  ACE_ENV_ARG_DECL)
+    : Peer_Base (orb, rtserver_setup
+                 ACE_ENV_ARG_PARAMETER)
+    , rt_class_ (&rt_class)
+  {
+  }
+
+  //@{
+  /** @name The Federated_Test::Peer methods
+   */
+  virtual Federated_Test::Experiment_Results *
+      run_experiment (CORBA::Long experiment_id,
+                      CORBA::Long iterations
+                      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  //@}
+
+private:
+  RT_Class *rt_class_;
+};
+
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:n:l:h:w:v:zdr");
+  ACE_Get_Opt get_opts (argc, argv, "k:n:l:h:w:v:zr");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -52,10 +75,6 @@ parse_args (int argc, char *argv[])
       {
       case 'k':
         ior = get_opts.opt_arg ();
-        break;
-
-      case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'n':
@@ -78,10 +97,6 @@ parse_args (int argc, char *argv[])
         low_priority_workload = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
-      case 'd':
-        do_dump_history = 1;
-        break;
-
       case 'z':
         disable_low_priority = 1;
         break;
@@ -102,7 +117,6 @@ parse_args (int argc, char *argv[])
                            "-v low_priority_workload (usecs) "
                            "-r (enable RT-CORBA) "
                            "-n nthreads (low priority thread) "
-                           "-d (dump history) "
                            "-z (disable low priority) "
                            "\n",
                            argv [0]),
@@ -114,8 +128,6 @@ parse_args (int argc, char *argv[])
 
 int main (int argc, char *argv[])
 {
-  const CORBA::Long experiment_id = 1;
-
   RT_Class rt_class;
 
   ACE_TRY_NEW_ENV
@@ -147,130 +159,37 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var supplier_poa (root_poa);
-      PortableServer::POA_var consumer_poa (root_poa);
-      if (use_rt_corba != 0)
-        {
-          supplier_poa = rtserver_setup.poa ();
-          consumer_poa = rtserver_setup.poa ();
-        }
-
       ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
-      ACE_Thread_Manager my_thread_manager;
+      Servant_var<Roundtrip_Peer> peer_impl (
+          new Roundtrip_Peer (orb,
+                              rtserver_setup,
+                              rt_class
+                              ACE_ENV_ARG_PARAMETER)
+          );
+      ACE_TRY_CHECK;
 
-      ORB_Task orb_task (orb);
-      orb_task.thr_mgr (&my_thread_manager);
-      ORB_Task_Activator orb_task_activator (rt_class.priority_high (),
-                                             rt_class.thr_sched_class (),
-                                             1,
-                                             &orb_task);
+      Federated_Test::Peer_var peer =
+        peer_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "ORB is active\n"));
-
+      ACE_DEBUG ((LM_DEBUG, "Finished peer configuration and activation\n")); 
+     
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+      Federated_Test::Control_var control =
+        Federated_Test::Control::_narrow (object.in ()
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      EC_Destroyer ec_destroyer (ec.in ());
-
-      CORBA::PolicyList_var inconsistent_policies;
-      (void) ec->_validate_connection (inconsistent_policies
-                                       ACE_ENV_ARG_PARAMETER);
+      control->join (peer.in ()
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Finished EC configuration and activation\n"));
-
-      int thread_count = 1;
-      if (disable_low_priority == 0)
-        thread_count += nthreads;
-
-      ACE_Barrier barrier (thread_count);
-
-      ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
-      ACE_High_Res_Timer::calibrate ();
-
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-      ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
-
-      Low_Priority_Setup<Client_Pair> low_priority_setup (
-          nthreads,
-          0, // no limit on the number of iterations
-          1, // each client gets its own type
-          experiment_id,
-          ACE_ES_EVENT_UNDEFINED + 2,
-          low_priority_workload,
-          gsf,
-          disable_low_priority ? 0 : 1,
-          rt_class.priority_low (),
-          rt_class.thr_sched_class (),
-          low_priority_period,
-          supplier_poa.in (),
-          consumer_poa.in (),
-          ec.in (),
-          &barrier
-          ACE_ENV_ARG_PARAMETER);
-
-      Client_Pair high_priority_group;
-      high_priority_group.init (experiment_id,
-                                ACE_ES_EVENT_UNDEFINED,
-                                iterations,
-                                high_priority_workload,
-                                gsf,
-                                supplier_poa.in (),
-                                consumer_poa.in ());
-      high_priority_group.connect (ec.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      Auto_Disconnect<Client_Pair> high_priority_disconnect (&high_priority_group);
-
-      Send_Task high_priority_task;
-      high_priority_task.init (iterations,
-                               high_priority_period,
-                               0,
-                               ACE_ES_EVENT_UNDEFINED,
-                               1,
-                               high_priority_group.supplier (),
-                               &barrier);
-      high_priority_task.thr_mgr (&my_thread_manager);
-      {
-        // Artificial scope to wait for the high priority task...
-        Task_Activator<Send_Task> high_priority_act (rt_class.priority_high (),
-                                                     rt_class.thr_sched_class (),
-                                                     1,
-                                                     &high_priority_task);
-      }
-
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - high priority task completed\n"));
-
-      if (disable_low_priority == 0)
-        {
-          low_priority_setup.stop_all_threads ();
-        }
-
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - low priority task(s) stopped\n"));
-
-      ACE_Sample_History &history =
-        high_priority_group.consumer ()->sample_history ();
-      if (do_dump_history)
-        {
-          history.dump_samples ("HISTORY", gsf);
-        }
-
-      ACE_Basic_Stats high_priority_stats;
-      history.collect_basic_stats (high_priority_stats);
-      high_priority_stats.dump_results ("High Priority", gsf);
-
-      ACE_Basic_Stats low_priority_stats;
-      low_priority_setup.collect_basic_stats (low_priority_stats);
-      low_priority_stats.dump_results ("Low Priority", gsf);
-
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
   ACE_CATCHANY
     {
@@ -283,20 +202,105 @@ int main (int argc, char *argv[])
   return 0;
 }
 
+Federated_Test::Experiment_Results *
+Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
+                                CORBA::Long iterations
+                                ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  int thread_count = 1;
+#if 0
+  if (disable_low_priority == 0)
+    thread_count += nthreads;
+#endif
+
+  ACE_Barrier barrier (thread_count);
+
+  ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
+  ACE_High_Res_Timer::calibrate ();
+
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
+
+#if 0
+  Low_Priority_Setup<Client_Pair> low_priority_setup (
+          nthreads,
+          0, // no limit on the number of iterations
+          1, // each client gets its own type
+          experiment_id,
+          ACE_ES_EVENT_UNDEFINED + 2,
+          low_priority_workload,
+          gsf,
+          disable_low_priority ? 0 : 1,
+          this->rt_class_.priority_low (),
+          this->rt_class_.thr_sched_class (),
+          low_priority_period,
+          this->poa_.in (),
+          this->poa_.in (),
+          this->event_channel_.in (),
+          &barrier
+          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+#endif
+
+  Client_Pair high_priority_group;
+  high_priority_group.init (experiment_id,
+                            ACE_ES_EVENT_UNDEFINED,
+                            iterations,
+                            high_priority_workload,
+                            gsf,
+                            this->poa_.in (),
+                            this->poa_.in ());
+  high_priority_group.connect (this->event_channel_.in ()
+                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  Auto_Disconnect<Client_Pair> high_priority_disconnect (&high_priority_group);
+
+  Send_Task high_priority_task;
+  high_priority_task.init (iterations,
+                           high_priority_period,
+                           0,
+                           ACE_ES_EVENT_UNDEFINED,
+                           1,
+                           high_priority_group.supplier (),
+                           &barrier);
+  {
+    // Artificial scope to wait for the high priority task...
+    Task_Activator<Send_Task> high_priority_act (this->rt_class_->priority_high (),
+                                                 this->rt_class_->thr_sched_class (),
+                                                 1,
+                                                 &high_priority_task);
+  }
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - high priority task completed\n"));
+
+#if 0
+  if (disable_low_priority == 0)
+    {
+      low_priority_setup.stop_all_threads ();
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - low priority task(s) stopped\n"));
+#endif
+
+  ACE_Sample_History &history =
+    high_priority_group.consumer ()->sample_history ();
+
+  Federated_Test::Experiment_Results_var results (
+     new Federated_Test::Experiment_Results (iterations)
+     );
+  results->length (iterations);
+  for (CORBA::ULong i = 0; i != results->length (); ++i)
+    {
+      results[i] = history.get_sample (i) / gsf;
+    }
+  
+  return results._retn ();
+}
+
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class Servant_var<Supplier>;
-template class Servant_var<Consumer>;
-template class ACE_Auto_Basic_Array_Ptr<Servant_var<Supplier> >;
-template class ACE_Auto_Basic_Array_Ptr<Servant_var<Consumer> >;
-template class ACE_Auto_Basic_Array_Ptr<Send_Task>;
-
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate Servant_var<Supplier>
-#pragma instantiate Servant_var<Consumer>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Servant_var<Supplier> >
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Servant_var<Consumer> >
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Send_Task>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

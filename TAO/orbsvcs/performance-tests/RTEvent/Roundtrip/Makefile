@@ -187,8 +187,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
-  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
-  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -198,6 +196,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
@@ -236,19 +235,14 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  ../lib/RTServer_Setup.h ../lib/RTCORBA_Setup.h \
+  ../lib/RTServer_Setup.h ../lib/RTClient_Setup.h ../lib/RTCORBA_Setup.h \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
-  ../lib/RTCORBA_Setup.inl ../lib/RTPOA_Setup.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
-  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
-  ../lib/RTPOA_Setup.inl ../lib/PriorityBand_Setup.h \
+  ../lib/RTCORBA_Setup.inl ../lib/PriorityBand_Setup.h \
   ../lib/PriorityBand_Setup.inl ../lib/SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/MessagingC.h \
@@ -262,7 +256,13 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
-  ../lib/SyncScope_Setup.inl ../lib/RTServer_Setup.inl \
+  ../lib/SyncScope_Setup.inl ../lib/RTClient_Setup.inl \
+  ../lib/RTPOA_Setup.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
+  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
+  ../lib/RTPOA_Setup.inl ../lib/RTServer_Setup.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
@@ -560,8 +560,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
-  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
-  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -571,6 +569,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
@@ -579,7 +578,8 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/Swap.inl \
   $(ACE_ROOT)/ace/Swap.cpp \
   ../lib/Servant_var.inl ../lib/Servant_var.cpp ../lib/RIR_Narrow.h \
-  ../lib/RIR_Narrow.cpp ../lib/RTServer_Setup.h ../lib/RTCORBA_Setup.h \
+  ../lib/RIR_Narrow.cpp ../lib/RTServer_Setup.h ../lib/RTClient_Setup.h \
+  ../lib/RTCORBA_Setup.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
@@ -611,15 +611,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
-  ../lib/RTCORBA_Setup.inl ../lib/RTPOA_Setup.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
-  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
-  ../lib/RTPOA_Setup.inl ../lib/PriorityBand_Setup.h \
+  ../lib/RTCORBA_Setup.inl ../lib/PriorityBand_Setup.h \
   ../lib/PriorityBand_Setup.inl ../lib/SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/MessagingC.h \
@@ -633,7 +625,16 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
-  ../lib/SyncScope_Setup.inl ../lib/RTServer_Setup.inl ../lib/Send_Task.h \
+  ../lib/SyncScope_Setup.inl ../lib/RTClient_Setup.inl \
+  ../lib/RTPOA_Setup.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
+  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
+  ../lib/RTPOA_Setup.inl ../lib/RTServer_Setup.inl ../lib/Send_Task.h \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -747,9 +748,10 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   ../lib/Client_Pair.inl ../lib/Loopback_Pair.h \
   ../lib/Loopback_Supplier.h ../lib/Loopback_Consumer.h \
   ../lib/Loopback_Pair.inl ../lib/Client_Group.inl ../lib/ORB_Task.h \
-  ../lib/ORB_Task.inl ../lib/Auto_Disconnect.h ../lib/Auto_Disconnect.inl \
-  ../lib/Auto_Disconnect.cpp ../lib/ORB_Task_Activator.h \
-  ../lib/Task_Activator.h \
+  ../lib/ORB_Task.inl ../lib/Auto_Disconnect.h ../lib/Auto_Functor.h \
+  ../lib/Auto_Functor.inl ../lib/Auto_Functor.cpp \
+  ../lib/Auto_Disconnect.inl ../lib/Auto_Disconnect.cpp \
+  ../lib/ORB_Task_Activator.h ../lib/Task_Activator.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   ../lib/Task_Activator.inl ../lib/Task_Activator.cpp \
   ../lib/ORB_Task_Activator.inl ../lib/Low_Priority_Setup.h \
@@ -757,6 +759,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   ../lib/Low_Priority_Setup.cpp \
   $(ACE_ROOT)/ace/Basic_Stats.h \
   $(ACE_ROOT)/ace/Basic_Stats.inl \
+  ../lib/EC_Destroyer.h ../lib/EC_Destroyer.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
