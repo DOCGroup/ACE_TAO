@@ -12,7 +12,7 @@ project(Netsvsc_Client_Test_Lib): acelib {
 project(Netsvcs_Client_Test) : aceexe {
   exename = main
   libs    += Client_Test
-  after   += Netsvcs_Client_Test_Lib
+  after   += Client_Test Netsvsc_Client_Test_Lib
   Source_Files {
     main.cpp
   }

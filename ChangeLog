@@ -1,3 +1,9 @@
+Tue Jan 13 16:19:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* netsvcs/clients/Naming/Client/Client.mpc:
+
+	  Fixed a dependancy issue.
+
 Tue Jan 13 11:28:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Makefile (CONTROLLED_FILES):
