@@ -17,6 +17,7 @@
 #   include  <sys/systeminfo.h>
 # endif /* ACE_HAS_SYS_INFO */
 
+// *********************************************************************
 class ACE_Export ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
 {
   // = TITLE
@@ -66,6 +67,10 @@ ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
 #elif defined(HPUX)
 
   os_id_ = OS_HPUX;   // set family
+
+#elif defined(__sgi)
+
+  os_id_ = OS_IRIX;   // set family
   // do the same
 
 //#else defined (LINUX, __FreeBSD__ ...)
@@ -491,7 +496,7 @@ private:
   // Pipe for the communication between Proactor and the
   // Asynch_Accept.
 
-  ACE_POSIX_AIOCB_Asynch_Read_Stream read_stream_;
+  ACE_POSIX_Asynch_Read_Stream read_stream_;
   // To do asynch_read on the pipe.
 
   ACE_AIOCB_Notify_Pipe_Manager (void);
@@ -612,6 +617,10 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations)
     }
 
   create_notify_manager ();
+
+  // start pseudo-asynchronous accept task
+  // one per all future acceptors
+  this->accept_task_.start ();
 }
 
 // Special protected constructor for ACE_SUN_Proactor
@@ -643,6 +652,7 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations,
       result_list_[ai] = 0;
     }
 
+
   // @@ We should create Notify_Pipe_Manager in the derived class to
   // provide correct calls for virtual functions !!!
 }
@@ -650,6 +660,9 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations,
 // Destructor.
 ACE_POSIX_AIOCB_Proactor::~ACE_POSIX_AIOCB_Proactor (void)
 {
+  // stop asynch accept task
+  this->get_asynch_accept_task().stop ();
+
   delete_notify_manager ();
 
   // delete all uncomlpeted operarion
@@ -863,7 +876,7 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_read_stream (void)
 {
   ACE_Asynch_Read_Stream_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_AIOCB_Asynch_Read_Stream (this),
+                  ACE_POSIX_Asynch_Read_Stream (this),
                   0);
   return implementation;
 }
@@ -873,7 +886,7 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_write_stream (void)
 {
   ACE_Asynch_Write_Stream_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_AIOCB_Asynch_Write_Stream (this),
+                  ACE_POSIX_Asynch_Write_Stream (this),
                   0);
   return implementation;
 }
@@ -883,7 +896,7 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_read_dgram (void)
 {
     ACE_Asynch_Read_Dgram_Impl *implementation = 0;
     ACE_NEW_RETURN (implementation,
-                ACE_POSIX_AIOCB_Asynch_Read_Dgram (this),
+                ACE_POSIX_Asynch_Read_Dgram (this),
                 0);
     return implementation;
 }
@@ -893,7 +906,7 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_write_dgram (void)
 {
         ACE_Asynch_Write_Dgram_Impl *implementation = 0;
         ACE_NEW_RETURN (implementation,
-                ACE_POSIX_AIOCB_Asynch_Write_Dgram (this),
+                ACE_POSIX_Asynch_Write_Dgram (this),
                 0);
 
     return implementation;
@@ -904,7 +917,7 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_read_file (void)
 {
   ACE_Asynch_Read_File_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_AIOCB_Asynch_Read_File (this),
+                  ACE_POSIX_Asynch_Read_File (this),
                   0);
   return  implementation;
 }
@@ -914,7 +927,7 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_write_file (void)
 {
   ACE_Asynch_Write_File_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_AIOCB_Asynch_Write_File (this),
+                  ACE_POSIX_Asynch_Write_File (this),
                   0);
   return  implementation;
 }
@@ -936,7 +949,7 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_transmit_file (void)
 {
   ACE_Asynch_Transmit_File_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_AIOCB_Asynch_Transmit_File (this),
+                  ACE_POSIX_Asynch_Transmit_File (this),
                   0);
   return  implementation;
 }
@@ -1469,6 +1482,10 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (size_t max_aio_operations)
   this->setup_signal_handler (ACE_SIGRTMIN);
 
   // we do not have to create notify manager
+  // but we should start pseudo-asynchronous accept task
+  // one per all future acceptors
+
+  this->accept_task_.start ();
   return;
 }
 
@@ -1512,11 +1529,18 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set,
   this->mask_signals (&this->RT_completion_signals_);
 
   // we do not have to create notify manager
+  // but we should start pseudo-asynchronous accept task
+  // one per all future acceptors
+
+  this->accept_task_.start ();
   return;
 }
 
 ACE_POSIX_SIG_Proactor::~ACE_POSIX_SIG_Proactor (void)
 {
+  // stop asynch accept task
+  this->get_asynch_accept_task().stop ();
+
   // @@ Enable the masked signals again.
 }
 
@@ -1918,18 +1942,5 @@ ACE_POSIX_Wakeup_Completion::complete (u_long       /* bytes_transferred */,
   this->handler_.handle_wakeup ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *>;
-template class ACE_Node<ACE_POSIX_Asynch_Result *>;
-template class ACE_Unbounded_Queue_Iterator<ACE_POSIX_Asynch_Result *>;
-
-#elif  defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *>
-#pragma instantiate ACE_Node<ACE_POSIX_Asynch_Result *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_POSIX_Asynch_Result *>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_AIO_CALLS */

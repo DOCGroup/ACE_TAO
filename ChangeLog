@@ -1,3 +1,49 @@
+Thu Mar 28 06:15:22 2002  Alex Libman <AlexL@rumblegroup.com>
+
+        * ace/POSIX_Asynch_IO.cpp,
+	  ace/POSIX_Asynch_IO.h: 
+	  ACE_POSIX_AOICB_Asynch_Operation and ACE_POSIX_Asynch_Operation	
+	  merged in one class ACE_POSIX_Asynch_Operation
+
+	  Since POSIX_SIG_Proactor and SUN_Proactor are based on
+ 	  POSIX_AIOCB_Proactor and both of them use
+ 	  ACE_POSIX_AOICB_Asynch_Operation, there is no necessity to
+ 	  support extra class tree.
+
+        * ace/POSIX_Asynch_IO.cpp,
+	  ace/POSIX_Asynch_IO.h: 
+	  ACE_POSIX_AOICB_Transmit_Handler and ACE_POSIX_Transmit_Handler
+	  merged in ACE_POSIX_Transmit_Handler for same reason as previous
+	  change.
+
+        * ace/POSIX_Asynch_IO.cpp,
+	  ace/POSIX_Asynch_IO.h: ACE_POSIX_Asynch_Accept merged with
+ 	  ACE_POSIX_Asynch_Accept_Hanlder and redesigned and added
+	  new class ACE_POSIX_Asynch_Accept_Task.
+
+	  POSIX_AIOCB_Proactor has new member
+	  ACE_POSIX_Asynch_Accept_Task   asynch_accept_task_.
+
+	  Task activation should be done from the most derived
+ 	  constructors , when the final table of virtual functions is
+ 	  built (simular case with notify_manager).
+
+	  // start asynch accept task
+	  this->get_asynch_accept_task.start ();
+  
+          All POSIX_Proactors implementations ( AIOCB,SIG,SUN ) should
+ 	  stop ACE_POSIX_Asynch_Accept_Task in their destructors to avoid
+ 	  post_completions from based classes
+
+	  // stop asynch accept task
+	  this->get_asynch_accept_task.stop ();
+
+Thu Mar 28 06:14:22 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+  
+	* ace/TTY_IO.cpp (Serial_Params): Zero out the values in the
+	  Serial_Params constructor.  Thanks to Pavel Repin
+ 	  <pavel@repin.com> for reporting this.
+
 Wed Mar 27 20:00:31 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* include/makeinclude/platform_linux.GNU: Fixed a typo where

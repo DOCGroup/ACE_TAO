@@ -282,7 +282,7 @@ standard out.
            #define SERVICE_DEMAND_START    0x00000003
            #define SERVICE_DISABLED        0x00000004
 
-           If only -i is specified, SERVICE_AUTO_START is default option.
+           If only -i is specified, SERVICE_DEMAND_START is default option.
 
         b. Now you are ready to run the actual service. Run
            NT_Naming_Service again, this time with -s option. If the
