@@ -40,7 +40,19 @@ endif # COMSPEC
 TAO_BASE_LIBS=-lTAO $(ACELIB) $(LIBS)
 TAO_SRVR_LIBS=-lTAO_PortableServer $(TAO_BASE_LIBS)
 TAO_CLNT_LIBS=-lTAO $(TAO_BASE_LIBS)
-TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface
+#
+# The following simbols has been defined to overcome a 
+# problem with the current QNX RTP linker. In fact for 
+# that platform the relative platform macro file takes 
+# care of adding a number of additional library that are
+# not usually needed on other platforms.
+#
+TAO_DYNAMIC_LIBS+=-lTAO_DynamicInterface
+TAO_COS_NAMING_LIBS+=-lTAO_CosNaming
+TAO_COS_NOTIFICATION_LIBS+=-lTAO_CosNotification
+TAO_RT_SCHED_LIBS+=-lTAO_RTSched
+TAO_FAULT_TOLERANCE_LIBS+=-lTAO_FaultTolerance
+TAO_COS_TRADING_LIBS+=-lTAO_CosTrading
 
 ####
 #### Macro customization.

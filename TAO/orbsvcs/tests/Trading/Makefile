@@ -38,8 +38,16 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 
 LSRC    = $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
 PSRC    = $(addsuffix .cpp,$(BIN2))
-ACE_SHLIBS = -lTAO_CosTrading -lTAO_CosNaming -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
-LDLIBS  = -lTAO_CosTrading -lTAO_CosNaming -lTAO_DynamicAny -lTAO_PortableServer -lTAO
+ACE_SHLIBS = -lTAO_CosNaming -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
+LDLIBS  = -lTAO_CosTrading -lTAO_DynamicAny -lTAO_PortableServer -lTAO
+#
+# NOTE
+#
+# The following macro expands to a series of libraries
+# on QNX RTP. It has been introduced to solve a problem
+# with the current QNX RTP linker.
+#
+LDLIBS+=$(TAO_COS_NAMING_LIBS) $(TAO_COS_TRADING_LIBS)
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

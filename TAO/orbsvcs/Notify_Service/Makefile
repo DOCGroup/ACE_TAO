@@ -6,7 +6,16 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosNotification  -lTAO_CosNaming -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
+#
+# NOTE
+#
+# The following macro expands to a series of libraries
+# on QNX RTP. It has been introduced to solve a problem
+# with the current QNX RTP linker.
+#
+LDLIBS+=$(TAO_COS_NAMING_LIBS) 
+LDLIBS+=$(TAO_COS_NOTIFICATION_LIBS)
 
 LSRC = Notify_Service.cpp
 
