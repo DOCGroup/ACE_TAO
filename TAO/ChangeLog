@@ -1,3 +1,18 @@
+Thu Nov 18 18:00:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Object_T.cpp:
+        
+          Made the _unchecked_narrow() method more robust by moving
+          the check for a local interface above the call to _stubobj().
+          Then if the call returns 0, we know we have been passed a
+          bogus object reference, so we can throw BAD_PARAM. Thanks
+          to Bala Natarajan <bala@dre.vanderbilt.edu> for answering
+          my questions about this.
+          
+        * tao/Object_T.h:
+        
+          Removed some commented out and unused code.
+
 Thu Nov 17 15:55:00 2004  Gary Maxey  <gary.maxey@hp.com>
 
         * tests/Bug_1020_Basic_Regression/run_test.pl
