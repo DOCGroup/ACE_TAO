@@ -320,6 +320,10 @@ SOURCE=.\be\be_state_attribute.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_state_exception.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_state_operation.cpp
 # End Source File
 # Begin Source File
