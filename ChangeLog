@@ -1,3 +1,8 @@
+Mon Jan 31 08:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Reactor/Timers.cpp:
+          Fixed unicode link errors
+
 Mon Jan 31 07:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_wchar.h:

@@ -25,7 +25,7 @@
 ACE_RCSID(Caching, http_client, "$Id$")
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Present a command line.
   // * Accept a URL.
