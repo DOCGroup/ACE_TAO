@@ -123,7 +123,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Stack)
 template <class T> void
 ACE_Unbounded_Stack<T>::dump (void) const
 {
-  ACE_TRACE ("ACE_Unbounded_Stack<T>::dump");
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::dump");
 }
 
 template<class T>
@@ -133,13 +133,13 @@ ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (void)
 {
   ACE_NEW (this->head_, ACE_Node<T>);
   this->head_->next_ = this->head_;
-  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
 }
 
 template<class T> void
 ACE_Unbounded_Stack<T>::delete_all_nodes (void)
 {
-  ACE_TRACE ("ACE_Unbounded_Stack<T>::delete_all_nodes");
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::delete_all_nodes");
 
   while (this->is_empty () == 0)
     {
@@ -155,7 +155,7 @@ ACE_Unbounded_Stack<T>::delete_all_nodes (void)
 template<class T> void
 ACE_Unbounded_Stack<T>::copy_all_nodes (const ACE_Unbounded_Stack<T> &s)
 {
-  ACE_TRACE ("ACE_Unbounded_Stack<T>::copy_all_nodes");
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::copy_all_nodes");
   
   ACE_ASSERT (this->head_ == this->head_->next_);
 
@@ -178,14 +178,14 @@ ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s)
   ACE_NEW (this->head_, ACE_Node<T>);
   this->head_->next_ = this->head_;
 
-  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
   this->copy_all_nodes (s);
 }
 
 template<class T> void
 ACE_Unbounded_Stack<T>::operator= (const ACE_Unbounded_Stack<T> &s)
 {
-  ACE_TRACE ("ACE_Unbounded_Stack<T>::operator=");
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::operator=");
   if (this != &s)
     {
       this->delete_all_nodes ();
@@ -196,7 +196,7 @@ ACE_Unbounded_Stack<T>::operator= (const ACE_Unbounded_Stack<T> &s)
 template<class T>
 ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack (void) 
 {
-  ACE_TRACE ("ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack");
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack");
 
   this->delete_all_nodes ();
   delete this->head_;
@@ -205,7 +205,7 @@ ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack (void)
 template<class T> int
 ACE_Unbounded_Stack<T>::push (const T &new_item)
 {
-  ACE_TRACE ("ACE_Unbounded_Stack<T>::push");
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::push");
 
   ACE_Node<T> *temp = 0;
 
@@ -218,7 +218,7 @@ ACE_Unbounded_Stack<T>::push (const T &new_item)
 template<class T> int
 ACE_Unbounded_Stack<T>::pop (T &item)
 {
-  ACE_TRACE ("ACE_Unbounded_Stack<T>::pop");
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::pop");
 
   if (this->is_empty ())
     return -1;
