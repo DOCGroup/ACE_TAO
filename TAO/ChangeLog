@@ -1,3 +1,9 @@
+Wed Oct 15 08:58:43 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+          Fixed compile problem when typed events is enabled and having
+          emulated exceptions.
+
 Wed Oct 15 08:27:12 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Makefile.bor:
