@@ -31,12 +31,17 @@
 
 #include "tao/Pluggable.h"
 #include "tao/GIOP_Message_State.h"
+#include "ace/MEM_Acceptor.h"
+#include "ace/Synch.h"
+#include "ace/Svc_Handler.h"
 
 // Forward decls.
-class TAO_SHMIOP_Handler_Base;
 class TAO_SHMIOP_Client_Connection_Handler;
 class TAO_SHMIOP_Server_Connection_Handler;
 class TAO_ORB_Core;
+
+typedef ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
+        TAO_SHMIOP_SVC_HANDLER;
 
 class TAO_Export TAO_SHMIOP_Transport : public TAO_Transport
 {
@@ -49,20 +54,16 @@ class TAO_Export TAO_SHMIOP_Transport : public TAO_Transport
   //   protocol.  This class in turn will be further specialized for
   //   the client and server side.
 public:
-  TAO_SHMIOP_Transport (TAO_SHMIOP_Handler_Base *handler,
-                        TAO_ORB_Core *orb_core);
+  TAO_SHMIOP_Transport (TAO_ORB_Core *orb_core);
   // Base object's creator method.
 
   ~TAO_SHMIOP_Transport (void);
   // Default destructor.
 
-  TAO_SHMIOP_Handler_Base *&handler (void);
-  // Return a reference to the corresponding connection handler.
-
   // = The TAO_Transport methods, please check the documentation in
   //   "tao/Pluggable.h" for more details.
   virtual void close_connection (void);
-  virtual int idle (void);
+
   virtual ACE_HANDLE handle (void);
   virtual ACE_Event_Handler *event_handler (void);
   virtual ssize_t send (TAO_Stub *stub,
@@ -71,7 +72,7 @@ public:
                         const ACE_Time_Value *s = 0);
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0,
-			size_t *bytes_transferred = 0);
+                        size_t *bytes_transferred = 0);
   virtual ssize_t send (const u_char *buf,
                         size_t len,
                         const ACE_Time_Value *s = 0);
@@ -88,10 +89,11 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
 
+  virtual TAO_SHMIOP_SVC_HANDLER *service_handler (void) = 0;
+  // Return the underlying the service handler
+
 protected:
-  TAO_SHMIOP_Handler_Base *handler_;
-  // the connection service handler used for accessing lower layer
-  // communication protocols.
+
 };
 
 class TAO_Export TAO_SHMIOP_Client_Transport : public TAO_SHMIOP_Transport
@@ -142,6 +144,10 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
 
+  virtual TAO_SHMIOP_SVC_HANDLER *service_handler (void);
+
+  virtual int idle (void);
+
   int messaging_init (CORBA::Octet major,
                       CORBA::Octet minor);
   // Initialising the messaging object
@@ -149,7 +155,13 @@ public:
   void use_lite (CORBA::Boolean flag);
   // Sets the lite flag
 
+
 private:
+
+  TAO_SHMIOP_Client_Connection_Handler *handler_;
+  // the connection service handler used for accessing lower layer
+  // communication protocols.
+
   TAO_Pluggable_Messaging *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
@@ -188,6 +200,15 @@ public:
   TAO_GIOP_Message_State message_state_;
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
+
+  virtual TAO_SHMIOP_SVC_HANDLER *service_handler (void);
+
+  virtual int idle (void);
+private:
+
+  TAO_SHMIOP_Server_Connection_Handler *handler_;
+  // the connection service handler used for accessing lower layer
+  // communication protocols.
 };
 
 #if defined (__ACE_INLINE__)

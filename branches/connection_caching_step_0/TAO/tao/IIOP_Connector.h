@@ -129,7 +129,7 @@ public:
           TAO_IIOP_BASE_CONNECTOR;
 
 protected:
-  TAO_IIOP_Handler_Base::TCP_Properties tcp_properties_;
+  TAO_IIOP_Properties tcp_properties_;
   // TCP configuration properties to be used for all
   // connections established by this connector.
 

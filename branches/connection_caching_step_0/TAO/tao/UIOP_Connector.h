@@ -234,7 +234,7 @@ private:
   // from the connection cache.
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
-  TAO_UIOP_Handler_Base::UIOP_Properties uiop_properties_;
+  TAO_UIOP_Properties uiop_properties_;
   // UIOP configuration properties for all connections established by
   // this connector.
 };

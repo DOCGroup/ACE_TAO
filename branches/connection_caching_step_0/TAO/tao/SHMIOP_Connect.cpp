@@ -59,7 +59,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_SHMIOP_Connect_Timeprobe_Description,
 // ****************************************************************
 
 TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SHMIOP_SVC_HANDLEr (t, 0, 0),
+  : TAO_SHMIOP_SVC_HANDLER (t, 0, 0),
     TAO_Connection_Handler (0),
     transport_ (this, 0),
     acceptor_factory_ (0),

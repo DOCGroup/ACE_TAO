@@ -25,7 +25,7 @@
 
 #include "tao/Pluggable.h"
 
-#include "tao/GIOP_Message_State.h"
+
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,12 +34,19 @@
 
 
 # if TAO_HAS_UIOP == 1
+#include "ace/LSOCK_Acceptor.h"
+#include "tao/GIOP_Message_State.h"
+#include "ace/Synch.h"
+#include "ace/Svc_Handler.h"
 
 // Forward decls.
-class TAO_UIOP_Handler_Base;
+
 class TAO_UIOP_Client_Connection_Handler;
 class TAO_UIOP_Server_Connection_Handler;
 class TAO_ORB_Core;
+
+typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
+        TAO_UIOP_SVC_HANDLER;
 
 class TAO_Export TAO_UIOP_Transport : public TAO_Transport
 {
@@ -52,15 +59,11 @@ class TAO_Export TAO_UIOP_Transport : public TAO_Transport
   //   protocol.  This class in turn will be further specialized for
   //   the client and server side.
 public:
-  TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
-                      TAO_ORB_Core *orb_core);
+  TAO_UIOP_Transport (TAO_ORB_Core *orb_core);
   // Base object's creator method.
 
   ~TAO_UIOP_Transport (void);
   // Default destructor.
-
-  TAO_UIOP_Handler_Base *&handler (void);
-  // Return a reference to the corresponding connection handler.
 
   // = The TAO_Transport methods, please check the documentation in
   //   "tao/Pluggable.h" for more details.
@@ -93,10 +96,10 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
 
-protected:
-
-  TAO_UIOP_SVC_HANDLER *service_handler (void) = 0;
+  virtual TAO_UIOP_SVC_HANDLER *service_handler (void) = 0;
   // Acces the underlying connection handler
+
+protected:
 };
 
 class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
@@ -164,7 +167,7 @@ public:
 
 private:
 
-  TAO_UIOP_Server_Connection_Handler *handler_;
+  TAO_UIOP_Client_Connection_Handler *handler_;
   // The connection service handler used for accessing lower layer
   // communication protocols.
 

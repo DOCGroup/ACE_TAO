@@ -10,6 +10,7 @@
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/GIOP_Message_Acceptors.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "tao/IIOP_Transport.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connect.i"
@@ -79,7 +80,7 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_
     acceptor_factory_ (0),
     refcount_ (1),
     tcp_properties_ (ACE_static_cast
-                     (TAO_IIOP_Handler_Base::TCP_Properties *, arg))
+                     (TAO_IIOP_Properties *, arg))
 {
   if (flag)
     {
@@ -160,16 +161,16 @@ TAO_IIOP_Server_Connection_Handler::activate (long flags,
                  flags,
                  THR_BOUND));
 
-  return TAO_SVC_HANDLER::activate (flags,
-                                    n_threads,
-                                    force_active,
-                                    priority,
-                                    grp_id,
-                                    task,
-                                    thread_handles,
-                                    stack,
-                                    stack_size,
-                                    thread_names);
+  return TAO_IIOP_SVC_HANDLER::activate (flags,
+                                         n_threads,
+                                         force_active,
+                                         priority,
+                                         grp_id,
+                                         task,
+                                         thread_handles,
+                                         stack,
+                                         stack_size,
+                                         thread_names);
 }
 
 int
@@ -192,7 +193,7 @@ TAO_IIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
       // ORB destruction.
       this->remove_handle (handle);
 
-      return TAO_SVC_HANDLER::handle_close (handle, rm);
+      return TAO_IIOP_SVC_HANDLER::handle_close (handle, rm);
     }
 
   return 0;
@@ -238,7 +239,7 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
     {
       --this->refcount_;
       if (this->refcount_ == 0)
-        this->TAO_SVC_HANDLER::handle_close ();
+        this->TAO_IIOP_SVC_HANDLER::handle_close ();
       return result;
     }
 
@@ -275,7 +276,7 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
   --this->refcount_;
   if (this->refcount_ == 0)
-    this->TAO_SVC_HANDLER::handle_close ();
+    this->TAO_IIOP_SVC_HANDLER::handle_close ();
 
   return result;
 }
@@ -302,7 +303,7 @@ TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     tcp_properties_ (ACE_static_cast
-                     (TAO_IIOP_Handler_Base::TCP_Properties *, arg))
+                     (TAO_IIOP_Properties *, arg))
 {
   // Set the lite flag in the client transport
   this->transport_.use_lite (flag);
@@ -310,7 +311,7 @@ TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
 
 TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
 {
-  //no-op
+
 }
 
 
