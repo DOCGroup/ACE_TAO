@@ -116,9 +116,6 @@
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_SIZET_SOCKET_LEN
 
-// Platform selects a port automatically if asked to bind to port 0
-#define ACE_HAS_WILDCARD_BIND
-
 // Platform has XPG4 wide character type and functions
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 

@@ -98,7 +98,4 @@
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
-// The OS bind() call will select the port if it's 0.
-#define ACE_HAS_WILDCARD_BIND
-
 #endif /* ACE_CONFIG_H */

@@ -123,9 +123,6 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 // Platform supports the tid_t type
 #define ACE_HAS_TID_T
 
-// Platform selects a port automatically if asked to bind to port 0
-#define ACE_HAS_WILDCARD_BIND
-
 // Platform has XPG4 wide character support
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 

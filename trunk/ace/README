@@ -211,7 +211,6 @@ ACE_HAS_USING_KEYWORD			Compiler supports the new using keyword for C++ namespac
 ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in ACE_NOTSUP.  Useful for tracking down origin of ACE_NOTSUP.
 ACE_HAS_VOIDPTR_MMAP			Platform requires void * for mmap().
 ACE_HAS_VOIDPTR_SOCKOPT			OS/compiler uses void * arg 4 setsockopt() rather than const char *
-ACE_HAS_WILDCARD_BIND                   The bind() call will select the port if it's 0.
 ACE_HAS_WIN32_TRYLOCK			The Win32 platform support TryEnterCriticalSection() (WinNT 4.0 and beyond)
 ACE_HAS_WINSOCK2			The Win32 platform supports WinSock 2.0
 ACE_HAS_XLI 				Platform has the XLI version of TLI
@@ -295,6 +294,7 @@ ACE_LACKS_UNISTD_H                      Platform lacks the unistd.h file (e.g., 
 ACE_LACKS_UNIX_DOMAIN_SOCKETS		ACE platform has no UNIX domain sockets
 ACE_LACKS_UNIX_SIGNALS			Platform lacks full signal support (e.g., Win32 and Chorus).
 ACE_LACKS_UTSNAME_T			Platform lacks struct utsname (e.g., Win32 and VxWorks)
+ACE_LACKS_WILDCARD_BIND                 The bind() call will not select the port if it's 0.
 ACE_MAIN				Renames "main (int, char *[])", for platforms such as g++/VxWorks that don't allow main.  Requires the use of ACE_HAS_NONSTATIC_OBJECT_MANAGER.
 ACE_MT_SAFE				Compile using multi-thread libraries
 ACE_NDEBUG				Turns off debugging features
