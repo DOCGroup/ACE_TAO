@@ -1,5 +1,22 @@
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+// 
+// = FILENAME
+//    Async_Timer_Queue_Test.cpp
+//
+// = DESCRIPTION
+//      This test exercises the <ACE_Asynch_Timer_Queue_Adapter> 
+//      using an <ACE_Timer_Heap>.
+//
+// = AUTHORS
+//    Douglas C. Schmidt and
+//    Sergio Flores-Gaitan
+// ============================================================================
+
 #include "ace/Signal.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
@@ -7,7 +24,7 @@
 #include "Async_Timer_Queue_Test.h"
 
 int 
-Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
+Async_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
 			       const void *arg)
 {
   // Print some information here (note that this is not strictly
@@ -80,7 +97,7 @@ Async_Timer_Queue::schedule (u_int microsecs)
   // Create a new Event_Handler for our timer.
 
   ACE_Event_Handler *eh;
-  ACE_NEW (eh, Timer_Handler);
+  ACE_NEW (eh, Async_Timer_Handler);
 
   // Schedule the timer to run in the future.
   long tid = this->tq_.schedule
@@ -109,6 +126,8 @@ Async_Timer_Queue::cancel (long timer_id)
   delete (ACE_Event_Handler *) act;
 }
 
+// Schedule timer hook method.   This method is called from the driver.
+
 int
 Async_Timer_Queue::schedule_timer (void *argument)
 {
@@ -119,6 +138,8 @@ Async_Timer_Queue::schedule_timer (void *argument)
 
   return 0;
 }
+
+// Cancel timer hook method.   Is called from the driver class.
 
 int
 Async_Timer_Queue::cancel_timer (void *argument)
@@ -131,12 +152,18 @@ Async_Timer_Queue::cancel_timer (void *argument)
   return 0;
 }
 
+// Dummy list timer hook method.  The listing of timers is done from 
+// a signal handler using SIGINT, not from the driver.
+
 int
 Async_Timer_Queue::list_timer (void *argument)
 {
   // Display an error message.
   ACE_ERROR_RETURN ((LM_ERROR, "invalid input\n"), 0);
 }
+
+// Dummy shutdown timer hook method.  The shutdown of the timer queue
+// is done with a signal handler using SIGQUIT, not from the driver.
 
 int
 Async_Timer_Queue::shutdown_timer (void *argument)
@@ -191,10 +218,13 @@ register_signal_handlers (void)
   ACE_UNUSED_ARG (sigint);
 }
 
+// constructor
+
 Async_Timer_Queue_Test_Driver::Async_Timer_Queue_Test_Driver (void)
-    {
-      timer_queue_ = Async_Timer_Queue::instance ();
-    }
+{
+}
+
+// displays the menu of options.
 
 int 
 Async_Timer_Queue_Test_Driver::display_menu (void)
@@ -212,10 +242,12 @@ Async_Timer_Queue_Test_Driver::display_menu (void)
   return 0; 
 }
 
+// Initializes the test driver.
+
 int 
 Async_Timer_Queue_Test_Driver::init (void)
 {
-  // initialize commands with their corresponding input_task methods.
+  // initialize <Command> objects with their corresponding <Input_Task> methods.
   ACE_NEW_RETURN (schedule_cmd_, 
 		  Command<Async_Timer_Queue> (*Async_Timer_Queue::instance (),
 					      Async_Timer_Queue::instance ()->schedule_timer),

@@ -78,17 +78,24 @@ Input_Task::Input_Task (Thread_Timer_Queue *queue, Thread_Timer_Queue_Test_Drive
 {
 }
 
+// Svc method is called from the thread library to read input from  the user.
+
 int 
 Input_Task::svc (void)
 {
   for (;;)
+    // call bacck to the driver's implementation on how to read and parse input.
     if (this->driver_.get_next_request () == -1)
       break;
 
+  // we are done.
   this->queue_->deactivate ();
   ACE_DEBUG ((LM_DEBUG, "terminating input thread\n"));
   return 0;
 }
+
+// schedule a new timer.  This method will be called from inside the 
+//  <Timer_Queue_Test_Driver> class.  (see Command pattern)
 
 int
 Input_Task::add_timer (void *argument)
@@ -115,11 +122,18 @@ Input_Task::add_timer (void *argument)
   return 0;
 }
 
+// Cancel a timer.  This method will be called from inside the 
+//  <Timer_Queue_Test_Driver> class.  (see Command pattern)
+
 int
 Input_Task::cancel_timer (void *argument)
 {
   return  this->queue_->cancel (*(int *)argument);
 }
+
+// lists the timers in the queue.  Ignores the argument. This 
+// method will be called from inside the <Timer_Queue_Test_Driver> 
+// class.  (see Command pattern)
 
 int
 Input_Task::list_timer (void *argument)
@@ -127,6 +141,9 @@ Input_Task::list_timer (void *argument)
   this->dump ();
   return 0;
 }
+
+// Shutdown the timer queue.  Return -1 indicates to the 
+// <Timer_Queue_Test_Driver> class that we are done.
 
 int
 Input_Task::shutdown_timer (void *argument)
@@ -148,6 +165,12 @@ Input_Task::dump (void)
 
   ACE_DEBUG ((LM_DEBUG, "end dumping timer queue\n"));
 }
+
+// constructor
+
+Thread_Timer_Queue_Test_Driver::Thread_Timer_Queue_Test_Driver (void)
+    : input_task (&timer_queue_, *this)
+    {}
 
 int 
 Thread_Timer_Queue_Test_Driver::run_test (void)
@@ -175,7 +198,8 @@ int
 Thread_Timer_Queue_Test_Driver::init (void)
 {
 
-  // initialize commands with their corresponding input_task methods.
+  // initialize the <Command> objects with their corresponding 
+  // methods from <Input_Task>
   ACE_NEW_RETURN (schedule_cmd_, 
 		  Command<Input_Task> (input_task,
 				       input_task.add_timer),

@@ -15,8 +15,8 @@
 //      using an <ACE_Timer_Heap>.
 //
 // = AUTHORS
-//    Douglas C. Schmidt
-// 
+//    Douglas C. Schmidt and
+//    Sergio Flores-Gaitan
 // ============================================================================
 
 #if !defined (_ASYNC_TIMER_QUEUE_TEST_H_)
@@ -28,7 +28,7 @@
 
 #include "Driver.h"
 
-class Timer_Handler : public ACE_Event_Handler
+class Async_Timer_Handler : public ACE_Event_Handler
   // = TITLE
   //     Target of the asynchronous timeout operation.
 {
@@ -61,9 +61,16 @@ public:
   // Dump the contents of the queue.
 
   int schedule_timer (void *argument);
+  // hook method to schedule a timer.  Called from <Timer_Queue_Test_Driver>
+
   int cancel_timer (void *argument);
+  // hook method to cancel a timer.  Called from <Timer_Queue_Test_Driver>
+
   int list_timer (void *argument);
+  // hook method to list timers.  Called from <Timer_Queue_Test_Driver>
+
   int shutdown_timer (void *argument);
+  // hook method to exit the timer queue.  Called from <Timer_Queue_Test_Driver>
 
 private:
   Async_Timer_Queue (ACE_Sig_Set *);
@@ -78,13 +85,23 @@ private:
 
 class Async_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Async_Timer_Queue *, Async_Timer_Queue>
 // = TITLE
+//    Async_Timer_Queue_Test_Driver
 //
 // = DESCRIPTION
+//    This class implements a test driver for the <Async_Timer_Queue>.  Implements
+//     a display_menu() method that prints the options for a user. and init() which
+//     initializes the driver.  The rest of the common functionality is in the parent
+//     class <Timer_Queue_Test_Driver>.
 {
 public:
   Async_Timer_Queue_Test_Driver (void);
 
+  // Print menu of options.
+
   virtual int display_menu (void);
+
+  // Initializes the driver's internal variables inherited from the parent
+
   virtual int init (void);
 };
 

@@ -6,25 +6,28 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-INFO  = README
+INFO    = README
 
-BIN   = main_async 
-FILES   = Async_Timer_Queue_Test
-LSRC    = $(addsuffix .cpp,$(FILES))
-LOBJ    = $(addsuffix .o,$(FILES))
-BUILD   = $(VBIN)
+LIB     = libTQTD.a
+SHLIB   = libTQTD.$(SOEXT)
 
-BIN     = main_reactor
-FILES   = Reactor_Timer_Queue_Test 
-LSRC    = $(addsuffix .cpp,$(FILES))
-LOBJ    = $(addsuffix .o,$(FILES))
-BUILD   = $(VBIN)
+BIN     = main_async \
+	  main_reactor \
+	  main_thread
 
-BIN     = main_thread
-FILES   = Thread_Timer_Queue_Test 
-LSRC    = $(addsuffix .cpp,$(FILES))
-LOBJ    = $(addsuffix .o,$(FILES))
-BUILD = $(VBIN)
+SRC   	= $(addsuffix .cpp,$(BIN))
+OBJ   	= $(SRC:%.cpp=$(VDIR)%.o)
+
+LSRC  	= Async_Timer_Queue_Test.cpp \
+	Reactor_Timer_Queue_Test.cpp \
+	Thread_Timer_Queue_Test.cpp \
+	Driver.cpp
+
+LDLIBS 	= -lTQTD
+
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
+BUILD = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
