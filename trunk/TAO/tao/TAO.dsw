@@ -26,6 +26,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -38,6 +41,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name IFR_Client
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -50,6 +56,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name IFR_Client_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -92,6 +101,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -104,6 +116,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -116,6 +131,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -128,6 +146,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -287,6 +308,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -323,6 +347,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -335,6 +362,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -347,6 +377,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name IFR_Client
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -359,6 +392,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name IFR_Client_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
