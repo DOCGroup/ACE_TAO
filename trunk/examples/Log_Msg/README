@@ -1,10 +1,15 @@
 This directory contains program(s) that demonstrate how to use ACE's
 Log_Msg class to record various information.  
 
-	* test_log_msg.cpp: This program basically tests various
-	  feature of the Log_Msg facility.  It opens a log file and
-	  writes some messages using different log priorities and
-	  output stream.  
+        * test_ostream.cpp: This program illustrates how the
+          ACE_Log_Msg abstraction can be used to write to 
+          stderr and to a file.  For even more sophisticated
+          use-cases of ACE_Log_Msg please see the 
+          $ACE_ROOT/netsvcs/clients/Logger/ examples.
+
+	* test_log_msg.cpp: This program tests various feature of the
+          Log_Msg facility.  It opens a log file and writes some
+          messages using different log priorities and output stream.  
 
 	  You can invoke the program with or without command
 	  parameters.  When invoked with any parameters like,
