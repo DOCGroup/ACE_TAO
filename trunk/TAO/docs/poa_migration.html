@@ -8,14 +8,14 @@ and client; this is necessary to support collocation.</li>
 </ul>
 
 Server side:
-<li>POA_init() is replaced with resolve_initial_references("RootPOA") followed>
+<li>POA_init() is replaced with resolve_initial_references("RootPOA") followed
 by a _narrow operation.</li
 <li>The implementation no longer inherits from the client-side stub; they
 inherit from PortableServer::ServantBase.  The implications of this are (a) if
 you want a object reference for that, you must use the _this() method.</li>
 <li>Object ID's are assigned by the POA unless you activate the servant with a
 specific ID; IDL_Cubit has examples on how to do this.</li>
-<li>Unlike the BOA, the POA explicitly addresses the temporal nature of servants>
+<li>Unlike the BOA, the POA explicitly addresses the temporal nature of servants
 and declares that a POA can service either transient or persistent servants
 (not both).  The root POA's (mandated, unchangeable) policy is "transient". 
 The implications of this are that in order for a client to be able to
