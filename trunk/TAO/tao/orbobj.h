@@ -118,6 +118,14 @@ public:
   // has completed.  <[NOTE]> <wait_for_completion>=TRUE is not
   // currently supported.
 
+  CORBA_Object_ptr resolve_initial_references (CORBA::String name);
+  // This method acts as a miniature name service provided by the ORB
+  // for certain well-known object references.  TAO supports the
+  // "NameService" and "RootPOA" via this method.
+
+  // @@ Chris, can you please make sure that all the methods that are
+  // "above" this comment are truly standard, and all the method below
+  // this comment are TAO-specific?
   // = TAO-specific Extensions
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
@@ -150,13 +158,12 @@ public:
   // objrefs, as well as how to marshal and unmarshal them ... as well
   // as provide their own QueryInterface.
 
+  int run (ACE_Time_Value &tv = 0);
+  // This is the same as the more "standard" <run> method, except that
+  // you don't need to put the & in front of <tv>.
+
   ULONG AddRef (void);
   ULONG Release (void);
-
-  CORBA_Object_ptr resolve_initial_references (CORBA::String name);
-  // This method acts as a miniature name service provided by the ORB
-  // for certain well-known object references.  TAO will shortly
-  // support the "NameService" and "RootPOA" via this method.
 
   int open (void);
   // Set up the ORB Core's acceptor to listen on the
