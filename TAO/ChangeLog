@@ -1,3 +1,9 @@
+Mon Nov 22 19:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+          The TAO_ETCL_Literal_Constraint constructor accepts an Any*, so
+          instead of passing an Any_var, use .ptr() to pass an Any*.
+
 Mon Nov 22 12:53:42 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/AMI_Buffering/client.cpp:
