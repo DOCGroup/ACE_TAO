@@ -1,5 +1,5 @@
 #
- # Makefile for building the RMCast Send_File ace examples
+ # Makefile for building the IPC_SAP SOCK_SAP ace examples
  #
 
  !include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
@@ -20,7 +20,6 @@ all_tests: $(TESTS)
 
 LIBFILES = \
 	$(ACE_LIB) \
-        $(ACE_RMCAST_LIB)
 
 $(TESTS):
 	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
