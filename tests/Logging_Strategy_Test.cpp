@@ -450,7 +450,7 @@ int main (int argc, ACE_TCHAR *argv [])
       // statically 
   ACE_Logging_Strategy logging_strategy;
   char ls_argc = argc - 1;
-  auto_ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
+  ACE_Auto_Basic_ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
 
   for (char c = 0; c < ls_argc; c++)
     (ls_argv.get ())[c] = argv[c+1];
