@@ -161,9 +161,9 @@
 // in 20+ files, define it conditionally.
 // The TAO_OutputCDR class uses the ACE macro, which
 // is defined by default.
-#if defined (ACE_NO_COPY_OCTET_SEQUENCES)
+//#if defined (ACE_NO_COPY_OCTET_SEQUENCES)
 #define TAO_NO_COPY_OCTET_SEQUENCES
-#endif /* ACE_NO_COPY_OCTET_SEQUENCES */
+//#endif /* ACE_NO_COPY_OCTET_SEQUENCES */
 
 #if defined (ACE_HAS_EXCEPTIONS)
 # define TAO_HAS_EXCEPTIONS
