@@ -1,3 +1,9 @@
+Tue Jan  1 08:47:25 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
+
+	* ace/Thread.h: Clarify how the ACE_Thread_Adapter is deleted
+	  when spawn() is called.  Thanks to Preston Elder
+ 	  <prez@srealm.net.au> for reporting this confusion.
+
 Tue Jan  1 14:09:26 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/Map_Manager/test_hash_map_manager.cpp:

@@ -63,8 +63,8 @@ public:
    * EXTREMEMLY implementation-dependent, and are probably best
    * avoided.
    *
-   * Note that <thread_adapter> is always deleted by <thr_create>,
-   * therefore it must be allocated with global operator new.
+   * Note that <thread_adapter> is always deleted when <spawn>
+   * is called, so it must be allocated with global operator new.
    */
   static int spawn (ACE_THR_FUNC func,
                     void *arg = 0,
@@ -128,12 +128,12 @@ public:
                       ACE_hthread_t thread_handles[] = 0,
                       ACE_Thread_Adapter *thread_adapter = 0);
 
-  /// Wait for one or more threads to exit.
+  /// Wait for one or more threads to exit and reap their exit status.
   static int join (ACE_thread_t,
                    ACE_thread_t *,
                    void **status);
 
-  /// Wait for one thread to exit.
+  /// Wait for one thread to exit and reap its exit status.
   static int join (ACE_hthread_t,
                    void ** = 0);
 
