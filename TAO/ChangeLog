@@ -1,6 +1,15 @@
+Wed Aug  7 13:06:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+	 
+        * tao/PortableServer/Object_Adapter.h	 
+        * tao/PortableServer/Object_Adapter.cpp
+
+	  Fixed compile errors.
+
+	  
 Wed Aug  7 24:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
         * tao/RTCORBA/Network_Priority_Mapping_Manager.h: 
+
 	* tao/RTCORBA/Network_Priority_Mapping_Manager.cpp: 	
 	* tao/RTCORBA/Network_Priority_Mapping_Manager.i: 
 	* tao/RTCORBA/Network_Priority_Mapping.h: 
