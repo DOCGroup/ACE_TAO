@@ -1,3 +1,23 @@
+Sun Apr 27 11:01:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/GIOPC.h:
+	* tao/GIOP_Utils.h:
+	* tao/Messaging_PolicyValueC.h:
+	* tao/Pluggable_Messaging_Utils.h:
+	* tao/Reply_Dispatcher.h:
+	* tao/Synch_Reply_Dispatcher.h:
+	* tao/Transport.h:
+	* tao/Transport_Acceptor.cpp:
+	* tao/Transport_Acceptor.h: Removed totally unwanted
+	  includes. This was setting up totally screwed dependencies and
+	  increased footprint. 
+
+	* tao/IOP_CodecC.cpp:
+	* tao/IOP_CodecC.h:
+	* tao/IOP_CodecC.i:
+	* tao/diffs/IOP_Codec.diff: Regenerated code and updated
+	  the diffs.
+
 Sun Apr 27 09:37:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IOP_IORC.h:

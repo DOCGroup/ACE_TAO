@@ -27,10 +27,9 @@
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
-#include "tao/IOPC.h"
-#include "tao/Object_KeyC.h"
-#include "OctetSeqC.h"
+#include "tao/IOP_IORC.h"
 #include "tao/VarOut_T.h"
+#include "tao/Any_T.h"
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"

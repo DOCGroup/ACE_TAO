@@ -18,7 +18,7 @@
 #define TAO_PLUGGABLE_MESSAGING_UTILS_H
 #include "ace/pre.h"
 
-#include "tao/IOPC.h"
+#include "tao/IOP_IORC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

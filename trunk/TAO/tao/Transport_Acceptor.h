@@ -15,14 +15,13 @@
 #ifndef TAO_ACCEPTOR_H
 #define TAO_ACCEPTOR_H
 #include "ace/pre.h"
+#include "tao/corbafwd.h"
 
-#include "tao/IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Object_KeyC.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -32,6 +31,15 @@ class TAO_MProfile;
 class TAO_Endpoint;
 class TAO_Transport;
 
+namespace IOP
+{
+  class TaggedProfile;
+}
+
+namespace TAO
+{
+  class ObjectKey;
+}
 // ****************************************************************
 
 /**
