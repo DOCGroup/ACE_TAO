@@ -161,7 +161,7 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::Struct
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Tests_RT_Test_Filter (%x) ::match_structured (%t)\n", this));
 
-  TAO_POA *poa = this->_default_POA ()->_tao_poa_downcast();
+  TAO_POA *poa = dynamic_cast<TAO_POA*>(this->_default_POA ());
 
   ACE_ASSERT (poa != 0);
 

@@ -1,3 +1,9 @@
+Tue Oct 12 14:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Miop/McastHello/server.cpp:
+          Use the new GOA interface instead of the MIOP specific part of the
+          POA. The GOA support still has to be tested, but now we can compile
+
 Tue Oct 12 13:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp:
