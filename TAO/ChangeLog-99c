@@ -1,5 +1,9 @@
 Thu Jul 15 22:43:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/AV/Policy.i:
+	* orbsvcs/orbsvcs/AV/MCast.i:
+	  Moved all the inline methods to the new .i files.
+			
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 	* orbsvcs/orbsvcs/AV/MCast.cpp:
 	* orbsvcs/orbsvcs/AV/MCast.h:
