@@ -1436,7 +1436,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'z':              // ACE_OS::WChar character
                   {
-                    wchar_t wtchar = va_arg (argp, ACE_OS::WChar);                  
+                    // On some platforms sizeof (wchar_t) can be 2
+                    // on the others 4 ...
+                    wchar_t wtchar = 
+                      ACE_static_cast(wchar_t,
+                                      va_arg (argp, int));
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("c"));
