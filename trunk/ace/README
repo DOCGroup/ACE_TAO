@@ -458,6 +458,7 @@ ACE_HAS_SET_T_ERRNO                     Platform has a function to set
                                         t_errno (e.g., Tandem).
 ACE_HAS_SIGINFO_T                       Platform supports SVR4
                                         extended signals
+ACE_HAS_SIGSUSPEND                      Platform supports sigsuspend()
 ACE_HAS_SIGISMEMBER_BUG                 Platform has bug with
                                         sigismember() (HP/UX 11).
 ACE_HAS_SIG_MACROS                      Platform/compiler has macros

@@ -284,7 +284,11 @@ worker_parent (void *)
   
   while (shut_down == 0)
     {
-      ACE_OS::sigpause (SIGINT);
+      // Wait for a signal to arrive.
+      if (ACE_OS::sigsuspend () == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("(%P|%t) %p\n"),
+                    ASYS_TEXT ("sigsuspend")));
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) got signal!\n")));
     }
