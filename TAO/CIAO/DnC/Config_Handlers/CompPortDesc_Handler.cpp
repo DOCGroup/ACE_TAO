@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 
 #include "IAD_Handler.h"
-#include "COMPPORTDESC_Handler.h"
+#include "CompPortDesc_Handler.h"
 
 #include <iostream>
 

@@ -141,7 +141,7 @@ namespace CIAO
 
     /// handle label attribute
     void CompIntrDesc_Handler::process_label
-      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &compintrcesc)
+      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &compintrdesc)
     {
       if (name)
         {
@@ -150,7 +150,7 @@ namespace CIAO
     }
 
     /// handle UUID attribute
-    void compintrdesc_Handler::process_UUID
+    void CompIntrDesc_Handler::process_UUID
       (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &compintrdesc)
     {
       if (name)
@@ -160,7 +160,7 @@ namespace CIAO
     }
 
     /// handle specificType attribute
-    void compintrdesc_Handler::process_specificType
+    void CompIntrDesc_Handler::process_specificType
       (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &compintrdesc)
     {
       if (name)
@@ -170,7 +170,7 @@ namespace CIAO
     }
 
     /// handle supportedType attribute
-    void compintrdesc_Handler::process_supportedType
+    void CompIntrDesc_Handler::process_supportedType
       (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &compintrdesc)
     {
       if (name)

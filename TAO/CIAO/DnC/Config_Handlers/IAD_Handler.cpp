@@ -11,6 +11,7 @@
 #include "Requirement_Handler.h"
 #include "PCI_Handler.h"
 #include "CompIntrDesc_Handler.h"
+#include "IAD_Handler.h"
 
 #include <iostream>
 
@@ -22,10 +23,10 @@ namespace CIAO
   namespace Config_Handler
   {
     IAD_Handler::IAD_Handler (DOMDocument* doc, unsigned long filter)
-      : traverse_ (doc),
+      : // traverse_ (doc),
         root_ (doc->getDocumentElement()),
         filter_ (filter),
-        iter_ (traverse_->createNodeIterator (this->root_,
+        iter_ (doc->createNodeIterator (this->root_,
                                               this->filter_,
                                               0,
                                               true)),
@@ -33,7 +34,8 @@ namespace CIAO
     {}
 
     IAD_Handler::IAD_Handler (DOMNodeIterator* iter, bool release)
-      : traverse_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
+      : // traverse_ (0),
+	root_ (0), filter_ (0), iter_ (iter), release_ (release)
     {}
 
 
