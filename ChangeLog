@@ -1,3 +1,10 @@
+Tue May 07 15:15:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Removed No_Server_MT_Connect_Test from
+	  the daily builds. The testing methodology needs to be
+	  rethought. Thanks to Ru for ppointing out that the test is
+	  failing on a few paltforms.
+
 Tue May  7 12:59:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Proactor_Test.cpp (handle_write_stream): Tried to fix
