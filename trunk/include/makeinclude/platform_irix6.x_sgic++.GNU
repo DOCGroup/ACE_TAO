@@ -58,7 +58,11 @@ CCFLAGS		+= -ptnone -no_prelink
 # Instantiate used templates, but do not run prelinker
 #CCFLAGS		+= -ptused
 # Suppress warnings about "pack" pragmas not being defined
-CCFLAGS         += -diag_suppress 3284
+# Suppress warnings about "member with the same name as its class"
+# Suppress warnings about "class has no copy assignment operator"
+# Suppress warnings about "Access control" on inherited classes
+# Suppress warnings about "last argument" of varargs function is unnamed
+CCFLAGS         += -diag_suppress 3284,1253,3439,1234,3506
 
 LDFLAGS		+= -Wl,-woff,15
 LDFLAGS		+= -Wl,-woff,84
