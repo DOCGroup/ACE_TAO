@@ -384,10 +384,10 @@ DRV_parse_args (long ac, char **av)
               else
                 {
                   ACE_ERROR ((
-                      LM_ERROR,
-                      ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-                      av[i]
-                    ));
+                              LM_ERROR,
+                              ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                              av[i]
+                              ));
                   ACE_OS::exit (99);
                 }
               break;
@@ -679,9 +679,11 @@ DRV_parse_args (long ac, char **av)
                   // enable OBV (Valuetype) support
                   idl_global->obv_support (1);
 #             else /* IDL_HAS_VALUETYPE */
-                  ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("IDL: -Gv (Valuetype) not compiled in\n");
-                  ACE_OS::exit (99);
+                  {
+                    ACE_ERROR ((LM_ERROR,
+                                ACE_TEXT ("IDL: -Gv (Valuetype) not compiled in\n")));
+                    ACE_OS::exit (99);
+                  }
 #             endif /* IDL_HAS_VALUETYPE */
                 }
               else if (av[i][2] == 'I')
