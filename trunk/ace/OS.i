@@ -2007,11 +2007,9 @@ ACE_INLINE int
 ACE_OS::mutex_lock (ACE_mutex_t *m,
                     const ACE_Time_Value &timeout)
 {
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_MUTEX_TIMEOUTS)
 
-# if defined (ACE_HAS_MUTEX_TIMEOUTS)
-
-#   if defined (ACE_HAS_PTHREADS)
+#  if defined (ACE_HAS_PTHREADS)
   int result;
 
   // "timeout" should be an absolute time.
@@ -2024,7 +2022,9 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
 
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts),
                                        result), int, -1);
-# elif defined (ACE_HAS_WTHREADS)
+
+#  elif defined (ACE_HAS_WTHREADS)
+
   switch (m->type_)
     {
     case USYNC_PROCESS:
@@ -2054,7 +2054,9 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
       return -1;
     }
   /* NOTREACHED */
-#   elif defined (ACE_PSOS)
+
+#  elif defined (ACE_PSOS)
+
   // Note that we must convert between absolute time (which is
   // passed as a parameter) and relative time (which is what
   // the system call expects).
@@ -2067,7 +2069,9 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
     ACE_OSCALL_RETURN (::sm_p (*m, SM_NOWAIT, 0), int, -1); //no timeout
   else
     ACE_OSCALL_RETURN (::sm_p (*m, SM_WAIT, ticks), int, -1);
-#   elif defined (VXWORKS)
+
+#  elif defined (VXWORKS)
+
   // Note that we must convert between absolute time (which is passed
   // as a parameter) and relative time (which is what the system call
   // expects).
@@ -2089,13 +2093,13 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
     }
   else
     return 0;
-#endif /* ACE_HAS_PTHREADS */
-# else  /* ACE_HAS_MUTEX_TIMEOUTS */
+#  endif /* ACE_HAS_PTHREADS */
+
+#endif /* ACE_HAS_THREADS && ACE_HAS_MUTEX_TIMEOUTS */
+
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_MUTEX_TIMEOUTS */
-#endif  /* ACE_HAS_THREADS */
 }
 
 ACE_INLINE int
