@@ -1,3 +1,13 @@
+Mon Oct  6 17:18:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+	  
+	  Improper copy from the main trunk here. 
+	
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+	  
+	  Fixed a wrong delete that cuased the ORB to crash.
+
 Thu Oct  2 15:12:50 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:

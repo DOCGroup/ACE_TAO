@@ -5,7 +5,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Callbacks.h"
 #include "ace/Dynamic_Service.h"
-#include <iostream>
 
 ACE_RCSID(FaultTolerance, FT_Service_Activate, "$Id$")
 

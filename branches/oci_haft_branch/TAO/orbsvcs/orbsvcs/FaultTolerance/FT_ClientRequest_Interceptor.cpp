@@ -17,10 +17,15 @@ namespace TAO
 {
   FT_ClientRequest_Interceptor::FT_ClientRequest_Interceptor (void)
     : name_ ("TAO_FT_ClientRequest_Interceptor")
-      , uuid_ (ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ())
+      , uuid_ (0)
       , lock_ (0)
       , retention_id_ (0)
   {
+    ACE_Utils::UUID_GENERATOR::instance ()->init ();
+
+    this->uuid_ =
+      ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
+
     // Would be nice to have runtime option.
     ACE_NEW (this->lock_,
              ACE_Lock_Adapter<ACE_SYNCH_MUTEX>);
@@ -45,12 +50,10 @@ namespace TAO
     return CORBA::string_dup (this->name_);
   }
 
-
   void
   FT_ClientRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    delete this;
   }
 
   void
@@ -96,7 +99,7 @@ namespace TAO
     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    this->tss_resources ()->clean_flag_ = false;
+    this->tss_resources ()->clean_flag_ = true;
   }
 
   void
@@ -317,8 +320,13 @@ namespace TAO
                             *this->lock_);
 
                 ftrsc.retention_id = ++this->retention_id_;
+
+		ACE_DEBUG ((LM_DEBUG,
+			    "(%P|%t) Retention id [%d]\n",
+			    ftrsc.retention_id));
                 tss->retention_id_ = ftrsc.retention_id;
-            }
+		tss->clean_flag_ = false;
+              }
             else
               {
                 ftrsc.retention_id =
