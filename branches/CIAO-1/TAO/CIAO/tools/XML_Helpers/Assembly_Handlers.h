@@ -14,7 +14,7 @@
 #define CIAO_ASSEMBLY_HANDLERS_H
 
 #include "Cascadable_DocHandler.h"
-#include "Assembly_Spec.h"
+#include "XML_Utils.h"
 
 namespace CIAO
 {
@@ -211,16 +211,6 @@ namespace CIAO
       ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   protected:
-    long get_id_and_cardinality (const char *&id,
-                                 ACEXML_Attributes *atts
-                                 ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException)) ;
-
-    long get_idref (const char *&id,
-                    ACEXML_Attributes *atts
-                    ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException)) ;
-
     long element_count_;
 
     Assembly_Spec *context_;
@@ -313,6 +303,12 @@ namespace CIAO
     Assembly_Connection::Connect_Info *info_;
 
     CH_States state_;
+
+    // Resolver info cache.
+    ACE_CString resolver_info_;
+
+    // Resolver cache.
+    Assembly_Connection::IF_Resolver_Info *resolver_;
 
     ACE_CString characters_;
   };

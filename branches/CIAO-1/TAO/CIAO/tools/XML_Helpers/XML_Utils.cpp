@@ -134,3 +134,48 @@ CIAO::XML_Utils::parse_componentassembly (const char *filename,
   ACEXML_ENDTRY;
   return 0;
 }
+
+long
+CIAO::XML_Utils::get_id_and_cardinality (const char *&id,
+                                         ACEXML_Attributes *atts
+                                         ACEXML_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
+{
+  long retv = 1;
+
+  for (size_t i = 0; i < atts->getLength (); ++i)
+    {
+      if (ACE_OS_String::strcmp (atts->getQName (i), ACE_TEXT ("id")) == 0)
+        {
+          id = atts->getValue (i);
+        }
+      else if (ACE_OS_String::strcmp (atts->getQName (i),
+                                      ACE_TEXT ("cardinality")) == 0)
+        {
+          retv = ACE_OS::atoi (atts->getValue (i));
+        }
+      else
+        ACEXML_THROW_RETURN
+          (ACEXML_SAXException
+           ("Invalid attribute found"),
+           -1);
+    }
+  return retv;
+}
+
+long
+CIAO::XML_Utils::get_single_attribute (const char *attname,
+                                       const char *&id,
+                                       ACEXML_Attributes *atts
+                                       ACEXML_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
+{
+  for (size_t i = 0; i < atts->getLength (); ++i)
+    {
+      if (ACE_OS_String::strcmp (atts->getQName (i), attname) == 0)
+        {
+          id = atts->getValue (i);
+        }
+    }
+  return 0;
+}

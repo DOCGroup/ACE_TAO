@@ -231,7 +231,7 @@ namespace CIAO
     typedef enum _conxion_type
       {
         INTERFACE,
-        EMITER_CONSUMER,
+        EMITTER_CONSUMER,
         PUBLISHER_CONSUMER,
         HOME,
         INVALID_CONN
@@ -317,7 +317,7 @@ namespace CIAO
     Assembly_Placement::Container partitioning_;
 
     /// Connection data
-    ACE_Unbounded_Queue<Assembly_Connection::Connect_Info> connections_;
+    ACE_Unbounded_Queue<Assembly_Connection::Connect_Info*> connections_;
   } Assembly_Spec;
 }
 

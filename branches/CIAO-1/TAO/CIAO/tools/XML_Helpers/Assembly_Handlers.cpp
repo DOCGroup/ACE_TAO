@@ -200,6 +200,7 @@ CIAO::Comp_File_Handler::endElement (const ACEXML_Char *namespaceURI,
                                   qName
                                   ACEXML_ENV_ARG_PARAMETER);
       ACEXML_CHECK;
+      return;
     }
 
   if (ACE_OS::strcmp (qName, "componentfile") == 0)
@@ -328,6 +329,7 @@ CIAO::Partitioning_Handler::endElement (const ACEXML_Char *namespaceURI,
                                   qName
                                   ACEXML_ENV_ARG_PARAMETER);
       ACEXML_CHECK;
+      return;
     }
 
   switch (this->state_)
@@ -436,8 +438,9 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
           this->state_ = HOMEPLACEMENT;
           const char *id = 0;
           long cardinality =
-            this->get_id_and_cardinality (id, atts
-                                          ACEXML_ENV_ARG_PARAMETER);
+            CIAO::XML_Utils::get_id_and_cardinality (id,
+                                                     atts
+                                                     ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK;
 
           ACEXML_NEW_THROW_EX (this->home_placement_,
@@ -451,8 +454,9 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
         {
           const char *id = 0;
           long cardinality =
-            this->get_id_and_cardinality (id, atts
-                                          ACEXML_ENV_ARG_PARAMETER);
+            CIAO::XML_Utils::get_id_and_cardinality (id,
+                                                     atts
+                                                     ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK;
 
           ACEXML_NEW_THROW_EX (this->process_collocation_,
@@ -466,8 +470,9 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
         {
           const char *id = 0;
           long cardinality =
-            this->get_id_and_cardinality (id, atts
-                                          ACEXML_ENV_ARG_PARAMETER);
+            CIAO::XML_Utils::get_id_and_cardinality (id,
+                                                     atts
+                                                     ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK;
 
           ACEXML_NEW_THROW_EX (this->host_collocation_,
@@ -503,9 +508,10 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
       if (ACE_OS::strcmp (qName, "componentfileref") == 0)
         {
           const char *id;
-          this->get_idref (id,
-                           atts
-                           ACEXML_ENV_ARG_PARAMETER);
+          CIAO::XML_Utils::get_single_attribute ("idref",
+                                                 id,
+                                                 atts
+                                                 ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK;
 
           this->home_placement_->componentfileref (id);
@@ -513,9 +519,9 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
       else if (ACE_OS::strcmp (qName, "componentinstantiation") == 0)
         {
           const char *id;
-          this->get_id_and_cardinality (id,
-                                        atts
-                                        ACEXML_ENV_ARG_PARAMETER);
+          CIAO::XML_Utils::get_id_and_cardinality (id,
+                                                   atts
+                                                   ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK;
 
           ACEXML_NEW_THROW_EX (this->comp_instance_,
@@ -538,55 +544,6 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
          ("Invalid tag encounter while parsing \"partitioning\""));
     }
 
-}
-
-long
-CIAO::Partitioning_Handler::get_id_and_cardinality (const char *&id,
-                                                    ACEXML_Attributes *atts
-                                                    ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-  long retv = 1;
-
-  for (size_t i = 0; i < atts->getLength (); ++i)
-    {
-      if (ACE_OS_String::strcmp (atts->getQName (i), ACE_TEXT ("id")) == 0)
-        {
-          id = atts->getValue (i);
-        }
-      else if (ACE_OS_String::strcmp (atts->getQName (i),
-                                      ACE_TEXT ("cardinality")) == 0)
-        {
-          retv = ACE_OS::atoi (atts->getValue (i));
-        }
-      else
-        ACEXML_THROW_RETURN
-          (ACEXML_SAXException
-           ("Invalid tag encounter while parsing \"componentfiles\""),
-           -1);
-    }
-  return retv;
-}
-
-long
-CIAO::Partitioning_Handler::get_idref (const char *&id,
-                                       ACEXML_Attributes *atts
-                                       ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-  for (size_t i = 0; i < atts->getLength (); ++i)
-    {
-      if (ACE_OS_String::strcmp (atts->getQName (i), ACE_TEXT ("idref")) == 0)
-        {
-          id = atts->getValue (i);
-        }
-      else
-        ACEXML_THROW_RETURN
-          (ACEXML_SAXException
-           ("Invalid tag encounter while parsing \"componentfiles\""),
-           -1);
-    }
-  return 0;
 }
 
 // =================================================================
@@ -618,6 +575,18 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
                                   qName
                                   ACEXML_ENV_ARG_PARAMETER);
       ACEXML_CHECK;
+      return;
+    }
+
+  if (ACE_OS::strcmp (qName, "stringifiedobjectref") == 0)
+    {
+        ACEXML_NEW_THROW_EX (this->resolver_,
+                           CIAO::Assembly_Connection::IF_Resolver_Info
+                           (CIAO::Assembly_Connection::STRINGIFIEDOBJECTREF,
+                            this->characters_.c_str ()),
+                           ACEXML_SAXException ("No memory left"));
+      ACEXML_CHECK;
+      return;
     }
 
   switch (this->state_)
@@ -628,6 +597,16 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
         {
           this->info_->name_ = this->characters_.c_str ();
         }
+      if (ACE_OS::strcmp (qName, "consumesport") == 0 ||
+          ACE_OS::strcmp (qName, "usesport") == 0 ||
+          ACE_OS::strcmp (qName, "proxyhome") == 0)
+        {
+          if (this->resolver_ == 0)
+            ACEXML_THROW (ACEXML_SAXException ("No valide IF resolver available"));
+          this->info_->component_ = this->resolver_;
+          this->resolver_ = 0;
+          this->state_ = SOURCE;
+        }
       else if (ACE_OS::strcmp (qName, "extension") == 0)
         {
           // @@ Not supported yet.
@@ -635,6 +614,62 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
       break;
 
     case SOURCE:
+      if (ACE_OS::strcmp (qName, "destinationhome") == 0)
+        {
+          if (this->resolver_ == 0)
+            ACEXML_THROW (ACEXML_SAXException ("No valide IF resolver available"));
+          this->info_->interface_ = this->resolver_;
+          this->resolver_ = 0;
+        }
+      else if (ACE_OS::strcmp (qName, "providesidentifier") == 0 ||
+               ACE_OS::strcmp (qName, "emitsidentifier") == 0 ||
+               ACE_OS::strcmp (qName, "publishesidentifier") == 0)
+        {
+          this->resolver_info_ = this->characters_.c_str ();
+        }
+      else if (ACE_OS::strcmp (qName, "providesport") == 0)
+        {
+          if (this->resolver_ == 0)
+            ACEXML_THROW (ACEXML_SAXException
+                          ("No valide nested IF resolver available"));
+          CIAO::Assembly_Connection::IF_Resolver_Info *nested = this->resolver_;
+
+          ACEXML_NEW_THROW_EX (this->resolver_,
+                               CIAO::Assembly_Connection::IF_Resolver_Info
+                               (CIAO::Assembly_Connection::PROVIDER,
+                                this->resolver_info_.c_str (),
+                                nested),
+                               ACEXML_SAXException ("No memory left"));
+          ACEXML_CHECK;
+          this->info_->interface_ = this->resolver_;
+          this->resolver_ = 0;
+        }
+      else if (ACE_OS::strcmp (qName, "emitsport") == 0 ||
+               ACE_OS::strcmp (qName, "publishesport") == 0)
+        {
+          if (this->resolver_ == 0)
+            ACEXML_THROW (ACEXML_SAXException
+                          ("No valide nested IF resolver available"));
+          CIAO::Assembly_Connection::IF_Resolver_Info *nested = this->resolver_;
+
+          ACEXML_NEW_THROW_EX (this->resolver_,
+                               CIAO::Assembly_Connection::IF_Resolver_Info
+                               (CIAO::Assembly_Connection::CONSUMER,
+                                this->resolver_info_.c_str (),
+                                nested),
+                               ACEXML_SAXException ("No memory left"));
+          ACEXML_CHECK;
+          this->info_->interface_ = this->resolver_;
+          this->resolver_ = 0;
+        }
+      else if (ACE_OS::strcmp (qName, "connectinterface") == 0 ||
+               ACE_OS::strcmp (qName, "connectevent") == 0 ||
+               ACE_OS::strcmp (qName, "connecthomes") == 0)
+        {
+          this->context_->connections_.enqueue_tail (this->info_);
+          this->info_ = 0;
+          this->state_ = START;
+        }
       break;
 
     default:
@@ -655,6 +690,77 @@ CIAO::Connections_Handler::startElement (const ACEXML_Char *namespaceURI,
 {
   ACE_TRACE ("CIAO::Connections_Handler::startElement");
   ++this->element_count_;
+
+  if (ACE_OS::strcmp (qName, "componentinstantiationref") == 0)
+    {
+      const char *idref;
+      CIAO::XML_Utils::get_single_attribute ("idref",
+                                             idref,
+                                             atts
+                                             ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_CHECK;
+
+      ACEXML_NEW_THROW_EX (this->resolver_,
+                           CIAO::Assembly_Connection::IF_Resolver_Info
+                           (CIAO::Assembly_Connection::COMP_IDREF,
+                            idref),
+                           ACEXML_SAXException ("No memory left"));
+      ACEXML_CHECK;
+      return;
+    }
+  else if (ACE_OS::strcmp (qName, "homeplacementref") == 0)
+    {
+      const char *idref;
+      CIAO::XML_Utils::get_single_attribute ("idref",
+                                             idref,
+                                             atts
+                                             ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_CHECK;
+
+      ACEXML_NEW_THROW_EX (this->resolver_,
+                           CIAO::Assembly_Connection::IF_Resolver_Info
+                           (CIAO::Assembly_Connection::HOME_IDREF,
+                            idref),
+                           ACEXML_SAXException ("No memory left"));
+      ACEXML_CHECK;
+      return;
+    }
+  else if (ACE_OS::strcmp (qName, "namingservice") == 0)
+    {
+      const char *name;
+      CIAO::XML_Utils::get_single_attribute ("name",
+                                             name,
+                                             atts
+                                             ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_CHECK;
+
+      ACEXML_NEW_THROW_EX (this->resolver_,
+                           CIAO::Assembly_Connection::IF_Resolver_Info
+                           (CIAO::Assembly_Connection::NAMINGSERVICE,
+                            name),
+                           ACEXML_SAXException ("No memory left"));
+      ACEXML_CHECK;
+      return;
+    }
+  else if (ACE_OS::strcmp (qName, "homefinder") == 0)
+    {
+      const char *name;
+      CIAO::XML_Utils::get_single_attribute ("name",
+                                             name,
+                                             atts
+                                             ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_CHECK;
+
+      ACEXML_NEW_THROW_EX (this->resolver_,
+                           CIAO::Assembly_Connection::IF_Resolver_Info
+                           (CIAO::Assembly_Connection::HOMEFINDER,
+                            name),
+                           ACEXML_SAXException ("No memory left"));
+      ACEXML_CHECK;
+      return;
+    }
+  else if (ACE_OS::strcmp (qName, "traderquery") == 0)
+    ACEXML_THROW (ACEXML_SAXException ("\'traderquery\' is not supported yet."));
 
   switch (this->state_)
     {
@@ -679,7 +785,7 @@ CIAO::Connections_Handler::startElement (const ACEXML_Char *namespaceURI,
           this->create_info (atts
                              ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK;
-
+          this->info_->type_ = CIAO::Assembly_Connection::HOME;
         }
       else if (ACE_OS::strcmp (qName, "extension") == 0)
         {
@@ -688,6 +794,14 @@ CIAO::Connections_Handler::startElement (const ACEXML_Char *namespaceURI,
       break;
 
     case SOURCE:
+      if (ACE_OS::strcmp (qName, "emitsport") == 0)
+        {
+          this->info_->type_ = CIAO::Assembly_Connection::EMITTER_CONSUMER;
+        }
+      else if (ACE_OS::strcmp (qName, "publishesport") == 0)
+        {
+          this->info_->type_ = CIAO::Assembly_Connection::PUBLISHER_CONSUMER;
+        }
       break;
 
     default:

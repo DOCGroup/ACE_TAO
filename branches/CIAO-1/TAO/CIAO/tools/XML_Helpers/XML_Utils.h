@@ -48,6 +48,17 @@ namespace CIAO
     static int parse_componentassembly (const char *filename,
                                         Assembly_Spec *spec);
 
+    static long get_id_and_cardinality (const char *&id,
+                                        ACEXML_Attributes *atts
+                                        ACEXML_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException)) ;
+
+    static long get_single_attribute (const char *attname,
+                                      const char *&id,
+                                      ACEXML_Attributes *atts
+                                      ACEXML_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException)) ;
+
   };
 
 }
