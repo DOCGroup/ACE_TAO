@@ -30,6 +30,8 @@ ACE_INLINE PortableServer::ObjectId *
 TAO_Object_Table_Impl::create_object_id (PortableServer::Servant servant,
                                          CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (servant);
+
   CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
   env.exception (exception);
   return 0;
@@ -347,8 +349,8 @@ TAO_Active_Demux_ObjTable::parse_object_id (const PortableServer::ObjectId &id,
 {
   CORBA::ULong id_data[2];
 
-  ACE_OS::memcpy (&id_data, 
-                  id.get_buffer (), 
+  ACE_OS::memcpy (&id_data,
+                  id.get_buffer (),
                   sizeof id_data);
 
   index = id_data[TAO_Active_Demux_ObjTable::INDEX_FIELD];
@@ -357,18 +359,17 @@ TAO_Active_Demux_ObjTable::parse_object_id (const PortableServer::ObjectId &id,
   return 0;
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Dynamic_Hash_ObjTable::~TAO_Dynamic_Hash_ObjTable (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Dynamic_Hash_ObjTable_Iterator::~TAO_Dynamic_Hash_ObjTable_Iterator (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Array_ObjTable_Iterator::~TAO_Array_ObjTable_Iterator (void)
 {
 }
-
