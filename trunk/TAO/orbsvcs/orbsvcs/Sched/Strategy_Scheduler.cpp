@@ -16,8 +16,8 @@
 //
 // ============================================================================
 
-#include <math.h>
-#include <float.h>
+#include "math.h"
+#include "float.h"
 
 #include "ace/Sched_Params.h"
 
@@ -156,48 +156,51 @@ ACE_Scheduler::status_t
 ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches, 
                                               u_int count)
 {
-  // start both subpriority counts at 0, set these values in 
-  // the first entry, and increment the static subpriority count
-  Sub_Priority dynamic_subpriorities = 0;
-  Sub_Priority static_subpriorities = 0;
-  dispatches[0]->dynamic_subpriority (dynamic_subpriorities);
-  dispatches[0]->static_subpriority (static_subpriorities++);
+  // start subpriority levels and element counts at 1, set level values in
+  // the first entry, increment the static subpriority level, 
+  Sub_Priority dynamic_subpriority_level = 0;
+  Sub_Priority static_subpriority_level = 0;
+  u_int dynamic_subpriority_elements = 1;
+  u_int static_subpriority_elements = 1;
+  dispatches[0]->dynamic_subpriority (dynamic_subpriority_level);
+  dispatches[0]->static_subpriority (static_subpriority_level++);
 
-
+  u_int i,j;
   // traverse ordered dispatch entry array, assigning priority
   // (array is sorted from highest to lowest priority)
-  for (u_int i = 1; i < count; ++i)
+  for (i = 1; i < count; ++i)
   {
     switch (strategy_.priority_comp (*(dispatches[i-1]), 
                                      *(dispatches[i])))
     {
       case -1:  // the current entry is at lower priority than the previous
 		{ 
-        // fill in the high to low subpriority values by subtracting the 
-        // previously assigned subpriorities from the total number of 
-        // subpriorities
-        int j;
-        for (j = 1; j <= dynamic_subpriorities; ++j)
+        // fill in the high to low dynamic subpriority values by subtracting
+        // the previously assigned subpriority value of each of element in the 
+		// current priority level from the value of last subpriority level
+        for (j = 1; j <= dynamic_subpriority_elements; ++j)
         {
           dispatches[i - j]->
-			  dynamic_subpriority (dynamic_subpriorities -
+			  dynamic_subpriority (dynamic_subpriority_level -
                                    dispatches[i - j]->
 								     dynamic_subpriority ());
         }
-        for (j = 1; j <= static_subpriorities; ++j)
+        for (j = 1; j <= static_subpriority_elements; ++j)
         {
           dispatches[i - j]->
-			  static_subpriority (static_subpriorities -
+			  static_subpriority (static_subpriority_level -
                                   dispatches[i - j]->
-								    static_subpriority ());
+								    static_subpriority () - 1);
         }
 
         // reset the subpriority counters, set these values in the
         // current entry, and increment the static subpriority counter
-        dynamic_subpriorities = 0;
-        static_subpriorities = 0;
-        dispatches[i]->dynamic_subpriority (dynamic_subpriorities);
-        dispatches[i]->static_subpriority (static_subpriorities++);
+        dynamic_subpriority_elements = 1;
+        static_subpriority_elements = 1;
+        dynamic_subpriority_level = 0;
+        static_subpriority_level = 0;
+        dispatches[i]->dynamic_subpriority (dynamic_subpriority_level);
+        dispatches[i]->static_subpriority (static_subpriority_level++);
 
         break;
 		}
@@ -209,28 +212,17 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
                                                     *(dispatches[i])))
         {
           case -1:  // the current entry is at lower dynamic subpriority
-          { 
-            // increment dynamic subpriority counter
-            ++dynamic_subpriorities;
 
-            // fill in the high to low static subpriority values by
-            // subtracting the previously assigned subpriorities from
-            // the total number of subpriorities
-            for (int j = 1; j <= static_subpriorities; ++j)
-            {
-              dispatches[i - j]->
-				  static_subpriority (static_subpriorities -
-                                      dispatches[i - j]->
-									    static_subpriority ());
-            }
+            // increment dynamic subpriority level
+            ++dynamic_subpriority_level;
 
-            // reset the static subpriority counter, set this value in the
-            // current entry, and increment the static subpriority counter
-            static_subpriorities = 0;
-            dispatches[i]->static_subpriority (static_subpriorities++);
-
+            // update the static subpriority as well: this avoids problems
+            // with non-determinism if due to run-time conditions, two
+            // dispatches line up with identical dynamic subpriority that
+            // were considered different with respect to the critical instant
+            dispatches[i]->static_subpriority (static_subpriority_level++);
+            static_subpriority_elements++;
             break;
-          }
 
           case 0:  // still at the same dynamic subpriority level 
 
@@ -242,10 +234,13 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
               case  0:    
 
                 // assign and then increment the static subpriority: even if
-                // still at the same static subpriority level as far as the
-                // scheduling strategy is concerned, assign a new one 
-                // anyway, to give a completely deterministic schedule
-                dispatches[i]->static_subpriority (static_subpriorities++);
+                // still at the same dynamic or static subpriority level as
+                // far as the scheduling strategy is concerned, assign a new
+                // one anyway, to give a completely deterministic schedule
+                // even if the dynamic subpriorities happen to align due to
+                // run-time variation
+                dispatches[i]->static_subpriority (static_subpriority_level++);
+                static_subpriority_elements++;
                 break;
 
               default: // should never reach here: something *bad* has happened
@@ -273,7 +268,8 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
               ACE_Scheduler::ST_INVALID_PRIORITY_ORDERING);
         }
 
-        dispatches[i]->dynamic_subpriority (dynamic_subpriorities);
+        dispatches[i]->dynamic_subpriority (dynamic_subpriority_level);
+		dynamic_subpriority_elements++;
         break;
 
       default: // should never reach here: something *bad* has happened
@@ -288,6 +284,22 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
     }
   }
 
+  // fill in the high to low subpriority values for the last priority 
+  // level by subtracting the previously assigned subpriorities from
+  // the total number of subpriorities
+  for (j = 1; j <= dynamic_subpriority_elements; ++j)
+  {
+    dispatches[i - j]->
+      dynamic_subpriority (dynamic_subpriority_level -
+                           dispatches[i - j]->dynamic_subpriority ());
+  }
+  for (j = 1; j <= static_subpriority_elements; ++j)
+  {
+    dispatches[i - j]->
+      static_subpriority (static_subpriority_level -
+                          dispatches[i - j]->static_subpriority () - 1);
+  }
+
   return ACE_Scheduler::SUCCEEDED;
 }
 
@@ -298,6 +310,169 @@ ACE_Strategy_Scheduler::minimum_critical_priority ()
   return strategy_.minimum_critical_priority ();
 }
   // = determine the minimum critical priority number
+
+
+ACE_Scheduler::status_t
+ACE_Strategy_Scheduler::schedule_timeline_entry (
+  Dispatch_Entry &dispatch_entry,
+  ACE_Unbounded_Queue <Dispatch_Entry *> &reschedule_queue)
+{
+  status_t status = SUCCEEDED;
+
+  // timeline entries cover the execution time of the dispatch
+  u_long remaining_time = 
+    dispatch_entry.task_entry().rt_info ()->worst_case_execution_time;
+
+  // initialize last stop time to arrival time of the dispatch
+  u_long last_stop = dispatch_entry.arrival ();
+
+  TimeLine_Entry *last_entry = 0;
+  TimeLine_Entry *current_entry = 0;
+  ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> iter (*timeline_);
+  for (iter.first (); (remaining_time > 0) && (iter.done () == 0);
+       iter.advance ())
+  {
+    TimeLine_Entry_Link *link;
+    if ((iter.next (link) == 0) || (! link))
+    {
+      return ST_BAD_INTERNAL_POINTER;
+    }
+
+    // for each entry already in the timeline that is the first one for a
+    // dispatch, and has lower dynamic subpriority and does not have greater
+    // static priority, and starts in the period in which the new entry would
+    // execute, then advance the iterator to the next timeline entry
+    // having a different dispatch entry (if there is such), add its dispatch
+    // entry to the reschedule set, remove all TimeLine_Entry_Links that 
+    // correspond to that dispatch entry, and delete all its TimeLine_Entry
+    // objects as well.  NOTE: 0 is highest priority, 1 next, etc.
+    while ((iter.done () == 0) &&
+           (link->entry ().start() < last_stop + remaining_time) &&
+           (link->entry ().start() >= last_stop) &&
+           (link->entry ().prev () == 0) && 
+           (link->entry ().dispatch_entry().priority () >=
+            dispatch_entry.priority ()) &&
+           (strategy_.dynamic_subpriority (dispatch_entry, link->entry ().start ()) >
+            strategy_.dynamic_subpriority (link->entry ().dispatch_entry (), 
+                                           link->entry ().start ())))
+    {
+      // point to the dispatch entry whose timeline entries will be removed and
+      // rescheduled, and to the timeline entry heading the bilinked list of
+      // timeline entries to be removed
+      Dispatch_Entry *removed_dispatch_entry
+        = &(link->entry ().dispatch_entry());
+      TimeLine_Entry *remove_entry = & (link->entry ());
+
+      // put the dispatch entry into the set of entries that will be 
+      // rescheduled at the end of this method (tail recursively)
+      reschedule_queue.enqueue_tail (removed_dispatch_entry);
+      
+      // advance the iterator to the next timeline entry (if there is one) 
+      // that is not for the dispatch entry being removed
+      while (iter.done () == 0)
+      {
+        // point to the current link
+        if ((iter.next (link) == 0) || (! link))
+        {
+          return ST_BAD_INTERNAL_POINTER;
+        }
+
+        // advance until a different dispatch entry is found, 
+        // or we run off the end of the timeline
+        if (&(link->entry ().dispatch_entry ()) == 
+            removed_dispatch_entry)
+        {
+          iter.advance ();
+        }
+        else
+        {
+          break;
+        }
+      }
+
+      // remove entries corresponding to the rescheduled 
+      // dispatch from the timeline and destroy them
+      TimeLine_Entry *next_remove_entry = 0;
+      while (remove_entry)
+      {
+        next_remove_entry = remove_entry->next ();
+
+        timeline_->remove (TimeLine_Entry_Link (*remove_entry));
+        delete remove_entry;
+
+        remove_entry = next_remove_entry;
+      }
+    }
+
+    // exit the outer loop if there are no more entries in the timeline
+    if (iter.done () != 0)
+    {
+      break;
+    }
+
+    // if there's room, schedule a new timeline entry for the dispatch
+    if (link->entry ().start() > last_stop)
+    {
+      ACE_NEW_RETURN (
+        current_entry,
+        TimeLine_Entry (
+          dispatch_entry,
+          last_stop,
+          (((remaining_time + last_stop) < link->entry ().start())
+             ? (remaining_time + last_stop) : link->entry ().start()),
+          dispatch_entry.arrival (),
+          dispatch_entry.deadline (),
+          0, last_entry),
+        ST_VIRTUAL_MEMORY_EXHAUSTED);
+  
+      // patch up the pointers within the list of entries for this dispatch
+      if (last_entry)
+      {
+        last_entry->next (current_entry); 
+      }
+      last_entry = current_entry; 
+
+      timeline_->insert(TimeLine_Entry_Link(*current_entry));
+
+      // update the remaining time and last stop values
+      remaining_time -= ((remaining_time < (link->entry ().start() - last_stop))
+                          ? remaining_time : (link->entry ().start() - last_stop));
+    }
+
+    // update the last stop time 
+    if (last_stop < link->entry ().stop ())
+    {
+      last_stop = link->entry ().stop ();
+    }
+  }    
+
+  // if there is still dispatch time remaining, and we've 
+  // reached the end of the list, insert what's left
+  if (remaining_time > 0)
+  {
+    ACE_NEW_RETURN (
+      current_entry,
+      TimeLine_Entry (
+        dispatch_entry,
+        last_stop,
+        remaining_time + last_stop,
+        dispatch_entry.arrival (),
+        dispatch_entry.deadline (),
+        0, last_entry),
+      ST_VIRTUAL_MEMORY_EXHAUSTED);
+  
+    // patch up the pointers within the list of entries for this dispatch
+    if (last_entry)
+    {
+      last_entry->next (current_entry); 
+    }
+
+    timeline_->insert(TimeLine_Entry_Link(*current_entry));
+  }
+
+  return status;
+}
+
 
 
 ////////////////////////////////////////////////////////////////////
@@ -394,11 +569,6 @@ ACE_Scheduler_Strategy::static_subpriority_comp (
     }
     else
     {
-      // should never get here: all entries should be ordered by finishing time
-      ACE_ERROR ((LM_ERROR, 
-                  "minimal ordering failure for tasks \"%s\" and \"%s\".\n",
-                  first_entry.task_entry ().rt_info ()->entry_point, 
-                  second_entry.task_entry ().rt_info ()->entry_point));
       return 0;
     }
   }
@@ -482,6 +652,23 @@ ACE_MUF_Scheduler_Strategy::~ACE_MUF_Scheduler_Strategy ()
 }
     // = virtual dtor
 
+long 
+ACE_MUF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
+                                                 u_long current_time)
+{
+  long laxity = 
+    entry.deadline () - current_time - 
+    entry.task_entry ().rt_info ()->worst_case_execution_time;
+
+  return (laxity > 0) ? LONG_MAX - laxity : laxity;
+}
+  // = returns a dynamic subpriority value for the given entry and the 
+  //   current time: if the operation has non-negative laxity, then the
+  //   value is positive, and a lower laxity gives a higher dynamic 
+  //   subpriority; if the operation has negative laxity, the value
+  //   is the (negative) laxity value
+
+
 int 
 ACE_MUF_Scheduler_Strategy::dynamic_subpriority_comp
   (const Dispatch_Entry &first_entry, 
@@ -489,11 +676,11 @@ ACE_MUF_Scheduler_Strategy::dynamic_subpriority_comp
 {
   // order by descending dynamic priority according to ascending laxity
   u_long laxity1 = 
-    first_entry.deadline () - 
+    first_entry.deadline () - first_entry.arrival () - 
     first_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
   u_long laxity2 =
-    second_entry.deadline () -
+    second_entry.deadline () - first_entry.arrival () - 
     second_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
 
@@ -529,7 +716,7 @@ ACE_MUF_Scheduler_Strategy::minimum_critical_priority ()
 {
   return minimum_critical_priority_;
 }
-  // = returns 0 for minimum critical priority number
+  // = returns minimum critical priority number
 
 /////////////////////////////////////////////////////////////////////////
 // class ACE_RMS_Scheduler_Strategy static data member initializations //
@@ -590,7 +777,7 @@ ACE_RMS_Scheduler_Strategy::sort (
 
 ACE_RMS_Scheduler_Strategy::ACE_RMS_Scheduler_Strategy (
   ACE_Scheduler::Preemption_Priority minimum_critical_priority) 
-  :ACE_Scheduler_Strategy (0)
+  :ACE_Scheduler_Strategy (minimum_critical_priority)
 {
 }
     // = default ctor
@@ -599,6 +786,14 @@ ACE_RMS_Scheduler_Strategy::~ACE_RMS_Scheduler_Strategy ()
 {
 }
     // = virtual dtor
+
+long 
+ACE_RMS_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
+                                                 u_long current_time)
+{
+  return 0;
+}
+  // = all entries have the same dynamic subpriority value
 
 int 
 ACE_RMS_Scheduler_Strategy::dynamic_subpriority_comp
@@ -620,6 +815,13 @@ ACE_RMS_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 }
   // comparison function to pass to qsort
 
+
+ACE_Scheduler::Preemption_Priority 
+ACE_RMS_Scheduler_Strategy::minimum_critical_priority ()
+{
+  return minimum_critical_priority_;
+}
+  // = returns minimum critical priority number
 
 /////////////////////////////////////////////////////////////////////////
 // class ACE_MLF_Scheduler_Strategy static data member initializations //
@@ -676,6 +878,19 @@ ACE_MLF_Scheduler_Strategy::~ACE_MLF_Scheduler_Strategy ()
     // = virtual dtor
 
 
+long 
+ACE_MLF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
+                                                 u_long current_time)
+{
+  long laxity = 
+    entry.deadline () - current_time - 
+    entry.task_entry ().rt_info ()->worst_case_execution_time;
+
+  return (laxity > 0) ? LONG_MAX - laxity : laxity;
+}
+  // = returns a dynamic subpriority value for the given entry and the 
+  //   current time relative to its arrival
+
 int
 ACE_MLF_Scheduler_Strategy::dynamic_subpriority_comp
   (const Dispatch_Entry &first_entry, 
@@ -684,11 +899,11 @@ ACE_MLF_Scheduler_Strategy::dynamic_subpriority_comp
   // order by laxity (ascending)
   // order by descending dynamic priority according to ascending laxity
   u_long laxity1 = 
-    first_entry.deadline () - 
+    first_entry.deadline () - first_entry.arrival () - 
     first_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
   u_long laxity2 =
-    second_entry.deadline () -
+    second_entry.deadline () - first_entry.arrival () -
     second_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
   if (laxity1 < laxity2)
@@ -774,17 +989,30 @@ ACE_EDF_Scheduler_Strategy::~ACE_EDF_Scheduler_Strategy ()
 }
     // = virtual dtor
 
+long 
+ACE_EDF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
+                                                 u_long current_time)
+{
+  long time_to_deadline = entry.deadline () - current_time;
+  return (time_to_deadline > 0) 
+         ? LONG_MAX - time_to_deadline : time_to_deadline;
+}
+  // = returns a dynamic subpriority value for the given entry and the 
+  //   current time relative to its arrival
+
 int
 ACE_EDF_Scheduler_Strategy::dynamic_subpriority_comp
   (const Dispatch_Entry &first_entry, 
    const Dispatch_Entry &second_entry)
 {
   // order by dispatchable interval (ascending)
-  if (first_entry.deadline () < second_entry.deadline ())
+  if (first_entry.deadline () - first_entry.arrival () < 
+      second_entry.deadline () - first_entry.arrival ())
   {
     return -1;
   }
-  else if (first_entry.deadline () > second_entry.deadline ())
+  else if (first_entry.deadline () - first_entry.arrival () > 
+           second_entry.deadline () - first_entry.arrival ())
   {
     return 1;
   }
@@ -897,6 +1125,25 @@ ACE_RMS_Dyn_Scheduler_Strategy::~ACE_RMS_Dyn_Scheduler_Strategy ()
 }
     // = virtual dtor
 
+long 
+ACE_RMS_Dyn_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
+                                                     u_long current_time)
+{
+  if (entry.task_entry ().rt_info ()->criticality < 
+      RtecScheduler::HIGH_CRITICALITY)
+  {
+  long laxity = 
+    entry.deadline () - current_time - 
+    entry.task_entry ().rt_info ()->worst_case_execution_time;
+
+  return (laxity > 0) ? LONG_MAX - laxity : laxity;
+  }
+
+  return 0;
+}
+  // = returns a dynamic subpriority value for the given entry and the 
+  //   current time relative to its arrival
+
 int
 ACE_RMS_Dyn_Scheduler_Strategy::dynamic_subpriority_comp
   (const Dispatch_Entry &first_entry, 
@@ -918,11 +1165,11 @@ ACE_RMS_Dyn_Scheduler_Strategy::dynamic_subpriority_comp
     // for VERY_LOW_CRITICALITY, LOW_CRITICALITY and MEDIUM_CRITICALITY,
     // order second by laxity (ascending)
     u_long laxity1 = 
-      first_entry.deadline () - 
+      first_entry.deadline () - first_entry.arrival () -
       first_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
     u_long laxity2 =
-      second_entry.deadline () -
+      second_entry.deadline () - first_entry.arrival () -
       second_entry.task_entry ().rt_info ()->worst_case_execution_time;    
 
     if (laxity1 < laxity2)

@@ -96,5 +96,17 @@ ACE_Scheduler::status (const status_t new_status)
   status_ = new_status; 
 }
 
+ACE_INLINE u_long
+ACE_Scheduler::min_dispatch_id () const
+{ 
+  return min_dispatch_id_; 
+}
+
+ACE_INLINE u_long
+ACE_Scheduler::max_dispatch_id () const
+{ 
+  return max_dispatch_id_; 
+}
+
 
 // EOF

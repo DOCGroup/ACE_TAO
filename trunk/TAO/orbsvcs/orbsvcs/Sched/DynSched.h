@@ -30,7 +30,7 @@
 
 class TAO_ORBSVCS_Export ACE_Scheduler
   // = TITLE
-  //    Thread scheduler interface.
+  //    dispatch scheduling interface.
   //
   // = DESCRIPTION
   //    This abstract base class provides the majority of the 
@@ -171,6 +171,7 @@ public:
   status_t output_timeline (const char *filename, const char *heading);
   // this prints the entire set of timeline outputs to the specified file
 
+
   // = Access a thread priority.
 //  TBD - put this back in, but with dynamic subpriority as well as static
 //  int priority (const handle_t handle,
@@ -222,6 +223,10 @@ public:
   static void export(RT_Info*, FILE* file);
   static void export(RT_Info&, FILE* file);
 
+  // accessors for the minimal and maximal dispatch entry id in the schedule
+  u_long min_dispatch_id () const;
+  u_long max_dispatch_id () const;
+
 protected:
 
   ////////////////////////////////
@@ -264,12 +269,17 @@ protected:
 
   virtual status_t assign_priorities (Dispatch_Entry **dispatches,
                                       u_int count) = 0;
-    // = assign priorities to the sorted dispatches
+  // = assign priorities to the sorted dispatches
 
   virtual status_t assign_subpriorities (Dispatch_Entry **dispatches, 
                                          u_int count) = 0;
-    // = assign dynamic and static sub-priorities to the sorted dispatches
+  // = assign dynamic and static sub-priorities to the sorted dispatches
 
+  virtual status_t
+    schedule_timeline_entry (Dispatch_Entry &dispatch_entry,
+                             ACE_Unbounded_Queue <Dispatch_Entry *> 
+                               &reschedule_queue) = 0;
+  // = schedule a dispatch entry into the timeline being created
 
   ////////////////////////////
   // protected data members //
@@ -303,6 +313,10 @@ protected:
   ACE_Unbounded_Set <Dispatch_Entry *> *dispatch_entries_;
     // the set of dispatch entries
 
+  ACE_Unbounded_Set <Dispatch_Entry *> *expanded_dispatches_;
+    // expanded set of dispatch entries (all dispatch entries produced by 
+    // expanding sub-frames to the total frame size during timeline creation)
+
   Dispatch_Entry **ordered_dispatch_entries_;
   // An array of pointers to  dispatch entries. It is  
   // sorted by the schedule_dispatches method.
@@ -312,6 +326,9 @@ protected:
 
   u_int threads_;
   // the number of dispatch entries in the schedule
+
+  ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_;
+  // Ordered MultiSet of timeline entries.
 
 private:
 
@@ -343,11 +360,19 @@ private:
 
   status_t output_dispatch_timeline (const char *filename);
   status_t output_dispatch_timeline (FILE *file);
-  // this prints the entire set of timeline outputs to the specified file
+  // this prints a dispatch timeline to the specified file
 
   status_t output_preemption_timeline (const char *filename);
   status_t output_preemption_timeline (FILE *file);
-  // this prints the entire set of timeline outputs to the specified file
+  // this prints a preemption timeline to the specified file
+  
+  status_t output_viewer_timeline (const char *filename);
+  status_t output_viewer_timeline (FILE *file);
+  // this prints a scheduling viewer timeline to the specified file
+  
+  status_t output_dispatch_priorities (const char *filename);
+  status_t output_dispatch_priorities (FILE *file);
+  // this prints the scheduling parameters and assigned priorities to the specified file
 
   // = Set up the task entry data structures
   status_t setup_task_entries (void);
@@ -385,7 +410,7 @@ private:
   // propagate the dispatch information from the
   // threads throughout the call graph
 
-  status_t calculate_utilization_params (void);
+  status_t calculate_utilization_params ();
   // calculate utilization, frame size, etc.
 
   // the following functions are not implememented
@@ -447,12 +472,14 @@ private:
     // the maximum priority dispatch queue is always 0, -1 indicates none can
     // be guaranteed.
 
-  ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_;
-    // Ordered MultiSet of timeline entries.
-
   u_int up_to_date_;
     // indicates whether the a valid schedule has been generated since the last
     // relevant change (addition, alteration or removal of an RT_Info, etc.)
+
+  u_long min_dispatch_id_; 
+
+  u_long max_dispatch_id_; 
+
 };
 
 #if defined (__ACE_INLINE__)
