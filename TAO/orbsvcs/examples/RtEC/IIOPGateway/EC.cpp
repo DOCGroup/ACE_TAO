@@ -89,22 +89,22 @@ EC::run (int argc, char* argv[])
 
       PortableServer::ObjectId_var ecId = PortableServer::string_to_ObjectId(ecname);
 
-      child_poa_->activate_object_with_id(ecId.in(), &ec_impl);
+      child_poa_->activate_object_with_id(ecId.in(), &ec_impl ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var ec_obj = child_poa_->id_to_reference(ecId.in());
+      CORBA::Object_var ec_obj = child_poa_->id_to_reference(ecId.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in());
+        RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Find the Naming Service.
-      object = orb->resolve_initial_references("NameService");
+      object = orb->resolve_initial_references("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosNaming::NamingContextExt_var naming_context =
-        CosNaming::NamingContextExt::_narrow(object.in());
+        CosNaming::NamingContextExt::_narrow(object.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create a name.
@@ -123,7 +123,6 @@ EC::run (int argc, char* argv[])
       // Wait for events, using work_pending()/perform_work() may help
       // or using another thread, this example is too simple for that.
       orb->run ();
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
