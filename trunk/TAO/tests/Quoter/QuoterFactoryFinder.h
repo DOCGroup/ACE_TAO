@@ -45,7 +45,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // instance of the ORB Manager
 
-  QuoterFactoryFinder_i quoterFactoryFinder_Impl_;
+  QuoterFactoryFinder_i *quoterFactoryFinder_Impl_ptr_;
   // instance of the Quoter Factory Finder
 
   int argc_;
