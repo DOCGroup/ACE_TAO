@@ -78,10 +78,10 @@ FILES= $(IDL_FILES) \
 	Runtime_Scheduler \
 	Scheduler_Utilities \
 	Time_Utilities \
+	IOR_Multicast \
 	\
 	Naming/CosNaming_i \
 	Naming/Entries \
-	Naming/Ior_Multicast \
 	Naming/Naming_Utils \
 	\
 	Event/BCU \
