@@ -1,3 +1,4 @@
+
 # $Id$
 #
 # This is the list of run_test.pl's that need to be run by
@@ -105,7 +106,6 @@ TAO/orbsvcs/tests/Security/Callback/run_test.pl: SSL !STATIC
 TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: !ST SSL !STATIC
 TAO/orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl: !ST SSL !STATIC
 TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL !STATIC
-TAO/orbsvcs/tests/Security/SecurityLevel1/run_test.pl: SSL !STATIC
 TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl: SSL !STATIC
 TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC !SUNCC5_1
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
@@ -117,4 +117,3 @@ TAO/examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: !MINIMUM !DISABL
 TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !STATIC !ST
 TAO/examples/ior_corbaloc/run_test.pl
 TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1
-
