@@ -51,12 +51,10 @@ typedef enum
 # pragma option -a                // BC++, use 1 byte alignment
 #endif
 
-// Forward declarations of some data types are needed.
-
+// = Forward declarations.
+class TAO_MProfile;
 class TAO_POA_Manager;
 class TAO_POA_Policies;
-
-// =Forward declarations
 struct TAO_Dispatch_Context;
 class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
@@ -64,23 +62,16 @@ class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
 class TAO_InputCDR;
 class TAO_OutputCDR;
-
-// Forward declaration and typedefs for the exception thrown by
-// the ORB Dynamic Any factory functions.
 class CORBA_ORB_InconsistentTypeCode;
-typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
-typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
+class TAO_ServantBase;
+class TAO_Stub;
 
 #ifdef TAO_HAS_VALUETYPE
 class TAO_ValueFactory_Map;
 #endif /* TAO_HAS_VALUETYPE */
 
-
-// The new (POA) base class for servants.
-class TAO_ServantBase;
-
-class TAO_Stub;
-// Forward declarations.
+typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
+typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
 
 class TAO_Export CORBA_String_var
 {
@@ -633,6 +624,11 @@ protected:
   // We must be created via the <ORB_init> call.
   CORBA_ORB (TAO_ORB_Core *orb_core);
   virtual ~CORBA_ORB (void);
+
+  TAO_ServantBase *_find_collocated_servant (TAO_Stub *sobj,
+                                             TAO_ORB_Core *orb_core,
+                                             const TAO_MProfile &mprofile);
+  // Check if local servant exists for <mprofile> in <orb_core>.
 
   CORBA_Object_ptr resolve_poa_current (CORBA_Environment &ACE_TRY_ENV);
   // Resolve the POA current.

@@ -906,10 +906,10 @@ CORBA_ORB::resolve_initial_references (const char *name,
               // Make sure that default initial reference doesn't
               //    end with the object key delimiter character.
 
-              const char object_key_delimiter = 
+              const char object_key_delimiter =
                 this->orb_core_->connector_registry ()->object_key_delimiter (str);
 
-              if (list_of_profiles[list_of_profiles.length() - 1] != 
+              if (list_of_profiles[list_of_profiles.length() - 1] !=
                   object_key_delimiter)
                 list_of_profiles += ACE_CString (object_key_delimiter);
               list_of_profiles += object_id;
@@ -1656,17 +1656,13 @@ CORBA_ORB::_optimize_collocation_objects (void) const
 TAO_ServantBase *
 CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
 {
-  // ACE_DEBUG ((LM_DEBUG, "CORBA_ORB: get_collocated_servant\n"));
-
   if (sobj == 0 || !this->_optimize_collocation_objects ())
     return 0;
-
-  // @@EXC@@ We should receive the <env> from the command line.
 
   // @@ What about forwarding.  Which this approach we are never forwarded
   //    when we use collocation!
 
-  CORBA::Environment ACE_TRY_ENV;
+  const TAO_MProfile &mprofile = sobj->get_base_profiles ();
 
   if (this->orb_core_->use_global_collocation ())
     {
@@ -1677,88 +1673,69 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
       ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
                                 *ACE_Static_Object_Lock::instance (), 0));
 
-      TAO_ORB_Table* table = TAO_ORB_Table::instance ();
-      TAO_ORB_Table::Iterator end =
-        table->end ();
+      TAO_ORB_Table *table = TAO_ORB_Table::instance ();
+      TAO_ORB_Table::Iterator end = table->end ();
       for (TAO_ORB_Table::Iterator i = table->begin ();
            i != end;
            ++i)
         {
-
-          const TAO_MProfile& mprofile = sobj->get_base_profiles ();
-          if ((*i).int_id_->is_collocated (mprofile) == 0)
-            continue;
-
-          TAO_Object_Adapter *oa = (*i).int_id_->object_adapter ();
-
-          for (TAO_PHandle j = 0;
-               j != mprofile.profile_count ();
-               ++j)
-            {
-              const TAO_Profile* profile = mprofile.get_profile (j);
-              TAO_ObjectKey_var objkey = profile->_key ();
-              ACE_CHECK_RETURN (0);
-
-              ACE_TRY
-                {
-                  PortableServer::Servant servant =
-                    oa->find_servant (objkey.in (), ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-
-                  // Found collocated object.  Perhaps we can get
-                  // around by simply setting the servant_orb, but let
-                  // get this to work first.
-                  sobj->servant_orb (CORBA::ORB::_duplicate ((*i).int_id_->orb ()));
-                  return servant;
-                }
-              ACE_CATCHANY
-                {
-                  // Ignore the exception and continue with the
-                  // next one.
-                }
-              ACE_ENDTRY;
-            }
+          TAO_ServantBase *servant =
+            this->_find_collocated_servant (sobj,
+                                            (*i).int_id_,
+                                            mprofile);
+          if (servant != 0)
+            return servant;
         }
+
+      // If we don't find one by this point, we return 0.
+      return 0;
     }
   else
     {
-      const TAO_MProfile& mprofile = sobj->get_base_profiles ();
-      if (!this->orb_core_->is_collocated (mprofile))
-        return 0;
+      return this->_find_collocated_servant (sobj,
+                                             this->orb_core_,
+                                             mprofile);
+    }
+}
 
-      // @@ Ossama: there is repeated code here, could you please
-      // move it to a routine....
+TAO_ServantBase *
+CORBA_ORB::_find_collocated_servant (TAO_Stub *sobj,
+                                     TAO_ORB_Core *orb_core,
+                                     const TAO_MProfile &mprofile)
+{
+  if (!orb_core->is_collocated (mprofile))
+    return 0;
 
-      TAO_Object_Adapter *oa = this->orb_core_->object_adapter ();
+  TAO_Object_Adapter *oa = orb_core->object_adapter ();
 
-      for (TAO_PHandle j = 0;
-           j != mprofile.profile_count ();
-           ++j)
+  for (TAO_PHandle j = 0;
+       j != mprofile.profile_count ();
+       ++j)
+    {
+      const TAO_Profile* profile = mprofile.get_profile (j);
+      TAO_ObjectKey_var objkey = profile->_key ();
+      ACE_CHECK_RETURN (0);
+
+      CORBA::Environment ACE_TRY_ENV;
+      ACE_TRY
         {
-          const TAO_Profile* profile = mprofile.get_profile (j);
-          TAO_ObjectKey_var objkey = profile->_key ();
-          ACE_CHECK_RETURN (0);
+          PortableServer::Servant servant =
+            oa->find_servant (objkey.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-          ACE_TRY_EX(LOCAL_ORB)
-            {
-              PortableServer::Servant servant =
-                oa->find_servant (objkey.in (), ACE_TRY_ENV);
-              ACE_TRY_CHECK_EX(LOCAL_ORB);
+          // Found collocated object.  Perhaps we can get around by
+          // simply setting the servant_orb, but let get this to work
+          // first.
 
-              // Found collocated object.  Perhaps we can get around by simply
-              // setting the servant_orb, but let get this to work first.
-
-              // There could only be one ORB which is us.
-              sobj->servant_orb (CORBA::ORB::_duplicate (this));
-              return servant;
-            }
-          ACE_CATCHANY
-            {
-              // Ignore the exception and continue with the
-              // next one.
-            }
-          ACE_ENDTRY;
+          // There could only be one ORB which is us.
+          sobj->servant_orb (CORBA::ORB::_duplicate (orb_core->orb ()));
+          return servant;
         }
+      ACE_CATCHANY
+        {
+          // Ignore the exception and continue with the next one.
+        }
+      ACE_ENDTRY;
     }
 
   return 0;
