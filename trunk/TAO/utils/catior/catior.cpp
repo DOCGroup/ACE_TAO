@@ -562,7 +562,13 @@ cat_octet_seq (const char *object_name,
               object_name));
 
   for (i = 0; i < length; i++)
-    ACE_DEBUG ((LM_DEBUG, "%c", objKey[i]));
+    {
+      char c = objKey[i];
+      if (isprint (c))
+        ACE_DEBUG ((LM_DEBUG, "%c", c));
+      else
+        ACE_DEBUG ((LM_DEBUG, "."));
+    }
 
   CORBA::string_free (objKey);
   ACE_DEBUG ((LM_DEBUG, "\n"));

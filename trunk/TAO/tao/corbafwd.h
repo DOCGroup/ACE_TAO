@@ -907,7 +907,7 @@ TAO_NAMESPACE CORBA
 //
 // For details on how to ask more numbers check:
 //
-// http://www.omg.org/cgi-bin/doc?ptc/99-02-01 
+// http://www.omg.org/cgi-bin/doc?ptc/99-02-01
 //
 
 // These numbers were assigned by the OMG.  Do *NOT* change.

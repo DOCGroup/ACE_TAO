@@ -7,10 +7,8 @@
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ECM_Supplier.h"
 #include "ECM_Data.h"
 
@@ -127,9 +125,6 @@ ECMS_Driver::run (int argc, char* argv[])
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      if (ACE_Scheduler_Factory::use_config (naming_context.in ()) == -1)
-        return -1;
 
       CosNaming::Name name (1);
       name.length (1);
@@ -431,88 +426,51 @@ Test_Supplier::connect (const char* name,
                         int event_b,
                         int event_period,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
-                        CORBA::Environment &TAO_IN_ENV)
+                        CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
-    {
-      RtecScheduler::Scheduler_ptr server =
-        ACE_Scheduler_Factory::server ();
+  this->supplier_id_ = ACE::crc32 (name);
+  ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", name,
+              this->supplier_id_));
 
-      RtecScheduler::handle_t rt_info =
-        server->create (name, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+  ACE_SupplierQOS_Factory qos;
+  qos.insert (this->supplier_id_,
+              event_a,
+              0, 1);
+  qos.insert (this->supplier_id_,
+              event_b,
+              0, 1);
+  qos.insert (this->supplier_id_,
+              ACE_ES_EVENT_SHUTDOWN,
+              0, 1);
 
-      ACE_Time_Value tv (0, event_period);
-      RtecScheduler::Period_t rate = tv.usec () * 10;
+  RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
+    ec->for_suppliers (ACE_TRY_ENV);
+  ACE_CHECK;
 
-      // The execution times are set to reasonable values, but
-      // actually they are changed on the real execution, i.e. we
-      // lie to the scheduler to obtain right priorities; but we
-      // don't care if the set is schedulable.
-      tv.set (0, 2000);
-      TimeBase::TimeT time;
-      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-      server->set (rt_info,
-                   RtecScheduler::VERY_HIGH_CRITICALITY,
-                   time, time, time,
-                   rate,
-                   RtecScheduler::VERY_LOW_IMPORTANCE,
-                   time,
-                   1,
-                   RtecScheduler::OPERATION,
-                   TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+  this->consumer_proxy_ =
+    supplier_admin->obtain_push_consumer (ACE_TRY_ENV);
+  ACE_CHECK;
 
-      this->supplier_id_ = ACE::crc32 (name);
-      ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", name,
-                  this->supplier_id_));
+  RtecEventComm::PushSupplier_var objref =
+    this->supplier_._this (ACE_TRY_ENV);
+  ACE_CHECK;
 
-      ACE_SupplierQOS_Factory qos;
-      qos.insert (this->supplier_id_,
-                  event_a,
-                  rt_info, 1);
-      qos.insert (this->supplier_id_,
-                  event_b,
-                  rt_info, 1);
-      qos.insert (this->supplier_id_,
-                  ACE_ES_EVENT_SHUTDOWN,
-                  rt_info, 1);
-
-      RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        ec->for_suppliers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      this->consumer_proxy_ =
-        supplier_admin->obtain_push_consumer (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      RtecEventComm::PushSupplier_var objref =
-        this->supplier_._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      this->consumer_proxy_->connect_push_supplier (objref.in (),
-                                                    qos.get_SupplierQOS (),
-                                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-    }
-  TAO_CATCHANY
-    {
-      TAO_RETHROW;
-    }
-  TAO_ENDTRY;
+  this->consumer_proxy_->connect_push_supplier (objref.in (),
+                                                qos.get_SupplierQOS (),
+                                                ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
-Test_Supplier::disconnect (CORBA::Environment &TAO_IN_ENV)
+Test_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+  RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
+    this->consumer_proxy_._retn ();
 
-  this->consumer_proxy_ = 0;
+  this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
 }
 
 int

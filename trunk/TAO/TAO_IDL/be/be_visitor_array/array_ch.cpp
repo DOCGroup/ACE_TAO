@@ -206,12 +206,8 @@ int be_visitor_array_ch::visit_array (be_array *node)
   if (this->ctx_->tdef ())
     {
       // typedefed array
-      if (!node->is_nested ())
-        *os << "ACE_INLINE ";
       *os << storage_class << node->nested_type_name (scope, "_slice") << " *";
       *os << node->nested_type_name (scope, "_alloc") << " (void);" << be_nl;
-      if (!node->is_nested ())
-        *os << "ACE_INLINE ";
       *os << storage_class << "void " << node->nested_type_name (scope, "_free") << " (";
       *os << node->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
       *os << storage_class << node->nested_type_name (scope, "_slice") << " *";
@@ -224,19 +220,15 @@ int be_visitor_array_ch::visit_array (be_array *node)
   else
     {
       // anonymous array
-      if (!node->is_nested ())
-        *os << "ACE_INLINE ";
       *os << storage_class << node->nested_type_name (scope, "_slice", "_") << " *";
       *os << node->nested_type_name (scope, "_alloc", "_") << " (void);" << be_nl;
-      if (!node->is_nested ())
-        *os << "ACE_INLINE ";
-      *os << storage_class << "void " 
+      *os << storage_class << "void "
           << node->nested_type_name (scope, "_free", "_") << " (";
       *os << node->nested_type_name (scope, "_slice", "_") << " *_tao_slice);" << be_nl;
       *os << storage_class << node->nested_type_name (scope, "_slice", "_") << " *";
       *os << node->nested_type_name (scope, "_dup", "_") << " (const ";
       *os << node->nested_type_name (scope, "_slice", "_") << " *_tao_slice);" << be_nl;
-      *os << storage_class << "void " 
+      *os << storage_class << "void "
           << node->nested_type_name (scope, "_copy", "_") << " (";
       *os << node->nested_type_name (scope, "_slice", "_") << " *_tao_to, const ";
       *os << node->nested_type_name (scope, "_slice", "_") << " *_tao_from);" << be_nl;
@@ -244,7 +236,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   *os << "\n";
 
-#if 0 
+#if 0
   // Typecode for an anonymous array will not be required anywhere since we do
   // not generate the Any operators for anonymous types
 
@@ -319,7 +311,7 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   *os << "~" << varnamebuf << " (void); // destructor" << be_nl;
   *os << be_nl;
   // assignment operator from a pointer to slice
-  *os << varnamebuf << " &operator= (" << namebuf << "_slice *);" 
+  *os << varnamebuf << " &operator= (" << namebuf << "_slice *);"
       << be_nl;
   // assignment from _var
   *os << varnamebuf << " &operator= (const " << varnamebuf << " &);" << be_nl;
@@ -330,13 +322,13 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
 
   // other extra types (cast operators, [] operator, and others)
   // overloaded [] operator
-  *os << namebuf << "_slice &operator[] (CORBA::ULong index);" 
+  *os << namebuf << "_slice &operator[] (CORBA::ULong index);"
       << be_nl;
-  *os << "const " << namebuf 
+  *os << "const " << namebuf
       << "_slice &operator[] (CORBA::ULong index) const;" << be_nl;
 
   // cast operators
-  *os << "operator " << namebuf << "_slice * const &() const;" 
+  *os << "operator " << namebuf << "_slice * const &() const;"
       << be_nl;
   *os << "operator " << namebuf << "_slice *&();" << be_nl;
 
@@ -399,7 +391,7 @@ be_visitor_array_ch::gen_out_defn (be_array *node)
   // assignment operator from a _out &
   *os << outnamebuf << " &operator= (const " << outnamebuf << " &);" << be_nl;
   // assignment from slice *
-  *os << outnamebuf << " &operator= (" << namebuf << "_slice *);" 
+  *os << outnamebuf << " &operator= (" << namebuf << "_slice *);"
       << be_nl;
   // cast
   *os << "operator " << namebuf << "_slice *&();" << be_nl;
@@ -407,7 +399,7 @@ be_visitor_array_ch::gen_out_defn (be_array *node)
   *os << namebuf << "_slice *&ptr (void);" << be_nl;
   // operator [] instead of ->
   *os << namebuf << "_slice &operator[] (CORBA::ULong index);" << be_nl;
-  *os << "const " << namebuf << "_slice &operator[] " 
+  *os << "const " << namebuf << "_slice &operator[] "
       << "(CORBA::ULong index) const;" << be_uidt_nl;
 
   *os << "private:" << be_idt_nl;
@@ -438,7 +430,7 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
     {
       // anonymous array case
       ACE_OS::sprintf (namebuf, "_%s", node->local_name ()->get_string ());
-      ACE_OS::sprintf (foranyname, "_%s_forany", 
+      ACE_OS::sprintf (foranyname, "_%s_forany",
                        node->local_name ()->get_string ());
     }
 
@@ -455,16 +447,16 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   // default constr
   *os << foranyname << " (void); // default constructor" << be_nl;
   // constr from pointer to slice
-  *os << foranyname << " (" << namebuf << "_slice *, " 
+  *os << foranyname << " (" << namebuf << "_slice *, "
       << "CORBA::Boolean nocopy=0);" << be_nl;
   // copy constructor
-  *os << foranyname << " (const " << foranyname 
+  *os << foranyname << " (const " << foranyname
       << " &); // copy constructor" << be_nl;
   // destructor
   *os << "~" << foranyname << " (void); // destructor" << be_nl;
   *os << be_nl;
   // assignment operator from a pointer to slice
-  *os << foranyname << " &operator= (" << namebuf << "_slice *);" 
+  *os << foranyname << " &operator= (" << namebuf << "_slice *);"
       << be_nl;
   // assignment from _var
   *os << foranyname << " &operator= (const " << foranyname << " &);" << be_nl;
@@ -475,13 +467,13 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
 
   // other extra types (cast operators, [] operator, and others)
   // overloaded [] operator
-  *os << namebuf << "_slice &operator[] (CORBA::ULong index);" 
+  *os << namebuf << "_slice &operator[] (CORBA::ULong index);"
       << be_nl;
-  *os << "const " << namebuf 
+  *os << "const " << namebuf
       << "_slice &operator[] (CORBA::ULong index) const;" << be_nl;
 
   // cast operators
-  *os << "operator " << namebuf << "_slice * const &() const;" 
+  *os << "operator " << namebuf << "_slice * const &() const;"
       << be_nl;
   *os << "operator " << namebuf << "_slice *&();" << be_nl;
 
@@ -507,4 +499,3 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
 
   return 0;
 }
-

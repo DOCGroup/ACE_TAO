@@ -236,7 +236,7 @@ CORBA::Environment::print_exception (const char *info,
     }
   else
     ACE_DEBUG ((LM_ERROR,
-                "TAO: (%P|%t) no exception\n"));
+                "TAO: (%P|%t) no exception, %s\n", info));
 }
 
 CORBA_Environment_var &

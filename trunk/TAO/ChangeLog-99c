@@ -1,3 +1,49 @@
+Wed Jun 23 20:40:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Environment.cpp:
+	  Print out the user provided info, even if there is no
+	  exception.
+
+	* tao/corbafwd.h:
+	  Minor cosmetic fixes
+
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+	  Some non-inline functions where declared inline, fixed.
+
+	* docs/Options.html:
+	  The -ORBResources option is not going away, the current behavior 
+	  is exactly what we want.
+
+	* examples/Simple/time-date/Makefile:
+	  The Makefile was not installing the shared library in
+	  $ACE_ROOT/ace
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Trap and ignore exceptions raised by the consumer, to isolate
+	  the suppliers from them, thanks to Paul Calabrese
+	  <calabrese_p@ociweb.com> for pointing this out.
+
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+	  They don't use the scheduling service anymore (the data was fake 
+	  anyway).
+ 	  We use perform_work() to wait for events, that way we don't have 
+	  to shutdown the ORB and we can cleanup the servants, POA,
+	  etc. afterwads.
+
+	* orbsvcs/tests/CosEC_Multiple/run_test.pl:
+	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+	* orbsvcs/tests/EC_Mcast/run_test.pl:
+	* orbsvcs/tests/Event_Latency/run_test.pl:
+	  Use the new real-time event channel to run the tests.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.cpp:
+	  Several exceptions were not printed correctly.
+
 Wed Jun 23 20:23:01 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/run_test.pl:
