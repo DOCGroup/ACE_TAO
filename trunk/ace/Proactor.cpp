@@ -87,7 +87,7 @@ ACE_Proactor_Timer_Handler::svc (void)
 {
 #if defined (ACE_HAS_AIO_CALLS)
   // @@ Alex, can you please document why this is a "no-op" for the
-  // AIO calls?  
+  // AIO calls?
   return 0;
 #else /* ACE_HAS_AIO_CALLS */
   u_long time;
@@ -217,7 +217,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
   aiocb_list_cur_size_ (0),
 #else /* ACE_HAS_AIO_CALLS */
   // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE!!!!
-   completion_port_ (0), 
+   completion_port_ (0),
 #endif /* ACE_HAS_AIO_CALLS */
    number_of_threads_ (number_of_threads),
    timer_queue_ (0),
@@ -344,7 +344,7 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Proactor::run_event_loop");
 
-  while (ACE_Proactor::end_event_loop_ == 0 
+  while (ACE_Proactor::end_event_loop_ == 0
          && tv != ACE_Time_Value::zero)
     {
       int result = ACE_Proactor::instance ()->handle_events (tv);
@@ -475,7 +475,7 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
 			      const ACE_Time_Value &interval)
 {
   // absolute time.
-  ACE_Time_Value absolute_time = 
+  ACE_Time_Value absolute_time =
     this->timer_queue_->gettimeofday () + time;
 
   // Only one guy goes in here at a time
@@ -603,16 +603,16 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
   if (aio_suspend (this->aiocb_list_,
                    this->aiocb_list_max_size_,
                    &timeout) < 0)
-    // If failure occurs due to timeout, then return *0* but set errno
+    // If failure is coz of timeout, then return *0* but set errno
     // appropriately. This is what the WinNT proactor does.
-    if (errno ==  EINTR)
+    if (errno ==  EAGAIN)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%p):aio_suspend"),
                         0);
     else
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%p):aio_suspend"),
-                        0);
+                        -1);
 
   // Check which aio has finished.
   size_t ai;
@@ -642,7 +642,7 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
   // Get the values for the completed aio.
   size_t bytes_transferred = aiocb_list_[ai]->aio_nbytes;
 
-  void *completion_key = 
+  void *completion_key =
     (void *) aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
 
   ACE_Asynch_Result *asynch_result =
@@ -835,6 +835,7 @@ ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
   this->handler_.handle_time_out (this->time_, this->act ());
 }
 
+#if defined (ACE_HAS_AIO_CALLS)
 int
 ACE_Proactor::insert_to_aiocb_list (aiocb *aiocb_ptr,
                                     ACE_Asynch_Result *result)
@@ -860,6 +861,8 @@ ACE_Proactor::insert_to_aiocb_list (aiocb *aiocb_ptr,
   this->aiocb_list_cur_size_ ++;
   return 0;
 }
+#endif /* ACE_HAS_AIO_CALLS */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Timer_Queue_T<ACE_Handler *,
   ACE_Proactor_Handle_Timeout_Upcall,
