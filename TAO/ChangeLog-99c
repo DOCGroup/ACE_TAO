@@ -6,7 +6,8 @@ Tue May 11 21:46:52 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	* tao/ObjectIDList.cpp
 	* tao/ObjectIDList.h
 	* tao/ObjectIDList.i
-
+	Added the above files.
+	
 	Included the declaration of ObjectIDList in the CORBA_ORB class.
 	* tao/ORB.h
 
